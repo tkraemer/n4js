@@ -9,7 +9,7 @@ N4JS is based on ECMAScript Version 5, ECMAScript 2015 is supported to a great e
 
 - N4JS IDE Snapshot Releases: [Linux64](http://goo.gl/qGKcm9) [Win64](http://goo.gl/2QDLfc) [MacOS](http://goo.gl/DszAu3)
 - Eclipse Update Site N4JS IDE: http://updates.n4js.org/updatesite/
-- N4JS command line compiler (jar): n4jsc.jar ( TODO )
+- N4JS command line compiler (jar): [n4jsc.jar] (http://goo.gl/09dfYB)
 
 ## Contribute
 
