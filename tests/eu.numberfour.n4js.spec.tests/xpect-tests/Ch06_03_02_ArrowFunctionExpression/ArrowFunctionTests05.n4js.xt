@@ -1,0 +1,39 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+function assert(actual : boolean) {
+	if (actual != true) {
+		throw new Error("Asssertion failure")
+	}
+}
+
+class C {
+	
+	// XPECT FIXME type of 'm1' --> {function():{function():{function():C}}}}
+	m1() {
+		return () => (() => this)
+	}
+	
+	// XPECT FIXME type of 'm2' --> {function():{function():{function():C}}}}
+	m2() {
+		return function () { // ie returns a {function():{function():C}}}
+			return () => new C; // ie returns a {function():C}
+		}
+	}
+	
+	// XPECT FIXME type of 'm3' --> {function():{function():{function():C}}}}
+	m3() {
+		return function () { // ie returns a {function():{function():C}}}
+			return function() { return new C }; // ie returns a {function():C}
+		}
+	}
+}
+
+class D extends C {
+	
+	// XPECT FIXME type of 'p1' --> {function():{function():{function():{function():C}}}}}
+	p1() { return () => m1() }
+	
+	// XPECT FIXME type of 'p2' --> {function():{function():{function():{function():{function():C}}}}}}
+	p2() { return () => p1() }
+	
+}

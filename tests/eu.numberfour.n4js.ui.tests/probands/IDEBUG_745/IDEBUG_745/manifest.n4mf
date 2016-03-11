@@ -1,0 +1,32 @@
+ArtifactId: IDEBUG_745
+VendorId: eu.numberfour
+ProjectName: "IDEBUG_745"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	
+	// External first, then source.
+	external {
+		"ext.one"
+	}
+	source {
+		"src.one"
+	}
+	
+	// Source first, then external.
+	source {
+		"src.two"
+	}
+	external {
+		"ext.two"
+	}
+	
+	// Source for the client code.
+	source {
+        "client.src"
+    }
+	
+}
+

@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+ 
+ /* XPECT output --- 
+<==
+stdout:
+iterator called
+stderr:
+==>
+--- */
+
+
+interface I extends Iterable<string> {
+	@Override
+	public [Symbol.iterator]() : Iterator<string> { console.log("iterator called"); return null }
+}
+
+class A implements I {
+	 
+}
+
+var a = new A();
+a[Symbol.iterator]();

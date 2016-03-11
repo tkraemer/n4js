@@ -1,0 +1,7 @@
+export public class X {
+	
+	public constructor() {
+		console.log('Workspace X<init>');
+	}
+	
+}

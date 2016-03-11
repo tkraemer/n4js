@@ -1,0 +1,39 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+export public interface I {
+	m0() : string
+	
+	public m1() : string
+	protected m2() : string
+// actually, that is possible and expected XPECT noerrors --> "Cannot define abstract method to be project as its implementors may not be able to override it due to visibility constraints." at "m3"
+	project m3() : string
+// XPECT errors --> "Members of interfaces must not be declared private." at "m4"
+	private m4() : string
+}
+
+
+export project interface I2 {
+	m0() : string
+	
+	public m1() : string
+	protected m2() : string
+// XPECT noerrors --> 
+	project m3() : string
+// XPECT errors --> "Members of interfaces must not be declared private." at "m4"
+	private m4() : string
+	
+}
+
+
+interface I3 {
+	
+	public m0() : string
+
+	public m1() : string
+	protected m2() : string
+// XPECT noerrors --> 
+	project m3() : string
+// XPECT errors --> "Members of interfaces must not be declared private." at "m4"
+	private m4() : string
+}

@@ -1,0 +1,8 @@
+export public class DeclarationSameProject {
+	private privateMethod() {}
+	
+	private privateField : number = 2;
+	
+	private set privateAccessorField(s : string) {}
+	private get privateAccessorField() : string { return "" } 
+}	

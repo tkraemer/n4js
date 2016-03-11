@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+// XPECT errors --> "{function(string):number} is not a subtype of {function<T>(T):T}." at "function(p : string) : number {return 42;}"
+var f1 : {function<T>(T):T} = function(p : string) : number {return 42;};
+
+
+// XPECT noerrors -->
+var f2 : {function<T>(T):T} = function<S>(p : S) : S {return null;};
+
+
+// TODO FIXME the following does not work yet, due to another problem
+//// X--PECT noerrors -->
+//var {function<T>(T):T} f3 = function<S>(S param) {return param;};
+

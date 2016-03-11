@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+class S {
+	num : number;
+	str : string;
+}
+
+//////////////
+// ST		//
+// Function //
+//////////////
+
+function bar () {
+	var s : ~S;
+	// setting ST inside a lambda expr. XPECT noerrors -->
+	(() => { s = { num: 3, str: "K"} })();
+}
+
+function foo () {
+	var s : ~S;
+	// using parameters XPECT noerrors -->
+	((n : number, m : string) => { s = { num: n, str: m } })(4, "F");
+}
+
+function baz () {
+	var s : ~S;
+	// expecting ST XPECT noerrors -->
+	((st : ~S) => { s = st })({ num: 5, str: "S"});
+}
+

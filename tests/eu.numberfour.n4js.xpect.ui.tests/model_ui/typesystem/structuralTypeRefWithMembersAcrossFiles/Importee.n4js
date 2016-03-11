@@ -1,0 +1,31 @@
+
+
+export public class X {}
+
+export public class G<T> {
+	public value : T;
+}
+
+export public class Provider {
+	
+	public f1 = {
+		string s: "",
+		X n: null
+	};
+	
+	public f2 : ~Object with {
+		s : string;
+		n : X ;
+	};
+	
+	public f3 : G<~Object with {
+		s : string;
+		n : X;
+	}>;
+	
+	public m1() : ~Object with {
+		s ; string;
+		n : X;
+	} {return null;}
+}
+

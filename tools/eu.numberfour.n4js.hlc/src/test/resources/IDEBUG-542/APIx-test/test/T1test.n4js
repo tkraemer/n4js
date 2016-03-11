@@ -1,0 +1,4 @@
+import { IExtendsIterator } from "runtime/es6/Iterator"
+import { X } from "pack1/T1"
+
+var x : X = null;

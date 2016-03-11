@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class A {
+	public n : number;
+	public foo () : void {};
+}
+
+class B {
+	public bar(t : ~A) : void { }
+}
+
+var a : ~~A = {n: 3};
+
+var b : B = new B();
+
+// XPECT errors --> "~~A is not a structural subtype of ~A: missing method foo." at "a"
+b.bar(a);

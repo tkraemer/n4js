@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Function.arguments
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments
+
+/* test disabled because uses deprecated JS feature that throws an exception in strict mode (see URL above)
+
+function f(n : number) { g(n-1); }
+
+function g(n : number) {
+  console.log("before: " + g.arguments[0]);
+  if(n>0) f(n);
+  console.log("after: " + g.arguments[0]);
+}
+
+f(2);
+
+*/
+
+/* XPECT ! output --- 
+<==
+stdout:
+before: 1
+before: 0
+after: 0
+after: 1
+stderr:
+==>
+--- */

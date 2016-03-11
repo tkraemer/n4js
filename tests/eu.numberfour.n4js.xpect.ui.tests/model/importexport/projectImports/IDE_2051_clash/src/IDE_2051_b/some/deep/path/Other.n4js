@@ -1,0 +1,9 @@
+
+
+export public class Other {
+	
+	public greet() {
+		console.log('Hello from the clashing Other#greet() in Other.n4js in project IDE_2051_clash!');
+	}
+}
+

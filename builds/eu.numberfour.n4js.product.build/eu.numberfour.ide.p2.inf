@@ -1,0 +1,4 @@
+instructions.configure=\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//updates.n4js.org/updatesite/,type:0,name:n4jside updates,enabled:true);\
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//updates.n4js.org/updatesite/,type:1,name:n4jside updates,enabled:true);\
+  

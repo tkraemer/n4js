@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface R {
+	set x(s : string) { }
+}
+
+class S {
+	x() {}
+}
+
+class C implements R {
+	// XPECT errors --> "Cannot implement setter R.x with method C.x." at "x"
+	x() {}
+}
+
+// XPECT errors --> "Inherited method S.x cannot implement setter R.x." at "CS"
+class CS extends S implements R {
+	
+}

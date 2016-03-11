@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+var ol = {
+// XPECT errors --> "string is not a subtype of int." at "'foo'"
+	int foo: 'foo', 
+// XPECT errors --> "int is not a subtype of string." at "3"
+	string bar : 3
+}

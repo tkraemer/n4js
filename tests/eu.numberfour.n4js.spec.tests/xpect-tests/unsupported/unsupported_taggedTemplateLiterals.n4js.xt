@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+function foo(parts, a, b) {}
+
+// XPECT errors --> "Unsupported feature: tagged template literals." at "foo"
+foo`hello`;
+

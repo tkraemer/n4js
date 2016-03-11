@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Function.prototype.call()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+
+@This (~Object with {name: string; price: number; })
+function Product(name, price) {
+	this.name = name;
+	this.price = price;
+	return this;
+}
+
+@This (~Object with {name: string; price: number; category: string;})
+function Food(name, price) {
+  this.category = 'food';
+  return Product.call(this, name, price);
+}
+
+var cheese = Food.call({name: '', price: 0, category: ""}, 'feta', 20);
+console.log(cheese);
+
+var cheese2 = Food.call({}, 'feta', 20);
+console.log(cheese2);
+
+/* XPECT output --- 
+<==
+stdout:
+{ name: 'feta', price: 20, category: 'food' }
+{ category: 'food', name: 'feta', price: 20 }
+stderr:
+==>
+--- */

@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// String.prototype.toLocaleUpperCase()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase
+
+console.log( "alphabet".toLocaleUpperCase() ); // "ALPHABET"
+
+/* XPECT output --- 
+<==
+stdout:
+ALPHABET
+stderr:
+==>
+--- */

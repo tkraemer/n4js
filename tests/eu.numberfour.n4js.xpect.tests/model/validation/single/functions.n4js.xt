@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+	}
+	END_SETUP 
+ */
+
+function myfunc() {
+
+	function mynested() {
+	}
+	var func = function mynested2() {
+	}
+	if(true) {
+/*
+XPECT errors at mynested3 --- 
+"Functions must only be declared on script level or as part of other expressions" at "mynested3"
+--- */
+		function mynested3() {
+		}
+		var func2 = function mynested4() {
+		}
+	}
+}

@@ -1,0 +1,23 @@
+
+
+export public class Remote {
+	field = {
+		s: "hello",
+		n: 42,
+		f: function(p : string) : int { return this.n; }
+	};
+	
+	static staticField = {
+		s: "hello",
+		n: 42,
+		f: function(p : string) : int { return this.n; }
+	};
+}
+
+
+export var remote_variable = {
+	s: "hello",
+	n: 42,
+	f: function(p : string) : int { return this.n; }
+};
+

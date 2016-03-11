@@ -1,0 +1,19 @@
+ArtifactId: N4JSXPECTTests
+VendorId: eu.numberfour
+ProjectName: "N4JS XPECT Tests"
+VendorName: "NumberFour AG"
+ProjectType: lib
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"model",
+		"model_ui"
+	}
+}
+ModuleFilters {
+	noValidate {
+		"validation/IDE_754_noValidate/novalidate/*",
+		"validation/IDE_754_noValidate/nowrap/*"
+	}
+}

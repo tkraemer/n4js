@@ -1,0 +1,9 @@
+import { AT_IDE_1510_Stubrouting_Internal_impl_subclass } from "routing/AT_IDE-1510_Internal_impl_Subclass"
+
+
+var exec = new AT_IDE_1510_Stubrouting_Internal_impl_subclass();
+
+
+exec.testUsingDirectImplementation();
+
+// exec.testUsingIndirectImplementation();

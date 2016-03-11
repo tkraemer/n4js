@@ -1,0 +1,5 @@
+import { A } from 'circularDependency/req_03/A'
+
+export public class B {
+	a : A = new A();
+}

@@ -1,0 +1,8 @@
+import { AT_IDE_1510_enum } from "direct/AT_IDE-1510_Enums"
+
+
+var exec : AT_IDE_1510_enum = new AT_IDE_1510_enum();
+
+
+exec.test_literal_in_missing_EnumSB();
+

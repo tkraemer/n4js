@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+ 
+// IDE-1804 support computed-names of string-literal form in indexed-accesses
+
+/* XPECT output --- 
+<==
+stdout:
+1
+2
+3
+stderr:
+==>
+--- */
+
+
+
+class A implements R, I { 
+	@Override
+	x : string = "1";
+}
+interface R{ x : string; }
+interface I{ x : string; }
+
+function f(a : A, r : R, i : I) {
+
+	console.log(a['x']);
+	a['x'] = '2'
+
+	console.log(r['x']);
+	r['x'] = '3'
+
+	console.log(i['x']);
+	
+}
+
+var a = new A
+
+f(a, a, a)

@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+Fixed: s1
+Optional: undefined
+Variadic length: 0
+Fixed: s1
+Optional: s2
+Variadic length: 0
+Fixed: s1
+Optional: s2
+Variadic length: 1
+Variadic: s3
+stderr:
+==>
+--- */
+
+	var f = (fixed : string, start : string?, ... s : string) => {
+		console.log("Fixed: " + fixed)
+		console.log("Optional: " + start)
+		console.log("Variadic length: " + s.length)
+		for(var i=0, l = s.length; i < l; i++){	
+			console.log("Variadic: " + s[i])	
+		}
+	}
+
+f("s1")
+f("s1", "s2")
+f("s1", "s2", "s3")

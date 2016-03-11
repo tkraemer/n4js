@@ -1,0 +1,17 @@
+import * as C from "scoping/static/Callee"
+
+export class SubCallee2 extends C.Callee {
+   //field override not allowed
+   //project String myNonStaticField = "myNonStaticFieldInSubCallee2";
+   //project static String myStaticField = "myStaticFieldInSubCallee2";
+   
+   @Override
+   project static myStaticMethod() : string {
+		return "myStaticMethodInSubCallee2";
+   }
+   
+   @Override
+   project myNonStaticMethod() : string {
+		return "myNonStaticMethodInSubCallee2";
+   }
+}

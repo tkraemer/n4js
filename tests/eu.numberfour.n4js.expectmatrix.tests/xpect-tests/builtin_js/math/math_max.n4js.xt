@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Math.max()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
+
+console.log(Math.max(10, 20));   //  20
+console.log(Math.max(-10, -20)); // -10
+console.log(Math.max(-10, 20));  //  20
+
+
+function getMaxOfArray(numArray : Array<number>) {
+    return Math.max.apply(null, numArray);
+}
+
+console.log(getMaxOfArray([1,2,3]));
+
+
+/* XPECT output --- 
+<==
+stdout:
+20
+-10
+20
+3
+stderr:
+==>
+--- */

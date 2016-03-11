@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+/* XPECT output --- 
+<==
+stdout:
+1
+2
+stderr:
+==>
+--- */
+
+
+export var a = 1;
+console.log(a); 
+
+a++; // this line causes an Exception in the background.
+console.log(a); 
+
+
+
+
+
+

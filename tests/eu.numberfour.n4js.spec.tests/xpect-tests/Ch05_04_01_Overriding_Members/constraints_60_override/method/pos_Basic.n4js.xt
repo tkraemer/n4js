@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+class A {
+	f(){ console.log("A.f()") }
+	g(){ console.log("A.g()") }
+}
+
+class B extends A {
+	// XPECT noerrors --> 
+	@Override
+	f(){ console.log("B.f()") }
+}
+
+
+/* XPECT output --- 
+<==
+stdout:
+A.f()
+B.f()
+A.g()
+stderr:
+==>
+--- */
+
+
+var a = new A();
+var b = new B();
+
+// XPECT binding --> A.f
+a.f();
+// XPECT binding --> B.f
+b.f();
+// XPECT binding --> A.g
+b.g();

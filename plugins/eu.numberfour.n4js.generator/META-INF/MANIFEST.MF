@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: N4JS Composed Generator
+Bundle-SymbolicName: eu.numberfour.n4js.generator;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: eu.numberfour.n4js.transpiler.es,
+ org.apache.log4j,
+ org.eclipse.core.runtime,
+ eu.numberfour.n4js.generator.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext,
+ eu.numberfour.n4js,
+ eu.numberfour.n4js.utils
+Bundle-ClassPath: .,
+ lib/guice-multibindings-3.0.jar
+Import-Package: org.eclipse.core.runtime
+Export-Package: eu.numberfour.n4js.generator
+Bundle-ActivationPolicy: lazy

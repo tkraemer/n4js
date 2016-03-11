@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// Test for IDE-1048, reproduced verbatim from the N4JS spec
+class C {
+  m() : void { }
+  static k() : void {}
+}
+						
+class D extends C {
+  
+  @Override m() : void { this.f() }
+  f() : void {}
+					
+  @Override static k() : void { this.f() }
+  static f() : void {}
+
+}
+				
+var c : C = new C();
+var d : C = new D(); // d looks like a C
+
+// XPECT warnings --> "A reference to method m is created detached from a (correct) this-instance." at "m"
+var v1 : {@This(C)function():void} = c.m;
+// XPECT warnings --> "A reference to method m is created detached from a (correct) this-instance." at "m"
+var v2 : {@This(C)function():void} = d.m;
+
+v1.call(c);
+v2.call(c);
+

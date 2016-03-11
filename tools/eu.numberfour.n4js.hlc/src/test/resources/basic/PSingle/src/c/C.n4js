@@ -1,0 +1,5 @@
+import { A } from "a/A"
+class C extends A 
+{
+	
+}

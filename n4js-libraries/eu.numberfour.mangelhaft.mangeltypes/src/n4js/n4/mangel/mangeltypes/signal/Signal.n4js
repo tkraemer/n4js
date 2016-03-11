@@ -1,0 +1,345 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Adaptation from js-signals
+ * 
+ * JS Signals <http://millermedeiros.github.com/js-signals/>
+ * Released under the MIT license
+ * Author: Miller Medeiros
+ */
+
+
+function validateListener(listener: Function, fnName: string) {
+    if (typeof listener !== 'function') {
+        throw new Error( 'listener is a required param of {fn}() and should be a TCallback.'.replace('{fn}', fnName) );
+    }
+}
+
+
+
+ export public class Signal<TCallback extends Function> {
+    /**
+     * If Signal should keep record of previously dispatched parameters and
+     * automatically execute listener during `add()`/`addOnce()` if Signal was
+     * already dispatched before.
+     * @type boolean
+     */
+    public memorize = false;
+
+    public bindings: Array<SignalBinding<TCallback>> = [];
+    public previousParams: Array<?> = null;
+    shouldPropagate = true;
+
+    /**
+     * If Signal is active and should broadcast events.
+     * <p><strong>IMPORTANT:</strong> Setting this property during a dispatch will only affect the next dispatch, if you want to stop the propagation of a signal use `halt()` instead.</p>
+     */
+    active = true;
+    /**
+     * @param {TCallback} listener
+     * @param {boolean} isOnce
+     * @param {Object} [listenerContext]
+     * @param {Number} [priority]
+     * @return {SignalBinding}
+     * @private
+     */
+    private registerListener(listener: TCallback, isOnce: boolean, listenerContext: any, priority: number): SignalBinding<TCallback> {
+        priority = priority || 0;
+        let prevIndex: number = this.indexOfListener(listener, listenerContext),
+            binding: SignalBinding<TCallback>;
+
+        if (prevIndex !== -1) {
+            binding = this.bindings[prevIndex];
+            if (binding.isOnce !== isOnce) {
+                throw new Error('You cannot add'+ (isOnce? '': 'Once') +'() then add'+ (!isOnce? '': 'Once') +'() the same listener without removing the relationship first.');
+            }
+        } else {
+
+            binding = new SignalBinding<TCallback>({Signal<TCallback> signal:this, listener: listener, isOnce: isOnce, context:listenerContext, priority:priority});
+            this.addBinding(binding);
+        }
+
+        if(this.memorize && this.previousParams){
+            binding.execute(this.previousParams);
+        }
+
+        return binding;
+    }
+
+    addBinding(binding: SignalBinding<TCallback>) {
+        //simplified insertion sort
+        let n = this.bindings.length;
+        do { --n; } while (this.bindings[n] && binding.priority <= this.bindings[n].priority);
+        this.bindings.splice(n + 1, 0, binding);
+    }
+
+    /**
+     * @param {TCallback} listener
+     * @return {number}
+     * @private
+     */
+    private indexOfListener(listener: TCallback, context: any): int {
+        let n = this.bindings.length,
+            cur: SignalBinding<TCallback>;
+        while (n--) {
+            cur = this.bindings[n];
+            if (cur.listener === listener && cur.context === context) {
+                return n;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Check if listener was attached to Signal.
+     * @param {TCallback} listener
+     * @param {Object} [context]
+     * @return {boolean} if Signal has the specified listener.
+     */
+    public has(listener: TCallback, context: any): boolean {
+        return this.indexOfListener(listener, context) !== -1;
+    }
+
+    /**
+     * Add a listener to the signal.
+     * @param {TCallback} listener Signal handler function.
+     * @param {Object} [listenerContext] Context on which listener will be executed (object that should represent the `this` variable inside listener function).
+     * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
+     * @return {SignalBinding} An Object representing the binding between the Signal and listener.
+     */
+    public add (listener: TCallback, listenerContext: any?, priority: number?): SignalBinding<TCallback> {
+        validateListener(listener, 'add');
+        return this.registerListener(listener, false, listenerContext, priority);
+    }
+
+    /**
+     * Add listener to the signal that should be removed after first execution (will be executed only once).
+     * @param {TCallback} listener Signal handler function.
+     * @param {Object} [listenerContext] Context on which listener will be executed (object that should represent the `this` variable inside listener function).
+     * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
+     * @return {SignalBinding} An Object representing the binding between the Signal and listener.
+     */
+    public addOnce (listener: TCallback, listenerContext: any?, priority: number?): SignalBinding<TCallback> {
+        validateListener(listener, 'addOnce');
+        return this.registerListener(listener, true, listenerContext, priority);
+    }
+
+    /**
+     * Remove a single listener from the dispatch queue.
+     * @param {TCallback} listener Handler function that should be removed.
+     * @param {Object} [context] Execution context (since you can add the same handler multiple times if executing in a different context).
+     * @return {TCallback} Listener handler function.
+     */
+    public remove (listener: TCallback, context: any) {
+        validateListener(listener, 'remove');
+
+        let i = this.indexOfListener(listener, context);
+        if (i !== -1) {
+            this.bindings[i].destroy(); //no reason to a SignalBinding exist if it isn't attached to a signal
+            this.bindings.splice(i, 1);
+        }
+        return listener;
+    }
+
+    /**
+     * Remove all listeners from the Signal.
+     */
+    public removeAll (): this {
+        let n = this.bindings.length;
+        while (n--) {
+            this.bindings[n].destroy();
+        }
+        this.bindings.length = 0;
+        return this;
+    }
+
+    /**
+     * @return {number} Number of listeners attached to the Signal.
+     */
+    public getNumListeners () {
+        return this.bindings.length;
+    }
+
+    /**
+     * Stop propagation of the event, blocking the dispatch to next listeners on the queue.
+     * <p><strong>IMPORTANT:</strong> should be called only during signal dispatch, calling it before/after dispatch won't affect signal broadcast.</p>
+     * @see Signal.prototype.disable
+     */
+    public halt (): this {
+        this.shouldPropagate = false;
+        return this;
+    }
+
+    /**
+     * Dispatch/Broadcast Signal to all listeners added to the queue.
+     * @param {...*} [params] Parameters that should be passed to each handler.
+     */
+    public async dispatch (params: Array<?>) {
+        //this.
+        if (! this.active) {
+            return;
+        }
+        let paramsArr: Array<?> = params.slice(), 
+            n: number = this.bindings.length,
+            bindings: Array<SignalBinding<TCallback>>;
+
+        if (this.memorize) {
+            this.previousParams = paramsArr;
+        }
+
+        if (! n) {
+            //should come after memorize
+            return;
+        }
+
+        bindings = this.bindings.slice(); //clone array in case add/remove items during dispatch
+        this.shouldPropagate = true; //in case `halt` was called before dispatch or during the previous dispatch.
+
+        //execute all callbacks until end of the list or until a callback returns `false` or stops propagation
+        //reverse loop since listeners with higher priority will be added at the end of the list
+
+        for (let executeNext = true; executeNext && n > 0;--n) {
+            executeNext = false; //default state
+
+            if (bindings[n - 1] && this.shouldPropagate) {
+                let res = await bindings[n - 1].execute(paramsArr);
+                executeNext = res !== false;
+            }
+       }
+       return true;
+    }
+
+    /**
+     * Forget memorized arguments.
+     * @see Signal.memorize
+     */
+    public forget (): this{
+        this.previousParams = null;
+        return this;
+    }
+
+    /**
+     * Remove all bindings from signal and destroy any reference to external objects (destroy Signal object).
+     * <p><strong>IMPORTANT:</strong> calling any method on the signal instance after calling dispose will throw errors.</p>
+     */
+    public dispose () {
+        this.removeAll();
+        delete this.bindings;
+        delete this.previousParams;
+    }
+
+    /**
+     * @return {string} String representation of the object.
+     */
+    @Override public toString(): string {
+        return '[Signal active:'+ this.active +' numListeners:'+ this.getNumListeners() +']';
+    }
+
+ }
+
+ // SignalBinding -------------------------------------------------
+//================================================================
+
+/**
+ * Object that represents a binding between a Signal and a listener function.
+ * <br />- <strong>This is an internal constructor and shouldn't be called by regular users.</strong>
+ * <br />- inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
+ * @author Miller Medeiros
+ * @constructor
+ * @internal
+ * @name SignalBinding
+ * @param {Signal} signal Reference to Signal object that listener is currently bound to.
+ * @param {TCallback} listener Handler function bound to the signal.
+ * @param {boolean} isOnce If binding should be executed just once.
+ * @param {Object} [listenerContext] Context on which listener will be executed (object that should represent the `this` variable inside listener function).
+ * @param {Number} [priority] The priority level of the event listener. (default = 0).
+ */
+ class SignalBinding<TCallback extends Function> {
+    /**
+     *
+     * Handler function bound to the signal.
+     */
+    public listener: TCallback;
+    public context: any;
+    /**
+     * Reference to Signal object that listener is currently bound to.
+     */
+    public signal: Signal<TCallback>;
+    /**
+     * If binding should be executed just once.
+     */
+    public isOnce: boolean = false;
+    public priority: number = 0;
+   /**
+     * If binding is active and should be executed.
+     * @type boolean
+     */
+    public active = true;
+
+    /**
+     * Default parameters passed to listener during `Signal.dispatch` and `SignalBinding.execute`. (curried parameters)
+     * @type Array|null
+     */
+        public params: Array<?> = null;
+
+        constructor(@Spec spec: ~i~this) {
+        }
+
+        /**
+     * Call listener passing arbitrary parameters.
+     * <p>If binding was added using `Signal.addOnce()` it will be automatically removed from signal dispatch queue, this method is used internally for the signal dispatch.</p>
+     * @param {Array} [paramsArr] Array of parameters that should be passed to the listener
+     * @return {*} Value returned by the listener.
+     */
+    public execute(paramsArr: Array<?>): any {
+        let handlerReturn, params: Array<?>;
+        if (this.active && !!this.listener) {
+            params = this.params? this.params.concat(paramsArr): paramsArr;
+            handlerReturn = this.listener.apply(this.context, params);
+            if (this.isOnce) {
+                this.detach();
+            }
+        }
+        return handlerReturn;
+    }
+
+    /**
+     * Detach binding from signal.
+     * - alias to: mySignal.remove(myBinding.getListener());
+     * @return {TCallback|null} Handler function bound to the signal or `null` if binding was previously detached.
+     */
+    public detach() {
+        return this.isBound()? this.signal.remove(this.listener, this.context): null;
+    }
+
+    /**
+     * @return {Boolean} `true` if binding is still bound to the signal and have a listener.
+     */
+    public isBound () {
+        return (!!this.signal && !!this.listener);
+    }
+
+    /**
+     * Delete instance properties
+     *
+     */
+    destroy () {
+        delete this.signal;
+        delete this.listener;
+        delete this.context;
+    }
+
+    /**
+     * @return {string} String representation of the object.
+     */
+     @Override
+    public toString(): string {
+        return '[SignalBinding isOnce:' + this.isOnce +', isBound:'+ this.isBound() +', active:' + this.active + ']';
+    }
+
+}

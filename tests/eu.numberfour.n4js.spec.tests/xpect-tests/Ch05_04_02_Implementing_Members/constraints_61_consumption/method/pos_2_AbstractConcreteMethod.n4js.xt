@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	f(){ console.log("I.f()")}
+}
+
+interface J {
+	f()
+}
+
+// XPECT noerrors --> "f is implemented in I"
+class A implements I,J {}
+// XPECT noerrors --> "f is implemented in I, order does not matter"
+class B implements J,I {}
+
+
+/* XPECT output --- 
+<==
+stdout:
+I.f()
+I.f()
+stderr:
+==>
+--- */
+
+// XPECT binding --> I.f
+new A().f();
+// XPECT binding --> I.f
+new B().f();

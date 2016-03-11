@@ -1,0 +1,7 @@
+export interface CalleeTrait {
+   project myRoleNonStaticField : string = "myRoleNonStaticField";
+   
+   project myRoleNonStaticMethod() : string {
+		return "myRoleNonStaticMethod";
+   }   
+}

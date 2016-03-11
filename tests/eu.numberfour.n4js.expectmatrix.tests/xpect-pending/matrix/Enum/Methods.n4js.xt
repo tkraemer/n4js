@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// String based enum as type parameter in generic class (methods)
+
+@StringBased enum SBEnum {
+	a: "a",
+	b: "b"
+}
+
+class A<T extends N4StringBasedEnum> {
+	
+	public printT (t : T) : void {
+		console.log(t);
+	}
+	
+	public returnT (t : T) : T {
+		return t;
+	}
+}
+
+var aClass : A<SBEnum> = new A<SBEnum>();
+var aEnum : SBEnum = SBEnum.a;
+
+// printT(T) with T = SBEnum accepts aEnum XPECT noerrors -->
+aClass.printT(aEnum);
+
+// aEnum is of type SBEnum XPECT noerrors -->
+var t1 : SBEnum = aClass.returnT(aEnum);
+
+// aEnum is of type string, too XPECT noerrors -->
+var t2 : string = aClass.returnT(aEnum);
+
+// What type is aEnum? XPECT type of t3 --> SBEnum
+var t3 = aClass.returnT(aEnum);

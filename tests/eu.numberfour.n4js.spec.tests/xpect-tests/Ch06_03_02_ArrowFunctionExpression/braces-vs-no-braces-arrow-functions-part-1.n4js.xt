@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT noerrors --> "return an object literal by wrapping it in parens, otherwise braces mistaken as bracketing lambda body."
+var asPairV1 = (a, b) => ({ elem1: a, elem2: b });
+
+
+/* XPECT errors ---
+"Couldn't resolve reference to IdentifiableElement 'elem2'." at "elem2"
+"no viable alternative at input ':'" at ":"
+--- */
+var asPairV2 = (a, b) => { elem1: a, elem2: b };

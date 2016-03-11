@@ -1,0 +1,5 @@
+export @Export public class A{}
+export interface B{ meth() : void; }
+export function foo() {}
+export var a;
+export const c="Hello";

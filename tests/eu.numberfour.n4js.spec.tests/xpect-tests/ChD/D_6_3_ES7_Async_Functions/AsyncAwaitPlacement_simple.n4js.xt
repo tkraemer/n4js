@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+
+//==== allowed
+
+//XPECT noerrors --> "should pass"
+async function t2(): void {
+	//XPECT noerrors --> "should pass"
+	await undefined;
+}
+
+
+//==== not allowed
+
+function t() {
+	//XPECT noerrors --> "IDE-1494"
+	var f =  async function(){};
+}
+
+//XPECT noerrors --> "IDE-1494"
+var f =  async function(){};
+
+//XPECT errors --> "await is allowed only inside functions annotated with async." at "await undefined"
+await undefined;
+
+async function t3(): void {
+	function ti(){
+		//XPECT errors --> "await is allowed only inside functions annotated with async." at "await undefined"
+		await undefined;
+	}
+}

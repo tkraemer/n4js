@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+class A {
+	set f(p : string){ console.log("setter A.f") }
+}
+
+class B extends A {
+	@Override
+	// XPECT noerrors --> No error expected: "string is a subtype of any, ok in setter"
+	f : any = "field B.f";	
+}
+
+
+/* XPECT output --- 
+<==
+stdout:
+setter A.f
+-
+set field B.f
+stderr:
+==>
+--- */
+
+
+var a = new A();
+var b = new B();
+
+
+// XPECT binding --> A.f
+a.f="";
+// XPECT binding --> B.f
+b.f ="set field B.f";
+console.log("-");
+console.log(
+// XPECT binding --> B.f
+b.f);

@@ -1,0 +1,8 @@
+export function <T, U> filterFunction (input: String, hint: String) : String {
+	var output
+	return output
+}
+
+export function transformFunction() {
+	var transformable
+}

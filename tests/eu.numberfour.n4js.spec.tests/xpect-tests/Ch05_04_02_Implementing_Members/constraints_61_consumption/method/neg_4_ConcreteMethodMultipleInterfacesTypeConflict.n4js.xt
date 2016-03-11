@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	f(s : string) {}
+}
+
+interface J  {
+	f(n : number){ }
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: method I.f and method J.f." at "A"
+class A implements I,J {}
+
+
+// bind to first one XPECT binding --> I.f
+new A().f();

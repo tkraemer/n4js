@@ -1,0 +1,95 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+B0.get x
+A0._x
+A0.set x
+B0.get x
+hello0
+B1.get x
+A0._x
+A0.set x
+B1.get x
+hello1
+B2.get x
+A0._x
+A0.set x
+B2.get x
+hello2
+C0.get x
+A0._x
+A0.set x
+C0.get x
+hello0
+C0.get x
+A0._x
+A0.set x
+C0.get x
+hello1
+C0.get x
+A0._x
+A0.set x
+C0.get x
+hello2
+stderr:
+==>
+--- */
+
+
+class A0 {
+	_x : string = "A0._x";
+	set x(s : string) { console.log("A0.set x"); this._x = s}
+}
+class A1 extends A0 {}
+class A2 extends A1 {}
+
+class B0 extends A0 {
+	get x() : string { console.log("B0.get x");  return this._x}
+}
+class B1 extends A1 {
+	get x() : string { console.log("B1.get x");  return this._x}
+}
+class B2 extends A2 {
+	get x() : string { console.log("B2.get x");  return this._x}
+}
+
+class C0 extends A2 {
+	get x() : string { console.log("C0.get x");  return this._x}
+}
+class C1 extends C0 {
+}
+class C2 extends C1 {
+}
+
+
+var b0 = new B0();
+console.log(b0.x); 
+b0.x = "hello0";
+console.log(b0.x); 
+
+var b1 = new B1();
+console.log(b1.x); 
+b1.x = "hello1";
+console.log(b1.x); 
+
+var b2 = new B2();
+console.log(b2.x); 
+b2.x = "hello2";
+console.log(b2.x); 
+
+var c0 = new C0();
+console.log(c0.x); 
+c0.x = "hello0";
+console.log(c0.x); 
+
+var c1 = new C1();
+console.log(c1.x); 
+c1.x = "hello1";
+console.log(c1.x); 
+
+var c2 = new C2();
+console.log(c2.x); 
+c2.x = "hello2";
+console.log(c2.x); 

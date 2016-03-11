@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+	// Cycling in content-assist (multiple ctrl+space hits.) changes kinds, to test them we can 
+	// specify the kind in the test.
+	// Default kind should be 'n4js',
+	// Testing kind in Setup 
+	
+	Config {
+		content_assist_kind = 'recommenders'
+	}
+	
+   END_SETUP
+ */
+  
+
+class A {
+	methodA() {	}
+	methodA2() { }
+}
+
+
+var a : A = new A();
+
+
+// Testing kind in test:
+// XPECT FIXME contentAssistList kind 'smart' at 'a.<|>methodA' display 'methodA2' --> 'methodA2(): any - A'
+a.methodA
+//       Added FIXME here to have the test running but expecting the UnsupportedOperationException to be thrown 
+//       unless a real implementation is provided.

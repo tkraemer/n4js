@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+D.s
+newValue0
+stderr:
+==>
+--- */
+
+interface R {
+	public get s() : string { console.log("R.s get"); return "R.s"}
+}
+
+class D implements R {
+	@Override public s : string = "D.s";
+}
+
+var d : D = new D();
+console.log(d.s);
+d.s = "newValue0";
+console.log(d.s);

@@ -1,0 +1,9 @@
+import { Event } from "n4/events/Event";
+var @Undefined undef;
+export public abstract class ChangeEvent extends Event {
+    public source : Object = undef;
+    public cause : ChangeEvent = undef;
+    public rootCause : ChangeEvent = undef;
+    public selector : string = undef;
+    public constructor (@Spec spec : ~i~this) {}
+}

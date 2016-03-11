@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: N4 Runner Tests
+Bundle-SymbolicName: eu.numberfour.n4js.runner.ui.tests
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Fragment-Host: eu.numberfour.n4js.runner;bundle-version="0.0.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit,
+ eu.numberfour.n4js.tests.helper,
+ org.eclipse.core.resources,
+ org.eclipse.xtext.junit4,
+ eu.numberfour.n4js.ui.tests.helper,
+ eu.numberfour.n4js.ui,
+ org.eclipse.ui,
+ eu.numberfour.n4js.tester

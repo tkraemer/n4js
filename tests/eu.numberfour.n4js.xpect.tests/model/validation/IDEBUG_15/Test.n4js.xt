@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+class A {
+	constructor() {}
+	m() : void {}
+}
+
+class B extends A {
+	
+	@Override
+	m() : void {
+
+		var f = function() {
+		}       // <--- *******
+		
+		// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'mm'." at "mm"
+		mm();					// should fail
+	}
+}

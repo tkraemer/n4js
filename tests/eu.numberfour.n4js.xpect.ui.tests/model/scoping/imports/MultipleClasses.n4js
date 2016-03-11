@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.scoping.N4JSScopeProviderPluginTest END_SETUP */
+
+export class Class1 {
+	
+}
+
+export class Class2 {
+	
+}
+
+class Class3 {
+	
+}
+
+export class Class4 {
+	
+}
+
+class MultipleClasses {
+	
+}

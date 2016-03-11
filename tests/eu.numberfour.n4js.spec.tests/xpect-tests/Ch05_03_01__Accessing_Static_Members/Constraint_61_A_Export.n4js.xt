@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+export public class C1 {
+	public static f = 34;
+	
+	public static giveIt() { 
+		// XPECT errors --> "Write access to the static member f defined in C1 must use C1 directly." at "f" 
+		this.f=23;
+		return this.f;
+	};
+}
+
+export public class C2 extends C1 {
+	
+	
+}

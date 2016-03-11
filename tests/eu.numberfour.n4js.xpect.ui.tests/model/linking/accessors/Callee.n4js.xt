@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		Project "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "linking" {
+					Folder "accessors" {
+						ThisFile {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+export class Callee {
+	project a : string;
+	private data_property_b : string;
+	
+	project get b() : string {
+// XPECT linkedFragment at 'this.|data_property_b' --> /1/@topLevelTypes.0/@ownedMembers.1
+		return this.data_property_b + "_getter";
+	}
+	
+	project set b(newB : string) {
+// XPECT linkedFragment at 'this.|data_property_b' --> /1/@topLevelTypes.0/@ownedMembers.1
+// XPECT linkedFragment at 'newB' --> /0/@scriptElements.0/@exportedElement/@ownedMembersRaw.3/@fpar
+		this.data_property_b = newB + "_setter";
+	}
+}

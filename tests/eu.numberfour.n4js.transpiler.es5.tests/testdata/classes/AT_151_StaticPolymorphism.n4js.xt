@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+A
+B
+stderr:
+==>
+--- */
+class A {
+	static foo() : string { return 'A'; }
+	static bar() : string {
+		return this.foo();
+	}
+}
+
+class B extends A {
+	@Override
+	static foo() : string { return 'B'; }
+}
+
+console.log(A.bar()); // will return 'A'
+console.log(B.bar()); // will return 'B'

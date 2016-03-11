@@ -1,0 +1,12 @@
+ArtifactId: TestProjectA
+VendorId: eu.numberfour
+ProjectName: "TestProjectA"
+VendorName: "NumberFour AG"
+ProjectType: test
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	test { 
+		"src"
+	}
+}

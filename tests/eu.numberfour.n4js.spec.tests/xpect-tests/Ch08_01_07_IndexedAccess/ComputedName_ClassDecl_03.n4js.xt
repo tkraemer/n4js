@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// IDE-1825 interplay with Symbol.iterator
+
+
+class Cls {
+	[Symbol.iterator] = 42;
+}
+console.log(
+	// XPECT errors -->  "Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name." at "new Cls()["#iterator"]"
+	new Cls()["#iterator"] // <-- no error; returns 42
+);
+
+interface I extends Iterable<string> {
+	@Override
+	public [System.iterator]() : Iterator<string> { console.log("iterator called"); return null }
+}
+
+class A implements I {}
+
+var a = new A();
+// XPECT noerrors -->
+a[Symbol.iterator]();
+
+// XPECT errors --> "Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name." at "a['#iterator']"
+a['#iterator']();
+
+

@@ -1,0 +1,7 @@
+export public abstract class A {
+	private x;
+	
+	private m() {
+		
+	}
+}

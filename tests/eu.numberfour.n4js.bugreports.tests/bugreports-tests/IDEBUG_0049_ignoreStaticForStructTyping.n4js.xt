@@ -1,0 +1,10 @@
+
+class A {
+    public stuff : string;
+    public static radness : string;
+    public constructor (@Spec spec : ~i~this) {}
+}
+
+var cool = 
+// XPECT noerrors --> "static is ignored, not: ObjectLiteral is not a subtype of ~~this[A]." at '{stuff:""}'
+new A({stuff:""});

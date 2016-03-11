@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "Project1" {
+			SrcFolder {
+				Folder "a" {
+					File "OverrideAccess1.n4js" {}
+				}
+			}
+			File "manifest.n4mf" { from="./manifest1.n4mf"}
+		}
+		JavaProject "Project2" {
+			SrcFolder {
+				Folder "b" {
+					ThisFile {}
+				}
+			}
+			File "manifest.n4mf" { from="./manifest2.n4mf"}
+		}
+	}
+	
+	END_SETUP
+ */
+
+import * as OA from "a/OverrideAccess1"
+
+// XPECT errors --> "Cannot use interface R: Cannot override non-accessible abstract method R.foo." at "OA.R"
+export public interface Other extends OA.R {
+	// foo.acc would be project, which would cause problems
+}
+
+// XPECT errors --> "Cannot use class C: Cannot override non-accessible abstract method C.foo." at "OA.C"
+export public abstract class D extends OA.C {
+}

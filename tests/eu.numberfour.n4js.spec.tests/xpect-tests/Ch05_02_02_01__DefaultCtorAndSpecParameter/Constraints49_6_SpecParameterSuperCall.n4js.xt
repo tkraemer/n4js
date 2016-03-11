@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C {
+	public n : number;
+	constructor(@Spec spec : ~i~this) {}
+}
+class D extends C {
+	public s : string;
+	constructor(@Spec spec : ~i~this) {
+		super(spec);
+	}
+}

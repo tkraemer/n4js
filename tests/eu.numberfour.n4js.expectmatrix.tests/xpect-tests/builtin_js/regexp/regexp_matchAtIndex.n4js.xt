@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// RegExp.$n
+// Source: self-constructed
+
+var re = /(a)(b*)(c)/g;
+var str = "abcdefabbch";
+
+console.log(str);
+var str2 = str.replace(re, "$3+$1");
+console.log(str2);
+
+/* XPECT output --- 
+<==
+stdout:
+abcdefabbch
+c+adefc+ah
+stderr:
+==>
+--- */

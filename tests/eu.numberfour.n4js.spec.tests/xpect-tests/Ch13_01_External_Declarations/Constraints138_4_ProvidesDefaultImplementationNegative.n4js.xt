@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface I {
+	/* XPECT errors ---
+		"@ProvidesDefaultImplementation must only be used in external interfaces in n4jsd files." at "foo"
+		"The method foo has to have either a body or must be defined abstract." at "foo"
+	--- */
+	@ProvidesDefaultImplementation foo()
+
+	/* XPECT errors ---
+		"@ProvidesDefaultImplementation must only be used in external interfaces in n4jsd files." at "a"
+		"The getter a has to have either a body or must be defined abstract." at "a"
+	--- */
+	@ProvidesDefaultImplementation get a() : string
+	
+	/* XPECT errors ---
+		"@ProvidesDefaultImplementation must only be used in external interfaces in n4jsd files." at "b"
+		"The setter b has to have either a body or must be defined abstract." at "b"
+	--- */
+	@ProvidesDefaultImplementation set b(x)
+}
+
+class C {
+	// XPECT errors --> "@ProvidesDefaultImplementation must only be used in external interfaces in n4jsd files." at "foo"
+	@ProvidesDefaultImplementation foo() {}
+}

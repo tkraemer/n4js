@@ -1,0 +1,54 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+// see: https://numberfour.jira.com/browse/IDE-521
+
+
+class A {
+	private x : string;
+
+	constructor(x : string) {
+		this.x = x;
+	}
+}
+class B extends A {
+	private y : string;
+
+	constructor(x : string, y : string) {
+		super(x);
+		this.y = y;
+	}
+}
+
+
+var a = A
+var b = B
+a =
+// XPECT errors --> "constructor{B} is not a subtype of constructor{A}." at "b"
+b		// invalid, as constructor{B} !extends constructor{A}
+
+
+var fun1 = function(typeA : type{A}) {
+	/* XPECT errors ---
+		"Incorrect number of arguments: expected 1, got 0." at "new typeA()"
+		"Not a reference to a constructor: type{A}." at "typeA"
+	--- */
+	return new typeA();	// invalid, as only constructor type ref is allowed in new expression
+}
+
+fun1(b)		// valid, as type{B} extends type{A}
+
+var fun2 = function(ctorA : constructor{A}) {
+	var _s : string;
+	return new ctorA(_s);	// valid
+}
+
+fun2(a)		// valid
+fun2(
+// XPECT errors --> "constructor{B} is not a subtype of constructor{A}." at "b"
+b)		// invalid, as constructor{B} !extends constructor{A}
+
+var aInstance = new a("a")
+var bInstance = new b("a","b")
+aInstance = bInstance	// valid
+

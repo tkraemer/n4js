@@ -1,0 +1,169 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+module eu.numberfour.n4js.GenerateN4JS
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var fileExtensions = "n4js,js,n4jsd"
+var projectName = "eu.numberfour.n4js"
+var grammarURI = "platform:/resource/${projectName}/src/eu/numberfour/n4js/N4JS.xtext"
+var runtimeProject = "../${projectName}"
+var generateXtendStub = true
+var encoding = 'UTF-8'
+var lineDelimiter = '\n'
+var skipUnusedRules = false
+var stripAllComments = true
+
+Workflow {
+	bean = StandaloneSetup {
+		scanClassPath = true
+		platformUri = "${runtimeProject}/.."
+
+		registerGenModelFile = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
+	}
+
+	component = DirectoryCleaner {
+		directory = "${runtimeProject}/src-gen"
+	}
+
+	component = DirectoryCleaner {
+		directory = "${runtimeProject}.ui/src-gen"
+	}
+
+	component = Generator auto-inject {
+		pathRtProject = runtimeProject
+		pathUiProject = "${runtimeProject}.ui"
+		// pathTestProject = "${runtimeProject}.tests"
+		projectNameRt = projectName
+		projectNameUi = "${projectName}.ui"
+		language = auto-inject  {
+			loadedResource = "platform:/resource/org.eclipse.emf.ecore.xcore.lib/model/XcoreLang.xcore"
+			loadedResource = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"
+			loadedResource = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
+			loadedResource = "platform:/resource/eu.numberfour.n4js.ts.model/model/Types.xcore"
+			loadedResource = "platform:/resource/eu.numberfour.n4js.ts.model/model/TypeRefs.xcore"
+			loadedResource = "platform:/resource/eu.numberfour.n4js.model/model/N4JS.xcore"
+			uri = grammarURI
+
+			// Java API to access grammar elements (required by several other fragments)
+			fragment = grammarAccess.GrammarAccessFragment auto-inject {}
+
+			// generates Java API for the generated EPackages
+			fragment = ecore.EMFGeneratorFragment auto-inject {
+			}
+
+			// serializer 2.0
+			fragment = serializer.SerializerFragment auto-inject {
+				generateStub = false
+			}
+
+			// a custom ResourceFactory for use with EMF
+			fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
+
+			// The antlr parser generator fragment.
+			fragment = eu.numberfour.n4js.antlr.AntlrGeneratorWithCustomKeywordLogic auto-inject {
+				antlrTool = eu.numberfour.n4js.antlr.AntlrToolFacadeWithInjectedCode {
+					step = eu.numberfour.n4js.antlr.n4js.AutomaticSemicolonInjector {}
+					step = eu.numberfour.n4js.antlr.n4js.RegExDisambiguationInjector auto-inject {}
+					step = eu.numberfour.n4js.antlr.n4js.TemplateLiteralDisambiguationInjector auto-inject {}
+					step = eu.numberfour.n4js.antlr.n4js.NoLineTerminatorHandlingInjector auto-inject {}
+				}
+				options = auto-inject {
+					keptBitSetName = "FOLLOW_ruleExpression_in_ruleExpressionStatement"
+					keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
+				}
+				antlrParam = "-Xconversiontimeout"
+				antlrParam = "30000"
+			}
+
+			fragment = eu.numberfour.n4js.antlr.delimiters.DebugAntlrGeneratorFragment auto-inject {
+				options = auto-inject {}
+			}
+
+			// Xtend-based API for validation
+			fragment = validation.ValidatorFragment auto-inject {
+				inheritImplementation = false
+			}
+
+			// scoping and exporting API
+			fragment = scoping.ImportURIScopingFragment {
+				generateStub = false
+			}
+			fragment = exporting.SimpleNamesFragment {}
+
+			fragment = builder.BuilderIntegrationFragment auto-inject {}
+
+			// generator API
+			fragment = generator.GeneratorFragment auto-inject {
+				generateMwe = false
+				generateJavaMain = false
+				generateStub = false
+			}
+
+			// formatter API
+			fragment = formatting.FormatterFragment auto-inject {}
+
+			// labeling API
+			fragment = labeling.LabelProviderFragment auto-inject {}
+
+			// outline API
+			fragment = outline.OutlineTreeProviderFragment auto-inject {}
+			fragment = outline.QuickOutlineFragment auto-inject {}
+
+			// quickfix API
+			fragment = quickfix.QuickfixProviderFragment auto-inject {}
+
+			// content assist API
+			fragment = contentAssist.ContentAssistFragment auto-inject {
+			}
+
+			// generates a more lightweight Antlr parser and lexer tailored for content assist
+			fragment = parser.antlr.ex.ca.ContentAssistParserGeneratorFragment auto-inject {
+				antlrParam = "-Xconversiontimeout"
+				antlrParam = "30000"
+				options = auto-inject {}
+			}
+
+			// project wizard (optional)
+//			fragment = projectWizard.SimpleProjectWizardFragment auto-inject {
+//				  generatorProjectName = "${projectName}"
+//			}
+
+			// rename refactoring
+			fragment = refactoring.RefactorElementNameFragment auto-inject {}
+
+			// provides a preference page for template proposals
+			fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
+
+			// provides a compare view
+			fragment = compare.CompareFragment auto-inject {}
+
+			// create a parser that will perform token id rewrites to treat keywords as ids in some situations
+			fragment = eu.numberfour.n4js.antlr.syntaxcoloring.HighlightingParserGeneratorFragment auto-inject {
+				antlrParam = "-Xconversiontimeout"
+				antlrParam = "30000"
+				options = auto-inject {
+					keptBitSetName = "FOLLOW_ruleExpression_in_ruleExpressionStatement"
+					keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
+				}
+			}
+
+			fragment = eu.numberfour.n4js.antlr.compressor.ParserCompressorFragment auto-inject {
+				grammarFile = "${runtimeProject}.ui/src-gen/eu/numberfour/n4js/ui/editor/syntaxcoloring/InternalN4JSParser.java"
+				grammarFile = "${runtimeProject}/src-gen/eu/numberfour/n4js/parser/antlr/internal/InternalN4JSParser.java"
+//				backup = true
+			}
+		}
+	}
+
+}

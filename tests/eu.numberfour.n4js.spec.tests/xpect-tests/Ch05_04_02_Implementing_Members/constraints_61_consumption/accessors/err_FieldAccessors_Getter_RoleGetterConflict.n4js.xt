@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface R1 {
+	get x() : string { return null }
+}
+
+interface R2 {
+	abstract get x() : string
+}
+
+interface R3 {
+	get x() : string { return null }
+}
+
+
+// XPECT noerrors --> "getter in R2 is abstract" at "C2"
+class C2 implements R1, R2 {
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: getter R1.x and getter R3.x." at "C3"
+class C3 implements R1, R3 {
+}

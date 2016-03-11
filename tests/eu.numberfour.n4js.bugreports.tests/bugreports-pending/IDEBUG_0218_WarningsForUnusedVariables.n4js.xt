@@ -1,0 +1,6 @@
+class A {
+	foo() : void {
+	    // XPECT FIXME warnings --> "unused variable"
+	    var n : number;
+	}
+}

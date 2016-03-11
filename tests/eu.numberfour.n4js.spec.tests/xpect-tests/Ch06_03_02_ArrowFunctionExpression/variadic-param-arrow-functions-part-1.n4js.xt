@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT noerrors ---> "variadic single-param wrapped by parentheses is ok."
+var sortedV1 = (... elems : number) => elems.sort;
+
+
+/* XPECT errors ---
+"Couldn't resolve reference to IdentifiableElement 'elems'." at "elems"
+"no viable alternative at input '...'" at "..."
+"no viable alternative at input 'elems'" at "elems"
+"no viable alternative at input 'elems'" at "elems"
+--- */
+var sortedV2 = number... elems => elems.sort;

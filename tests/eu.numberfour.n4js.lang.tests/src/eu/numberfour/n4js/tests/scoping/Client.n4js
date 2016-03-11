@@ -1,0 +1,3 @@
+import { Supplier } from "eu/numberfour/n4js/tests/scoping/Supplier"
+var a: Supplier; 
+a.foo(); 

@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+foo
+foo
+bar
+baz
+stderr:
+==>
+--- */
+class A{
+	private myName = 'foo';
+	public get name() : string {
+		return this.myName;
+	}
+	
+	public set name(s : string){
+		this.myName = s;
+	}
+	
+	public sayMyName(){
+		console.log(this.myName);
+	}
+}
+var a = new A();
+a.sayMyName();
+console.log(a.name);
+a.name = 'bar';
+console.log(a.name);
+a.name = 'baz'
+a.sayMyName();

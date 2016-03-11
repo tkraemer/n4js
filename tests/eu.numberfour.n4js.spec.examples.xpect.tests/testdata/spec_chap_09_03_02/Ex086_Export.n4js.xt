@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest  END_SETUP*/
+
+/* XPECT output ---
+<==
+stdout:
+Hello
+stderr:
+==>
+--- */
+
+
+export @Export public class A{}
+export function foo() {}
+export var a;
+export const c="Hello";
+
+
+// additional check not in example 86: 
+console.log(c);
+

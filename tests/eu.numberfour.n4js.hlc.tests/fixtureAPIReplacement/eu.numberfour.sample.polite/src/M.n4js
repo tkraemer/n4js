@@ -1,0 +1,14 @@
+import { Utils } from "Utilities"
+
+
+/**
+ * A very polite implementation.
+ */
+export public class Greeter {
+	
+	public greet(name : string) : number {
+		var greeting = "\n  Polite implementation says: Hello " + name + ", my friend !!";
+		Utils.println(greeting);
+		return greeting.length;
+	}
+}

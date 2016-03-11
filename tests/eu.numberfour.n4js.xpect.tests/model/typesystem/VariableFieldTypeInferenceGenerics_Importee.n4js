@@ -1,0 +1,18 @@
+
+
+export public class RemoteGen extends RemoteGenSuper<string> {
+	field = this.fieldSuperIndirect;
+}
+export public class RemoteGenSuper<T> {
+	fieldSuperDirect : T = null;		// main file will access this field directly
+	fieldSuperIndirect : T = null;	// main file will access this field indirectly through 'field' in subclass
+}
+
+export public class RemoteGenPrivate extends RemoteGenSuperPrivate<string> {
+	field = this.fieldSuperIndirect;
+}
+class RemoteGenSuperPrivate<T> {
+	fieldSuperDirect : T = null;		// main file will access this field directly
+	fieldSuperIndirect : T = null;	// main file will access this field indirectly through 'field' in subclass
+}
+

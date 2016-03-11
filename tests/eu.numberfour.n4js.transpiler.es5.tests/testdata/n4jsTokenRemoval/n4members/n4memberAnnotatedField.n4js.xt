@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+
+
+/* XPECT output ~~~
+<==
+stdout:
+apscsf
+stderr:
+==>
+~~~ */
+
+
+class C{
+	
+	@Undefined
+	public const field : string = 'apscsf';
+}
+
+console.log(C.field)

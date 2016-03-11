@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+var a : any;
+var n : number;
+var i : int;
+
+// ----------------------------------------------------------------------
+// int vs. any
+
+// XPECT noerrors -->
+a = i;
+// XPECT errors --> "any is not a subtype of int." at "a"
+i = a;
+
+// ----------------------------------------------------------------------
+// int vs. number
+
+// XPECT noerrors --> "int is a subtype of number"
+n = i;
+// XPECT noerrors --> "number is a subtype of int (for now)"
+i = n;
+

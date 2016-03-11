@@ -1,0 +1,52 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+interface I {
+	
+	static f : number = 42;
+	
+	static get g() {
+		return "returned from static getter";
+	}
+	static set s(p : string) {
+		console.log("sent to static setter: "+p);
+	}
+	
+	static m() {
+		console.log("hello from the static method!")
+	}
+
+	static propI;
+}
+
+interface I2 extends I {
+	static propI2;
+}
+
+class C implements I {
+	static propC;
+}
+
+
+// XPECT scope at 'I.|propI' ---
+// f, g, s, m, propI,
+// create, defineProperties, defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+// is, isExtensible, isFrozen, isSealed, keys, n4type, preventExtensions, prototype, seal
+// ---
+I.propI;
+
+
+// XPECT scope at 'I2.|propI2' ---
+// propI2,
+// create, defineProperties, defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+// is, isExtensible, isFrozen, isSealed, keys, n4type, preventExtensions, prototype, seal
+// ---
+I2.propI2;
+
+
+// XPECT scope at 'C.|propC' ---
+// propC,
+// create, defineProperties, defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+// is, isExtensible, isFrozen, isSealed, keys, n4type, preventExtensions, prototype, seal
+// ---
+C.propC;
+

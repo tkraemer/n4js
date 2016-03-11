@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// Acceptance Test IDE-830
+
+// Ok, XPECT errors -->
+var param : number = function(aa,bb){}.length
+
+var func1 = function(m,l,b){/*...*/};
+// Ok, XPECT errors -->
+func1.length; // 3
+
+var func2 : {function()} = function(){/*...*/};
+var obj = {};
+var ar : Array<?> = []
+
+
+// Ok, XPECT errors -->
+func2.call(obj);
+
+// Ok, XPECT errors -->
+func2.apply(null, ar);
+
+// Ok, XPECT errors -->
+func2.bind(null);
+
+// Ok, XPECT errors -->
+func2.toString();
+
+
+
+function a(x : number) { return x*x; }
+// Ok, XPECT errors -->
+a.length; // 1 
+

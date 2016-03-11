@@ -1,0 +1,9 @@
+@@StaticPolyfillAware
+export public class Poly {
+   public value : number = 0;
+}
+
+
+export public class Buddy {
+   public name : string = "nix";
+}

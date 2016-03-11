@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+// IDE-1534
+
+interface I {
+	// XPECT errors -->"The return type of an async function is not allowed to refer to the this-type." at "async m() : this"
+	async m() : this
+}
+

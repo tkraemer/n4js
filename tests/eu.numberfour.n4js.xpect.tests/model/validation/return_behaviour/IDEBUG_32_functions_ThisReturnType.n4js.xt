@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+abstract class BaseParty {
+	// this does not work;
+	// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "party"
+    public party() : this{}
+    // this works:
+    // XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "time"
+    public time() : number{ }
+}

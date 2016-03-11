@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest   
+
+ 	ResourceSet {
+		ThisFile {}
+		File "F.n4jsd" {}
+		File "P1.n4jsd" {}
+		File "P2.n4jsd" {}
+	}
+
+END_SETUP */
+
+
+var f : F<string> = new F<string>();
+var s : string;
+
+// XPECT noerrors --> "bind to original def"
+s = f.initialMethod();
+// XPECT noerrors --> "Conflicts (P1 and P2 provide method) are checked in manifest"
+s = f.additionalMethod();
+// XPECT noerrors --> No error expected: "bind to polyfile in P1"
+s = f.additionalMethod1();
+// XPECT noerrors --> No error expected: "bind to polyfile in P2"
+s = f.additionalMethod2();

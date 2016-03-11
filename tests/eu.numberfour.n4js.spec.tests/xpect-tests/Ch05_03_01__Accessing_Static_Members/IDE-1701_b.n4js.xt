@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+  static s = "A.s";
+  
+  static set p(s : string) {  }
+  static get p() : string {return "A.p";}
+  
+  static f() {
+    // XPECT noerrors -->
+    A.s = "Hello";
+    // XPECT errors --> "Write access to the static member s defined in A must use A directly." at "s"
+    this.s = "Hello";
+    // XPECT noerrors --> "read access ok"
+    var x = this.s;
+
+    // XPECT noerrors -->
+    A.p = "Hello";
+    // XPECT errors --> "Write access to the static member p defined in A must use A directly." at "p"
+    this.p = "Hello";
+    // XPECT noerrors --> "read access ok"
+    var x2 = this.p;
+
+  } 
+}

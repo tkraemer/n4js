@@ -1,0 +1,47 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+export function foo() { // /1/@topLevelTypes.0
+    foo;
+	
+	// XPECT scopeWithPosition at foo --> b - 9, foo - T3, ...
+    foo();
+    
+    var b = function foo2() { // foo2 - /1/@internalTypes.2
+
+		/* XPECT scopeWithPosition at foo2 --- 
+			b - 9,
+			c - 25,
+			foo - T3,
+			foo2 - T9,
+			...
+		---*/
+		foo2()
+		
+		/*
+			We expect foo2 - /1/@internalTypes.0, at index '0' because the defined types for function
+			expressions are built lazily. The innermost function is asked first thus it is at index 0
+			in the list of internal types
+		*/
+    	var c = function foo() { // foo - /1/@internalTypes.1
+    		var d = function foo2() { // foo2 - /1/@internalTypes.0
+
+				/*
+				XPECT scopeWithPosition at foo2 --- 
+					b - 9,
+					c - 25,
+					d - 26,
+					foo - T25,
+					foo2 - T26,
+					...
+				---*/
+    			foo2()
+
+    		}
+    	}
+    }
+}
+/* XPECT scopeWithPosition at foo --- 
+	foo - T3,
+	...
+---*/
+foo(); 

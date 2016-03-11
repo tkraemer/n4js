@@ -1,0 +1,54 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// Class with a generic iterator
+
+class A<T> implements Iterable<T> {
+	storage : Array<T>;
+		
+	public constructor (st : Array<T>) {
+		this.storage = st;
+	} 
+	
+	@Override
+	public [Symbol.iterator]() : Iterator<T> { return new B<T>(this.storage); }	
+}
+
+class B<T> implements Iterator<T> {
+	storage : Array<T>;
+	index : number;
+		
+	public constructor (st : Array<T>) {
+		this.storage = st;
+		this.index = 0;
+	} 
+	
+	@Override
+	public next () : IteratorEntry<T> {
+		if (this.storage[this.index] === undefined) { 
+			return {done: true};
+		}
+		this.index++;
+		return { done: false, value: this.storage[this.index-1] };
+	}
+}
+
+var a : A<number> = new A<number>(new Array<number>(4,3,2,1));
+var iA = a[Symbol.iterator]();
+
+console.log(iA.next());
+console.log(iA.next());
+console.log(iA.next());
+console.log(iA.next());
+console.log(iA.next());
+
+/* XPECT output --- 
+<==
+stdout:
+{ done: false, value: 4 }
+{ done: false, value: 3 }
+{ done: false, value: 2 }
+{ done: false, value: 1 }
+{ done: true }
+stderr:
+==>
+--- */

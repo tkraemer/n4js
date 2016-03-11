@@ -1,0 +1,24 @@
+@@StaticPolyfillModule
+
+
+@StaticPolyfill
+export public class K extends K {
+	
+	// public string greeting;
+	
+	@Override
+	public constructor(name : string) {
+		this.greeting = "Hi there "+name+"!";
+	}
+	
+	// overriding method
+	public greet() : void {
+		console.log( "Enhanced: " + this.greeting );	
+	}
+	
+	// additional method introduced by this polyfill.
+	public addedGreetResult() : string {
+		return this.greeting;
+	}
+}  
+

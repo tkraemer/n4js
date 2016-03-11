@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+	foo() : void {}	
+}
+
+// XPECT noerrors --> "this annotation is used"
+@IDEBUG(1234,"The method B.foo overriding method A.foo must be annotated with @Override.")
+// XPECT errors --> "No matching error found, apparently bug IDEBUG-1235 has been fixed or does not occur here." at "IDEBUG(1235,"This error does not occur.")"
+@IDEBUG(1235,"This error does not occur.")
+class B extends A {
+	// XPECT warnings --> "IDEBUG-1234: The method B.foo overriding method A.foo must be annotated with @Override." at "foo"
+	foo() : void {}	
+}

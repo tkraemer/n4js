@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+class A {
+	s;
+	
+	f() {
+		// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 's'." at "s"
+		s;
+
+		// XPECT noerrors --> "s is correctly addressed via receiver" at "s"
+		this.s;
+	}
+}
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 's'." at "s"
+s;

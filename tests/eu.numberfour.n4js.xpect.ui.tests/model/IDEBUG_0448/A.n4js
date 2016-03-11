@@ -1,0 +1,21 @@
+export public class P_private {
+	private constructor() {}
+}
+export public class P_project {
+	project constructor() {}
+}
+export public class P_protected_intern {
+	@Internal
+	protected constructor() {}
+}
+export public class P_protected {
+	protected constructor() {}
+}
+export public class P_public_internal {
+	@Internal
+	public constructor() {}
+}
+export public class P_public {
+	public constructor() {}
+}
+

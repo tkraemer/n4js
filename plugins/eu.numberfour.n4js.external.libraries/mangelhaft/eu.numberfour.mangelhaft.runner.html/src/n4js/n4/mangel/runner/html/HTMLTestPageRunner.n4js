@@ -1,0 +1,112 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import {FIXME1} from "n4/mangel/Test"
+import {FIXME2} from "n4/mangel/Test"
+import {IFIXME} from "n4/mangel/Test"
+import {IFIXME2} from "n4/mangel/Test"
+import {TestController} from "n4/mangel/TestController"
+import {ITestReporter} from "n4/mangel/mangeltypes/ITestReporter"
+import {ResultGroups} from "n4/mangel/mangeltypes/ResultGroups"
+import {TestInfos} from "n4/mangel/mangeltypes/TestInfos"
+import {ConsoleReporter} from "n4/mangel/reporter/console/ConsoleReporter"
+import {HTMLReporter} from "n4/mangel/reporter/html/HTMLReporter"
+import {N4Injector} from "n4js/lang/N4Injector"
+import {TestDIComponent} from "n4/mangel/mangeltypes/TestDIComponent"
+
+function getParm(name: string): string{
+    let names: Array<string> = new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)').exec(location.search);
+    if(names) {
+        return decodeURIComponent(names[1]);
+    }
+    return "";
+}
+
+class HTMLTestPageRunner {
+    @Inject
+    private consoleReporter: ConsoleReporter;
+    @Inject
+    private htmlReporter: HTMLReporter;
+    @Inject
+    private controller: TestController;
+
+     public async run(): void {
+        let groupsStr = getParm("groups")
+        , groupsFilter: string = getParm("filter")
+        , groupsArray: Array<string>
+        , testsStr = getParm("tests")
+        , testsArray: Array<string>
+        , reporterStr = getParm("reporter")
+        , endpoint = getParm("endpoint")
+        , reporters: Array<ITestReporter> = []
+        , tests: TestInfos
+        , buffer: Array<Array<?>> = []
+        , resultGroups: ResultGroups
+        ;
+
+        tests = (await (await window.fetch("/test-catalog.json", {
+                union{Headers,Array<Array<string>>,Object} headers: {
+                    "Content-Type": "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
+                }
+            })).json()) as TestInfos;
+
+        this.consoleReporter.setLogger(function(... messages: any){
+            buffer.push(messages);
+        })
+        reporters.push(this.htmlReporter, this.consoleReporter);
+        this.controller.reporters = reporters;
+        if (groupsStr) {
+            groupsArray = groupsStr.split(",").map(function(group: string) {return group.trim()})
+        }
+
+        if (testsStr) {
+            testsArray = testsStr.split(",").map(function(test: string) {return test.trim()})
+        }
+
+        if (groupsFilter) {
+            tests.testDescriptors = tests.testDescriptors.filter(function(testInfo) {
+                let name = testInfo.fqn;
+                return name.indexOf(groupsFilter) === 0;
+            })
+            if (testsArray && testsArray.length && tests.testDescriptors.length === 1) {
+                tests.testDescriptors[0].testMethods = testsArray;
+            }
+
+        }
+        try {
+            resultGroups =  await this.controller.runGroups(tests);
+            buffer.forEach(function(logEntry) {
+                console.log.apply(console, logEntry);
+            })
+        } catch (exc) {
+            let er: any+ = exc;
+            console.error(er.stack);
+            document.body.innerText += er.stack;
+            throw exc; //FIXME JM needed for implicit type system
+        }
+    }
+}
+
+@Bind(IFIXME, FIXME1)
+@Bind(IFIXME2, FIXME2)
+@Binder
+class TestBinder {}
+
+@GenerateInjector
+@WithParentInjector(TestDIComponent)
+@UseBinder(TestBinder)
+class Root {
+   @Inject runner: HTMLTestPageRunner;
+}
+
+let parentinj = N4Injector.of(TestDIComponent);
+let root = N4Injector.of(Root, parentinj).create(Root);
+
+export default public let main = root.runner;

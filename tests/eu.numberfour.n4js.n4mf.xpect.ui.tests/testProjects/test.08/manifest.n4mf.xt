@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFProjectReferencesPluginTest 
+   
+	Workspace {
+			Project "test.08" {
+				File "manifest.n4mf" { from="../../testProjects/test.08/manifest.n4mf.xt" }
+				Folder "src" { }
+			}
+			Project "test.data.re.project" {
+				File "manifest.n4mf" { from="../../testProjects/test.data.re.project/manifest.n4mf" }
+			}
+	}
+   
+   END_SETUP
+ */
+ArtifactId: test.08
+VendorId: eu.numberfour
+ProjectName: "test.08"
+VendorName: "NumberFour AG"
+ProjectType: test
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+
+// XPECT nowarnings -->
+TestedProjects {
+	// XPECT noerrors -->
+	test.data.re.project
+}

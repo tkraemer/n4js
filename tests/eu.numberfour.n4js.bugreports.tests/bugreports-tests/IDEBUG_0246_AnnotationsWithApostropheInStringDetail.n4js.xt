@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+/* XPECT output ---
+<==
+stdout:
+N4Annotation { name: 'Description', details: [ 'I\'m a real cool method' ] }
+stderr:
+==>
+--- */
+
+export public class SomeClass{
+    @Description("I'm a real cool method")
+    partyHard() {
+    }
+}
+
+console.log(SomeClass.n4type.methods()[0].annotations[0]);

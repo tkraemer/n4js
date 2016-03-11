@@ -1,0 +1,7 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+@This(~Object with {y : number;})
+function f() {
+	// ~this[Object], not this[~Object] XPECT type of 'this' --> ~this[Object]
+	this;
+}

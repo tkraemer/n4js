@@ -1,0 +1,5 @@
+@@Global
+
+ 
+export public var globalExportedVar = "globalExportedVar_VAL";
+var globalVar;

@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+   END_SETUP
+ */
+ 
+
+
+// XPECT deadCode --> dead code
+function f(): void {
+	return;
+	// XPECT warnings --> "Dead code. No execution possible after return." at "console.log();"
+	console.log();
+}

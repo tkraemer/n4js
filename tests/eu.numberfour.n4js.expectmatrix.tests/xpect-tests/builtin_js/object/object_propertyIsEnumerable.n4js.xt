@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Object.prototype.propertyIsEnumerable()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/propertyIsEnumerable
+
+var o = {prop: 'is enumerable'};
+var a = [];
+a[0] = 'is enumerable';
+
+console.log("true = " + o.propertyIsEnumerable('prop'));
+console.log("true = " + a.propertyIsEnumerable("0"));		// in Source: argument is a number
+
+/* XPECT output --- 
+<==
+stdout:
+true = true
+true = true
+stderr:
+==>
+--- */

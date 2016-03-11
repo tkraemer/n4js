@@ -1,0 +1,2 @@
+// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+function f (a : number?, b : number, c : number) {}

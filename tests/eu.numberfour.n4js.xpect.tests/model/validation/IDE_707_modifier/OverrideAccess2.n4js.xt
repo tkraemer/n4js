@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+		File "OverrideAccess1.n4js.xt" {}
+	}
+	
+	END_SETUP 
+ */
+
+import * as N from "validation/IDE_707_modifier/OverrideAccess1"
+
+// this is expected behavior! XPECT noerrors XPECT noerrors --> "This class must override abstract non-public members since implementors may not be able to do so due to visibility constraints." at "D"
+export public abstract class D extends N.C {
+}

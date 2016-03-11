@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+		File "VariableFieldTypeInferenceIndirectly_Importee.n4js" {}
+	}
+	
+	END_SETUP 
+ */
+
+import * as N from "typesystem/VariableFieldTypeInferenceIndirectly_Importee"
+
+
+class X {}
+var remoteBefore : N.RemoteBefore;
+var remoteAfter : N.RemoteAfter;
+
+
+// test remote fields
+
+// XPECT errors --> "string is not a subtype of X." at "remoteBefore.field"
+var x1 : X = remoteBefore.field;
+// XPECT errors --> "string is not a subtype of X." at "N.RemoteBefore.staticField"
+var x2 : X = N.RemoteBefore.staticField;
+
+// XPECT errors --> "string is not a subtype of X." at "remoteAfter.field"
+var x3 : X = remoteAfter.field;
+// XPECT errors --> "string is not a subtype of X." at "N.RemoteAfter.staticField"
+var x4 : X = N.RemoteAfter.staticField;
+
+
+// test remote variables
+
+// XPECT errors --> "string is not a subtype of X." at "N.remote_variable_before"
+var x11 : X = N.remote_variable_before;
+// XPECT errors --> "string is not a subtype of X." at "N.remote_variable_after"
+var x12 : X = N.remote_variable_after;
+

@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "linking" {
+					Folder "static" {
+						ThisFile {}
+						File "Callee.n4js" {}
+						File "CalleeTrait.n4js" {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" } 
+		}
+	}
+	
+	END_SETUP 
+ */
+
+import { Callee } from "linking/static/Callee"
+
+class SubCallee extends Callee {
+   
+   call() {
+		// XPECT linkedFragment at 'this.|myNonStaticField' --> Callee.n4js#/1/@topLevelTypes.0/@ownedMembers.0
+		this.myNonStaticField
+   }
+   
+   static callStatic() {
+		// XPECT linkedFragment at 'this.|myStaticField' --> Callee.n4js#/1/@topLevelTypes.0/@ownedMembers.1
+		this.myStaticField
+   }
+}

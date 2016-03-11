@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+2
+3
+4
+[ -1, -2, -3 ]
+stderr:
+==>
+--- */
+
+var nums = [1]
+
+nums.forEach(  n  => { var res = n + 1; console.log(res) } )
+nums.forEach( (n) => { var res = n + 2; console.log(res) } )
+nums.forEach( (n : number) => { var res = n + 3; console.log(res) } )
+
+var nums2 = [1, 2, 3]
+
+console.log(nums2.map( n => { var res = -n; return res } ))

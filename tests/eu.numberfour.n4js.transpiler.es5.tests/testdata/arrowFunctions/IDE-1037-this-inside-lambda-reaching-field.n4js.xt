@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+true
+stderr:
+==>
+--- */
+
+class C {
+
+    af : {function():C} = null;
+
+    g : {function():void} = () => {
+        this.af = () => {
+            return this;
+        };
+    };
+
+    forComparison() : void {
+        this.af = () => {
+            return this;
+        };
+    };
+
+}
+
+var c = new C
+c.g()
+console.log(c === c.af())

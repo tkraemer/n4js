@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+// for the time being, we disallow empty destructuring patterns, because
+// ES6 implementations differ in that respect (including Babel/Traceur).
+
+
+// XPECT errors --> "Empty destructuring pattern (disallowed for time being, since ES6 implementations have different semantics)." at "[]"
+var [] = undefined;
+// XPECT errors --> "Empty destructuring pattern (disallowed for time being, since ES6 implementations have different semantics)." at "{}"
+var {} = undefined;
+
+// XPECT errors --> "Empty destructuring pattern (disallowed for time being, since ES6 implementations have different semantics)." at "[]"
+[]=undefined;
+// XPECT errors --> "Empty destructuring pattern (disallowed for time being, since ES6 implementations have different semantics)." at "{}"
+({}=undefined);
+

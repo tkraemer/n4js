@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+All fine
+All fine
+stderr:
+==>
+--- */
+
+function logEquals(a, b) {
+    if (a !== b) {
+        console.log(new Error(a + " !== " + b));
+    } else {
+		console.log("All fine" )
+    }
+}
+
+class A {
+    public n : number;
+    constructor(@Spec spec : ~i~this) {}
+
+    m() : void {
+        var self = this;
+
+        // works:
+        [1212].forEach(() => logEquals(self, this));
+
+        // fails:
+        [1212].forEach(() => {
+            var a = new A({
+                n: this.n
+            })
+            logEquals(a.n, 5)
+        });
+    }
+}
+
+var a = new A({ n: 5 });
+a.m();

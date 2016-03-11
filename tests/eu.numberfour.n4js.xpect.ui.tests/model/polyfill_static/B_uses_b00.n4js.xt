@@ -1,0 +1,42 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+    Workspace {
+   	 Project "P_USERTL_B00" {
+   	 	Folder "src" {
+	   	 	Folder "n4js" { 
+	   	 		ThisFile {}
+	   	 		// no polyfill is defined here by intention !
+	   	 	}
+	   	 	Folder "n4js-gen" {
+	   	 		File "Generated01.n4js" {}	
+	   	 	}
+	   	}
+   	 	File "manifest.n4mf" { from="manifest_uses_b00.n4mf" }
+   	 }
+   }
+   
+   END_SETUP
+ */
+ 
+import { K } from "Generated01"
+import { L } from "Generated01"
+
+
+class A {
+	
+}
+
+//var string dummy = "dummy ok";
+// XPECT noerrors -->
+
+var k : K = new K();
+
+//// XPECT noerrors --> 
+k.greet();
+
+// XPECT noerrors --> ""
+var x : number = 5;
+
+// XPECT noerrors --> No error expected: ""
+var l : L = new L();
+

@@ -1,0 +1,16 @@
+export public class DeclarationOtherProjectOtherVendor {
+	
+	private privateField = 2;
+	
+	project projectMethod() {}
+	
+	@Internal
+	protected protectedInternalMethod() {}
+	
+	protected protectedAccessorField() : number { return 2 } 
+	
+	@Internal
+	public publicInternalMethod() {}
+	
+	
+}

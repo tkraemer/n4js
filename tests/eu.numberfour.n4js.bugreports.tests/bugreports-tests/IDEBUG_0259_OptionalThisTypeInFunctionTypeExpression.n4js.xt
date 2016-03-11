@@ -1,0 +1,4 @@
+class Foo {
+    // XPECT noerrors --> No error expected: No error expected: No error expected: "Missing type name for type modifier ?." at "this"
+    bar(f : {function(this?): void}) : void {}
+}

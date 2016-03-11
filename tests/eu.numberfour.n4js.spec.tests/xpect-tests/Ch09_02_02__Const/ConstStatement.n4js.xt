@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT noerrors --> ""
+var v : number;
+
+// XPECT noerrors --> ""
+var v1 : number = 5;
+
+// XPECT errors --> "Const variable c must be provided with an initializer." at "c"
+const c : number;
+
+// XPECT noerrors --> 
+const c1 : number = 5;
+
+// XPECT noerrors --> 
+const c2 : number = 5;

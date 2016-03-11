@@ -1,0 +1,56 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+
+/* XPECT output ~~~
+<==
+stdout:
+undefined
+null
+Hi
+Hello World
+stderr:
+==>
+~~~ */
+
+/* XPECT compileResult ---
+(function(System) {
+	'use strict';
+	System.register([], function($n4Export) {
+		var any, anyNull, s, init, MESSAGE;
+		return {
+			setters: [],
+			execute: function() {
+				anyNull = null;
+				init = "Hi";
+				MESSAGE = "Hello World";
+				console.log(any);
+				console.log(anyNull);
+				console.log(init);
+				console.log(MESSAGE);
+			}
+		};
+	});
+})(typeof module !== 'undefined' && module.exports ? require('n4js-node/index').System(require, module) : System);
+--- */
+
+
+var any : any;
+// any.type := any
+
+var anyNull = null;
+// anyNull.type := any
+
+var s : string;
+// s.type := string
+
+var init = "Hi";
+// init.type := string
+
+const MESSAGE = "Hello World";
+// MESSAGE.type := string
+
+
+// §-§-§-§-§ additional check not in example 75: §-§-§-§--
+console.log(any);
+console.log(anyNull);
+console.log(init);
+console.log(MESSAGE);

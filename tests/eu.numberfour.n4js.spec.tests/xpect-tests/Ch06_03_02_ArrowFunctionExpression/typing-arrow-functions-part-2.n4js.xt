@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+	
+	m2() : any {
+		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,ThisT):U}." at "s => { console.log(s); ; }"
+        var arrayOfVoid = ["a", "b"].map(s => { console.log(s); ; })  
+		return arrayOfVoid
+	}
+
+	m3() : void {
+		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,ThisT):U}." at "s => { console.log(s); return; }"
+		["a", "b"].map(s => { console.log(s); return; })  
+	}
+
+	m4() : void {
+		// XPECT noerrors ---> "{function(string):void} is ok for the forEach."
+		["a", "b"].forEach(s => { console.log(s); return; })  
+	}
+
+	m11() : void {
+		// XPECT noerrors ---> "{function(string):void} is ok for the forEach."
+		["a", "b"].forEach(s => console.log(s));
+	}
+
+	m22() : void {
+		// XPECT noerrors ---> "{function(string):void} is ok for the forEach."
+        ["a", "b"].forEach(s => { console.log(s); ; })  
+	}
+
+	m33() : void {
+		// XPECT noerrors ---> "{function(string):void} is ok for the forEach."
+		["a", "b"].forEach(s => { console.log(s); return; })  
+	}
+
+}

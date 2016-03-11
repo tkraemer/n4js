@@ -1,0 +1,11 @@
+import * as express from 'express';
+
+var props = "";
+for (var prop in express.application) {
+	if (props.length > 0) {
+		props += ', ';
+	}
+	props += prop;
+}
+
+console.log('express properties: ' + props);

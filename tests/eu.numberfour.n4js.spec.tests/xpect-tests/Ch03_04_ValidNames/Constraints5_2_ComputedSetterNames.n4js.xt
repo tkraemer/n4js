@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C1 {
+
+	// XPECT errors --> "The setter m (line 6) duplicates setter m (line 8)." at "'m'"
+	set['m'](arg : string) {}
+	// XPECT errors --> "The setter m (line 8) duplicates setter m (line 6)." at "m"
+	set m(arg : string) {}
+
+	// XPECT noerrors -->
+	set["@abc"](arg : string) {}
+
+	// XPECT noerrors -->
+	set[    '@abc1'    ](arg : string) {} 
+
+	// XPECT noerrors -->
+	set[ /*comment*/ '@abc2'](arg : string) {}  
+
+	// XPECT noerrors -->
+	set['@abc3'  /*comment*/ ](arg : string) {}
+
+}
+

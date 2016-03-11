@@ -1,0 +1,16 @@
+ArtifactId: pDepToTestLib
+VendorId: MyVendorID
+ProjectName: "pDepToTestLib"
+VendorName: "My Vendor Name"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "out"
+Sources {
+	source { 
+		"src"
+	}
+}
+
+ProjectDependencies {
+	eu.numberfour.mangelhaft
+}

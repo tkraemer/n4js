@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+xFE
+xFD
+stderr:
+==>
+--- */
+
+var x1 = function x(){
+	console.log("xFE")
+}
+try {
+	throw 3;
+} catch(v){
+	function x(){
+		console.log("xFD");
+	}
+	x1();
+	x();
+}

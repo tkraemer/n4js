@@ -1,0 +1,65 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+/* XPECT errors ---
+"The annotation @MyAnno is not defined." at "MyAnno"
+"The optional modifier isn't allowed here." at "String?"
+--- */
+@MyAnno(String?)
+class Test {
+	private field1 : Object = {
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+		String? key : new String("value"),
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+		get value(): String? {
+			return this.key;
+		},
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+		set value(value : String?) {
+			this.key = value;
+		}
+	};
+	private field2 : String?;
+
+	method1() : Test {
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+		var x : String?;
+// // XPECT errors --> "The optional modifier isn't allowed here." at "string?"
+		for(var n : string? in x) {
+			this.method2().method1()
+		}
+// // XPECT noerrors -->
+		var fun = function() : String? {
+			return new String("funstr");
+		};
+		return this;
+	}
+
+	method2() : Test {
+		var test : Test = new Test();
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+		test.<String?>create(new String("Test"));
+		return test;
+	}
+
+// // XPECT noerrors -->
+	method3() : String? {
+		return null;
+	}
+
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+	get fieldOne() : String? {
+		return null;
+	}
+
+	<T> create(object : T, extra : String?) {
+		console.log(object);
+	}
+}
+
+// // XPECT noerrors -->
+function <T> fun(elem : T) : String? {
+	return new String(elem);
+};
+// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
+<String?>fun(new String("Test"));
+

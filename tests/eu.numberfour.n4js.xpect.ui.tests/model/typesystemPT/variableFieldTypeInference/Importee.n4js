@@ -1,0 +1,33 @@
+
+
+export public class Remote {
+	
+	// instance fields:
+	
+	public fieldFN_decl : {function(string):number} = function(p : string) : number { return 0; };
+	public                           fieldFN_inf  = function(p : string) : number { return 0; };
+	
+	public fieldOL_decl : ~Object with { s: string; n: number; } = { s: "hello", n: 42.0 };
+	public                                      fieldOL_inf  = { s: "hello", n: 42.0 };
+	
+	
+	
+	// static fields:
+	
+	public static staticFieldFN_decl : {function(string):number} = function(p : string) : number { return 0; };
+	public static                           staticFieldFN_inf  = function(p : string) : number { return 0; };
+	
+	public static staticFieldOL_decl : ~Object with { s: string; n: number; } = { s: "hello", n: 42.0 };
+	public static                                      staticFieldOL_inf  = { s: "hello", n: 42.0 };
+}
+
+
+
+// exported variables:
+
+export public var remote_variableFN_decl : {function(string):number} = function(p : string) : number { return 0; };
+export public var                           remote_variableFN_inf  = function(p : string) : number { return 0; };
+
+export public var remote_variableOL_decl : ~Object with { s: string; n: number; } = { s: "hello", n: 42.0 };
+export public var                                      remote_variableOL_inf  = { s: "hello", n: 42.0 };
+

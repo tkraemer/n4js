@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+class C {}
+class D {}
+
+
+// XPECT errors --> "Unsupported feature: anonymous default export." at "class {}"
+export default class {}
+// XPECT errors ---
+// "Unsupported feature: anonymous default export." at "interface {}"
+// "Duplicate default export." at "default"
+// ---
+export default interface {}
+// XPECT errors ---
+// "Unsupported feature: anonymous default export." at "enum { YES, NO }"
+// "Duplicate default export." at "default"
+// ---
+export default enum { YES, NO }
+// XPECT errors ---
+// "Unsupported feature: anonymous default export." at "function() {}"
+// "Duplicate default export." at "default"
+// ---
+export default function() {}
+
+
+// XPECT errors --> "Unsupported feature: separate export statements (add keyword 'export' directly before a class, interface, enum, function or variable declaration)." at "export {C} "
+export {C}
+
+
+// XPECT errors --> "Unsupported feature: separate export statements (add keyword 'export' directly before a class, interface, enum, function or variable declaration)." at "export {D as X} "
+export {D as X}
+
+
+// XPECT errors ---
+// "Unsupported feature: exporting values (only declared classes, interfaces, enums, functions and variables can be exported)." at "export default "hello" "
+// "Duplicate default export." at "default"
+// ---
+export default "hello"
+
+
+// XPECT errors ---
+// "Unsupported feature: exporting values (only declared classes, interfaces, enums, functions and variables can be exported)." at "export default (class {}) "
+// "Unsupported feature: class expressions." at "class"
+// "Duplicate default export." at "default"
+// ---
+export default (class {})
+

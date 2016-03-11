@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+@Final
+// XPECT errors --> "Interfaces must not be declared final." at "I"
+interface I {
+}
+

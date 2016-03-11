@@ -1,0 +1,25 @@
+@@StaticPolyfillAware
+
+
+export public class K {
+	
+	public greeting : string;
+	
+	public constructor() {
+		this.greeting = "Hi there.";
+	}
+	
+	public greet() : void {
+		console.log( this.greeting );	
+	}
+	
+	
+} 
+
+// This class is intended not to be statically polyfilled.
+
+export public class L extends K {
+	public constructor() {
+		super(); // calling K's constructor, I'm curious what the effect is after Polyfilling :-)
+	}
+}

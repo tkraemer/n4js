@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+/* XPECT output --- 
+<==
+stdout:
+false
+stderr:
+==>
+---*/
+
+
+function instanceOf(obj : Object, t : type{Object}) {
+    return obj instanceof t;
+}
+
+interface I {}
+
+console.log(instanceOf({}, I));
+
+// currently: TypeError: Expecting a function in instanceof check, but got #<Object>

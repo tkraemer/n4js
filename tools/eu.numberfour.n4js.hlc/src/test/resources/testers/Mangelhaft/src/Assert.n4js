@@ -1,0 +1,13 @@
+export public class Assert {
+//	public static void assertTrue(boolean c, string? msg){
+//		if(!c) throw new Error(msg)
+//	}
+//	
+	public static assertEquals(actual : string, expected : string, msg : string?) : void{
+		if(actual !== expected) {
+			var _msg = "expected <" + expected + "> but was <" + actual + ">"
+			if(msg) _msg+= " " + msg;
+			throw new Error(_msg);
+			}
+	}
+}

@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+// XPECT errors --> "Unsupported feature: class expressions." at "class"
+(class {});
+
+// XPECT errors --> "Unsupported feature: class expressions." at "CE"
+(class CE {});
+

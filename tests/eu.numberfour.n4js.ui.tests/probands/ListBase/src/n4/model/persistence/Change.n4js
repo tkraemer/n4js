@@ -1,0 +1,51 @@
+import { ChangeType } from "n4/model/persistence/ChangeType";
+import { ChangeEvent } from "n4/events/ChangeEvent";
+class NewPosition{} class ChangeSet{} class ContextForChangeApplyTo{}
+export public class Change{
+    public type : ChangeType;
+    public selector : string;
+    public value : string; 
+    public oldValue : string; 
+    public position : NewPosition; 
+    public isServerChange : boolean; 
+    public applyTo(object : Object, context : ContextForChangeApplyTo?) {
+    }
+    public applyAsUndoTo(object : Object) {
+    }
+    public addToExistingChanges(changes : union{Array<Change>,ChangeSet}) {
+    }
+    public valueAsValue() : any {
+    	return null;
+    }
+    public oldValueAsValue() : any {
+    	return null;
+    }
+    @Override
+    public toString() : string {
+    	return null;
+    }
+    public toNFON() : Object {
+    	return null;
+    }
+    public isEqual(other : Change) : boolean {
+    	return null;
+    }
+    public matchSelector(selector : string, checkViceVersa : boolean?) : boolean {
+    	return null;
+    }
+    public static fromNFON(spec) {
+    	return null;
+    }
+    public static createChangesFromEvent(event : ChangeEvent) : Array<Change> {
+    	return null;
+    }
+    public static applyToObject(object : Object, selector : string, type : ChangeType, 
+    	valOrFunc : any, 
+    	oldValOrFunc : any, 
+    		context : ContextForChangeApplyTo?
+    ) {
+    }
+    public static getUndoTypeOfType(type : ChangeType) : ChangeType {
+    	return null;
+    }
+}

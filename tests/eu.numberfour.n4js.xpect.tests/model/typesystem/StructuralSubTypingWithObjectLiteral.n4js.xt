@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+export public class S {
+	public s : string;
+	n : number;
+	public foo() : void {}
+}
+
+function foo(p : ~S) {}
+function bar(p : ~~S) {}
+
+// ok
+bar({s: "Hello"});
+// ok
+foo({s: "Hello",foo: function(): void{}});

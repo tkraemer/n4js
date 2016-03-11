@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   ResourceSet {
+		ThisFile {}
+	}
+	
+   END_SETUP
+ */
+
+export public class A {
+	
+	private constructor(){
+	}
+	public m1() {}
+}   
+
+
+export public class B extends A {
+	private constructor(f : string) {
+		f.toUpperCase(); 
+	}
+}
+
+
+function <T extends N4Object> me (ctor : constructor{T}) : T {
+ 
+ 	// XPECT noerrors --> "not even an Exception should be created here." 
+ 	var x = new ctor();
+ 	
+ 	return x;
+}
+
+me(A).m1();
+me(B).m1(); // will expolode in constructor of B

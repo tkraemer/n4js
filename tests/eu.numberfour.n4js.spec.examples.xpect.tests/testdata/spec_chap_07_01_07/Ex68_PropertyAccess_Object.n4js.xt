@@ -1,0 +1,42 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT output ~~~
+<==
+stdout:
+{ Kant: 'Imperative', Hegel: 'Dialectic', Spinoza: 'Am I?' }
+Imperative
+Am I?
+stderr:
+==>
+~~~ */
+
+/* XPECT compileResult ---
+(function(System) {
+	'use strict';
+	System.register([], function($n4Export) {
+		var map;
+		return {
+			setters: [],
+			execute: function() {
+				map = new Object();
+				map["Kant"] = "Imperative";
+				map["Hegel"] = "Dialectic";
+				map["Spinoza"] = "Am I?";
+				console.log(map);
+				console.log(map["Kant"]);
+				console.log(map["Spinoza"]);
+			}
+		};
+	});
+})(typeof module !== 'undefined' && module.exports ? require('n4js-node/index').System(require, module) : System);
+--- */
+
+var map : Object = new Object();
+map["Kant"]="Imperative";
+map["Hegel"]="Dialectic";
+map["Spinoza"]="Am I?";
+
+// §-§-§-§-§ additional check not in example: §-§-§-§--
+console.log(map);
+console.log(map["Kant"]);
+console.log(map["Spinoza"]);

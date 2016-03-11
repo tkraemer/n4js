@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A<T1> {
+	e : T1;
+}
+
+abstract class B<T2, X extends A<T2>> extends A<T2> {
+	abstract create(e : T2) : X
+}
+
+class C<T3, X2 extends B<T3, X2>> {
+	f(x : X2) {
+		// XPECT noerrors --> "T1 must be substituted with T3" at "x.e"
+		var e : T3 = x.e;
+	}
+}
+

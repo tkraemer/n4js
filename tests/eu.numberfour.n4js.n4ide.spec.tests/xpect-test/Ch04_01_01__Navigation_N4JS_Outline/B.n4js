@@ -1,0 +1,12 @@
+export abstract class B1 {
+	
+	abstract constructon(x : number) : string
+}
+
+export interface X {
+	
+}
+
+export interface Z {
+	
+}

@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Array.prototype.push()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+
+var sports = ["soccer", "baseball"];
+var total = sports.push("football", "swimming");
+
+console.log(sports); // ["soccer", "baseball", "football", "swimming"]
+console.log(total);  // 4
+
+/* XPECT output --- 
+<==
+stdout:
+[ 'soccer', 'baseball', 'football', 'swimming' ]
+4
+stderr:
+==>
+--- */

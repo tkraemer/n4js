@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+ 
+class ~T {
+	public n : number;
+	public foo() {}
+	private s : string;
+	public static N : number;
+}
+class X extends Object {
+	public n : number;
+	public foo() {}
+}
+
+var x : X;
+var t : T;
+// XPECT noerrors --> "X is not an N4Object." at "x"
+t = x;

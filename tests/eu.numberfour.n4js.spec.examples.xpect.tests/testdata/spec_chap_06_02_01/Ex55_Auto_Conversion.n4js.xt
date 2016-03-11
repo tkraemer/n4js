@@ -1,0 +1,50 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT  output ~~~
+<==
+stdout:
+[object Object]
+[object Object]1
+MyB
+1MyB1
+10
+11
+20
+21
+stderr:
+==>
+~~~ */
+
+/* XPECT ! compileResult ---
+--- */
+// §-§-§-§-§ additional ^^^^^^^^ not in example: §-§-§-§--
+
+class A {}
+class B{
+	@Override public toString() : string { return "MyB"}
+}
+class C{
+	@Override public valueOf() : any { return 10}
+}
+class D{
+	@Override public toString() : string { return "MyD"}
+	@Override public valueOf() : any { return 20}
+}
+var a = new A(), b = new B(), c = new C(), d = new D();
+
+// §-§-§-§-§ break here §-§-§-§--
+
+console.log(a+""); 						// [object Object]
+console.log(a+1);						// [object Object]1
+
+console.log(""+b+"");					// MyB
+console.log(1+b+1);						// MyB1
+
+console.log(c+"");						// 10
+console.log(c+1);						// 11
+
+console.log(d+"");						// 20
+console.log(d+1);						// 21
+
+// §-§-§-§-§ additional check not in example: §-§-§-§--
+

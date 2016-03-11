@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+export @Internal public interface I { 
+	public x : number; 
+	public y : number?; 
+	public foo()
+};
+export public class C { 
+	public x : number; 
+	public foo() {}
+};
+
+export project class D { 
+	x : number; 
+	foo() {}
+};
+
+function n(p : I) {}
+function f(p : ~I) {}
+function g(p : ~~I) {}
+function h(c : ~C) {}
+function i(d : ~D) {}
+
+// XPECT errors --> "C is not a subtype of I." at "new C()"
+n(new C());
+f(new C());
+// XPECT errors --> "~Object with { x: number } is not a structural subtype of ~I: missing method foo." at "{x:10}"
+f({x:10});
+g({x:10}); 
+// XPECT errors --> "D is not a subtype of I." at "new D()"
+n(new D());
+// XPECT errors --> "D is not a structural subtype of ~I: missing method foo and 1 more." at "new D()"
+f(new D());
+g(new C());
+// XPECT errors --> "D is not a structural subtype of ~C: missing method foo and 1 more." at "new D()"
+h(new D());
+i(new C());
+i(new D());
+
+
+

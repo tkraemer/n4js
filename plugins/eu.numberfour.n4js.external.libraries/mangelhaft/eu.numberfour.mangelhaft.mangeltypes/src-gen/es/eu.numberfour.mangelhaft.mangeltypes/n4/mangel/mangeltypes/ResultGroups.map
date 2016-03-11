@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"ResultGroups.js",
+"lineCount":97,
+"mappings":"A;;;;EAWA,qCAK6B,IAL7B;;mEAE+B,CAF/B;gEAG8B,CAH9B;;I;;;;;IAAoB;;;;;;;;;;;;;;;oCAYmC;OAA3B,4DAA2B;OAC/C,OAAO,yBAAyB,YAAzB,CAAP,CAD+C;OAZnC;;;uCAkBU,aAlBV,EAkB6C;OACzD,OAAO,qBAAqB,SAAS,GAAT,EAA4B,YAA5B,EAAwD;QAChF,IAAI,GAAJ;SACI,cAAc,mBAAmB,oBAAnB,CAAd,CADJ;SAEI,iBAAiB,sBAAjB,CAFJ;SAGI,gBAAgB,qBAAhB,CAHJ;SADgF;QAMhF,OAAO,GAAP,CANgF;QAA7E,EAOJ,IAAI,YAAJ,CAAiB;QAAoB,SAAS,EAA7B;QAAiC,WAAW,CAA5C;QAA+C,UAAU,CAAzD;QAAjB,CAPI,CAAP,CADyD;OAlB7C;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroups.n4js"],
+"names":[]
+}

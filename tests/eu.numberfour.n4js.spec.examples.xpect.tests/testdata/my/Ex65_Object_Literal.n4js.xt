@@ -1,0 +1,58 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest  
+    ResourceSet {
+        ThisFile {}
+        File  "Address.n4js" { } 
+     }
+   END_SETUP
+ */
+ 
+ /* XPECT output ~~~
+<==
+stdout:
+{ name: 'Walter', age: 72, address: Address {} }
+Walter
+72
+Address {}
+stderr:
+==>
+~~~ */
+
+/* XPECT compileResult ---
+(function(System) {
+	'use strict';
+	System.register([
+		'eu.numberfour.n4js.spec.examples.xpect.tests/my/Address'
+	], function($n4Export) {
+		var Address, simple;
+		return {
+			setters: [
+				function($_import_eu_u002enumberfour_u002en4js_u002espec_u002eexamples_u002expect_u002etests_my_u002fAddress) {
+					Address = $_import_eu_u002enumberfour_u002en4js_u002espec_u002eexamples_u002expect_u002etests_my_u002fAddress.Address;
+				}
+			],
+			execute: function() {
+				;
+				simple = {
+					name: "Walter",
+					age: 72,
+					address: new Address()
+				};
+				console.log(simple);
+				console.log(simple.name);
+				console.log(simple.age);
+				console.log(simple.address);
+			}
+		};
+	});
+})(typeof module !== 'undefined' && module.exports ? require('n4js-node/index').System(require, module) : System);
+--- */
+// IDEBUG-73 
+;
+import { Address } from "my/Address";
+var simple = {name: "Walter", age: 72, address: new Address()};
+
+// §-§-§-§-§ additional check not in example: §-§-§-§--
+console.log(simple);
+console.log(simple.name);
+console.log(simple.age);
+console.log(simple.address);

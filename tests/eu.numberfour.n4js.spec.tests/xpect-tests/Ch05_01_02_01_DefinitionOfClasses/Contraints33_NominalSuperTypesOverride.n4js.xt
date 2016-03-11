@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class ~A {
+	foo() {}
+}
+
+class B extends A {
+	// XPECT noerrors --> "override since A is nominal"
+	@Override
+	foo() {}
+}

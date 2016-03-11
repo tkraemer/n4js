@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "imported/dep.n4js" { from="imported/dep.n4js"}
+	}
+	
+	END_SETUP
+ */
+
+/* XPECT output --- 
+<==
+stdout:
+B.f()
+stderr:
+==>
+--- */
+import {B as C} from "classes/AT_953_alias/imported/dep"
+var c = new C();
+class B {}
+class X extends C {}
+var b = new B();
+//b.f();
+var x = new X();
+x.f();

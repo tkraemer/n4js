@@ -1,0 +1,70 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+// TODO add getters/setters!
+
+
+// with inferred return type of void
+
+function foo1() {
+	// XPECT noerrors -->
+	foo1();
+}
+
+var a1 = {
+	foo: function() {
+		// XPECT noerrors -->
+		this.foo();
+	},
+	set s(p) {
+		// XPECT noerrors -->
+		this.s = 42;
+	}
+};
+
+class C1 {
+	m() {
+		// XPECT noerrors -->
+		this.m();
+	}
+	set s(p) {
+		// XPECT noerrors -->
+		this.s = 42;
+	}
+}
+
+
+// with inferred return type of non-void
+
+function foo2() {
+	// XPECT noerrors -->
+	var x = foo2();
+	return 42;
+}
+
+var a2 = {
+	foo: function() {
+		// XPECT noerrors -->
+		var x = this.foo();
+		return 42;
+	},
+	get g() {
+		// XPECT noerrors -->
+		var x = this.g;
+		return 42;
+	}
+};
+
+class C2 {
+	m() {
+		// XPECT noerrors -->
+		var x = this.m();
+		return 42;
+	}
+	get g() {
+		// XPECT noerrors -->
+		var x = this.g;
+		return 42;
+	}
+}
+

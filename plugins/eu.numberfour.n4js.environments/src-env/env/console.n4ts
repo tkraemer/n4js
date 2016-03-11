@@ -1,0 +1,27 @@
+public providedByRuntime object console @Global {
+// see also https://developer.mozilla.org/en-US/docs/Web/API/console
+	/**
+	 * Outputs a log message, the concrete format depends on the engine. 
+	 * Usually, elements are appended with space and
+	 * printed to standard out. 
+	 */
+	public static log(...elementToLog: any): void
+	/**
+	 * Outputs an error message, the concrete format depends on the engine. 
+	 * Usually, elements are appended with space and
+	 * printed to standard error. 
+	 */
+	public static error(...elementToLog: any): void
+	/**
+	 * Outputs a warning message, the concrete format depends on the engine. 
+	 * Usually, elements are appended with space and
+	 * printed to standard out. 
+	 */
+	public static warn(...elementToLog: any): void
+	/**
+	 * Outputs an info message, the concrete format depends on the engine. 
+	 * Usually, elements are appended with space and
+	 * printed to standard out. 
+	 */
+	public static info(...elementToLog: any): void
+}

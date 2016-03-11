@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Math.PI
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/PI
+
+function getPi() {
+   return Math.PI
+}
+
+console.log(getPi()); // 3.141592653589793
+
+/* XPECT output --- 
+<==
+stdout:
+3.141592653589793
+stderr:
+==>
+--- */

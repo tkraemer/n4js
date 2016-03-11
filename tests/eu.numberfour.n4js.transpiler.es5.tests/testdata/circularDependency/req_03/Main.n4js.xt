@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest
+
+    ResourceSet {
+		ThisFile {}
+		File "A.n4js" {}
+		File "B.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+
+/* XPECT !output ---
+<==
+stdout:
+A was created.
+stderr:
+==>
+--- */
+
+import { A } from 'circularDependency/req_03/A'
+
+new A();
+console.log('A was created.');

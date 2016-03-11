@@ -1,0 +1,51 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest
+	
+    ResourceSet {
+		ThisFile {}
+		File "A.n4js" {}
+		File "B.n4js" {}
+	}
+	
+	END_SETUP 
+*/
+
+
+import { JA } from "circularDependency/consumedMembers/A"
+import { JB } from "circularDependency/consumedMembers/B"
+
+
+class CA implements JA {}
+class CB implements JB {}
+
+
+var ca = new CA();
+var cb = new CB();
+
+console.log(ca.m());
+console.log(cb.m());
+
+console.log(ca.g);
+console.log(cb.g);
+
+ca.s = 'hello';
+cb.s = 'hello';
+
+// note: the problem can no longer occur for static methods, because
+//       static polymorphism has been disabled for interfaces
+//console.log(JA.mStatic());
+//console.log(JB.mStatic());
+
+
+/* XPECT output ---
+<==
+stdout:
+IB#m()
+IA#m()
+IB#g
+IA#g
+IB#s value: hello
+IA#s value: hello
+stderr:
+==>
+--- */
+

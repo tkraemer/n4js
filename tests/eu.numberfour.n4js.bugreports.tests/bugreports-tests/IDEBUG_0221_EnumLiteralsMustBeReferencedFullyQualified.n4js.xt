@@ -1,0 +1,7 @@
+enum E { L }
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'L'." at "L"
+var e1 : E = L;
+
+// XPECT noerrors -->
+var e2 : E = E.L;

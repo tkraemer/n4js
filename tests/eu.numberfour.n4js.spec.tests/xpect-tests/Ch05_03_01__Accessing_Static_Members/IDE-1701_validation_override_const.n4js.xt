@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+	const s : string = "A";
+}
+
+class C extends A {
+	// XPECT errors --> "The static field C.s cannot override const static field A.s." at "s"
+	@Override static s : string = "C";
+}

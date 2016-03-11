@@ -1,0 +1,16 @@
+
+@N4JS 
+export external public class F {
+	
+	
+	public memberX1 : string; 
+	public memberX2 : string;
+	public memberX3 : string;
+	public memberX4 : string;
+
+	public get memberY1() : string;
+	public set memberY1(arg : string);
+	
+	public get memberY2() : string;
+	public set memberY2(arg : string) ;
+}

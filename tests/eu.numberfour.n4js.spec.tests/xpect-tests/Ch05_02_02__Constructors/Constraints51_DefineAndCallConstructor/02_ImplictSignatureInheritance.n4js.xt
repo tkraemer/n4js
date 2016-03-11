@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class C {
+    public constructor (s : string) {}
+}
+
+class D extends C{
+}
+
+class E extends D {
+}
+
+// XPECT errors --> "Incorrect number of arguments: expected 1, got 0." at "new D()"
+new D();
+// XPECT errors --> "Incorrect number of arguments: expected 1, got 0." at "new E()"
+new E();
+// XPECT errors --> "int is not a subtype of string." at "1"
+new E(1);

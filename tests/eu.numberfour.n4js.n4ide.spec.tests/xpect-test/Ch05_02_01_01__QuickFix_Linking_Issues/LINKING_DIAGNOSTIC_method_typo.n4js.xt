@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest
+ 	
+   	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				ThisFile {}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../test-config/manifest.n4mf" }
+		}
+	}
+ 	 
+ END_SETUP
+ */
+class A {
+	methodA() {}
+	methodB() {}
+}
+
+var a = new A();
+
+/* XPECT quickFix at 'a.method<|>()' apply 'methodA' fileValid ---
+   a.[method|methodA]();
+   ---
+ */
+a.method();

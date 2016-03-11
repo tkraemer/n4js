@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+/* XPECT output --- 
+<==
+stdout:
+[ 'blzit' ]
+[ 'blzit' ]
+stderr:
+==>
+--- */
+
+
+class Four {
+    public twenty(...party : string) {
+        console.log(party);
+    }
+    public async twentyOne(...party : string) {
+        console.log(party);
+    }
+}
+
+var f = new Four();
+f.twenty("blzit"); //[ 'blzit' ]
+f.twentyOne("blzit"); //[]
+

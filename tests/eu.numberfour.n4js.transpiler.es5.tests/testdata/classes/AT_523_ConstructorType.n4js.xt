@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* There has been an error in test AT_523_ReferenceCtorViaPropertyAccessTest.xtend,
+   this runtime tests validates the actual behavior.
+ */
+
+/* XPECT output ---
+<==
+stdout:
+C.f
+stderr:
+==>
+--- */
+class C {
+	f() { console.log("C.f")}
+}
+var ctor = C;				// static reference
+var resultCtor : constructor{C} = ctor;
+var resultNewInstance : C = new ctor();
+resultNewInstance.f();

@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+class A {
+	get f() : any{ return "getter A.f" }
+}
+
+class B extends A {
+	@Override
+	// XPECT noerrors --> No error expected: "string is a subtype of any, ok in getter"
+	f = "field B.f";	
+}
+
+
+/* XPECT output --- 
+<==
+stdout:
+getter A.f
+field B.f
+stderr:
+==>
+--- */
+
+
+var a = new A();
+var b = new B();
+
+
+console.log(
+// XPECT binding --> A.f
+a.f);
+console.log(
+// XPECT binding --> B.f
+b.f);

@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// Test for IDE-1048
+class C {
+	g(c : C) : void {
+	}
+	h() : void {
+        // XPECT warnings --> "A reference to method g is created detached from a (correct) this-instance." at "g"
+		var wrong1 : {@This(C)function(C):void} = this.g;
+	}
+
+    paramAssignment(param : any) : void {
+        // XPECT warnings --> "A reference to method h is created detached from a (correct) this-instance." at "h"
+	    param = this.h;
+    }
+
+}

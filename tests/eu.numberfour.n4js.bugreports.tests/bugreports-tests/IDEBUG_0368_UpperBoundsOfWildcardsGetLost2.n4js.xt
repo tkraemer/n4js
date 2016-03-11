@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+// note: this issue was not really part of IDEBUG-368, but discovered during that task
+
+
+class G<T> {
+	foo() : T { return null; }
+}
+
+var g : G<?>;
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'bad'." at "bad"
+g.foo().bad(); // before, no error was shown here :(
+

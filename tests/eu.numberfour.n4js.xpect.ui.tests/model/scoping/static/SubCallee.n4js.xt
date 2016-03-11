@@ -1,0 +1,50 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "scoping" {
+					Folder "static" {
+						ThisFile {}
+						File "Callee.n4js" {}
+						File "CalleeTrait.n4js" {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" } 
+		}
+	}
+	
+	END_SETUP 
+ */
+
+import { Callee } from "scoping/static/Callee"
+
+class SubCallee extends Callee {
+   
+   call() {
+		/* XPECT scope at 'this.|myNonStaticField' --- 
+		   !myStaticField, 
+		   !myStaticMethod,
+		   !myPrivateStaticAccessor
+		   myNonStaticField,
+		   myNonStaticMethod,
+		   myRoleNonStaticField,
+		   myRoleNonStaticMethod
+		 --- */
+		this.myNonStaticField
+   }
+   
+   static callStatic() {
+		/* XPECT scope at 'this.|myStaticField' --- 
+		   myStaticField,
+		   myStaticMethod,
+		   myPrivateStaticAccessor,
+		   !myNonStaticField,
+		   !myNonStaticMethod,
+		   !myRoleNonStaticField,
+		   !myRoleNonStaticMethod
+		 --- */
+		this.myStaticField
+   }
+}

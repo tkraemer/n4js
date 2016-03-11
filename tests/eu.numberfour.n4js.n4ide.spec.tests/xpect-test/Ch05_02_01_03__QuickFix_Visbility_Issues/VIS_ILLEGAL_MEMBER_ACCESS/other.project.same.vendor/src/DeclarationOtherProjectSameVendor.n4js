@@ -1,0 +1,27 @@
+export public class DeclarationOtherProjectSameVendor {
+	
+	private privateMethod() {}
+	
+	private privateField = 2;
+	
+	projectMethod(): string { return "" }
+	
+	@Internal
+	protected protectedInternalMethod() {}
+	
+	@Internal 
+	protected get protectedInternalAccessorField() : number { return 2 }
+	
+	protected set protectedInternalAccessorField(s : number) { }
+	 
+	protected protectedMethod() {}
+	 
+	projectField = 2;
+	
+	
+	get any() { return 2 }
+	
+	get a(): number { return 3 }
+	
+	set a(a: number) {} 
+}

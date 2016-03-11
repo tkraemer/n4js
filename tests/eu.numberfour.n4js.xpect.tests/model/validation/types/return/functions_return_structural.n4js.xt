@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+   END_SETUP
+ */
+
+class C {
+	public s : string;
+}
+function f(): ~C with { n: number; } { return null; }
+var p = f();
+p.s;
+p.n;

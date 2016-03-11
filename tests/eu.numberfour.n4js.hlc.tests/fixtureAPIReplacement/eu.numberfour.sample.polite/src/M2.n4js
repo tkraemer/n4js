@@ -1,0 +1,17 @@
+
+
+export public interface I {
+	
+	public computeStuff() : string {
+		console.log('computing stuff ...');
+		var str = this.implDetail();
+		return str.toUpperCase() + ' | ' + str.toLowerCase();
+	}
+	
+	// this is the actual corner case: adding a default method on implementation side!
+	public implDetail() : string {
+		console.log('in method: #implDetail()');
+		return 'Some' + '_' + 'Value';
+	}
+}
+

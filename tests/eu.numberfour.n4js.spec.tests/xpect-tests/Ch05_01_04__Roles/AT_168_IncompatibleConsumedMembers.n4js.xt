@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface R1 {
+  foo(s : string) : string { return null; }
+}
+
+interface R5 {
+  foo : number;
+}
+
+// XPECT errors --> "Incompatible consumed members: field R5.foo and method R1.foo." at "F"
+class F implements R1, R5 {}

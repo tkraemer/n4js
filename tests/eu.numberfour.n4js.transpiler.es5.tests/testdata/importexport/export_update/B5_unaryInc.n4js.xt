@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "A5_unaryInc.n4js" {}
+	}
+	
+	END_SETUP
+ */
+
+/* XPECT output --- 
+<==
+stdout:
+v1 =  2
+v2 =  2
+After do_increment:
+v1 =  3
+v2 =  3
+stderr:
+==>
+--- */
+
+import {v1,v2, do_post_increment_v1_and_assign_old_value_to_v2} from "importexport/export_update/A5_unaryInc"
+
+console.log( "v1 = ", v1 );  // v1 == 2 --> after increment in init of v2
+console.log( "v2 = ", v2 );  // v2 == 2 --> first value of v1 after increment
+do_post_increment_v1_and_assign_old_value_to_v2();
+console.log("After do_increment:")
+console.log( "v1 = ", v1 );
+console.log( "v2 = ", v2 );
+
+
+
+
+
+
+

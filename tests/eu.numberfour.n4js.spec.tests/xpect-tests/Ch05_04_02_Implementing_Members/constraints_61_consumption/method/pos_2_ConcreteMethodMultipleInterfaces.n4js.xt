@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	f(){ console.log("I.f()")}
+}
+
+interface J  {
+	f(){ console.log("J.f()")}
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: method I.f and method J.f." at "A"
+class A implements I,J {}
+
+
+
+// XPECT binding --> I.f
+new A().f();

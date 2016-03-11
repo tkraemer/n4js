@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "Enums.n4js" {}
+	}
+	
+	END_SETUP
+ */
+ 
+import * as N from "validation/IDE_707_modifier/Enums" 
+
+class EnumUser {
+	
+	use() {
+		var b : N.Enums = N.Enums.LIT1;
+	}
+}
+
+	
+var c : N.Color = N.Color.RED;

@@ -1,0 +1,16 @@
+// test
+import { B as Balias } from "M2"
+//
+import { B } from "M3"
+
+// sdlkfjlljsdfjlsdkkjfk
+function K() {
+	//  sölkdfkeösodkfeoojdk
+	var b1 : Balias;
+}
+var b2 : B;
+
+
+/* Description: 
+ * - Changes to comments before/above an import arbitrary toggle the used/unused state
+ */

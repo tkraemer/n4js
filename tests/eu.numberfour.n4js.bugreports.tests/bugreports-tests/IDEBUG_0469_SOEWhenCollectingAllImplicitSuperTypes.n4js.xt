@@ -1,0 +1,62 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// Non of the inheritance cycle validations should throw SOE.
+
+
+// XPECT errors --> "Inheritance cycle detected: A, A." at "A"
+class A extends A { }
+var f = function (type : Object) { };
+var fa = function (type : A) { };
+// XPECT noerrors -->
+f(new A());
+// XPECT noerrors -->
+fa(new A());
+
+// XPECT errors --> "Inheritance cycle detected: B, C, B." at "C"
+class B extends C { }
+// XPECT errors --> "Inheritance cycle detected: C, B, C." at "B"
+class C extends B { }
+
+var b : B;
+// XPECT noerrors -->
+var o1 : Object = b;
+// XPECT noerrors -->
+var no1 : N4Object = b;
+
+var c : C;
+// XPECT noerrors -->
+var o2 : Object = c;
+// XPECT noerrors -->
+var no2 : N4Object = c;
+
+// XPECT noerrors -->
+f(new B());
+
+// XPECT errors -->"B is not a subtype of A." at "new B()"
+fa(new B());
+
+// XPECT noerrors -->
+f(new C());
+
+// XPECT errors -->"C is not a subtype of A." at "new C()"
+fa(new C());
+
+
+interface I<T> {
+	foo(t : T) : T;
+}
+
+interface I1 extends I<string> {}
+interface I2 extends I<number> {}
+
+// XPECT errors --> "Inheritance cycle detected: IC, IC." at "IC"
+abstract class IC extends IC implements I1, I2 {}
+
+// XPECT errors --> "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes.I multiple times." at "I<string>"
+abstract class IC2 implements I<string>, I<number> {}
+
+var ic : IC = null;
+// XPECT errors --> "boolean is not a subtype of union{number,string}." at "false"
+ic.foo(false);
+// XPECT errors --> "intersection{number,string} is not a subtype of boolean." at "ic.foo(null)"
+var x : boolean = ic.foo(null);

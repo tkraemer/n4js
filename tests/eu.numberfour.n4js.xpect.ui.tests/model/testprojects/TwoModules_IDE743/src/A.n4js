@@ -1,0 +1,9 @@
+export class A {
+	foo() : void {
+		console.log("modules A A.foo")
+	}	
+}
+
+export function f() {
+	console.log("modules A f")
+}

@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Math.pow()
+// Source: 
+
+function raisePower(x : number, y : number) {
+   return Math.pow(x,y)
+}
+
+console.log(raisePower(2,3));
+
+/* XPECT output --- 
+<==
+stdout:
+8
+stderr:
+==>
+--- */

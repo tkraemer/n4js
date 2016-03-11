@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest  
+   ResourceSet {
+        ThisFile {}
+        File "Example_5_Base.n4js" {}
+   }
+   END_SETUP
+ */
+ 
+import * as N from "spec_chap_03_03_Accesibility_of_Members/Example_5_Base"
+
+var t = new N.ApiType();
+// XPECT noerrors --> "member can be accessed although type Base is not exported"
+t.m(t);

@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+var nums = [1, 2]
+// XPECT errors --> "An arrow-function is used in a context where its body is expected to have some value as opposed to being void." at "console.log(x)"
+var res = [1, 2].map(x => console.log(x)); 
+
+// XPECT noerrors --> 'void-returning single-expr arrow-function, but that's fine given it's used in a context expecting a void-returning function-type'
+nums.forEach(x => console.log(x));
+
+

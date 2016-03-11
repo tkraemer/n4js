@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface I {
+	f() { console.log("I.f"); }
+}
+
+// XPECT noerrors --> "f is consumed"
+class A implements I {}
+
+// XPECT noerrors --> No error expected: "f is inherited"
+class B extends A implements I{
+}
+
+
+/* XPECT output --- 
+<==
+stdout:
+I.f
+I.f
+stderr:
+==>
+--- */
+
+
+var a = new A();
+var b = new B();
+
+
+
+// XPECT binding --> I.f
+a.f();
+
+// XPECT binding --> I.f
+b.f();

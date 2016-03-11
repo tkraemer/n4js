@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+/* XPECT output ---
+<==
+stdout:
+R.x getter
+stderr:
+==>
+---
+*/
+// but get "[Function: getX]"
+interface R {
+	get x(){ return "R.x getter"}
+}
+class C implements R {
+}
+var c : C = new C();
+console.log(c.x);

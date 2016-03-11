@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT output ~~~
+<==
+stdout:
+stderr:
+==>
+~~~ */
+
+/* XPECT compileResult ---
+--- */
+// additional empty statement IDEBUG-73
+;
+
+import { Address } from "my/Address";
+
+var a = new Address();
+// a.type := my/Address
+
+class C<T> {
+	constructor(T param) {}
+}
+var c = new C<string>("hello");
+
+// --§-§-§-§ additional check not in example: §-§-§-§--
+console.log(map);
+console.log(map["Kant"]);
+console.log(map["Spinoza"]);

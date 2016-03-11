@@ -1,0 +1,56 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class A {}
+class ASub extends A {}
+class B {}
+
+
+class T1 {
+	
+	f_onlyInT1 : A;
+	
+	f1 : A;
+	
+	public f2 : A;
+	
+	f3 : A;
+	
+	f4 : A;
+}
+
+
+class T2 {
+	
+	f_onlyInT2 : A;
+	
+	f1 : A;
+	
+	private f2 : A;
+	
+	f3 : ASub;
+	
+	f4 : B;
+}
+
+
+var u : union{T1,T2};
+
+
+// XPECT errors --> "Member f_onlyInT1 not present in all types of union; missing from: T2." at "f_onlyInT1"
+u.f_onlyInT1;
+// XPECT errors --> "Member f_onlyInT2 not present in all types of union; missing from: T1." at "f_onlyInT2"
+u.f_onlyInT2;
+// XPECT type of 'u.f1' --> A
+u.f1;
+// XPECT errors --> "The field f2 is not visible." at "f2"
+u.f2;
+// XPECT type of 'u.f3' --> union{A,ASub}
+u.f3;
+// XPECT expectedType at 'null' --> intersection{A,ASub}?
+u.f3 = null;
+// XPECT type of 'u.f4' --> union{A,B}
+u.f4;
+// XPECT expectedType at 'null' --> intersection{A,B}?
+u.f4 = null;
+

@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Object.getOwnPropertyNames()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
+
+var arr = ["a", "b", "c"];
+console.log(Object.getOwnPropertyNames(arr));
+
+// Array-like object
+var obj : Object = { 0: "a", 1: "b", 2: "c"};
+console.log(Object.getOwnPropertyNames(obj));
+
+// Printing property names and values using Array.forEach
+Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
+  console.log(val + " -> " + obj[val]);
+});
+
+// non-enumerable property
+var my_obj : Object+ = Object.create({}, { getFoo: { foo: 4, value: function() { return this.foo; }, enumerable: false } });
+my_obj.foo = 1;
+
+console.log(Object.getOwnPropertyNames(my_obj));
+
+/* XPECT output --- 
+<==
+stdout:
+[ '0', '1', '2', 'length' ]
+[ '0', '1', '2' ]
+0 -> a
+1 -> b
+2 -> c
+[ 'getFoo', 'foo' ]
+stderr:
+==>
+--- */

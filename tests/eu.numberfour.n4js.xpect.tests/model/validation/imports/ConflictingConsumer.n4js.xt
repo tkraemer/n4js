@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+		File "MultipleClasses.n4js" {}
+		File "DifferentClasses.n4js" {}
+	}
+	END_SETUP 
+ */
+
+// Warnings of unused imports due to no real usage in file below.
+
+/* XPECT issues ---
+"The import of Class2 is unused." at "Class2"
+--- */
+import { Class2 } from "validation/imports/MultipleClasses"
+
+/* XPECT issues ---
+"Name Class2 is already used as name for named import Class2 from validation.imports.MultipleClasses." at "Class2"
+--- */
+import { Class2 } from "validation/imports/DifferentClasses"
+
+/* XPECT issues --- 
+	"Name Class2 is already used as name for named import Class2 from validation.imports.MultipleClasses." at "Class1 as Class2"
+ --- */
+import { Class1 as Class2 } from "validation/imports/MultipleClasses"

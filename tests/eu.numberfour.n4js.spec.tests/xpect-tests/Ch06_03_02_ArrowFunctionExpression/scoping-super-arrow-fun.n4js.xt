@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class B {
+	z : number;
+	m() : number { return 0 }
+}
+
+
+class C extends B {
+	
+  @Override
+  z : number;
+  
+  @Override
+  m() : number { return 1 }
+  
+  m2() : any {
+      return y => // XPECT linkedPathname at 'y'      ---> C/m2/y
+                  y +
+                  // XPECT linkedPathname at 'm()' ---> B/m
+                  super.m() +
+                  // XPECT linkedPathname at 'm()' ---> C/m
+                  this.m();
+  }
+
+}

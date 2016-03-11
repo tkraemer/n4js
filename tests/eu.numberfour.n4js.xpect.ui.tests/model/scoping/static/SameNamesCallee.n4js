@@ -1,0 +1,10 @@
+export class SameNamesCallee {
+   project static method() : string {
+      return this.field;
+   }
+   project method() : string {
+      return this.field;
+   }
+   project static field : string = "static";
+   project field : string = "instance";
+}

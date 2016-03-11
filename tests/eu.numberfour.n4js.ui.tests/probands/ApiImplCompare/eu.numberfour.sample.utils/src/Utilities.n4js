@@ -1,0 +1,6 @@
+
+export public class A {}
+export public class B extends A {}
+export public class C extends B {}
+
+export public class X {}

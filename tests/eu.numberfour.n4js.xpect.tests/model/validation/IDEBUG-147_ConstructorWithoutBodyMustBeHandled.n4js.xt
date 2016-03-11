@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+class C {
+    constructor(param : string) {}
+}
+
+class D extends C {
+
+	// XPECT errors --> "Constructors must have a body." at "constructor"
+    constructor()
+}

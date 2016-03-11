@@ -1,0 +1,11 @@
+export class Container<T> {
+	private item : T;
+	
+	getItem() : T {
+		return this.item;
+	}
+	
+	setItem(item : T) : void {
+		this.item = item;
+	}
+}

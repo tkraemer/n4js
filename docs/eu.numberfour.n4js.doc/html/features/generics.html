@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>Generics · Features · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- eclipse -->
+
+
+  <!-- ************* Styles ************* -->
+  <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+</head>
+
+<body>
+  <header class="Grid"></header>
+
+  <div class="Main">
+    <article class="Article--noGrid">
+
+<h1>Generics</h1>
+<p class="Introduction">
+Generics in N4JS are a language feature that allows for generic programming. They enable
+a function, class, interface, or method to operate on the values of various (possibly unknown) types while
+preserving compile-time type safety. If you are familiar with Java's generics, they will be very similar. There are some differences, however, which we shall describe below.
+</p>
+
+
+<!-- ======================================================================= -->
+<h2>Motivation</h2>
+<!-- ======================================================================= -->
+
+<p>
+Several language elements may be declared in a generic form; we'll start with focusing on classes
+in this and the following section, generic methods will be discussed after that.
+</p>
+
+<p>
+The standard case, of course, is a non-generic class. For example, take the following class that
+bundles a pair of two strings:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class PairOfString {
+    first: string;
+    second: string;
+}
+</pre></div>
+
+<p>
+This implementation is fine as long as all we ever want to store are strings. As experience shows,
+someone will soon come up with the idea of storing two values of some other type, like ... numbers!
+So, let's add another class:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class PairOfNumber {
+    first: number;
+    second: number;
+}
+</pre></div>
+
+<p>
+Following this pattern of adding more classes for new types to be stored obviously has its limitations.
+We would soon end up with a multitude of classes that are basically serving the same purpose, leading to
+code duplication, terrible maintainability and many other problems.
+</p>
+
+<p>
+One solution could be having a class that stores two values of type <code>any</code> (in N4JS,
+<code>any</code> is the so-called top type, i.e. the common super type of all other types).
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class PairOfWhatEver {
+    first: any;
+    second: any;
+}
+</pre></div>
+
+<p>
+But now we are worse off than before. We lost the certainty that within a single pair, both values
+will always be of the same type, and when reading a value from a pair, we have no clue what its
+type might be.
+</p>
+
+
+
+<!-- ======================================================================= -->
+<h2>Generic Classes (and Interfaces)</h2>
+<!-- ======================================================================= -->
+
+<p>
+The way to solve the above problem, using generics, is to introduce a <em>type variable</em> for the class
+(we then call such a class a <em>generic class</em>).
+Such a type variable can then be used within the class declaration just as any other ordinary type.
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class Pair&lt;T&gt; {
+    first: T;
+    second: T;
+}
+</pre></div>
+
+<p>
+The type variable <code>T</code>, declared after the class name in angle brackets, now represents
+the type of the values stored in the <code>Pair</code> and can be used as the type of the two fields.
+</p>
+
+<p>
+Now, whenever we refer to class <code>Pair</code>, we will provide a <em>type argument</em>, i.e. a
+type that will be put in wherever type variable <code>T</code> is being used inside the class
+declaration.
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Pair } from 'Pair';
+
+let myPair = new Pair&lt;string&gt;();
+myPair.first = '1st value';
+myPair.second = '2nd value';
+</pre></div>
+
+<p>
+By using a type variable we have not just allowed any given type to be used as value type,
+we have also stated that both values, first and second, must always be of the same type. We
+have also given the type system a chance to track the types of values stored in a <code>Pair</code>:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols">import { Pair } from 'Pair';
+
+let myPair2 = new Pair&lt;string&gt;();
+myPair2.first = '1st value';
+myPair2.second = 42; // error: 'int is not a subtype of string.'
+
+console.log(myPair2.first.charAt(2)); 
+// type system will know myPair2.first is of type string
+</pre></div>
+
+<p>
+The error in line 3 shows that the type checker will make sure we won't put any value of incorrect
+type into the pair. The fact that we can access method <code>charAt()</code> (available on strings)
+in the last line indicates that when we read a value from the pair, the type system knows its type
+and we can use it accordingly.
+</p>
+
+<p>
+Generic interfaces can be declared in exactly the same way.
+</p>
+
+
+<!-- ======================================================================= -->
+<h2>Generic Functions (and Methods)</h2>
+<!-- ======================================================================= -->
+
+<p>
+With the above, we can now avoid introducing a multitude of classes that are basically serving the
+same purpose. However, it is still not possible to write code that manipulates such pairs no matter
+what type its values may have. For example, a function for swapping the two values of a pair and
+then return the new first value:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { PairOfString } from 'PairOfString';
+
+function swapStrings1(pair: PairOfString): string {
+    let backup = pair.first; // inferred type of 'backup' will be string
+    pair.first = pair.second;
+    pair.second = backup;
+    return pair.first;
+}
+</pre></div>
+
+<p>
+The above function would have to be copied for every value type to be supported. Using the generic class
+<code>Pair&lt;T&gt;</code> does not help much:
+
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Pair } from 'Pair';
+
+function swapStrings2(pair: Pair&lt;string&gt;): string {
+    let backup = pair.first; // inferred type of 'backup' will be string
+    pair.first = pair.second;
+    pair.second = backup;
+    return pair.first;
+}
+</pre></div>
+
+<p>
+The solution is to not only make generic the type being manipulated, as we have done with class
+<code>Pair&lt;T&gt;</code> above, but to also make the code performing the manipulation generic:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Pair } from 'Pair';
+
+function &lt;T&gt; swap(pair: Pair&lt;T&gt;): T {
+    let backup = pair.first; // inferred type of 'backup' will be T
+    pair.first = pair.second;
+    pair.second = backup;
+    return pair.first;
+}
+</pre></div>
+
+<p>
+Here we have introduced a type variable for function <code>swap()</code> in much the same way as
+we have done for class <code>Pair</code> in the previous section (we then call such a function
+a <em>generic function</em>). Similarly, we can use the type variable in this function's signature
+and body.
+</p>
+
+<p>
+It is possible to state in the declaration of the function <code>swap()</code> above, that
+it will return something of type <code>T</code> when having obtained a <code>Pair&lt;T&gt;</code> without
+even knowing what type that might be. This allows the type system to track the type of values that
+are being passed around between functions and methods, are being put into and taken out of containers,
+and so on.
+</p>
+
+<p>
+<em>Generic methods</em> can be declared just as generic functions. There is one caveat, however:
+Only if a method introduces its own, new type variables is it called a generic method. If it is
+merely using the type variables of its containing class or interface, it's an ordinary method.
+The following example illustrates the difference:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class Pair&lt;T&gt; {
+    …
+    public foo(): T { … }
+    public &lt;S&gt; bar(pair: Pair2&lt;S&gt;): void { … } 
+}
+</pre></div>
+<p>The first method <code>foo</code> is a non generic method, while the second one <code>bar</code> is.
+</p>
+
+<p>
+A very interesting application of static methods is when using in combination with function type arguments:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class Pair&lt;T&gt; {
+	…
+	&lt;R&gt; merge(merger: {function(T,T): R}): R {
+		return merger(this.first, this.second);
+	}
+}
+
+var p = new Pair&lt;string&gt;();
+…
+var i = p.merge( (f,s)=&gt; f.length+s.length )
+</pre></div>
+
+<p>
+You will notice that N4JS can infer the correct types for the arguments and the return type of the arrow expression. Also the type for <code>i</code> will be automatically computed.
+</p>
+
+<!-- ======================================================================= -->
+<h2>Differences to Java</h2>
+<!-- ======================================================================= -->
+
+<p>
+Important differences between generics in Java and N4JS include:
+</p>
+
+<ul>
+  <li>Primitve types can be used as type arguments in N4JS.</li>
+  <li>There are no raw types in N4JS. Whenever a generic class or interface is referenced, a type argument
+  has to be provided, possibly in the form of a wildcard. For generic functions and methods, an
+  explicit definition of type arguments is optional if the type system can infer the type arguments
+  from the context.</li>
+</ul>
+
+
+<!-- http://lambda-the-ultimate.org/node/5286 -->
+
+
+    </article>
+
+
+  </div>
+  <footer class="Grid"></footer>
+  <script>
+    dp.SyntaxHighlighter.HighlightAll('code');
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+import { ChangeEvent } from 'n4/events/ChangeEvent';
+import { Event } from 'n4/events/Event';
+var @Undefined undef;
+class Constraint{} class ObjectConstraintValidateEntry{} class ConstraintEntry{}
+class ConstraintValidator{}
+export public class ConstraintCollectEvent extends ChangeEvent {
+    public fieldConstraints : Constraint; 
+    public objectConstraints : ObjectConstraintValidateEntry;
+    public deepConstraints : ConstraintEntry;
+    public selectorPath : string;
+    public constructor (@Spec spec : ~i~this) {
+    	super(spec)
+    }
+    @Override
+    public cloneWithoutConstraints() : ConstraintCollectEvent {
+    	return null;
+    }
+    @Override
+    public mergeWith(event : Event ) {
+    }
+    public addArrayIndex(index : union{number,string} ) {
+    }
+    public addConstraints(propertyName : string, cv : ConstraintValidator ) {
+    }
+    public addConstraintsDeep(cv : ConstraintValidator) {
+    }        
+}

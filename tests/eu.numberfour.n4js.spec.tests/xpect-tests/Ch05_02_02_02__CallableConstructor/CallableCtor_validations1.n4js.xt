@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	
+	// XPECT errors --> "Callable constructors may only be used in classes (not in interfaces)." at "() {}"
+	() {}
+	
+	// XPECT errors --> "Constructors aren't allowed in interfaces." at "constructor"
+	constructor() {}
+}
+
+
+class C {
+	
+	// XPECT errors --> "Callable constructors may only be used in .n4jsd files." at "() {}"
+	() {}
+	
+	constructor() {}
+}
+

@@ -1,0 +1,3 @@
+import { A } from 'circularDependency/req_08/A'
+
+export public class B extends A { }

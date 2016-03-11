@@ -1,0 +1,12 @@
+
+
+export default class C {
+	public m() {
+		console.log('hello from method C.m!');
+	}
+}
+
+console.log('running in Cls.n4js:');
+var c: C = new C();
+c.m();
+

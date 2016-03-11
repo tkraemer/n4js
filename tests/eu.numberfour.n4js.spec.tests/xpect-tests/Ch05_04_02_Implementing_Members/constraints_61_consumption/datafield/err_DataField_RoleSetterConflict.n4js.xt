@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface R1 {
+	x : string;
+}
+interface R2 {
+	set x(s : string) {}
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: setter R2.x and field R1.x." at "C1"
+class C1 implements R1, R2 {
+}

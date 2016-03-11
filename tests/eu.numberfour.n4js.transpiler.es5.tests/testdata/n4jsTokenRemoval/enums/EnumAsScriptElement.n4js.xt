@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+
+
+/* XPECT output ~~~
+<==
+stdout:
+{ [Function: Enum]
+  v: Enum { name: 'v', value: 'v' },
+  s: Enum { name: 's', value: 'string' } }
+stderr:
+==>
+~~~ */
+
+
+
+enum Enum{v, s:'string'}
+console.log(Enum)

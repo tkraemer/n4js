@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Date.prototype.setMilliseconds()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMilliseconds
+
+var theBigDay = new Date(2003,11,2);
+theBigDay.setMilliseconds(100);
+console.log(theBigDay.getMilliseconds());
+
+/* XPECT output --- 
+<==
+stdout:
+100
+stderr:
+==>
+--- */

@@ -1,0 +1,46 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+// §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+// §§ Testing Organize imports with different vendor         
+// §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+
+  Workspace {
+   	Project "IDEBUG-314_A" {
+   	 	Folder "src" { 	Folder "a" { File "TAM.n4js" {} } 
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_A.n4mf" }
+   	}
+   	Project "IDEBUG-314_C" {
+   	 	Folder "src" { 	Folder "c" { ThisFile {} } 
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_C.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+
+/* XPECT organizeImports ---
+   + import { C2 } 
+   | [class|from "a/TAM"]
+   | [|class] B0 extends C0 {}// private
+     export class B1 extends C1 {}	// project
+     export project class B1_project extends C1_project {}	// project
+     export @Internal public class B1_vendor extends C1_vendor {} 	// public@Internal
+   (...)
+--- */
+
+
+// XPECT errors -->"Couldn't resolve reference to Type 'C0'." at "C0"
+class B0 extends C0 {}// private
+
+// XPECT errors -->"Couldn't resolve reference to Type 'C1'." at "C1"
+export class B1 extends C1 {}	// project
+
+// XPECT errors -->"Couldn't resolve reference to Type 'C1_project'." at "C1_project"
+export project class B1_project extends C1_project {}	// project
+
+// XPECT errors --> "Couldn't resolve reference to Type 'C1_vendor'." at "C1_vendor"
+export @Internal public class B1_vendor extends C1_vendor {} 	// public@Internal
+
+// XPECT errors --> "Couldn't resolve reference to Type 'C2'." at "C2"
+export public class B2 extends C2 {}	// public

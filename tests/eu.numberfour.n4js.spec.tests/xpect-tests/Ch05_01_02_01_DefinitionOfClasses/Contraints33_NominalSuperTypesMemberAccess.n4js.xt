@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class ~A {
+	foo() {}
+}
+
+class B extends A {
+}
+
+var b : B;
+// XPECT noerrors --> "super type of a nominal type is nominal as well" 
+b.foo();
+
+var a : A ;
+// control only XPECT errors --> "method foo is not available for structurally defined type A." at "foo"
+a.foo();
+
+

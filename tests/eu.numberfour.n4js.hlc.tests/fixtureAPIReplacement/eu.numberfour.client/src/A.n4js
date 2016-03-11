@@ -1,0 +1,7 @@
+import { Greeter } from "M"
+
+console.log('Greeting incoming ...');
+
+var g = new Greeter();
+g.greet("Bob");
+

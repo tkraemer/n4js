@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// 5 abstract
+abstract class C {
+	abstract get x()
+	abstract set y(p : any)
+	
+	get cx() { return null }
+	set cy(p : any) { }
+}
+
+abstract class D extends C {
+	// ok
+	@Override abstract get x()
+	// ok
+	@Override abstract set y(p : any)
+	
+	// ok
+	@Override get cx() { return null }
+	// ok
+	@Override set cy(p : any) { }
+}
+
+abstract class E extends C {
+	// ok
+	@Override get x() { return null }
+	// ok
+	@Override set y(p : any) { }
+	
+	// XPECT errors --> "The abstract getter E.cx cannot override concrete getter C.cx." at "cx"
+	@Override abstract get cx() 
+	// XPECT errors --> "The abstract setter E.cy cannot override concrete setter C.cy." at "cy"
+	@Override abstract set cy(p : any)
+}

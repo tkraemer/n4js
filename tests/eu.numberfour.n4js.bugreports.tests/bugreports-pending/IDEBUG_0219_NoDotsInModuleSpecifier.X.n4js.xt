@@ -1,0 +1,2 @@
+// XPECT FIXME errors --> "n4js module specifiers must not contain dots" 
+class C {}

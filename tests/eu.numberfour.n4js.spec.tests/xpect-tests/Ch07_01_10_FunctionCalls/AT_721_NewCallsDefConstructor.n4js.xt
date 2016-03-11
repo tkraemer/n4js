@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C{}
+var c : C;
+
+// XPECT noerrors --> "Correct number of arguments"
+c = new C();
+// XPECT errors --> "Incorrect number of arguments: expected 0, got 1." at "new C('foo')"
+c = new C('foo');
+

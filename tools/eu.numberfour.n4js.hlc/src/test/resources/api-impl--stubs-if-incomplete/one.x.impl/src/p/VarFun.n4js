@@ -1,0 +1,15 @@
+//export var a;
+//
+//export public var string b;
+//
+//export public function f1(string g) : string {
+//	return "x";
+//}
+
+@N4JS
+export public class A {
+		
+}
+
+console.log("Loaded Implementation one.x.impl::p.VarFun.n4js");
+

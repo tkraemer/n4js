@@ -1,0 +1,8 @@
+import { AT_IDE_1510_Missing_Members } from "direct/AT_IDE-1510_Missing_Members"
+
+
+var test : AT_IDE_1510_Missing_Members = new AT_IDE_1510_Missing_Members();
+
+
+test.test_implemented_members();
+

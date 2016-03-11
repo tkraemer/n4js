@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+when not needed DI data is undefined
+stderr:
+==>
+--- */
+
+class Foo{}
+class Bar{}
+class Baz{}
+
+
+class A{ 
+    fieldFoo : Foo;
+    fieldPB : N4Provider<Bar>;
+    fieldPPB : N4Provider<N4Provider<Baz>>;
+    
+    constructor(cargFoo : Foo, cargPB : N4Provider<Bar>, cargPPB : N4Provider<N4Provider<Baz>>){}
+}
+
+var tA = A as Object;//just to supress validation of index access
+var diData = JSON.stringify(tA['$di'], null, '\t')
+console.log('when not needed DI data is', diData);
+

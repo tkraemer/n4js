@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.numberfour.n4js.runner
+Bundle-SymbolicName: eu.numberfour.n4js.runner;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: eu.numberfour.n4js.runner,
+ eu.numberfour.n4js.runner.exceptions,
+ eu.numberfour.n4js.runner.extension
+Require-Bundle: org.eclipse.core.runtime,
+ org.apache.log4j,
+ eu.numberfour.n4js,
+ eu.numberfour.n4js.n4mf.model,
+ eu.numberfour.n4js.generator.common,
+ eu.numberfour.n4js.utils,
+ org.eclipse.jetty.util.ajax,
+ org.eclipse.jetty.util,
+ eu.numberfour.n4js.external.libraries

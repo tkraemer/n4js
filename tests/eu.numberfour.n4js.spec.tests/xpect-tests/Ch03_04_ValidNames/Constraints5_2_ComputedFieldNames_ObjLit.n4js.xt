@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+var c1 = {
+
+	// XPECT FIXME errors --> "The field m (line 6) duplicates field m (line 8)." at "['m']"
+	string ['m'] : "1",
+	// XPECT FIXME errors --> "The field m (line 8) duplicates field m (line 6)." at "m"
+	string m : "2",
+
+	// XPECT noerrors -->
+	string ["@abc"] : "3",
+
+	// XPECT noerrors -->
+	string [    '@abc1'    ] : "4", 
+
+	// XPECT noerrors -->
+	string [ /*comment*/ '@abc2'] : "5",  
+
+	// XPECT noerrors -->
+	string ['@abc3'  /*comment*/ ] : "6"
+
+}
+

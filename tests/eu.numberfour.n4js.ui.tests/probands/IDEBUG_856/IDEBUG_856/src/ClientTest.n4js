@@ -1,0 +1,10 @@
+import { Assert } from 'n4/mangel/assert/Assert';
+
+export public class ClientTest {
+
+    @Test
+    public foo() {
+        Assert.notEqual(null, { s : 'foo' });
+    }
+
+}

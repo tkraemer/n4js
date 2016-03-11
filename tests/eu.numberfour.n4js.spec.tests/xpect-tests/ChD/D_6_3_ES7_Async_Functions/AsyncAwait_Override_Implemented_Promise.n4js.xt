@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+
+interface I{
+
+	//XPECT noerrors --> "should pass"
+	public async async1() : string
+
+	//XPECT noerrors --> "should pass"
+	public async async2() : string
+	
+	//XPECT noerrors --> "should pass"
+	public promised1() : Promise<string,?>
+
+	//XPECT noerrors --> "should pass"
+	public promised2() : Promise<string,?>
+}
+
+
+class A implements I{
+	
+	//XPECT noerrors --> "should pass"
+	@Override
+	public async1() : Promise<string,?>{return null;}
+
+	//XPECT noerrors --> "should pass"
+	@Override
+	public async async2() : string{return null;}
+	
+	//XPECT noerrors --> "should pass"
+	@Override
+	public promised1() : Promise<string,?>{return null;}
+
+	//XPECT noerrors --> "should pass"
+	@Override
+	public async promised2() : string{return null;}
+}

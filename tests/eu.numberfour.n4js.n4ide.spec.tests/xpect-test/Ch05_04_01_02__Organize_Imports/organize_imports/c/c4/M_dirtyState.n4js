@@ -1,0 +1,14 @@
+import {A as AliasA} from "M2"
+// lasdkf
+
+
+
+class A {}
+
+var a : AliasA;
+
+/* Description:
+ * 
+ * Dirty state - even though nothing changed, the dirty state is ??? 
+ * 
+ */

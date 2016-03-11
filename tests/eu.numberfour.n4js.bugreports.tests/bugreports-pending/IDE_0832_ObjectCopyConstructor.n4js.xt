@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportPendingTest END_SETUP  */
+
+// see https://numberfour.jira.com/browse/IDE-832
+
+// This is due to the missing constructor: Array access doesn't work or any+ or Objects when trying to get typed members
+
+// missed Object(@CopyOf Object x)
+var bummerDeal = new Object({"party": new Object()});
+//FIXED? somewhat weird error "passed null object to system at IndexedAccessExpression."
+// XPECT noerrors --> 
+var stuffYouKnow : Object = bummerDeal["party"];
+// XPECT FIXME noerrors --> 
+// GOT: Couldn't resolve reference to IdentifiableElement 'party'.
+var stuffYouKnow2 : Object = bummerDeal.party;
+
+
+// Jvp: the following problems seem to be fixed:
+
+var  bummer : any+ = {"party" : "time"};
+//passed null object to system at IndexedAccessExpression.
+var stuff : any+ = bummer["party"];
+
+//if you rely on automatic typing it doesn't error directly but...
+var bummers = {"party" : "time"}
+var stuffs = bummer["party"];
+var stuffs2 = bummer.party;
+
+
+//...if you try to use the value you get a 'cannot type xxx' error
+if (stuffs) {
+    
+}
+
+//

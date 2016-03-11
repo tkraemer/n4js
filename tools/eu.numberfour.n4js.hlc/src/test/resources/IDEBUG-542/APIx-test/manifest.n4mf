@@ -1,0 +1,20 @@
+ArtifactId: APIx-test
+VendorId: eu.numberfour
+ProjectName: "APIx-test"
+VendorName: "NumberFour AG"
+ProjectType: test
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+	test {
+		"test"
+	}
+}
+RequiredRuntimeLibraries { rtlib }
+
+TestedProjects { 
+    APIx
+}

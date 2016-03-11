@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+
+    ResourceSet {
+		ThisFile {}
+		File "GlobalDefs.n4jsd" {}
+	}
+	
+   END_SETUP 
+ */
+
+ 
+ // XPECT noerrors --> "MyDom is marked as @Global" at "MyDom"
+ MyDom.foo();
+ 
+ 
+  // XPECT noerrors --> "MyDom is marked as @Global" at "MyDom"
+ var dom : MyDom;

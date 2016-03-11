@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	
+	
+	foo() {}
+	
+	// as of IDEBUG-312, method in interfaces may be final XPECT noerrors -->
+	@Final bar() {}
+}
+

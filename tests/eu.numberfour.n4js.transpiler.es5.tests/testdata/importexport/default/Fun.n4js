@@ -1,0 +1,9 @@
+
+
+export default function f() {
+	console.log('hello from function f!');
+}
+
+console.log('running in Fun.n4js:');
+f();
+

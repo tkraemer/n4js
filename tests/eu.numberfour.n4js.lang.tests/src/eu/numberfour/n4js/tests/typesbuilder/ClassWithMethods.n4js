@@ -1,0 +1,28 @@
+class MySuperClass {
+	
+}
+
+interface MyInterface {
+	
+}
+
+enum Storage {
+	LITERAL
+}
+
+export public class MyClass extends MySuperClass implements MyInterface {
+	private static instanceCounter: Number;	
+	
+	public myMethod1(): void {
+		
+	}
+	
+	public myMethod2(input: any): any {
+		return null;
+	}
+	
+	private secretMethod(element: MyInterface, ...storages: Storage): any {
+		return null;
+	}
+
+}

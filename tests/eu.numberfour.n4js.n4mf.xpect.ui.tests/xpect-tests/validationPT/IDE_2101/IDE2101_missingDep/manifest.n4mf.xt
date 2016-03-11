@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationPluginTest
+	Workspace {
+		Project "IDE2101_missingDep" {
+			ThisFile "manifest.n4mf" {from="../../IDE_2101/IDE2101_missingDep/manifest.n4mf.xt"}
+			Folder "tst" { }
+		}
+	
+	}
+	
+	END_SETUP 
+ */
+
+/* XPECT errors ---
+"Project with test fragment should depend on eu.numberfour.mangelhaft." at "IDE2101_missingDep"
+--- */
+ArtifactId: IDE2101_missingDep
+VendorId: MyVendorID
+ProjectName: "IDE2101_missingDep"
+VendorName: "My Vendor Name"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "out"
+Sources {
+	test { 
+		"tst"
+	}
+}

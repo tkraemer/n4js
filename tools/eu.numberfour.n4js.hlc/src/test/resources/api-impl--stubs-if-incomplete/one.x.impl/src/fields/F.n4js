@@ -1,0 +1,8 @@
+import { FA } from "fields/F1"
+
+
+export public class F extends FA {
+
+} 
+
+console.log("Loaded Implementation one.x.impl::fields.F.n4js");

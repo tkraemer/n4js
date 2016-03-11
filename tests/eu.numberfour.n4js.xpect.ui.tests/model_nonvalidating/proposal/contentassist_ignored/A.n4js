@@ -1,0 +1,9 @@
+export public class A {
+	public methodA() {
+		
+	}
+	
+	public methodA2() {
+		
+	}
+}

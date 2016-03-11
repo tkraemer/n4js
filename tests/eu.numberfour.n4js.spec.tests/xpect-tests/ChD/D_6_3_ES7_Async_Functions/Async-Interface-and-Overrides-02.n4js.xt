@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+// IDE-1534
+ 
+interface I2 {
+
+	m1() : Promise<C, ?>
+
+	// XPECT type of 'm2' --> {function():Promise<C, ?>}
+	async m2() : C
+
+}
+
+class C implements I2 {
+	@Override m1() : Promise<C, ?> { return undefined }
+	@Override async m2() : C { return undefined }
+}
+
+class D extends C {
+
+	// XPECT noerrors --> 'As long as method signature conforms, overriding method is free to be tagged async or not'
+	@Override async m1() : C { return undefined } // overriding non-async with async
+
+	// XPECT noerrors --> 'As long as method signature conforms, overriding method is free to be tagged async or not'
+	@Override m2() : Promise<C, ?> { return undefined } // overriding async with non-async
+
+}
+
+

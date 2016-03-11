@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I{}
+enum E { a,b}
+
+var e : E, i : I;
+
+// XPECT errors --> "Cannot cast from E to I" at "e as I"
+e as I;
+
+// XPECT errors --> "Cannot cast from I to E" at "i as E"
+i as E;

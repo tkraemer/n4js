@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+//////////////////////////
+// Subclass relation II //
+//////////////////////////
+
+class A {}
+class B extends A {}
+class C extends A {}
+class D extends B {}
+class E extends B {}
+
+function f (a : B) {};
+
+var ac : union{A,C};
+// A !<: B and C !<: B XPECT errors --> "union{A,C} is not a subtype of B." at "ac"
+f(ac);
+
+var bc : union{B,C};
+// B <: B but C !<: B XPECT errors --> "union{B,C} is not a subtype of B." at "bc"
+f(bc);
+
+var de : union{D,E};
+// D <: B and E <: B XPECT noerrors -->
+f(de);
+
+var eb : union{E,B};
+// E <: B and B <: B XPECT noerrors -->
+f(eb);

@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+@This(~Object with { x : number; })
+function f() {
+	// XPECT noerrors --> 
+	this.x;
+}

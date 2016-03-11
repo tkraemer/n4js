@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+   END_SETUP
+ */
+
+
+class A {
+	methodA() {	}
+	methodA2() { }
+}
+
+
+var a0 : A = new A();
+// XPECT hyperlinks at 'met<|>hodA' --> methodA: "methodA"(N4MethodDeclaration) in "A"(N4ClassDeclaration) in file Simple2.n4js.xt
+a0.methodA();
+

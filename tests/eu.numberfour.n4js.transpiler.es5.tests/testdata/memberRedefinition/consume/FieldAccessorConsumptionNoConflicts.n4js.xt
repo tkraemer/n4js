@@ -1,0 +1,63 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+R0.set x
+B0.get x
+hello0
+R0.set x
+B1.get x
+hello1
+R0.set x
+B2.get x
+hello2
+R0.set x
+B3.get x
+hello3
+stderr:
+==>
+--- */
+
+interface R0 {
+	_x : string;
+	set x(s : string) { console.log("R0.set x"); this._x = s}
+}
+
+interface R1 extends R0 {}
+interface R2 extends R1 {}
+
+class A0 implements R0 {}
+class A1 extends A0 {}
+class A2 extends A1 {}
+class A3 extends A2 {}
+
+class B0 extends A0 {
+	get x() : string { console.log("B0.get x");  return this._x}
+}
+class B1 extends A1 {
+	get x() : string { console.log("B1.get x");  return this._x}
+}
+class B2 extends A2 {
+	get x() : string { console.log("B2.get x");  return this._x}
+}
+class B3 extends A3 {
+	get x() : string { console.log("B3.get x");  return this._x}
+}
+
+var b0 = new B0();
+b0.x = "hello0";
+console.log(b0.x); 
+
+var b1 = new B1();
+b1.x = "hello1";
+console.log(b1.x); 
+
+var b2 = new B2();
+b2.x = "hello2";
+console.log(b2.x); 
+
+var b3 = new B3();
+b3.x = "hello3";
+console.log(b3.x); 
+ 

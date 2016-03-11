@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+///////////////
+// Arguments //
+///////////////
+
+function fun(n : number, m : number) {
+	(() => {
+		var i : number, j;
+		// arguments is bound to outer context (all well) XPECT noerrors -->
+		for (i in arguments) { j += arguments[i] }
+		return j 
+	})();
+}

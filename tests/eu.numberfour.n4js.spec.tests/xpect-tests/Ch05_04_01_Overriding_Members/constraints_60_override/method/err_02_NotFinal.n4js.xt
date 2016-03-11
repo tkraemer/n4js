@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// --------------------------------------------------------------------------
+// overridden method must not be @Final:
+
+class A03 {
+    @Final
+    public x() : void {}
+}
+
+class B03 extends A03 {
+    @Override
+// XPECT errors --> "The method B03.x cannot override final method A03.x." at "x"
+    public x() : void {}
+}
+
+// ----
+
+// (not applicable to interfaces, because members are always abstract can therefore not be final)
+

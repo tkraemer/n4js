@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+class H {
+	// Makes sense for n4jsd only !
+	// XPECT noerrors --> "The this type isn't allowed on this place. You can only use it as return type of instance methods or structurally on use site in the constructor." at "this"
+	static getIt(hint : string) : this {
+		return null; 
+	}
+}
+
+// XPECT noerrors --> "type{H} is not a subtype of H." at "H.getIt("x")"
+var x : H = H.getIt("x");
+
+

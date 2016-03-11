@@ -1,0 +1,55 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// IDE-772
+
+
+class A {
+	propI : I;
+	propR : R;
+}
+interface I {}
+interface R {}
+function func() { return 5; }
+function funcv() { return; }
+function funcn(): number { return 5; }
+function funcS(): string { return "propR"; }
+
+
+///////////////////////////////////////////////////////////////////////////////////
+//
+// OK
+var bin : boolean =  'propI' in new A()
+
+// OK
+var bin2 : boolean =  funcS() in new A()
+
+// OK
+var bin3 : boolean =  funcn() in new A()
+
+// OK, since type is any, no checks:
+var bin4 : boolean =  funcS() in func
+
+
+
+var bin5 : boolean =
+// XPECT errors --> "any is not a subtype of union{number,string}." at "func()"
+func() in new A()
+
+
+var bin6 : boolean =
+// XPECT errors --> "void is not a subtype of union{number,string}." at "funcv()"
+funcv() in new A()
+
+
+var bin7 : boolean =
+// XPECT errors --> "constructor{A} is not a subtype of Object." at "A"
+1 in A
+
+
+var bin8 : boolean =
+// XPECT errors --> "type{I} is not a subtype of Object." at "I"
+1 in I
+
+
+var bin9 : boolean =
+// XPECT errors --> "type{R} is not a subtype of Object." at "R"
+1 in R

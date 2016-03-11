@@ -1,0 +1,8 @@
+export public class T {
+	
+	@Test
+	public t() {
+		
+	}
+	
+}

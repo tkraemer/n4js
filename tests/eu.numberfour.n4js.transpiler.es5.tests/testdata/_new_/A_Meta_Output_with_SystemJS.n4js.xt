@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+
+/* XPECT output with systemjs ---
+<==
+stdout:
+n4.runtimeOptions.cjs = undefined
+========================^^^^^^^^^
+stderr:
+==>
+--- */
+
+
+new Function("console.log('n4.runtimeOptions.cjs =',n4.runtimeOptions.cjs);")();
+
+console.log('========================^^^^^^^^^');
+

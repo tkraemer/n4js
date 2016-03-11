@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+@N4JS // Unlike in the previos test case we do have the @N4JS annotation at the custom error class level.
+export external class MyError2 extends Error { }
+
+@N4JS
+// XPECT noerrors --> "Indirect subtype of Error"
+export external class MySubError2 extends MyError2 { }

@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class A {
+	foo() {
+	}
+}
+
+class B extends A {
+	@Override foo() {
+		// XPECT errors --> "Super member access may not be used with index access." at "super"
+		super['foo']();
+	}
+}

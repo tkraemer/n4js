@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT output ---
+<==
+stdout:
+John
+Hello John
+John
+undefined
+stderr:
+==>
+--- */
+
+
+
+class A {
+	name = "John";
+	greeting  = "Hello " + this.name; // works, in N4JS classes, greeting is "Hello John"
+	
+	f() {
+		return this.name; // this usually is instance object, similar to object literals.
+	}
+	
+	g() {
+		var h = function() {
+			return undefined;
+			//return this.name; // as in object literals: no receiver, no this.
+		}
+		return h();
+	}
+	
+}
+
+
+//  additional check not in example 75: 
+
+console.log(new A().name); 
+console.log(new A().greeting); 
+console.log(new A().f()); 
+console.log(new A().g()); 

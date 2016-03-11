@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// cannot test 'abstract' here, because this is currently enforced by the syntax (thus: ugly error message)
+
+// cannot test 'static' here, because this is currently enforced by the syntax (thus: ugly error message)
+
+
+class C {
+    @Final
+    // XPECT errors --> "A constructor must not be declared abstract, static or final and may not be annotated with @Override." at "constructor"
+    public constructor () {}
+}
+
+
+class D {
+    @Override
+    // XPECT errors --> "A constructor must not be declared abstract, static or final and may not be annotated with @Override." at "constructor"
+    public constructor () {}
+}
+

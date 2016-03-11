@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+class A {}
+class G<T> {
+	field : T;
+}
+
+var ga : G<A>;
+// XPECT type of 'field' --> A
+var {field} = ga;
+

@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// Test for IDE-1048
+class A {
+    f : number;
+
+    m() : number { return this.f; }
+}
+
+
+var a : A;
+
+
+function foo(p) { return p; }
+
+// XPECT warnings --> "A reference to method m is created detached from a (correct) this-instance." at "m"
+var y = foo(a.m);

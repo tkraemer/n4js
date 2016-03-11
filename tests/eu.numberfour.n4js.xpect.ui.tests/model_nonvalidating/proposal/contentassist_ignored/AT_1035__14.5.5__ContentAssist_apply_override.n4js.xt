@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+   END_SETUP
+ */
+ 
+ // TODO IDE-1087 XPECT_IGNORE override still not supported.
+
+
+class A {
+	methodA() {	}
+	methodA2() { }
+}
+
+var a : A = new A();
+
+// 
+
+
+// XPECT contentAssist at 'a.<|>methodA' apply 'methodA2' override --> a.methodA2<|>
+a.methodA

@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {}
+
+// XPECT errors --> "Cannot instantiate interface I." at "I"
+var i = new I()
+

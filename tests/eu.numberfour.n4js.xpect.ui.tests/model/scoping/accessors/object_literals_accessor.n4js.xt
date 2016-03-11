@@ -1,0 +1,50 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "scoping" {
+					Folder "accessors" {
+						ThisFile {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+var p2 = {
+	internalSimpleInt : 42,
+	internalO: { 
+		nested: "Hello"
+	},
+	
+	get simpleInt() {
+		return null;
+	},
+	set simpleInt(newSimpleInt : number) {
+// TODO: enable scope test for dynamically created elements in scope XPECT ! scope at 'this.|internalSimpleInt' --> internalSimpleInt, internalO, ...
+// TODO: enable scope test for dynamically created elements in scope XPECT ! scope at 'newSimpleInt' --> newSimpleInt, !newO, ...
+		// this.internalSimpleInt = newSimpleInt;
+	},
+	get o(): ~Object with  { nested: String; } {
+		return null;
+	},
+	set o(newO : ~Object) {
+// TODO: enable scope test for dynamically created elements in scope XPECT ! scope at 'this.|internalO' --> internalSimpleInt, internalO, ...
+// TODO: enable scope for test dynamically created elements in scope XPECT ! scope at 'newO' --> newO
+		// this.internalO = newO
+	}
+};
+// XPECT scope at 'p2.|o' --> simpleInt, o, ...
+p2.o(); // must be bound correctly to getter
+/* XPECT scope at 'p2.internalO.|nested' ---
+constructor, hasOwnProperty, isPrototypeOf, nested, propertyIsEnumerable,
+toLocaleString, toString, valueOf 
+--- */
+p2.internalO.nested;
+// XPECT scope at 'p2.o.|nested' --> nested, ...
+p2.o.nested;

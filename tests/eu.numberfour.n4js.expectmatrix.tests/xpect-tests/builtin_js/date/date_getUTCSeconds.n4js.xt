@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Date.prototype.getUTCSeconds()
+// Source: self-constructed
+
+var date = new Date(1994, 10, 13, 4, 56, 27);
+var day = date.getUTCSeconds();
+
+console.log(day);
+
+/* XPECT output --- 
+<==
+stdout:
+27
+stderr:
+==>
+--- */

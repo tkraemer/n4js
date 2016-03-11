@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// IDEBUG-199
+
+class Task {}
+class Promise<S,F> {
+    public static <S, F> reject(f : F) : Promise<S, F> {return null;}
+}
+
+class C {
+    public persist() : Promise<? extends Task, Error> {
+    	// XPECT noerrors -->
+		return Promise.reject(new Error("no id"));
+	}
+}

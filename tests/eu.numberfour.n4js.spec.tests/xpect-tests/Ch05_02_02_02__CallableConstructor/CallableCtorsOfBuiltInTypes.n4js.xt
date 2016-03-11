@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT type of 'test1' --> string
+// XPECT noerrors -->
+var test1 = Date();
+
+// XPECT type of 'test2' --> string
+// XPECT noerrors -->
+var test2 = String();
+
+// XPECT type of 'test3' --> number
+// XPECT noerrors -->
+var test3 = Number();
+
+// XPECT type of 'test4' --> Function
+// XPECT noerrors -->
+var test4 = Function("");
+
+// XPECT type of 'test5' --> symbol
+// XPECT noerrors -->
+var test5 = Symbol();
+

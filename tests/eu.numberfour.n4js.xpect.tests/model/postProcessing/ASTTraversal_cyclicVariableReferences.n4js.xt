@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+// XPECT warnings --> "Reference to variable v0 within the initializer expression of the declaration of v0." at "v0"
+// XPECT type of 'v0' --> any
+var v0 = v0;
+
+
+// XPECT type of 'v1' --> any
+var v1 = v2;
+var v2 = v3;
+var v3 = v1;
+

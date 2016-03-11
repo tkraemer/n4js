@@ -1,0 +1,3 @@
+export project var varOtherProjectOtherVendor = 2;
+@Internal
+export public var varOtherProjectOtherVendorInternal = 2;

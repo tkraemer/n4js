@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP */
+
+
+export public class MyError extends Error {
+	
+	// constructor required as a work-around because super ctor call not working in case of Error (at least for the time being)
+	// see https://jira.numberfour.eu/browse/IDEBUG-213?focusedCommentId=34430&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-34430
+	constructor(msg : string?) {
+		super(); // not working, but required to make N4JS validation happy
+		this.name = 'my failure name';
+		this.message = msg;
+	}
+}
+
+
+var myErr : MyError = new MyError("my failure message");
+
+// make sure type system is ok
+var err : Error;
+err = myErr;
+
+// make sure instanceof is ok
+console.log(err instanceof Error);
+console.log(err instanceof MyError);
+
+// make sure work-around for broken super ctor invocation is working
+console.log(err.message);
+
+
+
+/* XPECT output --- 
+<==
+stdout:
+true
+true
+my failure message
+stderr:
+==>
+--- */
+

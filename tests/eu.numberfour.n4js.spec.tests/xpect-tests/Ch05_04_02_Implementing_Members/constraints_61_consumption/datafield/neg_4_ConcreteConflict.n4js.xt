@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	f;
+}
+
+interface J {
+	f;
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: field I.f and field J.f." at "A"
+class A implements I,J {}
+
+// although it is an error, we bind to the first one XPECT binding --> I.f
+new A().f();

@@ -1,0 +1,17 @@
+export public class A {
+	
+}
+
+export public class B {
+	
+}
+
+export public interface IA {
+	
+}
+
+export public  interface IB {
+	
+}
+
+

@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+interface A<S> {}
+
+function <T> create(p1 : T, p : type{T}): T {
+    return null;
+}
+function <T> createR(p : type{T}, p1 : T): T {
+    return null;
+}
+
+var x : type{A} = A;
+
+
+var astr : A<string>;
+var anum : A<number>;
+
+
+
+// XPECT noerrors -->
+var c2 : A<string> = create(astr, A);
+
+// XPECT noerrors -->
+var c3 : A<string> = createR(A, astr);
+

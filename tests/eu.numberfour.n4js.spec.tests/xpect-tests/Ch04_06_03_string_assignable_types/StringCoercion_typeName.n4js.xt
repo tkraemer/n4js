@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class Classes {
+	static <T> createType(type : typeName<T>) : T {
+		return null;
+	}
+}
+class Widget {}
+
+
+function <T extends Widget> createWidget(type : typeName<T>): T
+{
+	return Classes.createType(type);
+}
+
+
+// OK, valid XPECT errors -->
+var validUsage = createWidget("Widget");
+
+// TODO validation
+// invalid, because String is not a subclass of Widget, X!PECT errors --> "String is not a subtype of Widget." at ""String""
+var invalidUsage = createWidget("String");
+
+// OK XPECT errors -->
+var anyType : typeName<?> = "Number";

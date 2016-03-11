@@ -1,0 +1,65 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+class A {
+	m() {}
+}
+
+class X {}
+
+class G<T extends A> {
+    foo() : T { return null; }
+}
+
+
+
+// ----------------------------------------------------------------------------------------------------------------
+
+
+// note: unbounded ? as argument to bounded type parameter T extends A
+var g : G<?>;
+
+
+// XPECT noerrors -->
+g = new G<A>();
+// XPECT errors ---
+// "G<X> is not a subtype of G<? extends A>." at "new G<X>()"
+// "X is not a subtype of A." at "X"
+// ---
+g = new G<X>();
+
+// XPECT noerrors -->
+var test01 : A = g.foo();
+// XPECT errors --> "? extends A is not a subtype of X." at "g.foo()"
+var test02 : X = g.foo();
+
+// XPECT noerrors -->
+g.foo().m();
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'other'." at "other"
+g.foo().other();
+
+
+
+// ----------------------------------------------------------------------------------------------------------------
+
+
+// note: now unbounded ? is contained within the inheritance hierarchy
+class H extends G<?> {}
+
+var h : H;
+
+
+// XPECT noerrors -->
+g = h;
+
+// XPECT noerrors -->
+var test11 : A = h.foo();
+// XPECT errors --> "? extends A is not a subtype of X." at "h.foo()"
+var test12 : X = h.foo();
+
+// XPECT noerrors -->
+h.foo().m();
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'other'." at "other"
+h.foo().other();
+
+

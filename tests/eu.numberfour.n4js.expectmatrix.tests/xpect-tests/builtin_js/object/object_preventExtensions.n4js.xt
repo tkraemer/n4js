@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Object.preventExtensions()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible
+
+var empty : Object = {};
+console.log(Object.isExtensible(empty) === true);
+// IDEBUG-124 XPECT noerrors --> "IDEBUG-124: preventExtensions"
+Object.preventExtensions(empty);
+console.log(Object.isExtensible(empty) === false);
+
+/* XPECT output --- 
+<==
+stdout:
+true
+true
+stderr:
+==>
+--- */

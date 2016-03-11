@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+////////////////////
+// Type modifiers //
+////////////////////
+
+// call without optional parameter XPECT noerrors -->
+((n : number?) => { return n | 0; })();
+
+// call with optional parameter XPECT noerrors -->
+((n : number?) => { return n | 0; })(5);
+
+// call with wrong optional parameter XPECT errors --> "string is not a subtype of number?." at ""hell""
+((n : number?) => { return n | 0; })("hell");
+
+
+
+// call without variadic parameter XPECT noerrors -->
+((... n : number) => { return n[2] | 0; })();
+
+// call with one variadic parameter XPECT noerrors -->
+((... n : number) => { return n[2] | 0; })(5);
+
+// call with many variadic parameters XPECT noerrors -->
+((... n : number) => { return n[2] | 0; })(5,3,4,5,6,7,8,9);
+
+// call with wrong variadic parameters XPECT errors --> "string is not a subtype of number." at ""hell""
+((... n : number) => { return n[2] | 0; })(5,3,4,5,"hell",7,8,9);

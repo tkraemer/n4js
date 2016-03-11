@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT outputRegex with SystemJS --- 
+<==
+stdout:
+stderr:
+foo\b(\s)+\bError loading\b(\s)+(.)+
+==>
+--- */
+throw 'foo'

@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+- E: optional -
+Optional: undefined
+Optional: s1
+- subclass of E -
+Optional: undefined
+Optional: s1
+stderr:
+==>
+--- */
+class E {
+	constructor(start : string?) {
+		console.log("Optional: " + start)
+	}
+}
+class E2 extends E {}
+
+console.log("- E: optional -")
+new E()
+new E("s1")
+console.log("- subclass of E -")
+new E2()
+new E2("s1")

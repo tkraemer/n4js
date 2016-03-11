@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+// see N4JS spec: Example 64 (Super Call in Static Methods) 
+
+/* XPECT output ---
+<==
+stdout:
+A
+B
+stderr:
+==>
+--- */
+class A {
+	static foo() : void { console.log('A') }
+	static bar() : void {
+		this.foo();
+	}
+}
+
+class B extends A {
+	
+	@Override
+	static foo() : void { console.log('B') }
+	@Override 
+	static bar() : void {
+		A.bar(); 		// outputs 'A'
+		super.bar();	// outputs 'B'
+	}
+}
+
+B.bar(); 

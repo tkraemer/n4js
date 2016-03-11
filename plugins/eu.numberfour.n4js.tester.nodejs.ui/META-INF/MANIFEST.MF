@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.numberfour.n4js.tester.nodejs.ui
+Bundle-SymbolicName: eu.numberfour.n4js.tester.nodejs.ui;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: eu.numberfour.n4js.ui,
+ eu.numberfour.n4js.runner,
+ eu.numberfour.n4js.runner.ui,
+ eu.numberfour.n4js.runner.nodejs,
+ eu.numberfour.n4js.runner.nodejs.ui,
+ eu.numberfour.n4js.tester,
+ eu.numberfour.n4js.tester.ui,
+ eu.numberfour.n4js.tester.nodejs,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.workbench,
+ org.eclipse.jface,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui
+Bundle-Activator: eu.numberfour.n4js.tester.nodejs.ui.NodejsTesterUiActivator
+Bundle-ActivationPolicy: lazy
+Import-Package: eu.numberfour.n4js.utils

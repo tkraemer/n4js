@@ -1,0 +1,12 @@
+class SameProjectClass {
+	private privateMethod() {
+		
+	}
+	private privateInternalMethod() {
+		
+	}
+	
+}
+enum SameProjectEnum {
+	ONE,TWO
+}

@@ -1,0 +1,13 @@
+ArtifactId: P2
+VendorId: eu.numberfour
+ProjectName: "P2"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+ProjectDependencies { P1 }
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}

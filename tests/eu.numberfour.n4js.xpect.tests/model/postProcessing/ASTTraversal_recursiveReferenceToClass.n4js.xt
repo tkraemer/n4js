@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+//
+// with methods:
+//
+
+var cm : CM;
+cm.m1(); // <- enter class from outside
+
+
+class CM {
+	
+	m1() {
+		var n = 42;
+		this.m2();
+	}
+	
+	m2() {
+		var x = CM; // <- reference to containing class
+	}
+}
+
+
+//
+// same situation with fields and initializer expressions:
+//
+
+var cf : CF;
+cf.f1; // <- enter class from outside
+
+
+class CF {
+	
+	f1 = 42 + this.f2;
+	
+	f2 = 43 + CF; // <- reference to containing class
+	
+}
+

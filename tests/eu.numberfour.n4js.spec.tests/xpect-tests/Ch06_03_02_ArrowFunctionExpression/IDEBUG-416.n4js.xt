@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+function foo(f : {function(): number?}) {}
+
+function none(): void {}
+
+// XPECT noerrors --> "An arrow-function is used in a context where its body is expected to have some value as opposed to being void."
+foo(() => none())
+
+// XPECT errors --> "string is not a subtype of number." at """"
+foo(() => "")
+// XPECT errors --> "boolean is not a subtype of number." at "true"
+foo(() => true)
+
+// XPECT errors --> "string is not a subtype of number." at """"
+foo(() => { return "" })
+
+class A {}
+function <T extends A> foo2(f : {function(): T}) {}
+foo2(() => new A)

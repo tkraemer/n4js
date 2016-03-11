@@ -1,0 +1,9 @@
+import { A } from "A";
+
+export public class Client {
+
+    public foo() {
+        console.log(A);
+    }
+
+}

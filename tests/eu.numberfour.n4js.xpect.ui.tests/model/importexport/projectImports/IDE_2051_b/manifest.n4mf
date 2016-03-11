@@ -1,0 +1,13 @@
+ArtifactId: IDE_2051_b
+VendorId: eu.numberfour
+ProjectName: "IDE_2051_b"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+MainModule: "def"
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}

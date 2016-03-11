@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// RegExp.prototype.test()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
+
+function testinput(re : RegExp, str : string){
+    var midstring;
+    if (re.test(str)) {
+        midstring = " contains ";
+    } else {
+        midstring = " does not contain ";
+    }
+    console.log(str + midstring + re.source);
+}
+
+var re = new RegExp("foo", "gi")
+var str = 'Foo foobar FOO';
+
+testinput(re, str);
+
+/* XPECT output --- 
+<==
+stdout:
+Foo foobar FOO contains foo
+stderr:
+==>
+--- */

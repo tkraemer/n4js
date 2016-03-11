@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+enum Color { RED, GREEN, BLUE }
+enum Country { DE : "276", US : "840", TR : "792" }
+
+var red : Color = Color.RED;
+var us : Country = Country.US;
+var s1 : string = us.value;
+var s2 : string = red.name;
+var s3 : string = Country.DE.value;
+
+// XPECT errors --> "N4Class is not a subtype of number." at "N4Type.of(us)"
+var n1 : number = N4Type.of(us);
+// XPECT errors --> "string is not a subtype of number." at "us.toString()"
+var n2 : number = us.toString();
+

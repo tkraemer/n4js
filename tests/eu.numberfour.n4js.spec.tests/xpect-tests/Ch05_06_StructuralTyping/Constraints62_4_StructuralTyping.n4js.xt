@@ -1,0 +1,59 @@
+class T {
+	public n : number;
+	public foo() {}
+	
+	private pn : number;
+	private pfoo() {}
+	
+	public static SN : number;
+	public static SFOO() {}
+}
+
+class X {
+	public n : number;
+	public foo() {}
+	
+	public s : string;
+}
+
+class Y {
+	public n : number;
+	public s : string;
+}
+
+var ol = {
+	n: 10,
+	foo: function() {},
+	s: "hello"
+}
+
+var ol2 = {
+	foo: function() {},
+	s: "hello"
+}
+
+var t : ~T;
+var x : ~X;
+var y : ~Y;
+
+// XPECT noerrors --> 
+t = x;
+// XPECT errors --> "~T is not a structural subtype of ~X: missing field s." at "t"
+x = t;
+
+// XPECT errors --> "~Y is not a structural subtype of ~T: missing method foo." at "y"
+t = y;
+// XPECT errors --> "~T is not a structural subtype of ~Y: missing field s." at "t"
+y = t;
+
+
+// XPECT noerrors --> 
+t = ol;
+
+// XPECT errors --> "~Object with { foo: {function():void}; s: string } is not a structural subtype of ~T: missing field n." at "ol2"
+t = ol2;
+
+
+
+
+

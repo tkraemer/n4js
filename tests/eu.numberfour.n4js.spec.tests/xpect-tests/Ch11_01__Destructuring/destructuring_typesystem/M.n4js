@@ -1,0 +1,8 @@
+
+
+export public class Cls {
+	public fieldPublic;
+	project fieldProject;
+	private fieldPrivate;
+}
+

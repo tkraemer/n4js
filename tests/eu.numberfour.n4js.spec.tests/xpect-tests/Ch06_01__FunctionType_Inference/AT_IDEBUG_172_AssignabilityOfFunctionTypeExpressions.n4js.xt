@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+/*
+   Acceptance Test to IDEBUG-172: Function type expression not assignable to Function
+ */
+
+var dest : Function;
+
+var f_ok = function():void {};
+dest = f_ok; // worked even before fix of IDEBUG-172
+
+var f_err : {function():void};
+// XPECT noerrors --> "{function():void} should be a subtype of Function"
+dest = f_err; // did not work before bug fix

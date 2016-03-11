@@ -1,0 +1,39 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "proposal" {
+					Folder "contentassist" {
+						ThisFile {}
+						File "A.n4js" {}						
+					}
+				}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../../manifest_nv.n4mf" }
+		}
+	}
+   END_SETUP
+
+ */
+
+// N4JSDesing, §14.5.2.3. "Multi Line Expectations in Proposal Tests" 
+// TODO Working with LineBasedTokenizer XPECT_IGNORE 
+
+/* XPECT quickFix at 'class B<|> extends' apply 'Import A' --- 
+
++ import { A } from "proposal/contentassist/A"
+
+| class B extends [a|A] {
+| [class B extends a {|class B extends A {]
+
+  }
+---
+*/
+class B extends a {
+		
+}
+
+
+

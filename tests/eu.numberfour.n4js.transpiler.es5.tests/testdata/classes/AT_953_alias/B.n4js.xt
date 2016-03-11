@@ -1,0 +1,68 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "A.n4js" {}
+	}
+	
+	END_SETUP
+ */
+
+/* XPECT output ---
+<==
+stdout:
+
+a.foo()
+B.A.foo
+
+b.foo()
+B.Super call --> C (A.A)
+A.A.foo
+
+c.foo()
+A.A.foo
+
+d.foo()
+D.Super call --> A (B.A)
+B.A.foo
+stderr:
+==>
+--- */
+
+import { A as C, R as S} from "classes/AT_953_alias/A"
+
+class A {
+    foo() : void {
+        console.log("B.A.foo");
+    }
+}
+
+class B extends C {
+    @Override
+    foo() : void {
+        console.log("B.Super call --> C (A.A)");
+        super.foo();
+    }
+}
+
+class D extends A {
+    @Override
+    foo() : void {
+        console.log("D.Super call --> A (B.A)");
+        super.foo();
+    }
+}
+
+var a = new A();
+var b = new B();
+var c = new C();
+var d = new D();
+
+console.log("\na.foo()")
+a.foo();
+console.log("\nb.foo()")
+b.foo();
+console.log("\nc.foo()")
+c.foo();
+console.log("\nd.foo()")
+d.foo();

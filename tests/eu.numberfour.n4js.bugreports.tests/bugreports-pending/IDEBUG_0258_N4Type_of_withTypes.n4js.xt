@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportPendingTest END_SETUP  */
+/* XPECT FIXME output ---
+<==
+stdout:
+Foo
+Foo
+stderr:
+==>
+--- */
+class Foo {}
+
+console.log(N4Class.of(new Foo()).name) // works
+try {
+	console.log(N4Class.of(Foo).name) // crashes
+}
+catch(e) {
+	console.log("EXCEPTION:",e);
+}

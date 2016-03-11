@@ -1,0 +1,6 @@
+@@Global
+
+@ProvidedByRuntime 
+export external public class MyDom {
+	public static foo() : void
+}

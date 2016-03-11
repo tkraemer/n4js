@@ -1,0 +1,20 @@
+
+export class Class1 {
+	
+}
+
+export class Class2 {
+	
+}
+
+class Class3 {
+	
+}
+
+export class Class4 {
+	
+}
+
+class MultipleClasses {
+	
+}

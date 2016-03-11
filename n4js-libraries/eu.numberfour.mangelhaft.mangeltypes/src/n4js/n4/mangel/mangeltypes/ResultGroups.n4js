@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
+export public class ResultGroups {
+    public results: Array<ResultGroup>;
+    public successes: number = 0;
+    public failures: number = 0;
+
+    public constructor(@Spec spec: ~i~this) {}
+
+    /**
+     * combines multiple ResultGroups into one single resultGroups
+     * @param resultGroups one or more resultGroups objects
+     * return a ResultGroups instance
+     */
+    public static concat(...resultGroups: ResultGroups): ResultGroups {
+        return ResultGroups.concatArray(resultGroups);
+    }
+    /**
+     * same as concat but takes a whole array
+     */
+    public static concatArray(resultGroupss: Array<ResultGroups>): ResultGroups {
+        return resultGroupss.reduce(function(acc: ResultGroups, resultGroups: ResultGroups) {
+            if (acc) {
+                acc.results = acc.results.concat(resultGroups.results);
+                acc.successes += resultGroups.successes;
+                acc.failures += resultGroups.failures;
+            }
+            return acc;
+        }, new ResultGroups({Array<ResultGroup> results: [], successes: 0, failures: 0}));
+    }
+}

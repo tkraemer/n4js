@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+//
+// nesting #1: introduce another structural type in type argument at variable declaration
+//
+
+class C1<T> {
+	public m() : ~Object with { prop: T; } { return null; }
+}
+
+var c1s : C1<~Object with { propInArg: string; }>;
+
+
+// XPECT type of 'c1s.m().prop.propInArg' --> string
+c1s.m().prop.propInArg;
+// XPECT noerrors -->
+c1s.m().prop.propInArg = "Hello prop!";
+// XPECT noerrors -->
+var test11 : string = c1s.m().prop.propInArg;
+

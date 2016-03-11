@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest   
+
+ 	ResourceSet {
+		ThisFile {}
+		File "F.n4jsd" {}
+	}
+
+END_SETUP */
+
+
+// Test needs to be run in project configured as ProjectType: runtimeEnvironment (i.e. need manifest.n4mf in this or parent folder)
+
+@@ProvidedByRuntime
+@@Global
+
+@Polyfill
+// XPECT errors --> "Polyfill F must declare same type parameters as filled class." at "F"
+export external public class F<S> 
+	// XPECT errors --> "Couldn't resolve reference to Type 'T'." at "T"
+	extends F<T> {
+	
+	// XPECT noerrors --> "but we can use T"
+	genMethod(t : T) : T;
+}

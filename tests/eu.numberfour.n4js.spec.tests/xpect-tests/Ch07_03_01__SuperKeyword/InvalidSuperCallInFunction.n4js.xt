@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+function someFun() {
+	// XPECT errors --> "Super member access may only be used in constructors, methods, getters, or setters." at "super"
+	super.m();						// should fail
+	// XPECT errors --> "Super member access may only be used in constructors, methods, getters, or setters." at "super"
+	super['m']();					// should fail
+	// XPECT errors --> "Super calls may only be used in constructors." at "super"
+	super();						// should fail
+
+	// XPECT errors --> "Super member access may only be used in constructors, methods, getters, or setters." at "super"
+	() => { super.m() };						// should fail
+	// XPECT errors --> "Super member access may only be used in constructors, methods, getters, or setters." at "super"
+	() => { return super['m']() };					// should fail
+	// XPECT errors --> "Super calls may only be used in constructors." at "super"
+	() => super();						// should fail
+}
+

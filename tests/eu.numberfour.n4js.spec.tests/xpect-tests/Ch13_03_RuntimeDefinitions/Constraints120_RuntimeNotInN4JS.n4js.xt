@@ -1,0 +1,6 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+  
+// XPECT errors --> "The annotation @ProvidedByRuntime can only be applied in definition files." at "ProvidedByRuntime"
+@ProvidedByRuntime
+class X {}

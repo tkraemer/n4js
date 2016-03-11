@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+// XPECT errors --> "A class with visibility public must be marked as exported." at "Point"
+public class Point {
+
+}
+
+// XPECT errors --> "A class with visibility project must be marked as exported." at "Point2"
+project class Point2 {
+
+}
+
+class Point3 {
+
+}

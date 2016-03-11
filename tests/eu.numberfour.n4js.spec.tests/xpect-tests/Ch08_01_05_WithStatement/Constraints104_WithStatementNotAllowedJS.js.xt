@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// IDE-962
+
+// Constraints 104: not allowed
+
+class A {
+	s : string;
+}
+
+var a = new A();
+// XPECT noerrors --> "With statement allowed in unrestricted mode." at "with (a) {}"
+with (a) {}

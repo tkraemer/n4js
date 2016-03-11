@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Math.LN10
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/LN10
+
+function getNatLog10() {
+   return Math.LN10
+}
+
+console.log(getNatLog10()); // 2.302585092994046
+
+/* XPECT output --- 
+<==
+stdout:
+2.302585092994046
+stderr:
+==>
+--- */

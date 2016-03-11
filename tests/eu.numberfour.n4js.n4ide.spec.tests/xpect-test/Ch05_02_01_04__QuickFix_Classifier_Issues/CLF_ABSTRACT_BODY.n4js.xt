@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest
+    
+ 	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				ThisFile {}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../test-config/manifest.n4mf" }
+		}
+	}
+ 
+   END_SETUP
+ */
+
+class A1 {
+	// XPECT quickFixList  at 'method1<|>()' proposals contain --> "Remove abstract annotation"
+	public abstract method1() {
+		
+	}
+}
+
+class A2 {
+	/* XPECT quickFix at 'method1<|>()' apply 'Remove abstract annotation' ---
+	   	public [abstract|] method1() {
+	   ---
+	 */
+	public abstract method1() {
+		
+	}
+}

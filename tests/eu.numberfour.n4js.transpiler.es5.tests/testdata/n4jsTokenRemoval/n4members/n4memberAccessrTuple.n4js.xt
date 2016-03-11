@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+
+
+/* XPECT output ~~~
+<==
+stdout:
+1
+true
+false
+stderr:
+==>
+~~~ */
+
+
+
+class C{
+
+	private static data : string;
+
+	public static get sdata () : any{
+		return this.data + "";
+	}
+
+	public static set sdata (s : any){
+		/*this*/ C.data = s + "";
+	}
+}
+
+
+console.log(C.sdata = 1)
+console.log(C.sdata == 1)
+console.log(C.sdata === 1)

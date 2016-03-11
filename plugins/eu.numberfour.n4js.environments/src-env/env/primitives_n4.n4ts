@@ -1,0 +1,17 @@
+any{}
+void{}
+
+primitive pathSelector<T> {
+	autoboxedType String
+	assignmnentCompatible string
+}
+
+primitive i18nKey {
+	autoboxedType String
+	assignmnentCompatible string
+}
+
+primitive typeName<T> {
+	autoboxedType String
+	assignmnentCompatible string
+}

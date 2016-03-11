@@ -1,0 +1,5 @@
+// Exports Variables 
+
+export var a = 2;
+
+export var x = "hallo";

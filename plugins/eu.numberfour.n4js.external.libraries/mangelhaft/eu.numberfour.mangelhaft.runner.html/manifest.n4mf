@@ -1,0 +1,35 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+ArtifactId: eu.numberfour.mangelhaft.runner.html
+VendorId: eu.numberfour
+ProjectName: "eu.numberfour.mangelhaft.runner.html"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.3.0
+Output: "src-gen"
+Sources {
+    source {
+        "src/n4js"
+    }
+}
+
+RequiredRuntimeLibraries {
+    n4js-runtime-fetch 
+    ,n4js-runtime-html5
+}
+
+ProjectDependencies {
+    n4js.lang,
+    eu.numberfour.mangelhaft.mangeltypes,
+    eu.numberfour.mangelhaft,
+    eu.numberfour.mangelhaft.reporter.html,
+    eu.numberfour.mangelhaft.reporter.console
+}

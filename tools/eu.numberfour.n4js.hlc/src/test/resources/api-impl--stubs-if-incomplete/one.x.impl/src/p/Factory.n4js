@@ -1,0 +1,15 @@
+import { Ifc , Ifa } from "p/IF"
+
+import { ClassC_ImplementingIfc , ClassA_ImplementingIfa } from "p/IFuser"
+
+@N4JS 
+export public class Factory {
+	
+	public static createSomeIfc() : Ifc {
+		return new ClassC_ImplementingIfc();
+	}
+	public static createSomeIfa() : Ifa {
+		return new ClassA_ImplementingIfa();
+	}
+	
+}

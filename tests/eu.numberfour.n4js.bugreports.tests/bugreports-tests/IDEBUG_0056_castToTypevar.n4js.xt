@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class Map<K,V> {
+	internalMap : Object+ = new Object();
+	
+	put(key : K, value : V) : void {
+		this.internalMap[key] = value;
+	}
+	get(key : any) : V {
+		if (key==null) {
+			// XPECT errors --> "string is not a subtype of V." at "(this.internalMap[key]) as string"
+			return (this.internalMap[key]) as string;
+		} else {
+			// XPECT noerrors --> "should work"
+			return (this.internalMap[key]) as V;
+		} 
+	}
+}

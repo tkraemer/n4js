@@ -1,0 +1,46 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+package eu.numberfour.n4js.n4mf.tests
+
+import eu.numberfour.n4js.n4mf.N4MFInjectorProvider
+import static eu.numberfour.n4js.n4mf.validation.WildcardPathFilter.*
+import org.eclipse.xtext.junit4.InjectWith
+import org.eclipse.xtext.junit4.XtextRunner
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.io.File
+
+/**
+ */
+@RunWith(XtextRunner)
+@InjectWith(N4MFInjectorProvider)
+class WildcardPathFilterTest {
+
+	@Test
+	def testCase1() {
+		val matchString = "src/**/juergensHacks/*"
+		val absoluteProjectPath = '''«System.getProperty("user.dir")»«File.separatorChar»testdata''';
+		val files = collectAllFilesByWildcardPath(absoluteProjectPath, matchString)
+		Assert.assertEquals(2, files.size)
+		Assert.assertTrue(files.exists[it.endsWith("A.js")])
+		Assert.assertTrue(files.exists[it.endsWith("B.js")])
+	}
+
+	@Test
+	def testCase2() {
+		val matchString = "src/**/juergensHacks"
+		val absoluteProjectPath = '''«System.getProperty("user.dir")»«File.separatorChar»testdata''';
+		val folders = collectAllFoldersByWildcardPath(absoluteProjectPath, matchString)
+		Assert.assertEquals(1, folders.size)
+		Assert.assertTrue(folders.exists[it.endsWith("juergensHacks")])
+	}
+}

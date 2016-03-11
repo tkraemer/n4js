@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+package eu.numberfour.n4js.ts.types;
+
+import org.eclipse.emf.common.util.EList;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Built In Type</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see eu.numberfour.n4js.ts.types.TypesPackage#getBuiltInType()
+ * @model
+ * @generated
+ */
+public interface BuiltInType extends Type {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%>.<<%eu.numberfour.n4js.ts.types.TypeVariable%>>emptyEList();'"
+	 * @generated
+	 */
+	EList<TypeVariable> getTypeVars();
+
+} // BuiltInType

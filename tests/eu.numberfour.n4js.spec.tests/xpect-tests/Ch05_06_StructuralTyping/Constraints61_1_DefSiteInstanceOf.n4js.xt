@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+ 
+class ~T {
+	public n : number;
+	public foo() {}
+}
+
+var t;
+
+// XPECT errors --> "instanceof cannot be used with structurally defined type T." at "T"
+t instanceof T;

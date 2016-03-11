@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.numberfour.n4js.ts.tests.helper
+Bundle-SymbolicName: eu.numberfour.n4js.ts.tests.helper
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: eu.numberfour.n4js.ts,
+ org.eclipse.xtext.junit4,
+ eu.numberfour.n4js.environments
+Export-Package: eu.numberfour.n4js.ts
+

@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface R {
+	public get x() : string { return null }
+}
+
+class C implements R {
+	// XPECT errors --> "The getter C.x cannot reduce the visibility of getter R.x." at "x"
+	get x() : string { return null }
+}
+

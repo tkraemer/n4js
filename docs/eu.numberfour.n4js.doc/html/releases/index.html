@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>Release Notes · Releases · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- eclipse -->
+
+
+  <!-- ************* Styles ************* -->
+  <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+</head>
+
+<body>
+  <header class="Grid"></header>
+
+  <div class="Main">
+    <article class="Article--noGrid">
+
+<h1>Release Notes</h1>
+
+<p>The current release of N4JS, version 0.3, is a "public alpha".
+"alpha" means four things:</p>
+
+<ol>
+  <li>There exist known issues</li>
+  <li>There exist probably even more unknown issues.</li>
+  <li>There will be more features in future releases.</li>
+  <li>There may be incompatible changes in future releases.</li>
+</ol>
+
+<p>
+In case of N4JS "alpha" does not mean unstable. N4JS has been developer for three years now.  There exists an extensive test suite with more that 70.000 tests, including the <a href="https://github.com/tc39/test262">ECMAScript test suites</a>. It is used in production mode internally for more than a year, handling a code base with more than 3.000 modules and thousands of tests. That is N4JS has successfully passed its internal beta phase: It is working for us. So we are confident that it will also work for you. But since every programmer has her/his own style, you may find issues we didn't find. In order to solve these issues, we may add new features or have to change things. This is why we call it "public alpha".
+</p>
+
+
+
+<h2>Known Issues</h2>
+<p>
+Since we are using N4JS and the N4JS IDE internally for quite a while we have found a lot of problems of course. There are still a lot of bugs open, and we have lots of ideas for new features. We used an non-public bug tracking system to manage bugs internally. We will review these issues and migrate them to <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> as soon as possible.
+</p>
+
+
+<h2>Unkown Issues</h2>
+
+<p><strong>We embrace bug reports and feature requests!</strong></p>
+
+<p>For the moment we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by public users. When we will move to a different bug-tracking system, we will try to migrate these issues.
+</p>
+<p>
+Writing bug reports is not easy. In order to help you describing bugs and new features, the N4JS IDE comes with an <a href="reporting_bugs.html">extra language</a> especially designed to enable users of a N4JS to write good bug reports.
+</p>
+
+
+<h2>New Features</h2>
+<p>
+In the future, the following topics are expected to be addressed:</p>
+
+<ol>
+<li>Improved UI experience, in particular customized content assist as well as more quick fixes.</li>
+<li>Improved ECMAScript 2015 support.</li>
+<li>Improved type inference and add type guards.</li>
+<li>Improved refactoring capabilities.</li>
+<li>Improved node.js developer experience.</li>
+<li>Support for browser-based projects.</li>
+</ol>
+
+<p>There may be other topics raised by users. Breaking down these topics into single features and prioritizing them highly <strong>depends on your feedback</strong>!
+</p>
+
+<h2>Incompatible Changes in Future Releases</h2>
+<p>
+Yes, that may happen. Maybe the language or APIs have to be changed in future releases, breaking existing code. But don't worry! As mentioned afore, we have a large internal code base. So if incompatible changes are introduced, we will provide tools to migrate your code automatically (unless the changes are easier to solve manually).</p>
+
+<p>Just to given you an idea: In earlier versions we used a Java-like syntax for type annotations. Since this did not work well together with other features such as async/await, we changed the syntax to ECMAScript 4 colon style. This required our whole code base to be changed. Fortunately this was easy since we provided a quick fix, enabling almost all problems stemming from that change to be fixed with a single key stroke!
+</p>
+
+
+
+
+    </article>
+
+  </div>
+  <footer class="Grid"></footer>
+  <script>
+    dp.SyntaxHighlighter.HighlightAll('code');
+  </script>
+
+</body>
+</html>

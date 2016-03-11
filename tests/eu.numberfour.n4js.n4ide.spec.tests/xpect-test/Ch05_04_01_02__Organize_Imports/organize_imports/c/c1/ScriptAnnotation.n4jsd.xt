@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "P1" {
+   	 	Folder "src" { 	
+ 	 	 	File "URLUtils.n4jsd" { from="../../a/URLUtils.n4jsd"}
+ 	 	 	ThisFile {} 
+
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_rtl.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+/* XPECT organizeImports ---
+  (...) 
+--- */
+
+
+@@Global @@ProvidedByRuntime
+import { URLUtils } from "URLUtils"
+
+export public interface ~Location extends URLUtils {
+    public assign(url : string) : void;
+    public reload(forcedReload : boolean?) : void;
+    public replace(url : string) : void;
+}

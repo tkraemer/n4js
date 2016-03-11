@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class C {
+	m() : this {
+		return null;
+	}
+}
+class D extends C {}
+
+function foo(p : Array<C>) {}
+
+var c : C;
+var d : D;
+
+
+// XPECT noerrors -->
+var s : Array<C> = [ c.m() ];
+
+
+// XPECT noerrors --> "Array<this[C]> is not a subtype of Array<C>."
+// XPECT type of '[ c.m() ]' --> Array<C>
+foo( [ c.m() ] );
+

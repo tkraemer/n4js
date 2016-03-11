@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				ThisFile {}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../../manifest_nv.n4mf" }
+		}
+	}
+
+   END_SETUP
+ */
+
+
+class A {
+	methodA() {	}
+	methodA2() { }
+}
+
+
+var a : A = new A();
+
+// Testing quickFix list
+// XPECT quickFixList at 'a.<|>method' --> "Change to 'methodA'"
+a.method();

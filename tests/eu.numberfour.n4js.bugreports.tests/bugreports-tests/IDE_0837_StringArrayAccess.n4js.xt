@@ -1,0 +1,4 @@
+var stuff : string ="bufu";
+// XPECT noerrors --> No error expected: "index access of string returns string"
+var first : string = stuff[0];
+

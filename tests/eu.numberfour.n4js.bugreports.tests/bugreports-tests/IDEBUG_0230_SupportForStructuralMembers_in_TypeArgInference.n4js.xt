@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+function <T> foo( param : ~Object with { prop: T; } ) : T {return null;}
+
+// XPECT type of 'x1' --> number
+// XPECT typeArgs of 'foo' --> number
+var /* number */ x1 = /*<number>*/ foo ( { number prop: 42 } );
+
+
+
+function <T> foo2( param : {function(T)} ) : ~Object with { prop: T; } {return null;}
+
+// XPECT type of 'param' --> string
+// XPECT typeArgs of 'foo2' --> string
+var x2 : ~Object with { prop: string; } = foo2( function(param) {} );
+

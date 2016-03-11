@@ -1,0 +1,65 @@
+ public final EObject ruleNoLineTerminator(EObject in_current) throws RecognitionException {
+        EObject current = in_current;
+
+        Token this_NO_LINE_TERMINATOR_0=null;
+
+         enterRule(); 
+            
+        try {
+            {
+            int alt418=2;
+            int LA418_0 = input.LA(1);
+
+            if ( (LA418_0==RULE_NO_LINE_TERMINATOR) ) {
+                alt418=1;
+            }
+            switch (alt418) {
+                case 1 :
+                    {
+                    this_NO_LINE_TERMINATOR_0=(Token)match(input,RULE_NO_LINE_TERMINATOR,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+                       
+                          newLeafNode(this_NO_LINE_TERMINATOR_0, grammarAccess.getNoLineTerminatorAccess().getNO_LINE_TERMINATORTerminalRuleCall()); 
+                          
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+        	catch (RecognitionException re) { 
+        	    recover(input,re); 
+        	    appendSkippedTokens();
+        	}
+        finally {
+        }
+        return current;
+    }
+_________________________________REPLACE_WITH_________________________________
+// REPLACEMENT ruleNoLineTerminator.java.replacement START
+ public final EObject ruleNoLineTerminator(EObject in_current) throws RecognitionException {
+    	EObject current = in_current;
+    	if (state.backtracking==0) {
+    		promoteEOL();
+    	}
+    	if (hasDisallowedEOL()) { 
+        	if (state.backtracking==0) {
+        		NoViableAltException nvae = new NoViableAltException("", 0, 0, input);
+                reportError(nvae);
+                throw nvae;
+        	}
+        	state.failed=true; 
+        	return current;
+        }
+        return current;
+    }
+// REPLACEMENT ruleNoLineTerminator.java.replacement END

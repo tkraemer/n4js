@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "linking" {
+					ThisFile {}
+				}
+			}
+			File "manifest.n4mf" { from="../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+var p = {
+	f: function() { 
+		console.log("p's f");
+	},
+	b: function() { 
+// XPECT linkedFragment at 'this.|f();' --> /1/@internalTypes.0/@ownedMembers.0
+		this.f();
+	}, // must be bound correctly
+	o: { 
+		nested: "Hello"
+	}
+};
+// XPECT linkedFragment at 'p.|b()' --> /1/@internalTypes.0/@ownedMembers.1
+p.b(); // must be bound correctly
+// XPECT linkedFragment at 'p.o.|nested' --> /1/@internalTypes.3/@ownedMembers.0
+p.o.nested; // must be bound correctly
+

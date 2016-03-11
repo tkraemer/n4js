@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "linking" {
+					Folder "enums" {
+						ThisFile {}
+						File "MyEnum.n4js" {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+import { MyEnum } from "linking/enums/MyEnum" 
+// XPECT linkedFragment at 'MyEnum.|ONE' --> MyEnum.n4js#/1/@topLevelTypes.0/@literals.0
+// Literals do not have a fully qualified name XPECT ! linkedName at 'MyEnum.|ONE' --> ONE
+var myEnum: MyEnum = MyEnum.ONE;

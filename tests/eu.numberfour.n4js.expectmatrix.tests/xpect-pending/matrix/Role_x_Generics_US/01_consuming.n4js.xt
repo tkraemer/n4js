@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////////////////
+// Consuming generic interfaces //
+/////////////////////////////
+
+interface A<T> {
+	a : T;
+	f (t : T) : T { return t; };
+}
+
+interface B<T,S> {
+	s : S;
+	f (t : T) : S { return this.s; };
+}
+
+// interface parameterized XPECT noerrors --> 
+class AA implements A<number> {}
+
+// interface partially parameterized XPECT noerrors -->
+class BA<S> implements B<number,S>{}
+
+// interface fully parameterized XPECT noerrors -->
+class BB implements B<number,string>{}
+
+console.log(21435)

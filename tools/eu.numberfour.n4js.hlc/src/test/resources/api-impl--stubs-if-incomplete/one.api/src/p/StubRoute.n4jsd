@@ -1,0 +1,4 @@
+@N4JS
+export external public class A { public m1() : string; public m2(); } 
+
+export external public class B extends A { }

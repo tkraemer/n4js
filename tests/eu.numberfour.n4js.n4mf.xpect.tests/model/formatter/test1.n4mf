@@ -1,0 +1,51 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFFormatterTest END_SETUP */
+
+/* XPECT formatted --- 
+ArtifactId: formatter
+VendorId: eu.numberfour
+ProjectName: "My Project One"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Sources {
+	source {
+		"src",
+		"src-gen"
+	}
+	test {
+		"src-test"
+	}
+	external {
+		"external"
+	}
+}
+Resources {
+	"resources"
+}
+Libraries {
+	"lib"
+}
+ModuleFilters {
+	noValidate {
+		"p/wolfgangsUglyHack",
+		"muchMoreHacks" in "src"
+	}
+	noModuleWrap {
+		"p/Wrapped"
+	}
+}
+Output: "output"
+ProjectDependencies {
+	eu.numberfour:my.project.one (0.0.1, 0.0.2] compile,
+	eu.numberfour:my.project.one (1.0, 1.0) compile
+}
+--- */
+ArtifactId : formatter VendorId : eu.numberfour ProjectName :
+"My Project One" VendorName : "NumberFour AG" ProjectType : library
+ProjectVersion : 0 . 0 . 1 - SNAPSHOT Sources { source { "src" , "src-gen"}
+test { "src-test"} external { "external" }}Resources { "resources"} Libraries {
+"lib"} ModuleFilters { noValidate { "p/wolfgangsUglyHack" ,
+"muchMoreHacks" in "src" }noModuleWrap { "p/Wrapped"
+}} Output : "output" ProjectDependencies {
+eu.numberfour : my.project.one ( 0 . 0 . 1 , 0 . 0 . 2 ] compile ,
+eu.numberfour : my.project.one ( 1 . 0 , 1 . 0 ) compile}

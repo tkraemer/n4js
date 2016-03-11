@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		Project "ConsumerOfAB" {
+			Folder "src" {
+				ThisFile {}
+				File "Main.n4js" { from="../src/Main.n4js" }
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf"}
+		}
+	}
+	
+	END_SETUP
+*/
+
+
+// XPECT noerrors --> resolves as complete module import from project
+import * as SpaceMain2 from "ConsumerOfAB/Main"
+
+//XPECT type of 'main2' --> constructor{MainC}
+var main2 = SpaceMain2.MainC;
+

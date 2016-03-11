@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "P1" {
+   	 	Folder "src" { 	Folder "a" {
+   	 		Folder "a1" { File "A.n4js" { from="../../a/a1/A.n4js" } } 
+   	 		Folder "a2" { File "A.n4js" { from="../../a/a2/A.n4js" } }
+			Folder "c"  { ThisFile {} }	   	 		
+   	 	}}
+   	 	File "manifest.n4mf" { from="manifest_p1.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+/* XPECT organizeImports --- 
+(...)
+--- */
+
+import {A,IA} from "a/a1/A"
+import {B,IB} from "a/a2/A"
+
+
+var a : A = new A(); //  'a/a1/A'
+var b : B = new B(); //  'a/a2/A'
+var ia : IA; //  'a/a1/A'
+var ib : IB; //  'a/a2/A'

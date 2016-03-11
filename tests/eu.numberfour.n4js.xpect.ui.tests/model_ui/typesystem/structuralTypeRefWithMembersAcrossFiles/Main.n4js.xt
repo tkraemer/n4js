@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginUITest
+	
+	Workspace {
+		JavaProject "ProjectMain" {
+			SrcFolder {
+				Folder "m" {
+					ThisFile {}
+				}
+			}
+			File "manifest.n4mf" { from="./manifestMain.n4mf" }
+		}
+		JavaProject "ProjectImportee" {
+			SrcFolder {
+				Folder "i" {
+					File "Importee.n4js" {}
+				}
+			}
+			File "manifest.n4mf" { from="./manifestImportee.n4mf" }
+		}
+	}
+	
+	END_SETUP
+*/
+
+
+import * as I from "i/Importee"
+
+var p : I.Provider;
+
+// XPECT type of 'p.f1.n' --> X
+p.f1.n;
+// XPECT type of 'p.f2.n' --> X
+p.f2.n;
+// XPECT type of 'p.f3.value.n' --> X
+p.f3.value.n;
+// XPECT type of 'p.m1().n' --> X
+p.m1().n;
+
+
+// XPECT hyperlinks at 'n<|>' --> n: "n" (PropertyNameValuePair) in "f1" (N4FieldDeclaration) in "Provider" (N4ClassDeclaration) in file Importee.n4js
+p.f1.n;
+// XPECT hyperlinks at 'n<|>' --> n: "n" (TStructField) in "f2" (N4FieldDeclaration) in "Provider" (N4ClassDeclaration) in file Importee.n4js
+p.f2.n;
+// XPECT hyperlinks at 'n<|>' --> n: "n" (TStructField) in "f3" (N4FieldDeclaration) in "Provider" (N4ClassDeclaration) in file Importee.n4js
+p.f3.value.n;
+// XPECT hyperlinks at 'n<|>' --> n: "n" (TStructField) in "m1" (N4MethodDeclaration) in "Provider" (N4ClassDeclaration) in file Importee.n4js
+p.m1().n;
+

@@ -1,0 +1,2 @@
+// XPECT noerrors --> "in plain JS, no type arguments are required"
+var /*Array<any+>*/ a = new Array/*<any+>*/();

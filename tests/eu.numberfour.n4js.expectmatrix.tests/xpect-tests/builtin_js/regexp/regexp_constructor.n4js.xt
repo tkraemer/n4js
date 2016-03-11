@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// RegExp.constructor
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+
+var re1 = /\w+/;
+var re2 = new RegExp("\\w+", "gi");
+
+console.log(re1);
+console.log(re2);
+
+/* XPECT output --- 
+<==
+stdout:
+/\w+/
+/\w+/gi
+stderr:
+==>
+--- */

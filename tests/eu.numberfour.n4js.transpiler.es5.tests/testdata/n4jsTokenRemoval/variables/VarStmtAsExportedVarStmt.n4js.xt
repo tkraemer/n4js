@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+
+
+/* XPECT output ~~~
+<==
+stdout:
+c2
+stderr:
+==>
+~~~ */
+
+
+export @Undefined project var @Undefined c2 : string = 'c2';
+
+console.log(c2);

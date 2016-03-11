@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+// this type in function expression
+class A {
+	
+	
+	/* FTE in formal parameters of method declaration */
+	// XPECT noerrors --> 
+	m1( param : {function(this)}) : string { return null; }  // ok
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	m2( param : {function():this}) : string { return null; } 	// disallow
+ 
+	/* FTE as returntype of method declaration */
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	m3( ) : {function(this)} { return null; }  // disallow
+
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	m4( ) : {function():this} { return null; }  // disabled due to inability to create a corresponding function.
+	
+	
+	/* FTE in formal parameters of method declaration */
+	// XPECT noerrors --> 
+	set  a ( x : {function(this)} ){ }  // ok
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	set  b ( x : {function():this} ){ }  // disallow
+	
+	/* FTE as returntype of getter declaration */
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	get b () : {function(this)} { return null; } // disallow
+
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+	get a () : {function():this} { return null; } // disabled due to inability to create a corresponding function.
+	
+} 
+
+
+
+

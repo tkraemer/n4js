@@ -1,0 +1,34 @@
+
+
+export class B {
+	f() { console.log("B.f()")}
+	
+	static staticF() {
+		console.log("B.staticF()")
+	}
+}
+
+export interface R {
+	
+	fR() {
+		console.log("R.fR()")
+	}
+}
+
+export interface I {
+	fI()
+}
+
+export enum COLOR {
+	RED,
+	GREEN,
+	BLUE
+}
+
+export function fun() {
+	console.log("fun")
+}
+
+export var variable = 5
+
+export const constant = 7

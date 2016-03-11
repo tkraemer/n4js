@@ -1,0 +1,20 @@
+import { os } from "node/os"
+import { getOsName } from "OsInspector"
+import { Assert } from "Assert"
+
+
+export public class OsInspectorTest{
+	
+	@Test
+	public testPass() : void{
+		console.log('inside testPass');
+		
+		var actual = getOsName();
+		
+		var osType : string = os.osType();
+		var expected = "detected os :: " + osType;
+
+		Assert.assertEquals(actual, expected, "Invalid OS detected");
+	}
+
+}

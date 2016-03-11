@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+Hello World
+stderr:
+==>
+--- */
+class Base {
+	public greet : string = 'hi';
+	constructor(@Spec spec : ~i~this) {
+		this.greet += ' World';
+	}
+}
+
+var b = new Base({greet:'Hello'});
+console.log(b.greet)

@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.linking.N4JSLinkingPluginTest END_SETUP */
+
+export class Class2 {
+	
+}
+
+export class Class4 {
+	
+}
+
+class Class6 {
+	
+}
+
+export class Class8 {
+	
+}

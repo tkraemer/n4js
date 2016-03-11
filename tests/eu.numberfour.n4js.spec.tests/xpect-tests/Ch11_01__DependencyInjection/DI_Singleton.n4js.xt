@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT noerrors -->
+@Singleton
+class C {
+	
+}
+
+@Singleton
+// XPECT errors --> "Duplicate annotation of non-repeatable type @Singleton." at "Singleton"
+@Singleton
+class D {
+	
+}
+
+// XPECT errors --> "Wrong number of annotation arguments: @Singleton expects 0 but got 2." at "Singleton"
+@Singleton(D, F)
+class F {
+	
+}
+
+class G {
+	// XPECT errors --> "The annotation @Singleton is disallowed for this location." at "Singleton"
+	@Singleton
+	private a : any;
+	
+	// XPECT errors --> "The annotation @Singleton is disallowed for this location." at "Singleton"
+	@Singleton
+	private foo() : void {
+		
+	}
+	
+	// XPECT errors --> "The annotation @Singleton is disallowed for this location." at "Singleton"
+	@Singleton
+	private static BOO = null;
+	
+	// XPECT errors --> "The annotation @Singleton is disallowed for this location." at "Singleton"
+	@Singleton
+	private static bar() : void {
+		
+	}
+	
+	// XPECT errors --> "The annotation @Singleton is disallowed for this location." at "Singleton"
+	@Singleton
+	constructor() {
+		
+	}
+}

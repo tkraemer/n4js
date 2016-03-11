@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A {}
+
+function foo(obj : Array<Object>) {}
+function <T> foo2(p : Array<T>) : Array<T> {return null;}
+
+// XPECT noerrors -->
+// XPECT type of '[new A()]' --> Array<Object>
+foo([new A()]); // error: "Array<A> is not a subtype of Array<Object>."
+
+// XPECT noerrors -->
+// XPECT type of '[null]' --> Array<Object>
+foo([null]); // error: "Array<null> is not a subtype of Array<Object>."
+
+
+// but:
+
+// XPECT errors --> "Array<int> is not a subtype of Array<Object>." at "[42]"
+foo([42]); // working correctly already
+
+
+
+// with nesting:
+
+// XPECT noerrors -->
+// XPECT type of '[new A()]' --> Array<Object>
+foo(foo2([new A()]));
+
+// XPECT noerrors -->
+// XPECT type of '[null]' --> Array<Object>
+foo(foo2([null]));
+

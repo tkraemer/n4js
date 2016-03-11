@@ -1,0 +1,28 @@
+@StringBased enum SBEnum {
+	a: "a",
+	b: "b"
+}
+
+class A<T extends N4Enum> {}
+
+// XPECT errors --> "SBEnum is not a subtype of N4Enum." at "SBEnum"
+var a : A<SBEnum>;
+
+// XPECT errors --> "SBEnum is not a subtype of N4Enum." at "SBEnum"
+new A<SBEnum>();
+
+
+// extended TESTs after fixing:
+
+enum NEnum { x:"x" }
+class B<T extends N4StringBasedEnum> {}
+
+// XPECT noerrors --> No error expected: "SBEnum is not a subtype of N4Enum." at "SBEnum"
+var b : B<SBEnum> ;
+
+// XPECT errors --> "NEnum is not a subtype of N4StringBasedEnum." at "NEnum"
+var c : B<NEnum> ;
+
+
+// XPECT noerrors --> 
+var d : A<NEnum> ;

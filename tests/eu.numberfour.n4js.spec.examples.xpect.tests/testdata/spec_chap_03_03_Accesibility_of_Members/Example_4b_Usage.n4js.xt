@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest  
+   ResourceSet {
+        ThisFile {}
+        File "Example_4a_Type_and_Member_Access_Modifiers_in_project_A.n4js.xt" {}
+   }
+   END_SETUP
+ */
+ 
+import { C } from "spec_chap_03_03_Accesibility_of_Members/Example_4a_Type_and_Member_Access_Modifiers_in_project_A"
+
+// XPECT errors --> "Cannot use class C: Cannot override non-accessible abstract method C.foo." at "C"
+export public abstract class Sub extends C {
+}
+
+// XPECT noerrors -->
+var c : C = C.instance();

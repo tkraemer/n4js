@@ -1,0 +1,21 @@
+import { MathContext } from "IDE_1789_CyclicDependencies_MathContext"
+
+export public class FixedPoint6 {
+    
+    const defaultContext = MathContext.FLOOR;
+    
+    private value : number;
+    
+    constructor(number : number) {
+        this.value = number;
+    }
+    
+    static getQuotient(fp1 : FixedPoint6, fp2 : FixedPoint6) : number { 
+        return fp1.value / fp2.value;
+    }
+
+    divide(fp : FixedPoint6) {
+        return FixedPoint6.defaultContext.divide(this, fp);
+    }
+    
+}

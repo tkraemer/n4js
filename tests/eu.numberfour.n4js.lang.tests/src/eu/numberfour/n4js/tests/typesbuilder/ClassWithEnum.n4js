@@ -1,0 +1,7 @@
+export project enum StorageType {
+	FILESYSTEM, DATABASE
+}
+
+export @Api public class Storage {
+	private type: StorageType;
+}

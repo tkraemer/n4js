@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   ResourceSet {
+		File "IDEBUG_448_Private.n4js" {}
+		ThisFile {}
+	}
+	
+   END_SETUP
+ */
+ 
+ import { B , A } from "validation/IDEBUG_448/IDEBUG_448_Private"
+
+class D extends B {
+	
+	a2 : A;
+	public constructor() {
+		// XPECT errors --> "The constructor of A is not visible." at "A"
+		this.a2 = new A();
+	}	
+	
+	// XPECT errors --> "The method privMeth is not visible."  at "privMeth"	
+	public callIt2() { this.a.privMeth();}
+		
+}
+
+new D().callIt();

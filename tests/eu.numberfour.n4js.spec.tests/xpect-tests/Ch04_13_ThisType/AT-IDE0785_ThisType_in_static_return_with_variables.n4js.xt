@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C {
+
+	static staticMethod() : type{this} {
+		var /*type{this}*/ c = this;
+		// XPECT errors --> "constructor{C} is not a subtype of type{this[C]}." at "C"
+	  	c = C 
+		return c;
+	}
+}
+
+

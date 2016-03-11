@@ -1,0 +1,14 @@
+@@ProvidedByRuntime
+@@Global
+
+// SEE WrongObjectExtension.n4jsd --> duplicate definition of mi
+
+//@ProvidedByRuntime
+@Polyfill
+export external public class MObject extends MObject {
+	public mi() : string;
+
+	public z0() : string;
+}
+  
+  

@@ -1,0 +1,8 @@
+class A{}
+class B{}
+
+// Constraints 23.1 XPECT FIXME errors --> "Any must not be an element of intersection type" at "{any,A}"
+var intersection{any,A} b;
+
+// Constraints 23.3 XPECT FIXME errors --> "Only one class may be contained in the intersection type" at "{A,B}"
+var intersection{A,B} a;

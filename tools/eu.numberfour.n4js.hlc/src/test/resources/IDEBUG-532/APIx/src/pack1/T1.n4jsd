@@ -1,0 +1,21 @@
+import { IExtendsIterator } from "runtime/es6/Iterator"
+
+// first Error 
+export external public interface Ii<T> extends IExtendsIterator<T> {}
+
+//// second Error -> class cast
+// export external public class Ii<T> 
+//// implements Iterator<T> 
+// implements IExtendsIterator<T>  
+// {
+//// 	@Override
+//// 	public IteratorEntry<T> next();
+//
+//    @Override
+//    public IExtendsIterator<T> [Symbol.iterator](); // must return this
+//
+// }
+//
+////export external public interface Ii<T> extends Iterator<T> {}
+
+

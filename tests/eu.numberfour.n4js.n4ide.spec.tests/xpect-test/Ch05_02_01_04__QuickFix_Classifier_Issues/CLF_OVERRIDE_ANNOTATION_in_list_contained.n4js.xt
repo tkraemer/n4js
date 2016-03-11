@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest
+ 
+ 	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				ThisFile {}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../test-config/manifest.n4mf" }
+		}
+	}
+ 
+   END_SETUP
+ */
+
+class A {
+  public method1() {
+  	return "45";
+  }	
+}
+
+class B extends A {
+	// XPECT errors  at "methods1" --> "The method B.method1 overriding method A.method1 must be annotated with @Override." at "method1"
+	// XPECT quickFixList at 'method1()<|>' proposals contain --> "Add @Override"
+	public method1() {
+		return "46";
+	}
+}

@@ -1,0 +1,7 @@
+@@StaticPolyfillModule
+@StaticPolyfill
+export public class TimezoneRegion extends TimezoneRegion {
+    public static get system() : TimezoneRegion {
+        return null;
+    }
+}

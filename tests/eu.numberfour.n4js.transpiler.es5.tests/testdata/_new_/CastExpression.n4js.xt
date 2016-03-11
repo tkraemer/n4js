@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+
+/* XPECT output ---
+<==
+stdout:
+========================================
+========================================
+stderr:
+==>
+--- */
+
+
+class C {}
+
+
+console.log('========================================');
+
+var x : any = new C();
+var c : C = x as C; // hereby, we simply check that the "as C" was properly removed by the transpiler
+
+console.log('========================================');
+

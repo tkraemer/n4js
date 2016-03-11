@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// IDE-395
+// Constraints 73 (Return statement):
+// ...
+// 2. If enclosing function is declared to return void, then either
+//  * no return statement must be defined
+//  * return statement has no expression
+//  * type of expression of return statement is void
+
+
+// ok: no return 
+function func() : void {}
+
+class A {
+	func() : void {}
+}

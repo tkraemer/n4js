@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		Project "ConsumerOfAB" {
+			Folder "src" {
+				ThisFile {}
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf"}
+		}
+		Project "A" {
+			Folder "src" {
+					File "Main.n4js" { from="../../A/src/Main.n4js" }
+				}
+			File "manifest.n4mf" { from="../../A/manifest.n4mf"}
+			}
+		Project "B" {
+			Folder "src" {
+					File "Main.n4js" { from="../../B/src/Main.n4js" }
+				}
+			File "manifest.n4mf" { from="../../B/manifest.n4mf"}
+			}
+	}
+	
+	END_SETUP
+*/
+
+
+//actually two MainModules are found, one in A, other in B
+//since calling project does not have "Main" first one found wins (ambiguity is not the resolved by using project import, or preficing module with project id)
+//TODO it would be nice to have validation giving a warning saying project import should be used for MainModules
+// XPECT noerrors --> resolves to first found, e.g. A/Main
+import * as SpaceMain from "Main"
+
+console.log("\nA" + SpaceMain)

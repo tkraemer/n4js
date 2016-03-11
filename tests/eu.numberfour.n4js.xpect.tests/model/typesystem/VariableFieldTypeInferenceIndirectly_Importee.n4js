@@ -1,0 +1,23 @@
+
+
+export public class RemoteBefore {
+	field = (new Remote()).field;
+	static staticField = Remote.staticField;
+}
+
+export public class Remote {
+	field = "hello";
+	static staticField = "hello";
+}
+
+export public class RemoteAfter {
+	field = (new Remote()).field;
+	static staticField = Remote.staticField;
+}
+
+
+export var remote_variable_before = remote_variable;
+
+export var remote_variable = "world";
+
+export var remote_variable_after = remote_variable;

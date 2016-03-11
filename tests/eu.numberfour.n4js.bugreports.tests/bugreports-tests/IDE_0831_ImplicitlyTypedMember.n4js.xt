@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+// see https://numberfour.jira.com/browse/IDE-831
+
+class Example {
+
+	// XPECT type of 's' --> string
+    public s = "stuff";
+
+    public n : number = 2;
+
+    public xplicit2implicit () {            
+		//XPECT errors --> "number is not a subtype of string." at "this.n"
+        this.s = this.n; // no error
+    }
+    public implicit2xplicit () {
+//			XPECT errors --> "string is not a subtype of number." at "this.s"
+        this.n = this.s; // "'any is not a subtype of 'number'"
+    }
+    
+//JM: these two tests currently error correctly in the IDE. The test framework though is not recognizing the assignment error.
+
+    public xplicit2implicitLocal () {
+        var s = "stuff";
+        var n : number = 5;
+		//XPECT errors --> "number is not a subtype of string." at "n"
+        s = n; 
+    } 
+    public implicit2xplicitLocal () {
+        var s = "stuff";
+        var n : number = 5;
+		//XPECT errors --> "string is not a subtype of number." at "s"
+        n = s;
+    } 
+
+    
+}
+

@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+
+export project interface I {
+	project foo();
+}
+
+
+// This interface may be used publicly, but since the inherited method foo() is project visible only, 
+// it is not possible to implement that interface in other projects.
+// XPECT noerrors -->
+export public interface J extends I {
+}
+
+
+// Since the visibility of foo is set to public here, it is possible to implement this interface in other projects.
+// XPECT noerrors -->
+export public interface K extends I {
+	@Override public foo();
+}
+
+// Since foo is private, it is not possible to subclass the class in other modules. Still, it
+// is possible to use it in other projects.
+// XPECT noerrors -->
+export public abstract class C {
+	private abstract foo();
+	
+	public static instance() : C { 
+		// return some default instance
+		return null;
+	}
+}

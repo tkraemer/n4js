@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+function safeEval(dyn : string){
+	try{
+		eval(dyn)
+	} catch(e){
+// XPECT type of 'x' --> any
+		var x = e
+// XPECT type of 'message' --> string
+		var message = 'error when running ' + dyn + e
+		console.error(message);
+	}
+}

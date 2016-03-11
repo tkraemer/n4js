@@ -1,0 +1,23 @@
+
+
+/**
+ * provide node os module funcionality
+ * @see https://nodejs.org/api/os.html
+ */
+export public class os{
+	
+	/**
+	 * @see https://nodejs.org/api/os.html#os_os_type
+	 */
+	public static osType() : string {
+		var _type = "";
+		
+		try{
+			_type = Function("var os = global.require('os'); return os.type();")();
+		}catch(e){
+			//issues with require, faking by reaching to node process global property
+			_type = Function("global","return global.process.platform;")(Function('return this')());
+		}
+		return _type;
+	}
+}

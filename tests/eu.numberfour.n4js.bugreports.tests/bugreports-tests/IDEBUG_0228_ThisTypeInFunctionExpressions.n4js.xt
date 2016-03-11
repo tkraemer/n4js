@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class A {
+
+	// XPECT noerrors --> "situation similar to return type"
+	f( cb : {function(this)}) {
+		// XPECT noerrors --> "looks like a consequential error"
+		cb(this);
+	}
+	
+	call1() {
+		// XPECT noerrors --> "this is already working!"
+		this.f(function(a : A){});
+	}
+}
+
+class B extends A{
+	call2() {
+		// XPECT noerrors --> "this is already working!"
+		this.f(function(a : B){});
+		// XPECT noerrors --> "no problem: function(A) <: function(B), so call in call1 is correct with this[B]!"
+		this.call1()
+	}
+}

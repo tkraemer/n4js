@@ -1,0 +1,23 @@
+interface Loadable {
+	
+}
+
+interface MyInterface {
+	
+}
+
+enum StorageType {
+	DB
+}
+
+class Storage {
+	
+}
+
+export public interface Persistable extends Loadable, MyInterface {
+	private stored: StorageType;
+	
+	public persist(element: MyInterface, storage: Storage): MyInterface {
+		//load(storage)
+	}
+}

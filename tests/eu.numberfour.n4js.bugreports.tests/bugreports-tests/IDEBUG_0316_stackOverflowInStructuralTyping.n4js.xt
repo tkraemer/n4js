@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+interface ~I<T> {
+    public m() : I<T>;
+}
+var i : I<?>;
+// XPECT noerrors -->
+var x : I<?> = i; // caused a stack overflow
+

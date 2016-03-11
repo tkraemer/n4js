@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+//////////////////////
+// Access modifiers //
+//////////////////////
+
+class A {
+	public x : number;
+	protected y : number;
+	private z : number;
+	w : number;
+	
+	public constructor (@Spec spec : ~i~this) {}
+}
+
+// XPECT warnings ---
+// "y is not used in constructor." at "y"
+// "z is not used in constructor." at "z"
+// "w is not used in constructor." at "w"
+// ---
+var a : A = new A({x: 1, y: 2, z: 3, w: 4});
+
+console.log(a);
+
+/* only public fields are set XPECT output --- 
+<==
+stdout:
+A { x: 1, y: undefined, z: undefined, w: undefined }
+stderr:
+==>
+--- */

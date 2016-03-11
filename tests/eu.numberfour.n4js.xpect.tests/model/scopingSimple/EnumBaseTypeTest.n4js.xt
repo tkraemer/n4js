@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+// - - - Testing inaccessability of EnumBaseType as a VirtualType.  - - - 
+
+// Enum setup
+enum E {a,b,c}
+
+var s : string = E.a.toString();
+var en : E = E.a;
+s = en.toString();
+
+
+
+
+
+// EnumBaseType not user-exposed XPECT errors --> "Couldn't resolve reference to Type 'EnumBaseType'." at "EnumBaseType"
+var ebt : EnumBaseType = null;
+
+
+

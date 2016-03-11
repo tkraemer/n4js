@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+  static s = "A.s";
+  
+  static set p(s : string) {  }
+  static get p() : string {return "A.p";}
+}
+
+class B extends A {
+	@Override
+	// XPECT noerrors --> "can be overriden"
+	static s = "B.s";
+}
+
+class C extends A {
+	@Override
+	// XPECT errors --> "Type of static field C.s must equal type of overridden static field A.s." at "s"
+	static s = 42;
+}
+

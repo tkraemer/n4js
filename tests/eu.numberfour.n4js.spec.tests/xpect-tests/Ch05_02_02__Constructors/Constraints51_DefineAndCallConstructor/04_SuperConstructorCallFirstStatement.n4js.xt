@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+	constructor(s : string) {
+	}
+	
+	foo() : void {
+	}
+}
+
+class B extends A {
+	constructor() {
+		this.foo();
+		// XPECT errors --> "Super constructor call must not be preceded by this keyword (line 13)." at "super"
+		super("msg");
+	}
+}
+
+class C extends A {
+	constructor() {
+		if (true) {
+			// XPECT errors --> "Super constructor call must only be directly contained in constructor body, i.e. not nested in if statement (line 21)." at "super"
+			super("msg");
+		} else {
+			// XPECT errors --> "Super constructor call must only be directly contained in constructor body, i.e. not nested in if statement (line 21)." at "super"
+			super("msg");
+		}
+	}
+}

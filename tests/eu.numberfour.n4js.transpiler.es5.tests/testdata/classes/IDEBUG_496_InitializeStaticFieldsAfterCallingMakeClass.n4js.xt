@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+
+class C {
+     static S = new C("hello from static initializer!!");
+     
+     private field : string;
+     
+     constructor(message : string) {
+     	console.log("creating a C ...");
+     	this.field = message;
+     }
+     foo() : void {
+     	console.log(this.field);
+     }
+}
+
+
+C.S.foo() // <-- crashes, since it doesn't have the correct prototype at the time of creation
+
+
+
+/* XPECT output ---
+<==
+stdout:
+creating a C ...
+hello from static initializer!!
+stderr:
+==>
+--- */
+

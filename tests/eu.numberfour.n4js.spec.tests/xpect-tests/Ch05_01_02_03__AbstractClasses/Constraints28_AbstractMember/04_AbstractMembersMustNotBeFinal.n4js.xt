@@ -1,0 +1,67 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+abstract class A {
+	
+	// --------------------------------------------------------------------------
+	// for method
+	
+	@Final
+	// XPECT errors --> "An abstract method cannot be declared final." at "m"
+	public abstract m() : string;
+	
+	
+	// --------------------------------------------------------------------------
+	// for getter
+	
+	@Final
+	// XPECT errors --> "An abstract getter cannot be declared final." at "g"
+	public abstract get g() : string;
+	
+	
+	// --------------------------------------------------------------------------
+	// for setter
+	
+	@Final
+	// XPECT errors --> "An abstract setter cannot be declared final." at "s"
+	public abstract set s(name : string);
+}
+
+
+interface I {
+	
+	// --------------------------------------------------------------------------
+	// for field
+	
+	@Final
+	// temporarily a warning, will be changed to error (IDE-1236) XPECT warnings --> "In interfaces, only methods may be declared final." at "f"
+	public f : string = null;
+	
+	
+	// --------------------------------------------------------------------------
+	// for method
+	
+	@Final
+	// XPECT errors --> "An abstract method cannot be declared final." at "m"
+	public m() : string;
+
+	@Final
+	// XPECT noerrors -->
+	public m_withBody() : string { return null; }
+	
+	
+	// --------------------------------------------------------------------------
+	// for getter
+	
+	@Final
+	// XPECT errors --> "An abstract getter cannot be declared final." at "g"
+	public get g() : string;
+	
+	
+	// --------------------------------------------------------------------------
+	// for setter
+	
+	@Final
+	// XPECT errors --> "An abstract setter cannot be declared final." at "s"
+	public set s(name : string);
+}

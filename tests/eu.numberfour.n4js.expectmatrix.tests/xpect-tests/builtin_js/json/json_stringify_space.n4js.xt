@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// JSON.stringify
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+// Using optional parameter 'space'
+
+console.log(JSON.stringify({ a: 2 }, null, " "));
+console.log(JSON.stringify({ uno: 1, dos : 2 }, null, '\t'));
+
+/* XPECT output --- 
+<==
+stdout:
+{
+ "a": 2
+}
+{
+	"uno": 1,
+	"dos": 2
+}
+stderr:
+==>
+--- */

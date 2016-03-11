@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: N4JS Composed Generator UI
+Bundle-SymbolicName: eu.numberfour.n4js.generator.ui;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: eu.numberfour.n4js.generator,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.workbench,
+ org.apache.log4j,
+ com.google.inject,
+ org.eclipse.jface,
+ org.eclipse.xtext.ui,
+ eu.numberfour.n4js.generator.common,
+ eu.numberfour.n4js
+Export-Package: eu.numberfour.n4js.generator.ui

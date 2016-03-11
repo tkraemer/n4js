@@ -1,0 +1,15 @@
+class MyClass {
+	
+}
+
+interface Persistable {
+	
+}
+
+interface Comparable {
+	
+}
+
+export @Internal public class MySubClass extends MyClass implements Persistable, Comparable {
+	
+}

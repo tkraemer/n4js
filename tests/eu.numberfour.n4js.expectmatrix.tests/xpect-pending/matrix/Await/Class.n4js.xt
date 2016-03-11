@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// Async and Await with class methods
+
+class A {
+	private a : string;
+	
+	// Async annotation for a method XPECT noerrors -->
+	public async getA () : string {
+		return this.a;
+	}
+	
+	public async getA2 () : string {
+		// Await annotation inside an async method XPECT noerrors -->
+		return await this.getA();
+	}
+
+	public async getA3 () : string {
+		// Old syntax is temporarily supported XPECT noerrors -->
+		return await this.getA();
+	}
+}
+
+var classA : A = new A();
+
+// does not return a string XPECT errors --> "Promise<string,?> is not a subtype of string." at "classA.getA()"
+var s1 : string = classA.getA();
+
+// returns a Promise of string XPECT noerrors -->
+var s2 : Promise<string,?> = classA.getA();
+
+// does not return a string XPECT errors --> "Promise<string,?> is not a subtype of string." at "classA.getA2()"
+var s3 : string = classA.getA2();
+
+// returns a Promise of string XPECT noerrors -->
+var s4 : Promise<string,?> = classA.getA2();

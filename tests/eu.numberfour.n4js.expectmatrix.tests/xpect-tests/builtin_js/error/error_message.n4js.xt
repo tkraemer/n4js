@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Error.message
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message
+
+var e = new Error("Could not parse input"); // e.message is "Could not parse input"
+console.log(e.toString());
+
+e.message = "Whatever."
+console.log(e.toString());
+
+/* XPECT output --- 
+<==
+stdout:
+Error: Could not parse input
+Error: Whatever.
+stderr:
+==>
+--- */

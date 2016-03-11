@@ -1,0 +1,44 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A {
+	// XPECT errors --> "Field field has type modifiers without giving a type." at "?"
+	field : ?;	
+	
+	// XPECT errors --> "Method method has type modifiers for return type without explicitly giving a return type." at "?"
+	method() : ? {}
+	
+	// XPECT errors --> "Field sfield has type modifiers without giving a type." at "?"
+	static sfield : ?;	
+	
+	// XPECT errors --> "Method smethod has type modifiers for return type without explicitly giving a return type." at "?"
+	static smethod() : ? {}
+
+}
+
+interface IA {
+
+	// XPECT errors --> "Field field has type modifiers without giving a type." at "?"
+	field : ?;	
+	
+	// XPECT errors --> "Method method has type modifiers for return type without explicitly giving a return type." at "?"
+	method() : ? {}
+	 
+	// XPECT errors --> "Field sfield has type modifiers without giving a type." at "?"
+	static sfield : ?;	
+	
+	// XPECT errors --> "Method smethod has type modifiers for return type without explicitly giving a return type." at "?"
+	static smethod() : ? {}
+}
+
+
+// XPECT errors --> "Function f has type modifiers for return type without explicitly giving a return type." at "?"
+function f() :?  {}
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Math.min()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min
+
+var x = 10, y = -20;
+var z = Math.min(x, y);
+console.log(z);
+
+/* XPECT output --- 
+<==
+stdout:
+-20
+stderr:
+==>
+--- */

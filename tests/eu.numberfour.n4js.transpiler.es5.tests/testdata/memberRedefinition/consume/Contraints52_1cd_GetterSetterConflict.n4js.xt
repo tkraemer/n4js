@@ -1,0 +1,49 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+
+/* XPECT output --- 
+<==
+stdout:
+-- A --
+A.x get
+A._x
+A.x set: newValue0
+A.x get
+newValue0
+-- B --
+B.x get
+const
+A.x set: newValue1
+B.x get
+const
+stderr:
+==>
+--- */
+
+interface R {
+	x : string = "R.x";
+}
+
+// R.x is not consumed because there exist getters and setters
+class A implements R {
+	private _x = "A._x";
+	@Override get x() : string { console.log("A.x get"); return this._x}
+	@Override set x(x : string) { console.log("A.x set: " + x);  this._x = x}
+}
+
+class B extends A {
+	@Override get x() : string {  console.log("B.x get");  return "const" }
+}
+
+console.log("-- A --");
+var a = new A();
+console.log(a.x);
+a.x = "newValue0";
+console.log(a.x);
+
+console.log("-- B --");
+var b = new B();
+console.log(b.x);
+b.x = "newValue1";
+console.log(b.x);
+

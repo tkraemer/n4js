@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+// IDEBUG-671 silencing "missing await" warning for Promise-expecting argument
+
+//XPECT noerrors --> "should pass"
+async function t2(): void {
+	//XPECT noerrors --> "should pass"
+	await undefined;
+}
+
+
+// XPECT noerrors -->
+var f1 = Promise.resolve(t2()) 
+
+// XPECT noerrors -->
+var f2 = Promise.all([t2()])  
+
+// XPECT noerrors -->
+var f3 = Promise.race([t2()]) 
+
+// XPECT noerrors -->
+var f4 = Promise.all([t2(), null])  

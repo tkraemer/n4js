@@ -1,0 +1,12 @@
+@@StaticPolyfillModule
+
+
+@StaticPolyfill
+export public class K extends K {
+	
+	@Override
+	public constructor() {
+		super("filled");
+	}
+}  
+

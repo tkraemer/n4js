@@ -1,0 +1,43 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////////////
+// Variadic parameters //
+/////////////////////////
+
+interface I {
+	// in method XPECT noerrors -->
+	public f (... param : string) : string
+};
+
+class A implements I {
+	@Override
+	// in method XPECT noerrors -->
+
+	public f (... param : string) : string {
+		var s1 : any, s = "";
+		
+		for (s1 in param) {
+			// accessing in method XPECT noerrors -->
+			s += param[s1 as number];
+		}
+		return s;
+	}
+};
+
+var a : A = new A();
+
+// calling the method, some parameters XPECT noerrors -->
+console.log(a.f("hello", " cruel ", "world"));
+
+// calling the method, no parameters XPECT noerrors -->
+console.log(a.f());
+
+/* XPECT output --- 
+<==
+stdout:
+hello cruel world
+
+stderr:
+==>
+--- */
+

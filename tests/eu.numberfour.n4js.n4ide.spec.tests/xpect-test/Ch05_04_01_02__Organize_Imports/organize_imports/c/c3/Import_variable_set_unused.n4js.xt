@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "P1" {
+   	 	Folder "src" { 	Folder "a" { File "ExpVar.n4js" { from="../../a/ExpVar.n4js" } } 
+   	 					Folder "c"  { ThisFile {} }	   	 	
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_c3.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+/* XPECT organizeImports ---
+  
+| import {a[,x|]} from "a/ExpVar"  // <-- obsolete
+  var a2 = a;
+  //var x2 = x;
+--- */
+// XPECT warnings --> "The import of x is unused." at "x"
+import {a,x} from "a/ExpVar"  // <-- obsolete
+
+
+var a2 = a;
+
+//var x2 = x;

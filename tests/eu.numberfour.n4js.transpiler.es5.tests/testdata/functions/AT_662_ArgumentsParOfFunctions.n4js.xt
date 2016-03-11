@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+foo.arguments.length: 1
+first arg: 0
+f(1).arguments.length: 2
+f(2).arguments.length: 3
+bar.arguments.length: 4
+first bar: 1
+stderr:
+==>
+--- */
+
+function foo(... args : any) {
+	console.log("foo.arguments.length: " + arguments.length)
+	var a = arguments[0];
+	console.log("first arg: " + a)
+	var f = function(... arg : any) {
+		console.log("f(1).arguments.length: " + arguments.length)
+		var f = function(... arg : any) {
+			console.log("f(2).arguments.length: " + arguments.length)
+		}
+		f(1,2,3);
+	}
+	f(1,2)
+}
+foo(0);
+
+function bar(a,b) {
+	console.log("bar.arguments.length: " + arguments.length)
+	var a0 = arguments[0];
+	console.log("first bar: " + a0)
+}
+
+function g(f : {function(any,any,...any)}) {
+	f(1,2,3,4)
+}
+
+g(bar);

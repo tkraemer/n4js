@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+	Workspace {
+		Project "TwoModules_IDE743" {
+			Folder "src" {
+				ThisFile {}
+				File "A.n4js" {}
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf"}
+		}
+	}
+   END_SETUP
+ */
+
+/* XPECT output --- 
+<==
+stdout:
+modules A A.foo
+modules A f
+stderr:
+==>
+--- */
+import {A, f} from "A"
+
+var a = new A();
+a.foo();
+f();

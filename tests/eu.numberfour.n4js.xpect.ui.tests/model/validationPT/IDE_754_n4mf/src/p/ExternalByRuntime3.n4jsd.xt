@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				Folder "p" {
+					ThisFile {}
+				}
+			}
+			File "manifest.n4mf" { from="../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+@ProvidedByRuntime
+// XPECT noerrors --> "@ProvidedByRuntime" at "ExternalByRuntime3" 
+export external public class ExternalByRuntime3 {
+	externalControl();
+}

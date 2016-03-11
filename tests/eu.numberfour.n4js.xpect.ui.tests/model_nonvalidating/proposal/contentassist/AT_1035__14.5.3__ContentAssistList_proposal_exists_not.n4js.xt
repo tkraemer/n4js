@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+   END_SETUP
+ */
+
+
+class A {
+	methodA() {	}
+	methodA2() { }
+}
+
+
+var a : A = new A();
+
+// proposal not in list
+// XPECT contentAssistList at 'a.<|>methodA' proposals not --> methodB
+a.methodA

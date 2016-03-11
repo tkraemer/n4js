@@ -1,0 +1,6 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+export external public interface I {
+	// XPECT noerrors --> "No errors should occur in definition files."
+    public delete() : void;
+}

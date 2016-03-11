@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT  output ~~~
+<==
+stdout:
+stderr:
+==>
+~~~ */
+
+/* XPECT ! compileResult ---
+--- */
+// §-§-§-§-§ additional ^^^^^^^^ not in example: §-§-§-§--
+// §-§-§-§-§ additional check not in example: §-§-§-§--
+

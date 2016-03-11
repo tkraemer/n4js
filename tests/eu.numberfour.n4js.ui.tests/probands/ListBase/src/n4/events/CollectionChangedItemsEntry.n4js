@@ -1,0 +1,10 @@
+
+var undef;
+export public class CollectionChangedItemsEntry{
+    constructor(spec : any) {}
+    public indexOrKey : union{number,string}; 
+    public value : Object; 
+    public oldValue : Object; 
+    public movedTo : number; 
+    public oldPKey : string; 
+}

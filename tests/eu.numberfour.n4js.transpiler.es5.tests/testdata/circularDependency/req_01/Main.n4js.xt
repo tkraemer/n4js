@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest
+
+    ResourceSet {
+		ThisFile {}
+		File "A.n4js" {}
+		File "B.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+
+/* XPECT !output ---
+<==
+stdout:
+3
+stderr:
+==>
+--- */
+
+import { a2 } from 'circularDependency/req_01/A'
+
+console.log(a2);

@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+		File "MultipleClasses.n4js" {}
+		File "DifferentClasses.n4js" {}
+	}
+	END_SETUP 
+ */
+
+
+/* XPECT errors ---
+"Class2 from validation.imports.MultipleClasses is already imported as X." at "Class2"
+--- */
+import { Class2 as X, Class2 } from "validation/imports/MultipleClasses"
+// XPECT errors --> "Import of Class2 cannot be resolved." at "Class2"
+var c : Class2;
+// XPECT noerrors --> "X is resolved to Class2"
+var x : X;

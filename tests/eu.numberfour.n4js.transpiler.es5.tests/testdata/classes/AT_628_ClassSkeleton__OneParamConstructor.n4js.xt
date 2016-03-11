@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+Base.constructor: Hello
+stderr:
+==>
+--- */
+class Base {
+   constructor(foo : string) {
+      console.log('Base.constructor: ' + foo);
+   }
+}
+new Base('Hello')

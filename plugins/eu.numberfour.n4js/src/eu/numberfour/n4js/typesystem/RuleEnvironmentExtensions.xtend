@@ -1,0 +1,942 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+package eu.numberfour.n4js.typesystem
+
+import com.google.common.collect.ImmutableList
+import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.scoping.builtin.GlobalObjectScope
+import eu.numberfour.n4js.scoping.builtin.VirtualBaseTypeScope
+import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
+import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
+import eu.numberfour.n4js.ts.types.AnyType
+import eu.numberfour.n4js.ts.types.IdentifiableElement
+import eu.numberfour.n4js.ts.types.NullType
+import eu.numberfour.n4js.ts.types.PrimitiveType
+import eu.numberfour.n4js.ts.types.TClass
+import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TEnum
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TN4Classifier
+import eu.numberfour.n4js.ts.types.TObjectPrototype
+import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.TypingStrategy
+import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.ts.types.VoidType
+import eu.numberfour.n4js.ts.utils.TypeExtensions
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.utils.RecursionGuard
+import it.xsemantics.runtime.RuleEnvironment
+import java.util.Collection
+import java.util.Collections
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.EcoreUtil2
+
+import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
+
+/**
+ * Extensions of class RuleEnvironment for handling substitutions and
+ * retrieving build in types.
+ */
+class RuleEnvironmentExtensions {
+
+	/**
+	 * Key used for storing a 'this' binding in a rule environment. Client code should not use this constant
+	 * directly, but instead use methods
+	 * {@link RuleEnvironmentExtensions#addThisType(RuleEnvironment,TypeRef) addThisType(RuleEnvironment G, TypeRef actualThisTypeRef)} and
+	 * {@link RuleEnvironmentExtensions#getThisType(RuleEnvironment) getThisType(RuleEnvironment G)}.
+	 */
+	public static final String KEY__THIS_BINDING = "this";
+
+	/**
+	 * Key used for storing the 'allow traverse AST' flag in a rule environment. Client code should not use
+	 * this constant directly, but instead use methods
+	 * {@link RuleEnvironmentExtensions#setAllowTraverseAST(RuleEnvironment,Resource,boolean) setAllowTraverseAST()} and
+	 * {@link RuleEnvironmentExtensions#getAllowTraverseAST(RuleEnvironment,Resource) getAllowTraverseAST()}.
+	 */
+	public static final String KEY__ALLOW_TRAVERSE_AST = "allowTraverseAST";
+
+	/**
+	 * Key for a List&lt;ExistentialTypeRef> with existential type references that should be re-opened during
+	 * type inference, ie. they should be treated like the Wildcard they were created from.
+	 * For detailed semantics, see xsemantics rules subtypeRefExistentialTypeRefLeft/Right.
+	 */
+	public static final String KEY__REOPEN_EXISTENTIAL_TYPES = "reopenExistentialTypes";
+
+	/**
+	 * Key for storing an ITypeReplacementProvider defining a replacement of some types by other types within
+	 * the context of a rule environment. Used when dealing with replacing an API by its implementation project.
+	 */
+	public static final String KEY__TYPE_REPLACEMENT = "typeReplacement";
+
+	public static final String GUARD_VARIABLE_DECLARATION = "varDecl";
+	public static final String GUARD_TYPE_CALL_EXPRESSION = "typeCallExpression";
+	public static final String GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION = "typePropertyAccessExpression";
+	public static final String GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT = "subtypeRefParameterizedTypeRef__struct";
+	public static final String GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL = "subtypeRefParameterizedTypeRef__nominal";
+	public static final String GUARD_SUBST_TYPE_VARS = "substTypeVariablesInParameterizedTypeRef";
+	public static final String GUARD_STRUCTURAL_TYPING_COMPUTER = "StructuralTypingComputer";
+
+	/**
+	 * Returns a new {@code RuleEnvironment}; we need this because of the
+	 * {@code BuiltInTypeScope} and we cannot simply create a new empty environment.
+	 *
+	 * @param context must not be null!
+	 */
+	public def static newRuleEnvironment(EObject context) {
+		var res = context.eResource;
+		if (res === null) {
+			if (context instanceof BoundThisTypeRef) {
+				res = context.actualThisTypeRef.declaredType.eResource
+			}
+			// maybe we can derive the resource set from other object as well..
+		}
+
+		var G = new RuleEnvironment();
+		G.setPredefinedTypesFromObjectsResourceSet(res.resourceSet);
+		G.add(Resource, res);
+		return G;
+	}
+
+	/**
+	 * Returns a new {@code RuleEnvironment} with a given resource to provide context information and xtext index access.
+	 */
+	public def static newRuleEnvironment(Resource resource) {
+		var G = new RuleEnvironment();
+		G.setPredefinedTypesFromObjectsResourceSet(resource.resourceSet);
+		G.add(Resource, resource)
+		return G;
+	}
+
+	/**
+	 * Returns a new {@code RuleEnvironment} for the same predefined types and resource as the given rule environment.
+	 * <p>
+	 * IMPORTANT: key/value pairs from G will not be available in the returned rule environment! Compare this with
+	 * method {@link #wrap(RuleEnvironment)}.
+	 */
+	public def static newRuleEnvironment(RuleEnvironment G) {
+		var Gnew = new RuleEnvironment();
+		Gnew.setPredefinedTypes(G.getPredefinedTypes());
+		Gnew.add(Resource,G.get(Resource));
+		return Gnew;
+	}
+
+	/**
+	 * Return a new rule environment wrapping the given rule environment 'G', i.e. the all key/value pairs of 'G'
+	 * will be readable in the returned environment, but changes to the returned environment will not affect 'G'.
+	 */
+	public def static wrap(RuleEnvironment G) {
+		new RuleEnvironment(G);
+	}
+
+	def static setPredefinedTypesFromObjectsResourceSet(RuleEnvironment G, ResourceSet resourceSet) {
+		if (resourceSet === null) {
+			throw new IllegalArgumentException("Resource set used to load predefined types must not be null at eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.setPredefinedTypesFromObjectsResourceSet(RuleEnvironment, ResourceSet)");
+		}
+		val builtInTypeScope = BuiltInTypeScope.get(resourceSet);
+		val globalObjectTypeScope = GlobalObjectScope.get(resourceSet);
+		val virtualBaseTypeScope = VirtualBaseTypeScope.get(resourceSet);
+		G.add(PredefinedTypes.PREDEFINED_TYPES_KEY,
+			new PredefinedTypes(builtInTypeScope, globalObjectTypeScope, virtualBaseTypeScope));
+	}
+
+	def static setPredefinedTypes(RuleEnvironment G, PredefinedTypes predefinedTypes) {
+		G.add(PredefinedTypes.PREDEFINED_TYPES_KEY, predefinedTypes);
+	}
+
+	def static PredefinedTypes getPredefinedTypes(RuleEnvironment G) {
+		val predefinedTypes = G.get(PredefinedTypes.PREDEFINED_TYPES_KEY) as PredefinedTypes;
+		if (predefinedTypes === null) {
+			throw new IllegalStateException(
+				"Predefined types not set, call type system with configured rule environment")
+		}
+		return predefinedTypes;
+	}
+
+	/**
+	 * Returns the resource used to load built-in types and to resolve proxies. This is the resource of the object
+	 */
+	public def static Resource getContextResource(RuleEnvironment G) {
+		return G.get(Resource) as Resource;
+	}
+
+	/*
+	 * Adds the actual this type to the rule environment if the actual this type is either
+	 * a  ParameterizedTypeRef or a BoundThisTypeRef. The latter case happens if the receiver
+	 * of a function call is a function call itself, returning a this type.
+	 */
+	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
+		switch (actualThisTypeRef) {
+			ClassifierTypeRef: // IDE-785 decompose
+			  addThisType(G,actualThisTypeRef.staticTypeRef)
+			ParameterizedTypeRef:
+				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
+			BoundThisTypeRef:
+				G.add(KEY__THIS_BINDING, actualThisTypeRef)
+			EnumTypeRef:	// IDEBUG-330
+				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
+		}
+	}
+
+	/**
+	 * Returns the current this type, this must have been added before via
+	 * {@link #addThisType(RuleEnvironment, TypeRef)}
+	 */
+	def static TypeRef getThisType(RuleEnvironment G) {
+		G.get(KEY__THIS_BINDING) as TypeRef;
+	}
+
+	/**
+	 * For semantics, see xsemantics rules subtypeRefExistentialTypeRefLeft/Right.
+	 */
+	def static void addExistentialTypeToBeReopened(RuleEnvironment G, ExistentialTypeRef existentialTypeRef) {
+		if(existentialTypeRef.getWildcard!==null)
+			G.add(KEY__REOPEN_EXISTENTIAL_TYPES->existentialTypeRef.getWildcard,Boolean.TRUE,true);
+	}
+
+	/**
+	 * For semantics, see xsemantics rules subtypeRefExistentialTypeRefLeft/Right.
+	 */
+	def static boolean isExistentialTypeToBeReopened(RuleEnvironment G, ExistentialTypeRef existentialTypeRef) {
+		return existentialTypeRef.getWildcard!==null && G.get(KEY__REOPEN_EXISTENTIAL_TYPES->existentialTypeRef.getWildcard)!==null;
+	}
+
+	def static boolean isExistentialTypeToBeReopened(RuleEnvironment G, EObject obj, boolean searchContents) {
+		if(obj instanceof ExistentialTypeRef) {
+			if(G.isExistentialTypeToBeReopened(obj)) {
+				return true;
+			}
+		}
+		if(searchContents && obj!==null) {
+			return obj.eAllContents.filter(ExistentialTypeRef).exists[G.isExistentialTypeToBeReopened(it)];
+		}
+		return false;
+	}
+
+	def static ExistentialTypeRef createExistentialTypeRef(TypeVariable typeVar, Wildcard wildcard) {
+		var ExistentialTypeRef etr = TypeRefsFactory.eINSTANCE.createExistentialTypeRef();
+		etr.wildcard = wildcard
+		etr.boundTypeVariable = typeVar
+		return etr;
+	}
+
+	/**
+	 * For the moment we won't use that; it should also take intersection
+	 * types into consideration.
+	 */
+	def static ExistentialTypeRef createExistentialTypeRef(TypeVariable typeVar) {
+		createExistentialTypeRef(
+			typeVar,
+			TypeRefsFactory.eINSTANCE.createWildcard => [
+				declaredUpperBound = TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+			]
+		)
+	}
+
+	def static void setTypeReplacement(RuleEnvironment G, ITypeReplacementProvider replacementProvider) {
+		G.add(KEY__TYPE_REPLACEMENT, replacementProvider);
+	}
+
+	def static TypeRef getReplacement(RuleEnvironment G, TypeRef typeRef) {
+		if(typeRef instanceof ParameterizedTypeRef) {
+			if(!(typeRef instanceof FunctionTypeRef)) {
+				val type = typeRef.declaredType;
+				val replacement = getReplacement(G,type);
+				if(replacement!==type) { // identity compare is ok here
+					val cpy = TypeUtils.copyWithProxies(typeRef); // do not resolve proxies
+					cpy.declaredType = replacement;
+					return cpy;
+				}
+			}
+		}
+		else if(typeRef instanceof EnumTypeRef) {
+			val type = typeRef.enumType;
+			val replacement = getReplacement(G,type);
+			if(replacement!==type) { // identity compare is ok here
+				val cpy = TypeUtils.copyWithProxies(typeRef); // do not resolve proxies
+				cpy.enumType = replacement;
+				return cpy;
+			}
+		}
+		else {
+			// no replacement required for other kinds of TypeRef (e.g. ClassifierTypeRef, UnionTypeExpression),
+			// because in those cases the subtype check - and replacement is supposed to only affect subtype
+			// checking - will boil down to nested subtype checks of ParameterizedTypeRef or EnumTypeRef
+		}
+		return typeRef;
+	}
+
+	def static <T extends Type> T getReplacement(RuleEnvironment G, T type) {
+		val replacementProvider = G.get(KEY__TYPE_REPLACEMENT) as ITypeReplacementProvider;
+		val replacement = replacementProvider?.getReplacement(type);
+		return if(replacement!==null) replacement else type;
+	}
+
+	def static TypeRef createTypeRefFromUpperBound(TypeVariable typeVar) {
+		TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+	}
+
+	/* Returns the top type (which is currently 'any' but may change in the future). */
+	public def static AnyType topType(RuleEnvironment G) {
+		G.anyType
+	}
+
+	/* Returns newly created reference to the top type (which is currently 'any' but may change in the future). */
+	public def static ParameterizedTypeRef topTypeRef(RuleEnvironment G) {
+		G.anyTypeRef
+	}
+
+	/* Returns the bottom type (which is currently 'undefined' but may change in the future). */
+	public def static UndefinedType bottomType(RuleEnvironment G) {
+		G.undefinedType
+	}
+
+	/* Returns newly created reference to the bottom type (which is currently 'undefined' but may change in the future). */
+	public def static ParameterizedTypeRef bottomTypeRef(RuleEnvironment G) {
+		G.undefinedTypeRef
+	}
+
+	/* Returns built-in type {@code boolean} */
+	public def static booleanType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.booleanType
+	}
+
+	/* Returns newly created reference to built-in type {@code boolean} */
+	public def static booleanTypeRef(RuleEnvironment G) {
+		G.booleanType.createTypeRef
+	}
+
+	/* Returns built-in type {@code string} */
+	public def static stringType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.stringType
+	}
+
+	/* Returns newly created reference to built-in type {@code string} */
+	public def static stringTypeRef(RuleEnvironment G) {
+		G.stringType.createTypeRef
+	}
+
+	/* Returns built-in object type {@code String} */
+	public def static stringObjectType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.stringObjectType
+	}
+
+	/* Returns newly created reference to built-in object type {@code String} */
+	public def static stringObjectTypeRef(RuleEnvironment G) {
+		G.stringObjectType.createTypeRef
+	}
+
+	/* Returns built-in type {@code number} */
+	public def static numberType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.numberType
+	}
+
+	/* Returns newly created reference to built-in type {@code number} */
+	public def static numberTypeRef(RuleEnvironment G) {
+		G.numberType.createTypeRef
+	}
+
+	/* Returns built-in type {@code int} */
+	public def static intType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.intType
+	}
+
+	/* Returns newly created reference to built-in type {@code int} */
+	public def static intTypeRef(RuleEnvironment G) {
+		G.intType.createTypeRef
+	}
+
+	/* Returns built-in type {@code symbol} */
+	public def static symbolType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.symbolType
+	}
+
+	/* Returns newly created reference to built-in type {@code symbol} */
+	public def static symbolTypeRef(RuleEnvironment G) {
+		G.symbolType.createTypeRef
+	}
+
+	/* Returns built-in object type {@code Symbol} */
+	public def static symbolObjectType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.symbolObjectType
+	}
+
+	/* Returns newly created reference to built-in object type {@code Symbol} */
+	public def static symbolObjectTypeRef(RuleEnvironment G) {
+		G.symbolObjectType.createTypeRef
+	}
+
+	/** Returns built-in type {@code any} */
+	public def static anyType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.anyType
+	}
+
+	/* Returns newly created reference to built-in type {@code any} */
+	public def static anyTypeRef(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.anyTypeRef
+	}
+
+	/* Returns newly created dynamic reference to built-in type {@code any}, that is {@code any+}.
+	 * This is the default type used in JavaScript modes.
+	 */
+	public def static anyTypeRefDynamic(RuleEnvironment G) {
+		val ParameterizedTypeRef result = G.anyType.createTypeRef
+		result.dynamic = true;
+		return result;
+	}
+
+	/* Returns newly created reference to built-in type {@code null} */
+	public def static nullTypeRef(RuleEnvironment G) {
+		G.nullType.createTypeRef
+	}
+
+	/* Returns built-in type {@code undefined} */
+	public def static undefinedType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.undefinedType
+	}
+
+	/* Returns built-in type {@code null} */
+	public def static nullType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.nullType
+	}
+
+	/* Returns newly created reference to built-in type {@code undefined} */
+	public def static undefinedTypeRef(RuleEnvironment G) {
+		G.undefinedType.createTypeRef
+	}
+
+	/* Returns built-in type {@code void} */
+	public def static voidType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.voidType
+	}
+
+	/* Returns newly created reference to built-in type {@code void} */
+	public def static voidTypeRef(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.voidTypeRef
+	}
+
+	/* Returns built-in type {@code RegExp} */
+	public def static regexpType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.regexpType
+	}
+
+	/* Returns newly created reference to built-in type {@code RegExp} */
+	public def static regexpTypeRef(RuleEnvironment G) {
+		G.regexpType.createTypeRef
+	}
+
+	/* Returns built-in type {@code Array<T>} */
+	public def static arrayType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.arrayType
+	}
+
+	/* Returns newly created reference to built-in type {@code Array<T>} */
+	public def static arrayTypeRef(RuleEnvironment G, TypeArgument... typeArgs) {
+		G.arrayType.createTypeRef(typeArgs)
+	}
+
+	/* Returns built-in type {@code Object} */
+	public def static objectType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.objectType
+	}
+
+	/* 	Returns newly created reference to built-in type {@code Object} */
+	public def static objectTypeRef(RuleEnvironment G) {
+		G.objectType.createTypeRef
+	}
+
+	/* 	Returns newly created reference to built-in global object type */
+	public def static globalObjectType(RuleEnvironment G) {
+		return G.getPredefinedTypes().globalObjectScope.globalObject;
+	}
+
+	/* 	Returns newly created reference to built-in global object type */
+	public def static globalObjectTypeRef(RuleEnvironment G) {
+		G.globalObjectType.createTypeRef
+	}
+
+	/* Returns built-in type {@code Function} */
+	public def static functionType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.functionType
+	}
+
+	/* 	Returns newly created reference to built-in type {@code Function} */
+	public def static functionTypeRef(RuleEnvironment G) {
+		G.functionType.createTypeRef
+	}
+
+	/* Returns built-in type {@code N4Object} */
+	public def static n4ObjectType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.n4ObjectType
+	}
+
+	/* 	Returns newly created reference to built-in type {@code N4Object} */
+	public def static n4ObjectTypeRef(RuleEnvironment G) {
+		G.n4ObjectType.createTypeRef
+	}
+
+	/* Returns built-in type {@code N4Enum} */
+	public def static n4EnumType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.n4EnumType
+	}
+
+	/* Returns built-in type {@code N4StringBasedEnum} */
+	public def static n4StringBasedEnumType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.n4StringBasedEnumType
+	}
+	/* Returns a newly created reference to the  built-in type {@code N4StringBasedEnum} */
+	public def static n4StringBasedEnumTypeRef(RuleEnvironment G) {
+		G.n4StringBasedEnumType.createTypeRef
+	}
+	/* Returns built-in type {@code i18nKey} */
+	public def static i18nKeyType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.i18nKeyType
+	}
+
+	/* Returns built-in type {@code pathSelector} */
+	public def static pathSelectorType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.pathSelectorType
+	}
+
+	/* Returns built-in type {@code typeName} */
+	public def static typeNameType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.typeNameType
+	}
+
+	/* Returns built-in type {@code N4Provider} */
+	public def static n4ProviderType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.n4ProviderType
+	}
+
+	/* Returns built-in type {@code Error}. */
+	public def static errorType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.errorType
+	}
+
+	/* Returns newly created reference to built-in type {@code Error}. */
+	public def static errorTypeRef(RuleEnvironment G) {
+		G.errorType.createTypeRef
+	}
+
+	/* Returns built-in type {@code ArgumentsType} */
+	public def static argumentsType(RuleEnvironment G) {
+		G.getPredefinedTypes().virtualBaseTypeScope.argumentsType
+	}
+
+	/* Returns newly created reference to built-in type {@code ArgumentsType} */
+	public def static argumentsTypeRef(RuleEnvironment G) {
+		G.argumentsType.createTypeRef
+	}
+
+	/* Returns built-in type {@code Iterable<T>} */
+	public def static iterableType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.iterableType
+	}
+
+	/* Returns newly created reference to built-in type {@code Iterable<T>} */
+	public def static iterableTypeRef(RuleEnvironment G, TypeArgument... typeArgs) {
+		createTypeRef(G.iterableType, typeArgs);
+	}
+
+	/* Returns built-in type {@code IterableN<T1...TN>} */
+	public def static iterableNType(RuleEnvironment G, int n) {
+		G.getPredefinedTypes().builtInTypeScope.getIterableNType(n)
+	}
+
+	/* Returns newly created reference to built-in type {@code IterableN<T1...TN>} */
+	public def static iterableNTypeRef(RuleEnvironment G, int n, TypeArgument... typeArgs) {
+		createTypeRef(G.iterableNType(n), typeArgs);
+	}
+
+	/* Returns built-in type {@code IterableN<T1...TN>} */
+	public def static iterableNTypes(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.getIterableNTypes
+	}
+
+	/**
+	 * Returns true iff <code>obj</code> is a {@link Type} or {@link TypeRef} and is or points to
+	 * one of the <code>IterableN&lt;...></code> built-in types. Does <b>not</b> check for the
+	 * built-in type <code>Iterable&lt;T></code>.
+	 */
+	public def static boolean isIterableN(RuleEnvironment G, EObject obj) {
+		val type = switch(obj) {
+			Type: obj
+			TypeRef: obj.declaredType
+		};
+		return type!==null && G.iterableNTypes.contains(type);
+	}
+
+	/* Returns built-in type {@code Promise<S,F>} */
+	public def static promiseType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.promiseType
+	}
+
+	/* Returns newly created reference to built-in type {@code Promise<S,F>} */
+	public def static promiseTypeRef(RuleEnvironment G, TypeArgument... typeArgs) {
+		createTypeRef(G.promiseType, typeArgs);
+	}
+
+	/**
+	 * Returns true if the given type is one of the {@link BuiltInTypeScope#isNumeric(Type) numeric} primitive
+	 * built-in types.
+	 */
+	public def static boolean isNumeric(RuleEnvironment G, Type type) {
+		G.predefinedTypes.builtInTypeScope.isNumeric(type)
+	}
+
+	/**
+	 * Returns true if the given type reference points to one of the {@link BuiltInTypeScope#isNumeric(Type) numeric}
+	 * primitive built-in types.
+	 */
+	public def static boolean isNumeric(RuleEnvironment G, TypeRef typeRef) {
+		typeRef?.declaredType!==null && G.predefinedTypes.builtInTypeScope.isNumeric(typeRef.declaredType)
+	}
+
+	/**
+	 * Same as {@link TypeUtils#wrapInTypeRef(BuiltInTypeScope,Type,TypeArgument...)}, but will obtain
+	 * the required {@code BuiltInTypeScope} from the given rule environment.
+	 */
+	public def static TypeRef wrapTypeInTypeRef(RuleEnvironment G, Type type, TypeArgument... typeArgs) {
+		return TypeUtils.wrapTypeInTypeRef(G.predefinedTypes.builtInTypeScope, type, typeArgs);
+	}
+
+	/**
+	 * Convenience method. Same as {@link #addTypeMapping(RuleEnvironment,TypeVariable,TypeArgument)},
+	 * but for adding several mappings.
+	 */
+	public static def void addTypeMappings(RuleEnvironment G, List<? extends TypeVariable> keys, List<? extends TypeArgument> values) {
+		if(keys===null || values===null)
+			return;
+		val size = Math.min(keys.size(),values.size());
+		for(var idx=0;idx<size;idx++) {
+			G.addTypeMapping(keys.get(idx), values.get(idx));
+		}
+	}
+	/**
+	 * Low-level method for adding a type variable -> type argument mapping to a rule environment.
+	 * Use this method only if you know the exact mapping and you do not need support for handling
+	 * existing mappings.
+	 * <p>
+	 * An existing mapping for type variable 'key' will be overwritten. If the given mapping is
+	 * invalid, i.e. {@link #isValidMapping(RulenEnvironment,TypeVariable,TypeArgument isValidMapping()}
+	 * returns false, then this method will do nothing.
+	 */
+	public static def void addTypeMapping(RuleEnvironment G, TypeVariable key, TypeArgument value) {
+		// ignore invalid type mappings
+		if(!G.isValidTypeMapping(key,value))
+			return;
+
+		// resolve wildcards
+		val actualValue = TypeUtils.resolveWildcard(key, value);  // TODO resolve before calling #isValidMapping() and return FALSE from isValidMapping() for Wildcard!!!!
+
+		G.add(key, actualValue);
+	}
+
+	/**
+	 * Checks if rule environment G defines an actual, i.e. non-reflexive, type variable
+	 * substitution for <code>typeVariable</code>. Argument <code>typeVariable</code> may
+	 * either be a {@link TypeVariable} itself or a {@link TypeRef} with a type variable
+	 * as its declared type.<p>
+	 * For convenience, this methods takes arguments of any type but will always return
+	 * <code>false</code> if the argument is neither an instance of {@link TypeVariable}
+	 * nor an instance of {@link TypeRef} with a declared type that is an instance of
+	 * {@link TypeVariable}.
+	 */
+	public def static boolean hasSubstitutionFor(RuleEnvironment G, Object typeVariable) {
+		val key = if(typeVariable instanceof TypeRef) typeVariable.declaredType else typeVariable;
+		if(key instanceof TypeVariable) {
+			val value = G.get(key)
+			return value!==null && !(value instanceof TypeRef && (value as TypeRef).declaredType===key)
+		}
+		return false;
+	}
+
+	public def static boolean isValidTypeMapping(RuleEnvironment G, TypeVariable key, TypeArgument value) {
+		// ignore reflexive mappings, e.g. T -> T, T -> G<T>, etc.
+		if (TypeUtils.isOrContainsRefToTypeVar(value,key))
+			return false;
+		// ignore DeferredTypeRefs
+		if (value instanceof DeferredTypeRef)
+			return false;
+		// ignore void (type 'void' is never a valid substitution for a type variable)
+		if (value instanceof ParameterizedTypeRef)
+			if (value.declaredType instanceof VoidType)
+				return false;
+		// ignore null and undefined (null and undefined do not provide any clue about key's type)
+		if (value instanceof ParameterizedTypeRef)
+			if (value.declaredType instanceof NullType || value.declaredType instanceof UndefinedType)
+				return false;
+		return true;
+	}
+
+	/**
+	 * Returns the declared or implicit super type of a class. This might be a TClass or, in case
+	 * of implicit super types and external classes, a TObjectPrototype (i.e. "Object").
+	 */
+	public def static TClassifier getDeclaredOrImplicitSuperType(RuleEnvironment G, TClass tClass) {
+		// this method is called by validator, AST and type model may be corrupt
+		// thus the super type maybe not a classifier.
+		if (tClass.superClassRef !== null && tClass.superClassRef.declaredType instanceof TClassifier)
+			return tClass.superClassRef.declaredType as TClassifier
+		else if (tClass.external)
+			return G.objectType
+		else
+			return G.n4ObjectType
+	}
+
+	/**
+	 * Returns transitive, non-reflexive closure of implicit super types. All implicit super types are non-generic, so
+	 * type arguments can be ignored here savely.
+	 */
+	public def static List<ParameterizedTypeRef> collectAllImplicitSuperTypesOfType(RuleEnvironment G, Type declaredType) {
+		collectAllImplicitSuperTypesOfType(G, declaredType, new RecursionGuard<Type>());
+	}
+
+	private def static List<ParameterizedTypeRef> collectAllImplicitSuperTypesOfType(RuleEnvironment G, Type declaredType, RecursionGuard<Type> guard) {
+
+		// Type argument is null.
+		if (null === declaredType) {
+			return emptyList;
+		}
+
+		if (!guard.tryNext(declaredType)) {
+			if (declaredType instanceof TClass) {
+				if (declaredType == G.n4ObjectType || (declaredType.external && !declaredType.declaredN4JS) ||
+						declaredType.typingStrategy==TypingStrategy.STRUCTURAL) {
+							return G.objectPrototypesAllImplicitSuperTypeRefs;
+				} else {
+					return G.n4ClassifiersAllImplicitSuperTypeRefs;
+				}
+			} else {
+				return emptyList; // recursion can happen only in case of TClasses.
+			}
+		}
+
+		switch (declaredType) {
+			TClass:
+				if (declaredType == G.n4ObjectType || (declaredType.external && !declaredType.declaredN4JS) ||
+					declaredType.typingStrategy==TypingStrategy.STRUCTURAL)
+					G.objectPrototypesAllImplicitSuperTypeRefs
+				else {
+					if (declaredType.superClassRef===null) {
+						G.n4ClassifiersAllImplicitSuperTypeRefs
+					} else {
+						G.collectAllImplicitSuperTypes(declaredType.superClassRef, guard);
+					}
+				}
+			TN4Classifier:
+				G.n4ClassifiersAllImplicitSuperTypeRefs
+			TObjectPrototype:
+				if (declaredType == G.objectType)
+					emptyList
+				else
+					G.objectPrototypesAllImplicitSuperTypeRefs
+			TEnum:
+				if( TypeSystemHelper::isStringBasedEnumeration( declaredType ))
+					#[G.n4StringBasedEnumTypeRef /* ,  G.stringTypeRef*/]
+				else
+					emptyList
+			default:
+				emptyList // quick exit
+		}
+	}
+
+	/**
+	 * Returns transitive, non-reflexive closure of implicit super types, delegates to
+	 * {@link #collectAllImplicitSuperTypesOfType((RuleEnvironment , Type )}.
+	 */
+	public def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		TypeRef typeRef) {
+
+		return collectAllImplicitSuperTypes(G, typeRef, new RecursionGuard<Type>());
+	}
+
+	public def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		IntersectionTypeExpression typeRef) {
+
+		return collectAllImplicitSuperTypes(G, typeRef, new RecursionGuard<Type>());
+	}
+
+	public def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		FunctionTypeExprOrRef typeRef) {
+
+		return collectAllImplicitSuperTypes(G, typeRef, new RecursionGuard<Type>());
+	}
+
+	private def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		TypeRef typeRef, RecursionGuard<Type> guard) {
+
+		return collectAllImplicitSuperTypesOfType(G, typeRef?.declaredType, guard);
+	}
+
+	private def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		IntersectionTypeExpression typeRef, RecursionGuard<Type> guard) {
+
+		return typeRef.typeRefs.map[G.collectAllImplicitSuperTypes(it, guard)].flatten.toList
+	}
+
+	private def static dispatch List<ParameterizedTypeRef> collectAllImplicitSuperTypes(RuleEnvironment G,
+		FunctionTypeExprOrRef typeRef, /*unused*/ RecursionGuard<Type> guard) {
+
+		return G.functionTypesAllImplicitSuperTypeRefs;
+	}
+
+	/** returns an iterable of the assignment-compatible types, up to now only primitives have this concept. */
+	public def static Iterable<TypeRef> assignmentCompatibleTypes(RuleEnvironment G, TypeRef typeRef) {
+		val declaredType = typeRef.declaredType
+		switch (declaredType) {
+			PrimitiveType:
+				G.assignmentCompatibleTypes(declaredType)
+			default:
+				emptyList
+		}
+	}
+
+	public def static Iterable<TypeRef> assignmentCompatibleTypes(RuleEnvironment G, PrimitiveType pt) {
+
+		// Handling primitives with assignment compatible set.
+		if (pt.assignmentCompatible !== null)
+			ImmutableList.<TypeRef>of(createTypeRef(pt.assignmentCompatible))
+		else {
+			emptyList
+		}
+	}
+
+	/**
+	 * Returns unmodifiable list of type references to all function types (expressions and concrete functions):
+	 * {@code Function} and {@code Object}.
+	 */
+	public def static getFunctionTypesAllImplicitSuperTypeRefs(RuleEnvironment G) {
+		return G.getPredefinedTypes().builtInTypeScope.functionTypesAllImplicitSuperTypeRefs
+	}
+
+	/**
+	 * Returns unmodifiable list of type references to all implicit super types of all built-in JavaScript object types,
+	 * object literals and via constructor created elements: {@code Object}.
+	 */
+	public def static getObjectPrototypesAllImplicitSuperTypeRefs(RuleEnvironment G) {
+		return G.getPredefinedTypes().builtInTypeScope.objectPrototypesAllImplicitSuperTypeRefs
+	}
+
+	/**
+	 * Returns unmodifiable list of type references to all implicit super types of all N4 classes, roles, and interfaces,
+	 * that is to {@code N4Object} and {@code Object}.
+	 */
+	public def static List<ParameterizedTypeRef> getN4ClassifiersAllImplicitSuperTypeRefs(RuleEnvironment G) {
+		return G.getPredefinedTypes().builtInTypeScope.n4ClassifiersAllImplicitSuperTypeRefs
+	}
+
+	/**
+	 * If the given expression is a property access to one of the fields in {@code Symbol},
+	 * then this method returns the referenced field, otherwise <code>null</code>.
+	 */
+	public def static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr) {
+		if (expr instanceof ParameterizedPropertyAccessExpression) {
+			val sym = G.symbolObjectType;
+			val prop = expr.property;
+			if(prop instanceof TField && prop.eContainer===sym)
+				return prop as TField;
+		}
+		return null;
+	}
+
+	public def static String ruleEnvAsString(RuleEnvironment G) {
+		val INDENT = "    ";
+		val result = new StringBuffer
+		result.append("RuleEnvironment@")
+		result.append(Integer.toHexString(System.identityHashCode(G)))
+		result.append(" {\n")
+		result.append(G.environment.typeVariableSubstitutionsAsString(INDENT));
+		if (G.next !== null)
+			result.append(INDENT + ruleEnvAsString(G.next).replaceAll("\\n", "\n" + INDENT));
+		result.append("}")
+		return result.toString
+	}
+
+	protected def static String typeVariableSubstitutionsAsString(Map<?, ?> substitutions, String indent) {
+		val pairs = newArrayList
+		for (currKey : substitutions.keySet)
+			pairs.add(
+				indent + typeRefOrVariableAsString(currKey) + ' -> ' +
+					typeRefOrVariableAsString(substitutions.get(currKey)) + '\n');
+		Collections.sort(pairs);
+		return pairs.join;
+	}
+
+	protected def static String typeRefOrVariableAsString(Object obj) {
+		if (obj instanceof Collection<?>)
+			'[ ' + obj.map[typeRefOrVariableAsString].join(', ') + ' ]'
+		else if (obj instanceof TypeVariable) {
+			val parent = obj.eContainer;
+			if (parent instanceof IdentifiableElement)
+				parent.name + '#' + obj.name
+			else if (parent !== null && parent.eClass !== null)
+				parent.eClass.name + '#' + obj.name
+			else
+				'#' + obj.name
+		} else if (obj instanceof TypeRef && (obj as TypeRef).declaredType instanceof TypeVariable)
+			typeRefOrVariableAsString((obj as TypeRef).declaredType)
+		else if (obj instanceof TypeRef)
+			obj.typeRefAsString
+		else
+			obj.toString
+	}
+
+
+	/**
+	 * Check if {@code locationToCheck} is contained in the return part of {@code container}.
+	 */
+	public def static boolean isInReturnDeclaration_Of_StaticMethod(EObject locationToCheck,N4MethodDeclaration container) {
+		if( ! container.isStatic ) return false;
+		val isInReturn = EcoreUtil2.isAncestor(container.returnTypeRef,locationToCheck)
+		return isInReturn;
+	}
+
+	/**
+	 * Check if {@code locationToCheck} is contained in the body part of {@code container}.
+	 */
+	public def static boolean isInBody_Of_StaticMethod(EObject locationToCheck,N4MethodDeclaration container) {
+		if( ! container.isStatic ) return false;
+		val isInBody = EcoreUtil2.isAncestor(container.body,locationToCheck)
+		return isInBody;
+	}
+
+	/**
+	 * Creates a parameterized type ref to the wrapped static type of a ClassifierTyperRef, configured with the given TypeArguments.
+	 * Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type)
+	 */
+	public static def TypeRef createTypeRefFromStaticType(ClassifierTypeRef ctr, TypeArgument ... typeArgs) {
+		 val type = ctr.staticType()
+		 if( type !== null ) {
+		 	 TypeExtensions.ref(type,typeArgs)
+		 } else {
+		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+		 }
+	}
+}

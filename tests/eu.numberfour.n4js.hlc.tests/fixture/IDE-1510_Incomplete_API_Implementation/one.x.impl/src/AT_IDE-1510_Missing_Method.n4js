@@ -1,0 +1,17 @@
+// TEST-RESULT SEE: eu.numberfour.n4js.hlc.tests.N4jscSingleFileCompileIT.testApiImplStub_CompileAndRunWithNodejsPlugin()
+import { A } from "p/A"
+var a : any+ = new A();
+
+try {
+	a.missing_n();
+} catch ( e ) {
+	console.log(""+e);
+}
+
+try {
+	a.missing_someIA();
+} catch ( e ) {
+	console.log(""+e);
+}
+
+

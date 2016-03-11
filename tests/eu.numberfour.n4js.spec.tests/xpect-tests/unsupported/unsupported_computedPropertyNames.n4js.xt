@@ -1,0 +1,43 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+function foo(): string {
+	return "someName";
+}
+
+
+
+class C {
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	get [foo()]() {return null;}
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	set [foo()](value) {}
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	[foo()]() {}
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "Symbol()"
+	[Symbol()]() {}
+}
+
+
+var ol = {
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	[foo()]: "one",
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	get [foo()]() {return null;},
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	set [foo()](value) {},
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "foo()"
+	[foo()]() {},
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "Symbol()"
+	[Symbol()]() {}
+}
+

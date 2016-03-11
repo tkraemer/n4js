@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// note:
+// The important thing in this test is not the "Couldn't resolve reference ..." error. Instead, we
+// here wanna make sure that we do *not* get an additional error saying XYZ is not an injectable type.
+
+
+class C {
+	
+	// XPECT errors --> "Couldn't resolve reference to Type 'XYZ'." at "XYZ"
+	@Inject field : XYZ;
+	
+}
+

@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+@GenerateInjector
+class C {
+}
+
+class D extends C {
+}
+
+class E extends D {
+}
+
+class X {
+}
+
+@GenerateInjector
+class F {
+
+	// XPECT errors --> "Types annotated with @GenerateInjector cannot be injected. Use @WithParentInjector instead for creating nested injectors." at "Inject"
+	@Inject
+	c : C;
+	
+	// XPECT errors --> "Types annotated with @GenerateInjector cannot be injected. Use @WithParentInjector instead for creating nested injectors." at "Inject"
+	@Inject
+	d : D;
+	
+	// XPECT errors --> "Types annotated with @GenerateInjector cannot be injected. Use @WithParentInjector instead for creating nested injectors." at "Inject"
+	@Inject
+	e : E;
+	
+	// XPECT noerrors --> "Neither X nor any if its super types are annoatedt with @GenerateInjector."
+	@Inject
+	x : X;
+}

@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* waiting for FIX of IDEBUG-119 XPECT ! output ---
+<==
+stdout:
+undefined
+undefined
+hi3
+stderr:
+==>
+--- */
+
+class Base {
+	public greet1 : string = 'hi1';
+	public greet2 : string = 'hi2';
+	public greet3 : string = 'hi3';
+	constructor(@Spec spec : ~i~this) {
+		this.greet1 = spec.greet1;
+		this.greet2 = undefined;
+	}
+}
+
+
+// fields explicitly initialized with undefined, will be undefiend
+var b = new Base({string greet1:undefined});
+console.log(b.greet1) //undefined -> value from spec param
+console.log(b.greet2) //undefined -> value not in spec param but set in the constructor
+console.log(b.greet3) //hi -> value from class init

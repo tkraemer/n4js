@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+@N4JS
+export external public class ThatIsOk {
+	constructor(foo : string);
+}
+
+@N4JS
+export external public class ThatIsFineToo {
+	protected constructor(foo : string);
+}
+
+@N4JS
+export external public class ThatFailedBeforeTheBugFix {
+	// XPECT noerrors -->
+	private constructor(foo : string);
+}
+
+
+export external public class ThatStillFailsAndShouldFail_not_any_more {
+	// 	relaxed visibility constraint by IDEBUG-561:		
+	// XPECT noerrors --> "External classes have to have a public constructor, unless they are annotated with @N4JS." at "constructor"
+	private constructor(foo : string);
+}
+

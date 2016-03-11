@@ -1,0 +1,9 @@
+// https://numberfour.jira.com/browse/IDEBUG-153
+
+function f(cb : {function(string?):void}) {}
+
+function g(s : string):void{}
+
+// show modifiers in error message
+// XPECT errors --> "{function(string):void} is not a subtype of {function(string?):void}." at "g"
+f(g);

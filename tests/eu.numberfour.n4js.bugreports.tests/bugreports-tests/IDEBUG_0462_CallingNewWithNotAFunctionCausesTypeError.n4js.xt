@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// XPECT errors --> "Not a reference to a constructor: null." at "null" 
+new null;
+
+// XPECT errors --> "Not a reference to a constructor: number." at "NaN"
+new NaN;
+
+// XPECT errors --> "Not a reference to a constructor: undefined." at "undefined"
+new undefined;
+
+// XPECT errors --> "Not a reference to a constructor: number." at "Infinity"
+new Infinity;
+
+// XPECT errors --> "Not a reference to a constructor: undefined." at "(void 0)"
+new (void 0);
+
+// XPECT errors --> "Not a reference to a constructor: string." at "'some String'"
+new 'some String';
+
+// XPECT errors --> "Not a reference to a constructor: int." at "2"
+new 2;
+
+// XPECT errors --> "Not a reference to a constructor: ~Object." at "{}"
+new {};
+
+// XPECT errors --> "Not a reference to a constructor: Array<any>." at "[]"
+new [];

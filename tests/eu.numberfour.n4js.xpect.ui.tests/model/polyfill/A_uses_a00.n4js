@@ -1,0 +1,10 @@
+
+//import { MObject } from "ObjectExtension"
+class A {
+	
+}
+
+var m : MObject = new MObject();
+
+var n : number = m.k(12);
+

@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+
+class A {
+	// XPECT errors --> "The setter n (line 7) duplicates setter n (line 9)." at "n"
+	public set n(x : string) {}
+	// XPECT errors --> "The setter n (line 9) duplicates setter n (line 7)." at "n"
+	public set n(x : number) {}
+	// XPECT noerrors -->
+	public get n() : number {return null;}
+}
+
+class B {
+	// XPECT errors --> "The getter n (line 16) duplicates getter n (line 18)." at "n"
+	public get n() : number {return null;}
+	// XPECT errors --> "The getter n (line 18) duplicates getter n (line 16)." at "n"
+	public get n() : number {return null;}
+	// XPECT noerrors -->
+	public set n(x : number) {}
+}
+

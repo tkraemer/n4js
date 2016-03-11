@@ -1,0 +1,12 @@
+ArtifactId: RL_MangelhaftRunner
+VendorId: eu.numberfour
+ProjectName: "RL_MangelhaftRunner"
+VendorName: "NumberFour AG"
+ProjectType: runtimeLibrary
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}

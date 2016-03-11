@@ -1,0 +1,16 @@
+ArtifactId: calling.project
+VendorId: eu.numberfour
+ProjectName: "calling.project"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+ProjectDependencies {
+	other.project.same.vendor,
+	other.project.other.vendor
+}

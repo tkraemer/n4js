@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP  */
+
+/* XPECT output --- 
+<==
+stdout:
+via getter: testValue
+via data: testValue
+stderr:
+==>
+--- */
+
+// setter in interface, getter in class
+interface R1 {
+	field : string;
+	set accessor(v : string) { this.field = v }
+}
+class C1 implements R1 {
+	get accessor() : string { return this.field }
+}
+var c1 = new C1(); 
+c1.accessor = "testValue";
+console.log("via getter: " + c1.accessor);
+console.log("via data: "+c1.field);

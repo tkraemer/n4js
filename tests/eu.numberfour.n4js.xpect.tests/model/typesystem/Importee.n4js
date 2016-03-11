@@ -1,0 +1,9 @@
+export var noType;
+export var typeFromLeftSide : string = "string";
+export var typeFromRightSide = "string";
+export class MyClass1 {
+}
+export class MyClass2 {
+	myClass1 : MyClass1;
+}
+export var myClass2 : MyClass2;

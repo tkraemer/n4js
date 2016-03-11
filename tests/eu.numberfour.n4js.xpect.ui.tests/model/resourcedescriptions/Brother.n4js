@@ -1,0 +1,12 @@
+import { Sister as SisterObject } from "resourcedescriptions/Sister"
+import { Child } from "resourcedescriptions/Child"
+
+export class Brother { 
+	project getSister() : SisterObject { return null; }
+	project getChild() : Child { return null; }
+} 
+var brother : Brother = new Brother();
+brother = brother.getSister().getBrother();
+var sister : SisterObject = new SisterObject();
+brother = sister.getBrother();
+

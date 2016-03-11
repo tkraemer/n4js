@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// 1 types
+
+class A{}
+
+interface R1 {
+	x : A;
+}
+interface R2 {
+	get x() : A { return null }
+}
+
+// XPECT errors --> "Redefine ambiguously consumed members: getter R2.x and field R1.x." at "C0"
+class C0 implements R1, R2 {
+}

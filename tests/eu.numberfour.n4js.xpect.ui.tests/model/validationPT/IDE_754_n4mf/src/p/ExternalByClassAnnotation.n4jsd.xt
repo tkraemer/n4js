@@ -1,0 +1,49 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				Folder "p" {
+					ThisFile {}
+					File "A.js" {}
+				}
+			}
+			Folder "src-external" {
+				Folder "class1path" {
+					File "ExternalByClassAnnotation.js" { from="../../src-external/class1path/ExternalByClassAnnotation.js" }
+				}
+				Folder "class2path" {
+					File "ExternalByClassAnnotation.js" { from="../../src-external/class2path/ExternalByClassAnnotation.js" }
+				}
+				Folder "p" {
+					File "A.js" { from="../../src-external/p/A.js" }
+				}
+			}
+			File "manifest.n4mf" { from="../../manifest.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+@ImplementedBy("class1path")
+export external public class ExternalByClass1 {
+	externalControl();
+}
+
+@ImplementedBy("class2path")
+export external public class ExternalByClass2 {
+	externalControl();
+}
+
+@ImplementedBy("class3path")
+// IDE-1099 XPECT ! errors --> "For the given n4jsd file no corresponding external file resp. no matching implemented by expression can be found." at "ExternalByClass3"
+export external public class ExternalByClass3 {
+	externalControl();
+}
+
+@ImplementedBy("A.js")
+// IDE-1099 XPECT ! errors --> "Duplicate external file src-external/p/A.js, has been already defined in src/p/A.js." at "A"
+export external public class A {
+	externalControl();
+}

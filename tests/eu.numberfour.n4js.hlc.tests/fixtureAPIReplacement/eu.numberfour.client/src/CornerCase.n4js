@@ -1,0 +1,7 @@
+import { I } from "M2"
+
+
+class TestI implements I {
+}
+console.log('result:', new TestI().computeStuff());
+

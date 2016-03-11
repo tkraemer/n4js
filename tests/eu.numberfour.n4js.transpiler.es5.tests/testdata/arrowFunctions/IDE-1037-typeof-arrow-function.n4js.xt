@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+function
+1
+function
+2
+function
+3
+stderr:
+==>
+--- */
+
+var af = x => x;
+
+console.log(typeof af);
+console.log(af(1));
+
+var af2 = x =>
+x;
+
+console.log(typeof af2);
+console.log(af2(2));
+
+
+var af3 = x =>
+{ return x };
+
+console.log(typeof af3);
+console.log(af3(3));
+
+

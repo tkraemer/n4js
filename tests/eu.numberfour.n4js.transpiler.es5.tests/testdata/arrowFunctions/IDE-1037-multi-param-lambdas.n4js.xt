@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+[ [ 1, 'a' ], [ 2, 'b' ], [ 3, 'c' ] ]
+[ [ 1, 'a' ], [ 2, 'b' ], [ 3, 'c' ] ]
+[ [ 1, 'a' ], [ 2, 'b' ], [ 3, 'c' ] ]
+[ [ 1, 'a' ], [ 2, 'b' ], [ 3, 'c' ] ]
+stderr:
+==>
+--- */
+
+var a = [1, 2, 3]
+var b = ['a', 'b', 'c']  
+
+var c1 = a.map((e, i) => {
+    return [a[i], b[i]];
+})
+console.log(c1)
+
+var c2 = a.map((e, i) =>
+    [a[i], b[i]]
+)
+console.log(c2)
+
+var c3 = a.map((e, i) =>
+    [a[i], b[i]]
+)
+console.log(c3)
+
+var c4 = a.map( (e, i) => [a[i], b[i]] )
+console.log(c4)

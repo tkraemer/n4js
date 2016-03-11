@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT noerrors -->
+@TestAPI
+export external public class  C {
+	
+}
+
+export external public class  D {
+	// XPECT noerrors -->
+	@TestAPI
+	foo()
+	bar()
+}
+
+// XPECT errors --> "The annotation @TestAPI is disallowed for this location." at "TestAPI"
+@TestAPI
+export external public function f()
+

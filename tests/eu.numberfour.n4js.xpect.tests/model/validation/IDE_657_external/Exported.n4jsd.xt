@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+// 	relaxed by IDEBUG-561:		
+// XPECT noerrors --> "External elements have to be exported." at "Point"
+external class Point {
+
+}
+
+//	relaxed by IDEBUG-561:		
+// XPECT noerrors --> "External elements have to be exported." at "Clonable"
+external interface Clonable {
+
+}
+
+//	relaxed by IDEBUG-561:		
+// XPECT noerrors --> "External elements have to be exported." at "I"
+interface ~I {
+	x : number;
+	y : number;
+}

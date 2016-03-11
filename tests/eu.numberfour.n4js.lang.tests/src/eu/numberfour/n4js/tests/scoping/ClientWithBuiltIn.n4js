@@ -1,0 +1,3 @@
+import { SupplierWithBuiltIn } from "eu/numberfour/n4js/tests/scoping/SupplierWithBuiltIn"
+var a: SupplierWithBuiltIn; 
+a.foo(); 

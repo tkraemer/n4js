@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface I {
+	x : string;
+}
+class S {
+	x() : void {}
+}
+
+// XPECT errors --> "Inherited method S.x cannot implement field I.x." at "C"
+class C extends S implements I {}
+

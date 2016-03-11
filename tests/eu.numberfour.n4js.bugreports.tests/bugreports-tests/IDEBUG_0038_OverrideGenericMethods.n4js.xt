@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+//
+// Tests for IDEBUG_38 have been moved to spec test bundle:
+//
+//   /eu.numberfour.n4js.spec.tests/xpect-tests/Ch05_04__RedefinitionOfMembers/RedefineGenericMethods.n4js.xt
+//   /eu.numberfour.n4js.spec.tests/xpect-tests/Ch05_04__RedefinitionOfMembers/RedefineGenericMethodsMore.n4js.xt
+//   /eu.numberfour.n4js.spec.tests/xpect-tests/Ch05_04__RedefinitionOfMembers/RedefineMethodsCovariantReturn.n4js.xt
+//

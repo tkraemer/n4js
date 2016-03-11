@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT errors --> "Inheritance cycle detected: A, B, A." at "B"
+class A extends B {
+	// XPECT errors --> "The field A.a overriding field B.a must be annotated with @Override." at "a"
+	a : any;
+	b : any;
+}
+
+// XPECT errors --> "Inheritance cycle detected: B, A, B." at "A"
+class B extends A {
+	// XPECT errors --> "The field B.a overriding field A.a must be annotated with @Override." at "a"
+	a : any;
+}
+

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: eu.numberfour.n4js.hlc.tests
+Bundle-Version: 1.0.0.qualifier
+Export-Package: eu.numberfour.n4js.hlc.tests
+Require-Bundle: eu.numberfour.n4js,
+ eu.numberfour.n4js.hlc;bundle-version="1.0.0",
+ org.junit;bundle-version="4.11.0",
+ com.google.guava;bundle-version="15.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.log4j

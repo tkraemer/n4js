@@ -1,0 +1,60 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.validation.N4JSFunctionReturnBehaviourXpectTest
+   END_SETUP
+ */
+ 
+ 
+// test containsReturnOrThrow with:
+// e.g.,  X-PECT:
+//   X-PECT returnOrThrow --> "returnOrThrow" 
+//   X-PECT returnOrThrow --> "breakOrcontinue" labels "..."
+//   X-PECT returnOrThrow --> "noreturn" labels "..." 
+// example see: eu.numberfour.n4js.xpect.N4JSTypeSystemXpectTest
+
+
+// XPECT xpIERef at '|function' --> "returnsMode"
+function f1() {
+
+   var boolean b1 = true; 
+   
+   // X--PECT xpIERef --> "returnsMode"
+   y: do  {
+       return;
+   } while ( true )
+}
+
+
+// XPECT xpIEAttrib at '|function' --> "returnsMode"
+function f1() {
+
+   var boolean b1 = true; 
+   
+   // X--PECT xpIEAttrib --> "returnsMode"
+   y: do  {
+       return;
+   } while ( true )
+}
+
+
+// XPECT xpINode at '|function' --> "returnsMode"
+function f1() {
+
+   var boolean b1 = true; 
+   
+   // X--PECT xpINode --> "returnsMode"
+   y: do  {
+       return;
+   } while ( true )
+}
+
+
+// XPECT returnOrThrow at '|function' --> "returnsMode"
+function f1() {
+
+   var boolean b1 = true; 
+   
+   // X--PECT returnOrThrow --> "returnsMode"
+   y: do  {
+       return;
+   } while ( true )
+}
+

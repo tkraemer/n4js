@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.Remove_N4JSSpecTest END_SETUP */
+
+@Api
+export external public class A {
+	@Api public s : string;
+	@Api public foo(p : number) : void
+	private n : number;
+	private bar(p : string) : void
+}
+
+@Api
+export external public class B {
+	@Api public foo(p : number) : void
+	private n : number;
+	private bar(p : string) : void
+}
+
+@Api
+export external public class C {
+	@Api public s : string;
+	private n : number;
+	private bar(p : string) : void
+}
+
+@Api
+export external public class D {
+	@Api public s : string;
+	@Api public foo(p : string) : void
+}

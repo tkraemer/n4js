@@ -1,0 +1,12 @@
+ArtifactId: eu.numberfour.mangelhaft
+VendorId: eu.numberfour
+ProjectName: "eu.numberfour.mangelhaft"
+VendorName: "eu.numberfour"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "out"
+Sources {
+	source { 
+		"src"
+	}
+}

@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "scoping" {
+					Folder "static" {
+						ThisFile {}
+						File "SameNamesCallee.n4js" {}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest.n4mf" } 
+		}
+	}
+	
+	END_SETUP 
+ */
+
+import { SameNamesCallee } from "scoping/static/SameNamesCallee"
+
+class SameNamesCaller {
+
+    call() {
+		// XPECT ! scope at 'SameNamesCallee.|method' --> field, method
+		/* XPECT ! scopeWithPosition at 'SameNamesCallee.|method' --- 
+		   field - /1/@topLevelTypes.0/@ownedMembers.0,
+		   method - /1/@topLevelTypes.0/@ownedMembers.1
+		 --- */
+		SameNamesCallee.method()
+		
+		var c : SameNamesCallee;
+		// XPECT ! scope at 'SameNamesCallee.|method' --> field, method
+		/* XPECT ! scopeWithPosition at 'c.|method' --- 
+		   field - /1/@topLevelTypes.0/@ownedMembers.2,
+		   method - /1/@topLevelTypes.0/@ownedMembers.3
+		 --- */
+		c.method()
+	}
+}

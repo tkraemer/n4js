@@ -1,0 +1,4 @@
+import { b_fun } from 'circularDependency/req_04/B'
+
+export public var a : number = 1;
+export public var a2 = b_fun();

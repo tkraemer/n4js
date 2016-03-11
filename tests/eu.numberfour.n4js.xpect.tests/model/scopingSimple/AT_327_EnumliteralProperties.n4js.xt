@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+enum Color { RED, GREEN, BLUE }
+enum Country { DE : "276", US : "840", TR : "792" }
+
+// XPECT scopeWithPosition at 'Color.|RED' --> RED - T3, GREEN - T3, BLUE - T3, ...
+var red : Color = Color.RED;
+// XPECT scopeWithPosition at 'Country.|US' --> DE - T4, US - T4, TR - T4, ...
+var us : Country = Country.US;
+/* XPECT scopeWithPosition at 'us.|value' ---
+n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
+toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+--- */
+var s : string = us.value;
+/* XPECT scopeWithPosition at 'red.|name' ---
+n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
+toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+--- */
+var s2 : string = red.name;
+/* XPECT scopeWithPosition at 'DE.|value' ---
+n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
+toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+--- */
+var s3 : string = Country.DE.value
+

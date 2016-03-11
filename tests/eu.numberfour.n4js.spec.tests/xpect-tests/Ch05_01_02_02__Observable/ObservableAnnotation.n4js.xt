@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {}
+
+@Observable
+class B extends A {}
+
+
+class X extends A {}
+
+// XPECT errors --> "Class Y extends observable class B and must therefore be annotated with @Observable." at "Y"
+class Y extends B {}
+

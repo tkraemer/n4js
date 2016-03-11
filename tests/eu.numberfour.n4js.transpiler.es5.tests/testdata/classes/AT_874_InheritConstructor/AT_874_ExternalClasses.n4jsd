@@ -1,0 +1,4 @@
+export external public class MyExternalClass {
+    public stuff : string;
+    public constructor (start : number, @Spec spec : ~i~this, end : string)
+}

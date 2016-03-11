@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+class A {
+	private f(){ console.log("A.f()"); }
+}
+
+class B extends A {
+	@Override
+	// XPECT errors --> "The method B.f cannot override private method A.f." at "f"
+	private f(){ console.log("B.f()"); }
+	
+}
+
+var a = new A();
+var b = new B();
+
+// XPECT binding --> A.f
+a.f();
+// XPECT binding --> B.f
+b.f();

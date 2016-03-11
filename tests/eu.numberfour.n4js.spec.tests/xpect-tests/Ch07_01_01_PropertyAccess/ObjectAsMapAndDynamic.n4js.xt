@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+var map : Object = new Object();
+// XPECT noerrors --> "Object can be used as a map" at 'map["Kant"]'
+map["Kant"]="Imperative";
+// XPECT noerrors --> "Object can be used as a map" at 'map["Kant"]'
+map["Hegel"]="Dialectic";
+
+class A{}
+var a : A+ = new A();
+// XPECT noerrors --> "Dynamic" at "kant"
+a.kant = 'Königsberg';
+
+// XPECT noerrors --> indexing on dynamic allowed (both via dot and via indexing)
+a['Hegel'] = "Anti-Thesis";

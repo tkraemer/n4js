@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT warnings --> "Class names should start with upper case letter." at "lower"
+class lower {
+}
+
+// XPECT warnings --> "Interface names should start with upper case letter." at "loweri"
+interface loweri {
+}
+
+// XPECT warnings --> "Enum names should start with upper case letter." at "lowere"
+enum lowere {
+	R
+}

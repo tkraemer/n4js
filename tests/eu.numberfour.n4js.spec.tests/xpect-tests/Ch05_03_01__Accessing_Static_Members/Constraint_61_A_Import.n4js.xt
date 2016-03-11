@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest 
+    
+    ResourceSet {
+		ThisFile {}
+		File "Constraint_61_A_Export.n4js.xt" {}
+	}
+   
+   END_SETUP
+ */
+import {C1 as RenamedC1,C2 as RenamedC2} from "Ch05_03_01__Accessing_Static_Members/Constraint_61_A_Export";
+
+class C3 extends RenamedC1 {}
+class C4 extends RenamedC2 {}
+
+// XPECT noerrors -->
+var ff : number = RenamedC1.f;
+// XPECT noerrors -->
+ff = C3.f;
+
+// XPECT noerrors -->
+RenamedC1.f = 343;
+// XPECT errors --> "Write access to the static member f defined in C1 must use the alias RenamedC1 directly." at "f"
+RenamedC2.f = 343;  
+
+console.log( C4.giveIt() );
+
+// XPECT errors --> "Write access to the static member f defined in C1 must use the alias RenamedC1 directly." at "f"
+C3.f = 12;
+
+// XPECT noerrors -->
+ff = C4.f;
+// XPECT errors --> "Write access to the static member f defined in C1 must use the alias RenamedC1 directly." at "f"
+C4.f = 23;
+
+
+var x : type{C4};
+// XPECT noerrors -->
+x.f;
+// XPECT errors --> "Write access to the static member f defined in C1 must use the alias RenamedC1 directly." at "f"
+x.f =0;
+
+
+
+
+

@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+ /* XPECT output ~~~
+<==
+stdout:
+p?s f
+{ f: [Function], b: [Function], o: { nested: 'Hello' } }
+Hello
+stderr:
+==>
+~~~ */
+
+var p = {
+	f: function() { 
+		console.log("p?s f");
+	},
+	b: function() { 
+		this.f();
+	},
+	o: { 
+		nested: "Hello"
+	}
+};
+p.b();
+p.o.nested;
+// §-§-§-§-§ additional check not in example: §-§-§-§--
+console.log(p);
+console.log(p.o.nested);

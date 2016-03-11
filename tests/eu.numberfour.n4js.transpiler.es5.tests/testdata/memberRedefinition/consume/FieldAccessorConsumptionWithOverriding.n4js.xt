@@ -1,0 +1,46 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+-- A --
+R.x get
+_x
+R.x set
+R.x get
+newValue0
+-- B --
+B.x get
+const
+R.x set
+B.x get
+const
+stderr:
+==>
+--- */
+
+interface R {
+	_x = "_x";
+	get x() : string { console.log("R.x get"); return this._x}
+	set x(x : string) { console.log("R.x set"); this._x = x}
+}
+
+class A implements R {
+}
+class B extends A {
+	@Override get x() : string { console.log("B.x get"); return "const" }
+}
+
+console.log("-- A --")
+var a = new A();
+console.log(a.x);
+a.x = "newValue0";
+console.log(a.x);
+
+
+console.log("-- B --")
+var b = new B();
+console.log(b.x);
+b.x = "newValue1";
+console.log(b.x);
+

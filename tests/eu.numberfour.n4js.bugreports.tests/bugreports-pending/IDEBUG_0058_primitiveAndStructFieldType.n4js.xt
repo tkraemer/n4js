@@ -1,0 +1,7 @@
+class A {
+    constructor(@Spec spec : ~i~this) {
+    }
+}
+
+// XPECT FIXME errors --> "string is not a subtype of ~~A."
+new A("hello"); 

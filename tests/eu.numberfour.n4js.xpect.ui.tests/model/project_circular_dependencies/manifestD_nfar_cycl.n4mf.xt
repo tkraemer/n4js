@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+    Workspace {
+   	
+   	 Project "D" {
+   	 	Folder "src" { }
+   	 	Folder "lib" { 
+   	 		File "A.nfar" {}
+   	 		File "B.nfar" {}
+   	 		File "C.nfar" {}
+   	 	}
+   	 	ThisFile "manifest.n4mf" { from="manifestD_nfar_cycl.n4mf.xt" }
+   	 }
+   }
+   
+   END_SETUP
+ */
+ 
+// Testing cycle-detection IDEBUG-266
+
+// Waiting for IDE-1232 XPECT ! errors --> "The project configuration contains a dependency cycle of projects D -> [A] -> C -> B -> [A]." at "D"
+ArtifactId: D
+VendorId: eu.numberfour
+ProjectName: "D"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+ProjectDependencies {A}
+Output: "src-gen"
+Libraries { "lib" }
+Sources {
+	source { 
+		"src"
+	}
+}

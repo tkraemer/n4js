@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+// XPECT noerrors -->
+var f = function ( cb : {function (string) : string } ) { return cb("") };
+
+
+// see comment about ComputedTypeRef in method
+// DerivationComputer#createBoundOfFunctionTypeExprOrRef(RuleEnvironment,FunctionTypeExprOrRef,BoundType)

@@ -1,0 +1,402 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import {IInstrumentedTest} from "n4/mangel/mangeltypes/IInstrumentedTest"
+import {ITestReporter} from "n4/mangel/mangeltypes/ITestReporter"
+import {ResultGroups} from "n4/mangel/mangeltypes/ResultGroups"
+import {TestMethodDescriptor} from "n4/mangel/mangeltypes/TestMethodDescriptor"
+import {TestResult} from "n4/mangel/mangeltypes/TestResult"
+import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
+import {TestStatus} from "n4/mangel/mangeltypes/TestStatus"
+import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
+
+let q = document.querySelectorAll.bind(document);
+
+function getLocation(): string {
+    return location.href;
+}
+
+function updateURLParameter(url: string, param: string, paramVal: string): string{
+    let urlObj = new URL(url)
+      , queryParts: Array<string>
+      , rowsTxt: string
+    ;
+    queryParts = urlObj.search.split("&").filter((part:string) => part.split('=')[0] != param);
+    queryParts.push(String(`${param}=${encodeURIComponent(paramVal)}`));
+    urlObj.search = queryParts.join("&");
+    return String(urlObj)
+}
+
+function getParm(name: string): string{
+    let names: Array<string> = new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)').exec(location.search);
+    if(names) {
+        return decodeURIComponent(names[1]);
+    }
+    return "";
+}
+
+function filterClickHandler(e: Event, showOnly: Array<TestStatus>) {
+    let testElm: HTMLElement
+       ,groupElm: HTMLElement
+       ,testStatus
+    ;
+    for (testElm of Array.<HTMLElement>from(document.querySelectorAll(".mangelhaft-test"))) {
+        testStatus = testElm.getAttribute("data-mangelhaft-test-status");
+        if (showOnly && showOnly.length && showOnly.indexOf(testStatus) === -1) {
+            testElm.style.display = "none";
+            testElm.classList.add("mangelhaft-hidden");
+            testElm.classList.remove("mangelhaft-shown");
+        } else {
+            testElm.style.display = "block";
+            testElm.classList.remove("mangelhaft-hidden");
+            testElm.classList.add("mangelhaft-shown");
+        }
+    }
+    for (groupElm of Array.<HTMLElement>from(document.querySelectorAll(".mangelhaft-group"))) {
+        if (groupElm.querySelectorAll(".mangelhaft-test.mangelhaft-shown").length === 0) {
+             groupElm.style.display = "none";
+             groupElm.classList.add("mangelhaft-hidden");
+         } else {
+             groupElm.style.display = "block";
+             groupElm.classList.remove("mangelhaft-hidden");
+         }
+
+    }
+    window.history.pushState(null, null, updateURLParameter(getLocation(), "showOnly", showOnly.join(",")));
+}
+
+export public class HTMLReporter implements ITestReporter {
+    @Inject @Override protected spy: TestSpy;
+    private setFavIconRed() {
+        document.getElementById("page_favicon").setAttribute("href", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAH0lEQVQ4T2P8z8AAROQDxlEDGEbDgGE0DIBZaBikAwCl1B/x0/RuTAAAAABJRU5ErkJggg==")
+    }
+    private reRunning = false;
+    private groupDivs: Map<IInstrumentedTest, Element> = new Map<IInstrumentedTest, Element>();
+    private testDivs: Map<string, Element> = new Map<string, Element>();
+    private statuses: Map<string, Element> = new Map<string, Element>();
+    private showOnly = getParm("showOnly")
+                                     .split(",")
+                                     .map((showType)=>showType.trim())
+                                     .filter((showType) => !!showType);
+    private wrapFilterElement (elm: Element, showOnly: Array<TestStatus>, classList: string, title: string): Element {
+        let anchor = document.createElement("a");
+        elm.classList.add(classList);
+        anchor.setAttribute("href", updateURLParameter(getLocation(), "showOnly", showOnly.join(",")));
+        anchor.setAttribute("title", title);
+        anchor.appendChild(elm);
+        anchor.addEventListener("click", function(e) {
+            filterClickHandler.call(this, e, showOnly);
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }, true)
+        return anchor;
+    }
+    private createFilterBox(): Element {
+        let fb: Element = document.createElement("div")
+          , left: Element = document.createElement("div")
+          , right: Element = document.createElement("div")
+          , skip: Element = document.createElement("div")
+          , fixme: Element = document.createElement("div")
+          , error: Element = document.createElement("div")
+          , all: Element = document.createElement("div")
+          , ok: Element = document.createElement("div")
+          , ran: Element = document.createElement("div")
+        ;
+        fb.classList.add("mangelhaft-filterbox");
+        left.classList.add("mangelhaft-filterbox-left");
+        right.classList.add("mangelhaft-filterbox-right");
+        fb.appendChild(left);
+        fb.appendChild(right);
+        skip.textContent = "show skipped tests";
+        fixme.textContent = "show fixme skipped tests";
+        error.textContent = "show unsuccessful tests";
+        ok.textContent = "show sucessful tests";
+        all.textContent = "show all tests (remove filter)";
+        ran.textContent = "show executed tests (non-skipped)";
+        left.appendChild(this.wrapFilterElement(all, [],
+            "mangelhaft-ALL", "Show all tests"));
+        left.appendChild(this.wrapFilterElement(ok, [TestStatus.passed],
+            "mangelhaft-OK", "Show only successful tests"));
+        left.appendChild(this.wrapFilterElement(error, [TestStatus.failed, TestStatus.error],
+            "mangelhaft-FAIL", "Show only unsuccessful tests"));
+        right.appendChild(this.wrapFilterElement(ran, [TestStatus.failed, TestStatus.error, TestStatus.passed],
+            "mangelhaft-RAN", "Show only non-skipped results"));
+        right.appendChild(this.wrapFilterElement(skip, [TestStatus.skipped, TestStatus.skipped_not_implemented, TestStatus.skipped_precondition, TestStatus.skipped_ignore, TestStatus.skipped_fixme],
+            "mangelhaft-SKIPPED", "Show only skipped results"));
+        right.appendChild(this.wrapFilterElement(fixme, [TestStatus.skipped_fixme],
+            "mangelhaft-SKIPPED-FIXME", "Show only skipped results"));
+
+        return fb;
+    }
+    @Override public async register(): any {
+        let that = this
+            , testsElm: Element = document.createElement("div")
+            , header: Element = document.createElement("div")
+            , countersElm: Element = document.createElement("div")
+            , numGroupsElm: Element = document.createElement("span")
+            , numGroups: number = 0
+            , numTestsElm: Element = document.createElement("span")
+            , numTests: number = 0
+            , numTestsOkElm: Element = document.createElement("span")
+            , numTestsOk: number = 0
+            , numTestsFailElm: Element = document.createElement("span")
+            , numTestsFail: number = 0
+            , totalTestsElm: Element = document.createElement("span")
+            , numTestsRun: number = 0
+            , numTestsSkipped: number = 0
+            , numTestsSkippedElm: Element = document.createElement("span")
+
+        ;
+
+        testsElm.classList.add("mangelhaft");
+        countersElm.classList.add("mangelhaft-counters");
+        header.classList.add("mangelhaft-header");
+        // preserve package id that the page has been booted with:
+        header.innerHTML = "<h1><a title='all tests' href='/test.html'>Mangelhaft</a></h1>";
+        testsElm.appendChild(countersElm);
+
+        testsElm.appendChild(that.createFilterBox());
+
+        testsElm.appendChild(header);
+
+        numGroupsElm.classList.add("mangelhaft-num-groups");
+
+        countersElm.appendChild(numGroupsElm);
+        countersElm.appendChild(this.wrapFilterElement(numTestsElm, [],
+            "mangelhaft-num-tests", "Show all results"));
+        countersElm.appendChild(this.wrapFilterElement(numTestsOkElm, [TestStatus.passed],
+            "mangelhaft-num-OK", "Show only successful results"));
+        countersElm.appendChild(this.wrapFilterElement(numTestsFailElm, [TestStatus.failed, TestStatus.error],
+            "mangelhaft-num-FAIL", "Show only unsuccessful results"));
+        countersElm.appendChild(this.wrapFilterElement(totalTestsElm, [TestStatus.failed, TestStatus.error, TestStatus.passed],
+            "mangelhaft-num-total-ran", "Show only non-skipped results"));
+        countersElm.appendChild(this.wrapFilterElement(numTestsSkippedElm, [TestStatus.skipped, TestStatus.skipped_not_implemented, TestStatus.skipped_precondition, TestStatus.skipped_ignore, TestStatus.skipped_fixme],
+            "mangelhaft-num-SKIPPED", "Show only skipped results"));
+
+        function updateTotals() {
+            numGroupsElm.innerText = numGroups.toString();
+            numTestsElm.innerText = numTests.toString();
+            numTestsOkElm.innerText = numTestsOk.toString();
+            numTestsFailElm.innerText = numTestsFail.toString();
+            numTestsSkippedElm.innerText = numTestsSkipped.toString();
+            totalTestsElm.innerText = numTestsRun.toString();
+
+        }
+        this.spy.testingStarted.add(function (numAllGroups: number, sessionId: string, numAllTests: number) {
+            if (that.reRunning) {return;}
+            document.body.appendChild(testsElm);
+            numGroups = numAllGroups;
+            numTests = numAllTests;
+            updateTotals();
+        });
+        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
+            if (that.reRunning) {return;}
+            let groupElm = document.createElement("div")
+            , groupTitleElm = document.createElement("div")
+            , moduleParts = group.fqn.split('.')
+            , moduleAnchors: Array<string>
+            , groupUrl = updateURLParameter(getLocation(), "filter", moduleParts.join("."))
+            , filterStr: string = null;
+            ;
+            groupUrl = updateURLParameter(groupUrl, "tests", "");
+            groupElm.classList.add("mangelhaft-group");
+            groupTitleElm.classList.add("mangelhaft-group-title");
+
+            moduleAnchors = moduleParts.map((modulePart) => {
+                let url;
+
+                filterStr = filterStr ? filterStr + "." + modulePart: modulePart;
+                url = updateURLParameter(updateURLParameter(getLocation(), "filter", filterStr), "tests", "");
+                return ["<a href='", url, "' >", modulePart, "</a>"].join("");
+            });
+
+            groupTitleElm.innerHTML = "<span class='mangelhaft-group-title-name'>"+ moduleAnchors.join(".") +"</span>";
+
+            groupElm.appendChild(groupTitleElm);
+            that.groupDivs.set(group, groupElm);
+            testsElm.appendChild(groupElm);
+            group.tests.forEach(function(test) {
+                let testName = test.description? test.description: test.name
+                , testElm: Element = document.createElement("div")
+                , status: Element = document.createElement("span")
+                , testNameElm: Element = document.createElement("span")
+                , tooltip: Element = document.createElement("pre")
+                , tooltipInner: Element = document.createElement("code")
+                , testUrl = updateURLParameter(groupUrl, "tests", test.name)
+                , nameParts: Array<string> = testName.match(/^(?:([a-zA-Z0-9]*)__)?(.*)___(.*)?$/)
+                ;
+                if (nameParts) {
+                    if (nameParts[1]) {
+                        testName = "<span class='mangelhaft-test-name-prefix'>" + nameParts[1] + "</span>"
+                    } else {
+                        testName = ""
+                    }
+                    testName += nameParts[2].replace(/_/g, " ") + " <span class='mangelhaft-test-name-suffix'>"+ nameParts[3] + "</span>";
+                }
+                if (!testName.match(/ /)) {
+                    testName = testName.replace(/^[a-z]|[A-Z]/g, function(letter: string, ii: number) {
+                        return ii === 0 ? letter.toUpperCase(): " " + letter.toLowerCase();
+                    });
+                }
+                tooltip.className = "mangelhaft-test-tooltip";
+                tooltipInner.className = "prettyprint lang-js";
+                tooltipInner.innerText = test.value.toString();
+                tooltip.appendChild(tooltipInner);
+
+
+                testElm.classList.add("mangelhaft-test");
+
+
+                testNameElm.className = "mangelhaft-test-name";
+                testNameElm.innerHTML = testName;
+                testNameElm.appendChild(tooltip);
+                testElm.appendChild(testNameElm);
+                status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>Running...</a>";
+                testElm.appendChild(status);
+                status.classList.add("mangelhaft-status");
+                groupElm.appendChild(testElm);
+                that.testDivs.set(testUrl, testElm);
+                that.statuses.set(testUrl, status);
+            })
+
+        });
+        this.spy.testFinished.add(function (group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult, rerunTestFunc: {function()}) {
+            let reason: Element
+            , stackElm: Element = null
+            , elapsed: Element = document.createElement("span")
+            , groupElm: Element
+            , testElm: Element
+            , status: Element
+            , module: string = group.fqn
+            , groupUrl = updateURLParameter(getLocation(), "filter", module)
+            , testUrl = updateURLParameter(groupUrl, "tests", test.name)
+            , elapsedStr: string
+            ;
+            groupElm = that.groupDivs.get(group);
+            testElm = that.testDivs.get(testUrl);
+
+
+            status = that.statuses.get(testUrl);
+            if (!that.reRunning) {
+               numTestsRun += 1;
+            }
+            testElm.setAttribute("data-mangelhaft-test-status", testResult.testStatus);
+            //remove classes before setting because testFinished may be called multiple times
+            status.className = "";
+            switch(testResult.testStatus) {
+                case TestStatus.skipped_fixme:
+                    status.classList.add("mangelhaft-SKIPPED-FIXME");
+                //fall through
+                case TestStatus.skipped_ignore:
+                case TestStatus.skipped_not_implemented:
+                case TestStatus.skipped_precondition:
+                case TestStatus.skipped: {
+
+                    status.classList.add("mangelhaft-SKIPPED");
+                    status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>" + testResult.testStatus.toString() + "</a>";
+                    if (!that.reRunning) {
+                        numTestsSkipped += 1;
+                        numTestsRun -= 1;                                       
+                    }
+                    break;
+                }
+                case TestStatus.passed: {
+                    //remove classes before setting because testFinished may be called multiple times
+                    status.classList.remove("mangelhaft-FAIL");
+                    status.classList.add("mangelhaft-OK");
+                    status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>OK</a>";
+                    if (!that.reRunning) {
+                        numTestsOk += 1;                                       
+                    }
+                    break;
+                }
+                case TestStatus.error: //fallthrough
+                case TestStatus.failed: {
+                    status.classList.add("mangelhaft-FAIL")
+                    status.innerHTML = "<a title='re-run test' name='fail' href='" +testUrl+ "'>" + testResult.testStatus.toString() + "</a>";
+
+                    if (testResult.trace) {
+                        stackElm = document.createElement("pre");
+                        stackElm.innerText = testResult.trace.join("\n");
+                        stackElm.classList.add("mangelhaft-FAIL-stack")
+                        testElm.appendChild(stackElm);
+                    }
+                    if (!that.reRunning) {
+                        numTestsFail +=1;  
+                    }
+                    that.setFavIconRed();                     
+                    break;
+                }
+            }
+            if (testResult.message) {
+                reason = document.createElement("span");
+                reason.innerHTML = " [" + testResult.message+ "]";
+                reason.className = status.className + " " + "mangelhaft-reason"
+                testElm.insertBefore(reason, stackElm);
+            }
+
+            if (that.showOnly && that.showOnly.length && that.showOnly.indexOf(testResult.testStatus.toString()) === -1) {
+                (testElm as HTMLElement).style.display = "none";
+                testElm.classList.add("mangelhaft-hidden");
+                testElm.classList.remove("mangelhaft-shown");
+            } else {
+                testElm.classList.remove("mangelhaft-hidden");
+                testElm.classList.add("mangelhaft-shown");
+
+                elapsedStr = testResult.elapsedTime ? testResult.elapsedTime.toString(): "< 1";
+                elapsed.innerText = " (" + elapsedStr + "ms) ";
+                elapsed.addEventListener("click", (e)=>{
+                    if (rerunTestFunc) {
+                        that.reRunning = true;
+                        status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>Running...</a>";
+                        if (stackElm) {
+                            stackElm.innerHTML = "";
+                        }
+                        if (elapsed) {
+                            elapsed.innerHTML = "";
+                        }
+                        if (reason) {
+                            reason.innerHTML = "";
+                        }
+                        rerunTestFunc();
+                    }
+                })
+                testElm.insertBefore(elapsed, status);
+                that.reRunning = false;
+            }
+            updateTotals();
+
+        });
+        this.spy.groupFinished.add((group: IInstrumentedTest, resultGroup: ResultGroup) => {
+            if (that.reRunning) {return;}
+            let groupElm: Element = that.groupDivs.get(group);
+            if (this.showOnly && this.showOnly.length && groupElm.querySelectorAll(".mangelhaft-test.mangelhaft-shown").length === 0) {
+                (groupElm as HTMLElement).style.display = "none";
+                groupElm.classList.add("mangelhaft-hidden");
+                groupElm.classList.remove("mangelhaft-shown");
+            } else {
+                groupElm.classList.remove("mangelhaft-hidden");
+                groupElm.classList.add("mangelhaft-shown");
+            }
+        })
+        this.spy.testingFinished.add(function(resultGroups: ResultGroups) {
+            if (that.reRunning) {return null;}
+                let done = document.createElement("span")
+                , groupElm: Element
+                ;
+                done.innerText = "DONE";
+                countersElm.appendChild(done);
+                window.prettyPrint();
+                return resultGroups;
+        });
+        return this;
+    }
+}

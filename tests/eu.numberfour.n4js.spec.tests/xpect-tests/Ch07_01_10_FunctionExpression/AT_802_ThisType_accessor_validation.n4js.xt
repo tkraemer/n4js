@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class B { public x : number; }
+
+class A {
+
+	// XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(B)
+	get a () : number { return 4; }
+	// XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(B)
+	set a (n : number) {}
+	
+}
+ 
+var ol = {
+	// XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(B)
+	get a(): number  { return 4; },
+	// XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(B)
+	set a(z) { } 
+}
+
+
+
+
+

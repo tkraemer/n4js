@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class X<T> {}
+
+class A { f() : string { return ""}; }
+class B1<T extends X<?>> extends A {}
+class B2 extends A {}
+class B3 extends A {}
+
+
+class C {
+   	field : union{B1<?>, B2};
+   	field_nongeneric : union{B2, B3};
+
+    g() {
+		// XPECT noerrors --> "both elements of union provide function f returning string, does not work with field"    	
+        var s : string = this.field.f();
+        
+   		var local : union{B1<?>, B2};
+   		// XPECT noerrors --> "...but it already works with local variable as receiver"
+        var s1 : string = local.f();
+        
+   		// XPECT noerrors --> "...and if no generics are involved"
+        var s2 : string = this.field_nongeneric.f();
+    }
+}

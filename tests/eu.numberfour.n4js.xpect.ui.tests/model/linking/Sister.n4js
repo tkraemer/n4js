@@ -1,0 +1,15 @@
+import { Brother } from "linking/Brother";
+import { Child } from "linking/Child";
+
+export class Sister { 
+	project getBrother() : Brother { return null; }
+	project getChild() : Child { return null; }
+} 
+var sister : Sister = new Sister();
+var brother : Brother = brother = new Brother();
+var child : Child = new Child();
+brother = brother.getSister().getBrother();
+sister = brother.getSister();
+child = sister.getChild();
+var childAge  = child.age;
+var brotherChildAge = sister.getBrother().getChild().age;

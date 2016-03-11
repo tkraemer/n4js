@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// IDEBUG-202
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'id'." at "id"
+var x = id;
+
+class C {
+	
+	m1(id) : void {
+	}
+	
+	m2(identifier) : void {
+		// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'id'." at "id"
+		var x = id;
+	}
+}

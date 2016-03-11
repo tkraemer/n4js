@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+// IDEBUG-620 Calling async functions with missing await
+
+var fArrA = async (x : number) => x + 1;
+
+var fNamedA = async function named(x : number) { return x + 1 };
+
+fArrA(1);
+((fArrA))(1);
+
+fNamedA(2);   
+((fNamedA))(2);   
+
+var fArrN = (x : number) => x + 1;
+
+var fNamedN = function named(x : number) { return x + 1 };
+
+// XPECT nowarnings -->
+fArrN(1);
+// XPECT nowarnings -->
+((fArrN))(1);
+
+// XPECT nowarnings -->
+fNamedN(2);   
+// XPECT nowarnings -->
+(fNamedN)(2);   
+
+

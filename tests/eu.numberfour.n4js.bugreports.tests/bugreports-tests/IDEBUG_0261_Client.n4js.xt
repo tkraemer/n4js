@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest
+    //  - - - - - - -  - - - - - - -  - - - - - - -  - - - - - - -  - - - - - - -   - - - - - - -
+    // also see in  for an inter-project UI test   /eu.numberfour.n4js.xpect.ui.tests/model/IDEBUG_0261
+    //  - - - - - -  -  - - - - - - -  - - - - - - -  - - - - - - -  - - - - - - -  - - - - - - -
+    ResourceSet {
+		ThisFile {}
+		Resource "IDEBUG_0261_Imported.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+
+import { A } from "IDEBUG_0261_Imported"
+class B extends A {
+	@Override
+	protected foo() {
+		// XPECT noerrors --> "The method foo is not visible."
+		super.foo();
+	}
+}

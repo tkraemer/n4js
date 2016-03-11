@@ -1,0 +1,17 @@
+@@StaticPolyfillModule
+
+@StaticPolyfill
+export public class A extends A {
+	
+	@Override
+	public constructor( ){
+	}
+}
+
+@StaticPolyfill
+export public class A2 extends A2 {
+	
+	@Override
+	public constructor( ){
+	}
+}

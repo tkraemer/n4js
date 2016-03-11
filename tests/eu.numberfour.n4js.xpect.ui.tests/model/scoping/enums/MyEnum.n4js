@@ -1,0 +1,5 @@
+export project enum MyEnum {
+	ONE,
+	TWO,
+	THREE
+}

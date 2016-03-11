@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+abstract class A {
+	public abstract foo();
+}
+
+class B extends A {
+	@Override
+	public foo() {}
+}
+
+
+// XPECT errors --> "Cannot instantiate abstract class A." at "A"
+var x = new A();
+var y = new B();
+
+
+function foo(ctor : constructor{A}) {
+	return new ctor();
+}
+

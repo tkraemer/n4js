@@ -1,0 +1,19 @@
+ArtifactId: eu.numberfour.sample.nasty
+VendorId: eu.numberfour
+ProjectName: "nasty implementation"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+ImplementationId: impl.nasty
+ImplementedProjects {
+	eu.numberfour.sample.api
+}
+ProjectDependencies {
+	eu.numberfour.sample.utils
+}

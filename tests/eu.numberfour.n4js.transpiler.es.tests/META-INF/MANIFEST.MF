@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: N4JS ECMAScript 5 Transpiler Tests
+Bundle-SymbolicName: eu.numberfour.n4js.transpiler.es.tests
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Fragment-Host: eu.numberfour.n4js.transpiler.es
+Require-Bundle: org.xpect;bundle-version="0.1.0",
+ org.xpect.xtext.lib;bundle-version="0.1.0",
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.junit4,
+ org.eclipse.emf.codegen.ecore,
+ it.xsemantics.runtime;bundle-version="1.4.3",
+ eu.numberfour.n4js.utils;bundle-version="0.0.1",
+ eu.numberfour.n4js.n4mf.ui;bundle-version="0.0.1",
+ eu.numberfour.n4js.ts.ui;bundle-version="0.0.1",
+ eu.numberfour.n4js.model;bundle-version="0.0.1",
+ eu.numberfour.n4js.ui;bundle-version="0.0.1",
+ com.ibm.icu;bundle-version="50.1.1",
+ org.objectweb.asm;bundle-version="3.3.1",
+ eu.numberfour.n4js.tests.helper;bundle-version="0.0.1",
+ org.eclipse.emf.ecore.xcore;bundle-version="1.1.2",
+ org.eclipse.emf.ecore.xcore.lib;bundle-version="1.0.0",
+ eu.numberfour.n4js.generator.common,
+ eu.numberfour.n4js.environments,
+ eu.numberfour.n4js.generator,
+ eu.numberfour.n4js.transpiler

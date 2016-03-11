@@ -1,0 +1,4 @@
+export @Export public class A{orig="file A";}
+export function foo() {}
+export var a;
+export const c="Hello";

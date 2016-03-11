@@ -1,0 +1,49 @@
+// Roughly specified N4 Target Platform grammar.
+
+
+TargetPlatform:
+	'{'  'location' ':' '[' (Location (',' Location)*)? ']' '}'
+;
+
+Location:
+	'{'  (RepoType & Config? & Projects?) '}'
+;
+
+RepoType:
+	'repoType' ':' Repo
+;
+
+enum Repo:
+	NPM = 'npm'
+;
+
+Config:
+	'config' ':' '{' ConfigKeyValue '}'
+;
+
+ConfigKeyValue:
+	STRING ':' ConfigValue (',' STRING ':' ConfigValue)* 
+;
+
+ConfigValue:
+	STRING | 
+	BOOLEAN |
+	NUMBER |
+	OBJECT |
+;
+
+Projects:
+	'projects' '{' Project* '}'
+;
+
+Project:
+	PROJECT_ID ':' '{' Version? '}'
+;
+
+Version:
+	'version' ':' STRING
+;
+
+terminal PROJECT_ID:
+	'^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'0'..'9')*
+;

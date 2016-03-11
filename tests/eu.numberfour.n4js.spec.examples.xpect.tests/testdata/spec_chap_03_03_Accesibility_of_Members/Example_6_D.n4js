@@ -1,0 +1,7 @@
+class Hidden extends Visible {
+	public foo() {}
+}
+
+export public class D {
+	public getHidden() : Hidden { return new Hidden(); }
+}

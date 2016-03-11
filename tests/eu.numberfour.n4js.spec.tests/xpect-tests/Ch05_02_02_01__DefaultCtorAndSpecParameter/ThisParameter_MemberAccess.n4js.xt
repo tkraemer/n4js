@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class D{
+	public s : string;
+	private n : number;
+	
+	constructor( spec : ~~this) {
+		spec.s;
+		// XPECT errors --> "field n is not available for fields-only-referenced type ~~D." at "n"
+		spec.n;
+	}
+}

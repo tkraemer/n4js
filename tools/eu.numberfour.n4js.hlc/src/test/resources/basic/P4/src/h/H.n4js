@@ -1,0 +1,5 @@
+import { K3 } from "k/K3"
+
+export public class H extends K3 {
+	
+}

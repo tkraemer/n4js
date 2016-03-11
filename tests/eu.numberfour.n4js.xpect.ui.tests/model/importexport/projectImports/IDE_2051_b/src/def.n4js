@@ -1,0 +1,11 @@
+
+
+// note: this file is registered as "main module" in the manifest
+
+
+export public class C {
+	public greet() {
+		console.log('Hello from C#greet() in def.n4js!');
+	}
+}
+

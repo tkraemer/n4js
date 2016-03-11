@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+ 
+// see https://numberfour.jira.com/browse/IDEBUG-42 
+
+/* XPECT output --- 
+<==
+stdout:
+func called
+smethod called
+ctor called
+method called
+stderr:
+==>
+--- */
+function <T,U> func(p1 : T, p2 : T): void {
+	console.log(p1, p2)
+}
+
+class A<X,Y> {
+	constructor(p1 : any, p2 : any) {
+		console.log(p1, p2)
+	}
+	static <T,U> smethod(p1 : T, p2 : T) : void {
+		console.log(p1, p2)
+	}
+	<T,U> method(p1 : T, p2 : T) : void {
+		console.log(p1, p2)
+	}
+}
+
+/* --------------------------------  */
+<string,number>func('func', 'called');
+A.<string,number>smethod('smethod', 'called');
+var a = new A<string,number>('ctor', 'called')
+a.<string,number>method('method', 'called');
+
+/* --------------------------------  */ 

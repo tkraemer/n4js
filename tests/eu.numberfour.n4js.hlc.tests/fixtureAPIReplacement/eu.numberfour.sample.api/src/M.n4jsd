@@ -1,0 +1,9 @@
+
+
+/**
+ * A neutral API.
+ */
+@N4JS export external public class Greeter {
+	
+	public greet(name : string) : number;
+}

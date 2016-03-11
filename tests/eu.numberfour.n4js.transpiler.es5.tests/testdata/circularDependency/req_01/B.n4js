@@ -1,0 +1,3 @@
+import { a } from 'circularDependency/req_01/A'
+
+export public var b : number = a + 1;

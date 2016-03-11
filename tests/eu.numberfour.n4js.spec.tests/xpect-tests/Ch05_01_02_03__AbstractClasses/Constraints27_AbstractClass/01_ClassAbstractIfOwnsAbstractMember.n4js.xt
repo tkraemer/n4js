@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// --------------------------------------------------------------------------
+// simple success case
+
+abstract class A {
+	public abstract m() : string
+}
+
+
+// --------------------------------------------------------------------------
+// simple failure case
+
+class B {
+	// XPECT errors --> "The abstract method m in class B can only be defined in an abstract class." at "m"
+	public abstract m() : string
+}
+
+

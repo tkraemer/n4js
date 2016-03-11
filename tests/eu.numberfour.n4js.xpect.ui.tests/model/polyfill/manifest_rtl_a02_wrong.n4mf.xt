@@ -1,0 +1,50 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+    Workspace {
+   	 Project "P_USERTL_A01" {
+   	 	Folder "src" { 
+   	 		 File "A.n4js" { from="A_uses_a01.n4js.xt"} 	   	 		
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_uses_a01.n4mf" }
+   	 }
+   	 Project "P_RTL_A00" {
+   	 	Folder "src" { 
+   	 		 File "ObjectExtension1.n4jsd" {} 	   	 		
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_rtl_a00.n4mf" }
+   	 }
+   	 Project "P_RTL_A01" {
+   	 	Folder "src" { 
+   	 		 File "ObjectExtension2.n4jsd" {} 	   	 		
+   	 		 File "WrongObjectExtension2.n4jsd" {} 	   		
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_rtl_a01.n4mf"  }
+   	 }
+   	 Project "P_RTL_A02" {
+   	 	Folder "src" { 
+   	 		 File "ObjectExtension3.n4jsd" {}
+   	 		 File "A.n4js" { from="A_uses_a00.n4js" } 	   	 		
+   	 	}
+   	 	// ThisFile "manifest.n4mf" {  }
+   	 	ThisFile "manifest.n4mf" { from="manifest_rtl_a02_wrong.n4mf.xt"  }
+   	 }
+   }
+   
+   END_SETUP
+ */
+
+ArtifactId: P_RTL_A02
+VendorId: eu.numberfour
+ProjectName: "P_RTL_A02"
+VendorName: "NumberFour AG"
+ProjectType: runtimeLibrary
+ProjectVersion: 0.0.1-SNAPSHOT
+// XPECT errors --> "Erroneous library P_RTL_A01 provides contradicting polyfills for "#.MObject#mi"." at "P_RTL_A01"
+RequiredRuntimeLibraries { P_RTL_A01 }
+Output: "src-gen"
+Sources { 
+	source { 
+		"src"
+	}
+} 
+ 

@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// IDEBUG-47
+
+class A {
+	f() {}
+}
+
+abstract class B1 extends A {
+	@Override
+	// XPECT errors --> "The abstract method B1.f cannot override concrete method A.f." at "f"
+	abstract f(); // no a weird error: Cannot reduce the visibility of the inherited method f from A.
+}
+
+abstract class B2 extends A {
+	@Override
+	// XPECT errors --> "The abstract method B2.f cannot override concrete method A.f." at "f"
+	public abstract f();
+}

@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationTest END_SETUP */
+ArtifactId: eu.numberfour.stdlib.ios
+VendorId: eu.numberfour
+ProjectName: "stdlib implementation for iOS"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+ImplementationId: impl.ios
+ImplementedProjects {
+	// XPECT errors --> "An implementation project may not implement itself." at "eu.numberfour.stdlib.ios"
+	eu.numberfour.stdlib.ios
+}

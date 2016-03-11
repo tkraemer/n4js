@@ -1,0 +1,9 @@
+class OtherProjectClass {
+	private privateMethod() {
+		
+	};
+	public static publicStaticMethod() {}
+}
+enum OtherProjectEnum {
+	ONE,TWO
+}

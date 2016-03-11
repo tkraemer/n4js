@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// XPECT noerrors --> "no duplicate errors" at "A"
+class A {
+	// XPECT errors --> "The abstract method f in class A can only be defined in an abstract class." at "f"
+	abstract f();
+} 
+
+
+interface I {
+	m()
+}
+// XPECT errors --> "Class B must either be defined abstract or implement method I.m." at "B"
+class B implements I {}
+
+
+abstract class Ab{
+	abstract g();
+} 
+
+// XPECT errors --> "Class C must either be defined abstract or implement method Ab.g." at "C"
+class C extends Ab {}

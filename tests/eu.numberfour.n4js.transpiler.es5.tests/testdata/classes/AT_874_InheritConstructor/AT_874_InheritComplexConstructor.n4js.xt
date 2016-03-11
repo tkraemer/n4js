@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+world
+hello
+stderr:
+==>
+--- */
+class A {
+    public stuff : string;
+    public constructor (@Spec spec : ~i~this) {}
+}
+
+class B extends A {
+    public otherStuff : string;
+}
+
+var cool = new B({stuff:'world',otherStuff:'hello'});
+
+console.log(cool.stuff);
+console.log(cool.otherStuff);

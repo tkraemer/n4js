@@ -1,0 +1,5 @@
+@@Global
+@@ProvidedByRuntime
+export external public class F<T> {
+	initialMethod() : T;
+} 

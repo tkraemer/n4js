@@ -1,0 +1,9 @@
+
+import { RemoteGen } from "i/ImporteeGenerics1"
+
+
+export public class RemoteGenNumber extends RemoteGen<number> {
+
+	public fieldIndirect = this.field;
+}
+

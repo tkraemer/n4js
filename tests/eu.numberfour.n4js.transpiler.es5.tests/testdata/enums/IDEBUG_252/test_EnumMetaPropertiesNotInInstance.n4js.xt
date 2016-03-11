@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest
+
+    ResourceSet {
+		ThisFile {}
+	}
+	
+   END_SETUP 
+ */
+
+
+/* XPECT output --- 
+<==
+stdout:
+{ [Function: E1]
+  A: E1 { name: 'A', value: 'aa' },
+  B: E1 { name: 'B', value: 'bb' } }
+stderr:
+==>
+--- */
+
+enum E1{ A: "aa", B: "bb" }
+console.log(E1)
+

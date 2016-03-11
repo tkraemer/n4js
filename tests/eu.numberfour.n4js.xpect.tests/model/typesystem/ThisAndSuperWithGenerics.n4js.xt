@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+class A<T> {
+	t : T;
+	constructor(t : T) {}
+	foo() : T { return null; } 
+	bar(t : T) {  } 
+	bar2(t : T) {}
+}
+
+
+class B extends A<string> {
+
+	constructor() {
+		super("Hello");
+	}
+
+	@Override
+	foo() : string {
+		return null;
+	}
+	 
+	@Override
+	bar(s : string) {
+		var a : A<string>;
+		a.bar("hello");
+		a.bar2("hello");
+		
+		a.t  ="Hello";
+		this.t = "Hello";
+		
+		super.bar("Hello") 
+		this.bar2("Hello")
+	}
+}

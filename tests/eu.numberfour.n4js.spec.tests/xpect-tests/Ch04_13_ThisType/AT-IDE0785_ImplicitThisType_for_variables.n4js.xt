@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C {
+  getThis() : this {return null}
+  m() : this {
+    var x = this.getThis(); // type of variable x inferred to upper bound of this[C]
+	
+	// XPECT noerrors --> "C is not a subtype of this[C]." at "x"
+    return x; // error: C not a subtype of this[C]
+  }
+}

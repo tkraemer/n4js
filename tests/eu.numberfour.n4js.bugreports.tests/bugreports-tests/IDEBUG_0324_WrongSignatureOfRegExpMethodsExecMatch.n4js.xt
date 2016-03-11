@@ -1,0 +1,7 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+var r : ~Array<string> with {index: number; input: string;};
+// XPECT noerrors -->
+r = /foo/.exec();
+

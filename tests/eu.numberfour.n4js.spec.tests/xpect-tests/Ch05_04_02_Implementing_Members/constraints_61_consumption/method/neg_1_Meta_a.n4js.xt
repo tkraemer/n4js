@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {
+	f(){}
+}
+
+interface J {
+	f;
+}
+
+// XPECT errors --> "Incompatible consumed members: field J.f and method I.f." at "A"
+class A implements I, J {
+}
+
+var a : A = new A();
+
+// XPECT binding --> I.f
+a.f();

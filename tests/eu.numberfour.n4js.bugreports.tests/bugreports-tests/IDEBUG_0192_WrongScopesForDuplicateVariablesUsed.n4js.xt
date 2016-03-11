@@ -1,0 +1,10 @@
+try {} catch (err) {} finally {
+	try {}
+	// XPECT noerrors --> "err defines own lexical environment" 
+	catch(err) {
+    }   
+}
+
+try {} 
+// XPECT noerrors --> "err defines own lexical environment" 
+catch (err) { }

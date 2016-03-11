@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// IDE-778 Comma Expression
+
+var bA : boolean;
+
+// OK, true
+bA = (12,34,true);
+
+// XPECT errors --> "int is not a subtype of boolean." at "12"
+bA = 12,34,true;
+
+// OK, false
+bA = false,12,34,true;
+
+// OK, true
+bA = true,12,34,false;
+
+// XPECT errors --> "int is not a subtype of boolean." at "2"
+bA = 2,1,0;
+
+// XPECT errors --> "string is not a subtype of boolean." at "( 2,true,"g" )"
+bA = ( 2,true,"g" );

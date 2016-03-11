@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+@@IgnoreImplementation
+
+  
+// XPECT noerrors --> "Ignore." at "Y"
+export external public class X {}
+
+// XPECT noerrors --> "Ignore." at "Y"
+export external public class Y {}

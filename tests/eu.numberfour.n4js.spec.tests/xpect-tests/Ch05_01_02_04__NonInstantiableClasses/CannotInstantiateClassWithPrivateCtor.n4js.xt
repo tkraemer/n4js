@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// TODO need several compilation units for testing this
+
+/*
+
+class A {
+	
+	private constructor (string n) {
+		
+	}
+	
+}
+
+
+=============================
+
+
+var A a = new A("hello")		// should fail!
+
+
+
+*/
+

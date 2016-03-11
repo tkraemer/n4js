@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class G<T> {
+    foo(p1 : string, p2 : T?) {}
+}
+
+var g : G<?>;
+var gn : G<number>;
+
+// XPECT noerrors --> "Incorrect number of arguments: expected 2, got 1." at "g.foo('')"
+g.foo('');
+
+// XPECT noerrors --> 
+gn.foo('');

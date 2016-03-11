@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+   END_SETUP
+ */
+
+/////// break out of try:
+// XPECT returnOrThrow --> noReturnsMode
+function f6(): number {
+
+   var b1 : boolean = true; 
+   
+   // XPECT returnOrThrow --> noReturnsMode
+   y: do  {
+       // XPECT returnOrThrow --> breakOrContinue labels y
+       z: {
+       	   // XPECT returnOrThrow --> breakOrContinue labels  y, z
+	       x: do  {
+	           // XPECT returnOrThrow at '|if'--> breakOrContinue labels y, z 
+	           if ( b1 ) {
+	           	  try {
+	                 // XPECT returnOrThrow --> breakOrContinue labels z
+	                 break z;
+	               } finally {
+	               	 return 3;
+	               }
+	           } else {
+	               // XPECT returnOrThrow --> breakOrContinue labels y
+	               try 
+	               {
+                     // XPECT returnOrThrow --> returnsMode
+	                 return 1;
+	               } catch(e) {
+	               	 return 2;
+	               	
+	               } finally {
+		               break y;
+		           }
+	           }
+	       } while ( true )
+	       
+       } // z 
+       // XPECT returnOrThrow --> returnsMode
+       return 4;
+   } while ( true )
+
+}

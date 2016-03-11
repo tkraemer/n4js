@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {
+// XPECT errors --> "The field a (line 5) duplicates field a (line 9)." at "a"
+	a : any;
+// XPECT errors --> "The field b (line 7) duplicates getter b (line 24)." at "b"
+	b : any;
+// XPECT errors --> "The field a (line 9) duplicates field a (line 5)." at "a"
+	a : any;
+// XPECT errors --> "The field d (line 11) duplicates setter d (line 29)." at "d"
+	d : any;
+	
+// XPECT errors --> "The method c (line 14) duplicates method c (line 19)." at "c"
+	c(x : number) : string {
+	  return null; 
+	}
+	
+// XPECT errors --> "The method c (line 19) duplicates method c (line 14)." at "c"
+	c(v : string) : string {
+	 return null; 
+	}
+	
+// XPECT errors --> "The getter b (line 24) duplicates field b (line 7)." at "b"
+	get b() : string {
+	 return null; 
+	}
+	
+// XPECT errors --> "The setter d (line 29) duplicates field d (line 11)." at "d"
+	set d(u : string) {
+	}
+}
+

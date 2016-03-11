@@ -1,0 +1,54 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "proposal" {
+					Folder "contentassist" {
+						ThisFile {}
+					}
+				}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../../manifest_nv.n4mf" }
+		}
+	}
+	
+	
+	Config {
+		content_assist_timeout = 1000 
+		VarDef "fields" {
+			StringList { 
+				s="field1" s="field2" s="field3"
+			}
+		}
+		VarDef "methods" {
+			StringList { 
+				s="methodA" s="methodB" s="methodC"
+			}
+		}
+	}
+	
+
+	END_SETUP
+ */
+
+class C {
+	
+	field1 : string;
+	field2 : string;
+	field3 : string;
+	
+	set setter(value : string) {}
+	
+	methodA() : void {}
+	methodB() : void {}
+	methodC() : void {}
+}
+
+var c : C;
+
+
+// XPECT contentAssistList at 'c.<|>field1' proposals contains --> <$fields>, "setter", <$methods>
+c.field1
+

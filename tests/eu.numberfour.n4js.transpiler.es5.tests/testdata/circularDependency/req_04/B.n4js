@@ -1,0 +1,5 @@
+import { a } from 'circularDependency/req_04/A'
+
+export public function b_fun() {
+	return a + 1;
+}

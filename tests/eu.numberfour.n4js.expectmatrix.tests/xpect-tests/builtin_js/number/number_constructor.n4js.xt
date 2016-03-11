@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Number.constructor
+// Source: self-constructed
+
+var n = Number(9658675);
+console.log(n);
+
+var n1 = Number();
+console.log(n1);
+
+var n2 = Number("hello");
+console.log(n2);
+
+/* XPECT output --- 
+<==
+stdout:
+9658675
+0
+NaN
+stderr:
+==>
+--- */

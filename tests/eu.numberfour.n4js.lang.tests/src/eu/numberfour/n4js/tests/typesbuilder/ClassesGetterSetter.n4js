@@ -1,0 +1,22 @@
+export class Callee {
+	a: string;
+	private data_property_b: string;
+	private data_property_c: string;
+	private data_property_d: string;
+	
+	get b(): string {
+		return this.data_property_b + "_getter";
+	}
+	
+	set c(newC: string) {
+		this.data_property_c = newC + "_setter";
+	}
+
+	get d(): string {
+		return this.data_property_d + "_getter";
+	}
+
+	set d(newD: String) {
+		this.data_property_d = newD + "_setter";
+	}
+}

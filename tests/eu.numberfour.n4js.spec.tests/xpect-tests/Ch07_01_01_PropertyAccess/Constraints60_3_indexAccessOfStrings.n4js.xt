@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+var stuff : string ="bufu";
+// XPECT noerrors --> No error expected: "string index access returns string" at first
+var first : string = stuff[0]; // should work
+// XPECT errors --> "string is not a subtype of number." at "stuff[1]"
+var n : number = stuff[1]; // should work
+
+// XPECT errors --> "Indexed access on string requires numeric index: string is not a subtype of number." at "'hello'"
+stuff['hello'];
+
+class A{}
+var ps : pathSelector<A> = "Hello";
+// XPECT noerrors --> No error expected: "string index access returns string" at "ps[0]"
+var s : string = ps[0];
+
+var tn : typeName<A> = "A";
+// XPECT noerrors --> No error expected: "string index access returns string" at "ps[0]"
+first = tn[0];
+
+var ik : i18nKey = "A";
+// XPECT noerrors --> No error expected: "string index access returns string" at "ps[0]"
+first = ik[0];
+
+var sobj : String = new String("Hello");
+// XPECT noerrors --> No error expected: "string index access returns string" at "ps[0]"
+first = sobj[0];

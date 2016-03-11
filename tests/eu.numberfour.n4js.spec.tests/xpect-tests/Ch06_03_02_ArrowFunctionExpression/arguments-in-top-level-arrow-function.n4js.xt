@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'arguments'." at "arguments"
+var fn = (n : number)=>arguments
+console.log(fn(1));
+
+var fn2 = (n : number)=> {
+	return function bindingProvider() {
+		// XPECT noerrors --> "Fine, arguments bound by named function"
+		return arguments
+	}
+}
+console.log(fn2(1));

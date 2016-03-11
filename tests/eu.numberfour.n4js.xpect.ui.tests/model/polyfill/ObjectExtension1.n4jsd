@@ -1,0 +1,10 @@
+@@Global
+// Initial contribution.
+
+@ProvidedByRuntime
+export external public class MObject {
+	
+	public k(n : number) : number
+	
+}
+

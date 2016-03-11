@@ -1,0 +1,7 @@
+
+
+export public class RemoteGen<A> {
+	
+	public field = function(p : A) : number { return 0; };
+}
+

@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Date.prototype.toISOString()
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+
+var today = new Date(2011, 9, 5, 14, 48);
+console.log(today.toISOString());
+
+/* XPECT output --- 
+<==
+stdout:
+2011-10-05T12:48:00.000Z
+stderr:
+==>
+--- */

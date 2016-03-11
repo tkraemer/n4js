@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+/* XPECT output --- 
+<==
+stdout:
+hello
+stderr:
+==>
+--- */
+
+class A {
+	private m : string;
+	public set s(p : string) { this.m = p; }
+	public get s() : string { return this.m; }
+	
+	constructor(@Spec spec : ~i~this) {}
+}
+
+console.log(new A({s:"hello"}).s);

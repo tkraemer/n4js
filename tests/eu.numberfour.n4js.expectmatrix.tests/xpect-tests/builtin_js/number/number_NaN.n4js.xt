@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Number.NaN
+// Source: self-constructed
+
+console.log(Number.NaN);
+
+/* XPECT output --- 
+<==
+stdout:
+NaN
+stderr:
+==>
+--- */

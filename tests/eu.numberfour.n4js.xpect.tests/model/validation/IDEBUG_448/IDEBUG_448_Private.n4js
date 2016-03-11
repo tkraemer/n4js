@@ -1,0 +1,25 @@
+
+
+export public class A {
+	private constructor() {
+		console.log("created an A!")
+	}	
+	
+	private privMeth() { console.log("called private method on A")}
+}
+
+
+export public class B {
+	
+	a : A;
+	
+	public constructor() {
+		this.a = new A();	
+	}
+	
+	public callIt() { this.a.privMeth();}
+	
+}
+
+new A();
+new B().callIt();

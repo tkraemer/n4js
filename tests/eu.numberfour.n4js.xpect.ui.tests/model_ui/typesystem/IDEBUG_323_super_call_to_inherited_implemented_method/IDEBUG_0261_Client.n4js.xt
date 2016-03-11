@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "IDEBUG-323" {
+   	 	Folder "src" { File "IDEBUG_0261_Imported.n4js" {} }
+   	 	File "manifest.n4mf" { from="manifest_A.n4mf" }
+   	 }
+   	 Project "IDEBUG-323_B" {
+   	 	Folder "src" { ThisFile {} }
+   	 	
+   	 	File "manifest.n4mf" { from="manifest_B.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+import { A } from "IDEBUG_0261_Imported"
+class B extends A {
+	@Override
+	protected foo() {
+		// XPECT noerrors --> "The method foo is not visible." at "foo"
+		super.foo();
+	}
+
+	protected bar() {
+		// XPECT noerrors --> "The method foo is not visible." at "foo"
+		this.foo2nd();
+	}
+
+	private fighter() {
+		// XPECT noerrors --> "The method foo is not visible." at "foo"
+		super.foo2nd();
+	}
+	
+}

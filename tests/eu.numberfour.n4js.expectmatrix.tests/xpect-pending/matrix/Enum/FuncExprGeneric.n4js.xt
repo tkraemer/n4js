@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// String based enum with generic function expressions
+
+@StringBased enum SBEnum {
+	a: "a",
+	b: "b"
+}
+
+
+// Implicit assignment //
+/////////////////////////
+
+var h = function <T>(t : T) : T { return t; }
+
+// XPECT type of h1a --> SBEnum
+var h1a = h(SBEnum.b);
+
+// SBEnum is SBEnum XPECT noerrors --> 
+var h2 : SBEnum = h(SBEnum.b);
+
+// SBEnum is string, too XPECT noerrors --> 
+var h3 : string = h(SBEnum.b);
+
+
+// Explicit assignment //
+/////////////////////////
+
+var k = function <T>(t : T) : T { return t; }
+
+// XPECT type of k1a --> SBEnum
+var k1a = <SBEnum>k(SBEnum.b);
+
+// SBEnum is SBEnum XPECT noerrors --> 
+var k2 : SBEnum = <SBEnum>k(SBEnum.b);
+
+// SBEnum is string, too XPECT noerrors --> 
+var k3 : string = <SBEnum>k(SBEnum.b);

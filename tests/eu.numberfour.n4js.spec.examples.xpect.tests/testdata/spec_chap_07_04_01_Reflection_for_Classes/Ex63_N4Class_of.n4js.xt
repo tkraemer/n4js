@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+ 
+// IDEBUG-195
+ 
+ /* XPECT  output ~~~
+<==
+stdout:
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.C
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.C
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.I
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.IImpl
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.R
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.RCons
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.E
+spec_chap_07_04_01_Reflection_for_Classes.Ex63_N4Class_of.E
+stderr:
+==>
+~~~ */
+
+
+class C { }
+interface I {} 	class IImpl implements I {}
+interface R {}		class RCons implements R {}
+enum E { L }
+
+var c : C = new C();
+var i : I = new IImpl();
+var r : R = new RCons();
+var e : E = E.L;
+
+console.log(C.n4type.fqn);
+console.log(N4Class.of(c).fqn);
+
+console.log(I.n4type.fqn);
+console.log(N4Class.of(i).fqn);
+
+console.log(R.n4type.fqn);
+console.log(N4Class.of(r).fqn);
+
+console.log(E.n4type.fqn);
+console.log(N4EnumType.of(e).fqn);

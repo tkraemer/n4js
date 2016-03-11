@@ -1,0 +1,6 @@
+export class C {
+	
+	b() {
+		console.log("b")
+	}
+}

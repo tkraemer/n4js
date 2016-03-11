@@ -1,0 +1,9 @@
+export external public class ExternalClass {
+}
+
+@N4JS
+export external public class ExternalN4JSClassByAnnotation {
+}
+
+export external public class ExternalN4JSClassByInheritance extends N4Object {
+}

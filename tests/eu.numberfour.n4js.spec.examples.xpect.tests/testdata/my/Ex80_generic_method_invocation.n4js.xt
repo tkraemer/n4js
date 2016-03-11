@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest  
+   ResourceSet {
+        ThisFile {}
+        File  "Address.n4js" { } 
+   }
+   END_SETUP
+ */
+ 
+ /* XPECT output ---
+<==
+stdout:
+street.number
+stderr:
+==>
+--- */
+
+class Address {
+	
+}
+
+class C {
+	static <T> foo(p : pathSelector<T>) { 
+		return p;
+	}
+};
+
+
+console.log(C.<Address>foo("street.number"));

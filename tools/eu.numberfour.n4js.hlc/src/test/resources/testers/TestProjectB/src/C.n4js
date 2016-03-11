@@ -1,0 +1,13 @@
+export public abstract class C {
+	
+	@Test
+	public c1() {
+		
+	}
+	
+	@Test
+	public c2() {
+		
+	}
+	
+}

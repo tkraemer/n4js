@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		Project "ConsumerOfAB" {
+			Folder "src" {
+				ThisFile {}
+				File "Main.n4js" { from="../src/Main.n4js" }
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf"}
+		}
+		Project "A" {
+			Folder "src" {
+					File "Main.n4js" { from="../../A/src/Main.n4js" }
+				}
+			File "manifest.n4mf" { from="../../A/manifest.n4mf"}
+			}
+		Project "B" {
+			Folder "src" {
+					File "Main.n4js" { from="../../B/src/Main.n4js" }
+				}
+			File "manifest.n4mf" { from="../../B/manifest.n4mf"}
+			}
+	}
+	
+	END_SETUP
+*/
+
+
+//actually two MainModules are found, one in A, other in B
+//but uresolved reference is forced in scoping
+// XPECT noerrors --> since calling project has "Main" it wins in case of module import (see other test for project import)
+import * as SpaceMain from "Main"
+
+console.log("\nA" + SpaceMain)

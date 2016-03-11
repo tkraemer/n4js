@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+enum MyEnum {
+	ONE: "eins",
+	TWO: "zwei",
+	THREE: "drei"
+}
+
+/* XPECT scopeWithPosition at 'MyEnum.|ONE' ---
+ONE - T4,
+TWO - T5,
+THREE - T6, ...
+--- */
+MyEnum.ONE;
+
+/* XPECT scopeWithPosition at 'MyEnum.ONE.|value' ---
+n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
+toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+--- */
+MyEnum.ONE.value;
+

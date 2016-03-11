@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest
+
+    ResourceSet {
+    	File "RuntimeLib.n4jsd" {}
+		ThisFile {}
+	}
+	   END_SETUP 
+ */
+
+/* XPECT output --- 
+<==
+stdout:
+stderr:
+==>
+--- */
+
+// XPECT noerrors --> "this test probably fails if not executed with Node.js" at "process"
+process.version;

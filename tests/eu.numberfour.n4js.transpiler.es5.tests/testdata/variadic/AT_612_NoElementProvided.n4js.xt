@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+ 
+/* XPECT output --- 
+<==
+stdout:
+The sum of this 4 numbers is 10
+The sum of this 0 numbers is 0
+stderr:
+==>
+--- */
+function fun1(... numbers : number) {
+	var length = numbers.length;
+	var sum : number = 0;
+	for(var i=0; i<length; i++) {
+		sum += numbers[i];
+	}
+	console.log('The sum of this ' + length + ' numbers is ' + sum);
+}
+fun1(1, 2, 3, 4)
+fun1()

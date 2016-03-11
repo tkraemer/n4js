@@ -1,0 +1,11 @@
+import { Brother } from "eu/numberfour/n4js/tests/scoping/Brother";
+import { Child } from "eu/numberfour/n4js/tests/scoping/Child";
+
+export class Sister { 
+	project getBrother(): Brother {}
+	project getChild(): Child {}
+} 
+var sister: Sister = new Sister;
+var child: Child = sister.getChild;
+child.age;
+var brotherChildAge = sister.getBrother().getChild;

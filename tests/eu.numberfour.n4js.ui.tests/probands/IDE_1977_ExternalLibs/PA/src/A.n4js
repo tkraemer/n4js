@@ -1,0 +1,7 @@
+export public class A {
+	
+	public constructor() {
+		console.log('External A<init>');
+	}
+	
+}

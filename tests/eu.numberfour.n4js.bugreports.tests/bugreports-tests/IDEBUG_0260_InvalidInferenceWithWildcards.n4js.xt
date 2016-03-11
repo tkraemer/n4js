@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+class G<T>{	get() : T {return null;} }
+class A{}
+class B extends A {}
+var b : B;
+
+var aa : Array<? extends A>;
+var ga : G<? extends A>;
+
+
+// index access XPECT nowarnings --> "Neither <type null> is a subtype of B nor B is a subtype of <type null>. The expression will always evaluate to false."
+if (aa[0]===b) {}
+
+// method XPECT nowarnings --> "Neither <type null> is a subtype of B nor B is a subtype of <type null>. The expression will always evaluate to false."
+if (ga.get()===b) {}

@@ -1,0 +1,26 @@
+{
+  "name": "n4js-mangelhaft-node",
+  "author": "NumberFour AG <npm@numberfour.eu>",
+  "license": "EPL-1.0",
+  "repository": "https://github.com/NumberFour/n4js",
+  "description": "N4JS node.js mangelhaft runtime environment.",
+  "keywords": [
+    "n4js",
+    "mangelhaft"
+  ],
+  "engines": {
+    "node": ">= 5.0.0"
+  },
+  "bin": {
+    "n4js-mangelhaft": "./n4js-mangelhaft-cli.js"
+  },
+  "dependencies": {
+    "eu.numberfour.mangelhaft.reporter.ide": "*",
+    "eu.numberfour.mangelhaft.runner.ide": "*",
+    "eu.numberfour.mangelhaft.mangeltypes": "*"
+  },
+  "files": [
+    "manifest.n4mf",
+    "n4js-mangelhaft-cli.js"
+  ]
+}

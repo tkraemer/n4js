@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+class A {}
+class B {}
+class X {}
+
+
+
+class ClsA {
+	fieldSimple : A;
+	fieldDifferentTypes : A;
+	fieldGetter : A;
+	fieldOnlyInClsA : A;
+}
+class ClsB<T,U> {
+	fieldSimple : T;
+	fieldDifferentTypes : U;
+	get fieldGetter() : T {return null;}
+}
+
+
+var value : union{ClsA,ClsB<A,B>};
+
+// XPECT noerrors -->
+var {fieldSimple:a11 : A} = value;
+// XPECT errors --> "Variable a12 cannot hold destructured value of property 'fieldDifferentTypes': union{A,B} is not a subtype of X." at "a12"
+var {fieldDifferentTypes:a12 : X} = value;
+// XPECT errors --> "Variable a13 cannot hold destructured value of property 'fieldGetter': A is not a subtype of X." at "a13"
+var {fieldGetter:a13 : X} = value;
+// XPECT errors --> "Property named "fieldOnlyInClsA" is not readable: Member fieldOnlyInClsA not present in all types of union; missing from: ClsB<A,B>." at "fieldOnlyInClsA"
+var {fieldOnlyInClsA:a14 : X} = value;
+// XPECT errors --> "Value to be destructured does not contain a property, field or getter named "fieldNotFound": union{ClsA,ClsB<A,B>}." at "fieldNotFound"
+var {fieldNotFound: a15} = value;
+

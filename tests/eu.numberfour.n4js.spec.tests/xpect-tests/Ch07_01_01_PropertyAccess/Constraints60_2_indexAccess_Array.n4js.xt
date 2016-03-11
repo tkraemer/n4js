@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+var a : Array<string>;
+// XPECT noerrors --> "index access on array ok"
+var first : string = a[0];
+// XPECT errors --> "Indexed access on Array requires numeric index: string is not a subtype of number." at "'hello'"
+a['hello'];
+
+function f() {
+	// XPECT noerrors --> "index access on array ok"
+	arguments[0];
+	// XPECT errors --> "Indexed access on ArgumentsType requires numeric index: string is not a subtype of number." at "'hello'"
+	arguments['hello'];
+}

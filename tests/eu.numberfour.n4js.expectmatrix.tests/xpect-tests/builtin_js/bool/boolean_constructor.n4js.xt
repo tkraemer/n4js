@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+
+// Boolean.constructor
+// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+var myFalse = new Boolean(false);   // initial value of false
+console.log("false = " + myFalse);
+var g = new Boolean(myFalse);       // initial value of true
+console.log("true = " + g);
+var myString = new String("Hello"); // string object
+var s = new Boolean(myString);      // initial value of true
+console.log("true = " + s);
+
+/* XPECT output --- 
+<==
+stdout:
+false = false
+true = true
+true = true
+stderr:
+==>
+--- */

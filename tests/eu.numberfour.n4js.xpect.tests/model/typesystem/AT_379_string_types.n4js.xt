@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+function fs(s : string) {}
+function fS(s : String) {}
+
+//  ++++ simple string checks +++++++++++++
+
+// XPECT errors --> "string is not a subtype of String." at ""Hello""
+fS("Hello");
+// XPECT errors --> "String is not a subtype of string." at "new String("Hello")"
+fs(new String("Hello"));
+
+
+
+//  ++++ string types  +++++++++++++
+
+function f_ps(p : pathSelector<?>) {
+	// ok XPECT errors -->
+	var s : string = p;
+}
+function f_tn(p : typeName<?>) {
+	// ok // XPECT errors -->
+	var s : string = p;
+}
+
+function f_ik(p : i18nKey) {
+	// ok // XPECT errors -->
+	var s : string = p;
+}
+
+// ok // XPECT errors -->
+f_ps("hello.world");
+
+// ok // XPECT errors -->
+f_tn("A");
+
+// ok // XPECT errors -->
+f_ik("somekey");

@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class C {
+	constructor(p : string) {}
+}
+
+class C1 extends C {
+	constructor(p : string) { super(p); }
+}
+class C2 extends C {
+	constructor(p : number) { super("p"); }
+}
+
+
+class G<T> {
+	put(p : T) {}
+	take() : T {return null;}
+}
+
+
+// XPECT noerrors -->
+var gFine : Array<constructor{C}> = [ C, C1 ];
+// XPECT errors --> "Array<union{constructor{C},constructor{C1},constructor{C2}}> is not a subtype of Array<constructor{C}>." at "[ C, C1, C2 ]"
+var gBad : Array<constructor{C}> = [ C, C1, C2 ];
+// XPECT noerrors -->
+var gFixed : Array<union{constructor{C},constructor{C1},constructor{C2}}> = [ C, C1, C2 ];
+// XPECT type of '[ C, C1, C2 ]' --> Array<union{constructor{C},constructor{C1},constructor{C2}}>
+var test = [ C, C1, C2 ];
+

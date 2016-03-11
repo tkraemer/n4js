@@ -1,0 +1,51 @@
+// Testing mixed in types.
+@N4JS export external public interface Ifa {
+	
+	@ProvidesDefaultImplementation
+	public m1() : string;
+
+	@ProvidesDefaultImplementation
+	public get fa() : string;
+	
+	@ProvidesDefaultImplementation
+	public set fb(s : string);
+
+	@ProvidesDefaultImplementation
+	public get fc() : string;
+	
+	@ProvidesDefaultImplementation
+	public set fc(s : string);
+
+	@ProvidesInitializer 
+	public f : string;
+
+	// -- static cases
+	
+	@ProvidesDefaultImplementation
+	public static sm1() : string;
+	
+	@ProvidesDefaultImplementation
+	public static get sfa() : string;
+	
+	@ProvidesDefaultImplementation
+	public static set sfb(s : string);
+
+	@ProvidesDefaultImplementation
+	public static get sfc() : string;
+	
+	@ProvidesDefaultImplementation
+	public static set sfc(s : string);
+
+	@ProvidesInitializer 
+	public static sf : string;
+	
+}
+
+@N4JS export external public interface Ifb extends Ifa {
+	
+}
+
+@N4JS export external public interface Ifc extends Ifb {
+	
+}
+

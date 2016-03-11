@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+ 
+// IDE-1805  transpiler changes for computed-names of string-literal form in member declarations
+
+/* XPECT output --- 
+<==
+stdout:
+{ '@type': 'whatever' }
+stderr:
+==>
+--- */
+
+class ~Party {
+    public ["@type"] : string = "some.type";
+    public ["@typeValue"] : string? = "some.parameter";
+}
+
+var some_party : Party = {
+    ["@type"] : "whatever"
+}
+
+console.log(some_party)

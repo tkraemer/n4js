@@ -1,0 +1,17 @@
+ArtifactId: IMPLx
+VendorId: eu.numberfour
+ProjectName: "IMPLx"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+ImplementationId : apiId1
+ImplementedProjects { APIx }
+RequiredRuntimeLibraries {rtlib}
+
+

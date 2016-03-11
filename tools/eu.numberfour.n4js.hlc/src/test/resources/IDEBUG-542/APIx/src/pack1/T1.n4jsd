@@ -1,0 +1,5 @@
+import { IExtendsIterator } from "runtime/es6/Iterator"
+
+export external public class X { 
+	public n : number;
+}

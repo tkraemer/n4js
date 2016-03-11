@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "Var.n4js" {}
+	}
+	
+	END_SETUP
+*/
+
+
+import myV from "importexport/default/Var"
+
+
+console.log('running in Var_main.n4js:');
+console.log(myV);
+
+
+
+/* XPECT output --- 
+<==
+stdout:
+running in Var.n4js:
+hello from variable v!
+running in Var_main.n4js:
+hello from variable v!
+stderr:
+==>
+--- */
+

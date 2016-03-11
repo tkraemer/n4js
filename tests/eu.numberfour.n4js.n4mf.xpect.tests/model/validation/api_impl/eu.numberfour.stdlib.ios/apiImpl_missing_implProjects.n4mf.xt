@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationTest END_SETUP */
+ArtifactId: eu.numberfour.stdlib.ios
+VendorId: eu.numberfour
+ProjectName: "stdlib implementation for iOS"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+// XPECT errors --> "When defining an implementation ID, you also have to define one or more API projects that are implemented by this project, using property ImplementedProjects." at "impl.ios"
+ImplementationId: impl.ios

@@ -1,0 +1,10 @@
+import { Ifc , Ifa } from "p/IF"
+
+@N4JS 
+export external public class Factory {
+	
+	public static createSomeIfc() : Ifc;
+
+	public static createSomeIfa() : Ifa;
+	
+}

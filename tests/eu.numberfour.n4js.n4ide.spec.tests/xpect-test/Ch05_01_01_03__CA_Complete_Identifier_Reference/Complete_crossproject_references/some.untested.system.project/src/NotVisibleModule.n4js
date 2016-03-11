@@ -1,0 +1,23 @@
+export public class NVMPublicClass {
+
+	private pubcPrivateField = null;
+	project pubcProjectField = null;
+	protected pubcProtectedField = null;
+	public pubcPublicdField = null;
+	
+	private static spubcPrivateField = null;
+	project static spubcProjectField = null;
+	protected static spubcProtectedField = null;
+	public static spubcPublicdField = null;
+
+	private pubcPrivateMethod() { }
+	project pubcProjectMethod() { }
+	protected pubcProtectedMethod() { }
+	public pubcPublicdMethod() { }
+
+	private static spubcPrivateMethod() { }
+	project static spubcProjectMethod() { }
+	protected static spubcProtectedMethod() { }
+	public static spubcPublicdMethod() { }
+	
+}

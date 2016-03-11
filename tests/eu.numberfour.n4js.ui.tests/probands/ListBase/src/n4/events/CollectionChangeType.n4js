@@ -1,0 +1,8 @@
+export public enum CollectionChangeType{
+    ADDED    ,
+    REMOVED  ,
+    REPLACED ,
+    MODIFIED ,
+    MOVED    ,         
+    REFRESHED 
+}

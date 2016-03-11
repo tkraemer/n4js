@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "proposal" {
+					Folder "contentassist" {
+						ThisFile {}
+						File "A.n4js" {}
+					}
+				}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../../manifest_nv.n4mf" }
+		}
+	}
+
+   END_SETUP
+ */
+ 
+/*
+   Test for N4JSIDE  - §14.5.4. display – Verify displayed string
+ */
+
+
+
+// XPECT contentAssistList at 'new <|>ClassA()' display 'ClassA' --> "ClassA - proposal.contentassist.A"
+new ClassA();
+

@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+////////////////////////////
+// Higher-order functions //
+// Generics				  //
+////////////////////////////
+
+function <T,S> foo (g : {function (T) : S}) : {function (T) : S} {
+	// IDEBUG-177 return type not inferred XPECT noerrors -->
+	return s=>{return g(s)};
+}
+
+// lambda as return & parameter XPECT noerrors -->
+<number,string>foo( n => { return ""+n })(5);
+
+// IDE-1037 lambda as return & parameter, simple syntax XPECT noerrors -->
+<number,string>foo( n => "hello" )(6);

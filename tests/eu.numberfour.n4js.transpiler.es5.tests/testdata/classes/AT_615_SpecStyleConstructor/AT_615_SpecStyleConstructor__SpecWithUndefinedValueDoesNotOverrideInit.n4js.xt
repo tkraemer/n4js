@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+hi
+stderr:
+==>
+--- */
+class Base {
+	public greet : string = 'hi';
+	constructor(@Spec spec : ~i~this) {
+	}
+}
+
+// not allowed anymore
+//var b = new Base();
+var b = new Base({});
+console.log(b.greet)

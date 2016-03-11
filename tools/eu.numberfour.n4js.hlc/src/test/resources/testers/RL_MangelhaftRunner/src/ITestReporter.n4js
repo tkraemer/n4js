@@ -1,0 +1,6 @@
+console.log("loaded ITestReporter module");
+
+export public interface ITestReporter{
+	public reportSuccess(testName : string) : void
+	public reportFailure(testName : string, err : Error) : void
+}

@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+	
+	ResourceSet {
+		ThisFile {}
+		File "Importee.n4js" {}
+	}
+	
+	END_SETUP 
+ */
+
+import * as N from "typesystem/Importee"
+
+// XPECT type of 'typeFromLeftSideUsage' --> string
+var typeFromLeftSideUsage = N.typeFromLeftSide;
+// XPECT type of 'typeFromRightSideUsage' --> string
+var typeFromRightSideUsage = N.typeFromRightSide;
+// XPECT type of 'myClassUsage' --> MyClass2
+var myClassUsage = N.myClass2;

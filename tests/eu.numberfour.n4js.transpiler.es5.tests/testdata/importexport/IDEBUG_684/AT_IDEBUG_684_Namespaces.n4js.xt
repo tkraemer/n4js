@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 
+	
+	ResourceSet {
+		ThisFile {}
+		File "Err.n4js" {}
+	}
+	
+	END_SETUP
+ */
+ 
+ /* XPECT output --- 
+<==
+stdout:
+true
+true
+false
+false
+stderr:
+==>
+--- */
+ 
+import * as N from "importexport/IDEBUG_684/Err"
+
+class MyErr extends N.Error{}
+class MyError extends Error{}
+
+
+var myErr = new MyErr();//instance of imported thing
+var myError = new MyError();//instnace of global error
+
+console.log(myErr instanceof N.Error)//true
+console.log(myError instanceof Error)//true
+
+console.log(myErr instanceof Error)//false
+console.log(myError instanceof N.Error)//false
