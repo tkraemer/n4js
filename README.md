@@ -1,9 +1,9 @@
 # N4JS
 
-The [N4JS language and its IDE](https://numberfour.github.io/n4js) allow high quality Javascript development for large Node.js projects. 
+The [N4JS language and its IDE](https://numberfour.github.io/n4js) enables high-quality JavaScript development for large Node.js projects. 
 N4JS enriches ECMAScript with a static type system and provides extensive support for static validation hosted within a feature-rich IDE.
 
-N4JS is based on ECMAScript Version 5, ECMAScript 2015 is supported to a great extent. It adds a sound static type system inspired by Java 8, extended by concepts such as structural typing or union types. The language provides built-in support for state-of-the-art programming paradigms, for example dependency injection and test support. The Eclipse based IDE for typed JavaScript is custom tailored to these concepts, it validates code as you type and comes with state-of-the art features sich as content assist or quick-fixes.
+N4JS is based on ECMAScript Version 5 and ECMAScript 2015 is supported to a great extent. It adds a sound static type system inspired by Java 8, extended by concepts such as structural typing or union types. The language provides built-in support for state-of-the-art programming paradigms such as dependency injection and robust test support. The Eclipse based IDE for typed JavaScript is custom-built for exactly these concepts. Code is validated as you type in addition to tools such as content-assist and quick-fixes to ensure your code is written safely and intuitively.
 
 ## Releases
 
@@ -13,7 +13,7 @@ N4JS is based on ECMAScript Version 5, ECMAScript 2015 is supported to a great e
 
 ## Contribute
 
-Eclipse developers who want to use develop N4JS itself should use the Oomph Eclipse installer, which installs the right Eclipse version, creates a new workspace and clones all projects into it.
+Eclipse developers who want to develop N4JS itself should use the Oomph Eclipse installer. This installs the correct Eclipse version, creates a new workspace and clones all projects into it.
 
 ### Eclipse Installer
 
@@ -37,7 +37,7 @@ The installer will then guide you through the rest of the installation. All plug
 
 ### Manual IDE Configuration
 
-If you want to install it manually, clone the code and import all top-level projects from the docs, features, plugins, releng, testhelpers, and tests folders. Then activate the targetplatform contained in the ```releng/eu.numberfour.ide.targetplatform``` project.
+For a manual install, clone the code and import all top-level projects from the docs, features, plugins, releng, testhelpers, and tests folders. Activate the targetplatform contained in the ```releng/eu.numberfour.ide.targetplatform``` project.
 
 The N4JS IDE is developed with Eclipse Mars 4.5 or better since the system is based on Eclipse anyway. 
 It is almost impossible to use another IDE to develop Eclipse plugins. The list of required plugins includes:
@@ -52,7 +52,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Documentation
 
-- [User Guide](https://numberfour.github.io/n4js/userguide/basic_user_guide.html): How to write type safe Node.js modules with N4JS?
+- [User Guide](https://numberfour.github.io/n4js/userguide/basic_user_guide.html): How to write type safe Node.js modules with N4JS
 - [N4JS Language Specification (PDF)](http://...)
 - [Complete Feature Table](https://numberfour.github.io/n4js/features/featuretable.html)
 - [Release Notes](https://numberfour.github.io/n4js/release/releases/release_notes)
