@@ -19,11 +19,11 @@
       source="http://www.eclipse.org/oomph/setup/BrandingInfo">
     <detail
         key="imageURI">
-      <value>http://www.numberfour.eu/numberfour.png</value>
+      <value>http://numberfour.github.io/n4js/imgs/n4_logo_128.png</value>
     </detail>
     <detail
         key="siteURI">
-      <value>http://www.numberfour.eu</value>
+      <value>http://numberfour.github.io/n4js/</value>
     </detail>
   </annotation>
   <setupTask
@@ -253,7 +253,6 @@
     <repository
         url="http://download.eclipse.org/technology/swtbot/releases/2.3.0"/>
   </setupTask>
-  
   <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone"
@@ -444,7 +443,7 @@
             xsi:type="predicates:LocationPredicate"
             pattern=".*/n4js-libraries/.*"/>
       </predicate>
-    </workingSet>    
+    </workingSet>
     <description>The dynamic working sets for ${scope.project.label}</description>
   </setupTask>
   <stream name="master"
