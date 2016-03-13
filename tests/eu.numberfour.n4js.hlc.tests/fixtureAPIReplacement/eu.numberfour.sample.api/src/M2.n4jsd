@@ -1,8 +1,0 @@
-
-
-@N4JS export external public interface I {
-	
-	@ProvidesDefaultImplementation
-	public computeStuff() : string
-}
-

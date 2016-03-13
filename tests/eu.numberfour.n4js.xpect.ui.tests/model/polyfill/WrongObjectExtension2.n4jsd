@@ -1,9 +1,0 @@
-@@Global
-
-// DESCRIPTION: if enabled expecting an error since sister-module "ObejctExtension.n4jsd" is also exporting mi())
-
-@ProvidedByRuntime
-@Polyfill
-export external public class  MObject extends MObject {
-	public mi() : number;
-}

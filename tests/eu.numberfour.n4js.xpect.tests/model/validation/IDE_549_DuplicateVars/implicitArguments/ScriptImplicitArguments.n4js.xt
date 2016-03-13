@@ -1,7 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
-
-
-//special case, as module body is wrapped, this would allow for user to mess up whole module loading and more
-// XPECT errors --> "Variable arguments shadows implicit function parameter." at "arguments"
-var arguments;
-

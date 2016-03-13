@@ -1,7 +1,0 @@
-// see https://numberfour.jira.com/browse/IDE-835
-
-var bummer : string = "bummer";
-// XPECT noerrors --> No error expected: should work due to autoboxing
-var bummerLength : number = bummer.length;
-// XPECT noerrors --> No error expected: should work due to autoboxing
-var s : string = bummer.toUpperCase();

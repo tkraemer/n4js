@@ -1,9 +1,0 @@
-import { AT_IDE_1510_Stubrouting_subclass } from "routing/AT_IDE-1510_Subclass"
-
-
-var exec = new AT_IDE_1510_Stubrouting_subclass();
-
-
-// exec.testNormalInherited();
-
-exec.testMissingInherited();

@@ -1,6 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
-
-function <T> foo( param : ~Object with { prop: T; } ) : T {return null;}
-// XPECT noerrors --> "x1 does not have a declared type, so no expected type available during type arg inference for 'foo'!""
-// XPECT type of 'x1' --> number
-var /* number */ x1 = /*<number>*/ foo ( { number prop: 42 } ); // now working (fixed as of IDE-1702)

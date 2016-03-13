@@ -1,9 +1,0 @@
-import { A } from "A"
-
-var a = new A();
-
-a.notPolyfilledMethod();
-a.polyfilledMethod();
-console.log(a.notPolyfilledMember);
-console.log(a.polyfilledMember);
-

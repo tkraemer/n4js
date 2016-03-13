@@ -1,3 +1,0 @@
-export var functionFromModuleA = function() {
-	console.log('functionFromModuleA')
-}

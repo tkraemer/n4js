@@ -1,8 +1,0 @@
-@Api export public class CompanionClass {
-}
-
-@Api export public interface CompanionRole {
-}
-
-@Api export public interface CompanionInterface1 {
-}

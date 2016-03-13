@@ -1,5 +1,0 @@
-class Base {
-	public m(b : Base) : void {}
-}
-export public class ApiType extends Base {
-}

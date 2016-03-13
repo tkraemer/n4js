@@ -1,5 +1,0 @@
-function otherVendorUnexported() {}
-
-@Internal export public function otherVendorPublicInternal() {
-	
-}

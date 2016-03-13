@@ -1,4 +1,0 @@
-import { B } from 'circularDependency/req_11/B'
-
-export public class A { }
-B.b1

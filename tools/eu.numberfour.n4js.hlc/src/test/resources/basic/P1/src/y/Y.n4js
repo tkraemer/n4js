@@ -1,4 +1,0 @@
-import { C } from "c/C"
-export public class Y extends C {
-	
-}

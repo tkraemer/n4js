@@ -1,8 +1,0 @@
-
-
-export default var v = "hello from variable v!";
-
-
-console.log('running in Var.n4js:');
-console.log(v);
-

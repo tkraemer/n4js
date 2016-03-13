@@ -1,3 +1,0 @@
-
-// XPECT warnings --> "Final type number should not be used as upper bound of type parameter T. Final types cannot be extended." at "number"
-function <T extends number> g (t : T) {};

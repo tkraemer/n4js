@@ -1,5 +1,0 @@
-import { Y } from "y/Y"
- 
-export public class Z extends Y {
-	
-}

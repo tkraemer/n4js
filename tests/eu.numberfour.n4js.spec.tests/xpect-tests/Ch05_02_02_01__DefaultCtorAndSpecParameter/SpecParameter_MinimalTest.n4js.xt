@@ -1,9 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
-
-class A {
-	public x : number;
-	constructor(@Spec spec : ~i~this){}
-}
-
-// XPECT noerrors -->
-new A({x:10})

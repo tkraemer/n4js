@@ -1,4 +1,0 @@
-export public class A {
-	method1() {}
-	method2() {}
-}

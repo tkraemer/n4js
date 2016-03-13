@@ -1,8 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
-
-
-interface I<T_N4Enum extends N4Enum> { }
-
-// XPECT noerrors --> "T_N4Enum is not a subtype of N4Enum." at "T_N4Enum"
-class C<T_N4Enum extends N4Enum> implements I<T_N4Enum> { }
-

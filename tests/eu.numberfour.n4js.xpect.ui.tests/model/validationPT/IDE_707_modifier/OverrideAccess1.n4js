@@ -1,7 +1,0 @@
-export public interface R {
-	project abstract foo();
-}
-
-export public abstract class C {
-	project abstract foo();
-}

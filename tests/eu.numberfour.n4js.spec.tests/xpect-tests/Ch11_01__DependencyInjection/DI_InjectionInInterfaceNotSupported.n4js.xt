@@ -1,7 +1,0 @@
-class A {}
-
-interface I {
-	//XPECT errors --> "Injection inside interfaces is not supported." at "Inject"
-    @Inject
-    field : A; // <=== add validation error
-}

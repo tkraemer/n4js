@@ -1,6 +1,0 @@
-
-export public class ClassA {
-
-	public methodA() {}
-	public methodA2() {}
-}

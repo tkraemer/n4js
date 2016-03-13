@@ -1,2 +1,0 @@
-export public var foo : number;
-export public var bar : string;

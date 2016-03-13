@@ -1,4 +1,0 @@
-import { b } from 'circularDependency/req_01/B'
-
-export public var a : number = 1;
-export public var a2 : number = b + 1;

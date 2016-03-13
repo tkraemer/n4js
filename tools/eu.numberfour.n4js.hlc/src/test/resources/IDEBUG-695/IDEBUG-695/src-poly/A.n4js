@@ -1,9 +1,0 @@
-@@StaticPolyfillModule
-@StaticPolyfill
-export public class A extends A {
-    @Override
-    public constructor(@Spec spec : ~i~this ) {
-        super(spec);
-        this.a = 5;
-    }
-}

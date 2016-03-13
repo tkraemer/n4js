@@ -1,8 +1,0 @@
-n4js-node@ /var/lib/build/workspace/CI_stdlib_n4js/stdlib_n4js/rtenvs/n4js-node
-├─┬ node-fetch@1.3.3  (git://github.com/bitinn/node-fetch.git#b21dd5a15b6b4d9df90a23284a8069017684fd9f)
-│ └─┬ encoding@0.1.12 
-│   └── iconv-lite@0.4.13 
-└─┬ systemjs@0.19.22 
-  ├── es6-module-loader@0.17.11 
-  └── when@3.7.7 
-

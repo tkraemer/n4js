@@ -1,7 +1,0 @@
-import { AT_IDEBUG_505_field_vs_getset } from "fields/AT_IDEBUG-505_field_vs_getset"
-
-
-var ex : AT_IDEBUG_505_field_vs_getset = new AT_IDEBUG_505_field_vs_getset();
-
-ex.test_constructor_works();
-

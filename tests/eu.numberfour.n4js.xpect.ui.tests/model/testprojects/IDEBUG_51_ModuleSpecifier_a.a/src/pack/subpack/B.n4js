@@ -1,6 +1,0 @@
-export class B {
-	
-	b() {
-		console.log("b")
-	}
-}

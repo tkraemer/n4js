@@ -1,9 +1,0 @@
-
-export var a : string;
-export var b : string;
-export var c : number = 2;
-export var d : void;
-export var x;
-
-export class C{};
-

@@ -1,3 +1,0 @@
-export @Export public class A{}
-export interface B{ meth() : void; }
-

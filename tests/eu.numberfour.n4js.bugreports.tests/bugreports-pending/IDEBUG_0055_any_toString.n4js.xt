@@ -1,6 +1,0 @@
-// any missing toString()
-
-var something : any = "party";
-
-// XPECT FIXME noerrors --> "any should be autoboxed to Object, but only if receiver is not a literal"
-console.log(something.toString());

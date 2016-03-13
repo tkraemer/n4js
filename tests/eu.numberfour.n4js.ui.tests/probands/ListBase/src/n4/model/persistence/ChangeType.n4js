@@ -1,7 +1,0 @@
-export public enum ChangeType {
-    MODIFIED,
-    DELETED,
-    CREATED,
-    MOVED_IN_SET,
-    SNAPSHOT_CREATED
-};

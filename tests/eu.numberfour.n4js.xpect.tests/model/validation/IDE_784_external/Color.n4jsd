@@ -1,3 +1,0 @@
-export external public enum Color {
-   RED,GREEN,BLUE
-}

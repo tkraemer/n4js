@@ -1,5 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
- 
-class B extends Object {}
-// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'n4type'." at "n4type"
-B.n4type;

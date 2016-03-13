@@ -1,5 +1,0 @@
-export class C {
-	foo() : void {
-		console.log('module C C.foo')
-	}
-}

@@ -1,4 +1,0 @@
-export class A {
-public stuff : string;
-public constructor (@Spec spec : ~i~this) {}
-}

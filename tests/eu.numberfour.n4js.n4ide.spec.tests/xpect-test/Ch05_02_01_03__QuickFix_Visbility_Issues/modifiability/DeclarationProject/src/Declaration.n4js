@@ -1,3 +1,0 @@
-export public class Declaration {
-	private privateMethod() {};
-}

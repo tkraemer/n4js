@@ -1,4 +1,0 @@
-export class SupplierWithBuiltIn {
-    public s: String;
-	public foo(): SupplierWithBuiltIn;
-}

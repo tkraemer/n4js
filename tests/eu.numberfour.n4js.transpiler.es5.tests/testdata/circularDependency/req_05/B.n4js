@@ -1,5 +1,0 @@
-import { A } from 'circularDependency/req_05/A'
-
-export public class B {
-	static b1 = A.a1;
-}

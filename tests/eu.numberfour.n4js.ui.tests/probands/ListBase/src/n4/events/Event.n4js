@@ -1,4 +1,0 @@
-export public abstract class Event{
-	public cloneWithoutConstraints() : Event { return null; }
-	public mergeWith(e : Event) : void {}
-} 

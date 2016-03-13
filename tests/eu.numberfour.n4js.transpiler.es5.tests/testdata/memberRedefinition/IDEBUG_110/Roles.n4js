@@ -1,2 +1,0 @@
-interface r1{ f="fR1";}
-export public interface r2 extends r1{}

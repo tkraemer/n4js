@@ -1,8 +1,0 @@
-export public class A {
-
-	@Test
-	public a() {
-		
-	}
-	
-}

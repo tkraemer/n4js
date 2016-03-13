@@ -1,8 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
-
-var x = 5
-var y = "string"
-
-x = 
-// XPECT errors --> "string is not a subtype of int." at "y"
-y

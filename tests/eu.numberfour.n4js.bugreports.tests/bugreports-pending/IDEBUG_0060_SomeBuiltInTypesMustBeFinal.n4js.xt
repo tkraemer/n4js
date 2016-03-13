@@ -1,3 +1,0 @@
-// XPECT FIXME errors --> "Cannot extend final class Function."
-class A extends Function {
-}

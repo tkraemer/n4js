@@ -1,9 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
-
-class C<T> {
-	f(p2 : T?) {}
-}
-
-var c : C<string>;
-// XPECT noerrors --> "Incorrect number of arguments: expected 2, got 1." at c.f()
-c.f();

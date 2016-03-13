@@ -1,3 +1,0 @@
-@@StaticPolyfillAware
-export external public class TimezoneRegion {
-}

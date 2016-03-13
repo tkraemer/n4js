@@ -1,9 +1,0 @@
-
-@N4JS 
-export external public interface X {
-	
-	@ProvidesDefaultImplementation	public providesDefault()  : X;
-//	@ProvidesDefaultImplementation	public get not_providesDefaultGet() : X;
-	@ProvidesDefaultImplementation	public missing_providesDefault()  : X;
-	
-}

@@ -1,5 +1,0 @@
-import { ChangeType }             from "n4/model/persistence/ChangeType";
-import { PropertyChangedEvent }   from "n4/events/PropertyChangedEvent";
-export public abstract class DataObject{
-	public observing : any;
-}

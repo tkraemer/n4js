@@ -1,5 +1,0 @@
-@@Global
-@@ProvidedByRuntime
-export external public class F {
-	initialMethod();
-}

@@ -1,5 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
-
-var num = 0;
-if(num <= 0) throw new TypeError('illegal');
-if(num <= 0) throw new RangeError('illegal');

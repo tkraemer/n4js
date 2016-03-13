@@ -1,8 +1,0 @@
-@@Global
-//import { MObject } from "ObjectExtension"
-
-@ProvidedByRuntime
-@Polyfill
-export external public class MObject extends MObject {
-	public mi() : Object;
-}

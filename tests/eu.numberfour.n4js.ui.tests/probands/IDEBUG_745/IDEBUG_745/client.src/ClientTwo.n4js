@@ -1,4 +1,0 @@
-import { foo } from "OldSchoolModuleTwo"
-import { bar } from "OldSchoolModuleTwo"
-
-console.log('foo === 36: ' + (foo === 36) + ', bar === \'bar\': ' + (bar === 'bar'));

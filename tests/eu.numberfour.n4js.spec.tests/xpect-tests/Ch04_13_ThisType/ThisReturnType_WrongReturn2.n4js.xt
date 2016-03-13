@@ -1,9 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
-
-class C {
-	foo() : this {
-		// XPECT errors --> "C is not a subtype of this[C]." at "new C().foo()"
-		return new C().foo();
-	}
-}
-	

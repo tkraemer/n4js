@@ -1,9 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
-
-// see https://numberfour.jira.com/browse/IDE-662
-//arguments missing inside function
-
-function someFunc () {
-	// XPECT noerrors -->
-    return arguments; //Couldn't resolve reference to IdentifiableElement 'arguments'.
-}

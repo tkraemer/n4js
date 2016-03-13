@@ -1,4 +1,0 @@
-class A{
-	// XPECT FIXME errors --> "Cannot redefine constructor property name" at "name"
-	private static name: string = 'foo';
-}

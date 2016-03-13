@@ -1,1 +1,0 @@
-This plugin provides additional binary dependencies to test the testers.

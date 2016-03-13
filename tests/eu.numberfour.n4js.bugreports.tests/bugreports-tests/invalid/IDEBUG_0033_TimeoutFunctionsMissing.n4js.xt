@@ -1,8 +1,0 @@
-
-//global timeout functions missing
-
-// not defined in ES5 XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'setTimeout'." at "setTimeout"
-var id = setTimeout(function() {}, 444);
-
-// not defined in ES5 XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'clearTimeout'." at "clearTimeout"
-clearTimeout(id);

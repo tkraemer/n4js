@@ -1,9 +1,0 @@
-
-
-
-export var a;
-
-export public var b : string;
-
-export external public function f1(g : string) : string;
-

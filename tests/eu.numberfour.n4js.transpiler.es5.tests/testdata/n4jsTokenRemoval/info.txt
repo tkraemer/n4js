@@ -1,5 +1,0 @@
-In this folder we have (very) high level tests for the compiler.
-Main purpose is to see if n4js specific tokens are removed from code or if no strange constructs were introduced during compile time.
-Basically check if compiled code can be executed without SyntaxError, ReferenceError, TypeError.
-
-Those are not checking if concrete features behave correctly.

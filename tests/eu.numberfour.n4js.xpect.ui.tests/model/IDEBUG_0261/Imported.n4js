@@ -1,4 +1,0 @@
-export public interface R {
-	protected foo() {}
-}
-export public class A implements R { }

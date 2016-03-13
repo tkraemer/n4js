@@ -1,9 +1,0 @@
-import { B } from "B";
-
-export public class C extends B {
-	
-	public constructor() {
-		console.log('External C<init>');
-	}
-	
-}

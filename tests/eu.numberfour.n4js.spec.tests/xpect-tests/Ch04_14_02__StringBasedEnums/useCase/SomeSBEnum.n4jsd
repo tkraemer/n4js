@@ -1,8 +1,0 @@
-
-
-@StringBased
-export external public enum Color {
-	RED: "_ROT_",
-	GREEN
-}
-

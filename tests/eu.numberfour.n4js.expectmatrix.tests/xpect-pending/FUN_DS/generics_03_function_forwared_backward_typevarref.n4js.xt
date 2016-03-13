@@ -1,8 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
-
-
-// Use forward and backware reference to typeVar, symmetric case
-// OK - should not eval to "T is not a subtype of S."
-// XPECT errors -->
-function <T extends S, S extends T> FA09(p1 : T, p2 : S) : T  { p1 = p2; p2 = p1; return null; } // S==T should work.
-

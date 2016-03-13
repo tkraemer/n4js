@@ -1,7 +1,0 @@
-export var a = 5, b: string
-
-export const CONST1 = 6.0, CONST2: number = 7.0
-
-var c = function(name: String) {
-
-}

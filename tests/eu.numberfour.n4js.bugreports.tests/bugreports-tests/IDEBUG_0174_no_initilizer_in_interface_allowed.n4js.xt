@@ -1,6 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
-
-interface Foo {
-	// XPECT noerrors --> "Initializer may be consumed by implementor (changed with IDE-1236)" at "5"
-    public bar : number = 5;
-}

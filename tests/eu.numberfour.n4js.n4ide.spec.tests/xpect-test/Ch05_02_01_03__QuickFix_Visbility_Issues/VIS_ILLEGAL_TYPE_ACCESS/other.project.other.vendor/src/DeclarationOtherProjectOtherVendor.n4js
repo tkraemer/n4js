@@ -1,8 +1,0 @@
-@Internal
-export public class OtherVendorClass {
-	public methodA() {	
-	}
-} 
-enum OtherVendorEnum {
-	ONE,TWO
-}

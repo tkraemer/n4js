@@ -1,5 +1,0 @@
-export public class NFARClass {
-	private privateMethod() {
-		
-	};
-}

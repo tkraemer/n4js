@@ -1,6 +1,0 @@
-@@Global
-@@ProvidedByRuntime
-
-export external public class process {
-	public static version : string;
-}

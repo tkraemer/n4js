@@ -1,5 +1,0 @@
-// Exports Variables 
-
-export var ba = 2;
-
-export var bx = "hallo";

@@ -1,4 +1,0 @@
-import * as S from "eu/numberfour/n4js/tests/typesbuilder/NamespaceImportsMod"
-import * as D+ from "eu/numberfour/n4js/tests/typesbuilder/NamespaceImportsPlain"
-
-D.foo; // it's dynamic!
