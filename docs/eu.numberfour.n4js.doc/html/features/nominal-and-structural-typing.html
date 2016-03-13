@@ -7,15 +7,26 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
 </head>
 
 <body>
@@ -36,16 +47,16 @@ N4JS provides support for different strategies of checking whether two types are
 A type T<sub>1</sub> is compatible with a type T<sub>2</sub> if,
 roughly speaking, a value of type T<sub>1</sub> may be used as if it were a value of
 type T<sub>2</sub>.
-If type T<sub>1</sub> is compatible to type T<sub>2</sub>, a value that is known to be of type T<sub>1</sub>
-may, for example, be assigned to a variable of type T<sub>2</sub> or may be passed as argument to a
+Therefore, if type T<sub>1</sub> is compatible to type T<sub>2</sub>, a value that is known to be of type T<sub>1</sub>
+may, for example, be assigned to a variable of type T<sub>2</sub> or may be passed as an argument to a
 function expecting a value of type T<sub>2</sub>.
 There are two major classes of type systems that differ in how they decide on
 type compatibility:
 </p>
 
 <ul>
-  <li>Nominal type systems</li>
-  <li>Structural type systems</li>
+  <li>Nominal type systems.</li>
+  <li>Structural type systems.</li>
 </ul>
 <p>
 Since N4JS provides both forms of typing, we briefly introduce each approach in
@@ -99,8 +110,8 @@ Most mainstream object-oriented languages use nominal subtyping, for example C++
 <!-- ======================================================================= -->
 
 <p>
-In a <strong>structural</strong> type system, two types are deemed the same if they are of <em>same structure</em>,
-i.e. have the same public fields and methods of compatible type/signature. Similarly, a type
+In a <strong>structural</strong> type system, two types are deemed the same if they are of the <em>same structure</em>.
+In other words, if they have the same public fields and methods of compatible type/signature. Similarly, a type
 T<sub>1</sub> is deemed a subtype of a type T<sub>2</sub> if and only if T<sub>1</sub> has
 all public members (of compatible type/signature) that T<sub>2</sub> has (but may have more).
 </p>
@@ -108,8 +119,8 @@ all public members (of compatible type/signature) that T<sub>2</sub> has (but ma
 <p>
 In the example from the previous section, we said <code>Product</code> is not a (nominal) subtype
 of Person. In a structural type system, however, <code>Product</code> would indeed be deemed a (structual)
-subtype of <code>Person</code>, because it has all of <code>Person</code>'s public members of compatible type (only field
-"name" in this case). However, the opposite is not true: <code>Person</code> is not a subtype of <code>Product</code>
+subtype of <code>Person</code> because it has all of <code>Person</code>'s public members of compatible type (only field
+name" in this case). The opposite is, in fact, not true: <code>Person</code> is not a subtype of <code>Product</code>
 because it lacks <code>Product</code>'s field "price".
 </p>
 
@@ -120,8 +131,8 @@ because it lacks <code>Product</code>'s field "price".
 <!-- ======================================================================= -->
 
 <p>
-Both classes of type systems have their <a href="http://lambda-the-ultimate.org/node/5286">advantages and proponents</a>. Nominal type systems
-are usually said to provide more type safety and better maintainability, whereas structual typing is mostly believed to be more flexible. As a matter of fact, nominal typing <em>is</em> structural typing, extended with an extra relation explicitly declaring the subtype relation (like the <code>extends</code> clause). So the real question is: What are the advantages and disadvantages of such explicit relation.
+Both classes of type systems have their <a href="http://lambda-the-ultimate.org/node/5286">own advantages and proponents</a>. Nominal type systems
+are usually said to provide more type safety and better maintainability whereas structual typing is mostly believed to be more flexible. As a matter of fact, nominal typing <em>is</em> structural typing extended with an extra relation explicitly declaring the subtype relation (like the <code>extends</code> clause). So the real question is: What are the advantages and disadvantages of such an explicit relation?
 </p>
 
 <p>
@@ -159,7 +170,7 @@ class A implements Identifiable {
 </div>
 
 <p>
-Client may use these classes as follows:
+A client may use these classes as follows:
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">Identifiable.check(new A());
@@ -168,7 +179,8 @@ Client may use these classes as follows:
 <h3>Maintainability</h3>
 
 <p>
-Everything would work fine. But maybe you consider to rename <code>name</code> to <code>id</code>. Assume you have thousands of classes and interfaces, so you start by just renaming the function in the interface:
+Everything works fine. But maybe you consider to rename <code>name</code> to <code>id</code>. Assume you have thousands of classes and interfaces.
+You start by renaming the function in the interface:
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public interface Identifiable {
@@ -178,22 +190,22 @@ Everything would work fine. But maybe you consider to rename <code>name</code> t
 </pre></div>
 
 <p>
-With structural typing, you won't get any errors in your framework. So you are happy and ship the new version. Alas the client code will no longer work, since you have forgotten to accordingly rename the function in class <code>A</code>.
+With structural typing, you won't get any errors in your framework. You are satisfied with your code and ship the new version. Alas! The client code will no longer work as you have forgotten to accordingly rename the function in class <code>A</code>.
 </p>
 <p>
-With nominal typing, you would have gotten errors in your framework code already ("Class A must implement getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code only on client side, your already find the problem in the framework code.
-In large systems this can be a lifesaver. Without this strict validation you probably wouldn't dare to refactor your framework anymore. Of course you may still break the client code, but even then it is much easier to pinpoint the problem.
+With nominal typing, you would have gotten errors in your framework code already ("Class A must implement getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code on the client side only, you find the problem in the framework code.
+In large systems, this can be a complete lifesaver. Without this strict validation, you probably wouldn't dare to refactor your framework. Of course, you may still break the client code, but even then it is much easier to pinpoint the problem.
 </p>
 
 <h3>Flexibility</h3>
 
 <p>
-Given the same code as in the previous example. Assume that the client code also uses another framework, providing a class Person as in the very first example.
+Given the same code as in the previous example, assume that the client code also uses another framework providing a class Person as in the very first example.
 </p>
 <p>
-With structural typing, it is no problem to use the Person class with the function check, since the Person class provides a data field name. So the code inside the function would work perfectly when called with an instance of Person.
+With structural typing, it is no problem to use the Person class with the function check since the Person class provides a data field name. So the code inside the function would work perfectly when called with an instance of Person.
 </p>
-<p>This won't work with nominal typing though. Since Person does not explicitly "implement" Identifiable, there is no chance to call function check. This can be quite annoying, in particular if the client can neither change your framework nor the person framework.
+<p>This won't work with nominal typing though. Since Person does not explicitly "implement" Identifiable, there is no chance to call function check. This can be quite annoying, particularly if the client can change neither your framework nor the person framework.
 </p>
 
 <!-- ======================================================================= -->
@@ -208,10 +220,10 @@ kinds of typing and aims to combine them in a seamless way.
 
 <p>
 N4JS uses nominal typing by default, but allows to switch to structural typing by way of special type
-constructors all using the tilde symbol. The switch can be done with either of the following:
+constructors using the tilde symbol. The switch can be done with either of the following:
 <ul>
-<li>Globally when defining a type and then applies to all uses of the type throughout the code, referred to as <strong>definition-site structural typing</strong></li>
-<li>Locally when referring to an existing, nominal type, referred to as <strong>use-site structural typing</strong>.</li>
+<li>Globally when defining a type. This then applies to all uses of the type throughout the code, referred to as<strong>definition-site structural typing</strong></li>
+<li>Locally when referring to an existing nominal type, referred to as <strong>use-site structural typing</strong>.</li>
 </ul>
 </p>
 
@@ -242,18 +254,19 @@ even though <code>Product</code> is not a nominal subtype of <code>Identifiable<
 <p>
 This way, N4JS provides the advantages of nominal typing (which is the default form of typing)
 while granting many of the advantages of structural typing if the programmer so chooses.
-And if you would rename name to id, the tilde would tell you that there may be client code calling the method with a structural type.
+Additionally, if you would rename name to id, the tilde would tell you that there may be client code calling the method with a structural type.
 </p>
 <p>
 The full flexibility of a purely structurally typed language, however, cannot be achieved with
 this combination. For example, the client of an existing function that is declared to expect
-an argument of a nominal type N is confined to nominal typing, i.e. she cannot choose to invoke
-this function with an argument that is only a structural subtype of N (it would be a compile-time
-error). But maybe this would exactly be the intention of the framework author in order to enable easier refactoring later. This is comparable to access modifiers, which serve the same purpose.
+an argument of a nominal type N is confined to nominal typing. They cannot choose to invoke
+this function with an argument that is only a structural subtype of N (it would be a compile time
+error). This would possibly be exactly the intention of the framework author in order to enable easier refactoring later. 
+This is comparable to access modifiers which serve the same purpose.
 </p>
 
 <h3>Field Structural Typing</h3>
-<p>N4JS provides some variants of structural types. Usually two structural types are compatible, if they provide the same properties, or in case of classes, public members. In ECMAScript we often only need to access the fields. In N4JS, we can use "~~" to refer to the so called "field structural type". Two field structural types are compatible, if they provide the same public fields -- methods are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter the properties or members to be considered: "~r~" only considers getters or data fields, "~w~" only setters and data fields. "~i~"  is used for initializer parameters: For every setter or (non-optional) data field in the type, the "~i~"-type needs to provide at least a getter (or readable data field).
+<p>N4JS provides some variants of structural types. Usually two structural types are compatible, if they provide the same properties, or in case of classes, public members. In ECMAScript we often only need to access the fields. In N4JS, we can use <code>~~</code> to refer to the so called "field structural type". Two field structural types are compatible, if they provide the same <code>public</code> fields -- methods are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter the properties or members to be considered: <code>~r~</code> only considers getters or data fields, <code>~w~</code> only setters and data fields. <code>~i~</code>  is used for initializer parameters: For every setter or (non-optional) data field in the type, the <code>~i~</code> -type needs to provide at least a getter (or readable data field).
 </p>
 
 
@@ -268,5 +281,6 @@ error). But maybe this would exactly be the intention of the framework author in
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>

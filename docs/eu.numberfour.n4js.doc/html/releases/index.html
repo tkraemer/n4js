@@ -7,15 +7,26 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
 </head>
 
 <body>
@@ -27,35 +38,36 @@
 <h1>Release Notes</h1>
 
 <p>The current release of N4JS, version 0.3, is a "public alpha".
-"alpha" means four things:</p>
+What that implies:</p>
 
 <ol>
-  <li>There exist known issues</li>
-  <li>There exist probably even more unknown issues.</li>
+  <li>There are some known issues.</li>
+  <li>There are probably a greater number of unknown issues.</li>
   <li>There will be more features in future releases.</li>
   <li>There may be incompatible changes in future releases.</li>
 </ol>
 
 <p>
-In case of N4JS "alpha" does not mean unstable. N4JS has been developer for three years now.  There exists an extensive test suite with more that 70.000 tests, including the <a href="https://github.com/tc39/test262">ECMAScript test suites</a>. It is used in production mode internally for more than a year, handling a code base with more than 3.000 modules and thousands of tests. That is N4JS has successfully passed its internal beta phase: It is working for us. So we are confident that it will also work for you. But since every programmer has her/his own style, you may find issues we didn't find. In order to solve these issues, we may add new features or have to change things. This is why we call it "public alpha".
+"Alpha" does not mean unstable. In fact, N4JS has been in development for three years. There is already an extensive test suite with more that 70.000 tests including the <a href="https://github.com/tc39/test262">ECMAScript test suites</a>. It has been in use internally in production mode for more than a year, handling a code base with more than 3.000 modules and many thousands of tests. N4JS has successfully passed its internal beta phase: it's working for us and, furthermore, we're confident it will work for you. Since every programmer has their own style, you may find issues we didn't. We may add new features or make changes in order to solve these particular issues. That's why we call it a "public alpha".
 </p>
+
 
 
 
 <h2>Known Issues</h2>
 <p>
-Since we are using N4JS and the N4JS IDE internally for quite a while we have found a lot of problems of course. There are still a lot of bugs open, and we have lots of ideas for new features. We used an non-public bug tracking system to manage bugs internally. We will review these issues and migrate them to <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> as soon as possible.
+Since we are using N4JS and the N4JS IDE internally for quite a while, we have found some issues. There are still a lot of bugs open and we have plenty of ideas for new features. We used an non-public bug tracking system to manage bugs internally. We will review migrate them to <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> as soon as possible.
 </p>
 
 
 <h2>Unkown Issues</h2>
 
-<p><strong>We embrace bug reports and feature requests!</strong></p>
+<p><strong>We embrace bug reports and feature requests.</strong></p>
 
-<p>For the moment we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by public users. When we will move to a different bug-tracking system, we will try to migrate these issues.
+<p>For the moment we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by public users. When we move to a different bug tracking system, these issues shall be migrated.
 </p>
 <p>
-Writing bug reports is not easy. In order to help you describing bugs and new features, the N4JS IDE comes with an <a href="reporting_bugs.html">extra language</a> especially designed to enable users of a N4JS to write good bug reports.
+The N4JS IDE comes with special tool support for <a href="reporting_bugs.html">writing bug reports</a>.
 </p>
 
 
@@ -64,22 +76,24 @@ Writing bug reports is not easy. In order to help you describing bugs and new fe
 In the future, the following topics are expected to be addressed:</p>
 
 <ol>
-<li>Improved UI experience, in particular customized content assist as well as more quick fixes.</li>
+<li>Improved UI experience with a focus on customized content assist and quick-fixes.</li>
 <li>Improved ECMAScript 2015 support.</li>
 <li>Improved type inference and add type guards.</li>
 <li>Improved refactoring capabilities.</li>
-<li>Improved node.js developer experience.</li>
+<li>Improved Node.js developer experience.</li>
 <li>Support for browser-based projects.</li>
 </ol>
 
-<p>There may be other topics raised by users. Breaking down these topics into single features and prioritizing them highly <strong>depends on your feedback</strong>!
+<p>There may be other topics raised by users. Separating these topics into individual features and prioritizing them will <strong>highly depend on your feedback</strong>.
 </p>
 
 <h2>Incompatible Changes in Future Releases</h2>
 <p>
-Yes, that may happen. Maybe the language or APIs have to be changed in future releases, breaking existing code. But don't worry! As mentioned afore, we have a large internal code base. So if incompatible changes are introduced, we will provide tools to migrate your code automatically (unless the changes are easier to solve manually).</p>
+Yes, this may happen. It's quite possible that the language or APIs must be changed in future releases, which could break existing code. This is no cause for concern, however. As mentioned before, we have a substantial internal code base, so if incompatible changes are introduced, we will provide tools to migrate your code automatically unless the changes are easier to solve manually.
+</p>
 
-<p>Just to given you an idea: In earlier versions we used a Java-like syntax for type annotations. Since this did not work well together with other features such as async/await, we changed the syntax to ECMAScript 4 colon style. This required our whole code base to be changed. Fortunately this was easy since we provided a quick fix, enabling almost all problems stemming from that change to be fixed with a single key stroke!
+<p>
+To give you an idea of how this can happen: In earlier versions we used a Java-like syntax for type annotations. Since this did not work well together with features such as async/await, we changed the syntax to ECMAScript 4 colon style. This required our entire code base to be reworked. Fortunately this was simple as we provided a quick-fix, enabling almost all problems stemming from that change to be corrected with a single key stroke!
 </p>
 
 
@@ -93,5 +107,6 @@ Yes, that may happen. Maybe the language or APIs have to be changed in future re
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>

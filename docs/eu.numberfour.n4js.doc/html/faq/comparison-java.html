@@ -7,15 +7,26 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
 </head>
 
 <body>
@@ -26,7 +37,7 @@
 <h1>N4JS and Java</h1>
 
 <p class="Introduction">
-N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript. There are additional features which are quite similar to Java, actually making ECMAScript feel more like <em>Java</em>Script. In the following, we describe the most important similarities and differences of Java and N4JS.
+N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript is. There are additional features which are quite similar to Java, actually making ECMAScript feel more like <em>Java</em>Script. In the following, we describe the most important similarities and differences of Java and N4JS.
 </p>
 
 <!-- ======================================================================= -->
@@ -34,13 +45,13 @@ N4JS is an extension of ECMAScript. It is therefore as different from Java as EC
 <!-- ======================================================================= -->
 
 <p>
-The general idea of N4JS is to make ECMAScript as type safe as Java. For that reason N4JS adds a static type system to ECMAScript. Many concepts of this type system are similar to Java's type system.
+The general idea of N4JS is to make ECMAScript as type safe as Java. For that reason, N4JS adds a static type system to ECMAScript. Many concepts of this type system are similar to Java's type system.
 </p>
 
 <h3>Nominal Typing</h3>
 
 <p>
-N4JS supports both, <a href="../features/nominal-and-structural-typing.html">nominal and structural typing</a>. Java has a nominal type system and this is also the default mode in N4JS. When you just use a simple type reference, nominal typing, as in Java, is applied.
+N4JS supports both, <a href="../features/nominal-and-structural-typing.html">nominal and structural typing</a>. Java has a nominal type system and this is also the default mode in N4JS. When you just use a simple type reference, nominal typing (as in Java) is applied.
 </p>
 <p>
 The following example should be easily understood by Java developers:
@@ -57,7 +68,7 @@ f(new C()); // error: C is not a subtype of A.
 </pre></div>
 
 <p>
-This example will produce an error in the last line, because C is not a nominal subtype of A.
+This example will produce an error in the last line because <code>C</code> is not a nominal subtype of <code>A</code>.
 </p>
 
 <p>
@@ -85,7 +96,7 @@ N4JS even uses the very same <a href="https://docs.oracle.com/javase/specs/jls/s
 As a consequence, generics and parameterization should immediately be understood by Java programmers (as far as 'immediately understood' can be applied to generics).
 </p>
 <p>
-At the moment, the N4JS type system has some known issues when substituting type variables and instantiating wildcard expressions. For the latter, Java uses a technique called "capture conversion" while N4JS implements a slightly simpler one called "existential types". Future releases of N4JS will fix these problems.
+At the moment, the N4JS type system has some known issues when substituting type variables and instantiating wildcard expressions. For the latter, Java uses a technique called "capture conversion" while N4JS implements a slightly simpler one called "existential types". Future releases of N4JS will fix these issues.
 </p>
 <h3>Interfaces and Abstract Declarations</h3>
 
@@ -120,11 +131,11 @@ While it is possible to organize modules in folders which could be interpreted a
 <h3>Auto-Boxing</h3>
 
 <p>
-In Java, primitive types can be auto-boxed to their corresponding object types (and vice vera). This is also true for ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:
+In Java, primitive types can be auto-boxed to their corresponding object types (and vice versa). This is also true for ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:
 </p>
 
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">var bool: boolean = false;
-var Bool: Boolean = new Boolean( false );
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">let bool: boolean = false;
+let Bool: Boolean = new Boolean( false );
 
 console.log( bool.valueOf(), bool ? "true" : "false");
 console.log( Bool.valueOf(), Bool ? "true" : "false");
@@ -134,12 +145,12 @@ console.log( Bool.valueOf(), Bool ? "true" : "false");
 Probably surprising for Java programmers, this would print out
 </p>
 
-<div class="Example"><pre name="code" class="plain">false 'false'
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">false 'false'
 false 'true'
 </pre></div>
 
 <p>
-In order avoid these problems, N4JS does not support auto-boxing. Instead, primitives and object types have to be explicitly converted using either the constructor, Object.valueof or other related methods.
+In order avoid these problems, N4JS does not support auto-boxing. Instead, primitives and object types have to be explicitly converted using either the <code>constructor</code>, <code>Object.valueof</code> or other related methods.
 </p>
 
 <h3>Function Subtyping</h3>
@@ -147,17 +158,17 @@ In order avoid these problems, N4JS does not support auto-boxing. Instead, primi
 Function (or method) subtyping comes into play in two cases: method overriding and passing functions as arguments (callbacks, for example). In both cases, the type checker has to ensure that a function <i>f</i>&nbsp; is compatible with another function <i>f'</i> (in other words, that the type of <i>f</i>&nbsp; is a subtype of the type of <i>f'</i>). In Java this is called "override compatible".
 </p>
 <p>
-In Java a method <i>f'</i> is override compatible to a <i>f'</i> if and only if
+In Java, a method <i>f</i> is override compatible to a <i>f'</i> if and only if
 </p>
 <ol>
 <li>it has the same name</li>
 <li>it has the same number of parameters</li>
-<li>the type of each parameter of <i>f'</i> must be a supertype of the corresponding parameter of <i>f</i></li>
-<li>it's return type is a subtype of <i>f</i>'s return type</li>
+<li>the type of each parameter of <i>f</i> must be a supertype of the corresponding parameter of <i>f'</i></li>
+<li>its return type is a subtype of the return type of <i>f'</i></li>
 </ol>
 
 <p>
-In ECMAScript, it is possible to call a function of a method with more or less arguments then declared formal parameters. Calling a function with less arguments is not allowed in N4JS (unless the parameters are declared as optional). The definition of "override compatible" is, therefore, a little bit different in N4JS.
+In ECMAScript, it is possible to call a function of a method with more or less arguments than declared formal parameters. Calling a function with less arguments is not allowed in N4JS (unless the parameters are declared as optional). The definition of "override compatible" is, therefore, a little bit different in N4JS.
 </p>
 <p>
 In N4JS, <i>f'</i> is override comptabible to <i>f</i> (or its type is a subtype of the type of <i>f</i>&nbsp;), if
@@ -166,7 +177,7 @@ In N4JS, <i>f'</i> is override comptabible to <i>f</i> (or its type is a subtype
 <li>it has the same name (in case of method override)</li>
 <li>it has the same number or less of parameters, or superfluous parameters are optional</li>
 <li>the type of each parameter of <i>f'</i> must be a subtype of the corresponding parameter of <i>f</i></li>
-<li>its return type is a subtype of the return type of <i>f</i>&nbsp;, or <i>f</i>&nbsp; has no return type (it's void).</li>
+<li>its return type is a subtype of the return type of <i>f</i>&nbsp;, or <i>f</i>&nbsp; has no return type (it's <code>void</code>).</li>
 </ol>
 
 <p>
@@ -184,7 +195,7 @@ class B extends A {
 <h3>Overloading</h3>
 
 <p>
-There is no method overloading in ECMAScript and therefore there cannot be overloading in N4JS. In order "emulate" overloading to a certain degree, union types and optional parameters can be used.
+There is no method overloading in ECMAScript and therefore there cannot be overloading in N4JS. In order to 'emulate' overloading to a certain degree, union types and optional parameters can be used.
 </p>
 
 <h3>Static Members</h3>
@@ -220,13 +231,13 @@ B.s();
 This will print out
 </p>
 
-<div class="Example"><pre name="code" class="plain">A.s
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">A.s
 A.t
 A.s
 B.t
 </pre></div>
 <p>
-In particular the last line may be surprising for Java programmers.
+The last line in particular may be surprising for Java programmers.
 </p>
 
 
@@ -238,5 +249,6 @@ In particular the last line may be surprising for Java programmers.
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>

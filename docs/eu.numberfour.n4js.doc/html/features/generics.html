@@ -7,15 +7,26 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
 </head>
 
 <body>
@@ -28,7 +39,7 @@
 <p class="Introduction">
 Generics in N4JS are a language feature that allows for generic programming. They enable
 a function, class, interface, or method to operate on the values of various (possibly unknown) types while
-preserving compile-time type safety. If you are familiar with Java's generics, they will be very similar. There are some differences, however, which we shall describe below.
+preserving compile-time type safety. If you are familiar with Java's generics, then N4JS's generics will look familiar as well. There are some differences, however, which we shall describe below.
 </p>
 
 
@@ -37,12 +48,11 @@ preserving compile-time type safety. If you are familiar with Java's generics, t
 <!-- ======================================================================= -->
 
 <p>
-Several language elements may be declared in a generic form; we'll start with focusing on classes
-in this and the following section, generic methods will be discussed after that.
+Several language elements may be declared in a generic form; we'll start with focusing on classes, generic methods will be discussed after that.
 </p>
 
 <p>
-The standard case, of course, is a non-generic class. For example, take the following class that
+The standard case, of course, is a non-generic class. Ttake the following class, for example, that
 bundles a pair of two strings:
 </p>
 
@@ -54,8 +64,8 @@ bundles a pair of two strings:
 
 <p>
 This implementation is fine as long as all we ever want to store are strings. As experience shows,
-someone will soon come up with the idea of storing two values of some other type, like ... numbers!
-So, let's add another class:
+someone is soon to come up with the idea of storing two values of another type, such as... numbers!
+Let's add another class:
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class PairOfNumber {
@@ -72,7 +82,7 @@ code duplication, terrible maintainability and many other problems.
 
 <p>
 One solution could be having a class that stores two values of type <code>any</code> (in N4JS,
-<code>any</code> is the so-called top type, i.e. the common super type of all other types).
+<code>any</code> is the so-called 'top type', the common supertype of all other types).
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class PairOfWhatEver {
@@ -82,8 +92,8 @@ One solution could be having a class that stores two values of type <code>any</c
 </pre></div>
 
 <p>
-But now we are worse off than before. We lost the certainty that within a single pair, both values
-will always be of the same type, and when reading a value from a pair, we have no clue what its
+Now we're worse off than before. We have lost the certainty that within a single pair, both values
+will always be of the same type. When reading a value from a pair, we have no clue what its
 type might be.
 </p>
 
@@ -94,9 +104,9 @@ type might be.
 <!-- ======================================================================= -->
 
 <p>
-The way to solve the above problem, using generics, is to introduce a <em>type variable</em> for the class
-(we then call such a class a <em>generic class</em>).
-Such a type variable can then be used within the class declaration just as any other ordinary type.
+The way to solve our previous conundrum using generics is to introduce a <em>type variable</em> for the class
+We will then call such a class a <em>generic class</em>.
+A type variable can then be used within the class declaration just as any other ordinary type.
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public class Pair&lt;T&gt; {
@@ -111,8 +121,8 @@ the type of the values stored in the <code>Pair</code> and can be used as the ty
 </p>
 
 <p>
-Now, whenever we refer to class <code>Pair</code>, we will provide a <em>type argument</em>, i.e. a
-type that will be put in wherever type variable <code>T</code> is being used inside the class
+Now, whenever we refer to the class <code>Pair</code>, we will provide a <em>type argument</em>, in other words a
+type that will be used wherever the type variable <code>T</code> is being used inside the class
 declaration.
 </p>
 
@@ -124,7 +134,7 @@ myPair.second = '2nd value';
 </pre></div>
 
 <p>
-By using a type variable we have not just allowed any given type to be used as value type,
+By using a type variable, we have not just allowed any given type to be used as value type,
 we have also stated that both values, first and second, must always be of the same type. We
 have also given the type system a chance to track the types of values stored in a <code>Pair</code>:
 </p>
@@ -157,9 +167,9 @@ Generic interfaces can be declared in exactly the same way.
 
 <p>
 With the above, we can now avoid introducing a multitude of classes that are basically serving the
-same purpose. However, it is still not possible to write code that manipulates such pairs no matter
-what type its values may have. For example, a function for swapping the two values of a pair and
-then return the new first value:
+same purpose. It is still not possible, however, to write code that manipulates such pairs regardless of the type of
+its values may have. For example, a function for swapping the two values of a pair and
+then return the new first value would look like this:
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { PairOfString } from 'PairOfString';
@@ -189,8 +199,8 @@ function swapStrings2(pair: Pair&lt;string&gt;): string {
 </pre></div>
 
 <p>
-The solution is to not only make generic the type being manipulated, as we have done with class
-<code>Pair&lt;T&gt;</code> above, but to also make the code performing the manipulation generic:
+The solution is not only to make generic the type being manipulated generic (as we have done with class
+<code>Pair&lt;T&gt;</code> above) but to make the code performing the manipulation generic:
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Pair } from 'Pair';
@@ -204,18 +214,17 @@ function &lt;T&gt; swap(pair: Pair&lt;T&gt;): T {
 </pre></div>
 
 <p>
-Here we have introduced a type variable for function <code>swap()</code> in much the same way as
+We have introduced a type variable for function <code>swap()</code> in much the same way as
 we have done for class <code>Pair</code> in the previous section (we then call such a function
 a <em>generic function</em>). Similarly, we can use the type variable in this function's signature
 and body.
 </p>
 
 <p>
-It is possible to state in the declaration of the function <code>swap()</code> above, that
+It is possible to state in the declaration of the function <code>swap()</code> above that
 it will return something of type <code>T</code> when having obtained a <code>Pair&lt;T&gt;</code> without
-even knowing what type that might be. This allows the type system to track the type of values that
-are being passed around between functions and methods, are being put into and taken out of containers,
-and so on.
+even knowing what type that might be. This allows the type system to track the type of values passed 
++between functions and methods or put into and taken out of containers and so on.
 </p>
 
 <p>
@@ -262,9 +271,9 @@ Important differences between generics in Java and N4JS include:
 </p>
 
 <ul>
-  <li>Primitve types can be used as type arguments in N4JS.</li>
+  <li>Primitive types can be used as type arguments in N4JS.</li>
   <li>There are no raw types in N4JS. Whenever a generic class or interface is referenced, a type argument
-  has to be provided, possibly in the form of a wildcard. For generic functions and methods, an
+  has to be provided - possibly in the form of a wildcard. For generic functions and methods, an
   explicit definition of type arguments is optional if the type system can infer the type arguments
   from the context.</li>
 </ul>
@@ -282,5 +291,6 @@ Important differences between generics in Java and N4JS include:
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>

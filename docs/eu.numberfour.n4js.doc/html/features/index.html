@@ -7,15 +7,34 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
+  
+	<style>
+	.done { background-color: #eeffee }
+	.most { background-color: #ffffdd }
+	.tbd { background-color: #ffeeee }
+	.tbc { background-color: #fff6de }
+	</style>
+  
 </head>
 
 <body>
@@ -80,7 +99,7 @@ The following table gives an overview of features implemented by N4JS.
 <tr class="tbc"><th>symbols</th><td>ES2015</td><td>minimal support for symbols, basically only predefined symbols, more support may be added</td></tr>
 <tr class="done"><th>nominal types</th><td>Java</td><td>By default, all subtyping is done nominally as in Java, i.e. subtype relations are to be explicitly declared with "extends" and "implements"</td></tr>
 <tr class="done"><th>structural types</th><td>~TS</td><td>Modifiers at declarations or references enable structural subtyping. Access modifiers are taken in to account, i.e. only public members become part of a structural type.</td></tr>
-<tr class="done"><th>field structural type</th><td></td><td>Similar to structural typing, but only fields (data/accessors) are taken into account. Different variants (all fields, read-only fields/getter, write-only fields/setter, initializer variant for special constructor intializer) supported.</td></tr>
+<tr class="done"><th>field structural type</th><td></td><td>Similar to structural typing, but only fields (data/accessors) are taken into account. Different variants (all fields, read-only fields/getter, write-only fields/setter, initializer variant for special constructor initializer) supported.</td></tr>
 <tr class="done"><th>static types</th><td>Java</td><td>By default, only declared properties of a type can be accessed. This is true independent from the syntax (property access with dot-syntax (a.x) or index access (a["x"]). To model the map-behavior of Object, arbitrary index access on variables of type Object is allowed.</td></tr>
 <tr class="done"><th>dynamic types</th><td></td><td>Type modifier "+" enables arbitrary property access. Actually "any+" is similar to TypeScript's any semantics. This is known to be unsafe, so it is not the default behavior (in particular not for any) but only to be used as an "escape hatch".</td></tr>
 <tr class="done"><th>arrays</th><td>ES5</td><td>Arrays are modeled as a generic type (extending Object)</td></tr>
@@ -95,7 +114,7 @@ The following table gives an overview of features implemented by N4JS.
 
 <tr><th colspan="3" class="section">Type Constructors and Special Types</th></tr>
 <tr class="done"><th>union type</th><td>~TS</td><td>An union type defines that a variable (of that type) is subtype of (at least) one type defined in the union. Without further type checks, only members available in all types of the union are available. In case of methods, formal parameter types are merged by means of intersection types (and return types by means of union types)</td></tr>
-<tr class="most"><th>intersection type</th><td>TS</td><td>An intersection type defines that a variable (of that type) is subtype of all types defined in the intersection. Thus, members defined in any type of the union are available. Property access to intersection types is not filly supported yet.</td></tr>
+<tr class="most"><th>intersection type</th><td>TS</td><td>An intersection type defines that a variable (of that type) is subtype of all types defined in the intersection. Thus, members defined in any type of the union are available. Property access to intersection types is not fully supported yet.</td></tr>
 <tr class="done"><th>constructor type</th><td>~TS</td><td>Type of a (non-abstract) class declaration or expression itself. Special subtyping rules are implemented, i.e. constructor signature is taking into account.</td></tr>
 <tr class="done"><th>type type</th><td></td><td>Type of a class or interface declaration, without any constructor. That is, variables of this type cannot be used in new-expressions. However, this type is useful in combination with static polymorphism.</tr>
 <tr class="done"><th>this type</th><td>~TS</td><td>Type of the this-literal, can be used in combination with structural typing. Via annotation @This this type can be explicitly defined for functions.</td></tr>
@@ -184,5 +203,6 @@ The following table gives an overview of features implemented by N4JS.
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>

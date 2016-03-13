@@ -7,15 +7,26 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-  <!-- eclipse -->
-
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
 
   <!-- ************* Styles ************* -->
   <link rel="stylesheet" type="text/css" href="../styles/eclipse.min.5f975d04.css">
 
   <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
 </head>
 
 <body>
@@ -67,15 +78,15 @@ export public class FooTest {
 <p>
     <a href="http://junit.org/">Junit-like</a> annotations are are available to configure the test suits, such as:
     <ul>
-        <li><code>@Test</code> - the annotated method will be percepted as a test case when configuring and running the test suite.</li>
-        <li><code>@Ignore</code> - the annotated method will be percepted as a test case when configuring the test suite, but the marked case will be be executed as a part of the suite execution.</li>
-        <li><code>@Fixme</code> - the annotated method will be percepted as a test case when configuring and running the test suite but the assertion logic will be negated.</li>
+        <li><code>@Test</code> - The annotated method will be percepted as a test case when configuring and running the test suite.</li>
+        <li><code>@Ignore</code> - The annotated method will be percepted as a test case when configuring the test suite but the marked case will be be executed as a part of the suite execution.</li>
+        <li><code>@Fixme</code> - The annotated method will be percepted as a test case when configuring and running the test suite but the assertion logic will be negated.</li>
     </ul>
 </p>
 
 <p>
-    Test classes can be created in the test container of any arbitrary project. With this approach, the production code can be separated from the test code but both production and test code will be still contained in the same N4JS project.
-    Another implementation is that of a test-project type implementation whereby one can completely separate the business logic form the test code. This is done literally using two separate projects, one for the production and one for the test code. Aside from the code separation, the major advantage of using a test-project is that the default access visibility restrictions can be overruled. That means, project visible classes and interfaces and their non visible members and methods can be called, hence tested from the test-projects while those will be still not visible from production code. In a nutshell, one can easily test different aspects of the application without breaking the encapsulation.
+    Test classes can be created in the test container of any arbitrary project. With this approach, the production code can be separated from the test code but both production and test code will still be contained in the same N4JS project.
+    Another implementation is that of a test project type implementation whereby one can completely separate the business logic form the test code. This is done literally using two separate projects; one for the production and one for the test code. Aside from the code separation, the major advantage of using a test project is that the default access visibility restrictions can be overruled. Project- visible classes and interfaces and their non-visible members and methods can then be called and tested from the test projects while still not visible in the production code. In a nutshell, one can easily test different aspects of the application without breaking the encapsulation.
 </p>
 
 <h2>N4 IDE Support</h2>
@@ -108,5 +119,6 @@ export public class FooTest {
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
+<!-- n4js-webpage build eclipse.production (Sun Mar 13 2016 14:12:01 GMT+0100 (CET)) -->
 </body>
 </html>
