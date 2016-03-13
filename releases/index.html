@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>Release Notes · Releases · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
+  <!-- ************* Styles ************* -->
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+  <link rel="stylesheet" type="text/css" href="../styles/styles.min.c66c9067.css">
+
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
+</head>
+
+<body>
+  <header class="Grid">
+    <div class="Cell Cell--4-12">
+      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+    </div>
+
+    <div class="Cell Cell--8-12">
+      <nav>
+         <a href="../#getting-started">Getting Started</a> ·
+         <a href="../features">Features</a> ·
+         <a href="../releases" class="is-active">Releases</a> ·
+         <a href="../userguide">User-Guide</a> ·
+         <a href="../faq" >FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="Main">
+    <nav class="Nav--top">
+      <h2>Releases</h2>
+      <ul>
+          <li><a href="../releases" class="is-active">Release Notes</a></li>
+          <li><a href="reporting-bugs.html" >Reporting Bugs</a></li>
+      </ul>
+    </nav>
+    <article class="Article--noGrid">
+
+<h1>Release Notes</h1>
+
+<p>The current release of N4JS, version 0.3, is a "public alpha".
+What that implies:</p>
+
+<ol>
+  <li>There are some known issues.</li>
+  <li>There are probably a greater number of unknown issues.</li>
+  <li>There will be more features in future releases.</li>
+  <li>There may be incompatible changes in future releases.</li>
+</ol>
+
+<p>
+"Alpha" does not mean unstable. In fact, N4JS has been in development for three years. There is already an extensive test suite with more that 70.000 tests including the <a href="https://github.com/tc39/test262">ECMAScript test suites</a>. It has been in use internally in production mode for more than a year, handling a code base with more than 3.000 modules and many thousands of tests. N4JS has successfully passed its internal beta phase: it's working for us and, furthermore, we're confident it will work for you. Since every programmer has their own style, you may find issues we didn't. We may add new features or make changes in order to solve these particular issues. That's why we call it a "public alpha".
+</p>
+
+
+
+
+<h2>Known Issues</h2>
+<p>
+Since we are using N4JS and the N4JS IDE internally for quite a while, we have found some issues. There are still a lot of bugs open and we have plenty of ideas for new features. We used an non-public bug tracking system to manage bugs internally. We will review migrate them to <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> as soon as possible.
+</p>
+
+
+<h2>Unkown Issues</h2>
+
+<p><strong>We embrace bug reports and feature requests.</strong></p>
+
+<p>For the moment we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by public users. When we move to a different bug tracking system, these issues shall be migrated.
+</p>
+<p>
+The N4JS IDE comes with special tool support for <a href="reporting_bugs.html">writing bug reports</a>.
+</p>
+
+
+<h2>New Features</h2>
+<p>
+In the future, the following topics are expected to be addressed:</p>
+
+<ol>
+<li>Improved UI experience with a focus on customized content assist and quick-fixes.</li>
+<li>Improved ECMAScript 2015 support.</li>
+<li>Improved type inference and add type guards.</li>
+<li>Improved refactoring capabilities.</li>
+<li>Improved Node.js developer experience.</li>
+<li>Support for browser-based projects.</li>
+</ol>
+
+<p>There may be other topics raised by users. Separating these topics into individual features and prioritizing them will <strong>highly depend on your feedback</strong>.
+</p>
+
+<h2>Incompatible Changes in Future Releases</h2>
+<p>
+Yes, this may happen. It's quite possible that the language or APIs must be changed in future releases, which could break existing code. This is no cause for concern, however. As mentioned before, we have a substantial internal code base, so if incompatible changes are introduced, we will provide tools to migrate your code automatically unless the changes are easier to solve manually.
+</p>
+
+<p>
+To give you an idea of how this can happen: In earlier versions we used a Java-like syntax for type annotations. Since this did not work well together with features such as async/await, we changed the syntax to ECMAScript 4 colon style. This required our entire code base to be reworked. Fortunately this was simple as we provided a quick-fix, enabling almost all problems stemming from that change to be corrected with a single key stroke!
+</p>
+
+
+
+
+    </article>
+
+  </div>
+
+  <footer class="Grid">
+    <div class="Cell Cell--12-12">
+      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
+
+      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
+    </div>
+  </footer>
+  <script>
+    dp.SyntaxHighlighter.HighlightAll('code');
+  </script>
+
+<!-- n4js-webpage build web.production (Sun Mar 13 2016 16:49:37 GMT+0100 (CET)) -->
+</body>
+</html>

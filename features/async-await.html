@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>Async/Await · Features · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
+  <!-- ************* Styles ************* -->
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+  <link rel="stylesheet" type="text/css" href="../styles/styles.min.c66c9067.css">
+
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.6f2064d5.js"></script>
+</head>
+
+<body>
+  <header class="Grid">
+    <div class="Cell Cell--4-12">
+      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+    </div>
+
+    <div class="Cell Cell--8-12">
+      <nav>
+         <a href="../#getting-started">Getting Started</a> ·
+         <a href="../features" class="is-active">Features</a> ·
+         <a href="../releases">Releases</a> ·
+         <a href="../userguide">User-Guide</a> ·
+         <a href="../faq" >FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="Main">
+    <nav class="Nav--top">
+      <h2>Features</h2>
+      <ul>
+          <li><a href="../features" >All Features</a></li>
+          <li><a href="modules.html" >Modules</a></li>
+          <li><a href="nominal-and-structural-typing.html" >Nominal And Structural Typing</a></li>
+          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
+          <li><a href="generics.html" >Generics</a></li>
+          <li><a href="async-await.html" class="is-active">Async/Await</a></li>
+          <li><a href="testing.html" >Test Driven</a></li>
+          <li><a href="nodejs-support.html" >Node.js Support</a></li>
+      </ul>
+    </nav>
+    <article class="Article--noGrid">
+
+<h1>Async/Await</h1>
+<p class="Introduction">
+Due to the event-driven nature inherent in JavaScript, asynchronous code has
+always been explicit and verbose, leading to projects which are hard to read and maintain.
+N4JS already implements the async/await proposal and it provides additional features allowing the use of legacy code in combination with await and promises.
+</p>
+<p>
+Over the years, growing trends have been to migrate from
+simple callbacks to Promise objects which is making the chaining of asynchronous data
+flows easier. This still urges the developer to implement callbacks on
+the resolution of a Promise.
+</p>
+<p>
+N4JS implements a new approach proposed by TC39 on <a href="https://tc39.github.io/ecmascript-asyncawait/">async functions</a> to tackle the problem. It conceals the drawn-out details and formal approach so that a developer would have less code to write. A function or method can essentially become an
+<strong>asynchronous</strong> function by prepending the keyword "<strong>async</strong>". Inside the function, the
+developer can call other functions and wait for their results using the keyword "<strong>async</strong>":
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">async function foo(): int {
+    let res = await anotherAsyncFunction();
+    ++res;
+    return res;
+}
+</pre></div>
+<p>
+The benefit here is that async functions integrate well with any existing
+Promise-based APIs, i.e. N4JS treats any return type <strong>T</strong> of an async method
+or function as a <strong>Promise&lt;T, any&gt;</strong>.
+
+On the other hand, async code can simply await on functions that return a Promise
+object:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function fetch(url: string): Promise&lt;Response, any&gt; {
+    // e.g., WHATWG fetch, https://github.com/whatwg/fetch
+    …
+}
+
+async function foo() {
+  let html = await (await fetch('http://www.google.com')).text();
+  console.log(html);
+}
+</pre></div>
+
+<h2>Error Handling</h2>
+<p>
+Since there's a one-to-one mapping to Promises, exceptions being thrown within
+an async function call are rejecting the corresponding Promise:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function throwError() { return Promise.reject(new Error('bah!')); }
+
+async function foo() {
+    try {
+        await throwError();
+    } catch (err) {
+        (err as Error).message === 'bah!';
+    }
+}
+</pre></div>
+
+<p>
+A rejected Promise will be reflected as an exception being thrown in the
+async function:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">async function throwErrorAsync() { throw new Error('bah!'); }
+let promise: Promise&lt;void, ?&gt; = throwErrorAsync();
+
+promise.catch(err =&gt; (err as Error).message === 'bah!');
+</pre></div>
+
+<h2 id="here">"await" for Legacy Code</h2>
+<p>
+There's quite a lot of callback-driven code alive that is not returning Promises,
+especially with reference to Node.js core modules:
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import * as fs from 'fs'; // module import of Node.js file system
+
+fs.readFile('myFile.txt', (err, content) =&gt; {
+    if (err) throw err;
+    console.log(content);
+})
+</pre></div>
+
+<p>
+This code follows the general Node.js callback pattern of passing the error as
+a first argument following the result value(s).
+</p>
+<p>
+Since N4JS encourages you to use and define types where possible, we can do
+better here, too. N4JS allows to use the <strong>@Promisifiable</strong> annotation in this
+case (and actually the Node.js runtime definitions provided by N4JS already make use of it):
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">@Promisifiable
+export external public function readFile(
+  filename: string,
+  options: ~Object with {encoding: string?; flag: string?;},
+  callback: {function(Error, string)}?): void;
+</pre></div>
+
+<p>
+This allows to call the function without implementing any callback, and let the
+transpiler wire up a Promise for you using the <strong>@Promisify</strong> annotation:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { readFile } from 'fs'; // named import of function readFile
+
+function foo(): Promise&lt;string, any&gt; {
+    var promise = @Promisify readFile('myFile.txt', { encoding: 'UTF-8' });
+    return promise.then(content =&gt; content.replace(/foo/g, 'bar'));
+}
+</pre></div>
+<p>
+Since promises integrate with async functions, we could even further
+condense this down:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { readFile } from 'fs';
+
+async function foo(): string {
+    var content = await readFile('myFile.txt', { encoding: 'UTF-8' });
+    return content.replace(/foo/g, 'bar');
+}
+</pre></div>
+
+<p>
+Finally, it's noteworthy to mention that arrow functions can work asynchronously as well,
+which is particularly helpful. The following example demonstrates how we can easily test async code to throw an error using an async arrow expression in the context of the N4JS test framework "mangelhaft".
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Assert } from 'n4/mangel/assert/Assert';
+
+export public class FooTest {
+
+    @Test async myTest() {
+      await Assert.throwsAsync(async () =&gt; {
+        // async piece of code that is throwing an error
+      });
+    }
+
+}
+</pre></div>
+
+
+    </article>
+
+
+  </div>
+
+  <footer class="Grid">
+    <div class="Cell Cell--12-12">
+      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
+
+      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
+    </div>
+  </footer>
+  <script>
+    dp.SyntaxHighlighter.HighlightAll('code');
+  </script>
+
+<!-- n4js-webpage build web.production (Sun Mar 13 2016 16:49:37 GMT+0100 (CET)) -->
+</body>
+</html>
