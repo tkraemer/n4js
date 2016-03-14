@@ -62,7 +62,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.validation.validators.utils.ResourceType
+import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */

@@ -29,6 +29,7 @@ import org.eclipse.xtext.validation.IResourceValidator
 import org.eclipse.xtext.validation.Issue
 
 import static org.eclipse.xtext.diagnostics.Severity.*
+import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
@@ -162,13 +163,14 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 * E.g., "proj-0.0.1/p/A.js" for a file A in proj.
 	 */
 	def String getTargetFileName(Resource n4jsSourceFile, String compiledFileExtension) {
+		val ResourceType resourceType = ResourceType.getResourceType(n4jsSourceFile);
 		/*
 		 * handle double extension for xpect, e.g. foo.n4js.xt
 		 *
 		 * assuming hasValidFileExtension was called, so care only about double extension
 		 */
 		var souceURI =
-			if("xt".equals(n4jsSourceFile.URI.fileExtension)){
+			if(ResourceType.xtHidesOtherExtension(resourceType)){
 				n4jsSourceFile.URI.trimFileExtension
 			}else{
 				n4jsSourceFile.URI
@@ -193,15 +195,11 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 * to one of (js, n4js, n4js.xt, js.xt")
 	 */
 	def hasValidFileExtension(Resource resource) {
-		switch (resource.URI.fileExtension) {
-			case "js"   : true
-			case "n4js" : true
-			case "xt"   : {
-				val ls = resource.URI.lastSegment;
-				ls.endsWith(".n4js.xt") || ls.endsWith((".js.xt"))
-			}
-			default : false
-		}
+		val resourceType = ResourceType.getResourceType(resource);
+		return resourceType.equals(ResourceType.JS)
+				|| resourceType.equals(ResourceType.N4JS)
+				|| resourceType.equals(ResourceType.JSXT)
+				|| resourceType.equals(ResourceType.N4JSXT);
 	}
 
 	/**

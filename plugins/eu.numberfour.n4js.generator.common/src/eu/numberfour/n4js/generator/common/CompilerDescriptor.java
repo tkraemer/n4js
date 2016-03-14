@@ -70,7 +70,7 @@ public class CompilerDescriptor extends ComponentDescriptor {
 
 	/**
 	 * @param compiledFileSourceMapExtension
-	 *            the file extension to use fot the source-map
+	 *            the file extension to use for the source-map
 	 */
 	public void setCompiledFileSourceMapExtension(String compiledFileSourceMapExtension) {
 		this.compiledFileSourceMapExtension = compiledFileSourceMapExtension;

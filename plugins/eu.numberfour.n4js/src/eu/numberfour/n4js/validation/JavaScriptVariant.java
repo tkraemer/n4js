@@ -11,9 +11,7 @@
 package eu.numberfour.n4js.validation;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.EcoreUtil2;
 
 import eu.numberfour.n4js.n4JS.Block;
@@ -22,6 +20,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.StringLiteral;
+import eu.numberfour.n4js.utils.ResourceType;
 
 /**
  * JavaScript variant to adjust validation. See ECMAScript Spec, 10.2.1 Strict Mode Code.
@@ -31,8 +30,9 @@ import eu.numberfour.n4js.n4JS.StringLiteral;
  * the mode is always n4js.
  *
  *
- * @see <a
- *      href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">MDN</a>
+ * @see <a href=
+ *      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">MDN
+ *      </a>
  */
 public enum JavaScriptVariant {
 
@@ -54,19 +54,15 @@ public enum JavaScriptVariant {
 	 * Returns the variant at the given code element.
 	 */
 	public static JavaScriptVariant getVariant(EObject eobj) {
-		String fileExt = fileExtension(eobj);
-		boolean bFoundN4JS = fileExt.equals("n4js") ||
-				(fileExt.equals("xt") && fileName(eobj).endsWith(".n4js.xt"));
-		if (bFoundN4JS) {
+		ResourceType resourceType = ResourceType.getResourceType(eobj);
+
+		if (ResourceType.N4JS.equals(resourceType) || ResourceType.N4JSXT.equals(resourceType)) {
 			return n4js;
 		}
-		boolean bStrict = isContainedInStrictFunctionOrScript(eobj);
-		if (bStrict) {
+		if (isContainedInStrictFunctionOrScript(eobj)) {
 			return strict;
 		}
-		boolean bFoundN4JSD = fileExt.equals("n4jsd") ||
-				(fileExt.equals("xt") && fileName(eobj).endsWith(".n4jsd.xt"));
-		if (bFoundN4JSD) {
+		if (ResourceType.N4JSD.equals(resourceType) || ResourceType.N4JSDXT.equals(resourceType)) {
 			return external;
 		}
 		return unrestricted;
@@ -78,34 +74,6 @@ public enum JavaScriptVariant {
 	 */
 	public boolean isActive(EObject eobj) {
 		return getVariant(eobj) == this;
-	}
-
-	private static String fileName(EObject eobj) {
-		if (eobj != null) {
-			Resource res = eobj.eResource();
-			if (res != null) {
-				URI uri = res.getURI();
-				String filename = uri.lastSegment();
-				if (filename != null) {
-					return filename;
-				}
-			}
-		}
-		return "";
-	}
-
-	private static String fileExtension(EObject eobj) {
-		if (eobj != null) {
-			Resource res = eobj.eResource();
-			if (res != null) {
-				URI uri = res.getURI();
-				String ext = uri.fileExtension();
-				if (ext != null) {
-					return ext.toLowerCase();
-				}
-			}
-		}
-		return "";
 	}
 
 	private static boolean isContainedInStrictFunctionOrScript(EObject eobj) {

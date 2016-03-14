@@ -43,6 +43,7 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSRuntimeCore;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.resource.OrderedResourceDescriptionsData;
+import eu.numberfour.n4js.utils.ResourceType;
 
 /**
  */
@@ -196,7 +197,7 @@ public class N4JSRuntimeCore extends AbstractN4JSCore implements IN4JSRuntimeCor
 	 * @boolean if ends in .js or .js.xt
 	 */
 	private boolean isJsFile(URI uri) {
-		String uriString = uri.toString();
-		return (uriString.endsWith(".js") || uriString.endsWith(".js.xt"));
+		ResourceType resourceType = ResourceType.getResourceType(uri);
+		return resourceType.equals(ResourceType.JS) || resourceType.equals(ResourceType.JSXT);
 	}
 }

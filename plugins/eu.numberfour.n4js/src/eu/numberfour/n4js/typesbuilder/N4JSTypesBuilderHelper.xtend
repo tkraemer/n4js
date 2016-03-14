@@ -30,7 +30,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import java.util.Collection
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import eu.numberfour.n4js.validation.validators.utils.ResourceType
+import eu.numberfour.n4js.utils.ResourceType
 
 @Singleton
 package class N4JSTypesBuilderHelper {

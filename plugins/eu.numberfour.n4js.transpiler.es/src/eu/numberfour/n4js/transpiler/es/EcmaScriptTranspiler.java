@@ -20,7 +20,6 @@ import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.transpiler.AbstractTranspiler;
@@ -45,6 +44,7 @@ import eu.numberfour.n4js.transpiler.es.transform.SanitizeImportsTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.StaticPolyfillTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.SuperLiteralTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.TrimTransformation;
+import eu.numberfour.n4js.utils.ResourceType;
 
 /**
  * Transpiles N4JS to ECMAScript. The exact language version of the target code depends on configuration parameters, so
@@ -180,14 +180,8 @@ public class EcmaScriptTranspiler extends AbstractTranspiler {
 	 * @return true if the code should only be wrapped.
 	 */
 	private boolean noTranspile(N4JSResource eResource) {
-		// only for JS
-		if (eResource != null
-				&& eResource.getURI() != null
-				&& (N4JSGlobals.JS_FILE_EXTENSION.equals(eResource.getURI().fileExtension())
-						|| (eResource.getURI().lastSegment() != null
-								&& eResource.getURI().lastSegment().endsWith(".js.xt"))))
-			return true;
-		return false;
+		ResourceType resourceType = ResourceType.getResourceType(eResource);
+		return resourceType.equals(ResourceType.JS) || resourceType.equals(ResourceType.JSXT);
 	}
 
 }
