@@ -62,33 +62,33 @@
 <p><b>We embrace bug reports and feature requests!</b></p>
 
 
-<p>For the moment, we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by users. We will soon migrate our current, internal list of bugs there. We greatly appreciate all bug reports, thank you so much for your time!
+<p>For the moment, we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by users. We will soon migrate our current, internal list of bugs there. We greatly appreciate all bug reports and are thankful for our users taking the time to submit them!
 </p>
 <p>
-If you like, you can try out a novel test technology called <a href="http://www.xpect-tests.org/">Xpect</a> that was designed for writing tests for domain-specific languages and that we have integrated into the N4JS IDE. It is described in detail in the coming section.
+If you like, you can try out a novel test technology called <a href="http://www.xpect-tests.org/">Xpect</a> that was designed for writing tests for domain-specific languages. We have integrated this test technology directly into the N4JS IDE and is described in detail in the following section.
 </p>
 
 <h3>Write Bug Reports with Xpect</h3>
-<p>With Xpect you can write concise bug reports and feature requests using N4JS and comments. What is a bug? A bug usually is a programming error that leads to unexpected behavior. What is a feature? A feature is a functionality provided by a system with a well-defined, i.e. expected, behavior. In other words: Bug reports and feature requests both have to describe the <b>expected</b> behavior. Instead of long explanations separated from the code, it is often easier to just add this <b>expectations</b> to the code.
+<p>With Xpect you can write concise bug reports and feature requests using N4JS and comments. What is a bug? A bug usually is a programming error that leads to unexpected behavior. What is a feature? A feature is a functionality provided by a system with a well-defined, i.e. expected, behavior. In other words: Bug reports and feature requests both have to describe the <b>expected</b> behavior. Instead of long-winded explanations disconnected from the code, it's easier to just add your <b>expectations</b> side-by-side with your code.
 </p>
-<p>The following screenshot shows a typical feature request (on the left hand side), written with Xpect:
+<p>The following screenshot shows a typical feature request (on the left-hand side) written with Xpect:
 </p>
 
 <div class="Image">
   <a href="fig/xpect_feature_request.png"><img src= "fig/xpect_feature_request.png"  ></a>
 </div>
 
-<p>The great thing about Xpect is that it actually defines a test. That is the feature request (or bug report) can be executed. This is even possible within the N4JS IDE, and the result is shown on the right hand side of the screenshot above. In order to do that, all you have to do is</p>
+<p>The great thing about Xpect is that it actually defines a test. The feature request (or bug report) can actually be executed. This is possible within the N4JS IDE and the result is shown on the right-hand side of the screenshot. In order to use Xpect;</p>
 
 <ol>
-  <li>create a new file with extension "n4js.xt" ("xt" will activate Xpect)</li>
-  <li>write the bug report or feature request, using comments and the keyword "XPECT" together with a known expectation type (see below)</li>
-  <li>run the Xpect test from the context menu ("Run As.../Xpect run").</li>
+  <li>Create a new file with extension "n4js.xt" ("xt" will activate Xpect).</li>
+  <li>Write the bug report or feature request, using comments and the keyword "XPECT" together with a known expectation type (see below).</li>
+  <li>Run the Xpect test from the context menu ("Run As.../Xpect run").</li>
 </ol>
 
-<p><b>Instead of writing long explanations, just file the n4js.xt-file as bug report (and a short explanation)!</b></p>
+<p><b>Instead of writing long explanations, simply file the n4js.xt-file as bug report including a brief description.</b></p>
 
-<p>Note that in the screenshot the file does not contain any error markers -- your expectation is already taken into account during validations, improving the readability of the bug report. As shown in the screenshot above, the Xpect test failed! In order to make things easier for the developer fixing the bug, you can add an additional keyword "FIXME" to expectations you have but which are not fulfilled. In particular in longer reports with several expectations, it is very helpful to easily identify what is expected and what is correct behavior. When running the test again with the "FIXME" annotation, it will succeed as shown in the following screenshot:</p>
+<p>In the screenshot above, the file does not contain any error markers; your expectation is already taken into account during validation which will improve the readability of the bug report. As we can see, the Xpect test failed! In order to make things easier for the developer fixing the bug, you can add an additional keyword "FIXME" to expectations you have but which are not fulfilled. This makes it very helpful to easily identify what is expected and what is correct behavior in longer reports with several expectations. When running the test again with the "FIXME" annotation, it will succeed as shown in the following screenshot:</p>
 
 <div class="Image">
   <a href="fig/xpect_fixme.png"><img src= "fig/xpect_fixme.png"  ></a>
@@ -97,7 +97,7 @@ If you like, you can try out a novel test technology called <a href="http://www.
 
 <p><b>Bug reporting will be improved in future releases!</b></p>
 
-<p>In future releases, we will improve the Xpect support and simplify writing bug reports. In particular, we will provide content assist or wizards for adding certain types of expectations. </p>
+<p>In future releases, we will improve the Xpect support and simplify writing bug reports. In particular, we will provide content assist and/or wizards for adding certain types of expectations. </p>
 
 <p>In general, expectations are written inside comments preceding the line in the code which demonstrates the (un-)expected behavior, according to the following pattern:</p>
 
@@ -105,14 +105,14 @@ If you like, you can try out a novel test technology called <a href="http://www.
 </pre></div>
 
 <ol>
-  <li>remark: optional and can be omitted.</li>
+  <li>remark: This is optional and can be omitted.</li>
   <li>type: The type of the expectation is one of the types described in the table below.</li>
-  <li>keyword "FIXME": is optional and is used to indicate currently missing or unexpected behavior</li>
-  <li>expectation: optional, usually used for the expected issue message, or value; concrete semantic depends on the expectation type.</li>
-  <li>location: used to further indicate the location of the problem, usually just the next line is assumed. The location has to be prefixed with "at" in most cases</li>
+  <li>keyword "FIXME": This is optional and is used to indicate currently missing or unexpected behavior.</li>
+  <li>expectation: This is optional, usually used for the expected issue message, or value; concrete semantic depends on the expectation type.</li>
+  <li>location: Used to further indicate the location of the problem, usually just the next line is assumed. The location has to be prefixed with "at" in most cases.</li>
 </ol>
 
-<p>In most cases, the expectations are written on a single line. In some cases, e.g. if a single code line contains several issues, multi-line comments are to be used:</p>
+<p>The expectations are usually written on a single line. In cases where a single code line contains several issues, multi-line comments are to be used:</p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">/* «remark» XPECT «type» ---
 "expectation1" at "location1"
@@ -194,6 +194,6 @@ If you like, you can try out a novel test technology called <a href="http://www.
         dp.SyntaxHighlighter.HighlightAll('code');
       </script>
     
-    <!-- n4js-webpage build web.production (Sun Mar 13 2016 18:30:47 GMT+0100 (CET)) -->
+    <!-- n4js-webpage build web.production (Mon Mar 14 2016 17:39:03 GMT+0100 (CET)) -->
     </body>
     </html>

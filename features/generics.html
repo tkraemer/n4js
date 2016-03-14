@@ -67,7 +67,7 @@
 <p class="Introduction">
 Generics in N4JS are a language feature that allows for generic programming. They enable
 a function, class, interface, or method to operate on the values of various (possibly unknown) types while
-preserving compile-time type safety. If you are familiar with Java's generics, then N4JS's generics will look familiar as well. There are some differences, however, which we shall describe below.
+preserving compile-time type safety. If you already have knowledge of Java's generics, then N4JS's generics will look very familiar. There are some differences, however, which we shall describe below.
 </p>
 
 
@@ -76,11 +76,11 @@ preserving compile-time type safety. If you are familiar with Java's generics, t
 <!-- ======================================================================= -->
 
 <p>
-Several language elements may be declared in a generic form; we'll start with focusing on classes, generic methods will be discussed after that.
+Several language elements may be declared in a generic form; we'll begin by focusing on classes, followed by generic methods.
 </p>
 
 <p>
-The standard case, of course, is a non-generic class. Ttake the following class, for example, that
+The standard case, of course, is a non-generic class. Take the following class that
 bundles a pair of two strings:
 </p>
 
@@ -132,7 +132,7 @@ type might be.
 <!-- ======================================================================= -->
 
 <p>
-The way to solve our previous conundrum using generics is to introduce a <em>type variable</em> for the class
+The way to solve our previous conundrum using generics is to introduce a <em>type variable</em> for the class.
 We will then call such a class a <em>generic class</em>.
 A type variable can then be used within the class declaration just as any other ordinary type.
 </p>
@@ -149,7 +149,7 @@ the type of the values stored in the <code>Pair</code> and can be used as the ty
 </p>
 
 <p>
-Now, whenever we refer to the class <code>Pair</code>, we will provide a <em>type argument</em>, in other words a
+Now, whenever we refer to the class <code>Pair</code>, we will provide a <em>type argument</em>; a
 type that will be used wherever the type variable <code>T</code> is being used inside the class
 declaration.
 </p>
@@ -178,7 +178,7 @@ console.log(myPair2.first.charAt(2));
 </pre></div>
 
 <p>
-The error in line 3 shows that the type checker will make sure we won't put any value of incorrect
+The error in line 3 demonstrates that the type checker will ensure we don't put any value of incorrect
 type into the pair. The fact that we can access method <code>charAt()</code> (available on strings)
 in the last line indicates that when we read a value from the pair, the type system knows its type
 and we can use it accordingly.
@@ -257,7 +257,7 @@ even knowing what type that might be. This allows the type system to track the t
 
 <p>
 <em>Generic methods</em> can be declared just as generic functions. There is one caveat, however:
-Only if a method introduces its own, new type variables is it called a generic method. If it is
+only if a method introduces its own new type variables is it called a generic method. If it is
 merely using the type variables of its containing class or interface, it's an ordinary method.
 The following example illustrates the difference:
 </p>
@@ -326,6 +326,6 @@ Important differences between generics in Java and N4JS include:
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
-<!-- n4js-webpage build web.production (Sun Mar 13 2016 18:30:47 GMT+0100 (CET)) -->
+<!-- n4js-webpage build web.production (Mon Mar 14 2016 17:39:03 GMT+0100 (CET)) -->
 </body>
 </html>

@@ -107,7 +107,7 @@
 }
 </pre></div>
 
-<p>In order to keep the examples as small as possible, in the non-DI version no manual wiring of the dependencies is used. The components are instead set up by initializing the fields directly.</p>
+<p>In order to keep the examples as small as possible, no manual wiring of the dependencies is used in the non-DI version. The components are instead set up by initializing the fields directly.</p>
 
 <div class="Comparison">
   <div class="Comparison-left">
@@ -178,7 +178,7 @@ server.run();
   </div>
 </div>
 
-<p>The changes are only minimal: Instead of creating the field instances directly, they are annotated with <code>@Inject</code> (line 4 and 13).  This should be familiar to Java programmers having used Google Guice.</p>
+<p>The changes are only minimal: instead of creating the field instances directly, they are annotated with <code>@Inject</code> (line 4 and 13). This should be familiar to Java programmers having used Google Guice.</p>
 
 <p>An interesting aspect of dependency injection is how to set up the injector. In N4JS, the annotation <code>@GenerateInjector</code> (line 11) is used in order mark a class as a dependency injection component. In other words, to associate an injector with the class. Running the server now requires slightly different instantiation. Instead of constructing the server with <code>new</code>, the built-in class <code>N4Injector</code> is used to create the first instance (line 4, StarterDI.n4js).</p>
 
@@ -250,6 +250,6 @@ As the N4JS test framework already supports DI, we can declare the test as a new
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
-<!-- n4js-webpage build web.production (Sun Mar 13 2016 18:30:47 GMT+0100 (CET)) -->
+<!-- n4js-webpage build web.production (Mon Mar 14 2016 17:39:03 GMT+0100 (CET)) -->
 </body>
 </html>

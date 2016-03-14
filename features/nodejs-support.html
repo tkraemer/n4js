@@ -67,7 +67,7 @@
 <h1>Node.js Support</h1>
 
 <p class="Introduction">
-N4JS and its IDE are optimized to develop large scale server applications with <a href="https://nodejs.org">Node.js</a>. Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading <a href="https://www.npmjs.com/">npm</a> packages and exporting N4JS projects to npm. This allows for seamless integration of N4JS projects with existing Node.js based environments.
+N4JS and its IDE are optimized to develop large-scale server applications with <a href="https://nodejs.org">Node.js</a>. Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading <a href="https://www.npmjs.com/">npm</a> packages and exporting N4JS projects to npm. This allows for seamless integration of N4JS projects with existing Node.js based environments.
 </p>
 
 <!-- ======================================================================= -->
@@ -85,7 +85,7 @@ N4JS helps Node.js developers to use third-party npm packages with support both 
 <h3>Dynamic Import</h3>
 <!-- ======================================================================= -->
 <p>
-Third-party packages are supported in two different ways. If an npm package does not have any corresponding type definition files defined yet, then the required module can be imported into an N4JS module dynamically. In order to support the import of modules without any N4JS (<code>.n4js</code>) or N4JS type definition (<code>.n4jsd</code>) files, N4JS extends the ES2015 module import. This is done by declaring the imported module with "<code>+</code>" appended to the end of the named import. This so called "dynamic module import" will be treated as a type of <code>any+</code>.
+Third-party packages are supported in two different ways: if an npm package does not have any corresponding type definition files defined yet, then the required module can be imported into an N4JS module dynamically. In order to support the import of modules without any N4JS (<code>.n4js</code>) or N4JS type definition (<code>.n4jsd</code>) files, N4JS extends the ES2015 module import. This is done by declaring the imported module with "<code>+</code>" appended to the end of the named import. This so called "dynamic module import" will be treated as a type of <code>any+</code>.
 </p>
 
 <div class="Example"><pre name="code" class="n4js:nocontrols">import * as mongodb+ from 'mongodb';
@@ -109,7 +109,7 @@ client.connect("…", function (err, db: any+) {
 <h3>Automatic Download of Type Definitions</h3>
 <!-- ======================================================================= -->
 <p>
-If type definitions are available at <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for a particular npm package
+If type definitions are available at <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for a particular npm package,
 these definitions will be included automatically when the npm package is being downloaded and installed. All npm packages with type definitions seamlessly integrate into the N4JS system. This means that all third-party npm packages with the correct type definitions behave just like any other N4JS module or project declared in the workspace. The language provides type safety while the tooling provides content assist, navigation, search functionality and so on.
 </p>
 
@@ -119,7 +119,7 @@ these definitions will be included automatically when the npm package is being d
 The IDE also supports a way to check for any type definition updates in an on-demand fashion. This means that you can initially begin to use any third-party packages that don't yet have type definition files. In such cases (as described above) the modules from the npm packages have to be imported dynamically. It's then possible to perform a manual refresh from the IDE and the application will check for any type definition updates. If the type definitions have been declared and been made available, meanwhile, the application will download the definitions and warn the user at the location of the dynamic imports about the availability of the type definition file. It's then possible to switch to the type safe approach by removing the appended <code>+</code> from the named module import.
 </p>
 
-<p>At the moment, writing type definition files requires to manually set up a new project and configuring the manifest etc. accordingly. We will improve supporting that to simplify users to write new and enrich existing type definitions and share them with others via <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> in future releases.
+<p>At the moment, writing type definition files requires manually setting up a new project and configuring the manifest file etc. accordingly. We will improve support for this in order to make it as simple as possible for users to write new type definitions and to build on and enrich existing ones. Type definitions can be shared with others via <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for future releases.
 </p>
 
 
@@ -130,7 +130,7 @@ The IDE also supports a way to check for any type definition updates in an on-de
 <p>
 Besides supporting npm package download and usage, the IDE comes with an npm package export feature.
 Any N4JS workspace project can then be transformed into a structure that complies to npm requirements and can be exported into the local file system.
-These exported structures can later be used to manually publish them as packages to npm. 
+These exported structures can later be manually published to npm as packages. 
 The corresponding <code>package.json</code> file will be created based on the dependencies declared in the N4 manifest file of the exported N4JS project. 
 Although all direct and transitive dependencies will be included in the brand new <code>package.json</code> file, only the desired N4JS projects will be transformed and exported.
 The <code>package.json</code> content can be customized by creating a <code>package.json</code> template file in the root of the N4JS project
@@ -155,6 +155,6 @@ This feature is further explained in the <a href="../userguide/index.html">user 
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
-<!-- n4js-webpage build web.production (Sun Mar 13 2016 18:30:47 GMT+0100 (CET)) -->
+<!-- n4js-webpage build web.production (Mon Mar 14 2016 17:39:03 GMT+0100 (CET)) -->
 </body>
 </html>

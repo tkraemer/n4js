@@ -68,7 +68,7 @@
 <p class="Introduction">
 One of the core responsibilities of a type system is to decide if two given types
 are <em>type compatible</em>, or if a type is a <em>subtype</em> of another type.
-N4JS provides support for different strategies of checking whether two types are compatible, namely nominal (as known from Java) and structural typing (as known from TypeScript). Additionally it proivdes certain variations of structural typing to support typical usages in ECMAScript.
+N4JS provides support for different strategies of checking whether two types are compatible, namely nominal (as known from Java) and structural typing (as known from TypeScript). Additionally, it proivdes certain variations of structural typing to support typical usages in ECMAScript.
 </p>
 
 <p>
@@ -221,7 +221,7 @@ You start by renaming the function in the interface:
 With structural typing, you won't get any errors in your framework. You are satisfied with your code and ship the new version. Alas! The client code will no longer work as you have forgotten to accordingly rename the function in class <code>A</code>.
 </p>
 <p>
-With nominal typing, you would have gotten errors in your framework code already ("Class A must implement getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code on the client side only, you find the problem in the framework code.
+With nominal typing, you would have gotten errors in your framework code already ("Class A must implement getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code on the client-side only, you find the problem in the framework code.
 In large systems, this can be a complete lifesaver. Without this strict validation, you probably wouldn't dare to refactor your framework. Of course, you may still break the client code, but even then it is much easier to pinpoint the problem.
 </p>
 
@@ -247,10 +247,10 @@ kinds of typing and aims to combine them in a seamless way.
 </p>
 
 <p>
-N4JS uses nominal typing by default, but allows to switch to structural typing by way of special type
+N4JS uses nominal typing by default but allows to switch to structural typing by way of special type
 constructors using the tilde symbol. The switch can be done with either of the following:
 <ul>
-<li>Globally when defining a type. This then applies to all uses of the type throughout the code, referred to as<strong>definition-site structural typing</strong></li>
+<li>Globally when defining a type. This then applies to all uses of the type throughout the code, referred to as <strong>definition-site structural typing</strong></li>
 <li>Locally when referring to an existing nominal type, referred to as <strong>use-site structural typing</strong>.</li>
 </ul>
 </p>
@@ -273,8 +273,8 @@ class A implements Identifiable {
 </pre></div>
 
 <p>
-For the argument of method "check" we use a (use-site) structural
-type by prefixing the type reference with a <code>~</code> (tilde), which means
+For the argument of method "check", we use a (use-site) structural
+type by prefixing the type reference with a <code>~</code> (tilde) which means
 we are allowed, in the last line, to pass in an instance of <code>Product</code>
 even though <code>Product</code> is not a nominal subtype of <code>Identifiable</code>.
 </p>
@@ -294,7 +294,7 @@ This is comparable to access modifiers which serve the same purpose.
 </p>
 
 <h3>Field Structural Typing</h3>
-<p>N4JS provides some variants of structural types. Usually two structural types are compatible, if they provide the same properties, or in case of classes, public members. In ECMAScript we often only need to access the fields. In N4JS, we can use <code>~~</code> to refer to the so called "field structural type". Two field structural types are compatible, if they provide the same <code>public</code> fields -- methods are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter the properties or members to be considered: <code>~r~</code> only considers getters or data fields, <code>~w~</code> only setters and data fields. <code>~i~</code>  is used for initializer parameters: For every setter or (non-optional) data field in the type, the <code>~i~</code> -type needs to provide at least a getter (or readable data field).
+<p>N4JS provides some variants of structural types. Two structural types are usually compatible if they provide the same properties, or in case of classes, public members. In ECMAScript we often only need to access the fields. In N4JS, we can use <code>~~</code> to refer to the so called "field structural type". Two field structural types are compatible if they provide the same <code>public</code> fields -- methods are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter the properties or members to be considered: <code>~r~</code> only considers getters or data fields, <code>~w~</code> only setters and data fields. <code>~i~</code>  is used for initializer parameters: For every setter or (non-optional) data field in the type, the <code>~i~</code> -type needs to provide at least a getter (or readable data field).
 </p>
 
 
@@ -316,6 +316,6 @@ This is comparable to access modifiers which serve the same purpose.
     dp.SyntaxHighlighter.HighlightAll('code');
   </script>
 
-<!-- n4js-webpage build web.production (Sun Mar 13 2016 18:30:47 GMT+0100 (CET)) -->
+<!-- n4js-webpage build web.production (Mon Mar 14 2016 17:39:03 GMT+0100 (CET)) -->
 </body>
 </html>
