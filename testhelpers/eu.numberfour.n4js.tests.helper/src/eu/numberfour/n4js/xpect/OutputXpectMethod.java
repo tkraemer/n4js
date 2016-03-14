@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Assert;
 import org.xpect.expectation.AbstractExpectation;
@@ -56,8 +57,8 @@ public class OutputXpectMethod {
 	 *            the Xpect file setup context (later required when creating a resource from a Xpect resource set
 	 *            configuration entry)
 	 * @param systemLoader
-	 *            optional SystemLoader to use (e.g. SYSTEM_JS or COMMON_JS) if not given, this test will be run with all
-	 *            known loaders.
+	 *            optional SystemLoader to use (e.g. SYSTEM_JS or COMMON_JS) if not given, this test will be run with
+	 *            all known loaders.
 	 */
 	@Xpect
 	@ParameterParser(syntax = "( 'with' arg4=ID )?")
@@ -99,8 +100,8 @@ public class OutputXpectMethod {
 	 * @param expectation
 	 *            regex expression that will be used as compiled output matcher
 	 * @param systemLoader
-	 *            optional SystemLoader to use (e.g. SYSTEM_JS or COMMON_JS) if not given, this test will be run with all
-	 *            known loaders.
+	 *            optional SystemLoader to use (e.g. SYSTEM_JS or COMMON_JS) if not given, this test will be run with
+	 *            all known loaders.
 	 *
 	 */
 	@Xpect
@@ -134,8 +135,8 @@ public class OutputXpectMethod {
 	}
 
 	/**
-	 * compiles provided resource and compares compiled representation to the provided expectation. Code is not
-	 * executed!
+	 * Transpiles provided resource and asserts that the target code is <b>equal</> to the provided expectation. Code is
+	 * not executed!
 	 *
 	 * @deprecated don't use compiled code string comparison, use to output execution test
 	 */
@@ -143,9 +144,24 @@ public class OutputXpectMethod {
 	@Xpect
 	public void compileResult(@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation,
 			@ThisResource XtextResource resource) {
+		final String compileResult = getCompileResult(resource, false);
+		expectation.assertEquals(compileResult);
+	}
 
-		boolean replaceQuotes = false;
+	/**
+	 * Transpiles provided resource and asserts that the target code <b>contains</b> the provided expectation string. In
+	 * addition, white-space is normalized, i.e. any non-empty sequence of white-space characters is normalized into a
+	 * single " " (space) on both sides before comparison. Code is not executed!
+	 */
+	@Xpect
+	public void compileResultContains(
+			@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation,
+			@ThisResource XtextResource resource) {
+		final String compileResult = getCompileResult(resource, false);
+		assertExpectationContained(expectation, compileResult, "compile result");
+	}
 
+	private String getCompileResult(Resource resource, boolean replaceQuotes) {
 		Script root = (Script) resource.getContents().get(0);
 		StringBuilder compileResultSb = new StringBuilder();
 		StringBuilder errorResultSb = new StringBuilder();
@@ -163,7 +179,30 @@ public class OutputXpectMethod {
 			compileResult = newCompileResult;
 			newCompileResult = XpectCommentRemovalUtil.removeAllXpectComments(newCompileResult);
 		} while (compileResult.length() != newCompileResult.length());
-		expectation.assertEquals(compileResult);
+		return compileResult;
+	}
+
+	private static final Pattern NORMALIZE_WHITE_SPACE = Pattern.compile("(\\s)+"); // note: \s includes \r and \n
+
+	/**
+	 * Asserts that the given expectation is <b>contained</b> in the actual string. Also normalizes white-space, i.e.
+	 * any non-empty sequence of white-space characters is normalized into a single " " (space) on both sides before
+	 * comparison.
+	 *
+	 * @param nameOfActual
+	 *            human-readable description of what "actual" represents (for error messages). E.g. "compile result".
+	 */
+	private static void assertExpectationContained(IStringExpectation expectation, String actual, String nameOfActual) {
+		final String expectationStr = ((AbstractExpectation) expectation).getExpectation();
+		final String expectationStrNormalized = NORMALIZE_WHITE_SPACE.matcher(expectationStr).replaceAll(" ").trim();
+		final String actualStrNormalized = NORMALIZE_WHITE_SPACE.matcher(actual).replaceAll(" ").trim();
+		if (!actualStrNormalized.contains(expectationStrNormalized)) {
+			Assert.assertTrue(
+					"Expectation string not contained in " + nameOfActual + " (after white-space normalization)\n"
+							+ "------ expectation string:\n" + expectationStr
+							+ "------ " + nameOfActual + ":\n" + actual,
+					false);
+		}
 	}
 
 	private static String regexToString(String input) {
