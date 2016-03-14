@@ -51,7 +51,7 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
       <property name="osgi.requiredJavaVersion" value="1.8"/>
-      <property name="osgi.instance.area.default" value ="@user.home"/>
+      <property name="osgi.instance.area.default" value ="@user.home/workspace"/>
       <property name="org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP" value ="false"/>
       <property name="org.eclipse.ui/defaultPerspectiveId" value ="eu.numberfour.n4js.product.N4JSPerspective"/>
       <property name="org.eclipse.ui/SHOW_TEXT_ON_PERSPECTIVE_BAR" value ="false"/>
@@ -60,8 +60,7 @@
    </configurations>
 
    <repositories>
-      <!-- TODO remove XXXXX marker for testing value-propagation -->
-      <repository location="http://updates.n4js.org/updatesite/XXXXX" enabled="true" /> 
+      <repository location="http://updates.n4js.org/updatesite/" enabled="true" /> 
    </repositories>
 
    <preferencesInfo>
