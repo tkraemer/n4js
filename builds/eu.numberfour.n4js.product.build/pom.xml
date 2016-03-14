@@ -26,6 +26,11 @@ Contributors:
 	<profiles>
 		<profile>
 			<id>buildProduct</id>
+				<properties>
+					<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+					<buildTime>${maven.build.timestamp}</buildTime>
+					<gitSha1>${buildNumber}</gitSha1>
+				</properties>
 			<build>
 				<plugins>
 					<plugin>
