@@ -2063,13 +2063,6 @@ from {
 	val funDef = EcoreUtil2.getContainerOfType(stmt, FunctionDefinition)
 	// return statement in Classes can have return-types with this.
 
-
-// FIXME IDEBUG-793 temporary hack to avoid problems with constructor return type checking
-if (funDef instanceof N4MethodDeclaration && (funDef as N4MethodDeclaration).isConstructor) {
-T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-}else{
-
-
 	val G2 = G.wrap
 	G |~ stmt ~> var TypeRef myThisTypeRef
 	G2.addThisType(myThisTypeRef) // takes the real-this type even if it is a type{this} reference.
@@ -2113,9 +2106,6 @@ T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 			T = getterDef?.definedGetter?.declaredTypeRef
 		}
 	}
-
-
-}
 }
 
 /* @see [N4JS] 9.2.1. Constraints 111.1 */

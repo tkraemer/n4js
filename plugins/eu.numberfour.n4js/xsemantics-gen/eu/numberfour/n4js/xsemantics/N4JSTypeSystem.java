@@ -6396,86 +6396,74 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   protected Result<TypeRef> applyRuleExpectedTypeInReturnStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ReturnStatement stmt, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
     final FunctionDefinition funDef = EcoreUtil2.<FunctionDefinition>getContainerOfType(stmt, FunctionDefinition.class);
-    boolean _and = false;
-    if (!(funDef instanceof N4MethodDeclaration)) {
-      _and = false;
-    } else {
-      boolean _isConstructor = ((N4MethodDeclaration) funDef).isConstructor();
-      _and = _isConstructor;
-    }
-    if (_and) {
-      UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-      T = _createUnknownTypeRef;
-    } else {
-      final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-      /* G |~ stmt ~> var TypeRef myThisTypeRef */
-      TypeRef myThisTypeRef = null;
-      Result<TypeRef> result = thisTypeRefInternal(G, _trace_, stmt);
-      checkAssignableTo(result.getFirst(), TypeRef.class);
-      myThisTypeRef = (TypeRef) result.getFirst();
-      
-      RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
-      /* { !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
-      {
-        RuleFailedException previousFailure = null;
-        try {
-          boolean _isAsync = funDef.isAsync();
-          boolean _not = (!_isAsync);
-          /* !funDef.isAsync() */
-          if (!_not) {
-            sneakyThrowRuleFailedException("!funDef.isAsync()");
-          }
-          /* G2 |- funDef : var FunctionTypeExprOrRef fType */
-          FunctionTypeExprOrRef fType = null;
-          Result<TypeRef> result_1 = typeInternal(G2, _trace_, funDef);
-          checkAssignableTo(result_1.getFirst(), FunctionTypeExprOrRef.class);
-          fType = (FunctionTypeExprOrRef) result_1.getFirst();
-          
-          /* G2 |- fType.returnTypeRef ~> T */
-          TypeRef _returnTypeRef = fType.getReturnTypeRef();
-          Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef);
-          checkAssignableTo(result_2.getFirst(), TypeRef.class);
-          T = (TypeRef) result_2.getFirst();
-          
-        } catch (Exception e) {
-          previousFailure = extractRuleFailedException(e);
-          if ((funDef != null)) {
-            TypeRef _returnTypeRef_1 = funDef.getReturnTypeRef();
-            boolean _tripleNotEquals = (_returnTypeRef_1 != null);
-            if (_tripleNotEquals) {
-              TypeRef _returnTypeRef_2 = funDef.getReturnTypeRef();
-              T = _returnTypeRef_2;
-            } else {
-              final Type tFun = funDef.getDefinedType();
-              if ((tFun instanceof TFunction)) {
-                final TypeRef actualReturnTypeRef = ((TFunction)tFun).getReturnTypeRef();
-                PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
-                boolean _isPromise = TypeUtils.isPromise(actualReturnTypeRef, _predefinedTypes.builtInTypeScope);
-                if (_isPromise) {
-                  EList<TypeArgument> _typeArgs = actualReturnTypeRef.getTypeArgs();
-                  final TypeArgument firstTypeArg = IterableExtensions.<TypeArgument>head(_typeArgs);
-                  if ((firstTypeArg != null)) {
-                    /* G |~ firstTypeArg /\ T */
-                    Result<TypeRef> result_3 = upperBoundInternal(G, _trace_, firstTypeArg);
-                    checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                    T = (TypeRef) result_3.getFirst();
-                    
-                  }
+    final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+    /* G |~ stmt ~> var TypeRef myThisTypeRef */
+    TypeRef myThisTypeRef = null;
+    Result<TypeRef> result = thisTypeRefInternal(G, _trace_, stmt);
+    checkAssignableTo(result.getFirst(), TypeRef.class);
+    myThisTypeRef = (TypeRef) result.getFirst();
+    
+    RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
+    /* { !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
+    {
+      RuleFailedException previousFailure = null;
+      try {
+        boolean _isAsync = funDef.isAsync();
+        boolean _not = (!_isAsync);
+        /* !funDef.isAsync() */
+        if (!_not) {
+          sneakyThrowRuleFailedException("!funDef.isAsync()");
+        }
+        /* G2 |- funDef : var FunctionTypeExprOrRef fType */
+        FunctionTypeExprOrRef fType = null;
+        Result<TypeRef> result_1 = typeInternal(G2, _trace_, funDef);
+        checkAssignableTo(result_1.getFirst(), FunctionTypeExprOrRef.class);
+        fType = (FunctionTypeExprOrRef) result_1.getFirst();
+        
+        /* G2 |- fType.returnTypeRef ~> T */
+        TypeRef _returnTypeRef = fType.getReturnTypeRef();
+        Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef);
+        checkAssignableTo(result_2.getFirst(), TypeRef.class);
+        T = (TypeRef) result_2.getFirst();
+        
+      } catch (Exception e) {
+        previousFailure = extractRuleFailedException(e);
+        if ((funDef != null)) {
+          TypeRef _returnTypeRef_1 = funDef.getReturnTypeRef();
+          boolean _tripleNotEquals = (_returnTypeRef_1 != null);
+          if (_tripleNotEquals) {
+            TypeRef _returnTypeRef_2 = funDef.getReturnTypeRef();
+            T = _returnTypeRef_2;
+          } else {
+            final Type tFun = funDef.getDefinedType();
+            if ((tFun instanceof TFunction)) {
+              final TypeRef actualReturnTypeRef = ((TFunction)tFun).getReturnTypeRef();
+              PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
+              boolean _isPromise = TypeUtils.isPromise(actualReturnTypeRef, _predefinedTypes.builtInTypeScope);
+              if (_isPromise) {
+                EList<TypeArgument> _typeArgs = actualReturnTypeRef.getTypeArgs();
+                final TypeArgument firstTypeArg = IterableExtensions.<TypeArgument>head(_typeArgs);
+                if ((firstTypeArg != null)) {
+                  /* G |~ firstTypeArg /\ T */
+                  Result<TypeRef> result_3 = upperBoundInternal(G, _trace_, firstTypeArg);
+                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                  T = (TypeRef) result_3.getFirst();
+                  
                 }
               }
             }
-          } else {
-            final GetterDeclaration getterDef = EcoreUtil2.<GetterDeclaration>getContainerOfType(stmt, GetterDeclaration.class);
-            TGetter _definedGetter = null;
-            if (getterDef!=null) {
-              _definedGetter=getterDef.getDefinedGetter();
-            }
-            TypeRef _declaredTypeRef = null;
-            if (_definedGetter!=null) {
-              _declaredTypeRef=_definedGetter.getDeclaredTypeRef();
-            }
-            T = _declaredTypeRef;
           }
+        } else {
+          final GetterDeclaration getterDef = EcoreUtil2.<GetterDeclaration>getContainerOfType(stmt, GetterDeclaration.class);
+          TGetter _definedGetter = null;
+          if (getterDef!=null) {
+            _definedGetter=getterDef.getDefinedGetter();
+          }
+          TypeRef _declaredTypeRef = null;
+          if (_definedGetter!=null) {
+            _declaredTypeRef=_definedGetter.getDeclaredTypeRef();
+          }
+          T = _declaredTypeRef;
         }
       }
     }
