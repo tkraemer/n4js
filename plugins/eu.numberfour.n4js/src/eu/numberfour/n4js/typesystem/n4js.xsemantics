@@ -1082,7 +1082,7 @@ from {
 				(fparTypeRef instanceof FunctionTypeExpression
 				&& (fparTypeRef as FunctionTypeExpression).eAllContents.filter(TFormalParameter).exists[currFpar|currFpar.typeRef instanceof ThisTypeRef])
 		) {
-			T = typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef);
+			T = typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef, fparTypeRef);
 		} else {
 			// note: it's a bit cleaner to return the type from the TModule, if one was already determined
 			T = if(fpar?.definedTypeElement?.typeRef!==null) fpar.definedTypeElement.typeRef else fpar.declaredTypeRef

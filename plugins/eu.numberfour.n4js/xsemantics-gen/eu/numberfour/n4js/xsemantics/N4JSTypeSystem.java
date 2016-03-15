@@ -3662,7 +3662,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         _or = _and;
       }
       if (_or) {
-        TypeRef _bindAndSubstituteThisTypeRef = this.typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef);
+        TypeRef _bindAndSubstituteThisTypeRef = this.typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef, fparTypeRef);
         T = _bindAndSubstituteThisTypeRef;
       } else {
         TypeRef _xifexpression = null;
