@@ -35,7 +35,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.validation.validators.utils.ResourceType
+import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
