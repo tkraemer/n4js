@@ -29,10 +29,6 @@ Contributors:
 		<gitSha1>${buildNumber}</gitSha1>
 	</properties>
 
-	<scm>
-	    <connection>scm:git:ssh://git@github.numberfour.eu/NumberFour/n4ide.git</connection>
-	</scm>
-
 	<build>
 		<plugins>
 			<plugin>
