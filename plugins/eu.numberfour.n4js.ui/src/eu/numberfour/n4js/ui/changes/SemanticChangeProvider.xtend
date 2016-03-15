@@ -405,13 +405,25 @@ public class SemanticChangeProvider {
 
 		//If the annotation is in the same line as the following element modifiers
 		//also remove the additional whitespace.
+		//Also consider chained one line annotations without separator
 		if ( element instanceof ModifiableElement &&
 			 document.getLineOfOffset(offset) == document.getLineOfOffset((element as ModifiableElement).modifierOffset) ) {
-			length++;
+			//Only delete trailing white space if there is white space in front of the annotation
+			//Also check if there even is a trailing white space.
+			val trailingChar = document.getChar(offset+length);
+			val leadingChar = document.getChar(offset-1);
+			if (Character.isWhitespace(leadingChar) &&
+				Character.isWhitespace(trailingChar)
+			) {
+				length++;
+			}
 		}
 
-
 		return ChangeProvider.removeText(document,offset,length,true);
+	}
+	
+	private def boolean firstNodeInLine(IXtextDocument document, INode node) throws BadLocationException {
+		document.getLineOfOffset(node.offset-1) != document.getLineOfOffset(node.offset);
 	}
 
 	/** Extension method to sort modifiers */
