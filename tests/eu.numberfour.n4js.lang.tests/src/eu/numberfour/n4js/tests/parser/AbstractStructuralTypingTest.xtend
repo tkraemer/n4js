@@ -33,6 +33,7 @@ abstract class AbstractStructuralTypingTest extends AbstractParserTest {
 
 	def assertMethod(String expectedType, List<String> expectedFPars, String expectedName, TMember member) {
 		val method = assertType(TMethod, member);
+		assertEquals(expectedType, method.returnTypeRef?.typeRefAsString);
 		assertEquals(expectedName, method.name);
 		var expected = '''«FOR p : expectedFPars SEPARATOR ","»«p»«ENDFOR»''';
 		var actual = '''«FOR m : method.fpars SEPARATOR ","»«m.typeRef.typeRefAsString»«ENDFOR»''';
