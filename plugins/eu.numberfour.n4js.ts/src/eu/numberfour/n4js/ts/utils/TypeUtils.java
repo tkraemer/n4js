@@ -36,6 +36,7 @@ import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
+import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
@@ -446,14 +447,15 @@ public class TypeUtils {
 		// set structural typing info
 		if (resolvedTypeRef instanceof ParameterizedTypeRefStructural)
 			copyStructuralTypingInfo((ParameterizedTypeRefStructural) resolvedTypeRef, boundThisTypeRef);
-
+		// copy other properties
+		copyTypeModifiers(resolvedTypeRef, boundThisTypeRef);
 		return resolvedTypeRef;
 	}
 
 	/**
 	 * @param ct
 	 *            referencing a BoundThisTypeRef
-	 * @return copy with staticTypeRef pointing to the upperbound of the former ct.staticTypeRef
+	 * @return copy with staticTypeRef pointing to the upper bound of the former ct.staticTypeRef
 	 */
 	public static ClassifierTypeRef createResolvedClassifierTypeRef(ClassifierTypeRef ct) {
 		// as part of IDE-785
@@ -497,6 +499,19 @@ public class TypeUtils {
 		dest.setStructuralType(src.getStructuralType()); // don't copy because 'structuralType' is a cross-reference
 		dest.getGenStructuralMembers().clear();
 		dest.getGenStructuralMembers().addAll(TypeUtils.copyAll(src.getGenStructuralMembers()));
+	}
+
+	/**
+	 * Copies additional type modifiers such as undefModifier, nullModifier and dynamic. This is usually not required as
+	 * whole references are copied, but in case of type variable substitution or similar cases, this might be necessary.
+	 */
+	public static void copyTypeModifiers(TypeRef target, TypeRef source) {
+		target.setUndefModifier(source.getUndefModifier());
+		target.setNullModifier(source.getNullModifier());
+
+		if (target instanceof BaseTypeRef) {
+			((BaseTypeRef) target).setDynamic(target.isDynamic() || source.isDynamic());
+		}
 	}
 
 	/**

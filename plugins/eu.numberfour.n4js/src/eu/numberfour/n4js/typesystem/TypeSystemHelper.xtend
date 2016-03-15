@@ -18,7 +18,6 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
-import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
@@ -234,21 +233,6 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			}
 			default:
 				null
-		}
-	}
-
-	/**
-	 * Copies additional type modifiers such as undef, null and dynamic.
-	 * This is usually not required as whole references are copied, but in case of type variable substitution or
-	 * creating union types, this might be necessary.
-	 * @see IDEBUG-145
-	 */
-	public def copyTypeModifiers(TypeRef target, TypeRef source) {
-		target.undefModifier = source.undefModifier
-		target.nullModifier = source.nullModifier
-
-		if (target instanceof BaseTypeRef) {
-			target.dynamic = target.dynamic || source.dynamic
 		}
 	}
 

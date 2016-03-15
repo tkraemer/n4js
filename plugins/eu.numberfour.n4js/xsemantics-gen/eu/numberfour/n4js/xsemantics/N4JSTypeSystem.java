@@ -6713,7 +6713,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     
     TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
     typeRef = _copy;
-    this.typeSystemHelper.copyTypeModifiers(typeRef, existentialTypeRef);
+    TypeUtils.copyTypeModifiers(typeRef, existentialTypeRef);
     return new Result<TypeRef>(typeRef);
   }
   
@@ -6759,7 +6759,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     };
     UnionTypeExpression _doubleArrow = ObjectExtensions.<UnionTypeExpression>operator_doubleArrow(_createNonSimplifiedUnionType, _function_1);
     T = _doubleArrow;
-    this.typeSystemHelper.copyTypeModifiers(T, U);
+    TypeUtils.copyTypeModifiers(T, U);
     return new Result<TypeRef>(T);
   }
   
@@ -6805,7 +6805,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     };
     IntersectionTypeExpression _doubleArrow = ObjectExtensions.<IntersectionTypeExpression>operator_doubleArrow(_createNonSimplifiedIntersectionType, _function_1);
     T = _doubleArrow;
-    this.typeSystemHelper.copyTypeModifiers(T, I);
+    TypeUtils.copyTypeModifiers(T, I);
     return new Result<TypeRef>(T);
   }
   
@@ -7050,7 +7050,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     
     TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
     typeRef = _copy;
-    this.typeSystemHelper.copyTypeModifiers(typeRef, existentialTypeRef);
+    TypeUtils.copyTypeModifiers(typeRef, existentialTypeRef);
     return new Result<TypeRef>(typeRef);
   }
   
@@ -7092,7 +7092,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     List<TypeRef> _map = ListExtensions.<TypeRef, TypeRef>map(_typeRefs, _function);
     UnionTypeExpression _createNonSimplifiedUnionType = TypeUtils.createNonSimplifiedUnionType(_map);
     T = _createNonSimplifiedUnionType;
-    this.typeSystemHelper.copyTypeModifiers(T, U);
+    TypeUtils.copyTypeModifiers(T, U);
     return new Result<TypeRef>(T);
   }
   
@@ -7134,7 +7134,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     List<TypeRef> _map = ListExtensions.<TypeRef, TypeRef>map(_typeRefs, _function);
     IntersectionTypeExpression _createNonSimplifiedIntersectionType = TypeUtils.createNonSimplifiedIntersectionType(_map);
     T = _createNonSimplifiedIntersectionType;
-    this.typeSystemHelper.copyTypeModifiers(T, I);
+    TypeUtils.copyTypeModifiers(T, I);
     return new Result<TypeRef>(T);
   }
   
@@ -7359,15 +7359,16 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRef thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRef(bound.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef bound = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
-        ParameterizedTypeRef _actualThisTypeRef = bound.getActualThisTypeRef();
+        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRef(_actualThisTypeRef);
         TypingStrategy _typingStrategy = thisTypeRef.getTypingStrategy();
         boundRef.setTypingStrategy(_typingStrategy);
+        TypeUtils.copyTypeModifiers(boundRef, thisTypeRef);
         T = boundRef;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
@@ -7398,13 +7399,14 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRefStructural(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRefStructural thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRefStructural(bound.actualThisTypeRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef bound = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
-        ParameterizedTypeRef _actualThisTypeRef = bound.getActualThisTypeRef();
+        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRefStructural(_actualThisTypeRef, thisTypeRef);
+        TypeUtils.copyTypeModifiers(boundRef, thisTypeRef);
         T = boundRef;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
@@ -7593,7 +7595,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } typeSystemHelper.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) typeSystemHelper.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -7649,10 +7651,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             TypeRef _copy_1 = TypeUtils.<TypeRef>copy(temp);
             result = _copy_1;
           }
-          this.typeSystemHelper.copyTypeModifiers(result, typeRef);
+          TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) typeSystemHelper.copyTypeModifiers(result, typeRef) } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
@@ -7666,7 +7668,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                 _xifexpression = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
               }
               result = _xifexpression;
-              this.typeSystemHelper.copyTypeModifiers(result, typeRef);
+              TypeUtils.copyTypeModifiers(result, typeRef);
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
             }
