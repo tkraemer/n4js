@@ -52,14 +52,14 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Documentation
 
-- [User Guide](https://numberfour.github.io/n4js/userguide/basic_user_guide.html): How to write type safe Node.js modules with N4JS
-- [N4JS Language Specification (PDF)](http://...)
-- [Complete Feature Table](https://numberfour.github.io/n4js/features/featuretable.html)
-- [Release Notes](https://numberfour.github.io/n4js/release/releases/release_notes)
+- [User Guide](https://numberfour.github.io/n4js/userguide/): How to write type safe Node.js modules with N4JS
+- [N4JS Language Specification (PDF)](https://goo.gl/2Lv2Te)
+- [Complete Feature Table](https://numberfour.github.io/n4js/features/)
+- [Release Notes](https://numberfour.github.io/n4js/releases/)
 
 ## Participate
 
-- [FAQ](https://numberfour.github.io/n4js/faq/faq.html)
+- [FAQ](https://numberfour.github.io/n4js/faq/)
 - [mailing list / web forum](http://groups.google.com/group/n4js)
 - [issues](https://github.com/numberfour/n4js/issues) 
 
