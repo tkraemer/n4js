@@ -23,6 +23,10 @@ Contributors:
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+	<scm>
+		<connection>scm:git:ssh://git@github.com/NumberFour/n4js.git</connection>
+	</scm>
+
 	<profiles>
 		<profile>
 			<id>buildProduct</id>
