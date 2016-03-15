@@ -78,9 +78,13 @@ def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, TypableEle
 
 
 	def protected static void log(int indentLevel, Result<TypeRef> result) {
+		if(!isDEBUG_LOG)
+			return;
 		log(indentLevel, result.resultToString);
 	}
 	def protected static void log(int indentLevel, EObject astNode, TypingCache cache) {
+		if(!isDEBUG_LOG)
+			return;
 		if(astNode.isTypableNode) {
 			val result = cache.getFailSafe(astNode);
 			val resultStr = if(result!==null) result.resultToString else "*** MISSING ***";
@@ -93,18 +97,18 @@ def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, TypableEle
 		}
 	}
 	def protected static void log(int indentLevel, String msg) {
-		if(isDEBUG_LOG) {
-			println(indent(indentLevel)+msg);
-		}
+		if(!isDEBUG_LOG)
+			return;
+		println(indent(indentLevel)+msg);
 	}
 	def protected static void logErr(String msg) {
-//		if(isDEBUG_LOG) {
-			System.out.flush();
-			System.err.println(msg);
-			System.err.flush();
-//		}
+		// always log errors, even if !isDEBUG_LOG()
+		System.out.flush();
+		System.err.println(msg);
+		System.err.flush();
 	}
 	def protected static Throwable logException(Throwable th) {
+		// always log exceptions, even if !isDEBUG_LOG()
 		th.printStackTrace // enforce dumping all exceptions to stderr
 		return th;
 	}

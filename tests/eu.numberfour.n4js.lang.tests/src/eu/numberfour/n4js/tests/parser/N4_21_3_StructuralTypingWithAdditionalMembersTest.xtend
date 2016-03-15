@@ -67,11 +67,11 @@ class N4_21_3_StructuralTypingWithAdditionalMembersTest extends AbstractStructur
 		val D = script.scriptElements.get(1) as N4ClassDeclaration
 		assertEquals(TypingStrategy.DEFAULT, D.typingStrategy)
 
-		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> ""],
+		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> "any"],
 			(D.ownedMembers.get(0) as N4FieldDeclaration).declaredTypeRef);
-		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> ""],
+		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> "any"],
 			(D.ownedMembers.get(1) as N4MethodDeclaration).fpars.get(0).declaredTypeRef);
-		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> ""],
+		assertAdditionalFieldsPTR(TypingStrategy.STRUCTURAL, #["s" -> "any"],
 			(script.scriptElements.get(2) as FunctionDeclaration).fpars.get(0).declaredTypeRef);
 	}
 
@@ -120,17 +120,17 @@ class N4_21_3_StructuralTypingWithAdditionalMembersTest extends AbstractStructur
 
 	@Test
 	def void testUseSiteWithDifferentAdditionalMemberFieldWOType() {
-		assertField(null, "n", setupAdditionalMember(1));
+		assertField("any", "n", setupAdditionalMember(1));
 	}
 
 	@Test
 	def void testUseSiteWithDifferentAdditionalMemberMethodNoParam() {
-		assertMethod(null, #["string"], "f1", setupAdditionalMember(2));
+		assertMethod("any", #["string"], "f1", setupAdditionalMember(2));
 	}
 
 	@Test
 	def void testUseSiteWithDifferentAdditionalMemberMethodVoid() {
-		assertMethod("void", #[], "f2", setupAdditionalMember(3));
+		assertMethod("string", #[], "f2", setupAdditionalMember(3));
 	}
 
 	@Test
@@ -145,7 +145,7 @@ class N4_21_3_StructuralTypingWithAdditionalMembersTest extends AbstractStructur
 
 	@Test
 	def void testUseSiteWithDifferentAdditionalMemberGetterWOType() {
-		assertGetter(null, "z", setupAdditionalMember(6));
+		assertGetter("any", "z", setupAdditionalMember(6));
 	}
 
 	@Test
