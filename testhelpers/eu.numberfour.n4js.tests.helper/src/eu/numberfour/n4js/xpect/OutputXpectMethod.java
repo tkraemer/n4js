@@ -151,7 +151,7 @@ public class OutputXpectMethod {
 	/**
 	 * Transpiles provided resource and asserts that the target code <b>contains</b> the provided expectation string. In
 	 * addition, white-space is normalized, i.e. any non-empty sequence of white-space characters is normalized into a
-	 * single " " (space) on both sides before comparison. Code is not executed!
+	 * single " " (space) on both sides before comparison (also within string literals!). Code is not executed.
 	 */
 	@Xpect
 	public void compileResultContains(
@@ -187,7 +187,7 @@ public class OutputXpectMethod {
 	/**
 	 * Asserts that the given expectation is <b>contained</b> in the actual string. Also normalizes white-space, i.e.
 	 * any non-empty sequence of white-space characters is normalized into a single " " (space) on both sides before
-	 * comparison.
+	 * comparison (also within string literals!).
 	 *
 	 * @param nameOfActual
 	 *            human-readable description of what "actual" represents (for error messages). E.g. "compile result".
@@ -197,11 +197,11 @@ public class OutputXpectMethod {
 		final String expectationStrNormalized = NORMALIZE_WHITE_SPACE.matcher(expectationStr).replaceAll(" ").trim();
 		final String actualStrNormalized = NORMALIZE_WHITE_SPACE.matcher(actual).replaceAll(" ").trim();
 		if (!actualStrNormalized.contains(expectationStrNormalized)) {
-			Assert.assertTrue(
-					"Expectation string not contained in " + nameOfActual + " (after white-space normalization)\n"
-							+ "------ expectation string:\n" + expectationStr
-							+ "------ " + nameOfActual + ":\n" + actual,
-					false);
+			Assert.fail("Expectation string not contained in " + nameOfActual + " (after white-space normalization)\n"
+					+ "------ expectation string:\n"
+					+ expectationStr + "\n"
+					+ "------ " + nameOfActual + ":\n"
+					+ actual);
 		}
 	}
 
