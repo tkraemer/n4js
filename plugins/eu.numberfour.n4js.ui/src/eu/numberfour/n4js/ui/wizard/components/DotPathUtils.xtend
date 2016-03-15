@@ -8,13 +8,18 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard
+package eu.numberfour.n4js.ui.wizard.components
+
 /**
+<<<<<<< HEAD:plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/wizard/components/DotPathUtils.xtend
+ * Utility methods to work with dot separated paths e.g. absolute class specifier.  
+=======
  * Utility class to handle the conversation of dot separated specifiers.
+>>>>>>> master:plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/wizard/classwizard/N4JSNewClassWizardUtils.xtend
  */
-class N4JSNewClassWizardUtils {
-			/**
-		 * Return all segments but the last one
+class DotPathUtils {
+		/**
+		 * Return all dot separated segments but the last one
 		 *
 		 * @param dotSeparatedString
 		 *            A dot separated string
@@ -34,8 +39,8 @@ class N4JSNewClassWizardUtils {
 		}
 
 		/**
-		 * Return the last dot segment.
-		 *
+		 * Return the last dot separated segment.
+		 * 
 		 * <p>Note: Returns an empty string if no dot is found in the string.</p>
 		 *
 		 * @param dotSeparatedString
@@ -48,6 +53,5 @@ class N4JSNewClassWizardUtils {
 				return segments.last
 			return "";
 		}
-
 
 }

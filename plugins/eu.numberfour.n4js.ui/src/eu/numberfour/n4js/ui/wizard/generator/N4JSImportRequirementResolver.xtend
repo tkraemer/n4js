@@ -8,34 +8,34 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard
+package eu.numberfour.n4js.ui.wizard.generator
 
-import org.eclipse.emf.common.util.URI
+import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.ImportDeclaration
+import eu.numberfour.n4js.n4JS.ImportSpecifier
+import eu.numberfour.n4js.n4JS.N4JSPackage
+import eu.numberfour.n4js.n4JS.NamedImportSpecifier
+import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.scoping.N4JSScopeProvider
+import eu.numberfour.n4js.scoping.imports.PlainAccessOfAliasedImportDescription
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ui.changes.IAtomicChange
+import eu.numberfour.n4js.ui.changes.Replacement
+import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
+import java.util.ArrayList
+import java.util.Collection
+import java.util.HashMap
 import java.util.List
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.util.TextRegion
+import java.util.Map
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.n4JS.Script
-import org.eclipse.emf.ecore.EObject
-import eu.numberfour.n4js.n4JS.ImportDeclaration
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModel.ClassifierReference
-import com.google.inject.Inject
-import eu.numberfour.n4js.scoping.N4JSScopeProvider
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
-import java.util.ArrayList
-import eu.numberfour.n4js.n4JS.ImportSpecifier
-import eu.numberfour.n4js.n4JS.NamedImportSpecifier
-import eu.numberfour.n4js.ts.types.TClassifier
-import java.util.Map
-import java.util.HashMap
-import org.eclipse.xtext.naming.QualifiedName
-import java.util.Collection
-import eu.numberfour.n4js.scoping.imports.PlainAccessOfAliasedImportDescription
-import eu.numberfour.n4js.ui.changes.Replacement
-import eu.numberfour.n4js.ui.changes.IAtomicChange
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.util.TextRegion
 
 /**
  * The N4JSImportRequirementResolver provides functionality to resolve import name conflicts and requirements.
@@ -49,7 +49,7 @@ class N4JSImportRequirementResolver {
 	private N4JSScopeProvider scopeProvider;
 
 	/**
-	 * Represents an import statement.
+	 * Represents an import requirement.
 	 */
 	public static class ImportRequirement {
 		public String typeName;
@@ -185,44 +185,41 @@ class N4JSImportRequirementResolver {
 	}
 
 	/**
-	 * Resolves name conflicts inside the import dependencies list. These are conflicts between elements of the dependencies list.
+	 * Resolves name conflicts inside the import requirements list, which are name conflicts between elements of the list.
 	 * Additional conditions are checked through the isUsedNamePredicate to allow for example advanced scope checking.
-	 *
-	 * The method returns a map of alias bindings used to resolve the naming conflicts
-	 *
+	 * 
+	 * The method returns a map of alias bindings which is a possible solution to resolve the naming conflicts.
+	 * 
 	 * <p>Note: If isUsedNamePredicate is null only inner list name conflicts are resolved</p>
-	 *
-	 * @param importRequirements A list of import dependencies
+	 * 
+	 * @param importRequirements A list of import requirements
 	 * @param isUsedNamePredicate Predicate for advanced name checking. May be null.
-	 *
-	 * @return The created alias bindings.
+	 * 
+	 * @return The alias bindings.
 	 */
 	public def Map<URI,String> resolveImportNameConflicts(Collection<ImportRequirement> importRequirements, (String)=>boolean isUsedNamePredicate ) {
 		val HashMap<String,Boolean> usedNames = new HashMap<String,Boolean>();
 
-		//Save used alias bindings
+		//Save used alias bindings 
 		var aliasBindings = new HashMap<URI,String>();
-
-		for ( var i=importRequirements.size-1; i >= 0 ; i-- ) {
-			val dependency = importRequirements.get(i);
-
-			if ( dependency.alias.empty ) {
-				var alias = dependency.typeName;
-
+		
+		for (requirement : importRequirements) {
+			if ( requirement.alias.empty ) {
+				var alias = requirement.typeName;
+				
 				//As long as the name check function returns false or the name already was used add another "Alias"-prefix
 				while ( (isUsedNamePredicate !== null && isUsedNamePredicate.apply(alias) ) ||
 						usedNames.containsKey(alias) ||
 						aliasBindings.containsValue(alias) ) {
 					alias = "Alias" + alias;
 				}
-
-				if ( !dependency.typeName.equals(alias) ) {
-					dependency.alias = alias;
-					aliasBindings.put(dependency.typeUri,alias);
-
+				
+				if ( !requirement.typeName.equals(alias) ) {
+					requirement.alias = alias;
+					aliasBindings.put(requirement.typeUri,alias);
 					usedNames.put(alias, true);
 				} else{
-					usedNames.put(dependency.typeName,true);
+					usedNames.put(requirement.typeName,true);
 				}
 
 			}

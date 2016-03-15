@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard;
+package eu.numberfour.n4js.ui.wizard.interfacewizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,43 +38,37 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidator;
 
 /**
- * A validator for a {@link N4JSClassWizardModel}
+ * A validator for {@link N4JSInterfaceWizardModel}s
+ *
+ * @author luca.beurer-kellner - Initial contribution and API
  */
-public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator {
-
+public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValidator {
 	@Inject
 	IN4JSCore n4jsCore;
 
 	private IResourceDescriptions descriptions;
 
 	/**
-	 * Error Messages for model validation of the {@link N4JSClassWizardModel}
+	 * Error Messages for model validation of the {@link N4JSInterfaceWizardModel}
 	 */
-	public static class ErrorMessages {
+	private static class ErrorMessages {
 
 		// Class name errors
-		private static final String CLASS_NAME_MUST_NOT_BE_EMPTY = "The class name field must not be empty.";
-		private static final String INVALID_CLASS_NAME = "Invalid class name ";
-
-		// Super class errors
-		private static final String THE_SUPER_CLASS_CANNOT_BE_FOUND = "The super class cannot be found";
+		private static final String INTERFACE_NAME_MUST_NOT_BE_EMPTY = "The interface name field must not be empty.";
+		private static final String INVALID_INTERFACE_NAME = "Invalid interface name ";
 
 		// Interfaces errors
 		private static final String THE_INTERFACE_CANNOT_BE_FOUND = "The interface %s cannot be found";
-
-		// Definition file collision errors
-		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file ";
-		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file ";
 	}
 
 	/**
 	 * Class name specifier property constraints
 	 */
-	private void validateClassName() throws ValidationExcep {
+	private void validateInterfaceName() throws ValidationExcep {
 
 		// 1. The class name must not be empty
 		if (getModel().getName().trim().length() < 1) {
-			throw new ValidationExcep(ErrorMessages.CLASS_NAME_MUST_NOT_BE_EMPTY);
+			throw new ValidationExcep(ErrorMessages.INTERFACE_NAME_MUST_NOT_BE_EMPTY);
 		}
 
 		String className = getModel().getName();
@@ -84,14 +78,14 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		String[] classNameLetters = className.split("");
 		char firstCharacter = classNameLetters[0].charAt(0);
 		if (!IdentifierValueConverter.isValidIdentifierStart(firstCharacter) || firstCharacter == ' ') {
-			throw new ValidationExcep(ErrorMessages.INVALID_CLASS_NAME
+			throw new ValidationExcep(ErrorMessages.INVALID_INTERFACE_NAME
 					+ errorPointer(className, validatedClassName));
 		}
 		validatedClassName += classNameLetters[0];
 		for (int i = 1; i < classNameLetters.length; i++) {
 			char character = classNameLetters[i].charAt(0);
 			if (!IdentifierValueConverter.isValidIdentifierPart(character) || character == ' ') {
-				throw new ValidationExcep(ErrorMessages.INVALID_CLASS_NAME
+				throw new ValidationExcep(ErrorMessages.INVALID_INTERFACE_NAME
 						+ errorPointer(className, validatedClassName));
 			}
 			validatedClassName += classNameLetters[i];
@@ -106,8 +100,8 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		String effectiveModuleSpecifier = getModel().getEffectiveModuleSpecifier();
 
 		/*
-		 * If the specifier is computed (with a class name suffix) the workspace validator doesn't validate the class
-		 * name part of the specifier path.
+		 * If the specifier is computed (with a interface name suffix) the workspace validator doesn't validate the
+		 * class name part of the specifier path.
 		 */
 		if (!effectiveModuleSpecifier.equals(getModel().getModuleSpecifier()) &&
 				!isValidFolderName(getModel().getName())) {
@@ -116,7 +110,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 							+ errorPointer(effectiveModuleSpecifier, getModel().getModuleSpecifier()));
 		}
 
-		/* Check for potential file collisions */
+		/* Check for n4js/n4jsd file collisions */
 		if (fileSpecifyingModuleSpecifier(effectiveModuleSpecifier)) {
 			IProject moduleProject = ResourcesPlugin.getWorkspace().getRoot()
 					.getProject(getModel().getProject().toString());
@@ -128,10 +122,10 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 					.append(effectiveModulePath.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
 
 			if (getModel().isDefinitionFile() && moduleProject.exists(n4jsPath)) {
-				throw new ValidationExcep(ErrorMessages.THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE
+				throw new ValidationExcep("The new definition module collides with the source file "
 						+ n4jsPath);
 			} else if (!getModel().isDefinitionFile() && moduleProject.exists(n4jsdPath)) {
-				throw new ValidationExcep(ErrorMessages.THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE
+				throw new ValidationExcep("The new source module collides with the definition file "
 						+ n4jsdPath);
 			}
 		}
@@ -148,28 +142,6 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	 */
 	private boolean fileSpecifyingModuleSpecifier(String specifier) {
 		return specifier.length() > 0 && specifier.charAt(specifier.length() - 1) != IPath.SEPARATOR;
-	}
-
-	/**
-	 * Super class specifier property constraints
-	 */
-	private void validateSuperClass() throws ValidationExcep {
-
-		ClassifierReference superClassRef = getModel().getSuperClass();
-
-		if (!superClassRef.getFullSpecifier().isEmpty())
-
-		{
-			if (!isValidClass(superClassRef)) {
-				throw new ValidationExcep(ErrorMessages.THE_SUPER_CLASS_CANNOT_BE_FOUND);
-			} else if (superClassRef.uri == null) {
-				IEObjectDescription classDescription = classifierObjectDescriptionForAbsoluteSpecifier(
-						superClassRef.getFullSpecifier());
-				if (classDescription != null) {
-					superClassRef.uri = classDescription.getEObjectURI();
-				}
-			}
-		}
 	}
 
 	/**
@@ -210,8 +182,9 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		if (!getModel().isDefinitionFile() && getModel().isN4jsAnnotated()) {
 			getModel().setN4jsAnnotated(false);
 		}
-		// Auto disable the Internal annotation for the private access modifier
-		if (getModel().getAccessModifier() == AccessModifier.PRIVATE && getModel().isInternal()) {
+		// Auto disable the Internal annotation for the private and project access modifier
+		if ((getModel().getAccessModifier() == AccessModifier.PRIVATE
+				|| getModel().getAccessModifier() == AccessModifier.PROJECT) && getModel().isInternal()) {
 			getModel().setInternal(false);
 		}
 
@@ -231,11 +204,11 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 
 	@Override
 	protected void run() throws ValidationExcep {
+		// Run workspace model validation
 		super.run();
-
+		// Run additional interface validation
 		validateModuleSpecifier();
-		validateClassName();
-		validateSuperClass();
+		validateInterfaceName();
 		validateInterfaces();
 	}
 
@@ -260,10 +233,6 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		return foundObjects.iterator().hasNext();
 	}
 
-	private boolean isValidClass(ClassifierReference ref) {
-		return isValidReferenceOfType(ref.getFullSpecifier(), TypesPackage.eINSTANCE.getTClass());
-	}
-
 	private boolean isValidInterface(ClassifierReference ref) {
 		return isValidReferenceOfType(ref.getFullSpecifier(), TypesPackage.eINSTANCE.getTInterface());
 	}
@@ -281,11 +250,11 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * @return The model currently validated
+	 * @return The model which is currently validated
 	 */
 	@Override
-	public N4JSClassWizardModel getModel() {
-		return (N4JSClassWizardModel) super.getModel();
+	public N4JSInterfaceWizardModel getModel() {
+		return (N4JSInterfaceWizardModel) super.getModel();
 	}
 
 	/**
@@ -294,7 +263,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	 * @param model
 	 *            The new model to validate
 	 */
-	public void setModel(N4JSClassWizardModel model) {
+	public void setModel(N4JSInterfaceWizardModel model) {
 		super.setModel(model);
 		this.validate();
 	}
@@ -313,8 +282,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	 *            Name to check
 	 * @return valid state
 	 */
-	public static boolean isValidFolderName(String name) {
+	private static boolean isValidFolderName(String name) {
 		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 	}
-
 }

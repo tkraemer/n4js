@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard;
+package eu.numberfour.n4js.ui.wizard.workspacewizard;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,8 +26,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -38,6 +36,8 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.primitives.Ints;
+
+import eu.numberfour.n4js.ui.ImageDescriptorCache;
 
 /**
  * Custom {@link org.eclipse.swt.widgets.Text} widget to optinally display a grey suffix at the end of the user input.
@@ -82,19 +82,16 @@ public class SuffixText extends Composite {
 		super(parent, style);
 
 		// Initialize transparent image to work around theming issues
-		ImageData data = new ImageData(1, 1, 24, new PaletteData(0xff0000, 0x00ff00, 0x0000ff));
-		data.setAlpha(0, 0, 0);
-		TRANSPARENT = new Image(Display.getCurrent(), data);
+		TRANSPARENT = ImageDescriptorCache.ImageRef.TRANSPARENT.asImage().orNull();
 
 		this.setLayout(new SuffixLayout());
 
 		userInput = new Text(this, SWT.NONE);
-		userInput.setBackgroundImage(new Image(Display.getCurrent(), data));
+		userInput.setBackgroundImage(TRANSPARENT);
 
 		completeLabel = new Label(this, SWT.HORIZONTAL);
 		completeLabel.setText("/Test");
 		completeLabel.setForeground(GREY);
-		completeLabel.setBackgroundImage(TRANSPARENT);
 
 		MouseListener focusCatcher = new MouseListener() {
 			@Override
@@ -126,15 +123,13 @@ public class SuffixText extends Composite {
 			@Override
 			public void paintControl(PaintEvent e) {
 				setBackground(userInput.getBackground());
-				// setBackground(userInput.getBackground());
+				completeLabel.setBackground(userInput.getBackground());
 			}
 		});
 
-		// Update layout offset on text modification events
-		this.userInput.addModifyListener(new ModifyListener() {
+		userInput.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				// updateOffset();
 				layout();
 				setText(userInput.getText());
 			}
@@ -145,7 +140,7 @@ public class SuffixText extends Composite {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == SUFFIX_PROPERTY) {
-					layout();
+					layout(true);
 				}
 			}
 		});
@@ -292,12 +287,17 @@ public class SuffixText extends Composite {
 	 */
 	private class SuffixLayout extends Layout {
 
-		private Point textDimension;
+		// Negative vertical spacing to imitate seamless character flow
+		private static final int NEGATIVE_VERTICAL_SPACING = 8;
+
+		// Amount of additional pixels for text dimensions to avoid clipping
+		private static final int AVOID_CLIPPING_PADDING = 8;
 
 		@Override
 		protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
 			int width = 0;
 			int height = 0;
+			Point textDimension = textDimensions();
 			Control[] children = composite.getChildren();
 			for (Control child : children) {
 				if (child instanceof Text) {
@@ -314,23 +314,47 @@ public class SuffixText extends Composite {
 			return new Point(width, height + 4);
 		}
 
+		private Point textDimensions() {
+			Point tDimensions = gc.textExtent(userInput.getText());
+			tDimensions.x += AVOID_CLIPPING_PADDING;
+			return tDimensions;
+		}
+
+		private Point labelDimensions() {
+			Point labelDimensions = gc.textExtent(suffix);
+			labelDimensions.x += AVOID_CLIPPING_PADDING;
+			return labelDimensions;
+		}
+
+		/** Return the top margin to vertically center an element of given
+		 * height in an area with given total height.
+		 */
+		private int marginTopCenter(int height, int totalHeight) {
+			return new Double(Math.floor((totalHeight - height) / 2.0)).intValue();
+		}
+
 		@Override
 		protected void layout(Composite composite, boolean flushCache) {
 			Rectangle clientArea = composite.getClientArea();
 			Control[] children = composite.getChildren();
+
+			Point labelDimension = labelDimensions();
+			Point textDimension = textDimensions();
+
 			for (Control child : children) {
+
 				if (child instanceof Text) {
-					final String textContent = ((Text) child).getText();
-					textDimension = gc.textExtent(textContent);
-					child.setBounds(0, new Double((clientArea.height - textDimension.y) / 2.0).intValue(),
-							textDimension.x + 4, textDimension.y);
+
+					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
+					child.setBounds(0, verticalCenterY, textDimension.x, textDimension.y);
 				}
 				if (child instanceof Label) {
-					final String labelText = ((Label) child).getText();
-					Point labelDimension = gc.textExtent(labelText);
-					child.setBounds(textDimension.x, new Double((clientArea.height - textDimension.y) / 2.0).intValue(),
-							labelDimension.x + 10, labelDimension.y);
+
+					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
+					child.setBounds(textDimension.x - NEGATIVE_VERTICAL_SPACING, verticalCenterY,
+							labelDimension.x, labelDimension.y);
 				}
+
 			}
 		}
 	}

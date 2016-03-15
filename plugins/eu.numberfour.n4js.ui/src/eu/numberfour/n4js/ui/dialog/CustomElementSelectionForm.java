@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 
-import eu.numberfour.n4js.ui.wizard.classwizard.SuffixText;
+import eu.numberfour.n4js.ui.wizard.workspacewizard.SuffixText;
 
 /**
  * This class holds the form/ui for {@link CustomElementSelectionDialog}.

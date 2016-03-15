@@ -171,6 +171,11 @@ public class SourceFolderSelectionDialogProvider {
 
 			String result = dialog.getValue();
 
+			// On Cancel
+			if (result == null) {
+				return;
+			}
+
 			if (sourceFolderValidator.isValid(result) == null) {
 				VirtualResource createdSourceFolder = createVirtualSourceFolder(result);
 

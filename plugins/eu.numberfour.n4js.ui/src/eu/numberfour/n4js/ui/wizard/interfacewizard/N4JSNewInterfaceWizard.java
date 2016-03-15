@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard;
+package eu.numberfour.n4js.ui.wizard.interfacewizard;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
@@ -30,30 +30,30 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 
 /**
- * A wizard to allow the user to create a new N4JS class.
+ * A New N4JS Interface wizard
  *
- * The wizard supports the creation of new files as well as the insertion of classes into existing modules.
+ * @author luca.beurer-kellner - Initial contribution and API
  */
-public class N4JSNewClassWizard extends Wizard implements INewWizard {
-
+public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
 	@Inject
-	N4JSClassWizardModel model;
+	N4JSInterfaceWizardModel model;
 	@Inject
 	IN4JSCore n4jsCore;
 	@Inject
 	LanguageSpecificURIEditorOpener uriOpener;
 
 	@Inject
-	N4JSNewClassWizardGenerator generator;
+	N4JSNewInterfaceWizardGenerator generator;
 
 	@Inject
-	N4JSNewClassWizardPage wizardPage;
+	N4JSNewInterfaceWizardPage wizardPage;
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.setNeedsProgressMonitor(false);
-		this.setWindowTitle("New N4JS Class");
-		setDefaultPageImageDescriptor(ImageRef.NEW_CLASS_WIZBAN.asImageDescriptor().orNull());
+		this.setWindowTitle("New N4JS Interface");
+
+		setDefaultPageImageDescriptor(ImageRef.NEW_INTERFACE_WIZBAN.asImageDescriptor().orNull());
 
 		parseIntialSelection(selection);
 	}
@@ -61,11 +61,11 @@ public class N4JSNewClassWizard extends Wizard implements INewWizard {
 	private void parseIntialSelection(IStructuredSelection selection) {
 		WorkspaceWizardModel.fillModelFromInitialSelection(model, selection, n4jsCore);
 		wizardPage.setModel(model);
-
 	}
 
 	@Override
 	public boolean performFinish() {
+
 		IPath fileLocation = this.model.computeFileLocation();
 
 		// Create missing module folders
@@ -73,8 +73,7 @@ public class N4JSNewClassWizard extends Wizard implements INewWizard {
 
 			IContainer parent = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().toString());
 
-			try {
-				// Iterate through remaining segments but the file segment
+			try { // Iterate through remaining segments but the file segment
 				for (String segment : fileLocation.makeRelativeTo(model.getProject()).removeLastSegments(1)
 						.segments()) {
 					IFolder subfolder = parent.getFolder(new Path(segment));
@@ -92,15 +91,14 @@ public class N4JSNewClassWizard extends Wizard implements INewWizard {
 		generator.writeToFile(this.model);
 
 		// Open the written file
-		uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true),
-				true);
+		uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true), true);
 
 		return true;
+
 	}
 
 	@Override
 	public void addPages() {
 		this.addPage(wizardPage);
 	}
-
 }

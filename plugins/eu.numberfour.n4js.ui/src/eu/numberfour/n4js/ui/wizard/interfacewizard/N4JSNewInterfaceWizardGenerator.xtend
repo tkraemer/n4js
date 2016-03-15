@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard
+package eu.numberfour.n4js.ui.wizard.interfacewizard
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.projectModel.IN4JSCore
@@ -27,46 +27,43 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
-import eu.numberfour.n4js.projectModel.IN4JSProject
 
 /**
- * A file generator for {@link N4JSClassWizardModel}
+ * A file generator for {@link N4JSInterfaceWizardModel}.
  * 
+ * @author luca.beurer-kellner - Initial contribution and API
  */
-class N4JSNewClassWizardGenerator {
-
+class N4JSNewInterfaceWizardGenerator {
 	@Inject
 	private IN4JSCore n4jsCore;
-
+	
 	@Inject
 	private extension WizardGeneratorUtils generatorUtils;
 	
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
-
+	
 	/**
 	 *  Generate the class code
 	 */
-	private def String generateClass(N4JSClassWizardModel model, Map<URI,String> aliasBindings) {
-'''«IF model.isFinal»@Final«ENDIF»
-«IF model.n4jsAnnotated»@N4JS«ENDIF»
+	private def String generateInterface(N4JSInterfaceWizardModel model, Map<URI,String> aliasBindings) {
+'''«IF model.n4jsAnnotated»@N4JS«ENDIF»
 «IF model.isInternal»@Internal «ENDIF
 »«model.accessModifier.exportDeclaration
 »«IF model.isDefinitionFile»external «ENDIF
-»«accessModifierString(model.accessModifier)»class «model.name»«
-IF model.superClass.isComplete» extends «model.superClass.realOrAliasName(aliasBindings)»«ENDIF»«
-IF model.interfaces.length > 0 » implements «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
+»«accessModifierString(model.accessModifier)»interface «model.name»«
+IF model.interfaces.length > 0 » extends «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
 iface.realOrAliasName(aliasBindings)»«ENDFOR» {
-
+	
 }
 		'''
 	}
-
+	
 	/**
 	 * Return the real or bound name of the classifier reference.
-	 *
+	 * 
 	 * Always prioritizes alias name over real name.
-	 *
+	 * 
 	 * @param reference The classifier reference
 	 * @param aliasBindings The alias bindings, may be null
 	 */
@@ -76,24 +73,23 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 		}
 		return reference.classifierName;
 	}
-
+	
 	/**
-	 * Writes the new class specified by model to a file.
-	 *
+	 * Writes the new interface specified by model to a file.
+	 * 
 	 * Depending on the model's module specifier the class will be written to a new file or inserted into an existing file.
-	 *
-	 * <p>Note: Make sure to only a pass a valid model, no model validation takes place. </p>
-	 *
-	 * @param model The class wizard model to write to file
-	 *
+	 * 
+	 * <p>Note: Make sure to only pass a valid model. No model validation takes place. </p>
+	 * 
+	 * @param model The interface wizard model to write to file
+	 *  
 	 */
-
-	def boolean writeToFile(N4JSClassWizardModel model) {
+	
+	def boolean writeToFile(N4JSInterfaceWizardModel model) {
 		val modulePath = model.computeFileLocation();
 		val moduleFile = ResourcesPlugin.workspace.root.getFile(modulePath);
-
+		
 		try {
-
 			if ( moduleFile.exists ) {
 				insertIntoFile(moduleFile, model);
 			} else {
@@ -102,85 +98,82 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 				
 				//Resolve occurring name conflicts
 				val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
-
+				
 				//Generate import statements
 				var importStatements = requirementResolver.generateImportStatements(importRequirements)
-				//If non empty import Statements add line break after statements and an additional empty line to have some space to the code
-				if ( !importRequirements.empty)
+				
+				//If there are import statements, add a line break after statements and an additional empty line to have some space to the code
+				if ( !importRequirements.empty) 
 					importStatements = importStatements + "\n\n";
-
-				//Generate class code
-				val classCode = generateClass(model, aliasBindings);
-
-				//Write to file
+				
+				//Generate interface code
+				val classCode = generateInterface(model, aliasBindings);
+				
+				//Write to file 
 				val classTextStream = new ByteArrayInputStream((importStatements+classCode).getBytes(StandardCharsets.UTF_8));
 				moduleFile.create(classTextStream, true, null);
 			}
 		} catch ( CoreException e ) {
 			return false;
 		}
-
+		
 		return true;
 	}
-
-	private def void insertIntoFile(IFile file, N4JSClassWizardModel model) throws CoreException {
+	
+	private def void insertIntoFile(IFile file, N4JSInterfaceWizardModel model) throws CoreException {
 		//Retrieve XtextResource
 		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
-
-		val moduleResource = getResource(moduleURI);
-
+		val moduleResource = moduleURI.getResource();
+		
 		//Collect the import requirements
 		var demandedImports = model.importRequirements
-
+		
 		//Analyze import requirements
 		val ImportAnalysis importAnalysis = requirementResolver.analyzeImportRequirements(demandedImports, moduleResource);
-
+		
 		//Generate class code
-		var classCode = generateClass(model,importAnalysis.aliasBindings);
-
+		var classCode = generateInterface(model,importAnalysis.aliasBindings);
+		
 		//Add an additional line break for non-line-break terminated files
 		if (lastCharacterInFile(file) != "\n") {
 			classCode = "\n"+classCode;
 		}
-
+		
 		//Get stream for code
 		val classCodeStream = new ByteArrayInputStream(classCode.getBytes(StandardCharsets.UTF_8));
-
+			
 		//Insert import statement at the top
-		insertImportStatements(moduleResource,importAnalysis.importRequirements);
-
+		moduleResource.insertImportStatements(importAnalysis.importRequirements);
+	
+		
 		//Append class code
 		file.appendContents(classCodeStream, true, true, null);
-
+		
 		//Finally organize imports
-		organizeImports(file, null);
+		file.organizeImports(null);
 	}
+	
 	/**
 	 * Performs the manifest changes required by the class of the model.
-	 *
+	 * 
 	 * This means for now the computation of necessary project dependencies and their addition to the project manifest file.
-	 *
-	 * <p> IMPORTANT: This method should always be called before invoking {@link #writeToFile(N4JSClassWizardModel)} as
+	 * 
+	 * <p> IMPORTANT: This method should always be called before invoking {@link #writeToFile(N4JSClassWizardModel)} as 
 	 * writeToFile may need manifest changes to resolve all imports.</p>
 	 */
-	def performManifestChanges(N4JSClassWizardModel model) {
+	def performManifestChanges(N4JSInterfaceWizardModel model) {
 		val project = n4jsCore.findProject(URI.createPlatformResourceURI(model.computeFileLocation.toString, true));
-
+		
 		if ( project.present ) {
 			val manifestLocation = project.get().manifestLocation;
-
-			val manifest = getResource(manifestLocation.get());
+			val manifest = manifestLocation.get().getResource();
 			
-			// Gather referenced projects
-			var referencedProjects = new ArrayList<IN4JSProject>(model.interfaces.map[uri.projectOfUri]);
-
-			if ( model.superClass.isComplete ) {
-				referencedProjects.add(model.superClass.uri.projectOfUri);
-			}
+			// Gather the referenced projects
+			var referencedProjects = model.interfaces.map[uri.projectOfUri];
 			
 			// Create manifest changes
 			val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
-			val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
+			val manifestChanges = manifest.manifestChanges(model,referencedProjects,moduleURI);
 			
 			//Only perform non-empty changes. (To prevent useless history entries)
 			if (manifestChanges.length>0) {
@@ -188,6 +181,9 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 			}
 		}
 	}
+	
+	
+		
 	/**
 	 * Return the export statement if the access modifier requires it. Return an empty string otherwise.
 	 */
@@ -197,7 +193,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 		}
 		""
 	}
-
+	
 	/**
 	 * Return the string representation of the given access modifier
 	 */
@@ -207,20 +203,17 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 				return "project "
 			case PUBLIC:
 				return "public "
-			default: //PRIVATE:
+			default: // PRIVATE
 				return ""
 		}
 	}
-	/** Return the import requirements of a N4JSClassWizardModel */
-	private def List<ImportRequirement> importRequirements(N4JSClassWizardModel model) {
+	/** Return the import requirement of a N4JSInterfaceWizardModel */
+	private def List<ImportRequirement> importRequirements(N4JSInterfaceWizardModel model) {
 		var demandedImports = new ArrayList<ImportRequirement>();
-
-		if ( model.superClass.complete )
-			demandedImports.add(N4JSImportRequirementResolver.classifierReferenceToImportRequirement(model.superClass));
+	
 		if ( !model.interfaces.empty)
-			demandedImports.addAll(N4JSImportRequirementResolver.classifierReferencesToImportRequirements(model.interfaces)
-			);
-
+			demandedImports.addAll(N4JSImportRequirementResolver.classifierReferencesToImportRequirements(model.interfaces));
+		
 		demandedImports
 	}
 }

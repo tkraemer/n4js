@@ -373,6 +373,11 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		// If the initial selection is empty select the root source folder
+		if (getInitialElementSelections().isEmpty()) {
+			setInitialSelection(this.sourceFolder);
+		}
+
 		Control dialog = super.createDialogArea(parent);
 
 		elementNameInput.setSuffix("." + this.defaultFileExtension);
@@ -399,6 +404,8 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		} else {
 			validateElementInput();
 		}
+
+		elementNameInput.setFocus();
 
 		return dialog;
 	}

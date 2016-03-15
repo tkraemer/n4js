@@ -34,7 +34,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
 
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualWorkbenchLabelProvider;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.ui.wizard.classwizard.SuffixText;
+import eu.numberfour.n4js.ui.wizard.workspacewizard.SuffixText;
 
 /**
  * This is a basic dialog which allows custom workspace element selection.

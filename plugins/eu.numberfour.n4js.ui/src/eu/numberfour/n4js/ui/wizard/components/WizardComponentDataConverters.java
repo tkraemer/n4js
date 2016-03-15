@@ -8,20 +8,19 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard;
+package eu.numberfour.n4js.ui.wizard.components;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModel.AccessModifier;
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModel.ClassifierReference;
+import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 
 /**
- * Converters for {@link N4JSNewClassWizardPage}s Databinding
+ * Converters for component data binding.
  */
-public class N4JSNewClassWizardConverters {
+public class WizardComponentDataConverters {
 
 	private static abstract class StrategyProvidingConverter extends Converter {
 		/**
@@ -32,7 +31,6 @@ public class N4JSNewClassWizardConverters {
 		 */
 		public StrategyProvidingConverter(Object fromType, Object toType) {
 			super(fromType, toType);
-			// TODO Auto-generated constructor stub
 		}
 
 		public UpdateValueStrategy updatingValueStrategy() {
@@ -40,33 +38,6 @@ public class N4JSNewClassWizardConverters {
 			strat.setConverter(this);
 			return strat;
 		}
-	}
-
-	/**
-	 * Converter which just adds a slash in the front of given string.
-	 * <p>
-	 * Note: Empty strings are passed through without addition of the a slash
-	 * </p>
-	 */
-	public static class AddSlashConverter extends StrategyProvidingConverter {
-
-		/**
-		 */
-		public AddSlashConverter() {
-			super(String.class, String.class);
-		}
-
-		@Override
-		public Object convert(Object fromObject) {
-			if (fromObject instanceof String) {
-				if (!((String) fromObject).equals("")) {
-					return "/" + fromObject;
-				}
-				return "";
-			}
-			return null;
-		}
-
 	}
 
 	/**
@@ -107,8 +78,8 @@ public class N4JSNewClassWizardConverters {
 		public Object convert(Object fromObject) {
 			if (fromObject instanceof String) {
 				String str = (String) fromObject;
-				return new ClassifierReference(N4JSNewClassWizardUtils.frontDotSegments(str),
-						N4JSNewClassWizardUtils.lastDotSegment(str));
+				return new ClassifierReference(DotPathUtils.frontDotSegments(str),
+						DotPathUtils.lastDotSegment(str));
 			}
 			return null;
 		}
@@ -164,39 +135,6 @@ public class N4JSNewClassWizardConverters {
 		 * @return true on fulfillment
 		 */
 		public abstract boolean validate(Object object);
-
-	}
-
-	/**
-	 * Converts a {@link AccessModifier} value to a boolean value. Converts to true if the access modifier is project or
-	 * public, false otherwise.
-	 *
-	 * <p>
-	 * Note: Although this converter does not convert any data value it is used to control the enabled state of a
-	 * checkbox which depends on the selected access modifier.
-	 * </p>
-	 */
-	public static class AccessModifierIsVisibleConverter extends StrategyProvidingConverter {
-
-		/**
-		 *
-		 */
-		public AccessModifierIsVisibleConverter() {
-			super(AccessModifier.class, boolean.class);
-		}
-
-		@Override
-		public Object convert(Object fromObject) {
-			if (fromObject instanceof AccessModifier) {
-				if (((AccessModifier) fromObject) == AccessModifier.PROJECT ||
-						((AccessModifier) fromObject) == AccessModifier.PUBLIC) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return null;
-		}
 
 	}
 }
