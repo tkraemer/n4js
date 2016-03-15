@@ -56,13 +56,13 @@ public enum JavaScriptVariant {
 	public static JavaScriptVariant getVariant(EObject eobj) {
 		ResourceType resourceType = ResourceType.getResourceType(eobj);
 
-		if (ResourceType.N4JS.equals(resourceType) || ResourceType.N4JSXT.equals(resourceType)) {
+		if (ResourceType.N4JS.equals(resourceType)) {
 			return n4js;
 		}
 		if (isContainedInStrictFunctionOrScript(eobj)) {
 			return strict;
 		}
-		if (ResourceType.N4JSD.equals(resourceType) || ResourceType.N4JSDXT.equals(resourceType)) {
+		if (ResourceType.N4JSD.equals(resourceType)) {
 			return external;
 		}
 		return unrestricted;

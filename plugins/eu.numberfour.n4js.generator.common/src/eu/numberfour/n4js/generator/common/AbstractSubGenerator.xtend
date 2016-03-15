@@ -163,14 +163,13 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 * E.g., "proj-0.0.1/p/A.js" for a file A in proj.
 	 */
 	def String getTargetFileName(Resource n4jsSourceFile, String compiledFileExtension) {
-		val ResourceType resourceType = ResourceType.getResourceType(n4jsSourceFile);
 		/*
 		 * handle double extension for xpect, e.g. foo.n4js.xt
 		 *
 		 * assuming hasValidFileExtension was called, so care only about double extension
 		 */
 		var souceURI =
-			if(ResourceType.xtHidesOtherExtension(resourceType)){
+			if(ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI)){
 				n4jsSourceFile.URI.trimFileExtension
 			}else{
 				n4jsSourceFile.URI
@@ -191,15 +190,13 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	// TODO is it possible to add a filter before even activating this generator?
 	// background: currently also n4mf files are passed to the generator
-	/** Checking if a resource will be as source to the generator by matching the file extension
-	 * to one of (js, n4js, n4js.xt, js.xt")
+	/** 
+	 * Checking if a resource will be as source to the generator.
 	 */
 	def hasValidFileExtension(Resource resource) {
 		val resourceType = ResourceType.getResourceType(resource);
 		return resourceType.equals(ResourceType.JS)
-				|| resourceType.equals(ResourceType.N4JS)
-				|| resourceType.equals(ResourceType.JSXT)
-				|| resourceType.equals(ResourceType.N4JSXT);
+				|| resourceType.equals(ResourceType.N4JS);
 	}
 
 	/**

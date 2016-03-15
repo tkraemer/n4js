@@ -22,32 +22,19 @@ import eu.numberfour.n4js.n4mf.utils.N4MFConstants;
  *
  */
 public enum ResourceType {
-	/** Raw file has extension <code>.js</code> */
+	/** Raw file has extension <code>.js</code> or <code>.js.xt</code> */
 	JS,
-	/** Raw file has extension <code>.n4js</code> */
+	/** Raw file has extension <code>.n4js</code> or <code>.n4js.xt</code> */
 	N4JS,
-	/** Raw file has extension <code>.n4jsd</code> */
+	/** Raw file has extension <code>.n4jsd</code> or <code>.n4jsd.xt</code> */
 	N4JSD,
-	/** Raw file has extension <code>.n4mf</code> */
+	/** Raw file has extension <code>.n4mf</code> or <code>.n4mf.xt</code> */
 	N4MF,
 
-	// test files extensions
-
-	/** Raw file has extension <code>.js.xt</code> */
-	JSXT,
-	/** Raw file has extension <code>.n4js.xt</code> */
-	N4JSXT,
-	/** Raw file has extension <code>.n4jsd.xt</code> */
-	N4JSDXT,
-	/** Raw file has extension <code>.n4mf.xt</code> */
-	N4MFXT,
 	/**
-	 * Raw file has extension <code>.xt</code> but was not recognized as any of the other known resource types with
-	 * double extension
+	 * Raw file has extension is <code>.xt</code> that doesn't hide any other known extensions.
 	 */
 	XT,
-
-	// fall back
 
 	/** Not recognized. Provided data could be invalid, e.g. <code>null</code>. */
 	UNKOWN;
@@ -91,9 +78,18 @@ public enum ResourceType {
 	 */
 	public static ResourceType getResourceType(URI uri) {
 		if (uri == null) {
-			return ResourceType.UNKOWN;
+			return UNKOWN;
 		}
-		switch (uri.fileExtension().toLowerCase()) {
+
+		String fileExtension = uri.fileExtension();
+		if (fileExtension == null) {
+			LOGGER.info("URI has no file extension " + uri);
+			return UNKOWN;
+		} else {
+			fileExtension = fileExtension.toLowerCase();
+		}
+
+		switch (fileExtension) {
 		case EXT_JS:
 			return ResourceType.JS;
 		case EXT_N4JS:
@@ -103,24 +99,35 @@ public enum ResourceType {
 		case EXT_N4MF:
 			return ResourceType.N4JSD;
 		case EXT_XT:
-			/* for xpect tests check hidden extension */
-			String uriAsString = uri.toString().toLowerCase();
-			ResourceType type = ResourceType.XT;
-			if (uriAsString.endsWith(END_JS_XT)) {
-				type = ResourceType.JSXT;
-			} else if (uriAsString.endsWith(END_N4JS_XT)) {
-				type = N4JSXT;
-			} else if (uriAsString.endsWith(END_N4JSD_XT)) {
-				type = N4JSDXT;
-			} else if (uriAsString.endsWith(END_N4MF_XT)) {
-				type = N4MFXT;
-			} else {
-				LOGGER.info("Unknown xt file type : " + uriAsString);
-			}
-			return type;
+			ResourceType resourceType = getXtHiddenType(uri);
+			if (resourceType.equals(UNKOWN))
+				return XT;
+			else
+				return resourceType;
 		default:
 			return ResourceType.UNKOWN;
 		}
+	}
+
+	/**
+	 * For Xpect resources return type hidden by the xt extension.
+	 */
+	private static ResourceType getXtHiddenType(URI uri) {
+		if (uri == null) {
+			return UNKOWN;
+		}
+
+		String uriAsString = uri.toString().toLowerCase();
+		if (uriAsString.endsWith(END_JS_XT)) {
+			return JS;
+		} else if (uriAsString.endsWith(END_N4JS_XT)) {
+			return N4JS;
+		} else if (uriAsString.endsWith(END_N4JSD_XT)) {
+			return N4JSD;
+		} else if (uriAsString.endsWith(END_N4MF_XT)) {
+			return N4MF;
+		} else
+			return ResourceType.UNKOWN;
 	}
 
 	/**
@@ -128,11 +135,12 @@ public enum ResourceType {
 	 *
 	 * @return true if given resource is based on file with double extension known
 	 */
-	public static boolean xtHidesOtherExtension(ResourceType resourceType) {
-		return JSXT.equals(resourceType)
-				|| N4JSXT.equals(resourceType)
-				|| N4JSDXT.equals(resourceType)
-				|| N4MFXT.equals(resourceType);
+	public static boolean xtHidesOtherExtension(URI uri) {
+		ResourceType resourceType = getXtHiddenType(uri);
+		return JS.equals(resourceType)
+				|| N4JS.equals(resourceType)
+				|| N4JSD.equals(resourceType)
+				|| N4MF.equals(resourceType);
 	}
 
 }

@@ -90,7 +90,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {
 		val resType = ResourceType.getResourceType(typeDefiningElement);
-		val isPlainJS = resType=== ResourceType.JS || resType=== ResourceType.JSXT
+		val isPlainJS = resType=== ResourceType.JS
 		if(isPlainJS){
 			return;//does not apply to plain JS files
 		}

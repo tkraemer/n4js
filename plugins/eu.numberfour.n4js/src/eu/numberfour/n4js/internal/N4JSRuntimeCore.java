@@ -198,6 +198,6 @@ public class N4JSRuntimeCore extends AbstractN4JSCore implements IN4JSRuntimeCor
 	 */
 	private boolean isJsFile(URI uri) {
 		ResourceType resourceType = ResourceType.getResourceType(uri);
-		return resourceType.equals(ResourceType.JS) || resourceType.equals(ResourceType.JSXT);
+		return resourceType.equals(ResourceType.JS);
 	}
 }

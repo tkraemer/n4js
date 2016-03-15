@@ -47,7 +47,7 @@ package class N4JSTypesBuilderHelper {
 
 	def package void setTypeAccessModifier(EObject eo, (TypeAccessModifier) => void typeAccessModifierAssignment, Collection<? extends N4Modifier> modifiers, List<Annotation> annotations) {
 		val resType = ResourceType.getResourceType(eo);
-		val isPlainJS = resType=== ResourceType.JS || resType=== ResourceType.JSXT
+		val isPlainJS = resType === ResourceType.JS
 
 		// IDEBUG-861 assume public visibility if plain JS
 		if (isPlainJS) {

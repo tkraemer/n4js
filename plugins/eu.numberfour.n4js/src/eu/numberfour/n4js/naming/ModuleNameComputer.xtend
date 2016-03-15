@@ -41,7 +41,6 @@ class ModuleNameComputer {
 	 */
 	def QualifiedName getQualifiedModuleName(Resource resource) {
 		val uri = resource.getURI()
-		val ResourceType resourceType = ResourceType.getResourceType(uri);
 
 		val maybeSourceContainer = findN4JSSourceContainer(uri)
 		if (maybeSourceContainer.present) {
@@ -49,7 +48,7 @@ class ModuleNameComputer {
 			val location = sourceContainer.location
 			if(uri.uriStartsWith(location)) {
 				var relativeURI = uri.deresolve(location.appendSegment(""))
-				if (ResourceType.xtHidesOtherExtension(resourceType)) { // support Xpect tests with files having additional file extension .xt
+				if (ResourceType.xtHidesOtherExtension(uri)) { // support Xpect tests with files having additional file extension .xt
 					relativeURI = relativeURI.trimFileExtension.trimFileExtension
 				} else {
 					relativeURI = relativeURI.trimFileExtension

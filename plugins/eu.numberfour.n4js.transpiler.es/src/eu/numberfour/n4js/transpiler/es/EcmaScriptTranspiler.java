@@ -181,7 +181,7 @@ public class EcmaScriptTranspiler extends AbstractTranspiler {
 	 */
 	private boolean noTranspile(N4JSResource eResource) {
 		ResourceType resourceType = ResourceType.getResourceType(eResource);
-		return resourceType.equals(ResourceType.JS) || resourceType.equals(ResourceType.JSXT);
+		return resourceType.equals(ResourceType.JS);
 	}
 
 }
