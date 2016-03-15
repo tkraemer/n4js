@@ -35,7 +35,7 @@ export public function callMangelhaft(reportersTypes : Array<type{ITestReporter}
 	 * we load TestController (entry point to the Mangelhaft)
 	 * and we trigger it with all data that needs to be provided
 	 */
-	var tcCTOR = (loadModule("Mangelhaft/TestController"))['TestController'] as constructor{Object};
+	var tcCTOR = (loadModule("Mangelhaft/TestController") as Object)['TestController'] as constructor{Object};
 	var testController : ITestController = new tcCTOR({reporters:reporters, testData:data}) as ITestController;
 	testController.runTests();
 }
