@@ -86,7 +86,7 @@ public class N4JSTypesFromTypeRefBuilder {
 			ft.typeVars.addAll(fte.typeVars.map[currTypeVar|TypeUtils.copyWithProxies(currTypeVar)]); // TODO support hyper links
 			ft.fpars.addAll(fte.fpars.map[currFpar|
 				val clone = TypeUtils.copyWithProxies(currFpar);
-				applyDefaults(builtInTypeScope, ft);
+				applyDefaults(builtInTypeScope, clone);
 				clone.astElement = currFpar;
 				return clone;
 			]);
