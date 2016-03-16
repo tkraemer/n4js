@@ -371,13 +371,13 @@ public class SemanticChangeProvider {
 
 		//Search for given annotation in the elements annotation list as well as
 		//in the containing export declaration as far as it exists.
-		if ( annotatedElement.annotations.findFirst[it.name.equals(annotation)] !== null ) {
+		if (annotatedElement.annotations.findFirst[it.name.equals(annotation)] !== null) {
 
 			sourceList = annotatedElement.annotations;
 			targetAnnotation = annotatedElement.annotations.findFirst[it.name.equals(annotation)];
 
-		} else if ( element.eContainer instanceof ExportDeclaration &&
-			 (element.eContainer as ExportDeclaration).annotations.findFirst[it.name.equals(annotation)] !== null ) {
+		} else if (element.eContainer instanceof ExportDeclaration &&
+				  (element.eContainer as ExportDeclaration).annotations.findFirst[it.name.equals(annotation)] !== null) {
 
 			sourceList = (element.eContainer as ExportDeclaration).annotations;
 			targetAnnotation = (element.eContainer as ExportDeclaration).annotations.findFirst[it.name.equals(annotation)];
@@ -395,19 +395,17 @@ public class SemanticChangeProvider {
 		//Workaround the fact that the offset of the first annotation starts
 		//after the '@' symbol. This is grammar caused. (The annotation can be first in the annotations list of the
 		//export declaration or of the element itself)
-		if  ( targetAnnotation === sourceList.head  )   {
-
+		if  (targetAnnotation === sourceList.head)   {
 			var containerNode = NodeModelUtils.findActualNodeFor(targetAnnotation.eContainer);
 			offset = containerNode.offset;
 			length = node.offset+node.length-containerNode.offset;
-
 		}
 
 		//If the annotation is in the same line as the following element modifiers
 		//also remove the additional whitespace.
 		//Also consider chained one line annotations without separator
-		if ( element instanceof ModifiableElement &&
-			 document.getLineOfOffset(offset) == document.getLineOfOffset((element as ModifiableElement).modifierOffset) ) {
+		if (element instanceof ModifiableElement &&
+			document.getLineOfOffset(offset) == document.getLineOfOffset((element as ModifiableElement).modifierOffset) ) {
 			//Only delete trailing white space if there is white space in front of the annotation
 			//Also check if there even is a trailing white space.
 			val trailingChar = document.getChar(offset+length);
@@ -420,10 +418,6 @@ public class SemanticChangeProvider {
 		}
 
 		return ChangeProvider.removeText(document,offset,length,true);
-	}
-	
-	private def boolean firstNodeInLine(IXtextDocument document, INode node) throws BadLocationException {
-		document.getLineOfOffset(node.offset-1) != document.getLineOfOffset(node.offset);
 	}
 
 	/** Extension method to sort modifiers */
