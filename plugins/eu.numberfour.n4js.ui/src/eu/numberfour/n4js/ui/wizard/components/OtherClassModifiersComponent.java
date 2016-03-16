@@ -24,7 +24,6 @@ import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModel;
 /**
  * A component which provides control over the annotations of a N4JS class
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class OtherClassModifiersComponent extends WizardComponent {
 

@@ -32,21 +32,21 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 /**
  * A New N4JS Interface wizard
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
-	@Inject
-	N4JSInterfaceWizardModel model;
-	@Inject
-	IN4JSCore n4jsCore;
-	@Inject
-	LanguageSpecificURIEditorOpener uriOpener;
 
 	@Inject
-	N4JSNewInterfaceWizardGenerator generator;
+	private N4JSInterfaceWizardModel model;
+	@Inject
+	private IN4JSCore n4jsCore;
+	@Inject
+	private LanguageSpecificURIEditorOpener uriOpener;
 
 	@Inject
-	N4JSNewInterfaceWizardPage wizardPage;
+	private N4JSNewInterfaceWizardGenerator generator;
+
+	@Inject
+	private N4JSNewInterfaceWizardPage wizardPage;
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {

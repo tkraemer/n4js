@@ -20,6 +20,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
@@ -33,8 +34,7 @@ import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -56,7 +56,6 @@ import eu.numberfour.n4js.ui.wizard.model.InterfacesContainingModel;
 /**
  * A provider for {@link InterfacesComponent} component.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class InterfacesComponentProvider {
 
@@ -82,15 +81,12 @@ public class InterfacesComponentProvider {
 	 *
 	 * When clicking into empty space of the list, a new inline interface cell editor can be activated.
 	 *
-	 * @author luca.beurer-kellner - Initial contribution and API
 	 */
 	public class InterfacesComponent extends WizardComponent {
 
 		/**
 		 * A mouse listener for the interfaces table to provide cell editing as well as empty space clicking
 		 * functionality
-		 *
-		 * @author luca.beurer-kellner - Initial contribution and API
 		 */
 		private final class InterfacesTableMouseListener implements MouseListener {
 			private final TableEditor editor;
@@ -259,15 +255,15 @@ public class InterfacesComponentProvider {
 			interfacesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 			Composite interfacesButtonsComposite = new Composite(parent, SWT.NONE);
-			interfacesButtonsComposite.setLayout(new RowLayout(SWT.VERTICAL));
+			interfacesButtonsComposite.setLayout(new GridLayout(1, false));
 
 			interfacesAddButton = new Button(interfacesButtonsComposite, SWT.NONE);
-			interfacesAddButton.setLayoutData(new RowData(69, -1));
 			interfacesAddButton.setText("Add...");
+			interfacesAddButton.setLayoutData(GridDataFactory.fillDefaults().create());
 
 			interfacesRemoveButton = new Button(interfacesButtonsComposite, SWT.NONE);
-			interfacesRemoveButton.setLayoutData(new RowData(68, -1));
 			interfacesRemoveButton.setText("Remove");
+			interfacesRemoveButton.setLayoutData(GridDataFactory.fillDefaults().create());
 
 			setupBindings();
 		}
@@ -289,14 +285,14 @@ public class InterfacesComponentProvider {
 					interfacesTable.setItemCount(itemCount);
 
 					// Find the minimum index to refresh from, to update the Table
-					int min_index = itemCount - 1;
+					int minIndex = itemCount - 1;
 					for (ListDiffEntry entry : event.diff.getDifferences()) {
-						if (min_index > entry.getPosition()) {
-							min_index = entry.getPosition();
+						if (minIndex > entry.getPosition()) {
+							minIndex = entry.getPosition();
 						}
 					}
 					if (itemCount > 0) {
-						interfacesTable.clear(min_index, itemCount - 1);
+						interfacesTable.clear(minIndex, itemCount - 1);
 					}
 
 					for (ListDiffEntry diff : event.diff.getDifferences()) {

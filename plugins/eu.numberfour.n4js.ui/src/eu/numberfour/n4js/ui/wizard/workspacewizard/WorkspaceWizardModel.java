@@ -29,7 +29,6 @@ import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 /**
  * An abstract model for workspace wizard elements.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class WorkspaceWizardModel {
 

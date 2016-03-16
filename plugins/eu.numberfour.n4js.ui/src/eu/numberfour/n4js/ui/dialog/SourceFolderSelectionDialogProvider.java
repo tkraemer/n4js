@@ -93,7 +93,7 @@ public class SourceFolderSelectionDialogProvider {
 			this.project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 			treeRoot = new WrappingVirtualContainer(this.project);
 
-			if (initialSelection != null && !initialSelection.toString().equals("")) {
+			if (initialSelection != null && !initialSelection.toString().isEmpty()) {
 				IFolder folder = this.project.getFolder(initialSelection);
 
 				// If the element passes the filter select it
@@ -148,7 +148,7 @@ public class SourceFolderSelectionDialogProvider {
 
 				@Override
 				public String isValid(String newText) {
-					if (newText.equals("")) {
+					if (newText.isEmpty()) {
 						return "The name must not be empty";
 					}
 

@@ -11,11 +11,7 @@
 package eu.numberfour.n4js.ui.wizard.components
 
 /**
-<<<<<<< HEAD:plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/wizard/components/DotPathUtils.xtend
- * Utility methods to work with dot separated paths e.g. absolute class specifier.  
-=======
  * Utility class to handle the conversation of dot separated specifiers.
->>>>>>> master:plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/wizard/classwizard/N4JSNewClassWizardUtils.xtend
  */
 class DotPathUtils {
 		/**

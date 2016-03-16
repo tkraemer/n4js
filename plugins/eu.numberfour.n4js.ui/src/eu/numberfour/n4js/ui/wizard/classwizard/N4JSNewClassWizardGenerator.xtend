@@ -15,7 +15,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportAnalysis
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
-import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorUtils
 import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import java.io.ByteArrayInputStream
@@ -28,6 +27,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
 import eu.numberfour.n4js.projectModel.IN4JSProject
+import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 
 /**
  * A file generator for {@link N4JSClassWizardModel}
@@ -39,7 +39,7 @@ class N4JSNewClassWizardGenerator {
 	private IN4JSCore n4jsCore;
 
 	@Inject
-	private extension WizardGeneratorUtils generatorUtils;
+	private extension WizardGeneratorHelper generatorUtils;
 	
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
@@ -48,17 +48,18 @@ class N4JSNewClassWizardGenerator {
 	 *  Generate the class code
 	 */
 	private def String generateClass(N4JSClassWizardModel model, Map<URI,String> aliasBindings) {
-'''«IF model.isFinal»@Final«ENDIF»
-«IF model.n4jsAnnotated»@N4JS«ENDIF»
-«IF model.isInternal»@Internal «ENDIF
-»«model.accessModifier.exportDeclaration
-»«IF model.isDefinitionFile»external «ENDIF
-»«accessModifierString(model.accessModifier)»class «model.name»«
-IF model.superClass.isComplete» extends «model.superClass.realOrAliasName(aliasBindings)»«ENDIF»«
-IF model.interfaces.length > 0 » implements «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
-iface.realOrAliasName(aliasBindings)»«ENDFOR» {
-
-}
+		'''
+		«IF model.isFinal»@Final«ENDIF»
+		«IF model.n4jsAnnotated»@N4JS«ENDIF»
+		«IF model.isInternal»@Internal «ENDIF
+		»«model.accessModifier.exportDeclaration
+		»«IF model.isDefinitionFile»external «ENDIF
+		»«accessModifierString(model.accessModifier)»class «model.name»«
+		IF model.superClass.isComplete» extends «model.superClass.realOrAliasName(aliasBindings)»«ENDIF»«
+		IF model.interfaces.length > 0 » implements «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
+		iface.realOrAliasName(aliasBindings)»«ENDFOR» {
+		
+		}
 		'''
 	}
 
@@ -71,7 +72,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 	 * @param aliasBindings The alias bindings, may be null
 	 */
 	private def String realOrAliasName(ClassifierReference reference, Map<URI,String> aliasBindings) {
-		if ( aliasBindings !== null && aliasBindings.containsKey(reference.uri) ) {
+		if (aliasBindings !== null && aliasBindings.containsKey(reference.uri)) {
 			return aliasBindings.get(reference.uri);
 		}
 		return reference.classifierName;
@@ -94,7 +95,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 
 		try {
 
-			if ( moduleFile.exists ) {
+			if (moduleFile.exists) {
 				insertIntoFile(moduleFile, model);
 			} else {
 				//Collect the import requirements
@@ -106,7 +107,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 				//Generate import statements
 				var importStatements = requirementResolver.generateImportStatements(importRequirements)
 				//If non empty import Statements add line break after statements and an additional empty line to have some space to the code
-				if ( !importRequirements.empty)
+				if (!importRequirements.empty)
 					importStatements = importStatements + "\n\n";
 
 				//Generate class code
@@ -116,7 +117,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 				val classTextStream = new ByteArrayInputStream((importStatements+classCode).getBytes(StandardCharsets.UTF_8));
 				moduleFile.create(classTextStream, true, null);
 			}
-		} catch ( CoreException e ) {
+		} catch (CoreException e) {
 			return false;
 		}
 
@@ -125,7 +126,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 
 	private def void insertIntoFile(IFile file, N4JSClassWizardModel model) throws CoreException {
 		//Retrieve XtextResource
-		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
+		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString, true);
 
 		val moduleResource = getResource(moduleURI);
 
@@ -166,7 +167,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 	def performManifestChanges(N4JSClassWizardModel model) {
 		val project = n4jsCore.findProject(URI.createPlatformResourceURI(model.computeFileLocation.toString, true));
 
-		if ( project.present ) {
+		if (project.present) {
 			val manifestLocation = project.get().manifestLocation;
 
 			val manifest = getResource(manifestLocation.get());
@@ -174,7 +175,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 			// Gather referenced projects
 			var referencedProjects = new ArrayList<IN4JSProject>(model.interfaces.map[uri.projectOfUri]);
 
-			if ( model.superClass.isComplete ) {
+			if (model.superClass.isComplete) {
 				referencedProjects.add(model.superClass.uri.projectOfUri);
 			}
 			
@@ -183,7 +184,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 			val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
 			
 			//Only perform non-empty changes. (To prevent useless history entries)
-			if (manifestChanges.length>0) {
+			if (manifestChanges.length > 0) {
 				manifest.applyChanges(manifestChanges);
 			}
 		}
@@ -192,7 +193,7 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 	 * Return the export statement if the access modifier requires it. Return an empty string otherwise.
 	 */
 	private def String exportDeclaration(AccessModifier modifier) {
-		if ( modifier == AccessModifier.PROJECT || modifier == AccessModifier.PUBLIC ) {
+		if (modifier == AccessModifier.PROJECT || modifier == AccessModifier.PUBLIC) {
 			return "export "
 		}
 		""
@@ -215,12 +216,12 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 	private def List<ImportRequirement> importRequirements(N4JSClassWizardModel model) {
 		var demandedImports = new ArrayList<ImportRequirement>();
 
-		if ( model.superClass.complete )
+		if (model.superClass.complete) {
 			demandedImports.add(N4JSImportRequirementResolver.classifierReferenceToImportRequirement(model.superClass));
-		if ( !model.interfaces.empty)
-			demandedImports.addAll(N4JSImportRequirementResolver.classifierReferencesToImportRequirements(model.interfaces)
-			);
-
+		}
+		if (!model.interfaces.empty) {
+			demandedImports.addAll(N4JSImportRequirementResolver.classifierReferencesToImportRequirements(model.interfaces));
+		}
 		demandedImports
 	}
 }

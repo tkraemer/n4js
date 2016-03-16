@@ -24,7 +24,6 @@ import eu.numberfour.n4js.ui.wizard.interfacewizard.N4JSInterfaceWizardModel;
 /**
  * A component which provides control over the annotations of a N4JS interface
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class OtherInterfaceModifiersComponent extends WizardComponent {
 
@@ -60,8 +59,6 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 	}
 
 	private void setupBindings() {
-		// Final property binding
-
 		// n4js annotation property binding
 
 		IObservableValue n4jsValue = BeanProperties

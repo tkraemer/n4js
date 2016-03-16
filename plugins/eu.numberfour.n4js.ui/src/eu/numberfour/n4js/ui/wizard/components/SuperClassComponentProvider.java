@@ -35,12 +35,11 @@ import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 /**
  * A provider for {@link SuperClassComponent}s
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class SuperClassComponentProvider {
 
 	@Inject
-	Provider<SingleClassSelectionDialog> singleClassSelectionDialogProvider;
+	private Provider<SingleClassSelectionDialog> singleClassSelectionDialogProvider;
 
 	/**
 	 * Create a new SuperClassComponent
@@ -52,8 +51,6 @@ public class SuperClassComponentProvider {
 	/**
 	 * A component to select a super class. Either by typing in the absolute class specifier or by using the browse
 	 * button.
-	 *
-	 * @author luca.beurer-kellner - Initial contribution and API
 	 */
 	public class SuperClassComponent extends WizardComponent {
 		/** The super class text */

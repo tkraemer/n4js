@@ -24,7 +24,6 @@ import org.eclipse.xtext.naming.QualifiedName;
  * is invalid. Invalid specifiers are reported as a validation error.
  * </p>
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class ClassifierReference {
 	/**

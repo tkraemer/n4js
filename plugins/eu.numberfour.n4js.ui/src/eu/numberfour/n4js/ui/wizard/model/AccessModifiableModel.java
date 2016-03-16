@@ -12,8 +12,6 @@ package eu.numberfour.n4js.ui.wizard.model;
 
 /**
  * A wizard model containing access modifier information
- *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public interface AccessModifiableModel extends PropertyChangeListenable {
 	/**

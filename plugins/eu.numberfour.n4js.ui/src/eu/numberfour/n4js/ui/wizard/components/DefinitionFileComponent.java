@@ -24,10 +24,9 @@ import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
 
 /**
  * A component which allows the selection of a checkbox specifying the Definition File property
- *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class DefinitionFileComponent extends WizardComponent {
+
 	/** The definition file checkbox */
 	private final Button definitionFileBox;
 	private final DefinitionFileModel model;

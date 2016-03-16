@@ -29,10 +29,8 @@ import org.eclipse.swt.widgets.Shell;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.ui.dialog.InterfacesSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
-import eu.numberfour.n4js.ui.dialog.SingleClassSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialogProvider;
 import eu.numberfour.n4js.ui.dialog.WorkspaceElementSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
@@ -47,7 +45,6 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.Str
  * This page provides controls for project, source folder, module specifier. You can use {@link WizardComponent}s and
  * the {@link #createComponents(WizardComponentContainer)} methods to add additional components to your wizard.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public abstract class WorkspaceWizardPage extends WizardPage implements WizardComponentContainer {
 
@@ -61,13 +58,9 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 	// Browse dialogs
 	@Inject
-	Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
+	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
-	SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
-	@Inject
-	Provider<SingleClassSelectionDialog> superClassSelectionDialogProvider;
-	@Inject
-	Provider<InterfacesSelectionDialog> interfacesSelectionDialogProvider;
+	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
 
 	/**
 	 * @param pageName
@@ -283,9 +276,9 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	 */
 	protected boolean setInitialFocus() {
 		// Set the focus to the first empty field beginning with project
-		if (model.getProject().toString().equals("")) {
+		if (model.getProject().toString().isEmpty()) {
 			workspaceWizardForm.getProjectText().setFocus();
-		} else if (model.getSourceFolder().toString().equals("")) {
+		} else if (model.getSourceFolder().toString().isEmpty()) {
 			workspaceWizardForm.getSourceFolderText().setFocus();
 		} else {
 			return false;
@@ -296,6 +289,14 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	@Override
 	public DataBindingContext getDataBindingContext() {
 		return databindingContext;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (databindingContext != null) {
+			databindingContext.dispose();
+		}
 	}
 
 	@Override

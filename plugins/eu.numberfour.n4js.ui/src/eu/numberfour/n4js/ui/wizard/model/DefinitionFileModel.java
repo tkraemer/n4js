@@ -12,8 +12,6 @@ package eu.numberfour.n4js.ui.wizard.model;
 
 /**
  * A wizard model that contains information about being (in) a definition file.
- *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public interface DefinitionFileModel extends PropertyChangeListenable {
 	/** The property name for the definition file property when using databinding */

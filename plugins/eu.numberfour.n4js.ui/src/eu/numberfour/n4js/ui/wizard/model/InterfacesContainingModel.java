@@ -15,10 +15,8 @@ import java.util.List;
 /**
  * A model that contains a list of interfaces
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public interface InterfacesContainingModel extends PropertyChangeListenable {
-
 	/**
 	 * The property name for the interfaces property when using databinding
 	 */

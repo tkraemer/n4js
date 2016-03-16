@@ -18,9 +18,9 @@ import org.eclipse.swt.widgets.Composite;
  *
  * A wizard component can be specialized to only work with a certain type of model.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public abstract class WizardComponent {
+
 	private final WizardComponentContainer container;
 
 	/**

@@ -13,7 +13,6 @@ package eu.numberfour.n4js.ui.wizard.components;
 /**
  * An empty placeholder component
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class EmptyComponent extends WizardComponent {
 	/**

@@ -12,8 +12,9 @@ package eu.numberfour.n4js.ui.wizard.classwizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -25,7 +26,9 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Optional;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.N4JSGlobals;
@@ -43,9 +46,12 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidato
 public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator {
 
 	@Inject
-	IN4JSCore n4jsCore;
+	private IN4JSCore n4jsCore;
 
 	private IResourceDescriptions descriptions;
+
+	private static final Pattern VALID_FOLDER_NAME_PATTERN = Pattern
+			.compile("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 
 	/**
 	 * Error Messages for model validation of the {@link N4JSClassWizardModel}
@@ -80,21 +86,18 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		String className = getModel().getName();
 
 		// 2. The class name is a valid n4js class identifier
-		String validatedClassName = "";
 		String[] classNameLetters = className.split("");
 		char firstCharacter = classNameLetters[0].charAt(0);
-		if (!IdentifierValueConverter.isValidIdentifierStart(firstCharacter) || firstCharacter == ' ') {
-			throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME
-					+ errorPointer(className, validatedClassName));
+		if (!IdentifierValueConverter.isValidIdentifierStart(firstCharacter)
+				|| CharMatcher.WHITESPACE.matches(firstCharacter)) {
+			throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME);
 		}
-		validatedClassName += classNameLetters[0];
 		for (int i = 1; i < classNameLetters.length; i++) {
 			char character = classNameLetters[i].charAt(0);
-			if (!IdentifierValueConverter.isValidIdentifierPart(character) || character == ' ') {
-				throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME
-						+ errorPointer(className, validatedClassName));
+			if (!IdentifierValueConverter.isValidIdentifierPart(character)
+					|| CharMatcher.WHITESPACE.matches(character)) {
+				throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME);
 			}
-			validatedClassName += classNameLetters[i];
 		}
 	}
 
@@ -112,8 +115,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		if (!effectiveModuleSpecifier.equals(getModel().getModuleSpecifier()) &&
 				!isValidFolderName(getModel().getName())) {
 			throw new ValidationException(
-					WorkspaceWizardModelValidator.ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT
-							+ errorPointer(effectiveModuleSpecifier, getModel().getModuleSpecifier()));
+					WorkspaceWizardModelValidator.ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT);
 		}
 
 		/* Check for potential file collisions */
@@ -217,15 +219,19 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 
 		// Remove interfaces duplicate entries
 		ArrayList<ClassifierReference> interfaces = new ArrayList<>(getModel().getInterfaces());
-		Map<String, Boolean> duplicatesMap = new HashMap<>();
-		for (int i = interfaces.size() - 1; i >= 0; i--) {
-			ClassifierReference iface = interfaces.get(i);
-			if (duplicatesMap.get(iface.getFullSpecifier()) != null) {
-				interfaces.remove(i);
-			} else {
-				duplicatesMap.put(iface.getFullSpecifier(), true);
+
+		Set<String> duplicateFullSpecifiers = Sets.newHashSet();
+		for (Iterator<ClassifierReference> itr = interfaces.iterator(); itr.hasNext();/**/) {
+			ClassifierReference next = itr.next();
+			if (!duplicateFullSpecifiers.add(next.getFullSpecifier())) {
+				itr.remove();
+			}
+			// Also remove empty entries
+			if (next.classifierName.isEmpty()) {
+				itr.remove();
 			}
 		}
+
 		getModel().setInterfaces(interfaces);
 	}
 
@@ -237,13 +243,6 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		validateClassName();
 		validateSuperClass();
 		validateInterfaces();
-	}
-
-	private String errorPointer(String original, String validated) {
-		if (validated.length() > original.length() - 1) {
-			return validated + "̫";
-		}
-		return validated + original.charAt(validated.length()) + "̫" + original.substring(validated.length() + 1);
 	}
 
 	private boolean isValidReferenceOfType(String absoluteSpecifier, EClass type) {
@@ -314,7 +313,6 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	 * @return valid state
 	 */
 	public static boolean isValidFolderName(String name) {
-		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
+		return VALID_FOLDER_NAME_PATTERN.matcher(name).matches();
 	}
-
 }

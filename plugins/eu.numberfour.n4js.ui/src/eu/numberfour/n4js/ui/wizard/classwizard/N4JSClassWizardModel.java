@@ -89,8 +89,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	public String getEffectiveModuleSpecifier() {
 		String effectiveModuleSpecifier = super.getModuleSpecifier();
 		// If Separator at the end or empty specifier auto attach class name
-		if (effectiveModuleSpecifier.length() < 1
-				|| (effectiveModuleSpecifier.length() > 0
+		if (effectiveModuleSpecifier.isEmpty()
+				|| (!effectiveModuleSpecifier.isEmpty()
 						&& effectiveModuleSpecifier.lastIndexOf('/') == effectiveModuleSpecifier.length() - 1)) {
 			effectiveModuleSpecifier = effectiveModuleSpecifier + this.getName();
 		}

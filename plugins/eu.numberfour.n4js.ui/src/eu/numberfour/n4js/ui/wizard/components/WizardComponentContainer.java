@@ -19,9 +19,9 @@ import org.eclipse.swt.widgets.Composite;
  * Wizard component containers are 3-column grid layouted swt composites. A component is meant to use one row of such a
  * layout.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public interface WizardComponentContainer {
+
 	/**
 	 * Get the global data binding context
 	 */

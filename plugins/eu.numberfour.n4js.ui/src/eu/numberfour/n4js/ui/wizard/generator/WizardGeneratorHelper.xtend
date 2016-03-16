@@ -45,10 +45,9 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork
 
 /**
  * This class contains commonly used methods when writing wizard generators.
- * 
- * @author luca.beurer-kellner - Initial contribution and API
  */
-class WizardGeneratorUtils {
+class WizardGeneratorHelper {
+	
 	@Inject
 	private IN4JSCore n4jsCore;
 	

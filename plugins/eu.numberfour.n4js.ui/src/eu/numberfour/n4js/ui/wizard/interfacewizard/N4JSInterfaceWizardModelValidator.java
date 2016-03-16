@@ -12,8 +12,8 @@ package eu.numberfour.n4js.ui.wizard.interfacewizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,6 +26,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.N4JSGlobals;
@@ -40,11 +41,11 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidato
 /**
  * A validator for {@link N4JSInterfaceWizardModel}s
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValidator {
+
 	@Inject
-	IN4JSCore n4jsCore;
+	private IN4JSCore n4jsCore;
 
 	private IResourceDescriptions descriptions;
 
@@ -190,15 +191,19 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 
 		// Remove interfaces duplicate entries
 		ArrayList<ClassifierReference> interfaces = new ArrayList<>(getModel().getInterfaces());
-		Map<String, Boolean> duplicatesMap = new HashMap<>();
-		for (int i = interfaces.size() - 1; i >= 0; i--) {
-			ClassifierReference iface = interfaces.get(i);
-			if (duplicatesMap.get(iface.getFullSpecifier()) != null) {
-				interfaces.remove(i);
-			} else {
-				duplicatesMap.put(iface.getFullSpecifier(), true);
+
+		Set<String> duplicateFullSpecifiers = Sets.newHashSet();
+		for (Iterator<ClassifierReference> itr = interfaces.iterator(); itr.hasNext();/**/) {
+			ClassifierReference next = itr.next();
+			if (!duplicateFullSpecifiers.add(next.getFullSpecifier())) {
+				itr.remove();
+			}
+			// Also remove empty entries
+			if (next.classifierName.isEmpty()) {
+				itr.remove();
 			}
 		}
+
 		getModel().setInterfaces(interfaces);
 	}
 

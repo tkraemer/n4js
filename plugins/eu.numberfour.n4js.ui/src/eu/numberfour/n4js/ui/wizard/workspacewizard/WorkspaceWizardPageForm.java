@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.Text;
 /**
  * The controls for a {@link WorkspaceWizardPage}.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class WorkspaceWizardPageForm extends Composite {
+
 	private final Text projectText;
 	private final Text sourceFolderText;
 	private final Button projectBrowseButton;

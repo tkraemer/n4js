@@ -30,7 +30,6 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
  * case of a too generic model themselves. This means whenever a validator isn't meant to also validate
  * {@link WorkspaceWizardModel}s, it needs to manually prohibit the use of this method.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public abstract class WorkspaceWizardModelValidator {
 
@@ -96,8 +95,6 @@ public abstract class WorkspaceWizardModelValidator {
 
 	/**
 	 * An exception to be thrown by validating logic in case of a validation error.
-	 *
-	 * @author luca.beurer-kellner - Initial contribution and API
 	 */
 	protected static class ValidationException extends Exception {
 
@@ -149,7 +146,7 @@ public abstract class WorkspaceWizardModelValidator {
 	WorkspaceWizardModel model;
 
 	@Inject
-	IN4JSCore n4jsCore;
+	private IN4JSCore n4jsCore;
 
 	/**
 	 * PropertyChangeListenerSupport
@@ -277,7 +274,7 @@ public abstract class WorkspaceWizardModelValidator {
 		this.setProjectValid(false);
 
 		// 1. It must not be empty
-		if (getModel().getProject().toString().trim().equals("")) {
+		if (getModel().getProject().toString().trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.PROJECT_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.PROJECT_PROPERTY);
 		}
@@ -306,7 +303,7 @@ public abstract class WorkspaceWizardModelValidator {
 		// 1. The source folder property must not be empty
 		String sourceFolder = getModel().getSourceFolder().toString();
 
-		if (sourceFolder.equals("")) {
+		if (sourceFolder.isEmpty()) {
 			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
@@ -326,43 +323,35 @@ public abstract class WorkspaceWizardModelValidator {
 		String effectiveModuleSpecifier = getModel().getModuleSpecifier();
 
 		// 1. The module specifier property must not be empty
-		if (effectiveModuleSpecifier.trim().equals("")) {
+		if (effectiveModuleSpecifier.trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.MODULE_SPECIFIER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 		}
 
 		// 2. The module specifier is properly formed
 		String[] moduleSpecifierSegments = effectiveModuleSpecifier.split("/", -1);
-		String validatedSpecifier = "";
 		for (int i = 0; i < moduleSpecifierSegments.length; i++) {
 
 			String segment = moduleSpecifierSegments[i];
 			boolean last = i == moduleSpecifierSegments.length - 1;
 			boolean first = i == 0;
-			boolean empty = segment.trim().equals("");
+			boolean empty = segment.trim().isEmpty();
 
 			// First segment is empty that means the specifier begins with a '/'
 			if (first && empty) {
-				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_MUST_NOT_BEGIN_WITH
-						+ errorPointer(effectiveModuleSpecifier,
-								validatedSpecifier),
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_MUST_NOT_BEGIN_WITH,
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}
 			// Segment is empty and not the last one
 			if (empty && !last) {
-				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_EMPTY_PATH_SEGMENT
-						+ errorPointer(effectiveModuleSpecifier, validatedSpecifier),
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_EMPTY_PATH_SEGMENT,
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}
 			// The segment is an invalid folder name, not the last segment and not empty
 			if (!isValidFolderName(segment) && !(empty && last)) {
-				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT
-						+ errorPointer(effectiveModuleSpecifier, validatedSpecifier),
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT,
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
-			} else {
-				validatedSpecifier += segment;
 			}
-			validatedSpecifier += "/";
 		}
 
 	}
@@ -411,12 +400,5 @@ public abstract class WorkspaceWizardModelValidator {
 	 */
 	private static boolean isValidFolderName(String name) {
 		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9\\-])|[a-zA-z_0-9\\-])*");
-	}
-
-	private static String errorPointer(String original, String validated) {
-		if (validated.length() > original.length() - 1) {
-			return validated + "̫";
-		}
-		return validated + original.charAt(validated.length()) + "̫" + original.substring(validated.length() + 1);
 	}
 }

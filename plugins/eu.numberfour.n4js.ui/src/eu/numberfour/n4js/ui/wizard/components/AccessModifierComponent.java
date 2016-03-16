@@ -30,10 +30,9 @@ import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier;
 
 /**
  * A component to allow the selection of a N4JS access modifiers and an additional internal annotation checkbox.
- *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class AccessModifierComponent extends WizardComponent {
+
 	private final Button privateAccessModifierBox;
 	private final Button projectAccessModifierBox;
 	private final Button internalAnnotationBox;

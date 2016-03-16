@@ -26,7 +26,6 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 /**
  * A data model to hold the information of a {@link N4JSNewInterfaceWizard}
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class N4JSInterfaceWizardModel extends WorkspaceWizardModel
 		implements InterfacesContainingModel, AccessModifiableModel, NamedModel, DefinitionFileModel {
@@ -146,8 +145,8 @@ public class N4JSInterfaceWizardModel extends WorkspaceWizardModel
 	public String getEffectiveModuleSpecifier() {
 		String effectiveModuleSpecifier = super.getModuleSpecifier();
 		// If Separator at the end or empty specifier auto attach class name
-		if (effectiveModuleSpecifier.length() < 1
-				|| (effectiveModuleSpecifier.length() > 0
+		if (effectiveModuleSpecifier.isEmpty()
+				|| (!effectiveModuleSpecifier.isEmpty()
 						&& effectiveModuleSpecifier.lastIndexOf('/') == effectiveModuleSpecifier.length() - 1)) {
 			effectiveModuleSpecifier = effectiveModuleSpecifier + this.getName();
 		}

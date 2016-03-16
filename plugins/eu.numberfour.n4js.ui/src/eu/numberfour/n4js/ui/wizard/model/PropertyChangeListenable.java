@@ -15,7 +15,6 @@ import java.beans.PropertyChangeListener;
 /**
  * A property listenable objects.
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public interface PropertyChangeListenable {
 	/**

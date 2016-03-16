@@ -24,9 +24,9 @@ import eu.numberfour.n4js.ui.wizard.model.NamedModel;
 /**
  * A component which provides simple name input for {@link NamedModel}s
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class NameComponent extends WizardComponent {
+
 	private final Text nameText;
 	private final NamedModel model;
 

@@ -51,7 +51,7 @@ class ManifestChangeProvider {
 	}
 
 	/**
-	 *  Returns change instance to insert given project dependency into manifest file
+	 *  Returns change instance to insert given project dependency into manifest file.
 	 * 
 	 * @param resourceUri The URI of the manifest resource
 	 * @param dependencies List of project identifiers
@@ -101,7 +101,7 @@ class ManifestChangeProvider {
 	}
 	
 	/**
-	 *  Returns change instance to insert given required runtime library into manifest file
+	 *  Returns change instance to insert given required runtime library into manifest file.
 	 * 
 	 * @param resourceUri The URI of the manifest resource
 	 * @param dependencies List of runtime library identifiers
@@ -149,7 +149,7 @@ class ManifestChangeProvider {
 	}
 	
 	/**
-	 * Returns change instance to set the ExtendedRuntimeEnvironment to the given value
+	 * Returns change instance to set the ExtendedRuntimeEnvironment to the given value.
 	 * 
 	 * @param manifestResource The manifest resource
 	 * @param runtimeEnvironment The runtime environment to set

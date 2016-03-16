@@ -15,7 +15,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportAnalysis
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
-import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorUtils
 import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import java.io.ByteArrayInputStream
@@ -27,18 +26,18 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
+import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 
 /**
  * A file generator for {@link N4JSInterfaceWizardModel}.
- * 
- * @author luca.beurer-kellner - Initial contribution and API
  */
 class N4JSNewInterfaceWizardGenerator {
+	
 	@Inject
 	private IN4JSCore n4jsCore;
 	
 	@Inject
-	private extension WizardGeneratorUtils generatorUtils;
+	private extension WizardGeneratorHelper generatorUtils;
 	
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;

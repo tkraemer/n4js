@@ -15,14 +15,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.widgets.Display;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
+import eu.numberfour.n4js.ui.utils.UIUtils;
 
 /**
  * Browse dialog to select a IProject of the current workspace.
@@ -32,13 +31,13 @@ import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
 public class ProjectSelectionDialog extends WorkspaceElementSelectionDialog {
 
 	@Inject
-	IN4JSCore n4jsCore;
+	private IN4JSCore n4jsCore;
 
 	/**
 	 * Create a new project selection dialog
 	 */
 	public ProjectSelectionDialog() {
-		super(Display.getCurrent().getActiveShell(), false);
+		super(UIUtils.getShell(), false);
 		this.addFilter(new ProjectFilter());
 		WrappingVirtualContainer virtualRoot = new WrappingVirtualContainer(
 				ResourcesPlugin.getWorkspace().getRoot());
@@ -53,9 +52,10 @@ public class ProjectSelectionDialog extends WorkspaceElementSelectionDialog {
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			// Filter for open existing n4js projects only
 			if (element instanceof IProject) {
-				final URI uri = URI.createPlatformResourceURI(((IProject) element).getFullPath().toString(), true);
-				final Optional<? extends IN4JSProject> project = n4jsCore.findProject(uri);
-				return project.isPresent() && project.get().exists() && ((IProject) element).isOpen();
+				IProject project = (IProject) element;
+				URI uri = URI.createPlatformResourceURI(project.getName(), true);
+				IN4JSProject n4Project = n4jsCore.findProject(uri).orNull();
+				return null != n4Project && n4Project.exists();
 			}
 			return false;
 		}

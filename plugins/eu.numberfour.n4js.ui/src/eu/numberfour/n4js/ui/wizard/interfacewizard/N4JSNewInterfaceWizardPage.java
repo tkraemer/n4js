@@ -28,13 +28,13 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
-import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters;
 import eu.numberfour.n4js.ui.wizard.components.DefinitionFileComponent;
 import eu.numberfour.n4js.ui.wizard.components.EmptyComponent;
 import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherInterfaceModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
+import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
@@ -53,13 +53,13 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardPage;
  * use the {@link N4JSNewInterfaceWizardPage#setModel(N4JSInterfaceWizardModel)} method.
  * </p>
  *
- * @author luca.beurer-kellner - Initial contribution and API
  */
 public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
+
 	N4JSInterfaceWizardModel model = null;
 
 	@Inject
-	N4JSInterfaceWizardModelValidator validator;
+	private N4JSInterfaceWizardModelValidator validator;
 
 	// Components
 	@Inject
@@ -102,7 +102,7 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 
 	@Override
 	public void setModel(WorkspaceWizardModel model) {
-		throw new IllegalArgumentException("The model is too generic");
+		throw new UnsupportedOperationException("The wizard page can only be used with N4JSInterfaceWizardModel");
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 			public void handleValueChange(ValueChangeEvent event) {
 				SuffixText input = workspaceWizardForm.getModuleSpecifierText();
 				String inputText = input.getText();
-				if (inputText.equals("") || inputText.charAt(inputText.length() - 1) == '/') {
+				if (inputText.isEmpty() || inputText.charAt(inputText.length() - 1) == '/') {
 					input.setSuffixVisible(true);
 				} else {
 					input.setSuffixVisible(false);
