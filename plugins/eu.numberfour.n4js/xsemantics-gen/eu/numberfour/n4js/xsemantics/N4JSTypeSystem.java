@@ -2631,13 +2631,24 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     } else {
-      boolean _isDynamic = targetTypeRef.isDynamic();
-      if (_isDynamic) {
-        ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-        T = _anyTypeRefDynamic;
+      Type _declaredType_2 = null;
+      if (targetTypeRef!=null) {
+        _declaredType_2=targetTypeRef.getDeclaredType();
+      }
+      TObjectPrototype _functionType = RuleEnvironmentExtensions.functionType(G);
+      boolean _tripleEquals_1 = (_declaredType_2 == _functionType);
+      if (_tripleEquals_1) {
+        ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+        T = _anyTypeRef_1;
       } else {
-        UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-        T = _createUnknownTypeRef;
+        boolean _isDynamic = targetTypeRef.isDynamic();
+        if (_isDynamic) {
+          ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+          T = _anyTypeRefDynamic;
+        } else {
+          UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+          T = _createUnknownTypeRef;
+        }
       }
     }
     return new Result<TypeRef>(T);

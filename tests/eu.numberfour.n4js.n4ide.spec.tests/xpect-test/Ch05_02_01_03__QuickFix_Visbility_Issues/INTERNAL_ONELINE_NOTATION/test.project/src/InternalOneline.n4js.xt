@@ -13,10 +13,18 @@
 				File "Library.n4js" { from="../../other.project.same.vendor/src/Library.n4js" }
 			}
 		}
+		Project "other.project.other.vendor" {
+			File "manifest.n4mf" { from="../../other.project.other.vendor/manifest.n4mf" }
+			Folder "src" {
+				File "AnnotationChain.n4js" { from="../../other.project.other.vendor/src/AnnotationChain.n4js" }
+			}
+		}
 	}
    
    END_SETUP
 */
+import {AnnotationChain} from "AnnotationChain"
+
 /* XPECT quickFix at 'import {Private<|>Class} from "Library"' apply 'Declare type as export public, @Internal' resource='../../other.project.same.vendor/src/Library.n4js' whitespaceSensitive ---
 [class PrivateClass {|@Internal export public class PrivateClass {]
  ---
@@ -208,3 +216,66 @@ m.projectMethod();
  ---
  */
 import {t} from "Library"
+
+
+var c = new AnnotationChain();
+
+/* XPECT quickFix at 'c.f<|>inalMethod1()' apply 'Declare member as public' resource='../../other.project.other.vendor/src/AnnotationChain.n4js' whitespaceSensitive ---
+  export public class AnnotationChain {
+- 	@Internal@Final public finalMethod1() {}
++ 	@Final public finalMethod1() {}
+  	@Final@Internal public finalMethod2() {}
+  	
+  	@Final @Internal public finalMethod3() {}
+(...)
+ ---
+ */
+c.finalMethod1();
+/* XPECT quickFix at 'c.f<|>inalMethod2()' apply 'Declare member as public' resource='../../other.project.other.vendor/src/AnnotationChain.n4js' whitespaceSensitive ---
+  export public class AnnotationChain {
+  	@Internal@Final public finalMethod1() {}
+- 	@Final@Internal public finalMethod2() {}
++ 	@Final public finalMethod2() {}
+  	
+  	@Final @Internal public finalMethod3() {}
+  	@Internal @Final public finalMethod4() {}
+(...)
+ ---
+ */
+c.finalMethod2();
+/* XPECT quickFix at 'c.f<|>inalMethod3()' apply 'Declare member as public' resource='../../other.project.other.vendor/src/AnnotationChain.n4js' whitespaceSensitive ---
+(...)
+  	@Internal@Final public finalMethod1() {}
+  	@Final@Internal public finalMethod2() {}
+  	
+- 	@Final @Internal public finalMethod3() {}
++ 	@Final public finalMethod3() {}
+  	@Internal @Final public finalMethod4() {}
+  	@Internal public finalMethod5() {}
+  }
+ ---
+ */
+c.finalMethod3();
+/* XPECT quickFix at 'c.f<|>inalMethod4()' apply 'Declare member as public' resource='../../other.project.other.vendor/src/AnnotationChain.n4js' whitespaceSensitive ---
+(...)
+  	@Final@Internal public finalMethod2() {}
+  	
+  	@Final @Internal public finalMethod3() {}
+- 	@Internal @Final public finalMethod4() {}
++ 	@Final public finalMethod4() {}
+  	@Internal public finalMethod5() {}
+  }
+ ---
+ */
+c.finalMethod4();
+/* XPECT quickFix at 'c.f<|>inalMethod5()' apply 'Declare member as public' resource='../../other.project.other.vendor/src/AnnotationChain.n4js' whitespaceSensitive ---
+(...)
+  	
+  	@Final @Internal public finalMethod3() {}
+  	@Internal @Final public finalMethod4() {}
+- 	@Internal public finalMethod5() {}
++ 	public finalMethod5() {}
+  }
+ ---
+ */
+c.finalMethod5();

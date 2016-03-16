@@ -1,7 +1,7 @@
-ArtifactId: test.project
+ArtifactId: Main
 VendorId: eu.numberfour
-ProjectName: "calling.project"
 VendorName: "NumberFour AG"
+ProjectName: "Main"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
@@ -11,6 +11,8 @@ Sources {
 	}
 }
 ProjectDependencies {
-	other.project.same.vendor,
-	other.project.other.vendor
+	Lib_cjs,
+	Lib_default,
+	Lib_n4js,
+	Lib_node
 }

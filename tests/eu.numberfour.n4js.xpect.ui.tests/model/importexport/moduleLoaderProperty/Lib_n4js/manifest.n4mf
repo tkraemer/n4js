@@ -1,7 +1,7 @@
-ArtifactId: test.project
+ArtifactId: Lib_n4js
 VendorId: eu.numberfour
-ProjectName: "calling.project"
 VendorName: "NumberFour AG"
+ProjectName: "Lib_n4js"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
@@ -10,7 +10,4 @@ Sources {
 		"src"
 	}
 }
-ProjectDependencies {
-	other.project.same.vendor,
-	other.project.other.vendor
-}
+ModuleLoader: n4js

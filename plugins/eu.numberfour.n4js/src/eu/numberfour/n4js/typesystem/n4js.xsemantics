@@ -804,6 +804,8 @@ from {
 				G2 |- F.returnTypeRef ~> T
 			}
 		}
+	} else if(targetTypeRef?.declaredType===G.functionType) {
+		T = G.anyTypeRef
 	} else if(targetTypeRef.dynamic) {
 		T = G.anyTypeRefDynamic
 	} else {
