@@ -59,7 +59,7 @@ Contributors:
 								<id>process-additional-resources</id>
 								<phase>prepare-package</phase>
 								<configuration>
-									<outputDirectory>${project.build.directory}</outputDirectory>
+									<outputDirectory>${project.build.directory}/repository</outputDirectory>
 									<overwrite>true</overwrite>
 									<resources>
 										<resource>
