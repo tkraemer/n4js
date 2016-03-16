@@ -1,0 +1,8 @@
+export public class AnnotationChain {
+	@Internal@Final public finalMethod1() {}
+	@Final@Internal public finalMethod2() {}
+	
+	@Final @Internal public finalMethod3() {}
+	@Internal @Final public finalMethod4() {}
+	@Internal public finalMethod5() {}
+}
