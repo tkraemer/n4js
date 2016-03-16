@@ -6692,17 +6692,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundExistentialTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExistentialTypeRef existentialTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
-    /* G |~ existentialTypeRef.wildcard /\ typeRef */
+    TypeRef T = null; // output parameter
+    /* G |~ existentialTypeRef.wildcard /\ T */
     Wildcard _wildcard = existentialTypeRef.getWildcard();
     Result<TypeRef> result = upperBoundInternal(G, _trace_, _wildcard);
     checkAssignableTo(result.getFirst(), TypeRef.class);
-    typeRef = (TypeRef) result.getFirst();
+    T = (TypeRef) result.getFirst();
     
-    TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
-    typeRef = _copy;
-    TypeUtils.copyTypeModifiers(typeRef, existentialTypeRef);
-    return new Result<TypeRef>(typeRef);
+    TypeRef _copy = TypeUtils.<TypeRef>copy(T);
+    T = _copy;
+    TypeUtils.copyTypeModifiers(T, existentialTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnionTypeExpression U) throws RuleFailedException {
@@ -6847,11 +6847,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundFunctionTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     Result<TypeRef> _applyRuleUpperBoundFunctionTypeExprOrRef = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F);
     TypeRef _value = _applyRuleUpperBoundFunctionTypeExprOrRef.getValue();
-    result = _value;
-    return new Result<TypeRef>(result);
+    T = _value;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
@@ -6874,10 +6874,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundFunctionTypeExprOrRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     FunctionTypeExpression _createUpperBoundOfFunctionTypeExprOrRef = this.typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G, F);
-    result = _createUpperBoundOfFunctionTypeExprOrRef;
-    return new Result<TypeRef>(result);
+    T = _createUpperBoundOfFunctionTypeExprOrRef;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
@@ -6900,10 +6900,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
+    TypeRef T = null; // output parameter
     ParameterizedTypeRef _createResolvedThisTypeRef = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef);
-    typeRef = _createResolvedThisTypeRef;
-    return new Result<TypeRef>(typeRef);
+    T = _createResolvedThisTypeRef;
+    TypeUtils.copyTypeModifiers(T, boundThisTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef ct) throws RuleFailedException {
@@ -7029,17 +7030,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundExistentialTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExistentialTypeRef existentialTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
-    /* G |~ existentialTypeRef.wildcard \/ typeRef */
+    TypeRef T = null; // output parameter
+    /* G |~ existentialTypeRef.wildcard \/ T */
     Wildcard _wildcard = existentialTypeRef.getWildcard();
     Result<TypeRef> result = lowerBoundInternal(G, _trace_, _wildcard);
     checkAssignableTo(result.getFirst(), TypeRef.class);
-    typeRef = (TypeRef) result.getFirst();
+    T = (TypeRef) result.getFirst();
     
-    TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
-    typeRef = _copy;
-    TypeUtils.copyTypeModifiers(typeRef, existentialTypeRef);
-    return new Result<TypeRef>(typeRef);
+    TypeRef _copy = TypeUtils.<TypeRef>copy(T);
+    T = _copy;
+    TypeUtils.copyTypeModifiers(T, existentialTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnionTypeExpression U) throws RuleFailedException {
@@ -7176,11 +7177,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundFunctionTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     Result<TypeRef> _applyRuleLowerBoundFunctionTypeExprOrRef = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F);
     TypeRef _value = _applyRuleLowerBoundFunctionTypeExprOrRef.getValue();
-    result = _value;
-    return new Result<TypeRef>(result);
+    T = _value;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
@@ -7203,10 +7204,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundFunctionTypeExprOrRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     FunctionTypeExpression _createLowerBoundOfFunctionTypeExprOrRef = this.typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G, F);
-    result = _createLowerBoundOfFunctionTypeExprOrRef;
-    return new Result<TypeRef>(result);
+    T = _createLowerBoundOfFunctionTypeExprOrRef;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
@@ -7221,7 +7222,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleLowerBoundThisTypeRef) {
-    	lowerBoundThrowException(ruleName("lowerBoundThisTypeRef") + stringRepForEnv(G) + " |~ " + stringRep(boundThisTypeRef) + " \\/ " + "ParameterizedTypeRef",
+    	lowerBoundThrowException(ruleName("lowerBoundThisTypeRef") + stringRepForEnv(G) + " |~ " + stringRep(boundThisTypeRef) + " \\/ " + "TypeRef",
     		LOWERBOUNDTHISTYPEREF,
     		e_applyRuleLowerBoundThisTypeRef, boundThisTypeRef, new ErrorInformation[] {new ErrorInformation(boundThisTypeRef)});
     	return null;
@@ -7229,13 +7230,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
-    
-    return new Result<TypeRef>(_applyRuleLowerBoundThisTypeRef_1(G, boundThisTypeRef));
-  }
-  
-  private ParameterizedTypeRef _applyRuleLowerBoundThisTypeRef_1(final RuleEnvironment G, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
+    TypeRef T = null; // output parameter
     ParameterizedTypeRef _undefinedTypeRef = RuleEnvironmentExtensions.undefinedTypeRef(G);
-    return _undefinedTypeRef;
+    T = _undefinedTypeRef;
+    TypeUtils.copyTypeModifiers(T, boundThisTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeArgument> substTypeVariablesImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeArgument type) throws RuleFailedException {

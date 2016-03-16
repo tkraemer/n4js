@@ -1,6 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 class Foo {
-    bar(f : {function(this?): void}) : void { f(this); }
+    bar(f : {function(this): void}) : void { f(this); }
+    barOpt(f : {function(this?): void}) : void { f(this); f(); }
 }
 class Futzi extends Foo { }
 
@@ -13,6 +14,8 @@ var f1 : Foo = new Foo();
 
 f1.bar(funcEmpty1);
 f1.bar( funcFoo );
+// XPECT errors --> "{function(Foo):void} is not a subtype of {function(this[Foo]?):void}." at "funcFoo"
+f1.barOpt( funcFoo );
 // XPECT errors --> "{function(Futzi):void} is not a subtype of {function(this[Foo]):void}." at "funcFutzi"
 f1.bar(funcFutzi);
 
@@ -20,5 +23,9 @@ f1.bar(funcFutzi);
 var fz : Futzi = new Futzi();
 
 fz.bar(funcEmpty1);
-fz.bar( funcFoo );
+fz.bar(funcFoo);
+// XPECT errors --> "{function(Foo):void} is not a subtype of {function(this[Futzi]?):void}." at "funcFoo"
+fz.barOpt(funcFoo);
 fz.bar(funcFutzi);
+// XPECT errors --> "{function(Futzi):void} is not a subtype of {function(this[Futzi]?):void}." at "funcFutzi"
+fz.barOpt(funcFutzi);

@@ -2188,12 +2188,12 @@ from {
 
 /* @see [N4JS] 3.3 Parameterized Types */
 rule upperBoundExistentialTypeRef
-	G |~ ExistentialTypeRef existentialTypeRef /\ TypeRef typeRef
+	G |~ ExistentialTypeRef existentialTypeRef /\ TypeRef T
 from {
-	G |~ existentialTypeRef.wildcard /\ typeRef
+	G |~ existentialTypeRef.wildcard /\ T
 	// retain undef- & nullable-modifier
-	typeRef = TypeUtils.copy( typeRef )
-	TypeUtils.copyTypeModifiers(typeRef,existentialTypeRef)
+	T = TypeUtils.copy( T )
+	TypeUtils.copyTypeModifiers(T, existentialTypeRef)
 }
 
 /* @see [N4JS] 4.10, Constraints 22 */
@@ -2228,22 +2228,23 @@ from {
 
 // required due to multiple inheritance (see rule: substTypeVariablesInFunctionTypeRef)
 rule upperBoundFunctionTypeRef
-	G |~ FunctionTypeRef F /\ TypeRef result
+	G |~ FunctionTypeRef F /\ TypeRef T
 from {
-	result = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F).value;
+	T = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F).value;
 }
 
 rule upperBoundFunctionTypeExprOrRef
-	G |~ FunctionTypeExprOrRef F /\ TypeRef result
+	G |~ FunctionTypeExprOrRef F /\ TypeRef T
 from {
-	result = typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G,F);
+	T = typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G,F);
 }
 
 /* @see [N4JS] 4.15. This Type */
 rule upperBoundThisTypeRef
-	G |~ BoundThisTypeRef boundThisTypeRef /\ TypeRef typeRef
+	G |~ BoundThisTypeRef boundThisTypeRef /\ TypeRef T
 from {
-	typeRef = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef)
+	T = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef)
+	TypeUtils.copyTypeModifiers(T, boundThisTypeRef)
 }
 
 /*  introduced for IDE-785 to get from type{this[X]} to type{X}
@@ -2289,12 +2290,12 @@ from {
 
 /* @see [N4JS] 3.3 Parameterized Types */
 rule lowerBoundExistentialTypeRef
-	G |~ ExistentialTypeRef existentialTypeRef \/ TypeRef typeRef
+	G |~ ExistentialTypeRef existentialTypeRef \/ TypeRef T
 from {
-	G |~ existentialTypeRef.wildcard \/ typeRef
+	G |~ existentialTypeRef.wildcard \/ T
 	// retain undef- & nullable-modifier
-	typeRef = TypeUtils.copy( typeRef )
-	TypeUtils.copyTypeModifiers(typeRef,existentialTypeRef)
+	T = TypeUtils.copy( T )
+	TypeUtils.copyTypeModifiers(T, existentialTypeRef)
 }
 
 /* @see [N4JS] 4.10, Constraints 22 */
@@ -2329,20 +2330,24 @@ from {
 
 // required due to multiple inheritance (see rule: substTypeVariablesInFunctionTypeRef)
 rule lowerBoundFunctionTypeRef
-	G |~ FunctionTypeRef F \/ TypeRef result
+	G |~ FunctionTypeRef F \/ TypeRef T
 from {
-	result = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F).value
+	T = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F).value
 }
 
 rule lowerBoundFunctionTypeExprOrRef
-	G |~ FunctionTypeExprOrRef F \/ TypeRef result
+	G |~ FunctionTypeExprOrRef F \/ TypeRef T
 from {
-	result = typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G,F);
+	T = typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G,F);
 }
 
 /* @see [N4JS] 4.15. This Type */
-axiom lowerBoundThisTypeRef
-	G |~ BoundThisTypeRef boundThisTypeRef \/ G.undefinedTypeRef
+rule lowerBoundThisTypeRef
+	G |~ BoundThisTypeRef boundThisTypeRef \/ TypeRef T
+from {
+	T = G.undefinedTypeRef
+	TypeUtils.copyTypeModifiers(T, boundThisTypeRef)
+}
 
 
 // **********************************************************************
