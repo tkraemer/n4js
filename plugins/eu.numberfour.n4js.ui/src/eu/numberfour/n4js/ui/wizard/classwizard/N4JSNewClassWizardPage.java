@@ -82,7 +82,7 @@ public class N4JSNewClassWizardPage extends WorkspaceWizardPage {
 	}
 
 	/**
-	 * Set the model to use with this wizard page.
+	 * Sets the model to use with this wizard page.
 	 *
 	 * @param model
 	 *            N4JSClassWizardModel to use
@@ -176,7 +176,7 @@ public class N4JSNewClassWizardPage extends WorkspaceWizardPage {
 	}
 
 	/**
-	 * Setup additional non-component contained bindings
+	 * Setups additional non-component contained bindings.
 	 */
 	private void setupBindings() {
 

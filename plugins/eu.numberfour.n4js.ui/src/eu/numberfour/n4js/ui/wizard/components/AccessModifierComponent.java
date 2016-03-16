@@ -44,7 +44,7 @@ public class AccessModifierComponent extends WizardComponent {
 	private final WizardComponentContainer componentContainer;
 
 	/**
-	 * Create a new AccessModifierComponent
+	 * Creates a new AccessModifierComponent.
 	 *
 	 * @param model
 	 *            The model to bind to
@@ -112,7 +112,7 @@ public class AccessModifierComponent extends WizardComponent {
 	}
 
 	/**
-	 * @return The internal annotation checkbox of the component
+	 * Returns the internal annotation checkbox of the component
 	 */
 	public Button getInternalAnnotationBox() {
 		return internalAnnotationBox;

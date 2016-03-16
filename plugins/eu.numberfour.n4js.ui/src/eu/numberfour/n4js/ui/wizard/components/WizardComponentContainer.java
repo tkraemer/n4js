@@ -23,15 +23,15 @@ import org.eclipse.swt.widgets.Composite;
 public interface WizardComponentContainer {
 
 	/**
-	 * Get the global data binding context
+	 * Returns the global data binding context
 	 */
 	public DataBindingContext getDataBindingContext();
 
 	/**
-	 * Get the SWT composite which is used as component composite.
+	 * Returns the SWT composite which is associatedwith the container
 	 *
 	 * <p>
-	 * This is always a 3 column grid layouted composite
+	 * This is always a column with a 3 column grid layout.
 	 * </p>
 	 */
 	public Composite getComposite();

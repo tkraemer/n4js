@@ -31,7 +31,7 @@ public class NameComponent extends WizardComponent {
 	private final NamedModel model;
 
 	/**
-	 * Create a new class name component
+	 * Creates a new class name component.
 	 *
 	 * @param model
 	 *            The model to bind it to

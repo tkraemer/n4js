@@ -16,7 +16,7 @@ package eu.numberfour.n4js.ui.wizard.components;
  */
 public class EmptyComponent extends WizardComponent {
 	/**
-	 * Create a new empty component
+	 * Creates a new empty component.
 	 */
 	public EmptyComponent(WizardComponentContainer container) {
 		super(container);

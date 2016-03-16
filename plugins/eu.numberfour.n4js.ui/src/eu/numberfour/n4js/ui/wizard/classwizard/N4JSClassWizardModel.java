@@ -24,7 +24,7 @@ import eu.numberfour.n4js.ui.wizard.model.NamedModel;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 
 /**
- * A data model to hold the informations of a {@link N4JSNewClassWizard}
+ * A data model to hold the informations of a {@link N4JSNewClassWizard}.
  */
 public class N4JSClassWizardModel extends WorkspaceWizardModel
 		implements InterfacesContainingModel, AccessModifiableModel, NamedModel, DefinitionFileModel {
@@ -63,7 +63,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	private ArrayList<ClassifierReference> interfacesURIs = new ArrayList<>();
 
 	/**
-	 * Sets the class name
+	 * Sets the class name.
 	 *
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * Returns the class name
+	 * Returns the class name.
 	 *
 	 */
 	@Override
@@ -81,6 +81,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Returns the effective module specifier.
+	 *
 	 * Dependent on the set module specifier this method returns its identity or the module specifier concatenated with
 	 * the class name. (set module specifiers ending with a '/' character are interpreted as base path)
 	 *
@@ -114,6 +116,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Returns if the model class is meant to be in a definition file.
+	 *
 	 * @return True if external flag is set
 	 */
 	@Override
@@ -122,6 +126,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Sets if the model class is meant to be in a definition file.
+	 *
 	 * @param definitionFile
 	 *            The new external state
 	 */
@@ -131,6 +137,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Returns the model class access modifier.
+	 *
 	 * @return The saved access modifier
 	 */
 	@Override
@@ -139,6 +147,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Set the model class access modifier.
+	 *
 	 * @param accessModifier
 	 *            The new access modifier
 	 */
@@ -148,6 +158,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Returns if the model class is internal.
+	 *
 	 * @return The state of the saved internal annotation
 	 */
 	@Override
@@ -156,6 +168,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Sets the model class internal annotation.
+	 *
 	 * @param internalAnnotation
 	 *            The new internal annotation
 	 */
@@ -165,13 +179,17 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * @return The saved final annotation state
+	 * Returns if the model class is final.
+	 *
+	 * @return The final annotation state
 	 */
 	public boolean isFinal() {
 		return finalAnnotation;
 	}
 
 	/**
+	 * Sets the the model class.
+	 *
 	 * @param finalAnnotation
 	 *            The new final annotation state
 	 */
@@ -180,13 +198,17 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * @return The saved @N4JS annotation state
+	 * Returns if the model class is n4js annotated.
+	 *
+	 * @return The N4JS annotation state
 	 */
 	public boolean isN4jsAnnotated() {
 		return n4jsAnnotation;
 	}
 
 	/**
+	 * Sets the model class n4js annotation.
+	 *
 	 * @param n4jsAnnotation
 	 *            The new N4JS annotation state
 	 */
@@ -195,6 +217,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Returns the model class super class.
 	 * <p>
 	 * Note: May be null for no super class
 	 * </p>
@@ -216,9 +239,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * <p>
-	 * Returns a reference to the internal interface list
-	 * </p>
+	 * Returns a reference to the internal interface list.
 	 *
 	 * @return The list of saved interfaces
 	 */
@@ -228,6 +249,8 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
+	 * Sets the model class implemented interfaces.
+	 *
 	 * @param interfaces
 	 *            New list of interfaces
 	 */
@@ -238,7 +261,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * Add a new interface uri to the list.
+	 * Adds a new implemented interface.
 	 *
 	 * @param iface
 	 *            The new interface
@@ -250,7 +273,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	}
 
 	/**
-	 * Remove the given interface from the list.
+	 * Removes the given interface from the implemented interfaces.
 	 *
 	 *
 	 * @param iface

@@ -31,7 +31,6 @@ import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 
 /**
  * A file generator for {@link N4JSClassWizardModel}
- * 
  */
 class N4JSNewClassWizardGenerator {
 
@@ -45,7 +44,7 @@ class N4JSNewClassWizardGenerator {
 	private N4JSImportRequirementResolver requirementResolver;
 
 	/**
-	 *  Generate the class code
+	 *  Generates the class code.
 	 */
 	private def String generateClass(N4JSClassWizardModel model, Map<URI,String> aliasBindings) {
 		'''
@@ -64,7 +63,7 @@ class N4JSNewClassWizardGenerator {
 	}
 
 	/**
-	 * Return the real or bound name of the classifier reference.
+	 * Returns the real or bound name of the classifier reference.
 	 *
 	 * Always prioritizes alias name over real name.
 	 *
@@ -190,7 +189,7 @@ class N4JSNewClassWizardGenerator {
 		}
 	}
 	/**
-	 * Return the export statement if the access modifier requires it. Return an empty string otherwise.
+	 * Returns the export statement if the access modifier requires it. Return an empty string otherwise.
 	 */
 	private def String exportDeclaration(AccessModifier modifier) {
 		if (modifier == AccessModifier.PROJECT || modifier == AccessModifier.PUBLIC) {
@@ -200,7 +199,7 @@ class N4JSNewClassWizardGenerator {
 	}
 
 	/**
-	 * Return the string representation of the given access modifier
+	 * Returns the string representation of the given access modifier
 	 */
 	private def String accessModifierString(AccessModifier modifier) {
 		switch (modifier) {
@@ -212,7 +211,7 @@ class N4JSNewClassWizardGenerator {
 				return ""
 		}
 	}
-	/** Return the import requirements of a N4JSClassWizardModel */
+	/** Returns the import requirements of a N4JSClassWizardModel */
 	private def List<ImportRequirement> importRequirements(N4JSClassWizardModel model) {
 		var demandedImports = new ArrayList<ImportRequirement>();
 

@@ -141,7 +141,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * True if the given module specifier is specifying a file.
+	 * Returns true if the given module specifier is specifying a file.
 	 *
 	 * Returns false for empty specifiers.
 	 *
@@ -280,7 +280,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * @return The model currently validated
+	 * Returns the currently validated model
 	 */
 	@Override
 	public N4JSClassWizardModel getModel() {
@@ -288,7 +288,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * Set the model to validate
+	 * Sets the model to validate.
 	 *
 	 * @param model
 	 *            The new model to validate
@@ -304,7 +304,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * Check whether name is a valid folder name.
+	 * Returns true if name is a valid folder name.
 	 *
 	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
 	 *

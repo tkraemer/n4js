@@ -11,11 +11,11 @@
 package eu.numberfour.n4js.ui.wizard.components
 
 /**
- * Utility class to handle the conversation of dot separated specifiers.
+ * Utility class to handle the dot separated specifiers.
  */
 class DotPathUtils {
 		/**
-		 * Return all dot separated segments but the last one
+		 * Returns all dot separated segments but the last one.
 		 *
 		 * @param dotSeparatedString
 		 *            A dot separated string
@@ -35,7 +35,7 @@ class DotPathUtils {
 		}
 
 		/**
-		 * Return the last dot separated segment.
+		 * Returns the last dot separated segment.
 		 * 
 		 * <p>Note: Returns an empty string if no dot is found in the string.</p>
 		 *

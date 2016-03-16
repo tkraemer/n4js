@@ -33,7 +33,7 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 	private final N4JSInterfaceWizardModel model;
 
 	/**
-	 * Create a new OtherInterfaceModifiersComponent component
+	 * Creates a new OtherInterfaceModifiersComponent component.
 	 *
 	 * @param model
 	 *            The model the bind it to
@@ -75,7 +75,7 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 	}
 
 	/**
-	 * Get the N4JS annotation box widget
+	 * Returns the N4JS annotation box widget.
 	 */
 	public Button getN4jsAnnotationBox() {
 		return n4jsAnnotationBox;

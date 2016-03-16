@@ -24,35 +24,35 @@ public abstract class WizardComponent {
 	private final WizardComponentContainer container;
 
 	/**
-	 * Create a new WizardComponent inside given container
+	 * Creates a new WizardComponent inside given container
 	 */
 	public WizardComponent(WizardComponentContainer container) {
 		this.container = container;
 	}
 
 	/**
-	 * The DataBindingContext used in the component scope
+	 * Returns the DataBindingContext used in the component scope
 	 */
 	public DataBindingContext getDataBindingContext() {
 		return container.getDataBindingContext();
 	}
 
 	/**
-	 * The components container
+	 * Returns the component's container
 	 */
 	public WizardComponentContainer getContainer() {
 		return container;
 	}
 
 	/**
-	 * The containers swt composite
+	 * Returns the containers swt composite
 	 */
 	public Composite getParentComposite() {
 		return container.getComposite();
 	}
 
 	/**
-	 * Focus the primary widget of this component
+	 * Focuses the primary widget of this component
 	 */
 	public abstract void setFocus();
 

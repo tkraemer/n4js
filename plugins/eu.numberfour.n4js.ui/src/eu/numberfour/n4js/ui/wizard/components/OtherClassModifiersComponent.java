@@ -35,7 +35,7 @@ public class OtherClassModifiersComponent extends WizardComponent {
 	private final N4JSClassWizardModel model;
 
 	/**
-	 * Create a new OtherClassModifiers component
+	 * Creates a new OtherClassModifiers component.
 	 *
 	 * @param model
 	 *            The model the bind it to
@@ -88,7 +88,7 @@ public class OtherClassModifiersComponent extends WizardComponent {
 	}
 
 	/**
-	 * Get the N4JS annotation box widget
+	 * Returns the N4JS annotation box widget
 	 */
 	public Button getN4jsAnnotationBox() {
 		return n4jsAnnotationBox;

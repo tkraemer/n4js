@@ -63,7 +63,7 @@ public class InterfacesComponentProvider {
 	private Provider<InterfacesSelectionDialog> interfacesSelectionDialogProvider;
 
 	/**
-	 * Create a new InterfacesComponent with the given model and container
+	 * Creates a new InterfacesComponent with the given model and container.
 	 *
 	 * @param interfacesContainingModel
 	 *            The model to bind it to
@@ -92,6 +92,8 @@ public class InterfacesComponentProvider {
 			private final TableEditor editor;
 
 			/**
+			 * Creates a new InterfacesTableMouseListener.
+			 *
 			 * @param editor
 			 *            The editor of the interfaces table
 			 */
@@ -115,7 +117,7 @@ public class InterfacesComponentProvider {
 			}
 
 			/**
-			 * Create an editor for the selected item if double clicked
+			 * Creates an editor for the selected item if double clicked.
 			 */
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
@@ -233,7 +235,7 @@ public class InterfacesComponentProvider {
 		private final InterfacesContainingModel model;
 
 		/**
-		 * Create a new interfaces component inside the parent composite using the given model.
+		 * Creates a new interfaces component inside the parent composite using the given model.
 		 *
 		 * @param interfacesContainingModel
 		 *            A interface containing model
@@ -329,9 +331,7 @@ public class InterfacesComponentProvider {
 			editor.grabHorizontal = true;
 			editor.minimumWidth = 50;
 
-			/**
-			 * Add in table editing
-			 */
+			// register listern to enable inline table editing
 			interfacesTable.addMouseListener(new InterfacesTableMouseListener(editor));
 
 			// Enable remove button when the user has selected a table element

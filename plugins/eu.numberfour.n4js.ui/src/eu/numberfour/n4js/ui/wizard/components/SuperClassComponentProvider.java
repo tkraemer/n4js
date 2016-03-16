@@ -42,7 +42,7 @@ public class SuperClassComponentProvider {
 	private Provider<SingleClassSelectionDialog> singleClassSelectionDialogProvider;
 
 	/**
-	 * Create a new SuperClassComponent
+	 * Creates a new SuperClassComponent
 	 */
 	public SuperClassComponent create(N4JSClassWizardModel model, WizardComponentContainer container) {
 		return new SuperClassComponent(model, container);
@@ -61,7 +61,7 @@ public class SuperClassComponentProvider {
 		private final N4JSClassWizardModel model;
 
 		/**
-		 * Create a new super class component using the given model and container
+		 * Creates a new super class component using the given model and container.
 		 *
 		 * @param model
 		 *            The model to bind this to

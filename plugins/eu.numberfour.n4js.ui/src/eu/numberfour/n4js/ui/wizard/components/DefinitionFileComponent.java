@@ -32,7 +32,7 @@ public class DefinitionFileComponent extends WizardComponent {
 	private final DefinitionFileModel model;
 
 	/**
-	 * Create a new definition file component using model in container
+	 * Creates a new definition file component using model in container.
 	 *
 	 * @param model
 	 *            The model to bind it to

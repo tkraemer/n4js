@@ -51,7 +51,7 @@ public class WizardComponentUtils {
 	}
 
 	/**
-	 * Insert an empty cell at the current position of a grid layout
+	 * Inserts an empty cell at the current position of a grid layout
 	 *
 	 * @param parent
 	 *            The parent grid layout composite
