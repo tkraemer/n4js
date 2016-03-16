@@ -29,6 +29,7 @@ import org.eclipse.xtext.validation.IResourceValidator
 import org.eclipse.xtext.validation.Issue
 
 import static org.eclipse.xtext.diagnostics.Severity.*
+import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
@@ -168,7 +169,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 		 * assuming hasValidFileExtension was called, so care only about double extension
 		 */
 		var souceURI =
-			if("xt".equals(n4jsSourceFile.URI.fileExtension)){
+			if(ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI)){
 				n4jsSourceFile.URI.trimFileExtension
 			}else{
 				n4jsSourceFile.URI
@@ -189,19 +190,13 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	// TODO is it possible to add a filter before even activating this generator?
 	// background: currently also n4mf files are passed to the generator
-	/** Checking if a resource will be as source to the generator by matching the file extension
-	 * to one of (js, n4js, n4js.xt, js.xt")
+	/** 
+	 * Checking if a resource will be as source to the generator.
 	 */
 	def hasValidFileExtension(Resource resource) {
-		switch (resource.URI.fileExtension) {
-			case "js"   : true
-			case "n4js" : true
-			case "xt"   : {
-				val ls = resource.URI.lastSegment;
-				ls.endsWith(".n4js.xt") || ls.endsWith((".js.xt"))
-			}
-			default : false
-		}
+		val resourceType = ResourceType.getResourceType(resource);
+		return resourceType.equals(ResourceType.JS)
+				|| resourceType.equals(ResourceType.N4JS);
 	}
 
 	/**
