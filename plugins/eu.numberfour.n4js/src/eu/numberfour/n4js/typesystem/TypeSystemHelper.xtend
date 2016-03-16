@@ -264,7 +264,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 */
 	public def bindAndSubstituteThisTypeRef(RuleEnvironment G, EObject location, TypeRef typeRef) {
 		// create a BoundThisTypeRef for given location
-		val boundThisTypeRef = ts.thisTypeRef(G, typeRef).value;
+		val boundThisTypeRef = ts.thisTypeRef(G, location).value;
 		val localG = G.wrap;
 		localG.addThisType(boundThisTypeRef);
 		// substitute all unbound ThisTypeRefs with the newly created BoundThisTypeRef
