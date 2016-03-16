@@ -99,7 +99,7 @@ public abstract class WorkspaceWizardModelValidator {
 	 *
 	 * @author luca.beurer-kellner - Initial contribution and API
 	 */
-	protected static class ValidationExcep extends Exception {
+	protected static class ValidationException extends Exception {
 
 		private final String propertyName = "";
 
@@ -109,7 +109,7 @@ public abstract class WorkspaceWizardModelValidator {
 		 * @param message
 		 *            The error message
 		 */
-		public ValidationExcep(String message) {
+		public ValidationException(String message) {
 			super(message);
 		}
 
@@ -121,7 +121,7 @@ public abstract class WorkspaceWizardModelValidator {
 		 * @param propertyName
 		 *            The model property name
 		 */
-		public ValidationExcep(String message, String propertyName) {
+		public ValidationException(String message, String propertyName) {
 			super(message);
 		}
 
@@ -226,7 +226,7 @@ public abstract class WorkspaceWizardModelValidator {
 		// Run the validation methods
 		try {
 			run();
-		} catch (ValidationExcep e) {
+		} catch (ValidationException e) {
 			setValidationResult(new ValidationResult(e.getMessage()));
 			success = false;
 		} catch (Exception e) {
@@ -245,10 +245,10 @@ public abstract class WorkspaceWizardModelValidator {
 	 * This method is invoked on every validation. It is used to delegate validation to specific validation methods. It
 	 * can be overridden by subclasses to add custom validation logic.
 	 *
-	 * @throws ValidationExcep
+	 * @throws ValidationException
 	 *             Exception to be thrown by validating methods on validation issues
 	 */
-	protected void run() throws ValidationExcep {
+	protected void run() throws ValidationException {
 		validateProject();
 		validateSourceFolder();
 		validateModuleSpecifier();
@@ -273,12 +273,12 @@ public abstract class WorkspaceWizardModelValidator {
 	/**
 	 * Project property constraints
 	 */
-	private void validateProject() throws ValidationExcep {
+	private void validateProject() throws ValidationException {
 		this.setProjectValid(false);
 
 		// 1. It must not be empty
 		if (getModel().getProject().toString().trim().equals("")) {
-			throw new ValidationExcep(ErrorMessages.PROJECT_MUST_NOT_BE_EMPTY,
+			throw new ValidationException(ErrorMessages.PROJECT_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.PROJECT_PROPERTY);
 		}
 
@@ -286,13 +286,13 @@ public abstract class WorkspaceWizardModelValidator {
 		URI projectURI = URI.createPlatformResourceURI(getModel().getProject().toString(), true);
 		Optional<? extends IN4JSProject> n4jsProject = n4jsCore.findProject(projectURI);
 		if (!n4jsProject.isPresent()) {
-			throw new ValidationExcep(ErrorMessages.INVALID_PROJECT, WorkspaceWizardModel.PROJECT_PROPERTY);
+			throw new ValidationException(ErrorMessages.INVALID_PROJECT, WorkspaceWizardModel.PROJECT_PROPERTY);
 		} else if (!n4jsProject.get().exists()) {
-			throw new ValidationExcep(ErrorMessages.PROJECT_DOES_NOT_EXIST, WorkspaceWizardModel.PROJECT_PROPERTY);
+			throw new ValidationException(ErrorMessages.PROJECT_DOES_NOT_EXIST, WorkspaceWizardModel.PROJECT_PROPERTY);
 		} else {
 			// The path points to a resource inside the project
 			if (!n4jsProject.get().getLocation().equals(projectURI)) {
-				throw new ValidationExcep(ErrorMessages.INVALID_PROJECT + n4jsProject.get().getLocation(),
+				throw new ValidationException(ErrorMessages.INVALID_PROJECT + n4jsProject.get().getLocation(),
 						WorkspaceWizardModel.PROJECT_PROPERTY);
 			}
 		}
@@ -300,20 +300,20 @@ public abstract class WorkspaceWizardModelValidator {
 		this.setProjectValid(true);
 	}
 
-	private void validateSourceFolder() throws ValidationExcep {
+	private void validateSourceFolder() throws ValidationException {
 		this.setSourceFolderValid(false);
 
 		// 1. The source folder property must not be empty
 		String sourceFolder = getModel().getSourceFolder().toString();
 
 		if (sourceFolder.equals("")) {
-			throw new ValidationExcep(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
+			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
 
 		// 2. The folder must be a valid folder name
 		if (!isValidFolderName(sourceFolder)) {
-			throw new ValidationExcep(
+			throw new ValidationException(
 					ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
@@ -321,13 +321,13 @@ public abstract class WorkspaceWizardModelValidator {
 		this.setSourceFolderValid(true);
 	}
 
-	private void validateModuleSpecifier() throws ValidationExcep {
+	private void validateModuleSpecifier() throws ValidationException {
 
 		String effectiveModuleSpecifier = getModel().getModuleSpecifier();
 
 		// 1. The module specifier property must not be empty
 		if (effectiveModuleSpecifier.trim().equals("")) {
-			throw new ValidationExcep(ErrorMessages.MODULE_SPECIFIER_MUST_NOT_BE_EMPTY,
+			throw new ValidationException(ErrorMessages.MODULE_SPECIFIER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 		}
 
@@ -343,20 +343,20 @@ public abstract class WorkspaceWizardModelValidator {
 
 			// First segment is empty that means the specifier begins with a '/'
 			if (first && empty) {
-				throw new ValidationExcep(ErrorMessages.INVALID_MODULE_SPECIFIER_MUST_NOT_BEGIN_WITH
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_MUST_NOT_BEGIN_WITH
 						+ errorPointer(effectiveModuleSpecifier,
 								validatedSpecifier),
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}
 			// Segment is empty and not the last one
 			if (empty && !last) {
-				throw new ValidationExcep(ErrorMessages.INVALID_MODULE_SPECIFIER_EMPTY_PATH_SEGMENT
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_EMPTY_PATH_SEGMENT
 						+ errorPointer(effectiveModuleSpecifier, validatedSpecifier),
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}
 			// The segment is an invalid folder name, not the last segment and not empty
 			if (!isValidFolderName(segment) && !(empty && last)) {
-				throw new ValidationExcep(ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT
+				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT
 						+ errorPointer(effectiveModuleSpecifier, validatedSpecifier),
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			} else {

@@ -64,11 +64,11 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 	/**
 	 * Class name specifier property constraints
 	 */
-	private void validateInterfaceName() throws ValidationExcep {
+	private void validateInterfaceName() throws ValidationException {
 
 		// 1. The class name must not be empty
 		if (getModel().getName().trim().length() < 1) {
-			throw new ValidationExcep(ErrorMessages.INTERFACE_NAME_MUST_NOT_BE_EMPTY);
+			throw new ValidationException(ErrorMessages.INTERFACE_NAME_MUST_NOT_BE_EMPTY);
 		}
 
 		String className = getModel().getName();
@@ -78,14 +78,14 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 		String[] classNameLetters = className.split("");
 		char firstCharacter = classNameLetters[0].charAt(0);
 		if (!IdentifierValueConverter.isValidIdentifierStart(firstCharacter) || firstCharacter == ' ') {
-			throw new ValidationExcep(ErrorMessages.INVALID_INTERFACE_NAME
+			throw new ValidationException(ErrorMessages.INVALID_INTERFACE_NAME
 					+ errorPointer(className, validatedClassName));
 		}
 		validatedClassName += classNameLetters[0];
 		for (int i = 1; i < classNameLetters.length; i++) {
 			char character = classNameLetters[i].charAt(0);
 			if (!IdentifierValueConverter.isValidIdentifierPart(character) || character == ' ') {
-				throw new ValidationExcep(ErrorMessages.INVALID_INTERFACE_NAME
+				throw new ValidationException(ErrorMessages.INVALID_INTERFACE_NAME
 						+ errorPointer(className, validatedClassName));
 			}
 			validatedClassName += classNameLetters[i];
@@ -95,7 +95,7 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 	/**
 	 * Module specifier specifier property constraints
 	 */
-	private void validateModuleSpecifier() throws ValidationExcep {
+	private void validateModuleSpecifier() throws ValidationException {
 
 		String effectiveModuleSpecifier = getModel().getEffectiveModuleSpecifier();
 
@@ -105,7 +105,7 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 		 */
 		if (!effectiveModuleSpecifier.equals(getModel().getModuleSpecifier()) &&
 				!isValidFolderName(getModel().getName())) {
-			throw new ValidationExcep(
+			throw new ValidationException(
 					WorkspaceWizardModelValidator.ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT
 							+ errorPointer(effectiveModuleSpecifier, getModel().getModuleSpecifier()));
 		}
@@ -122,10 +122,10 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 					.append(effectiveModulePath.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
 
 			if (getModel().isDefinitionFile() && moduleProject.exists(n4jsPath)) {
-				throw new ValidationExcep("The new definition module collides with the source file "
+				throw new ValidationException("The new definition module collides with the source file "
 						+ n4jsPath);
 			} else if (!getModel().isDefinitionFile() && moduleProject.exists(n4jsdPath)) {
-				throw new ValidationExcep("The new source module collides with the definition file "
+				throw new ValidationException("The new source module collides with the definition file "
 						+ n4jsdPath);
 			}
 		}
@@ -147,7 +147,7 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 	/**
 	 * Interfaces specifier property constraints
 	 */
-	private void validateInterfaces() throws ValidationExcep {
+	private void validateInterfaces() throws ValidationException {
 		// ---------------------------------------
 		// Interfaces property constraints
 		// ---------------------------------------
@@ -157,7 +157,7 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 		for (int i = 0; i < interfaces.size(); i++) {
 			ClassifierReference iface = interfaces.get(i);
 			if (!isValidInterface(iface)) {
-				throw new ValidationExcep(
+				throw new ValidationException(
 						String.format(ErrorMessages.THE_INTERFACE_CANNOT_BE_FOUND, iface.getFullSpecifier())
 								.toString());
 			} else if (iface.uri == null) {
@@ -203,7 +203,7 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 	}
 
 	@Override
-	protected void run() throws ValidationExcep {
+	protected void run() throws ValidationException {
 		// Run workspace model validation
 		super.run();
 		// Run additional interface validation
