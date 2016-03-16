@@ -10,15 +10,30 @@
  */
 package eu.numberfour.n4js.ui.wizard.workspacewizard;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.fieldassist.ContentProposal;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -29,6 +44,8 @@ import org.eclipse.swt.widgets.Shell;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialogProvider;
@@ -61,6 +78,8 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
 	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
+	@Inject
+	private IN4JSCore n4jsCore;
 
 	/**
 	 * @param pageName
@@ -77,6 +96,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 		setupBindings(workspaceWizardForm);
 		setupBrowseDialogs(workspaceWizardForm);
+		setupContentProposal(workspaceWizardForm);
 
 		createComponents(this);
 
@@ -150,6 +170,100 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 			model.setSourceFolder(((IContainer) firstResult).getProjectRelativePath().append("/"));
 		} else if (firstResult instanceof VirtualResource) {
 			model.setSourceFolder(new Path(((VirtualResource) firstResult).getName()).append("/"));
+		}
+	}
+
+	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
+		KeyStroke keyInitiator = KeyStroke.getInstance(SWT.CTRL, SWT.SPACE);
+
+		ContentProposalAdapter projectAdapter = new ContentProposalAdapter(wizardForm.getProjectText(),
+				new TextContentAdapter(), new ProjectContentProposalProvider(),
+				keyInitiator, null);
+
+		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
+		ContentProposalAdapter sourceFolderAdapter = new ContentProposalAdapter(wizardForm.getSourceFolderText(),
+				new TextContentAdapter(), new SourceFolderContentProvider(),
+				keyInitiator, null);
+
+		sourceFolderAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+	}
+
+	private final class SourceFolderContentProvider implements IContentProposalProvider {
+
+		private final List<String> availableSourceFolders = new ArrayList<String>();
+
+		public SourceFolderContentProvider() {
+			updateSourceFolders();
+			model.addPropertyChangeListener(new PropertyChangeListener() {
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY) {
+						updateSourceFolders();
+					}
+				}
+			});
+		}
+
+		private void updateSourceFolders() {
+			if (model.getProject().isEmpty()) {
+				return;
+			}
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().toString());
+			if (project == null) {
+				return;
+			}
+			availableSourceFolders.clear();
+			URI projectURI = URI.createPlatformResourceURI(project.getName(), true);
+			IN4JSProject n4Project = n4jsCore
+					.findProject(projectURI)
+					.orNull();
+			if (n4Project == null) {
+				return;
+			}
+			// Add all src folder paths to the available list
+			availableSourceFolders.addAll(n4Project.getSourceContainers().stream().map(src -> src.getRelativeLocation())
+					.collect(Collectors.toList()));
+		}
+
+		@Override
+		public IContentProposal[] getProposals(String contents, int position) {
+			List<IContentProposal> filteredSourceFolders = availableSourceFolders.stream()
+					.filter(src -> src.startsWith(contents))
+					.map(src -> new ContentProposal(src)).collect(Collectors.toList());
+			return filteredSourceFolders.toArray(new IContentProposal[filteredSourceFolders.size()]);
+		}
+	}
+
+	private final class ProjectContentProposalProvider implements IContentProposalProvider {
+
+		private final IWorkspaceRoot workspaceRoot;
+
+		private final List<String> workspaceProjectsNames = new ArrayList<>();
+
+		/** Creates a new ProjectcontentProposalProvider */
+		public ProjectContentProposalProvider() {
+			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+			IProject[] projects = workspaceRoot.getProjects();
+			for (IProject project : projects) {
+				URI uri = URI.createPlatformResourceURI(project.getName(), true);
+				IN4JSProject n4Project = n4jsCore.findProject(uri).orNull();
+				if (null != n4Project && n4Project.exists()) {
+					workspaceProjectsNames.add(n4Project.getProjectName());
+				}
+			}
+		}
+
+		@Override
+		public IContentProposal[] getProposals(String contents, int position) {
+			List<IContentProposal> matchingProjects = new ArrayList<>();
+			for (String projectName : workspaceProjectsNames) {
+				if (projectName.startsWith(contents)) {
+					matchingProjects.add(new ContentProposal(projectName, "The project"));
+				}
+			}
+			return matchingProjects.toArray(new IContentProposal[matchingProjects.size()]);
 		}
 	}
 
