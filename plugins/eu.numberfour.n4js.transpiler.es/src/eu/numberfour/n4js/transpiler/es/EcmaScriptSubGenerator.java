@@ -50,14 +50,14 @@ public class EcmaScriptSubGenerator extends AbstractSubGenerator {
 	private static CompilerDescriptor createDescriptor() {
 		final CompilerDescriptor result = new CompilerDescriptor();
 		result.setIdentifier(COMPILER_ID);
-		result.setName("N4JS to ECMAScript transpiler (NEW)");
+		result.setName("N4JS to ECMAScript transpiler");
 		result.setDescription(
 				"Transpiles N4JS to ECMAScript, currently ES5 plus some selected ES6 features supported by V8.");
 		result.setActive(true);
 		result.setCompiledFileExtension("js");
 		result.setCompiledFileSourceMapExtension("map");
 		final OutputConfiguration outCfg = new OutputConfiguration(COMPILER_ID);
-		outCfg.setDescription("N4JS to ECMAScript transpiler (NEW)");
+		outCfg.setDescription("N4JS to ECMAScript transpiler");
 		outCfg.setOutputDirectory(calculateOutputDirectory("src-gen", COMPILER_ID));
 		outCfg.setOverrideExistingResources(true);
 		outCfg.setCreateOutputDirectory(true);
