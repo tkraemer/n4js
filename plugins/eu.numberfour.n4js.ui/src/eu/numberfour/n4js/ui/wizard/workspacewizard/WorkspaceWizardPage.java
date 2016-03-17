@@ -198,7 +198,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 				.observe(wizardForm.getModuleSpecifierText());
 		databindingContext.bindValue(moduleSpecifierUI, moduleSpecifierModelValue);
 
-		// Conditional activiation of the browse buttons according to the precedent input fields validity
+		// Conditional activation of the browse buttons according to the precedent input fields validity
 		IObservableValue moduleSpecifierBrowseEnabled = WidgetProperties.enabled()
 				.observe(wizardForm.getModuleSpecifierBrowseButton());
 		IObservableValue sourceFolderValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,

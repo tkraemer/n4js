@@ -12,6 +12,7 @@ package eu.numberfour.n4js.ui.wizard.interfacewizard;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -27,13 +28,14 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
+import eu.numberfour.n4js.ui.wizard.workspacewizard.InlineWorkspaceWizard;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 
 /**
  * A New N4JS Interface wizard
  *
  */
-public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
+public class N4JSNewInterfaceWizard extends Wizard implements INewWizard, InlineWorkspaceWizard {
 
 	@Inject
 	private N4JSInterfaceWizardModel model;
@@ -48,6 +50,8 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
 	@Inject
 	private N4JSNewInterfaceWizardPage wizardPage;
 
+	private boolean fillInModuleFile = false;
+
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.setNeedsProgressMonitor(false);
@@ -56,6 +60,19 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
 		setDefaultPageImageDescriptor(ImageRef.NEW_INTERFACE_WIZBAN.asImageDescriptor().orNull());
 
 		parseIntialSelection(selection);
+
+		if (fillInModuleFile && selection.getFirstElement() instanceof IResource) {
+			String moduleSpecifier = model.getModuleSpecifier();
+			IResource selectionResource = (IResource) selection.getFirstElement();
+
+			model.setModuleSpecifier(
+					new Path(moduleSpecifier + selectionResource.getName()).removeFileExtension().toString());
+		}
+	}
+
+	@Override
+	public void setFillModuleFile(boolean fillModuleFile) {
+		this.fillInModuleFile = fillModuleFile;
 	}
 
 	private void parseIntialSelection(IStructuredSelection selection) {

@@ -12,6 +12,7 @@ package eu.numberfour.n4js.ui.wizard.classwizard;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -27,6 +28,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
+import eu.numberfour.n4js.ui.wizard.workspacewizard.InlineWorkspaceWizard;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 
 /**
@@ -34,7 +36,7 @@ import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
  *
  * The wizard supports the creation of new files as well as the insertion of classes into existing modules.
  */
-public class N4JSNewClassWizard extends Wizard implements INewWizard {
+public class N4JSNewClassWizard extends Wizard implements INewWizard, InlineWorkspaceWizard {
 
 	@Inject
 	private N4JSClassWizardModel model;
@@ -49,6 +51,8 @@ public class N4JSNewClassWizard extends Wizard implements INewWizard {
 	@Inject
 	private N4JSNewClassWizardPage wizardPage;
 
+	private boolean fillModuleFile = false;
+
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.setNeedsProgressMonitor(false);
@@ -62,6 +66,18 @@ public class N4JSNewClassWizard extends Wizard implements INewWizard {
 		WorkspaceWizardModel.fillModelFromInitialSelection(model, selection, n4jsCore);
 		wizardPage.setModel(model);
 
+		if (fillModuleFile && selection.getFirstElement() instanceof IResource) {
+			String moduleSpecifier = model.getModuleSpecifier();
+			IResource selectionResource = (IResource) selection.getFirstElement();
+
+			model.setModuleSpecifier(
+					new Path(moduleSpecifier + selectionResource.getName()).removeFileExtension().toString());
+		}
+	}
+
+	@Override
+	public void setFillModuleFile(boolean fillModuleFile) {
+		this.fillModuleFile = fillModuleFile;
 	}
 
 	@Override

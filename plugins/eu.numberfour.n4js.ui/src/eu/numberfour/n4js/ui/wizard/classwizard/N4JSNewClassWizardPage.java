@@ -175,6 +175,16 @@ public class N4JSNewClassWizardPage extends WorkspaceWizardPage {
 		}
 	}
 
+	private void updateSuffixVisibility() {
+		SuffixText input = workspaceWizardForm.getModuleSpecifierText();
+		String inputText = input.getText();
+		if (inputText.isEmpty() || inputText.charAt(inputText.length() - 1) == '/') {
+			input.setSuffixVisible(true);
+		} else {
+			input.setSuffixVisible(false);
+		}
+	}
+
 	/**
 	 * Setups additional non-component contained bindings.
 	 */
@@ -189,15 +199,11 @@ public class N4JSNewClassWizardPage extends WorkspaceWizardPage {
 		moduleSpecifierValue.addValueChangeListener(new IValueChangeListener() {
 			@Override
 			public void handleValueChange(ValueChangeEvent event) {
-				SuffixText input = workspaceWizardForm.getModuleSpecifierText();
-				String inputText = input.getText();
-				if (inputText.isEmpty() || inputText.charAt(inputText.length() - 1) == '/') {
-					input.setSuffixVisible(true);
-				} else {
-					input.setSuffixVisible(false);
-				}
+				updateSuffixVisibility();
 			}
 		});
+		// Initial suffix visibility update
+		updateSuffixVisibility();
 
 		//// Class name to module specifier suffix binding
 		IObservableValue classNameModelValue = BeanProperties
