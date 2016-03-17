@@ -17,6 +17,7 @@ import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static java.lang.String.valueOf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -40,10 +41,10 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	public static final String IMPLEMENTATION_ID_PROP_NAME = "implementationId";
 
 	/** Name of the implementation ID property. Used by SWT data binding. */
-	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedApis";
+	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedProjects";
 
 	/** Tested Project of a test project */
-	public static final String TESTED_PROJECT = "testedProject";
+	public static final String TESTED_PROJECT = "testedProjects";
 
 	/** Property to specify whether a test project should have an additional normal source folder */
 	public static final String ADDITIONAL_NORMAL_SOURCE_FOLDER = "additionalSourceFolder";
@@ -58,16 +59,27 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	private String implementationId;
 
 	/** The implemented API project IDs. */
-	private List<String> implementedApis = newArrayList();
+	private List<String> implementedProjects = newArrayList();
 
 	/** WorkingSets the new Project will be included to. */
 	private IWorkingSet[] selectedWorkingSets;
 
 	/** The tested project in case of a test project */
-	private String testedProject;
+	private List<String> testedProjects;
 
 	/** Specifies whether a test project should have an additional normal source folder */
 	private boolean additionalSourceFolder;
+
+	/** The list of project dependencies */
+	private List<String> projectDependencies = new ArrayList<>();
+
+	/** The output folder of the project */
+	private String outputFolder;
+
+	/** Different source folders of the project */
+	private List<String> sourceFolders = new ArrayList<>();
+	private List<String> externalSourceFolders = new ArrayList<>();
+	private List<String> testSourceFolders = new ArrayList<>();
 
 	/**
 	 * Returns with the project type as a lower camel case formatted string. This can be used directly for the N4
@@ -154,32 +166,32 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *
 	 * @return a list of API project artifact IDs.
 	 */
-	public List<String> getImplementedApis() {
-		return implementedApis;
+	public List<String> getImplementedProjects() {
+		return implementedProjects;
 	}
 
 	/**
-	 * Counterpart of {@link #getImplementedApis()}.
+	 * Counterpart of {@link #getImplementedProjects()}.
 	 *
 	 * @param implementedApis
 	 *            the list of implemented API project IDs to set.
 	 */
 	public void setImplementedApis(List<String> implementedApis) {
-		this.implementedApis = implementedApis;
+		this.implementedProjects = implementedApis;
 	}
 
 	/**
 	 * Returns the tested project for a test project
 	 */
-	public String getTestedProject() {
-		return this.testedProject;
+	public List<String> getTestedProjects() {
+		return this.testedProjects;
 	}
 
 	/**
 	 * Sets the tested project for a test project
 	 */
-	public void setTestedProject(String testedProject) {
-		this.testedProject = testedProject;
+	public void setTestedProjects(List<String> testedProject) {
+		this.testedProjects = testedProject;
 	}
 
 	/**
@@ -187,7 +199,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *
 	 * Does not hold any useful information if project type is not test.
 	 */
-	public boolean isAdditionalSourceFolder() {
+	public boolean getAdditionalSourceFolder() {
 		return additionalSourceFolder;
 	}
 
@@ -196,6 +208,86 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 */
 	public void setAdditionalSourceFolder(boolean additionalSourceFolder) {
 		this.additionalSourceFolder = additionalSourceFolder;
+	}
+
+	/**
+	 * Returns the project dependencies of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getProjectDependencies() {
+		return projectDependencies;
+	}
+
+	/**
+	 * Sets the project dependencies of the project.
+	 */
+	public void setProjectDependencies(List<String> projectDependencies) {
+		this.projectDependencies = projectDependencies;
+	}
+
+	/**
+	 * Returns the output folder of the project.
+	 */
+	public String getOutputFolder() {
+		return outputFolder;
+	}
+
+	/**
+	 * Sets the output folder of the project.
+	 */
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
+	}
+
+	/**
+	 * Returns the source folders of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getSourceFolders() {
+		return sourceFolders;
+	}
+
+	/**
+	 * Sets the source folders of the project
+	 */
+	public void setSourceFolders(List<String> sourceFolders) {
+		this.sourceFolders = sourceFolders;
+	}
+
+	/**
+	 * Returns the external source folders of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 *
+	 */
+	public List<String> getExternalSourceFolders() {
+		return externalSourceFolders;
+	}
+
+	/**
+	 * Sets the source folders of the project
+	 *
+	 */
+	public void setExternalSourceFolders(List<String> externalSourceFolders) {
+		this.externalSourceFolders = externalSourceFolders;
+	}
+
+	/**
+	 * Returns the test source folders of the project
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getTestSourceFolders() {
+		return testSourceFolders;
+	}
+
+	/**
+	 * Sets the test source folders of the project
+	 */
+	public void setTestSourceFolders(List<String> testSourceFolders) {
+		this.testSourceFolders = testSourceFolders;
 	}
 
 }
