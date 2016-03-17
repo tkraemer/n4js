@@ -18,7 +18,6 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
-import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
@@ -44,6 +43,7 @@ import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
@@ -238,21 +238,6 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * Copies additional type modifiers such as undef, null and dynamic.
-	 * This is usually not required as whole references are copied, but in case of type variable substitution or
-	 * creating union types, this might be necessary.
-	 * @see IDEBUG-145
-	 */
-	public def copyTypeModifiers(TypeRef target, TypeRef source) {
-		target.undefModifier = source.undefModifier
-		target.nullModifier = source.nullModifier
-
-		if (target instanceof BaseTypeRef) {
-			target.dynamic = target.dynamic || source.dynamic
-		}
-	}
-
-	/**
 	 * Helper Method checking existence of "@StringBased" annotation.
 	 */
 	public static def boolean isStringBasedEnumeration (TEnum tEnum) {
@@ -270,17 +255,20 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 *
 	 * @param G
 	 * 		the rule environment that will be wrapped for the operation.
-	 * @param thisTypeRef
-	 * 		the type reference for the {@code this} which will be bound and substituted.
-	 *
+	 * @param location
+	 * 		location within the AST for which to create a BoundThisTypeRef. Same as the argument 'location' of
+	 * 		judgment 'thisTypeRef' in Xsemantics.
+	 * @param typeRef
+	 * 		type reference to substitute; this can either be an unbound ThisTypeRef or any other kind of TypeRef that
+	 * 		contains one or more unbound ThisTypeRefs. Need not be contained in the AST (as usual for type references).
 	 */
-	public def bindAndSubstituteThisTypeRef(RuleEnvironment G, TypeRef thisTypeRef) {
-		// create a BoundThisTypeRef for our location (using 'thisTypeRef' as location)
-		val boundThisTypeRef = ts.thisTypeRef(G, thisTypeRef).value;
+	public def bindAndSubstituteThisTypeRef(RuleEnvironment G, EObject location, TypeRef typeRef) {
+		// create a BoundThisTypeRef for given location
+		val boundThisTypeRef = ts.thisTypeRef(G, location).value;
 		val localG = G.wrap;
 		localG.addThisType(boundThisTypeRef);
 		// substitute all unbound ThisTypeRefs with the newly created BoundThisTypeRef
-		return ts.substTypeVariables(localG, thisTypeRef).value as TypeRef;
+		return ts.substTypeVariables(localG, typeRef).value as TypeRef;
 	}
 
 	/**
