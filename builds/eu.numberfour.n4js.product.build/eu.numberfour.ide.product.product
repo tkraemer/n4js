@@ -48,17 +48,17 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
-      <property name="osgi.requiredJavaVersion" value="1.8"/>
-      <property name="osgi.instance.area.default" value ="@user.home/workspace"/>
-      <property name="org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP" value ="false"/>
-      <property name="org.eclipse.ui/defaultPerspectiveId" value ="eu.numberfour.n4js.product.N4JSPerspective"/>
-      <property name="org.eclipse.ui/SHOW_TEXT_ON_PERSPECTIVE_BAR" value ="false"/>
-      <property name="org.eclipse.ui/PERSPECTIVE_BAR_EXTRAS" value ="eu.numberfour.n4js.product.N4JSPerspective,org.eclipse.egit.ui.GitRepositoryExploring"/>
-      <property name="org.eclipse.core.resources/encoding" value ="UTF-8"/>
+      <property name="org.eclipse.core.resources/encoding" value="UTF-8" />
+      <property name="org.eclipse.ui/PERSPECTIVE_BAR_EXTRAS" value="eu.numberfour.n4js.product.N4JSPerspective,org.eclipse.egit.ui.GitRepositoryExploring" />
+      <property name="org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP" value="false" />
+      <property name="org.eclipse.ui/SHOW_TEXT_ON_PERSPECTIVE_BAR" value="false" />
+      <property name="org.eclipse.ui/defaultPerspectiveId" value="eu.numberfour.n4js.product.N4JSPerspective" />
+      <property name="osgi.instance.area.default" value="@user.home/workspace" />
+      <property name="osgi.requiredJavaVersion" value="1.8" />
    </configurations>
 
    <repositories>
-      <repository location="http://updates.n4js.org/updatesite/" enabled="true" /> 
+      <repository location="http://updates.n4js.org/updatesite/" enabled="true" />
    </repositories>
 
    <preferencesInfo>
