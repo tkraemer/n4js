@@ -174,7 +174,6 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import java.util.Collection
 import java.util.List
 import org.eclipse.emf.common.util.ECollections
 import org.eclipse.emf.ecore.EObject
@@ -2496,7 +2495,22 @@ from {
 		{
 			// do we have multiple substitutions?
 			val List<TypeRef> l_raw = env(G, typeVar, List)
-			val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+			val l = newArrayList;
+			for(var i=0;i<l_raw.size;i++) {
+				val temp = l_raw.get(i);
+				val tempDeclaredType = temp.declaredType;
+				if(typeVar !== tempDeclaredType
+						&& (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic))
+						&& G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) {
+					val G2 = G.wrap;
+					G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)
+					G2 |- temp ~> var TypeRef tempResult
+					tempResult = TypeUtils.copy(tempResult); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+					l += tempResult;
+				} else {
+					l += TypeUtils.copy(temp); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+				}
+			}
 			val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter
 			result = if(needUnionInsteadIntersection)
 					typeSystemHelper.createUnionType(G,l)
