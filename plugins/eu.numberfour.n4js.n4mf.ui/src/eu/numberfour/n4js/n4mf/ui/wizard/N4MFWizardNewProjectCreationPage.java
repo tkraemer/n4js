@@ -20,6 +20,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static eu.numberfour.n4js.n4mf.ProjectType.SYSTEM;
+import static eu.numberfour.n4js.n4mf.ProjectType.TEST;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectId;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectType;
 import static eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator.EU_NUMBERFOUR_N4JS_N4MF_N4MF;
@@ -171,11 +172,15 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 			setPageComplete(validatePage());
 		});
 
+		// Invalidate if advanced options change
+
 		implementationIdText.addModifyListener(e -> {
 			setPageComplete(validatePage());
 		});
-
 		apiViewer.addSelectionChangedListener(e -> {
+			setPageComplete(validatePage());
+		});
+		testedProjectText.addModifyListener(e -> {
 			setPageComplete(validatePage());
 		});
 
@@ -229,6 +234,21 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 				}
 			}
 
+			if (TEST.equals(projectInfo.getProjectType())) {
+				String testedProject = projectInfo.getTestedProject();
+
+				// Don't perform advanced validation when tested project field is empty
+				if (testedProject != null && !testedProject.isEmpty()) {
+					IN4JSProject n4jsProject = n4jsCore.findProject(URI.createPlatformResourceURI(testedProject, true))
+							.orNull();
+					if (null == n4jsProject || !n4jsProject.exists()) {
+						errorMsg = "The tested project doesn't exist";
+					} else if (TEST.equals(n4jsProject.getProjectType())) {
+						errorMsg = "The tested project must not be a test project itself";
+					}
+				}
+			}
+
 			if (SYSTEM.equals(projectInfo.getProjectType())) {
 				errorMsg = "Project type 'System' is deprecated and will be removed soon. Use either 'API' or 'Library' instead.";
 			}
@@ -275,24 +295,25 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 
 	private void initTestProjectBinding(DataBindingContext dbc, Text testedProjectText, Button testedProjectBrowse,
 			Button addNormalSourceFolderButton) {
-		dbc.bindValue(WidgetProperties.text().observe(testedProjectText),
+		// Bind the project text
+		dbc.bindValue(WidgetProperties.text(Modify).observe(testedProjectText),
 				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.TESTED_PROJECT).observe(projectInfo));
+		// Bind the "normal source folder"-checkbox
 		dbc.bindValue(WidgetProperties.selection().observe(addNormalSourceFolderButton),
 				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER)
 						.observe(projectInfo));
+		// Setup the browse button with the dialog
 		testedProjectBrowse.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ProjectSelectionDialog dialog = new ProjectSelectionDialog(getShell());
 				// Filter out N4JS test projects
 				dialog.addFilter(new NonTestProjectFilter());
-
 				dialog.open();
-
+				// On Cancel
 				if (dialog.getFirstResult() == null) {
 					return;
 				}
-
 				// Use the result as new value
 				Object result = dialog.getFirstResult();
 				if (result instanceof IProject) {
