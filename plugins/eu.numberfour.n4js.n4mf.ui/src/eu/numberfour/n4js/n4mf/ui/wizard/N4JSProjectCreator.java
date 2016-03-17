@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.n4mf.ui.wizard;
 
-import static java.lang.String.valueOf;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
 import static org.eclipse.xtext.ui.XtextProjectHelper.BUILDER_ID;
 import static org.eclipse.xtext.ui.XtextProjectHelper.NATURE_ID;
@@ -31,10 +29,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xpand2.XpandExecutionContextImpl;
-import org.eclipse.xpand2.output.Outlet;
-import org.eclipse.xpand2.output.OutputImpl;
-import org.eclipse.xtend.type.impl.java.JavaBeansMetaModel;
 import org.eclipse.xtext.ui.util.ProjectFactory;
 import org.eclipse.xtext.ui.wizard.AbstractProjectCreator;
 
@@ -99,13 +93,6 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 
 	@Override
 	protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
-		final OutputImpl output = new OutputImpl();
-		output.addOutlet(
-				new Outlet(false, getEncoding(), null, true, project.getLocation().makeAbsolute().toOSString()));
-
-		final XpandExecutionContextImpl execCtx = new XpandExecutionContextImpl(output, null);
-		execCtx.getResourceManager().setFileEncoding(valueOf(UTF_8));
-		execCtx.registerMetaModel(new JavaBeansMetaModel());
 
 		final N4MFProjectInfo pi = (N4MFProjectInfo) getProjectInfo();
 

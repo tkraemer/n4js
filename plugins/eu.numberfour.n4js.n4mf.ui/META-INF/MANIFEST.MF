@@ -24,7 +24,9 @@ Require-Bundle: eu.numberfour.n4js.n4mf;visibility:=reexport,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.property,
- eu.numberfour.n4js.utils
+ eu.numberfour.n4js.utils,
+ eu.numberfour.n4js,
+ eu.numberfour.n4js.ui;bundle-version="0.0.1"
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

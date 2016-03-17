@@ -30,6 +30,7 @@ import static org.eclipse.jface.databinding.viewers.ViewersObservables.observeSi
 import static org.eclipse.jface.layout.GridDataFactory.fillDefaults;
 import static org.eclipse.swt.SWT.BORDER;
 import static org.eclipse.swt.SWT.CENTER;
+import static org.eclipse.swt.SWT.CHECK;
 import static org.eclipse.swt.SWT.FILL;
 import static org.eclipse.swt.SWT.MULTI;
 import static org.eclipse.swt.SWT.Modify;
@@ -42,6 +43,8 @@ import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.dialogs.Dialog;
@@ -50,8 +53,15 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
@@ -62,6 +72,9 @@ import com.google.inject.Injector;
 import eu.numberfour.n4js.n4mf.N4mfPackage;
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
+import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 
 /**
  * Wizard page for configuring a new N4 project.
@@ -69,6 +82,7 @@ import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
 public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPage {
 
 	private final N4MFProjectInfo projectInfo;
+	private final IN4JSCore n4jsCore = getN4JSCore();
 
 	/**
 	 * Creates a new wizard page to set up and create a new N4 project with the given project info model.
@@ -100,25 +114,60 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		projectType.getControl().setLayoutData(fillDefaults().grab(true, false).create());
 		projectType.setInput(ProjectType.values());
 
-		final Composite implementationComposite = new Composite(control, NONE);
-		implementationComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
-		implementationComposite.setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).create());
-		new Label(implementationComposite, SWT.NONE).setText("Implementation ID:");
-		final Text implementationIdText = new Text(implementationComposite, BORDER);
+		// A composite to hold the changin UI (additional library project options / additional test project options)
+		final Composite changingComposite = new Composite(control, NONE);
+		StackLayout changingStackLayout = new StackLayout();
+		changingComposite.setLayout(changingStackLayout);
+		changingComposite.setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).create());
+
+		// An empty composite to show for project types without additional options
+		final Composite emptyOptions = new Composite(changingComposite, NONE);
+
+		// Additional library project options
+		final Composite libraryProjectOptionsComposite = new Composite(changingComposite, NONE);
+		libraryProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
+		new Label(libraryProjectOptionsComposite, SWT.NONE).setText("Implementation ID:");
+		final Text implementationIdText = new Text(libraryProjectOptionsComposite, BORDER);
 		implementationIdText.setLayoutData(fillDefaults().align(FILL, CENTER).grab(true, false).create());
 
-		final ListViewer apiViewer = new ListViewer(implementationComposite, BORDER | MULTI);
+		final ListViewer apiViewer = new ListViewer(libraryProjectOptionsComposite, BORDER | MULTI);
 		apiViewer.getControl().setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).span(2, 1).create());
 		apiViewer.setContentProvider(ArrayContentProvider.getInstance());
 		apiViewer.setInput(getAvailableApiProjectIds());
 
+		// Additional test project options
+		final Composite testProjectOptionsComposite = new Composite(changingComposite, NONE);
+		testProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(3).create());
+
+		new Label(testProjectOptionsComposite, SWT.NONE).setText("Tested Project:");
+		// Project text
+		final Text testedProjectText = new Text(testProjectOptionsComposite, SWT.BORDER);
+		testedProjectText.setLayoutData(fillDefaults().align(FILL, CENTER).grab(true, false).create());
+		// Browse button
+		final Button testedProjectBrowse = new Button(testProjectOptionsComposite, NONE);
+		testedProjectBrowse.setText("Browse...");
+
+		emptyPlaceholder(testProjectOptionsComposite); // Just an empty placeholder
+		final Button addNormalSourceFolderButton = new Button(testProjectOptionsComposite, CHECK);
+		addNormalSourceFolderButton.setText("Also create a non-test source folder");
+
 		initProjectTypeBinding(dbc, projectType);
 		initImplementationIdBinding(dbc, implementationIdText);
 		initApiViewerBinding(dbc, apiViewer);
+		initTestProjectBinding(dbc, testedProjectText, testedProjectBrowse, addNormalSourceFolderButton);
 
 		projectType.addPostSelectionChangedListener(e -> {
-			implementationComposite.setVisible(LIBRARY.equals(projectInfo.getProjectType()));
-			apiViewer.getControl().setVisible(LIBRARY.equals(projectInfo.getProjectType()));
+			switch (projectInfo.getProjectType()) {
+			case LIBRARY:
+				changingStackLayout.topControl = libraryProjectOptionsComposite;
+				break;
+			case TEST:
+				changingStackLayout.topControl = testProjectOptionsComposite;
+				break;
+			default:
+				changingStackLayout.topControl = emptyOptions;
+			}
+			changingComposite.layout(true);
 			setPageComplete(validatePage());
 		});
 
@@ -141,6 +190,10 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		Dialog.applyDialogFont(getControl());
 
 		dbc.updateTargets();
+	}
+
+	private Control emptyPlaceholder(Composite parent) {
+		return new Label(parent, NONE);
 	}
 
 	@Override
@@ -220,6 +273,58 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		}
 	}
 
+	private void initTestProjectBinding(DataBindingContext dbc, Text testedProjectText, Button testedProjectBrowse,
+			Button addNormalSourceFolderButton) {
+		dbc.bindValue(WidgetProperties.text().observe(testedProjectText),
+				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.TESTED_PROJECT).observe(projectInfo));
+		dbc.bindValue(WidgetProperties.selection().observe(addNormalSourceFolderButton),
+				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER)
+						.observe(projectInfo));
+		testedProjectBrowse.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ProjectSelectionDialog dialog = new ProjectSelectionDialog(getShell());
+				// Filter out N4JS test projects
+				dialog.addFilter(new NonTestProjectFilter());
+
+				dialog.open();
+
+				if (dialog.getFirstResult() == null) {
+					return;
+				}
+
+				// Use the result as new value
+				Object result = dialog.getFirstResult();
+				if (result instanceof IProject) {
+					testedProjectText.setText(((IProject) result).getName());
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				/***/
+			}
+		});
+	}
+
+	/**
+	 * Filter out all non-test N4JS projects
+	 */
+	private class NonTestProjectFilter extends ViewerFilter {
+		@Override
+		public boolean select(Viewer viewer, Object parentElement, Object element) {
+			if (element instanceof IProject) {
+				IN4JSProject n4jsProject = n4jsCore
+						.findProject(URI.createPlatformResourceURI(((IProject) element).getName(), true)).orNull();
+				if (null != n4jsProject && n4jsProject.getProjectType() != ProjectType.TEST) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+	}
+
 	private void initProjectTypeBinding(final DataBindingContext dbc, final ComboViewer projectType) {
 		dbc.bindValue(observeSingleSelection(projectType),
 				PojoProperties.value(N4MFProjectInfo.class, PROJECT_TYPE_PROP_NAME).observe(projectInfo));
@@ -244,6 +349,10 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		final List<String> ids = newArrayList(distinctIds);
 		Collections.sort(ids);
 		return ids;
+	}
+
+	private IN4JSCore getN4JSCore() {
+		return getInjector().getInstance(IN4JSCore.class);
 	}
 
 	private IResourceDescriptions getResourceDescriptions() {

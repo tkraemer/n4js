@@ -42,6 +42,12 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	/** Name of the implementation ID property. Used by SWT data binding. */
 	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedApis";
 
+	/** Tested Project of a test project */
+	public static final String TESTED_PROJECT = "testedProject";
+
+	/** Property to specify whether a test project should have an additional normal source folder */
+	public static final String ADDITIONAL_NORMAL_SOURCE_FOLDER = "additionalSourceFolder";
+
 	/** The custom project location. {@code null} if there is not custom project location set. */
 	private IPath projectLocation;
 
@@ -56,6 +62,12 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 
 	/** WorkingSets the new Project will be included to. */
 	private IWorkingSet[] selectedWorkingSets;
+
+	/** The tested project in case of a test project */
+	private String testedProject;
+
+	/** Specifies whether a test project should have an additional normal source folder */
+	private boolean additionalSourceFolder;
 
 	/**
 	 * Returns with the project type as a lower camel case formatted string. This can be used directly for the N4
@@ -154,6 +166,36 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 */
 	public void setImplementedApis(List<String> implementedApis) {
 		this.implementedApis = implementedApis;
+	}
+
+	/**
+	 * Returns the tested project for a test project
+	 */
+	public String getTestedProject() {
+		return this.testedProject;
+	}
+
+	/**
+	 * Sets the tested project for a test project
+	 */
+	public void setTestedProject(String testedProject) {
+		this.testedProject = testedProject;
+	}
+
+	/**
+	 * Returns whether a test project should have an additional normal source folder.
+	 *
+	 * Does not hold any useful information if project type is not test.
+	 */
+	public boolean isAdditionalSourceFolder() {
+		return additionalSourceFolder;
+	}
+
+	/**
+	 * Sets whether a test project should have an additional normal source folder.
+	 */
+	public void setAdditionalSourceFolder(boolean additionalSourceFolder) {
+		this.additionalSourceFolder = additionalSourceFolder;
 	}
 
 }
