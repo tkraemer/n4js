@@ -221,6 +221,10 @@ public class SuffixText extends Composite {
 		return this.text;
 	}
 
+	Text internalText() {
+		return this.userInput;
+	}
+
 	/**
 	 * @param text
 	 *            New text for the input
@@ -326,8 +330,8 @@ public class SuffixText extends Composite {
 			return labelDimensions;
 		}
 
-		/** Return the top margin to vertically center an element of given
-		 * height in an area with given total height.
+		/**
+		 * Return the top margin to vertically center an element of given height in an area with given total height.
 		 */
 		private int marginTopCenter(int height, int totalHeight) {
 			return new Double(Math.floor((totalHeight - height) / 2.0)).intValue();

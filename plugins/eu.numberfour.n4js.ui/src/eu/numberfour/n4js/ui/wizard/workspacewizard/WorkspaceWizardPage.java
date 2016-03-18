@@ -10,51 +10,49 @@
  */
 package eu.numberfour.n4js.ui.wizard.workspacewizard;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.bindings.TriggerSequence;
+import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.keys.IBindingService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.projectModel.IN4JSCore;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.ui.ImageDescriptorCache;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialogProvider;
 import eu.numberfour.n4js.ui.dialog.WorkspaceElementSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
+import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.StringToPathConverter;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ProjectContentProposalProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SimpleImageContentProposalLabelProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProvider;
 
 /**
  * An abstract wizard page for {@link WorkspaceWizardModel}s.
@@ -65,6 +63,7 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.Str
  */
 public abstract class WorkspaceWizardPage extends WizardPage implements WizardComponentContainer {
 
+	private static final String CONTENT_ASSIST_ECLIPSE_COMMAND_ID = "org.eclipse.ui.edit.text.contentAssist.proposals";
 	WorkspaceWizardModel model;
 	DataBindingContext databindingContext;
 
@@ -78,8 +77,16 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
 	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
+
 	@Inject
-	private IN4JSCore n4jsCore;
+	private ProjectContentProposalProvider projectContentProposalProvider;
+	@Inject
+	private SourceFolderContentProvider sourceFolderContentProvider;
+	@Inject
+	private ModuleSpecifierContentProvider moduleSpecifierContentProvider;
+
+	@Inject
+	N4JSLabelProvider labelProvider;
 
 	/**
 	 * @param pageName
@@ -103,6 +110,8 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		// Synchronize background color to work around a dark theme issue where the wizard content background appears
 		// white
 		workspaceWizardForm.setBackground(parent.getBackground());
+
+		databindingContext.updateTargets();
 
 		setControl(workspaceWizardForm);
 	}
@@ -173,97 +182,99 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		}
 	}
 
+	private KeyStroke activeContentAssistBinding() {
+		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
+		TriggerSequence[] activeBindingsFor = bindingService
+				.getActiveBindingsFor(CONTENT_ASSIST_ECLIPSE_COMMAND_ID);
+
+		if (activeBindingsFor.length > 0 && activeBindingsFor[0] instanceof KeySequence) {
+			KeyStroke[] strokes = ((KeySequence) activeBindingsFor[0]).getKeyStrokes();
+			if (strokes.length == 1) {
+				return strokes[0];
+			}
+		}
+		return null;
+	}
+
 	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
-		KeyStroke keyInitiator = KeyStroke.getInstance(SWT.CTRL, SWT.SPACE);
+		// Get active bindings content assist key strokes
+		KeyStroke keyInitiator = activeContentAssistBinding();
 
+		// If unbound don't configure the content proposal
+		if (null == keyInitiator) {
+			return;
+		}
+
+		// Setup project content proposal
 		ContentProposalAdapter projectAdapter = new ContentProposalAdapter(wizardForm.getProjectText(),
-				new TextContentAdapter(), new ProjectContentProposalProvider(),
+				new TextContentAdapter(), projectContentProposalProvider,
 				keyInitiator, null);
-
 		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
+		// Setup project proposal label provider
+		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
+		projectAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(projectSymbol));
+
+		// Setup source folder content proposal
 		ContentProposalAdapter sourceFolderAdapter = new ContentProposalAdapter(wizardForm.getSourceFolderText(),
-				new TextContentAdapter(), new SourceFolderContentProvider(),
+				new TextContentAdapter(), sourceFolderContentProvider,
 				keyInitiator, null);
 
 		sourceFolderAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		sourceFolderAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(
+						ImageDescriptorCache.ImageRef.SRC_FOLDER.asImageDescriptor().orNull()));
+
+		// Setup module specifier content proposal
+		ContentProposalAdapter moduleSpecifierAdapter = new ContentProposalAdapter(
+				wizardForm.getModuleSpecifierText().internalText(),
+				new TextContentAdapter(), moduleSpecifierContentProvider, keyInitiator, null);
+
+		// Update proposal context whenever the model changes
+		model.addPropertyChangeListener(evt -> {
+			if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY ||
+					evt.getPropertyName() == WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY) {
+				updateProposalContext();
+			}
+		});
+		updateProposalContext();
+
+		moduleSpecifierAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		moduleSpecifierAdapter
+				.setLabelProvider(new ModuleSpecifierContentProvider.ModuleSpecifierProposalLabelProvider());
 	}
 
-	private final class SourceFolderContentProvider implements IContentProposalProvider {
+	/**
+	 * This method is invoked whenever source folder or project change, to update the proposal contexts for the field
+	 * source folder and module specifier
+	 */
+	private void updateProposalContext() {
+		IPath projectPath = model.getProject();
+		IPath sourceFolderPath = model.getSourceFolder();
 
-		private final List<String> availableSourceFolders = new ArrayList<String>();
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectPath.toString());
 
-		public SourceFolderContentProvider() {
-			updateSourceFolders();
-			model.addPropertyChangeListener(new PropertyChangeListener() {
+		if (null == project || !project.exists()) {
+			// Disable source folder and module specifier proposals
+			sourceFolderContentProvider.setContextProject(null);
+			moduleSpecifierContentProvider.setProposalRoot(null);
+		} else {
+			// Try to retrieve the source folder and if not specified set it to null
+			IContainer sourceFolder = sourceFolderPath.segmentCount() != 0 ? project.getFolder(sourceFolderPath) : null;
 
-				@Override
-				public void propertyChange(PropertyChangeEvent evt) {
-					if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY) {
-						updateSourceFolders();
-					}
-				}
-			});
-		}
+			// If the project exists, enable source folder proposals
+			sourceFolderContentProvider.setContextProject(project);
 
-		private void updateSourceFolders() {
-			if (model.getProject().isEmpty()) {
-				return;
+			if (null != sourceFolder && sourceFolder.exists()) {
+				// If source folder exists as well enable module specifier proposal
+				moduleSpecifierContentProvider.setProposalRoot(sourceFolder.getFullPath());
+			} else {
+				// Otherwise disable module specifier proposals
+				moduleSpecifierContentProvider.setProposalRoot(null);
 			}
-			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().toString());
-			if (project == null) {
-				return;
-			}
-			availableSourceFolders.clear();
-			URI projectURI = URI.createPlatformResourceURI(project.getName(), true);
-			IN4JSProject n4Project = n4jsCore
-					.findProject(projectURI)
-					.orNull();
-			if (n4Project == null) {
-				return;
-			}
-			// Add all src folder paths to the available list
-			availableSourceFolders.addAll(n4Project.getSourceContainers().stream().map(src -> src.getRelativeLocation())
-					.collect(Collectors.toList()));
-		}
-
-		@Override
-		public IContentProposal[] getProposals(String contents, int position) {
-			List<IContentProposal> filteredSourceFolders = availableSourceFolders.stream()
-					.filter(src -> src.startsWith(contents))
-					.map(src -> new ContentProposal(src)).collect(Collectors.toList());
-			return filteredSourceFolders.toArray(new IContentProposal[filteredSourceFolders.size()]);
-		}
-	}
-
-	private final class ProjectContentProposalProvider implements IContentProposalProvider {
-
-		private final IWorkspaceRoot workspaceRoot;
-
-		private final List<String> workspaceProjectsNames = new ArrayList<>();
-
-		/** Creates a new ProjectcontentProposalProvider */
-		public ProjectContentProposalProvider() {
-			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-			IProject[] projects = workspaceRoot.getProjects();
-			for (IProject project : projects) {
-				URI uri = URI.createPlatformResourceURI(project.getName(), true);
-				IN4JSProject n4Project = n4jsCore.findProject(uri).orNull();
-				if (null != n4Project && n4Project.exists()) {
-					workspaceProjectsNames.add(n4Project.getProjectName());
-				}
-			}
-		}
-
-		@Override
-		public IContentProposal[] getProposals(String contents, int position) {
-			List<IContentProposal> matchingProjects = new ArrayList<>();
-			for (String projectName : workspaceProjectsNames) {
-				if (projectName.startsWith(contents)) {
-					matchingProjects.add(new ContentProposal(projectName, "The project"));
-				}
-			}
-			return matchingProjects.toArray(new IContentProposal[matchingProjects.size()]);
 		}
 	}
 
@@ -279,14 +290,16 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		IObservableValue projectUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getProjectText());
 
 		// Note: No model to UI conversation here as IPath is castable to String (default behaviour)
-		databindingContext.bindValue(projectUI, projectModelValue, new StringToPathConverter().updatingValueStrategy(),
+		databindingContext.bindValue(projectUI, projectModelValue,
+				new StringToPathConverter().updatingValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
 		// Source folder property binding
 		IObservableValue sourceFolderModelValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY)
 				.observe(model);
-		IObservableValue sourceFolderUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getSourceFolderText());
+		IObservableValue sourceFolderUI = WidgetProperties.text(SWT.Modify)
+				.observe(wizardForm.getSourceFolderText());
 
 		// Note: No model to UI conversation (see above)
 		databindingContext.bindValue(sourceFolderUI, sourceFolderModelValue,
