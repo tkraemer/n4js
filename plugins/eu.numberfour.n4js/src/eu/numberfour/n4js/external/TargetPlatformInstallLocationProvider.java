@@ -38,12 +38,6 @@ public interface TargetPlatformInstallLocationProvider {
 	String NODE_MODULES_FOLDER = ExternalLibrariesActivator.N4_NPM_CATEGORY;
 
 	/**
-	 * Unique name of the local git repository root folder that will be used to retrieve N4JS definition files for NPM
-	 * install.
-	 */
-	String N4JSD_FILES_ROOT_FOLDER = ExternalLibrariesActivator.N4_GIT_ROOT;
-
-	/**
 	 * Returns with an URI pointing to the target platform install location.
 	 *
 	 * @return the URI pointing to the target platform install location.
@@ -57,6 +51,13 @@ public interface TargetPlatformInstallLocationProvider {
 	 * @return the URI pointing to the actual target platform file.
 	 */
 	URI getTargetPlatformFileLocation();
+
+	/**
+	 * Returns with the unique name of the Git repository for storing the type definition files for the npm packages.
+	 *
+	 * @return the unique name of the Git repository.
+	 */
+	String getGitRepositoryName();
 
 	/**
 	 * Returns with an URI pointing to the {@code node_modules} folder inside the target platform install location.
@@ -108,7 +109,7 @@ public interface TargetPlatformInstallLocationProvider {
 			LOGGER.warn("Falling back to install location: " + installLocation + ".");
 			parentFile = installLocation;
 		}
-		final File gitRoot = new File(parentFile, N4JSD_FILES_ROOT_FOLDER);
+		final File gitRoot = new File(parentFile, getGitRepositoryName());
 		if (!gitRoot.exists()) {
 			checkState(gitRoot.mkdir(), "Error while creating local git repository folder for target platform.");
 		}

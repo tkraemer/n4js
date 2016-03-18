@@ -63,8 +63,10 @@ import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
 import eu.numberfour.n4js.binaries.OsgiBinariesPreferenceStore;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
+import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.OutputStreamProvider;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.generator.common.CompilerDescriptor;
 import eu.numberfour.n4js.generator.common.IComposedGenerator;
 import eu.numberfour.n4js.generator.common.IGeneratorMarkerSupport;
@@ -140,6 +142,13 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	 */
 	public Provider<ExternalLibraryWorkspace> provideN4JSExternalLibraryWorkspace() {
 		return Access.contributedProvider(ExternalLibraryWorkspace.class);
+	}
+
+	/**
+	 * Re-binds the {@link GitCloneSupplier} to the singleton instance declared in the contribution module.
+	 */
+	public Provider<GitCloneSupplier> provideGitCloneSupplier() {
+		return Access.contributedProvider(GitCloneSupplier.class);
 	}
 
 	@Override
@@ -220,6 +229,13 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	 */
 	public Provider<TargetPlatformInstallLocationProvider> provideTargetPlatformInstallLocationProvider() {
 		return Access.contributedProvider(TargetPlatformInstallLocationProvider.class);
+	}
+
+	/**
+	 * Binds the type definition Git location provider.
+	 */
+	public Provider<TypeDefinitionGitLocationProvider> provideTypeDefinitionGitLocationProvider() {
+		return Access.contributedProvider(TypeDefinitionGitLocationProvider.class);
 	}
 
 	/**
