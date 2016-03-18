@@ -51,7 +51,6 @@ import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Modules;
 
-import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.N4JSStandaloneSetup;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
@@ -166,7 +165,7 @@ public class N4jsc {
 			+ "\n'singlefile' interprets the arguments as paths to N4JS-source files and compiles only those both."
 			+ "\n'dontcompile' don't generate anything.",
 
-			metaVar = "type")
+	metaVar = "type")
 	Type buildtype = Type.dontcompile;
 
 	@Option(name = "--testCatalogFile", aliases = "-tc", required = false, usage = "if specified, a test catalog file will be generated to the given file location. The generated test catalog file will represent all "
@@ -238,13 +237,13 @@ public class N4jsc {
 	// -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- -
 	// Special debugging features, hidden from normal usage
 	@Option(name = "--log",
-			// no usage, do not show in help
-			required = false)
+	// no usage, do not show in help
+	required = false)
 	boolean log = false;
 
 	@Option(name = "--logfile",
-			// no usage, do not show in help
-			required = false)
+	// no usage, do not show in help
+	required = false)
 	String logFile = "n4jsc.log";
 
 	/**
@@ -329,7 +328,6 @@ public class N4jsc {
 	 */
 	void doMain(String[] args) throws ExitCodeException {
 		try {
-			N4JSGlobals.setHeadless(true);
 
 			CmdLineParser parser = new CmdLineParser(this);
 			parser.setUsageWidth(130);
@@ -913,7 +911,7 @@ public class N4jsc {
 					return id_len >= r_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - r_len, id_len).equalsIgnoreCase(runnerId)
-					// b) full segment match (either full string or previous char is .)
+							// b) full segment match (either full string or previous char is .)
 							&& (id_len == r_len || id.charAt(id_len - r_len - 1) == '.');
 				})
 				.map(id -> runnerRegistry.getDescriptor(id))
@@ -936,7 +934,7 @@ public class N4jsc {
 					return id_len >= t_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - t_len, id_len).equalsIgnoreCase(testerId)
-					// b) full segment match (either full string or previous char is .)
+							// b) full segment match (either full string or previous char is .)
 							&& (id_len == t_len || id.charAt(id_len - t_len - 1) == '.');
 				})
 				.map(id -> testerRegistry.getDescriptor(id))

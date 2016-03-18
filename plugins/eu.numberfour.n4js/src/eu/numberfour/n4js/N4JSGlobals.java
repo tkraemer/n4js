@@ -19,9 +19,8 @@ import java.util.Collection;
 /**
  * Global hook for static information about the current setup.
  *
- * Start up code must initialize static attributes herin.
+ * Start up code must initialize static attributes here.
  *
- * {@link #isHeadless()} indicates a non-eclipse, non-OSGi environment. (see N4jsc)
  */
 public final class N4JSGlobals {
 
@@ -49,26 +48,8 @@ public final class N4JSGlobals {
 			N4JSD_FILE_EXTENSION,
 			JS_FILE_EXTENSION)));
 
-	private static boolean headless = false;
-
 	private N4JSGlobals() {
 		// private to prevent inheritance & instantiation.
 	}
 
-	/**
-	 * Query if in headless mode (true).
-	 *
-	 * @return if running without eclipse, equinox & OSGi.
-	 */
-	public static boolean isHeadless() {
-		return headless;
-	}
-
-	/**
-	 * @param headless
-	 *            set to true if in headless mode.
-	 */
-	public static void setHeadless(boolean headless) {
-		N4JSGlobals.headless = headless;
-	}
 }

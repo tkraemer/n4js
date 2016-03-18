@@ -15,6 +15,8 @@ import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.base.Predicates;
+
 import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
 
 /**
@@ -29,7 +31,7 @@ public class AT_IDEBUG_532_transpilecrashTest extends AbstractN4jscTest {
 	 */
 	@BeforeClass
 	public static void setupWorkspace() throws IOException {
-		setupWorkspace(WSP_532);
+		setupWorkspace(WSP_532, Predicates.alwaysTrue());
 	}
 
 	/** The Problem was, that nothing was compiled. */

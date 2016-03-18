@@ -1,5 +1,0 @@
-console.log("loaded ITestController module")
-
-export public interface ITestController{
-	public runTests() : void;	
-}

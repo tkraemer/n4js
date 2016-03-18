@@ -10,4 +10,7 @@ Sources {
 		"src"
 	}
 }
-RequiredRuntimeLibraries { rtlib }
+
+RequiredRuntimeLibraries { 
+	n4js-runtime-es2015
+}
