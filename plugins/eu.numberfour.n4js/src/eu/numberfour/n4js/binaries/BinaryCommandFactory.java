@@ -21,10 +21,11 @@ import eu.numberfour.n4js.utils.process.ProcessExecutor;
 import eu.numberfour.n4js.utils.process.ProcessResult;
 
 /**
- * ObjectMother for commands used to interact with external binaries.
+ * Factory for commands used to interact with external binaries.
  */
 @Singleton
 public class BinaryCommandFactory {
+
 	@Inject
 	private ProcessExecutor processExecutor;
 
@@ -48,16 +49,16 @@ public class BinaryCommandFactory {
 
 			@Override
 			public ProcessResult execute() {
-				ProcessBuilder npmProcess = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath, packageName,
-						saveDependnecy);
-				ProcessResult per = processExecutor.createAndExecute(npmProcess, COMMAND_NAME);
-				return per;
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
+						packageName, saveDependnecy);
+				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME);
+				return processResult;
 			}
 		};
 	}
 
 	/**
-	 * Creates command that will execute external node process and command it to reolve pakage main module.
+	 * Creates command that will execute external node process to resolve the main module.
 	 *
 	 * @param packageRoot
 	 *            package name to resolve.
@@ -68,9 +69,9 @@ public class BinaryCommandFactory {
 
 			@Override
 			public ProcessResult execute() {
-				ProcessBuilder npmProcess = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
-				ProcessResult per = processExecutor.createAndExecute(npmProcess, COMMAND_NAME);
-				return per;
+				ProcessBuilder processBuilder = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
+				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME);
+				return processResult;
 			}
 		};
 	}
@@ -86,9 +87,9 @@ public class BinaryCommandFactory {
 
 			@Override
 			public ProcessResult execute() {
-				ProcessBuilder npmProcess = nodeProccessBuilder.createVersionCheckProcess(binary);
-				ProcessResult per = processExecutor.createAndExecute(npmProcess, binary.getLabel());
-				return per;
+				ProcessBuilder processBuilder = nodeProccessBuilder.createVersionCheckProcess(binary);
+				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, binary.getLabel());
+				return processResult;
 			}
 		};
 	}

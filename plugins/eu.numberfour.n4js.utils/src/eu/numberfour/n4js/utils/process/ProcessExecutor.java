@@ -28,54 +28,18 @@ public class ProcessExecutor {
 	@Inject
 	private OutputStreamPrinterThreadProvider printerThreadProvider;
 
-	private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class);
-
-	private static final int ERROR_EXIT_CODE = -1;
-
 	/**
 	 * Default timeout for the integration test script running in seconds.
 	 */
 	private static final long DEFAULT_PROCESS_TIMEOUT_IN_SECONDS = 30L;
-
-	/**
-	 * Convenience method delegates to {@link #createAndExecute(ProcessBuilder, String)} with <code>null</code> as name}
-	 */
-	public ProcessResult createAndExecute(final ProcessBuilder processBuilder) {
-		return createAndExecute(processBuilder, null);
-	}
+	private static final int ERROR_EXIT_CODE = -1;
+	private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class);
 
 	/**
 	 * Convenience method delegates to {@link #execute(Process, String)} with <code>null</code> as name}
 	 */
 	public ProcessResult execute(final Process process) {
 		return execute(process, null);
-	}
-
-	/**
-	 * Convenience method for clients that want to execute process from prepared {@link ProcessBuilder}. Delegate to
-	 * {@link #execute(Process, String)}
-	 *
-	 * @param processBuilder
-	 *            the {@link ProcessBuilder} used to create process
-	 * @param name
-	 *            name used in debug messages, null empty string used
-	 * @return a new result object that represents the actual result of the created process execution
-	 */
-	public ProcessResult createAndExecute(final ProcessBuilder processBuilder, String name) {
-		// prepare name to be used in log messages
-		String pbName = name == null ? " " : " for process '" + name + "' ";
-
-		if (processBuilder == null) {
-			LOGGER.info("Provided process buidler" + pbName + "was null");
-			return new ProcessResult(ERROR_EXIT_CODE, "", "");
-		}
-
-		try {
-			return execute(processBuilder.start(), name);
-		} catch (IOException e) {
-			LOGGER.error("Cannot start process from process builder" + pbName, e);
-			return new ProcessResult(ERROR_EXIT_CODE, "", "");
-		}
 	}
 
 	/**
@@ -107,21 +71,21 @@ public class ProcessExecutor {
 				stdOutThread.join(5L);
 				stdErrThread.join(5L);
 
-				ProcessResult captureOutput = new ProcessResult(exitCode, stdOutThread.toString(),
+				ProcessResult processResult = new ProcessResult(exitCode, stdOutThread.toString(),
 						stdErrThread.toString());
 				if (LOGGER.isDebugEnabled()) {
-					final String processLog = captureOutput.toString();
+					final String processLog = processResult.toString();
 					if (!StringExtensions.isNullOrEmpty(processLog)) {
 						LOGGER.debug(processLog);
 					}
 				}
 
 				process.destroy();
-				return captureOutput;
+				return processResult;
 			}
 
 		} catch (final InterruptedException e) {
-			LOGGER.error("Thread was interrupted while waiting for process" + name + " to end.", e);
+			LOGGER.error("Thread was interrupted while waiting for process" + name + "to end.", e);
 			return new ProcessResult(exitCode, "", writeStackeTrace(e));
 
 		} finally {
@@ -142,8 +106,42 @@ public class ProcessExecutor {
 									+ DEFAULT_PROCESS_TIMEOUT_IN_SECONDS + " " + SECONDS + ".");
 				}
 			} else {
-				LOGGER.info("Spawned " + name + "process was successfully terminated.");
+				LOGGER.info("Spawned" + name + "process was successfully terminated.");
 			}
+		}
+	}
+
+	/**
+	 * Convenience method delegates to {@link #createAndExecute(ProcessBuilder, String)} with <code>null</code> as name}
+	 */
+	public ProcessResult createAndExecute(final ProcessBuilder processBuilder) {
+		return createAndExecute(processBuilder, null);
+	}
+
+	/**
+	 * Convenience method for clients that want to execute process from prepared {@link ProcessBuilder}. Delegate to
+	 * {@link #execute(Process, String)}
+	 *
+	 * @param processBuilder
+	 *            the {@link ProcessBuilder} used to create process
+	 * @param name
+	 *            name used in debug messages, null empty string used
+	 * @return a new result object that represents the actual result of the created process execution
+	 */
+	public ProcessResult createAndExecute(final ProcessBuilder processBuilder, String name) {
+		// prepare name to be used in log messages
+		String pbName = name == null ? " " : " for process '" + name + "' ";
+
+		if (processBuilder == null) {
+			LOGGER.info("Provided process builder" + pbName + "was null");
+			return new ProcessResult(ERROR_EXIT_CODE, "", "");
+		}
+
+		try {
+			return execute(processBuilder.start(), name);
+		} catch (IOException e) {
+			LOGGER.error("Cannot start process from process builder" + pbName, e);
+			return new ProcessResult(ERROR_EXIT_CODE, "", "");
 		}
 	}
 

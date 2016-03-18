@@ -25,15 +25,17 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.binaries.Binary;
 
 /**
- * Factory for the processes interacting with Node.js Takes care of OS specific data.
+ * Factory for the processes interacting with Node.js, takes care of the OS specific data.
  */
 @Singleton
 public class NodeProcesBuilder {
+
 	private static String[] WIN_SHELL_COMAMNDS = { "cmd", "/c" };
 	private static String[] NIX_SHELL_COMAMNDS = { "sh", "-c" };
 
 	@Inject
 	private Provider<NodeJsBinary> nodeBinaryProvider;
+
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
 

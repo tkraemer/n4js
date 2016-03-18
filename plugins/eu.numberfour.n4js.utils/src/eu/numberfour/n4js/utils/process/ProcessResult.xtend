@@ -14,6 +14,7 @@ import org.eclipse.xtend.lib.annotations.AccessorType
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
+import com.google.common.base.Strings
 
 /**
  * Representation of the result of a terminated process.
@@ -29,8 +30,8 @@ class ProcessResult {
 
 	package new(int exitCode, String stdOut, String stdErr) {
 		this.exitCode = exitCode;
-		this.stdOut = if (stdOut === null) "" else stdOut;
-		this.stdErr = if (stdErr === null) "" else stdErr;
+		this.stdOut = Strings.nullToEmpty(stdOut);
+		this.stdErr = Strings.nullToEmpty(stdErr);
 	}
 
 	/** Returns with {@code true} if the exit code is {@code 0}, otherwise {@code false}. */
@@ -43,6 +44,7 @@ class ProcessResult {
 		"Exit code:" + exitCode + LN + "Standard out:" + LN + stdOut + LN + "Standard error:" + LN + stdErr;
 	}
 
+	/** Creates {@link Throwable} instance with provided custom message and {@link #getStdErr error output} of this result. */
 	def Throwable toThrowable(String message) {
 		val Exception exc = new Exception(message + LN + LN + stdErr);
 		exc.setStackTrace(#[]);
