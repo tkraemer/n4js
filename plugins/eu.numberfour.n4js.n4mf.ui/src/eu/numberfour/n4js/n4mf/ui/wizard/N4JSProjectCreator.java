@@ -174,7 +174,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 
 		// For test projects without specified tested project create a test greeter
 		if (ProjectType.TEST.equals(pi.getProjectType()) && pi.getTestedProjects().isEmpty()) {
-			pathContentMap.put(modelFolderName + "/" + "Test_" + safeProjectName + ".n4js",
+			pathContentMap.put(modelFolderName + "/" + "Test_" + projectName + ".n4js",
 					NewN4JSProjectFileTemplates.getSourceFileWithTestGreeter(safeProjectName));
 		}
 
