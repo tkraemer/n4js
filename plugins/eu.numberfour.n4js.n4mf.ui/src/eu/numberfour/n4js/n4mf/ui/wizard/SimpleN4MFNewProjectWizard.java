@@ -13,6 +13,7 @@ package eu.numberfour.n4js.n4mf.ui.wizard;
 import static org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.wizard.IProjectCreator;
 import org.eclipse.xtext.ui.wizard.IProjectInfo;
 
@@ -20,7 +21,6 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
-import eu.numberfour.n4js.projectModel.IN4JSCore;
 
 /**
  * Project wizard that creates a simple Eclipse project with Xtext nature.
@@ -30,7 +30,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.XtextNewProjectWizard {
 
 	@Inject
-	IN4JSCore n4jsCore;
+	IResourceDescriptions resourceDescriptions;
 
 	private static final String FILE_PATH = "icons/newprj_wiz.png";
 	private static final String PLUGIN_ID = N4MFActivator.getInstance().getBundle().getSymbolicName();
@@ -58,7 +58,7 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 	public void addPages() {
 		n4mfWizardNewProjectCreationPage = new N4MFWizardNewProjectCreationPage(projectInfo);
 		addPage(n4mfWizardNewProjectCreationPage);
-		addPage(new N4MFWizardTestedProjectPage(projectInfo, n4jsCore));
+		addPage(new N4MFWizardTestedProjectPage(projectInfo, resourceDescriptions));
 	}
 
 	@Override

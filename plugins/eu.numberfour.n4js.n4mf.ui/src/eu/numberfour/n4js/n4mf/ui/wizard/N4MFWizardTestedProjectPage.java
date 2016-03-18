@@ -15,6 +15,7 @@ import java.util.stream.StreamSupport;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
@@ -22,10 +23,12 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 
+import eu.numberfour.n4js.n4mf.N4mfPackage;
 import eu.numberfour.n4js.n4mf.ProjectType;
-import eu.numberfour.n4js.projectModel.IN4JSCore;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy;
 
 /**
  * This wizard page provides controls for tested projects selection.
@@ -34,15 +37,15 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
  */
 public class N4MFWizardTestedProjectPage extends WizardPage {
 
-	private final IN4JSCore n4jsCore;
+	private final IResourceDescriptions resourceDescriptions;
 	private final N4MFProjectInfo projectInfo;
 
 	/**
 	 * Create a new tested project wizard page.
 	 */
-	public N4MFWizardTestedProjectPage(N4MFProjectInfo projectInfo, IN4JSCore n4jsCore) {
+	public N4MFWizardTestedProjectPage(N4MFProjectInfo projectInfo, IResourceDescriptions resourceDescriptions) {
 		super("Select projects to be tested");
-		this.n4jsCore = n4jsCore;
+		this.resourceDescriptions = resourceDescriptions;
 		this.projectInfo = projectInfo;
 
 		this.setTitle("Select projects to be tested");
@@ -69,15 +72,28 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 		setControl(listComposite);
 	}
 
+	private boolean isExternal(URI resourceURI) {
+		return !resourceURI.isPlatformResource();
+	}
+
 	/**
 	 * Returns all non-test type N4JS projects in the workspace
 	 */
 	private String[] getNonTestProjects() {
-		Stream<IN4JSProject> projects = StreamSupport.stream(n4jsCore.findAllProjects().spliterator(), false);
-		// Filter for existing, non-external, non-test projects
-		return projects.filter(p -> null != p && p.exists() && !p.isExternal())
-				.filter(p -> !ProjectType.TEST.equals(p.getProjectType()))
-				.map(pt -> pt.getProjectName()).toArray(String[]::new);
+
+		Stream<IEObjectDescription> projectDescriptions = StreamSupport.stream(resourceDescriptions
+				.getExportedObjectsByType(N4mfPackage.eINSTANCE.getProjectDescription()).spliterator(), false);
+
+		// Filter for non-test, non-external, non-null project descriptions and return their id
+		return projectDescriptions
+				.filter(desc -> {
+					ProjectType type = N4MFResourceDescriptionStrategy.getProjectType(desc);
+					return type != null && !ProjectType.TEST.equals(type);
+				})
+				.filter(desc -> !isExternal(desc.getEObjectURI()))
+				.map(d -> N4MFResourceDescriptionStrategy.getProjectId(d))
+				.toArray(String[]::new);
+
 	}
 
 }

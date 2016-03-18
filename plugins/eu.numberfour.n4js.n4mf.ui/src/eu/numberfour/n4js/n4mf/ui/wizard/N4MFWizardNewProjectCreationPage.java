@@ -92,7 +92,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 	@Override
 	public boolean canFlipToNextPage() {
 		// Only allow page flipping for test projects
-		return TEST.equals(projectInfo.getProjectType());
+		return isPageComplete() && TEST.equals(projectInfo.getProjectType());
 	}
 
 	@Override
