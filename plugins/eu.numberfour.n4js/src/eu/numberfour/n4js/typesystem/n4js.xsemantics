@@ -2471,6 +2471,7 @@ from {
 	result = typeRef
 
 	// (2) substitute type variables in declared type
+	// TODO GH-43 clean up the following (simplify + resolve redundancy with handling of recursive mappings in GenericsComputer#addSubstitutions())
 	if (typeRef.declaredType instanceof TypeVariable) {
 		val typeVar = typeRef.declaredType as TypeVariable
 		{
