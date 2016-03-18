@@ -2942,7 +2942,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// **
-	// * Used in type expressions, name is optional. 
+	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
 	//	variadic?='...'? (=> name=TIdentifier ':')? typeRef=super::TypeRef;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {

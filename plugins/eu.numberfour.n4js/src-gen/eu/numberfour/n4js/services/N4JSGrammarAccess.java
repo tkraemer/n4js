@@ -166,9 +166,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// **
 		// * Left factored, annotated script elements.
-		// * 
+		// *
 		// * Pretty much inlined versions of type declarations, imports, exports and function declarations.
-		// * 
+		// *
 		// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 		// * / AnnotatedScriptElement ScriptElement:
 		//	AnnotationList ({ExportDeclaration.annotationList=current} ExportDeclarationImpl
@@ -796,9 +796,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// **
 		// * Left factored, annotated exportable elements.
-		// * 
+		// *
 		// * Pretty much inlined versions of type and function declarations.
-		// * 
+		// *
 		// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 		// * / AnnotatedExportableElement <Yield ExportableElement:
 		//	AnnotationList ({FunctionDeclaration.annotationList=current} declaredModifiers+=N4Modifier* AsyncNoTrailingLineBreak
@@ -2215,9 +2215,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// **
 		// * Left factored, annotated expression.
-		// * 
+		// *
 		// * Pretty much inlined versions of function expression and class expression.
-		// * 
+		// *
 		// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 		// * / AnnotatedExpression <Yield Expression:
 		//	ExpressionAnnotationList ({N4ClassExpression.annotationList=current}
@@ -2856,10 +2856,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionAssignmentExpressionParserRuleCall_1_1_1_1_0 = (RuleCall)cExpressionAssignment_1_1_1_1.eContents().get(0);
 		
 		/// **
-		// * This rule was very complicated for Java like type annotations. It is much simpler with the ES4 colon style type annotations. However, 
+		// * This rule was very complicated for Java like type annotations. It is much simpler with the ES4 colon style type annotations. However,
 		// * just in case odd things will happen, may look at the previous version in the git history.
-		// * 
-		// * The colon type annotation syntax clashes with object literals and object destruction. While we still support java type annotation in the 
+		// *
+		// * The colon type annotation syntax clashes with object literals and object destruction. While we still support java type annotation in the
 		// * former case, we do not allow types in the latter. This may be changed in the future.
 		// * / fragment VariableDeclarationImpl <In, Yield, AllowType> *:
 		//	annotations+=Annotation* (<AllowType> => (name=BindingIdentifier<Yield> ColonSepTypeRef?) ('='
@@ -3317,7 +3317,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ForStatement <Yield>:
 		//	{ForStatement} 'for' '(' (
-		//	// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS 
+		//	// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
 		//	=> (initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')') | (->
 		//	varStmtKeyword=VariableStatementKeyword (=>
 		//	(varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield> (forIn?='in' | forOf?='of') ->
@@ -3334,7 +3334,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	')') statement=Statement<Yield>;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ForStatement} 'for' '(' ( // this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS 
+		//{ForStatement} 'for' '(' ( // this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
 		//=> (initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')') | (->
 		//varStmtKeyword=VariableStatementKeyword (=> (varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield>
 		//(forIn?='in' | forOf?='of') -> expression=AssignmentExpression<In=true,Yield>?) |
@@ -3356,7 +3356,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//( // this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS 
+		//( // this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
 		//=> (initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')') | (->
 		//varStmtKeyword=VariableStatementKeyword (=> (varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield>
 		//(forIn?='in' | forOf?='of') -> expression=AssignmentExpression<In=true,Yield>?) |
@@ -3369,7 +3369,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?) ')')
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS 
+		//// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
 		//=> (initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')')
 		public Group getGroup_3_0() { return cGroup_3_0; }
 
@@ -3874,8 +3874,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		/// *
-		// * All clauses are added to a single list, in order to retain order of the clauses. In particular, 
-		// * the position of the default clause is 
+		// * All clauses are added to a single list, in order to retain order of the clauses. In particular,
+		// * the position of the default clause is
 		// * / SwitchStatement <Yield>:
 		//	'switch' '(' expression=Expression<In=true,Yield> ')' '{'
 		//	cases+=CaseClause<Yield>* (cases+=DefaultClause<Yield> cases+=CaseClause<Yield>*)? '}';
@@ -4462,8 +4462,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		// * As described in the spec, array literals may use elisions to influence the
 		// * index of expressions in the array.
 		// * This is achieved by special ArrayElements, called ArrayPadding, which are
-		// * represented by a ',' in the concrete syntax. 
-		// * 
+		// * represented by a ',' in the concrete syntax.
+		// *
 		// * 	ArrayLiteral :
 		// * 		[ Elision/opt ]
 		// * 		[ ElementList ]
@@ -4474,7 +4474,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		// * 	Elision :
 		// * 		,
 		// * 		Elision ,
-		// *  
+		// *
 		// * / ArrayLiteral <Yield>:
 		//	{ArrayLiteral} '['
 		//	elements+=ArrayPadding* (elements+=ArrayElement<Yield> (',' elements+=ArrayPadding* elements+=ArrayElement<Yield>)*
@@ -4551,7 +4551,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cArrayPaddingAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cCommaKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		/// ** 
+		/// **
 		// * This array element is used to pad the remaining elements, e.g. to get the
 		// * length and index right
 		// * / ArrayPadding ArrayElement:
@@ -5269,7 +5269,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cArgumentsWithParenthesesParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		/// * Left-hand-side expressions (11.2) [ECM11]
-		// * Heavily refactored to make them LL(*) compliant. 
+		// * Heavily refactored to make them LL(*) compliant.
 		// * / ParameterizedCallExpression <Yield>:
 		//	TypeArguments
 		//	target=IdentifierRef<Yield> ArgumentsWithParentheses<Yield>;
@@ -6066,7 +6066,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		/// **
 		// * Note that the whole expression, including the rhs, must be in the syntactic
 		// * predicate in order to avoid problems stemming from the parameterized function call
-		// * and from the assignment operator >>>= 
+		// * and from the assignment operator >>>=
 		// * / ShiftExpression <Yield Expression:
 		//	AdditiveExpression<Yield> => ({ShiftExpression.lhs=current} op=ShiftOperator rhs=AdditiveExpression<Yield>)*
 		@Override public ParserRule getRule() { return rule; }
@@ -6147,7 +6147,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		/// *
 		// * Note that the whole expression, including the rhs, must be in the syntactic
 		// * predicate in order to avoid problems stemming from the parameterized function call
-		// * and from the assignment operator >>>= 
+		// * and from the assignment operator >>>=
 		// * / // Relational operators (11.8)
 		//RelationalExpression <In, Yield Expression:
 		//	ShiftExpression<Yield>
@@ -6665,7 +6665,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRhsAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
 		private final RuleCall cRhsAssignmentExpressionParserRuleCall_4_1_1_0 = (RuleCall)cRhsAssignment_4_1_1.eContents().get(0);
 		
-		/// * 
+		/// *
 		// * Assignment operators ([ECM11] 11.13)
 		// * / AssignmentExpression <In, Yield Expression:
 		//	AwaitExpression<In,Yield> | PromisifyExpression<In,Yield> | ArrowExpression<In,Yield> | <Yield> YieldExpression<In> |
@@ -7176,7 +7176,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ****************************************************************************************************
 		//// [ECM11] A.1 Lexical Grammar (p. 211)
-		//// note: 'undefined' is not a literal, but a property of the built-in global object 
+		//// note: 'undefined' is not a literal, but a property of the built-in global object
 		//// ****************************************************************************************************
 		//Literal:
 		//	NumericLiteral | BooleanLiteral | StringLiteral | NullLiteral | RegularExpressionLiteral;
@@ -7633,7 +7633,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
 		//	| 'null' // boolean literal
 		//	| 'true' | 'false' // Future Reserved Word
-		//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * / 
+		//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
 		//	| 'enum';
 		@Override public ParserRule getRule() { return rule; }
 
@@ -7643,7 +7643,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
 		//| 'null' // boolean literal
 		//| 'true' | 'false' // Future Reserved Word
-		//// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * / 
+		//// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
 		//| 'enum'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -7799,7 +7799,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	| 'This' | 'Await' | 'Promisify'
 		//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 		//	| 'await'
-		//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name 
+		//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
 		//	| 'async'
 		//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//	| 'implements' | 'interface'
@@ -7809,7 +7809,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
 		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
-		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name 
+		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name
 		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//| 'implements' | 'interface' | 'private' | 'protected' | 'public'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -7980,7 +7980,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword = (Keyword)rule.eContents().get(1);
 		
 		//// ****************************************************************************************************
-		//// Helpers 
+		//// Helpers
 		//// ****************************************************************************************************
 		/// **
 		// * Placeholder, will be replaced by manually written ANTLR rule.
@@ -8015,10 +8015,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationNoAtSignParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		
 		//// ****************************************************************************************************
-		//// N4 Specific 
+		//// N4 Specific
 		//// ****************************************************************************************************
 		//// ****************************************************************************************************
-		//// Annotations 
+		//// Annotations
 		//// ****************************************************************************************************
 		//// cf. N4JSSpec §9
 		//Annotation:
@@ -8294,7 +8294,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cQualifiedTypeReferenceNameParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//// ****************************************************************************************************
-		//// N4JS versions of type references and expressions, overriding rules in Types.xtext 
+		//// N4JS versions of type references and expressions, overriding rules in Types.xtext
 		//// ****************************************************************************************************
 		//TypeReferenceName:
 		//	'void' | 'This' | 'await' | 'Promisify' | 'target' | QualifiedTypeReferenceName;
@@ -8368,11 +8368,11 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMembersParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		//// ****************************************************************************************************
-		//// New Expressions, Statements, and other Features 
+		//// New Expressions, Statements, and other Features
 		//// ****************************************************************************************************
 		//// cf. N4JSSpec §2.2.1 -- const statements are handled by means of variable statement modifiers
 		//// ****************************************************************************************************
-		//// New Meta Types 
+		//// New Meta Types
 		//// ****************************************************************************************************
 		//// cf. N4JSSpec §14
 		//N4ClassDeclaration <Yield>:
@@ -8984,9 +8984,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// **
 		// * Left factored, annotated member declarations.
-		// * 
+		// *
 		// * Pretty much inlined versions of getter, setter, method and field declarations with leading annotations.
-		// * 
+		// *
 		// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 		// * / AnnotatedN4MemberDeclaration <Yield N4MemberDeclaration:
 		//	N4MemberAnnotationList (=> ({N4GetterDeclaration.annotationList=current} declaredModifiers+=N4Modifier*
@@ -9936,7 +9936,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// *
 		// * In case of object destruction, no colon separated type can be declared in case of single name binding since this would
-		// * be ambiguous (e.g., {prop: newVar} vs.  {propAndVarName: TypeForVar}. 
+		// * be ambiguous (e.g., {prop: newVar} vs.  {propAndVarName: TypeForVar}.
 		// * However it is possible with a preceding LiteralBindingPropertyName, as in this case we simply have three
 		// * segment, e.g. { prop: newVar: TypeOfNewVar }.
 		// * / BindingProperty <Yield, AllowType>:
@@ -11090,9 +11090,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// **
 	// * Left factored, annotated script elements.
-	// * 
+	// *
 	// * Pretty much inlined versions of type declarations, imports, exports and function declarations.
-	// * 
+	// *
 	// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 	// * / AnnotatedScriptElement ScriptElement:
 	//	AnnotationList ({ExportDeclaration.annotationList=current} ExportDeclarationImpl
@@ -11198,9 +11198,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// **
 	// * Left factored, annotated exportable elements.
-	// * 
+	// *
 	// * Pretty much inlined versions of type and function declarations.
-	// * 
+	// *
 	// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 	// * / AnnotatedExportableElement <Yield ExportableElement:
 	//	AnnotationList ({FunctionDeclaration.annotationList=current} declaredModifiers+=N4Modifier* AsyncNoTrailingLineBreak
@@ -11506,9 +11506,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// **
 	// * Left factored, annotated expression.
-	// * 
+	// *
 	// * Pretty much inlined versions of function expression and class expression.
-	// * 
+	// *
 	// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 	// * / AnnotatedExpression <Yield Expression:
 	//	ExpressionAnnotationList ({N4ClassExpression.annotationList=current}
@@ -11669,10 +11669,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// **
-	// * This rule was very complicated for Java like type annotations. It is much simpler with the ES4 colon style type annotations. However, 
+	// * This rule was very complicated for Java like type annotations. It is much simpler with the ES4 colon style type annotations. However,
 	// * just in case odd things will happen, may look at the previous version in the git history.
-	// * 
-	// * The colon type annotation syntax clashes with object literals and object destruction. While we still support java type annotation in the 
+	// *
+	// * The colon type annotation syntax clashes with object literals and object destruction. While we still support java type annotation in the
 	// * former case, we do not allow types in the latter. This may be changed in the future.
 	// * / fragment VariableDeclarationImpl <In, Yield, AllowType> *:
 	//	annotations+=Annotation* (<AllowType> => (name=BindingIdentifier<Yield> ColonSepTypeRef?) ('='
@@ -11782,7 +11782,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ForStatement <Yield>:
 	//	{ForStatement} 'for' '(' (
-	//	// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS 
+	//	// this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
 	//	=> (initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')') | (->
 	//	varStmtKeyword=VariableStatementKeyword (=>
 	//	(varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield> (forIn?='in' | forOf?='of') ->
@@ -11882,8 +11882,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// *
-	// * All clauses are added to a single list, in order to retain order of the clauses. In particular, 
-	// * the position of the default clause is 
+	// * All clauses are added to a single list, in order to retain order of the clauses. In particular,
+	// * the position of the default clause is
 	// * / SwitchStatement <Yield>:
 	//	'switch' '(' expression=Expression<In=true,Yield> ')' '{'
 	//	cases+=CaseClause<Yield>* (cases+=DefaultClause<Yield> cases+=CaseClause<Yield>*)? '}';
@@ -12055,8 +12055,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * As described in the spec, array literals may use elisions to influence the
 	// * index of expressions in the array.
 	// * This is achieved by special ArrayElements, called ArrayPadding, which are
-	// * represented by a ',' in the concrete syntax. 
-	// * 
+	// * represented by a ',' in the concrete syntax.
+	// *
 	// * 	ArrayLiteral :
 	// * 		[ Elision/opt ]
 	// * 		[ ElementList ]
@@ -12067,7 +12067,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * 	Elision :
 	// * 		,
 	// * 		Elision ,
-	// *  
+	// *
 	// * / ArrayLiteral <Yield>:
 	//	{ArrayLiteral} '['
 	//	elements+=ArrayPadding* (elements+=ArrayElement<Yield> (',' elements+=ArrayPadding* elements+=ArrayElement<Yield>)*
@@ -12081,7 +12081,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getArrayLiteralAccess().getRule();
 	}
 
-	/// ** 
+	/// **
 	// * This array element is used to pad the remaining elements, e.g. to get the
 	// * length and index right
 	// * / ArrayPadding ArrayElement:
@@ -12210,7 +12210,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Left-hand-side expressions (11.2) [ECM11]
-	// * Heavily refactored to make them LL(*) compliant. 
+	// * Heavily refactored to make them LL(*) compliant.
 	// * / ParameterizedCallExpression <Yield>:
 	//	TypeArguments
 	//	target=IdentifierRef<Yield> ArgumentsWithParentheses<Yield>;
@@ -12409,7 +12409,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Note that the whole expression, including the rhs, must be in the syntactic
 	// * predicate in order to avoid problems stemming from the parameterized function call
-	// * and from the assignment operator >>>= 
+	// * and from the assignment operator >>>=
 	// * / ShiftExpression <Yield Expression:
 	//	AdditiveExpression<Yield> => ({ShiftExpression.lhs=current} op=ShiftOperator rhs=AdditiveExpression<Yield>)*
 	public ShiftExpressionElements getShiftExpressionAccess() {
@@ -12434,7 +12434,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Note that the whole expression, including the rhs, must be in the syntactic
 	// * predicate in order to avoid problems stemming from the parameterized function call
-	// * and from the assignment operator >>>= 
+	// * and from the assignment operator >>>=
 	// * / // Relational operators (11.8)
 	//RelationalExpression <In, Yield Expression:
 	//	ShiftExpression<Yield>
@@ -12599,7 +12599,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalExpressionAccess().getRule();
 	}
 
-	/// * 
+	/// *
 	// * Assignment operators ([ECM11] 11.13)
 	// * / AssignmentExpression <In, Yield Expression:
 	//	AwaitExpression<In,Yield> | PromisifyExpression<In,Yield> | ArrowExpression<In,Yield> | <Yield> YieldExpression<In> |
@@ -12735,7 +12735,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ****************************************************************************************************
 	//// [ECM11] A.1 Lexical Grammar (p. 211)
-	//// note: 'undefined' is not a literal, but a property of the built-in global object 
+	//// note: 'undefined' is not a literal, but a property of the built-in global object
 	//// ****************************************************************************************************
 	//Literal:
 	//	NumericLiteral | BooleanLiteral | StringLiteral | NullLiteral | RegularExpressionLiteral;
@@ -12935,7 +12935,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
 	//	| 'null' // boolean literal
 	//	| 'true' | 'false' // Future Reserved Word
-	//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * / 
+	//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
 	//	| 'enum';
 	public ReservedWordElements getReservedWordAccess() {
 		return pReservedWord;
@@ -12955,7 +12955,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'This' | 'Await' | 'Promisify'
 	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 	//	| 'await'
-	//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name 
+	//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
 	//	| 'async'
 	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	//	| 'implements' | 'interface'
@@ -13176,7 +13176,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// ****************************************************************************************************
-	//// Helpers 
+	//// Helpers
 	//// ****************************************************************************************************
 	/// **
 	// * Placeholder, will be replaced by manually written ANTLR rule.
@@ -13212,10 +13212,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// ****************************************************************************************************
-	//// N4 Specific 
+	//// N4 Specific
 	//// ****************************************************************************************************
 	//// ****************************************************************************************************
-	//// Annotations 
+	//// Annotations
 	//// ****************************************************************************************************
 	//// cf. N4JSSpec §9
 	//Annotation:
@@ -13319,7 +13319,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ****************************************************************************************************
-	//// N4JS versions of type references and expressions, overriding rules in Types.xtext 
+	//// N4JS versions of type references and expressions, overriding rules in Types.xtext
 	//// ****************************************************************************************************
 	//TypeReferenceName:
 	//	'void' | 'This' | 'await' | 'Promisify' | 'target' | QualifiedTypeReferenceName;
@@ -13342,11 +13342,11 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ****************************************************************************************************
-	//// New Expressions, Statements, and other Features 
+	//// New Expressions, Statements, and other Features
 	//// ****************************************************************************************************
 	//// cf. N4JSSpec §2.2.1 -- const statements are handled by means of variable statement modifiers
 	//// ****************************************************************************************************
-	//// New Meta Types 
+	//// New Meta Types
 	//// ****************************************************************************************************
 	//// cf. N4JSSpec §14
 	//N4ClassDeclaration <Yield>:
@@ -13492,9 +13492,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// **
 	// * Left factored, annotated member declarations.
-	// * 
+	// *
 	// * Pretty much inlined versions of getter, setter, method and field declarations with leading annotations.
-	// * 
+	// *
 	// * The GrammarLinter ensures that the inlined content mirrors the content of the real declarations.
 	// * / AnnotatedN4MemberDeclaration <Yield N4MemberDeclaration:
 	//	N4MemberAnnotationList (=> ({N4GetterDeclaration.annotationList=current} declaredModifiers+=N4Modifier*
@@ -13687,7 +13687,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	// * In case of object destruction, no colon separated type can be declared in case of single name binding since this would
-	// * be ambiguous (e.g., {prop: newVar} vs.  {propAndVarName: TypeForVar}. 
+	// * be ambiguous (e.g., {prop: newVar} vs.  {propAndVarName: TypeForVar}.
 	// * However it is possible with a preceding LiteralBindingPropertyName, as in this case we simply have three
 	// * segment, e.g. { prop: newVar: TypeOfNewVar }.
 	// * / BindingProperty <Yield, AllowType>:
@@ -13761,18 +13761,18 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// ****************************************************************************************************
-	//// N4JS versions of type references and expressions, also used by Types.xtext 
+	//// N4JS versions of type references and expressions, also used by Types.xtext
 	//// ****************************************************************************************************
-	/// * 
+	/// *
 	// * cf. N4JSSec §4
 	// * Depending on where the type references is used, not all possible variants are allows.
 	// * This is however checked by the validator in order to
 	// * 1) provide better error messages
 	// * 2) simplify grammar
-	// * 
+	// *
 	// * Constraints:
 	// * UnionElementTypeRef: no AnyType, no Void, union itself must not be dynamic
-	// * FParTypeRef: no Void 
+	// * FParTypeRef: no Void
 	// * ReturnTypeRef: everything, but no dynamic
 	// * // in N4JS:
 	// * VarTypeRef: no Void, i.e.
@@ -13883,7 +13883,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// **
-	// * Used in type expressions, name is optional. 
+	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
 	//	variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
