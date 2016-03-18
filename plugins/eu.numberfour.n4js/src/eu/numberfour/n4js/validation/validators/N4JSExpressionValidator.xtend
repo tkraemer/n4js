@@ -382,6 +382,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (isArrayElem) {
 			utilityCall = container.eContainer.eContainer
 		}
+		if (utilityCall instanceof Argument) {
+			utilityCall = utilityCall.eContainer;
+		}
 		// let's see if 'container' stands for 'Promise.{all/race/resolve}(...,asyncInvocation,...)'
 		if (utilityCall instanceof ParameterizedCallExpression) {
 			if (utilityCall.target instanceof ParameterizedPropertyAccessExpression) {
@@ -395,7 +398,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					val name = utilityAccess.property.name
 					if (isArrayElem && (name == 'all' || name == 'race')) {
 						// let's see if 'callExpression' occurs as arg in 'Promise.{all/race}([...,asyncInvocation,...])'
-						val argOccursInArray = utilityCall.arguments.exists[arg| arg === container.eContainer]
+						val argOccursInArray = utilityCall.arguments.exists[arg| arg.expression === container.eContainer]
 						return argOccursInArray
 					}
 				}

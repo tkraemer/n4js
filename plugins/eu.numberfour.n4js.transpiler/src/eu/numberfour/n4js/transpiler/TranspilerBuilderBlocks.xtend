@@ -655,7 +655,7 @@ public class TranspilerBuilderBlocks
 	{
 		return _CallExpr => [
 			target = _IdentRef(symbolFor_n4Export)
-			arguments += _Argument(_StringLiteralForSTE( steExportedElement ))
+			arguments += _Argument(_StringLiteralForSTE( steExportedElement, true ))
 			arguments += _Argument(expr)
 		]
 	}

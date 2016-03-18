@@ -108,7 +108,7 @@ abstract class AbstractCallExpressionTypesystemTest extends AbstractTypesystemTe
 					null;
 			if (expectedType !== null) {
 				val trace = new RuleApplicationTrace();
-				val actualTypeResult = ts.expectedTypeIn(G, trace, call, arg.expression);
+				val actualTypeResult = ts.expectedTypeIn(G, trace, arg, arg.expression);
 				if (actualTypeResult.failed) {
 					assertNoFailure(actualTypeResult, trace);
 				}

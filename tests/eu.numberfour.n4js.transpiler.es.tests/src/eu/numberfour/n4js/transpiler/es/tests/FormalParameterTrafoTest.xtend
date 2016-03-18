@@ -216,7 +216,7 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			// C) checking call of g(a,b,a,c) in body of methodF():
 		 	val paramCall_of_g_IM = (F_IM.body?.statements.findLast[ it instanceof ExpressionStatement] as ExpressionStatement).expression as ParameterizedCallExpression;
-		 	val g_Args_IM = paramCall_of_g_IM.arguments
+		 	val g_Args_IM = paramCall_of_g_IM.arguments.map[expression]
 		 	#['a','b','a','c'].forEach[arg,i| ("i="+i).assertEquals(arg,(g_Args_IM.get(i) as IdentifierRef_IM).id_IM.name )]
 		}
 		/// checking transformed result, g()

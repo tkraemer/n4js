@@ -257,7 +257,7 @@ class ClassConstructorAssistant extends TransformationAssistant {
 					_IdentRef(fpars.last.findSymbolTableEntryForElement(true))
 				)); // end CallExpr
 			} else {
-				arguments += fpars.map[findSymbolTableEntryForElement(it , true)].map[_IdentRef(it)];
+				arguments += fpars.map[findSymbolTableEntryForElement(it , true)].map[_Argument(_IdentRef(it))];
 			}
 		]);
 	}
