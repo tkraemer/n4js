@@ -156,7 +156,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 
 		// create folders
 
-		// folders in this.allFolders are already created by the super class
+		// folders in allFolders are already created by the super class
 		List<String> otherFolders = Arrays.asList();
 		for (Iterator<String> iterator = otherFolders.iterator(); iterator.hasNext();) {
 			String folderName = iterator.next();
@@ -197,7 +197,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		List<String> sources = pi.getSourceFolders();
 		List<String> tests = pi.getTestSourceFolders();
 
-		// If it's test project use model folder name as test folder
+		// If it's a test project use model folder name as test source folder
 		// and optionally add the source folder as source,
 		if (ProjectType.TEST.equals(pi.getProjectType())) {
 			if (pi.getAdditionalSourceFolder()) {

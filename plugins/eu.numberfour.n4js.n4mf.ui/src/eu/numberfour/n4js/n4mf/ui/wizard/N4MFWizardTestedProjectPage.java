@@ -46,7 +46,7 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 		this.projectInfo = projectInfo;
 
 		this.setTitle("Select projects to be tested");
-		this.setMessage("Select one or multiple projects to be tested in your new test project");
+		this.setMessage("Select projects to be tested in your new test project");
 	}
 
 	@Override
@@ -59,7 +59,6 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 		projectListViewer.setInput(getNonTestProjects());
 
 		// Data binding
-
 		DataBindingContext databindingContext = new DataBindingContext();
 		parent.addDisposeListener(e -> databindingContext.dispose());
 
@@ -71,10 +70,10 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 
 	/**
 	 * Returns all non-test type N4JS projects in the workspace
-	 *
 	 */
 	private String[] getNonTestProjects() {
 		Stream<IN4JSProject> projects = StreamSupport.stream(n4jsCore.findAllProjects().spliterator(), false);
+		// Filter for existing, non-external, non-test projects
 		return projects.filter(p -> null != p && p.exists() && !p.isExternal())
 				.filter(p -> !ProjectType.TEST.equals(p.getProjectType()))
 				.map(pt -> pt.getProjectName()).toArray(String[]::new);

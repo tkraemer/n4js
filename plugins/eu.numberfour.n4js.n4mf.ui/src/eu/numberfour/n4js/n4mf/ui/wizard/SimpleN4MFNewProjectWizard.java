@@ -63,7 +63,7 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 	public boolean canFinish() {
 		/*
 		 * Can finish after first page for non-test projects or like normally if all pages are complete for test
-		 * projects (super)
+		 * projects
 		 *
 		 * This means that even for test projects the whole second page can be completely skipped.
 		 */

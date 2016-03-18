@@ -56,7 +56,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -113,7 +112,8 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		projectType.getControl().setLayoutData(fillDefaults().grab(true, false).create());
 		projectType.setInput(ProjectType.values());
 
-		// A composite to hold the changin UI (additional library project options / additional test project options)
+		// A composite to hold the changing UI component (additional library project options / additional test project
+		// options)
 		final Composite changingComposite = new Composite(control, NONE);
 		StackLayout changingStackLayout = new StackLayout();
 		changingComposite.setLayout(changingStackLayout);
@@ -123,26 +123,26 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		final Composite emptyOptions = new Composite(changingComposite, NONE);
 
 		// Additional library project options
-		final Group libraryProjectOptionsComposite = new Group(changingComposite, NONE);
-		libraryProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
+		final Group libraryProjectOptionsGroup = new Group(changingComposite, NONE);
+		libraryProjectOptionsGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
 
-		new Label(libraryProjectOptionsComposite, SWT.NONE).setText("Implementation ID:");
-		final Text implementationIdText = new Text(libraryProjectOptionsComposite, BORDER);
+		new Label(libraryProjectOptionsGroup, SWT.NONE).setText("Implementation ID:");
+		final Text implementationIdText = new Text(libraryProjectOptionsGroup, BORDER);
 		implementationIdText.setLayoutData(fillDefaults().align(FILL, CENTER).grab(true, false).create());
 
-		final ListViewer apiViewer = new ListViewer(libraryProjectOptionsComposite, BORDER | MULTI);
+		final ListViewer apiViewer = new ListViewer(libraryProjectOptionsGroup, BORDER | MULTI);
 		apiViewer.getControl().setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).span(2, 1).create());
 		apiViewer.setContentProvider(ArrayContentProvider.getInstance());
 		apiViewer.setInput(getAvailableApiProjectIds());
 
 		// Additional test project options
-		final Group testProjectOptionsComposite = new Group(changingComposite, NONE);
-		testProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
+		final Group testProjectOptionsGroup = new Group(changingComposite, NONE);
+		testProjectOptionsGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
 
-		final Button addNormalSourceFolderButton = new Button(testProjectOptionsComposite, CHECK);
+		final Button addNormalSourceFolderButton = new Button(testProjectOptionsGroup, CHECK);
 		addNormalSourceFolderButton.setText("Also create a non-test source folder");
 
-		Label nextPageHint = new Label(testProjectOptionsComposite, NONE);
+		Label nextPageHint = new Label(testProjectOptionsGroup, NONE);
 		nextPageHint.setText("The projects which should be tested can be selected on the next page");
 		nextPageHint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
 
@@ -154,10 +154,10 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		projectType.addPostSelectionChangedListener(e -> {
 			switch (projectInfo.getProjectType()) {
 			case LIBRARY:
-				changingStackLayout.topControl = libraryProjectOptionsComposite;
+				changingStackLayout.topControl = libraryProjectOptionsGroup;
 				break;
 			case TEST:
-				changingStackLayout.topControl = testProjectOptionsComposite;
+				changingStackLayout.topControl = testProjectOptionsGroup;
 				break;
 			default:
 				changingStackLayout.topControl = emptyOptions;
@@ -188,10 +188,6 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		dbc.updateTargets();
 
 		setControl(control);
-	}
-
-	private Control emptyPlaceholder(Composite parent) {
-		return new Label(parent, NONE);
 	}
 
 	@Override
@@ -226,18 +222,6 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 					}
 				}
 			}
-
-			/*
-			 * if (TEST.equals(projectInfo.getProjectType())) { List<String> testedProjects =
-			 * projectInfo.getTestedProjects();
-			 *
-			 * if (null != testedProjects) { for (String testedProject : testedProjects) { // Don't perform advanced
-			 * validation when tested project field is empty if (testedProject != null && !testedProject.isEmpty()) {
-			 * IN4JSProject n4jsProject = n4jsCore .findProject(URI.createPlatformResourceURI(testedProject, true))
-			 * .orNull(); if (null == n4jsProject || !n4jsProject.exists()) { errorMsg =
-			 * "One of the tested projects doesn't exist"; } else if (TEST.equals(n4jsProject.getProjectType())) {
-			 * errorMsg = "The tested projects must not be test project themselves"; } } } } }
-			 */
 
 			if (SYSTEM.equals(projectInfo.getProjectType())) {
 				errorMsg = "Project type 'System' is deprecated and will be removed soon. Use either 'API' or 'Library' instead.";
@@ -288,25 +272,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		dbc.bindValue(WidgetProperties.selection().observe(addNormalSourceFolderButton),
 				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER)
 						.observe(projectInfo));
-
-		/*
-		 * // Bind the project text dbc.bindValue(WidgetProperties.text(Modify).observe(testedProjectText),
-		 * PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.TESTED_PROJECT).observe(projectInfo));
-		 */
-		// Setup the browse button with the dialog
-		/*
-		 * testedProjectBrowse.addSelectionListener(new SelectionListener() {
-		 *
-		 * @Override public void widgetSelected(SelectionEvent e) { ProjectSelectionDialog dialog = new
-		 * ProjectSelectionDialog(getShell()); // Filter out N4JS test projects dialog.addFilter(new
-		 * NonTestProjectFilter()); dialog.open(); // On Cancel if (dialog.getFirstResult() == null) { return; } // Use
-		 * the result as new value Object result = dialog.getFirstResult(); if (result instanceof IProject) {
-		 * testedProjectText.setText(((IProject) result).getName()); } }
-		 *
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 *
-		 * } });
-		 */}
+	}
 
 	private void initProjectTypeBinding(final DataBindingContext dbc, final ComboViewer projectType) {
 		dbc.bindValue(observeSingleSelection(projectType),

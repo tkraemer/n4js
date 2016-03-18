@@ -18,7 +18,13 @@ import eu.numberfour.n4js.n4mf.ProjectType;
  */
 class NewN4JSProjectFileTemplates {
 
-		static def getSourceFileWithGreeterClass(String projectName, String safeProjectName) '''
+	/**
+	 * Returns the contents of the greeter class module for given projectName
+	 * 
+	 * @param projectName The name of the project
+	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
+	 */
+	static def getSourceFileWithGreeterClass(String projectName, String safeProjectName) '''
 		export class GreeterFor_«safeProjectName» {
 		    public greet() {
 		        console.log("Hello World from '«projectName»'!");
@@ -31,10 +37,15 @@ class NewN4JSProjectFileTemplates {
 		
 	'''
 	
-	static def getSourceFileWithTestGreeter(String projectName) '''
+	/** 
+	 * Returns the contents of the greeter test class module for given projectName
+	 * 
+	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
+	 */
+	static def getSourceFileWithTestGreeter(String safeProjectName) '''
 		import { Assert } from "n4/mangel/assert/Assert"
 		
-		export public class Test_«projectName» {
+		export public class Test_«safeProjectName» {
 			@Test
 			test(){
 				Assert.isTrue(true, "Testing works!")
@@ -111,10 +122,10 @@ class NewN4JSProjectFileTemplates {
 		«simpleManifestContents(projectInfo.projectName, projectInfo.projectTypeForManifest, projectInfo.sourceFolders,
 								projectInfo.externalSourceFolders, projectInfo.testSourceFolders, projectInfo.outputFolder)»
 		«IF ProjectType.LIBRARY.equals(projectInfo.projectType)»
-		«libraryManifestFragment(projectInfo.implementationId, projectInfo.implementedProjects)»
+		«	libraryManifestFragment(projectInfo.implementationId, projectInfo.implementedProjects)»
 		«ENDIF»
 		«IF ProjectType.TEST.equals(projectInfo.projectType)»
-		«testManifestFragment(projectInfo.getTestedProjects)»
+		«	testManifestFragment(projectInfo.getTestedProjects)»
 		«ENDIF»
 		«projectDependenciesManifestFragment(projectInfo.projectDependencies)»
 		'''
