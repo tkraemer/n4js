@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.n4mf.ui.wizard
 
 import java.util.List
+import eu.numberfour.n4js.n4mf.ProjectType;
 
 /**
  * Basic Xtend templates for new project wizard.
@@ -109,8 +110,12 @@ class NewN4JSProjectFileTemplates {
 		'''
 		«simpleManifestContents(projectInfo.projectName, projectInfo.projectTypeForManifest, projectInfo.sourceFolders,
 								projectInfo.externalSourceFolders, projectInfo.testSourceFolders, projectInfo.outputFolder)»
+		«IF ProjectType.LIBRARY.equals(projectInfo.projectType)»
 		«libraryManifestFragment(projectInfo.implementationId, projectInfo.implementedProjects)»
+		«ENDIF»
+		«IF ProjectType.TEST.equals(projectInfo.projectType)»
 		«testManifestFragment(projectInfo.getTestedProjects)»
+		«ENDIF»
 		«projectDependenciesManifestFragment(projectInfo.projectDependencies)»
 		'''
 }

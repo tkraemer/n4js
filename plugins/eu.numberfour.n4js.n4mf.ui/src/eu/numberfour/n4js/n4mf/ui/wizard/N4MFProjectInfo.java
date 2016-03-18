@@ -65,7 +65,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	private IWorkingSet[] selectedWorkingSets;
 
 	/** The tested project in case of a test project */
-	private List<String> testedProjects;
+	private List<String> testedProjects = new ArrayList<>();
 
 	/** Specifies whether a test project should have an additional normal source folder */
 	private boolean additionalSourceFolder;
@@ -176,7 +176,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 * @param implementedApis
 	 *            the list of implemented API project IDs to set.
 	 */
-	public void setImplementedApis(List<String> implementedApis) {
+	public void setImplementedProjects(List<String> implementedApis) {
 		this.implementedProjects = implementedApis;
 	}
 
