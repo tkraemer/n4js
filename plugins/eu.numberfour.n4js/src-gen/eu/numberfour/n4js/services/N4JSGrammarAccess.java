@@ -5394,92 +5394,92 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTemplateTemplateLiteralParserRuleCall_1_2_3_0_1_0() { return cTemplateTemplateLiteralParserRuleCall_1_2_3_0_1_0; }
 	}
 
-	public class ArgumentsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.Arguments");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(0);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Assignment cArgumentsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cArgumentsAssignmentExpressionParserRuleCall_0_0_0 = (RuleCall)cArgumentsAssignment_0_0.eContents().get(0);
-		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
-		private final Keyword cCommaKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
-		private final Assignment cArgumentsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
-		private final RuleCall cArgumentsAssignmentExpressionParserRuleCall_0_1_1_0 = (RuleCall)cArgumentsAssignment_0_1_1.eContents().get(0);
-		private final Group cGroup_0_2 = (Group)cGroup_0.eContents().get(2);
-		private final Keyword cCommaKeyword_0_2_0 = (Keyword)cGroup_0_2.eContents().get(0);
-		private final Assignment cSpreadAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
-		private final Keyword cSpreadFullStopFullStopFullStopKeyword_0_2_1_0 = (Keyword)cSpreadAssignment_0_2_1.eContents().get(0);
-		private final Assignment cArgumentsAssignment_0_2_2 = (Assignment)cGroup_0_2.eContents().get(2);
-		private final RuleCall cArgumentsAssignmentExpressionParserRuleCall_0_2_2_0 = (RuleCall)cArgumentsAssignment_0_2_2.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Assignment cSpreadAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final Keyword cSpreadFullStopFullStopFullStopKeyword_1_0_0 = (Keyword)cSpreadAssignment_1_0.eContents().get(0);
-		private final Assignment cArgumentsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cArgumentsAssignmentExpressionParserRuleCall_1_1_0 = (RuleCall)cArgumentsAssignment_1_1.eContents().get(0);
+	public class ArgumentsWithParenthesesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.ArgumentsWithParentheses");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cArgumentsParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
-		//fragment Arguments <Yield> *:
-		//	arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (','
-		//	spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
-		//	| spread?='...' arguments+=AssignmentExpression<In=true,Yield>;
+		//fragment ArgumentsWithParentheses <Yield> *:
+		//	'(' Arguments<Yield>? ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (',' spread?='...'
-		//arguments+=AssignmentExpression<In=true,Yield>)? | spread?='...' arguments+=AssignmentExpression<In=true,Yield>
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//'(' Arguments<Yield>? ')'
+		public Group getGroup() { return cGroup; }
 
-		//arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (',' spread?='...'
-		//arguments+=AssignmentExpression<In=true,Yield>)?
-		public Group getGroup_0() { return cGroup_0; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
 
-		//arguments+=AssignmentExpression<In=true,Yield>
-		public Assignment getArgumentsAssignment_0_0() { return cArgumentsAssignment_0_0; }
+		//Arguments<Yield>?
+		public RuleCall getArgumentsParserRuleCall_1() { return cArgumentsParserRuleCall_1; }
 
-		//AssignmentExpression<In=true,Yield>
-		public RuleCall getArgumentsAssignmentExpressionParserRuleCall_0_0_0() { return cArgumentsAssignmentExpressionParserRuleCall_0_0_0; }
+		//')'
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+	}
 
-		//(',' arguments+=AssignmentExpression<In=true,Yield>)*
-		public Group getGroup_0_1() { return cGroup_0_1; }
+	public class ArgumentsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.Arguments");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Assignment cArgumentsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cArgumentsArgumentParserRuleCall_0_0 = (RuleCall)cArgumentsAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cCommaKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cArgumentsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cArgumentsArgumentParserRuleCall_1_1_0 = (RuleCall)cArgumentsAssignment_1_1.eContents().get(0);
+		
+		//fragment Arguments <Yield> *:
+		//	arguments+=Argument<Yield> (',' arguments+=Argument<Yield>)*;
+		@Override public ParserRule getRule() { return rule; }
 
-		//','
-		public Keyword getCommaKeyword_0_1_0() { return cCommaKeyword_0_1_0; }
+		//arguments+=Argument<Yield> (',' arguments+=Argument<Yield>)*
+		public Group getGroup() { return cGroup; }
 
-		//arguments+=AssignmentExpression<In=true,Yield>
-		public Assignment getArgumentsAssignment_0_1_1() { return cArgumentsAssignment_0_1_1; }
+		//arguments+=Argument<Yield>
+		public Assignment getArgumentsAssignment_0() { return cArgumentsAssignment_0; }
 
-		//AssignmentExpression<In=true,Yield>
-		public RuleCall getArgumentsAssignmentExpressionParserRuleCall_0_1_1_0() { return cArgumentsAssignmentExpressionParserRuleCall_0_1_1_0; }
+		//Argument<Yield>
+		public RuleCall getArgumentsArgumentParserRuleCall_0_0() { return cArgumentsArgumentParserRuleCall_0_0; }
 
-		//(',' spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
-		public Group getGroup_0_2() { return cGroup_0_2; }
-
-		//','
-		public Keyword getCommaKeyword_0_2_0() { return cCommaKeyword_0_2_0; }
-
-		//spread?='...'
-		public Assignment getSpreadAssignment_0_2_1() { return cSpreadAssignment_0_2_1; }
-
-		//'...'
-		public Keyword getSpreadFullStopFullStopFullStopKeyword_0_2_1_0() { return cSpreadFullStopFullStopFullStopKeyword_0_2_1_0; }
-
-		//arguments+=AssignmentExpression<In=true,Yield>
-		public Assignment getArgumentsAssignment_0_2_2() { return cArgumentsAssignment_0_2_2; }
-
-		//AssignmentExpression<In=true,Yield>
-		public RuleCall getArgumentsAssignmentExpressionParserRuleCall_0_2_2_0() { return cArgumentsAssignmentExpressionParserRuleCall_0_2_2_0; }
-
-		//spread?='...' arguments+=AssignmentExpression<In=true,Yield>
+		//(',' arguments+=Argument<Yield>)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//spread?='...'
-		public Assignment getSpreadAssignment_1_0() { return cSpreadAssignment_1_0; }
+		//','
+		public Keyword getCommaKeyword_1_0() { return cCommaKeyword_1_0; }
 
-		//'...'
-		public Keyword getSpreadFullStopFullStopFullStopKeyword_1_0_0() { return cSpreadFullStopFullStopFullStopKeyword_1_0_0; }
-
-		//arguments+=AssignmentExpression<In=true,Yield>
+		//arguments+=Argument<Yield>
 		public Assignment getArgumentsAssignment_1_1() { return cArgumentsAssignment_1_1; }
 
+		//Argument<Yield>
+		public RuleCall getArgumentsArgumentParserRuleCall_1_1_0() { return cArgumentsArgumentParserRuleCall_1_1_0; }
+	}
+
+	public class ArgumentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.Argument");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSpreadAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cSpreadFullStopFullStopFullStopKeyword_0_0 = (Keyword)cSpreadAssignment_0.eContents().get(0);
+		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cExpressionAssignmentExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
+		
+		//Argument <Yield>:
+		//	spread?='...'? expression=AssignmentExpression<In=true,Yield>;
+		@Override public ParserRule getRule() { return rule; }
+
+		//spread?='...'? expression=AssignmentExpression<In=true,Yield>
+		public Group getGroup() { return cGroup; }
+
+		//spread?='...'?
+		public Assignment getSpreadAssignment_0() { return cSpreadAssignment_0; }
+
+		//'...'
+		public Keyword getSpreadFullStopFullStopFullStopKeyword_0_0() { return cSpreadFullStopFullStopFullStopKeyword_0_0; }
+
+		//expression=AssignmentExpression<In=true,Yield>
+		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
+
 		//AssignmentExpression<In=true,Yield>
-		public RuleCall getArgumentsAssignmentExpressionParserRuleCall_1_1_0() { return cArgumentsAssignmentExpressionParserRuleCall_1_1_0; }
+		public RuleCall getExpressionAssignmentExpressionParserRuleCall_1_0() { return cExpressionAssignmentExpressionParserRuleCall_1_0; }
 	}
 
 	public class TypeArgumentsElements extends AbstractParserRuleElementFinder {
@@ -5524,30 +5524,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'>'
 		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
-	}
-
-	public class ArgumentsWithParenthesesElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.ArgumentsWithParentheses");
-		private final Group cGroup = (Group)rule.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final RuleCall cArgumentsParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		//fragment ArgumentsWithParentheses <Yield> *:
-		//	'(' Arguments<Yield>? ')';
-		@Override public ParserRule getRule() { return rule; }
-
-		//'(' Arguments<Yield>? ')'
-		public Group getGroup() { return cGroup; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
-
-		//Arguments<Yield>?
-		public RuleCall getArgumentsParserRuleCall_1() { return cArgumentsParserRuleCall_1; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
 
 	public class MemberExpressionElements extends AbstractParserRuleElementFinder {
@@ -10630,9 +10606,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	private final PropertySetterDeclarationElements pPropertySetterDeclaration;
 	private final ParameterizedCallExpressionElements pParameterizedCallExpression;
 	private final LeftHandSideExpressionElements pLeftHandSideExpression;
-	private final ArgumentsElements pArguments;
-	private final TypeArgumentsElements pTypeArguments;
 	private final ArgumentsWithParenthesesElements pArgumentsWithParentheses;
+	private final ArgumentsElements pArguments;
+	private final ArgumentElements pArgument;
+	private final TypeArgumentsElements pTypeArguments;
 	private final MemberExpressionElements pMemberExpression;
 	private final IndexedAccessExpressionTailElements pIndexedAccessExpressionTail;
 	private final ParameterizedPropertyAccessExpressionTailElements pParameterizedPropertyAccessExpressionTail;
@@ -10881,9 +10858,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPropertySetterDeclaration = new PropertySetterDeclarationElements();
 		this.pParameterizedCallExpression = new ParameterizedCallExpressionElements();
 		this.pLeftHandSideExpression = new LeftHandSideExpressionElements();
-		this.pArguments = new ArgumentsElements();
-		this.pTypeArguments = new TypeArgumentsElements();
 		this.pArgumentsWithParentheses = new ArgumentsWithParenthesesElements();
+		this.pArguments = new ArgumentsElements();
+		this.pArgument = new ArgumentElements();
+		this.pTypeArguments = new TypeArgumentsElements();
 		this.pMemberExpression = new MemberExpressionElements();
 		this.pIndexedAccessExpressionTail = new IndexedAccessExpressionTailElements();
 		this.pParameterizedPropertyAccessExpressionTail = new ParameterizedPropertyAccessExpressionTailElements();
@@ -12236,16 +12214,34 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getLeftHandSideExpressionAccess().getRule();
 	}
 
+	//fragment ArgumentsWithParentheses <Yield> *:
+	//	'(' Arguments<Yield>? ')';
+	public ArgumentsWithParenthesesElements getArgumentsWithParenthesesAccess() {
+		return pArgumentsWithParentheses;
+	}
+	
+	public ParserRule getArgumentsWithParenthesesRule() {
+		return getArgumentsWithParenthesesAccess().getRule();
+	}
+
 	//fragment Arguments <Yield> *:
-	//	arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (','
-	//	spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
-	//	| spread?='...' arguments+=AssignmentExpression<In=true,Yield>;
+	//	arguments+=Argument<Yield> (',' arguments+=Argument<Yield>)*;
 	public ArgumentsElements getArgumentsAccess() {
 		return pArguments;
 	}
 	
 	public ParserRule getArgumentsRule() {
 		return getArgumentsAccess().getRule();
+	}
+
+	//Argument <Yield>:
+	//	spread?='...'? expression=AssignmentExpression<In=true,Yield>;
+	public ArgumentElements getArgumentAccess() {
+		return pArgument;
+	}
+	
+	public ParserRule getArgumentRule() {
+		return getArgumentAccess().getRule();
 	}
 
 	//fragment TypeArguments *:
@@ -12256,16 +12252,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypeArgumentsRule() {
 		return getTypeArgumentsAccess().getRule();
-	}
-
-	//fragment ArgumentsWithParentheses <Yield> *:
-	//	'(' Arguments<Yield>? ')';
-	public ArgumentsWithParenthesesElements getArgumentsWithParenthesesAccess() {
-		return pArgumentsWithParentheses;
-	}
-	
-	public ParserRule getArgumentsWithParenthesesRule() {
-		return getArgumentsWithParenthesesAccess().getRule();
 	}
 
 	//MemberExpression <Yield Expression:
