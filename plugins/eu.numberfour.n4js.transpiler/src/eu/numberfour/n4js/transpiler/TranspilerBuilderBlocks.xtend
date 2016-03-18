@@ -16,6 +16,7 @@ import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration
 import eu.numberfour.n4js.n4JS.Annotation
 import eu.numberfour.n4js.n4JS.AnnotationList
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.AssignmentExpression
@@ -218,7 +219,17 @@ public class TranspilerBuilderBlocks
 	public static def ParameterizedCallExpression _CallExpr(Expression target, Expression... arguments) {
 		val result = N4JSFactory.eINSTANCE.createParameterizedCallExpression;
 		result.target = target;
-		result.arguments += arguments.filterNull;
+		result.arguments += arguments.filterNull.map[_Argument];
+		return result;
+	}
+	
+	public static def Argument _Argument(Expression expression) {
+		return _Argument(false, expression);
+	}
+	public static def Argument _Argument(boolean spread, Expression expression) {
+		val result = N4JSFactory.eINSTANCE.createArgument;
+		result.spread = spread;
+		result.expression = expression;
 		return result;
 	}
 
@@ -290,7 +301,7 @@ public class TranspilerBuilderBlocks
 		val result = N4JSFactory.eINSTANCE.createNewExpression;
 		result.callee = callee;
 		result.withArgs = !arguments.filterNull.empty;
-		result.arguments += arguments.filterNull;
+		result.arguments += arguments.filterNull.map[_Argument];
 		return result;
 	}
 
@@ -410,11 +421,15 @@ public class TranspilerBuilderBlocks
 		return result;
 	}
 
-	public static def ArrayElement _ArrayElement(Expression expression) {
-		val result = N4JSFactory.eINSTANCE.createArrayElement;
-		result.expression = expression;
-		return result;
+ 	public static def ArrayElement _ArrayElement(Expression expression) {
+		return _ArrayElement(false, expression);
 	}
+	public static def ArrayElement _ArrayElement(boolean spread, Expression expression) {
+ 		val result = N4JSFactory.eINSTANCE.createArrayElement;
+		result.spread = spread;
+ 		result.expression = expression;
+ 		return result;
+ 	}
 
 	public static def FunctionDeclaration _FunDecl(String name, Statement... statements) {
 		return _FunDecl(name, #[], statements);
@@ -639,10 +654,10 @@ public class TranspilerBuilderBlocks
 	public static def _N4ExportExpr(SymbolTableEntry steExportedElement, Expression expr, SymbolTableEntry symbolFor_n4Export )
 	{
 		return _CallExpr => [
-				target = _IdentRef(symbolFor_n4Export)
-				arguments += _StringLiteralForSTE( steExportedElement, true )
-				arguments += expr
-				]
+			target = _IdentRef(symbolFor_n4Export)
+			arguments += _Argument(_StringLiteralForSTE( steExportedElement ))
+			arguments += _Argument(expr)
+		]
 	}
 
 

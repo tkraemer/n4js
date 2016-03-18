@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS.impl;
 
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ParameterizedAccess;
@@ -43,7 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedCallExpressionImpl#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedCallExpressionImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedCallExpressionImpl#getArguments <em>Arguments</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedCallExpressionImpl#isSpread <em>Spread</em>}</li>
  * </ul>
  *
  * @generated
@@ -77,27 +77,7 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Expression> arguments;
-
-	/**
-	 * The default value of the '{@link #isSpread() <em>Spread</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSpread()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean SPREAD_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isSpread() <em>Spread</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSpread()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean spread = SPREAD_EDEFAULT;
+	protected EList<Argument> arguments;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,32 +158,11 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Expression> getArguments() {
+	public EList<Argument> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<Expression>(Expression.class, this, N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS);
+			arguments = new EObjectContainmentEList<Argument>(Argument.class, this, N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS);
 		}
 		return arguments;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSpread() {
-		return spread;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSpread(boolean newSpread) {
-		boolean oldSpread = spread;
-		spread = newSpread;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__SPREAD, oldSpread, spread));
 	}
 
 	/**
@@ -267,8 +226,6 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 				return getTarget();
 			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS:
 				return getArguments();
-			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__SPREAD:
-				return isSpread();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -291,10 +248,7 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 				return;
 			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS:
 				getArguments().clear();
-				getArguments().addAll((Collection<? extends Expression>)newValue);
-				return;
-			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__SPREAD:
-				setSpread((Boolean)newValue);
+				getArguments().addAll((Collection<? extends Argument>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -317,9 +271,6 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS:
 				getArguments().clear();
 				return;
-			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__SPREAD:
-				setSpread(SPREAD_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -338,8 +289,6 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 				return target != null;
 			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS:
 				return arguments != null && !arguments.isEmpty();
-			case N4JSPackage.PARAMETERIZED_CALL_EXPRESSION__SPREAD:
-				return spread != SPREAD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -406,22 +355,6 @@ public class ParameterizedCallExpressionImpl extends ExpressionImpl implements P
 				return isParameterized();
 		}
 		return super.eInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (spread: ");
-		result.append(spread);
-		result.append(')');
-		return result.toString();
 	}
 
 } //ParameterizedCallExpressionImpl

@@ -6758,22 +6758,13 @@ public interface N4JSPackage extends EPackage {
 	int NEW_EXPRESSION__WITH_ARGS = EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Spread</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NEW_EXPRESSION__SPREAD = EXPRESSION_FEATURE_COUNT + 4;
-
-	/**
 	 * The number of structural features of the '<em>New Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NEW_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 5;
+	int NEW_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
@@ -6886,22 +6877,13 @@ public interface N4JSPackage extends EPackage {
 	int PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS = EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Spread</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_CALL_EXPRESSION__SPREAD = EXPRESSION_FEATURE_COUNT + 3;
-
-	/**
 	 * The number of structural features of the '<em>Parameterized Call Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_CALL_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 4;
+	int PARAMETERIZED_CALL_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
@@ -6940,6 +6922,52 @@ public interface N4JSPackage extends EPackage {
 	int PARAMETERIZED_CALL_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.ArgumentImpl <em>Argument</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.n4JS.impl.ArgumentImpl
+	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getArgument()
+	 * @generated
+	 */
+	int ARGUMENT = 94;
+
+	/**
+	 * The feature id for the '<em><b>Spread</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT__SPREAD = TypesPackage.TYPABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT__EXPRESSION = TypesPackage.TYPABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Argument</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT_FEATURE_COUNT = TypesPackage.TYPABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Argument</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARGUMENT_OPERATION_COUNT = TypesPackage.TYPABLE_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.IndexedAccessExpressionImpl <em>Indexed Access Expression</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6947,7 +6975,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIndexedAccessExpression()
 	 * @generated
 	 */
-	int INDEXED_ACCESS_EXPRESSION = 94;
+	int INDEXED_ACCESS_EXPRESSION = 95;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -7002,7 +7030,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getTaggedTemplateString()
 	 * @generated
 	 */
-	int TAGGED_TEMPLATE_STRING = 95;
+	int TAGGED_TEMPLATE_STRING = 96;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -7057,7 +7085,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getParameterizedPropertyAccessExpression()
 	 * @generated
 	 */
-	int PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION = 96;
+	int PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION = 97;
 
 	/**
 	 * The feature id for the '<em><b>Type Args</b></em>' containment reference list.
@@ -7130,7 +7158,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAwaitExpression()
 	 * @generated
 	 */
-	int AWAIT_EXPRESSION = 97;
+	int AWAIT_EXPRESSION = 98;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -7176,7 +7204,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getPromisifyExpression()
 	 * @generated
 	 */
-	int PROMISIFY_EXPRESSION = 98;
+	int PROMISIFY_EXPRESSION = 99;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -7222,7 +7250,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getYieldExpression()
 	 * @generated
 	 */
-	int YIELD_EXPRESSION = 99;
+	int YIELD_EXPRESSION = 100;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -7277,7 +7305,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getLiteral()
 	 * @generated
 	 */
-	int LITERAL = 100;
+	int LITERAL = 101;
 
 	/**
 	 * The number of structural features of the '<em>Literal</em>' class.
@@ -7323,7 +7351,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getNullLiteral()
 	 * @generated
 	 */
-	int NULL_LITERAL = 101;
+	int NULL_LITERAL = 102;
 
 	/**
 	 * The number of structural features of the '<em>Null Literal</em>' class.
@@ -7369,7 +7397,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBooleanLiteral()
 	 * @generated
 	 */
-	int BOOLEAN_LITERAL = 102;
+	int BOOLEAN_LITERAL = 103;
 
 	/**
 	 * The feature id for the '<em><b>True</b></em>' attribute.
@@ -7424,7 +7452,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getStringLiteral()
 	 * @generated
 	 */
-	int STRING_LITERAL = 103;
+	int STRING_LITERAL = 104;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7488,7 +7516,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getTemplateLiteral()
 	 * @generated
 	 */
-	int TEMPLATE_LITERAL = 104;
+	int TEMPLATE_LITERAL = 105;
 
 	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
@@ -7543,7 +7571,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getTemplateSegment()
 	 * @generated
 	 */
-	int TEMPLATE_SEGMENT = 105;
+	int TEMPLATE_SEGMENT = 106;
 
 	/**
 	 * The feature id for the '<em><b>Raw Value</b></em>' attribute.
@@ -7598,7 +7626,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getNumericLiteral()
 	 * @generated
 	 */
-	int NUMERIC_LITERAL = 106;
+	int NUMERIC_LITERAL = 107;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7653,7 +7681,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getDoubleLiteral()
 	 * @generated
 	 */
-	int DOUBLE_LITERAL = 107;
+	int DOUBLE_LITERAL = 108;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7717,7 +7745,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAbstractIntLiteral()
 	 * @generated
 	 */
-	int ABSTRACT_INT_LITERAL = 108;
+	int ABSTRACT_INT_LITERAL = 109;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7799,7 +7827,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIntLiteral()
 	 * @generated
 	 */
-	int INT_LITERAL = 109;
+	int INT_LITERAL = 110;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7881,7 +7909,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBinaryIntLiteral()
 	 * @generated
 	 */
-	int BINARY_INT_LITERAL = 110;
+	int BINARY_INT_LITERAL = 111;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -7963,7 +7991,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getOctalIntLiteral()
 	 * @generated
 	 */
-	int OCTAL_INT_LITERAL = 111;
+	int OCTAL_INT_LITERAL = 112;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8045,7 +8073,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getLegacyOctalIntLiteral()
 	 * @generated
 	 */
-	int LEGACY_OCTAL_INT_LITERAL = 112;
+	int LEGACY_OCTAL_INT_LITERAL = 113;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8127,7 +8155,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getHexIntLiteral()
 	 * @generated
 	 */
-	int HEX_INT_LITERAL = 113;
+	int HEX_INT_LITERAL = 114;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8209,7 +8237,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getScientificIntLiteral()
 	 * @generated
 	 */
-	int SCIENTIFIC_INT_LITERAL = 114;
+	int SCIENTIFIC_INT_LITERAL = 115;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8291,7 +8319,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getRegularExpressionLiteral()
 	 * @generated
 	 */
-	int REGULAR_EXPRESSION_LITERAL = 115;
+	int REGULAR_EXPRESSION_LITERAL = 116;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8346,7 +8374,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getPostfixExpression()
 	 * @generated
 	 */
-	int POSTFIX_EXPRESSION = 116;
+	int POSTFIX_EXPRESSION = 117;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -8401,7 +8429,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getUnaryExpression()
 	 * @generated
 	 */
-	int UNARY_EXPRESSION = 117;
+	int UNARY_EXPRESSION = 118;
 
 	/**
 	 * The feature id for the '<em><b>Op</b></em>' attribute.
@@ -8456,7 +8484,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getCastExpression()
 	 * @generated
 	 */
-	int CAST_EXPRESSION = 118;
+	int CAST_EXPRESSION = 119;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -8511,7 +8539,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getMultiplicativeExpression()
 	 * @generated
 	 */
-	int MULTIPLICATIVE_EXPRESSION = 119;
+	int MULTIPLICATIVE_EXPRESSION = 120;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8575,7 +8603,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAdditiveExpression()
 	 * @generated
 	 */
-	int ADDITIVE_EXPRESSION = 120;
+	int ADDITIVE_EXPRESSION = 121;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8639,7 +8667,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getShiftExpression()
 	 * @generated
 	 */
-	int SHIFT_EXPRESSION = 121;
+	int SHIFT_EXPRESSION = 122;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8703,7 +8731,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getRelationalExpression()
 	 * @generated
 	 */
-	int RELATIONAL_EXPRESSION = 122;
+	int RELATIONAL_EXPRESSION = 123;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8767,7 +8795,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getEqualityExpression()
 	 * @generated
 	 */
-	int EQUALITY_EXPRESSION = 123;
+	int EQUALITY_EXPRESSION = 124;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8831,7 +8859,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBinaryBitwiseExpression()
 	 * @generated
 	 */
-	int BINARY_BITWISE_EXPRESSION = 124;
+	int BINARY_BITWISE_EXPRESSION = 125;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8895,7 +8923,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBinaryLogicalExpression()
 	 * @generated
 	 */
-	int BINARY_LOGICAL_EXPRESSION = 125;
+	int BINARY_LOGICAL_EXPRESSION = 126;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -8959,7 +8987,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getConditionalExpression()
 	 * @generated
 	 */
-	int CONDITIONAL_EXPRESSION = 126;
+	int CONDITIONAL_EXPRESSION = 127;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -9023,7 +9051,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAssignmentExpression()
 	 * @generated
 	 */
-	int ASSIGNMENT_EXPRESSION = 127;
+	int ASSIGNMENT_EXPRESSION = 128;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -9087,7 +9115,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getCommaExpression()
 	 * @generated
 	 */
-	int COMMA_EXPRESSION = 128;
+	int COMMA_EXPRESSION = 129;
 
 	/**
 	 * The feature id for the '<em><b>Exprs</b></em>' containment reference list.
@@ -9133,7 +9161,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getTypeDefiningElement()
 	 * @generated
 	 */
-	int TYPE_DEFINING_ELEMENT = 129;
+	int TYPE_DEFINING_ELEMENT = 130;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9170,7 +9198,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getGenericDeclaration()
 	 * @generated
 	 */
-	int GENERIC_DECLARATION = 130;
+	int GENERIC_DECLARATION = 131;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9216,7 +9244,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4TypeDefinition()
 	 * @generated
 	 */
-	int N4_TYPE_DEFINITION = 131;
+	int N4_TYPE_DEFINITION = 132;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9271,7 +9299,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4TypeDeclaration()
 	 * @generated
 	 */
-	int N4_TYPE_DECLARATION = 132;
+	int N4_TYPE_DECLARATION = 133;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9398,7 +9426,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4ClassifierDeclaration()
 	 * @generated
 	 */
-	int N4_CLASSIFIER_DECLARATION = 133;
+	int N4_CLASSIFIER_DECLARATION = 134;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9624,7 +9652,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4ClassifierDefinition()
 	 * @generated
 	 */
-	int N4_CLASSIFIER_DEFINITION = 134;
+	int N4_CLASSIFIER_DEFINITION = 135;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9760,7 +9788,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4ClassDefinition()
 	 * @generated
 	 */
-	int N4_CLASS_DEFINITION = 135;
+	int N4_CLASS_DEFINITION = 136;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -9932,7 +9960,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4ClassDeclaration()
 	 * @generated
 	 */
-	int N4_CLASS_DECLARATION = 136;
+	int N4_CLASS_DECLARATION = 137;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -10203,7 +10231,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4ClassExpression()
 	 * @generated
 	 */
-	int N4_CLASS_EXPRESSION = 137;
+	int N4_CLASS_EXPRESSION = 138;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -10411,7 +10439,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4InterfaceDeclaration()
 	 * @generated
 	 */
-	int N4_INTERFACE_DECLARATION = 138;
+	int N4_INTERFACE_DECLARATION = 139;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -10655,7 +10683,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4EnumDeclaration()
 	 * @generated
 	 */
-	int N4_ENUM_DECLARATION = 139;
+	int N4_ENUM_DECLARATION = 140;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type</b></em>' reference.
@@ -10800,7 +10828,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4EnumLiteral()
 	 * @generated
 	 */
-	int N4_ENUM_LITERAL = 140;
+	int N4_ENUM_LITERAL = 141;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10864,7 +10892,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getModifiableElement()
 	 * @generated
 	 */
-	int MODIFIABLE_ELEMENT = 141;
+	int MODIFIABLE_ELEMENT = 142;
 
 	/**
 	 * The feature id for the '<em><b>Declared Modifiers</b></em>' attribute list.
@@ -10901,7 +10929,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4MemberDeclaration()
 	 * @generated
 	 */
-	int N4_MEMBER_DECLARATION = 142;
+	int N4_MEMBER_DECLARATION = 143;
 
 	/**
 	 * The feature id for the '<em><b>Declared Modifiers</b></em>' attribute list.
@@ -11037,7 +11065,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAnnotableN4MemberDeclaration()
 	 * @generated
 	 */
-	int ANNOTABLE_N4_MEMBER_DECLARATION = 143;
+	int ANNOTABLE_N4_MEMBER_DECLARATION = 144;
 
 	/**
 	 * The feature id for the '<em><b>Declared Modifiers</b></em>' attribute list.
@@ -11191,7 +11219,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4MemberAnnotationList()
 	 * @generated
 	 */
-	int N4_MEMBER_ANNOTATION_LIST = 144;
+	int N4_MEMBER_ANNOTATION_LIST = 145;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -11336,7 +11364,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4FieldDeclaration()
 	 * @generated
 	 */
-	int N4_FIELD_DECLARATION = 145;
+	int N4_FIELD_DECLARATION = 146;
 
 	/**
 	 * The feature id for the '<em><b>Declared Modifiers</b></em>' attribute list.
@@ -11562,7 +11590,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getMethodDeclaration()
 	 * @generated
 	 */
-	int METHOD_DECLARATION = 146;
+	int METHOD_DECLARATION = 147;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -11779,7 +11807,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4MethodDeclaration()
 	 * @generated
 	 */
-	int N4_METHOD_DECLARATION = 147;
+	int N4_METHOD_DECLARATION = 148;
 
 	/**
 	 * The feature id for the '<em><b>Declared Modifiers</b></em>' attribute list.
@@ -12086,7 +12114,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4FieldAccessor()
 	 * @generated
 	 */
-	int N4_FIELD_ACCESSOR = 148;
+	int N4_FIELD_ACCESSOR = 149;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -12330,7 +12358,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4GetterDeclaration()
 	 * @generated
 	 */
-	int N4_GETTER_DECLARATION = 149;
+	int N4_GETTER_DECLARATION = 150;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -12592,7 +12620,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4SetterDeclaration()
 	 * @generated
 	 */
-	int N4_SETTER_DECLARATION = 150;
+	int N4_SETTER_DECLARATION = 151;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -12854,7 +12882,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBindingPattern()
 	 * @generated
 	 */
-	int BINDING_PATTERN = 151;
+	int BINDING_PATTERN = 152;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -12900,7 +12928,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getObjectBindingPattern()
 	 * @generated
 	 */
-	int OBJECT_BINDING_PATTERN = 152;
+	int OBJECT_BINDING_PATTERN = 153;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -12946,7 +12974,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getArrayBindingPattern()
 	 * @generated
 	 */
-	int ARRAY_BINDING_PATTERN = 153;
+	int ARRAY_BINDING_PATTERN = 154;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -12992,7 +13020,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBindingProperty()
 	 * @generated
 	 */
-	int BINDING_PROPERTY = 154;
+	int BINDING_PROPERTY = 155;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' attribute.
@@ -13056,7 +13084,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBindingElement()
 	 * @generated
 	 */
-	int BINDING_ELEMENT = 155;
+	int BINDING_ELEMENT = 156;
 
 	/**
 	 * The feature id for the '<em><b>Rest</b></em>' attribute.
@@ -13120,7 +13148,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getVariableStatementKeyword()
 	 * @generated
 	 */
-	int VARIABLE_STATEMENT_KEYWORD = 156;
+	int VARIABLE_STATEMENT_KEYWORD = 157;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.PropertyNameKind <em>Property Name Kind</em>}' enum.
@@ -13130,7 +13158,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getPropertyNameKind()
 	 * @generated
 	 */
-	int PROPERTY_NAME_KIND = 157;
+	int PROPERTY_NAME_KIND = 158;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.PostfixOperator <em>Postfix Operator</em>}' enum.
@@ -13140,7 +13168,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getPostfixOperator()
 	 * @generated
 	 */
-	int POSTFIX_OPERATOR = 158;
+	int POSTFIX_OPERATOR = 159;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.UnaryOperator <em>Unary Operator</em>}' enum.
@@ -13150,7 +13178,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getUnaryOperator()
 	 * @generated
 	 */
-	int UNARY_OPERATOR = 159;
+	int UNARY_OPERATOR = 160;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.MultiplicativeOperator <em>Multiplicative Operator</em>}' enum.
@@ -13160,7 +13188,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getMultiplicativeOperator()
 	 * @generated
 	 */
-	int MULTIPLICATIVE_OPERATOR = 160;
+	int MULTIPLICATIVE_OPERATOR = 161;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.AdditiveOperator <em>Additive Operator</em>}' enum.
@@ -13170,7 +13198,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAdditiveOperator()
 	 * @generated
 	 */
-	int ADDITIVE_OPERATOR = 161;
+	int ADDITIVE_OPERATOR = 162;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.RelationalOperator <em>Relational Operator</em>}' enum.
@@ -13180,7 +13208,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getRelationalOperator()
 	 * @generated
 	 */
-	int RELATIONAL_OPERATOR = 162;
+	int RELATIONAL_OPERATOR = 163;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.EqualityOperator <em>Equality Operator</em>}' enum.
@@ -13190,7 +13218,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getEqualityOperator()
 	 * @generated
 	 */
-	int EQUALITY_OPERATOR = 163;
+	int EQUALITY_OPERATOR = 164;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.BinaryBitwiseOperator <em>Binary Bitwise Operator</em>}' enum.
@@ -13200,7 +13228,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBinaryBitwiseOperator()
 	 * @generated
 	 */
-	int BINARY_BITWISE_OPERATOR = 164;
+	int BINARY_BITWISE_OPERATOR = 165;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.BinaryLogicalOperator <em>Binary Logical Operator</em>}' enum.
@@ -13210,7 +13238,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getBinaryLogicalOperator()
 	 * @generated
 	 */
-	int BINARY_LOGICAL_OPERATOR = 165;
+	int BINARY_LOGICAL_OPERATOR = 166;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.ShiftOperator <em>Shift Operator</em>}' enum.
@@ -13220,7 +13248,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getShiftOperator()
 	 * @generated
 	 */
-	int SHIFT_OPERATOR = 166;
+	int SHIFT_OPERATOR = 167;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.AssignmentOperator <em>Assignment Operator</em>}' enum.
@@ -13230,7 +13258,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getAssignmentOperator()
 	 * @generated
 	 */
-	int ASSIGNMENT_OPERATOR = 167;
+	int ASSIGNMENT_OPERATOR = 168;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.N4Modifier <em>N4 Modifier</em>}' enum.
@@ -13240,7 +13268,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getN4Modifier()
 	 * @generated
 	 */
-	int N4_MODIFIER = 168;
+	int N4_MODIFIER = 169;
 
 	/**
 	 * The meta object id for the '<em>Iterator Of Statement</em>' data type.
@@ -13250,7 +13278,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfStatement()
 	 * @generated
 	 */
-	int ITERATOR_OF_STATEMENT = 169;
+	int ITERATOR_OF_STATEMENT = 170;
 
 	/**
 	 * The meta object id for the '<em>Iterator Of Return Statement</em>' data type.
@@ -13260,7 +13288,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfReturnStatement()
 	 * @generated
 	 */
-	int ITERATOR_OF_RETURN_STATEMENT = 170;
+	int ITERATOR_OF_RETURN_STATEMENT = 171;
 
 
 	/**
@@ -15997,17 +16025,6 @@ public interface N4JSPackage extends EPackage {
 	EAttribute getNewExpression_WithArgs();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.NewExpression#isSpread <em>Spread</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Spread</em>'.
-	 * @see eu.numberfour.n4js.n4JS.NewExpression#isSpread()
-	 * @see #getNewExpression()
-	 * @generated
-	 */
-	EAttribute getNewExpression_Spread();
-
-	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.ParameterizedAccess <em>Parameterized Access</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16071,17 +16088,6 @@ public interface N4JSPackage extends EPackage {
 	EReference getParameterizedCallExpression_Arguments();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#isSpread <em>Spread</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Spread</em>'.
-	 * @see eu.numberfour.n4js.n4JS.ParameterizedCallExpression#isSpread()
-	 * @see #getParameterizedCallExpression()
-	 * @generated
-	 */
-	EAttribute getParameterizedCallExpression_Spread();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#getReceiver() <em>Get Receiver</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16090,6 +16096,38 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getParameterizedCallExpression__GetReceiver();
+
+	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.Argument <em>Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Argument</em>'.
+	 * @see eu.numberfour.n4js.n4JS.Argument
+	 * @generated
+	 */
+	EClass getArgument();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.Argument#isSpread <em>Spread</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Spread</em>'.
+	 * @see eu.numberfour.n4js.n4JS.Argument#isSpread()
+	 * @see #getArgument()
+	 * @generated
+	 */
+	EAttribute getArgument_Spread();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.n4JS.Argument#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see eu.numberfour.n4js.n4JS.Argument#getExpression()
+	 * @see #getArgument()
+	 * @generated
+	 */
+	EReference getArgument_Expression();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.IndexedAccessExpression <em>Indexed Access Expression</em>}'.
@@ -20676,14 +20714,6 @@ public interface N4JSPackage extends EPackage {
 		EAttribute NEW_EXPRESSION__WITH_ARGS = eINSTANCE.getNewExpression_WithArgs();
 
 		/**
-		 * The meta object literal for the '<em><b>Spread</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NEW_EXPRESSION__SPREAD = eINSTANCE.getNewExpression_Spread();
-
-		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.ParameterizedAccessImpl <em>Parameterized Access</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -20736,20 +20766,38 @@ public interface N4JSPackage extends EPackage {
 		EReference PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS = eINSTANCE.getParameterizedCallExpression_Arguments();
 
 		/**
-		 * The meta object literal for the '<em><b>Spread</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETERIZED_CALL_EXPRESSION__SPREAD = eINSTANCE.getParameterizedCallExpression_Spread();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Receiver</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation PARAMETERIZED_CALL_EXPRESSION___GET_RECEIVER = eINSTANCE.getParameterizedCallExpression__GetReceiver();
+
+		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.ArgumentImpl <em>Argument</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.n4JS.impl.ArgumentImpl
+		 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getArgument()
+		 * @generated
+		 */
+		EClass ARGUMENT = eINSTANCE.getArgument();
+
+		/**
+		 * The meta object literal for the '<em><b>Spread</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARGUMENT__SPREAD = eINSTANCE.getArgument_Spread();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARGUMENT__EXPRESSION = eINSTANCE.getArgument_Expression();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.IndexedAccessExpressionImpl <em>Indexed Access Expression</em>}' class.

@@ -140,15 +140,15 @@ class ModuleWrappingTransformation extends Transformation {
 			target = _PropertyAccessExpr => [
 			  	target =  _IdentRef(steFor_System)
 				property_IM = steFor_register
-			] // "System.register"
-			arguments += _ArrLit => [
+			]; // "System.register"
+			arguments += _Argument(_ArrLit => [
 				// list of imported modules: the order of the elements must correspond to the order in the setters-property down.
 				it.elements += importSetterMap.values.map[itx| _ArrayElement(_StringLiteral(itx.actualModuleSpecifier))=>[
 					//tracing
 					state.tracer.copyTrace(itx.tobeReplacedImportSpecifier,it)
 				] ]
-			] // fpar0
-			arguments += _FunExpr(false) => [  // fpar1
+			]); // fpar0
+			arguments += _Argument(_FunExpr(false) => [  // fpar1
 				fpars += _Fpar => [name = steFor_$n4Export.name ] // "$n4Export"
 				body = _Block => [
 					val hoist = hoistedVariablesAndInits(content_im)
@@ -181,7 +181,7 @@ class ModuleWrappingTransformation extends Transformation {
 						)
 					); // end return
 				]
-			]
+			]);
 
 		]
 		val exprStatementSystem = _ExprStmnt(call_System_dot_register_Expr)
@@ -550,7 +550,7 @@ class ModuleWrappingTransformation extends Transformation {
 		val initFunction = [ PostfixExpression pe |
 							((((replaceExp.expression
 								as CommaExpression).exprs.get(0)
-								as ParameterizedCallExpression).arguments.get(1)
+								as ParameterizedCallExpression).arguments.get(1).expression
 								as ParenExpression).expression
 								as CommaExpression)
 						=> [it.exprs.set(0,pe)]; return;	];
@@ -635,7 +635,7 @@ class ModuleWrappingTransformation extends Transformation {
 				((replaceExp.expression
 					as CommaExpression).exprs.get(0)
 					as ParameterizedCallExpression)
-					=> [ it.arguments.set(1,ae) ];
+					=> [ it.arguments.set(1, _Argument(ae)) ];
 				return;
 			];
 		wrapExistingExpression( expr, replaceExp, initFunc );

@@ -244,18 +244,18 @@ class ClassConstructorAssistant extends TransformationAssistant {
 
 		return _ExprStmnt(_CallExpr()=>[
 			target = __NSSafe_PropertyAccessExpr(superClassSTE, prototypeSTE, constructorSTE, genericCallSTE);
-			arguments += _ThisLiteral();
+			arguments += _Argument(_ThisLiteral());
 			if( variadicCase) {
 				val concatSTE = getSymbolTableEntryForMember(state.G.arrayType, "concat", false, false, true);
 
-				arguments += _CallExpr(
-						_PropertyAccessExpr(
-							_ArrLit(fpars.take(fpars.size-1)
-									.map[findSymbolTableEntryForElement(it , true)]
-									.map[_IdentRef(it)]) // target of PropAcc
-									, concatSTE ) // end PropAcc
-						, _IdentRef(fpars.last.findSymbolTableEntryForElement(true))
-					) // end CallExpr
+				arguments += _Argument(_CallExpr(
+					_PropertyAccessExpr(
+						_ArrLit(fpars.take(fpars.size-1)
+								.map[findSymbolTableEntryForElement(it , true)]
+								.map[_IdentRef(it)]) // target of PropAcc
+								, concatSTE ), // end PropAcc
+					_IdentRef(fpars.last.findSymbolTableEntryForElement(true))
+				)); // end CallExpr
 			} else {
 				arguments += fpars.map[findSymbolTableEntryForElement(it , true)].map[_IdentRef(it)];
 			}

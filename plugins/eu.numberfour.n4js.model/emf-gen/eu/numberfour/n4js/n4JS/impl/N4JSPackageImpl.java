@@ -21,6 +21,7 @@ import eu.numberfour.n4js.n4JS.AnnotableScriptElement;
 import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.AnnotationArgument;
 import eu.numberfour.n4js.n4JS.AnnotationList;
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.ArrayBindingPattern;
 import eu.numberfour.n4js.n4JS.ArrayElement;
 import eu.numberfour.n4js.n4JS.ArrayLiteral;
@@ -860,6 +861,13 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	private EClass parameterizedCallExpressionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass argumentEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -3833,15 +3841,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNewExpression_Spread() {
-		return (EAttribute)newExpressionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getParameterizedAccess() {
 		return parameterizedAccessEClass;
 	}
@@ -3896,8 +3895,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterizedCallExpression_Spread() {
-		return (EAttribute)parameterizedCallExpressionEClass.getEStructuralFeatures().get(2);
+	public EOperation getParameterizedCallExpression__GetReceiver() {
+		return parameterizedCallExpressionEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -3905,8 +3904,26 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getParameterizedCallExpression__GetReceiver() {
-		return parameterizedCallExpressionEClass.getEOperations().get(0);
+	public EClass getArgument() {
+		return argumentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArgument_Spread() {
+		return (EAttribute)argumentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getArgument_Expression() {
+		return (EReference)argumentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -6262,7 +6279,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(newExpressionEClass, NEW_EXPRESSION__CALLEE);
 		createEReference(newExpressionEClass, NEW_EXPRESSION__ARGUMENTS);
 		createEAttribute(newExpressionEClass, NEW_EXPRESSION__WITH_ARGS);
-		createEAttribute(newExpressionEClass, NEW_EXPRESSION__SPREAD);
 
 		parameterizedAccessEClass = createEClass(PARAMETERIZED_ACCESS);
 		createEReference(parameterizedAccessEClass, PARAMETERIZED_ACCESS__TYPE_ARGS);
@@ -6271,8 +6287,11 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		parameterizedCallExpressionEClass = createEClass(PARAMETERIZED_CALL_EXPRESSION);
 		createEReference(parameterizedCallExpressionEClass, PARAMETERIZED_CALL_EXPRESSION__TARGET);
 		createEReference(parameterizedCallExpressionEClass, PARAMETERIZED_CALL_EXPRESSION__ARGUMENTS);
-		createEAttribute(parameterizedCallExpressionEClass, PARAMETERIZED_CALL_EXPRESSION__SPREAD);
 		createEOperation(parameterizedCallExpressionEClass, PARAMETERIZED_CALL_EXPRESSION___GET_RECEIVER);
+
+		argumentEClass = createEClass(ARGUMENT);
+		createEAttribute(argumentEClass, ARGUMENT__SPREAD);
+		createEReference(argumentEClass, ARGUMENT__EXPRESSION);
 
 		indexedAccessExpressionEClass = createEClass(INDEXED_ACCESS_EXPRESSION);
 		createEReference(indexedAccessExpressionEClass, INDEXED_ACCESS_EXPRESSION__TARGET);
@@ -6723,6 +6742,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		newExpressionEClass.getESuperTypes().add(this.getParameterizedAccess());
 		parameterizedCallExpressionEClass.getESuperTypes().add(this.getExpression());
 		parameterizedCallExpressionEClass.getESuperTypes().add(this.getParameterizedAccess());
+		argumentEClass.getESuperTypes().add(theTypesPackage.getTypableElement());
 		indexedAccessExpressionEClass.getESuperTypes().add(this.getExpression());
 		taggedTemplateStringEClass.getESuperTypes().add(this.getExpression());
 		parameterizedPropertyAccessExpressionEClass.getESuperTypes().add(this.getExpression());
@@ -7234,9 +7254,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(newExpressionEClass, NewExpression.class, "NewExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNewExpression_Callee(), this.getExpression(), null, "callee", null, 0, 1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNewExpression_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNewExpression_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNewExpression_WithArgs(), theEcorePackage.getEBoolean(), "withArgs", null, 0, 1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNewExpression_Spread(), theEcorePackage.getEBoolean(), "spread", null, 0, 1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterizedAccessEClass, ParameterizedAccess.class, "ParameterizedAccess", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParameterizedAccess_TypeArgs(), theTypeRefsPackage.getTypeRef(), null, "typeArgs", null, 0, -1, ParameterizedAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -7245,10 +7264,13 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(parameterizedCallExpressionEClass, ParameterizedCallExpression.class, "ParameterizedCallExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParameterizedCallExpression_Target(), this.getExpression(), null, "target", null, 0, 1, ParameterizedCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getParameterizedCallExpression_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, ParameterizedCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameterizedCallExpression_Spread(), theEcorePackage.getEBoolean(), "spread", null, 0, 1, ParameterizedCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getParameterizedCallExpression_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, ParameterizedCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getParameterizedCallExpression__GetReceiver(), this.getExpression(), "getReceiver", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEClass(argumentEClass, Argument.class, "Argument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getArgument_Spread(), theEcorePackage.getEBoolean(), "spread", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArgument_Expression(), this.getExpression(), null, "expression", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(indexedAccessExpressionEClass, IndexedAccessExpression.class, "IndexedAccessExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getIndexedAccessExpression_Target(), this.getExpression(), null, "target", null, 0, 1, IndexedAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

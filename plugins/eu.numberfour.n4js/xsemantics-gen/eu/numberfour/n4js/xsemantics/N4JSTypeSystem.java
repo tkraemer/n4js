@@ -9,6 +9,7 @@ import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.misc.DestructureHelper;
 import eu.numberfour.n4js.n4JS.AdditiveExpression;
 import eu.numberfour.n4js.n4JS.AdditiveOperator;
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.ArrayElement;
 import eu.numberfour.n4js.n4JS.ArrayLiteral;
 import eu.numberfour.n4js.n4JS.ArrayPadding;
@@ -285,6 +286,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String TYPECALLEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeCallExpression";
   
+  public final static String TYPEARGUMENT = "eu.numberfour.n4js.xsemantics.TypeArgument";
+  
   public final static String TYPEFUNCTIONDEFINITION = "eu.numberfour.n4js.xsemantics.TypeFunctionDefinition";
   
   public final static String TYPEPOSTFIXEXPRESSION = "eu.numberfour.n4js.xsemantics.TypePostfixExpression";
@@ -375,9 +378,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EXPECTEDTYPENONE = "eu.numberfour.n4js.xsemantics.ExpectedTypeNone";
   
-  public final static String EXPECTEDTYPEOFARGUMENTINNEWEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgumentInNewExpression";
-  
-  public final static String EXPECTEDTYPEOFARGUMENTINCALLEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgumentInCallExpression";
+  public final static String EXPECTEDTYPEOFARGUMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgument";
   
   public final static String EXPECTEDTYPEINPOSTFIXEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInPostfixExpression";
   
@@ -2651,6 +2652,36 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     }
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument arg) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleTypeArgument(G, _subtrace_, arg);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("typeArgument") + stringRepForEnv(G) + " |- " + stringRep(arg) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleTypeArgument) {
+    	typeThrowException(ruleName("typeArgument") + stringRepForEnv(G) + " |- " + stringRep(arg) + " : " + "TypeRef",
+    		TYPEARGUMENT,
+    		e_applyRuleTypeArgument, arg, new ErrorInformation[] {new ErrorInformation(arg)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleTypeArgument(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument arg) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    /* G |- arg.expression: T */
+    Expression _expression = arg.getExpression();
+    Result<TypeRef> result = typeInternal(G, _trace_, _expression);
+    checkAssignableTo(result.getFirst(), TypeRef.class);
+    T = (TypeRef) result.getFirst();
+    
     return new Result<TypeRef>(T);
   }
   
@@ -5461,163 +5492,145 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     return ((TypeRef) null);
   }
   
-  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final NewExpression e, final Expression argument) throws RuleFailedException {
+  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument argument, final Expression argumentExpression) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<TypeRef> _result_ = applyRuleExpectedTypeOfArgumentInNewExpression(G, _subtrace_, e, argument);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeOfArgument(G, _subtrace_, argument, argumentExpression);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("expectedTypeOfArgumentInNewExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " |> " + stringRep(argument) + " : " + stringRep(_result_.getFirst());
+    			return ruleName("expectedTypeOfArgument") + stringRepForEnv(G) + " |- " + stringRep(argument) + " |> " + stringRep(argumentExpression) + " : " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
-    } catch (Exception e_applyRuleExpectedTypeOfArgumentInNewExpression) {
-    	expectedTypeInThrowException(ruleName("expectedTypeOfArgumentInNewExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " |> " + stringRep(argument) + " : " + "TypeRef",
-    		EXPECTEDTYPEOFARGUMENTINNEWEXPRESSION,
-    		e_applyRuleExpectedTypeOfArgumentInNewExpression, e, argument, new ErrorInformation[] {new ErrorInformation(e), new ErrorInformation(argument)});
+    } catch (Exception e_applyRuleExpectedTypeOfArgument) {
+    	expectedTypeInThrowException(ruleName("expectedTypeOfArgument") + stringRepForEnv(G) + " |- " + stringRep(argument) + " |> " + stringRep(argumentExpression) + " : " + "TypeRef",
+    		EXPECTEDTYPEOFARGUMENT,
+    		e_applyRuleExpectedTypeOfArgument, argument, argumentExpression, new ErrorInformation[] {new ErrorInformation(argument), new ErrorInformation(argumentExpression)});
     	return null;
     }
   }
   
-  protected Result<TypeRef> applyRuleExpectedTypeOfArgumentInNewExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final NewExpression e, final Expression argument) throws RuleFailedException {
+  protected Result<TypeRef> applyRuleExpectedTypeOfArgument(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument argument, final Expression argumentExpression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    EList<Expression> _arguments = e.getArguments();
-    boolean _contains = _arguments.contains(argument);
-    boolean _not = (!_contains);
-    if (_not) {
-    } else {
-      /* G |- e.callee : var ConstructorTypeRef ctorTypeRef */
-      Expression _callee = e.getCallee();
-      ConstructorTypeRef ctorTypeRef = null;
-      Result<TypeRef> result = typeInternal(G, _trace_, _callee);
-      checkAssignableTo(result.getFirst(), ConstructorTypeRef.class);
-      ctorTypeRef = (ConstructorTypeRef) result.getFirst();
-      
-      EList<TypeRef> _typeArgs = e.getTypeArgs();
-      TypeRef typeRefOfInstanceToCreate = RuleEnvironmentExtensions.createTypeRefFromStaticType(ctorTypeRef, ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
-      Type _declaredType = typeRefOfInstanceToCreate.getDeclaredType();
-      ContainerType<?> typeOfInstanceToCreate = ((ContainerType<?>) _declaredType);
-      final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-      this.typeSystemHelper.addSubstitutions(G2, typeRefOfInstanceToCreate);
-      RuleEnvironmentExtensions.addThisType(G2, typeRefOfInstanceToCreate);
-      Resource _eResource = e.eResource();
-      ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(_eResource);
-      TMethod ctor = _fromContext.findConstructor(typeOfInstanceToCreate);
-      TFormalParameter _fparForArgIdx = null;
-      if (ctor!=null) {
-        EList<Expression> _arguments_1 = e.getArguments();
-        int _indexOf = ECollections.indexOf(_arguments_1, argument, 0);
-        _fparForArgIdx=ctor.getFparForArgIdx(_indexOf);
-      }
-      final TFormalParameter fpar = _fparForArgIdx;
-      boolean _equals = Objects.equal(fpar, null);
-      if (_equals) {
-        UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-        T = _createUnknownTypeRef;
+    final EObject expr = argument.eContainer();
+    if ((expr instanceof NewExpression)) {
+      EList<Argument> _arguments = ((NewExpression)expr).getArguments();
+      boolean _contains = _arguments.contains(argument);
+      boolean _not = (!_contains);
+      if (_not) {
       } else {
-        final TypeRef paramType = fpar.getTypeRef();
-        boolean _equals_1 = Objects.equal(paramType, null);
-        if (_equals_1) {
-          ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G2);
-          T = _anyTypeRef;
+        /* G |- expr.callee : var ConstructorTypeRef ctorTypeRef */
+        Expression _callee = ((NewExpression)expr).getCallee();
+        ConstructorTypeRef ctorTypeRef = null;
+        Result<TypeRef> result = typeInternal(G, _trace_, _callee);
+        checkAssignableTo(result.getFirst(), ConstructorTypeRef.class);
+        ctorTypeRef = (ConstructorTypeRef) result.getFirst();
+        
+        EList<TypeRef> _typeArgs = ((NewExpression)expr).getTypeArgs();
+        TypeRef typeRefOfInstanceToCreate = RuleEnvironmentExtensions.createTypeRefFromStaticType(ctorTypeRef, ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
+        Type _declaredType = typeRefOfInstanceToCreate.getDeclaredType();
+        ContainerType<?> typeOfInstanceToCreate = ((ContainerType<?>) _declaredType);
+        final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+        this.typeSystemHelper.addSubstitutions(G2, typeRefOfInstanceToCreate);
+        RuleEnvironmentExtensions.addThisType(G2, typeRefOfInstanceToCreate);
+        Resource _eResource = ((NewExpression)expr).eResource();
+        ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(_eResource);
+        TMethod ctor = _fromContext.findConstructor(typeOfInstanceToCreate);
+        TFormalParameter _fparForArgIdx = null;
+        if (ctor!=null) {
+          EList<Argument> _arguments_1 = ((NewExpression)expr).getArguments();
+          int _indexOf = ECollections.indexOf(_arguments_1, argument, 0);
+          _fparForArgIdx=ctor.getFparForArgIdx(_indexOf);
+        }
+        final TFormalParameter fpar = _fparForArgIdx;
+        boolean _equals = Objects.equal(fpar, null);
+        if (_equals) {
+          UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+          T = _createUnknownTypeRef;
         } else {
-          /* G2 |- paramType ~> T */
-          Result<TypeArgument> result_1 = substTypeVariablesInternal(G2, _trace_, paramType);
-          checkAssignableTo(result_1.getFirst(), TypeRef.class);
-          T = (TypeRef) result_1.getFirst();
-          
+          final TypeRef paramType = fpar.getTypeRef();
+          boolean _equals_1 = Objects.equal(paramType, null);
+          if (_equals_1) {
+            ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G2);
+            T = _anyTypeRef;
+          } else {
+            /* G2 |- paramType ~> T */
+            Result<TypeArgument> result_1 = substTypeVariablesInternal(G2, _trace_, paramType);
+            checkAssignableTo(result_1.getFirst(), TypeRef.class);
+            T = (TypeRef) result_1.getFirst();
+            
+          }
         }
       }
-    }
-    return new Result<TypeRef>(T);
-  }
-  
-  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedCallExpression expr, final Expression argument) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<TypeRef> _result_ = applyRuleExpectedTypeOfArgumentInCallExpression(G, _subtrace_, expr, argument);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("expectedTypeOfArgumentInCallExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(argument) + " : " + stringRep(_result_.getFirst());
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleExpectedTypeOfArgumentInCallExpression) {
-    	expectedTypeInThrowException(ruleName("expectedTypeOfArgumentInCallExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(argument) + " : " + "TypeRef",
-    		EXPECTEDTYPEOFARGUMENTINCALLEXPRESSION,
-    		e_applyRuleExpectedTypeOfArgumentInCallExpression, expr, argument, new ErrorInformation[] {new ErrorInformation(expr), new ErrorInformation(argument)});
-    	return null;
-    }
-  }
-  
-  protected Result<TypeRef> applyRuleExpectedTypeOfArgumentInCallExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedCallExpression expr, final Expression argument) throws RuleFailedException {
-    TypeRef T = null; // output parameter
-    EList<Expression> _arguments = expr.getArguments();
-    boolean _contains = _arguments.contains(argument);
-    /* expr.arguments.contains(argument) */
-    if (!_contains) {
-      sneakyThrowRuleFailedException("expr.arguments.contains(argument)");
-    }
-    /* G |- expr.target : var TypeRef targetTypeRef */
-    Expression _target = expr.getTarget();
-    TypeRef targetTypeRef = null;
-    Result<TypeRef> result = typeInternal(G, _trace_, _target);
-    checkAssignableTo(result.getFirst(), TypeRef.class);
-    targetTypeRef = (TypeRef) result.getFirst();
-    
-    if ((targetTypeRef instanceof FunctionTypeExprOrRef)) {
-      final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef)targetTypeRef);
-      EList<Expression> _arguments_1 = expr.getArguments();
-      final int argIndex = ECollections.indexOf(_arguments_1, argument, 0);
-      final TFormalParameter fpar = F.getFparForArgIdx(argIndex);
-      boolean _equals = Objects.equal(fpar, null);
-      if (_equals) {
-        UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-        T = _createUnknownTypeRef;
-      } else {
-        final TypeRef paramType = fpar.getTypeRef();
-        boolean _equals_1 = Objects.equal(paramType, null);
-        if (_equals_1) {
-          ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-          T = _anyTypeRef;
-        } else {
-          final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-          this.typeSystemHelper.addSubstitutions(G2, expr, F);
-          Expression _target_1 = expr.getTarget();
-          if ((_target_1 instanceof SuperLiteral)) {
-            N4ClassDeclaration _containerOfType = EcoreUtil2.<N4ClassDeclaration>getContainerOfType(expr, N4ClassDeclaration.class);
-            Type _definedType = null;
-            if (_containerOfType!=null) {
-              _definedType=_containerOfType.getDefinedType();
-            }
-            final Type containingClass = _definedType;
-            if ((containingClass instanceof TClass)) {
-              TypeRef _ref = TypeExtensions.ref(containingClass);
-              RuleEnvironmentExtensions.addThisType(G2, _ref);
-              ParameterizedTypeRef _superClassRef = ((TClass)containingClass).getSuperClassRef();
-              boolean _tripleNotEquals = (_superClassRef != null);
-              if (_tripleNotEquals) {
-                ParameterizedTypeRef _superClassRef_1 = ((TClass)containingClass).getSuperClassRef();
-                this.typeSystemHelper.addSubstitutions(G2, _superClassRef_1);
+    } else {
+      if ((expr instanceof ParameterizedCallExpression)) {
+        EList<Argument> _arguments_2 = ((ParameterizedCallExpression)expr).getArguments();
+        boolean _contains_1 = _arguments_2.contains(argument);
+        /* expr.arguments.contains(argument) */
+        if (!_contains_1) {
+          sneakyThrowRuleFailedException("expr.arguments.contains(argument)");
+        }
+        /* G |- expr.target : var TypeRef targetTypeRef */
+        Expression _target = ((ParameterizedCallExpression)expr).getTarget();
+        TypeRef targetTypeRef = null;
+        Result<TypeRef> result_2 = typeInternal(G, _trace_, _target);
+        checkAssignableTo(result_2.getFirst(), TypeRef.class);
+        targetTypeRef = (TypeRef) result_2.getFirst();
+        
+        if ((targetTypeRef instanceof FunctionTypeExprOrRef)) {
+          final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef)targetTypeRef);
+          EList<Argument> _arguments_3 = ((ParameterizedCallExpression)expr).getArguments();
+          final int argIndex = ECollections.indexOf(_arguments_3, argument, 0);
+          final TFormalParameter fpar_1 = F.getFparForArgIdx(argIndex);
+          boolean _equals_2 = Objects.equal(fpar_1, null);
+          if (_equals_2) {
+            UnknownTypeRef _createUnknownTypeRef_1 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+            T = _createUnknownTypeRef_1;
+          } else {
+            final TypeRef paramType_1 = fpar_1.getTypeRef();
+            boolean _equals_3 = Objects.equal(paramType_1, null);
+            if (_equals_3) {
+              ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+              T = _anyTypeRef_1;
+            } else {
+              final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
+              this.typeSystemHelper.addSubstitutions(G2_1, ((ParameterizedCallExpression)expr), F);
+              Expression _target_1 = ((ParameterizedCallExpression)expr).getTarget();
+              if ((_target_1 instanceof SuperLiteral)) {
+                N4ClassDeclaration _containerOfType = EcoreUtil2.<N4ClassDeclaration>getContainerOfType(expr, N4ClassDeclaration.class);
+                Type _definedType = null;
+                if (_containerOfType!=null) {
+                  _definedType=_containerOfType.getDefinedType();
+                }
+                final Type containingClass = _definedType;
+                if ((containingClass instanceof TClass)) {
+                  TypeRef _ref = TypeExtensions.ref(containingClass);
+                  RuleEnvironmentExtensions.addThisType(G2_1, _ref);
+                  ParameterizedTypeRef _superClassRef = ((TClass)containingClass).getSuperClassRef();
+                  boolean _tripleNotEquals = (_superClassRef != null);
+                  if (_tripleNotEquals) {
+                    ParameterizedTypeRef _superClassRef_1 = ((TClass)containingClass).getSuperClassRef();
+                    this.typeSystemHelper.addSubstitutions(G2_1, _superClassRef_1);
+                  }
+                  if ((paramType_1 instanceof ThisTypeRefStructural)) {
+                    ParameterizedTypeRef _superClassRef_2 = ((TClass)containingClass).getSuperClassRef();
+                    RuleEnvironmentExtensions.addThisType(G2_1, _superClassRef_2);
+                  }
+                }
               }
-              if ((paramType instanceof ThisTypeRefStructural)) {
-                ParameterizedTypeRef _superClassRef_2 = ((TClass)containingClass).getSuperClassRef();
-                RuleEnvironmentExtensions.addThisType(G2, _superClassRef_2);
-              }
+              /* G2 |- paramType ~> T */
+              Result<TypeArgument> result_3 = substTypeVariablesInternal(G2_1, _trace_, paramType_1);
+              checkAssignableTo(result_3.getFirst(), TypeRef.class);
+              T = (TypeRef) result_3.getFirst();
+              
             }
           }
-          /* G2 |- paramType ~> T */
-          Result<TypeArgument> result_1 = substTypeVariablesInternal(G2, _trace_, paramType);
-          checkAssignableTo(result_1.getFirst(), TypeRef.class);
-          T = (TypeRef) result_1.getFirst();
-          
+        } else {
+          UnknownTypeRef _createUnknownTypeRef_2 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+          T = _createUnknownTypeRef_2;
         }
       }
-    } else {
-      UnknownTypeRef _createUnknownTypeRef_1 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-      T = _createUnknownTypeRef_1;
     }
     return new Result<TypeRef>(T);
   }

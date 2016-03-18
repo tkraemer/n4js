@@ -13,10 +13,15 @@ package eu.numberfour.n4js.xsemantics
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.AssignmentExpression
-import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.FunctionDeclaration
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
+import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.typesystem.AbstractScriptAssembler
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
 import org.eclipse.xtext.junit4.InjectWith
@@ -24,11 +29,6 @@ import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.n4JS.FunctionDeclaration
-import it.xsemantics.runtime.RuleApplicationTrace
-import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 
 /**
  * Abstract base class for testing typing of function calls. The function under test and its call are created using
@@ -108,7 +108,7 @@ abstract class AbstractCallExpressionTypesystemTest extends AbstractTypesystemTe
 					null;
 			if (expectedType !== null) {
 				val trace = new RuleApplicationTrace();
-				val actualTypeResult = ts.expectedTypeIn(G, trace, call, arg);
+				val actualTypeResult = ts.expectedTypeIn(G, trace, call, arg.expression);
 				if (actualTypeResult.failed) {
 					assertNoFailure(actualTypeResult, trace);
 				}

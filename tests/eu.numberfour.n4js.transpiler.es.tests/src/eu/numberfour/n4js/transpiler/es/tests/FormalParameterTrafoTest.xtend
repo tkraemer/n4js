@@ -87,10 +87,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 		/// B) call to ....slice()
 		"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-		val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+		val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 		"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-		val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+		val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 		"should be 2".assertEquals(2L,arg1.value.longValue())
 
 	}
@@ -143,10 +143,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 		/// B) call to ....slice()
 		"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-		val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+		val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 		"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-		val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+		val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 		"should be 2".assertEquals(2L,arg1.value.longValue())
 
 	}
@@ -208,10 +208,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			/// B) call to ....slice() for c
 			"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-			val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+			val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 			"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-			val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+			val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 			"should be 2".assertEquals(2L,arg1.value.longValue())
 
 			// C) checking call of g(a,b,a,c) in body of methodF():
@@ -229,10 +229,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			/// B) call to ....slice() for d2
 			"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-			val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+			val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 			"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-			val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+			val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 			"argument-offset of d2 is 3".assertEquals(3L,arg1.value.longValue())
 		}
 
@@ -306,15 +306,15 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			/// B) call to ....slice() for c
 			"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-			val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+			val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 			"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-			val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+			val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 			"should be 2".assertEquals(2L,arg1.value.longValue())
 
 			// C) checking call of g(a,b,a,c) in body of methodF():
 		 	val paramCall_of_g_IM = (F_IM.body?.statements.findLast[ it instanceof ExpressionStatement] as ExpressionStatement).expression as ParameterizedCallExpression;
-		 	val g_Args_IM = paramCall_of_g_IM.arguments
+		 	val g_Args_IM = paramCall_of_g_IM.arguments.map[expression]
 		 	#['a','b','a','c'].forEach[arg,i| ("i="+i).assertEquals(arg,(g_Args_IM.get(i) as IdentifierRef_IM).id_IM.name )]
 		}
 		/// checking transformed result, g()
@@ -327,10 +327,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			/// B) call to ....slice() for d2
 			"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-			val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+			val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 			"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-			val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+			val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 			"argument-offset of d2 is 3".assertEquals(3L,arg1.value.longValue())
 		}
 		/// checking transformed result, ( function(...){})()
@@ -343,10 +343,10 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 			/// B) call to ....slice() for d2
 			"should have two parameter".assertEquals(2,pc_IM.arguments.size)
-			val arg0 = pc_IM.arguments.get(0) as IdentifierRef_IM;
+			val arg0 = pc_IM.arguments.get(0).expression as IdentifierRef_IM;
 			"First parameters must be the arguments-variable".assertEquals("arguments",arg0.id_IM.name)
 
-			val arg1 = pc_IM.arguments.get(1) as IntLiteral;
+			val arg1 = pc_IM.arguments.get(1).expression as IntLiteral;
 			"argument-offset of z1 is 0".assertEquals(0L,arg1.value.longValue())
 		}
 

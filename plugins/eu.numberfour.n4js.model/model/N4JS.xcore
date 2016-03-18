@@ -1184,9 +1184,8 @@ class NewTarget extends Expression {
 
 class NewExpression extends Expression, ParameterizedAccess {
 	contains Expression callee
-	contains Expression[] arguments
+	contains Argument[] arguments
 	boolean withArgs
-	boolean spread
 }
 
 abstract class ParameterizedAccess {
@@ -1204,8 +1203,7 @@ class ParameterizedCallExpression extends Expression, ParameterizedAccess {
 	 * The callee or target of the call, e.g. the name of the called function. This is not the receiver (which may be null).
 	 */
 	contains Expression target
-	contains Expression[] arguments
-	boolean spread
+	contains Argument[] arguments
 	/*
 	 * Convenience method returning the receiver expression or null, if call has no receiver.
 	 */
@@ -1216,6 +1214,12 @@ class ParameterizedCallExpression extends Expression, ParameterizedAccess {
 			null;
 		}
 	}
+}
+
+/* Argument in a new or call expression. */
+class Argument extends TypableElement {
+	boolean spread
+	contains Expression expression
 }
 
 class IndexedAccessExpression extends Expression {

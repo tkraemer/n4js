@@ -120,7 +120,7 @@ class AbstractPolyProcessor extends AbstractProcessor {
 	def private EObject getParentPolyCandidate(Expression poly) {
 		val directParent = poly?.eContainer;
 		return switch(directParent) {
-			ParameterizedCallExpression case directParent.arguments.contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
+			ParameterizedCallExpression case directParent.arguments.map[expression].contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
 				directParent
 			FunctionExpression:
 				null // function expressions never have nested poly expressions (expression in the body are detached)
