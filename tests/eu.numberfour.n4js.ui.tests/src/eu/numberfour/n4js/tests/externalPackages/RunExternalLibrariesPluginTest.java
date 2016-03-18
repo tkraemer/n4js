@@ -40,8 +40,8 @@ import eu.numberfour.n4js.runner.RunnerFrontEnd;
 import eu.numberfour.n4js.runner.ui.RunnerFrontEndUI;
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
+import eu.numberfour.n4js.utils.process.ProcessExecutor;
 import eu.numberfour.n4js.utils.process.ProcessResult;
-import eu.numberfour.n4js.utils.process.ProcessResultFactory;
 
 /**
  * Test for checking the runtime behavior of the external libraries.
@@ -128,7 +128,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"Workspace D<init>",
-				result.getStdOutString());
+				result.getStdOut());
 		// @formatter:on
 	}
 
@@ -148,7 +148,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"External C<init>" + NL +
 				"External D<init>",
-				result.getStdOutString());
+				result.getStdOut());
 		// @formatter:on
 	}
 
@@ -168,7 +168,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"External D<init>",
-				result.getStdOutString());
+				result.getStdOut());
 		// @formatter:on
 	}
 
@@ -188,7 +188,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"External D<init>",
-				firstResult.getStdOutString());
+				firstResult.getStdOut());
 		// @formatter:on
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
@@ -203,7 +203,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"Workspace D<init>",
-				secondResult.getStdOutString());
+				secondResult.getStdOut());
 		// @formatter:on
 	}
 
@@ -223,7 +223,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"External C<init>" + NL +
 				"External D<init>",
-				result.getStdOutString());
+				result.getStdOut());
 		// @formatter:on
 	}
 
@@ -243,7 +243,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"External D<init>",
-				result.getStdOutString());
+				result.getStdOut());
 		// @formatter:on
 	}
 
@@ -263,7 +263,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"External D<init>",
-				firstResult.getStdOutString());
+				firstResult.getStdOut());
 		// @formatter:on
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
@@ -279,7 +279,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"Workspace D<init>",
-				secondResult.getStdOutString());
+				secondResult.getStdOut());
 		// @formatter:on
 	}
 
@@ -288,9 +288,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		final org.eclipse.emf.common.util.URI moduleToRun = createPlatformResourceURI(pathToModuleToRun, true);
 		final RunConfiguration config = runnerFrontEnd.createConfiguration(ID, null, moduleToRun);
 		final Process process = runnerFrontEndUI.runInUI(config);
-		final ProcessResult result = new ProcessResultFactory().createNewResult(process);
-		final int exitCode = result.getExitCode();
-		assertTrue("Expected 0 error code for the process. Was: " + exitCode, 0 == exitCode);
+		final ProcessResult result = new ProcessExecutor().execute(process, "");
+		assertTrue("Expected 0 error code for the process. Was: " + result.getExitCode(), result.isOK());
 		return result;
 	}
 

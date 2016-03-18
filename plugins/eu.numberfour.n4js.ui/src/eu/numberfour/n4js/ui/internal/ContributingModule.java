@@ -35,8 +35,10 @@ import com.google.inject.name.Names;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
 import eu.numberfour.n4js.binaries.BinariesProvider;
 import eu.numberfour.n4js.binaries.BinariesValidator;
+import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.binaries.OsgiBinariesPreferenceStore;
 import eu.numberfour.n4js.binaries.nodejs.NodeJsBinary;
+import eu.numberfour.n4js.binaries.nodejs.NodeProcesBuilder;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.EclipseExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.EclipseTargetPlatformInstallLocationProvider;
@@ -63,7 +65,9 @@ import eu.numberfour.n4js.ui.containers.NfarStorageMapper;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.scoping.builtin.ScopeInitializer;
 import eu.numberfour.n4js.utils.StatusHelper;
-import eu.numberfour.n4js.utils.process.ProcessResultFactory;
+import eu.numberfour.n4js.utils.process.OutputStreamPrinterThreadProvider;
+import eu.numberfour.n4js.utils.process.OutputStreamProvider;
+import eu.numberfour.n4js.utils.process.ProcessExecutor;
 
 /**
  */
@@ -124,7 +128,11 @@ public class ContributingModule implements Module {
 				.annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS))
 				.to(IBuilderState.class);
 
-		binder.bind(ProcessResultFactory.class).in(SINGLETON);
+		binder.bind(ProcessExecutor.class).in(SINGLETON);
+		binder.bind(BinaryCommandFactory.class).in(SINGLETON);
+		binder.bind(NodeProcesBuilder.class).in(SINGLETON);
+		binder.bind(OutputStreamPrinterThreadProvider.class).in(SINGLETON);
+		binder.bind(OutputStreamProvider.class);
 		binder.bind(BinariesPreferenceStore.class).to(OsgiBinariesPreferenceStore.class).in(SINGLETON);
 		binder.bind(BinariesValidator.class).in(SINGLETON);
 		binder.bind(BinariesProvider.class).in(SINGLETON);

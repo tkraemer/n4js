@@ -39,7 +39,7 @@ public class NodeJsBinary implements Binary {
 	/** The minimum {@code Node.js} version. */
 	private static final Version MIN_VERSION = new Version(5, 0, 0);
 	private static final String LABEL = "Node.js";
-	private static final String COMMAND = isWindows() ? "node.exe" : "node";
+	private static final String BINARY_NAME = isWindows() ? "node.exe" : "node";
 	private static final String VERSION_ARGUMENT = "-v";
 
 	@Inject
@@ -76,8 +76,8 @@ public class NodeJsBinary implements Binary {
 	}
 
 	@Override
-	public String getCommandWithAbsolutePath() {
-		return getUserNodePathOrDefault() + File.separator + COMMAND;
+	public String getBinaryAbsolutePath() {
+		return getUserNodePathOrDefault() + File.separator + BINARY_NAME;
 	}
 
 	@Override

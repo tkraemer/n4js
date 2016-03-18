@@ -29,8 +29,8 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import com.google.common.base.Supplier;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType;
-import eu.numberfour.n4js.external.OutputStreamProvider;
+import eu.numberfour.n4js.utils.process.OutputStreamProvider;
+import eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType;
 
 /**
  * Output stream provider to the NPM console.

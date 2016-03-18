@@ -4,13 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
 package eu.numberfour.n4js.utils.process
 
-import java.util.Collection
 import org.eclipse.xtend.lib.annotations.AccessorType
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -25,13 +24,13 @@ class ProcessResult {
 	val static LN = System.lineSeparator;
 
 	val int exitCode;
-	val Collection<String> stdOut;
-	val Collection<String> stdErr;
+	val String stdOut;
+	val String stdErr;
 
-	package new(int exitCode, Iterable<String> stdOut, Iterable<String> stdErr) {
+	package new(int exitCode, String stdOut, String stdErr) {
 		this.exitCode = exitCode;
-		this.stdOut = stdOut.toList.unmodifiableView;
-		this.stdErr = stdErr.toList.unmodifiableView;
+		this.stdOut = if (stdOut === null) "" else stdOut;
+		this.stdErr = if (stdErr === null) "" else stdErr;
 	}
 
 	/** Returns with {@code true} if the exit code is {@code 0}, otherwise {@code false}. */
@@ -39,19 +38,15 @@ class ProcessResult {
 		return 0 === exitCode;
 	}
 
-	/** Returns with the standard output content as a string. */
-	def getStdOutString() {
-		stdOut.join(LN);
-	}
-
-	/** Returns with the standard error output content as a string. */
-	def getStdErrString() {
-		stdErr.join(LN);
-	}
-
 	@Override
 	override toString() {
-		"Exit code:" + exitCode + LN +"Standard out:" + LN + stdOutString + LN + "Standard error:" + LN + stdErrString;
+		"Exit code:" + exitCode + LN + "Standard out:" + LN + stdOut + LN + "Standard error:" + LN + stdErr;
+	}
+
+	def Throwable toThrowable(String message) {
+		val Exception exc = new Exception(message + LN + LN + stdErr);
+		exc.setStackTrace(#[]);
+		return exc;
 	}
 
 }
