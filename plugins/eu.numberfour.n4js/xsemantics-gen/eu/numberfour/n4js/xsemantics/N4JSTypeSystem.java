@@ -3662,7 +3662,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         _or = _and;
       }
       if (_or) {
-        TypeRef _bindAndSubstituteThisTypeRef = this.typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef);
+        TypeRef _bindAndSubstituteThisTypeRef = this.typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef, fparTypeRef);
         T = _bindAndSubstituteThisTypeRef;
       } else {
         TypeRef _xifexpression = null;
@@ -6396,86 +6396,74 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   protected Result<TypeRef> applyRuleExpectedTypeInReturnStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ReturnStatement stmt, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
     final FunctionDefinition funDef = EcoreUtil2.<FunctionDefinition>getContainerOfType(stmt, FunctionDefinition.class);
-    boolean _and = false;
-    if (!(funDef instanceof N4MethodDeclaration)) {
-      _and = false;
-    } else {
-      boolean _isConstructor = ((N4MethodDeclaration) funDef).isConstructor();
-      _and = _isConstructor;
-    }
-    if (_and) {
-      UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-      T = _createUnknownTypeRef;
-    } else {
-      final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-      /* G |~ stmt ~> var TypeRef myThisTypeRef */
-      TypeRef myThisTypeRef = null;
-      Result<TypeRef> result = thisTypeRefInternal(G, _trace_, stmt);
-      checkAssignableTo(result.getFirst(), TypeRef.class);
-      myThisTypeRef = (TypeRef) result.getFirst();
-      
-      RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
-      /* { !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
-      {
-        RuleFailedException previousFailure = null;
-        try {
-          boolean _isAsync = funDef.isAsync();
-          boolean _not = (!_isAsync);
-          /* !funDef.isAsync() */
-          if (!_not) {
-            sneakyThrowRuleFailedException("!funDef.isAsync()");
-          }
-          /* G2 |- funDef : var FunctionTypeExprOrRef fType */
-          FunctionTypeExprOrRef fType = null;
-          Result<TypeRef> result_1 = typeInternal(G2, _trace_, funDef);
-          checkAssignableTo(result_1.getFirst(), FunctionTypeExprOrRef.class);
-          fType = (FunctionTypeExprOrRef) result_1.getFirst();
-          
-          /* G2 |- fType.returnTypeRef ~> T */
-          TypeRef _returnTypeRef = fType.getReturnTypeRef();
-          Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef);
-          checkAssignableTo(result_2.getFirst(), TypeRef.class);
-          T = (TypeRef) result_2.getFirst();
-          
-        } catch (Exception e) {
-          previousFailure = extractRuleFailedException(e);
-          if ((funDef != null)) {
-            TypeRef _returnTypeRef_1 = funDef.getReturnTypeRef();
-            boolean _tripleNotEquals = (_returnTypeRef_1 != null);
-            if (_tripleNotEquals) {
-              TypeRef _returnTypeRef_2 = funDef.getReturnTypeRef();
-              T = _returnTypeRef_2;
-            } else {
-              final Type tFun = funDef.getDefinedType();
-              if ((tFun instanceof TFunction)) {
-                final TypeRef actualReturnTypeRef = ((TFunction)tFun).getReturnTypeRef();
-                PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
-                boolean _isPromise = TypeUtils.isPromise(actualReturnTypeRef, _predefinedTypes.builtInTypeScope);
-                if (_isPromise) {
-                  EList<TypeArgument> _typeArgs = actualReturnTypeRef.getTypeArgs();
-                  final TypeArgument firstTypeArg = IterableExtensions.<TypeArgument>head(_typeArgs);
-                  if ((firstTypeArg != null)) {
-                    /* G |~ firstTypeArg /\ T */
-                    Result<TypeRef> result_3 = upperBoundInternal(G, _trace_, firstTypeArg);
-                    checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                    T = (TypeRef) result_3.getFirst();
-                    
-                  }
+    final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+    /* G |~ stmt ~> var TypeRef myThisTypeRef */
+    TypeRef myThisTypeRef = null;
+    Result<TypeRef> result = thisTypeRefInternal(G, _trace_, stmt);
+    checkAssignableTo(result.getFirst(), TypeRef.class);
+    myThisTypeRef = (TypeRef) result.getFirst();
+    
+    RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
+    /* { !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
+    {
+      RuleFailedException previousFailure = null;
+      try {
+        boolean _isAsync = funDef.isAsync();
+        boolean _not = (!_isAsync);
+        /* !funDef.isAsync() */
+        if (!_not) {
+          sneakyThrowRuleFailedException("!funDef.isAsync()");
+        }
+        /* G2 |- funDef : var FunctionTypeExprOrRef fType */
+        FunctionTypeExprOrRef fType = null;
+        Result<TypeRef> result_1 = typeInternal(G2, _trace_, funDef);
+        checkAssignableTo(result_1.getFirst(), FunctionTypeExprOrRef.class);
+        fType = (FunctionTypeExprOrRef) result_1.getFirst();
+        
+        /* G2 |- fType.returnTypeRef ~> T */
+        TypeRef _returnTypeRef = fType.getReturnTypeRef();
+        Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef);
+        checkAssignableTo(result_2.getFirst(), TypeRef.class);
+        T = (TypeRef) result_2.getFirst();
+        
+      } catch (Exception e) {
+        previousFailure = extractRuleFailedException(e);
+        if ((funDef != null)) {
+          TypeRef _returnTypeRef_1 = funDef.getReturnTypeRef();
+          boolean _tripleNotEquals = (_returnTypeRef_1 != null);
+          if (_tripleNotEquals) {
+            TypeRef _returnTypeRef_2 = funDef.getReturnTypeRef();
+            T = _returnTypeRef_2;
+          } else {
+            final Type tFun = funDef.getDefinedType();
+            if ((tFun instanceof TFunction)) {
+              final TypeRef actualReturnTypeRef = ((TFunction)tFun).getReturnTypeRef();
+              PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
+              boolean _isPromise = TypeUtils.isPromise(actualReturnTypeRef, _predefinedTypes.builtInTypeScope);
+              if (_isPromise) {
+                EList<TypeArgument> _typeArgs = actualReturnTypeRef.getTypeArgs();
+                final TypeArgument firstTypeArg = IterableExtensions.<TypeArgument>head(_typeArgs);
+                if ((firstTypeArg != null)) {
+                  /* G |~ firstTypeArg /\ T */
+                  Result<TypeRef> result_3 = upperBoundInternal(G, _trace_, firstTypeArg);
+                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                  T = (TypeRef) result_3.getFirst();
+                  
                 }
               }
             }
-          } else {
-            final GetterDeclaration getterDef = EcoreUtil2.<GetterDeclaration>getContainerOfType(stmt, GetterDeclaration.class);
-            TGetter _definedGetter = null;
-            if (getterDef!=null) {
-              _definedGetter=getterDef.getDefinedGetter();
-            }
-            TypeRef _declaredTypeRef = null;
-            if (_definedGetter!=null) {
-              _declaredTypeRef=_definedGetter.getDeclaredTypeRef();
-            }
-            T = _declaredTypeRef;
           }
+        } else {
+          final GetterDeclaration getterDef = EcoreUtil2.<GetterDeclaration>getContainerOfType(stmt, GetterDeclaration.class);
+          TGetter _definedGetter = null;
+          if (getterDef!=null) {
+            _definedGetter=getterDef.getDefinedGetter();
+          }
+          TypeRef _declaredTypeRef = null;
+          if (_definedGetter!=null) {
+            _declaredTypeRef=_definedGetter.getDeclaredTypeRef();
+          }
+          T = _declaredTypeRef;
         }
       }
     }
@@ -6704,17 +6692,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundExistentialTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExistentialTypeRef existentialTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
-    /* G |~ existentialTypeRef.wildcard /\ typeRef */
+    TypeRef T = null; // output parameter
+    /* G |~ existentialTypeRef.wildcard /\ T */
     Wildcard _wildcard = existentialTypeRef.getWildcard();
     Result<TypeRef> result = upperBoundInternal(G, _trace_, _wildcard);
     checkAssignableTo(result.getFirst(), TypeRef.class);
-    typeRef = (TypeRef) result.getFirst();
+    T = (TypeRef) result.getFirst();
     
-    TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
-    typeRef = _copy;
-    this.typeSystemHelper.copyTypeModifiers(typeRef, existentialTypeRef);
-    return new Result<TypeRef>(typeRef);
+    TypeRef _copy = TypeUtils.<TypeRef>copy(T);
+    T = _copy;
+    TypeUtils.copyTypeModifiers(T, existentialTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnionTypeExpression U) throws RuleFailedException {
@@ -6759,7 +6747,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     };
     UnionTypeExpression _doubleArrow = ObjectExtensions.<UnionTypeExpression>operator_doubleArrow(_createNonSimplifiedUnionType, _function_1);
     T = _doubleArrow;
-    this.typeSystemHelper.copyTypeModifiers(T, U);
+    TypeUtils.copyTypeModifiers(T, U);
     return new Result<TypeRef>(T);
   }
   
@@ -6805,7 +6793,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     };
     IntersectionTypeExpression _doubleArrow = ObjectExtensions.<IntersectionTypeExpression>operator_doubleArrow(_createNonSimplifiedIntersectionType, _function_1);
     T = _doubleArrow;
-    this.typeSystemHelper.copyTypeModifiers(T, I);
+    TypeUtils.copyTypeModifiers(T, I);
     return new Result<TypeRef>(T);
   }
   
@@ -6859,11 +6847,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundFunctionTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     Result<TypeRef> _applyRuleUpperBoundFunctionTypeExprOrRef = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F);
     TypeRef _value = _applyRuleUpperBoundFunctionTypeExprOrRef.getValue();
-    result = _value;
-    return new Result<TypeRef>(result);
+    T = _value;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
@@ -6886,10 +6874,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundFunctionTypeExprOrRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     FunctionTypeExpression _createUpperBoundOfFunctionTypeExprOrRef = this.typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G, F);
-    result = _createUpperBoundOfFunctionTypeExprOrRef;
-    return new Result<TypeRef>(result);
+    T = _createUpperBoundOfFunctionTypeExprOrRef;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
@@ -6912,10 +6900,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleUpperBoundThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
+    TypeRef T = null; // output parameter
     ParameterizedTypeRef _createResolvedThisTypeRef = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef);
-    typeRef = _createResolvedThisTypeRef;
-    return new Result<TypeRef>(typeRef);
+    T = _createResolvedThisTypeRef;
+    TypeUtils.copyTypeModifiers(T, boundThisTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> upperBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef ct) throws RuleFailedException {
@@ -7041,17 +7030,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundExistentialTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExistentialTypeRef existentialTypeRef) throws RuleFailedException {
-    TypeRef typeRef = null; // output parameter
-    /* G |~ existentialTypeRef.wildcard \/ typeRef */
+    TypeRef T = null; // output parameter
+    /* G |~ existentialTypeRef.wildcard \/ T */
     Wildcard _wildcard = existentialTypeRef.getWildcard();
     Result<TypeRef> result = lowerBoundInternal(G, _trace_, _wildcard);
     checkAssignableTo(result.getFirst(), TypeRef.class);
-    typeRef = (TypeRef) result.getFirst();
+    T = (TypeRef) result.getFirst();
     
-    TypeRef _copy = TypeUtils.<TypeRef>copy(typeRef);
-    typeRef = _copy;
-    this.typeSystemHelper.copyTypeModifiers(typeRef, existentialTypeRef);
-    return new Result<TypeRef>(typeRef);
+    TypeRef _copy = TypeUtils.<TypeRef>copy(T);
+    T = _copy;
+    TypeUtils.copyTypeModifiers(T, existentialTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnionTypeExpression U) throws RuleFailedException {
@@ -7092,7 +7081,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     List<TypeRef> _map = ListExtensions.<TypeRef, TypeRef>map(_typeRefs, _function);
     UnionTypeExpression _createNonSimplifiedUnionType = TypeUtils.createNonSimplifiedUnionType(_map);
     T = _createNonSimplifiedUnionType;
-    this.typeSystemHelper.copyTypeModifiers(T, U);
+    TypeUtils.copyTypeModifiers(T, U);
     return new Result<TypeRef>(T);
   }
   
@@ -7134,7 +7123,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     List<TypeRef> _map = ListExtensions.<TypeRef, TypeRef>map(_typeRefs, _function);
     IntersectionTypeExpression _createNonSimplifiedIntersectionType = TypeUtils.createNonSimplifiedIntersectionType(_map);
     T = _createNonSimplifiedIntersectionType;
-    this.typeSystemHelper.copyTypeModifiers(T, I);
+    TypeUtils.copyTypeModifiers(T, I);
     return new Result<TypeRef>(T);
   }
   
@@ -7188,11 +7177,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundFunctionTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     Result<TypeRef> _applyRuleLowerBoundFunctionTypeExprOrRef = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F);
     TypeRef _value = _applyRuleLowerBoundFunctionTypeExprOrRef.getValue();
-    result = _value;
-    return new Result<TypeRef>(result);
+    T = _value;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
@@ -7215,10 +7204,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundFunctionTypeExprOrRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionTypeExprOrRef F) throws RuleFailedException {
-    TypeRef result = null; // output parameter
+    TypeRef T = null; // output parameter
     FunctionTypeExpression _createLowerBoundOfFunctionTypeExprOrRef = this.typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G, F);
-    result = _createLowerBoundOfFunctionTypeExprOrRef;
-    return new Result<TypeRef>(result);
+    T = _createLowerBoundOfFunctionTypeExprOrRef;
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> lowerBoundImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
@@ -7233,7 +7222,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
     } catch (Exception e_applyRuleLowerBoundThisTypeRef) {
-    	lowerBoundThrowException(ruleName("lowerBoundThisTypeRef") + stringRepForEnv(G) + " |~ " + stringRep(boundThisTypeRef) + " \\/ " + "ParameterizedTypeRef",
+    	lowerBoundThrowException(ruleName("lowerBoundThisTypeRef") + stringRepForEnv(G) + " |~ " + stringRep(boundThisTypeRef) + " \\/ " + "TypeRef",
     		LOWERBOUNDTHISTYPEREF,
     		e_applyRuleLowerBoundThisTypeRef, boundThisTypeRef, new ErrorInformation[] {new ErrorInformation(boundThisTypeRef)});
     	return null;
@@ -7241,13 +7230,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<TypeRef> applyRuleLowerBoundThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
-    
-    return new Result<TypeRef>(_applyRuleLowerBoundThisTypeRef_1(G, boundThisTypeRef));
-  }
-  
-  private ParameterizedTypeRef _applyRuleLowerBoundThisTypeRef_1(final RuleEnvironment G, final BoundThisTypeRef boundThisTypeRef) throws RuleFailedException {
+    TypeRef T = null; // output parameter
     ParameterizedTypeRef _undefinedTypeRef = RuleEnvironmentExtensions.undefinedTypeRef(G);
-    return _undefinedTypeRef;
+    T = _undefinedTypeRef;
+    TypeUtils.copyTypeModifiers(T, boundThisTypeRef);
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeArgument> substTypeVariablesImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeArgument type) throws RuleFailedException {
@@ -7359,15 +7346,16 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRef thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRef(bound.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef bound = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
-        ParameterizedTypeRef _actualThisTypeRef = bound.getActualThisTypeRef();
+        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRef(_actualThisTypeRef);
         TypingStrategy _typingStrategy = thisTypeRef.getTypingStrategy();
         boundRef.setTypingStrategy(_typingStrategy);
+        TypeUtils.copyTypeModifiers(boundRef, thisTypeRef);
         T = boundRef;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
@@ -7398,13 +7386,14 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRefStructural(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRefStructural thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRefStructural(bound.actualThisTypeRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef bound = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
-        ParameterizedTypeRef _actualThisTypeRef = bound.getActualThisTypeRef();
+        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRefStructural(_actualThisTypeRef, thisTypeRef);
+        TypeUtils.copyTypeModifiers(boundRef, thisTypeRef);
         T = boundRef;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
@@ -7593,7 +7582,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } typeSystemHelper.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) typeSystemHelper.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -7649,14 +7638,76 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             TypeRef _copy_1 = TypeUtils.<TypeRef>copy(temp);
             result = _copy_1;
           }
-          this.typeSystemHelper.copyTypeModifiers(result, typeRef);
+          TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) typeSystemHelper.copyTypeModifiers(result, typeRef) } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
-              final Collection<TypeRef> l = TypeUtils.<TypeRef>copyAll(l_raw);
+              final ArrayList<TypeRef> l = CollectionLiterals.<TypeRef>newArrayList();
+              for (int i = 0; (i < l_raw.size()); i++) {
+                final TypeRef temp_1 = l_raw.get(i);
+                final Type tempDeclaredType_1 = temp_1.getDeclaredType();
+                boolean _and_3 = false;
+                boolean _and_4 = false;
+                boolean _tripleNotEquals_2 = (typeVar != tempDeclaredType_1);
+                if (!_tripleNotEquals_2) {
+                  _and_4 = false;
+                } else {
+                  boolean _or_1 = false;
+                  boolean _isOrContainsRefToTypeVar_1 = TypeUtils.isOrContainsRefToTypeVar(temp_1);
+                  if (_isOrContainsRefToTypeVar_1) {
+                    _or_1 = true;
+                  } else {
+                    boolean _and_5 = false;
+                    boolean _tripleNotEquals_3 = (tempDeclaredType_1 != null);
+                    if (!_tripleNotEquals_3) {
+                      _and_5 = false;
+                    } else {
+                      boolean _isGeneric_1 = tempDeclaredType_1.isGeneric();
+                      _and_5 = _isGeneric_1;
+                    }
+                    _or_1 = _and_5;
+                  }
+                  _and_4 = _or_1;
+                }
+                if (!_and_4) {
+                  _and_3 = false;
+                } else {
+                  Pair<String, TypeRef> _mappedTo_2 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
+                  Object _get_1 = G.get(_mappedTo_2);
+                  boolean _tripleEquals_1 = (_get_1 == null);
+                  _and_3 = _tripleEquals_1;
+                }
+                if (_and_3) {
+                  final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
+                  Pair<String, TypeRef> _mappedTo_3 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
+                  boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
+                  /* G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) */
+                  if (!_add_1) {
+                    sneakyThrowRuleFailedException("G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)");
+                  }
+                  /* G2 |- temp ~> var TypeRef tempResult */
+                  TypeRef tempResult = null;
+                  Result<TypeArgument> result_2 = substTypeVariablesInternal(G2_1, _trace_, temp_1);
+                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                  tempResult = (TypeRef) result_2.getFirst();
+                  
+                  TypeRef _copy_2 = TypeUtils.<TypeRef>copy(tempResult);
+                  tempResult = _copy_2;
+                  /* l += tempResult */
+                  if (!l.add(tempResult)) {
+                    sneakyThrowRuleFailedException("l += tempResult");
+                  }
+                } else {
+                  TypeRef _copy_3 = TypeUtils.<TypeRef>copy(temp_1);
+                  /* l += TypeUtils.copy(temp) */
+                  if (!l.add(_copy_3)) {
+                    sneakyThrowRuleFailedException("l += TypeUtils.copy(temp)");
+                  }
+                }
+              }
               EObject _eContainer = typeRef.eContainer();
               final boolean needUnionInsteadIntersection = (_eContainer instanceof TFormalParameter);
               TypeRef _xifexpression = null;
@@ -7666,7 +7717,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                 _xifexpression = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
               }
               result = _xifexpression;
-              this.typeSystemHelper.copyTypeModifiers(result, typeRef);
+              TypeUtils.copyTypeModifiers(result, typeRef);
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
             }

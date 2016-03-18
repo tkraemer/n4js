@@ -11,5 +11,6 @@ Sources {
 	}
 }
 ProjectDependencies {
-	other.project.same.vendor
+	other.project.same.vendor,
+	other.project.other.vendor
 }

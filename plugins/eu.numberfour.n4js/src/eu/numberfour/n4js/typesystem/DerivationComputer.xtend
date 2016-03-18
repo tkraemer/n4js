@@ -92,7 +92,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 			}
 		}
 
-		copyTypeModifiers(result, F)
+		TypeUtils.copyTypeModifiers(result, F)
 
 		return result
 	}
@@ -157,7 +157,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 			}
 		}
 
-		copyTypeModifiers(result, F);
+		TypeUtils.copyTypeModifiers(result, F);
 
 		return result;
 	}

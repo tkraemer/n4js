@@ -30,7 +30,7 @@ Contributors:
 	</properties>
 
 	<scm>
-	    <connection>scm:git:ssh://git@github.numberfour.eu/NumberFour/n4ide.git</connection>
+		<connection>scm:git:ssh://git@github.com/NumberFour/n4js.git</connection>
 	</scm>
 
 	<build>

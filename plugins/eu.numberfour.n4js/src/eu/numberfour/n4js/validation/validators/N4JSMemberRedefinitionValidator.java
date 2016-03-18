@@ -79,16 +79,6 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.utils.ContainerTypesHelper;
-import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.IssueUserDataKeys;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
-import eu.numberfour.n4js.validation.validators.utils.MemberCube;
-import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
-import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
@@ -104,6 +94,16 @@ import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.utils.ContainerTypesHelper;
+import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
+import eu.numberfour.n4js.validation.IssueUserDataKeys;
+import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.validators.utils.MemberCube;
+import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
+import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -502,7 +502,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		if ((m.isSetter() || m.isField()) && !s.isGetter()) {
 			Result<Boolean> result = isSubTypeResult(s, m);
 			if (result.failed()) { // 4. subtype
-				if (!consumptionConflict) { // avoid consequention errors
+				if (!consumptionConflict) { // avoid consequential errors
 					messageOverrideMemberTypeConflict(redefinitionType, m, s, result, mm);
 				}
 				return OverrideCompatibilityResult.ERROR;

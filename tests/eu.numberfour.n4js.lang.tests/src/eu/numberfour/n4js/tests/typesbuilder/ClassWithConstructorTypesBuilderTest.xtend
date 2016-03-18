@@ -15,6 +15,10 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.tests.parser.AbstractParserTest
 import eu.numberfour.n4js.ts.types.TMethod
 import org.junit.Test
+import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.resource.N4JSResource
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.n4JS.ExportDeclaration
 
 class ClassWithConstructorTypesBuilderTest extends AbstractParserTest {
 
@@ -29,20 +33,48 @@ class ClassWithConstructorTypesBuilderTest extends AbstractParserTest {
 
 		assertTrue(script.eResource.errors.toString, script.eResource.errors.empty)
 
-		val cdecl = script.scriptElements.get(0) as N4ClassDeclaration
-		assertEquals("C", cdecl.name)
+		val classDecl = script.scriptElements.get(0) as N4ClassDeclaration
+		performChecks(classDecl);
+	}
 
-		val ctorDecl = cdecl.getOwnedMembers.get(0) as N4MethodDeclaration
-		val ctor = ctorDecl.definedType as TMethod
+	@Test
+	def void testConstructorInN4JSD() {
+		val script = '''
+			export external public class C {
+				public constructor()
+				public m()
+			}
+		'''.parse(JavaScriptVariant.external)
+
+		assertTrue(script.eResource.errors.toString, script.eResource.errors.empty)
+
+		val classDecl = (script.scriptElements.get(0) as ExportDeclaration).exportedElement as N4ClassDeclaration;
+		performChecks(classDecl);
+	}
+
+	def private void performChecks(N4ClassDeclaration classDecl) {
+		assertEquals("C", classDecl.name)
+
+		val ctorDecl = classDecl.getOwnedMembers.get(0) as N4MethodDeclaration
+		assertTrue(ctorDecl.definedType instanceof TMethod);
+		val ctor = ctorDecl.definedType as TMethod;
+		assertSame(ctorDecl, ctor.astElement);
+
 		assertEquals("constructor", ctorDecl.name);
-		assertTrue(ctorDecl.constructor)
-		assertTrue(ctor.constructor)
+		assertEquals("constructor", ctor.name);
+		assertTrue(ctorDecl.constructor);
+		assertTrue(ctor.constructor);
+		assertNull(ctorDecl.returnTypeRef);
+		assertTrue(ctor.returnTypeRef instanceof DeferredTypeRef);
 
-		val mDecl = cdecl.getOwnedMembers.get(1) as N4MethodDeclaration
+		val mDecl = classDecl.getOwnedMembers.get(1) as N4MethodDeclaration
 		val m = mDecl.definedType as TMethod
 		assertEquals("m", mDecl.name);
 		assertEquals("m", m.name);
 		assertFalse(mDecl.constructor)
 		assertFalse(m.constructor)
+
+		N4JSResource.postProcessContainingN4JSResourceOf(classDecl);
+		assertEquals("this[C]?", ctor.returnTypeRef?.typeRefAsString);
 	}
 }
