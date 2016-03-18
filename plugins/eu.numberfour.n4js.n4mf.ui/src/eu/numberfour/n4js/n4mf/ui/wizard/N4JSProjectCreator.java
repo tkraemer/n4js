@@ -64,13 +64,14 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 	private static final String[] BUILDERS = { BUILDER_ID };
 	/** The default natures */
 	private static final String[] NATURES = { NATURE_ID };
-
 	/** The default project folders list */
 	private static final List<String> SRC_FOLDER_LIST = ImmutableList.of(SRC_ROOT, SRC_GEN);
 
+	/** The mangelhaft default dependencies */
 	private static final List<String> MANGELHAFT_DEPENDENCIES = Arrays.asList("eu.numberfour.mangelhaft",
 			"eu.numberfour.mangelhaft.assert");
 
+	// Set folder names to default values
 	private String modelFolderName = SRC_ROOT;
 	private final List<String> allFolders = new ArrayList<>(SRC_FOLDER_LIST);
 

@@ -58,6 +58,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
@@ -122,8 +123,9 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		final Composite emptyOptions = new Composite(changingComposite, NONE);
 
 		// Additional library project options
-		final Composite libraryProjectOptionsComposite = new Composite(changingComposite, NONE);
+		final Group libraryProjectOptionsComposite = new Group(changingComposite, NONE);
 		libraryProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
+
 		new Label(libraryProjectOptionsComposite, SWT.NONE).setText("Implementation ID:");
 		final Text implementationIdText = new Text(libraryProjectOptionsComposite, BORDER);
 		implementationIdText.setLayoutData(fillDefaults().align(FILL, CENTER).grab(true, false).create());
@@ -134,14 +136,12 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		apiViewer.setInput(getAvailableApiProjectIds());
 
 		// Additional test project options
-		final Composite testProjectOptionsComposite = new Composite(changingComposite, NONE);
-		testProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(3).create());
+		final Group testProjectOptionsComposite = new Group(changingComposite, NONE);
+		testProjectOptionsComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
 
-		emptyPlaceholder(testProjectOptionsComposite); // Just an empty placeholder
 		final Button addNormalSourceFolderButton = new Button(testProjectOptionsComposite, CHECK);
 		addNormalSourceFolderButton.setText("Also create a non-test source folder");
-		emptyPlaceholder(testProjectOptionsComposite);
-		emptyPlaceholder(testProjectOptionsComposite);
+
 		Label nextPageHint = new Label(testProjectOptionsComposite, NONE);
 		nextPageHint.setText("The projects which should be tested can be selected on the next page");
 		nextPageHint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
