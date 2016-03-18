@@ -63,7 +63,8 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 		parent.addDisposeListener(e -> databindingContext.dispose());
 
 		databindingContext.bindList(ViewersObservables.observeMultiSelection(projectListViewer),
-				PojoProperties.list(N4MFProjectInfo.class, N4MFProjectInfo.TESTED_PROJECT).observe(projectInfo));
+				PojoProperties.list(N4MFProjectInfo.class, N4MFProjectInfo.TESTED_PROJECT_PROP_NAME)
+						.observe(projectInfo));
 
 		setControl(listComposite);
 	}

@@ -44,10 +44,10 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedProjects";
 
 	/** Tested Project of a test project */
-	public static final String TESTED_PROJECT = "testedProjects";
+	public static final String TESTED_PROJECT_PROP_NAME = "testedProjects";
 
 	/** Property to specify whether a test project should have an additional normal source folder */
-	public static final String ADDITIONAL_NORMAL_SOURCE_FOLDER = "additionalSourceFolder";
+	public static final String ADDITIONAL_NORMAL_SOURCE_FOLDER_PROP_NAME = "additionalSourceFolder";
 
 	/** The custom project location. {@code null} if there is not custom project location set. */
 	private IPath projectLocation;

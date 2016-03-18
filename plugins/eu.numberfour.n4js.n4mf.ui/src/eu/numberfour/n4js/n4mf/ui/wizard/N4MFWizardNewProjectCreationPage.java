@@ -270,7 +270,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 	private void initTestProjectBinding(DataBindingContext dbc, Button addNormalSourceFolderButton) {
 		// Bind the "normal source folder"-checkbox
 		dbc.bindValue(WidgetProperties.selection().observe(addNormalSourceFolderButton),
-				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER)
+				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER_PROP_NAME)
 						.observe(projectInfo));
 	}
 
