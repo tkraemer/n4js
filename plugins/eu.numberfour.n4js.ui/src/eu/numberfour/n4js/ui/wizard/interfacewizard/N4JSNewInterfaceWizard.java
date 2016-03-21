@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.ui.wizard.interfacewizard;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -28,14 +29,14 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.InlineWorkspaceWizard;
+import eu.numberfour.n4js.ui.wizard.workspacewizard.NestedElementWorkbenchWizard;
 import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
 
 /**
  * A New N4JS Interface wizard
  *
  */
-public class N4JSNewInterfaceWizard extends Wizard implements INewWizard, InlineWorkspaceWizard {
+public class N4JSNewInterfaceWizard extends Wizard implements INewWizard, NestedElementWorkbenchWizard {
 
 	@Inject
 	private N4JSInterfaceWizardModel model;
@@ -50,10 +51,13 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard, Inline
 	@Inject
 	private N4JSNewInterfaceWizardPage wizardPage;
 
-	private boolean fillInModuleFile = false;
-
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		init(workbench, selection, false);
+	}
+
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection selection, boolean nested) {
 		this.setNeedsProgressMonitor(false);
 		this.setWindowTitle("New N4JS Interface");
 
@@ -61,18 +65,13 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard, Inline
 
 		parseIntialSelection(selection);
 
-		if (fillInModuleFile && selection.getFirstElement() instanceof IResource) {
+		if (nested && selection.getFirstElement() instanceof IFile) {
 			String moduleSpecifier = model.getModuleSpecifier();
 			IResource selectionResource = (IResource) selection.getFirstElement();
 
 			model.setModuleSpecifier(
 					new Path(moduleSpecifier + selectionResource.getName()).removeFileExtension().toString());
 		}
-	}
-
-	@Override
-	public void setFillModuleFile(boolean fillModuleFile) {
-		this.fillInModuleFile = fillModuleFile;
 	}
 
 	private void parseIntialSelection(IStructuredSelection selection) {
