@@ -42,6 +42,11 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 
 	/**
 	 * Create a new tested project wizard page.
+	 *
+	 * @param projectInfo
+	 *            The N4MFProjectInfo to use as model
+	 * @param resourceDescriptions
+	 *            A {@link IResourceDescriptions} implementation.
 	 */
 	public N4MFWizardTestedProjectPage(N4MFProjectInfo projectInfo, IResourceDescriptions resourceDescriptions) {
 		super("Select projects to be tested");
@@ -77,7 +82,9 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 	}
 
 	/**
-	 * Returns all non-test type N4JS projects in the workspace
+	 * Returns all non-external, non-test typed N4JS projects in the workspace.
+	 *
+	 * The result is sorted alphabetically.
 	 */
 	private String[] getNonTestProjects() {
 

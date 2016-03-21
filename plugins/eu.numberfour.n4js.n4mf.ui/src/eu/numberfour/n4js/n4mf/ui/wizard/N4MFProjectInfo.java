@@ -46,7 +46,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	public static final String IMPLEMENTATION_ID_PROP_NAME = "implementationId";
 
 	/** Name of the implementation ID property. Used by SWT data binding. */
-	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedProjects";
+	public static final String IMPLEMENTED_PROJECTS_PROP_NAME = "implementedProjects";
 
 	/** Tested Project of a test project */
 	public static final String TESTED_PROJECT_PROP_NAME = "testedProjects";
@@ -239,7 +239,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *            the list of implemented API project IDs to set.
 	 */
 	public void setImplementedProjects(List<String> implementedProjects) {
-		firePropertyChange(IMPLEMENTED_APIS_PROP_NAME, this.implementedProjects,
+		firePropertyChange(IMPLEMENTED_PROJECTS_PROP_NAME, this.implementedProjects,
 				this.implementedProjects = implementedProjects);
 	}
 

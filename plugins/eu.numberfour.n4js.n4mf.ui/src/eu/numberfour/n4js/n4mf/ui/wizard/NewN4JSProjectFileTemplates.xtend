@@ -57,8 +57,7 @@ class NewN4JSProjectFileTemplates {
 
 	private static def simpleManifestContents(String projectName, String projectTypeForManifest, List<String> sources,
 		List<String> externals, List<String> tests, String outputFolder
-	) {
-		'''
+	)	'''
 		ArtifactId: «projectName»
 		VendorId: eu.numberfour
 		ProjectName: "«projectName»"
@@ -86,16 +85,14 @@ class NewN4JSProjectFileTemplates {
 		    }«ENDIF»
 		}
 		'''
-	}
 
-	private static def libraryManifestFragment(String implementationId, List<String> implementedProjects) {
+	private static def libraryManifestFragment(String implementationId, List<String> implementedProjects)
 		'''
 		«IF implementationId !== null && implementationId.trim.length >0»«"\n"»ImplementationId: «implementationId»«ENDIF»
 		«IF !implementedProjects.empty »ImplementedProjects {«
 			FOR String api : implementedProjects SEPARATOR ","»«"\n"»    «api»«ENDFOR»
 		}«ENDIF»
 		'''
-	}
 	
 	private static def testManifestFragment(List<String> testedProjects) {
 		'''

@@ -23,7 +23,7 @@ import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
 
 /**
- * Project wizard that creates a simple Eclipse project with Xtext nature.
+ * Project wizard that creates a new N4JS Project.
  *
  * Provides controls for project name, project type, optional additional project options and working set selection.
  */

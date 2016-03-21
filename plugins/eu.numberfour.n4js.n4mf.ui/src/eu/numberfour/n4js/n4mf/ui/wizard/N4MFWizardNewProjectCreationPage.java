@@ -25,7 +25,7 @@ import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.g
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectType;
 import static eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator.EU_NUMBERFOUR_N4JS_N4MF_N4MF;
 import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTATION_ID_PROP_NAME;
-import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTED_APIS_PROP_NAME;
+import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTED_PROJECTS_PROP_NAME;
 import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.PROJECT_TYPE_PROP_NAME;
 import static org.eclipse.jface.databinding.viewers.ViewersObservables.observeSingleSelection;
 import static org.eclipse.jface.layout.GridDataFactory.fillDefaults;
@@ -341,7 +341,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 	private void initApiViewerBinding(DataBindingContext dbc, ListViewer apiViewer) {
 		dbc.bindList(
 				ViewersObservables.observeMultiSelection(apiViewer),
-				PojoProperties.list(N4MFProjectInfo.class, IMPLEMENTED_APIS_PROP_NAME).observe(projectInfo));
+				PojoProperties.list(N4MFProjectInfo.class, IMPLEMENTED_PROJECTS_PROP_NAME).observe(projectInfo));
 	}
 
 	private Collection<String> getAvailableApiProjectIds() {

@@ -172,7 +172,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		// Path-Content map of the files to create
 		Map<String, CharSequence> pathContentMap = new HashMap<>();
 
-		// For test projects without specified tested project create a test greeter
+		// For test projects create a test project greeter if wanted
 		if (ProjectType.TEST.equals(pi.getProjectType()) && pi.getCreateGreeterFile()) {
 			pathContentMap.put(modelFolderName + "/" + "Test_" + projectName + ".n4js",
 					NewN4JSProjectFileTemplates.getSourceFileWithTestGreeter(safeProjectName));
@@ -185,9 +185,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		}
 
 		// create initial files
-		for (Iterator<Map.Entry<String, CharSequence>> iterator = pathContentMap.entrySet().iterator(); iterator
-				.hasNext(); /**/) {
-			Map.Entry<String, CharSequence> entry = iterator.next();
+		for (Map.Entry<String, CharSequence> entry : pathContentMap.entrySet()) {
 			IFile file = project.getFile(entry.getKey());
 			file.create(FileContentUtil.from(entry.getValue(), charset), false, null);
 		}
@@ -203,7 +201,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 				sources.add(SRC_ROOT);
 			}
 			tests.add(modelFolderName);
-		} else { // Otherwise just use the model folder name as source folder
+		} else { // Otherwise add the model folder name as source folder
 			sources.add(modelFolderName);
 		}
 
