@@ -173,13 +173,13 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		Map<String, CharSequence> pathContentMap = new HashMap<>();
 
 		// For test projects without specified tested project create a test greeter
-		if (ProjectType.TEST.equals(pi.getProjectType()) && pi.getTestedProjects().isEmpty()) {
+		if (ProjectType.TEST.equals(pi.getProjectType()) && pi.getCreateGreeterFile()) {
 			pathContentMap.put(modelFolderName + "/" + "Test_" + projectName + ".n4js",
 					NewN4JSProjectFileTemplates.getSourceFileWithTestGreeter(safeProjectName));
 		}
 
 		// For other projects create the default greeter file
-		if (!ProjectType.TEST.equals(pi.getProjectType())) {
+		if (!ProjectType.TEST.equals(pi.getProjectType()) && pi.getCreateGreeterFile()) {
 			pathContentMap.put(modelFolderName + "/" + "GreeterModule_" + safeProjectName + ".n4js",
 					NewN4JSProjectFileTemplates.getSourceFileWithGreeterClass(projectName, safeProjectName));
 		}
@@ -193,7 +193,6 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		}
 
 		// prepare the manifest
-
 		List<String> sources = pi.getSourceFolders();
 		List<String> tests = pi.getTestSourceFolders();
 

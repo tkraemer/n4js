@@ -92,6 +92,7 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 				})
 				.filter(desc -> !isExternal(desc.getEObjectURI()))
 				.map(d -> N4MFResourceDescriptionStrategy.getProjectId(d))
+				.sorted()
 				.toArray(String[]::new);
 
 	}
