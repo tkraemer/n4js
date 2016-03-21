@@ -16,10 +16,12 @@ import org.apache.log4j.Logger;
 
 import com.google.inject.ImplementedBy;
 
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider.TypeDefinitionGitLocationProviderImpl;
+
 /**
  * Representation of a Git repository location provider.
  */
-@ImplementedBy(TypeDefinitionGitLocationProvider.Default.class)
+@ImplementedBy(TypeDefinitionGitLocationProviderImpl.class)
 public interface TypeDefinitionGitLocationProvider {
 
 	/**
@@ -30,14 +32,14 @@ public interface TypeDefinitionGitLocationProvider {
 	TypeDefinitionGitLocation getGitLocation();
 
 	/**
-	 * Default implementation that points to the public Git repository with the type definitions. This repository is
+	 * TypeDefinitionGitLocationProviderImpl implementation that points to the public Git repository with the type definitions. This repository is
 	 * accessible via HTTPS and requires no SSH session factory creation.
 	 */
-	public static final class Default implements TypeDefinitionGitLocationProvider {
+	public static final class TypeDefinitionGitLocationProviderImpl implements TypeDefinitionGitLocationProvider {
 
-		private static final Logger LOGGER = Logger.getLogger(Default.class);
+		private static final Logger LOGGER = Logger.getLogger(TypeDefinitionGitLocationProviderImpl.class);
 
-		private TypeDefinitionGitLocation gitLocation = TypeDefinitionGitLocation.DEFAULT;
+		private TypeDefinitionGitLocation gitLocation = TypeDefinitionGitLocation.PUBLIC_DEFINITION_LOCATION;
 
 		@Override
 		public TypeDefinitionGitLocation getGitLocation() {
@@ -77,10 +79,10 @@ public interface TypeDefinitionGitLocationProvider {
 			if (obj == null) {
 				return false;
 			}
-			if (!(obj instanceof Default)) {
+			if (!(obj instanceof TypeDefinitionGitLocationProviderImpl)) {
 				return false;
 			}
-			final Default other = (Default) obj;
+			final TypeDefinitionGitLocationProviderImpl other = (TypeDefinitionGitLocationProviderImpl) obj;
 			if (gitLocation != other.gitLocation) {
 				return false;
 			}
@@ -97,12 +99,12 @@ public interface TypeDefinitionGitLocationProvider {
 		/**
 		 * The default location for the type definition file. Used in the production code.
 		 */
-		DEFAULT("n4jsd", "https://github.com/NumberFour/n4jsd.git"),
+		PUBLIC_DEFINITION_LOCATION("n4jsd", "https://github.com/NumberFour/n4jsd.git"),
 
 		/**
 		 * Type definition location for testing purposes.
 		 */
-		TEST("n4jsd-sandbox", "git@github.com:NumberFour/n4jsd-sandbox.git");
+		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "git@github.com:NumberFour/n4jsd-sandbox.git");
 
 		private final String repositoryName;
 		private final String remoteUrl;
