@@ -57,6 +57,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -175,7 +176,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		final Group libraryProjectOptionsGroup = new Group(parent, NONE);
 		libraryProjectOptionsGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).create());
 
-		new Label(libraryProjectOptionsGroup, NONE);
+		emptyPlaceholder(libraryProjectOptionsGroup);
 
 		final Button createGreeterFileButton = new Button(libraryProjectOptionsGroup, CHECK);
 		createGreeterFileButton.setText("Create a greeter file");
@@ -209,6 +210,11 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		});
 
 		return libraryProjectOptionsGroup;
+	}
+
+	/** Create an empty placeholder control in parent */
+	private static Control emptyPlaceholder(Composite parent) {
+		return new Label(parent, NONE);
 	}
 
 	private Composite initTestProjectUI(DataBindingContext dbc, Composite parent) {
