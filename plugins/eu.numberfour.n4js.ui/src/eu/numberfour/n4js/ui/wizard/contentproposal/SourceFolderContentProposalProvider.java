@@ -21,17 +21,20 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 public class SourceFolderContentProposalProvider implements IContentProposalProvider {
 
 	@Inject
-	IN4JSCore n4jsCore;
+	private IN4JSCore n4jsCore;
 
 	private final List<String> availableSourceFolders = new ArrayList<>();
 
+	/** The project for which the source folders are proposed */
 	private IProject contextProject;
 
 	private void updateSourceFolders() {
+		availableSourceFolders.clear();
+
 		if (null == contextProject) {
 			return;
 		}
-		availableSourceFolders.clear();
+
 		URI projectURI = URI.createPlatformResourceURI(contextProject.getName(), true);
 		IN4JSProject n4Project = n4jsCore
 				.findProject(projectURI)
@@ -39,7 +42,7 @@ public class SourceFolderContentProposalProvider implements IContentProposalProv
 		if (n4Project == null) {
 			return;
 		}
-		// Add all src folder paths to the available list
+		// Add all source folder paths to the list
 		availableSourceFolders
 				.addAll(n4Project.getSourceContainers().stream().map(src -> src.getRelativeLocation())
 						.collect(Collectors.toList()));

@@ -159,6 +159,8 @@ public class SuffixText extends Composite {
 			}
 		});
 
+		// Redirect key events from user input to this
+		// to make content proposal activation work
 		userInput.addListener(SWT.KeyDown, e -> {
 			notifyListeners(SWT.KeyDown, e);
 		});
@@ -427,7 +429,7 @@ public class SuffixText extends Composite {
 		}
 
 		/**
-		 * Return the top margin to vertically center an element of given height in an area with given total height.
+		 * Returns the top margin to vertically center an element of given height in an area with given total height.
 		 */
 		private int marginTopCenter(int height, int totalHeight) {
 			return new Double(Math.floor((totalHeight - height) / 2.0)).intValue();

@@ -20,7 +20,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * Content proposal provider for module specifiers.
  *
- * The proposal lets the user choose from the list of file system children for the already inserted text content.
+ * The proposal lets the user choose from the list of file system children for the path of the content.
  */
 public class ModuleSpecifierContentProposalProvider implements IContentProposalProvider {
 
@@ -122,6 +122,22 @@ public class ModuleSpecifierContentProposalProvider implements IContentProposalP
 		}
 	}
 
+	/**
+	 * Helper method to return the workspace container at the given path.
+	 *
+	 * Returns null when not found or the element is not of type {@link IContainer}.
+	 *
+	 * @param path
+	 *            workspace absolute path
+	 */
+	private static IContainer findContainerForPath(IPath path) {
+		IResource containerResource = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+		if (containerResource instanceof IContainer) {
+			return (IContainer) containerResource;
+		}
+		return null;
+	}
+
 	private IPath proposalRoot;
 
 	@Override
@@ -155,7 +171,7 @@ public class ModuleSpecifierContentProposalProvider implements IContentProposalP
 			// Use the full content as working directory path
 			workingDirectoryPath = contentsPath;
 		} else {
-			// Otherwise only use completely separated segments as working directory
+			// Otherwise only use complete segments as working directory
 			workingDirectoryPath = contentsPath.removeLastSegments(1);
 		}
 
@@ -188,10 +204,6 @@ public class ModuleSpecifierContentProposalProvider implements IContentProposalP
 						ModuleSpecifierProposal.Type type = resource instanceof IFile
 								? ModuleSpecifierProposal.Type.MODULE
 								: ModuleSpecifierProposal.Type.FOLDER;
-						// Remove trailing separator for modules
-						if (type == ModuleSpecifierProposal.Type.MODULE) {
-							proposalPath = proposalPath.removeTrailingSeparator();
-						}
 						// Create a new module specifier proposal
 						return new ModuleSpecifierProposal(proposalPath, type);
 					})
@@ -200,23 +212,6 @@ public class ModuleSpecifierContentProposalProvider implements IContentProposalP
 			return EMPTY_PROPOSAL;
 		}
 
-	}
-
-	/**
-	 * Helper method to return the workspace container at the given path.
-	 *
-	 * Returns null when not found or the element is not of type {@link IContainer}.
-	 *
-	 * @param path
-	 *            workspace absolute path
-	 */
-	private IContainer findContainerForPath(IPath path) {
-		IResource containerResource = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(path);
-		if (containerResource instanceof IContainer) {
-			return (IContainer) containerResource;
-		}
-		return null;
 	}
 
 	/**
@@ -233,7 +228,7 @@ public class ModuleSpecifierContentProposalProvider implements IContentProposalP
 	 *
 	 * The proposal root is the absolute workspace path of the root folder in which the proposals should be given.
 	 *
-	 * May be null to disable proposals.
+	 * Pass null to disable proposals.
 	 *
 	 * @param proposalRoot
 	 *            An absolute workspace path of the proposal root.

@@ -50,6 +50,7 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.StringToPathConverter;
 import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProvider.ModuleSpecifierProposalLabelProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.ProjectContentProposalProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.SimpleImageContentProposalLabelProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProposalProvider;
@@ -183,6 +184,11 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		}
 	}
 
+	/**
+	 * Returns the active key binding for content assist.
+	 *
+	 * If no binding is set null is returned.
+	 */
 	private KeyStroke activeContentAssistBinding() {
 		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
 		TriggerSequence[] activeBindingsFor = bindingService
@@ -198,7 +204,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	}
 
 	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
-		// Get active bindings content assist key strokes
+		// Get the active binding's content assist key strokes
 		KeyStroke keyInitiator = activeContentAssistBinding();
 
 		// If unbound don't configure the content proposal
@@ -212,7 +218,6 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 				keyInitiator, null);
 		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
-		// Setup project proposal label provider
 		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
 		projectAdapter.setLabelProvider(
@@ -222,8 +227,8 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		ContentProposalAdapter sourceFolderAdapter = new ContentProposalAdapter(wizardForm.getSourceFolderText(),
 				new TextContentAdapter(), sourceFolderContentProvider,
 				keyInitiator, null);
-
 		sourceFolderAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
 		sourceFolderAdapter.setLabelProvider(
 				new SimpleImageContentProposalLabelProvider(
 						ImageDescriptorCache.ImageRef.SRC_FOLDER.asImageDescriptor().orNull()));
@@ -244,12 +249,12 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 		moduleSpecifierAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 		moduleSpecifierAdapter
-				.setLabelProvider(new ModuleSpecifierContentProposalProvider.ModuleSpecifierProposalLabelProvider());
+				.setLabelProvider(new ModuleSpecifierProposalLabelProvider());
 	}
 
 	/**
-	 * This method is invoked whenever source folder or project change, to update the proposal contexts for the field
-	 * source folder and module specifier
+	 * This method should be invoked whenever source folder or project value change, to update the proposal contexts for
+	 * the field source folder and module specifier
 	 */
 	private void updateProposalContext() {
 		IPath projectPath = model.getProject();

@@ -21,26 +21,26 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 public class ProjectContentProposalProvider implements IContentProposalProvider {
 
 	private final IWorkspaceRoot workspaceRoot;
-	private final List<String> workspaceProjectsNames;
+	private final List<String> workspaceProjectNames;
 
 	/** Creates a new ProjectcontentProposalProvider */
 	@Inject
 	public ProjectContentProposalProvider(IN4JSCore n4jsCore) {
 		workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-		workspaceProjectsNames = Arrays.asList(workspaceRoot.getProjects()).stream()
+		workspaceProjectNames = Arrays.stream(workspaceRoot.getProjects())
 				.map(p -> URI.createPlatformResourceURI(p.getName(), true)) // map to uri
 				.map(uri -> n4jsCore.findProject(uri).orNull()) // map to project
 				.filter(n4Project -> (null != n4Project)) // remove null projects
-				.filter(n4Project -> n4Project.exists())
+				.filter(n4Project -> n4Project.exists()) // remove non-existent projects
 				.map(n4Project -> n4Project.getProjectName()) // map to name
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public IContentProposal[] getProposals(String contents, int position) {
-		return workspaceProjectsNames.stream()
-				.filter(p -> p.startsWith(contents))
+		return workspaceProjectNames.stream()
+				.filter(p -> p.startsWith(contents)) // prefix matching
 				.map(p -> new ContentProposal(p))
 				.toArray(IContentProposal[]::new);
 	}
