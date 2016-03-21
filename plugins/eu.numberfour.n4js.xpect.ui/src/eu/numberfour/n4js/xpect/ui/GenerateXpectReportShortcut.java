@@ -23,15 +23,13 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
-import eu.numberfour.n4js.xpect.ui.results.XpectBugReportUtil;
-
 /**
- * Launch shortcut for generating bug report in a console.
+ * Base for generating in the console Xpect reports from launch shortcut. No Xpect execution state validation.
  */
-public class GenerateBugReportShortcut implements ILaunchShortcut {
+public abstract class GenerateXpectReportShortcut implements ILaunchShortcut {
 
 	/***/
-	public GenerateBugReportShortcut() {
+	public GenerateXpectReportShortcut() {
 	}
 
 	private static void showDialogNotImplemented(String what) {
@@ -72,7 +70,17 @@ public class GenerateBugReportShortcut implements ILaunchShortcut {
 		}
 
 		System.out.println(content);
-		XpectBugReportUtil.displayGeneratedBugConsole(fileSelectedToRun.getName(), content);
+		generateAndDisplayReport(fileSelectedToRun.getName(), content);
 	}
+
+	/**
+	 * Generate bug report for a given module.
+	 *
+	 * @param name
+	 *            of the module used in bug report
+	 * @param content
+	 *            of the module used in the bug report
+	 */
+	protected abstract void generateAndDisplayReport(String name, String content);
 
 }
