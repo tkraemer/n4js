@@ -79,6 +79,9 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 	@Inject
 	private RunnerFrontEnd runnerFrontEnd;
 
+	@Inject
+	private ProcessExecutor processExecutor;
+
 	/**
 	 * Checks whether the platform is running or not.
 	 */
@@ -127,7 +130,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"Workspace D<init>",
+				"Workspace D<init>" + NL,
 				result.getStdOut());
 		// @formatter:on
 	}
@@ -147,7 +150,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External A<init>" + NL +
 				"External B<init>" + NL +
 				"External C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				result.getStdOut());
 		// @formatter:on
 	}
@@ -167,7 +170,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				result.getStdOut());
 		// @formatter:on
 	}
@@ -187,7 +190,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				firstResult.getStdOut());
 		// @formatter:on
 
@@ -202,7 +205,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"Workspace D<init>",
+				"Workspace D<init>" + NL,
 				secondResult.getStdOut());
 		// @formatter:on
 	}
@@ -222,7 +225,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"External A<init>" + NL +
 				"External B<init>" + NL +
 				"External C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				result.getStdOut());
 		// @formatter:on
 	}
@@ -242,7 +245,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				result.getStdOut());
 		// @formatter:on
 	}
@@ -262,7 +265,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"External B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"External D<init>",
+				"External D<init>" + NL,
 				firstResult.getStdOut());
 		// @formatter:on
 
@@ -278,7 +281,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace A<init>" + NL +
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
-				"Workspace D<init>",
+				"Workspace D<init>" + NL,
 				secondResult.getStdOut());
 		// @formatter:on
 	}
@@ -288,7 +291,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		final org.eclipse.emf.common.util.URI moduleToRun = createPlatformResourceURI(pathToModuleToRun, true);
 		final RunConfiguration config = runnerFrontEnd.createConfiguration(ID, null, moduleToRun);
 		final Process process = runnerFrontEndUI.runInUI(config);
-		final ProcessResult result = new ProcessExecutor().execute(process, "");
+		final ProcessResult result = processExecutor.execute(process, ""); // INJECT
 		assertTrue("Expected 0 error code for the process. Was: " + result.getExitCode(), result.isOK());
 		return result;
 	}

@@ -56,37 +56,41 @@ public class ProcessExecutor {
 		// prepare name to be used in log messages
 		name = name == null ? " " : " '" + name + "' ";
 
-		int exitCode = ERROR_EXIT_CODE;
 		try {
 
 			if (process == null) {
 				LOGGER.error("Started process" + name + "was null");
-				return new ProcessResult(exitCode, "", "");
+				return new ProcessResult(ERROR_EXIT_CODE, "", "");
 			}
 
 			try (OutputStreamPrinterThread stdOutThread = printerThreadProvider.getPrinterThreadForStdOut(process);
 					OutputStreamPrinterThread stdErrThread = printerThreadProvider.getPrinterThreadForStdErr(process)) {
 
-				exitCode = process.waitFor();
-				stdOutThread.join(5L);
-				stdErrThread.join(5L);
+				boolean finished = process.waitFor(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS, SECONDS);
+				if (!finished) {
+					LOGGER.error(
+							"Process didn't finish after " + DEFAULT_PROCESS_TIMEOUT_IN_SECONDS + " " + SECONDS);
+				}
 
-				ProcessResult processResult = new ProcessResult(exitCode, stdOutThread.toString(),
+				stdOutThread.join(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS);
+				stdErrThread.join(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS);
+
+				ProcessResult processResult = new ProcessResult(process.exitValue(), stdOutThread.toString(),
 						stdErrThread.toString());
-				if (LOGGER.isDebugEnabled()) {
+
+				if (LOGGER.isDebugEnabled() && (!finished || !processResult.isOK())) {
 					final String processLog = processResult.toString();
 					if (!StringExtensions.isNullOrEmpty(processLog)) {
 						LOGGER.debug(processLog);
 					}
 				}
 
-				process.destroy();
 				return processResult;
 			}
 
 		} catch (final InterruptedException e) {
 			LOGGER.error("Thread was interrupted while waiting for process" + name + "to end.", e);
-			return new ProcessResult(exitCode, "", writeStackeTrace(e));
+			return new ProcessResult(ERROR_EXIT_CODE, "", writeStackeTrace(e));
 
 		} finally {
 			if (process != null && process.isAlive()) {
