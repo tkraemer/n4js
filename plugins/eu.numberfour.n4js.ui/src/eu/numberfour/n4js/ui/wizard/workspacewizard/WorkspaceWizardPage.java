@@ -49,10 +49,11 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.StringToPathConverter;
-import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.ProjectContentProposalProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.SimpleImageContentProposalLabelProvider;
-import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProposalProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SuffixTextContentAdapter;
 
 /**
  * An abstract wizard page for {@link WorkspaceWizardModel}s.
@@ -81,9 +82,9 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	@Inject
 	private ProjectContentProposalProvider projectContentProposalProvider;
 	@Inject
-	private SourceFolderContentProvider sourceFolderContentProvider;
+	private SourceFolderContentProposalProvider sourceFolderContentProvider;
 	@Inject
-	private ModuleSpecifierContentProvider moduleSpecifierContentProvider;
+	private ModuleSpecifierContentProposalProvider moduleSpecifierContentProvider;
 
 	@Inject
 	N4JSLabelProvider labelProvider;
@@ -229,8 +230,8 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 		// Setup module specifier content proposal
 		ContentProposalAdapter moduleSpecifierAdapter = new ContentProposalAdapter(
-				wizardForm.getModuleSpecifierText().internalText(),
-				new TextContentAdapter(), moduleSpecifierContentProvider, keyInitiator, null);
+				wizardForm.getModuleSpecifierText(),
+				new SuffixTextContentAdapter(), moduleSpecifierContentProvider, keyInitiator, null);
 
 		// Update proposal context whenever the model changes
 		model.addPropertyChangeListener(evt -> {
@@ -243,7 +244,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 		moduleSpecifierAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 		moduleSpecifierAdapter
-				.setLabelProvider(new ModuleSpecifierContentProvider.ModuleSpecifierProposalLabelProvider());
+				.setLabelProvider(new ModuleSpecifierContentProposalProvider.ModuleSpecifierProposalLabelProvider());
 	}
 
 	/**

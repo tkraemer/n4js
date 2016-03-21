@@ -18,7 +18,7 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 /**
  * A content proposal provider to propose source folders in a given project.
  */
-public class SourceFolderContentProvider implements IContentProposalProvider {
+public class SourceFolderContentProposalProvider implements IContentProposalProvider {
 
 	@Inject
 	IN4JSCore n4jsCore;

@@ -15,6 +15,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -117,6 +119,28 @@ public class SuffixText extends Composite {
 		completeLabel.addMouseListener(focusCatcher);
 		this.addMouseListener(focusCatcher);
 
+		// Whenever focus is put on suffix text redirect it to the userInput
+		this.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// Do nothing
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				userInput.setFocus();
+			}
+		});
+
+		// Make tab traversal skip the suffix text and traverse the userInput instead
+		this.userInput.addListener(SWT.Traverse, traverseEvent -> {
+			if (traverseEvent.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
+				traverse(traverseEvent.detail);
+				traverseEvent.doit = false;
+			}
+		});
+
 		// Workaround theme dependent background color issues:
 		// Reset the background color for every paint event
 		addPaintListener(new PaintListener() {
@@ -133,6 +157,10 @@ public class SuffixText extends Composite {
 				layout();
 				setText(userInput.getText());
 			}
+		});
+
+		userInput.addListener(SWT.KeyDown, e -> {
+			notifyListeners(SWT.KeyDown, e);
 		});
 
 		// Relayout when suffix label changes
@@ -221,8 +249,76 @@ public class SuffixText extends Composite {
 		return this.text;
 	}
 
-	Text internalText() {
-		return this.userInput;
+	/**
+	 * Sets the selection to the range specified by the given start and end indices.
+	 *
+	 * See {@link Text#setSelection(int, int)}
+	 *
+	 * @param start
+	 *            the start of the range
+	 * @param end
+	 *            the end of the range
+	 */
+	public void setSelection(int start, int end) {
+		this.userInput.setSelection(start, end);
+	}
+
+	/**
+	 * Returns the suffix text selection.
+	 *
+	 * See {@link Text#getSelection()}
+	 */
+	public Point getSelection() {
+		return this.userInput.getSelection();
+	}
+
+	/**
+	 * Inserts a string.
+	 * <p>
+	 * The old selection is replaced with the new text.
+	 * </p>
+	 *
+	 * See {@link Text#insert(String)}
+	 *
+	 * @param string
+	 *            The new text
+	 */
+	public void insert(String string) {
+		this.userInput.insert(string);
+	}
+
+	/**
+	 * Returns the character position of the caret.
+	 * <p>
+	 * Indexing is zero based.
+	 * </p>
+	 *
+	 * See {@link Text#getCaretPosition()}
+	 *
+	 * @return the position of the caret
+	 */
+	public int getCaretPosition() {
+		return this.userInput.getCaretPosition();
+	}
+
+	/**
+	 * Returns a point describing the location of the caret relative to the receiver.
+	 *
+	 * See {@link Text#getCaretLocation()}
+	 */
+	public Point getCaretLocation() {
+		return this.userInput.getCaretLocation();
+	}
+
+	/**
+	 * Returns the height of a line.
+	 *
+	 * See {@link Text#getLineHeight()}
+	 *
+	 * @return the height of a row of text
+	 */
+	public int getLineHeight() {
+		return this.userInput.getLineHeight();
 	}
 
 	/**

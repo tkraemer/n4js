@@ -10,7 +10,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -23,14 +22,14 @@ import org.eclipse.ui.PlatformUI;
  *
  * The proposal lets the user choose from the list of file system children for the already inserted text content.
  */
-public class ModuleSpecifierContentProvider implements IContentProposalProvider {
+public class ModuleSpecifierContentProposalProvider implements IContentProposalProvider {
 
 	private final IContentProposal[] EMPTY_PROPOSAL = new IContentProposal[] {};
 
 	/**
 	 * Custom proposal type which also holds information about the proposal module type. See {@link Type}
 	 */
-	private static final class ModuleSpecifierProposal extends ContentProposal {
+	private static final class ModuleSpecifierProposal implements IContentProposal {
 
 		public enum Type {
 			FOLDER, MODULE
@@ -45,7 +44,6 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 		 */
 		public ModuleSpecifierProposal(IPath path, Type moduleType) {
 			// Remove file extension for content
-			super(path.removeFileExtension().toString());
 			this.path = path;
 			this.moduleType = moduleType;
 		}
@@ -57,19 +55,39 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 			return moduleType;
 		}
 
-		/**
-		 * Returns the path of this module specifier proposal
-		 */
-		public IPath getPath() {
-			return path;
+		@Override
+		public String getContent() {
+			if (moduleType == Type.FOLDER) {
+				return path.removeFileExtension().addTrailingSeparator().toString();
+			} else {
+				return path.removeFileExtension().toString();
+			}
+		}
+
+		@Override
+		public int getCursorPosition() {
+			// Always place the cursor at the end of the inserted path
+			return getContent().length();
+		}
+
+		@Override
+		public String getLabel() {
+			if (moduleType == Type.FOLDER) {
+				return path.addTrailingSeparator().toString();
+			} else {
+				return path.toString();
+			}
+		}
+
+		@Override
+		public String getDescription() {
+			return null;
 		}
 
 	}
 
-	private IPath proposalRoot;
-
 	/**
-	 * A label provider for {@link ModuleSpecifierContentProvider}s proposals
+	 * A label provider for {@link ModuleSpecifierContentProposalProvider}s proposals
 	 */
 	public static final class ModuleSpecifierProposalLabelProvider extends LabelProvider {
 
@@ -90,7 +108,7 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 		@Override
 		public String getText(Object element) {
 			if (element instanceof ModuleSpecifierProposal) {
-				return ((ModuleSpecifierProposal) element).getPath().toString();
+				return ((ModuleSpecifierProposal) element).getLabel();
 			}
 			return super.getText(element);
 		}
@@ -103,6 +121,8 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 			FILE_SYMBOL.dispose();
 		}
 	}
+
+	private IPath proposalRoot;
 
 	@Override
 	public IContentProposal[] getProposals(String contents, int position) {
@@ -124,29 +144,30 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 			return EMPTY_PROPOSAL;
 		}
 
+		// The field content as path
 		IPath contentsPath = new Path(contents);
 
-		String prefix = "";
+		// The directory to look for prefix matches
 		IPath workingDirectoryPath;
 
-		if (!contentsPath.hasTrailingSeparator()) {
-			if (contentsPath.lastSegment() != null) {
-				prefix = contentsPath.lastSegment();
-			}
-			workingDirectoryPath = contentsPath.removeLastSegments(1);
-		} else {
-			prefix = "";
+		// If the contents path has a trailing separator...
+		if (contentsPath.hasTrailingSeparator()) {
+			// Use the full content as working directory path
 			workingDirectoryPath = contentsPath;
+		} else {
+			// Otherwise only use completely separated segments as working directory
+			workingDirectoryPath = contentsPath.removeLastSegments(1);
 		}
 
-		final String finalPrefix = prefix;
-
 		IContainer workingDirectory;
+
 		if (workingDirectoryPath.segmentCount() > 0) {
 			workingDirectory = proposalRootFolder.getFolder(workingDirectoryPath);
 		} else {
 			workingDirectory = proposalRootFolder;
 		}
+
+		// Return an empty proposal list for non-existing working directories
 		if (null == workingDirectory || !workingDirectory.exists()) {
 			return EMPTY_PROPOSAL;
 		}
@@ -155,7 +176,10 @@ public class ModuleSpecifierContentProvider implements IContentProposalProvider 
 					// Only work with files and folders
 					.filter(r -> (r instanceof IFile || r instanceof IFolder))
 					// Filter by prefix matching
-					.filter(resource -> resource.getName().startsWith(finalPrefix))
+					.filter(resource -> {
+						IPath rootRelativePath = resource.getFullPath().makeRelativeTo(proposalRoot);
+						return rootRelativePath.toString().startsWith(contentsPath.toString());
+					})
 					// Transform to a ModuleSpecifierProposal
 					.map(resource -> {
 						// Create proposal path

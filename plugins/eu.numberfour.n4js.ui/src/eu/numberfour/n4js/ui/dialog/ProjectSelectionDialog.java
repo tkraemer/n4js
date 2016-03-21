@@ -47,7 +47,7 @@ public class ProjectSelectionDialog extends WorkspaceElementSelectionDialog {
 	/**
 	 * Filter to only show N4JS Projects in the dialog
 	 */
-	public final class ProjectFilter extends ViewerFilter {
+	private final class ProjectFilter extends ViewerFilter {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			// Filter for open existing n4js projects only
