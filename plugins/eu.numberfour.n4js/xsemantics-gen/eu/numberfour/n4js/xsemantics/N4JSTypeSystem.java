@@ -7595,7 +7595,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -7654,11 +7654,73 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
-              final Collection<TypeRef> l = TypeUtils.<TypeRef>copyAll(l_raw);
+              final ArrayList<TypeRef> l = CollectionLiterals.<TypeRef>newArrayList();
+              for (int i = 0; (i < l_raw.size()); i++) {
+                final TypeRef temp_1 = l_raw.get(i);
+                final Type tempDeclaredType_1 = temp_1.getDeclaredType();
+                boolean _and_3 = false;
+                boolean _and_4 = false;
+                boolean _tripleNotEquals_2 = (typeVar != tempDeclaredType_1);
+                if (!_tripleNotEquals_2) {
+                  _and_4 = false;
+                } else {
+                  boolean _or_1 = false;
+                  boolean _isOrContainsRefToTypeVar_1 = TypeUtils.isOrContainsRefToTypeVar(temp_1);
+                  if (_isOrContainsRefToTypeVar_1) {
+                    _or_1 = true;
+                  } else {
+                    boolean _and_5 = false;
+                    boolean _tripleNotEquals_3 = (tempDeclaredType_1 != null);
+                    if (!_tripleNotEquals_3) {
+                      _and_5 = false;
+                    } else {
+                      boolean _isGeneric_1 = tempDeclaredType_1.isGeneric();
+                      _and_5 = _isGeneric_1;
+                    }
+                    _or_1 = _and_5;
+                  }
+                  _and_4 = _or_1;
+                }
+                if (!_and_4) {
+                  _and_3 = false;
+                } else {
+                  Pair<String, TypeRef> _mappedTo_2 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
+                  Object _get_1 = G.get(_mappedTo_2);
+                  boolean _tripleEquals_1 = (_get_1 == null);
+                  _and_3 = _tripleEquals_1;
+                }
+                if (_and_3) {
+                  final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
+                  Pair<String, TypeRef> _mappedTo_3 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
+                  boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
+                  /* G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) */
+                  if (!_add_1) {
+                    sneakyThrowRuleFailedException("G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)");
+                  }
+                  /* G2 |- temp ~> var TypeRef tempResult */
+                  TypeRef tempResult = null;
+                  Result<TypeArgument> result_2 = substTypeVariablesInternal(G2_1, _trace_, temp_1);
+                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                  tempResult = (TypeRef) result_2.getFirst();
+                  
+                  TypeRef _copy_2 = TypeUtils.<TypeRef>copy(tempResult);
+                  tempResult = _copy_2;
+                  /* l += tempResult */
+                  if (!l.add(tempResult)) {
+                    sneakyThrowRuleFailedException("l += tempResult");
+                  }
+                } else {
+                  TypeRef _copy_3 = TypeUtils.<TypeRef>copy(temp_1);
+                  /* l += TypeUtils.copy(temp) */
+                  if (!l.add(_copy_3)) {
+                    sneakyThrowRuleFailedException("l += TypeUtils.copy(temp)");
+                  }
+                }
+              }
               EObject _eContainer = typeRef.eContainer();
               final boolean needUnionInsteadIntersection = (_eContainer instanceof TFormalParameter);
               TypeRef _xifexpression = null;
