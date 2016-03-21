@@ -31,7 +31,7 @@ public abstract class OSInfo {
 	 * @return true for Windows
 	 */
 	public static boolean isWindows() {
-		return (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0);
+		return (OS_NAME.indexOf("win") >= 0);
 	}
 
 	/**
