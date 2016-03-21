@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.external;
+package eu.numberfour.n4js.utils.process;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -8,10 +8,10 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.external;
+package eu.numberfour.n4js.utils.process;
 
-import static eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType.STD_ERR;
-import static eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType.STD_OUT;
+import static eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType.STD_ERR;
+import static eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType.STD_OUT;
 
 import java.io.OutputStream;
 

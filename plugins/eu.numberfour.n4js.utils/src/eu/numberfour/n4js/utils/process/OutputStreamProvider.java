@@ -8,14 +8,14 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.external;
+package eu.numberfour.n4js.utils.process;
 
 import java.io.OutputStream;
 
 import com.google.inject.ImplementedBy;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType;
+import eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType;
 
 /**
  * Provides {@link OutputStream output stream} for clients.
