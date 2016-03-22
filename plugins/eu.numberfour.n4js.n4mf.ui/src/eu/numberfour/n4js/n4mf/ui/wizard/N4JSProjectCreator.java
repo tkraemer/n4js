@@ -161,7 +161,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		for (Iterator<String> iterator = otherFolders.iterator(); iterator.hasNext();) {
 			String folderName = iterator.next();
 			IFolder folder = project.getFolder(folderName);
-			folder.create(false, true, null);
+			folder.create(false, true, monitor);
 		}
 
 		// create files
@@ -187,7 +187,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		// create initial files
 		for (Map.Entry<String, CharSequence> entry : pathContentMap.entrySet()) {
 			IFile file = project.getFile(entry.getKey());
-			file.create(FileContentUtil.from(entry.getValue(), charset), false, null);
+			file.create(FileContentUtil.from(entry.getValue(), charset), false, monitor);
 		}
 
 		// prepare the manifest
@@ -206,8 +206,8 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 		}
 
 		// Gather default project dependencies
-		List<String> projectDependencies = pi.getProjectDependencies();
 		if (ProjectType.TEST.equals(pi.getProjectType())) {
+			List<String> projectDependencies = pi.getProjectDependencies();
 			projectDependencies.addAll(MANGELHAFT_DEPENDENCIES);
 		}
 
@@ -216,7 +216,7 @@ public class N4JSProjectCreator extends AbstractProjectCreator {
 
 		// create manifest
 		IFile manifest = project.getFile(N4MFConstants.N4MF_MANIFEST);
-		manifest.create(FileContentUtil.from(manifestContent, charset), false, null);
+		manifest.create(FileContentUtil.from(manifestContent, charset), false, monitor);
 
 		project.refreshLocal(DEPTH_INFINITE, monitor);
 	}

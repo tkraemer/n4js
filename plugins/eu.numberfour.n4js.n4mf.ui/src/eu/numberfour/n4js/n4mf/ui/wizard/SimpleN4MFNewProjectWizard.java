@@ -31,9 +31,6 @@ import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
  */
 public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.XtextNewProjectWizard {
 
-	@Inject
-	IResourceDescriptions resourceDescriptions;
-
 	private static final String FILE_PATH = "icons/newprj_wiz.png";
 	private static final String PLUGIN_ID = N4MFActivator.getInstance().getBundle().getSymbolicName();
 	private static final ImageDescriptor NEW_PROJECT_WIZBAN_DESC = imageDescriptorFromPlugin(PLUGIN_ID, FILE_PATH);
@@ -42,6 +39,10 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 	private static final String CREATE_GREETER_SETTINGS_KEY = "createGreeterFile";
 
 	private final N4MFProjectInfo projectInfo;
+
+	@Inject
+	private IResourceDescriptions resourceDescriptions;
+
 	private N4MFWizardNewProjectCreationPage n4mfWizardNewProjectCreationPage;
 
 	/**
