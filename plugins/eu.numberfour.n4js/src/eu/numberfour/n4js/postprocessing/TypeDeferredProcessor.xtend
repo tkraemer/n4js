@@ -16,15 +16,17 @@ import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.TMethod
+import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 
@@ -49,10 +51,20 @@ public class TypeDeferredProcessor extends AbstractProcessor {
 		switch(obj) {
 			N4MethodDeclaration: {
 				val returnTypeRef = obj.returnTypeRef;
-				if(returnTypeRef instanceof ThisTypeRef) {
+				if(obj.isConstructor) {
+					val tCtor = obj.definedType as TMethod;
+					assertTrueIfRigid("TMethod in TModule should be a constructor", tCtor.isConstructor);
+					assertTrueIfRigid("return type of constructor in TModule should be a DeferredTypeRef", tCtor.returnTypeRef instanceof DeferredTypeRef);
+					val implicitReturnTypeRef = TypeRefsFactory.eINSTANCE.createThisTypeRef;
+					implicitReturnTypeRef.undefModifier = UndefModifier.OPTIONAL;
+					val boundThisTypeRef = tsh.bindAndSubstituteThisTypeRef(G, obj, implicitReturnTypeRef);
+					EcoreUtilN4.doWithDeliver(false,[
+						tCtor.returnTypeRef = TypeUtils.copy(boundThisTypeRef);
+					],tCtor);
+				} else if(returnTypeRef instanceof ThisTypeRef) {
 					val tMethod = obj.definedType as TMethod;
 					assertTrueIfRigid("return type of TMethod in TModule should be a DeferredTypeRef", tMethod.returnTypeRef instanceof DeferredTypeRef);
-					val boundThisTypeRef = tsh.bindAndSubstituteThisTypeRef(G, returnTypeRef);
+					val boundThisTypeRef = tsh.bindAndSubstituteThisTypeRef(G, returnTypeRef, returnTypeRef);
 					EcoreUtilN4.doWithDeliver(false,[
 						tMethod.returnTypeRef = TypeUtils.copy(boundThisTypeRef);
 					],tMethod);

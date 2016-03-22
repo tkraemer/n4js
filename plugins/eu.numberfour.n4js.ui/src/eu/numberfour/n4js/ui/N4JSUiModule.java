@@ -64,7 +64,6 @@ import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
 import eu.numberfour.n4js.binaries.OsgiBinariesPreferenceStore;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.GitCloneSupplier;
-import eu.numberfour.n4js.external.OutputStreamProvider;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.generator.common.CompilerDescriptor;
@@ -111,6 +110,7 @@ import eu.numberfour.n4js.ui.resource.OutputFolderAwareResourceServiceProvider;
 import eu.numberfour.n4js.ui.search.N4JSReferenceQueryExecutor;
 import eu.numberfour.n4js.ui.utils.CancelIndicatorUiExtractor;
 import eu.numberfour.n4js.ui.validation.ManifestAwareResourceValidator;
+import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 
 /**
  * Use this class to register components to be used within the IDE.

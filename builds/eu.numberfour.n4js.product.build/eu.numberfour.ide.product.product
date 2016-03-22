@@ -3,12 +3,11 @@
 
 <product name="N4JS IDE" uid="eu.numberfour.n4js.product.product" id="eu.numberfour.n4js.product.product" application="eu.numberfour.n4js.product.application" version="0.0.1.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Dosgi.requiredJavaVersion=1.8 -Xms1024m -Xmx2048m -DN4JSValidation=enable
+      <vmArgs>-Dosgi.requiredJavaVersion=1.8 -Xms1024m -Xmx2048m
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -27,7 +26,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -50,6 +48,13 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
+      <property name="org.eclipse.core.resources/encoding" value="UTF-8" />
+      <property name="org.eclipse.ui/PERSPECTIVE_BAR_EXTRAS" value="eu.numberfour.n4js.product.N4JSPerspective,org.eclipse.egit.ui.GitRepositoryExploring" />
+      <property name="org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP" value="false" />
+      <property name="org.eclipse.ui/SHOW_TEXT_ON_PERSPECTIVE_BAR" value="false" />
+      <property name="org.eclipse.ui/defaultPerspectiveId" value="eu.numberfour.n4js.product.N4JSPerspective" />
+      <property name="osgi.instance.area.default" value="@user.home/workspace" />
+      <property name="osgi.requiredJavaVersion" value="1.8" />
    </configurations>
 
    <repositories>

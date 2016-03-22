@@ -97,7 +97,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		assertBuiltinTypeFragmentURI(phase, newN4jsResource, type, "//@types.5")
 	}
 
-	def assertFirstTMethod(String phase, TClass tClass, Resource newN4jsResource) {
+	def private assertFirstTMethod(String phase, TClass tClass, Resource newN4jsResource) {
 		val tMethod = assertTMethod(phase, tClass, "myMethod1", 0)
 
 		val type = assertReturnTypeRef(phase, tMethod, newN4jsResource)
@@ -105,7 +105,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		assertBuiltinTypeFragmentURI(phase, newN4jsResource, type, "//@types.1")
 	}
 
-	def assertSecondTMethod(String phase, TClass tClass, Resource newN4jsResource) {
+	def private assertSecondTMethod(String phase, TClass tClass, Resource newN4jsResource) {
 		val tMethod = assertTMethod(phase, tClass, "myMethod2", 1)
 
 		val returnType = assertReturnTypeRef(phase, tMethod, newN4jsResource)
@@ -117,7 +117,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		assertBuiltinTypeFragmentURI(phase, newN4jsResource, parameterType, "//@types.0")
 	}
 
-	def assertThirdTMethod(String phase, TClass tClass, Resource newN4jsResource) {
+	def private assertThirdTMethod(String phase, TClass tClass, Resource newN4jsResource) {
 		val tMethod = assertTMethod(phase, tClass, "secretMethod", 2)
 
 		val type = assertReturnTypeRef(phase, tMethod, newN4jsResource)
@@ -159,7 +159,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		return assertTypeRef(phase, field, resource)
 	}
 
-	def assertFirstN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
+	def private assertFirstN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
 		val n4Method = assertN4Method(phase, n4Class, "myMethod1", 0)
 
 		val type = assertReturnTypeRef(phase, n4Method, resource)
@@ -167,7 +167,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		assertBuiltinTypeFragmentURI(phase, resource, type, "//@types.1")
 	}
 
-	def assertSecondN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
+	def private assertSecondN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
 		val n4Method = assertN4Method(phase, n4Class, "myMethod2", 1)
 
 		val returnType = assertReturnTypeRef(phase, n4Method, resource)
@@ -179,7 +179,7 @@ class ClassWithMethodsTypesBuilderTest extends AbstractTypesBuilderTest {
 		assertBuiltinTypeFragmentURI(phase, resource, parameterType, "//@types.0")
 	}
 
-	def assertThirdN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
+	def private assertThirdN4Method(String phase, N4ClassDeclaration n4Class, Resource resource) {
 		val n4Method = assertN4Method(phase, n4Class, "secretMethod", 2)
 
 		val type = assertReturnTypeRef(phase, n4Method, resource)

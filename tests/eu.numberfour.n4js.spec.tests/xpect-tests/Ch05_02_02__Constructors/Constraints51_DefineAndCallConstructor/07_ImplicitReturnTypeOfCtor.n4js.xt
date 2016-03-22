@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C1 {
+	constructor() {
+		// XPECT errors --> "int is not a subtype of this[C1]?." at "42"
+		return 42;
+	}
+}
+
+class C2 {
+	// XPECT noerrors -->
+	constructor() {
+		// should be ok to not return anything
+	}
+}
+
+class C3 {
+	constructor() {
+		// XPECT noerrors -->
+		return this;
+	}
+}
+
+class C4 {
+	constructor() {
+		if(2<3) {
+			// XPECT noerrors -->
+			return this.m();
+		} else {
+			// XPECT noerrors -->
+			console.log("don't return anything in this case");
+		}
+	}
+	
+	m(): this {
+		return null;
+	}
+}
