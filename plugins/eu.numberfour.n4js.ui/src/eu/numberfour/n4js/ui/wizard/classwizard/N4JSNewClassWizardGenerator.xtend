@@ -49,7 +49,7 @@ class N4JSNewClassWizardGenerator {
 	private def String generateClass(N4JSClassWizardModel model, Map<URI,String> aliasBindings) {
 		'''
 		«IF model.isFinal»@Final«ENDIF»
-		«IF model.n4jsAnnotated»@N4JS«ENDIF»
+		«IF model.isN4jsAnnotated»@N4JS«ENDIF»
 		«IF model.isInternal»@Internal «ENDIF
 		»«model.accessModifier.exportDeclaration
 		»«IF model.isDefinitionFile»external «ENDIF

@@ -216,6 +216,10 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		if (getModel().getAccessModifier() == AccessModifier.PRIVATE && getModel().isInternal()) {
 			getModel().setInternal(false);
 		}
+		// Auto disable the N4JS annotation for the private access modifier
+		if (getModel().getAccessModifier() == AccessModifier.PRIVATE) {
+			getModel().setN4jsAnnotated(false);
+		}
 
 		// Remove interfaces duplicate entries
 		ArrayList<ClassifierReference> interfaces = new ArrayList<>(getModel().getInterfaces());

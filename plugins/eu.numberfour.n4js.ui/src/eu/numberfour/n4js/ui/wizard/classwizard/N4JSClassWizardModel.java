@@ -51,13 +51,13 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	 */
 
 	private String className = "";
-	private boolean external = false;
+	private boolean definitionFile = false;
 
 	private AccessModifier accessModifier = AccessModifier.PUBLIC;
 	private boolean internal = false;
 
 	private boolean finalAnnotation = false;
-	private boolean n4jsAnnotation = false;
+	private boolean n4jsAnnotatated = false;
 
 	private ClassifierReference superClass = new ClassifierReference("", "");
 	private ArrayList<ClassifierReference> interfacesURIs = new ArrayList<>();
@@ -122,7 +122,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	 */
 	@Override
 	public boolean isDefinitionFile() {
-		return external;
+		return definitionFile;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	 */
 	@Override
 	public void setDefinitionFile(boolean definitionFile) {
-		this.firePropertyChange(DEFINITION_FILE_PROPERTY, this.external, this.external = definitionFile);
+		this.firePropertyChange(DEFINITION_FILE_PROPERTY, this.definitionFile, this.definitionFile = definitionFile);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	 * @return The N4JS annotation state
 	 */
 	public boolean isN4jsAnnotated() {
-		return n4jsAnnotation;
+		return n4jsAnnotatated;
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class N4JSClassWizardModel extends WorkspaceWizardModel
 	 *            The new N4JS annotation state
 	 */
 	public void setN4jsAnnotated(boolean n4jsAnnotation) {
-		this.firePropertyChange(N4JS_PROPERTY, this.n4jsAnnotation, this.n4jsAnnotation = n4jsAnnotation);
+		this.firePropertyChange(N4JS_PROPERTY, this.n4jsAnnotatated, this.n4jsAnnotatated = n4jsAnnotation);
 	}
 
 	/**

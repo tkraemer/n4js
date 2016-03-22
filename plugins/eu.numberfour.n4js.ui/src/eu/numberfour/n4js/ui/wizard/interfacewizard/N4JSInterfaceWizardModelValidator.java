@@ -188,6 +188,10 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 				|| getModel().getAccessModifier() == AccessModifier.PROJECT) && getModel().isInternal()) {
 			getModel().setInternal(false);
 		}
+		// Auto disable the N4JS annotation for the private access modifier
+		if (getModel().getAccessModifier() == AccessModifier.PRIVATE) {
+			getModel().setN4jsAnnotated(false);
+		}
 
 		// Remove interfaces duplicate entries
 		ArrayList<ClassifierReference> interfaces = new ArrayList<>(getModel().getInterfaces());
@@ -276,18 +280,5 @@ public class N4JSInterfaceWizardModelValidator extends WorkspaceWizardModelValid
 	@Override
 	public void setModel(WorkspaceWizardModel model) {
 		throw new UnsupportedOperationException("Only N4JSClassWizardModels can be validated");
-	}
-
-	/**
-	 * Check whether name is a valid folder name.
-	 *
-	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
-	 *
-	 * @param name
-	 *            Name to check
-	 * @return valid state
-	 */
-	private static boolean isValidFolderName(String name) {
-		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 	}
 }

@@ -127,7 +127,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		Object firstResult = dialog.getFirstResult();
 
 		if (firstResult instanceof IProject) {
-			model.setProject(((IProject) firstResult).getFullPath());
+			model.setProject(new Path(((IProject) firstResult).getName()));
 		}
 	}
 

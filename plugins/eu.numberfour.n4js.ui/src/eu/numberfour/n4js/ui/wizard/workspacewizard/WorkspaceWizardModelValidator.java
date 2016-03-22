@@ -33,6 +33,15 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
  */
 public abstract class WorkspaceWizardModelValidator {
 
+	/** The validation result property constant */
+	public static final String VALIDATION_RESULT = "validationResult";
+	/** The validity of the project property */
+	public static final String PROJECT_PROPERTY_VALID = "projectValid";
+	/** The validity of the source folder property */
+	public static final String SOURCE_FOLDER_PROPERTY_VALID = "sourceFolderValid";
+
+	private static final ValidationResult NO_MODEL_VALIDATION_RESULT = new ValidationResult("No model set");
+
 	/**
 	 * Error Messages for model validation of the {@link WorkspaceWizardModel}
 	 */
@@ -129,14 +138,18 @@ public abstract class WorkspaceWizardModelValidator {
 
 	}
 
-	/** The validation result property constant */
-	public static final String VALIDATION_RESULT = "validationResult";
-	/** The validity of the project property */
-	public static final String PROJECT_PROPERTY_VALID = "projectValid";
-	/** The validity of the source folder property */
-	public static final String SOURCE_FOLDER_PROPERTY_VALID = "sourceFolderValid";
-
-	private static final ValidationResult NO_MODEL_VALIDATION_RESULT = new ValidationResult("No model set");
+	/**
+	 * Check whether name is a valid folder name.
+	 *
+	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
+	 *
+	 * @param name
+	 *            Name to check
+	 * @return valid state
+	 */
+	public static boolean isValidFolderName(String name) {
+		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9\\-])|[a-zA-z_0-9\\-])*");
+	}
 
 	private ValidationResult validationResult;
 
@@ -303,7 +316,7 @@ public abstract class WorkspaceWizardModelValidator {
 		// 1. The source folder property must not be empty
 		String sourceFolder = getModel().getSourceFolder().toString();
 
-		if (sourceFolder.isEmpty()) {
+		if (sourceFolder.trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
@@ -387,18 +400,5 @@ public abstract class WorkspaceWizardModelValidator {
 	private void setSourceFolderValid(boolean sourceFolderValid) {
 		this.firePropertyChange(SOURCE_FOLDER_PROPERTY_VALID, this.sourceFolderValid,
 				this.sourceFolderValid = sourceFolderValid);
-	}
-
-	/**
-	 * Check whether name is a valid folder name.
-	 *
-	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
-	 *
-	 * @param name
-	 *            Name to check
-	 * @return valid state
-	 */
-	private static boolean isValidFolderName(String name) {
-		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9\\-])|[a-zA-z_0-9\\-])*");
 	}
 }

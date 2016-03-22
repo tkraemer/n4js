@@ -22,6 +22,7 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.widgets.Composite;
 
 import com.google.inject.Inject;
 
@@ -205,7 +206,7 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 		IObservableValue greySuffixValue = BeanProperties.value(SuffixText.class, SuffixText.SUFFIX_PROPERTY)
 				.observe(workspaceWizardForm.getModuleSpecifierText());
 		dataBindingContext.bindValue(greySuffixValue,
-				interfaceNameModelValue, new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+				interfaceNameModelValue, noUpdateValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
 		//// Enable n4js <-> Definition value(external) is selected
@@ -223,19 +224,26 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 		IObservableValue accessModifierSelectObservable = BeanProperties
 				.value(N4JSInterfaceWizardModel.class, AccessModifiableModel.ACCESS_MODIFIER_PROPERTY).observe(model);
 
-		dataBindingContext.bindValue(internalEnabledValue, accessModifierSelectObservable,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
-				new WizardComponentDataConverters.ConditionalConverter() {
-					@Override
-					public boolean validate(Object object) {
-						if (object instanceof AccessModifier) {
-							if (((AccessModifier) object) == AccessModifier.PUBLIC) {
-								return true;
-							}
+		dataBindingContext.bindValue(internalEnabledValue, accessModifierSelectObservable, noUpdateValueStrategy(),
+				WizardComponentDataConverters.strategyForPredicate(object -> {
+					if (object instanceof AccessModifier) {
+						if (((AccessModifier) object) == AccessModifier.PUBLIC) {
+							return true;
 						}
-						return false;
 					}
-				}.updatingValueStrategy());
+					return false;
+				}));
+
+		// N4JS annotation checkbox disabled when access modifier is private
+		IObservableValue n4jsEnabledValue = WidgetProperties.enabled()
+				.observe(otherInterfaceModifiersComponent.getN4jsAnnotationBox());
+		dataBindingContext.bindValue(n4jsEnabledValue, accessModifierSelectObservable, noUpdateValueStrategy(),
+				WizardComponentDataConverters.strategyForPredicate(object -> {
+					if (object instanceof AccessModifier) {
+						return ((AccessModifier) object != AccessModifier.PRIVATE);
+					}
+					return false;
+				}));
 
 		// Refresh wizard state on validation change
 		IObservableValue observableValidationValue = BeanProperties
@@ -247,8 +255,17 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 			public void handleValueChange(ValueChangeEvent event) {
 				onValidationChange((ValidationResult) event.diff.getNewValue());
 			}
+
 		});
 
+	}
+
+	@Override
+	public void createControl(Composite parent) {
+		super.createControl(parent);
+
+		// Set initial ui state
+		otherInterfaceModifiersComponent.getN4jsAnnotationBox().setEnabled(model.isDefinitionFile());
 	}
 
 	@Override
@@ -286,4 +303,9 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 	public N4JSInterfaceWizardModelValidator getValidator() {
 		return this.validator;
 	}
+
+	private static UpdateValueStrategy noUpdateValueStrategy() {
+		return new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER);
+	}
+
 }
