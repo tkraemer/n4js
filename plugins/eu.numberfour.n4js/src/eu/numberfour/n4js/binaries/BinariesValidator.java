@@ -14,6 +14,7 @@ import static org.eclipse.core.runtime.Status.OK_STATUS;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
 
 import com.google.inject.Inject;
@@ -26,6 +27,7 @@ import eu.numberfour.n4js.utils.process.ProcessResult;
  * Class for validating {@link Binary binaries} with respect to their existence, accessibility and version.
  */
 public class BinariesValidator {
+	private static final Logger LOGGER = Logger.getLogger(BinariesValidator.class);
 
 	@Inject
 	private StatusHelper status;
@@ -61,6 +63,11 @@ public class BinariesValidator {
 		if (!result.isOK()) {
 			return error(binary, "Expected exit code 0 when checking version of '" + binary.getLabel() + "' got "
 					+ result.getExitCode() + "' instead.\n" + result.getStdErr());
+		}
+		if (LOGGER.isDebugEnabled()) {
+			final String stdErrString = result.getStdErr();
+			if (!stdErrString.isEmpty())
+				LOGGER.debug(stdErrString);
 		}
 
 		final String stdOutString = result.getStdOut();
