@@ -12,6 +12,7 @@ package eu.numberfour.n4js.utils;
 
 import static eu.numberfour.n4js.N4JSPluginId.N4JS_PLUGIN_ID;
 import static org.eclipse.core.runtime.IStatus.ERROR;
+import static org.eclipse.core.runtime.IStatus.INFO;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -35,6 +36,17 @@ public class StatusHelper {
 	 */
 	public IStatus OK() {
 		return Status.OK_STATUS;
+	}
+
+	/**
+	 * Creates a new {@link IStatus#INFO info} status with the given message.
+	 * 
+	 * @param message
+	 *            the message of the new status.
+	 * @return a new info status with the given message.
+	 */
+	public IStatus createInfo(final String message) {
+		return new Status(INFO, N4JS_PLUGIN_ID, message);
 	}
 
 	/**

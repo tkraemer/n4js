@@ -16,10 +16,7 @@ import static com.google.common.base.Predicates.notNull;
 import static com.google.common.base.Suppliers.memoize;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newLinkedHashMap;
-import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
 import static java.lang.Boolean.parseBoolean;
-import static org.eclipse.core.runtime.IStatus.ERROR;
-import static org.eclipse.core.runtime.IStatus.INFO;
 import static org.eclipse.core.runtime.Platform.inDebugMode;
 import static org.eclipse.core.runtime.Platform.inDevelopmentMode;
 import static org.eclipse.xtext.util.Tuples.pair;
@@ -37,7 +34,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.xtext.util.Pair;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -49,9 +45,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
-import eu.numberfour.n4js.utils.git.GitUtils;
-import eu.numberfour.n4js.utils.io.FileDeleter;
 
 /**
  * Activator for the bundle that holds all the external/built-in libraries.
@@ -89,12 +82,6 @@ public class ExternalLibrariesActivator implements BundleActivator {
 
 	/** Unique name of the {@code npm} category. */
 	public static final String N4_NPM_CATEGORY = "node_modules";
-
-	/** Unique name of the root local git clone folder for N4JS definition files. */
-	public static final String N4_GIT_ROOT = "n4jsd";
-
-	/** URL pointing to the remote git repository that stores the N4JS definition files. */
-	public static final String N4_GIT_REMOTE_URL = "https://github.com/NumberFour/" + N4_GIT_ROOT + ".git";
 
 	/** Unique name of the root npm folder for N4JS. */
 	private static final String N4_NPM_ROOT = ".n4npm";
@@ -167,13 +154,6 @@ public class ExternalLibrariesActivator implements BundleActivator {
 	 */
 	public static final Supplier<File> N4_NPM_FOLDER_SUPPLIER = memoize(() -> getOrCreateNpmFolder());
 
-	/**
-	 * Supplies the local git repository root folder location. Ensures that the remote git repository is cloned in case
-	 * of its absence. If the local git repository already exists, then it performs a hard reset on the {@code HEAD} of
-	 * the {@code master} branch.
-	 */
-	public static final Supplier<File> N4_GIT_FOLDER_SUPPLIER = GitCloneSupplier.SUPPLIER;
-
 	/** Shared private bundle context. */
 	private static BundleContext context;
 
@@ -190,12 +170,6 @@ public class ExternalLibrariesActivator implements BundleActivator {
 	public void start(final BundleContext bundleContext) throws Exception {
 		context = bundleContext;
 		N4_NPM_FOLDER_SUPPLIER.get();
-		// Client code can still clone the repository on demand. (Mind plug-in UI tests.)
-		if (requiresInfrastructureForLibraryManager()) {
-			new Thread(() -> {
-				N4_GIT_FOLDER_SUPPLIER.get();
-			}).start();
-		}
 	}
 
 	@Override
@@ -236,6 +210,41 @@ public class ExternalLibrariesActivator implements BundleActivator {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Logs the given status to the platform log. Has no effect if the platform is not running or the bundle cannot be
+	 * found.
+	 *
+	 * @param status
+	 *            the status to log.
+	 */
+	public static void log(final IStatus status) {
+		if (null != status && Platform.isRunning() && null != context) {
+			final Bundle bundle = context.getBundle();
+			if (null != bundle) {
+				Platform.getLog(bundle).log(status);
+			}
+		}
+	}
+
+	/**
+	 * Returns with the nested folder. Creates it if the folder does not exist yet.
+	 *
+	 * @param path
+	 *            the name of the nested folder.
+	 * @return the nested folder.
+	 */
+	public static synchronized File getOrCreateNestedFolder(String path) {
+		checkState(Platform.isRunning(), "Expected running platform.");
+		final Bundle bundle = context.getBundle();
+		checkNotNull(bundle, "Bundle was null. Does the platform running?");
+		final File targetPlatform = InternalPlatform.getDefault().getStateLocation(bundle).append(path).toFile();
+		if (!targetPlatform.exists()) {
+			checkState(targetPlatform.mkdirs(), "Error while creating " + targetPlatform + " folder.");
+		}
+		checkState(targetPlatform.isDirectory(), "Expecting director but was a file: " + targetPlatform + ".");
+		return targetPlatform;
 	}
 
 	private static BiMap<URI, String> getExternalLibraries() {
@@ -297,78 +306,4 @@ public class ExternalLibrariesActivator implements BundleActivator {
 		return targetPlatform;
 	}
 
-	private static void log(final IStatus status) {
-		if (null != status && Platform.isRunning() && null != context) {
-			final Bundle bundle = context.getBundle();
-			if (null != bundle) {
-				Platform.getLog(bundle).log(status);
-			}
-		}
-	}
-
-	private static IStatus createError(final String message, final Throwable t) {
-		return new Status(ERROR, PLUGIN_ID, message, t);
-	}
-
-	private static IStatus createInfo(final String message) {
-		return new Status(INFO, PLUGIN_ID, message);
-	}
-
-	private static synchronized File getOrCreateNestedFolder(String path) {
-		checkState(Platform.isRunning(), "Expected running platform.");
-		final Bundle bundle = context.getBundle();
-		checkNotNull(bundle, "Bundle was null. Does the platform running?");
-		final File targetPlatform = InternalPlatform.getDefault().getStateLocation(bundle).append(path).toFile();
-		if (!targetPlatform.exists()) {
-			checkState(targetPlatform.mkdirs(), "Error while creating " + targetPlatform + " folder.");
-		}
-		checkState(targetPlatform.isDirectory(), "Expecting director but was a file: " + targetPlatform + ".");
-		return targetPlatform;
-	}
-
-	/**
-	 * Clones the remote git repository with the N4JS definition files.
-	 */
-	private static enum GitCloneSupplier implements Supplier<File> {
-
-		SUPPLIER;
-
-		private boolean successfullyCloned = false;
-
-		@Override
-		public File get() {
-			if (!successfullyCloned) {
-				synchronized (GitCloneSupplier.class) {
-					if (!successfullyCloned) {
-						final File gitRoot = getOrCreateNestedFolder(N4_GIT_ROOT);
-						try {
-							GitUtils.hardReset(N4_GIT_REMOTE_URL, gitRoot.toPath(), getMasterBranch(), true);
-							GitUtils.pull(gitRoot.toPath());
-							log(createInfo(
-									"Local N4JS type definition files have been successfully prepared for npm support."));
-							successfullyCloned = true;
-							return gitRoot;
-						} catch (final Exception e) {
-							final String message = "Error occurred while preparing local git repository for N4JS type definition files.";
-							LOGGER.error(message, e);
-							log(createError(message, e));
-							try {
-								FileDeleter.delete(gitRoot.toPath()); // Clean up folder.
-							} catch (final IOException e2) {
-								final String message2 = "Error while cleaning up local git clone after failed clone.";
-								LOGGER.error(message2, e2);
-								log(createError(message2, e2));
-							}
-							successfullyCloned = false;
-							return gitRoot;
-						} finally {
-							getOrCreateNestedFolder(N4_GIT_ROOT); // Make sure root is there even if clone failed.
-						}
-					}
-				}
-			}
-			return getOrCreateNestedFolder(N4_GIT_ROOT);
-		}
-
-	}
 }

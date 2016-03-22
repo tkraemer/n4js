@@ -49,9 +49,12 @@ import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.ExternalProjectCacheLoader;
 import eu.numberfour.n4js.external.ExternalProjectProvider;
 import eu.numberfour.n4js.external.ExternalProjectsCollector;
+import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.ProjectStateChangeListener;
 import eu.numberfour.n4js.external.RebuildWorkspaceProjectsScheduler;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider.TypeDefinitionGitLocationProviderImpl;
 import eu.numberfour.n4js.internal.FileBasedExternalPackageManager;
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
 import eu.numberfour.n4js.internal.N4JSModel;
@@ -95,6 +98,9 @@ public class ContributingModule implements Module {
 		});
 		binder.bind(StatusHelper.class);
 		binder.bind(TargetPlatformInstallLocationProvider.class).to(EclipseTargetPlatformInstallLocationProvider.class)
+				.in(SINGLETON);
+		binder.bind(GitCloneSupplier.class).in(SINGLETON);
+		binder.bind(TypeDefinitionGitLocationProvider.class).to(TypeDefinitionGitLocationProviderImpl.class)
 				.in(SINGLETON);
 		binder.bind(ExternalProjectCacheLoader.class);
 		binder.bind(ExternalLibraryWorkspace.class).to(EclipseExternalLibraryWorkspace.class).in(SINGLETON);

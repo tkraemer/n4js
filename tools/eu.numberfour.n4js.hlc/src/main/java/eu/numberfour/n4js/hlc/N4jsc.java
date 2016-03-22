@@ -12,7 +12,9 @@ package eu.numberfour.n4js.hlc;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.util.Modules.override;
-import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.N4_GIT_REMOTE_URL;
+import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
+import static eu.numberfour.n4js.utils.git.GitUtils.hardReset;
+import static eu.numberfour.n4js.utils.git.GitUtils.pull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,6 +63,7 @@ import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.HeadlessTargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
@@ -90,7 +93,6 @@ import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
 import eu.numberfour.n4js.ts.TypesStandaloneSetup;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.utils.git.GitUtils;
 
 /**
  * N4JS Compiler.
@@ -166,7 +168,7 @@ public class N4jsc {
 			+ "\n'singlefile' interprets the arguments as paths to N4JS-source files and compiles only those both."
 			+ "\n'dontcompile' don't generate anything.",
 
-			metaVar = "type")
+	metaVar = "type")
 	Type buildtype = Type.dontcompile;
 
 	@Option(name = "--testCatalogFile", aliases = "-tc", required = false, usage = "if specified, a test catalog file will be generated to the given file location. The generated test catalog file will represent all "
@@ -238,13 +240,13 @@ public class N4jsc {
 	// -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- -
 	// Special debugging features, hidden from normal usage
 	@Option(name = "--log",
-			// no usage, do not show in help
-			required = false)
+	// no usage, do not show in help
+	required = false)
 	boolean log = false;
 
 	@Option(name = "--logfile",
-			// no usage, do not show in help
-			required = false)
+	// no usage, do not show in help
+	required = false)
 	String logFile = "n4jsc.log";
 
 	/**
@@ -298,6 +300,9 @@ public class N4jsc {
 
 	@Inject
 	private BinariesPreferenceStore binariesPreferenceStore;
+
+	@Inject
+	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
@@ -507,8 +512,9 @@ public class N4jsc {
 				java.net.URI gitRepositoryLocation = installLocationProvider
 						.getTargetPlatformLocalGitRepositoryLocation();
 				Path localClonePath = new File(gitRepositoryLocation).toPath();
-				GitUtils.hardReset(N4_GIT_REMOTE_URL, localClonePath, GitUtils.getMasterBranch(), true);
-				GitUtils.pull(localClonePath);
+				hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
+						getMasterBranch(), true);
+				pull(localClonePath);
 
 			}
 
@@ -913,7 +919,7 @@ public class N4jsc {
 					return id_len >= r_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - r_len, id_len).equalsIgnoreCase(runnerId)
-					// b) full segment match (either full string or previous char is .)
+							// b) full segment match (either full string or previous char is .)
 							&& (id_len == r_len || id.charAt(id_len - r_len - 1) == '.');
 				})
 				.map(id -> runnerRegistry.getDescriptor(id))
@@ -936,7 +942,7 @@ public class N4jsc {
 					return id_len >= t_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - t_len, id_len).equalsIgnoreCase(testerId)
-					// b) full segment match (either full string or previous char is .)
+							// b) full segment match (either full string or previous char is .)
 							&& (id_len == t_len || id.charAt(id_len - t_len - 1) == '.');
 				})
 				.map(id -> testerRegistry.getDescriptor(id))
