@@ -20,8 +20,8 @@
     "n4js": "./n4js-cli.js"
   },
   "dependencies": {
-    "node-fetch": "bitinn/node-fetch",
-    "systemjs": "^0.19.20"
+    "node-fetch": "^1.4.0",
+    "systemjs": "^0.19.24"
   },
   "files": [
     "manifest.n4mf",
