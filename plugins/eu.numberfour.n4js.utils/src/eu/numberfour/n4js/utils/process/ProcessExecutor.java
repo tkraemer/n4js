@@ -28,10 +28,8 @@ public class ProcessExecutor {
 	@Inject
 	private OutputStreamPrinterThreadProvider printerThreadProvider;
 
-	/**
-	 * Default timeout for the integration test script running in seconds.
-	 */
-	private static final long DEFAULT_PROCESS_TIMEOUT_IN_SECONDS = 30L;
+	private static final long DEFAULT_PROCESS_TIMEOUT = 30L;
+	private static final long DEFAULT_THREAD_TIMEOUT = 3000L;
 	private static final int ERROR_EXIT_CODE = -1;
 	private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class);
 
@@ -66,14 +64,14 @@ public class ProcessExecutor {
 			try (OutputStreamPrinterThread stdOutThread = printerThreadProvider.getPrinterThreadForStdOut(process);
 					OutputStreamPrinterThread stdErrThread = printerThreadProvider.getPrinterThreadForStdErr(process)) {
 
-				boolean finished = process.waitFor(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS, SECONDS);
+				boolean finished = process.waitFor(DEFAULT_PROCESS_TIMEOUT, SECONDS);
 				if (!finished) {
 					LOGGER.error(
-							"Process didn't finish after " + DEFAULT_PROCESS_TIMEOUT_IN_SECONDS + " " + SECONDS);
+							"Process didn't finish after " + DEFAULT_PROCESS_TIMEOUT + " " + SECONDS);
 				}
 
-				stdOutThread.join(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS);
-				stdErrThread.join(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS);
+				stdOutThread.join(DEFAULT_THREAD_TIMEOUT);// ms
+				stdErrThread.join(DEFAULT_THREAD_TIMEOUT);// ms
 
 				ProcessResult processResult = new ProcessResult(process.exitValue(), stdOutThread.toString(),
 						stdErrThread.toString());
@@ -96,7 +94,7 @@ public class ProcessExecutor {
 			if (process != null && process.isAlive()) {
 				// try to force close
 				try {
-					process.destroyForcibly().waitFor(DEFAULT_PROCESS_TIMEOUT_IN_SECONDS, SECONDS);
+					process.destroyForcibly().waitFor(DEFAULT_PROCESS_TIMEOUT, SECONDS);
 				} catch (final InterruptedException e) {
 					LOGGER.error("Error while trying to forcefully terminate" + name + "process.",
 							e);
@@ -107,7 +105,7 @@ public class ProcessExecutor {
 					// there is nothing else we can do about it
 					LOGGER.error(
 							"Cannot terminate" + name + "subprocess. Termination timeouted after "
-									+ DEFAULT_PROCESS_TIMEOUT_IN_SECONDS + " " + SECONDS + ".");
+									+ DEFAULT_PROCESS_TIMEOUT + " " + SECONDS + ".");
 				}
 			} else {
 				LOGGER.info("Spawned" + name + "process was successfully terminated.");
