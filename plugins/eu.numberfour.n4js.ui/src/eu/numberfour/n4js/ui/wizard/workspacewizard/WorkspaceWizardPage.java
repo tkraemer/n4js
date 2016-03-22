@@ -44,7 +44,6 @@ import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialogProvider;
 import eu.numberfour.n4js.ui.dialog.WorkspaceElementSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
-import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
@@ -87,9 +86,6 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	@Inject
 	private ModuleSpecifierContentProposalProvider moduleSpecifierContentProvider;
 
-	@Inject
-	N4JSLabelProvider labelProvider;
-
 	/**
 	 * @param pageName
 	 *            The name of the workspace page
@@ -112,8 +108,6 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 		// Synchronize background color to work around a dark theme issue where the wizard content background appears
 		// white
 		workspaceWizardForm.setBackground(parent.getBackground());
-
-		databindingContext.updateTargets();
 
 		setControl(workspaceWizardForm);
 	}
@@ -189,7 +183,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	 *
 	 * If no binding is set null is returned.
 	 */
-	private KeyStroke activeContentAssistBinding() {
+	private KeyStroke getActiveContentAssistBinding() {
 		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
 		TriggerSequence[] activeBindingsFor = bindingService
 				.getActiveBindingsFor(CONTENT_ASSIST_ECLIPSE_COMMAND_ID);
@@ -205,7 +199,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 
 	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
 		// Get the active binding's content assist key strokes
-		KeyStroke keyInitiator = activeContentAssistBinding();
+		KeyStroke keyInitiator = getActiveContentAssistBinding();
 
 		// If unbound don't configure the content proposal
 		if (null == keyInitiator) {
