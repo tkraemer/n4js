@@ -356,63 +356,63 @@ Contributors:
             </toolbar>
          </menuContribution>
          <menuContribution locationURI="menu:eu.numberfour.toolbar.newN4JSElement">
-         	<command
+            <command
                      commandId="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule"
                      icon="icons/newclass_wiz.gif"
                      label="New N4JS Class"
                      id="eu.numberfour.toolbar.newN4JSElement.newClassInModule"
                      style="push">
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
-                     	value="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
+                        value="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
                      </parameter>
-			</command>
-         	<command
+            </command>
+            <command
                      commandId="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule"
                      icon="icons/newclass_wiz.gif"
                      label="New N4JS Class in this module"
                      id="eu.numberfour.toolbar.newN4JSElement.newClassInModule"
                      style="push">
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
-                     	value="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
+                        value="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
                      </parameter>
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
-                     	value="true">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
+                        value="true">
                      </parameter>
                      <visibleWhen checkEnabled="true">
-                		<reference definitionId="eu.numberfour.n4js.N4JS.Editor.opened" />
-            		</visibleWhen>
-			</command>
-			<command
+                        <reference definitionId="eu.numberfour.n4js.N4JS.Editor.opened" />
+                     </visibleWhen>
+            </command>
+            <command
                      commandId="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule"
                      icon="icons/newint_wiz.gif"
                      label="New N4JS Interface"
                      id="eu.numberfour.toolbar.newN4JSElement.newInterfaceInModule"
                      style="push">
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
-                     	value="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
+                        value="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard">
                      </parameter>
-			</command>
-			<command
+            </command>
+            <command
                      commandId="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule"
                      icon="icons/newint_wiz.gif"
                      label="New N4JS Interface in this module"
                      id="eu.numberfour.toolbar.newN4JSElement.newInterfaceInModule"
                      style="push">
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
-                     	value="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
+                        value="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard">
                      </parameter>
                      <parameter
-                     	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
-                     	value="true">
+                        name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
+                        value="true">
                      </parameter>
                      <visibleWhen checkEnabled="true">
-                		<reference definitionId="eu.numberfour.n4js.N4JS.Editor.opened" />
-            		</visibleWhen>
+                        <reference definitionId="eu.numberfour.n4js.N4JS.Editor.opened" />
+                     </visibleWhen>
 			</command>
          </menuContribution>
          <menuContribution
