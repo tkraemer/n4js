@@ -109,8 +109,9 @@ class GenericsComputer extends TypeSystemHelperStrategy {
 					}
 				}
 			}
-			if(typeRef instanceof StructuralTypeRef)
+			if(typeRef instanceof StructuralTypeRef) {
 				G.restorePostponedSubstitutionsFrom(typeRef)
+			}
 		}
 	}
 	/**

@@ -20,16 +20,17 @@ import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static eu.numberfour.n4js.n4mf.ProjectType.SYSTEM;
+import static eu.numberfour.n4js.n4mf.ProjectType.TEST;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectId;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectType;
 import static eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator.EU_NUMBERFOUR_N4JS_N4MF_N4MF;
 import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTATION_ID_PROP_NAME;
-import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTED_APIS_PROP_NAME;
+import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.IMPLEMENTED_PROJECTS_PROP_NAME;
 import static eu.numberfour.n4js.n4mf.ui.wizard.N4MFProjectInfo.PROJECT_TYPE_PROP_NAME;
 import static org.eclipse.jface.databinding.viewers.ViewersObservables.observeSingleSelection;
 import static org.eclipse.jface.layout.GridDataFactory.fillDefaults;
 import static org.eclipse.swt.SWT.BORDER;
-import static org.eclipse.swt.SWT.CENTER;
+import static org.eclipse.swt.SWT.CHECK;
 import static org.eclipse.swt.SWT.FILL;
 import static org.eclipse.swt.SWT.MULTI;
 import static org.eclipse.swt.SWT.Modify;
@@ -41,17 +42,24 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
@@ -84,6 +92,12 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 	}
 
 	@Override
+	public boolean canFlipToNextPage() {
+		// Only allow page flipping for test projects
+		return isPageComplete() && TEST.equals(projectInfo.getProjectType());
+	}
+
+	@Override
 	public void createControl(final Composite parent) {
 		super.createControl(parent); // We need to create the UI controls from the parent class.
 
@@ -100,33 +114,32 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		projectType.getControl().setLayoutData(fillDefaults().grab(true, false).create());
 		projectType.setInput(ProjectType.values());
 
-		final Composite implementationComposite = new Composite(control, NONE);
-		implementationComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
-		implementationComposite.setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).create());
-		new Label(implementationComposite, SWT.NONE).setText("Implementation ID:");
-		final Text implementationIdText = new Text(implementationComposite, BORDER);
-		implementationIdText.setLayoutData(fillDefaults().align(FILL, CENTER).grab(true, false).create());
+		// A composite to hold the changing UI component (additional library project options / additional test project
+		// options)
+		final Composite changingComposite = new Composite(control, NONE);
+		StackLayout changingStackLayout = new StackLayout();
+		changingComposite.setLayout(changingStackLayout);
+		changingComposite.setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).create());
 
-		final ListViewer apiViewer = new ListViewer(implementationComposite, BORDER | MULTI);
-		apiViewer.getControl().setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).span(2, 1).create());
-		apiViewer.setContentProvider(ArrayContentProvider.getInstance());
-		apiViewer.setInput(getAvailableApiProjectIds());
+		Composite defaultOptions = initDefaultOptionsUI(dbc, changingComposite);
+		Composite libraryProjectOptionsGroup = initLibraryOptionsUI(dbc, changingComposite);
+		Composite testProjectOptionsGroup = initTestProjectUI(dbc, changingComposite);
 
 		initProjectTypeBinding(dbc, projectType);
-		initImplementationIdBinding(dbc, implementationIdText);
-		initApiViewerBinding(dbc, apiViewer);
 
+		// Configure stack layout to show advanced options
 		projectType.addPostSelectionChangedListener(e -> {
-			implementationComposite.setVisible(LIBRARY.equals(projectInfo.getProjectType()));
-			apiViewer.getControl().setVisible(LIBRARY.equals(projectInfo.getProjectType()));
-			setPageComplete(validatePage());
-		});
-
-		implementationIdText.addModifyListener(e -> {
-			setPageComplete(validatePage());
-		});
-
-		apiViewer.addSelectionChangedListener(e -> {
+			switch (projectInfo.getProjectType()) {
+			case LIBRARY:
+				changingStackLayout.topControl = libraryProjectOptionsGroup;
+				break;
+			case TEST:
+				changingStackLayout.topControl = testProjectOptionsGroup;
+				break;
+			default:
+				changingStackLayout.topControl = defaultOptions;
+			}
+			changingComposite.layout(true);
 			setPageComplete(validatePage());
 		});
 
@@ -141,6 +154,87 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		Dialog.applyDialogFont(getControl());
 
 		dbc.updateTargets();
+
+		setControl(control);
+	}
+
+	private Composite initDefaultOptionsUI(DataBindingContext dbc, Composite parent) {
+		// A group for default options
+		final Group defaultOptions = new Group(parent, NONE);
+		defaultOptions.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
+
+		final Button createGreeterFileButton = new Button(defaultOptions, CHECK);
+		createGreeterFileButton.setText("Create a greeter file");
+
+		initDefaultCreateGreeterBindings(dbc, createGreeterFileButton);
+
+		return defaultOptions;
+	}
+
+	private Composite initLibraryOptionsUI(DataBindingContext dbc, Composite parent) {
+		// Additional library project options
+		final Group libraryProjectOptionsGroup = new Group(parent, NONE);
+		libraryProjectOptionsGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).create());
+
+		emptyPlaceholder(libraryProjectOptionsGroup);
+
+		final Button createGreeterFileButton = new Button(libraryProjectOptionsGroup, CHECK);
+		createGreeterFileButton.setText("Create a greeter file");
+		createGreeterFileButton.setLayoutData(GridDataFactory.fillDefaults().create());
+
+		new Label(libraryProjectOptionsGroup, SWT.NONE).setText("Implementation ID:");
+		final Text implementationIdText = new Text(libraryProjectOptionsGroup, BORDER);
+		implementationIdText.setLayoutData(fillDefaults().align(FILL, SWT.CENTER).grab(true, false).create());
+
+		final Label implementedProjectsLabel = new Label(libraryProjectOptionsGroup, SWT.NONE);
+		implementedProjectsLabel.setText("Implemented projects:");
+		implementedProjectsLabel
+				.setLayoutData(GridDataFactory.fillDefaults().grab(false, true).align(SWT.LEFT, SWT.TOP).create());
+
+		final ListViewer apiViewer = new ListViewer(libraryProjectOptionsGroup, BORDER | MULTI);
+		apiViewer.getControl().setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).span(1, 1).create());
+		apiViewer.setContentProvider(ArrayContentProvider.getInstance());
+		apiViewer.setInput(getAvailableApiProjectIds());
+
+		initApiViewerBinding(dbc, apiViewer);
+		initImplementationIdBinding(dbc, implementationIdText);
+		initDefaultCreateGreeterBindings(dbc, createGreeterFileButton);
+
+		// Invalidate on change
+		apiViewer.addSelectionChangedListener(e -> {
+			setPageComplete(validatePage());
+		});
+		// Invalidate on change
+		implementationIdText.addModifyListener(e -> {
+			setPageComplete(validatePage());
+		});
+
+		return libraryProjectOptionsGroup;
+	}
+
+	/** Create an empty placeholder control in parent */
+	private static Control emptyPlaceholder(Composite parent) {
+		return new Label(parent, NONE);
+	}
+
+	private Composite initTestProjectUI(DataBindingContext dbc, Composite parent) {
+		// Additional test project options
+		final Group testProjectOptionsGroup = new Group(parent, NONE);
+		testProjectOptionsGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
+
+		final Button createTestGreeterFileButton = new Button(testProjectOptionsGroup, CHECK);
+		createTestGreeterFileButton.setText("Create a test project greeter file");
+
+		final Button addNormalSourceFolderButton = new Button(testProjectOptionsGroup, CHECK);
+		addNormalSourceFolderButton.setText("Also create a non-test source folder");
+
+		Label nextPageHint = new Label(testProjectOptionsGroup, NONE);
+		nextPageHint.setText("The projects which should be tested can be selected on the next page");
+		nextPageHint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
+
+		initTestProjectBinding(dbc, addNormalSourceFolderButton, createTestGreeterFileButton);
+
+		return testProjectOptionsGroup;
 	}
 
 	@Override
@@ -159,7 +253,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 				// Implementation ID is optional
 				if (!isNullOrEmpty(implementationId)) {
 
-					final List<String> implementedApis = projectInfo.getImplementedApis();
+					final List<String> implementedApis = projectInfo.getImplementedProjects();
 					if (null == implementedApis || implementedApis.isEmpty()) {
 						errorMsg = "One or more API project should be selected for implementation when the implementation ID is specified.";
 					}
@@ -220,6 +314,26 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		}
 	}
 
+	private void initDefaultCreateGreeterBindings(DataBindingContext dbc, Button createGreeterFileButton) {
+		// Bind the "create greeter file"-checkbox
+		dbc.bindValue(WidgetProperties.selection().observe(createGreeterFileButton),
+				BeanProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.CREATE_GREETER_FILE_PROP_NAME)
+						.observe(projectInfo));
+	}
+
+	private void initTestProjectBinding(DataBindingContext dbc, Button addNormalSourceFolderButton,
+			Button createTestGreeterFileButton) {
+		// Bind the "normal source folder"-checkbox
+		dbc.bindValue(WidgetProperties.selection().observe(addNormalSourceFolderButton),
+				PojoProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.ADDITIONAL_NORMAL_SOURCE_FOLDER_PROP_NAME)
+						.observe(projectInfo));
+
+		// Bind the "Create greeter file"-checkbox
+		dbc.bindValue(WidgetProperties.selection().observe(createTestGreeterFileButton),
+				BeanProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.CREATE_GREETER_FILE_PROP_NAME)
+						.observe(projectInfo));
+	}
+
 	private void initProjectTypeBinding(final DataBindingContext dbc, final ComboViewer projectType) {
 		dbc.bindValue(observeSingleSelection(projectType),
 				PojoProperties.value(N4MFProjectInfo.class, PROJECT_TYPE_PROP_NAME).observe(projectInfo));
@@ -233,7 +347,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 	private void initApiViewerBinding(DataBindingContext dbc, ListViewer apiViewer) {
 		dbc.bindList(
 				ViewersObservables.observeMultiSelection(apiViewer),
-				PojoProperties.list(N4MFProjectInfo.class, IMPLEMENTED_APIS_PROP_NAME).observe(projectInfo));
+				PojoProperties.list(N4MFProjectInfo.class, IMPLEMENTED_PROJECTS_PROP_NAME).observe(projectInfo));
 	}
 
 	private Collection<String> getAvailableApiProjectIds() {

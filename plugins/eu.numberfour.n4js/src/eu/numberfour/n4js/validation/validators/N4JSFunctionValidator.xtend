@@ -233,13 +233,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		// Dead Code? : Constraints 107
 		holdsNoDeadCode(functionOrFieldAccessor, analysis);
 
-// FIXME IDEBUG-793 temporary hack to avoid problems with constructor return type checking
-if (functionOrFieldAccessor instanceof N4MethodDeclaration) {
-	if(functionOrFieldAccessor.isConstructor) {
-		return true;
-	}
-}
-
 		if (isOptionalReturnType) {
 			// anything goes!
 			// (function may or may not leave with return statement; return statements may or may not have an expression)

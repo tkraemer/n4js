@@ -17,6 +17,9 @@ import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static java.lang.String.valueOf;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -36,11 +39,38 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	/** The name of the project type property name. Used by JFace data binding. */
 	public static final String PROJECT_TYPE_PROP_NAME = "projectType";
 
+	/** Property to specify the selected working set */
+	public static final String SELECTED_WORKING_SET_PROP_NAME = "selectedWorkingSet";
+
 	/** Name of the implementation ID property. Used by SWT data binding. */
 	public static final String IMPLEMENTATION_ID_PROP_NAME = "implementationId";
 
 	/** Name of the implementation ID property. Used by SWT data binding. */
-	public static final String IMPLEMENTED_APIS_PROP_NAME = "implementedApis";
+	public static final String IMPLEMENTED_PROJECTS_PROP_NAME = "implementedProjects";
+
+	/** Tested Project of a test project */
+	public static final String TESTED_PROJECT_PROP_NAME = "testedProjects";
+
+	/** Property to specify whether a test project should have an additional normal source folder */
+	public static final String ADDITIONAL_NORMAL_SOURCE_FOLDER_PROP_NAME = "additionalSourceFolder";
+
+	/** Property to specify to project dependencies */
+	public static final String PROJECT_DEPENDENCIES_PROP_NAME = "projectDependencies";
+
+	/** Property to specify the output folder */
+	public static final String OUTPUT_FOLDER_PROP_NAME = "outputFolder";
+
+	/** Property to specify the source folders */
+	public static final String SOURCE_FOLDERS_PROP_NAME = "sourceFolders";
+
+	/** Property to specify the external source folders */
+	public static final String EXTERNAL_SOURCE_FOLDERS_PROP_NAME = "externalSourceFolders";
+
+	/** Property to specify the test source folders */
+	public static final String TEST_SOURCE_FOLDERS_PROP_NAME = "testSourceFolders";
+
+	/** Property to specify whether a greeter file should be created */
+	public static final String CREATE_GREETER_FILE_PROP_NAME = "createGreeterFile";
 
 	/** The custom project location. {@code null} if there is not custom project location set. */
 	private IPath projectLocation;
@@ -52,10 +82,60 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	private String implementationId;
 
 	/** The implemented API project IDs. */
-	private List<String> implementedApis = newArrayList();
+	private List<String> implementedProjects = newArrayList();
 
 	/** WorkingSets the new Project will be included to. */
 	private IWorkingSet[] selectedWorkingSets;
+
+	/** The tested project in case of a test project */
+	private List<String> testedProjects = new ArrayList<>();
+
+	/** Specifies whether a test project should have an additional normal source folder */
+	private boolean additionalSourceFolder;
+
+	/** Specifies whether a greeter file should be created */
+	private boolean createGreeterFile;
+
+	/** The list of project dependencies */
+	private List<String> projectDependencies = new ArrayList<>();
+
+	/** The output folder of the project */
+	private String outputFolder;
+
+	/** Different source folders of the project */
+	private List<String> sourceFolders = new ArrayList<>();
+	private List<String> externalSourceFolders = new ArrayList<>();
+	private List<String> testSourceFolders = new ArrayList<>();
+
+	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
+	/**
+	 * @param listener
+	 *            listener to be called on every change of any property
+	 */
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		this.changeSupport.addPropertyChangeListener(listener);
+	}
+
+	/**
+	 * @param listener
+	 *            remove listener
+	 */
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		this.changeSupport.removePropertyChangeListener(listener);
+	}
+
+	/**
+	 * @param propertyName
+	 *            bean name of the property
+	 * @param newValue
+	 *            new value of the property
+	 * @param oldValue
+	 *            old value of the property
+	 */
+	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		this.changeSupport.firePropertyChange(propertyName, oldValue, newValue);
+	}
 
 	/**
 	 * Returns with the project type as a lower camel case formatted string. This can be used directly for the N4
@@ -86,7 +166,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *            the project location to set.
 	 */
 	public void setProjectLocation(IPath projectLocation) {
-		this.projectLocation = projectLocation;
+		firePropertyChange(PROJECT_LOCATION_PROP_NAME, this.projectLocation, this.projectLocation = projectLocation);
 	}
 
 	/**
@@ -105,17 +185,22 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *            the project type.
 	 */
 	public void setProjectType(ProjectType projectType) {
-		this.projectType = projectType;
+		firePropertyChange(PROJECT_TYPE_PROP_NAME, this.projectType, this.projectType = projectType);
 	}
 
-	/** */
+	/**
+	 * Returns the selected working set
+	 */
 	public IWorkingSet[] getSelectedWorkingSets() {
 		return selectedWorkingSets;
 	}
 
-	/** */
+	/**
+	 * Sets the selected working set
+	 */
 	public void setSelectedWorkingSets(IWorkingSet[] selectedWorkingSets) {
-		this.selectedWorkingSets = selectedWorkingSets;
+		firePropertyChange(SELECTED_WORKING_SET_PROP_NAME, this.selectedWorkingSets,
+				this.selectedWorkingSets = selectedWorkingSets);
 	}
 
 	/**
@@ -134,7 +219,8 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *            the desired implementation ID value. Optional, can be {@code null}.
 	 */
 	public void setImplementationId(String implementationId) {
-		this.implementationId = implementationId;
+		firePropertyChange(IMPLEMENTATION_ID_PROP_NAME, this.implementationId,
+				this.implementationId = implementationId);
 	}
 
 	/**
@@ -142,18 +228,149 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	 *
 	 * @return a list of API project artifact IDs.
 	 */
-	public List<String> getImplementedApis() {
-		return implementedApis;
+	public List<String> getImplementedProjects() {
+		return implementedProjects;
 	}
 
 	/**
-	 * Counterpart of {@link #getImplementedApis()}.
+	 * Counterpart of {@link #getImplementedProjects()}.
 	 *
-	 * @param implementedApis
+	 * @param implementedProjects
 	 *            the list of implemented API project IDs to set.
 	 */
-	public void setImplementedApis(List<String> implementedApis) {
-		this.implementedApis = implementedApis;
+	public void setImplementedProjects(List<String> implementedProjects) {
+		firePropertyChange(IMPLEMENTED_PROJECTS_PROP_NAME, this.implementedProjects,
+				this.implementedProjects = implementedProjects);
+	}
+
+	/**
+	 * Returns the tested project for a test project
+	 */
+	public List<String> getTestedProjects() {
+		return this.testedProjects;
+	}
+
+	/**
+	 * Sets the tested project for a test project
+	 */
+	public void setTestedProjects(List<String> testedProjects) {
+		firePropertyChange(TESTED_PROJECT_PROP_NAME, this.testedProjects, this.testedProjects = testedProjects);
+	}
+
+	/**
+	 * Returns whether a test project should have an additional normal source folder.
+	 *
+	 * Does not hold any useful information if project type is not test.
+	 */
+	public boolean getAdditionalSourceFolder() {
+		return additionalSourceFolder;
+	}
+
+	/**
+	 * Sets whether a test project should have an additional normal source folder.
+	 */
+	public void setAdditionalSourceFolder(boolean additionalSourceFolder) {
+		firePropertyChange(ADDITIONAL_NORMAL_SOURCE_FOLDER_PROP_NAME, this.additionalSourceFolder,
+				this.additionalSourceFolder = additionalSourceFolder);
+	}
+
+	/**
+	 * Returns the project dependencies of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getProjectDependencies() {
+		return projectDependencies;
+	}
+
+	/**
+	 * Sets the project dependencies of the project.
+	 */
+	public void setProjectDependencies(List<String> projectDependencies) {
+		firePropertyChange(PROJECT_DEPENDENCIES_PROP_NAME, this.projectDependencies,
+				this.projectDependencies = projectDependencies);
+	}
+
+	/**
+	 * Returns the output folder of the project.
+	 */
+	public String getOutputFolder() {
+		return outputFolder;
+	}
+
+	/**
+	 * Sets the output folder of the project.
+	 */
+	public void setOutputFolder(String outputFolder) {
+		firePropertyChange(OUTPUT_FOLDER_PROP_NAME, this.outputFolder, this.outputFolder = outputFolder);
+	}
+
+	/**
+	 * Returns the source folders of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getSourceFolders() {
+		return sourceFolders;
+	}
+
+	/**
+	 * Sets the source folders of the project
+	 */
+	public void setSourceFolders(List<String> sourceFolders) {
+		firePropertyChange(SOURCE_FOLDERS_PROP_NAME, this.sourceFolders, this.sourceFolders = sourceFolders);
+	}
+
+	/**
+	 * Returns the external source folders of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 *
+	 */
+	public List<String> getExternalSourceFolders() {
+		return externalSourceFolders;
+	}
+
+	/**
+	 * Sets the source folders of the project.
+	 *
+	 */
+	public void setExternalSourceFolders(List<String> externalSourceFolders) {
+		firePropertyChange(EXTERNAL_SOURCE_FOLDERS_PROP_NAME, this.externalSourceFolders,
+				this.externalSourceFolders = externalSourceFolders);
+	}
+
+	/**
+	 * Returns the test source folders of the project.
+	 *
+	 * Note: The return value is a mutable reference.
+	 */
+	public List<String> getTestSourceFolders() {
+		return testSourceFolders;
+	}
+
+	/**
+	 * Sets the test source folders of the project.
+	 */
+	public void setTestSourceFolders(List<String> testSourceFolders) {
+		firePropertyChange(TEST_SOURCE_FOLDERS_PROP_NAME, this.testSourceFolders,
+				this.testSourceFolders = testSourceFolders);
+	}
+
+	/**
+	 * Returns whether a test project greeter file should be created.
+	 *
+	 */
+	public boolean getCreateGreeterFile() {
+		return createGreeterFile;
+	}
+
+	/**
+	 * Sets whether a test project greeter file should be created.
+	 */
+	public void setCreateGreeterFile(boolean createTestGreeterFile) {
+		firePropertyChange(CREATE_GREETER_FILE_PROP_NAME, this.createGreeterFile,
+				this.createGreeterFile = createTestGreeterFile);
 	}
 
 }

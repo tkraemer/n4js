@@ -13,23 +13,7 @@ package eu.numberfour.n4js.ui.wizard.model;
 /**
  * A wizard model containing access modifier information
  */
-public interface AccessModifiableModel extends PropertyChangeListenable {
-	/**
-	 * Helper type for access modifiers
-	 */
-	public static enum AccessModifier {
-		/** For public visibility */
-		PUBLIC,
-		/** For project visibility */
-		PROJECT,
-		/** For private visibility */
-		PRIVATE
-	}
-
-	/** The property name for the access modifier property when using databinding */
-	public static final String ACCESS_MODIFIER_PROPERTY = "accessModifier";
-	/** The property name for the internal property when using databinding */
-	public static final String INTERNAL_PROPERTY = "internal";
+public interface AccessModifiableModel {
 
 	/**
 	 * The saved access modifier

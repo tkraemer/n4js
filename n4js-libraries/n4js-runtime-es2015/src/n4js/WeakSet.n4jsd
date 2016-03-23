@@ -14,28 +14,23 @@ export external public class WeakSet<ValueT extends Object> extends Object {
     public constructor(arg: Iterable<ValueT>?);
 
     /**
-    * Length property is 1.
-    */
+     * Length property is 1.
+     */
     @Final public length: number;
 
     /**
-    * Adds a new element.
-    */
+     * Adds a new element.
+     */
     public add(value: ValueT): this;
 
     /**
-    * Removes all elements.
-    */
-    public clear(): void;
-
-    /**
-    * Removes the element associated with the value.
-    */
+     * Removes the element associated with the value.
+     */
     public delete(value: ValueT): boolean;
 
     /**
-    * Tests whether an element is present.
-    */
+     * Tests whether an element is present.
+     */
     public has(value: ValueT): boolean;
 }
 

@@ -12,6 +12,7 @@ package eu.numberfour.n4js.external;
 
 import java.net.URI;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
@@ -22,7 +23,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class HeadlessTargetPlatformInstallLocationProvider implements TargetPlatformInstallLocationProvider {
 
+	@Inject
+	private TypeDefinitionGitLocationProvider gitLocationProvider;
+
 	private URI targetPlatformInstallLocation;
+
 	private URI targetPlatformFileLocation;
 
 	@Override
@@ -33,6 +38,11 @@ public class HeadlessTargetPlatformInstallLocationProvider implements TargetPlat
 	@Override
 	public URI getTargetPlatformFileLocation() {
 		return targetPlatformFileLocation;
+	}
+
+	@Override
+	public String getGitRepositoryName() {
+		return gitLocationProvider.getGitLocation().getRepositoryName();
 	}
 
 	/**

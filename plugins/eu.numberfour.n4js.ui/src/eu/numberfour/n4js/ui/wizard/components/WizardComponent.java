@@ -14,7 +14,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * A wizard component is a bundle of ui and data binding which can be placed in a {@link WizardComponentContainer}.
+ * A wizard component is a bundle of UI and data binding which can be placed in a {@link WizardComponentContainer}.
  *
  * A wizard component can be specialized to only work with a certain type of model.
  *

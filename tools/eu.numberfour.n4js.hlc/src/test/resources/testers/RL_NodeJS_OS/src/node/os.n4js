@@ -13,10 +13,10 @@ export public class os{
 		var _type = "";
 		
 		try{
-			_type = Function("var os = global.require('os'); return os.type();")();
+			_type = Function("var os = global.require('os'); return os.type();")() as string;
 		}catch(e){
 			//issues with require, faking by reaching to node process global property
-			_type = Function("global","return global.process.platform;")(Function('return this')());
+			_type = Function("global","return global.process.platform;")(Function('return this')()) as string;
 		}
 		return _type;
 	}

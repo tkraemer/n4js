@@ -11,12 +11,19 @@
 package eu.numberfour.n4js.n4mf.ui.wizard
 
 import java.util.List
+import eu.numberfour.n4js.n4mf.ProjectType;
 
 /**
  * Basic Xtend templates for new project wizard.
  */
 class NewN4JSProjectFileTemplates {
 
+	/**
+	 * Returns the contents of the greeter class module for given projectName
+	 * 
+	 * @param projectName The name of the project
+	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
+	 */
 	static def getSourceFileWithGreeterClass(String projectName, String safeProjectName) '''
 		export class GreeterFor_«safeProjectName» {
 		    public greet() {
@@ -27,12 +34,30 @@ class NewN4JSProjectFileTemplates {
 		greeter.greet();
 		//right click this module and select "Run As -> Launch in Node.js" to see
 		//"Hello World from '«projectName»'!"
-
+		
+	'''
+	
+	/** 
+	 * Returns the contents of the greeter test class module for given projectName
+	 * 
+	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
+	 */
+	static def getSourceFileWithTestGreeter(String safeProjectName) '''
+		import { Assert } from "n4/mangel/assert/Assert"
+		
+		export public class Test_«safeProjectName» {
+			@Test
+			test(){
+				Assert.isTrue(true, "Testing works!")
+			}
+			
+		}
+		//right click this module and select "Run As -> Test in Node.js" to see the test results
 	'''
 
-	// TODO introduce ParameterObject
-	static def getManifestContents(String projectName, String projectTypeForManifest, List<String> sources,
-		List<String> externals, List<String> tests, String out, String implID, List<String> apis) '''
+	private static def simpleManifestContents(String projectName, String projectTypeForManifest, List<String> sources,
+		List<String> externals, List<String> tests, String outputFolder
+	)	'''
 		ArtifactId: «projectName»
 		VendorId: eu.numberfour
 		ProjectName: "«projectName»"
@@ -40,7 +65,7 @@ class NewN4JSProjectFileTemplates {
 		ProjectType: «projectTypeForManifest»
 		ProjectVersion: 0.0.1-SNAPSHOT
 		//output folder (e.g. compiled files, etc.)
-		Output: "«out»"
+		Output: "«outputFolder»"
 		//define project source folders
 		Sources {
 		    «IF !sources.empty»
@@ -59,9 +84,46 @@ class NewN4JSProjectFileTemplates {
 		        «FOR String fTST : tests SEPARATOR ","»"«fTST»"«ENDFOR»
 		    }«ENDIF»
 		}
-		«IF implID !== null && implID.trim.length >0»«"\n"»ImplementationId: «implID»«ENDIF»
-		«IF !apis.empty »ImplementedProjects {«
-			FOR String api : apis SEPARATOR ","»«"\n"»    «api»«ENDFOR»
+		'''
+
+	private static def libraryManifestFragment(String implementationId, List<String> implementedProjects)
+		'''
+		«IF implementationId !== null && implementationId.trim.length >0»«"\n"»ImplementationId: «implementationId»«ENDIF»
+		«IF !implementedProjects.empty »ImplementedProjects {«
+			FOR String api : implementedProjects SEPARATOR ","»«"\n"»    «api»«ENDFOR»
 		}«ENDIF»
-	'''
+		'''
+	
+	private static def testManifestFragment(List<String> testedProjects) {
+		'''
+		«IF testedProjects !== null && !testedProjects.empty
+		»TestedProjects {«
+			FOR String project : testedProjects SEPARATOR ","»«"\n"»    «project»«ENDFOR»
+		}«
+		ENDIF»'''
+	}
+	private static def projectDependenciesManifestFragment(List<String> projectDependencies) {
+		'''
+		«IF projectDependencies !== null && !projectDependencies.empty
+		»ProjectDependencies {«
+			FOR String dependency : projectDependencies SEPARATOR ","»«"\n"»    «dependency»«ENDFOR»
+		}«
+		ENDIF»'''
+	}
+
+	/**
+	 * Returns the manifest contents for the given project info 
+	 */
+	static def getManifestContents(N4MFProjectInfo projectInfo)
+		'''
+		«simpleManifestContents(projectInfo.projectName, projectInfo.projectTypeForManifest, projectInfo.sourceFolders,
+								projectInfo.externalSourceFolders, projectInfo.testSourceFolders, projectInfo.outputFolder)»
+		«IF ProjectType.LIBRARY.equals(projectInfo.projectType)»
+		«	libraryManifestFragment(projectInfo.implementationId, projectInfo.implementedProjects)»
+		«ENDIF»
+		«IF ProjectType.TEST.equals(projectInfo.projectType)»
+		«	testManifestFragment(projectInfo.getTestedProjects)»
+		«ENDIF»
+		«projectDependenciesManifestFragment(projectInfo.projectDependencies)»
+		'''
 }

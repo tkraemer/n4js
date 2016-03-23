@@ -66,11 +66,11 @@ public interface Binary {
 	Version getMinimumVersion();
 
 	/**
-	 * The actual command (with the absolute path) as a string that has to be called to execute the binary.
+	 * The actual binary absolute path as a string that has to be called to execute the binary.
 	 *
 	 * @return the command of the binary to execute it.
 	 */
-	String getCommandWithAbsolutePath();
+	String getBinaryAbsolutePath();
 
 	/**
 	 * The version argument that is used to check and validate the version of the current binary. In lot cases this is

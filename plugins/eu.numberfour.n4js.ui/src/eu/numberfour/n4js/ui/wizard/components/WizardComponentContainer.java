@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * A container for wizard components.
  *
- * Wizard component containers are 3-column grid layouted swt composites. A component is meant to use one row of such a
+ * Wizard component containers are SWT composites with three column grids. A component is meant to use one row of such a
  * layout.
  *
  */
@@ -28,7 +28,7 @@ public interface WizardComponentContainer {
 	public DataBindingContext getDataBindingContext();
 
 	/**
-	 * Returns the SWT composite which is associatedwith the container
+	 * Returns the SWT composite which is associated with the container
 	 *
 	 * <p>
 	 * This is always a column with a 3 column grid layout.

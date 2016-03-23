@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import eu.numberfour.n4js.ui.dialog.SingleClassSelectionDialog;
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModel;
+import eu.numberfour.n4js.ui.wizard.classes.N4JSClassWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 
 /**

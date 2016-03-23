@@ -15,6 +15,8 @@ import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import com.google.common.base.Predicate;
+
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 
 /**
@@ -105,6 +107,21 @@ public class WizardComponentDataConverters {
 			return null;
 		}
 
+	}
+
+	/**
+	 * Helper method which returns an update value strategy using a conditional converter which is evaluating the
+	 * predicate
+	 */
+	public static UpdateValueStrategy strategyForPredicate(Predicate<Object> predicate) {
+		return new ConditionalConverter() {
+
+			@Override
+			public boolean validate(Object object) {
+				return predicate.apply(object);
+			}
+
+		}.updatingValueStrategy();
 	}
 
 	/**
