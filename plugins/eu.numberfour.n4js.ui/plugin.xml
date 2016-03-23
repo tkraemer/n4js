@@ -263,11 +263,10 @@ Contributors:
       </command>
       <command
             id="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule"
-            name="Create a new N4JS Element in this module">
+            name="Create a new N4JS Element">
             <!-- The id of a newWizard to launch --> 
             <commandParameter
               id="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
-              values="org.eclipse.ui.newWizards"
               name="wizardId">
             </commandParameter>
             <!-- True if the wizard should try to create the element inside of the currently selected module-->
@@ -343,7 +342,7 @@ Contributors:
                      icon="icons/newclass_wiz.gif"
                      label="New N4JS Class"
                      id="eu.numberfour.toolbar.newN4JSElement"
-                     tooltip="Creates a new N4JS Class in this module"
+                     tooltip="Creates a new N4JS Class"
                      style="pulldown">
                      <parameter
                      	name="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId"
