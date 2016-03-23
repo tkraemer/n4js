@@ -17,11 +17,6 @@ import eu.numberfour.n4js.xpect.ui.results.XpectBugReportUtil;
  */
 public class GenerateJiraBugReportShortcut extends GenerateXpectReportShortcut {
 
-	/** */
-	public GenerateJiraBugReportShortcut() {
-		// NOP
-	}
-
 	/**
 	 * Generate bug report using JIRA formatting.
 	 */

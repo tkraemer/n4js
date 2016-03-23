@@ -33,7 +33,7 @@ public abstract class GenerateXpectReportShortcut implements ILaunchShortcut {
 	}
 
 	private static void showDialogNotImplemented(String what) {
-		MessageDialog.openWarning(null, "Warning", "Launching of type " + what + " is not implemeneted yet!");
+		MessageDialog.openWarning(null, "Warning", "Launching of type " + what + " is not implemented yet!");
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public abstract class GenerateXpectReportShortcut implements ILaunchShortcut {
 		try {
 			content = new String(Files.readAllBytes(Paths.get(fileSelectedToRun.getRawLocationURI())));
 		} catch (IOException e) {
-			throw new RuntimeException("Cannot read profided file " + fileSelectedToRun.getName(), e);
+			throw new RuntimeException("Cannot read provided file " + fileSelectedToRun.getName(), e);
 		}
 
 		System.out.println(content);

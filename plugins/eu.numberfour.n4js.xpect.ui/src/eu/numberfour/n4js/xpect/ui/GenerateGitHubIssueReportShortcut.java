@@ -17,11 +17,6 @@ import eu.numberfour.n4js.xpect.ui.results.XpectBugReportUtil;
  */
 public class GenerateGitHubIssueReportShortcut extends GenerateXpectReportShortcut {
 
-	/** */
-	public GenerateGitHubIssueReportShortcut() {
-		// NOP
-	}
-
 	/**
 	 * Generate bug report using GitHub formatting.
 	 */
