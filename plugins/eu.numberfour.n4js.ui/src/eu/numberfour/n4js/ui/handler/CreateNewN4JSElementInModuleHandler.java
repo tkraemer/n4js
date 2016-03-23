@@ -32,7 +32,7 @@ import org.eclipse.ui.wizards.IWizardDescriptor;
 
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.NestedElementWorkbenchWizard;
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizard;
 
 /**
  * Handler for the "Create New N4JS Element in module" command.
@@ -150,8 +150,8 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 			WizardDialog wizardDialog = new WizardDialog(UIUtils.getShell(), wizard);
 
 			// If the wizard supports it, enable in module option
-			if (wizard instanceof NestedElementWorkbenchWizard) {
-				((NestedElementWorkbenchWizard) wizard).init(PlatformUI.getWorkbench(), selection, nested);
+			if (wizard instanceof N4JSNewClassifierWizard<?>) {
+				((N4JSNewClassifierWizard<?>) wizard).init(PlatformUI.getWorkbench(), selection, nested);
 			} else {
 				// Otherwise just pass it the initial selection
 				wizard.init(PlatformUI.getWorkbench(), selection);
