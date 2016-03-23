@@ -122,14 +122,6 @@ import eu.numberfour.n4js.n4JS.VariableBinding
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
-import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
-import eu.numberfour.n4js.utils.PromisifyHelper
-import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
@@ -174,7 +166,14 @@ import eu.numberfour.n4js.ts.types.UndefinedType
 import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import java.util.Collection
+import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4js.utils.PromisifyHelper
+import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
 import org.eclipse.emf.common.util.ECollections
 import org.eclipse.emf.ecore.EObject
@@ -183,10 +182,10 @@ import org.eclipse.xtext.EcoreUtil2
 import static eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.PRIORITY_ERROR
 import static eu.numberfour.n4js.validation.JavaScriptVariant.*
 
-import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import static extension eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import static extension eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.*
 
 inject TypeSystemHelper typeSystemHelper
 inject N4JSFunctionDefinitionTypesBuilder functionDefinitionTypesBuilder
@@ -804,6 +803,8 @@ from {
 				G2 |- F.returnTypeRef ~> T
 			}
 		}
+	} else if(targetTypeRef?.declaredType===G.functionType) {
+		T = G.anyTypeRef
 	} else if(targetTypeRef.dynamic) {
 		T = G.anyTypeRefDynamic
 	} else {
@@ -1080,7 +1081,7 @@ from {
 				(fparTypeRef instanceof FunctionTypeExpression
 				&& (fparTypeRef as FunctionTypeExpression).eAllContents.filter(TFormalParameter).exists[currFpar|currFpar.typeRef instanceof ThisTypeRef])
 		) {
-			T = typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef);
+			T = typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef, fparTypeRef);
 		} else {
 			// note: it's a bit cleaner to return the type from the TModule, if one was already determined
 			T = if(fpar?.definedTypeElement?.typeRef!==null) fpar.definedTypeElement.typeRef else fpar.declaredTypeRef
@@ -2061,13 +2062,6 @@ from {
 	val funDef = EcoreUtil2.getContainerOfType(stmt, FunctionDefinition)
 	// return statement in Classes can have return-types with this.
 
-
-// FIXME IDEBUG-793 temporary hack to avoid problems with constructor return type checking
-if (funDef instanceof N4MethodDeclaration && (funDef as N4MethodDeclaration).isConstructor) {
-T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-}else{
-
-
 	val G2 = G.wrap
 	G |~ stmt ~> var TypeRef myThisTypeRef
 	G2.addThisType(myThisTypeRef) // takes the real-this type even if it is a type{this} reference.
@@ -2111,9 +2105,6 @@ T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 			T = getterDef?.definedGetter?.declaredTypeRef
 		}
 	}
-
-
-}
 }
 
 /* @see [N4JS] 9.2.1. Constraints 111.1 */
@@ -2196,12 +2187,12 @@ from {
 
 /* @see [N4JS] 3.3 Parameterized Types */
 rule upperBoundExistentialTypeRef
-	G |~ ExistentialTypeRef existentialTypeRef /\ TypeRef typeRef
+	G |~ ExistentialTypeRef existentialTypeRef /\ TypeRef T
 from {
-	G |~ existentialTypeRef.wildcard /\ typeRef
+	G |~ existentialTypeRef.wildcard /\ T
 	// retain undef- & nullable-modifier
-	typeRef = TypeUtils.copy( typeRef )
-	typeSystemHelper.copyTypeModifiers(typeRef,existentialTypeRef)
+	T = TypeUtils.copy( T )
+	TypeUtils.copyTypeModifiers(T, existentialTypeRef)
 }
 
 /* @see [N4JS] 4.10, Constraints 22 */
@@ -2211,7 +2202,7 @@ from {
 	T = TypeUtils.createNonSimplifiedUnionType(
 		U.typeRefs.map[var TypeRef E; G|~ it /\ E; E]
 	) => [ originalComposedTypeRef = U ]
-	typeSystemHelper.copyTypeModifiers(T,U)
+	TypeUtils.copyTypeModifiers(T,U)
 }
 
 /* @see [N4JS] 4.11, Constraints 28 */
@@ -2221,7 +2212,7 @@ from {
 	T = TypeUtils.createNonSimplifiedIntersectionType(
 		I.typeRefs.map[var TypeRef E; G|~ it /\ E; E]
 	) => [ originalComposedTypeRef = I ]
-	typeSystemHelper.copyTypeModifiers(T,I)
+	TypeUtils.copyTypeModifiers(T,I)
 }
 
 rule upperBoundParameterizedTypeRef
@@ -2236,22 +2227,23 @@ from {
 
 // required due to multiple inheritance (see rule: substTypeVariablesInFunctionTypeRef)
 rule upperBoundFunctionTypeRef
-	G |~ FunctionTypeRef F /\ TypeRef result
+	G |~ FunctionTypeRef F /\ TypeRef T
 from {
-	result = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F).value;
+	T = this.applyRuleUpperBoundFunctionTypeExprOrRef(G, _trace_, F).value;
 }
 
 rule upperBoundFunctionTypeExprOrRef
-	G |~ FunctionTypeExprOrRef F /\ TypeRef result
+	G |~ FunctionTypeExprOrRef F /\ TypeRef T
 from {
-	result = typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G,F);
+	T = typeSystemHelper.createUpperBoundOfFunctionTypeExprOrRef(G,F);
 }
 
 /* @see [N4JS] 4.15. This Type */
 rule upperBoundThisTypeRef
-	G |~ BoundThisTypeRef boundThisTypeRef /\ TypeRef typeRef
+	G |~ BoundThisTypeRef boundThisTypeRef /\ TypeRef T
 from {
-	typeRef = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef)
+	T = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef)
+	TypeUtils.copyTypeModifiers(T, boundThisTypeRef)
 }
 
 /*  introduced for IDE-785 to get from type{this[X]} to type{X}
@@ -2297,12 +2289,12 @@ from {
 
 /* @see [N4JS] 3.3 Parameterized Types */
 rule lowerBoundExistentialTypeRef
-	G |~ ExistentialTypeRef existentialTypeRef \/ TypeRef typeRef
+	G |~ ExistentialTypeRef existentialTypeRef \/ TypeRef T
 from {
-	G |~ existentialTypeRef.wildcard \/ typeRef
+	G |~ existentialTypeRef.wildcard \/ T
 	// retain undef- & nullable-modifier
-	typeRef = TypeUtils.copy( typeRef )
-	typeSystemHelper.copyTypeModifiers(typeRef,existentialTypeRef)
+	T = TypeUtils.copy( T )
+	TypeUtils.copyTypeModifiers(T, existentialTypeRef)
 }
 
 /* @see [N4JS] 4.10, Constraints 22 */
@@ -2312,7 +2304,7 @@ from {
 	T = TypeUtils.createNonSimplifiedUnionType(
 		U.typeRefs.map[var TypeRef E; G|~ it \/ E; E]
 	)
-	typeSystemHelper.copyTypeModifiers(T,U)
+	TypeUtils.copyTypeModifiers(T,U)
 }
 
 /* @see [N4JS] 4.11, Constraints 28 */
@@ -2322,7 +2314,7 @@ from {
 	T = TypeUtils.createNonSimplifiedIntersectionType(
 		I.typeRefs.map[var TypeRef E; G|~ it \/ E; E]
 	)
-	typeSystemHelper.copyTypeModifiers(T,I)
+	TypeUtils.copyTypeModifiers(T,I)
 }
 
 rule lowerBoundParameterizedTypeRef
@@ -2337,20 +2329,24 @@ from {
 
 // required due to multiple inheritance (see rule: substTypeVariablesInFunctionTypeRef)
 rule lowerBoundFunctionTypeRef
-	G |~ FunctionTypeRef F \/ TypeRef result
+	G |~ FunctionTypeRef F \/ TypeRef T
 from {
-	result = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F).value
+	T = this.applyRuleLowerBoundFunctionTypeExprOrRef(G, _trace_, F).value
 }
 
 rule lowerBoundFunctionTypeExprOrRef
-	G |~ FunctionTypeExprOrRef F \/ TypeRef result
+	G |~ FunctionTypeExprOrRef F \/ TypeRef T
 from {
-	result = typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G,F);
+	T = typeSystemHelper.createLowerBoundOfFunctionTypeExprOrRef(G,F);
 }
 
 /* @see [N4JS] 4.15. This Type */
-axiom lowerBoundThisTypeRef
-	G |~ BoundThisTypeRef boundThisTypeRef \/ G.undefinedTypeRef
+rule lowerBoundThisTypeRef
+	G |~ BoundThisTypeRef boundThisTypeRef \/ TypeRef T
+from {
+	T = G.undefinedTypeRef
+	TypeUtils.copyTypeModifiers(T, boundThisTypeRef)
+}
 
 
 // **********************************************************************
@@ -2386,9 +2382,10 @@ rule substTypeVariablesThisTypeRef
 	G |- ThisTypeRef thisTypeRef ~> ThisTypeRef T
 from {
 	{
-		val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
-		val boundRef = TypeUtils.createBoundThisTypeRef(bound.actualThisTypeRef);
-		boundRef.setTypingStrategy(thisTypeRef.typingStrategy);// note: must take use-site-typing-strategy from 'thisTypeRef', not the one stored in the environment
+		val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
+		val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef);
+		boundRef.setTypingStrategy(thisTypeRef.typingStrategy); // note: must take use-site typing-strategy from 'thisTypeRef', not the one stored in the environment
+		TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); // note: must take use-site type modifiers (e.g. optional)
 		T = boundRef;
 	}
 	or
@@ -2401,8 +2398,9 @@ rule substTypeVariablesThisTypeRefStructural
 	G |- ThisTypeRefStructural thisTypeRef ~> ThisTypeRef T
 from {
 	{
-		val BoundThisTypeRef bound = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
-		val boundRef = TypeUtils.createBoundThisTypeRefStructural(bound.actualThisTypeRef, thisTypeRef);
+		val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
+		val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef);
+		TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); // note: must take use-site type modifiers (e.g. optional)
 		T = boundRef;
 	}
 	or
@@ -2473,6 +2471,7 @@ from {
 	result = typeRef
 
 	// (2) substitute type variables in declared type
+	// TODO GH-43 clean up the following (simplify + resolve redundancy with handling of recursive mappings in GenericsComputer#addSubstitutions())
 	if (typeRef.declaredType instanceof TypeVariable) {
 		val typeVar = typeRef.declaredType as TypeVariable
 		{
@@ -2491,19 +2490,34 @@ from {
 				result = TypeUtils.copy(temp); // always copy! ('temp' is lying in the rule env, don't wanna change content of rule env!)
 				// (note: TypeUtils#copyIfContained() would fail in previous lines, because 'temp' will not be "contained" in the sense of EMF containment)
 			}
-			typeSystemHelper.copyTypeModifiers(result, typeRef)
+			TypeUtils.copyTypeModifiers(result, typeRef)
 		}
 		or
 		{
 			// do we have multiple substitutions?
 			val List<TypeRef> l_raw = env(G, typeVar, List)
-			val Collection<TypeRef> l = TypeUtils.copyAll(l_raw); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+			val l = newArrayList;
+			for(var i=0;i<l_raw.size;i++) {
+				val temp = l_raw.get(i);
+				val tempDeclaredType = temp.declaredType;
+				if(typeVar !== tempDeclaredType
+						&& (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic))
+						&& G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) {
+					val G2 = G.wrap;
+					G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)
+					G2 |- temp ~> var TypeRef tempResult
+					tempResult = TypeUtils.copy(tempResult); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+					l += tempResult;
+				} else {
+					l += TypeUtils.copy(temp); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
+				}
+			}
 			val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter
 			result = if(needUnionInsteadIntersection)
 					typeSystemHelper.createUnionType(G,l)
 				else
 					typeSystemHelper.createIntersectionType(G,l)
-			typeSystemHelper.copyTypeModifiers(result, typeRef)
+			TypeUtils.copyTypeModifiers(result, typeRef)
 		}
 		or
 		{

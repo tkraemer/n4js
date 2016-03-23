@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.ui.dialog;
 
+import static eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils.isValidFolderName;
+
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IContainer;
@@ -36,7 +38,6 @@ import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualContainer;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModelValidator;
 
 /**
  * Browse dialog to select and create module folders inside of a given source folder location.
@@ -496,7 +497,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	@Override
 	protected void createPressed() {
 		InputDialog dialog = new InputDialog(this.getShell(), "Create a new module folder",
-				"Enter the module folder name", "",
+				"Enter the module folder name.", "",
 				new ModuleFolderValidator());
 		dialog.open();
 
@@ -632,7 +633,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			this.setResult(Arrays.asList(sourceFolderRelativePath((VirtualResource) selection).toString()));
 			return;
 		}
-		updateError("Invalid selection type");
+		updateError("Invalid selection type.");
 
 	}
 
@@ -655,7 +656,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			if (newText.isEmpty()) {
 				return "The module folder must not be empty";
 			}
-			if (!N4JSClassWizardModelValidator.isValidFolderName(newText)) {
+			if (!isValidFolderName(newText)) {
 				return "The module name is not a valid file system name";
 			}
 			return null;
@@ -673,25 +674,25 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			String moduleName = path.removeFileExtension().lastSegment();
 
 			if (path.removeFileExtension().segmentCount() < 1 || moduleName.isEmpty()) {
-				return "The module name must not be empty";
+				return "The module name must not be empty.";
 			}
 
-			if (!N4JSClassWizardModelValidator.isValidFolderName(newText)) {
-				return "The module name is not a valid file system name";
+			if (!isValidFolderName(newText)) {
+				return "The module name is not a valid file system name.";
 			}
 
 			if (fileExtension == null) {
-				return "The module name needs to have a valid N4JS file extension";
+				return "The module name needs to have a valid N4JS file extension.";
 			}
 			if (!(fileExtension.equals(N4JSGlobals.N4JS_FILE_EXTENSION) ||
 					fileExtension.equals(N4JSGlobals.N4JSD_FILE_EXTENSION))) {
-				return "Invalid file extension";
+				return "Invalid file extension.";
 			}
 			if (!isModuleFileSpecifier(path)) {
-				return "Invalid module file specifier";
+				return "Invalid module file specifier.";
 			}
 			if (path.segmentCount() > 1) {
-				return IPath.SEPARATOR + " is not allowed in a module file specifier";
+				return IPath.SEPARATOR + " is not allowed in a module file specifier.";
 			}
 
 			return null;

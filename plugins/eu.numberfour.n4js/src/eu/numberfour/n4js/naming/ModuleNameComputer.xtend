@@ -15,6 +15,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.naming.QualifiedName
+import eu.numberfour.n4js.utils.ResourceType
 
 /**
  * Utility class to calculate the qualified name of the resource depending on the project configuration.
@@ -27,7 +28,6 @@ import org.eclipse.xtext.naming.QualifiedName
  * module's name.
  */
 class ModuleNameComputer {
-	private final String XPECT_FILE_EXT = "xt"
 
 	@Inject
 	private extension IN4JSCore core
@@ -48,7 +48,7 @@ class ModuleNameComputer {
 			val location = sourceContainer.location
 			if(uri.uriStartsWith(location)) {
 				var relativeURI = uri.deresolve(location.appendSegment(""))
-				if (relativeURI.fileExtension == XPECT_FILE_EXT) { // support Xpect tests with files having additional file extension .xt
+				if (ResourceType.xtHidesOtherExtension(uri)) { // support Xpect tests with files having additional file extension .xt
 					relativeURI = relativeURI.trimFileExtension.trimFileExtension
 				} else {
 					relativeURI = relativeURI.trimFileExtension

@@ -59,6 +59,6 @@ export public class TestController implements ITestController{
 	
 	//TODO @returns N4 module exports
 	private static loadClass(name : string) : Object{
-		return Function("name", "return n4.$requireSync(name);")(name);
+		return Function("name", "return n4.$requireSync(name);")(name) as Object;
 	}
 }

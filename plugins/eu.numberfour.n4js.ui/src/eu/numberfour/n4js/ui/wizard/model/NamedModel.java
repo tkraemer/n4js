@@ -14,9 +14,7 @@ package eu.numberfour.n4js.ui.wizard.model;
  * A model which is named. (e.g. class name, interface name)
  *
  */
-public interface NamedModel extends PropertyChangeListenable {
-	/** The property name for the name property when using databinding */
-	public static final String NAME_PROPERTY = "name";
+public interface NamedModel {
 
 	/** Get the name */
 	public String getName();

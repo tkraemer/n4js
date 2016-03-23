@@ -19,9 +19,8 @@ import java.net.URI;
 
 import org.eclipse.core.runtime.Platform;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 
 /**
  * Target platform install location and target platform file location provider that is used when the platform is
@@ -29,6 +28,12 @@ import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
  */
 @Singleton
 public class EclipseTargetPlatformInstallLocationProvider implements TargetPlatformInstallLocationProvider {
+
+	@Inject
+	private GitCloneSupplier gitCloneSupplier;
+
+	@Inject
+	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	@Override
 	public URI getTargetPlatformInstallLocation() {
@@ -43,8 +48,13 @@ public class EclipseTargetPlatformInstallLocationProvider implements TargetPlatf
 	}
 
 	@Override
+	public String getGitRepositoryName() {
+		return gitLocationProvider.getGitLocation().getRepositoryName();
+	}
+
+	@Override
 	public URI getTargetPlatformLocalGitRepositoryLocation() {
-		return ExternalLibrariesActivator.N4_GIT_FOLDER_SUPPLIER.get().toURI();
+		return gitCloneSupplier.get().toURI();
 	}
 
 }

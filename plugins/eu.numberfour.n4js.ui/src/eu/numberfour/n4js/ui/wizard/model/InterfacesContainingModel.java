@@ -16,11 +16,7 @@ import java.util.List;
  * A model that contains a list of interfaces
  *
  */
-public interface InterfacesContainingModel extends PropertyChangeListenable {
-	/**
-	 * The property name for the interfaces property when using databinding
-	 */
-	static final String INTERFACES_PROPERTY = "interfaces";
+public interface InterfacesContainingModel {
 
 	/**
 	 * Set the interfaces
@@ -38,7 +34,7 @@ public interface InterfacesContainingModel extends PropertyChangeListenable {
 	 * @param iface
 	 *            The interface to add
 	 */
-	public void addInterface(ClassifierReference iface);
+	public void addInterfaces(ClassifierReference iface);
 
 	/**
 	 * Remove a single interface from the model
@@ -46,7 +42,7 @@ public interface InterfacesContainingModel extends PropertyChangeListenable {
 	 * @param iface
 	 *            The interface to remove
 	 */
-	public void removeInterface(ClassifierReference iface);
+	public void removeInterfaces(ClassifierReference iface);
 
 	/**
 	 * Get the interfaces

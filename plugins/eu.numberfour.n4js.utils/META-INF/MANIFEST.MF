@@ -30,6 +30,7 @@ Import-Package: com.jcraft.jsch,
  org.eclipse.xtend.typesystem.emf,
  org.slf4j
 Export-Package: eu.numberfour.n4js.utils,
+ eu.numberfour.n4js.utils.beans,
  eu.numberfour.n4js.utils.di.scopes,
  eu.numberfour.n4js.utils.emf,
  eu.numberfour.n4js.utils.git,

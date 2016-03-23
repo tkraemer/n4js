@@ -30,7 +30,7 @@ Contributors:
       </category>
      <wizard
            category="eu.numberfour.wizards"
-           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.classwizard.N4JSNewClassWizard"
+           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.classes.N4JSNewClassWizard"
            icon="icons/newclass_wiz.gif"
            id="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard"
            name="N4JS Class"
@@ -41,7 +41,7 @@ Contributors:
       </wizard>
       <wizard
            category="eu.numberfour.wizards"
-           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.interfacewizard.N4JSNewInterfaceWizard"
+           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.interfaces.N4JSNewInterfaceWizard"
            icon="icons/newint_wiz.gif"
            id="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard"
            name="N4JS Interface"

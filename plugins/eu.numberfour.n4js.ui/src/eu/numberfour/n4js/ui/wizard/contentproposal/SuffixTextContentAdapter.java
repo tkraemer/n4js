@@ -17,7 +17,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 
-import eu.numberfour.n4js.ui.wizard.workspacewizard.SuffixText;
+import eu.numberfour.n4js.ui.wizard.workspace.SuffixText;
 
 /**
  * A content adapter for content proposals for {@link SuffixText}.

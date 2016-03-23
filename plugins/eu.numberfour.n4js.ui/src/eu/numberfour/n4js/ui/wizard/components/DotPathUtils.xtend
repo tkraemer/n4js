@@ -14,6 +14,7 @@ package eu.numberfour.n4js.ui.wizard.components
  * Utility class to handle the dot separated specifiers.
  */
 class DotPathUtils {
+
 		/**
 		 * Returns all dot separated segments but the last one.
 		 *
@@ -22,16 +23,15 @@ class DotPathUtils {
 		 * @return The front segments
 		 */
 		public static def String frontDotSegments(String dotSeparatedString) {
-			if ( dotSeparatedString.length < 1 ) {
+			if (dotSeparatedString.nullOrEmpty) {
 				return "";
 			}
+			
 			val lastSegment = lastDotSegment(dotSeparatedString);
-
 			if (lastSegment.length == dotSeparatedString.length) {
 				return "";
 			}
-			return dotSeparatedString.substring(0,
-					dotSeparatedString.length() - 1 - lastSegment.length());
+			return dotSeparatedString.substring(0, dotSeparatedString.length() - 1 - lastSegment.length());
 		}
 
 		/**
@@ -45,8 +45,9 @@ class DotPathUtils {
 		 */
 		public static def String lastDotSegment(String dotSeparatedString) {
 			val segments = dotSeparatedString.split("\\.");
-			if ( segments.length > 0 )
-				return segments.last
+			if (segments.length > 0) {
+				return segments.last;
+			}
 			return "";
 		}
 

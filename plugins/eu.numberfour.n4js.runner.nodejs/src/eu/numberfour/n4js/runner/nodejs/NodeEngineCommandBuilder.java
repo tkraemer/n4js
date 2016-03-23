@@ -50,7 +50,7 @@ public class NodeEngineCommandBuilder {
 
 		final ArrayList<String> commands = new ArrayList<>();
 
-		commands.add(nodeJsBinary.get().getCommandWithAbsolutePath());
+		commands.add(nodeJsBinary.get().getBinaryAbsolutePath());
 
 		// brute force harmony
 		commands.add(OPT_HARMONY);

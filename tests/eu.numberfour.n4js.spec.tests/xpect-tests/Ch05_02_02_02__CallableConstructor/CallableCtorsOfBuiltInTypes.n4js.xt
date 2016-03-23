@@ -1,6 +1,10 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
+// XPECT type of 'test0' --> Object
+// XPECT noerrors -->
+var test0 = Object();
+
 // XPECT type of 'test1' --> string
 // XPECT noerrors -->
 var test1 = Date();
