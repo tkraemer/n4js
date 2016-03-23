@@ -26,8 +26,8 @@ import eu.numberfour.n4js.utils.process.ProcessResult;
 @Singleton
 public class BinaryCommandFactory {
 
-	/** Instructs {@link ProcessExecutor} to execute external process without redirection of output to the caller */
-	private final boolean SILENT = false;
+	/** Instructs {@link ProcessExecutor} to execute external process with redirection of output to the caller */
+	private final boolean REDIRECT = true;
 
 	@Inject
 	private ProcessExecutor processExecutor;
@@ -54,7 +54,7 @@ public class BinaryCommandFactory {
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
 						packageName, saveDependnecy);
-				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME, SILENT);
+				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME, REDIRECT);
 				return processResult;
 			}
 		};
@@ -73,7 +73,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
-				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME, SILENT);
+				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME, REDIRECT);
 				return processResult;
 			}
 		};
@@ -92,7 +92,7 @@ public class BinaryCommandFactory {
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.createVersionCheckProcess(binary);
 				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, binary.getLabel(),
-						/* used in internal checks, no need to pollute user console */ !SILENT);
+						/* used in internal checks, no need to pollute user console */ !REDIRECT);
 				return processResult;
 			}
 		};

@@ -49,15 +49,13 @@ public class ProcessExecutor {
 	 *            the process to execute
 	 * @param name
 	 *            name used in debug messages, null empty string used
-	 * @param silent
+	 * @param redirect
 	 *            indicates if captured output should be redirected to this process
 	 * @return a new result object that represents the actual result of the created process execution
 	 */
-	public ProcessResult execute(final Process process, String name, boolean silent) {
+	public ProcessResult execute(final Process process, String name, boolean redirect) {
 		// prepare name to be used in log messages
 		name = name == null ? " " : " '" + name + "' ";
-
-		boolean redirect = !silent;
 
 		try {
 
