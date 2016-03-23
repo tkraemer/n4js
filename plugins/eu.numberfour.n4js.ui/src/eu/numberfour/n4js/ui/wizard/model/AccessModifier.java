@@ -11,15 +11,22 @@
 package eu.numberfour.n4js.ui.wizard.model;
 
 /**
- * A model which is named. (e.g. class name, interface name)
- *
+ * Enumeration types for access modifiers.
  */
-public interface NamedModel {
+public enum AccessModifier {
 
-	/** Get the name */
-	public String getName();
+	/**
+	 * For public visibility.
+	 */
+	PUBLIC,
 
-	/** Set the name */
-	public void setName(String name);
+	/**
+	 * For project visibility.
+	 */
+	PROJECT,
 
+	/**
+	 * For private visibility
+	 */
+	PRIVATE;
 }

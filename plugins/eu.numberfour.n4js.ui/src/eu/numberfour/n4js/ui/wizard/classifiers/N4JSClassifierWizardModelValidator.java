@@ -8,7 +8,9 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.classwizard;
+package eu.numberfour.n4js.ui.wizard.classifiers;
+
+import static java.lang.String.format;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,30 +30,34 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.conversion.IdentifierValueConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.ts.types.TClass;
+import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier;
+import eu.numberfour.n4js.ui.wizard.classes.N4JSClassWizardModel;
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidator;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
 /**
- * A validator for a {@link N4JSClassWizardModel}
+ * Base validator implementation for N4JS classifiers.
  */
-public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator {
+public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifierWizardModel>
+		extends WorkspaceWizardModelValidator<M> {
+
+	private static final Pattern VALID_FOLDER_NAME_PATTERN = Pattern
+			.compile("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 
 	@Inject
 	private IN4JSCore n4jsCore;
 
 	private IResourceDescriptions descriptions;
-
-	private static final Pattern VALID_FOLDER_NAME_PATTERN = Pattern
-			.compile("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 
 	/**
 	 * Error Messages for model validation of the {@link N4JSClassWizardModel}
@@ -59,52 +65,52 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	public static class ErrorMessages {
 
 		// Class name errors
-		private static final String CLASS_NAME_MUST_NOT_BE_EMPTY = "The class name field must not be empty.";
-		private static final String INVALID_CLASS_NAME = "Invalid class name ";
-
-		// Super class errors
-		private static final String THE_SUPER_CLASS_CANNOT_BE_FOUND = "The super class cannot be found";
+		private static final String CLASSIFIER_NAME_MUST_NOT_BE_EMPTY = "The %s name field must not be empty.";
+		private static final String INVALID_CLASSIFIER_NAME = "Invalid %s name.";
 
 		// Interfaces errors
-		private static final String THE_INTERFACE_CANNOT_BE_FOUND = "The interface %s cannot be found";
+		private static final String THE_INTERFACE_CANNOT_BE_FOUND = "The interface %s cannot be found.";
 
 		// Definition file collision errors
-		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file ";
-		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file ";
+		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file.";
+		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file.";
 	}
 
 	/**
 	 * Class name specifier property constraints
 	 */
-	private void validateClassName() throws ValidationException {
+	protected void validateClassifierName() throws ValidationException {
 
 		// 1. The class name must not be empty
 		if (getModel().getName().trim().length() < 1) {
-			throw new ValidationException(ErrorMessages.CLASS_NAME_MUST_NOT_BE_EMPTY);
+			throw new ValidationException(
+					String.format(ErrorMessages.CLASSIFIER_NAME_MUST_NOT_BE_EMPTY, getClassifierName()));
 		}
 
 		String className = getModel().getName();
 
-		// 2. The class name is a valid n4js class identifier
-		String[] classNameLetters = className.split("");
-		char firstCharacter = classNameLetters[0].charAt(0);
-		if (!IdentifierValueConverter.isValidIdentifierStart(firstCharacter)
-				|| CharMatcher.WHITESPACE.matches(firstCharacter)) {
-			throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME);
-		}
-		for (int i = 1; i < classNameLetters.length; i++) {
-			char character = classNameLetters[i].charAt(0);
-			if (!IdentifierValueConverter.isValidIdentifierPart(character)
-					|| CharMatcher.WHITESPACE.matches(character)) {
-				throw new ValidationException(ErrorMessages.INVALID_CLASS_NAME);
+		for (int i = 0; i < className.length(); i++) {
+			char c = className.charAt(i);
+
+			if (0 == i) {
+				if (CharMatcher.WHITESPACE.matches(c) || !IdentifierValueConverter.isValidIdentifierStart(c)) {
+					throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
+				}
+			} else {
+				if (CharMatcher.WHITESPACE.matches(c) || !IdentifierValueConverter.isValidIdentifierPart(c)) {
+					throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
+				}
 			}
+
 		}
+
 	}
 
 	/**
 	 * Module specifier specifier property constraints
 	 */
-	private void validateModuleSpecifier() throws ValidationException {
+	@Override
+	protected void validateModuleSpecifier() throws ValidationException {
 
 		String effectiveModuleSpecifier = getModel().getEffectiveModuleSpecifier();
 
@@ -119,7 +125,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		}
 
 		/* Check for potential file collisions */
-		if (fileSpecifyingModuleSpecifier(effectiveModuleSpecifier)) {
+		if (isFileSpecifyingModuleSpecifier(effectiveModuleSpecifier)) {
 			IProject moduleProject = ResourcesPlugin.getWorkspace().getRoot()
 					.getProject(getModel().getProject().toString());
 			IPath effectiveModulePath = new Path(getModel().getEffectiveModuleSpecifier());
@@ -141,43 +147,9 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	}
 
 	/**
-	 * Returns true if the given module specifier is specifying a file.
-	 *
-	 * Returns false for empty specifiers.
-	 *
-	 * @param specifier
-	 *            The module specifier
-	 */
-	private boolean fileSpecifyingModuleSpecifier(String specifier) {
-		return specifier.length() > 0 && specifier.charAt(specifier.length() - 1) != IPath.SEPARATOR;
-	}
-
-	/**
-	 * Super class specifier property constraints
-	 */
-	private void validateSuperClass() throws ValidationException {
-
-		ClassifierReference superClassRef = getModel().getSuperClass();
-
-		if (!superClassRef.getFullSpecifier().isEmpty())
-
-		{
-			if (!isValidClass(superClassRef)) {
-				throw new ValidationException(ErrorMessages.THE_SUPER_CLASS_CANNOT_BE_FOUND);
-			} else if (superClassRef.uri == null) {
-				IEObjectDescription classDescription = classifierObjectDescriptionForAbsoluteSpecifier(
-						superClassRef.getFullSpecifier());
-				if (classDescription != null) {
-					superClassRef.uri = classDescription.getEObjectURI();
-				}
-			}
-		}
-	}
-
-	/**
 	 * Interfaces specifier property constraints
 	 */
-	private void validateInterfaces() throws ValidationException {
+	protected void validateInterfaces() throws ValidationException {
 		// ---------------------------------------
 		// Interfaces property constraints
 		// ---------------------------------------
@@ -191,7 +163,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 						String.format(ErrorMessages.THE_INTERFACE_CANNOT_BE_FOUND, iface.getFullSpecifier())
 								.toString());
 			} else if (iface.uri == null) {
-				IEObjectDescription interfaceDescription = classifierObjectDescriptionForAbsoluteSpecifier(
+				IEObjectDescription interfaceDescription = getClassifierObjectDescriptionForFQN(
 						iface.getFullSpecifier());
 				if (interfaceDescription != null) {
 					iface.uri = interfaceDescription.getEObjectURI();
@@ -200,6 +172,14 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		}
 
 		getModel().setInterfaces(interfaces);
+	}
+
+	/**
+	 * Sugar for getting a the specific name of the classifier for UI purposes. With this we can distinguish on the UI
+	 * between interfaces and classes.
+	 */
+	protected String getClassifierName() {
+		return getModel().getClassifierName();
 	}
 
 	@Override
@@ -243,9 +223,7 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 	protected void run() throws ValidationException {
 		super.run();
 
-		validateModuleSpecifier();
-		validateClassName();
-		validateSuperClass();
+		validateClassifierName();
 		validateInterfaces();
 	}
 
@@ -263,48 +241,49 @@ public class N4JSClassWizardModelValidator extends WorkspaceWizardModelValidator
 		return foundObjects.iterator().hasNext();
 	}
 
-	private boolean isValidClass(ClassifierReference ref) {
+	/**
+	 * Returns with {@code true} if the classifier resolved against the argument is a {@link TClass}, otherwise
+	 * {@code false}.
+	 */
+	protected boolean isValidClass(ClassifierReference ref) {
 		return isValidReferenceOfType(ref.getFullSpecifier(), TypesPackage.eINSTANCE.getTClass());
 	}
 
-	private boolean isValidInterface(ClassifierReference ref) {
+	/**
+	 * Returns with {@code true} if the classifier resolved against the argument is a {@link TInterface}, otherwise
+	 * {@code false}.
+	 */
+	protected boolean isValidInterface(ClassifierReference ref) {
 		return isValidReferenceOfType(ref.getFullSpecifier(), TypesPackage.eINSTANCE.getTInterface());
 	}
 
-	private IEObjectDescription classifierObjectDescriptionForAbsoluteSpecifier(String absoluteSpecifier) {
-		String[] segments = absoluteSpecifier.split("\\.");
+	/**
+	 * Returns true if the given module specifier is specifying a file.
+	 *
+	 * Returns false for empty specifiers.
+	 *
+	 * @param specifier
+	 *            The module specifier
+	 */
+	protected boolean isFileSpecifyingModuleSpecifier(String specifier) {
+		return specifier.length() > 0 && specifier.charAt(specifier.length() - 1) != IPath.SEPARATOR;
+	}
+
+	/**
+	 * Returns with the index entry representing a classifier for the given classifier FQN argument.
+	 *
+	 * @param fqn
+	 *            the fully qualified name of the classifier.
+	 * @return the index entry representing the classifier.
+	 */
+	protected IEObjectDescription getClassifierObjectDescriptionForFQN(String fqn) {
+		String[] segments = fqn.split("\\.");
 		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
 		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(
 				TypesPackage.eINSTANCE.getTClassifier(),
 				name, false);
-		if (foundObjects.iterator().hasNext()) {
-			return foundObjects.iterator().next();
-		}
-		return null;
-	}
 
-	/**
-	 * Returns the currently validated model
-	 */
-	@Override
-	public N4JSClassWizardModel getModel() {
-		return (N4JSClassWizardModel) super.getModel();
-	}
-
-	/**
-	 * Sets the model to validate.
-	 *
-	 * @param model
-	 *            The new model to validate
-	 */
-	public void setModel(N4JSClassWizardModel model) {
-		super.setModel(model);
-		this.validate();
-	}
-
-	@Override
-	public void setModel(WorkspaceWizardModel model) {
-		throw new UnsupportedOperationException("Only N4JSClassWizardModels can be validated");
+		return Iterables.getFirst(foundObjects, null);
 	}
 
 	/**

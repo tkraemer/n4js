@@ -19,6 +19,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.NamedModel;
 
 /**
@@ -55,7 +56,7 @@ public class NameComponent extends WizardComponent {
 
 	private void setupBindings() {
 		IObservableValue nameValue = BeanProperties
-				.value(NamedModel.class, NamedModel.NAME_PROPERTY).observe(model);
+				.value(NamedModel.class, N4JSClassifierWizardModel.NAME_PROPERTY).observe(model);
 		IObservableValue nameUI = WidgetProperties.text(SWT.Modify).observe(nameText);
 		getDataBindingContext().bindValue(nameValue, nameUI);
 	}

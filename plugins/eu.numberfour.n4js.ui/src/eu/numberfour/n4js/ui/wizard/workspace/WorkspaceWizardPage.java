@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspacewizard;
+package eu.numberfour.n4js.ui.wizard.workspace;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -46,15 +46,14 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.Str
  * the {@link #createComponents(WizardComponentContainer)} methods to add additional components to your wizard.
  *
  */
-public abstract class WorkspaceWizardPage extends WizardPage implements WizardComponentContainer {
+public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extends WizardPage
+		implements WizardComponentContainer {
 
-	WorkspaceWizardModel model;
-	DataBindingContext databindingContext;
+	private M model;
+	private DataBindingContext databindingContext;
 
 	/** Available after invocation of #createControl */
 	protected WorkspaceWizardPageForm workspaceWizardForm;
-
-	IObservableValue observableValidationValue;
 
 	// Browse dialogs
 	@Inject
@@ -63,11 +62,10 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
 
 	/**
-	 * @param pageName
-	 *            The name of the workspace page
+	 * Sole constructor.
 	 */
-	protected WorkspaceWizardPage(String pageName) {
-		super(pageName);
+	protected WorkspaceWizardPage() {
+		super(WorkspaceWizardPage.class.getName());
 		this.setPageComplete(false);
 	}
 
@@ -156,7 +154,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	private void setupBindings(WorkspaceWizardPageForm wizardForm) {
 		databindingContext = new DataBindingContext();
 
-		WorkspaceWizardModelValidator validator = getValidator();
+		WorkspaceWizardModelValidator<M> validator = getValidator();
 
 		// Project property binding
 		IObservableValue projectModelValue = BeanProperties
@@ -164,7 +162,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 				.observe(model);
 		IObservableValue projectUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getProjectText());
 
-		// Note: No model to UI conversation here as IPath is castable to String (default behaviour)
+		// Note: No model to UI conversation here as IPath is castable to String (default behavior)
 		databindingContext.bindValue(projectUI, projectModelValue, new StringToPathConverter().updatingValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
@@ -198,7 +196,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 				.observe(wizardForm.getModuleSpecifierText());
 		databindingContext.bindValue(moduleSpecifierUI, moduleSpecifierModelValue);
 
-		// Conditional activiation of the browse buttons according to the precedent input fields validity
+		// Conditional activation of the browse buttons according to the precedent input fields validity
 		IObservableValue moduleSpecifierBrowseEnabled = WidgetProperties.enabled()
 				.observe(wizardForm.getModuleSpecifierBrowseButton());
 		IObservableValue sourceFolderValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,
@@ -250,8 +248,19 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	 * @param model
 	 *            WorkspaceWizardModel to use
 	 */
-	public void setModel(WorkspaceWizardModel model) {
+	public void setModel(M model) {
 		this.model = model;
+		getValidator().setModel(this.model);
+		this.model.addPropertyChangeListener(evt -> getValidator().validate());
+	}
+
+	/**
+	 * Returns with the underlying module instance.
+	 *
+	 * @return the model instance used for data binding.
+	 */
+	public M getModel() {
+		return model;
 	}
 
 	/**
@@ -311,7 +320,7 @@ public abstract class WorkspaceWizardPage extends WizardPage implements WizardCo
 	 *
 	 * @return A {@link WorkspaceWizardModelValidator}
 	 */
-	public abstract WorkspaceWizardModelValidator getValidator();
+	public abstract WorkspaceWizardModelValidator<M> getValidator();
 
 	/**
 	 * Implement this method to add custom form components.

@@ -25,8 +25,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier;
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 
 /**
  * A component to allow the selection of a N4JS access modifiers and an additional internal annotation checkbox.
@@ -98,14 +99,14 @@ public class AccessModifierComponent extends WizardComponent {
 		accessModifierSelectObservable.addOption(AccessModifier.PRIVATE, privateButtonSelection);
 
 		IObservableValue accessModifierProperty = BeanProperties
-				.value(AccessModifiableModel.class, AccessModifiableModel.ACCESS_MODIFIER_PROPERTY).observe(model);
+				.value(AccessModifiableModel.class, N4JSClassifierWizardModel.ACCESS_MODIFIER_PROPERTY).observe(model);
 
 		dataBindingContext.bindValue(accessModifierSelectObservable, accessModifierProperty);
 
 		// Internal property binding
 
 		IObservableValue internalValue = BeanProperties
-				.value(AccessModifiableModel.class, AccessModifiableModel.INTERNAL_PROPERTY)
+				.value(AccessModifiableModel.class, N4JSClassifierWizardModel.INTERNAL_PROPERTY)
 				.observe(model);
 		IObservableValue internalUI = WidgetProperties.selection().observe(getInternalAnnotationBox());
 		dataBindingContext.bindValue(internalUI, internalValue);

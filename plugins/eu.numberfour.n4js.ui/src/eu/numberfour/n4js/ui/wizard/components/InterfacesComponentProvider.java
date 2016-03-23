@@ -50,6 +50,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import eu.numberfour.n4js.ui.dialog.InterfacesSelectionDialog;
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 import eu.numberfour.n4js.ui.wizard.model.InterfacesContainingModel;
 
@@ -164,7 +165,7 @@ public class InterfacesComponentProvider {
 								ClassifierReference ref = interfaces.get(fSelectionIndex);
 
 								if (newEditor.getText().isEmpty()) {
-									model.removeInterface(ref);
+									model.removeInterfaces(ref);
 									newEditor.dispose();
 									return;
 								}
@@ -201,7 +202,7 @@ public class InterfacesComponentProvider {
 							if (event.keyCode == SWT.CR) {
 								String userInput = newEditor.getText();
 
-								model.addInterface(
+								model.addInterfaces(
 										new ClassifierReference(DotPathUtils.frontDotSegments(userInput),
 												DotPathUtils.lastDotSegment(userInput)));
 								newEditor.dispose();
@@ -275,7 +276,7 @@ public class InterfacesComponentProvider {
 				return;
 			}
 			IObservableList interfacesValue = BeanProperties
-					.list(InterfacesContainingModel.class, InterfacesContainingModel.INTERFACES_PROPERTY)
+					.list(InterfacesContainingModel.class, N4JSClassifierWizardModel.INTERFACES_PROPERTY)
 					.observe(model);
 
 			// Update SWT Table on model interfaces list update
@@ -357,7 +358,7 @@ public class InterfacesComponentProvider {
 					if (itemToRemove == null) {
 						return;
 					}
-					model.removeInterface(itemToRemove);
+					model.removeInterfaces(itemToRemove);
 					interfacesRemoveButton.setEnabled(interfacesTable.getSelectionIndex() != -1);
 				}
 			});
@@ -381,7 +382,7 @@ public class InterfacesComponentProvider {
 
 							URI objectUri = ((IEObjectDescription) result).getEObjectURI();
 
-							model.addInterface(
+							model.addInterfaces(
 									new ClassifierReference(objectDescription.getQualifiedName(), objectUri));
 						}
 					}

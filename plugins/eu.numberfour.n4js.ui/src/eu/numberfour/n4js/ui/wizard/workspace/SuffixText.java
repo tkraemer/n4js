@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspacewizard;
+package eu.numberfour.n4js.ui.wizard.workspace;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -40,7 +40,7 @@ import com.google.common.primitives.Ints;
 import eu.numberfour.n4js.ui.ImageDescriptorCache;
 
 /**
- * Custom {@link org.eclipse.swt.widgets.Text} widget to optinally display a grey suffix at the end of the user input.
+ * Custom {@link org.eclipse.swt.widgets.Text} widget to optionally display a grey suffix at the end of the user input.
  */
 public class SuffixText extends Composite {
 
@@ -149,7 +149,7 @@ public class SuffixText extends Composite {
 		gc.setFont(userInput.getFont());
 
 		// Tracks dragging mouse movement in this widget and applies it to the text field userInput to
-		// fake proper text selection behaviour
+		// fake proper text selection behavior
 		MouseMoveListener mouseMoveSelectionListener = new MouseMoveListener() {
 			@Override
 			public void mouseMove(MouseEvent e) {
@@ -326,8 +326,8 @@ public class SuffixText extends Composite {
 			return labelDimensions;
 		}
 
-		/** Return the top margin to vertically center an element of given
-		 * height in an area with given total height.
+		/**
+		 * Return the top margin to vertically center an element of given height in an area with given total height.
 		 */
 		private int marginTopCenter(int height, int totalHeight) {
 			return new Double(Math.floor((totalHeight - height) / 2.0)).intValue();

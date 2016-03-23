@@ -22,7 +22,7 @@ import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
 import java.util.ArrayList
 import java.util.Collection
 import java.util.HashSet

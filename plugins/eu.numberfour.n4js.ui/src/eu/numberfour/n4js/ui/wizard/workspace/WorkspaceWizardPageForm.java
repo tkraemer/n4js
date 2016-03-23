@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspacewizard;
+package eu.numberfour.n4js.ui.wizard.workspace;
 
 import static eu.numberfour.n4js.ui.wizard.components.WizardComponentUtils.fillLabelDefaults;
 import static eu.numberfour.n4js.ui.wizard.components.WizardComponentUtils.fillTextDefaults;

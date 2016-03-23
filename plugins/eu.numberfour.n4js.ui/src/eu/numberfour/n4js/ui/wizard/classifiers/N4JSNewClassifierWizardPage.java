@@ -8,10 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.interfacewizard;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+package eu.numberfour.n4js.ui.wizard.classifiers;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -24,115 +21,45 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 
-import com.google.inject.Inject;
-
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
-import eu.numberfour.n4js.ui.wizard.components.DefinitionFileComponent;
-import eu.numberfour.n4js.ui.wizard.components.EmptyComponent;
-import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
-import eu.numberfour.n4js.ui.wizard.components.OtherInterfaceModifiersComponent;
-import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
+import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifiableModel.AccessModifier;
+import eu.numberfour.n4js.ui.wizard.interfaces.N4JSInterfaceWizardModel;
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
-import eu.numberfour.n4js.ui.wizard.model.NamedModel;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.SuffixText;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidator;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModelValidator.ValidationResult;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardPage;
+import eu.numberfour.n4js.ui.wizard.workspace.SuffixText;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator.ValidationResult;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardPage;
 
 /**
- * A wizard page to allow the user to specify the informations about the creation of a new interface.
- *
- * <p>
- * Note: The wizard page is not meant to be used without setting a {@link N4JSInterfaceWizardModel}. To accomplish this
- * use the {@link N4JSNewInterfaceWizardPage#setModel(N4JSInterfaceWizardModel)} method.
- * </p>
- *
+ * Generic wizard page for all N4JS classifieris.
  */
-public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
+public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizardModel> extends WorkspaceWizardPage<M> {
 
-	N4JSInterfaceWizardModel model = null;
+	/** Component for the classifier name. */
+	protected NameComponent nameComponent;
 
-	@Inject
-	private N4JSInterfaceWizardModelValidator validator;
+	/** Component for the access modifier buttons with the bindings. */
+	protected AccessModifierComponent accessModifierComponent;
 
-	// Components
-	@Inject
-	private InterfacesComponentProvider interfacesComponentProvider;
-
-	private OtherInterfaceModifiersComponent otherInterfaceModifiersComponent;
-	private NameComponent nameComponent;
-
-	private AccessModifierComponent accessModifierComponent;
-
-	/**
-	 * Instantiates a New N4JS Interface wizard main page
-	 */
-	public N4JSNewInterfaceWizardPage() {
-		super("Create a new N4JS Interface");
-
-		this.setTitle("New N4JS Interface");
-		this.setMessage("Create a new N4JS Interface");
-		this.setPageComplete(false);
-	}
-
-	/**
-	 * Set the model to use with this wizard page.
-	 *
-	 * @param model
-	 *            N4JSInterfaceWizardModel to use
-	 */
-	public void setModel(N4JSInterfaceWizardModel model) {
-		super.setModel(model);
-
-		this.model = model;
-		this.validator.setModel(this.model);
-		this.model.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				validator.validate();
-			}
-		});
-	}
-
-	@Override
-	public void setModel(WorkspaceWizardModel model) {
-		throw new UnsupportedOperationException("The wizard page can only be used with N4JSInterfaceWizardModel");
-	}
-
-	/**
-	 * Invoked when the validation result of the model has changed.
-	 *
-	 * @param result
-	 *            The most recent validation result
-	 */
-	private void onValidationChange(ValidationResult result) {
-		if (result.valid) {
-			this.setPageComplete(true);
-			this.setMessage("Press finish to create the new interface");
-			this.setErrorMessage(null);
-		} else {
-			this.setPageComplete(false);
-			this.setErrorMessage(result.errorMessage);
-		}
-	}
+	/** Component for the other modifier, such as @N4JS or @Internal. */
+	protected OtherClassifierModifiersComponent otherClassifierModifiersComponent;
 
 	@Override
 	public void openModuleSpecifierDialog(org.eclipse.swt.widgets.Shell shell) {
 
 		ModuleSpecifierSelectionDialog dialog = new ModuleSpecifierSelectionDialog(shell,
-				model.getProject().append(model.getSourceFolder()));
+				getModel().getProject().append(getModel().getSourceFolder()));
 
-		if (!model.getEffectiveModuleSpecifier().isEmpty()) {
-			String initialSelectionSpecifier = model.getEffectiveModuleSpecifier();
+		if (!getModel().getEffectiveModuleSpecifier().isEmpty()) {
+			String initialSelectionSpecifier = getModel().getEffectiveModuleSpecifier();
 
-			String fileExtension = model.computeFileLocation().getFileExtension();
+			String fileExtension = getModel().computeFileLocation().getFileExtension();
 			if (fileExtension != null) {
 				dialog.setDefaultFileExtension(fileExtension);
 			}
@@ -154,17 +81,17 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 			// If the selected module specifier is a file
 			if (fileExtension != null && !fileExtension.isEmpty()) {
 				// and its file extension suggests a different external value than the model
-				if (fileExtension.equals(N4JSGlobals.N4JSD_FILE_EXTENSION) != model.isDefinitionFile()) {
+				if (fileExtension.equals(N4JSGlobals.N4JSD_FILE_EXTENSION) != getModel().isDefinitionFile()) {
 					// toggle the external value of the model
-					model.setDefinitionFile(!model.isDefinitionFile());
+					getModel().setDefinitionFile(!getModel().isDefinitionFile());
 				}
 				specifierPath = specifierPath.removeFileExtension();
 			}
 
 			// If the last segment corresponds with the non-empty interface name remove it
 			if (specifierPath.segmentCount() > 0
-					&& specifierPath.removeFileExtension().lastSegment().equals(model.getName())
-					&& !model.getName().isEmpty()) {
+					&& specifierPath.removeFileExtension().lastSegment().equals(getModel().getName())
+					&& !getModel().getName().isEmpty()) {
 				if (specifierPath.segmentCount() > 1) {
 					specifierPath = specifierPath.removeLastSegments(1).addTrailingSeparator();
 				} else {
@@ -172,19 +99,19 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 				}
 			}
 
-			model.setModuleSpecifier(specifierPath.toString());
+			getModel().setModuleSpecifier(specifierPath.toString());
 		}
 	}
 
 	/**
 	 * Setup additional non-component contained bindings
 	 */
-	private void setupBindings() {
+	protected void setupBindings() {
 
 		DataBindingContext dataBindingContext = this.getDataBindingContext();
 
 		IObservableValue moduleSpecifierValue = BeanProperties
-				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY).observe(model);
+				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY).observe(getModel());
 
 		//// Only show the suffix on input values ending with a '/' character or empty module specifiers.
 		moduleSpecifierValue.addValueChangeListener(new IValueChangeListener() {
@@ -202,7 +129,7 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 
 		//// interface name to module specifier suffix binding
 		IObservableValue interfaceNameModelValue = BeanProperties
-				.value(N4JSInterfaceWizardModel.class, NamedModel.NAME_PROPERTY).observe(model);
+				.value(N4JSInterfaceWizardModel.class, N4JSClassifierWizardModel.NAME_PROPERTY).observe(getModel());
 		IObservableValue greySuffixValue = BeanProperties.value(SuffixText.class, SuffixText.SUFFIX_PROPERTY)
 				.observe(workspaceWizardForm.getModuleSpecifierText());
 		dataBindingContext.bindValue(greySuffixValue,
@@ -211,36 +138,37 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 
 		//// Enable n4js <-> Definition value(external) is selected
 		IObservableValue externalValue = BeanProperties
-				.value(DefinitionFileModel.class, DefinitionFileModel.DEFINITION_FILE_PROPERTY)
-				.observe(model);
+				.value(DefinitionFileModel.class, N4JSClassifierWizardModel.DEFINITION_FILE_PROPERTY)
+				.observe(getModel());
 
 		IObservableValue n4jsEnabled = WidgetProperties.enabled()
-				.observe(otherInterfaceModifiersComponent.getN4jsAnnotationBox());
-		dataBindingContext.bindValue(n4jsEnabled, externalValue);
+				.observe(otherClassifierModifiersComponent.getN4jsAnnotationBox());
+		dataBindingContext.bindValue(n4jsEnabled, externalValue, noUpdateValueStrategy(),
+				WizardComponentDataConverters.strategyForPredicate(input -> getModel().isDefinitionFile()
+						&& AccessModifier.PRIVATE != getModel().getAccessModifier()));
 
 		// One way binding of the access modifiers to the enabled state of internal checkbox
 		IObservableValue internalEnabledValue = WidgetProperties.enabled()
 				.observe(accessModifierComponent.getInternalAnnotationBox());
 		IObservableValue accessModifierSelectObservable = BeanProperties
-				.value(N4JSInterfaceWizardModel.class, AccessModifiableModel.ACCESS_MODIFIER_PROPERTY).observe(model);
+				.value(N4JSInterfaceWizardModel.class, N4JSClassifierWizardModel.ACCESS_MODIFIER_PROPERTY)
+				.observe(getModel());
 
 		dataBindingContext.bindValue(internalEnabledValue, accessModifierSelectObservable, noUpdateValueStrategy(),
 				WizardComponentDataConverters.strategyForPredicate(object -> {
 					if (object instanceof AccessModifier) {
-						if (((AccessModifier) object) == AccessModifier.PUBLIC) {
-							return true;
-						}
+						return isInternalAccessModifierEnabled((AccessModifier) object);
 					}
 					return false;
 				}));
 
 		// N4JS annotation checkbox disabled when access modifier is private
 		IObservableValue n4jsEnabledValue = WidgetProperties.enabled()
-				.observe(otherInterfaceModifiersComponent.getN4jsAnnotationBox());
+				.observe(otherClassifierModifiersComponent.getN4jsAnnotationBox());
 		dataBindingContext.bindValue(n4jsEnabledValue, accessModifierSelectObservable, noUpdateValueStrategy(),
 				WizardComponentDataConverters.strategyForPredicate(object -> {
 					if (object instanceof AccessModifier) {
-						return ((AccessModifier) object != AccessModifier.PRIVATE);
+						return ((AccessModifier) object != AccessModifier.PRIVATE) && getModel().isDefinitionFile();
 					}
 					return false;
 				}));
@@ -248,7 +176,7 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 		// Refresh wizard state on validation change
 		IObservableValue observableValidationValue = BeanProperties
 				.value(WorkspaceWizardModelValidator.VALIDATION_RESULT)
-				.observe(this.validator);
+				.observe(getValidator());
 		observableValidationValue.addValueChangeListener(new IValueChangeListener() {
 
 			@Override
@@ -260,12 +188,23 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 
 	}
 
+	/**
+	 * Returns {@code true} if the <code>@Internal</code> access modifier should be enabled for selection in the UI.
+	 *
+	 * @param modifier
+	 *            the currently selected modifier on the UI.
+	 * @return {@code true} if the internal visibility should be enabled on the UI, otherwise {@code false}.
+	 */
+	protected boolean isInternalAccessModifierEnabled(AccessModifier modifier) {
+		return modifier == AccessModifier.PUBLIC;
+	}
+
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 
-		// Set initial ui state
-		otherInterfaceModifiersComponent.getN4jsAnnotationBox().setEnabled(model.isDefinitionFile());
+		// Set initial UI state.
+		getDataBindingContext().updateTargets();
 	}
 
 	@Override
@@ -276,32 +215,21 @@ public class N4JSNewInterfaceWizardPage extends WorkspaceWizardPage {
 		return false;
 	}
 
-	@SuppressWarnings("unused")
-	@Override
-	public void createComponents(WizardComponentContainer container) {
-
-		// instance variable to set intial focus
-		nameComponent = new NameComponent(model, container);
-
-		new EmptyComponent(container);
-
-		new DefinitionFileComponent(model, container);
-
-		accessModifierComponent = new AccessModifierComponent(model, container);
-
-		// instance variable to allow custom bindings
-		otherInterfaceModifiersComponent = new OtherInterfaceModifiersComponent(model, container);
-
-		new EmptyComponent(container);
-
-		interfacesComponentProvider.create(model, container);
-
-		setupBindings();
-	}
-
-	@Override
-	public N4JSInterfaceWizardModelValidator getValidator() {
-		return this.validator;
+	/**
+	 * Invoked when the validation result of the model has changed.
+	 *
+	 * @param result
+	 *            The most recent validation result
+	 */
+	private void onValidationChange(ValidationResult result) {
+		if (result.valid) {
+			this.setPageComplete(true);
+			this.setMessage("Press finish to create the new " + getModel().getClassifierName());
+			this.setErrorMessage(null);
+		} else {
+			this.setPageComplete(false);
+			this.setErrorMessage(result.errorMessage);
+		}
 	}
 
 	private static UpdateValueStrategy noUpdateValueStrategy() {

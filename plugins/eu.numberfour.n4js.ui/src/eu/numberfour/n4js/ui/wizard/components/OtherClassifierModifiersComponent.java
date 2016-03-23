@@ -19,28 +19,35 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import eu.numberfour.n4js.ui.wizard.interfacewizard.N4JSInterfaceWizardModel;
+import eu.numberfour.n4js.ui.wizard.classes.N4JSClassWizardModel;
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel;
 
 /**
- * A component which provides control over the annotations of a N4JS interface
+ * A component which provides control over the annotations of a N4JS class
  *
  */
-public class OtherInterfaceModifiersComponent extends WizardComponent {
+public class OtherClassifierModifiersComponent extends WizardComponent {
 
-	/** The N4JS annotation box */
+	/** The Final annotation box. */
+	private final Button finalAnnotationBox;
+
+	/** The N4JS annotation box. */
 	private final Button n4jsAnnotationBox;
 
-	private final N4JSInterfaceWizardModel model;
+	/** Model for the data binding. */
+	private final N4JSClassifierWizardModel model;
 
 	/**
-	 * Creates a new OtherInterfaceModifiersComponent component.
+	 * Creates a new OtherClassModifiers component.
 	 *
 	 * @param model
 	 *            The model the bind it to
 	 * @param container
 	 *            The container to put it in
 	 */
-	public OtherInterfaceModifiersComponent(N4JSInterfaceWizardModel model, WizardComponentContainer container) {
+	public OtherClassifierModifiersComponent(N4JSClassifierWizardModel model, WizardComponentContainer container,
+			boolean createFinalButton) {
+
 		super(container);
 		this.model = model;
 
@@ -49,6 +56,13 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 
 		Composite otherModifierComposite = new Composite(this.getParentComposite(), SWT.NONE);
 		otherModifierComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+		if (createFinalButton) {
+			finalAnnotationBox = new Button(otherModifierComposite, SWT.CHECK);
+			finalAnnotationBox.setText("@Final");
+		} else {
+			finalAnnotationBox = null;
+		}
 
 		n4jsAnnotationBox = new Button(otherModifierComposite, SWT.CHECK);
 		getN4jsAnnotationBox().setText("@N4JS");
@@ -59,10 +73,20 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 	}
 
 	private void setupBindings() {
+		// Final property binding
+
+		if (null != finalAnnotationBox) {
+			IObservableValue finalValue = BeanProperties
+					.value(N4JSClassWizardModel.class, N4JSClassWizardModel.FINAL_ANNOTATED_PROPERTY)
+					.observe(model);
+			IObservableValue finalUI = WidgetProperties.selection().observe(finalAnnotationBox);
+			getDataBindingContext().bindValue(finalUI, finalValue);
+		}
+
 		// n4js annotation property binding
 
 		IObservableValue n4jsValue = BeanProperties
-				.value(N4JSInterfaceWizardModel.class, N4JSInterfaceWizardModel.N4JS_PROPERTY)
+				.value(N4JSClassWizardModel.class, N4JSClassifierWizardModel.N4JS_ANNOTATED_PROPERTY)
 				.observe(model);
 		IObservableValue n4jsUI = WidgetProperties.selection().observe(n4jsAnnotationBox);
 
@@ -71,11 +95,15 @@ public class OtherInterfaceModifiersComponent extends WizardComponent {
 
 	@Override
 	public void setFocus() {
-		this.n4jsAnnotationBox.setFocus();
+		if (null != finalAnnotationBox) {
+			this.finalAnnotationBox.setFocus();
+		} else {
+			this.n4jsAnnotationBox.setFocus();
+		}
 	}
 
 	/**
-	 * Returns the N4JS annotation box widget.
+	 * Returns the N4JS annotation box widget
 	 */
 	public Button getN4jsAnnotationBox() {
 		return n4jsAnnotationBox;

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspacewizard;
+package eu.numberfour.n4js.ui.wizard.workspace;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -31,7 +31,7 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
  * {@link WorkspaceWizardModel}s, it needs to manually prohibit the use of this method.
  *
  */
-public abstract class WorkspaceWizardModelValidator {
+public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardModel> {
 
 	/** The validation result property constant */
 	public static final String VALIDATION_RESULT = "validationResult";
@@ -156,7 +156,7 @@ public abstract class WorkspaceWizardModelValidator {
 	private boolean projectValid = false;
 	private boolean sourceFolderValid = false;
 
-	WorkspaceWizardModel model;
+	M model;
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -197,7 +197,7 @@ public abstract class WorkspaceWizardModelValidator {
 	/**
 	 * @return The model currently validated
 	 */
-	protected WorkspaceWizardModel getModel() {
+	protected M getModel() {
 		return model;
 	}
 
@@ -207,7 +207,7 @@ public abstract class WorkspaceWizardModelValidator {
 	 * @param model
 	 *            The new model to validate
 	 */
-	public void setModel(WorkspaceWizardModel model) {
+	public void setModel(M model) {
 		this.model = model;
 
 		// Reset state and revalidate
@@ -331,7 +331,10 @@ public abstract class WorkspaceWizardModelValidator {
 		this.setSourceFolderValid(true);
 	}
 
-	private void validateModuleSpecifier() throws ValidationException {
+	/**
+	 * Validates the module name.
+	 */
+	protected void validateModuleSpecifier() throws ValidationException {
 
 		String effectiveModuleSpecifier = getModel().getModuleSpecifier();
 

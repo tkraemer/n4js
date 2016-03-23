@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.interfacewizard;
+package eu.numberfour.n4js.ui.wizard.classifiers;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
@@ -22,59 +22,49 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.xtext.ui.editor.LanguageSpecificURIEditorOpener;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
-import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.ui.wizard.workspacewizard.WorkspaceWizardModel;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
 
 /**
- * A New N4JS Interface wizard
- *
+ * Generic interface for creating new N4JS classifiers. For instance classes and interfaces.
  */
-public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
+public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardModel> extends Wizard
+		implements INewWizard {
 
-	@Inject
-	private N4JSInterfaceWizardModel model;
 	@Inject
 	private IN4JSCore n4jsCore;
+
 	@Inject
 	private LanguageSpecificURIEditorOpener uriOpener;
-
-	@Inject
-	private N4JSNewInterfaceWizardGenerator generator;
-
-	@Inject
-	private N4JSNewInterfaceWizardPage wizardPage;
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.setNeedsProgressMonitor(false);
-		this.setWindowTitle("New N4JS Interface");
-
-		setDefaultPageImageDescriptor(ImageRef.NEW_INTERFACE_WIZBAN.asImageDescriptor().orNull());
-
+		this.setWindowTitle("New N4JS " + StringExtensions.toFirstUpper(getModel().getClassifierName()));
 		parseIntialSelection(selection);
 	}
 
 	private void parseIntialSelection(IStructuredSelection selection) {
-		WorkspaceWizardModel.fillModelFromInitialSelection(model, selection, n4jsCore);
-		wizardPage.setModel(model);
+		WorkspaceWizardModel.fillModelFromInitialSelection(getModel(), selection, n4jsCore);
+		getPage().setModel(getModel());
 	}
 
 	@Override
 	public boolean performFinish() {
 
-		IPath fileLocation = this.model.computeFileLocation();
+		IPath fileLocation = getModel().computeFileLocation();
 
 		// Create missing module folders
 		if (!ResourcesPlugin.getWorkspace().getRoot().getFile(fileLocation).exists()) {
 
-			IContainer parent = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().toString());
+			IContainer parent = ResourcesPlugin.getWorkspace().getRoot().getProject(getModel().getProject().toString());
 
 			try { // Iterate through remaining segments but the file segment
-				for (String segment : fileLocation.makeRelativeTo(model.getProject()).removeLastSegments(1)
+				for (String segment : fileLocation.makeRelativeTo(getModel().getProject()).removeLastSegments(1)
 						.segments()) {
 					IFolder subfolder = parent.getFolder(new Path(segment));
 					if (!subfolder.exists()) {
@@ -87,8 +77,7 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
 			}
 		}
 
-		generator.performManifestChanges(this.model);
-		generator.writeToFile(this.model);
+		doGenerateClassifier();
 
 		// Open the written file
 		uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true), true);
@@ -99,6 +88,21 @@ public class N4JSNewInterfaceWizard extends Wizard implements INewWizard {
 
 	@Override
 	public void addPages() {
-		this.addPage(wizardPage);
+		this.addPage(getPage());
 	}
+
+	/**
+	 * Returns with the model used for data binding purposes during the life of the wizard.
+	 */
+	protected abstract M getModel();
+
+	/**
+	 * Performs the actual generation of {@link #performFinish()} call.
+	 */
+	protected abstract void doGenerateClassifier();
+
+	/**
+	 * Returns with the one single {@link N4JSNewClassifierWizardPage classifier wizard page}.
+	 */
+	protected abstract N4JSNewClassifierWizardPage<M> getPage();
 }

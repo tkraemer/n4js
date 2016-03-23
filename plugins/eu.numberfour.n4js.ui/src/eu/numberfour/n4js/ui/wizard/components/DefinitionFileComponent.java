@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
 
 /**
@@ -61,7 +62,7 @@ public class DefinitionFileComponent extends WizardComponent {
 		// Definition file property binding (definition file)
 
 		IObservableValue externalValue = BeanProperties
-				.value(DefinitionFileModel.class, DefinitionFileModel.DEFINITION_FILE_PROPERTY)
+				.value(DefinitionFileModel.class, N4JSClassifierWizardModel.DEFINITION_FILE_PROPERTY)
 				.observe(model);
 		IObservableValue externalUI = WidgetProperties.selection().observe(definitionFileBox);
 		getDataBindingContext().bindValue(externalUI, externalValue);
