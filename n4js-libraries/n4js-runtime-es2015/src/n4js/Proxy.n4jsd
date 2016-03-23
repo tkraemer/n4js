@@ -39,9 +39,7 @@ export external public class ~ProxyHandler<T extends Object> {
      * Calling revoke() redners the proxy unusable, any trap will throw a TypeError.
      * Revoked proxies can be garbage collected.
      */
-    public static <T extends Object, T extends Object>
-        revocable(target: T, handler: ProxyHandler<T>):
-            ~Object with { proxy: T; revoke: Function; };
+    public static <T extends Object> revocable(target: T, handler: ProxyHandler<T>): ~Object with { proxy: T; revoke: Function; };
 }
 
 /* -*- mode: typescript;-*- */

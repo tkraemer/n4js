@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class C {
+	
+	// XPECT noerrors -->
+	m1(): this? {
+		// without return statement!
+	}
+	
+	// XPECT noerrors -->
+	m2(): this? {
+		return this; // with return statement
+	}
+}

@@ -23,14 +23,18 @@ import eu.numberfour.n4js.xpect.ui.N4IDEXpectUIPlugin;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectFileNameUtil;
 
 /**
- * When called will check if provided data contains {@link Description} of test and will check with Execution status
- * stored in test view ({@link N4IDEXpectView}) if test failed. If that is the case, will generate data for bug report
- * in a console view.
+ * Base for generating in the console xpect reports from xpect run results. Checks if xpect results are valid for proper
+ * bug report.
  */
-public class XpectGenerateBugReportCommandHandler extends AbstractHandler {
+public abstract class GenerateXpectReportCommandHandler extends AbstractHandler {
 
 	private N4IDEXpectView view;
 
+	/**
+	 * When called will check if provided data contains {@link Description test description} with failed status stored
+	 * in {@link N4IDEXpectView test view}. If that holds, will generate data for bug report in a console view,
+	 * otherwise will show message to reconfigure and rerun Xpect tests.
+	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
@@ -57,7 +61,7 @@ public class XpectGenerateBugReportCommandHandler extends AbstractHandler {
 				XpectFileContentsUtil.getXpectFileContentAccess(desc).ifPresent(
 						xpectFielContentAccess -> {
 							if (xpectFielContentAccess.containsFixme()) {
-								XpectBugReportUtil.displayGeneratedBugConsole(
+								generateAndDisplayReport(
 										N4IDEXpectFileNameUtil.getSuiteName(desc),
 										xpectFielContentAccess.getContetns());
 							}
@@ -75,5 +79,15 @@ public class XpectGenerateBugReportCommandHandler extends AbstractHandler {
 
 		return null;
 	}
+
+	/**
+	 * Generate bug report for a given module.
+	 *
+	 * @param name
+	 *            of the module used in bug report
+	 * @param content
+	 *            of the module used in the bug report
+	 */
+	protected abstract void generateAndDisplayReport(String name, String content);
 
 }

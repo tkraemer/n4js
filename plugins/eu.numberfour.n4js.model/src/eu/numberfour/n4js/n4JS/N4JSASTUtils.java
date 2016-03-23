@@ -191,17 +191,18 @@ public abstract class N4JSASTUtils {
 	 * cf. ECMAScript spec 10.4.3 Entering Function Code
 	 * </p>
 	 */
-	public static ThisTarget getProbableThisTarget(EObject eobj) {
-		if (eobj == null || eobj.eContainer() == null) {
+	public static ThisTarget getProbableThisTarget(EObject location) {
+		if (location == null || location.eContainer() == null) {
 			return null;
 		}
 
-		ThisArgProvider thisArgProvider = EcoreUtil2.getContainerOfType(eobj.eContainer(), ThisArgProvider.class);
+		final ThisArgProvider thisArgProvider = location instanceof N4MethodDeclaration ? (N4MethodDeclaration) location
+				: EcoreUtil2.getContainerOfType(location.eContainer(), ThisArgProvider.class);
 		if (thisArgProvider == null) {
 			return null;
 		}
 
-		ThisTarget thisTarget = EcoreUtil2.getContainerOfType(thisArgProvider.eContainer(), ThisTarget.class);
+		final ThisTarget thisTarget = EcoreUtil2.getContainerOfType(thisArgProvider.eContainer(), ThisTarget.class);
 		if (thisTarget != null) {
 			ThisArgProvider indirectThisArgProvider = EcoreUtil2.getContainerOfType(thisArgProvider.eContainer(),
 					ThisArgProvider.class);
@@ -244,7 +245,9 @@ public abstract class N4JSASTUtils {
 	}
 
 	/**
-	 * The function or method in which the expression is (indirectly) contained, may be null
+	 * The function or method in which the given location is (indirectly) contained, may be null. If a function or
+	 * method is passed in, it won't be returned itself but the next outer function or method will be returned (so, this
+	 * method behaves differently than {@link EcoreUtil2#getContainerOfType(EObject, Class)}).
 	 */
 	public static FunctionOrFieldAccessor getContainingFunctionOrAccessor(EObject eobj) {
 		if (eobj == null || eobj.eContainer() == null) {

@@ -41,6 +41,7 @@ import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.resource.ManifestMerger;
@@ -52,6 +53,7 @@ import eu.numberfour.n4js.utils.Version;
 import eu.numberfour.n4js.utils.git.GitUtils;
 import eu.numberfour.n4js.utils.io.FileCopier;
 import eu.numberfour.n4js.utils.io.FileDeleter;
+import eu.numberfour.n4js.utils.process.ProcessResult;
 
 /**
  * Adapts given npm package to n4js project form
@@ -73,7 +75,7 @@ public class NpmPackageToProjectAdapter {
 	private ManifestMerger manifestMerger;
 
 	@Inject
-	NpmMainModuleResolver npmMainModuleResolver;
+	private BinaryCommandFactory commandFactory;
 
 	@Inject
 	private Provider<XtextResourceSet> resourceSetProvider;
@@ -368,7 +370,7 @@ public class NpmPackageToProjectAdapter {
 	 *            file to which contents should be written
 	 */
 	private void generateManifestContent(File projectFolder, PackageJson packageJSON, File manifest)
-			throws IOException, InterruptedException {
+			throws IOException {
 
 		String projectName = packageJSON.getName();
 		String manifestMain = computeMainModule(projectFolder);
@@ -385,8 +387,8 @@ public class NpmPackageToProjectAdapter {
 
 	/**
 	 */
-	private String computeMainModule(File projectFolder) throws IOException, InterruptedException {
-		File main = new File(npmMainModuleResolver.resolveMainModule(projectFolder));
+	private String computeMainModule(File projectFolder) throws IOException {
+		File main = new File(resolveMainModule(projectFolder));
 
 		Path packagePath = projectFolder.toPath();
 		Path packageMainModulePath = main.toPath();
@@ -409,6 +411,27 @@ public class NpmPackageToProjectAdapter {
 			mainSpecifier = mainSpecifier.substring(2);
 
 		return mainSpecifier;
+	}
+
+	/**
+	 * Calls node process to resolve main module of the provided npm package.
+	 *
+	 * @param packageRoot
+	 *            package root folder
+	 * @return string with absolute path to the package main module
+	 * @throws IOException
+	 *             if cannot resolve main module
+	 */
+	private String resolveMainModule(File packageRoot)
+			throws IOException {
+
+		ProcessResult per = commandFactory.createResolveMainModuleCommand(packageRoot).execute();
+
+		if (per.isOK()) {
+			// happy case string with full path to the main module (terminated with line ending)
+			return per.getStdOut().trim();
+		}
+		throw new IOException(per.toString());
 	}
 
 }

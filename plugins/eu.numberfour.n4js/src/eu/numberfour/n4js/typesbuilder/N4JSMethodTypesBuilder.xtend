@@ -56,7 +56,7 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 		methodType.declaredAsync = methodDecl.async // TODO change to declaredAsync one the annotation is gone
 
 		val providesDefaultImpl = AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(methodDecl);
-		methodType.hasNoBody = methodDecl.body ===null && !providesDefaultImpl;
+		methodType.hasNoBody = methodDecl.body===null && !providesDefaultImpl;
 
 		methodType.lacksThisOrSuperUsage = hasNonNullBody(methodDecl.body) && !containsThisOrSuperUsage(methodDecl.body)
 
@@ -89,10 +89,8 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 	 */
 	def private setReturnTypeConsideringThis(TMethod methodType, N4MethodDeclaration methodDecl,
 		BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
-		if (methodDecl.isConstructor) {
-			methodType.returnTypeRef = builtInTypeScope.voidTypeRef;
-		} else if (methodDecl.returnTypeRef instanceof ThisTypeRef) {
-			// special case: TypingASTWalker will create a BoundThisTypeRef via Xsemantics judgment 'thisTypeRef'
+		if (methodDecl.isConstructor || methodDecl.returnTypeRef instanceof ThisTypeRef) {
+			// special case: TypeDeferredProcessor will create a BoundThisTypeRef via Xsemantics judgment 'thisTypeRef'
 			methodType.returnTypeRef = TypeUtils.createDeferredTypeRef
 		} else {
 			// standard case
