@@ -52,6 +52,9 @@ public class SuffixText extends Composite {
 	/** Complete text property name */
 	public static final String SUFFIX_PROPERTY = "suffix";
 
+	/** Suffix visibility property name */
+	public static final String SUFFIX_VISIBILITY_PROPERTY = "suffixVisibility";
+
 	// Color constants
 	private static Color GREY = Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 	private final Image TRANSPARENT;
@@ -60,7 +63,8 @@ public class SuffixText extends Composite {
 	private String text = "";
 
 	private final Text userInput;
-	private final Label completeLabel;
+	private final Label suffixLabel;
+	private boolean suffixVisibility;
 
 	// private final Composite packComposite;
 
@@ -89,9 +93,14 @@ public class SuffixText extends Composite {
 		userInput = new Text(this, SWT.NONE);
 		userInput.setBackgroundImage(TRANSPARENT);
 
-		completeLabel = new Label(this, SWT.HORIZONTAL);
-		completeLabel.setText("/Test");
-		completeLabel.setForeground(GREY);
+		suffixLabel = new Label(this, SWT.HORIZONTAL);
+		suffixLabel.setText("/Test");
+		suffixLabel.setForeground(GREY);
+
+		// Connect swt visibility to databinding property
+		addPropertyChangeListener(evt -> {
+			suffixLabel.setVisible(suffixVisibility);
+		});
 
 		MouseListener focusCatcher = new MouseListener() {
 			@Override
@@ -114,7 +123,7 @@ public class SuffixText extends Composite {
 		};
 
 		this.addMouseListener(focusCatcher);
-		completeLabel.addMouseListener(focusCatcher);
+		suffixLabel.addMouseListener(focusCatcher);
 		this.addMouseListener(focusCatcher);
 
 		// Workaround theme dependent background color issues:
@@ -123,7 +132,7 @@ public class SuffixText extends Composite {
 			@Override
 			public void paintControl(PaintEvent e) {
 				setBackground(userInput.getBackground());
-				completeLabel.setBackground(userInput.getBackground());
+				suffixLabel.setBackground(userInput.getBackground());
 			}
 		});
 
@@ -211,7 +220,7 @@ public class SuffixText extends Composite {
 	 */
 	public void setSuffix(String suffix) {
 		this.firePropertyChange(SUFFIX_PROPERTY, this.suffix, this.suffix = suffix);
-		this.completeLabel.setText(this.suffix);
+		this.suffixLabel.setText(this.suffix);
 	}
 
 	/**
@@ -235,11 +244,18 @@ public class SuffixText extends Composite {
 	/**
 	 * Sets the visibility of the suffix label
 	 *
-	 * @param state
+	 * @param visibility
 	 *            The new state to adapt
 	 */
-	public void setSuffixVisible(boolean state) {
-		this.completeLabel.setVisible(state);
+	public void setSuffixVisibility(boolean visibility) {
+		this.firePropertyChange(SUFFIX_VISIBILITY_PROPERTY, this.suffixVisibility, this.suffixVisibility = visibility);
+	}
+
+	/**
+	 * Returns the suffix visibility
+	 */
+	public boolean getSuffixVisibility() {
+		return this.suffixVisibility;
 	}
 
 	@Override
