@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.ui.dialog;
 
+import static eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils.isValidFolderName;
+
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IContainer;
@@ -36,7 +38,6 @@ import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualContainer;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
-import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModelValidator;
 
 /**
  * Browse dialog to select and create module folders inside of a given source folder location.
@@ -655,7 +656,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			if (newText.isEmpty()) {
 				return "The module folder must not be empty";
 			}
-			if (!N4JSClassifierWizardModelValidator.isValidFolderName(newText)) {
+			if (!isValidFolderName(newText)) {
 				return "The module name is not a valid file system name";
 			}
 			return null;
@@ -676,7 +677,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 				return "The module name must not be empty.";
 			}
 
-			if (!N4JSClassifierWizardModelValidator.isValidFolderName(newText)) {
+			if (!isValidFolderName(newText)) {
 				return "The module name is not a valid file system name.";
 			}
 

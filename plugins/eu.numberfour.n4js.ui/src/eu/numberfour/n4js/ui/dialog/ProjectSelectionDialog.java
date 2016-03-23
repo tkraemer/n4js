@@ -38,6 +38,8 @@ public class ProjectSelectionDialog extends WorkspaceElementSelectionDialog {
 	 */
 	public ProjectSelectionDialog() {
 		super(UIUtils.getShell(), false);
+		this.setTitle("Select a project");
+
 		this.addFilter(new ProjectFilter());
 		WrappingVirtualContainer virtualRoot = new WrappingVirtualContainer(
 				ResourcesPlugin.getWorkspace().getRoot());

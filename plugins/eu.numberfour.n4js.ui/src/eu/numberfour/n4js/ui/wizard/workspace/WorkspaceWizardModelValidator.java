@@ -138,19 +138,6 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 
 	}
 
-	/**
-	 * Check whether name is a valid folder name.
-	 *
-	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
-	 *
-	 * @param name
-	 *            Name to check
-	 * @return valid state
-	 */
-	public static boolean isValidFolderName(String name) {
-		return name.matches("[a-zA-z_](([\\.][a-zA-z_0-9\\-])|[a-zA-z_0-9\\-])*");
-	}
-
 	private ValidationResult validationResult;
 
 	private boolean projectValid = false;
@@ -322,7 +309,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		}
 
 		// 2. The folder must be a valid folder name
-		if (!isValidFolderName(sourceFolder)) {
+		if (!WorkspaceWizardValidatorUtils.isValidFolderName(sourceFolder)) {
 			throw new ValidationException(
 					ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
@@ -332,20 +319,28 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	}
 
 	/**
-	 * Validates the module name.
+	 * Validates the module specifier
 	 */
 	protected void validateModuleSpecifier() throws ValidationException {
+		doValidateModuleSpecifier(getModel().getModuleSpecifier());
+	}
 
-		String effectiveModuleSpecifier = getModel().getModuleSpecifier();
+	/**
+	 * Runs validation procedure for a given module specifier.
+	 *
+	 * @throws ValidationException
+	 *             if an validation issue is detected
+	 */
+	protected void doValidateModuleSpecifier(String moduleSpecifier) throws ValidationException {
 
 		// 1. The module specifier property must not be empty
-		if (effectiveModuleSpecifier.trim().isEmpty()) {
+		if (moduleSpecifier.trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.MODULE_SPECIFIER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 		}
 
 		// 2. The module specifier is properly formed
-		String[] moduleSpecifierSegments = effectiveModuleSpecifier.split("/", -1);
+		String[] moduleSpecifierSegments = moduleSpecifier.split("/", -1);
 		for (int i = 0; i < moduleSpecifierSegments.length; i++) {
 
 			String segment = moduleSpecifierSegments[i];
@@ -364,7 +359,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}
 			// The segment is an invalid folder name, not the last segment and not empty
-			if (!isValidFolderName(segment) && !(empty && last)) {
+			if (!WorkspaceWizardValidatorUtils.isValidFolderName(segment) && !(empty && last)) {
 				throw new ValidationException(ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT,
 						WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY);
 			}

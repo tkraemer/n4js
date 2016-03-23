@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -50,9 +49,6 @@ import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
  */
 public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifierWizardModel>
 		extends WorkspaceWizardModelValidator<M> {
-
-	private static final Pattern VALID_FOLDER_NAME_PATTERN = Pattern
-			.compile("[a-zA-z_](([\\.][a-zA-z_0-9])|[a-zA-z_0-9])*");
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -114,15 +110,8 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 		String effectiveModuleSpecifier = getModel().getEffectiveModuleSpecifier();
 
-		/*
-		 * If the specifier is computed (with a class name suffix) the workspace validator doesn't validate the class
-		 * name part of the specifier path.
-		 */
-		if (!effectiveModuleSpecifier.equals(getModel().getModuleSpecifier()) &&
-				!isValidFolderName(getModel().getName())) {
-			throw new ValidationException(
-					WorkspaceWizardModelValidator.ErrorMessages.INVALID_MODULE_SPECIFIER_INVALID_SEGMENT);
-		}
+		// Invoke super validation procedure on full effective module specifier
+		doValidateModuleSpecifier(effectiveModuleSpecifier);
 
 		/* Check for potential file collisions */
 		if (isFileSpecifyingModuleSpecifier(effectiveModuleSpecifier)) {
@@ -175,7 +164,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	}
 
 	/**
-	 * Sugar for getting a the specific name of the classifier for UI purposes. With this we can distinguish on the UI
+	 * Sugar for getting the specific name of the classifier for UI purposes. With this we can distinguish on the UI
 	 * between interfaces and classes.
 	 */
 	protected String getClassifierName() {
@@ -205,6 +194,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		ArrayList<ClassifierReference> interfaces = new ArrayList<>(getModel().getInterfaces());
 
 		Set<String> duplicateFullSpecifiers = Sets.newHashSet();
+
 		for (Iterator<ClassifierReference> itr = interfaces.iterator(); itr.hasNext();/**/) {
 			ClassifierReference next = itr.next();
 			if (!duplicateFullSpecifiers.add(next.getFullSpecifier())) {
@@ -235,9 +225,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 		String[] segments = absoluteSpecifier.split("\\.");
 		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
-		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(
-				type,
-				name, false);
+		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(type, name, false);
 		return foundObjects.iterator().hasNext();
 	}
 
@@ -284,18 +272,5 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 				name, false);
 
 		return Iterables.getFirst(foundObjects, null);
-	}
-
-	/**
-	 * Returns true if name is a valid folder name.
-	 *
-	 * For now this means: Letter or underscore in the beginning, no dot at the end or beginning
-	 *
-	 * @param name
-	 *            Name to check
-	 * @return valid state
-	 */
-	public static boolean isValidFolderName(String name) {
-		return VALID_FOLDER_NAME_PATTERN.matcher(name).matches();
 	}
 }

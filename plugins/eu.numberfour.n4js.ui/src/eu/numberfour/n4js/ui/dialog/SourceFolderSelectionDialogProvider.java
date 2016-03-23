@@ -35,7 +35,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
-import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils;
 
 /**
  * Provides {@link SourceFolderSelectionDialog}s. Use the createDialog method to instantiate a new dialog.
@@ -153,7 +153,7 @@ public class SourceFolderSelectionDialogProvider {
 						return "The name must not be empty";
 					}
 
-					if (!WorkspaceWizardModelValidator.isValidFolderName(newText)) {
+					if (!WorkspaceWizardValidatorUtils.isValidFolderName(newText)) {
 						return "The name is not a valid folder name";
 					}
 
