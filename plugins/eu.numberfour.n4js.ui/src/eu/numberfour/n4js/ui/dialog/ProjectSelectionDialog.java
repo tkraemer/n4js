@@ -12,11 +12,16 @@ package eu.numberfour.n4js.ui.dialog;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.widgets.Shell;
 
+import com.google.inject.Inject;
+
+import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
+import eu.numberfour.n4js.ui.utils.UIUtils;
 
 /**
  * Browse dialog to select a IProject of the current workspace.
@@ -25,27 +30,36 @@ import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
  */
 public class ProjectSelectionDialog extends WorkspaceElementSelectionDialog {
 
+	@Inject
+	private IN4JSCore n4jsCore;
+
 	/**
-	 * @param parent
-	 *            Parent shell
+	 * Create a new project selection dialog
 	 */
-	public ProjectSelectionDialog(Shell parent) {
-		super(parent, false);
+	public ProjectSelectionDialog() {
+		super(UIUtils.getShell(), false);
+		this.setTitle("Select a project");
+
 		this.addFilter(new ProjectFilter());
-		WrappingVirtualContainer virtualRoot = new WrappingVirtualContainer(ResourcesPlugin.getWorkspace().getRoot());
+		WrappingVirtualContainer virtualRoot = new WrappingVirtualContainer(
+				ResourcesPlugin.getWorkspace().getRoot());
 		this.setInput(virtualRoot);
 	}
 
 	/**
-	 * Filter to only show Projects in the dialog
+	 * Filter to only show N4JS Projects in the dialog
 	 */
-	private static final class ProjectFilter extends ViewerFilter {
+	private final class ProjectFilter extends ViewerFilter {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			if (!(element instanceof IProject)) {
-				return false;
+			// Filter for open existing n4js projects only
+			if (element instanceof IProject) {
+				IProject project = (IProject) element;
+				URI uri = URI.createPlatformResourceURI(project.getName(), true);
+				IN4JSProject n4Project = n4jsCore.findProject(uri).orNull();
+				return null != n4Project && n4Project.exists();
 			}
-			return true;
+			return false;
 		}
 	}
 }

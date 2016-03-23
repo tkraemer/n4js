@@ -22,8 +22,9 @@ import eu.numberfour.n4js.ui.typesearch.TypeSearchKind;
  * Returns multiple values of type {@link IEObjectDescription}
  */
 public class InterfacesSelectionDialog extends OpenTypeSelectionDialog {
+
 	/**
-	 *
+	 * Create a new InterfaceSelectionDialog
 	 */
 	public InterfacesSelectionDialog() {
 		super(true); // Enable multiple selection

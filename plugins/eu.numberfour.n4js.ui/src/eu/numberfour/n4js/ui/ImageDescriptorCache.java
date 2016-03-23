@@ -88,7 +88,10 @@ public enum ImageDescriptorCache {
 		NEW_INTERFACE_WIZBAN("newint_wiz.png"),
 
 		/** Wizard banner for the new N4JS enum wizard. */
-		NEW_ENUM_WIZBAN("newenum_wiz.png");
+		NEW_ENUM_WIZBAN("newenum_wiz.png"),
+
+		/** A transparent 1x1 image */
+		TRANSPARENT("transparent.png");
 
 		private final String fileName;
 
