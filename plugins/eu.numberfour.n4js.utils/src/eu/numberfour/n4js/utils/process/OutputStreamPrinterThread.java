@@ -55,8 +55,9 @@ public class OutputStreamPrinterThread extends Thread implements AutoCloseable {
 				final byte[] clearedBuffer = new byte[numberOfReadBytes];
 				System.arraycopy(buffer, 0, clearedBuffer, 0, numberOfReadBytes);
 				baos.write(clearedBuffer);
-				if (redirect)
+				if (redirect) {
 					os.write(clearedBuffer);
+				}
 			}
 		} catch (final Exception e) {
 			final String message = "Error reading output of running process.";

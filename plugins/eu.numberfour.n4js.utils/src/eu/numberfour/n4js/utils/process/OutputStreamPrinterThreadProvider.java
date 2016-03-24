@@ -65,7 +65,7 @@ public class OutputStreamPrinterThreadProvider {
 	 */
 	@SuppressWarnings("resource")
 	public OutputStreamPrinterThread getPrinterThreadForStdOut(Process process, boolean redirect) {
-		final OutputStream os = osProvider.getOutputStream(STD_OUT);
+		final OutputStream os = osProvider.getOutputStream(STD_OUT, redirect);
 		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getInputStream(), os, redirect);
 		thread.start();
 		return thread;
@@ -84,7 +84,7 @@ public class OutputStreamPrinterThreadProvider {
 	 */
 	@SuppressWarnings("resource")
 	public OutputStreamPrinterThread getPrinterThreadForStdErr(Process process, boolean redirect) {
-		final OutputStream os = osProvider.getOutputStream(STD_ERR);
+		final OutputStream os = osProvider.getOutputStream(STD_ERR, redirect);
 		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getErrorStream(), os, redirect);
 		thread.start();
 		return thread;
