@@ -291,7 +291,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		final org.eclipse.emf.common.util.URI moduleToRun = createPlatformResourceURI(pathToModuleToRun, true);
 		final RunConfiguration config = runnerFrontEnd.createConfiguration(ID, null, moduleToRun);
 		final Process process = runnerFrontEndUI.runInUI(config);
-		final ProcessResult result = processExecutor.execute(process, ""); // INJECT
+		final ProcessResult result = processExecutor.execute(process, "", /* redirect output */ false);
 		assertTrue("Expected 0 error code for the process. Was: " + result.getExitCode(), result.isOK());
 		return result;
 	}
