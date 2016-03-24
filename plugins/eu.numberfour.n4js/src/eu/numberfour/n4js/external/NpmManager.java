@@ -48,8 +48,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
+import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.external.libraries.PackageJson;
@@ -402,7 +402,7 @@ public class NpmManager {
 	private void logInfo(final String message) {
 		LOGGER.info(message);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		pw.flush();
 	}
@@ -419,7 +419,7 @@ public class NpmManager {
 	private void logError(final String message, final Throwable t) {
 		LOGGER.error(message, t);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		if (null != t) {
 			pw.append(getTimestamp() + getStackTraceAsString(t) + lineSeparator());
