@@ -100,40 +100,6 @@ Contributors:
 								<id>TychoSurefirePluginUITest</id>
 								<phase>integration-test</phase>
 							</execution>
-							<execution>
-								<id>TychoSurefireLowMemoryTest</id>
-								<phase>integration-test</phase>
-								<configuration>
-									<!-- 100 Minutes timeout -->
-									<forkedProcessTimeoutInSeconds>6000</forkedProcessTimeoutInSeconds>
-									<!-- BEWARE: no line breaks in the following line, or the build breaks!  -->
-									<!-- This configuration intentionally using lower memory setting. -->
-									<argLine>${encodingArgs} ${lowMemoryArgs} ${ui.test.vmargs} ${coverageAgent} ${loggingArgs}</argLine>
-									<!-- different for mac/not mac -->
-									<useUIHarness>true</useUIHarness>
-									<useUIThread>false</useUIThread>
-									<product>eu.numberfour.n4js.product.product</product>
-									<application>eu.numberfour.n4js.product.application</application>
-									<dependencies>
-										<dependency>
-											<type>eclipse-feature</type>
-											<artifactId>org.eclipse.platform</artifactId>
-											<version>0.0.0</version>
-										</dependency>
-										<dependency>
-											<type>eclipse-feature</type>
-											<artifactId>eu.numberfour.n4js.sdk</artifactId>
-											<version>0.0.0</version>
-										</dependency>
-									</dependencies>
-									<includes>
-										<include>**/*TestLowMemory.java</include>
-									</includes>
-								</configuration>
-								<goals>
-									<goal>test</goal>
-								</goals>
-							</execution>
 						</executions>
 					</plugin>
 				</plugins>
