@@ -16,7 +16,7 @@ This has two advantages:
 -->
 
 <!-- Features added to the target platform -->
-<target includeMode="feature" name="N4JS - Eclipse 4.5.1, Xtext/Xtend 2.9.1  +(Xcore 1.3.1) , Xsemantics 1.9, XpectN4" sequenceNumber="95">
+<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.9.2  +(Xcore 1.3.2) , Xsemantics 1.9, XpectN4" sequenceNumber="96">
 	<locations>
 		<!-- Main target platform, that is: Eclipse 4.5 Mars -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -24,53 +24,53 @@ This has two advantages:
 			<unit id="org.eclipse.draw2d" version="3.10.1.201508170204" />
 
 			<!-- Dependencies for the web team such as HTML and XML editor -->
-			<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.7.1.v201508271605"/>
-			<unit id="org.eclipse.wst.web_ui.feature.feature.group" version="3.7.1.v201509022125"/>
-			<repository location="http://download.eclipse.org/releases/mars/"/>
+			<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.7.2.v201511240257"/>
+			<unit id="org.eclipse.wst.web_ui.feature.feature.group" version="3.7.1.v201602111638"/>
+			<repository location="http://download.eclipse.org/releases/mars/201602261000/"/>
 		</location>
 
 		<!-- Enable EGit Support in N4JS Product -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.egit.feature.group" version="4.1.1.201511131810-r" />
-			<unit id="org.eclipse.egit.source.feature.group" version="4.1.1.201511131810-r" />
-			<unit id="org.eclipse.jgit.feature.group" version="4.1.1.201511131810-r" />
-			<unit id="org.eclipse.jgit.source.feature.group" version="4.1.1.201511131810-r" />
-			<repository location="http://download.eclipse.org/egit/updates-4.1.1/"/>
+			<unit id="org.eclipse.egit.feature.group" version="4.2.0.201601211800-r" />
+			<unit id="org.eclipse.egit.source.feature.group" version="4.2.0.201601211800-r" />
+			<unit id="org.eclipse.jgit.feature.group" version="4.2.0.201601211800-r" />
+			<unit id="org.eclipse.jgit.source.feature.group" version="4.2.0.201601211800-r" />
+			<repository location="http://download.eclipse.org/egit/updates-4.2/"/>
 		</location>
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.sdk.feature.group" version="4.5.1.v20150904-0345"/>
-			<unit id="org.eclipse.pde.feature.group" version="3.11.1.v20150904-0345"/>
-			<unit id="org.eclipse.help.feature.group" version="2.1.1.v20150904-0015"/>
-			<unit id="org.eclipse.jdt.feature.group" version="3.11.1.v20150904-0015"/>
-			<unit id="org.eclipse.platform.feature.group" version="4.5.1.v20150904-0015"/>
-			<unit id="org.eclipse.rcp.feature.group" version="4.5.1.v20150904-0015"/>
+			<unit id="org.eclipse.sdk.feature.group" version="4.5.2.v20160212-1500"/>
+			<unit id="org.eclipse.pde.feature.group" version="3.11.2.v20160212-1500"/>
+			<unit id="org.eclipse.help.feature.group" version="2.1.2.v20160212-1500"/>
+			<unit id="org.eclipse.jdt.feature.group" version="3.11.2.v20160212-1500"/>
+			<unit id="org.eclipse.platform.feature.group" version="4.5.2.v20160212-1500"/>
+			<unit id="org.eclipse.rcp.feature.group" version="4.5.2.v20160212-1500"/>
 			<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.200.v20150602-1417"/>
 			<unit id="org.eclipse.equinox.p2.core.feature.feature.group" version="1.3.100.v20150527-1706"/>
-			<unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.101.v20150826-1318"/>
+			<unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.102.v20160129-0947"/>
 			<unit id="org.eclipse.equinox.p2.rcp.feature.feature.group" version="1.2.101.v20150826-1318"/>
-			<unit id="org.eclipse.equinox.p2.extras.feature.feature.group" version="1.2.100.v20150601-1708"/>
+			<unit id="org.eclipse.equinox.p2.extras.feature.feature.group" version="1.2.101.v20160129-0947"/>
 
-			<unit id="org.eclipse.ecf.core.feature.feature.group" version="1.1.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.provider.filetransfer" version="3.2.200.v20150810-1719" />
-			<unit id="org.eclipse.ecf.provider.filetransfer.source" version="3.2.200.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer" version="5.0.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer.source" version="5.0.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf" version="3.5.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.source" version="3.5.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.identity" version="3.6.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.identity.source" version="3.6.0.v20150810-1719" />
+			<unit id="org.eclipse.ecf.core.feature.feature.group" version="1.2.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.provider.filetransfer" version="3.2.200.v20151130-0157" />
+			<unit id="org.eclipse.ecf.provider.filetransfer.source" version="3.2.200.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer" version="5.0.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer.source" version="5.0.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf" version="3.7.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.source" version="3.7.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.identity" version="3.6.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.identity.source" version="3.6.0.v20151130-0157" />
 
-			<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342" />
+			<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.2.v20160202-2102" />
 			<unit id="org.eclipse.equinox.concurrent" version="1.1.0.v20130327-1442" />
 
-			<unit id="org.eclipse.ecf.core.ssl.feature.feature.group" version="1.0.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="3.10.1.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer.ssl.feature.feature.group" version="1.0.0.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group" version="3.10.1.v20150810-1719" />
-			<unit id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group" version="1.0.0.v20150810-1719" />
+			<unit id="org.eclipse.ecf.core.ssl.feature.feature.group" version="1.1.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="3.12.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer.ssl.feature.feature.group" version="1.1.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group" version="3.12.0.v20151130-0157" />
+			<unit id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group" version="1.1.0.v20151130-0157" />
 
-			<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+			<repository location="http://download.eclipse.org/eclipse/updates/4.5/R-4.5.2-201602121500"/>
 		</location>
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -85,9 +85,9 @@ This has two advantages:
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<!-- EMF -->
-			<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150806-0404"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.2.v20160208-0841"/>
 			<!-- Xcore -->
-			<unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.3.1.v20150806-0546"/>
+			<unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.3.2.v20160209-0349"/>
 			<repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.11.x/"/>
 		</location>
 
@@ -104,10 +104,10 @@ This has two advantages:
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<!-- Xtend -->
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.9.1.v201512180746"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.9.2.v201603040440"/>
 			<!-- Xtext -->
-			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.1.v201512180746"/>
-			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.2.v201603040440"/>
+			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.9.2/"/>
 		</location>
 
 		<!-- ANTLR parser generator (not runtime), used by Xtext during code generation -->
@@ -182,7 +182,7 @@ This has two advantages:
 			<unit id="javaewah" version="0.7.9.v201401101600" />
 			<unit id="javaewah.source" version="0.7.9.v201401101600" />
 
-			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository"/>
+			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
 		</location>
 
 		<!-- JSON editor (Used by the web team)-->
@@ -199,10 +199,10 @@ This has two advantages:
 
 		<!-- Jetty stuff, aligned version with built-eclipse jetty components. -->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.jetty.util.ajax" version="9.2.9.v20150224"/>
-			<unit id="org.eclipse.jetty.server" version="9.2.9.v20150224"/>
-			<unit id="org.eclipse.jetty.util" version="9.2.9.v20150224"/>
-			<repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.9.v20150224"/>
+			<unit id="org.eclipse.jetty.util.ajax" version="9.3.6.v20151106"/>
+			<unit id="org.eclipse.jetty.server" version="9.3.6.v20151106"/>
+			<unit id="org.eclipse.jetty.util" version="9.3.6.v20151106"/>
+			<repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.3.6.v20151106"/>
 		</location>
 
 
