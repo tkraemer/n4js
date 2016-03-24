@@ -199,9 +199,18 @@ This has two advantages:
 
 		<!-- Jetty stuff, aligned version with built-eclipse jetty components. -->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+
 			<unit id="org.eclipse.jetty.util.ajax" version="9.3.6.v20151106"/>
+
 			<unit id="org.eclipse.jetty.server" version="9.3.6.v20151106"/>
+			<unit id="org.eclipse.jetty.server.source" version="9.3.6.v20151106"/>
+
 			<unit id="org.eclipse.jetty.util" version="9.3.6.v20151106"/>
+			<unit id="org.eclipse.jetty.util.source" version="9.3.6.v20151106"/>
+
+			<unit id="org.eclipse.jetty.io.source" version="9.3.6.v20151106"/>
+			<unit id="org.eclipse.jetty.http.source" version="9.3.6.v20151106"/>
+
 			<repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.3.6.v20151106"/>
 		</location>
 
