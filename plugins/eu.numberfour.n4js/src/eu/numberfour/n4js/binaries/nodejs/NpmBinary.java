@@ -35,7 +35,7 @@ public class NpmBinary implements Binary {
 	public static final Version MIN_VERSION = new Version(3, 0, 0);
 
 	private static final String LABEL = "npm";
-	private static final String COMMAND = "npm";
+	private static final String BINARY_NAME = "npm";
 	private static final String VERSION_ARGUMENT = "-v";
 
 	@Inject
@@ -63,9 +63,9 @@ public class NpmBinary implements Binary {
 	}
 
 	@Override
-	public String getCommandWithAbsolutePath() {
+	public String getBinaryAbsolutePath() {
 		final NodeJsBinary nodeJsBinary = nodeJsBinaryProvider.get();
-		return nodeJsBinary.getUserNodePathOrDefault() + File.separator + COMMAND;
+		return nodeJsBinary.getUserNodePathOrDefault() + File.separator + BINARY_NAME;
 	}
 
 	@Override

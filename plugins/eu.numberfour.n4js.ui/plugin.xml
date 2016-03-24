@@ -30,13 +30,24 @@ Contributors:
       </category>
      <wizard
            category="eu.numberfour.wizards"
-           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.classwizard.N4JSNewClassWizard"
+           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.classes.N4JSNewClassWizard"
            icon="icons/newclass_wiz.gif"
            id="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard"
            name="N4JS Class"
            project="false">
            <description>
            	Create a new N4JS Class file or create a new class inside an existing module.
+           </description>
+      </wizard>
+      <wizard
+           category="eu.numberfour.wizards"
+           class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.wizard.interfaces.N4JSNewInterfaceWizard"
+           icon="icons/newint_wiz.gif"
+           id="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard"
+           name="N4JS Interface"
+           project="false">
+           <description>
+           	Create a new N4JS Interface file or create a new interface inside an existing module.
            </description>
       </wizard>
       
@@ -1018,6 +1029,20 @@ Contributors:
        <commonWizard
              type="new"
              wizardId="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
+          <enablement>
+             <and>
+                <instanceof
+                      value="org.eclipse.core.resources.IResource">
+                </instanceof>
+                <test
+                      property="eu.numberfour.n4js.ui.sourceContainer">
+                </test>
+             </and>
+          </enablement>
+       </commonWizard>
+       <commonWizard
+             type="new"
+             wizardId="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard">
           <enablement>
              <and>
                 <instanceof

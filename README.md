@@ -61,7 +61,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 - [FAQ](https://numberfour.github.io/n4js/faq/)
 - [mailing list / web forum](http://groups.google.com/group/n4js)
-- [issues](https://github.com/numberfour/n4js/issues) 
+- [issues](https://github.com/numberfour/n4js/issues/) 
 
 ## Build the N4JS IDE from command line
 

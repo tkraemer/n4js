@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.ui.dialog;
 
+import static eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils.isValidFolderName;
+
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IContainer;
@@ -36,7 +38,6 @@ import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualContainer;
 import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
-import eu.numberfour.n4js.ui.wizard.classwizard.N4JSClassWizardModelValidator;
 
 /**
  * Browse dialog to select and create module folders inside of a given source folder location.
@@ -53,7 +54,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	private final static String CREATE_FOLDER_LABEL = "Create Folder";
 
 	private final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-	private final IFolder sourceFolder;
+	private final VirtualContainer sourceFolder;
 	private final WrappingVirtualContainer treeRoot;
 
 	private final ModuleFileValidator inputValidator = new ModuleFileValidator();
@@ -82,17 +83,35 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 		this.setInputValidator(inputValidator);
 
-		this.sourceFolder = workspaceRoot
+		IPath parentPath = sourceFolder.removeLastSegments(1);
+		IContainer sourceFolderParent = containerForPath(parentPath);
+		IFolder workspaceSourceFolder = workspaceRoot
 				.getFolder(sourceFolder);
 
 		// Use parent of source folder as root to show source folder itself in the tree
-		this.treeRoot = new WrappingVirtualContainer(this.sourceFolder.getParent());
+		this.treeRoot = new WrappingVirtualContainer(sourceFolderParent);
+
+		if (workspaceSourceFolder.exists()) {
+			this.sourceFolder = new WrappingVirtualContainer(workspaceSourceFolder);
+			this.addFilter(new ModuleFolderFilter(this.sourceFolder.getFullPath()));
+		} else {
+			// If the source folder doesn't exist, show it as a virtual resource
+			this.sourceFolder = new VirtualContainer(sourceFolder.lastSegment());
+			this.addFilter(new ModuleFolderFilter(parentPath.append(this.sourceFolder.getFullPath())));
+		}
 
 		this.setAutoExpandLevel(2);
-		this.addFilter(new ModuleFolderFilter(this.sourceFolder.getFullPath()));
-
 		// Show the status line above the buttons
 		this.setStatusLineAboveButtons(true);
+	}
+
+	/** Return the workspace container with the path */
+	private IContainer containerForPath(IPath path) {
+		if (path.segmentCount() == 1) {
+			return workspaceRoot.getProject(path.segment(0));
+		} else {
+			return workspaceRoot.getFolder(path);
+		}
 	}
 
 	/**
@@ -189,13 +208,13 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			return;
 		}
 
-		IResource existingModuleResource = workspaceRoot.findMember(new Path(basepath).append(elementName));
+		IResource workspaceModuleResource = workspaceRoot.findMember(new Path(basepath).append(elementName));
 
 		// The basepath + module name points to an existing file
-		if (existingModuleResource != null && existingModuleResource.exists()) {
+		if (workspaceModuleResource != null && workspaceModuleResource.exists()) {
 			if (isExistingSelection) { // An existing element is selected in the tree view
 				if (treeViewSelection instanceof IContainer) {
-					setSelectedElement(existingModuleResource); // Select the existing child of the container
+					setSelectedElement(workspaceModuleResource); // Select the existing child of the container
 					return;
 				} else if (treeViewSelection instanceof IResource) {
 					// The basepath + module name points to the already selected element
@@ -204,7 +223,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 						this.treeViewer.refresh();
 						return;
 					} else { // The selected element is different from the basepath + module name
-						setSelectedElement(existingModuleResource);
+						setSelectedElement(workspaceModuleResource);
 						return;
 					}
 				} else {
@@ -212,7 +231,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 					return;
 				}
 			} else { // An non-existent element is selected in the tree view
-				setSelectedElement(existingModuleResource);
+				setSelectedElement(workspaceModuleResource);
 			}
 		} else { // The basepath + module name points to an non-existent file
 			if (isExistingSelection) { // An existing element is selected in the tree view
@@ -274,7 +293,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 */
 	public Object computeInitialSelection(String initialModuleSpecifier) {
 
-		IPath projectFolderPath = sourceFolder.getProject().getFullPath();
+		IPath projectFolderPath = sourceFolder.getFullPath().removeLastSegments(1);
 		IPath sourceFolderPath = sourceFolder.getFullPath();
 
 		if (initialModuleSpecifier.isEmpty()) {
@@ -373,6 +392,18 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		// If the initial selection is empty select the root source folder
+		if (getInitialElementSelections().isEmpty()) {
+			// Handle case of a non-existing virtual source folder
+			if (this.sourceFolder instanceof WrappingVirtualContainer) {
+				setInitialSelection(((WrappingVirtualContainer) this.sourceFolder).getWrappedContainer());
+			} else {
+				setInitialSelection(this.sourceFolder);
+				// Add the virtual source folder resource to the tree root
+				this.treeRoot.addChild(this.sourceFolder);
+			}
+		}
+
 		Control dialog = super.createDialogArea(parent);
 
 		elementNameInput.setSuffix("." + this.defaultFileExtension);
@@ -394,11 +425,13 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		Object selectedElement = this.treeViewer.getStructuredSelection().getFirstElement();
 		if (selectedElement instanceof IFile) {
 			updateElementNameInput(((IResource) selectedElement).getName());
-		} else if (selectedElement instanceof VirtualResource) {
+		} else if (selectedElement instanceof VirtualResource && !(selectedElement instanceof VirtualContainer)) {
 			updateElementNameInput(((VirtualResource) selectedElement).getName());
 		} else {
 			validateElementInput();
 		}
+
+		elementNameInput.setFocus();
 
 		return dialog;
 	}
@@ -464,7 +497,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	@Override
 	protected void createPressed() {
 		InputDialog dialog = new InputDialog(this.getShell(), "Create a new module folder",
-				"Enter the module folder name", "",
+				"Enter the module folder name.", "",
 				new ModuleFolderValidator());
 		dialog.open();
 
@@ -600,7 +633,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			this.setResult(Arrays.asList(sourceFolderRelativePath((VirtualResource) selection).toString()));
 			return;
 		}
-		updateError("Invalid selection type");
+		updateError("Invalid selection type.");
 
 	}
 
@@ -623,7 +656,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			if (newText.isEmpty()) {
 				return "The module folder must not be empty";
 			}
-			if (!N4JSClassWizardModelValidator.isValidFolderName(newText)) {
+			if (!isValidFolderName(newText)) {
 				return "The module name is not a valid file system name";
 			}
 			return null;
@@ -641,25 +674,25 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			String moduleName = path.removeFileExtension().lastSegment();
 
 			if (path.removeFileExtension().segmentCount() < 1 || moduleName.isEmpty()) {
-				return "The module name must not be empty";
+				return "The module name must not be empty.";
 			}
 
-			if (!N4JSClassWizardModelValidator.isValidFolderName(newText)) {
-				return "The module name is not a valid file system name";
+			if (!isValidFolderName(newText)) {
+				return "The module name is not a valid file system name.";
 			}
 
 			if (fileExtension == null) {
-				return "The module name needs to have a valid N4JS file extension";
+				return "The module name needs to have a valid N4JS file extension.";
 			}
 			if (!(fileExtension.equals(N4JSGlobals.N4JS_FILE_EXTENSION) ||
 					fileExtension.equals(N4JSGlobals.N4JSD_FILE_EXTENSION))) {
-				return "Invalid file extension";
+				return "Invalid file extension.";
 			}
 			if (!isModuleFileSpecifier(path)) {
-				return "Invalid module file specifier";
+				return "Invalid module file specifier.";
 			}
 			if (path.segmentCount() > 1) {
-				return IPath.SEPARATOR + " is not allowed in a module file specifier";
+				return IPath.SEPARATOR + " is not allowed in a module file specifier.";
 			}
 
 			return null;

@@ -82,10 +82,10 @@ Contributors:
        <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
-             class="eu.numberfour.n4js.xpect.ui.GenerateBugReportShortcut"
+             class="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
              icon="icons/bug_report.png"
-             id="eu.numberfour.n4js.xpect.ui.GenerateBugReportShortcut"
-             label="Xpect Bug Report Generation"
+             id="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
+             label="JIRA ticket generation for Xpect bug"
              modes="run"> 
            <contextualLaunch>   
               <enablement>   
@@ -115,6 +115,31 @@ Contributors:
               </enablement>
            </contextualLaunch>
        </shortcut>
+       <shortcut
+             class="eu.numberfour.n4js.xpect.ui.GenerateGitHubIssueReportShortcut"
+             icon="icons/bug_report.png"
+             id="eu.numberfour.n4js.xpect.ui.GenerateGitHubIssueReportShortcut"
+             label="GitHub issue generation for Xpect bug"
+             modes="run">
+          <contextualLaunch>
+             <enablement>
+                <with
+                      variable="selection">
+                   <count
+                         value="1">
+                   </count>
+                   <iterate>
+                      <or>
+                         <test
+                               property="org.eclipse.debug.ui.matchesPattern"
+                               value="*.n4js.xt">
+                         </test>
+                      </or>
+                   </iterate>
+                </with>
+             </enablement>
+          </contextualLaunch>
+       </shortcut>
    </extension>
    
    
@@ -126,20 +151,23 @@ Contributors:
           </testSuite>
        </extension>
 
-   <extension point="org.eclipse.ui.commands">
-     <command
-        description="Compare Test Results"
-        id="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
-        name="Compare Test Results">
-      </command>
-   </extension>
 
    <extension point="org.eclipse.ui.commands">
      <command
-        description="Generate Bug Report"
-        id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand"
-        name="Generate Bug Report">
+        description="Generate JIRA Bug Report"
+        id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
+        name="Generate JIRA Bug Report">
       </command>
+     <command
+           description="Generate GitHub Issue Report"
+           id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
+           name="Generate GitHub Issue Report">
+     </command>
+     <command
+           description="Compare Test Results"
+           id="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
+           name="Compare Test Results">
+     </command>
    </extension>
 
 <extension point="org.eclipse.ui.handlers">
@@ -148,8 +176,12 @@ Contributors:
         commandId="eu.numberfour.n4js.xpect.ui.runner.comparecommand">
   </handler>
   <handler
-        class="eu.numberfour.n4js.xpect.ui.results.XpectGenerateBugReportCommandHandler"
-        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand">
+        class="eu.numberfour.n4js.xpect.ui.results.GenerateGitHubIssueXpectReportCommandHandler"
+        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github">
+  </handler>
+  <handler
+        class="eu.numberfour.n4js.xpect.ui.results.GenerateJIRABugXpectReportCommandHandler"
+        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira">
   </handler>
 </extension>
 
@@ -166,13 +198,26 @@ Contributors:
             </visibleWhen>
      </command>
      <command
-        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand"
+        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
            style="push">
             <visibleWhen>
                <with variable="activeMenuSelection">
                   <test property="eu.numberfour.n4js.xpect.ui.runner.isSuite" value="true"/>
                </with>
             </visibleWhen>
+     </command>
+     <command
+           commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
+           style="push">
+        <visibleWhen>
+           <with
+                 variable="activeMenuSelection">
+              <test
+                    property="eu.numberfour.n4js.xpect.ui.runner.isSuite"
+                    value="true">
+              </test>
+           </with>
+        </visibleWhen>
      </command>
   </menuContribution>
 </extension>

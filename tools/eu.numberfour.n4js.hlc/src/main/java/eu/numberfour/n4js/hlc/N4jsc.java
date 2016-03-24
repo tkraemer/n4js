@@ -12,7 +12,9 @@ package eu.numberfour.n4js.hlc;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.util.Modules.override;
-import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.N4_GIT_REMOTE_URL;
+import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
+import static eu.numberfour.n4js.utils.git.GitUtils.hardReset;
+import static eu.numberfour.n4js.utils.git.GitUtils.pull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,6 +62,7 @@ import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.HeadlessTargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
+import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
@@ -89,7 +92,6 @@ import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
 import eu.numberfour.n4js.ts.TypesStandaloneSetup;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.utils.git.GitUtils;
 
 /**
  * N4JS Compiler.
@@ -298,6 +300,9 @@ public class N4jsc {
 	@Inject
 	private BinariesPreferenceStore binariesPreferenceStore;
 
+	@Inject
+	private TypeDefinitionGitLocationProvider gitLocationProvider;
+
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
 	 *
@@ -505,8 +510,9 @@ public class N4jsc {
 				java.net.URI gitRepositoryLocation = installLocationProvider
 						.getTargetPlatformLocalGitRepositoryLocation();
 				Path localClonePath = new File(gitRepositoryLocation).toPath();
-				GitUtils.hardReset(N4_GIT_REMOTE_URL, localClonePath, GitUtils.getMasterBranch(), true);
-				GitUtils.pull(localClonePath);
+				hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
+						getMasterBranch(), true);
+				pull(localClonePath);
 
 			}
 

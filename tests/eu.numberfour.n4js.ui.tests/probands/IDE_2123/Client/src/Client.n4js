@@ -1,4 +1,0 @@
-import bar from "bar";
-
-console.log(bar.drinker);
-console.log(bar.utils);

@@ -13,7 +13,7 @@ VendorId: eu.numberfour
 ProjectName: "n4js-node"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
-ProjectVersion: 0.3.0
+ProjectVersion: 0.3.1
 ExtendedRuntimeEnvironment: n4js-es5
 
 ProvidedRuntimeLibraries {
