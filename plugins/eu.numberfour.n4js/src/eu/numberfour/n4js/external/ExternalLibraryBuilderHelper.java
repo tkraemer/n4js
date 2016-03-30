@@ -105,8 +105,8 @@ public class ExternalLibraryBuilderHelper {
 	};
 
 	/**
-	 * Predicate for filtering out all jobs with {@link Job#RUNNING running} and/or with {@link Job#WAITING waiting}
-	 * state.
+	 * Predicate for filtering out all jobs without {@link Job#RUNNING running} and/or without {@link Job#WAITING
+	 * waiting} state.
 	 */
 	private static final Predicate<Job> SCHEDULED_JOBS_PREDICATE = j -> RUNNING != j.getState()
 			&& WAITING != j.getState();
