@@ -43,7 +43,6 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			updateProjectReferencesIfNecessary();
 			N4JSBuildTypeTracker.setBuildType(getProject(), BuildType.CLEAN);
 			super.doClean(toBeBuilt, monitor);
-			getProject().touch(monitor);
 		} finally {
 			N4JSBuildTypeTracker.clearBuildType(getProject());
 		}
@@ -56,7 +55,6 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			updateProjectReferencesIfNecessary();
 			N4JSBuildTypeTracker.setBuildType(getProject(), type);
 			super.doBuild(toBeBuilt, monitor, type);
-			getProject().touch(monitor);
 		} catch (OperationCanceledException e) {
 			throw e;
 		} catch (Exception e) {
@@ -73,7 +71,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			final String value = args.get(ExternalLibraryBuilderHelper.EXTERNAL_BUILD);
 			boolean external = Boolean.parseBoolean(value);
 			if (external) {
-				return null;
+				 return null;
 			}
 		}
 		return super.getRule(kind, args);

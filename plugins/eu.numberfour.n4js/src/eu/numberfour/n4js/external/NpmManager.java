@@ -321,7 +321,7 @@ public class NpmManager {
 		logInfo("================================================================");
 		final String taskName = "Refreshing type definitions for '" + packageName + "' npm package...";
 		logInfo(taskName);
-		monitor.beginTask(taskName, 1);
+		monitor.setTaskName(taskName);
 
 		try {
 

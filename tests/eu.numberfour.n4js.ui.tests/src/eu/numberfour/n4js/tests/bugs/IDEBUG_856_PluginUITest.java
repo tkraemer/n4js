@@ -22,10 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 
 import com.google.common.collect.BiMap;
 import com.google.inject.Inject;
@@ -50,11 +47,11 @@ public class IDEBUG_856_PluginUITest extends AbstractBuilderParticipantTest {
 	private static final String WORKSPACE_LOC = "IDEBUG_856";
 	private static final String PROJECT = "IDEBUG_856";
 
-	private static final int ITERATION_COUNT = 10;
+	private static final int ITERATION_COUNT = 300;
 
-	/** Global timeout rule with proper threading support. */
-	@Rule
-	public Timeout timeout = Timeout.seconds(ITERATION_COUNT * 20L);
+	// /** Global timeout rule with proper threading support. */
+	// @Rule
+	// public Timeout timeout = Timeout.seconds(ITERATION_COUNT * 20L);
 
 	@Inject
 	private ExternalLibrariesReloadHelper reloadHelper;
@@ -97,7 +94,6 @@ public class IDEBUG_856_PluginUITest extends AbstractBuilderParticipantTest {
 	 * Checks whether the external refreshing does not cause deadlock due to incorrect workspace checkpoints and
 	 * incorrect job family configuration.
 	 */
-	@Ignore("IDEBUG-856")
 	@Test
 	public void testMultipleExternalRefresh() throws Exception {
 		for (int i = 1; i <= ITERATION_COUNT; i++) {

@@ -15,8 +15,10 @@ import static com.google.common.collect.Maps.newHashMap;
 import static org.eclipse.core.resources.IncrementalProjectBuilder.CLEAN_BUILD;
 import static org.eclipse.core.resources.IncrementalProjectBuilder.FULL_BUILD;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.internal.events.BuildManager;
@@ -25,11 +27,18 @@ import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Function;
 import com.google.inject.Inject;
@@ -159,9 +168,31 @@ public class ExternalLibraryBuilderHelper {
 			LOGGER.info("Building external libraries: " + Arrays.toString(buildOrder));
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
 			for (final IBuildConfiguration configuration : buildOrder) {
+
 				final Map<String, String> args = newHashMap();
 				args.put(EXTERNAL_BUILD, Boolean.TRUE.toString());
-				buildManager.build(configuration, FULL_BUILD, N4JSExternalProject.BUILDER_ID, args, subMonitor.newChild(1));
+
+				final Job job = new WorkspaceJob("Building external library: " + configuration.getProject()) {
+
+					@Override
+					public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
+						buildManager.build(configuration, FULL_BUILD, N4JSExternalProject.BUILDER_ID, args,
+								subMonitor.newChild(1));
+
+						return Status.OK_STATUS;
+					}
+
+				};
+
+				waitForWorkspaceLock(subMonitor);
+				job.schedule();
+
+				try {
+					job.join();
+				} catch (final InterruptedException e) {
+					LOGGER.error("Error occurred while building external libraries.", e);
+				}
+
 			}
 		}
 	}
@@ -237,9 +268,39 @@ public class ExternalLibraryBuilderHelper {
 			LOGGER.info("Cleaning external libraries: " + Arrays.toString(buildOrder));
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
 			for (final IBuildConfiguration configuration : buildOrder) {
+
 				final Map<String, String> args = newHashMap();
 				args.put(EXTERNAL_BUILD, Boolean.TRUE.toString());
-				buildManager.build(configuration, CLEAN_BUILD, N4JSExternalProject.BUILDER_ID, args, subMonitor.newChild(1));
+
+				final Job job = new WorkspaceJob("Cleaning external library: " + configuration.getProject()) {
+
+					@Override
+					public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
+						buildManager.build(configuration, CLEAN_BUILD, N4JSExternalProject.BUILDER_ID, args,
+								subMonitor.newChild(1));
+
+						return Status.OK_STATUS;
+					}
+
+				};
+
+				waitForWorkspaceLock(subMonitor);
+				job.schedule();
+
+				try {
+					Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, monitor);
+				} catch (final OperationCanceledException e) {
+					LOGGER.info("User abort.");
+				} catch (final InterruptedException e) {
+					LOGGER.error("Error occurred while waiting for workspace job.", e);
+				}
+
+				try {
+					job.join();
+				} catch (final InterruptedException e) {
+					LOGGER.error("Error occurred while cleaning external libraries.", e);
+				}
+
 			}
 		}
 	}
@@ -251,6 +312,46 @@ public class ExternalLibraryBuilderHelper {
 	private BuildManager getBuildManager() {
 		final Workspace workspace = (Workspace) ResourcesPlugin.getWorkspace();
 		return workspace.getBuildManager();
+	}
+
+	/**
+	 * Jobs accessing this code should be configured as "system" jobs, to not interrupt autobuild jobs.
+	 *
+	 * @param monitor
+	 *            the monitor for the wait process.
+	 */
+	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
+		// Wait for the workspace lock to avoid starting the external build.
+		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		try {
+			Job.getJobManager().beginRule(root, monitor);
+		} catch (final OperationCanceledException e) {
+			return;
+		} finally {
+			Job.getJobManager().endRule(root);
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void waitForIdleBuildManager(final long timeout) {
+		final long now = System.currentTimeMillis();
+		while (System.currentTimeMillis() < now + timeout) {
+			final BuildManager buildManager = getBuildManager();
+			Field declaredField;
+			try {
+				declaredField = buildManager.getClass().getDeclaredField("building");
+				declaredField.setAccessible(true);
+				final Object object = declaredField.get(buildManager);
+				if (Boolean.FALSE.equals(object)) {
+					return;
+				}
+				LOGGER.warn("Build manager was busy. Waiting for its idle state...");
+			} catch (final Exception e) {
+				LOGGER.error("Error while checking whether build manager is idle or not.", e);
+				return;
+			}
+		}
+		Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle build manager."));
 	}
 
 }

@@ -17,20 +17,28 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import eu.numberfour.n4js.utils.Cancelable;
 
 /**
  * Helper class for reloading the registered external libraries by recreating the Xtext index for them.
  */
 @Singleton
 public class ExternalLibrariesReloadHelper {
+
+	private static final Logger LOGGER = Logger.getLogger(ExternalLibrariesReloadHelper.class);
 
 	@Inject
 	private NpmManager npmManager;
@@ -59,7 +67,21 @@ public class ExternalLibrariesReloadHelper {
 	public void reloadLibraries(final boolean refreshNpmDefinitions, final IProgressMonitor monitor)
 			throws InvocationTargetException {
 
-		final SubMonitor subMonitor = SubMonitor.convert(monitor, refreshNpmDefinitions ? 2 : 1);
+		final SubMonitor subMonitor = SubMonitor.convert(monitor, refreshNpmDefinitions ? 3 : 2);
+
+		try {
+			final SubMonitor waitMonitor = subMonitor.newChild(1);
+			Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, waitMonitor);
+			if (monitor instanceof Cancelable) {
+				((Cancelable) monitor).setCancelable(false); // No cancel is allowed from now on.
+			}
+		} catch (final OperationCanceledException e) {
+			LOGGER.info("User abort.");
+			return;
+		} catch (final InterruptedException e) {
+			LOGGER.error("Error occurred while waiting for workspace build.", e);
+			return;
+		}
 
 		// Refresh the type definitions for the NPM packages if required.
 		if (refreshNpmDefinitions) {
