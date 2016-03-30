@@ -47,11 +47,7 @@ public class IDEBUG_856_PluginUITest extends AbstractBuilderParticipantTest {
 	private static final String WORKSPACE_LOC = "IDEBUG_856";
 	private static final String PROJECT = "IDEBUG_856";
 
-	private static final int ITERATION_COUNT = 300;
-
-	// /** Global timeout rule with proper threading support. */
-	// @Rule
-	// public Timeout timeout = Timeout.seconds(ITERATION_COUNT * 20L);
+	private static final int ITERATION_COUNT = 30;
 
 	@Inject
 	private ExternalLibrariesReloadHelper reloadHelper;
