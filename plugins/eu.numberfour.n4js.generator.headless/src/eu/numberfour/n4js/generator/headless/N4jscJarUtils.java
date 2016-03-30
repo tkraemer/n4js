@@ -100,7 +100,7 @@ public class N4jscJarUtils {
 		cmdline.addAll(Arrays.asList(
 				"java",
 				"-jar", getAbsoluteRunnableN4jsc().getAbsolutePath(),
-				"--debug", "-v", // generate more output
+				// "--debug", "-v", // generate more output
 				"-t", "allprojects"));
 		cmdline.addAll(Arrays.asList(options));
 		cmdline.add("-pl");
