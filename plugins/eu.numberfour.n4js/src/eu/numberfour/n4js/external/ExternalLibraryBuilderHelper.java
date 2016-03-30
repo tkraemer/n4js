@@ -20,7 +20,6 @@ import static org.eclipse.core.runtime.jobs.Job.RUNNING;
 import static org.eclipse.core.runtime.jobs.Job.WAITING;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -354,12 +353,27 @@ public class ExternalLibraryBuilderHelper {
 	}
 
 	/**
+	 * Make sure the project description is available and cached for each workspace projects. This is important to avoid
+	 * performing a workspace operation (with no scheduling rule) when setting the dynamic project references for each
+	 * project.
+	 */
+	private void ensureWorkspaceProjectsConfigured() {
+		for (final IProject project : getWorkspace().getRoot().getProjects()) {
+			final org.eclipse.emf.common.util.URI uri = createPlatformResourceURI(project.getName(), true);
+			final IN4JSProject n4Project = core.findProject(uri).get();
+			if (null != n4Project) {
+				n4Project.getArtifactId(); // This will trigger dynamic project reference update.
+			}
+		}
+	}
+
+	/**
 	 * Jobs accessing this code should be configured as "system" jobs, to not interrupt autobuild jobs.
 	 *
 	 * @param monitor
 	 *            the monitor for the wait process.
 	 */
-	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
+	/* default */ static void waitForWorkspaceLock(final IProgressMonitor monitor) {
 
 		waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
 
@@ -374,29 +388,7 @@ public class ExternalLibraryBuilderHelper {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void waitForIdleBuildManager(final long timeout) {
-		final long now = System.currentTimeMillis();
-		while (System.currentTimeMillis() < now + timeout) {
-			final BuildManager buildManager = getBuildManager();
-			Field declaredField;
-			try {
-				declaredField = buildManager.getClass().getDeclaredField("building");
-				declaredField.setAccessible(true);
-				final Object object = declaredField.get(buildManager);
-				if (Boolean.FALSE.equals(object)) {
-					return;
-				}
-				LOGGER.warn("Build manager was busy. Waiting for its idle state...");
-			} catch (final Exception e) {
-				LOGGER.error("Error while checking whether build manager is idle or not.", e);
-				return;
-			}
-		}
-		Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle build manager."));
-	}
-
-	private void waitForIdleAutoBuildJob(final long timeout) {
+	private static void waitForIdleAutoBuildJob(final long timeout) {
 
 		checkArgument(timeout > 0, "Timeout must be a positive long.");
 		final long now = System.currentTimeMillis();
@@ -420,26 +412,11 @@ public class ExternalLibraryBuilderHelper {
 		}
 	}
 
-	private FluentIterable<Job> getScheduledAutoBuildJobs() {
+	private static FluentIterable<Job> getScheduledAutoBuildJobs() {
 		final FluentIterable<Job> allJobs = from(Arrays.asList(Job.getJobManager().find(null)));
 		final FluentIterable<Job> autoBuildJobs = allJobs.filter(AUTO_BUILD_JOB_PREDICATE);
 		final FluentIterable<Job> scheduledJobs = autoBuildJobs.filter(SCHEDULED_JOBS_PREDICATE);
 		return scheduledJobs;
-	}
-
-	/**
-	 * Make sure the project description is available and cached for each workspace projects. This is important to avoid
-	 * performing a workspace operation (with no scheduling rule) when setting the dynamic project references for each
-	 * project.
-	 */
-	private void ensureWorkspaceProjectsConfigured() {
-		for (final IProject project : getWorkspace().getRoot().getProjects()) {
-			final org.eclipse.emf.common.util.URI uri = createPlatformResourceURI(project.getName(), true);
-			final IN4JSProject n4Project = core.findProject(uri).get();
-			if (null != n4Project) {
-				n4Project.getArtifactId(); // This will trigger dynamic project reference update.
-			}
-		}
 	}
 
 }
