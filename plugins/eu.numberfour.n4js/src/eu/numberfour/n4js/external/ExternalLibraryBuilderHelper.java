@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.external;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.eclipse.core.resources.IncrementalProjectBuilder.CLEAN_BUILD;
@@ -68,6 +69,11 @@ public class ExternalLibraryBuilderHelper {
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibraryBuilderHelper.class);
 
 	/**
+	 * Build argument to be able to distinguish between workspace and external library builds.
+	 */
+	public static final String EXTERNAL_BUILD_KEY = ExternalLibraryBuilderHelper.class + ".externalBuild";
+
+	/**
 	 * Timeout (in minutes) to wait for the idle auto build job after cleaning external workspace.
 	 */
 	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES = 10L;
@@ -76,11 +82,6 @@ public class ExternalLibraryBuilderHelper {
 	 * Unique name of the {@code org.eclipse.core.internal.events.AutoBuildJob}.
 	 */
 	private static final String AUTO_BUILD_JOB_NAME = Messages.events_building_0;
-
-	/**
-	 * Build argument to be able to distinguish between workspace and external library builds.
-	 */
-	public static final String EXTERNAL_BUILD = ExternalLibraryBuilderHelper.class + ".externalBuild";
 
 	/**
 	 * Function for converting a {@link IProject project} into the corresponding {@link IBuildConfiguration build
@@ -205,12 +206,15 @@ public class ExternalLibraryBuilderHelper {
 			for (final IBuildConfiguration configuration : buildOrder) {
 
 				final Map<String, String> args = newHashMap();
-				args.put(EXTERNAL_BUILD, Boolean.TRUE.toString());
+				args.put(EXTERNAL_BUILD_KEY, Boolean.TRUE.toString());
 
 				final Job job = new WorkspaceJob("Building external library: " + configuration.getProject()) {
 
 					@Override
 					public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
+
+						LOGGER.info("Building external library: " + configuration.getProject());
+
 						buildManager.build(configuration, FULL_BUILD, N4JSExternalProject.BUILDER_ID, args,
 								subMonitor.newChild(1));
 
@@ -306,12 +310,15 @@ public class ExternalLibraryBuilderHelper {
 			for (final IBuildConfiguration configuration : buildOrder) {
 
 				final Map<String, String> args = newHashMap();
-				args.put(EXTERNAL_BUILD, Boolean.TRUE.toString());
+				args.put(EXTERNAL_BUILD_KEY, Boolean.TRUE.toString());
 
 				final Job job = new WorkspaceJob("Cleaning external library: " + configuration.getProject()) {
 
 					@Override
 					public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
+
+						LOGGER.info("Cleaning external library: " + configuration.getProject());
+
 						buildManager.build(configuration, CLEAN_BUILD, N4JSExternalProject.BUILDER_ID, args,
 								subMonitor.newChild(1));
 
@@ -353,6 +360,9 @@ public class ExternalLibraryBuilderHelper {
 	 *            the monitor for the wait process.
 	 */
 	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
+
+		waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
+
 		// Wait for the workspace lock to avoid starting the external build.
 		final IWorkspaceRoot root = getWorkspace().getRoot();
 		try {
@@ -386,20 +396,27 @@ public class ExternalLibraryBuilderHelper {
 		Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle build manager."));
 	}
 
-	private void waitForIdleAutoBuildJob(long timeout) {
+	private void waitForIdleAutoBuildJob(final long timeout) {
+
+		checkArgument(timeout > 0, "Timeout must be a positive long.");
 		final long now = System.currentTimeMillis();
+
 		while (!getScheduledAutoBuildJobs().isEmpty()) {
+
 			if (LOGGER.isTraceEnabled()) {
 				LOGGER.trace("Waiting for workspace build job to finish...");
 			}
+
 			try {
 				Thread.sleep(100L);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				LOGGER.error("Error while checking whether auto build job is idle or not.", e);
 			}
+
 			if (System.currentTimeMillis() > now + timeout) {
 				Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle auto build job."));
 			}
+
 		}
 	}
 

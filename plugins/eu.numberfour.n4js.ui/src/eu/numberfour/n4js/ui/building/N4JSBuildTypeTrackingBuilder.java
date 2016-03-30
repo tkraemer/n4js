@@ -68,7 +68,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 	@Override
 	public ISchedulingRule getRule(int kind, Map<String, String> args) {
 		if (null != args) {
-			final String value = args.get(ExternalLibraryBuilderHelper.EXTERNAL_BUILD);
+			final String value = args.get(ExternalLibraryBuilderHelper.EXTERNAL_BUILD_KEY);
 			boolean external = Boolean.parseBoolean(value);
 			if (external) {
 				return null;
