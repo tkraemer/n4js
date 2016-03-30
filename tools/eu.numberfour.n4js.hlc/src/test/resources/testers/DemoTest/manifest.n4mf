@@ -2,18 +2,16 @@ ArtifactId: DemoTest
 VendorId: eu.numberfour
 ProjectName: "DemoTest"
 VendorName: "NumberFour AG"
-ProjectType: app
+ProjectType: test
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
 Sources {
-	test { 
-		"test"
-	}
+    test { 
+        "test"
+    }
 }
 ProjectDependencies {
-	Mangelhaft,
-	Demo
-}
-RequiredRuntimeLibraries {
-	RL_NodeJS_OS
+    eu.numberfour.mangelhaft,
+    eu.numberfour.mangelhaft.assert,
+    Demo
 }

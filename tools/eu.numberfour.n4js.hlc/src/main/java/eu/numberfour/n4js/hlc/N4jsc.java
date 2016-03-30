@@ -53,7 +53,6 @@ import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Modules;
 
-import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.N4JSStandaloneSetup;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
@@ -334,7 +333,6 @@ public class N4jsc {
 	 */
 	void doMain(String[] args) throws ExitCodeException {
 		try {
-			N4JSGlobals.setHeadless(true);
 
 			CmdLineParser parser = new CmdLineParser(this);
 			parser.setUsageWidth(130);
