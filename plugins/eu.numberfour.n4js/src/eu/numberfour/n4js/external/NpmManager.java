@@ -190,7 +190,7 @@ public class NpmManager {
 				}
 			} catch (IOException | InterruptedException e) {
 				final IStatus status = statusHelper
-						.createError("Errors occurred while installing npm package '" + packageName + "'.", e);
+						.createError("Error occurred while installing npm package '" + packageName + "'.", e);
 				logError(status);
 				return status;
 			}

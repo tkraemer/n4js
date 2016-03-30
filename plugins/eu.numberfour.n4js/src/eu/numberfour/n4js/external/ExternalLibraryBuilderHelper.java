@@ -14,21 +14,26 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.eclipse.core.resources.IncrementalProjectBuilder.CLEAN_BUILD;
 import static org.eclipse.core.resources.IncrementalProjectBuilder.FULL_BUILD;
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.eclipse.core.runtime.jobs.Job.RUNNING;
+import static org.eclipse.core.runtime.jobs.Job.WAITING;
+import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.internal.events.BuildManager;
 import org.eclipse.core.internal.resources.BuildConfiguration;
 import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -41,9 +46,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
@@ -57,6 +66,16 @@ import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
 public class ExternalLibraryBuilderHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibraryBuilderHelper.class);
+
+	/**
+	 * Timeout (in minutes) to wait for the idle auto build job after cleaning external workspace.
+	 */
+	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES = 10L;
+
+	/**
+	 * Unique name of the {@code org.eclipse.core.internal.events.AutoBuildJob}.
+	 */
+	private static final String AUTO_BUILD_JOB_NAME = Messages.events_building_0;
 
 	/**
 	 * Build argument to be able to distinguish between workspace and external library builds.
@@ -85,8 +104,23 @@ public class ExternalLibraryBuilderHelper {
 		return from(projects).transform(TO_CONFIG_FUNC).toArray(IBuildConfiguration.class);
 	};
 
+	/**
+	 * Predicate for filtering out all jobs with {@link Job#RUNNING running} and/or with {@link Job#WAITING waiting}
+	 * state.
+	 */
+	private static final Predicate<Job> SCHEDULED_JOBS_PREDICATE = j -> RUNNING != j.getState()
+			&& WAITING != j.getState();
+
+	/**
+	 * Predicate for filtering by name.
+	 */
+	private static final Predicate<Job> AUTO_BUILD_JOB_PREDICATE = j -> AUTO_BUILD_JOB_NAME.equals(j.getName());
+
 	@Inject
 	private ExternalProjectsCollector collector;
+
+	@Inject
+	private IN4JSCore core;
 
 	/**
 	 * Performs a full build on all registered and available external libraries.
@@ -164,6 +198,7 @@ public class ExternalLibraryBuilderHelper {
 	 */
 	public void build(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
 		if (!Arrays2.isEmpty(buildOrder)) {
+			ensureWorkspaceProjectsConfigured();
 			final BuildManager buildManager = getBuildManager();
 			LOGGER.info("Building external libraries: " + Arrays.toString(buildOrder));
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
@@ -264,6 +299,7 @@ public class ExternalLibraryBuilderHelper {
 	 */
 	public void clean(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
 		if (!Arrays2.isEmpty(buildOrder)) {
+			ensureWorkspaceProjectsConfigured();
 			final BuildManager buildManager = getBuildManager();
 			LOGGER.info("Cleaning external libraries: " + Arrays.toString(buildOrder));
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
@@ -288,18 +324,14 @@ public class ExternalLibraryBuilderHelper {
 				job.schedule();
 
 				try {
-					Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, monitor);
-				} catch (final OperationCanceledException e) {
-					LOGGER.info("User abort.");
-				} catch (final InterruptedException e) {
-					LOGGER.error("Error occurred while waiting for workspace job.", e);
-				}
-
-				try {
 					job.join();
 				} catch (final InterruptedException e) {
 					LOGGER.error("Error occurred while cleaning external libraries.", e);
 				}
+
+				// No matter what an auto build job will be performed on Eclipse workspace projects after running
+				// a clean on the external libraries. Make sure to block until the autobuild job is done.
+				waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
 
 			}
 		}
@@ -310,7 +342,7 @@ public class ExternalLibraryBuilderHelper {
 	}
 
 	private BuildManager getBuildManager() {
-		final Workspace workspace = (Workspace) ResourcesPlugin.getWorkspace();
+		final Workspace workspace = (Workspace) getWorkspace();
 		return workspace.getBuildManager();
 	}
 
@@ -322,7 +354,7 @@ public class ExternalLibraryBuilderHelper {
 	 */
 	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
 		// Wait for the workspace lock to avoid starting the external build.
-		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		final IWorkspaceRoot root = getWorkspace().getRoot();
 		try {
 			Job.getJobManager().beginRule(root, monitor);
 		} catch (final OperationCanceledException e) {
@@ -352,6 +384,45 @@ public class ExternalLibraryBuilderHelper {
 			}
 		}
 		Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle build manager."));
+	}
+
+	private void waitForIdleAutoBuildJob(long timeout) {
+		final long now = System.currentTimeMillis();
+		while (!getScheduledAutoBuildJobs().isEmpty()) {
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("Waiting for workspace build job to finish...");
+			}
+			try {
+				Thread.sleep(100L);
+			} catch (Exception e) {
+				LOGGER.error("Error while checking whether auto build job is idle or not.", e);
+			}
+			if (System.currentTimeMillis() > now + timeout) {
+				Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle auto build job."));
+			}
+		}
+	}
+
+	private FluentIterable<Job> getScheduledAutoBuildJobs() {
+		final FluentIterable<Job> allJobs = from(Arrays.asList(Job.getJobManager().find(null)));
+		final FluentIterable<Job> autoBuildJobs = allJobs.filter(AUTO_BUILD_JOB_PREDICATE);
+		final FluentIterable<Job> scheduledJobs = autoBuildJobs.filter(SCHEDULED_JOBS_PREDICATE);
+		return scheduledJobs;
+	}
+
+	/**
+	 * Make sure the project description is available and cached for each workspace projects. This is important to avoid
+	 * performing a workspace operation (with no scheduling rule) when setting the dynamic project references for each
+	 * project.
+	 */
+	private void ensureWorkspaceProjectsConfigured() {
+		for (final IProject project : getWorkspace().getRoot().getProjects()) {
+			final org.eclipse.emf.common.util.URI uri = createPlatformResourceURI(project.getName(), true);
+			final IN4JSProject n4Project = core.findProject(uri).get();
+			if (null != n4Project) {
+				n4Project.getArtifactId(); // This will trigger dynamic project reference update.
+			}
+		}
 	}
 
 }

@@ -71,7 +71,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			final String value = args.get(ExternalLibraryBuilderHelper.EXTERNAL_BUILD);
 			boolean external = Boolean.parseBoolean(value);
 			if (external) {
-				 return null;
+				return null;
 			}
 		}
 		return super.getRule(kind, args);
