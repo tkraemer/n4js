@@ -33,6 +33,7 @@ import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -223,12 +224,21 @@ public class ExternalLibraryBuilderHelper {
 				};
 
 				waitForWorkspaceLock(subMonitor);
-				job.schedule();
+				final boolean autoBuild = isAutoBuild();
 
 				try {
-					job.join();
-				} catch (final InterruptedException e) {
-					LOGGER.error("Error occurred while building external libraries.", e);
+
+					toggleAutoBuild(false);
+					job.schedule();
+
+					try {
+						job.join();
+					} catch (final InterruptedException e) {
+						LOGGER.error("Error occurred while building external libraries.", e);
+					}
+
+				} finally {
+					toggleAutoBuild(autoBuild);
 				}
 
 			}
@@ -327,17 +337,26 @@ public class ExternalLibraryBuilderHelper {
 				};
 
 				waitForWorkspaceLock(subMonitor);
-				job.schedule();
+				final boolean autoBuild = isAutoBuild();
 
 				try {
-					job.join();
-				} catch (final InterruptedException e) {
-					LOGGER.error("Error occurred while cleaning external libraries.", e);
-				}
 
-				// No matter what an auto build job will be performed on Eclipse workspace projects after running
-				// a clean on the external libraries. Make sure to block until the autobuild job is done.
-				waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
+					toggleAutoBuild(false);
+					job.schedule();
+
+					try {
+						job.join();
+					} catch (final InterruptedException e) {
+						LOGGER.error("Error occurred while cleaning external libraries.", e);
+					}
+
+					// No matter what an auto build job will be performed on Eclipse workspace projects after running
+					// a clean on the external libraries. Make sure to block until the autobuild job is done.
+					waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
+
+				} finally {
+					toggleAutoBuild(autoBuild);
+				}
 
 			}
 		}
@@ -417,6 +436,20 @@ public class ExternalLibraryBuilderHelper {
 		final FluentIterable<Job> autoBuildJobs = allJobs.filter(AUTO_BUILD_JOB_PREDICATE);
 		final FluentIterable<Job> scheduledJobs = autoBuildJobs.filter(SCHEDULED_JOBS_PREDICATE);
 		return scheduledJobs;
+	}
+
+	private static boolean isAutoBuild() {
+		return getWorkspace().getDescription().isAutoBuilding();
+	}
+
+	private static void toggleAutoBuild(final boolean enabled) {
+		IWorkspaceDescription description = getWorkspace().getDescription();
+		description.setAutoBuilding(enabled);
+		try {
+			getWorkspace().setDescription(description);
+		} catch (CoreException e) {
+			throw new RuntimeException(e.getStatus().getMessage(), e);
+		}
 	}
 
 }
