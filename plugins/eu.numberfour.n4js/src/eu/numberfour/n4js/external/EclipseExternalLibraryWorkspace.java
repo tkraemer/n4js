@@ -44,6 +44,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -122,7 +123,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 	public void init() {
 		projectCache = CacheBuilder.newBuilder().build(cacheLoader);
 		if (Platform.isRunning()) {
-			getWorkspace().addResourceChangeListener(projectStateChangeListener);
+			getWorkspace().addResourceChangeListener(projectStateChangeListener, IResourceChangeEvent.POST_CHANGE);
 		}
 	}
 

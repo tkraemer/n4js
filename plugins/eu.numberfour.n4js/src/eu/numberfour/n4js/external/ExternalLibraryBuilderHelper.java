@@ -30,6 +30,7 @@ import org.eclipse.core.internal.events.BuildManager;
 import org.eclipse.core.internal.resources.BuildConfiguration;
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.internal.utils.Messages;
+import org.eclipse.core.internal.utils.Policy;
 import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -65,6 +66,54 @@ import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
 @SuppressWarnings("restriction")
 @Singleton
 public class ExternalLibraryBuilderHelper {
+
+	private static final boolean DEBUG = true;
+
+	static {
+
+		if (DEBUG) {
+
+			Policy.DEBUG_AUTO_REFRESH = true;
+
+			// debug constants
+			Policy.DEBUG_BUILD_DELTA = true;
+			Policy.DEBUG_BUILD_FAILURE = true;
+			Policy.DEBUG_BUILD_INTERRUPT = true;
+			Policy.DEBUG_BUILD_INVOKING = true;
+			Policy.DEBUG_BUILD_NEEDED = true;
+			Policy.DEBUG_BUILD_NEEDED_STACK = true;
+			Policy.DEBUG_BUILD_STACK = true;
+
+			Policy.DEBUG_CONTENT_TYPE = true;
+			Policy.DEBUG_CONTENT_TYPE_CACHE = true;
+			Policy.DEBUG_HISTORY = true;
+			Policy.DEBUG_NATURES = true;
+			Policy.DEBUG_NOTIFICATIONS = true;
+			Policy.DEBUG_PREFERENCES = true;
+
+			// Get timing information for restoring data
+			Policy.DEBUG_RESTORE = true;
+			Policy.DEBUG_RESTORE_MARKERS = true;
+			Policy.DEBUG_RESTORE_MASTERTABLE = true;
+
+			Policy.DEBUG_RESTORE_METAINFO = true;
+			Policy.DEBUG_RESTORE_SNAPSHOTS = true;
+			Policy.DEBUG_RESTORE_SYNCINFO = true;
+			Policy.DEBUG_RESTORE_TREE = true;
+
+			// Get timing information for save and snapshot data
+			Policy.DEBUG_SAVE = true;
+			Policy.DEBUG_SAVE_MARKERS = true;
+			Policy.DEBUG_SAVE_MASTERTABLE = true;
+
+			Policy.DEBUG_SAVE_METAINFO = true;
+			Policy.DEBUG_SAVE_SYNCINFO = true;
+			Policy.DEBUG_SAVE_TREE = true;
+			Policy.DEBUG_STRINGS = true;
+
+		}
+
+	}
 
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibraryBuilderHelper.class);
 
