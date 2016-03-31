@@ -12,6 +12,10 @@ import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.N4JSFactory;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.ThisArgProvider;
+import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
+
+import eu.numberfour.n4js.ts.types.TypableElement;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 
@@ -215,6 +219,15 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -300,6 +313,32 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VariableEnvironmentElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+				default: return -1;
+			}
+		}
+		if (baseClass == ThisArgProvider.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == TypableElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME:
@@ -308,6 +347,8 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 				return getLocalArgumentsVariable();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

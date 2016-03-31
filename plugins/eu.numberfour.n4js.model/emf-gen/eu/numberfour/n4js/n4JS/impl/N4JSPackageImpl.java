@@ -1871,6 +1871,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getVariableEnvironmentElement__AppliesOnlyToBlockScopedElements() {
+		return variableEnvironmentElementEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getThisTarget() {
 		return thisTargetEClass;
 	}
@@ -2456,7 +2465,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllStatements() {
+	public EOperation getBlock__AppliesOnlyToBlockScopedElements() {
 		return blockEClass.getEOperations().get(0);
 	}
 
@@ -2465,7 +2474,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllReturnStatements() {
+	public EOperation getBlock__GetAllStatements() {
 		return blockEClass.getEOperations().get(1);
 	}
 
@@ -2474,7 +2483,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllNonVoidReturnStatements() {
+	public EOperation getBlock__GetAllReturnStatements() {
 		return blockEClass.getEOperations().get(2);
 	}
 
@@ -2483,7 +2492,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllVoidReturnStatements() {
+	public EOperation getBlock__GetAllNonVoidReturnStatements() {
 		return blockEClass.getEOperations().get(3);
 	}
 
@@ -2492,8 +2501,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__HasNonVoidReturn() {
+	public EOperation getBlock__GetAllVoidReturnStatements() {
 		return blockEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__HasNonVoidReturn() {
+		return blockEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -2863,6 +2881,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 */
 	public EOperation getForStatement__IsForPlain() {
 		return forStatementEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getForStatement__AppliesOnlyToBlockScopedElements() {
+		return forStatementEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -5966,6 +5993,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(typedElementEClass, TYPED_ELEMENT__DECLARED_TYPE_REF);
 
 		variableEnvironmentElementEClass = createEClass(VARIABLE_ENVIRONMENT_ELEMENT);
+		createEOperation(variableEnvironmentElementEClass, VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
 
 		thisTargetEClass = createEClass(THIS_TARGET);
 
@@ -6053,6 +6081,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		blockEClass = createEClass(BLOCK);
 		createEReference(blockEClass, BLOCK__STATEMENTS);
+		createEOperation(blockEClass, BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
 		createEOperation(blockEClass, BLOCK___GET_ALL_STATEMENTS);
 		createEOperation(blockEClass, BLOCK___GET_ALL_RETURN_STATEMENTS);
 		createEOperation(blockEClass, BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS);
@@ -6115,6 +6144,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEAttribute(forStatementEClass, FOR_STATEMENT__FOR_IN);
 		createEAttribute(forStatementEClass, FOR_STATEMENT__FOR_OF);
 		createEOperation(forStatementEClass, FOR_STATEMENT___IS_FOR_PLAIN);
+		createEOperation(forStatementEClass, FOR_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
 
 		continueStatementEClass = createEClass(CONTINUE_STATEMENT);
 		createEReference(continueStatementEClass, CONTINUE_STATEMENT__LABEL);
@@ -6882,6 +6912,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(variableEnvironmentElementEClass, VariableEnvironmentElement.class, "VariableEnvironmentElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEOperation(getVariableEnvironmentElement__AppliesOnlyToBlockScopedElements(), theEcorePackage.getEBoolean(), "appliesOnlyToBlockScopedElements", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		initEClass(thisTargetEClass, ThisTarget.class, "ThisTarget", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(thisArgProviderEClass, ThisArgProvider.class, "ThisArgProvider", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -6990,6 +7022,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBlock_Statements(), this.getStatement(), null, "statements", null, 0, -1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEOperation(getBlock__AppliesOnlyToBlockScopedElements(), theEcorePackage.getEBoolean(), "appliesOnlyToBlockScopedElements", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		initEOperation(getBlock__GetAllStatements(), this.getIteratorOfStatement(), "getAllStatements", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getBlock__GetAllReturnStatements(), this.getIteratorOfReturnStatement(), "getAllReturnStatements", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7063,6 +7097,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEAttribute(getForStatement_ForOf(), theEcorePackage.getEBoolean(), "forOf", null, 0, 1, ForStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getForStatement__IsForPlain(), theEcorePackage.getEBoolean(), "isForPlain", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getForStatement__AppliesOnlyToBlockScopedElements(), theEcorePackage.getEBoolean(), "appliesOnlyToBlockScopedElements", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(continueStatementEClass, ContinueStatement.class, "ContinueStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getContinueStatement_Label(), this.getLabelledStatement(), null, "label", null, 0, 1, ContinueStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -35,6 +35,44 @@ public abstract class N4JSASTUtils {
 	public static final String CONSTRUCTOR = "constructor";
 
 	/**
+	 * Returns the containing variable environment scope for the given variable, depending on whether the variable is
+	 * block scoped (i.e. let, const) or not.
+	 */
+	public static VariableEnvironmentElement getScope(Variable variable) {
+		return getScope(variable, isBlockScoped(variable));
+	}
+
+	/**
+	 * Same as {@link #getScope(Variable)}, but takes any kind of AST node. Flag <code>isBlockScoped</code> can be used
+	 * to determine whether the scope for "block scoped" elements should be returned (i.e. let, const) or the scope for
+	 * ordinarily scoped elements (e.g. var).
+	 */
+	public static VariableEnvironmentElement getScope(EObject astNode, boolean isBlockScoped) {
+		VariableEnvironmentElement scope = EcoreUtil2.getContainerOfType(astNode, VariableEnvironmentElement.class);
+		if (!isBlockScoped) {
+			while (scope != null && scope.appliesOnlyToBlockScopedElements()) {
+				scope = EcoreUtil2.getContainerOfType(scope.eContainer(), VariableEnvironmentElement.class);
+			}
+		}
+		return scope;
+	}
+
+	/**
+	 * Tells if given identifiable element is block scoped, i.e. if it is a variable declared with <code>let</code> or
+	 * <code>const</code>.
+	 */
+	public static boolean isBlockScoped(Variable variable) {
+		if (variable instanceof VariableDeclaration) {
+			// FIXME next two lines will fail if variable is declared in destructuring pattern
+			final EObject parent = variable.eContainer();
+			if (parent instanceof VariableDeclarationContainer) {
+				return ((VariableDeclarationContainer) parent).isBlockScoped();
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Tells if the given AST node contains a variable declaration in form of a destructuring pattern.
 	 */
 	public static boolean containsDestructuringPattern(VariableDeclarationContainer vdeclContainer) {

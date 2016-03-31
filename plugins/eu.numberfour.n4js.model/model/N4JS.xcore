@@ -229,6 +229,13 @@ abstract class TypedElement extends TypeProvidingElement {
  * allowing access to properties of the current context).
  */
 abstract class VariableEnvironmentElement {
+	/**
+	 * Tells if this variable environment element applies only to block scoped elements, i.e. let & const.
+	 * Returns <code>true</code> for {@link Block} and {@link ForStatement}, <code>false</code> otherwise.
+	 */
+	op boolean appliesOnlyToBlockScopedElements() {
+		false // overridden by Block and ForStatement to return true
+	}
 }
 
 /* Possible target to which a this expression may be bound. This is used in the type inferrer.
@@ -577,6 +584,12 @@ class FormalParameter extends AnnotableElement, Variable {
 
 class Block extends Statement, VariableEnvironmentElement {
 	contains Statement[] statements
+
+	/** See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}. */
+	op boolean appliesOnlyToBlockScopedElements() {
+		true
+	}
+
 	/*
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.
@@ -731,6 +744,10 @@ class ForStatement extends VariableDeclarationContainer, IterationStatement, Var
 	boolean forOf
 	op boolean isForPlain() {
 		return !forIn && !forOf;
+	}
+	/** See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}. */
+	op boolean appliesOnlyToBlockScopedElements() {
+		true
 	}
 }
 
