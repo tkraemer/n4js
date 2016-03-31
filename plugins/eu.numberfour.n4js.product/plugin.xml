@@ -63,6 +63,7 @@ Contributors:
             targetID="eu.numberfour.n4js.product.N4JSPerspective">
          
          <newWizardShortcut id="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard"/>
+         <newWizardShortcut id="eu.numberfour.n4js.ui.wizard.N4JSNewInterfaceWizard"/>
          <newWizardShortcut id="eu.numberfour.n4js.n4mf.ui.wizard.N4MFNewProjectWizard"/>
          
          <view

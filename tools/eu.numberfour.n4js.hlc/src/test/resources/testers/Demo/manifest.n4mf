@@ -10,6 +10,3 @@ Sources {
 		"src"
 	}
 }
-RequiredRuntimeLibraries {
-	RL_NodeJS_OS
-}

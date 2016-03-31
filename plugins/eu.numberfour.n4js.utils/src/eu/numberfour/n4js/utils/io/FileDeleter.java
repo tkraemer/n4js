@@ -33,20 +33,6 @@ public class FileDeleter implements FileVisitor<Path> {
 	 * Deletes a single file or recursively a folder with its content.
 	 *
 	 * @param resourceToDelete
-	 *            path to the file resource or to the folder to delete.
-	 * @throws IOException
-	 *             in unrecognized cases.
-	 */
-	public static void delete(Path resourceToDelete) throws IOException {
-		if (resourceToDelete.toFile().exists()) {
-			Files.walkFileTree(resourceToDelete, new FileDeleter());
-		}
-	}
-
-	/**
-	 * Deletes a single file or recursively a folder with its content.
-	 *
-	 * @param resourceToDelete
 	 *            the file resource or to the folder to delete.
 	 * @throws IOException
 	 *             in unrecognized cases.
@@ -56,6 +42,48 @@ public class FileDeleter implements FileVisitor<Path> {
 		if (resourceToDelete.exists()) {
 			delete(resourceToDelete.toPath());
 		}
+	}
+
+	/**
+	 * Deletes a single file or recursively a folder with its content.
+	 *
+	 * @param resourceToDelete
+	 *            path to the file resource or to the folder to delete.
+	 * @throws IOException
+	 *             in unrecognized cases.
+	 */
+	public static void delete(Path resourceToDelete) throws IOException {
+		delete(resourceToDelete, false);
+	}
+
+	/**
+	 * Sugar for {@link #delete(Path)}. The error output can be configured with the boolean argument.
+	 *
+	 * @param resourceToDelete
+	 *            path to the file resource or to the folder to delete.
+	 * @param logToStdErr
+	 *            {@code true} if any error messages should be logged to the standard error output instead of the
+	 *            logger's output.
+	 * @throws IOException
+	 *             in unrecognized cases.
+	 */
+	public static void delete(Path resourceToDelete, boolean logToStdErr) throws IOException {
+		if (resourceToDelete.toFile().exists()) {
+			Files.walkFileTree(resourceToDelete, new FileDeleter(logToStdErr));
+		}
+	}
+
+	private final boolean logToStdErr;
+
+	/**
+	 * Creates a new file deleter instance.
+	 *
+	 * @param logToStdErr
+	 *            {@code true} if any error messages should be logged to the standard out instead of the logger
+	 *            instance. This could be useful when using file deleted in the headless tool.
+	 */
+	public FileDeleter(boolean logToStdErr) {
+		this.logToStdErr = logToStdErr;
 	}
 
 	@Override
@@ -71,7 +99,7 @@ public class FileDeleter implements FileVisitor<Path> {
 
 	@Override
 	public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-		LOGGER.error("Unexpected file visiting failure.", exc);
+		logError(file, exc);
 		return CONTINUE;
 	}
 
@@ -79,6 +107,15 @@ public class FileDeleter implements FileVisitor<Path> {
 	public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
 		Files.delete(dir);
 		return CONTINUE;
+	}
+
+	private void logError(Path path, IOException e) {
+		if (logToStdErr) {
+			System.err.println("Unexpected file visiting failure" + path);
+			e.printStackTrace();
+		} else {
+			LOGGER.error("Unexpected file visiting failure" + path, e);
+		}
 	}
 
 }

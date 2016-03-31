@@ -10,25 +10,29 @@
  */
 package eu.numberfour.n4js.hlc;
 
-import static java.nio.file.FileVisitResult.CONTINUE;
-import static java.nio.file.FileVisitResult.SKIP_SUBTREE;
+import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.FileSystemLoopException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
+import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.io.FileCopier;
+import eu.numberfour.n4js.utils.io.FileDeleter;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -46,7 +50,6 @@ public class AbstractN4jscTest {
 	protected static final String WSP = "wsp";
 	/** name of package containing the test resources */
 	protected static final String FIXTURE = "src/test/resources";
-
 	/** name of default test data set */
 	protected static final String TEST_DATA_SET__BASIC = "basic";
 	/** name of test data set for launching testers from the command line */
@@ -56,16 +59,44 @@ public class AbstractN4jscTest {
 	 * Copy a fresh fixture to the workspace area. Deleting old leftovers from former tests.
 	 */
 	protected static void setupWorkspace(String testDataSet) throws IOException {
+		setupWorkspace(testDataSet, Predicates.alwaysFalse());
+	}
+
+	/**
+	 * Copy a fresh fixture to the workspace area. Deleting old leftovers from former tests. Also includes all N4JS
+	 * libraries from the {@code n4js} Git repository which name provides {@code true} value for the given predicate.
+	 */
+	protected static void setupWorkspace(String testDataSet, Predicate<String> n4jsLibrariesPredicate)
+			throws IOException {
 		File wsp = new File(TARGET, WSP);
 		File fixture = new File(FIXTURE, testDataSet);
 		// clean
 		System.out.println("Workspace : " + wsp.getAbsolutePath());
 		// Files.deleteIfExists(wsp.toPath());
 		if (wsp.exists()) {
-			Files.walkFileTree(wsp.toPath(), new TreeDeleter());
+			FileDeleter.delete(wsp.toPath(), true);
 		}
-		// copy
-		Files.walkFileTree(fixture.toPath(), new TreeCopier(fixture.toPath(), wsp.toPath()));
+
+		// copy fixtures to workspace
+		FileCopier.copy(fixture.toPath(), wsp.toPath(), true);
+
+		final File gitRoot = new File(new File("").getAbsolutePath()).getParentFile().getParentFile();
+		final File n4jsLibraryRoot = new File(gitRoot, "n4js-libraries");
+		final File[] n4jsLibraries = n4jsLibraryRoot.listFiles();
+		// copy N4JS libraries on demand
+		if (!Arrays2.isEmpty(n4jsLibraries)) {
+			for (final File n4jsLibrary : n4jsLibraries) {
+				if (n4jsLibrariesPredicate.apply(n4jsLibrary.getName())) {
+					System.out.println("Including N4JS library in workspace: '" + n4jsLibrary.getName() + "'.");
+					final File libFolder = new File(wsp, n4jsLibrary.getName());
+					libFolder.mkdir();
+					checkState(libFolder.isDirectory(),
+							"Error while copying N4JS library '" + n4jsLibrary.getName() + "' to workspace.");
+					FileCopier.copy(n4jsLibrary.toPath(), libFolder.toPath(), true);
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -80,26 +111,22 @@ public class AbstractN4jscTest {
 
 	}
 
-	/** Wrapper for FileVisitor */
-	private static class Counter {
-		public int i = 0;
-
-		public int inc() {
-			return i++;
-		}
-	}
-
 	/**
-	 * @param i
-	 *            expected number i of "*.js" files in all "es5" sub folders
-	 * @param workspaceroot
+	 * @param expectedCompiledModuleCount
+	 *            expected number of compiled '.js' files in the {@value #SUBGENERATOR_PATH} folder.
+	 * @param workspaceRootPath
 	 *            subtree to search in passed as argument to {@link File}
 	 */
-	protected void assertFilesCompiledToES(int i, String workspaceroot) {
-		File f = new File(workspaceroot);
-		final Counter c = new Counter();
+	protected void assertFilesCompiledToES(int expectedCompiledModuleCount, String workspaceRootPath) {
+		final File workspaceRoot = new File(workspaceRootPath);
+
+		final File gitRoot = new File(new File("").getAbsolutePath()).getParentFile().getParentFile();
+		final File n4jsLibrariesRoot = new File(gitRoot, "n4js-libraries");
+		final Collection<String> n4jsLibraryNames = newHashSet(n4jsLibrariesRoot.list());
+
+		final AtomicInteger counter = new AtomicInteger();
 		try {
-			Files.walkFileTree(f.toPath(), new FileVisitor<Path>() {
+			Files.walkFileTree(workspaceRoot.toPath(), new FileVisitor<Path>() {
 
 				@Override
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
@@ -108,6 +135,11 @@ public class AbstractN4jscTest {
 					if ("src".equals(dir.getFileName())) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
+
+					if (n4jsLibraryNames.contains(dir.toFile().getName())) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -116,7 +148,7 @@ public class AbstractN4jscTest {
 					if (file.getFileName().toString().endsWith(".js")) {
 						for (int j = 0; j < file.getNameCount() - 1; j++) {
 							if (SUBGENERATOR_PATH.equals(file.getName(j).toString())) {
-								c.inc();
+								counter.incrementAndGet();
 								return FileVisitResult.CONTINUE;
 							}
 						}
@@ -138,106 +170,20 @@ public class AbstractN4jscTest {
 			});
 		} catch (IOException e) {
 			e.printStackTrace();
-			assertTrue("Could not parse file tree of path '" + workspaceroot + "' exc = " + e.getMessage(), false);
+			assertTrue("Could not parse file tree of path '" + workspaceRootPath + "' exc = " + e.getMessage(), false);
 		}
-		assertEquals("Files expected", i, c.i);
+		assertEquals("Files expected", expectedCompiledModuleCount, counter.get());
 	}
 
-	// = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = =
-	// Static File helper methods.
-	// = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = =
 	/**
-	 * Determine class.method of the direct caller by inspecting the current thread's stacktrace.
+	 * Determine class.method of the direct caller by inspecting the current thread's stack trace.
 	 *
 	 * @return Class + Method name of the caller.
 	 */
-	protected static String logMethodname() {
+	protected String logMethodname() {
 		StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[2];
 		String name = stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "";
 		return "INSIDE of " + name;
 	}
 
-	// = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = =
-	// Static File helper classes.
-	// = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = = 0 = = 00=0====0== = =
-	/**
-	 *
-	 */
-	private static class TreeCopier implements FileVisitor<Path> {
-		private final Path source;
-		private final Path target;
-
-		TreeCopier(Path source, Path target) {
-			this.source = source;
-			this.target = target;
-		}
-
-		@Override
-		public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-			CopyOption[] options = new CopyOption[0];
-
-			Path newdir = target.resolve(source.relativize(dir));
-			try {
-				Files.copy(dir, newdir, options);
-			} catch (FileAlreadyExistsException x) {
-				// ignore
-			} catch (IOException x) {
-				System.err.format("Unable to create: %s: %s%n", newdir, x);
-				return SKIP_SUBTREE;
-			}
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult visitFileFailed(Path file, IOException exc) {
-			if (exc instanceof FileSystemLoopException) {
-				System.err.println("cycle detected: " + file);
-			} else {
-				System.err.format("Unable to copy: %s: %s%n", file, exc);
-			}
-			return CONTINUE;
-		}
-	}
-
-	/**
-	 *
-	 */
-	private static class TreeDeleter implements FileVisitor<Path> {
-
-		@Override
-		public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			Files.delete(file);
-			System.out.println("Deleting file: " + file);
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-			System.out.println("ouch what happened ? " + exc);
-			return CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-			Files.delete(dir);
-			System.out.println("Deleting dir: " + dir);
-			return CONTINUE;
-		}
-	}
 }

@@ -15,9 +15,9 @@ import static com.google.common.base.Throwables.getStackTraceAsString;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.difference;
-import static eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType.STD_ERR;
-import static eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType.STD_OUT;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
+import static eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType.STD_ERR;
+import static eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType.STD_OUT;
 import static java.lang.System.lineSeparator;
 import static org.eclipse.core.runtime.Status.OK_STATUS;
 
@@ -48,6 +48,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
@@ -55,6 +56,8 @@ import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.git.GitUtils;
+import eu.numberfour.n4js.utils.process.OutputStreamProvider;
+import eu.numberfour.n4js.utils.process.ProcessResult;
 import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 
@@ -83,7 +86,7 @@ public class NpmManager {
 	};
 
 	@Inject
-	private NpmConnector npmConnector;
+	private BinaryCommandFactory commandFactory;
 
 	@Inject
 	private NpmPackageToProjectAdapter npmPackageToProjectAdapter;
@@ -179,7 +182,7 @@ public class NpmManager {
 			monitor.setTaskName("Fetching '" + packageName + "' package... [1 of 4]");
 			try {
 				final File targetInstallLocation = new File(locationProvider.getTargetPlatformInstallLocation());
-				final IStatus installStatus = npmConnector.installPackage(targetInstallLocation, packageName);
+				final IStatus installStatus = installPackage(targetInstallLocation, packageName);
 				if (!installStatus.isOK()) {
 					logError("Error occurred while installing '" + packageName + "' npm package.",
 							installStatus.getException());
@@ -399,7 +402,7 @@ public class NpmManager {
 	private void logInfo(final String message) {
 		LOGGER.info(message);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		pw.flush();
 	}
@@ -416,7 +419,7 @@ public class NpmManager {
 	private void logError(final String message, final Throwable t) {
 		LOGGER.error(message, t);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		if (null != t) {
 			pw.append(getTimestamp() + getStackTraceAsString(t) + lineSeparator());
@@ -426,6 +429,42 @@ public class NpmManager {
 
 	private String getTimestamp() {
 		return DATE_FORMAT.get().format(new Date());
+	}
+
+	/**
+	 * Installs package under given name in specified location. Updates dependencies in the package.json of that
+	 * location. If there is no package.json at that location npm errors will be logged to the error log. In that case
+	 * npm usual still installs requested dependency (if possible).
+	 *
+	 * @param installPath
+	 *            location in which package will be installed
+	 * @param packageName
+	 *            to be installed
+	 *
+	 * @throws IOException
+	 *             if IO issues in npm process
+	 * @throws InterruptedException
+	 *             if interrupted when waiting for npm process
+	 */
+	private IStatus installPackage(File installPath, String packageName) throws IOException, InterruptedException {
+		if (packageName == null || packageName.trim().isEmpty()) {
+			return statusHelper.createError("Malformed npm package name: '" + packageName + "'.");
+		}
+
+		ProcessResult per = commandFactory.createInstallPackageCommand(installPath, packageName, true).execute();
+
+		if (!per.isOK()) {
+			final Throwable cause = per.toThrowable("Error while installing npm package.");
+			if (null != cause) {
+				return statusHelper.createError(cause.getMessage(), cause);
+			} else {
+				final String processLog = per.toString();
+				return statusHelper.createError(processLog, cause);
+			}
+		} else {
+			return OK_STATUS;
+		}
+
 	}
 
 }

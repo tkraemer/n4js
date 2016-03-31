@@ -29,8 +29,8 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import com.google.common.base.Supplier;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.external.OutputStreamPrinterThread.OutputStreamType;
-import eu.numberfour.n4js.external.OutputStreamProvider;
+import eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType;
+import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 
 /**
  * Output stream provider to the NPM console.
@@ -44,23 +44,25 @@ public class ConsoleOutputStreamProvider implements OutputStreamProvider {
 	private final Supplier<MessageConsole> consoleSupplier = memoize(() -> new MessageConsole("npm Console", null));
 
 	@Override
-	public OutputStream getOutputStream(final OutputStreamType type) {
+	public OutputStream getOutputStream(final OutputStreamType type, boolean silent) {
 		if (!PlatformUI.isWorkbenchRunning()) {
-			return DEFAULT.getOutputStream(type);
+			return DEFAULT.getOutputStream(type, silent);
 		}
 		final MessageConsole console = consoleSupplier.get();
-		console.activate();
+		if (!silent) {
+			console.activate();
+		}
 		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] { console });
 		final MessageConsoleStream stream = console.newMessageStream();
 		getDisplay().asyncExec(() -> {
 			stream.setColor(toColor(type));
-			showConsoleView();
+			showConsoleView(silent);
 		});
 		return stream;
 	}
 
-	private void showConsoleView() {
-		if (PlatformUI.isWorkbenchRunning()) {
+	private void showConsoleView(final boolean silent) {
+		if (PlatformUI.isWorkbenchRunning() && !silent) {
 			final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 			final IViewPart view = window.getActivePage().findView(CONSOLE_VIEW_ID);
 			if (null != view) {

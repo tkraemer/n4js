@@ -10,8 +10,15 @@ Sources {
 		"src"
 	}
 }
+
 ImplementationId : apiId1
-ImplementedProjects { APIx }
-RequiredRuntimeLibraries {rtlib}
+
+ImplementedProjects { 
+	APIx
+}
+
+RequiredRuntimeLibraries { 
+	n4js-runtime-es2015
+}
 
 

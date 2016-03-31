@@ -17,11 +17,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Files;
 
 import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
@@ -31,12 +33,22 @@ import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
  */
 public class N4jscTestersTest extends AbstractN4jscTest {
 
+	private static Collection<String> REQUIRED_LIBS = ImmutableSet.<String> builder()
+			.add("eu.numberfour.mangelhaft")
+			.add("eu.numberfour.mangelhaft.assert")
+			.add("eu.numberfour.mangelhaft.mangeltypes")
+			.add("n4js-runtime-n4")
+			.add("n4js-runtime-v8")
+			.add("n4js-runtime-es2015")
+			.add("n4js.lang")
+			.build();
+
 	/**
 	 * Prepare tests.
 	 */
 	@Before
 	public void setupWorkspace() throws IOException {
-		setupWorkspace(TEST_DATA_SET__TESTERS);
+		setupWorkspace(TEST_DATA_SET__TESTERS, Predicates.in(REQUIRED_LIBS));
 	}
 
 	/**
@@ -45,7 +57,6 @@ public class N4jscTestersTest extends AbstractN4jscTest {
 	 * @throws ExitCodeException
 	 *             in error cases ( not expected )
 	 */
-	@Ignore("IDEBUG-781") // TODO reactivate see bug IDEBUG-781
 	@Test
 	public void testCompile_And_LaunchSingleTestFile() throws ExitCodeException {
 		System.out.println(logMethodname());
