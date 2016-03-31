@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,7 @@ public class N4jscJarUtils {
 			jar = new File(providedJar).getAbsoluteFile();
 		}
 		LOGGER.info("Using n4jsc.jar at: " + jar.getAbsolutePath());
-		checkState(jar.exists(), "n4jsc.jar does not exist at default location: " + jar);
+		checkState(jar.exists(), "n4jsc.jar does not exist at location: " + jar);
 		return jar;
 	}
 
@@ -87,8 +88,8 @@ public class N4jscJarUtils {
 	 *            zero or more additional command line optional that will be sent to the {@code n4jsc.jar}.
 	 */
 	public static void buildHeadlessWithN4jscJar(Collection<? extends File> workspaceRoots, String... options) {
-		if (workspaceRoots == null || options == null)
-			throw new IllegalArgumentException("arguments may not be null");
+		Objects.requireNonNull(workspaceRoots);
+		Objects.requireNonNull(options);
 		if (workspaceRoots.isEmpty())
 			throw new IllegalArgumentException("at least one workspace root must be given");
 
@@ -110,7 +111,7 @@ public class N4jscJarUtils {
 		pb.directory(null); // set to home of current process, which should be the module (mvn: ${project.basedir})
 		pb.inheritIO();
 
-		LOGGER.info("current directory is: " + new File(".").getAbsolutePath());
+		LOGGER.info("current directory is: " + new File("").getAbsolutePath());
 		LOGGER.info("spawning process with command: " + Joiner.on(" ").join(cmdline));
 
 		boolean timeout = false;
