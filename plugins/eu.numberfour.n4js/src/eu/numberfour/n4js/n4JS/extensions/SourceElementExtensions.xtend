@@ -22,9 +22,7 @@ import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
-import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
-import eu.numberfour.n4js.n4JS.Variable
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -32,6 +30,8 @@ import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.IResourceScopeCache
+
+import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 
 /**
  * Extensions for source element, in particular for statements.
@@ -183,9 +183,6 @@ class SourceElementExtensions {
 	}
 
 	def private boolean belongsToScope(IdentifiableElement elem, VariableEnvironmentElement scope) {
-		return N4JSASTUtils.getScope(elem, elem.isBlockScoped) === scope;
-	}
-	def private boolean isBlockScoped(IdentifiableElement elem) {
-		return if(elem instanceof Variable) N4JSASTUtils.isBlockScoped(elem) else false;
+		return elem.getScope === scope;
 	}
 }

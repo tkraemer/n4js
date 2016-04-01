@@ -16,12 +16,14 @@ import org.eclipse.xtext.EcoreUtil2;
 
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 /**
@@ -35,17 +37,21 @@ public abstract class N4JSASTUtils {
 	public static final String CONSTRUCTOR = "constructor";
 
 	/**
-	 * Returns the containing variable environment scope for the given variable, depending on whether the variable is
-	 * block scoped (i.e. let, const) or not.
+	 * Returns the containing variable environment scope for the given identifiable element, depending on whether the
+	 * element is block scoped (i.e. variables declared with let, const) or not.
+	 *
+	 * @param elemInAST
+	 *            an AST node of a subtype of {@link IdentifiableElement} that may appear in the AST, e.g.
+	 *            {@link Variable}, {@link TypeVariable}, {@link TStructMember}.
 	 */
-	public static VariableEnvironmentElement getScope(Variable variable) {
-		return getScope(variable, isBlockScoped(variable));
+	public static VariableEnvironmentElement getScope(IdentifiableElement elemInAST) {
+		return getScope(elemInAST, isBlockScoped(elemInAST));
 	}
 
 	/**
-	 * Same as {@link #getScope(Variable)}, but takes any kind of AST node. Flag <code>isBlockScoped</code> can be used
-	 * to determine whether the scope for "block scoped" elements should be returned (i.e. let, const) or the scope for
-	 * ordinarily scoped elements (e.g. var).
+	 * Same as {@link #getScope(IdentifiableElement)}, but takes any kind of AST node. Flag <code>isBlockScoped</code>
+	 * can be used to determine whether the scope for "block scoped" elements should be returned (i.e. let, const) or
+	 * the scope for ordinarily scoped elements (e.g. var).
 	 */
 	public static VariableEnvironmentElement getScope(EObject astNode, boolean isBlockScoped) {
 		VariableEnvironmentElement scope = EcoreUtil2.getContainerOfType(astNode, VariableEnvironmentElement.class);
@@ -59,12 +65,16 @@ public abstract class N4JSASTUtils {
 
 	/**
 	 * Tells if given identifiable element is block scoped, i.e. if it is a variable declared with <code>let</code> or
-	 * <code>const</code>.
+	 * <code>const</code>. Delegates to {@link VariableDeclarationContainer#isBlockScoped()}.
+	 *
+	 * @param elemInAST
+	 *            an AST node of a subtype of {@link IdentifiableElement} that may appear in the AST, e.g.
+	 *            {@link Variable}, {@link TypeVariable}, {@link TStructMember}.
 	 */
-	public static boolean isBlockScoped(Variable variable) {
-		if (variable instanceof VariableDeclaration) {
+	public static boolean isBlockScoped(IdentifiableElement elemInAST) {
+		if (elemInAST instanceof VariableDeclaration) {
 			// FIXME next two lines will fail if variable is declared in destructuring pattern
-			final EObject parent = variable.eContainer();
+			final EObject parent = elemInAST.eContainer();
 			if (parent instanceof VariableDeclarationContainer) {
 				return ((VariableDeclarationContainer) parent).isBlockScoped();
 			}
