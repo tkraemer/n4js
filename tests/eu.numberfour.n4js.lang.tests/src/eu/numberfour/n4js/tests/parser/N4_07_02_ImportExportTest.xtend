@@ -13,12 +13,10 @@ package eu.numberfour.n4js.tests.parser
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
-import org.junit.Ignore
 import org.junit.Test
 
 class N4_07_02_ImportExportTest extends AbstractParserTest{
 
-	@Ignore("IDE-1744") // FIXME IDE-1744
 	@Test
 	def void testImportExample() {
 		val script = '''
@@ -47,11 +45,10 @@ class N4_07_02_ImportExportTest extends AbstractParserTest{
 		assertTrue(script.scriptElements.filter(ImportDeclaration).forall[!it.isImportFrom])
 	}
 
-	@Ignore("IDE-1744") // FIXME IDE-1744
 	@Test
 	def void testES6Imports_02() {
 		val script = '''
-			import ImportedBinding from 'p/A'
+			import { ImportedBinding } from 'p/A'
 			import * as ImportedBinding from 'p/A'
 		'''.parse
 
@@ -82,7 +79,6 @@ class N4_07_02_ImportExportTest extends AbstractParserTest{
 		assertTrue(script.scriptElements.filter(ImportDeclaration).forall[!it.firstIsDefault])
 	}
 
-	@Ignore("IDE-1744") // FIXME IDE-1744
 	@Test
 	def void testES6Imports_04() {
 		val script = '''
