@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.ui.building;
 
+import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.collect.FluentIterable.from;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
@@ -39,6 +41,8 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -226,6 +230,42 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 						new ResourceDescriptionWithoutModuleUserData(resDesc)));
 			}
 		}
+	}
+
+	/**
+	 * Customized method when setting the index state. Here we have to re-map the customized
+	 * {@link ResourceDescriptionWithoutModuleUserData} description instances to the delegates after the build is
+	 * finished. Without this re-mapping logic some Xtext index entries would not get persisted on graceful shutdown.
+	 *
+	 * See: GH-120
+	 */
+	@Override
+	protected void setResourceDescriptionsData(final ResourceDescriptionsData newData) {
+
+		final ResourceDescriptionsData newDataWithoutCustomDescriptions = newData.copy();
+
+		for (final IResourceDescription description : newData.getAllResourceDescriptions()) {
+			if (description instanceof ResourceDescriptionWithoutModuleUserData) {
+				final IResourceDescription delegate = ((ResourceDescriptionWithoutModuleUserData) description)
+						.getDelegate();
+				newDataWithoutCustomDescriptions.removeDescription(description.getURI());
+				newDataWithoutCustomDescriptions.register(new DefaultResourceDescriptionDelta(description, delegate));
+			}
+		}
+
+		final FluentIterable<ResourceDescriptionWithoutModuleUserData> customResourceDescriptions = from(
+				newDataWithoutCustomDescriptions.getAllResourceDescriptions())
+						.filter(ResourceDescriptionWithoutModuleUserData.class);
+
+		checkState(customResourceDescriptions.isEmpty(),
+				"Expected zero " + ResourceDescriptionWithoutModuleUserData.class.getName()
+						+ " resource description instances in the index after the build phase. Was " +
+						customResourceDescriptions.size() + "."
+						+ "\n--------------------------------------------------------------------------------\n"
+						+ Joiner.on("\n").join(customResourceDescriptions.transform(desc -> desc.getURI()))
+						+ "\n--------------------------------------------------------------------------------");
+
+		super.setResourceDescriptionsData(newDataWithoutCustomDescriptions);
 	}
 
 	private ExternalLibraryWorkspace getExternalLibraryWorkspace() {
