@@ -161,13 +161,11 @@ public class N4jsc {
 	@Option(name = "--preferences", usage = "provide custom compiler preference settings stored in a *.properties file")
 	File preferencesProperties;
 
-	@Option(name = "-t", usage = "provide the type to build (defaults to dontcompile). "
+	@Option(name = "-t", metaVar = "type", usage = "provide the type to build (defaults to dontcompile). "
 			+ "\n'allprojects' compiles all projects found in the projectlocations, no other argument required. "
 			+ "\n'projects' interprets the arguments as projects-folders and compiles them. "
 			+ "\n'singlefile' interprets the arguments as paths to N4JS-source files and compiles only those both."
-			+ "\n'dontcompile' don't generate anything.",
-
-	metaVar = "type")
+			+ "\n'dontcompile' don't generate anything.")
 	Type buildtype = Type.dontcompile;
 
 	@Option(name = "--testCatalogFile", aliases = "-tc", required = false, usage = "if specified, a test catalog file will be generated to the given file location. The generated test catalog file will represent all "
@@ -185,6 +183,11 @@ public class N4jsc {
 			+ "specified in the target platform file will be downloaded to that given location. If the target platform file is given, but the target platform install location is not specified, "
 			+ "then a the compilation phase will be aborted and the execution will be interrupted.")
 	File targetPlatformInstallLocation;
+
+	@Option(name = "--targetPlatformSkipInstall", required = false, usage = "usually dependencies defined in the target platform file will be installed into the folder defined by option --targetPlatformInstallLocation. "
+			+ "If this flag is provided, this installation will be skipped, assuming the given folder already contains the required files and everything is up-to-date."
+			+ "Use with care, because no checks will be performed whether the location actually contains all required dependencies.")
+	boolean targetPlatformSkipInstall;
 
 	@Option(name = "--keepCompiling", usage = "keep compiling - even if errors are encountered")
 	boolean keepCompiling = false;
@@ -239,13 +242,13 @@ public class N4jsc {
 	// -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- - -- --- --- -
 	// Special debugging features, hidden from normal usage
 	@Option(name = "--log",
-	// no usage, do not show in help
-	required = false)
+			// no usage, do not show in help
+			required = false)
 	boolean log = false;
 
 	@Option(name = "--logfile",
-	// no usage, do not show in help
-	required = false)
+			// no usage, do not show in help
+			required = false)
 	String logFile = "n4jsc.log";
 
 	/**
@@ -507,13 +510,14 @@ public class N4jsc {
 				((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
 						.setTargetPlatformInstallLocation(targetPlatformInstallLocation.toURI());
 
-				java.net.URI gitRepositoryLocation = installLocationProvider
-						.getTargetPlatformLocalGitRepositoryLocation();
-				Path localClonePath = new File(gitRepositoryLocation).toPath();
-				hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
-						getMasterBranch(), true);
-				pull(localClonePath);
-
+				if (!targetPlatformSkipInstall) {
+					java.net.URI gitRepositoryLocation = installLocationProvider
+							.getTargetPlatformLocalGitRepositoryLocation();
+					Path localClonePath = new File(gitRepositoryLocation).toPath();
+					hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
+							getMasterBranch(), true);
+					pull(localClonePath);
+				}
 			}
 
 			if (null != targetPlatformFile) {
@@ -541,7 +545,7 @@ public class N4jsc {
 						.setTargetPlatformFileLocation(packageJsonFile.toURI());
 			}
 
-			if (null != installLocationProvider.getTargetPlatformFileLocation()) {
+			if (null != installLocationProvider.getTargetPlatformFileLocation() && !targetPlatformSkipInstall) {
 				final PackageJson packageJson = installLocationProvider.getTargetPlatformContent();
 				final Map<String, String> dependencies = packageJson.getDependencies();
 				if (null != dependencies) {
@@ -560,7 +564,6 @@ public class N4jsc {
 						}
 					}
 				}
-
 			}
 
 		} catch (Exception e) {

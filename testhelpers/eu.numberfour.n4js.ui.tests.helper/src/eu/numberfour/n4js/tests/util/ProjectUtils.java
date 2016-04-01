@@ -85,17 +85,29 @@ public class ProjectUtils {
 	 *      "http://stackoverflow.com/questions/12484128/how-do-i-import-an-eclipse-project-from-a-zip-file-programmatically">
 	 *      stackoverflow: from zip</a>
 	 */
-	// TODO after java update bring back nullness analysis
-	// @Nonnull
-	// public static IProject importProject(@Nonnull File probandsFolder, @Nonnull String projectName) throws Exception
-	// {
 	public static IProject importProject(File probandsFolder, String projectName) throws Exception {
+		return importProject(probandsFolder, projectName, true);
+	}
+
+	/**
+	 * Same as {@link #importProject(File, String)}, but won't enforce the convention that ".project" files should be
+	 * named "_project" in the proband folder. This should only be used as a rare exception when tests import projects
+	 * from Git repositories other than the N4JS or N4JS-N4 source repositories (e.g. for integration tests).
+	 */
+	public static IProject importProjectFromExternalSource(File probandsFolder, String projectName) throws Exception {
+		return importProject(probandsFolder, projectName, false);
+	}
+
+	private static IProject importProject(File probandsFolder, String projectName, boolean prepareDotProject)
+			throws Exception {
 		File projectSourceFolder = new File(probandsFolder, projectName);
 		if (!projectSourceFolder.exists()) {
 			throw new IllegalArgumentException("proband not found in " + projectSourceFolder);
 		}
 
-		prepareDotProject(projectSourceFolder);
+		if (prepareDotProject) {
+			prepareDotProject(projectSourceFolder);
+		}
 
 		IProgressMonitor monitor = new NullProgressMonitor();
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
