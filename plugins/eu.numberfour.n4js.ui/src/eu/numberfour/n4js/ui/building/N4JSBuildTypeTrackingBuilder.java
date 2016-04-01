@@ -39,6 +39,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			updateProjectReferencesIfNecessary();
 			N4JSBuildTypeTracker.setBuildType(getProject(), BuildType.CLEAN);
 			super.doClean(toBeBuilt, monitor);
+			getProject().touch(monitor);
 		} finally {
 			N4JSBuildTypeTracker.clearBuildType(getProject());
 		}
@@ -51,6 +52,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 			updateProjectReferencesIfNecessary();
 			N4JSBuildTypeTracker.setBuildType(getProject(), type);
 			super.doBuild(toBeBuilt, monitor, type);
+			getProject().touch(monitor);
 		} catch (OperationCanceledException e) {
 			throw e;
 		} catch (Exception e) {
