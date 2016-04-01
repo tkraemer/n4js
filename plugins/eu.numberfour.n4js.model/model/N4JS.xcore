@@ -636,6 +636,14 @@ enum VariableStatementKeyword {
 	, let
 }
 
+/**
+ * Base class for elements containing variable declarations.
+ * <p>
+ * IMPORTANT: the variable declarations need not be <em>directly</em> contained! In order to support destructuring, a
+ * {@link VariableBinding} and other destructuring-related nodes might appear in between. To get from a
+ * {@link VariableDeclaration} to its <code>VariableDeclarationContainer</code> use method
+ * {@link eu.numberfour.n4js.n4JS.N4JSASTUtils#getVariableDeclarationContainer(VariableDeclaration)}.
+ */
 abstract class VariableDeclarationContainer {
 	contains VariableDeclarationOrBinding[] varDeclsOrBindings
 	VariableStatementKeyword varStmtKeyword

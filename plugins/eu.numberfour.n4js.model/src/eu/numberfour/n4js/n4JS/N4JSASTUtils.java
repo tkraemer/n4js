@@ -73,13 +73,31 @@ public abstract class N4JSASTUtils {
 	 */
 	public static boolean isBlockScoped(IdentifiableElement elemInAST) {
 		if (elemInAST instanceof VariableDeclaration) {
-			// FIXME next two lines will fail if variable is declared in destructuring pattern
-			final EObject parent = elemInAST.eContainer();
-			if (parent instanceof VariableDeclarationContainer) {
-				return ((VariableDeclarationContainer) parent).isBlockScoped();
+			final VariableDeclarationContainer parent = getVariableDeclarationContainer(
+					(VariableDeclaration) elemInAST);
+			if (parent != null) {
+				return parent.isBlockScoped();
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * To get from a variable declaration to its "containing" {@link VariableDeclarationContainer} use this method.
+	 * Details on why this is required are given {@link VariableDeclarationContainer here}.
+	 */
+	public static VariableDeclarationContainer getVariableDeclarationContainer(VariableDeclaration varDecl) {
+		EObject parent = varDecl.eContainer();
+		if (parent instanceof BindingProperty || parent instanceof BindingElement) {
+			final EObject destructRoot = getRootOfDestructuringPattern(varDecl);
+			if (destructRoot instanceof BindingPattern && destructRoot.eContainer() instanceof VariableBinding) {
+				parent = destructRoot.eContainer().eContainer();
+			}
+		}
+		if (parent instanceof VariableDeclarationContainer) {
+			return (VariableDeclarationContainer) parent;
+		}
+		return null;
 	}
 
 	/**
