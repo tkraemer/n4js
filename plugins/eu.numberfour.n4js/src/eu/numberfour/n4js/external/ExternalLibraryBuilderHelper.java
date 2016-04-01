@@ -15,6 +15,7 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
 import static eu.numberfour.n4js.utils.Arrays2.transform;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_BEGINTASK;
 import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_NONE;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
@@ -350,7 +351,9 @@ public class ExternalLibraryBuilderHelper {
 
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
 			final ToBeBuiltComputer computer = helper.builtComputer;
-			final ToBeBuilt toBeBuilt = getToBeBuilt(computer, project, subMonitor.newChild(1, SUPPRESS_NONE));
+			final IProgressMonitor computeMonitor = subMonitor.newChild(1, SUPPRESS_BEGINTASK);
+			monitor.setTaskName("Collecting resource for '" + project.getName() + "'...");
+			final ToBeBuilt toBeBuilt = getToBeBuilt(computer, project, computeMonitor);
 
 			if (toBeBuilt.getToBeDeleted().isEmpty() && toBeBuilt.getToBeUpdated().isEmpty()) {
 				subMonitor.newChild(1, SUPPRESS_NONE).worked(1);
@@ -384,7 +387,9 @@ public class ExternalLibraryBuilderHelper {
 						queuedBuildData,
 						true /* indexingOnly */);
 
-				builderState.update(buildData, subMonitor.newChild(1, SUPPRESS_NONE));
+				monitor.setTaskName("Building '" + project.getName() + "'...");
+				final IProgressMonitor buildMonitor = subMonitor.newChild(1, SUPPRESS_BEGINTASK);
+				builderState.update(buildData, buildMonitor);
 				resourceSet.getResources().clear();
 				resourceSet.eAdapters().clear();
 
