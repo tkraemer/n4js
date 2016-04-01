@@ -268,9 +268,9 @@ public class NpmManager {
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, packageNames.size() + 1);
 		try {
 
-			performGitPull();
+			subMonitor.setTaskName("Refreshing cache for type definitions files...");
 
-			subMonitor.worked(1);
+			performGitPull(subMonitor.newChild(1, SubMonitor.SUPPRESS_ALL_LABELS));
 
 			// Initial pessimistic.
 			final MultiStatus errorStatus = statusHelper
@@ -318,10 +318,12 @@ public class NpmManager {
 	private IStatus refreshInstalledNpmPackage(final String packageName, final boolean performGitPull,
 			final IProgressMonitor monitor) {
 
+		final SubMonitor progress = SubMonitor.convert(monitor, 2);
+
 		logInfo("================================================================");
 		final String taskName = "Refreshing type definitions for '" + packageName + "' npm package...";
 		logInfo(taskName);
-		monitor.setTaskName(taskName);
+		progress.setTaskName(taskName);
 
 		try {
 
@@ -338,7 +340,7 @@ public class NpmManager {
 			}
 
 			if (performGitPull) {
-				performGitPull();
+				performGitPull(progress.newChild(1));
 			}
 
 			final File packageRoot = new File(uri);
@@ -371,7 +373,6 @@ public class NpmManager {
 			logError(error);
 			return error;
 		} finally {
-			monitor.worked(1);
 			monitor.done();
 		}
 	}
@@ -394,9 +395,9 @@ public class NpmManager {
 		return ImmutableMap.copyOf(mappings);
 	}
 
-	private void performGitPull() {
+	private void performGitPull(final IProgressMonitor monitor) {
 		final URI repositoryLocation = locationProvider.getTargetPlatformLocalGitRepositoryLocation();
-		GitUtils.pull(new File(repositoryLocation).toPath());
+		GitUtils.pull(new File(repositoryLocation).toPath(), monitor);
 	}
 
 	private void logInfo(final String message) {
