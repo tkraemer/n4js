@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.external;
 
+import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
@@ -30,8 +31,8 @@ import com.google.inject.Inject;
 
 /**
  * Resource change listener implementation for listening project open/close event and running the
- * {@link ExternalLibraryBuilderHelper external library build helper} according to the changes. Also got notified if
- * new workspace project is being created or an existing, accessible project is being deleted.
+ * {@link ExternalLibraryBuilderHelper external library build helper} according to the changes. Also got notified if new
+ * workspace project is being created or an existing, accessible project is being deleted.
  */
 public class ProjectStateChangeListener implements IResourceChangeListener {
 
@@ -60,6 +61,7 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 				if (resource instanceof IProject) {
 
 					final IProject project = (IProject) resource;
+					// XXX What if project is not accessible and/or not Xtext project with the corresponding builder?
 					final IProject externalProject = externalLibraryWorkspace.getProject(project.getName());
 					if (null != externalProject && externalProject.exists()) {
 
@@ -91,8 +93,8 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 
 			if (!toClean.isEmpty() || !toBuild.isEmpty()) {
 				LOGGER.info("Received project open/close change.");
-				LOGGER.info("Opened projects: " + Iterables.toString(toClean));
-				LOGGER.info("Closed projects: " + Iterables.toString(toBuild));
+				LOGGER.info("Opened projects: " + Iterables.toString(from(toClean).transform(p -> p.getName())));
+				LOGGER.info("Closed projects: " + Iterables.toString(from(toBuild).transform(p -> p.getName())));
 
 				buildJobProvider.createBuildJob(toBuild, toClean).schedule();
 			}

@@ -11,39 +11,24 @@
 package eu.numberfour.n4js.external;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Suppliers.memoize;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
+import static eu.numberfour.n4js.utils.Arrays2.transform;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_NONE;
-import static org.eclipse.core.runtime.jobs.Job.RUNNING;
-import static org.eclipse.core.runtime.jobs.Job.WAITING;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
-
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.internal.events.BuildManager;
 import org.eclipse.core.internal.resources.BuildConfiguration;
-import org.eclipse.core.internal.resources.Workspace;
-import org.eclipse.core.internal.utils.Messages;
-import org.eclipse.core.internal.utils.Policy;
 import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -52,21 +37,19 @@ import org.eclipse.xtext.builder.impl.BuildData;
 import org.eclipse.xtext.builder.impl.QueuedBuildData;
 import org.eclipse.xtext.builder.impl.ToBeBuilt;
 import org.eclipse.xtext.builder.impl.ToBeBuiltComputer;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
-import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.utils.Arrays2;
-import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
 
@@ -78,70 +61,7 @@ import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
 @Singleton
 public class ExternalLibraryBuilderHelper {
 
-	private static final boolean DEBUG = false;
-
-	static {
-
-		if (DEBUG) {
-
-			Policy.DEBUG_AUTO_REFRESH = true;
-
-			// debug constants
-			Policy.DEBUG_BUILD_DELTA = true;
-			Policy.DEBUG_BUILD_FAILURE = true;
-			Policy.DEBUG_BUILD_INTERRUPT = true;
-			Policy.DEBUG_BUILD_INVOKING = true;
-			Policy.DEBUG_BUILD_NEEDED = true;
-			Policy.DEBUG_BUILD_NEEDED_STACK = true;
-			Policy.DEBUG_BUILD_STACK = true;
-
-			Policy.DEBUG_CONTENT_TYPE = true;
-			Policy.DEBUG_CONTENT_TYPE_CACHE = true;
-			Policy.DEBUG_HISTORY = true;
-			Policy.DEBUG_NATURES = true;
-			Policy.DEBUG_NOTIFICATIONS = true;
-			Policy.DEBUG_PREFERENCES = true;
-
-			// Get timing information for restoring data
-			Policy.DEBUG_RESTORE = true;
-			Policy.DEBUG_RESTORE_MARKERS = true;
-			Policy.DEBUG_RESTORE_MASTERTABLE = true;
-
-			Policy.DEBUG_RESTORE_METAINFO = true;
-			Policy.DEBUG_RESTORE_SNAPSHOTS = true;
-			Policy.DEBUG_RESTORE_SYNCINFO = true;
-			Policy.DEBUG_RESTORE_TREE = true;
-
-			// Get timing information for save and snapshot data
-			Policy.DEBUG_SAVE = true;
-			Policy.DEBUG_SAVE_MARKERS = true;
-			Policy.DEBUG_SAVE_MASTERTABLE = true;
-
-			Policy.DEBUG_SAVE_METAINFO = true;
-			Policy.DEBUG_SAVE_SYNCINFO = true;
-			Policy.DEBUG_SAVE_TREE = true;
-			Policy.DEBUG_STRINGS = true;
-
-		}
-
-	}
-
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibraryBuilderHelper.class);
-
-	/**
-	 * Build argument to be able to distinguish between workspace and external library builds.
-	 */
-	public static final String EXTERNAL_BUILD_KEY = ExternalLibraryBuilderHelper.class + ".externalBuild";
-
-	/**
-	 * Timeout (in minutes) to wait for the idle auto build job after cleaning external workspace.
-	 */
-	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES = 10L;
-
-	/**
-	 * Unique name of the {@code org.eclipse.core.internal.events.AutoBuildJob}.
-	 */
-	private static final String AUTO_BUILD_JOB_NAME = Messages.events_building_0;
 
 	/**
 	 * Function for converting a {@link IProject project} into the corresponding {@link IBuildConfiguration build
@@ -165,21 +85,6 @@ public class ExternalLibraryBuilderHelper {
 		return from(projects).transform(TO_CONFIG_FUNC).toArray(IBuildConfiguration.class);
 	};
 
-	/**
-	 * Predicate for filtering out all jobs without {@link Job#RUNNING running} and/or without {@link Job#WAITING
-	 * waiting} state.
-	 */
-	private static final Predicate<Job> SCHEDULED_JOBS_PREDICATE = j -> RUNNING != j.getState()
-			&& WAITING != j.getState();
-
-	/**
-	 * Predicate for filtering by name.
-	 */
-	private static final Predicate<Job> AUTO_BUILD_JOB_PREDICATE = j -> AUTO_BUILD_JOB_NAME.equals(j.getName());
-
-	@Inject
-	private ExternalProjectsCollector collector;
-
 	@Inject
 	private IN4JSCore core;
 
@@ -187,13 +92,13 @@ public class ExternalLibraryBuilderHelper {
 	private IBuilderState builderState;
 
 	@Inject
-	private ToBeBuiltComputer builtComputer;
-
-	@Inject
 	private QueuedBuildData queuedBuildData;
 
 	@Inject
-	private StatusHelper statusHelper;
+	private ToBeBuiltComputer builtComputer;
+
+	@Inject
+	private ExternalProjectsCollector collector;
 
 	/**
 	 * Performs a full build on all registered and available external libraries.
@@ -269,80 +174,8 @@ public class ExternalLibraryBuilderHelper {
 	 * @param monitor
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
-	public synchronized void build(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
-		if (!Arrays2.isEmpty(buildOrder)) {
-			ensureWorkspaceProjectsConfigured();
-			final BuildManager buildManager = getBuildManager();
-			LOGGER.info("Building external libraries: " + Arrays.toString(buildOrder));
-			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
-			for (final IBuildConfiguration configuration : buildOrder) {
-
-				final ExternalProject project = (ExternalProject) configuration.getProject();
-				try {
-
-					final ToBeBuilt toBeBuilt = builtComputer.updateProject(project, subMonitor);
-					if (!toBeBuilt.getToBeDeleted().isEmpty() || !toBeBuilt.getToBeUpdated().isEmpty()) {
-						final URI uri = URI.createFileURI(project.getExternalResource().getAbsolutePath());
-						final IN4JSProject n4Project = core.findProject(uri).orNull();
-						final ResourceSet resourceSet = core.createResourceSet(Optional.of(n4Project));
-						if (resourceSet instanceof ResourceSetImpl) {
-							((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
-						}
-						final BuildData buildData = new BuildData(
-								project.getName(),
-								resourceSet,
-								toBeBuilt,
-								queuedBuildData,
-								true);
-
-						builderState.update(buildData, subMonitor);
-						resourceSet.getResources().clear();
-						resourceSet.eAdapters().clear();
-					}
-
-				} catch (OperationCanceledException | CoreException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				// final Map<String, String> args = newHashMap();
-				// args.put(EXTERNAL_BUILD_KEY, Boolean.TRUE.toString());
-				//
-				// final Job job = new WorkspaceJob("Building external library: " + configuration.getProject()) {
-				//
-				// @Override
-				// public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
-				//
-				// LOGGER.info("Building external library: " + configuration.getProject());
-				//
-				// buildManager.build(configuration, FULL_BUILD, N4JSExternalProject.BUILDER_ID, args,
-				// subMonitor.newChild(1));
-				//
-				// return Status.OK_STATUS;
-				// }
-				//
-				// };
-				//
-				// waitForWorkspaceLock(subMonitor);
-				// final boolean autoBuild = isAutoBuild();
-				//
-				// try {
-				//
-				// toggleAutoBuild(false);
-				// job.schedule();
-				//
-				// try {
-				// job.join();
-				// } catch (final InterruptedException e) {
-				// LOGGER.error("Error occurred while building external libraries.", e);
-				// }
-				//
-				// } finally {
-				// toggleAutoBuild(autoBuild);
-				// }
-
-			}
-		}
+	public void build(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
+		doPerformOperation(buildOrder, BuildOperation.BUILD, monitor);
 	}
 
 	/**
@@ -410,95 +243,40 @@ public class ExternalLibraryBuilderHelper {
 	 * @param monitor
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
-	public synchronized void clean(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
+	public void clean(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
+		doPerformOperation(buildOrder, BuildOperation.CLEAN, monitor);
+	}
+
+	private void doPerformOperation(final IBuildConfiguration[] buildOrder, final BuildOperation operation,
+			final IProgressMonitor monitor) {
+
 		if (!Arrays2.isEmpty(buildOrder)) {
-			ensureWorkspaceProjectsConfigured();
-			final BuildManager buildManager = getBuildManager();
-			LOGGER.info("Cleaning external libraries: " + Arrays.toString(buildOrder));
+			ensureDynamicDependenciesSetForWorkspaceProjects();
+			final String prefix = Strings.toFirstUpper(operation.toString().toLowerCase());
+			final String projectNames = Iterables.toString(transform(buildOrder, c -> c.getProject().getName()));
+			LOGGER.info(prefix + "ing external libraries: " + projectNames);
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
 			for (final IBuildConfiguration configuration : buildOrder) {
-
-				final ExternalProject project = (ExternalProject) configuration.getProject();
-
-				final ToBeBuilt toBeBuilt = builtComputer.removeProject(project, subMonitor);
-				if (!toBeBuilt.getToBeDeleted().isEmpty() || !toBeBuilt.getToBeUpdated().isEmpty()) {
-					final URI uri = URI.createFileURI(project.getExternalResource().getAbsolutePath());
-					final IN4JSProject n4Project = core.findProject(uri).orNull();
-					final ResourceSet resourceSet = core.createResourceSet(Optional.of(n4Project));
-					if (resourceSet instanceof ResourceSetImpl) {
-						((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
-					}
-					final BuildData buildData = new BuildData(
-							project.getName(),
-							resourceSet,
-							toBeBuilt,
-							queuedBuildData,
-							true);
-
-					builderState.update(buildData, subMonitor);
-					resourceSet.getResources().clear();
-					resourceSet.eAdapters().clear();
-				}
-
-				// final Map<String, String> args = newHashMap();
-				// args.put(EXTERNAL_BUILD_KEY, Boolean.TRUE.toString());
-				//
-				// final Job job = new WorkspaceJob("Cleaning external library: " + configuration.getProject()) {
-				//
-				// @Override
-				// public IStatus runInWorkspace(final IProgressMonitor unused) throws CoreException {
-				//
-				// LOGGER.info("Cleaning external library: " + configuration.getProject());
-				//
-				// buildManager.build(configuration, CLEAN_BUILD, N4JSExternalProject.BUILDER_ID, args,
-				// subMonitor.newChild(1));
-				//
-				// return Status.OK_STATUS;
-				// }
-				//
-				// };
-				//
-				// waitForWorkspaceLock(subMonitor);
-				// final boolean autoBuild = isAutoBuild();
-				//
-				// try {
-				//
-				// toggleAutoBuild(false);
-				// job.schedule();
-				//
-				// try {
-				// job.join();
-				// } catch (final InterruptedException e) {
-				// LOGGER.error("Error occurred while cleaning external libraries.", e);
-				// }
-				//
-				// // No matter what an auto build job will be performed on Eclipse workspace projects after running
-				// // a clean on the external libraries. Make sure to block until the autobuild job is done.
-				// waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
-				//
-				// } finally {
-				// toggleAutoBuild(autoBuild);
-				// }
-
+				final IProject project = configuration.getProject();
+				LOGGER.info(prefix + "ing external library: " + project.getName());
+				operation.run(this, project, subMonitor.newChild(1));
 			}
 		}
+
 	}
 
 	private IBuildConfiguration getBuildConfiguration(final IProject project) {
 		return TO_CONFIG_FUNC.apply(project);
 	}
 
-	private BuildManager getBuildManager() {
-		final Workspace workspace = (Workspace) getWorkspace();
-		return workspace.getBuildManager();
-	}
-
 	/**
 	 * Make sure the project description is available and cached for each workspace projects. This is important to avoid
 	 * performing a workspace operation (with no scheduling rule) when setting the dynamic project references for each
 	 * project.
+	 *
+	 * See: ProjectDescriptionLoadListener#updateProjectReferencesIfNecessary(IProject)
 	 */
-	private void ensureWorkspaceProjectsConfigured() {
+	private void ensureDynamicDependenciesSetForWorkspaceProjects() {
 		for (final IProject project : getWorkspace().getRoot().getProjects()) {
 			final org.eclipse.emf.common.util.URI uri = createPlatformResourceURI(project.getName(), true);
 			final IN4JSProject n4Project = core.findProject(uri).get();
@@ -509,59 +287,13 @@ public class ExternalLibraryBuilderHelper {
 	}
 
 	/**
-	 * Jobs accessing this code should be configured as "system" jobs, to not interrupt autobuild jobs.
-	 *
-	 * @param monitor
-	 *            the monitor for the wait process.
+	 * Enumeration of strategies to encapsulate the clean/build operations.
 	 */
-	/* default */ static void waitForWorkspaceLock(final IProgressMonitor monitor) {
-
-		waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
-
-		// Wait for the workspace lock to avoid starting the external build.
-		final IWorkspaceRoot root = getWorkspace().getRoot();
-		try {
-			Job.getJobManager().beginRule(root, monitor);
-		} catch (final OperationCanceledException e) {
-			return;
-		} finally {
-			Job.getJobManager().endRule(root);
-		}
-	}
-
-	private static void waitForIdleAutoBuildJob(final long timeout) {
-
-		checkArgument(timeout > 0, "Timeout must be a positive long.");
-		final long now = System.currentTimeMillis();
-
-		while (!getScheduledAutoBuildJobs().isEmpty()) {
-
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("Waiting for workspace build job to finish...");
-			}
-
-			try {
-				Thread.sleep(100L);
-			} catch (final Exception e) {
-				LOGGER.error("Error while checking whether auto build job is idle or not.", e);
-			}
-
-			if (System.currentTimeMillis() > now + timeout) {
-				Exceptions.sneakyThrow(new TimeoutException("Timeouted while waiting for idle auto build job."));
-			}
-
-		}
-	}
-
-	private static FluentIterable<Job> getScheduledAutoBuildJobs() {
-		final FluentIterable<Job> allJobs = from(Arrays.asList(Job.getJobManager().find(null)));
-		final FluentIterable<Job> autoBuildJobs = allJobs.filter(AUTO_BUILD_JOB_PREDICATE);
-		final FluentIterable<Job> scheduledJobs = autoBuildJobs.filter(SCHEDULED_JOBS_PREDICATE);
-		return scheduledJobs;
-	}
-
 	private enum BuildOperation {
 
+		/**
+		 * Operation for indexing external library.
+		 */
 		BUILD {
 
 			@Override
@@ -577,6 +309,9 @@ public class ExternalLibraryBuilderHelper {
 
 		},
 
+		/**
+		 * Operation for removing the Xtext index entries for a particular external project.
+		 */
 		CLEAN {
 
 			@Override
@@ -586,23 +321,31 @@ public class ExternalLibraryBuilderHelper {
 
 		};
 
-		private static final Supplier<ISchedulingRule> BUILD_RULE = memoize(new Supplier<ISchedulingRule>() {
+		/**
+		 * Calculates the {@link ToBeBuilt} for the project.
+		 *
+		 * @param computer
+		 *            the computer for the calculation.
+		 * @param project
+		 *            the object of the operation.
+		 * @param monitor
+		 *            the monitor for the process.
+		 * @return the calculated {@link ToBeBuilt} instance.
+		 */
+		abstract ToBeBuilt getToBeBuilt(ToBeBuiltComputer computer, IProject project, IProgressMonitor monitor);
 
-			@Override
-			public ISchedulingRule get() {
-				return ResourcesPlugin.getWorkspace().getRoot();
-			}
+		/**
+		 * Runs the operation in a blocking fashion.
+		 *
+		 * @param helper
+		 *            the build helper to get the injected services.
+		 * @param project
+		 *            the project to clean/build.
+		 * @param monitor
+		 *            monitor for the operation.
+		 */
+		void run(final ExternalLibraryBuilderHelper helper, IProject project, IProgressMonitor monitor) {
 
-		});
-
-		protected abstract ToBeBuilt getToBeBuilt(ToBeBuiltComputer computer, IProject project,
-				IProgressMonitor monitor);
-
-		public String getLabel() {
-			return Strings.toFirstUpper(toString().toLowerCase());
-		}
-
-		public void schedule(final ExternalLibraryBuilderHelper helper, IProject project, IProgressMonitor monitor) {
 			checkArgument(project instanceof ExternalProject, "Expected external project: " + project);
 
 			final SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
@@ -614,64 +357,43 @@ public class ExternalLibraryBuilderHelper {
 				return;
 			}
 
-			final String jobName = new StringBuilder(getLabel())
-					.append("ing external library: ")
-					.append(project.getName())
-					.toString();
+			try {
 
-			final Job job = new Job(jobName) {
+				final IN4JSCore core = helper.core;
+				final QueuedBuildData queuedBuildData = helper.queuedBuildData;
+				final IBuilderState builderState = helper.builderState;
 
-				@Override
-				protected IStatus run(IProgressMonitor unused) {
+				final ExternalProject externalProject = (ExternalProject) project;
+				final String path = externalProject.getExternalResource().getAbsolutePath();
+				final URI uri = URI.createFileURI(path);
+				final IN4JSProject n4Project = core.findProject(uri).orNull();
 
-					try {
-
-						final IN4JSCore core = helper.core;
-						final QueuedBuildData queuedBuildData = helper.queuedBuildData;
-						final IBuilderState builderState = helper.builderState;
-
-						final ExternalProject externalProject = (ExternalProject) project;
-						final String path = externalProject.getExternalResource().getAbsolutePath();
-						final URI uri = URI.createFileURI(path);
-						final IN4JSProject n4Project = core.findProject(uri).orNull();
-						final ResourceSet resourceSet = core.createResourceSet(Optional.of(n4Project));
-						if (resourceSet instanceof ResourceSetImpl) {
-							((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
-						}
-
-						final BuildData buildData = new BuildData(
-								project.getName(),
-								resourceSet,
-								toBeBuilt,
-								queuedBuildData,
-								true);
-
-						builderState.update(buildData, subMonitor.newChild(1, SUPPRESS_NONE));
-						resourceSet.getResources().clear();
-						resourceSet.eAdapters().clear();
-
-					} catch (Exception e) {
-						if (e instanceof CoreException) {
-							return ((CoreException) e).getStatus();
-						} else if (e instanceof OperationCanceledException) {
-							return Status.CANCEL_STATUS;
-						} else {
-							return helper.statusHelper.createError(e);
-						}
-					}
-
-					return Status.OK_STATUS;
+				final ResourceSet resourceSet = core.createResourceSet(Optional.of(n4Project));
+				if (!resourceSet.getLoadOptions().isEmpty()) {
+					resourceSet.getLoadOptions().clear();
+				}
+				resourceSet.getLoadOptions().put(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE, Boolean.TRUE);
+				if (resourceSet instanceof ResourceSetImpl) {
+					((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
 				}
 
-				@Override
-				public boolean belongsTo(Object family) {
-					return ResourcesPlugin.FAMILY_AUTO_BUILD == family;
-				}
+				final BuildData buildData = new BuildData(
+						project.getName(),
+						resourceSet,
+						toBeBuilt,
+						queuedBuildData,
+						true /* indexingOnly */);
 
-			};
+				builderState.update(buildData, subMonitor.newChild(1, SUPPRESS_NONE));
+				resourceSet.getResources().clear();
+				resourceSet.eAdapters().clear();
 
-			job.setRule(BUILD_RULE.get());
-			job.schedule();
+			} catch (Exception e) {
+				final String message = "Error occurred while " + toString().toLowerCase() + "ing external library "
+						+ project.getName() + ".";
+				LOGGER.error(message, e);
+				throw new RuntimeException(message, e);
+			}
 
 		}
 
