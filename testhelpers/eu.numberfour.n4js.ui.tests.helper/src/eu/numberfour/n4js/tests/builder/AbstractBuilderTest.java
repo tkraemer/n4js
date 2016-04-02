@@ -52,7 +52,6 @@ import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSUiInjectorProvider;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
-import eu.numberfour.n4js.ui.building.ResourceDescriptionWithoutModuleUserData;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 
 /**
@@ -194,14 +193,7 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 
 	/***/
 	public void waitForAutoBuild() {
-		waitForAutoBuild(true);
-	}
-
-	/***/
-	public void waitForAutoBuild(boolean assertValidityOfXtextIndex) {
 		ProjectUtils.waitForAutoBuild();
-		if (assertValidityOfXtextIndex)
-			assertXtextIndexIsValid();
 	}
 
 	/***/
@@ -250,16 +242,4 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 		return resourceDescriptionsProvider.getResourceDescriptions(resourceSet);
 	}
 
-	/**
-	 * Performs some general validity checks on the Xtext index.
-	 */
-	protected void assertXtextIndexIsValid() {
-		final IResourceDescriptions index = getXtextIndex();
-		for (IResourceDescription desc : index.getAllResourceDescriptions()) {
-			assertFalse(
-					"IResourceDescriptions in index must not be instances of ResourceDescriptionWithoutModuleUserData but was "
-							+ desc.getClass().getName() + "[" + desc.getURI() + "]",
-					desc instanceof ResourceDescriptionWithoutModuleUserData);
-		}
-	}
 }

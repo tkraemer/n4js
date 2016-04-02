@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.ui.building;
 
-import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant.BuildType;
+import org.eclipse.xtext.builder.builderState.impl.EObjectDescriptionImpl;
 import org.eclipse.xtext.builder.clustering.ClusteringBuilderState;
 import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
 import org.eclipse.xtext.builder.impl.BuildData;
@@ -38,17 +38,16 @@ import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant.DeferredBuilder
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
+import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
@@ -225,48 +224,48 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 		for (URI currAffURI : affectedURIs) {
 			final IResourceDescription resDesc = this.getResourceDescription(currAffURI);
 			if (!N4MF_MANIFEST.equals(currAffURI.lastSegment())) {
-				// will hide serialized module in user data
-				newState.register(new DefaultResourceDescriptionDelta(resDesc,
-						new ResourceDescriptionWithoutModuleUserData(resDesc)));
+				from(resDesc.getExportedObjects()).filter(EObjectDescriptionImpl.class)
+						.filter(desc -> desc.getEClass() == TypesPackage.eINSTANCE.getTModule())
+						.forEach(desc -> desc.getUserData().remove(UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT));
 			}
 		}
 	}
 
-	/**
-	 * Customized method when setting the index state. Here we have to re-map the customized
-	 * {@link ResourceDescriptionWithoutModuleUserData} description instances to the delegates after the build is
-	 * finished. Without this re-mapping logic some Xtext index entries would not get persisted on graceful shutdown.
-	 *
-	 * See: GH-120
-	 */
-	@Override
-	protected void setResourceDescriptionsData(final ResourceDescriptionsData newData) {
-
-		final ResourceDescriptionsData newDataWithoutCustomDescriptions = newData.copy();
-
-		for (final IResourceDescription description : newData.getAllResourceDescriptions()) {
-			if (description instanceof ResourceDescriptionWithoutModuleUserData) {
-				final IResourceDescription delegate = ((ResourceDescriptionWithoutModuleUserData) description)
-						.getDelegate();
-				newDataWithoutCustomDescriptions.removeDescription(description.getURI());
-				newDataWithoutCustomDescriptions.register(new DefaultResourceDescriptionDelta(description, delegate));
-			}
-		}
-
-		final FluentIterable<ResourceDescriptionWithoutModuleUserData> customResourceDescriptions = from(
-				newDataWithoutCustomDescriptions.getAllResourceDescriptions())
-						.filter(ResourceDescriptionWithoutModuleUserData.class);
-
-		checkState(customResourceDescriptions.isEmpty(),
-				"Expected zero " + ResourceDescriptionWithoutModuleUserData.class.getName()
-						+ " resource description instances in the index after the build phase. Was " +
-						customResourceDescriptions.size() + "."
-						+ "\n--------------------------------------------------------------------------------\n"
-						+ Joiner.on("\n").join(customResourceDescriptions.transform(desc -> desc.getURI()))
-						+ "\n--------------------------------------------------------------------------------");
-
-		super.setResourceDescriptionsData(newDataWithoutCustomDescriptions);
-	}
+	// /**
+	// * Customized method when setting the index state. Here we have to re-map the customized
+	// * {@link ResourceDescriptionWithoutModuleUserData} description instances to the delegates after the build is
+	// * finished. Without this re-mapping logic some Xtext index entries would not get persisted on graceful shutdown.
+	// *
+	// * See: GH-120
+	// */
+	// @Override
+	// protected void setResourceDescriptionsData(final ResourceDescriptionsData newData) {
+	//
+	// final ResourceDescriptionsData newDataWithoutCustomDescriptions = newData.copy();
+	//
+	// for (final IResourceDescription description : newData.getAllResourceDescriptions()) {
+	// if (description instanceof ResourceDescriptionWithoutModuleUserData) {
+	// final IResourceDescription delegate = ((ResourceDescriptionWithoutModuleUserData) description)
+	// .getDelegate();
+	// newDataWithoutCustomDescriptions.removeDescription(description.getURI());
+	// newDataWithoutCustomDescriptions.register(new DefaultResourceDescriptionDelta(description, delegate));
+	// }
+	// }
+	//
+	// final FluentIterable<ResourceDescriptionWithoutModuleUserData> customResourceDescriptions = from(
+	// newDataWithoutCustomDescriptions.getAllResourceDescriptions())
+	// .filter(ResourceDescriptionWithoutModuleUserData.class);
+	//
+	// checkState(customResourceDescriptions.isEmpty(),
+	// "Expected zero " + ResourceDescriptionWithoutModuleUserData.class.getName()
+	// + " resource description instances in the index after the build phase. Was " +
+	// customResourceDescriptions.size() + "."
+	// + "\n--------------------------------------------------------------------------------\n"
+	// + Joiner.on("\n").join(customResourceDescriptions.transform(desc -> desc.getURI()))
+	// + "\n--------------------------------------------------------------------------------");
+	//
+	// super.setResourceDescriptionsData(newDataWithoutCustomDescriptions);
+	// }
 
 	private ExternalLibraryWorkspace getExternalLibraryWorkspace() {
 		final Injector injector = N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS);

@@ -39,12 +39,11 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
-import eu.numberfour.n4js.ui.building.ResourceDescriptionWithoutModuleUserData;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 
 /**
- * Test for checking that no {@link ResourceDescriptionWithoutModuleUserData customized resource description} instances
- * are leaked into the {@link IBuilderState builder state Xtext index} because those cannot be persisted.
+ * Test for checking that no customized resource description instances are leaked into the {@link IBuilderState builder
+ * state Xtext index} because those cannot be persisted.
  *
  * Way to manually reproduce the issue:
  * <ol>
@@ -95,7 +94,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		}
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
 		assertTrue("Error while saving external library preference changes.", result.isOK());
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 	}
 
 	/**
@@ -115,7 +114,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		}
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
 		assertTrue("Error while saving external library preference changes.", result.isOK());
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 	}
 
 	@Override
@@ -133,7 +132,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		// Since we do not know whether the built-in initialization or the test project import happened earlier...
 		// Make sure both test module and manifest get into the index.
 		IResourcesSetupUtil.fullBuild();
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 
 		final Resource resource = persister.createResource();
 		assertNotNull("Test resource was null.", resource);
@@ -149,7 +148,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		// Imitate VM crash with force built-in unload and reload.
 		unLoadBuiltIns();
 		IResourcesSetupUtil.fullBuild();
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 
 		// Test module issues:
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
@@ -166,7 +165,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 
 		loadBuilIns();
 		IResourcesSetupUtil.fullBuild();
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 		resource.getContents().clear();
 
 		assertMarkers("Expected exactly zero issues.", project, 0);
