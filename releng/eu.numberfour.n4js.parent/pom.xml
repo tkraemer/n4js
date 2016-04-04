@@ -83,7 +83,7 @@ Contributors:
 		<!-- <eclipse-signing-maven-plugin.version>1.0.5</eclipse-signing-maven-plugin.version> -->
 
 		<!-- current xtext version -->
-		<xtext.version>2.9.1</xtext.version>
+		<xtext.version>2.9.2</xtext.version>
 		<!-- compile xtend files to java -->
 		<xtend-maven-plugin.version>${xtext.version}</xtend-maven-plugin.version>
 		<xtend-library.version>${xtend-maven-plugin.version}</xtend-library.version>
@@ -110,7 +110,7 @@ Contributors:
 		<org.eclipse.xtext.xtext-version>[${xtend-maven-plugin.version}]</org.eclipse.xtext.xtext-version>
 		<org.eclipse.xtext.xbase-version>[${xtend-maven-plugin.version}]</org.eclipse.xtext.xbase-version>
 		<org.osgi.core-version>4.3.1</org.osgi.core-version>
-				<equinox-common-version>3.6.200.v20150602-1417</equinox-common-version>
+		<equinox-common-version>3.6.200-v20130402-1505</equinox-common-version>
 		<org.eclipse.core.resources-version>3.7.100</org.eclipse.core.resources-version>
 		<org.eclipse.text-version>3.5.101</org.eclipse.text-version>
 		<org.eclipse.emf.codegen.ecore-version>[2.11.0-v20150123-0357]</org.eclipse.emf.codegen.ecore-version>
