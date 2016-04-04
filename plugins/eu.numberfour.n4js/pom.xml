@@ -41,12 +41,16 @@ Contributors:
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 			</plugin>
+<!--
+ # Switch back to the exec plugin, problem is that fornax plugin creates command lien call exceeding 32K characters
+ # which breaks Windows api https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx 
 			<plugin>
 				<groupId>org.fornax.toolsupport</groupId>
 				<artifactId>fornax-oaw-m2-plugin</artifactId>
 				<version>${fornax-oaw-m2-plugin.version}</version>
 			</plugin>
-<!--			
+ -->
+		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -79,7 +83,7 @@ Contributors:
 					</dependency>
 				</dependencies>
 			</plugin>
--->			
+			
 			<plugin>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>xtext-maven-plugin</artifactId>

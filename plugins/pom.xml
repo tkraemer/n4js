@@ -114,7 +114,6 @@ Contributors:
 					</filesets>
 				</configuration>
 			</plugin>
-			<plugin>
 				<!-- The plug-in to execute the language MWE2 workflows inside the grammar 
 					projects. This is base configuration, that is: * setting the timestampFileName, 
 					to be used to determine changes that makes regeneration of the code for the 
@@ -124,6 +123,12 @@ Contributors:
 					here so that the actual grammar project need to set * fill the property skip.mwe2 
 					to false * fill the property mwe2descriptor with the module name of the actual 
 					MWE2 file contained by this project -->
+
+<!--
+ # Switch back to the exec plugin, problem is that fornax plugin creates command lien call exceeding 32K characters
+ # which breaks Windows api https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx 
+	
+			<plugin>
 				<groupId>org.fornax.toolsupport</groupId>
 				<artifactId>fornax-oaw-m2-plugin</artifactId>
 				<version>${fornax-oaw-m2-plugin.version}</version>
@@ -159,6 +164,8 @@ Contributors:
 					</execution>
 				</executions>
 			</plugin>
+
+ -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -199,7 +206,7 @@ Contributors:
 					</executions>
 				</plugin>			
 				
-				<!--
+
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
@@ -225,9 +232,9 @@ Contributors:
 										runtimeProject=/${project.basedir}
 									</argument>
 								</arguments>
-								<! - - Following switch:
+								<!-- Following switch:
 									 do not try to kill the daemons of MWE, default timed out after 15s and gave Exceptins to build
-									 - - >
+									 -->
 								<cleanupDaemonThreads>false</cleanupDaemonThreads>
 							</configuration>
 						</execution>
@@ -265,7 +272,7 @@ Contributors:
 						</dependency>
 					</dependencies>
 				</plugin>
--->
+
 				<plugin>
 					<groupId>org.eclipse.xtext</groupId>
 					<artifactId>xtext-maven-plugin</artifactId>
