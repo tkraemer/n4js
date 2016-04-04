@@ -11,8 +11,10 @@
 package eu.numberfour.n4js.tests.bugs;
 
 import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Iterables.size;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.difference;
+import static eu.numberfour.n4js.resource.UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT;
 
 import java.io.File;
 import java.net.URI;
@@ -28,17 +30,20 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.builder.builderState.IBuilderState;
 import org.eclipse.xtext.builder.builderState.impl.ResourceDescriptionImpl;
 import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 
 /**
@@ -141,6 +146,13 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 				builderState.getAllResourceDescriptions())
 						.transform(desc -> desc.getURI()).toSet();
 		final int builderStateBeforeReloadSize = Iterables.size(beforeCrashBuilderState);
+		final FluentIterable<IEObjectDescription> beforeTModulesInBuilderState = from(
+				builderState.getAllResourceDescriptions()).transformAndConcat(desc -> desc.getExportedObjects())
+						.filter(desc -> desc.getEClass() == TypesPackage.eINSTANCE.getTModule());
+		int beforeTModulesInBuilderStateSize = size(beforeTModulesInBuilderState);
+		int beforeTModulesInBuilderStateWithUserDataSize = size(
+				beforeTModulesInBuilderState.filter(desc -> null != desc.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT)));
+
 		persister.saveToResource(resource, builderState.getAllResourceDescriptions());
 		final Iterable<EObject> beforeCrashResource = newArrayList(resource.getContents());
 		final int persistedBeforeReloadSize = resource.getContents().size();
@@ -174,6 +186,14 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 				builderState.getAllResourceDescriptions())
 						.transform(desc -> desc.getURI()).toSet();
 		final int builderStateAfterReloadSize = Iterables.size(afterCrashBuilderState);
+
+		final FluentIterable<IEObjectDescription> afterTModulesInBuilderState = from(
+				builderState.getAllResourceDescriptions()).transformAndConcat(desc -> desc.getExportedObjects())
+						.filter(desc -> desc.getEClass() == TypesPackage.eINSTANCE.getTModule());
+		int afterTModulesInBuilderStateSize = size(afterTModulesInBuilderState);
+		int afterTModulesInBuilderStateWithUserDataSize = size(
+				afterTModulesInBuilderState.filter(desc -> null != desc.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT)));
+
 		persister.saveToResource(resource, builderState.getAllResourceDescriptions());
 		final Iterable<EObject> afterCrashResource = newArrayList(resource.getContents());
 		final int persistedAfterReloadSize = resource.getContents().size();
@@ -188,6 +208,17 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 				builderStateBeforeReloadSize == builderStateAfterReloadSize
 						&& persistedBeforeReloadSize == persistedAfterReloadSize
 						&& builderStateBeforeReloadSize == persistedBeforeReloadSize);
+
+		assertTrue(
+				"Expected same number for EObject descriptions for TModules before and after crash. Before was: "
+						+ beforeTModulesInBuilderStateSize + " after was: " + afterTModulesInBuilderStateSize,
+				beforeTModulesInBuilderStateSize == afterTModulesInBuilderStateSize);
+
+		assertTrue(
+				"Expected same number for EObject descriptions for TModules with serialized user data before and after crash. Before was: "
+						+ beforeTModulesInBuilderStateWithUserDataSize + " after was: "
+						+ afterTModulesInBuilderStateWithUserDataSize,
+				beforeTModulesInBuilderStateWithUserDataSize == afterTModulesInBuilderStateWithUserDataSize);
 
 	}
 

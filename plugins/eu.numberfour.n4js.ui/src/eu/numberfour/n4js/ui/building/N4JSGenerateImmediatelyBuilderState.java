@@ -224,48 +224,46 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 		for (URI currAffURI : affectedURIs) {
 			final IResourceDescription resDesc = this.getResourceDescription(currAffURI);
 			if (!N4MF_MANIFEST.equals(currAffURI.lastSegment())) {
+
+				/*-
+				 * This logic here is required to get rid of the invalid serialized TModules information from the index
+				 * which are working with an index based approach. Consider the below example:
+				 *
+				 * -------Module A------
+				 *1 	//class XYZ {}
+				 *2		function foo() {}
+				 *3		export public class A {}
+				 *
+				 * -------Module B------
+				 *1 	import { A } from "A"
+				 *2 	import { C } from "C"
+				 *3
+				 *4 	var arrCC : Array<A>;
+				 *5 	var t2 : C = new C();
+				 *6 	t2.m(arrCC);
+				 *
+				 * -------Module C------
+				 *1		import { A } from "A"
+				 *2
+				 *3 	export public class C {
+				 *4			m(param : Array<A>) {}
+				 *5		}
+				 *
+				 *
+				 * Commenting out line 1 in module A will trigger rebuild of A, and related module B and C in this order.
+				 * When loading module B, module C has to be resolved as it imports it, quickly jump to module C and load
+				 * class A from module A, class A used to have index 1 (in the serialized TModule in the Xtext index) as
+				 * it was the second top level element, but that is not true any more, because 'foo' was just commented out,
+				 * so index 1 in module A is not class A any more but 'foo'. With this, line 6 in module B will fail,
+				 * because it will think that the method 'm' accepts an array of 'foo' and not A any more.
+				 */
+
 				from(resDesc.getExportedObjects()).filter(EObjectDescriptionImpl.class)
 						.filter(desc -> desc.getEClass() == TypesPackage.eINSTANCE.getTModule())
 						.forEach(desc -> desc.getUserData().remove(UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT));
 			}
 		}
 	}
-
-	// /**
-	// * Customized method when setting the index state. Here we have to re-map the customized
-	// * {@link ResourceDescriptionWithoutModuleUserData} description instances to the delegates after the build is
-	// * finished. Without this re-mapping logic some Xtext index entries would not get persisted on graceful shutdown.
-	// *
-	// * See: GH-120
-	// */
-	// @Override
-	// protected void setResourceDescriptionsData(final ResourceDescriptionsData newData) {
-	//
-	// final ResourceDescriptionsData newDataWithoutCustomDescriptions = newData.copy();
-	//
-	// for (final IResourceDescription description : newData.getAllResourceDescriptions()) {
-	// if (description instanceof ResourceDescriptionWithoutModuleUserData) {
-	// final IResourceDescription delegate = ((ResourceDescriptionWithoutModuleUserData) description)
-	// .getDelegate();
-	// newDataWithoutCustomDescriptions.removeDescription(description.getURI());
-	// newDataWithoutCustomDescriptions.register(new DefaultResourceDescriptionDelta(description, delegate));
-	// }
-	// }
-	//
-	// final FluentIterable<ResourceDescriptionWithoutModuleUserData> customResourceDescriptions = from(
-	// newDataWithoutCustomDescriptions.getAllResourceDescriptions())
-	// .filter(ResourceDescriptionWithoutModuleUserData.class);
-	//
-	// checkState(customResourceDescriptions.isEmpty(),
-	// "Expected zero " + ResourceDescriptionWithoutModuleUserData.class.getName()
-	// + " resource description instances in the index after the build phase. Was " +
-	// customResourceDescriptions.size() + "."
-	// + "\n--------------------------------------------------------------------------------\n"
-	// + Joiner.on("\n").join(customResourceDescriptions.transform(desc -> desc.getURI()))
-	// + "\n--------------------------------------------------------------------------------");
-	//
-	// super.setResourceDescriptionsData(newDataWithoutCustomDescriptions);
-	// }
 
 	private ExternalLibraryWorkspace getExternalLibraryWorkspace() {
 		final Injector injector = N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS);
