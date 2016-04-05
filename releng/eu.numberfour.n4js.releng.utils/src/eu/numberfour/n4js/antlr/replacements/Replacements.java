@@ -96,8 +96,12 @@ public class Replacements {
 			String replacementResourceName = replacementBase + "/" + replacementName;
 			URL url = ClassLoader.getSystemResource(replacementResourceName);
 			if (url == null) {
-				throw new NullPointerException(
-						"cannot locate system resource <" + replacementName + "> at " + replacementBase);
+				url = ClassLoader.getSystemResource(replacementName);
+				System.out.println("### fallback resource lookup");
+				if (url == null) {
+					throw new NullPointerException(
+							"cannot locate system resource <" + replacementName + "> at " + replacementBase);
+				}
 			}
 			// normalize string to run on Windows and Mac/Unix
 			String replacement = Resources.toString(url, Charsets.UTF_8).replace("\r\n", "\n");
