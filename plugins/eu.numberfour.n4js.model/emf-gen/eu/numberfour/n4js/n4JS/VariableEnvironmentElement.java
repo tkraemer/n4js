@@ -30,4 +30,18 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface VariableEnvironmentElement extends EObject {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * Tells if this variable environment element applies only to block scoped elements, i.e. let & const.
+	 * Returns <code>true</code> for {@link Block} and {@link ForStatement}, <code>false</code> otherwise.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
+	 * @generated
+	 */
+	boolean appliesOnlyToBlockScopedElements();
+
 } // VariableEnvironmentElement

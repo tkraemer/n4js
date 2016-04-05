@@ -16,7 +16,6 @@ import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
-import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
@@ -24,16 +23,15 @@ import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
-import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.n4JS.VariableDeclarationContainer
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.util.IResourceScopeCache
+
+import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 
 /**
  * Extensions for source element, in particular for statements.
@@ -185,28 +183,6 @@ class SourceElementExtensions {
 	}
 
 	def private boolean belongsToScope(IdentifiableElement elem, VariableEnvironmentElement scope) {
-		return getScope(elem) === scope;
-	}
-	def private VariableEnvironmentElement getScope(IdentifiableElement elem) {
-		var VariableEnvironmentElement scope = EcoreUtil2.getContainerOfType(elem, VariableEnvironmentElement);
-		if(!elem.isBlockScoped) {
-			while(scope!==null && scope.appliesOnlyToBlockScopedElements) {
-				scope = EcoreUtil2.getContainerOfType(scope.eContainer, VariableEnvironmentElement);
-			}
-		}
-		return scope;
-	}
-
-	def private boolean isBlockScoped(IdentifiableElement elem) {
-		if(elem instanceof VariableDeclaration) {
-			val parent = elem.eContainer;
-			if(parent instanceof VariableDeclarationContainer) {
-				return parent.isBlockScoped;
-			}
-		}
-		return false;
-	}
-	def private boolean appliesOnlyToBlockScopedElements(VariableEnvironmentElement vee) {
-		return vee instanceof Block || vee instanceof ForStatement;
+		return elem.getScope === scope;
 	}
 }
