@@ -57,6 +57,7 @@ Contributors:
 				<executions>
 					<execution>
 						<id>mwe2-launcher</id>
+						<phase>generate-sources</phase>
 						<configuration>
 							<additionalClasspathElements>
 								<additionalClasspathElement>${additional-classes-of-n4ide.unicode}</additionalClasspathElement>
