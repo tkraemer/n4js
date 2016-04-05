@@ -82,8 +82,9 @@ Workflow {
 					keptBitSetName = "FOLLOW_ruleExpression_in_ruleExpressionStatement"
 					keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
 				}
+				antlrParam = "-report"
 				antlrParam = "-Xconversiontimeout"
-				antlrParam = "30000"
+				antlrParam = "90000"
 			}
 
 			fragment = eu.numberfour.n4js.antlr.delimiters.DebugAntlrGeneratorFragment auto-inject {

@@ -61,9 +61,9 @@ public class AntlrToolFacadeWithInjectedCode extends AntlrToolFacade {
 			File fileToWrite = new File(grammarFullPath);
 			Files.write(grammarContent, fileToWrite, Charsets.UTF_8);
 			if (fileToWrite.exists() && fileToWrite.isFile()) {
-				LOGGER.info("grammar file check OK :: " + fileToWrite.getAbsolutePath());
+				LOGGER.info("### grammar file check OK :: " + fileToWrite.getAbsolutePath());
 			} else {
-				LOGGER.error("grammar file check NOT OK :: " + fileToWrite.getAbsolutePath());
+				LOGGER.error("### grammar file check NOT OK :: " + fileToWrite.getAbsolutePath());
 			}
 		} catch (IOException e) {
 			throw new RuntimeException();
