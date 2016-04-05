@@ -26,6 +26,7 @@ import eu.numberfour.n4js.n4JS.ImportSpecifier
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassExpression
+import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4TypeDeclaration
 import eu.numberfour.n4js.n4JS.N4TypeDefinition
@@ -39,21 +40,21 @@ import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.Variable
-import eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
 import eu.numberfour.n4js.n4JS.extensions.SourceElementExtensions
+import eu.numberfour.n4js.n4mf.ProjectType
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.scoping.builtin.GlobalObjectScope
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.validation.ValidatorMessageHelper
-import eu.numberfour.n4js.n4mf.ProjectType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.ValidatorMessageHelper
 import java.util.ArrayList
 import java.util.Collections
 import java.util.HashSet
@@ -355,7 +356,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 			default: #[]
 		};
 		val fparNames = fpars.map[name].toSet;
-		val declaredLetConst = getNameDeclarations(block).filter(VariableDeclarationOrBinding).filter[isBlockScoped];
+		val declaredLetConst = getNameDeclarations(block).filter(VariableDeclaration).filter[N4JSASTUtils.isBlockScoped(it)];
 		declaredLetConst.filter[fparNames.contains(declaredName)].forEach[dupeEO|
 			val name = dupeEO.declaredName;
 			val baseEO = fpars.filter[it.name==name].head;

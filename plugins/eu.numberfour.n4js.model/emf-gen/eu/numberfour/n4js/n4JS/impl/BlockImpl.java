@@ -18,6 +18,7 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ReturnStatement;
 import eu.numberfour.n4js.n4JS.Statement;
+import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 
@@ -95,6 +96,15 @@ public class BlockImpl extends StatementImpl implements Block {
 			statements = new EObjectContainmentEList<Statement>(Statement.class, this, N4JSPackage.BLOCK__STATEMENTS);
 		}
 		return statements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return true;
 	}
 
 	/**
@@ -245,8 +255,26 @@ public class BlockImpl extends StatementImpl implements Block {
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VariableEnvironmentElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case N4JSPackage.BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
 			case N4JSPackage.BLOCK___GET_ALL_STATEMENTS:
 				return getAllStatements();
 			case N4JSPackage.BLOCK___GET_ALL_RETURN_STATEMENTS:
