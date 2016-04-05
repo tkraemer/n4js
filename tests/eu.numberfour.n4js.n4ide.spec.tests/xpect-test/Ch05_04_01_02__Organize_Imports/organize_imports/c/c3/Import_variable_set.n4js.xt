@@ -11,7 +11,11 @@
 */
 
 /* XPECT organizeImports ---
-   (...)
+     
+   +   // trailing comment
+   | import {a,x} from "a/ExpVar"  [// trailing comment|]
+     var a2 = a;
+     var x2 = x;
 --- */
 
 // XPECT nowarnings --> "The import of x is unused." at "x"
