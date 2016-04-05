@@ -629,7 +629,7 @@ public class TestResultsView extends ViewPart {
 					testerFrontEndUI.runInUI(newConfiguration);
 				} catch (Exception e) {
 					String message = "Test class not found in the workspace.";
-					if (!Strings.isNullOrEmpty(message)) {
+					if (!Strings.isNullOrEmpty(e.getMessage())) {
 						message += " Reason: " + e.getMessage();
 					}
 					MessageDialog.openError(getShell(), "Cannot open editor", message);
