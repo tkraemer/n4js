@@ -13,6 +13,8 @@ package eu.numberfour.n4js.ui.organize.imports;
 import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import eu.numberfour.n4js.documentation.N4JSDocumentationProvider
+import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
@@ -21,14 +23,17 @@ import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.ScriptElement
+import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
-import eu.numberfour.n4js.ui.changes.ChangeProvider
-import eu.numberfour.n4js.ui.changes.IChange
-import eu.numberfour.n4js.ui.contentassist.N4JSCandidateFilter
+import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TypesFactory
+import eu.numberfour.n4js.ui.changes.ChangeProvider
+import eu.numberfour.n4js.ui.changes.IChange
+import eu.numberfour.n4js.ui.contentassist.N4JSCandidateFilter
 import eu.numberfour.n4js.utils.UtilN4
 import java.util.ArrayList
 import java.util.Collections
@@ -46,13 +51,13 @@ import org.eclipse.jface.window.Window
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.TerminalRule
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.BidiTreeIterator
 import org.eclipse.xtext.nodemodel.ILeafNode
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
-import org.eclipse.xtext.util.TextRegion
 
 import static eu.numberfour.n4js.parser.InternalSemicolonInjectingParser.SEMICOLON_INSERTED
 
@@ -70,16 +75,24 @@ public class N4JSOrganizeImports {
 	private N4JSScopeProvider scopeProvider;
 
 	@Inject
-	private ImportProvidedElementLabelprovider ImportProvidedElementLabelprovider;
+	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
 
-	// Adapter used to mark programmatically created AST-Elements without a corresponding parstree-node.
+	// Adapter used to mark programmatically created AST-Elements without a corresponding parse tree node.
 	private final Adapter nodelessMarker = new AdapterImpl();
-
+	
+	@Inject 
+	private N4JSDocumentationProvider documentationProvider;
+	
+	@Inject
+	private TypeExpressionsGrammarAccess typeExpressionGrammmarAccess;
+	
 	/**
 	 * Calculate destination region in Document for imports. If the offset is not 0,
-	 * then it has to be advanced be current linefeed-length
+	 * then it has to be advanced by current line feed length
 	 *
-	 * Using first position after script-annotation. (first whitespace, usually the linebreak )
+	 * Using first position after script-annotation ("@@") and after any directive in the prolog section, that is 
+	 * just before the first statement or, in cases where the first statement is js-style documented, before the jsdoc-style 
+	 * documentation.
 	 *
 	 * Region has length 0;
 	 *
@@ -87,32 +100,151 @@ public class N4JSOrganizeImports {
 	 *            n4js resource
 	 * @return region for import statements, length 0
 	 */
-	public def TextRegion getImportRegion(XtextResource xtextResource) {
+	public def InsertionPoint getImportRegion(XtextResource xtextResource) {
 
 		// In N4js imports can appear anywhere in the Script as top-level elements. So even as a last
 		// statement and more importantly scattered around.
-		var TextRegion ret = null;
+		val InsertionPoint insertionPoint = new InsertionPoint;
 
 		// First Position
-		var int begin = 0;
+		var int begin = -1;
 
 		val Script script = getScript(xtextResource);
 		if (script !== null) {
+			// if there is a script, we can insert in first position.
+			begin = 0;
 			val List<INode> scriptAnnos = findNodesForFeature(script, N4JSPackage.Literals.SCRIPT__ANNOTATIONS);
 			if (!scriptAnnos.isEmpty()) {
 				val INode lastAnno = scriptAnnos.get(scriptAnnos.size() - 1);
 				begin = lastAnno.getTotalEndOffset();
-
-			// advance over linefeed, since newlines are in the hidden token
+				insertionPoint.notBeforeTotalOffset = begin;
+			// advance over line feed, since newlines are in the hidden token
 			// channel of the following element
-			// ChangeManager has information of current linefeed length.
+			// ChangeManager has information of current line feed length.
+			}
+	
+			// Searching for directives (string-statements at the beginning, e.g. "use strict") 
+			// and the first real statement, ignoring imports:
+			val elements = script.scriptElements;
+			var lastSeenDirective = -1;
+			var idxNondirectiveStatemnt = -1; 
+			for( var i=0; i< elements.size && idxNondirectiveStatemnt === -1; i++ ) {
+				val curr = elements.get(i)					
+				if( curr.isStringLiteralExpression ) {
+					lastSeenDirective = i;
+				} else if( curr instanceof ImportDeclaration ){
+					// ignore import declarations, will be removed anyway.
+				} else	{
+					idxNondirectiveStatemnt = i;
+				}
+			}			
+			
+			
+			// Conditionally calculate begin-position
+			if( idxNondirectiveStatemnt !== -1 ) {
+				// Standard case, a normal statement encountered.
+				
+				// get documentation of that statement:
+				val realScriptElement = elements.get(idxNondirectiveStatemnt);
+				val realScriptElementNode = findActualNodeFor( realScriptElement );
+				
+				// find doc, looks for nearest.
+				val docuNodes = documentationProvider.getDocumentationNodes(realScriptElement);
+				
+				if( !docuNodes.isEmpty ) {
+					// docu found
+					begin = docuNodes.get(0).totalOffset;
+					insertionPoint.isBeforeDocumentation = true;
+					
+				} else {
+					// no documentation, go before the statement:
+					var listLeafNodes = realScriptElementNode.leafNodes.toList;
+					
+					// looking for a position right after the last the last comment and before (WS+EOL)* NOT_HIDDEN_LEAF
+					{
+						val iterLeaves = listLeafNodes.iterator;
+						var ILeafNode curr; 
+						var ILeafNode firstEOL;
+						var ILeafNode afterFirstEOL;
+						var ILeafNode lastNode;
+						// got up to first non-hidden.
+						while( iterLeaves.hasNext && ( (curr = iterLeaves.next).isHidden) ) {  
+							if( curr.grammarElement instanceof TerminalRule ){
+								if( curr.grammarElement == typeExpressionGrammmarAccess.ML_COMMENTRule )
+								{
+									// reset EOLs
+									firstEOL = null; afterFirstEOL = null;
+								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.SL_COMMENTRule 	) {
+									// reset EOLs
+									firstEOL = null;afterFirstEOL = null;
+								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.EOLRule 	) {
+									if( firstEOL === null ) {
+										// store 
+										firstEOL = curr; 
+									} else if( afterFirstEOL === null ) {
+										// store insertion point.
+										afterFirstEOL = curr;
+									} 
+								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.WSRule 	) {
+									// keep going
+									if( firstEOL !== null && afterFirstEOL === null ) afterFirstEOL = curr;
+								} else 
+								{
+									firstEOL = null; afterFirstEOL = null;
+								}
+							}
+							lastNode = curr;
+						}
+						if( curr === null || curr.isHidden ) {
+							// Something is wrong here.
+							throw new RuntimeException("Expected at least one non-hidden element.");
+						}
+						
+						insertionPoint.notAfterTotalOffset = curr.totalOffset;
+						
+						var begin2 = if( afterFirstEOL !== null ) {
+							afterFirstEOL.totalOffset;
+						} else {
+							curr.totalOffset;
+						}
+						begin = Math.max(begin,begin2);
+					}
+				}
+				
+				
+			} else {
+				// no normal statement encountered.
+				if( lastSeenDirective > -1 ) {
+					// have directive, so insert after last directive.
+					val lastDirectiveNode = elements.get(lastSeenDirective).findActualNodeFor;
+					
+					// update begin:
+					begin = lastDirectiveNode.totalEndOffset
+					insertionPoint.notBeforeTotalOffset = Math.max( begin, insertionPoint.notBeforeTotalOffset );
+					 
+				} else {
+					// no directive
+					// --> just leave begin as is, after the "@@"
+				}
 			}
 
 			// create new insertion point.
-			ret = new TextRegion(begin, 0);
+			insertionPoint.offset = begin;
 		}
 
-		return ret;
+		return insertionPoint;
+	}
+	
+	
+	/** returns true for expression statements containing a single string literal. (e.g. a JS directive like '"use strict"' ) */
+	def boolean isStringLiteralExpression(ScriptElement element) {
+		if( element instanceof ExpressionStatement ) {
+			val expression = element.expression;
+			if( expression instanceof StringLiteral ) {
+				return true; 
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -135,6 +267,7 @@ public class N4JSOrganizeImports {
 	 *
 	 * @param xtextResource
 	 *            to organize
+	 * @param lineEnding - current active line-Ending in file
 	 * @param interaction Mode how to handle ambiguous situations
 	 * @return new import section, might be an empty String.
 	 */
@@ -412,13 +545,11 @@ public class N4JSOrganizeImports {
 	}
 
 	/**
-	 * Compute all changes,
+	 * Compute all cleanup changes (removal of imports)
 	 *
-	 * ask user for choices.
 	 *
 	 * @param xtextResource - the Resource to modify
 	 * @param document - the document connected to the xtextResource,  for textual changes.
-	 * @param mode how to deal with situations requiring user-interaction. null == Interaction.queryUser
 	 * @return list of changes to the document.
 	 */
 	public def List<IChange> getCleanupChanges(XtextResource xtextResource,
@@ -529,7 +660,7 @@ public class N4JSOrganizeImports {
 
 		// ISelection sel= editor.getSelectionProvider().getSelection();
 		// ILabelProvider labelProvider= new TypeNameMatchLabelProvider(TypeNameMatchLabelProvider.SHOW_FULLYQUALIFIED);
-		val ILabelProvider labelProvider = ImportProvidedElementLabelprovider;
+		val ILabelProvider labelProvider = importProvidedElementLabelprovider;
 
 		val Object[][] openChoices = N4JSOrganizeImportsHelper.createOptions(multimap);
 

@@ -43,6 +43,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -54,13 +55,14 @@ import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
-import org.eclipse.xtext.util.TextRegion;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.common.collect.HashMultimap;
@@ -68,12 +70,16 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.documentation.N4JSDocumentationProvider;
+import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
 import eu.numberfour.n4js.resource.N4JSResource;
+import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess;
 import eu.numberfour.n4js.ui.changes.ChangeManager;
 import eu.numberfour.n4js.ui.changes.ChangeProvider;
 import eu.numberfour.n4js.ui.changes.IAtomicChange;
 import eu.numberfour.n4js.ui.changes.IChange;
 import eu.numberfour.n4js.ui.changes.Replacement;
+import eu.numberfour.n4js.utils.UtilN4;
 
 /**
  * Handler used for two cases: Mass updates on files/folders in selection or organizing the current N4JS Editor.
@@ -100,6 +106,12 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 	// cleaned version of extensions got from fileExtensions
 	private Collection<String> n4FileExtensions;
+
+	@Inject
+	private TypeExpressionsGrammarAccess typeExpressionsGrammarAccess;
+
+	@Inject
+	private N4JSDocumentationProvider n4JSDocumentationProvider;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -302,15 +314,17 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 		List<IChange> result = document.readOnly(
 				new IUnitOfWork<List<IChange>, XtextResource>() {
+
 					@Override
 					public List<IChange> exec(XtextResource xtextResource) throws Exception {
 						// Position, length 0
-						TextRegion importRegion = organizeImports.getImportRegion(xtextResource);
+						InsertionPoint insertionPoint = organizeImports.getImportRegion(xtextResource);
 
-						if (importRegion != null) {
+						if (insertionPoint.offset != -1) {
 							List<IChange> changes = new ArrayList<>();
 							try {
-								final String NL = ChangeProvider.lineDelimiter(document, importRegion.getOffset());
+								final String NL = ChangeProvider.lineDelimiter(document,
+										insertionPoint.offset);
 
 								final String organizedImportSection = organizeImports
 										.getOrganizedImportSection(xtextResource, NL, interaction);
@@ -318,12 +332,56 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 									changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
 									if (!organizedImportSection.isEmpty()) {
 										// advance ImportRegion-offset if not nil:
-										int offset = importRegion.getOffset();
+										int offset = insertionPoint.offset;
 										if (offset != 0) {
 											offset += NL.length();
 										}
-										changes.add(ChangeProvider.insertLineAbove(document,
-												offset, organizedImportSection, true));
+										// if the line above is part of a ML-comment, then line-break:
+										IRegion lineRegion = document.getLineInformationOfOffset(offset);
+
+										ILeafNode leafNodeAtBeginOfLine = NodeModelUtils.findLeafNodeAtOffset(
+												xtextResource.getParseResult().getRootNode(), lineRegion.getOffset());
+
+										if (leafNodeAtBeginOfLine.getGrammarElement() == typeExpressionsGrammarAccess
+												.getML_COMMENTRule() // plain ML
+										) {
+
+											int insertOffset = insertionPoint.offset;
+											// it is ML, so we need to insert a line-break;
+											String finalText = NL + organizedImportSection + NL;
+											changes.add(new Replacement(xtextResource.getURI().trimFragment(),
+													insertOffset, 0, finalText));
+
+										} else if (UtilN4.isIgnoredSyntaxErrorNode(leafNodeAtBeginOfLine,
+												InternalSemicolonInjectingParser.SEMICOLON_INSERTED)
+												// ASI overlapping something
+												&& (leafNodeAtBeginOfLine.getTotalOffset() < lineRegion.getOffset()
+										// this ASI something starts before the beginning of the line
+										)) {
+											int insertOffset = insertionPoint.offset; // concrete
+																						// position
+
+											if ((!insertionPoint.isBeforeDocumentation) &&
+											// if this was an ASI case shadowing a jsdoc-/**-style comment
+											// we should insert before this comment. Still need to double-check the
+											// concrete content:
+													n4JSDocumentationProvider.isDocumentationStyle(
+															NodeModelUtils.getTokenText(leafNodeAtBeginOfLine))) {
+												// it's an active jsdoc comment, shadowed by ASI-insertions
+												insertOffset = leafNodeAtBeginOfLine.getTotalOffset();
+
+											}
+											// it is ML, so we need to insert a line-break;
+											String finalText = NL + organizedImportSection + NL;
+											changes.add(new Replacement(xtextResource.getURI().trimFragment(),
+													insertOffset, 0, finalText));
+
+										} else {
+											// The line above is not part of a ML-comment, so do this:
+											changes.add(ChangeProvider.insertLineAbove(document,
+													offset, organizedImportSection, false)); // indentation doesn't work
+																								// with multiple lines
+										}
 									}
 									return changes;
 								}
@@ -386,7 +444,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 			return new ChangeAnalysis(atomicResult, false);
 		}
 
-		// Pre condition: find the one with text != ø && other no test.
+		// Pre condition: find the one with text != ø && other have no text.
 		// Pre uris must match.
 		Replacement rText = null;
 		for (IAtomicChange nxt : atomicResult) {
@@ -404,7 +462,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 		}
 
 		Replacement current = null;
-		// Back to front
+		// Back to front iteration
 		for (int i = atomicResult.size() - 1; i >= 0; i--) {
 			IAtomicChange nxt = atomicResult.get(i);
 			if (nxt == rText) {
@@ -429,7 +487,19 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 			return new ChangeAnalysis(atomicResult, false);
 		}
 
-		ChangeAnalysis result = new ChangeAnalysis(Arrays.asList(current, rText), true);
+		// keep correct order.
+		List<IAtomicChange> orderedChanges = null;
+		if (rText == atomicResult.get(0)) {
+			orderedChanges = Arrays.asList(rText, current);
+		} else if (rText == atomicResult.get(atomicResult.size() - 1)) {
+			orderedChanges = Arrays.asList(current, rText);
+		} else {
+			// something is wrong here ?!
+			System.out.println("XXX");
+			return new ChangeAnalysis(atomicResult, false);
+		}
+
+		ChangeAnalysis result = new ChangeAnalysis(orderedChanges, true);
 		result.deletion = current;
 		result.newText = rText;
 		return result;
