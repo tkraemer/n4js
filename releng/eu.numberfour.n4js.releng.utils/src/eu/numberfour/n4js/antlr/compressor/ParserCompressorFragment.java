@@ -33,7 +33,7 @@ import eu.numberfour.n4js.antlr.compressor.IfElseCascade.Replacement;
  */
 public class ParserCompressorFragment extends DefaultGeneratorFragment {
 
-	private final static Logger log = Logger.getLogger(ParserCompressorFragment.class);
+	private final static Logger LOGGER = Logger.getLogger(ParserCompressorFragment.class);
 
 	/**
 	 * Pattern for detecting const integer definitions. Package visible for testing.
@@ -72,11 +72,11 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 			try {
 				javaSource = Files.toString(file, Charsets.UTF_8);
 			} catch (Exception ex) {
-				log.error("Error reading file " + fileName + ": " + ex.getMessage());
+				LOGGER.error("Error reading file " + fileName + ": " + ex.getMessage());
 			}
 			if (javaSource != null) {
 				String compressed = process(javaSource, file);
-				log.info("File " + readableFileName(file) + " compressed: " + javaSource.length() + " --> "
+				LOGGER.info("File " + readableFileName(file) + " compressed: " + javaSource.length() + " --> "
 						+ compressed.length() + " ("
 						+ 100 * compressed.length() / javaSource.length() + "%)");
 
@@ -84,7 +84,7 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 					try {
 						Files.copy(file, new File(file.getParentFile(), file.getName() + ".bak"));
 					} catch (IOException e) {
-						log.error("Error creating backup of " + readableFileName(file) + ": " + e.getMessage());
+						LOGGER.error("Error creating backup of " + readableFileName(file) + ": " + e.getMessage());
 						return;
 					}
 				}
@@ -92,7 +92,7 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 				try {
 					Files.write(compressed, file, Charsets.UTF_8);
 				} catch (IOException e) {
-					log.error("Error writing compressed file " + readableFileName(file) + ": " + e.getMessage());
+					LOGGER.error("Error writing compressed file " + readableFileName(file) + ": " + e.getMessage());
 				}
 			}
 		}
@@ -120,7 +120,7 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 
 		Map<String, Integer> parserConstMap = createConstMap(javaSource);
 		if (parserConstMap.isEmpty()) {
-			log.info("No integer constants found in " + readableFileName(file));
+			LOGGER.info("No integer constants found in " + readableFileName(file));
 			return null;
 		}
 
