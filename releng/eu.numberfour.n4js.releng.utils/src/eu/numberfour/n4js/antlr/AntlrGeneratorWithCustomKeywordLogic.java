@@ -31,7 +31,7 @@ import eu.numberfour.n4js.antlr.n4js.NoLineTerminatorHandlingInjector;
  */
 public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment {
 
-	private final static Logger log = Logger.getLogger(AntlrGeneratorWithCustomKeywordLogic.class);
+	private final static Logger LOGGER = Logger.getLogger(AntlrGeneratorWithCustomKeywordLogic.class);
 
 	@Override
 	public void generate(final Grammar grammar, XpandExecutionContext ctx) {
@@ -45,19 +45,37 @@ public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment
 
 	private void massageGrammar(String absoluteParserFileName, String encoding) {
 		try {
+			LOGGER.info("massageGrammar " + absoluteParserFileName);
 			String javaFile = absoluteParserFileName.replaceAll("\\.g$", getParserFileNameSuffix());
-			String content = Files.toString(new File(javaFile), Charset.forName(encoding));
+
+			File fileToRead = new File(javaFile);
+			if (fileToRead.exists() && fileToRead.isFile()) {
+				LOGGER.info("fileToRead check OK :: " + fileToRead.getAbsolutePath());
+			} else {
+				LOGGER.error("fileToRead check NOT OK :: " + fileToRead.getAbsolutePath());
+			}
+
+			String content = Files.toString(fileToRead, Charset.forName(encoding));
 			String normalizedContent = content.replace("\r\n", "\n");
 
 			String newContent = fixIdentifierAsKeywordWithEOLAwareness(normalizedContent);
 
 			if (normalizedContent.equals(newContent)) {
-				log.warn("Replacement not found in " + javaFile);
+				LOGGER.warn("Replacement not found in " + javaFile);
 				// throw new IllegalStateException("Replacement not found in " + javaFile);
 			}
+
+			File fileToWrite = new File(javaFile);
 			if (!content.equals(newContent)) {
-				Files.write(newContent, new File(javaFile), Charset.forName(encoding));
+				Files.write(newContent, fileToWrite, Charset.forName(encoding));
 			}
+
+			if (fileToWrite.exists() && fileToWrite.isFile()) {
+				LOGGER.info("fileToWrite check OK :: " + fileToWrite.getAbsolutePath());
+			} else {
+				LOGGER.error("fileToWrite check NOT OK :: " + fileToWrite.getAbsolutePath());
+			}
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

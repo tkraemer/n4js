@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.xtext.generator.parser.antlr.AntlrToolFacade;
 
 import com.google.common.base.Charsets;
@@ -29,6 +30,7 @@ import com.google.common.io.Files;
  */
 public class AntlrToolFacadeWithInjectedCode extends AntlrToolFacade {
 
+	private final static Logger LOGGER = Logger.getLogger(AntlrToolFacadeWithInjectedCode.class);
 	private final List<CodeIntoGrammarInjector> steps = Lists.newArrayList();
 
 	/**
@@ -45,6 +47,8 @@ public class AntlrToolFacadeWithInjectedCode extends AntlrToolFacade {
 	}
 
 	private void injectCode(String grammarFullPath) {
+		LOGGER.info("### inject grammar " + grammarFullPath);
+
 		try {
 			String grammarContent = Files.toString(new File(grammarFullPath), Charsets.UTF_8);
 			if (grammarFullPath.endsWith("Lexer.g")) {
@@ -54,7 +58,13 @@ public class AntlrToolFacadeWithInjectedCode extends AntlrToolFacade {
 			} else {
 				throw new IllegalArgumentException(grammarFullPath);
 			}
-			Files.write(grammarContent, new File(grammarFullPath), Charsets.UTF_8);
+			File fileToWrite = new File(grammarFullPath);
+			Files.write(grammarContent, fileToWrite, Charsets.UTF_8);
+			if (fileToWrite.exists() && fileToWrite.isFile()) {
+				LOGGER.info("grammar file check OK :: " + fileToWrite.getAbsolutePath());
+			} else {
+				LOGGER.error("grammar file check NOT OK :: " + fileToWrite.getAbsolutePath());
+			}
 		} catch (IOException e) {
 			throw new RuntimeException();
 		}
