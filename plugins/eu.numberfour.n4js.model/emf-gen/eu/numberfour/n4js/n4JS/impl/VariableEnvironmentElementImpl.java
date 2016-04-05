@@ -10,6 +10,10 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -39,6 +43,29 @@ public abstract class VariableEnvironmentElementImpl extends MinimalEObjectImpl.
 	@Override
 	protected EClass eStaticClass() {
 		return N4JSPackage.Literals.VARIABLE_ENVIRONMENT_ELEMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //VariableEnvironmentElementImpl

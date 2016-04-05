@@ -105,7 +105,7 @@ public class ProcessExecutor {
 							e);
 				}
 				if (!process.isAlive()) {
-					LOGGER.info("Spawned" + name + "process was successfully terminated.");
+					LOGGER.debug("Spawned" + name + "process was successfully terminated.");
 				} else {
 					// there is nothing else we can do about it
 					LOGGER.error(
@@ -113,7 +113,7 @@ public class ProcessExecutor {
 									+ DEFAULT_PROCESS_TIMEOUT + " " + SECONDS + ".");
 				}
 			} else {
-				LOGGER.info("Spawned" + name + "process was successfully terminated.");
+				LOGGER.debug("Spawned" + name + "process was successfully terminated.");
 			}
 		}
 	}
@@ -143,7 +143,7 @@ public class ProcessExecutor {
 		String pbName = name == null ? " " : " for process '" + name + "' ";
 
 		if (processBuilder == null) {
-			LOGGER.info("Provided process builder" + pbName + "was null");
+			LOGGER.error("Provided process builder" + pbName + "was null");
 			return new ProcessResult(ERROR_EXIT_CODE, "", "");
 		}
 
