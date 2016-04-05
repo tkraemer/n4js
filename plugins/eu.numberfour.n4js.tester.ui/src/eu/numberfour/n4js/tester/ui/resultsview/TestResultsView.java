@@ -20,7 +20,11 @@ import static eu.numberfour.n4js.tester.domain.TestStatus.PASSED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_NOT_IMPLEMENTED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_PRECONDITION;
+import static eu.numberfour.n4js.ui.utils.UIUtils.getShell;
 import static java.lang.System.lineSeparator;
+import static java.util.Arrays.copyOfRange;
+import static org.eclipse.core.runtime.IPath.SEPARATOR;
+import static org.eclipse.jface.dialogs.MessageDialog.openError;
 import static org.eclipse.swt.SWT.NONE;
 import static org.eclipse.swt.widgets.Display.getDefault;
 
@@ -29,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -38,6 +43,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -82,6 +88,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
@@ -107,6 +115,8 @@ import eu.numberfour.n4js.tester.ui.TesterFrontEndUI;
 import eu.numberfour.n4js.tester.ui.TesterUiActivator;
 import eu.numberfour.n4js.ui.editor.EditorContentExtractor;
 import eu.numberfour.n4js.ui.editor.StyledTextDescriptor;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseProject;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
 
 /**
@@ -134,6 +144,9 @@ public class TestResultsView extends ViewPart {
 
 	@Inject
 	private TesterFrontEnd testerFrontEnd;
+
+	@Inject
+	private IN4JSEclipseCore core;
 
 	private final List<TestSession> registeredSessions = new ArrayList<>();
 
@@ -610,9 +623,17 @@ public class TestResultsView extends ViewPart {
 			final TestSession session = from(registeredSessions).firstMatch(s -> s.root == currentRoot).orNull();
 			if (null != session) {
 				final TestConfiguration configurationToReRun = session.configuration;
-				final TestConfiguration newConfiguration = testerFrontEnd.createConfiguration(configurationToReRun);
 				registeredSessions.remove(session);
-				testerFrontEndUI.runInUI(newConfiguration);
+				try {
+					final TestConfiguration newConfiguration = testerFrontEnd.createConfiguration(configurationToReRun);
+					testerFrontEndUI.runInUI(newConfiguration);
+				} catch (Exception e) {
+					String message = "Test class not found in the workspace.";
+					if (!Strings.isNullOrEmpty(message)) {
+						message += " Reason: " + e.getMessage();
+					}
+					MessageDialog.openError(getShell(), "Cannot open editor", message);
+				}
 			}
 		}
 	}
@@ -643,17 +664,36 @@ public class TestResultsView extends ViewPart {
 	 */
 	protected void onDoubleClick() {
 		final ISelection selection = testTreeViewer.getSelection();
-		final ResultNode obj = (ResultNode) ((IStructuredSelection) selection).getFirstElement();
-		if (obj == null) {
+		final ResultNode resultNode = (ResultNode) ((IStructuredSelection) selection).getFirstElement();
+
+		if (resultNode == null) {
 			return;
 		}
-		TestElement elm = obj.getElement();
-		if (elm instanceof TestCase) {
-			final URI tcURI = ((TestCase) elm).getURI();
-			if (tcURI == null) {
+
+		TestElement testElement = resultNode.getElement();
+		if (testElement instanceof TestCase) {
+
+			final URI testCaseURI = ((TestCase) testElement).getURI();
+			if (testCaseURI == null) {
 				return;
 			}
-			uriOpener.open(tcURI, true);
+
+			final IN4JSEclipseProject project = core.findProject(testCaseURI).orNull();
+			if (null != project && project.exists()) {
+				final URI moduleLocation = testCaseURI.trimFragment();
+				final String[] projectRelativeSegments = moduleLocation.deresolve(project.getLocation()).segments();
+				final String path = Joiner.on(SEPARATOR)
+						.join(copyOfRange(projectRelativeSegments, 1, projectRelativeSegments.length));
+				final IFile module = project.getProject().getFile(path);
+				if (null != module && module.isAccessible()) {
+					uriOpener.open(testCaseURI, true);
+				} else {
+					openError(getShell(), "Cannot open editor", "Test class not found in selected project.");
+				}
+			} else {
+				openError(getShell(), "Cannot open editor", "The container project not found in the workspace.");
+			}
+
 		}
 	}
 
