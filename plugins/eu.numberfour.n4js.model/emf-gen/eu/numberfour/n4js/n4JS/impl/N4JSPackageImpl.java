@@ -2609,17 +2609,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getVariableDeclarationOrBinding__IsBlockScoped() {
-		return variableDeclarationOrBindingEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getVariableDeclarationOrBinding__GetVariableDeclarations() {
-		return variableDeclarationOrBindingEClass.getEOperations().get(1);
+		return variableDeclarationOrBindingEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -3005,7 +2996,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getSwitchStatement__GetDefaultClause() {
+	public EOperation getSwitchStatement__AppliesOnlyToBlockScopedElements() {
 		return switchStatementEClass.getEOperations().get(0);
 	}
 
@@ -3014,8 +3005,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getSwitchStatement__GetCaseClauses() {
+	public EOperation getSwitchStatement__GetDefaultClause() {
 		return switchStatementEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getSwitchStatement__GetCaseClauses() {
+		return switchStatementEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -6102,7 +6102,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(exportedVariableStatementEClass, EXPORTED_VARIABLE_STATEMENT___IS_EXTERNAL);
 
 		variableDeclarationOrBindingEClass = createEClass(VARIABLE_DECLARATION_OR_BINDING);
-		createEOperation(variableDeclarationOrBindingEClass, VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED);
 		createEOperation(variableDeclarationOrBindingEClass, VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS);
 
 		variableBindingEClass = createEClass(VARIABLE_BINDING);
@@ -6162,6 +6161,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		switchStatementEClass = createEClass(SWITCH_STATEMENT);
 		createEReference(switchStatementEClass, SWITCH_STATEMENT__EXPRESSION);
 		createEReference(switchStatementEClass, SWITCH_STATEMENT__CASES);
+		createEOperation(switchStatementEClass, SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
 		createEOperation(switchStatementEClass, SWITCH_STATEMENT___GET_DEFAULT_CLAUSE);
 		createEOperation(switchStatementEClass, SWITCH_STATEMENT___GET_CASE_CLAUSES);
 
@@ -6702,6 +6702,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		withStatementEClass.getESuperTypes().add(this.getStatement());
 		withStatementEClass.getESuperTypes().add(this.getVariableEnvironmentElement());
 		switchStatementEClass.getESuperTypes().add(this.getStatement());
+		switchStatementEClass.getESuperTypes().add(this.getVariableEnvironmentElement());
 		caseClauseEClass.getESuperTypes().add(this.getAbstractCaseClause());
 		defaultClauseEClass.getESuperTypes().add(this.getAbstractCaseClause());
 		labelledStatementEClass.getESuperTypes().add(this.getStatement());
@@ -7052,8 +7053,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(variableDeclarationOrBindingEClass, VariableDeclarationOrBinding.class, "VariableDeclarationOrBinding", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getVariableDeclarationOrBinding__IsBlockScoped(), theEcorePackage.getEBoolean(), "isBlockScoped", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
 		initEOperation(getVariableDeclarationOrBinding__GetVariableDeclarations(), this.getVariableDeclaration(), "getVariableDeclarations", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(variableBindingEClass, VariableBinding.class, "VariableBinding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -7116,6 +7115,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEClass(switchStatementEClass, SwitchStatement.class, "SwitchStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSwitchStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSwitchStatement_Cases(), this.getAbstractCaseClause(), null, "cases", null, 0, -1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getSwitchStatement__AppliesOnlyToBlockScopedElements(), theEcorePackage.getEBoolean(), "appliesOnlyToBlockScopedElements", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getSwitchStatement__GetDefaultClause(), this.getDefaultClause(), "getDefaultClause", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

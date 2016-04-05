@@ -3134,22 +3134,13 @@ public interface N4JSPackage extends EPackage {
 	int VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT = 0;
 
 	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED = 0;
-
-	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS = 1;
+	int VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS = 0;
 
 	/**
 	 * The number of operations of the '<em>Variable Declaration Or Binding</em>' class.
@@ -3158,7 +3149,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_OR_BINDING_OPERATION_COUNT = 2;
+	int VARIABLE_DECLARATION_OR_BINDING_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.VariableBindingImpl <em>Variable Binding</em>}' class.
@@ -3196,15 +3187,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_BINDING_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_BINDING___IS_BLOCK_SCOPED = VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3269,15 +3251,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPORTED_VARIABLE_BINDING_FEATURE_COUNT = VARIABLE_BINDING_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPORTED_VARIABLE_BINDING___IS_BLOCK_SCOPED = VARIABLE_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3351,15 +3324,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_DECLARATION___IS_BLOCK_SCOPED = VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3487,15 +3451,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPORTED_VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPORTED_VARIABLE_DECLARATION___IS_BLOCK_SCOPED = VARIABLE_DECLARATION___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -4158,13 +4113,22 @@ public interface N4JSPackage extends EPackage {
 	int SWITCH_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = STATEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Default Clause</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT___GET_DEFAULT_CLAUSE = STATEMENT_OPERATION_COUNT + 0;
+	int SWITCH_STATEMENT___GET_DEFAULT_CLAUSE = STATEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Case Clauses</em>' operation.
@@ -4173,7 +4137,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT___GET_CASE_CLAUSES = STATEMENT_OPERATION_COUNT + 1;
+	int SWITCH_STATEMENT___GET_CASE_CLAUSES = STATEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Switch Statement</em>' class.
@@ -4182,7 +4146,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 2;
+	int SWITCH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.AbstractCaseClauseImpl <em>Abstract Case Clause</em>}' class.
@@ -14823,16 +14787,6 @@ public interface N4JSPackage extends EPackage {
 	EClass getVariableDeclarationOrBinding();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#isBlockScoped() <em>Is Block Scoped</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Block Scoped</em>' operation.
-	 * @see eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#isBlockScoped()
-	 * @generated
-	 */
-	EOperation getVariableDeclarationOrBinding__IsBlockScoped();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#getVariableDeclarations() <em>Get Variable Declarations</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15284,6 +15238,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSwitchStatement_Cases();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.SwitchStatement#appliesOnlyToBlockScopedElements() <em>Applies Only To Block Scoped Elements</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.SwitchStatement#appliesOnlyToBlockScopedElements()
+	 * @generated
+	 */
+	EOperation getSwitchStatement__AppliesOnlyToBlockScopedElements();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.SwitchStatement#getDefaultClause() <em>Get Default Clause</em>}' operation.
@@ -19759,14 +19723,6 @@ public interface N4JSPackage extends EPackage {
 		EClass VARIABLE_DECLARATION_OR_BINDING = eINSTANCE.getVariableDeclarationOrBinding();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Block Scoped</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED = eINSTANCE.getVariableDeclarationOrBinding__IsBlockScoped();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Variable Declarations</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -20141,6 +20097,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SWITCH_STATEMENT__CASES = eINSTANCE.getSwitchStatement_Cases();
+
+		/**
+		 * The meta object literal for the '<em><b>Applies Only To Block Scoped Elements</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getSwitchStatement__AppliesOnlyToBlockScopedElements();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Default Clause</b></em>' operation.
