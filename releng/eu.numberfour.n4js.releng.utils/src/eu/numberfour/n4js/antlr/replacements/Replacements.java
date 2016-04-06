@@ -102,6 +102,10 @@ public class Replacements {
 				url = ClassLoader.getSystemResource(replacementName);
 				LOGGER.info("### fallback resource lookup of " + replacementName);
 				if (url == null) {
+					LOGGER.info("t1 " + ClassLoader.getSystemResource(replacementBase + "/" + "Replacements.class"));
+					LOGGER.info("t2 " + Replacements.class.getClassLoader().getResource(replacementResourceName));
+					LOGGER.info("t3 " + Replacements.class.getClassLoader().getResource(replacementResourceName));
+
 					throw new NullPointerException(
 							"cannot locate system resource <" + replacementName + "> at " + replacementBase);
 				}
