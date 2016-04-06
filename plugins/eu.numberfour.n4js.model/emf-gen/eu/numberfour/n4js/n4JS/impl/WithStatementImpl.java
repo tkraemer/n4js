@@ -10,10 +10,15 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.Statement;
+import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 import eu.numberfour.n4js.n4JS.WithStatement;
+
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -165,6 +170,15 @@ public class WithStatementImpl extends StatementImpl implements WithStatement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -242,6 +256,36 @@ public class WithStatementImpl extends StatementImpl implements WithStatement {
 				return statement != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VariableEnvironmentElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.WITH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case N4JSPackage.WITH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //WithStatementImpl

@@ -1,0 +1,4 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// XPECT errors --> "Name missing in type declaration." at "public class { @Final public label: string; constructor() { } }"
+export public class { @Final public label: string; constructor() { } }
