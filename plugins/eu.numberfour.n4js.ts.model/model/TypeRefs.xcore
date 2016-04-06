@@ -578,7 +578,7 @@ abstract class StructuralTypeRef {
 	 * contains the structural members. In this case, properties 'astStructuralType' and 'genStructuralType'
 	 * are empty.
 	 */
-	refers TStructuralType structuralType
+	refers transient TStructuralType structuralType
 	/*
 	 * If a StructuralTypeRef with additional structural members is to be generated programmatically <em>without
 	 * having a TModule</em> at hand, then the structural members can be added to this property. If a TModule is

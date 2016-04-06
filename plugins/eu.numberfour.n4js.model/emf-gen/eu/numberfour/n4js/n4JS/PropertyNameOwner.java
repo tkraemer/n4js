@@ -39,7 +39,7 @@ public interface PropertyNameOwner extends NamedElement {
 	 * @see eu.numberfour.n4js.n4JS.PropertyNameKind
 	 * @see #setKind(PropertyNameKind)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getPropertyNameOwner_Kind()
-	 * @model unique="false"
+	 * @model unique="false" transient="true"
 	 * @generated
 	 */
 	PropertyNameKind getKind();

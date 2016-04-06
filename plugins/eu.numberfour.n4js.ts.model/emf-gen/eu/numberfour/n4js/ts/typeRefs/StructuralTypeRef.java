@@ -95,7 +95,7 @@ public interface StructuralTypeRef extends EObject {
 	 * @return the value of the '<em>Structural Type</em>' reference.
 	 * @see #setStructuralType(TStructuralType)
 	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getStructuralTypeRef_StructuralType()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	TStructuralType getStructuralType();

@@ -37,7 +37,7 @@ public interface StrictModeRelevant extends EObject {
 	 * @return the value of the '<em>Strict Mode</em>' attribute.
 	 * @see #setStrictMode(boolean)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getStrictModeRelevant_StrictMode()
-	 * @model unique="false" derived="true"
+	 * @model unique="false" transient="true" derived="true"
 	 * @generated
 	 */
 	boolean isStrictMode();
