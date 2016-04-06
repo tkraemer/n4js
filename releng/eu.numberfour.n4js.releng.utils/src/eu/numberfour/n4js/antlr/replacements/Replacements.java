@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
@@ -23,6 +25,7 @@ import com.google.common.io.Resources;
  * replace snippets in the generated java parser.
  */
 public class Replacements {
+	private final static Logger LOGGER = Logger.getLogger(Replacements.class);
 
 	/**
 	 * Returns the simple name of the top level class defined in the given grammar content.
@@ -97,7 +100,7 @@ public class Replacements {
 			URL url = ClassLoader.getSystemResource(replacementResourceName);
 			if (url == null) {
 				url = ClassLoader.getSystemResource(replacementName);
-				System.out.println("### fallback resource lookup");
+				LOGGER.info("### fallback resource lookup of " + replacementName);
 				if (url == null) {
 					throw new NullPointerException(
 							"cannot locate system resource <" + replacementName + "> at " + replacementBase);
