@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests.bugs;
+package eu.numberfour.n4js.tests.externalPackages;
 
 import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;

@@ -86,14 +86,14 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 		 */
 		public ProjectImporter(final File rootFolder) {
 			assertNotNull("Root folder cannot be null.", rootFolder);
+			assertTrue("Root folder does not exist: " + rootFolder, rootFolder.exists());
 			assertTrue("Root folder must be a folder. But was a file: " + rootFolder, rootFolder.isDirectory());
-			assertTrue("Root folder does not exist: " + rootFolder, rootFolder.isDirectory());
 			assertTrue("Root folder directory content cannot be read: " + rootFolder, rootFolder.canRead());
 			assertTrue("No files were found in the directory: " + rootFolder, null != rootFolder.listFiles());
 			this.rootFolder = rootFolder;
 		}
 
-				/* default */ void importProjects() throws Exception {
+		/* default */ void importProjects() throws Exception {
 			for (final File file : rootFolder.listFiles()) {
 				if (file.exists() && file.isDirectory() && null != file.listFiles() && 0 < file.listFiles().length) {
 

@@ -49,10 +49,10 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.ArchiveURIUtil;
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
 import eu.numberfour.n4js.internal.N4JSSourceContainerType;
-import eu.numberfour.n4js.projectModel.IN4JSArchive;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.ProjectReference;
+import eu.numberfour.n4js.projectModel.IN4JSArchive;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 
 /**
  */
@@ -145,7 +145,7 @@ public class EclipseBasedN4JSWorkspace extends InternalN4JSWorkspace {
 			String expectedProjectName = projectReference.getProject().getArtifactId();
 			if (expectedProjectName != null && expectedProjectName.length() > 0) {
 				IProject existingProject = workspace.getProject(expectedProjectName);
-				if (existingProject.isAccessible()) {
+				if (N4JSEclipseModel.isAccessibleXtextProject(existingProject)) {
 					if (expectedN4JSSourceContainerType == N4JSSourceContainerType.ARCHIVE) {
 						return null;
 					} else {

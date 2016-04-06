@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.external;
 
+import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
@@ -19,6 +20,7 @@ import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -30,8 +32,8 @@ import com.google.inject.Inject;
 
 /**
  * Resource change listener implementation for listening project open/close event and running the
- * {@link ExternalLibraryBuilderHelper external library build helper} according to the changes. Also got notified if
- * new workspace project is being created or an existing, accessible project is being deleted.
+ * {@link ExternalLibraryBuilderHelper external library build helper} according to the changes. Also got notified if new
+ * workspace project is being created or an existing, accessible project is being deleted.
  */
 public class ProjectStateChangeListener implements IResourceChangeListener {
 
@@ -60,28 +62,31 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 				if (resource instanceof IProject) {
 
 					final IProject project = (IProject) resource;
-					final IProject externalProject = externalLibraryWorkspace.getProject(project.getName());
-					if (null != externalProject && externalProject.exists()) {
 
-						if (CHANGED == delta.getKind() && (delta.getFlags() & OPEN) != 0) {
+					if (hasNature(project) && hasBuilder(project)) {
+						final IProject externalProject = externalLibraryWorkspace.getProject(project.getName());
+						if (null != externalProject && externalProject.exists()) {
 
-							// Workspace project close/open
-							if (project.isOpen()) {
-								toClean.add(externalProject);
-							} else {
+							if (CHANGED == delta.getKind() && (delta.getFlags() & OPEN) != 0) {
+
+								// Workspace project close/open
+								if (project.isOpen()) {
+									toClean.add(externalProject);
+								} else {
+									toBuild.add(externalProject);
+								}
+
+							} else if (REMOVED == delta.getKind()) {
+
+								// Workspace project deletion
 								toBuild.add(externalProject);
+
+							} else if (ADDED == delta.getKind()) {
+
+								// Workspace project creation
+								toClean.add(externalProject);
+
 							}
-
-						} else if (REMOVED == delta.getKind()) {
-
-							// Workspace project deletion
-							toBuild.add(externalProject);
-
-						} else if (ADDED == delta.getKind()) {
-
-							// Workspace project creation
-							toClean.add(externalProject);
-
 						}
 					}
 				}
@@ -91,8 +96,8 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 
 			if (!toClean.isEmpty() || !toBuild.isEmpty()) {
 				LOGGER.info("Received project open/close change.");
-				LOGGER.info("Opened projects: " + Iterables.toString(toClean));
-				LOGGER.info("Closed projects: " + Iterables.toString(toBuild));
+				LOGGER.info("Opened projects: " + Iterables.toString(from(toClean).transform(p -> p.getName())));
+				LOGGER.info("Closed projects: " + Iterables.toString(from(toBuild).transform(p -> p.getName())));
 
 				buildJobProvider.createBuildJob(toBuild, toClean).schedule();
 			}
@@ -100,6 +105,30 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 		} catch (final CoreException e) {
 			LOGGER.error("Error while visiting resource change event.", e);
 		}
+	}
+
+	private boolean hasNature(final IProject project) {
+		try {
+			return project.isAccessible() && project.hasNature(N4JSExternalProject.NATURE_ID);
+		} catch (final CoreException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return false;
+	}
+
+	private boolean hasBuilder(final IProject project) {
+		if (project.isAccessible()) {
+			try {
+				for (final ICommand command : project.getDescription().getBuildSpec()) {
+					if (N4JSExternalProject.BUILDER_ID.equals(command.getBuilderName())) {
+						return true;
+					}
+				}
+			} catch (final CoreException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+		}
+		return false;
 	}
 
 }

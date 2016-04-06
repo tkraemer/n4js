@@ -176,19 +176,19 @@ public class NpmPackageToProjectAdapter {
 
 	}
 
-			/**
-			 * Reads, parses and returns with the content of the {@code package.json} file as a POJO for the given NPM
-			 * package root location.
-			 *
-			 * @param packageRoot
-			 *            the root location of the NPM package.
-			 *
-			 * @return the POJO instance that represents the read, parsed content of the {@code package.json} file.
-			 *
-			 * @throws IOException
-			 *             if {@code package.json} file does not exists, hence the content cannot be read.
-			 */
-			/* default */ PackageJson getPackageJson(File packageRoot) throws IOException {
+	/**
+	 * Reads, parses and returns with the content of the {@code package.json} file as a POJO for the given NPM package
+	 * root location.
+	 *
+	 * @param packageRoot
+	 *            the root location of the NPM package.
+	 *
+	 * @return the POJO instance that represents the read, parsed content of the {@code package.json} file.
+	 *
+	 * @throws IOException
+	 *             if {@code package.json} file does not exists, hence the content cannot be read.
+	 */
+	PackageJson getPackageJson(File packageRoot) throws IOException {
 
 		final File packageJsonResource = new File(packageRoot, PACKAGE_JSON);
 		if (!packageJsonResource.exists() || !packageJsonResource.isFile()) {
@@ -204,16 +204,17 @@ public class NpmPackageToProjectAdapter {
 		return getNpmsTypeDefinitionsFolder(true);
 	}
 
-			/**
-			 * Returns with the root folder of all available npm package definitions. Or returns with {@code null} if no
-			 * definitions are available. Also performs an on demand {@code git pull}.
-			 *
-			 * @param performGitPull
-			 *            {@code true} if a git pull has to be performed in the local clone.
-			 *
-			 * @return the root folder of all npm package definitions or {@code null} if missing.
-			 */
-			/* default */ File getNpmsTypeDefinitionsFolder(final boolean performGitPull) {
+	/**
+	 * Returns with the root folder of all available npm package definitions. Or returns with {@code null} if no
+	 * definitions are available. Also performs an on demand {@code git pull}.
+	 *
+	 * @param performGitPull
+	 *            {@code true} if a git pull has to be performed in the local clone.
+	 *
+	 * @return the root folder of all npm package definitions or {@code null} if missing.
+	 */
+	File getNpmsTypeDefinitionsFolder(final boolean performGitPull) {
+
 		File repositoryLocation = new File(installLocationProvider.getTargetPlatformLocalGitRepositoryLocation());
 
 		if (performGitPull) {
@@ -231,26 +232,26 @@ public class NpmPackageToProjectAdapter {
 		}
 	}
 
-			/**
-			 * Add type definitions (N4JSDs) to the npm package. Types are added only if matching version is found.
-			 *
-			 * This method suppresses any potential issues as adding type definitions to some npm package does not
-			 * affect overall npm usage. Still, errors are {@link #LOGGER logged} to help troubleshooting potential
-			 * issues and returns with an {@link IStatus status} instance that represents the problem if any.
-			 *
-			 * @param packageRoot
-			 *            npm package folder.
-			 * @param packageJson
-			 *            {@link PackageJson package.json} of that package.
-			 * @param manifest
-			 *            file that will be adjusted according to manifest fragments.
-			 * @param definitionsFolder
-			 *            root folder for npm type definitions.
-			 *
-			 * @return a status representing the outcome of performed the operation.
-			 */
-			/* default */ IStatus addTypeDefinitions(File packageRoot, PackageJson packageJson, File manifest,
-					File definitionsFolder) {
+	/**
+	 * Add type definitions (N4JSDs) to the npm package. Types are added only if matching version is found.
+	 *
+	 * This method suppresses any potential issues as adding type definitions to some npm package does not affect
+	 * overall npm usage. Still, errors are {@link #LOGGER logged} to help troubleshooting potential issues and returns
+	 * with an {@link IStatus status} instance that represents the problem if any.
+	 *
+	 * @param packageRoot
+	 *            npm package folder.
+	 * @param packageJson
+	 *            {@link PackageJson package.json} of that package.
+	 * @param manifest
+	 *            file that will be adjusted according to manifest fragments.
+	 * @param definitionsFolder
+	 *            root folder for npm type definitions.
+	 *
+	 * @return a status representing the outcome of performed the operation.
+	 */
+	IStatus addTypeDefinitions(File packageRoot, PackageJson packageJson, File manifest,
+			File definitionsFolder) {
 
 		String packageName = packageRoot.getName();
 		File packageN4JSDsRoot = new File(definitionsFolder, packageName);

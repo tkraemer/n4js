@@ -22,6 +22,8 @@ import java.net.URI;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -282,6 +284,48 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace B<init>" + NL +
 				"Workspace C<init>" + NL +
 				"Workspace D<init>" + NL,
+				secondResult.getStdOut());
+		// @formatter:on
+	}
+
+	/***/
+	@Test
+	public void runClientWhenWorkspaceProjectsAreNonN4jsProjects() throws Exception {
+
+		for (final String libProjectName : LIB_PROJECT_IDS) {
+			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+		}
+		waitForAutoBuild(false);
+
+		final ProcessResult firstResult = runClient();
+		// @formatter:off
+		assertEquals("Unexpected output after deleting all library projects from the workspace: " + firstResult,
+				"External A<init>" + NL +
+				"External B<init>" + NL +
+				"External C<init>" + NL +
+				"External D<init>" + NL,
+				firstResult.getStdOut());
+		// @formatter:on
+
+		for (final String libProjectName : LIB_PROJECT_IDS) {
+			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			final IProject project = root.getProject(libProjectName);
+			assertFalse("Expected non-existing project: " + project, project.exists());
+			project.create(new NullProgressMonitor());
+			assertTrue("Expected existing project: " + project, project.exists());
+			assertFalse("Expected non-accessible project: " + project, project.isAccessible());
+			project.open(new NullProgressMonitor());
+			assertTrue("Expected accessible project: " + project, project.isAccessible());
+		}
+		waitForAutoBuild(false);
+
+		final ProcessResult secondResult = runClient();
+		// @formatter:off
+		assertEquals("Unexpected output after creating non-N4JS projects in the workspace: " + secondResult,
+				"External A<init>" + NL +
+				"External B<init>" + NL +
+				"External C<init>" + NL +
+				"External D<init>" + NL,
 				secondResult.getStdOut());
 		// @formatter:on
 	}
