@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
@@ -25,7 +23,6 @@ import com.google.common.io.Resources;
  * replace snippets in the generated java parser.
  */
 public class Replacements {
-	private final static Logger LOGGER = Logger.getLogger(Replacements.class);
 
 	/**
 	 * Returns the simple name of the top level class defined in the given grammar content.
@@ -97,14 +94,10 @@ public class Replacements {
 		try {
 			String replacementBase = Replacements.class.getPackage().getName().replace(".", "/");
 			String replacementResourceName = replacementBase + "/" + replacementName;
-			URL url = ClassLoader.getSystemResource(replacementResourceName);
+			URL url = Replacements.class.getClassLoader().getResource(replacementResourceName);
 			if (url == null) {
-				LOGGER.debug("### fallback to dynamic class loader");
-				url = Replacements.class.getClassLoader().getResource(replacementResourceName);
-				if (url == null) {
-					throw new NullPointerException(
-							"cannot replacement :: " + replacementResourceName);
-				}
+				throw new NullPointerException(
+						"cannot replacement :: " + replacementResourceName);
 			}
 			// normalize string to run on Windows and Mac/Unix
 			String replacement = Resources.toString(url, Charsets.UTF_8).replace("\r\n", "\n");
