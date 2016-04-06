@@ -84,15 +84,14 @@ Contributors:
 		<skip.mwe2>true</skip.mwe2>
 		<!--MWE2: Additional dependency to artifacts of the current reactor for MWE Generation. 
 			See IDE-1433 --> 
-		<!--  Variant a)		-->
+		<!--  Variant a)	
 		<additional-classes-of-n4ide.unicode>${basedir}/../eu.numberfour.n4js.common.unicode/target/classes</additional-classes-of-n4ide.unicode>
 		<additional-classes-of-n4ide.releng.utils>${basedir}/../../releng/eu.numberfour.n4js.releng.utils/target/classes</additional-classes-of-n4ide.releng.utils>
-		 
-		 <!-- use variant b after resource laoding is resolved -->
-		<!-- Variant b)
+		 	-->
+		<!-- Variant b) --> 
 		<additional-classes-of-n4ide.unicode>${basedir}/../eu.numberfour.n4js.common.unicode/target/eu.numberfour.n4js.common.unicode-${project.version}.jar</additional-classes-of-n4ide.unicode>
 		<additional-classes-of-n4ide.releng.utils>${basedir}/../../releng/eu.numberfour.n4js.releng.utils/target/eu.numberfour.n4js.releng.utils-${project.version}.jar</additional-classes-of-n4ide.releng.utils>
- 		--> 
+ 		
 
 		<fornax-oaw-m2-plugin.version>3.6.0</fornax-oaw-m2-plugin.version>
 
