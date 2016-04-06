@@ -295,7 +295,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -317,7 +317,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 			project.open(new NullProgressMonitor());
 			assertTrue("Expected accessible project: " + project, project.isAccessible());
 		}
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
