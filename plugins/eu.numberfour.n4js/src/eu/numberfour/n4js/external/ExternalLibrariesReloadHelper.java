@@ -54,7 +54,7 @@ public class ExternalLibrariesReloadHelper {
 	/**
 	 * Timeout (in minutes) to wait for the idle auto build job after cleaning external workspace.
 	 */
-	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES = 10L;
+	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT = TimeUnit.MINUTES.toMillis(10L);
 
 	/**
 	 * Unique name of the {@code org.eclipse.core.internal.events.AutoBuildJob}.
@@ -142,7 +142,7 @@ public class ExternalLibrariesReloadHelper {
 
 	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
 
-		waitForIdleAutoBuildJob(TimeUnit.MINUTES.toMillis(AUTO_BUILD_JOB_WAIT_TIMEOUT_IN_MINUTES));
+		waitForIdleAutoBuildJob(AUTO_BUILD_JOB_WAIT_TIMEOUT);
 
 		// Wait for the workspace lock to avoid starting the external build.
 		final IWorkspaceRoot root = getWorkspace().getRoot();

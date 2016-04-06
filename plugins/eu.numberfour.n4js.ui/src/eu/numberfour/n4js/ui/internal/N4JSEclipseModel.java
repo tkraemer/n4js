@@ -16,6 +16,8 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import static java.util.Arrays.asList;
+import static org.eclipse.xtext.ui.XtextProjectHelper.hasBuilder;
+import static org.eclipse.xtext.ui.XtextProjectHelper.hasNature;
 
 import java.io.File;
 import java.util.List;
@@ -31,8 +33,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.xtext.ui.XtextProjectHelper;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -40,16 +44,16 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.internal.N4JSProject;
 import eu.numberfour.n4js.internal.N4JSSourceContainerType;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
-import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseArchive;
-import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseProject;
-import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseSourceContainer;
 import eu.numberfour.n4js.n4mf.ProjectDependency;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.SourceFragment;
 import eu.numberfour.n4js.n4mf.SourceFragmentType;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseArchive;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseProject;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseSourceContainer;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 
 /**
@@ -299,7 +303,8 @@ public class N4JSEclipseModel extends N4JSModel {
 	public Iterable<IN4JSProject> findAllProjects() {
 
 		final Map<String, IProject> workspaceProjectMapping = newLinkedHashMap();
-		for (final IProject workspaceProject : from(asList(workspace.getProjects())).filter(p -> p.isOpen())) {
+		final Predicate<IProject> accessibleN4jsProject = p -> isAccessibleXtextProject(p);
+		for (final IProject workspaceProject : from(asList(workspace.getProjects())).filter(accessibleN4jsProject)) {
 			workspaceProjectMapping.put(workspaceProject.getName(), workspaceProject);
 		}
 
@@ -310,5 +315,18 @@ public class N4JSEclipseModel extends N4JSModel {
 		}
 
 		return from(workspaceProjectMapping.values()).transform(p -> getN4JSProject(p));
+	}
+
+	/**
+	 * Returns {@code true} if the project argument is not {@code null}, is {@link IProject#isAccessible()} and has
+	 * {@link XtextProjectHelper#hasNature(IProject) Xtext nature} and has
+	 * {@link XtextProjectHelper#hasBuilder(IProject) Xtext builder}. Otherwise returns with {@code false}.
+	 *
+	 * @param project
+	 *            the project to check.
+	 * @return {@code true} if the argument is an accessible Xtext project, otherwise {@code false}
+	 */
+	/* default */ static boolean isAccessibleXtextProject(final IProject project) {
+		return null != project && project.isAccessible() && hasNature(project) && hasBuilder(project);
 	}
 }

@@ -20,6 +20,7 @@ import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -61,29 +62,31 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 				if (resource instanceof IProject) {
 
 					final IProject project = (IProject) resource;
-					// XXX What if project is not accessible and/or not Xtext project with the corresponding builder?
-					final IProject externalProject = externalLibraryWorkspace.getProject(project.getName());
-					if (null != externalProject && externalProject.exists()) {
 
-						if (CHANGED == delta.getKind() && (delta.getFlags() & OPEN) != 0) {
+					if (hasNature(project) && hasBuilder(project)) {
+						final IProject externalProject = externalLibraryWorkspace.getProject(project.getName());
+						if (null != externalProject && externalProject.exists()) {
 
-							// Workspace project close/open
-							if (project.isOpen()) {
-								toClean.add(externalProject);
-							} else {
+							if (CHANGED == delta.getKind() && (delta.getFlags() & OPEN) != 0) {
+
+								// Workspace project close/open
+								if (project.isOpen()) {
+									toClean.add(externalProject);
+								} else {
+									toBuild.add(externalProject);
+								}
+
+							} else if (REMOVED == delta.getKind()) {
+
+								// Workspace project deletion
 								toBuild.add(externalProject);
+
+							} else if (ADDED == delta.getKind()) {
+
+								// Workspace project creation
+								toClean.add(externalProject);
+
 							}
-
-						} else if (REMOVED == delta.getKind()) {
-
-							// Workspace project deletion
-							toBuild.add(externalProject);
-
-						} else if (ADDED == delta.getKind()) {
-
-							// Workspace project creation
-							toClean.add(externalProject);
-
 						}
 					}
 				}
@@ -102,6 +105,30 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 		} catch (final CoreException e) {
 			LOGGER.error("Error while visiting resource change event.", e);
 		}
+	}
+
+	private boolean hasNature(final IProject project) {
+		try {
+			return project.isAccessible() && project.hasNature(N4JSExternalProject.NATURE_ID);
+		} catch (final CoreException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return false;
+	}
+
+	private boolean hasBuilder(final IProject project) {
+		if (project.isAccessible()) {
+			try {
+				for (final ICommand command : project.getDescription().getBuildSpec()) {
+					if (N4JSExternalProject.BUILDER_ID.equals(command.getBuilderName())) {
+						return true;
+					}
+				}
+			} catch (final CoreException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+		}
+		return false;
 	}
 
 }
