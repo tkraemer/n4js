@@ -142,6 +142,15 @@ public interface ImPackage extends EPackage {
 	int SCRIPT_IM_FEATURE_COUNT = N4JSPackage.SCRIPT_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT_IM___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = N4JSPackage.SCRIPT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1902,6 +1911,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION_FEATURE_COUNT = N4JSPackage.N4_GETTER_DECLARATION_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = N4JSPackage.N4_GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2198,6 +2216,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION_FEATURE_COUNT = N4JSPackage.N4_SETTER_DECLARATION_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = N4JSPackage.N4_SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -2586,6 +2613,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION___GET_ANNOTATIONS = N4JSPackage.N4_METHOD_DECLARATION___GET_ANNOTATIONS;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = N4JSPackage.N4_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.

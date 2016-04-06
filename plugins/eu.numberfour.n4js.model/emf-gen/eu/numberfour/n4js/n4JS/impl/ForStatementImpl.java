@@ -383,6 +383,15 @@ public class ForStatementImpl extends VariableDeclarationContainerImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -576,10 +585,43 @@ public class ForStatementImpl extends VariableDeclarationContainerImpl implement
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == ScriptElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == Statement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == IterationStatement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == VariableEnvironmentElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.FOR_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case N4JSPackage.FOR_STATEMENT___IS_FOR_PLAIN:
 				return isForPlain();
+			case N4JSPackage.FOR_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

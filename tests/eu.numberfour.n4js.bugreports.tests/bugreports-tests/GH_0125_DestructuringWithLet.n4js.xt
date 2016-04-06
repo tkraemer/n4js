@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+function foo() {
+    let ar = [1, 2];
+    let [a, b] = ar;
+    let [c, d] = ar;
+    console.log(a,b,c,d);
+}
+
+function bar() {
+    let obj: ~Object with {a: int; b: int; c: int; d: int;} = {
+        a:1, b:2, c:3, d:4
+    };
+    let {a, b} = obj;
+    let {c, d} = obj;
+    console.log(a,b,c,d);
+}
+
+
+foo();
+bar();
+
+
+/* XPECT output ---
+<==
+stdout:
+1 2 1 2
+1 2 3 4
+stderr:
+==>
+--- */
+

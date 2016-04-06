@@ -16,6 +16,16 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Variable Declaration Container</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * *
+ * Base class for elements containing variable declarations.
+ * <p>
+ * IMPORTANT: the variable declarations need not be <em>directly</em> contained! In order to support destructuring, a
+ * {@link VariableBinding} and other destructuring-related nodes might appear in between. To get from a
+ * {@link VariableDeclaration} to its <code>VariableDeclarationContainer</code> use method
+ * {@link eu.numberfour.n4js.n4JS.N4JSASTUtils#getVariableDeclarationContainer(VariableDeclaration)}.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
