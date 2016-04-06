@@ -63,6 +63,8 @@ import static eu.numberfour.n4js.parser.InternalSemicolonInjectingParser.SEMICOL
 
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
+import org.eclipse.xtext.nodemodel.impl.LeafNode
+import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 
 /**
  */
@@ -167,7 +169,7 @@ public class N4JSOrganizeImports {
 						var ILeafNode firstEOL;
 						var ILeafNode afterFirstEOL;
 						var ILeafNode lastNode;
-						// got up to first non-hidden.
+						// got to first non-hidden:
 						while( iterLeaves.hasNext && ( (curr = iterLeaves.next).isHidden) ) {  
 							if( curr.grammarElement instanceof TerminalRule ){
 								if( curr.grammarElement == typeExpressionGrammmarAccess.ML_COMMENTRule )
@@ -205,7 +207,11 @@ public class N4JSOrganizeImports {
 						var begin2 = if( afterFirstEOL !== null ) {
 							afterFirstEOL.totalOffset;
 						} else {
-							curr.totalOffset;
+							if( hasNoCommentUpTo(curr) ) {
+								0; // all the imports before will be removed, so put at the beginning.
+							} else {
+								curr.totalOffset;
+							}
 						}
 						begin = Math.max(begin,begin2);
 					}
@@ -233,6 +239,32 @@ public class N4JSOrganizeImports {
 		}
 
 		return insertionPoint;
+	}
+	
+	/** Goes from the beginning of the RootNode up to the passed in node. Looks only at hidden leafs and at ASI-LeafNodes. 
+	 * @return {@code false} if any comment is encountered on the way.
+	 */
+	private def boolean hasNoCommentUpTo(ILeafNode node) {
+		if( node === null ) return true;
+		val iter = node.rootNode.asTreeIterable.iterator
+		while( iter.hasNext )
+		{
+			val curr = iter.next;
+			// exit case:
+			if( curr == node ) return true;
+			
+			if( curr instanceof LeafNode ) {
+				if( curr.isHidden || UtilN4.isIgnoredSyntaxErrorNode(curr,  InternalSemicolonInjectingParser.SEMICOLON_INSERTED ) ) {
+					// hidden OR ASI
+					if( ! curr.text.trim.isEmpty ) {
+						// token-text contains not only whitespace --> there must be a comment.
+						return false;
+					}
+				}
+			}
+		}
+		// should never be reached. 
+		throw new IllegalStateException("Iteration over-stepped the passed in node.");
 	}
 	
 	
