@@ -44,11 +44,12 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.ui.building.ResourceDescriptionWithoutModuleUserData;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 
 /**
- * Test for checking that no customized resource description instances are leaked into the {@link IBuilderState builder
- * state Xtext index} because those cannot be persisted.
+ * Test for checking that no {@link ResourceDescriptionWithoutModuleUserData customized resource description} instances
+ * are leaked into the {@link IBuilderState builder state Xtext index} because those cannot be persisted.
  *
  * Way to manually reproduce the issue:
  * <ol>
@@ -92,7 +93,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 	 * Initializes the N4JS built-in libraries. Does not matter before or after the test project import.
 	 */
 	@Before
-	public void loadBuilIns() {
+	public void loadBuiltIns() {
 		final BiMap<URI, String> locations = ExternalLibrariesActivator.EXTERNAL_LIBRARIES_SUPPLIER.get();
 		for (final URI location : locations.keySet()) {
 			externalLibraryPreferenceStore.add(location);
@@ -175,7 +176,7 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		// Project with test fragment should depend on eu.numberfour.mangelhaft.
 		assertMarkers("Expected exactly 8 issues.", project, 8);
 
-		loadBuilIns();
+		loadBuiltIns();
 		IResourcesSetupUtil.fullBuild();
 		waitForAutoBuild();
 		resource.getContents().clear();

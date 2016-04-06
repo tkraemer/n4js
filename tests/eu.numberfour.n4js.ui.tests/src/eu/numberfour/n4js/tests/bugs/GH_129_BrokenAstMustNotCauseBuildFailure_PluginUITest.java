@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.tests.bugs;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 
 import org.eclipse.core.resources.IProject;

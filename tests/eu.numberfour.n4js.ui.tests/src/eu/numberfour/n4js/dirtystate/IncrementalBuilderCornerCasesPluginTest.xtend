@@ -165,7 +165,7 @@ public class IncrementalBuilderCornerCasesPluginTest extends AbstractBuilderPart
 			var c : C;
 		''')
 
-		waitForAutoBuild() // note: do not validate Xtext index (want do my custom checks first!)
+		waitForAutoBuild(false) // note: do not validate Xtext index (want do my custom checks first!)
 
 		assertMarkers("file should have no errors", c1, 0)
 		assertMarkers("file should have no errors", m1, 0)
@@ -193,6 +193,7 @@ public class IncrementalBuilderCornerCasesPluginTest extends AbstractBuilderPart
 		assertTrue("file M.n4js in first project should be affected by change to file C.n4js in first project", rdm.isAffected(deltas, m1_rd, xtextIndex))
 		assertFalse("file M.n4js in second project should *not* be affected by change to file C.n4js in first project", rdm.isAffected(deltas, m2_rd, xtextIndex))
 
+		assertXtextIndexIsValid // now do the general Xtext index validity checking
 	}
 
 

@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.ui.building;
 
-import static com.google.common.collect.FluentIterable.from;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant.BuildType;
-import org.eclipse.xtext.builder.builderState.impl.EObjectDescriptionImpl;
 import org.eclipse.xtext.builder.clustering.ClusteringBuilderState;
 import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
 import org.eclipse.xtext.builder.impl.BuildData;
@@ -38,6 +36,7 @@ import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant.DeferredBuilder
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
 import com.google.common.collect.ImmutableList;
@@ -46,8 +45,6 @@ import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
-import eu.numberfour.n4js.resource.UserdataMapper;
-import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
@@ -225,6 +222,12 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			final IResourceDescription resDesc = this.getResourceDescription(currAffURI);
 			if (!N4MF_MANIFEST.equals(currAffURI.lastSegment())) {
 
+				// Do not discard serialized TModule information on EObject descriptions if not scheduled for build,
+				// those will not be used anyway.
+				if (!buildData.getURIQueue().contains(currAffURI)) {
+					continue;
+				}
+
 				/*-
 				 * This logic here is required to get rid of the invalid serialized TModules information from the index
 				 * which are working with an index based approach. Consider the below example:
@@ -257,10 +260,8 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 				 * so index 1 in module A is not class A any more but 'foo'. With this, line 6 in module B will fail,
 				 * because it will think that the method 'm' accepts an array of 'foo' and not A any more.
 				 */
-
-				from(resDesc.getExportedObjects()).filter(EObjectDescriptionImpl.class)
-						.filter(desc -> desc.getEClass() == TypesPackage.eINSTANCE.getTModule())
-						.forEach(desc -> desc.getUserData().remove(UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT));
+				newState.register(new DefaultResourceDescriptionDelta(resDesc,
+						new ResourceDescriptionWithoutModuleUserData(resDesc)));
 			}
 		}
 	}
