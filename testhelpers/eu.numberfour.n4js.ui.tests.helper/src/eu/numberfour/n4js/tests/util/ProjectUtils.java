@@ -12,6 +12,7 @@ package eu.numberfour.n4js.tests.util;
 
 import static com.google.common.base.Predicates.alwaysTrue;
 import static com.google.common.collect.FluentIterable.from;
+import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.addBuilder;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.addNature;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.monitor;
 import static org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil.createSimpleProject;
@@ -239,6 +240,7 @@ public class ProjectUtils {
 	@SuppressWarnings("restriction")
 	public static IFolder configureProjectWithXtext(IProject project, String sourceFolder) throws CoreException {
 		addNature(project.getProject(), XtextProjectHelper.NATURE_ID);
+		addBuilder(project, XtextProjectHelper.BUILDER_ID);
 		IFolder folder = project.getProject().getFolder(sourceFolder);
 		if (!folder.exists()) {
 			folder.create(true, true, null);
