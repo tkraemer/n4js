@@ -99,15 +99,11 @@ public class Replacements {
 			String replacementResourceName = replacementBase + "/" + replacementName;
 			URL url = ClassLoader.getSystemResource(replacementResourceName);
 			if (url == null) {
-				url = ClassLoader.getSystemResource(replacementName);
-				LOGGER.info("### fallback resource lookup of " + replacementName);
+				LOGGER.debug("### fallback to dynamic class loader");
+				url = Replacements.class.getClassLoader().getResource(replacementResourceName);
 				if (url == null) {
-					LOGGER.info("t1 " + ClassLoader.getSystemResource(replacementBase + "/" + "Replacements.class"));
-					LOGGER.info("t2 " + Replacements.class.getClassLoader().getResource(replacementResourceName));
-					LOGGER.info("t3 " + Replacements.class.getClassLoader().getResource(replacementResourceName));
-
 					throw new NullPointerException(
-							"cannot locate system resource <" + replacementName + "> at " + replacementBase);
+							"cannot replacement :: " + replacementResourceName);
 				}
 			}
 			// normalize string to run on Windows and Mac/Unix
