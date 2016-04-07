@@ -116,23 +116,27 @@ class BlockTransformation extends Transformation {
 		// fallOff can not happen in Setter (no return) nor Getter (must have returns)
 		val fallOffCase = (eConFA instanceof FunctionDefinition)
 				&& blockAssistant.hasBodyWhereExecutionFallsOff(eConFA as FunctionDefinition)
-
+		// TODO OLD behav, will be replaced with new $spawn impl.
 		// case 1: return;   		 =>   yield undefined; return;
 		// case 2: return eXpr; 	 =>   yield expr; return;
 		// case 3: return awaitExpr; =>   exprStmt(awaitExpr); return;      (2nd trafw turns await)=> yield expr;
+		// TODO new befav
+		// case 1: return;   		 =>   return;  // NTD
+		// case 2: return expr; 	 =>   return expr; // NTD
+		// case 3: return awaitExpr; =>   return expr;     --> remove await
 
 		// all existing returns must be replaced with
 		val existingRets = block.allReturnStatements.toList
 		existingRets.forEach[
-			val retExpr = if( it.expression === null ) undefinedRef else expression;
-			val firstStmt = if( retExpr instanceof AwaitExpression ) {
-			  // case 3:
-			  _ExprStmnt( retExpr );
-			} else {
-			  // case 1+2:
-			  _ExprStmnt(_YieldExpr( retExpr ));
+			val expR = it.expression;
+			if( expR instanceof AwaitExpression ) {
+				// case 3: remove await.
+				// it.expression = expR.expression
+				// detach:
+				val innerExpr =expR.expression;
+				expR.expression = null;
+				replace( expression, innerExpr )
 			}
-			it.insertBefore(firstStmt)
 		]
 
 		val ret = _ReturnStmnt( _CallExpr(
@@ -142,14 +146,15 @@ class BlockTransformation extends Transformation {
 					_FunExpr(false)=>[
 						it.generator = true;
 						it.body.statements += block.statements
-						if( fallOffCase ) {
-							it.body.statements += _ExprStmnt( _YieldExpr(  undefinedRef ) );
-							it.body.statements += _ReturnStmnt();
-						}
+//						if( fallOffCase ) {
+//							it.body.statements += _ExprStmnt( _YieldExpr(  undefinedRef ) );
+//							it.body.statements += _ReturnStmnt();
+//						}
 					],
-					getSymbolTableEntryForMember(state.G.functionType, "bind", false, false, true)
+					getSymbolTableEntryForMember(state.G.functionType, "apply", false, false, true)
 				),
-				_ThisLiteral
+				_ThisLiteral,
+				_IdentRef( steFor_arguments() )
 			) // end Call function*()
 			) // end Call $spawn
 		);
