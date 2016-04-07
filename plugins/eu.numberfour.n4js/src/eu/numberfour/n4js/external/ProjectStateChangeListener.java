@@ -14,7 +14,6 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
-import static org.eclipse.core.resources.IResourceDelta.DESCRIPTION;
 import static org.eclipse.core.resources.IResourceDelta.OPEN;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 
@@ -85,11 +84,6 @@ public class ProjectStateChangeListener implements IResourceChangeListener {
 							} else if (ADDED == delta.getKind()) {
 
 								// Workspace project creation
-								toClean.add(externalProject);
-
-							} else if ((delta.getFlags() & DESCRIPTION) != 0) {
-
-								// .project changes, this point it already has the proper nature, discard external one
 								toClean.add(externalProject);
 
 							}
