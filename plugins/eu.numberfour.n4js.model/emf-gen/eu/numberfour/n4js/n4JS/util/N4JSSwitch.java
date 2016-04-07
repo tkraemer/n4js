@@ -580,6 +580,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				SwitchStatement switchStatement = (SwitchStatement)theEObject;
 				T result = caseSwitchStatement(switchStatement);
 				if (result == null) result = caseStatement(switchStatement);
+				if (result == null) result = caseVariableEnvironmentElement(switchStatement);
 				if (result == null) result = caseScriptElement(switchStatement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

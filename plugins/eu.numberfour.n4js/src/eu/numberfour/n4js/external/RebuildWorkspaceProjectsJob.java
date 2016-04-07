@@ -19,23 +19,23 @@ import static org.eclipse.core.runtime.Status.OK_STATUS;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IBuildConfiguration;
-import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-
-import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 /**
  * Job for building projects in the Eclipse workspace.
  */
-public class RebuildWorkspaceProjectsJob extends Job {
+public class RebuildWorkspaceProjectsJob extends WorkspaceJob {
 
 	private static final Logger LOGGER = Logger.getLogger(RebuildWorkspaceProjectsJob.class);
+
+	private static final ISchedulingRule BUILD_RULE = ResourcesPlugin.getWorkspace().getRuleFactory().buildRule();
 
 	private final IBuildConfiguration[] configs;
 
@@ -50,17 +50,13 @@ public class RebuildWorkspaceProjectsJob extends Job {
 		super("Building workspace");
 		checkState(Platform.isRunning(), "This job requires a running platform");
 		this.configs = checkNotNull(configs, "configs");
-		final IResourceRuleFactory ruleFactory = new DelegatingWorkspace().getRuleFactory();
-		if (null != ruleFactory) {
-			setRule(ruleFactory.buildRule());
-		}
-		setUser(true);
 		setSystem(false);
-		setPriority(BUILD);
+		setUser(true);
+		setRule(BUILD_RULE);
 	}
 
 	@Override
-	protected IStatus run(final IProgressMonitor monitor) {
+	public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 		try {
 			ResourcesPlugin.getWorkspace().build(configs, FULL_BUILD, true, monitor);
 			return OK_STATUS;

@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SwitchStatement extends Statement {
+public interface SwitchStatement extends Statement, VariableEnvironmentElement {
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -66,6 +66,18 @@ public interface SwitchStatement extends Statement {
 	 * @generated
 	 */
 	EList<AbstractCaseClause> getCases();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * * See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return true;'"
+	 * @generated
+	 */
+	boolean appliesOnlyToBlockScopedElements();
 
 	/**
 	 * <!-- begin-user-doc -->

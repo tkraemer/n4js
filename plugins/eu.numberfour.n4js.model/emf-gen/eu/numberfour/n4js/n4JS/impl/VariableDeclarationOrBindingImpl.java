@@ -12,7 +12,6 @@ import com.google.common.collect.Iterators;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.VariableBinding;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
-import eu.numberfour.n4js.n4JS.VariableDeclarationContainer;
 import eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding;
 
 import java.lang.reflect.InvocationTargetException;
@@ -60,23 +59,6 @@ public abstract class VariableDeclarationOrBindingImpl extends MinimalEObjectImp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isBlockScoped() {
-		final EObject parent = this.eContainer();
-		boolean _xifexpression = false;
-		if ((parent instanceof VariableDeclarationContainer)) {
-			_xifexpression = ((VariableDeclarationContainer)parent).isBlockScoped();
-		}
-		else {
-			_xifexpression = false;
-		}
-		return _xifexpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<VariableDeclaration> getVariableDeclarations() {
 		EList<VariableDeclaration> _switchResult = null;
 		boolean _matched = false;
@@ -108,8 +90,6 @@ public abstract class VariableDeclarationOrBindingImpl extends MinimalEObjectImp
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case N4JSPackage.VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED:
-				return isBlockScoped();
 			case N4JSPackage.VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS:
 				return getVariableDeclarations();
 		}

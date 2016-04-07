@@ -48,6 +48,18 @@ public interface Block extends Statement, VariableEnvironmentElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 * * See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return true;'"
+	 * @generated
+	 */
+	boolean appliesOnlyToBlockScopedElements();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.
 	 * <!-- end-model-doc -->

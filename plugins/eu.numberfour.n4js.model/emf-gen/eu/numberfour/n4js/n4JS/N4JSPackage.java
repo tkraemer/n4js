@@ -134,13 +134,22 @@ public interface N4JSPackage extends EPackage {
 	int VARIABLE_ENVIRONMENT_ELEMENT_FEATURE_COUNT = 0;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = 0;
+
+	/**
 	 * The number of operations of the '<em>Variable Environment Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_ENVIRONMENT_ELEMENT_OPERATION_COUNT = 0;
+	int VARIABLE_ENVIRONMENT_ELEMENT_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.ScriptImpl <em>Script</em>}' class.
@@ -196,6 +205,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCRIPT_FEATURE_COUNT = VARIABLE_ENVIRONMENT_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -1564,13 +1582,22 @@ public interface N4JSPackage extends EPackage {
 	int FUNCTION_OR_FIELD_ACCESSOR___GET_ANNOTATIONS = ANNOTABLE_ELEMENT___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_OR_FIELD_ACCESSOR___GET_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 0;
+	int FUNCTION_OR_FIELD_ACCESSOR___GET_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -1579,7 +1606,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_ELEMENT_OPERATION_COUNT + 1;
+	int FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
@@ -1588,7 +1615,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC = ANNOTABLE_ELEMENT_OPERATION_COUNT + 2;
+	int FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC = ANNOTABLE_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Function Or Field Accessor</em>' class.
@@ -1597,7 +1624,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 3;
+	int FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl <em>Function Definition</em>}' class.
@@ -1689,6 +1716,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_DEFINITION___GET_ANNOTATIONS = FUNCTION_OR_FIELD_ACCESSOR___GET_ANNOTATIONS;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_DEFINITION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -1789,6 +1825,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int FIELD_ACCESSOR___GET_ANNOTATIONS = FUNCTION_OR_FIELD_ACCESSOR___GET_ANNOTATIONS;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -1990,13 +2035,22 @@ public interface N4JSPackage extends EPackage {
 	int FUNCTION_DECLARATION___GET_ANNOTATIONS = ANNOTABLE_SCRIPT_ELEMENT___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 1;
+	int FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
@@ -2005,7 +2059,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_ASYNC = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 3;
+	int FUNCTION_DECLARATION___IS_ASYNC = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Exported</em>' operation.
@@ -2014,7 +2068,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXPORTED = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 4;
+	int FUNCTION_DECLARATION___IS_EXPORTED = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Exported As Default</em>' operation.
@@ -2023,7 +2077,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXPORTED_AS_DEFAULT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 5;
+	int FUNCTION_DECLARATION___IS_EXPORTED_AS_DEFAULT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Exported Name</em>' operation.
@@ -2032,7 +2086,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___GET_EXPORTED_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 6;
+	int FUNCTION_DECLARATION___GET_EXPORTED_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Is Toplevel</em>' operation.
@@ -2041,7 +2095,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_TOPLEVEL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 7;
+	int FUNCTION_DECLARATION___IS_TOPLEVEL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -2050,7 +2104,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___GET_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 8;
+	int FUNCTION_DECLARATION___GET_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is External</em>' operation.
@@ -2059,7 +2113,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXTERNAL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 9;
+	int FUNCTION_DECLARATION___IS_EXTERNAL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The number of operations of the '<em>Function Declaration</em>' class.
@@ -2068,7 +2122,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION_OPERATION_COUNT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 10;
+	int FUNCTION_DECLARATION_OPERATION_COUNT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionExpressionImpl <em>Function Expression</em>}' class.
@@ -2178,6 +2232,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_EXPRESSION_FEATURE_COUNT = FUNCTION_DEFINITION_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_EXPRESSION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FUNCTION_DEFINITION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -2359,6 +2422,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARROW_FUNCTION_FEATURE_COUNT = FUNCTION_EXPRESSION_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARROW_FUNCTION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FUNCTION_EXPRESSION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -2716,13 +2788,22 @@ public interface N4JSPackage extends EPackage {
 	int BLOCK_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = STATEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get All Statements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_STATEMENTS = STATEMENT_OPERATION_COUNT + 0;
+	int BLOCK___GET_ALL_STATEMENTS = STATEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get All Return Statements</em>' operation.
@@ -2731,7 +2812,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 1;
+	int BLOCK___GET_ALL_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get All Non Void Return Statements</em>' operation.
@@ -2740,7 +2821,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 2;
+	int BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get All Void Return Statements</em>' operation.
@@ -2749,7 +2830,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 3;
+	int BLOCK___GET_ALL_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Has Non Void Return</em>' operation.
@@ -2758,7 +2839,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___HAS_NON_VOID_RETURN = STATEMENT_OPERATION_COUNT + 4;
+	int BLOCK___HAS_NON_VOID_RETURN = STATEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Block</em>' class.
@@ -2767,7 +2848,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 5;
+	int BLOCK_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationContainerImpl <em>Variable Declaration Container</em>}' class.
@@ -3053,22 +3134,13 @@ public interface N4JSPackage extends EPackage {
 	int VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT = 0;
 
 	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED = 0;
-
-	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS = 1;
+	int VARIABLE_DECLARATION_OR_BINDING___GET_VARIABLE_DECLARATIONS = 0;
 
 	/**
 	 * The number of operations of the '<em>Variable Declaration Or Binding</em>' class.
@@ -3077,7 +3149,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_OR_BINDING_OPERATION_COUNT = 2;
+	int VARIABLE_DECLARATION_OR_BINDING_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.VariableBindingImpl <em>Variable Binding</em>}' class.
@@ -3115,15 +3187,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_BINDING_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_BINDING___IS_BLOCK_SCOPED = VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3188,15 +3251,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPORTED_VARIABLE_BINDING_FEATURE_COUNT = VARIABLE_BINDING_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPORTED_VARIABLE_BINDING___IS_BLOCK_SCOPED = VARIABLE_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3270,15 +3324,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_DECLARATION___IS_BLOCK_SCOPED = VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3406,15 +3451,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPORTED_VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Is Block Scoped</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPORTED_VARIABLE_DECLARATION___IS_BLOCK_SCOPED = VARIABLE_DECLARATION___IS_BLOCK_SCOPED;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3853,7 +3889,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FOR_STATEMENT___IS_FOR_PLAIN = VARIABLE_DECLARATION_CONTAINER_OPERATION_COUNT + 0;
+	int FOR_STATEMENT___IS_FOR_PLAIN = VARIABLE_DECLARATION_CONTAINER_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = VARIABLE_DECLARATION_CONTAINER_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>For Statement</em>' class.
@@ -3862,7 +3907,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FOR_STATEMENT_OPERATION_COUNT = VARIABLE_DECLARATION_CONTAINER_OPERATION_COUNT + 1;
+	int FOR_STATEMENT_OPERATION_COUNT = VARIABLE_DECLARATION_CONTAINER_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.ContinueStatementImpl <em>Continue Statement</em>}' class.
@@ -4013,13 +4058,22 @@ public interface N4JSPackage extends EPackage {
 	int WITH_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WITH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = STATEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>With Statement</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WITH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
+	int WITH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.SwitchStatementImpl <em>Switch Statement</em>}' class.
@@ -4059,13 +4113,22 @@ public interface N4JSPackage extends EPackage {
 	int SWITCH_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = STATEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Default Clause</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT___GET_DEFAULT_CLAUSE = STATEMENT_OPERATION_COUNT + 0;
+	int SWITCH_STATEMENT___GET_DEFAULT_CLAUSE = STATEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Case Clauses</em>' operation.
@@ -4074,7 +4137,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT___GET_CASE_CLAUSES = STATEMENT_OPERATION_COUNT + 1;
+	int SWITCH_STATEMENT___GET_CASE_CLAUSES = STATEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Switch Statement</em>' class.
@@ -4083,7 +4146,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 2;
+	int SWITCH_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.AbstractCaseClauseImpl <em>Abstract Case Clause</em>}' class.
@@ -4427,13 +4490,22 @@ public interface N4JSPackage extends EPackage {
 	int CATCH_BLOCK_FEATURE_COUNT = ABSTRACT_CATCH_BLOCK_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ABSTRACT_CATCH_BLOCK_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Catch Block</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_BLOCK_OPERATION_COUNT = ABSTRACT_CATCH_BLOCK_OPERATION_COUNT + 0;
+	int CATCH_BLOCK_OPERATION_COUNT = ABSTRACT_CATCH_BLOCK_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.CatchVariableImpl <em>Catch Variable</em>}' class.
@@ -5171,13 +5243,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT___GET_ANNOTATIONS = ANNOTABLE_ELEMENT___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT___GET_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 0;
+	int PROPERTY_ASSIGNMENT___GET_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -5186,7 +5267,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER = ANNOTABLE_ELEMENT_OPERATION_COUNT + 3;
+	int PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -5195,7 +5276,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT___IS_VALID_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
+	int PROPERTY_ASSIGNMENT___IS_VALID_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Property Assignment</em>' class.
@@ -5204,7 +5285,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 5;
+	int PROPERTY_ASSIGNMENT_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.PropertyNameOwnerImpl <em>Property Name Owner</em>}' class.
@@ -5335,6 +5416,15 @@ public interface N4JSPackage extends EPackage {
 	int ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT = PROPERTY_ASSIGNMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTABLE_PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5444,13 +5534,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_ANNOTATIONS = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 1;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -5459,7 +5558,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 5;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -5468,7 +5567,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 6;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 7;
 
 	/**
 	 * The number of operations of the '<em>Property Assignment Annotation List</em>' class.
@@ -5477,7 +5576,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_OPERATION_COUNT = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 7;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_OPERATION_COUNT = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl <em>Property Name Value Pair</em>}' class.
@@ -5560,6 +5659,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_NAME_VALUE_PAIR_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -5705,6 +5813,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME_FEATURE_COUNT = PROPERTY_NAME_VALUE_PAIR_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = PROPERTY_NAME_VALUE_PAIR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -5906,6 +6023,15 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 10;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6087,6 +6213,15 @@ public interface N4JSPackage extends EPackage {
 	int GETTER_DECLARATION___GET_ANNOTATIONS = FIELD_ACCESSOR___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6239,6 +6374,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int SETTER_DECLARATION___GET_ANNOTATIONS = FIELD_ACCESSOR___GET_ANNOTATIONS;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -6402,6 +6546,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_GETTER_DECLARATION_FEATURE_COUNT = GETTER_DECLARATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -6583,6 +6736,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_SETTER_DECLARATION_FEATURE_COUNT = SETTER_DECLARATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -11710,6 +11872,15 @@ public interface N4JSPackage extends EPackage {
 	int METHOD_DECLARATION___GET_ANNOTATIONS = FUNCTION_DEFINITION___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FUNCTION_DEFINITION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11999,13 +12170,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_METHOD_DECLARATION___GET_ANNOTATIONS = ANNOTABLE_N4_MEMBER_DECLARATION___GET_ANNOTATIONS;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 0;
+	int N4_METHOD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -12014,7 +12194,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 1;
+	int N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
@@ -12023,7 +12203,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 3;
+	int N4_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -12032,7 +12212,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_DEFINED_MEMBER = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+	int N4_METHOD_DECLARATION___GET_DEFINED_MEMBER = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.
@@ -12041,7 +12221,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
+	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -12050,7 +12230,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
+	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -12059,7 +12239,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
+	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Is Constructor</em>' operation.
@@ -12068,7 +12248,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
+	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
@@ -12077,7 +12257,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
+	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -12086,7 +12266,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
+	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -12095,7 +12275,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
+	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
 
 	/**
 	 * The number of operations of the '<em>N4 Method Declaration</em>' class.
@@ -12104,7 +12284,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
+	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 15;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl <em>N4 Field Accessor</em>}' class.
@@ -12196,6 +12376,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_FIELD_ACCESSOR_FEATURE_COUNT = FIELD_ACCESSOR_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -12460,6 +12649,15 @@ public interface N4JSPackage extends EPackage {
 	int N4_GETTER_DECLARATION_FEATURE_COUNT = GETTER_DECLARATION_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = GETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12720,6 +12918,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_SETTER_DECLARATION_FEATURE_COUNT = SETTER_DECLARATION_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = SETTER_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
@@ -13764,6 +13971,16 @@ public interface N4JSPackage extends EPackage {
 	EClass getVariableEnvironmentElement();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.VariableEnvironmentElement#appliesOnlyToBlockScopedElements() <em>Applies Only To Block Scoped Elements</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.VariableEnvironmentElement#appliesOnlyToBlockScopedElements()
+	 * @generated
+	 */
+	EOperation getVariableEnvironmentElement__AppliesOnlyToBlockScopedElements();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.ThisTarget <em>This Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14436,6 +14653,16 @@ public interface N4JSPackage extends EPackage {
 	EReference getBlock_Statements();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#appliesOnlyToBlockScopedElements() <em>Applies Only To Block Scoped Elements</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#appliesOnlyToBlockScopedElements()
+	 * @generated
+	 */
+	EOperation getBlock__AppliesOnlyToBlockScopedElements();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllStatements() <em>Get All Statements</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14586,16 +14813,6 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getVariableDeclarationOrBinding();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#isBlockScoped() <em>Is Block Scoped</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Block Scoped</em>' operation.
-	 * @see eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#isBlockScoped()
-	 * @generated
-	 */
-	EOperation getVariableDeclarationOrBinding__IsBlockScoped();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding#getVariableDeclarations() <em>Get Variable Declarations</em>}' operation.
@@ -14914,6 +15131,16 @@ public interface N4JSPackage extends EPackage {
 	EOperation getForStatement__IsForPlain();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.ForStatement#appliesOnlyToBlockScopedElements() <em>Applies Only To Block Scoped Elements</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.ForStatement#appliesOnlyToBlockScopedElements()
+	 * @generated
+	 */
+	EOperation getForStatement__AppliesOnlyToBlockScopedElements();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.ContinueStatement <em>Continue Statement</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15039,6 +15266,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSwitchStatement_Cases();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.SwitchStatement#appliesOnlyToBlockScopedElements() <em>Applies Only To Block Scoped Elements</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Applies Only To Block Scoped Elements</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.SwitchStatement#appliesOnlyToBlockScopedElements()
+	 * @generated
+	 */
+	EOperation getSwitchStatement__AppliesOnlyToBlockScopedElements();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.SwitchStatement#getDefaultClause() <em>Get Default Clause</em>}' operation.
@@ -18814,6 +19051,14 @@ public interface N4JSPackage extends EPackage {
 		EClass VARIABLE_ENVIRONMENT_ELEMENT = eINSTANCE.getVariableEnvironmentElement();
 
 		/**
+		 * The meta object literal for the '<em><b>Applies Only To Block Scoped Elements</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getVariableEnvironmentElement__AppliesOnlyToBlockScopedElements();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.ThisTargetImpl <em>This Target</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -19378,6 +19623,14 @@ public interface N4JSPackage extends EPackage {
 		EReference BLOCK__STATEMENTS = eINSTANCE.getBlock_Statements();
 
 		/**
+		 * The meta object literal for the '<em><b>Applies Only To Block Scoped Elements</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getBlock__AppliesOnlyToBlockScopedElements();
+
+		/**
 		 * The meta object literal for the '<em><b>Get All Statements</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -19506,14 +19759,6 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EClass VARIABLE_DECLARATION_OR_BINDING = eINSTANCE.getVariableDeclarationOrBinding();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Block Scoped</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation VARIABLE_DECLARATION_OR_BINDING___IS_BLOCK_SCOPED = eINSTANCE.getVariableDeclarationOrBinding__IsBlockScoped();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Variable Declarations</b></em>' operation.
@@ -19778,6 +20023,14 @@ public interface N4JSPackage extends EPackage {
 		EOperation FOR_STATEMENT___IS_FOR_PLAIN = eINSTANCE.getForStatement__IsForPlain();
 
 		/**
+		 * The meta object literal for the '<em><b>Applies Only To Block Scoped Elements</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FOR_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getForStatement__AppliesOnlyToBlockScopedElements();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.ContinueStatementImpl <em>Continue Statement</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -19882,6 +20135,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SWITCH_STATEMENT__CASES = eINSTANCE.getSwitchStatement_Cases();
+
+		/**
+		 * The meta object literal for the '<em><b>Applies Only To Block Scoped Elements</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getSwitchStatement__AppliesOnlyToBlockScopedElements();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Default Clause</b></em>' operation.

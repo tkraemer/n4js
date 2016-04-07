@@ -229,6 +229,13 @@ abstract class TypedElement extends TypeProvidingElement {
  * allowing access to properties of the current context).
  */
 abstract class VariableEnvironmentElement {
+	/**
+	 * Tells if this variable environment element applies only to block scoped elements, i.e. let & const.
+	 * Returns <code>true</code> for {@link Block} and {@link ForStatement}, <code>false</code> otherwise.
+	 */
+	op boolean appliesOnlyToBlockScopedElements() {
+		false // overridden by Block, ForStatement, and SwitchStatment to return true
+	}
 }
 
 /* Possible target to which a this expression may be bound. This is used in the type inferrer.
@@ -577,6 +584,12 @@ class FormalParameter extends AnnotableElement, Variable {
 
 class Block extends Statement, VariableEnvironmentElement {
 	contains Statement[] statements
+
+	/** See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}. */
+	op boolean appliesOnlyToBlockScopedElements() {
+		true
+	}
+
 	/*
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.
@@ -623,6 +636,14 @@ enum VariableStatementKeyword {
 	, let
 }
 
+/**
+ * Base class for elements containing variable declarations.
+ * <p>
+ * IMPORTANT: the variable declarations need not be <em>directly</em> contained! In order to support destructuring, a
+ * {@link VariableBinding} and other destructuring-related nodes might appear in between. To get from a
+ * {@link VariableDeclaration} to its <code>VariableDeclarationContainer</code> use method
+ * {@link eu.numberfour.n4js.n4JS.N4JSASTUtils#getVariableDeclarationContainer(VariableDeclaration)}.
+ */
 abstract class VariableDeclarationContainer {
 	contains VariableDeclarationOrBinding[] varDeclsOrBindings
 	VariableStatementKeyword varStmtKeyword
@@ -654,10 +675,6 @@ class ExportedVariableStatement extends VariableStatement, ExportableElement, An
 
 abstract class VariableDeclarationOrBinding {
 
-	op boolean isBlockScoped() {
-		val parent = eContainer;
-		return if(parent instanceof VariableDeclarationContainer) parent.isBlockScoped() else false;
-	}
 	op VariableDeclaration[] getVariableDeclarations() {
 		switch(this) {
 		VariableDeclaration: #[this as VariableDeclaration].toEList
@@ -732,6 +749,10 @@ class ForStatement extends VariableDeclarationContainer, IterationStatement, Var
 	op boolean isForPlain() {
 		return !forIn && !forOf;
 	}
+	/** See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}. */
+	op boolean appliesOnlyToBlockScopedElements() {
+		true
+	}
 }
 
 class ContinueStatement extends Statement {
@@ -746,7 +767,7 @@ class ReturnStatement extends Statement {
 	contains Expression expression
 }
 
-class WithStatement extends Statement , VariableEnvironmentElement {
+class WithStatement extends Statement, VariableEnvironmentElement {
 	contains Expression expression
 	contains Statement statement
 }
@@ -754,7 +775,7 @@ class WithStatement extends Statement , VariableEnvironmentElement {
 // bug in XCore maven plugin:
 // [ERROR] 0    [main] ERROR org.eclipse.xtext.generator.LanguageConfig  - Error loading 'classpath:/eu.numberfour.n4js/N4JS.xcore': [XtextLinkingDiagnostic: null:254 Couldn't resolve reference to JvmType 'CaseClause'.
 // type CaseClauseIterable wraps Iterable<CaseClause>
-class SwitchStatement extends Statement {
+class SwitchStatement extends Statement, VariableEnvironmentElement {
 	/*
 	 * The discriminant of the switch statement.
 	 */
@@ -763,6 +784,11 @@ class SwitchStatement extends Statement {
 	 * All cases of the switch statement, i.e. all CaseClauses and not more than one DefaultClause.
 	 */
 	contains AbstractCaseClause[] cases
+
+	/** See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}. */
+	op boolean appliesOnlyToBlockScopedElements() {
+		true
+	}
 	/*
 	 * Convenience method returns default clause if switch statement defines such as clause or null.
 	 */

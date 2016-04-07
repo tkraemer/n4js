@@ -19,6 +19,7 @@ import eu.numberfour.n4js.n4JS.EqualityOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
+import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.Script
@@ -35,6 +36,7 @@ import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
@@ -52,6 +54,9 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
  */
 @ExcludesAfter(StaticPolyfillTransformation) // otherwise destructuring patterns from filling module won't be processed!
 class DestructuringTransformation extends Transformation {
+
+	/** Counts destructuring patterns per variable environment. Used to avoid name clashes of helper variables. */
+	private final Map<VariableEnvironmentElement,Integer> destructsPerScope = newHashMap;
 
 
 	override assertPreConditions() {
@@ -226,7 +231,9 @@ class DestructuringTransformation extends Transformation {
 	}
 	def private void traverse(List<VariableDeclaration> helperVars, List<Pair<SymbolTableEntry,? extends Expression>> simpleAssignments,
 			DestructNode rootNode, Expression value) {
-		traverse(helperVars, simpleAssignments, rootNode.nestedNodes, value, "");
+		val scope = N4JSASTUtils.getScope(rootNode.astElement, false) ?: state.im;
+		val n = destructsPerScope.merge(scope, 1, [i,j|i+j]) - 1;
+		traverse(helperVars, simpleAssignments, rootNode.nestedNodes, value, Integer.toString(n));
 	}
 	/**
 	 * Breaks down the destructuring pattern, represented by the given {@link DestructNode}s, into a number of simple
