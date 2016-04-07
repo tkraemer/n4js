@@ -52,7 +52,7 @@ public class ExternalLibrariesReloadHelper {
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibrariesReloadHelper.class);
 
 	/**
-	 * Timeout (in minutes) to wait for the idle auto build job after cleaning external workspace.
+	 * Timeout to wait for the idle auto build job after cleaning external workspace.
 	 */
 	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT = TimeUnit.MINUTES.toMillis(10L);
 
