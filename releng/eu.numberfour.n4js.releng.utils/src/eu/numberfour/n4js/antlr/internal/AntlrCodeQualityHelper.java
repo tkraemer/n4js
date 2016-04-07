@@ -18,8 +18,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
@@ -29,13 +27,11 @@ import eu.numberfour.n4js.antlr.generator.NewlineNormalizer;
 /**
  */
 public class AntlrCodeQualityHelper {
-	private final static Logger LOGGER = Logger.getLogger(AntlrCodeQualityHelper.class);
 
 	/**
 	 * Remove all unnecessary comments from the java code that was produced by Antlr
 	 */
 	public static void stripUnnecessaryComments(String javaFile, Charset encoding) throws IOException {
-		LOGGER.debug("### stripUnnecessaryComments from " + javaFile);
 		String content = Files.toString(new File(javaFile), encoding);
 		content = new NewlineNormalizer().toUnixLineDelimiter(content);
 		content = content.replaceAll(
@@ -52,7 +48,6 @@ public class AntlrCodeQualityHelper {
 	 */
 	public static void stripUnnecessaryComments(String lexer, String parser, Charset encoding) {
 		try {
-			LOGGER.debug("### stripUnnecessaryComments from " + lexer + ", " + parser);
 			stripUnnecessaryComments(lexer, encoding);
 			stripUnnecessaryComments(parser, encoding);
 		} catch (IOException e) {

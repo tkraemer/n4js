@@ -45,17 +45,9 @@ public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment
 
 	private void massageGrammar(String absoluteParserFileName, String encoding) {
 		try {
-			LOGGER.info("### massageGrammar " + absoluteParserFileName);
 			String javaFile = absoluteParserFileName.replaceAll("\\.g$", getParserFileNameSuffix());
 
-			File fileToRead = new File(javaFile);
-			if (fileToRead.exists() && fileToRead.isFile()) {
-				LOGGER.info("### fileToRead check OK :: " + fileToRead.getAbsolutePath());
-			} else {
-				LOGGER.error("### fileToRead check NOT OK :: " + fileToRead.getAbsolutePath());
-			}
-
-			String content = Files.toString(fileToRead, Charset.forName(encoding));
+			String content = Files.toString(new File(javaFile), Charset.forName(encoding));
 			String normalizedContent = content.replace("\r\n", "\n");
 
 			String newContent = fixIdentifierAsKeywordWithEOLAwareness(normalizedContent);
@@ -65,17 +57,8 @@ public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment
 				// throw new IllegalStateException("Replacement not found in " + javaFile);
 			}
 
-			File fileToWrite = new File(javaFile);
 			if (!content.equals(newContent)) {
-				Files.write(newContent, fileToWrite, Charset.forName(encoding));
-			} else {
-				LOGGER.info("### content the same, no need to rewrite");
-			}
-
-			if (fileToWrite.exists() && fileToWrite.isFile()) {
-				LOGGER.info("### fileToWrite check OK :: " + fileToWrite.getAbsolutePath());
-			} else {
-				LOGGER.error("### fileToWrite check NOT OK :: " + fileToWrite.getAbsolutePath());
+				Files.write(newContent, new File(javaFile), Charset.forName(encoding));
 			}
 
 		} catch (IOException e) {
