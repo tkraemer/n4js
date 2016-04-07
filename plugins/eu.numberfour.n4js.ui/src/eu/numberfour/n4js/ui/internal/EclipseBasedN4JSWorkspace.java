@@ -145,7 +145,7 @@ public class EclipseBasedN4JSWorkspace extends InternalN4JSWorkspace {
 			String expectedProjectName = projectReference.getProject().getArtifactId();
 			if (expectedProjectName != null && expectedProjectName.length() > 0) {
 				IProject existingProject = workspace.getProject(expectedProjectName);
-				if (N4JSEclipseModel.isAccessibleXtextProject(existingProject)) {
+				if (existingProject.isAccessible()) {
 					if (expectedN4JSSourceContainerType == N4JSSourceContainerType.ARCHIVE) {
 						return null;
 					} else {
