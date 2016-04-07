@@ -2062,7 +2062,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		initEClass(structuralTypeRefEClass, StructuralTypeRef.class, "StructuralTypeRef", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getStructuralTypeRef_AstStructuralMembers(), theTypesPackage.getTStructMember(), null, "astStructuralMembers", null, 0, -1, StructuralTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStructuralTypeRef_StructuralType(), theTypesPackage.getTStructuralType(), null, "structuralType", null, 0, 1, StructuralTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStructuralTypeRef_StructuralType(), theTypesPackage.getTStructuralType(), null, "structuralType", null, 0, 1, StructuralTypeRef.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStructuralTypeRef_GenStructuralMembers(), theTypesPackage.getTStructMember(), null, "genStructuralMembers", null, 0, -1, StructuralTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStructuralTypeRef_PostponedSubstitutions(), this.getTypeVariableMapping(), null, "postponedSubstitutions", null, 0, -1, StructuralTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

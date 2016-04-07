@@ -39,7 +39,7 @@ public interface N4FieldDeclaration extends AnnotableN4MemberDeclaration, TypedE
 	 * @return the value of the '<em>Defined Field</em>' reference.
 	 * @see #setDefinedField(TField)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getN4FieldDeclaration_DefinedField()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	TField getDefinedField();

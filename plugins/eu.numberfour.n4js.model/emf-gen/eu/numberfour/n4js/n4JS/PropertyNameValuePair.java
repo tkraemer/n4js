@@ -39,7 +39,7 @@ public interface PropertyNameValuePair extends AnnotablePropertyAssignment, Type
 	 * @return the value of the '<em>Defined Field</em>' reference.
 	 * @see #setDefinedField(TStructField)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getPropertyNameValuePair_DefinedField()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	TStructField getDefinedField();
