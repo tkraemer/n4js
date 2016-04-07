@@ -133,12 +133,12 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 	public void checkNoCustomResourceDescriptionsLeaksToBuilderState() throws CoreException {
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJECT_NAME);
 		assertTrue("Test project is not accessible.", project.isAccessible());
-		assertMarkers("Expected exactly zero issues.", project, 0);
 
 		// Since we do not know whether the built-in initialization or the test project import happened earlier...
 		// Make sure both test module and manifest get into the index.
 		IResourcesSetupUtil.fullBuild();
 		waitForAutoBuild();
+		assertMarkers("Expected exactly zero issues.", project, 0);
 
 		final Resource resource = persister.createResource();
 		assertNotNull("Test resource was null.", resource);
