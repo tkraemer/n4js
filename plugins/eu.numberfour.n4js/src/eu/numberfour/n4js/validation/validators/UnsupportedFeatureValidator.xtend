@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.validation.validators
 
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.BindingPattern
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExportableElement
@@ -29,10 +30,11 @@ import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
 import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.validation.ASTStructureValidator
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
@@ -171,6 +173,21 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkBindingPatternAsFpar(BindingPattern pattern) {
 		if(pattern.eContainer instanceof FormalParameter) {
 			unsupported("destructuring patterns as formal parameter", pattern);
+		}
+	}
+
+
+	/**
+	 * NOTE: in addition to the errors produced by this method, spread operator in <em>array literals</em> is also
+	 * unsupported; but that is checked in
+	 * {@link ASTStructureValidator#validateSpreadInArrayLiteral(eu.numberfour.n4js.n4JS.ArrayElement,
+	 * eu.numberfour.n4js.validation.ASTStructureDiagnosticProducer)}
+	 */
+	@Check
+	def void checkSpreadOperatorInNewAndCallExpressions(Argument argument) {
+		if(argument.spread) {
+			unsupported("spread operator in new and call expressions (only allowed in array destructuring patterns)",
+				argument, N4JSPackage.eINSTANCE.argument_Spread);
 		}
 	}
 

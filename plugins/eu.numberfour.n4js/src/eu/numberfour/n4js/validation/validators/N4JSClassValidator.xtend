@@ -155,10 +155,10 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		}
 
-		if (!(newExpression.arguments.get(indexOfTheSpecFpar) instanceof ObjectLiteral)) {
+		if (!(newExpression.arguments.get(indexOfTheSpecFpar)?.expression instanceof ObjectLiteral)) {
 			return;
 		}
-		val objectLiteral = newExpression.arguments.get(indexOfTheSpecFpar) as ObjectLiteral;
+		val objectLiteral = newExpression.arguments.get(indexOfTheSpecFpar)?.expression as ObjectLiteral;
 		if (!(objectLiteral.definedType instanceof ContainerType<?>)) {
 			return;
 		}

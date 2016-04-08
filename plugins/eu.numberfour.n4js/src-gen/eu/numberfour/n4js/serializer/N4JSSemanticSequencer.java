@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.n4JS.AdditiveExpression;
 import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.AnnotationList;
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.ArrayElement;
 import eu.numberfour.n4js.n4JS.ArrayLiteral;
 import eu.numberfour.n4js.n4JS.ArrayPadding;
@@ -164,6 +165,9 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case N4JSPackage.ANNOTATION_LIST:
 				sequence_AnnotationList(context, (AnnotationList) semanticObject); 
+				return; 
+			case N4JSPackage.ARGUMENT:
+				sequence_Argument(context, (Argument) semanticObject); 
 				return; 
 			case N4JSPackage.ARRAY_ELEMENT:
 				sequence_ArrayElement(context, (ArrayElement) semanticObject); 
@@ -3991,6 +3995,19 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Argument<Yield> returns Argument
+	 *     Argument returns Argument
+	 *
+	 * Constraint:
+	 *     (spread?='...'? expression=AssignmentExpression)
+	 */
+	protected void sequence_Argument(ISerializationContext context, Argument semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LeftHandSideExpression.ParameterizedCallExpression_1_2_0_0<Yield> returns ParameterizedCallExpression
 	 *     LeftHandSideExpression.ParameterizedCallExpression_1_2_0_0<PostfixExpression.Yield> returns ParameterizedCallExpression
 	 *     LeftHandSideExpression.ParameterizedCallExpression_1_2_0_0<CastExpression.Yield> returns ParameterizedCallExpression
@@ -4147,10 +4164,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         (target=LeftHandSideExpression_ParameterizedCallExpression_1_0 | target=LeftHandSideExpression_ParameterizedCallExpression_1_2_0_0) 
-	 *         (
-	 *             (arguments+=AssignmentExpression arguments+=AssignmentExpression* (spread?='...' arguments+=AssignmentExpression)?) | 
-	 *             (spread?='...' arguments+=AssignmentExpression)
-	 *         )?
+	 *         (arguments+=Argument arguments+=Argument*)?
 	 *     )
 	 */
 	protected void sequence_Arguments_LeftHandSideExpression_IndexedAccessExpression_1_2_1_0_ParameterizedCallExpression_1_2_0_0_ParameterizedPropertyAccessExpression_1_2_2_0_TaggedTemplateString_1_2_3_0_0(ISerializationContext context, ParameterizedCallExpression semanticObject) {
@@ -4569,10 +4583,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *             target=LeftHandSideExpression_ParameterizedCallExpression_1_2_0_0 | 
 	 *             (typeArgs+=TypeRef typeArgs+=TypeRef* target=IdentifierRef)
 	 *         ) 
-	 *         (
-	 *             (arguments+=AssignmentExpression arguments+=AssignmentExpression* (spread?='...' arguments+=AssignmentExpression)?) | 
-	 *             (spread?='...' arguments+=AssignmentExpression)
-	 *         )?
+	 *         (arguments+=Argument arguments+=Argument*)?
 	 *     )
 	 */
 	protected void sequence_Arguments_LeftHandSideExpression_ParameterizedCallExpression_TypeArguments(ISerializationContext context, ParameterizedCallExpression semanticObject) {
@@ -4701,15 +4712,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     MemberExpression.TaggedTemplateString_1_3_3_2_0 returns NewExpression
 	 *
 	 * Constraint:
-	 *     (
-	 *         callee=MemberExpression 
-	 *         (typeArgs+=TypeRef typeArgs+=TypeRef*)? 
-	 *         withArgs?='(' 
-	 *         (
-	 *             (arguments+=AssignmentExpression arguments+=AssignmentExpression* (spread?='...' arguments+=AssignmentExpression)?) | 
-	 *             (spread?='...' arguments+=AssignmentExpression)
-	 *         )?
-	 *     )
+	 *     (callee=MemberExpression (typeArgs+=TypeRef typeArgs+=TypeRef*)? withArgs?='(' (arguments+=Argument arguments+=Argument*)?)
 	 */
 	protected void sequence_Arguments_MemberExpression_TypeArguments_IndexedAccessExpression_1_3_3_0_0_ParameterizedPropertyAccessExpression_1_3_3_1_0_TaggedTemplateString_1_3_3_2_0(ISerializationContext context, NewExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -5161,17 +5164,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Expression.CommaExpression_1_0 returns NewExpression
 	 *
 	 * Constraint:
-	 *     (
-	 *         callee=MemberExpression 
-	 *         (typeArgs+=TypeRef typeArgs+=TypeRef*)? 
-	 *         (
-	 *             withArgs?='(' 
-	 *             (
-	 *                 (arguments+=AssignmentExpression arguments+=AssignmentExpression* (spread?='...' arguments+=AssignmentExpression)?) | 
-	 *                 (spread?='...' arguments+=AssignmentExpression)
-	 *             )?
-	 *         )?
-	 *     )
+	 *     (callee=MemberExpression (typeArgs+=TypeRef typeArgs+=TypeRef*)? (withArgs?='(' (arguments+=Argument arguments+=Argument*)?)?)
 	 */
 	protected void sequence_Arguments_MemberExpression_TypeArguments(ISerializationContext context, NewExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -5303,15 +5296,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     MemberExpression.TaggedTemplateString_2_1_2_0 returns ParameterizedCallExpression
 	 *
 	 * Constraint:
-	 *     (
-	 *         typeArgs+=TypeRef 
-	 *         typeArgs+=TypeRef* 
-	 *         target=IdentifierRef 
-	 *         (
-	 *             (arguments+=AssignmentExpression arguments+=AssignmentExpression* (spread?='...' arguments+=AssignmentExpression)?) | 
-	 *             (spread?='...' arguments+=AssignmentExpression)
-	 *         )?
-	 *     )
+	 *     (typeArgs+=TypeRef typeArgs+=TypeRef* target=IdentifierRef (arguments+=Argument arguments+=Argument*)?)
 	 */
 	protected void sequence_Arguments_ParameterizedCallExpression_TypeArguments(ISerializationContext context, ParameterizedCallExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -5365,15 +5350,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	//     MemberExpression returns ParameterizedCallExpression
 	//
 	// Constraint:
-	//     (
-	//         typeArgs+=TypeRef 
-	//         typeArgs+=TypeRef* 
-	//         target=IdentifierRef 
-	//         (
-	//             (arguments+=AssignmentExpression arguments+=AssignmentExpression? (spread?='...' arguments+=AssignmentExpression)?) | 
-	//             (spread?='...' arguments+=AssignmentExpression)
-	//         )?
-	//     )
+	//     (typeArgs+=TypeRef typeArgs+=TypeRef* target=IdentifierRef (arguments+=Argument arguments+=Argument?)?)
 	//
 	// protected void sequence_Arguments_ParameterizedCallExpression_TypeArguments(ISerializationContext context, ParameterizedCallExpression semanticObject) { }
 	
