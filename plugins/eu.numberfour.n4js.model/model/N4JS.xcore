@@ -899,7 +899,7 @@ class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 }
 
 abstract class StrictModeRelevant {
-	derived boolean strictMode
+	derived transient boolean strictMode
 }
 
 class SuperLiteral extends PrimaryExpression {
@@ -965,7 +965,7 @@ abstract class PropertyNameOwner extends NamedElement {
 	/*
 	 * This is set by the IAstFactory while parsing a property assignment.
 	 */
-	PropertyNameKind kind
+	transient PropertyNameKind kind
 	String name
 	op TStructMember getDefinedMember()
 	/**
@@ -1030,7 +1030,7 @@ enum PropertyNameKind {
 }
 
 class PropertyNameValuePair extends AnnotablePropertyAssignment, TypedElement, TypableElement {
-	refers TStructField definedField
+	refers transient TStructField definedField
 	/*
 	 * The (initial) value of the property.
 	 */
@@ -1084,7 +1084,7 @@ abstract class GetterDeclaration extends FieldAccessor, TypedElement {
  * Base class for setters, of either object literals (PropertySetterDeclaration) or classes (N4SetterDeclaration).
  */
 abstract class SetterDeclaration extends FieldAccessor {
-	refers TSetter definedSetter
+	refers transient TSetter definedSetter
 	contains FormalParameter fpar
 	op TSetter getDefinedAccessor() {
 		return definedSetter;
@@ -1847,7 +1847,7 @@ class N4MemberAnnotationList extends AbstractAnnotationList, N4MemberDeclaration
 }
 
 class N4FieldDeclaration extends AnnotableN4MemberDeclaration, TypedElement, ThisArgProvider, PropertyNameOwner {
-	refers TField definedField
+	refers transient TField definedField
 	/*
 	 * Initializer expression.
 	 */

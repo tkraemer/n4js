@@ -7189,7 +7189,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getIdentifierRef__IsValidSimpleAssignmentTarget(), theEcorePackage.getEBoolean(), "isValidSimpleAssignmentTarget", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(strictModeRelevantEClass, StrictModeRelevant.class, "StrictModeRelevant", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStrictModeRelevant_StrictMode(), theEcorePackage.getEBoolean(), "strictMode", null, 0, 1, StrictModeRelevant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStrictModeRelevant_StrictMode(), theEcorePackage.getEBoolean(), "strictMode", null, 0, 1, StrictModeRelevant.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(superLiteralEClass, SuperLiteral.class, "SuperLiteral", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -7220,7 +7220,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getPropertyAssignment__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(propertyNameOwnerEClass, PropertyNameOwner.class, "PropertyNameOwner", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPropertyNameOwner_Kind(), this.getPropertyNameKind(), "kind", null, 0, 1, PropertyNameOwner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPropertyNameOwner_Kind(), this.getPropertyNameKind(), "kind", null, 0, 1, PropertyNameOwner.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPropertyNameOwner_Name(), theEcorePackage.getEString(), "name", null, 0, 1, PropertyNameOwner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getPropertyNameOwner__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7237,7 +7237,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getPropertyAssignmentAnnotationList__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(propertyNameValuePairEClass, PropertyNameValuePair.class, "PropertyNameValuePair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPropertyNameValuePair_DefinedField(), theTypesPackage.getTStructField(), null, "definedField", null, 0, 1, PropertyNameValuePair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPropertyNameValuePair_DefinedField(), theTypesPackage.getTStructField(), null, "definedField", null, 0, 1, PropertyNameValuePair.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPropertyNameValuePair_Expression(), this.getExpression(), null, "expression", null, 0, 1, PropertyNameValuePair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getPropertyNameValuePair__GetDefinedMember(), theTypesPackage.getTStructField(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7260,7 +7260,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getGetterDeclaration__GetDefinedAccessor(), theTypesPackage.getTGetter(), "getDefinedAccessor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(setterDeclarationEClass, SetterDeclaration.class, "SetterDeclaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSetterDeclaration_DefinedSetter(), theTypesPackage.getTSetter(), null, "definedSetter", null, 0, 1, SetterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSetterDeclaration_DefinedSetter(), theTypesPackage.getTSetter(), null, "definedSetter", null, 0, 1, SetterDeclaration.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSetterDeclaration_Fpar(), this.getFormalParameter(), null, "fpar", null, 0, 1, SetterDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getSetterDeclaration__GetDefinedAccessor(), theTypesPackage.getTSetter(), "getDefinedAccessor", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7566,7 +7566,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getN4MemberAnnotationList__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(n4FieldDeclarationEClass, N4FieldDeclaration.class, "N4FieldDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getN4FieldDeclaration_DefinedField(), theTypesPackage.getTField(), null, "definedField", null, 0, 1, N4FieldDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getN4FieldDeclaration_DefinedField(), theTypesPackage.getTField(), null, "definedField", null, 0, 1, N4FieldDeclaration.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getN4FieldDeclaration_Expression(), this.getExpression(), null, "expression", null, 0, 1, N4FieldDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getN4FieldDeclaration__GetDefinedTypeElement(), theTypesPackage.getTMember(), "getDefinedTypeElement", 0, 1, !IS_UNIQUE, IS_ORDERED);
