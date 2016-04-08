@@ -126,12 +126,18 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		final URI toUri = delta.getUri();
 		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
 		final IN4JSProject toProject = n4jsCore.findProject(toUri).orNull();
-		if (Objects.equals(fromProject, toProject)) {
-			return true;
-		}
-		if (null != fromProject) { // Consider libraries. TODO: implement it at #findProject(URI)
-			for (IN4JSProject depP : new N4JSProjectDependencyCollector(fromProject).collectDependencies()) {
-				if (Objects.equals(depP, toProject)) {
+
+		if (null != fromProject && null != toProject) { // Consider libraries. TODO: implement it at #findProject(URI)
+
+			if (Objects.equals(fromProject, toProject)) {
+				return true;
+			}
+
+			for (IN4JSProject fromProjectDependency : fromProject.getDependenciesAndImplementedApis()) {
+
+				// Do not resolve dependencies from workspace to external and vice versa
+				if (Objects.equals(fromProjectDependency, toProject)
+						&& fromProject.isExternal() == fromProjectDependency.isExternal()) {
 					return true;
 				}
 			}

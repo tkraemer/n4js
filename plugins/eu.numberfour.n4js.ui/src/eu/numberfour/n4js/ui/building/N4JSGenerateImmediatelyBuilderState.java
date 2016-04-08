@@ -222,12 +222,6 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			final IResourceDescription resDesc = this.getResourceDescription(currAffURI);
 			if (!N4MF_MANIFEST.equals(currAffURI.lastSegment())) {
 
-				// Do not discard serialized TModule information on EObject descriptions if not scheduled for build,
-				// those will not be used anyway.
-				if (!buildData.getURIQueue().contains(currAffURI)) {
-					continue;
-				}
-
 				/*-
 				 * This logic here is required to get rid of the invalid serialized TModules information from the index
 				 * which are working with an index based approach. Consider the below example:
