@@ -127,7 +127,7 @@ class SuperLiteralTransformation extends Transformation {
 		if(superCallStmnt instanceof ExpressionStatement) {
 			val expr = superCallStmnt.expression;
 			if(expr instanceof ParameterizedCallExpression) {
-				return expr.arguments.drop(1); // need to drop the first argument, i.e. the 'this'
+				return expr.arguments.map[expression].drop(1); // need to drop the first argument, i.e. the 'this'
 			}
 		}
 		throw new IllegalArgumentException("explicit super call has an unexpected structure");
@@ -240,7 +240,7 @@ class SuperLiteralTransformation extends Transformation {
 			val parent = accExpr.eContainer as AssignmentExpression;
 			val value = parent.rhs;
 
-			replacement.arguments += value;
+			replacement.arguments += _Argument(value);
 			replace(parent, replacement);
 		} else {
 			// we have a getter

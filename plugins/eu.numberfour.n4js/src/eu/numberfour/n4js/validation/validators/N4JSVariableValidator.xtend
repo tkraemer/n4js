@@ -15,15 +15,16 @@ import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
+import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.ts.types.TVariable
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
-import org.eclipse.emf.ecore.EStructuralFeature
 
 /**
  * Validations for variable declarations and variables.
@@ -70,9 +71,9 @@ class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 		// exception cases:
 		// do not inspect class expressions and function expressions because contained code will be executed later
 		// and therefore self-reference is ok UNLESS the class is immediately instantiated / the function immediately called
-		if(astNode instanceof N4ClassExpression && !(astNode.eContainer instanceof NewExpression))
+		if(astNode instanceof N4ClassExpression && !astNode.isInstantiatedOrCalled)
 			return result;  // add nothing
-		if(astNode instanceof FunctionExpression && !(astNode.eContainer instanceof ParameterizedCallExpression))
+		if(astNode instanceof FunctionExpression && !astNode.isInstantiatedOrCalled)
 			return result;  // add nothing
 
 		// standard cases:
@@ -85,5 +86,21 @@ class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 	}
 	def public static boolean containsIdentifierRefsTo(EObject astNode, VariableDeclaration varDecl) {
 		return !astNode.collectIdentifierRefsTo(varDecl,newArrayList).empty
+	}
+	/**
+	 * Tells if given astNode is an expression serving as target to a new or call expression. This provides <b>only a
+	 * heuristic</b>; might produce false negatives (but no false positives).
+	 */
+	def private static boolean isInstantiatedOrCalled(EObject astNode) {
+		var curr = astNode;
+		while(curr.eContainer instanceof ParenExpression) {
+			curr = curr.eContainer;
+		}
+		val parent = curr.eContainer;
+		return switch(parent) {
+			NewExpression: parent.callee===curr
+			ParameterizedCallExpression: parent.target===curr
+			default: false
+		}
 	}
 }

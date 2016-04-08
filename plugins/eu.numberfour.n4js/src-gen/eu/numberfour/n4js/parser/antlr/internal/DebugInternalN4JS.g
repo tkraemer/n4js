@@ -2877,33 +2877,6 @@ norm1_LeftHandSideExpression :
 	)?
 ;
 
-// Rule Arguments
-ruleArguments :
-	norm1_AssignmentExpression (
-		',' norm1_AssignmentExpression
-	)* (
-		',' '...' norm1_AssignmentExpression
-	)? |
-	'...' norm1_AssignmentExpression
-;
-
-// Rule Arguments
-norm1_Arguments :
-	norm3_AssignmentExpression (
-		',' norm3_AssignmentExpression
-	)* (
-		',' '...' norm3_AssignmentExpression
-	)? |
-	'...' norm3_AssignmentExpression
-;
-
-// Rule TypeArguments
-ruleTypeArguments :
-	'<' ruleTypeRef (
-		',' ruleTypeRef
-	)* '>'
-;
-
 // Rule ArgumentsWithParentheses
 ruleArgumentsWithParentheses :
 	'(' ruleArguments? ')'
@@ -2912,6 +2885,37 @@ ruleArgumentsWithParentheses :
 // Rule ArgumentsWithParentheses
 norm1_ArgumentsWithParentheses :
 	'(' norm1_Arguments? ')'
+;
+
+// Rule Arguments
+ruleArguments :
+	ruleArgument (
+		',' ruleArgument
+	)*
+;
+
+// Rule Arguments
+norm1_Arguments :
+	norm1_Argument (
+		',' norm1_Argument
+	)*
+;
+
+// Rule Argument
+ruleArgument :
+	'...'? norm1_AssignmentExpression
+;
+
+// Rule Argument
+norm1_Argument :
+	'...'? norm3_AssignmentExpression
+;
+
+// Rule TypeArguments
+ruleTypeArguments :
+	'<' ruleTypeRef (
+		',' ruleTypeRef
+	)* '>'
 ;
 
 // Rule MemberExpression

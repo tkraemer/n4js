@@ -45,6 +45,7 @@ import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.Argument
 
 /**
  */
@@ -119,9 +120,11 @@ class AbstractPolyProcessor extends AbstractProcessor {
 
 	def private EObject getParentPolyCandidate(Expression poly) {
 		val directParent = poly?.eContainer;
+		val grandParent = directParent?.eContainer;
 		return switch(directParent) {
-			ParameterizedCallExpression case directParent.arguments.contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
-				directParent
+			Argument case grandParent instanceof ParameterizedCallExpression
+					&& (grandParent as ParameterizedCallExpression).arguments.map[expression].contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
+				grandParent
 			FunctionExpression:
 				null // function expressions never have nested poly expressions (expression in the body are detached)
 			ArrayElement case directParent.expression===poly:

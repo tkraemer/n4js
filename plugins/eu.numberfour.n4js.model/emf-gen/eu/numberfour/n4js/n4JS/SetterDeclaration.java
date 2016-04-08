@@ -44,7 +44,7 @@ public interface SetterDeclaration extends FieldAccessor {
 	 * @return the value of the '<em>Defined Setter</em>' reference.
 	 * @see #setDefinedSetter(TSetter)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getSetterDeclaration_DefinedSetter()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	TSetter getDefinedSetter();

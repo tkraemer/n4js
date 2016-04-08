@@ -7284,115 +7284,6 @@ norm1_LeftHandSideExpression
 
 
 
-// Rule Arguments
-ruleArguments 
-    @init {
-    }:
-(((
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_0_0=norm1_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_0_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_0_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_0()); }
-)
-)(
-	CommaKeyword_0_1_0=Comma 	 { announce($CommaKeyword_0_1_0, grammarAccess.getArgumentsAccess().getCommaKeyword_0_1_0()); }(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0=norm1_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_1_1()); }
-)
-))*(
-	CommaKeyword_0_2_0=Comma 	 { announce($CommaKeyword_0_2_0, grammarAccess.getArgumentsAccess().getCommaKeyword_0_2_0()); }(
-(
-
-	SpreadFullStopFullStopFullStopKeyword_0_2_1_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_0_2_1_0, grammarAccess.getArgumentsAccess().getSpreadFullStopFullStopFullStopKeyword_0_2_1_0()); }
-
-)
-)(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0=norm1_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_2_2()); }
-)
-))?)
-    |((
-(
-
-	SpreadFullStopFullStopFullStopKeyword_1_0_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_1_0_0, grammarAccess.getArgumentsAccess().getSpreadFullStopFullStopFullStopKeyword_1_0_0()); }
-
-)
-)(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_1_1_0=norm1_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_1_1_0.start, $ArgumentsAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_1()); }
-)
-)))
-;
-
-
-
-
-
-
-// Rule Arguments
-norm1_Arguments 
-    @init {
-    }:
-(((
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_0_0=norm3_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_0_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_0_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_0()); }
-)
-)(
-	CommaKeyword_0_1_0=Comma 	 { announce($CommaKeyword_0_1_0, grammarAccess.getArgumentsAccess().getCommaKeyword_0_1_0()); }(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0=norm3_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_1_1()); }
-)
-))*(
-	CommaKeyword_0_2_0=Comma 	 { announce($CommaKeyword_0_2_0, grammarAccess.getArgumentsAccess().getCommaKeyword_0_2_0()); }(
-(
-
-	SpreadFullStopFullStopFullStopKeyword_0_2_1_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_0_2_1_0, grammarAccess.getArgumentsAccess().getSpreadFullStopFullStopFullStopKeyword_0_2_1_0()); }
-
-)
-)(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0=norm3_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0.start, $ArgumentsAssignmentExpressionParserRuleCall_0_2_2_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0_2_2()); }
-)
-))?)
-    |((
-(
-
-	SpreadFullStopFullStopFullStopKeyword_1_0_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_1_0_0, grammarAccess.getArgumentsAccess().getSpreadFullStopFullStopFullStopKeyword_1_0_0()); }
-
-)
-)(
-(
-	ArgumentsAssignmentExpressionParserRuleCall_1_1_0=norm3_AssignmentExpression { announce($ArgumentsAssignmentExpressionParserRuleCall_1_1_0.start, $ArgumentsAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_1()); }
-)
-)))
-;
-
-
-
-
-
-
-// Rule TypeArguments
-ruleTypeArguments 
-    @init {
-    }:
-(
-	LessThanSignKeyword_0=LessThanSign 	 { announce($LessThanSignKeyword_0, grammarAccess.getTypeArgumentsAccess().getLessThanSignKeyword_0()); }(
-(
-	TypeArgsTypeRefParserRuleCall_1_0=ruleTypeRef { announce($TypeArgsTypeRefParserRuleCall_1_0.start, $TypeArgsTypeRefParserRuleCall_1_0.stop, grammarAccess.getTypeArgumentsAccess().getTypeArgsAssignment_1()); }
-)
-)(
-	CommaKeyword_2_0=Comma 	 { announce($CommaKeyword_2_0, grammarAccess.getTypeArgumentsAccess().getCommaKeyword_2_0()); }(
-(
-	TypeArgsTypeRefParserRuleCall_2_1_0=ruleTypeRef { announce($TypeArgsTypeRefParserRuleCall_2_1_0.start, $TypeArgsTypeRefParserRuleCall_2_1_0.stop, grammarAccess.getTypeArgumentsAccess().getTypeArgsAssignment_2_1()); }
-)
-))*
-	GreaterThanSignKeyword_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_3, grammarAccess.getTypeArgumentsAccess().getGreaterThanSignKeyword_3()); })
-;
-
-
-
-
-
-
 // Rule ArgumentsWithParentheses
 ruleArgumentsWithParentheses 
     @init {
@@ -7416,6 +7307,121 @@ norm1_ArgumentsWithParentheses
 	LeftParenthesisKeyword_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0, grammarAccess.getArgumentsWithParenthesesAccess().getLeftParenthesisKeyword_0()); }(	ArgumentsParserRuleCall_1=norm1_Arguments		{ announce($ArgumentsParserRuleCall_1.start, $ArgumentsParserRuleCall_1.stop, grammarAccess.getArgumentsWithParenthesesAccess().getArgumentsParserRuleCall_1()); }
 )?
 	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getArgumentsWithParenthesesAccess().getRightParenthesisKeyword_2()); })
+;
+
+
+
+
+
+
+// Rule Arguments
+ruleArguments 
+    @init {
+    }:
+((
+(
+	ArgumentsArgumentParserRuleCall_0_0=ruleArgument { announce($ArgumentsArgumentParserRuleCall_0_0.start, $ArgumentsArgumentParserRuleCall_0_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0()); }
+)
+)(
+	CommaKeyword_1_0=Comma 	 { announce($CommaKeyword_1_0, grammarAccess.getArgumentsAccess().getCommaKeyword_1_0()); }(
+(
+	ArgumentsArgumentParserRuleCall_1_1_0=ruleArgument { announce($ArgumentsArgumentParserRuleCall_1_1_0.start, $ArgumentsArgumentParserRuleCall_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_1()); }
+)
+))*)
+;
+
+
+
+
+
+
+// Rule Arguments
+norm1_Arguments 
+    @init {
+    }:
+((
+(
+	ArgumentsArgumentParserRuleCall_0_0=norm1_Argument { announce($ArgumentsArgumentParserRuleCall_0_0.start, $ArgumentsArgumentParserRuleCall_0_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_0()); }
+)
+)(
+	CommaKeyword_1_0=Comma 	 { announce($CommaKeyword_1_0, grammarAccess.getArgumentsAccess().getCommaKeyword_1_0()); }(
+(
+	ArgumentsArgumentParserRuleCall_1_1_0=norm1_Argument { announce($ArgumentsArgumentParserRuleCall_1_1_0.start, $ArgumentsArgumentParserRuleCall_1_1_0.stop, grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_1()); }
+)
+))*)
+;
+
+
+
+
+
+// Entry rule entryRuleArgument
+entryRuleArgument
+	:
+	ruleArgument 
+	EOF 
+;
+
+// Rule Argument
+ruleArgument 
+    @init {
+    }:
+((
+(
+
+	SpreadFullStopFullStopFullStopKeyword_0_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_0_0, grammarAccess.getArgumentAccess().getSpreadFullStopFullStopFullStopKeyword_0_0()); }
+
+)
+)?(
+(
+	ExpressionAssignmentExpressionParserRuleCall_1_0=norm1_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getArgumentAccess().getExpressionAssignment_1()); }
+)
+))
+;
+
+
+
+
+
+
+// Rule Argument
+norm1_Argument 
+    @init {
+    }:
+((
+(
+
+	SpreadFullStopFullStopFullStopKeyword_0_0=FullStopFullStopFullStop 	 { announce($SpreadFullStopFullStopFullStopKeyword_0_0, grammarAccess.getArgumentAccess().getSpreadFullStopFullStopFullStopKeyword_0_0()); }
+
+)
+)?(
+(
+	ExpressionAssignmentExpressionParserRuleCall_1_0=norm3_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getArgumentAccess().getExpressionAssignment_1()); }
+)
+))
+;
+
+
+
+
+
+
+// Rule TypeArguments
+ruleTypeArguments 
+    @init {
+    }:
+(
+	LessThanSignKeyword_0=LessThanSign 	 { announce($LessThanSignKeyword_0, grammarAccess.getTypeArgumentsAccess().getLessThanSignKeyword_0()); }(
+(
+	TypeArgsTypeRefParserRuleCall_1_0=ruleTypeRef { announce($TypeArgsTypeRefParserRuleCall_1_0.start, $TypeArgsTypeRefParserRuleCall_1_0.stop, grammarAccess.getTypeArgumentsAccess().getTypeArgsAssignment_1()); }
+)
+)(
+	CommaKeyword_2_0=Comma 	 { announce($CommaKeyword_2_0, grammarAccess.getTypeArgumentsAccess().getCommaKeyword_2_0()); }(
+(
+	TypeArgsTypeRefParserRuleCall_2_1_0=ruleTypeRef { announce($TypeArgsTypeRefParserRuleCall_2_1_0.start, $TypeArgsTypeRefParserRuleCall_2_1_0.stop, grammarAccess.getTypeArgumentsAccess().getTypeArgsAssignment_2_1()); }
+)
+))*
+	GreaterThanSignKeyword_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_3, grammarAccess.getTypeArgumentsAccess().getGreaterThanSignKeyword_3()); })
 ;
 
 
