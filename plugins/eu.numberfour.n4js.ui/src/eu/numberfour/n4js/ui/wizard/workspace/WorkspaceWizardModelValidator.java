@@ -308,11 +308,13 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
 
-		// 2. The folder must be a valid folder name
-		if (!WorkspaceWizardValidatorUtils.isValidFolderName(sourceFolder)) {
-			throw new ValidationException(
-					ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
-					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
+		// 2. All segments of the source folder path must be valid folder names
+		for (String segment : getModel().getSourceFolder().segments()) {
+			if (!WorkspaceWizardValidatorUtils.isValidFolderName(segment)) {
+				throw new ValidationException(
+						ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
+						WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
+			}
 		}
 
 		this.setSourceFolderValid(true);
