@@ -16,7 +16,7 @@ import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
 import eu.numberfour.n4js.n4JS.GenericDeclaration
-import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
@@ -30,9 +30,12 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
+import eu.numberfour.n4js.ts.types.TClass
+import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
@@ -59,7 +62,6 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 
 /**
  * Class for validating the N4JS types.
@@ -268,27 +270,31 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def void checkInconsistentInterfaceImplementation(N4ClassDeclaration classDecl) {
-		val tClass = classDecl.definedTypeAsClass;
-		val typeVarsOfInterfaces = tClass.implementedInterfaceRefs.map[it?.declaredType].filter(TInterface)
+	def void checkInconsistentInterfaceImplementationOrExtension(N4ClassifierDeclaration classifierDecl) {
+		val tClassifier = classifierDecl.definedType as TClassifier;
+		if(tClassifier===null)
+			return; // broken AST
+		val typeVarsOfInterfaces =
+			tClassifier.implementedOrExtendedInterfaceRefs.map[it?.declaredType].filter(TInterface)
 			.map[typeVars].flatten.toList;
 		if(typeVarsOfInterfaces.empty)
-			return;
-		val G = newRuleEnvironment(classDecl);
+			return; // nothing to check
+		val G = newRuleEnvironment(classifierDecl);
 		G.recordInconsistentSubstitutions;
-		tClass.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
+		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
 		for(tv : typeVarsOfInterfaces) {
 			val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
 			if(subst instanceof UnknownTypeRef) {
 				val badSubst = G.getInconsistentSubstitutions(tv);
 				if(!badSubst.empty) {
 					if(!tsh.allEqualType(G, badSubst)) {
+						val mode = if(tClassifier instanceof TClass) "implement" else "extend";
 						val ifcName = (tv.eContainer as TInterface).name;
 						val tvName = tv.name;
 						val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
-						val message = getMessageForCLF_IMPLEMENT_SAME_INTERFACE_INCONSISTENTLY(ifcName, tvName, typeRefsStr);
-						addIssue(message, classDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
-							CLF_IMPLEMENT_SAME_INTERFACE_INCONSISTENTLY);
+						val message = getMessageForCLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY(mode, ifcName, tvName, typeRefsStr);
+						addIssue(message, classifierDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
+							CLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY);
 					}
 				}
 			}
