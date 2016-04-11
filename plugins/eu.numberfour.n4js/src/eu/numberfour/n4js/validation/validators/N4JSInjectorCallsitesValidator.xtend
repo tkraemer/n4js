@@ -121,7 +121,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def void internalCheckInjectorOfCallsite(ParameterizedCallExpression callExpression) {
 		// partition arguments into ctorOfDIC, parentDIC, providedBinders
-		val args = callExpression.arguments
+		val args = callExpression.arguments.map[expression];
 		var Expression ctorOfDICArg = null;
 		if (args.get(0) instanceof CastExpression) {
 			// TODO why is this needed in connection with tauWithContextAnalysed?
@@ -227,7 +227,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 * Validation: <code>type{T}</code> should be injectable (in particular, it may be an N4Provider).
 	 */
 	private def void internalCheckInjectorCreateCallsite(ParameterizedCallExpression callExpression) {
-		val ctorArg = callExpression.arguments.head
+		val ctorArg = callExpression.arguments.head?.expression
 		val ctorArgTypeRef = typeInferencer.tau(ctorArg)
 		if (ctorArgTypeRef instanceof ClassifierTypeRef) {
 			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.staticTypeRef)) {

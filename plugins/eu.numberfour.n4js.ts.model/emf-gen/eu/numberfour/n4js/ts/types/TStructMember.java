@@ -48,7 +48,7 @@ public interface TStructMember extends TMember {
 	 * @return the value of the '<em>Defined Member</em>' reference.
 	 * @see #setDefinedMember(TStructMember)
 	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTStructMember_DefinedMember()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	TStructMember getDefinedMember();

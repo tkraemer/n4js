@@ -758,17 +758,20 @@ LeftHandSideExpression <Yield> returns Expression:
 	)?
 ;
 
+fragment ArgumentsWithParentheses <Yield>*:
+	'(' Arguments<Yield>? ')'
+;
+
 fragment Arguments <Yield>*:
-	arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (',' spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
-	| spread?='...' arguments+=AssignmentExpression<In=true,Yield>
+	arguments+=Argument<Yield> (',' arguments+=Argument<Yield>)*
+;
+
+Argument<Yield>:
+	spread?='...'? expression=AssignmentExpression<In=true, Yield>
 ;
 
 fragment TypeArguments*:
 	'<' typeArgs+=TypeRef (',' typeArgs+=TypeRef)* '>'
-;
-
-fragment ArgumentsWithParentheses <Yield>*:
-	'(' Arguments<Yield>? ')'
 ;
 
 MemberExpression <Yield> returns Expression:

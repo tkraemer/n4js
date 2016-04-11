@@ -48,7 +48,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		'''.parse()
 
 		val call = EcoreUtil2.getAllContentsOfType(script, ParameterizedCallExpression).head;
-		val funcExpr = call.arguments.head as FunctionExpression;
+		val funcExpr = call.arguments.head.expression as FunctionExpression;
 		assertTypeByName("{function(number):void}", funcExpr);
 
 		// eventually:
@@ -63,7 +63,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		'''.parse()
 
 		val call = EcoreUtil2.getAllContentsOfType(script, ParameterizedCallExpression).head;
-		val funcExpr = call.arguments.head as FunctionExpression;
+		val funcExpr = call.arguments.head.expression as FunctionExpression;
 		assertTypeName("{function(number):any}", funcExpr);
 
 		// eventually:
@@ -78,7 +78,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		'''.parse()
 
 		val call = EcoreUtil2.getAllContentsOfType(script, ParameterizedCallExpression).head;
-		val funcExpr = call.arguments.head as FunctionExpression;
+		val funcExpr = call.arguments.head.expression as FunctionExpression;
 		assertTypeByName("{function(number):string}", funcExpr);
 
 		// eventually:
@@ -93,7 +93,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		'''.parse()
 
 		val call = EcoreUtil2.getAllContentsOfType(script, ParameterizedCallExpression).head;
-		val funcExpr = call.arguments.head as FunctionExpression;
+		val funcExpr = call.arguments.head.expression as FunctionExpression;
 		assertTypeByName("{function(any):any}", funcExpr);
 
 		// eventually:
@@ -109,7 +109,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		'''.parse()
 
 		val call = EcoreUtil2.getAllContentsOfType(script, ParameterizedCallExpression).head;
-		val funcExpr = call.arguments.head as FunctionExpression;
+		val funcExpr = call.arguments.head.expression as FunctionExpression;
 
 
 		assertTypeName("{function(string):void}", funcExpr);
@@ -541,8 +541,8 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 		val call = EcoreUtil2.getAllContentsOfType(
 			script,
 			ParameterizedCallExpression
-		).filter[arguments.exists[it instanceof FunctionExpression]].last;
-		val funcExpr = call.arguments.filter(FunctionExpression).last;
+		).filter[arguments.map[expression].exists[it instanceof FunctionExpression]].last;
+		val funcExpr = call.arguments.map[expression].filter(FunctionExpression).last;
 
 		assertTypeName(expectedTypeName, funcExpr);
 
