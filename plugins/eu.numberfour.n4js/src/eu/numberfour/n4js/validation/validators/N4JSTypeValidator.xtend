@@ -16,18 +16,14 @@ import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
 import eu.numberfour.n4js.n4JS.GenericDeclaration
+import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
@@ -39,10 +35,18 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
+import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import org.eclipse.emf.ecore.EObject
@@ -51,10 +55,11 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
-import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 
 /**
  * Class for validating the N4JS types.
@@ -69,6 +74,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private N4JSTypeSystem ts;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	@Inject
 	private N4JSScopeProvider n4jsScopeProvider;
@@ -254,6 +261,34 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 								createError(result, assExpr.lhs);
 							}
 						}
+					}
+				}
+			}
+		}
+	}
+
+	@Check
+	def void checkInconsistentInterfaceImplementation(N4ClassDeclaration classDecl) {
+		val tClass = classDecl.definedTypeAsClass;
+		val typeVarsOfInterfaces = tClass.implementedInterfaceRefs.map[it?.declaredType].filter(TInterface)
+			.map[typeVars].flatten.toList;
+		if(typeVarsOfInterfaces.empty)
+			return;
+		val G = newRuleEnvironment(classDecl);
+		G.recordInconsistentSubstitutions;
+		tClass.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
+		for(tv : typeVarsOfInterfaces) {
+			val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
+			if(subst instanceof UnknownTypeRef) {
+				val badSubst = G.getInconsistentSubstitutions(tv);
+				if(!badSubst.empty) {
+					if(!tsh.allEqualType(G, badSubst)) {
+						val ifcName = (tv.eContainer as TInterface).name;
+						val tvName = tv.name;
+						val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
+						val message = getMessageForCLF_IMPLEMENT_SAME_INTERFACE_INCONSISTENTLY(ifcName, tvName, typeRefsStr);
+						addIssue(message, classDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
+							CLF_IMPLEMENT_SAME_INTERFACE_INCONSISTENTLY);
 					}
 				}
 			}

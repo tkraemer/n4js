@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class G<T> {}
+
+interface I<T> {}
+interface J<T> extends I<T> {}
+interface J_number extends J<number> {}
+interface K<T> extends I<G<T>> {}
+
+
+class A1 implements I<string> {}
+class A2 extends A1 {}
+// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T: string, number." at "A3"
+class A3 extends A2 implements I<number> {}
+// XPECT noerrors --> "avoid follow-up error"
+class A4 extends A3 {}
+
+
+// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T: string, number." at "B1"
+class B1 implements I<string>, J<number> {}
+// XPECT noerrors -->
+class B2 implements I<number>, J<number> {}
+
+
+// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T: string, number." at "C1"
+class C1 implements I<string>, J_number {}
+// XPECT noerrors -->
+class C2 implements I<number>, J_number {}
+
+
+// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T: G<string>, G<number>." at "B3"
+class B3 implements I<G<string>>, K<number> {}
+// XPECT noerrors -->
+class B4 implements I<G<number>>, K<number> {}
+
