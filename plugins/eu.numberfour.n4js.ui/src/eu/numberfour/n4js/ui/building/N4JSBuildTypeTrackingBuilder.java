@@ -12,18 +12,14 @@ package eu.numberfour.n4js.ui.building;
 
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant.BuildType;
 import org.eclipse.xtext.builder.impl.ToBeBuilt;
 import org.eclipse.xtext.builder.impl.XtextBuilder;
 
-import eu.numberfour.n4js.external.ExternalLibraryBuilderHelper;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.internal.ProjectDescriptionLoadListener;
 
@@ -65,18 +61,6 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 		} finally {
 			N4JSBuildTypeTracker.clearBuildType(getProject());
 		}
-	}
-
-	@Override
-	public ISchedulingRule getRule(int kind, Map<String, String> args) {
-		if (null != args) {
-			final String value = args.get(ExternalLibraryBuilderHelper.EXTERNAL_BUILD);
-			boolean external = Boolean.parseBoolean(value);
-			if (external) {
-				return null;
-			}
-		}
-		return super.getRule(kind, args);
 	}
 
 	private void updateProjectReferencesIfNecessary() {

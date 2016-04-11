@@ -18,7 +18,8 @@ Require-Bundle: eu.numberfour.n4js.releng.utils;resolution:=optional,
  org.objectweb.asm;bundle-version="5.0.1";resolution:=optional,
  org.eclipse.xtext.ui,
  org.codehaus.jackson.core,
- org.codehaus.jackson.mapper
+ org.codehaus.jackson.mapper,
+ org.eclipse.egit.core
 Import-Package: com.jcraft.jsch,
  org.apache.commons.logging,
  org.eclipse.jgit.api,

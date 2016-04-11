@@ -247,6 +247,11 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	private def Iterable<N4FieldDeclaration> filterFieldsInitializedViaSpecConstructor(N4ClassifierDefinition n4classifier, Iterable<N4FieldDeclaration> finalFieldsWithoutInit) {
+		
+		if (null === n4classifier.definedType) {
+			return emptyList
+		}
+		
 		val ctor = n4classifier.polyfilledOrOwnCtor;
 		val tctor =
 				if (ctor===null) {

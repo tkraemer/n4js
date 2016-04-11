@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+function foo(a,b,c,d) {}
+
+// XPECT errors --> "Unsupported feature: spread operator in new and call expressions (only allowed in array destructuring patterns)." at "..."
+foo(1,...[2],3,4);
+// XPECT errors --> "Unsupported feature: spread operator in new and call expressions (only allowed in array destructuring patterns)." at "..."
+foo(1,2,3,...[4]);
+
+
+
+
+class C {
+	constructor(a,b,c,d) {}
+}
+
+// XPECT errors --> "Unsupported feature: spread operator in new and call expressions (only allowed in array destructuring patterns)." at "..."
+new C(1,...[2],3,4);
+// XPECT errors --> "Unsupported feature: spread operator in new and call expressions (only allowed in array destructuring patterns)." at "..."
+new C(1,2,3,...[4]);
+

@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS.impl;
 
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.NewExpression;
@@ -43,7 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.NewExpressionImpl#getCallee <em>Callee</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.NewExpressionImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.NewExpressionImpl#isWithArgs <em>With Args</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.NewExpressionImpl#isSpread <em>Spread</em>}</li>
  * </ul>
  *
  * @generated
@@ -77,7 +77,7 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Expression> arguments;
+	protected EList<Argument> arguments;
 
 	/**
 	 * The default value of the '{@link #isWithArgs() <em>With Args</em>}' attribute.
@@ -98,26 +98,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 	 * @ordered
 	 */
 	protected boolean withArgs = WITH_ARGS_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isSpread() <em>Spread</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSpread()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean SPREAD_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isSpread() <em>Spread</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSpread()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean spread = SPREAD_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -198,9 +178,9 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Expression> getArguments() {
+	public EList<Argument> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<Expression>(Expression.class, this, N4JSPackage.NEW_EXPRESSION__ARGUMENTS);
+			arguments = new EObjectContainmentEList<Argument>(Argument.class, this, N4JSPackage.NEW_EXPRESSION__ARGUMENTS);
 		}
 		return arguments;
 	}
@@ -224,27 +204,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 		withArgs = newWithArgs;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.NEW_EXPRESSION__WITH_ARGS, oldWithArgs, withArgs));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSpread() {
-		return spread;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSpread(boolean newSpread) {
-		boolean oldSpread = spread;
-		spread = newSpread;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.NEW_EXPRESSION__SPREAD, oldSpread, spread));
 	}
 
 	/**
@@ -292,8 +251,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 				return getArguments();
 			case N4JSPackage.NEW_EXPRESSION__WITH_ARGS:
 				return isWithArgs();
-			case N4JSPackage.NEW_EXPRESSION__SPREAD:
-				return isSpread();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -316,13 +273,10 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 				return;
 			case N4JSPackage.NEW_EXPRESSION__ARGUMENTS:
 				getArguments().clear();
-				getArguments().addAll((Collection<? extends Expression>)newValue);
+				getArguments().addAll((Collection<? extends Argument>)newValue);
 				return;
 			case N4JSPackage.NEW_EXPRESSION__WITH_ARGS:
 				setWithArgs((Boolean)newValue);
-				return;
-			case N4JSPackage.NEW_EXPRESSION__SPREAD:
-				setSpread((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -348,9 +302,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 			case N4JSPackage.NEW_EXPRESSION__WITH_ARGS:
 				setWithArgs(WITH_ARGS_EDEFAULT);
 				return;
-			case N4JSPackage.NEW_EXPRESSION__SPREAD:
-				setSpread(SPREAD_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -371,8 +322,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 				return arguments != null && !arguments.isEmpty();
 			case N4JSPackage.NEW_EXPRESSION__WITH_ARGS:
 				return withArgs != WITH_ARGS_EDEFAULT;
-			case N4JSPackage.NEW_EXPRESSION__SPREAD:
-				return spread != SPREAD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -451,8 +400,6 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (withArgs: ");
 		result.append(withArgs);
-		result.append(", spread: ");
-		result.append(spread);
 		result.append(')');
 		return result.toString();
 	}

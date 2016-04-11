@@ -124,8 +124,8 @@ class ES_11_02_LeftHandSideExpressionEsprimaTest extends AbstractParserTest {
 		val foo = statement.expression as ParameterizedCallExpression
 		assertEquals('foo', (foo.target as IdentifierRef).text)
 		assertEquals(2, foo.arguments.size)
-		assertEquals('bar', (foo.arguments.get(0) as IdentifierRef).text)
-		assertEquals('baz', (foo.arguments.get(1) as IdentifierRef).text)
+		assertEquals('bar', (foo.arguments.get(0).expression as IdentifierRef).text)
+		assertEquals('baz', (foo.arguments.get(1).expression as IdentifierRef).text)
 	}
 
 	@Test
@@ -213,7 +213,7 @@ class ES_11_02_LeftHandSideExpressionEsprimaTest extends AbstractParserTest {
 		val galaxies = statement.expression as ParameterizedPropertyAccessExpression
 		assertEquals('galaxies', galaxies.propertyText)
 		val call = galaxies.target as ParameterizedCallExpression
-		val number = call.arguments.head as IntLiteral
+		val number = call.arguments.head.expression as IntLiteral
 		assertEquals(42, number.toInt)
 		val universe = call.target as IdentifierRef
 		assertEquals('universe', universe.text)
@@ -226,7 +226,7 @@ class ES_11_02_LeftHandSideExpressionEsprimaTest extends AbstractParserTest {
 		val milkyway = statement.expression as ParameterizedPropertyAccessExpression
 		assertEquals('milkyway', milkyway.propertyText)
 		val galaxiesCall = milkyway.target as ParameterizedCallExpression
-		val galaxiesArgs = galaxiesCall.arguments
+		val galaxiesArgs = galaxiesCall.arguments.map[expression]
 		assertEquals(3, galaxiesArgs.size)
 		assertEquals(14, (galaxiesArgs.get(0) as IntLiteral).toInt)
 		assertEquals(3, (galaxiesArgs.get(1) as IntLiteral).toInt)
@@ -234,7 +234,7 @@ class ES_11_02_LeftHandSideExpressionEsprimaTest extends AbstractParserTest {
 		val galaxies = galaxiesCall.target as ParameterizedPropertyAccessExpression
 		assertEquals('galaxies', galaxies.propertyText)
 		val universeCall = galaxies.target as ParameterizedCallExpression
-		val universeArgs = universeCall.arguments
+		val universeArgs = universeCall.arguments.map[expression]
 		assertEquals(1, universeArgs.size)
 		assertEquals(42, (universeArgs.get(0) as IntLiteral).toInt)
 		val universe = universeCall.target as IdentifierRef
@@ -246,7 +246,7 @@ class ES_11_02_LeftHandSideExpressionEsprimaTest extends AbstractParserTest {
 		val script = 'earth.asia.Indonesia.prepareForElection(2014)'.parseSuccessfully
 		val statement = script.scriptElements.head as ExpressionStatement
 		val call = statement.expression as ParameterizedCallExpression
-		assertEquals(2014, (call.arguments.head as IntLiteral).toInt)
+		assertEquals(2014, (call.arguments.head.expression as IntLiteral).toInt)
 	}
 
 	@Test

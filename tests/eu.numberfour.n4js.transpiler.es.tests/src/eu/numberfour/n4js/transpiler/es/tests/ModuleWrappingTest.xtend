@@ -167,7 +167,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 			//	WAS:		val excprStmt = im_n.scriptElements.get(0) as ExpressionStatement
 			val excprStmt = sys_reg as ExpressionStatement;
 
-			val fe_with_n4Export =  (excprStmt.expression as ParameterizedCallExpression).arguments.get(1) as FunctionExpression;
+			val fe_with_n4Export =  (excprStmt.expression as ParameterizedCallExpression).arguments.get(1).expression as FunctionExpression;
 			assertEquals("$n4Export", fe_with_n4Export.fpars.get(0).name )
 
 			val ol_in_ret = (fe_with_n4Export.body.statements.get(0) as ReturnStatement).expression as ObjectLiteral
@@ -712,7 +712,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 
 		val system_register_excprStmt = cjs_fun_expr.body.statements.get(1) as ExpressionStatement // 1st stmt is original System-register call:
 
-		val fe_with_n4Export =  (system_register_excprStmt.expression as ParameterizedCallExpression).arguments.get(1) as FunctionExpression;
+		val fe_with_n4Export =  (system_register_excprStmt.expression as ParameterizedCallExpression).arguments.get(1).expression as FunctionExpression;
 		assertEquals("$n4Export", fe_with_n4Export.fpars.get(0).name )
 
 	    // §1
@@ -727,7 +727,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 		val calls = EcoreUtil2.eAllOfType(ctor_A.body, ParameterizedCallExpression)
 		assertEquals("One call for console.log expected", 1, calls.size)
 		val pCall = calls.get(0)
-		assertEquals("argument of console.log expected","ctor A", (pCall.arguments.get(0) as StringLiteral).value)
+		assertEquals("argument of console.log expected","ctor A", (pCall.arguments.get(0).expression as StringLiteral).value)
 
 		val assignments = EcoreUtil2.eAllOfType(ctor_A.body,AssignmentExpression)
 		assertEquals("there should not be any assignment in ctor.",0,assignments.size)

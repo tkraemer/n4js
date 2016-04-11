@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests.bugs;
+package eu.numberfour.n4js.tests.externalPackages;
 
 import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
@@ -30,7 +30,6 @@ import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Iterables;
@@ -101,10 +100,7 @@ public class IDEBUG_855_PluginUITest extends AbstractBuilderParticipantTest {
 
 	/**
 	 * See description at class declaration.
-	 *
-	 * @see IDEBUG_855_PluginUITest
 	 */
-	@Ignore("IDEBUG-856")
 	@Test
 	public void testAllIndexElementsCanBeAddedToAResource() throws InvocationTargetException, CoreException {
 

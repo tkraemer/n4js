@@ -164,7 +164,7 @@ class ExpressionTransformation extends Transformation {
 						_IdentRef(steFor_$n4promisifyMethod()),
 						(target as ParameterizedPropertyAccessExpression_IM).target, // here we take the "cls" part of "cls.meth" as first argument
 						_StringLiteralForSTE(targetSTE),
-						_ArrLit(callExpr.arguments),
+						_ArrLit(callExpr.arguments.map[_ArrayElement(spread, expression)]), // reuse arguments while preserving spread
 						_BooleanLiteral(hasMoreThan1SuccessValue),
 						_BooleanLiteral(!hasErrorValue)
 					);
@@ -177,7 +177,7 @@ class ExpressionTransformation extends Transformation {
 					return _CallExpr(
 						_IdentRef(steFor_$n4promisifyFunction()),
 						callExpr.target, // reuse target as first argument
-						_ArrLit(callExpr.arguments),
+						_ArrLit(callExpr.arguments.map[_ArrayElement(spread,expression)]), // reuse arguments while preserving spread
 						_BooleanLiteral(hasMoreThan1SuccessValue),
 						_BooleanLiteral(!hasErrorValue)
 					);
