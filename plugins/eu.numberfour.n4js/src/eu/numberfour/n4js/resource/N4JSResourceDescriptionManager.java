@@ -136,7 +136,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 			for (IN4JSProject fromProjectDependency : fromProject.getDependenciesAndImplementedApis()) {
 
 				// Never mark a resource as effected if the dependency is an external one.
-				// The library manager already know about the build older.
+				// The library manager already knows about the build older.
 				if (Objects.equals(fromProjectDependency, toProject) && !fromProjectDependency.isExternal()) {
 					return true;
 				}

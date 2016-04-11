@@ -227,24 +227,24 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 				 * which are working with an index based approach. Consider the below example:
 				 *
 				 * -------Module A------
-				 *1 	//class XYZ {}
-				 *2		function foo() {}
-				 *3		export public class A {}
+				 *1    //class XYZ { }
+				 *2    function foo() { }
+				 *3    export public class A { }
 				 *
 				 * -------Module B------
-				 *1 	import { A } from "A"
-				 *2 	import { C } from "C"
+				 *1    import { A } from "A"
+				 *2    import { C } from "C"
 				 *3
-				 *4 	var arrCC : Array<A>;
-				 *5 	var t2 : C = new C();
-				 *6 	t2.m(arrCC);
+				 *4    var arrCC : Array<A>;
+				 *5    var t2 : C = new C();
+				 *6    t2.m(arrCC);
 				 *
 				 * -------Module C------
-				 *1		import { A } from "A"
+				 *1    import { A } from "A"
 				 *2
-				 *3 	export public class C {
-				 *4			m(param : Array<A>) {}
-				 *5		}
+				 *3    export public class C {
+				 *4        m(param : Array<A>) { }
+				 *5    }
 				 *
 				 *
 				 * Commenting out line 1 in module A will trigger rebuild of A, and related module B and C in this order.
@@ -253,6 +253,10 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 				 * it was the second top level element, but that is not true any more, because 'foo' was just commented out,
 				 * so index 1 in module A is not class A any more but 'foo'. With this, line 6 in module B will fail,
 				 * because it will think that the method 'm' accepts an array of 'foo' and not A any more.
+				 *
+				 * The following code will be executed after A was processed and B and C are the "affectedURIs". With this
+				 * code, we make sure that the cached TModule of C (in the user data of C's resource description) won't be
+				 * used while processing B during proxy resolution.
 				 */
 				newState.register(new DefaultResourceDescriptionDelta(resDesc,
 						new ResourceDescriptionWithoutModuleUserData(resDesc)));
