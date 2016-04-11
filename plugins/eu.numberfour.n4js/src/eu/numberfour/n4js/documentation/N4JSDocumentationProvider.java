@@ -83,7 +83,27 @@ public class N4JSDocumentationProvider extends MultiLineCommentDocumentationProv
 	}
 
 	/**
-	 * Looking for lost documentation due to ASI. Goes backward from in the AST unless an ASI-modified
+	 * This is a fix for shadowed jsdoc-style documentation. Example:
+	 * 
+	 * <pre>
+	 * "use strict" /&#42;&#42;
+	 * jsdoc-style comment
+	 * &#42;/
+	 * class A {
+	 * }
+	 * </pre>
+	 * 
+	 * Parsing the snippet above will trigger automatic semicolon insertion (ASI) in the first line. Currently ASI
+	 * replaces the HiddenLeaf MultiLine comment starting in the same line as the missing ';' by a
+	 * {@link LeafNodeWithSyntaxError} which is not hidden. It also transfers the "ownership" from the class-node to the
+	 * directive-statement in the parse-tree. The text of the LeafNodeWithSyntaxError is still the original
+	 * comment-text.
+	 *
+	 * Giving the concrete node for "class A", this method will return the LeafNodeWithSyntaxError representing an ASI
+	 * and having the textual content of the jsdoc.
+	 *
+	 * <p>
+	 * Looking for lost documentation due to ASI. Goes backward in the AST unless an ASI-modified
 	 * {@link LeafNodeWithSyntaxError} is encountered.
 	 *
 	 * @return A hidden leaf node with jsdoc-documentation or a LeafNodeWithSyntaxError containing the documentation.

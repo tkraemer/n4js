@@ -10,19 +10,29 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
+import org.eclipse.xtext.util.TextRegion;
+
 /**
- * Extended information about where to insert new text.
+ * Extended information about where to insert new text. It holds a general total offset in the document - similar to a
+ * {@link TextRegion} instance, but contrary to that has no length as it describes the point after that insertion should
+ * happen.
+ *
+ * It also carries information if the insertion has to be recomputed. The properties {@link #notBeforeTotalOffset} and
+ * {@link #notAfterTotalOffset} mark the domain of valid recomputed insertion points.
+ *
+ * The property {@linkp #isBeforeJsdocDocumentation} marks insertion points associated with active jsdoc-style
+ * ML-comments.
  *
  */
-public class InsertionPoint {
+/* default */ class InsertionPoint {
 
-	/** Insertion point, a value of {@code -1} means not set. Zero-based offset. */
+	/** Insertion point, a value of {@code -1} means not set. Zero-based total offset. */
 	public int offset = -1;
 
 	/**
 	 * Flag, if set indicates that the textRegion is just in Front of an active jsdoc region for the first statement
 	 */
-	public boolean isBeforeDocumentation = false;
+	public boolean isBeforeJsdocDocumentation = false;
 
 	/** Lowest offset for possible insertion. Usually marked by existing ScriptAnnotation(s) or directives in prolog */
 	public int notBeforeTotalOffset = 0;

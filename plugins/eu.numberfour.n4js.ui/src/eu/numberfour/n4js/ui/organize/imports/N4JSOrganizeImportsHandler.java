@@ -361,7 +361,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 											int insertOffset = insertionPoint.offset; // concrete
 																						// position
 
-											if ((!insertionPoint.isBeforeDocumentation) &&
+											if ((!insertionPoint.isBeforeJsdocDocumentation) &&
 											// if this was an ASI case shadowing a jsdoc-/**-style comment
 											// we should insert before this comment. Still need to double-check the
 											// concrete content:

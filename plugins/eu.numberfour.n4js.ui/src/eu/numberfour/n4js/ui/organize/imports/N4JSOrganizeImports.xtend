@@ -95,8 +95,32 @@ public class N4JSOrganizeImports {
 	 * Using first position after script-annotation ("@@") and after any directive in the prolog section, that is 
 	 * just before the first statement or, in cases where the first statement is js-style documented, before the jsdoc-style 
 	 * documentation.
-	 *
-	 * Region has length 0;
+	 * 
+	 * Examples:
+	 * <pre>
+	 *  // (A)
+	 *  // (B)
+	 *  &#64;&#64;StaticPolyfillAware
+	 *  // (C)
+	 *  "use strict";
+	 *  // (D)
+	 *  /&#42; non-jsdoc comment (E) &#42;/
+	 *  /&#42;&#42; jsdoc comment (F) &#42;/
+	 *  /&#42; non-jsdoc comment (G) &#42;/
+	 *  // (H)
+	 *  export public class A { // (I)
+	 *     method(): B { 
+	 *        return new B(); // requires import
+	 *    } 
+	 *  } 
+	 * </pre>
+	 * Will put the insertion-point in front of line (F), since this is the active jsdoc for class A. 
+	 * {@link InsertionPoint#isBeforeJsdocDocumentation} will be set to true. Lowest possible insertion 
+	 * is the begin of line (D), stored in {@link InsertionPoint#notBeforeTotalOffset}. If the directive <code>"use strict";</code> 
+	 * between lines (C) and (D) is omitted, then the lowest insertion point would be in front of line (C). In any case the insertion of 
+	 * the import must be in front of the <code>export</code> keyword line (I).
+	 * 
+	 * <p>Region has length 0.
 	 *
 	 * @param xtextResource
 	 *            n4js resource
@@ -156,7 +180,7 @@ public class N4JSOrganizeImports {
 				if( !docuNodes.isEmpty ) {
 					// docu found
 					begin = docuNodes.get(0).totalOffset;
-					insertionPoint.isBeforeDocumentation = true;
+					insertionPoint.isBeforeJsdocDocumentation = true;
 					
 				} else {
 					// no documentation, go before the statement:
@@ -269,7 +293,7 @@ public class N4JSOrganizeImports {
 	
 	
 	/** returns true for expression statements containing a single string literal. (e.g. a JS directive like '"use strict"' ) */
-	def boolean isStringLiteralExpression(ScriptElement element) {
+	private def boolean isStringLiteralExpression(ScriptElement element) {
 		if( element instanceof ExpressionStatement ) {
 			val expression = element.expression;
 			if( expression instanceof StringLiteral ) {
