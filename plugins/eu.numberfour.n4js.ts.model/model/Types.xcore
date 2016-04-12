@@ -322,7 +322,10 @@ enum TypingStrategy {
 }
 
 class TypeVariable extends Type {
+	boolean declaredCovariant
+	boolean declaredContravariant
 	contains ParameterizedTypeRef[] declaredUpperBounds
+
 	op TypeVariable[] getTypeVars() {
 		return emptyEList();
 	}

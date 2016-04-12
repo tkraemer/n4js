@@ -930,8 +930,26 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTypeVariable_DeclaredCovariant() {
+		return (EAttribute)typeVariableEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeVariable_DeclaredContravariant() {
+		return (EAttribute)typeVariableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getTypeVariable_DeclaredUpperBounds() {
-		return (EReference)typeVariableEClass.getEStructuralFeatures().get(0);
+		return (EReference)typeVariableEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2793,6 +2811,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEReference(tAnnotableElementEClass, TANNOTABLE_ELEMENT__ANNOTATIONS);
 
 		typeVariableEClass = createEClass(TYPE_VARIABLE);
+		createEAttribute(typeVariableEClass, TYPE_VARIABLE__DECLARED_COVARIANT);
+		createEAttribute(typeVariableEClass, TYPE_VARIABLE__DECLARED_CONTRAVARIANT);
 		createEReference(typeVariableEClass, TYPE_VARIABLE__DECLARED_UPPER_BOUNDS);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_VARS);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_AS_STRING);
@@ -3213,6 +3233,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getTAnnotableElement_Annotations(), this.getTAnnotation(), null, "annotations", null, 0, -1, TAnnotableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typeVariableEClass, TypeVariable.class, "TypeVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTypeVariable_DeclaredCovariant(), theEcorePackage.getEBoolean(), "declaredCovariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeVariable_DeclaredContravariant(), theEcorePackage.getEBoolean(), "declaredContravariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTypeVariable_DeclaredUpperBounds(), theTypeRefsPackage.getParameterizedTypeRef(), null, "declaredUpperBounds", null, 0, -1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTypeVariable__GetTypeVars(), this.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);

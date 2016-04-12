@@ -23,6 +23,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredCovariant <em>Declared Covariant</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredContravariant <em>Declared Contravariant</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBounds <em>Declared Upper Bounds</em>}</li>
  * </ul>
  *
@@ -31,6 +33,58 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface TypeVariable extends Type {
+	/**
+	 * Returns the value of the '<em><b>Declared Covariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Declared Covariant</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Declared Covariant</em>' attribute.
+	 * @see #setDeclaredCovariant(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeVariable_DeclaredCovariant()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isDeclaredCovariant();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredCovariant <em>Declared Covariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Covariant</em>' attribute.
+	 * @see #isDeclaredCovariant()
+	 * @generated
+	 */
+	void setDeclaredCovariant(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Declared Contravariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Declared Contravariant</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Declared Contravariant</em>' attribute.
+	 * @see #setDeclaredContravariant(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeVariable_DeclaredContravariant()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isDeclaredContravariant();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredContravariant <em>Declared Contravariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Contravariant</em>' attribute.
+	 * @see #isDeclaredContravariant()
+	 * @generated
+	 */
+	void setDeclaredContravariant(boolean value);
+
 	/**
 	 * Returns the value of the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
 	 * The list contents are of type {@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef}.

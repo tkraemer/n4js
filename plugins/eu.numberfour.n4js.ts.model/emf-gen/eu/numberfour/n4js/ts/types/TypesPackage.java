@@ -899,13 +899,31 @@ public interface TypesPackage extends EPackage {
 	int TYPE_VARIABLE__ANNOTATIONS = TYPE__ANNOTATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_VARIABLE__DECLARED_COVARIANT = TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Declared Contravariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_VARIABLE__DECLARED_CONTRAVARIANT = TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE__DECLARED_UPPER_BOUNDS = TYPE_FEATURE_COUNT + 0;
+	int TYPE_VARIABLE__DECLARED_UPPER_BOUNDS = TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Type Variable</em>' class.
@@ -914,7 +932,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+	int TYPE_VARIABLE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -10429,6 +10447,28 @@ public interface TypesPackage extends EPackage {
 	EClass getTypeVariable();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredCovariant <em>Declared Covariant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Covariant</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredCovariant()
+	 * @see #getTypeVariable()
+	 * @generated
+	 */
+	EAttribute getTypeVariable_DeclaredCovariant();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredContravariant <em>Declared Contravariant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Contravariant</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredContravariant()
+	 * @see #getTypeVariable()
+	 * @generated
+	 */
+	EAttribute getTypeVariable_DeclaredContravariant();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBounds <em>Declared Upper Bounds</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12836,6 +12876,22 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TYPE_VARIABLE = eINSTANCE.getTypeVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared Covariant</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_VARIABLE__DECLARED_COVARIANT = eINSTANCE.getTypeVariable_DeclaredCovariant();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared Contravariant</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_VARIABLE__DECLARED_CONTRAVARIANT = eINSTANCE.getTypeVariable_DeclaredContravariant();
 
 		/**
 		 * The meta object literal for the '<em><b>Declared Upper Bounds</b></em>' containment reference list feature.

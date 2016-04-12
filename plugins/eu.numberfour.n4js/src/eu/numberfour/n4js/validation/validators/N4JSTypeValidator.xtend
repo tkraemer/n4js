@@ -283,18 +283,20 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		G.recordInconsistentSubstitutions;
 		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
 		for(tv : typeVarsOfInterfaces) {
-			val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
-			if(subst instanceof UnknownTypeRef) {
-				val badSubst = G.getInconsistentSubstitutions(tv);
-				if(!badSubst.empty) {
-					if(!tsh.allEqualType(G, badSubst)) {
-						val mode = if(tClassifier instanceof TClass) "implement" else "extend";
-						val ifcName = (tv.eContainer as TInterface).name;
-						val tvName = tv.name;
-						val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
-						val message = getMessageForCLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY(mode, ifcName, tvName, typeRefsStr);
-						addIssue(message, classifierDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
-							CLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY);
+			if(!tv.declaredCovariant && !tv.declaredContravariant) {
+				val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
+				if(subst instanceof UnknownTypeRef) {
+					val badSubst = G.getInconsistentSubstitutions(tv);
+					if(!badSubst.empty) {
+						if(!tsh.allEqualType(G, badSubst)) {
+							val mode = if(tClassifier instanceof TClass) "implement" else "extend";
+							val ifcName = (tv.eContainer as TInterface).name;
+							val tvName = "invariant " + tv.name;
+							val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
+							val message = getMessageForCLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY(mode, ifcName, tvName, typeRefsStr);
+							addIssue(message, classifierDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
+								CLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY);
+						}
 					}
 				}
 			}

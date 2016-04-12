@@ -2523,15 +2523,16 @@ from {
 					l += TypeUtils.copy(temp); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
 				}
 			}
-			result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
-//			val needUnionInsteadIntersection = TODO
-//			result = if(needUnionInsteadIntersection)
-//					typeSystemHelper.createUnionType(G,l)
-//				else
-//					typeSystemHelper.createIntersectionType(G,l);
-			TypeUtils.copyTypeModifiers(result, typeRef);
-			G.addInconsistentSubstitutions(typeVar, l); // will have no effect unless recording was turned on
-			// by a validation (see method RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment))
+			result = if(typeVar.declaredCovariant) {
+				typeSystemHelper.createIntersectionType(G,l)
+			} else if(typeVar.declaredContravariant) {
+				typeSystemHelper.createUnionType(G,l)
+			} else {
+				G.addInconsistentSubstitutions(typeVar, l); // will have no effect unless recording was turned on
+				// by a validation (see method RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment))
+				TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+			};
+			TypeUtils.copyTypeModifiers(result, typeRef)
 		}
 		or
 		{

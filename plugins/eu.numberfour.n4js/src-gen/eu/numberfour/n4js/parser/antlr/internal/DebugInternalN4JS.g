@@ -704,7 +704,10 @@ norm1_AnnotatedExpression :
 
 // Rule TypeVariable
 ruleTypeVariable :
-	ruleIdentifierOrThis (
+	(
+		'+' |
+		'-'
+	)? ruleIdentifierOrThis (
 		'extends' ruleParameterizedTypeRefNominal (
 			'&' ruleParameterizedTypeRefNominal
 		)*

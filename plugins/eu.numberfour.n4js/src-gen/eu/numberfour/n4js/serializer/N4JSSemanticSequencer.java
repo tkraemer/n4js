@@ -23111,7 +23111,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeVariable returns TypeVariable
 	 *
 	 * Constraint:
-	 *     (name=IdentifierOrThis (declaredUpperBounds+=ParameterizedTypeRefNominal declaredUpperBounds+=ParameterizedTypeRefNominal*)?)
+	 *     (
+	 *         (declaredCovariant?='+' | declaredContravariant?='-')? 
+	 *         name=IdentifierOrThis 
+	 *         (declaredUpperBounds+=ParameterizedTypeRefNominal declaredUpperBounds+=ParameterizedTypeRefNominal*)?
+	 *     )
 	 */
 	protected void sequence_TypeVariable(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

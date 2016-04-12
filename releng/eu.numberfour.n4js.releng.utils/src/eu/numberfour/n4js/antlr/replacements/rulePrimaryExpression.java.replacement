@@ -5,24 +5,24 @@ EObject this_TemplateLiteral_12 = null;
             
         try {
             {
-            int alt242=13;
-            alt242 = dfa242.predict(input);
-            switch (alt242) {
+            int alt243=13;
+            alt243 = dfa243.predict(input);
+            switch (alt243) {
                 case 1 :
 _________________________________REPLACE_WITH_________________________________
 EObject this_TemplateLiteral_12 = null;
          enterRule(); 
         try { 
         	{
-            int alt242=13;
+            int alt243=13;
             // REPLACEMENT rulePrimaryExpression.java.replacement START
             try {
-                alt242 = dfa242.predict(input);
+                alt243 = dfa243.predict(input);
             } catch (NoViableAltException re) {
             	int as = input.LA(1);
-            	if (as==Async) { alt242=3; }
+            	if (as==Async) { alt243=3; }
             	else throw re;
             }
             // REPLACEMENT rulePrimaryExpression.java.replacement END
-            switch (alt242) {
+            switch (alt243) {
                 case 1 : 

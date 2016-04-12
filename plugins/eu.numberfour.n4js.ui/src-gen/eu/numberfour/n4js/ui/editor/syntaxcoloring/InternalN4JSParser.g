@@ -2111,19 +2111,32 @@ entryRuleTypeVariable
 ruleTypeVariable 
     @init {
     }:
-((
+(((
 (
-	NameIdentifierOrThisParserRuleCall_0_0=ruleIdentifierOrThis { announce($NameIdentifierOrThisParserRuleCall_0_0.start, $NameIdentifierOrThisParserRuleCall_0_0.stop, grammarAccess.getTypeVariableAccess().getNameAssignment_0()); }
+
+	DeclaredCovariantPlusSignKeyword_0_0_0=PlusSign 	 { announce($DeclaredCovariantPlusSignKeyword_0_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+
+)
+)
+    |(
+(
+
+	DeclaredContravariantHyphenMinusKeyword_0_1_0=HyphenMinus 	 { announce($DeclaredContravariantHyphenMinusKeyword_0_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+
+)
+))?(
+(
+	NameIdentifierOrThisParserRuleCall_1_0=ruleIdentifierOrThis { announce($NameIdentifierOrThisParserRuleCall_1_0.start, $NameIdentifierOrThisParserRuleCall_1_0.stop, grammarAccess.getTypeVariableAccess().getNameAssignment_1()); }
 )
 )(
-	ExtendsKeyword_1_0=Extends 	 { announce($ExtendsKeyword_1_0, grammarAccess.getTypeVariableAccess().getExtendsKeyword_1_0()); }(
+	ExtendsKeyword_2_0=Extends 	 { announce($ExtendsKeyword_2_0, grammarAccess.getTypeVariableAccess().getExtendsKeyword_2_0()); }(
 (
-	DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0=ruleParameterizedTypeRefNominal { announce($DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0.start, $DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0.stop, grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1()); }
+	DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0=ruleParameterizedTypeRefNominal { announce($DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0.start, $DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0.stop, grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_1()); }
 )
 )(
-	AmpersandKeyword_1_2_0=Ampersand 	 { announce($AmpersandKeyword_1_2_0, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0()); }(
+	AmpersandKeyword_2_2_0=Ampersand 	 { announce($AmpersandKeyword_2_2_0, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_2_2_0()); }(
 (
-	DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0=ruleParameterizedTypeRefNominal { announce($DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0.start, $DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0.stop, grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_2_1()); }
+	DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0=ruleParameterizedTypeRefNominal { announce($DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0.start, $DeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0.stop, grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_2_1()); }
 )
 ))*)?)
 ;

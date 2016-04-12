@@ -5766,56 +5766,66 @@ ruleTypeVariable returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(((
+(
+		lv_declaredCovariant_0_0=
+	PlusSign
+    {
+        newLeafNode(lv_declaredCovariant_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeVariableRule());
+	        }
+       		setWithLastConsumed($current, "declaredCovariant", true, "+");
+	    }
+
+)
+)
+    |(
+(
+		lv_declaredContravariant_1_0=
+	HyphenMinus
+    {
+        newLeafNode(lv_declaredContravariant_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeVariableRule());
+	        }
+       		setWithLastConsumed($current, "declaredContravariant", true, "-");
+	    }
+
+)
+))?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getNameIdentifierOrThisParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getNameIdentifierOrThisParserRuleCall_1_0()); 
 	    }
-		lv_name_0_0=ruleIdentifierOrThis		{
+		lv_name_2_0=ruleIdentifierOrThis		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
 	        }
        		set(
        			$current, 
        			"name",
-        		lv_name_0_0, 
+        		lv_name_2_0, 
         		"eu.numberfour.n4js.N4JS.IdentifierOrThis");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )(
-	otherlv_1=Extends
+	otherlv_3=Extends
     {
-    	newLeafNode(otherlv_1, grammarAccess.getTypeVariableAccess().getExtendsKeyword_1_0());
+    	newLeafNode(otherlv_3, grammarAccess.getTypeVariableAccess().getExtendsKeyword_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0()); 
-	    }
-		lv_declaredUpperBounds_2_0=ruleParameterizedTypeRefNominal		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
-	        }
-       		add(
-       			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-	otherlv_3=Ampersand
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0()); 
 	    }
 		lv_declaredUpperBounds_4_0=ruleParameterizedTypeRefNominal		{
 	        if ($current==null) {
@@ -5825,6 +5835,29 @@ ruleTypeVariable returns [EObject current=null]
        			$current, 
        			"declaredUpperBounds",
         		lv_declaredUpperBounds_4_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_5=Ampersand
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_2_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0()); 
+	    }
+		lv_declaredUpperBounds_6_0=ruleParameterizedTypeRefNominal		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
+	        }
+       		add(
+       			$current, 
+       			"declaredUpperBounds",
+        		lv_declaredUpperBounds_6_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
 	        afterParserOrEnumRuleCall();
 	    }
