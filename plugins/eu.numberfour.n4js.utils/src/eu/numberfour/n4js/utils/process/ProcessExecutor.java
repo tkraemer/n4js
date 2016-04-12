@@ -49,11 +49,13 @@ public class ProcessExecutor {
 	 *            the process to execute
 	 * @param name
 	 *            name used in debug messages, null empty string used
-	 * @param redirect
-	 *            indicates if captured output should be redirected to this process
+	 * @param silent
+	 *            indicates if captured output should be swallowed or not. If {@code silent} is {@code true}, then the
+	 *            captured process output will not be flushed to an output streams, in other words, it will not be
+	 *            redirected.
 	 * @return a new result object that represents the actual result of the created process execution
 	 */
-	public ProcessResult execute(final Process process, String name, boolean redirect) {
+	public ProcessResult execute(final Process process, String name, boolean silent) {
 		// prepare name to be used in log messages
 		name = name == null ? " " : " '" + name + "' ";
 
@@ -65,9 +67,9 @@ public class ProcessExecutor {
 			}
 
 			try (OutputStreamPrinterThread stdOutThread = printerThreadProvider.getPrinterThreadForStdOut(process,
-					redirect);
+					silent);
 					OutputStreamPrinterThread stdErrThread = printerThreadProvider.getPrinterThreadForStdErr(process,
-							redirect)) {
+							silent)) {
 
 				boolean finished = process.waitFor(DEFAULT_PROCESS_TIMEOUT, SECONDS);
 				if (!finished) {

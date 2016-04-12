@@ -10,14 +10,12 @@
  */
 package eu.numberfour.n4js.transpiler.es.transform
 
-import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AwaitExpression
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
 import eu.numberfour.n4js.transpiler.Transformation
-import eu.numberfour.n4js.transpiler.es.assistants.BlockAssistant
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
 
@@ -29,9 +27,6 @@ class BlockTransformation extends Transformation {
 
 	/** Name for capturing local-arguments-environment in distinct variable on entering a block.*/
 	public static final String $CAPTURE_ARGS = "$capturedArgs";
-
-	@Inject BlockAssistant blockAssistant;
-
 
 	override analyze() {
 
@@ -113,26 +108,28 @@ class BlockTransformation extends Transformation {
 		}
 
 		// Dealing with async:
-		// fallOff can not happen in Setter (no return) nor Getter (must have returns)
-		val fallOffCase = (eConFA instanceof FunctionDefinition)
-				&& blockAssistant.hasBodyWhereExecutionFallsOff(eConFA as FunctionDefinition)
-
-		// case 1: return;   		 =>   yield undefined; return;
-		// case 2: return eXpr; 	 =>   yield expr; return;
-		// case 3: return awaitExpr; =>   exprStmt(awaitExpr); return;      (2nd trafw turns await)=> yield expr;
+		// NOTE in former implementations it was necessary to analyze fall-off cases where some execution paths did not
+		// end in return-statements. Henc, the following code-snippet was used: 
+		//	//		val fallOffCase = (eConFA instanceof FunctionDefinition)
+		//	//				&& blockAssistant.hasBodyWhereExecutionFallsOff(eConFA as FunctionDefinition)
+		// This is not necessary any more. 
+		
+		// case 1: return;   		 =>   return;  // NTD
+		// case 2: return expr; 	 =>   return expr; // NTD
+		// case 3: return await expr; =>   return expr;     --> remove await
 
 		// all existing returns must be replaced with
 		val existingRets = block.allReturnStatements.toList
 		existingRets.forEach[
-			val retExpr = if( it.expression === null ) undefinedRef else expression;
-			val firstStmt = if( retExpr instanceof AwaitExpression ) {
-			  // case 3:
-			  _ExprStmnt( retExpr );
-			} else {
-			  // case 1+2:
-			  _ExprStmnt(_YieldExpr( retExpr ));
+			val expR = it.expression;
+			if( expR instanceof AwaitExpression ) {
+				// case 3: remove await.
+				// it.expression = it.expression.expression
+				// detach:
+				val innerExpr =expR.expression;
+				expR.expression = null;
+				replace( expression, innerExpr )
 			}
-			it.insertBefore(firstStmt)
 		]
 
 		val ret = _ReturnStmnt( _CallExpr(
@@ -142,14 +139,11 @@ class BlockTransformation extends Transformation {
 					_FunExpr(false)=>[
 						it.generator = true;
 						it.body.statements += block.statements
-						if( fallOffCase ) {
-							it.body.statements += _ExprStmnt( _YieldExpr(  undefinedRef ) );
-							it.body.statements += _ReturnStmnt();
-						}
 					],
-					getSymbolTableEntryForMember(state.G.functionType, "bind", false, false, true)
+					getSymbolTableEntryForMember(state.G.functionType, "apply", false, false, true)
 				),
-				_ThisLiteral
+				_ThisLiteral,
+				_IdentRef( steFor_arguments() )
 			) // end Call function*()
 			) // end Call $spawn
 		);

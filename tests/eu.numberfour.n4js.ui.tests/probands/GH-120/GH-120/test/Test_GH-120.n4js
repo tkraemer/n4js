@@ -1,0 +1,10 @@
+import { Assert } from "n4/mangel/assert/Assert"
+
+export public class Test_GH_120 {
+
+	@Test
+	test() {
+		Assert.isTrue(true, "Testing works!");
+	}
+
+}

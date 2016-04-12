@@ -366,9 +366,14 @@ abstract class AbstractTranspilerTest {
 		val generatedResult = esSubGen.getCompileResultAsText(scriptNode);
 		val matcher = pattern.matcher(generatedResult);
 		if( ! matcher.find ) throw new AssertionError("The generated output doesn't match the pattern "+pattern.toString );
-
 	}
 
+	/** assert to <b>NOT</b> match the pattern in the compiled output. */
+	def assertCompileResultDoesNotMatch(Script scriptNode, Pattern pattern) throws AssertionError {
+		val generatedResult = esSubGen.getCompileResultAsText(scriptNode);
+		val matcher = pattern.matcher(generatedResult);
+		if( matcher.find ) throw new AssertionError("The generated output unexpectedly matches the pattern "+pattern.toString );
+	}
 
 	/** Expected patching when supporting unified format CommonJS & SystemJS together (IDE-2050) */
 	def cjsPatched(CharSequence raw) {

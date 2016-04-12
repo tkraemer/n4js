@@ -50,7 +50,8 @@ class AT_IDE_2004_YieldTest extends AbstractTranspilerTest {
    		// \\h is a horizontal white-space
    		val pattern = Pattern.compile("\\(\\h*yield\\h*45\\h*\\)");
 
-		assertCompileResultMatches(scriptNode,pattern);
+		// Changed behavior in GH-93 to not create a yield for simple return statements.
+		assertCompileResultDoesNotMatch(scriptNode,pattern);
 	}
 
 }
