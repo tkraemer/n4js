@@ -24,11 +24,11 @@ import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.RelationalExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
-import eu.numberfour.n4js.typesystem.constraints.Variance
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment

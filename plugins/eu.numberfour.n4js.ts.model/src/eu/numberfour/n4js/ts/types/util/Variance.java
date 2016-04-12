@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.typesystem.constraints;
+package eu.numberfour.n4js.ts.types.util;
 
 /**
  * Type variance.

@@ -17,10 +17,10 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.typesystem.constraints.Variance
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
