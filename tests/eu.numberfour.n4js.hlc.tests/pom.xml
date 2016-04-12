@@ -69,8 +69,8 @@ Contributors:
 						<WORKSPACE>${WORKSPACE}</WORKSPACE>
 						<NODEJS_PATH>${NODEJS_PATH}</NODEJS_PATH>
 						<property>
-							<name>n4ide.stdlib.integration.snapshot</name>
-							<value>${n4ide.stdlib.integration.snapshot}</value>
+							<name>N4IDE_STDLIB_INTEGRATION_SNAPSHOT_BRANCH</name>
+							<value>${N4IDE_STDLIB_INTEGRATION_SNAPSHOT_BRANCH}</value>
 						</property>
 						<eu.numberfour.n4js.defaultNodePath>${eu.numberfour.n4js.defaultNodePath}</eu.numberfour.n4js.defaultNodePath>
 					</systemProperties>
@@ -159,7 +159,7 @@ Contributors:
 					<systemProperties>
 						<WORKSPACE>${WORKSPACE}</WORKSPACE>
 						<NODEJS_PATH>${NODEJS_PATH}</NODEJS_PATH>
-						<n4ide.stdlib.integration.snapshot>${n4ide.stdlib.integration.snapshot}</n4ide.stdlib.integration.snapshot>
+						<N4IDE_STDLIB_INTEGRATION_SNAPSHOT_BRANCH>${N4IDE_STDLIB_INTEGRATION_SNAPSHOT_BRANCH}</N4IDE_STDLIB_INTEGRATION_SNAPSHOT_BRANCH>
 						<eu.numberfour.n4js.defaultNodePath>${eu.numberfour.n4js.defaultNodePath}</eu.numberfour.n4js.defaultNodePath>
 					</systemProperties>
 					<!-- argLine needs to be one line, if you auto-format line break will 
