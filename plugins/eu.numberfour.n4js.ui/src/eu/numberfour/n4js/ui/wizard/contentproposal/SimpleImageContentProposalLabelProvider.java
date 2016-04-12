@@ -13,7 +13,8 @@ public class SimpleImageContentProposalLabelProvider extends LabelProvider {
 	private final Image image;
 
 	/**
-	 * Creates a new SimpleImageContentProposalLabelProvider with given image
+	 * Creates a new SimpleImageContentProposalLabelProvider with a given image.
+	 *
 	 *
 	 * @param imageDescriptor
 	 *            The descriptor of the image which should be used

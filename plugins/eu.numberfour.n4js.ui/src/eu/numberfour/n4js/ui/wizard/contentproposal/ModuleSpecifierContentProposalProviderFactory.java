@@ -116,7 +116,7 @@ public class ModuleSpecifierContentProposalProviderFactory {
 	}
 
 	/**
-	 * A content proposal provider for module specifier inside a give root folder.
+	 * A content proposal provider for module specifier inside a given root folder.
 	 */
 	private static class ModuleSpecifierContentProposalProvider implements IContentProposalProvider {
 

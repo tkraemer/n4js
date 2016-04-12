@@ -81,14 +81,14 @@ public class SuffixText extends Composite {
 	 */
 	public SuffixText(Composite parent, int style) {
 
-		super(parent, style | SWT.BORDER);
+		super(parent, style);
 
 		// Initialize transparent image to work around theming issues
 		TRANSPARENT = ImageDescriptorCache.ImageRef.TRANSPARENT.asImage().orNull();
 
 		this.setLayout(new SuffixLayout());
 
-		userInput = new Text(this, SWT.NONE);
+		userInput = new Text(this, SWT.TRANSPARENT);
 		userInput.setBackgroundImage(TRANSPARENT);
 
 		completeLabel = new Label(this, SWT.HORIZONTAL);
@@ -308,7 +308,7 @@ public class SuffixText extends Composite {
 	}
 
 	/**
-	 * Returns the internally used swt text.
+	 * Returns the internally used SWT text.
 	 */
 	Text getInternalText() {
 		return this.userInput;

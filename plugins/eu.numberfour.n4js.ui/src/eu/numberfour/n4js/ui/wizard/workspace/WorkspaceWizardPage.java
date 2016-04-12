@@ -88,13 +88,12 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	@Inject
 	private ProjectContentProposalProvider projectContentProposalProvider;
 	@Inject
-	private SourceFolderContentProposalProviderFactory sourceFolderContentProvider;
+	private SourceFolderContentProposalProviderFactory sourceFolderContentProviderFactory;
 	@Inject
-	private ModuleSpecifierContentProposalProviderFactory moduleSpecifierContentProvider;
+	private ModuleSpecifierContentProposalProviderFactory moduleSpecifierContentProviderFactory;
 
 	// Content proposal adapters
 	private ContentProposalAdapter sourceFolderContentProposalAdapter;
-
 	private ContentProposalAdapter moduleSpecifierContentProposalAdapter;
 
 	/**
@@ -503,12 +502,12 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 			// If the project exists, enable source folder proposals
 			sourceFolderContentProposalAdapter
-					.setContentProposalProvider(sourceFolderContentProvider.createProviderForProject(project));
+					.setContentProposalProvider(sourceFolderContentProviderFactory.createProviderForProject(project));
 
 			if (null != sourceFolder && sourceFolder.exists()) {
 				// If source folder exists as well enable module specifier proposal
 				moduleSpecifierContentProposalAdapter.setContentProposalProvider(
-						moduleSpecifierContentProvider.createProviderForPath(sourceFolder.getFullPath()));
+						moduleSpecifierContentProviderFactory.createProviderForPath(sourceFolder.getFullPath()));
 			} else {
 				// Otherwise disable module specifier proposals
 				moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
