@@ -73,6 +73,9 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		// Definition file collision errors
 		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file.";
 		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file.";
+
+		// File location errors
+		private static final String FILE_LOCATION_OVERLAPS = "The specified file location overlaps with the file %s";
 	}
 
 	/**
@@ -239,7 +242,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 			// If a segment isn't the module file but a file exists at its path
 			if (member instanceof IFile && i < path.segmentCount() - 1) {
 				throw new ValidationException(
-						String.format("The specified file location overlaps with the file %s", member.getFullPath()));
+						String.format(ErrorMessages.FILE_LOCATION_OVERLAPS, member.getFullPath()));
 			}
 
 			if (member instanceof IContainer) {

@@ -55,6 +55,8 @@ import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils;
  */
 public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog {
 
+	private static final String CREATE_A_NEW_FOLDER_MESSAGE = "Enter the name of the new folder";
+	private static final String CREATE_A_NEW_FOLDER_TITLE = "Create a new folder";
 	private final static String MODULE_ELEMENT_NAME = "Module:";
 	private final static String CREATE_FOLDER_LABEL = "Create Folder";
 
@@ -77,6 +79,8 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	private final ModuleFileValidator inputValidator = new ModuleFileValidator();
 
 	private String defaultFileExtension = N4JSGlobals.N4JS_FILE_EXTENSION;
+
+	/** The module name extracted from the initial selection */
 	private String initialModuleName = "";
 
 	/**
@@ -127,17 +131,16 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		if (getInitialElementSelections().size() > 0) {
 			Object initialSelection = getInitialElementSelections().get(0);
 
-			// Preprocess intial string selections and replace them with their file system equivalent
+			// Preprocess initial string selection and replace it with their file system equivalent
 			if (initialSelection instanceof String) {
 				setInitialSelection(processInitialSelection((String) initialSelection));
 			}
 		}
-
 		return super.open();
 	}
 
 	/**
-	 * Set the default file extension which is used for created files.
+	 * Sets the default file extension which is used for created files.
 	 *
 	 * @param defaultFileExtension
 	 *            The extension to use by default
@@ -197,11 +200,12 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		// For selected files where the element name input equals the selected file
 		if (selection instanceof IFile
 				&& ((IFile) selection).getFullPath().removeFileExtension().lastSegment().equals(moduleName)) {
+			// Use the selected file's path as result
 			IPath fileSpec = sourceFolderRelativePath((IResource) selection);
 			this.setResult(Arrays.asList(fileSpec.toString()));
 			return;
 		} else if (selection instanceof IResource) {
-			// Use their container for files with a different element name input
+			// For files with different element name input value, use their container as selection
 			if (selection instanceof IFile) {
 				selection = ((IFile) selection).getParent();
 			}
@@ -218,7 +222,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	@Override
 	protected void createPressed() {
-		InputDialog dialog = new InputDialog(getShell(), "Create a new folder", "Enter the name of the new folder", "",
+		InputDialog dialog = new InputDialog(getShell(), CREATE_A_NEW_FOLDER_TITLE, CREATE_A_NEW_FOLDER_MESSAGE, "",
 				new ModuleFolderValidator());
 		dialog.open();
 
@@ -262,7 +266,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	}
 
-	/** Return the workspace container with the path */
+	/** Return the container with the given path */
 	private IContainer containerForPath(IPath path) {
 		if (path.segmentCount() == 1) {
 			return workspaceRoot.getProject(path.segment(0));
@@ -306,6 +310,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			IFile n4jsModuleFile = workspaceRoot.getFile(fullPath.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
 			IFile n4jsdModuleFile = workspaceRoot.getFile(fullPath.addFileExtension(N4JSGlobals.N4JSD_FILE_EXTENSION));
 
+			// Just use it as initial selection
 			if (n4jsModuleFile.exists()) {
 				return n4jsModuleFile;
 			}
@@ -317,7 +322,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 		// Otherwise use the existing part of the path as initial selection
 
-		// If the module specifier specifies the module name, infer it and remove the segment.
+		// If the module specifier specifies the module name, extract it and remove its segment.
 		if (isModuleFileSpecifier(initialModulePath)) {
 			initialModuleName = initialModulePath.lastSegment();
 			initialModulePath = initialModulePath.removeLastSegments(1);
@@ -328,7 +333,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		// Accumulate path segments to search for the longest existing path
 		IPath accumulatedPath = sourceFolderPath;
 
-		// Collect the path of all non-existing segments
+		// Collect the paths of all non-existing segments
 		// These are relative to the last existing segment of the path
 		List<IPath> nonExistingSegmentPaths = new ArrayList<>();
 
@@ -337,11 +342,11 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 			accumulatedPath = accumulatedPath.append(segmentIterator.next());
 
-			// null if non-existing
+			// Results in null if non-existing
 			IResource nextSegmentResource = workspaceRoot.findMember(accumulatedPath);
 
 			// If the current segment is an existing file and not the last specifier segment
-			// show an file overlap error message
+			// show a file overlap error message
 			if (null != nextSegmentResource && !(nextSegmentResource instanceof IContainer)
 					&& segmentIterator.hasNext()) {
 
@@ -452,7 +457,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 *
 	 * @param path
 	 *            The path to examine
-	 * @return True if the path also specifies the file
+	 * @return True if the path is a module file specifier
 	 */
 	private static boolean isModuleFileSpecifier(IPath path) {
 		if (path.segmentCount() < 1) {

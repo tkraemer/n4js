@@ -55,6 +55,7 @@ public class SourceFolderSelectionDialog extends ListDialog {
 
 		this.setLabelProvider(new N4JSSourceFolderLabelProvider());
 		this.setContentProvider(new ArrayContentProvider());
+		this.setHelpAvailable(false);
 	}
 
 	/**
