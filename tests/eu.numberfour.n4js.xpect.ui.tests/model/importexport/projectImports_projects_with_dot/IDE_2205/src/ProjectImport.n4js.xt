@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+	
+	Workspace {
+		Project "IDE_2205" {
+			Folder "src" {
+				ThisFile {}
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf"}
+		}
+		Project "foo.bar" {
+			Folder "src" {
+				Folder "some" {
+					Folder "deep" {
+						Folder "path" {
+							File "baz.n4js" { from="../../foo.bar/src/some/deep/path/baz.n4js" }
+						}
+					}
+				}
+			}
+			File "manifest.n4mf" { from="../../foo.bar/manifest.n4mf"}
+		}
+	}
+	
+	END_SETUP
+*/
+
+
+import * as bazProjectImport from "foo.bar"
+
+
+console.log("project import is correct :", bazProjectImport.myVar === "my var val")
+
+/* XPECT output --- 
+<==
+stdout:
+project import is correct : true
+stderr:
+==>
+--- */
+
