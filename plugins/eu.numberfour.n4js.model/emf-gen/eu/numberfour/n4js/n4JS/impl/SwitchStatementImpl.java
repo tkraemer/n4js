@@ -15,6 +15,7 @@ import eu.numberfour.n4js.n4JS.DefaultClause;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.SwitchStatement;
+import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
 import java.lang.Iterable;
 
@@ -154,6 +155,15 @@ public class SwitchStatementImpl extends StatementImpl implements SwitchStatemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DefaultClause getDefaultClause() {
 		EList<AbstractCaseClause> _cases = this.getCases();
 		final Function1<AbstractCaseClause, Boolean> _function = new Function1<AbstractCaseClause, Boolean>() {
@@ -268,8 +278,26 @@ public class SwitchStatementImpl extends StatementImpl implements SwitchStatemen
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VariableEnvironmentElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case N4JSPackage.SWITCH_STATEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
 			case N4JSPackage.SWITCH_STATEMENT___GET_DEFAULT_CLAUSE:
 				return getDefaultClause();
 			case N4JSPackage.SWITCH_STATEMENT___GET_CASE_CLAUSES:

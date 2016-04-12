@@ -249,6 +249,15 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean appliesOnlyToBlockScopedElements() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -427,6 +436,7 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == VariableEnvironmentElement.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 				default: return -1;
 			}
 		}
@@ -465,6 +475,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 				return getDefinedMember();
 			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME:
 				return isValidName();
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
+				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

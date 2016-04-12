@@ -13,13 +13,13 @@ package eu.numberfour.n4js.xsemantics
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.AssignmentExpression
-import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import org.eclipse.xtext.junit4.InjectWith
@@ -329,8 +329,9 @@ class GenericsTest extends AbstractTypesystemTest {
 		var G = newRuleEnvironment(script);
 		val call = (script.scriptElements.get(4) as ExpressionStatement).expression as ParameterizedCallExpression;
 
-		val expectedType = ts.expectedTypeIn(G, call, call.arguments.head);
-		val actualType = ts.type(G, call.arguments.head);
+		val arg0 = call.arguments.head;
+		val expectedType = ts.expectedTypeIn(G, arg0, arg0.expression);
+		val actualType = ts.type(G, arg0.expression);
 
 		assertType(expectedType, (actualType.value as ParameterizedTypeRef).declaredType);
 
@@ -435,8 +436,9 @@ class GenericsTest extends AbstractTypesystemTest {
 		var G = newRuleEnvironment(script);
 		val call = (script.scriptElements.last as ExpressionStatement).expression as ParameterizedCallExpression;
 
-		val expectedType = ts.expectedTypeIn(G, call, call.arguments.head);
-		val actualType = ts.type(G, call.arguments.head);
+		val arg0 = call.arguments.head;
+		val expectedType = ts.expectedTypeIn(G, arg0, arg0.expression);
+		val actualType = ts.type(G, arg0.expression);
 
 		val result = ts.subtype(G, actualType.value, expectedType.value);
 		assertNotNull(result.ruleFailedException);

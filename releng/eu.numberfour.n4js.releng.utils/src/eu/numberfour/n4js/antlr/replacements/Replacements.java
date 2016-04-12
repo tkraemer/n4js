@@ -74,8 +74,9 @@ public class Replacements {
 	public static String replace(String in, String lookup, String replacement) {
 		String result = in.replace(lookup, replacement);
 		if (result.equals(in)) {
-			Thread.dumpStack();
-			throw new IllegalStateException("Did not find '" + lookup + "' in grammar");
+			final IllegalStateException ex = new IllegalStateException("Did not find '" + lookup + "' in grammar");
+			ex.printStackTrace();
+			throw ex;
 		}
 		return result;
 	}

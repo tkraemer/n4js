@@ -24,14 +24,25 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.ui.IAggregateWorkingSet;
 import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.internal.navigator.NavigatorContentService;
+import org.eclipse.ui.internal.navigator.workingsets.WorkingSetsContentProvider;
 import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.navigator.CommonNavigator;
+import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
+import org.eclipse.ui.navigator.IExtensionStateModel;
 import org.eclipse.ui.navigator.IPipelinedTreeContentProvider2;
 import org.eclipse.ui.navigator.PipelinedShapeModification;
 import org.eclipse.ui.navigator.PipelinedViewerUpdate;
+import org.eclipse.ui.navigator.resources.ProjectExplorer;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -44,16 +55,34 @@ import eu.numberfour.n4js.utils.Arrays2;
 /**
  * Customized content provider for tuning the Project Explorer view with N4JS specific content.
  */
+@SuppressWarnings("restriction")
 @Singleton
 public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		implements ExternalLibraryPreferenceStore.StoreUpdatedListener, IPipelinedTreeContentProvider2 {
 
 	private static final Logger LOGGER = Logger.getLogger(N4JSProjectExplorerContentProvider.class);
 
+	private static final Object[] EMPTY_ARRAY = new Object[0];
+
 	@Inject
 	private N4JSProjectExplorerHelper helper;
 
+	private IExtensionStateModel extensionStateModel;
+
+	private CommonNavigator projectExplorer;
+
 	private final Map<IProject, Object[]> virtualNodeCache = newConcurrentMap();
+
+	private final IPropertyChangeListener rootModeListener = new IPropertyChangeListener() {
+
+		@Override
+		public void propertyChange(final PropertyChangeEvent event) {
+			if (WorkingSetsContentProvider.SHOW_TOP_LEVEL_WORKING_SETS.equals(event.getProperty())) {
+				updateRootMode();
+			}
+		}
+
+	};
 
 	/**
 	 * Creates a new content provider for the navigator with N4JS content support.
@@ -100,12 +129,36 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 	@Override
 	public Object[] getChildren(final Object element) {
 
+		if (null != projectExplorer) {
+			if (ProjectExplorer.WORKING_SETS == projectExplorer.getRootMode()) {
+				if (element instanceof IWorkingSet) {
+					final IWorkingSet workingSet = (IWorkingSet) element;
+					if (workingSet.isAggregateWorkingSet()) {
+						return ((IAggregateWorkingSet) workingSet).getComponents();
+					} else {
+						return getWorkingSetElements(workingSet);
+					}
+				}
+				return EMPTY_ARRAY;
+			}
+		}
+
 		final Object[] children = super.getChildren(element);
 
 		if (element instanceof IProject && ((IProject) element).isAccessible()) {
 			return Arrays2.add(children, getVirtualNodes((IProject) element));
 		}
 
+		return children;
+	}
+
+	private IAdaptable[] getWorkingSetElements(final IWorkingSet workingSet) {
+		final IAdaptable[] children = workingSet.getElements();
+		for (int i = 0; i < children.length; i++) {
+			final Object resource = children[i].getAdapter(IResource.class);
+			if (resource instanceof IProject)
+				children[i] = (IProject) resource;
+		}
 		return children;
 	}
 
@@ -132,6 +185,14 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 			}
 		}
 		return objects;
+	}
+
+	@Override
+	public void dispose() {
+		if (null != extensionStateModel) {
+			extensionStateModel.removePropertyChangeListener(rootModeListener);
+		}
+		super.dispose();
 	}
 
 	// ------------------------------------------------------------------------------------
@@ -176,8 +237,14 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 	}
 
 	@Override
-	public void init(final ICommonContentExtensionSite aConfig) {
-		// NOOP
+	public void init(final ICommonContentExtensionSite config) {
+		final NavigatorContentService contentService = (NavigatorContentService) config.getService();
+		final CommonViewer viewer = (CommonViewer) contentService.getViewer();
+		projectExplorer = viewer.getCommonNavigator();
+
+		extensionStateModel = config.getExtensionStateModel();
+		extensionStateModel.addPropertyChangeListener(rootModeListener);
+		updateRootMode();
 	}
 
 	@Override
@@ -193,6 +260,17 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 	@Override
 	public boolean hasPipelinedChildren(final Object anInput, final boolean currentHasChildren) {
 		return currentHasChildren || getChildren(anInput).length > 0;
+	}
+
+	private void updateRootMode() {
+		if (projectExplorer == null) {
+			return;
+		}
+		if (extensionStateModel.getBooleanProperty(WorkingSetsContentProvider.SHOW_TOP_LEVEL_WORKING_SETS)) {
+			projectExplorer.setRootMode(ProjectExplorer.WORKING_SETS);
+		} else {
+			projectExplorer.setRootMode(ProjectExplorer.PROJECTS);
+		}
 	}
 
 }

@@ -82,7 +82,7 @@ class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 
 		val int argsSize = callExpr.getArguments().size();
 		for (var i = 0; i < argsSize; i++) {
-			val Expression arg = callExpr.getArguments().get(i);
+			val Expression arg = callExpr.getArguments().get(i)?.expression;
 			val TFormalParameter curr_fpar = F.getFparForArgIdx(i);
 			if (arg !== null && curr_fpar !== null) {
 				val fparTypeRef = curr_fpar.getTypeRef();

@@ -13,6 +13,7 @@ package eu.numberfour.n4js.scoping
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
@@ -47,8 +48,6 @@ import eu.numberfour.n4js.scoping.utils.LocallyKnownTypesScopingHelper
 import eu.numberfour.n4js.scoping.utils.MainModuleAwareSelectableBasedScope
 import eu.numberfour.n4js.scoping.utils.N4JSTypesScopeFilter
 import eu.numberfour.n4js.scoping.utils.ProjectImportEnablingScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.scoping.ValidatingScope
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -57,6 +56,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TStructMethod
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xtext.scoping.FilteringScope
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -192,6 +193,8 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 				NewExpression:
 					return scope_EObject_id(context, reference)
 				ParameterizedCallExpression:
+					return scope_EObject_id(context, reference)
+				Argument:
 					return scope_EObject_id(context, reference)
 			}
 		}

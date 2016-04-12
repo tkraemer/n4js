@@ -13,6 +13,7 @@ package eu.numberfour.n4js.validation.validators
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.AssignmentExpression
@@ -53,18 +54,6 @@ import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareCtorScope
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.scoping.members.TypingStrategyAwareMemberScope
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
-import eu.numberfour.n4js.utils.PromisifyHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
-import eu.numberfour.n4js.validation.ValidatorMessageHelper
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
@@ -101,6 +90,18 @@ import eu.numberfour.n4js.ts.types.TypeDefs
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4js.utils.PromisifyHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
+import eu.numberfour.n4js.validation.ValidatorMessageHelper
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
@@ -117,8 +118,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
-import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.ts.utils.TypeUtils.*
+import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
@@ -381,20 +382,23 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (isArrayElem) {
 			utilityCall = container.eContainer.eContainer
 		}
+		if (utilityCall instanceof Argument) {
+			utilityCall = utilityCall.eContainer;
+		}
 		// let's see if 'container' stands for 'Promise.{all/race/resolve}(...,asyncInvocation,...)'
 		if (utilityCall instanceof ParameterizedCallExpression) {
 			if (utilityCall.target instanceof ParameterizedPropertyAccessExpression) {
 				// let's see if 'utilityAccess' stands for 'Promise.{all/race/resolve}'
 				val utilityAccess = utilityCall.target as ParameterizedPropertyAccessExpression;
 				if (isPromiseUtilityPropertyAccess(utilityAccess, G)) {
-					val isDirectArg = utilityCall.arguments.exists[arg| arg === asyncInvocation]
+					val isDirectArg = utilityCall.arguments.exists[arg| arg.expression === asyncInvocation]
 					if (isDirectArg) {
 						return true
 					}
 					val name = utilityAccess.property.name
 					if (isArrayElem && (name == 'all' || name == 'race')) {
 						// let's see if 'callExpression' occurs as arg in 'Promise.{all/race}([...,asyncInvocation,...])'
-						val argOccursInArray = utilityCall.arguments.exists[arg| arg === container.eContainer]
+						val argOccursInArray = utilityCall.arguments.exists[arg| arg.expression === container.eContainer]
 						return argOccursInArray
 					}
 				}
@@ -667,7 +671,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	def private void internalCheckNumberOfArguments(List<TFormalParameter> fpars, List<Expression> args, Expression expr) {
+	def private void internalCheckNumberOfArguments(List<TFormalParameter> fpars, List<Argument> args, Expression expr) {
 		val cmp = compareNumberOfArgsWithNumberOfFPars(fpars, args);
 		if (cmp < 0) { // too few
 			addIssue(IssueCodes.getMessageForEXP_NUM_OF_ARGS_TOO_FEW(fpars.size, args.size), expr,
@@ -682,7 +686,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * Compares number of arguments with number of formal parameter, taking optional and variadic parameters into consideration.
 	 * @return -1 if to few arguments are found, 1 if too many arguments are found, 0 if number of arguments is according to formal parameter list
 	 */
-	def private int compareNumberOfArgsWithNumberOfFPars(List<TFormalParameter> fpars, List<Expression> args) {
+	def private int compareNumberOfArgsWithNumberOfFPars(List<TFormalParameter> fpars, List<Argument> args) {
 		val argCount = args.size
 		val fparCount = fpars.size;
 

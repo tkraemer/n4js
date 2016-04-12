@@ -452,6 +452,10 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 				return createParameterizedCallExpressionAdapter();
 			}
 			@Override
+			public Adapter caseArgument(Argument object) {
+				return createArgumentAdapter();
+			}
+			@Override
 			public Adapter caseIndexedAccessExpression(IndexedAccessExpression object) {
 				return createIndexedAccessExpressionAdapter();
 			}
@@ -2040,6 +2044,20 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createParameterizedCallExpressionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.n4JS.Argument <em>Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.n4JS.Argument
+	 * @generated
+	 */
+	public Adapter createArgumentAdapter() {
 		return null;
 	}
 

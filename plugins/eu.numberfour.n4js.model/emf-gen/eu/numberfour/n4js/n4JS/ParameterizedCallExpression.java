@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#getTarget <em>Target</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#getArguments <em>Arguments</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#isSpread <em>Spread</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.n4JS.N4JSPackage#getParameterizedCallExpression()
@@ -55,7 +54,7 @@ public interface ParameterizedCallExpression extends Expression, ParameterizedAc
 
 	/**
 	 * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
-	 * The list contents are of type {@link eu.numberfour.n4js.n4JS.Expression}.
+	 * The list contents are of type {@link eu.numberfour.n4js.n4JS.Argument}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
@@ -67,33 +66,7 @@ public interface ParameterizedCallExpression extends Expression, ParameterizedAc
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Expression> getArguments();
-
-	/**
-	 * Returns the value of the '<em><b>Spread</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Spread</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Spread</em>' attribute.
-	 * @see #setSpread(boolean)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getParameterizedCallExpression_Spread()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isSpread();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.ParameterizedCallExpression#isSpread <em>Spread</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Spread</em>' attribute.
-	 * @see #isSpread()
-	 * @generated
-	 */
-	void setSpread(boolean value);
+	EList<Argument> getArguments();
 
 	/**
 	 * <!-- begin-user-doc -->

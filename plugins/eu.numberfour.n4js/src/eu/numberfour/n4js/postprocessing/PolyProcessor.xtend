@@ -12,6 +12,7 @@ package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.Expression
@@ -21,15 +22,15 @@ import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.RelationalExpression
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
 import eu.numberfour.n4js.typesystem.constraints.Variance
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
-import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.types.TypableElement
-import eu.numberfour.n4js.ts.utils.TypeUtils
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.CancelIndicator
@@ -59,6 +60,7 @@ class PolyProcessor extends AbstractPolyProcessor {
 
 	def package boolean isResponsibleFor(TypableElement astNode) {
 		astNode.isPoly
+		|| (astNode instanceof Argument && astNode.eContainer instanceof ParameterizedCallExpression && astNode.eContainer.isPoly)
 		|| (astNode instanceof FormalParameter && astNode.eContainer instanceof FunctionExpression && astNode.eContainer.isPoly)
 		|| (astNode instanceof ArrayElement && astNode.eContainer instanceof ArrayLiteral && astNode.eContainer.isPoly)
 		|| (astNode instanceof PropertyAssignment && astNode.eContainer instanceof ObjectLiteral && astNode.eContainer.isPoly)

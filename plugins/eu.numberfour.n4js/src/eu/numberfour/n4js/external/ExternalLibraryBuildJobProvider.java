@@ -11,14 +11,12 @@
 package eu.numberfour.n4js.external;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_BUILD;
-import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_REFRESH;
-import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_MANUAL_BUILD;
-import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_MANUAL_REFRESH;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -51,7 +49,9 @@ public class ExternalLibraryBuildJobProvider {
 		return new ExternalLibraryBuildJob(builderHelper, toBuild, toClean);
 	}
 
-	/* default */ static class ExternalLibraryBuildJob extends Job {
+	/* default */ static class ExternalLibraryBuildJob extends WorkspaceJob {
+
+		private static final ISchedulingRule BUILD_RULE = ResourcesPlugin.getWorkspace().getRuleFactory().buildRule();
 
 		private final Iterable<IProject> toBuild;
 		private final Iterable<IProject> toClean;
@@ -64,23 +64,12 @@ public class ExternalLibraryBuildJobProvider {
 			this.builderHelper = checkNotNull(builderHelper, "builderHelper");
 			this.toBuild = checkNotNull(toBuild, "toBuild");
 			this.toClean = checkNotNull(toClean, "toClean");
-			setUser(true);
-			setSystem(false);
-			setPriority(SHORT);
-			setRule(ResourcesPlugin.getWorkspace().getRuleFactory().buildRule());
+			setSystem(true);
+			setRule(BUILD_RULE);
 		}
 
 		@Override
-		public boolean belongsTo(final Object family) {
-			return FAMILY_AUTO_BUILD.equals(family)
-					|| FAMILY_AUTO_REFRESH.equals(family)
-					|| FAMILY_MANUAL_BUILD.equals(family)
-					|| FAMILY_MANUAL_REFRESH.equals(family);
-		}
-
-		@Override
-		public IStatus run(final IProgressMonitor monitor) {
-
+		public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 			monitor.beginTask("Building external libraries...", IProgressMonitor.UNKNOWN);
 
 			for (final IProject project : toClean) {

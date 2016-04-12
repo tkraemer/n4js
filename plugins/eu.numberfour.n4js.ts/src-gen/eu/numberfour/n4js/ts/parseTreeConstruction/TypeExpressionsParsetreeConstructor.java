@@ -65,18 +65,18 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule TypeRef ****************
  *
  * // ****************************************************************************************************
- * // N4JS versions of type references and expressions, also used by Types.xtext 
+ * // N4JS versions of type references and expressions, also used by Types.xtext
  * // ****************************************************************************************************
- * / * 
+ * / *
  *  * cf. N4JSSec §4
  *  * Depending on where the type references is used, not all possible variants are allows.
  *  * This is however checked by the validator in order to
  *  * 1) provide better error messages
  *  * 2) simplify grammar
- *  * 
+ *  *
  *  * Constraints:
  *  * UnionElementTypeRef: no AnyType, no Void, union itself must not be dynamic
- *  * FParTypeRef: no Void 
+ *  * FParTypeRef: no Void
  *  * ReturnTypeRef: everything, but no dynamic
  *  * // in N4JS:
  *  * VarTypeRef: no Void, i.e.
@@ -2527,7 +2527,7 @@ protected class TAnonymousFormalParameterList_FparsAssignment_1_1 extends Assign
 /************ begin Rule TAnonymousFormalParameter ****************
  *
  * / **
- *  * Used in type expressions, name is optional. 
+ *  * Used in type expressions, name is optional.
  *  * / TAnonymousFormalParameter:
  * 	variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef;
  *

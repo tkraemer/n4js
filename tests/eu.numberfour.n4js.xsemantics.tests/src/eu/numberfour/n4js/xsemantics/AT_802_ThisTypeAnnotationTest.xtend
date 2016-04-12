@@ -218,7 +218,7 @@ class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
 			);
 		''')
 
-		val argToLog = ((script.scriptElements.get(0) as ExpressionStatement).expression as ParameterizedCallExpression).arguments
+		val argToLog = ((script.scriptElements.get(0) as ExpressionStatement).expression as ParameterizedCallExpression).arguments.map[expression]
 
 		assertEquals("Only one arg.",1,argToLog.size)
 

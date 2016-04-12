@@ -34,12 +34,14 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
+import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.transport.SshTransport;
@@ -161,6 +163,18 @@ public abstract class GitUtils {
 	 * Performs a git {@code pull} in a local git repository given as repository root path argument.
 	 */
 	public static void pull(final Path localClonePath) {
+		pull(localClonePath, null);
+	}
+
+	/**
+	 * Sugar for {@link #pull(Path)} with progress monitor support. Performs a git {@code pull} in a local git
+	 * repository. If the {@code monitor} argument is optional, hence it can be {@code null}.
+	 */
+	public static void pull(final Path localClonePath, final IProgressMonitor monitor) {
+
+		@SuppressWarnings("restriction")
+		final ProgressMonitor gitMonitor = null == monitor ? createMonitor()
+				: new org.eclipse.egit.core.EclipseGitProgressTransformer(monitor);
 
 		if (null == localClonePath) {
 			LOGGER.warn("Local clone path should be specified for the git clone operation.");
@@ -180,7 +194,7 @@ public abstract class GitUtils {
 
 		try (final Git git = open(localCloneRoot)) {
 			try {
-				git.pull().setProgressMonitor(createMonitor()).setTransportConfigCallback(TRANSPORT_CALLBACK).call();
+				git.pull().setProgressMonitor(gitMonitor).setTransportConfigCallback(TRANSPORT_CALLBACK).call();
 			} catch (final GitAPIException e) {
 				LOGGER.error("Error when trying to pull on repository  '" + localClonePath + ".");
 				Throwables.propagate(e);

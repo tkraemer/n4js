@@ -470,7 +470,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 
 			try {
-				new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+				new MutableProgressMonitorDialog(getShell()).run(true, true, monitor -> {
 					externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 				});
 			} catch (final InvocationTargetException | InterruptedException exc) {
