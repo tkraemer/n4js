@@ -331,9 +331,9 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 								if (organizedImportSection != null) { // remove old imports
 									changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
 									if (!organizedImportSection.isEmpty()) {
-										// advance ImportRegion-offset if not nil:
+										// advance ImportRegion-offset if not nil and not right before a jsdoc:
 										int offset = insertionPoint.offset;
-										if (offset != 0) {
+										if (offset != 0 && !insertionPoint.isBeforeJsdocDocumentation) {
 											offset += NL.length();
 										}
 										// if the line above is part of a ML-comment, then line-break:
@@ -347,8 +347,9 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 										) {
 
 											int insertOffset = insertionPoint.offset;
-											// it is ML, so we need to insert a line-break;
-											String finalText = NL + organizedImportSection + NL;
+											// it is inside a ML, so we need to insert a line-break;
+											boolean atStartOfLine = insertionPoint.offset == lineRegion.getOffset();
+											String finalText = (atStartOfLine ? "" : NL) + organizedImportSection + NL;
 											changes.add(new Replacement(xtextResource.getURI().trimFragment(),
 													insertOffset, 0, finalText));
 

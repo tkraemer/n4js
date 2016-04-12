@@ -14,7 +14,6 @@ import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import eu.numberfour.n4js.documentation.N4JSDocumentationProvider
-import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
@@ -23,8 +22,6 @@ import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.n4JS.ScriptElement
-import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess
