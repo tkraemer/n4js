@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+
+/* XPECT output ---
+<==
+stdout:
+first argument is 42
+stderr:
+==>
+--- */
+
+
+async function foo(a) {
+    console.log('first argument is ' + arguments[0]);
+}
+
+foo(42);
