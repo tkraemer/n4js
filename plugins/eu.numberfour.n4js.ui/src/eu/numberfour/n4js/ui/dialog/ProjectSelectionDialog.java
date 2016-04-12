@@ -136,12 +136,12 @@ public class ProjectSelectionDialog extends ListDialog {
 	 */
 	private static final class N4JSProjectLabelProvider extends LabelProvider {
 
-		private final Image PROJECT_IMAGE = PlatformUI.getWorkbench().getSharedImages()
+		private final Image projectImage = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
 
 		@Override
 		public Image getImage(Object element) {
-			return PROJECT_IMAGE;
+			return projectImage;
 		}
 
 		@Override

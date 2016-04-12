@@ -97,8 +97,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		if (!model.getModuleSpecifier().isEmpty()) {
 			String initialSelectionSpecifier = model.getModuleSpecifier();
 
-			Object initialSelection = dialog.computeInitialSelection(initialSelectionSpecifier);
-			dialog.setInitialSelection(initialSelection);
+			dialog.setInitialSelection(initialSelectionSpecifier);
 		}
 
 		dialog.open();
@@ -141,7 +140,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().segment(0));
 
 		dialog.setInput(project);
-		dialog.setInitialSelections(new Object[] { model.getSourceFolder().toString() });
+		dialog.setInitialSelections(new Object[] { model.getSourceFolder().removeTrailingSeparator().toString() });
 
 		dialog.open();
 

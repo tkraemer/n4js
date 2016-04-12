@@ -31,7 +31,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.ui.ImageDescriptorCache;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 
 /**
@@ -122,7 +121,7 @@ public class SourceFolderSelectionDialog extends ListDialog {
 				null != inputProject) {
 
 			IN4JSSourceContainer matchingItem = sourceFolders.stream()
-					.filter(src -> src.getRelativeLocation().equals(initialSelection.toString()))
+					.filter(src -> src.getRelativeLocation().equals(initialSelection))
 					.findAny().orElse(null);
 
 			if (null != matchingItem) {
@@ -147,9 +146,6 @@ public class SourceFolderSelectionDialog extends ListDialog {
 	public class SourceFolderFilter extends ViewerFilter {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			if (element instanceof VirtualResource) {
-				return true;
-			}
 			if (element instanceof IResource) {
 				return isN4JSSourceContainer((IResource) element);
 			}
@@ -159,11 +155,11 @@ public class SourceFolderSelectionDialog extends ListDialog {
 
 	private static class N4JSSourceFolderLabelProvider extends LabelProvider {
 
-		private final Image SOURCE_FOLDER_IMAGE = ImageDescriptorCache.ImageRef.SRC_FOLDER.asImage().orNull();
+		private final Image sourceFolderImage = ImageDescriptorCache.ImageRef.SRC_FOLDER.asImage().orNull();
 
 		@Override
 		public void dispose() {
-			SOURCE_FOLDER_IMAGE.dispose();
+			sourceFolderImage.dispose();
 			super.dispose();
 		}
 
@@ -177,7 +173,7 @@ public class SourceFolderSelectionDialog extends ListDialog {
 
 		@Override
 		public Image getImage(Object element) {
-			return SOURCE_FOLDER_IMAGE;
+			return sourceFolderImage;
 		}
 	}
 }

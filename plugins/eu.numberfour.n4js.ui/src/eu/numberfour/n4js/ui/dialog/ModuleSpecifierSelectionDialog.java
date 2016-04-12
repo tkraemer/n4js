@@ -12,7 +12,10 @@ package eu.numberfour.n4js.ui.dialog;
 
 import static eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils.isValidFolderName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -20,54 +23,68 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import eu.numberfour.n4js.N4JSGlobals;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualContainer;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
-import eu.numberfour.n4js.ui.dialog.virtualresource.WrappingVirtualContainer;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils;
 
 /**
  * Browse dialog to select and create module folders inside of a given source folder location.
  *
- * Offers create functionality what means that the user is able to create new module folders. No changes are made to the
- * file system only virtual folders are displayed to reflect the changes.
+ * Offers create functionality what means that the user is able to create new module folders. Created module containers
+ * are directly written to the file system.
  *
- * Returns values of type {@link String} that are a representing of the path of the selected module folder. The path may
- * not exist in case that the user has created new folders.
+ * Returns values of type {@link String} that are a representation of the path of the selected module folder. The
+ * specified file may not exist, but it is ensured that all containing folders exist.
  */
 public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog {
 
 	private final static String MODULE_ELEMENT_NAME = "Module:";
 	private final static String CREATE_FOLDER_LABEL = "Create Folder";
 
+	/** Failed to create folder dialog */
+	private static final String FAILED_TO_CREATE_FOLDER_TITLE = "Failed to create the folders";
+	private static final String FAILED_TO_CREATE_FOLDER_MESSAGE = "The folder %s couldn't be created: %s";
+
+	/** Non existing module location dialog */
+	private static final String NON_EXISTING_MODULE_LOCATION_TITLE = "Non-existing module location";
+	private static final String NON_EXISTING_MODULE_LOCATION_MESSAGE = "The module specifier you entered does not exist yet, do you want to create it in the file system?";
+
+	/** Specifier overlaps dialog */
+	private static final String SPECIFIER_OVERLAPS_WITH_FILE_TITLE = "Invalid module specifier";
+	private static final String SPECIFIER_OVERLAPS_WITH_FILE_MESSAGE = "Your module specifier %s overlaps with the path of the file %s.";
+
 	private final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-	private final VirtualContainer sourceFolder;
-	private final WrappingVirtualContainer treeRoot;
+	private final IContainer sourceFolder;
+	private final IContainer treeRoot;
 
 	private final ModuleFileValidator inputValidator = new ModuleFileValidator();
 
 	private String defaultFileExtension = N4JSGlobals.N4JS_FILE_EXTENSION;
+	private String initialModuleName = "";
 
 	/**
 	 * Create the dialog.
 	 *
 	 * <p>
 	 * Note: The model should have a valid source folder path as this is the root folder for this browse dialog. If the
-	 * source folder path doesn't exist yet this dialog will handle it as a to be created location and will still allow
-	 * module folder creation.
+	 * source folder path doesn't exist yet this dialog will be empty.
 	 * </p>
 	 *
 	 * @param parent
@@ -89,20 +106,158 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 				.getFolder(sourceFolder);
 
 		// Use parent of source folder as root to show source folder itself in the tree
-		this.treeRoot = new WrappingVirtualContainer(sourceFolderParent);
+		this.treeRoot = sourceFolderParent;
 
-		if (workspaceSourceFolder.exists()) {
-			this.sourceFolder = new WrappingVirtualContainer(workspaceSourceFolder);
-			this.addFilter(new ModuleFolderFilter(this.sourceFolder.getFullPath()));
-		} else {
-			// If the source folder doesn't exist, show it as a virtual resource
-			this.sourceFolder = new VirtualContainer(sourceFolder.lastSegment());
-			this.addFilter(new ModuleFolderFilter(parentPath.append(this.sourceFolder.getFullPath())));
-		}
+		this.sourceFolder = workspaceSourceFolder;
+		this.addFilter(new ModuleFolderFilter(this.sourceFolder.getFullPath()));
 
 		this.setAutoExpandLevel(2);
 		// Show the status line above the buttons
 		this.setStatusLineAboveButtons(true);
+	}
+
+	@Override
+	public void setInitialSelection(Object element) {
+		super.setInitialSelection(element);
+
+	}
+
+	@Override
+	public int open() {
+		Object initialSelection = getInitialElementSelections().get(0);
+
+		// Preprocess intial string selections and replace them with their file system equivalent
+		if (initialSelection instanceof String) {
+			setInitialSelection(processInitialSelection((String) initialSelection));
+		}
+
+		return super.open();
+	}
+
+	/**
+	 * Set the default file extension which is used for created files.
+	 *
+	 * @param defaultFileExtension
+	 *            The extension to use by default
+	 */
+	public void setDefaultFileExtension(String defaultFileExtension) {
+		this.defaultFileExtension = defaultFileExtension;
+	}
+
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		Control dialog = super.createDialogArea(parent);
+
+		elementNameInput.setSuffix("." + this.defaultFileExtension);
+		this.setInput(this.treeRoot);
+
+		// Update the file extension whenever the dialog value selection changes (tree + element name)
+		this.treeViewer.addSelectionChangedListener(selectionChange -> {
+			updateFileExtension();
+
+			validateElementInput();
+
+			// When selecting a file use its name as element name
+			Object selection = treeViewer.getStructuredSelection().getFirstElement();
+			if (selection instanceof IFile) {
+				String extensionFreeFileName = ((IFile) selection).getFullPath().removeFileExtension().lastSegment();
+				elementNameInput.setText(extensionFreeFileName);
+			}
+		});
+		this.elementNameInput.addPropertyChangeListener(change -> updateFileExtension());
+
+		// Refire initial selection change
+		this.treeViewer.setSelection(this.treeViewer.getSelection());
+
+		if (!initialModuleName.isEmpty()) {
+			elementNameInput.setText(initialModuleName);
+		}
+
+		validateElementInput();
+
+		elementNameInput.setFocus();
+
+		return dialog;
+	}
+
+	@Override
+	protected void computeResult() {
+
+		Object selection = treeViewer.getStructuredSelection().getFirstElement();
+
+		if (selection == null) {
+			return;
+		}
+
+		String moduleName = elementNameInput.getText();
+		String moduleFileExtension = elementNameInput.getSuffix();
+
+		// For selected files where the element name input equals the selected file
+		if (selection instanceof IFile
+				&& ((IFile) selection).getFullPath().removeFileExtension().lastSegment().equals(moduleName)) {
+			IPath fileSpec = sourceFolderRelativePath((IResource) selection);
+			this.setResult(Arrays.asList(fileSpec.toString()));
+			return;
+		} else if (selection instanceof IResource) {
+			// Use their container for files with a different element name input
+			if (selection instanceof IFile) {
+				selection = ((IFile) selection).getParent();
+			}
+
+			this.setResult(
+					Arrays.asList(sourceFolderRelativePath((IContainer) selection).toString() + "/" + moduleName
+							+ moduleFileExtension));
+
+			return;
+		} else
+			updateError("Invalid selection type.");
+
+	}
+
+	@Override
+	protected void createPressed() {
+		InputDialog dialog = new InputDialog(getShell(), "Create a new folder", "Enter the name of the new folder", "",
+				new ModuleFolderValidator());
+		dialog.open();
+
+		Object selection = treeViewer.getStructuredSelection().getFirstElement();
+		IContainer parent;
+
+		// Infer parent folder from selection
+		if (selection instanceof IFile) {
+			parent = ((IFile) selection).getParent();
+		} else if (selection instanceof IContainer) {
+			parent = (IContainer) selection;
+		} else { // Use the source folder as default
+			parent = this.sourceFolder;
+		}
+
+		String folderName = dialog.getValue();
+		IFolder createdFolder = null;
+
+		if (Window.OK == dialog.getReturnCode()) {
+			ProgressMonitorDialog progressMonitorDialog = new ProgressMonitorDialog(getShell());
+			progressMonitorDialog.open();
+			IProgressMonitor progressMonitor = progressMonitorDialog.getProgressMonitor();
+
+			try {
+				createdFolder = createFolder(folderName, parent, null);
+			} catch (CoreException e) {
+				MessageDialog.open(MessageDialog.ERROR, getShell(), FAILED_TO_CREATE_FOLDER_TITLE,
+						String.format(FAILED_TO_CREATE_FOLDER_MESSAGE,
+								parent.getFullPath().append(folderName).toString(),
+								e.getMessage()),
+						SWT.NONE);
+			}
+
+			progressMonitor.done();
+			progressMonitorDialog.close();
+
+			if (null != createdFolder) {
+				treeViewer.setSelection(new StructuredSelection(createdFolder));
+			}
+		}
+
 	}
 
 	/** Return the workspace container with the path */
@@ -115,259 +270,174 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	}
 
 	/**
-	 * Convenience method to get the basepath of a tree element.
+	 * Processes the initial string selection.
 	 *
-	 * The basepath is the full path for containers and the full path of their parent for resources.
+	 * For existing resources it just sets the initial selection to the specified file system resource.
 	 *
-	 * @param treeElement
-	 *            A tree element
-	 * @return The basepath of the element.
-	 */
-	private String basepathForTreeElement(Object treeElement) {
-		if (treeElement instanceof IContainer) {
-			return ((IContainer) treeElement).getFullPath().toString();
-		} else if (treeElement instanceof IResource) {
-			return ((IResource) treeElement).getParent().getFullPath().toString();
-		} else if (treeElement instanceof VirtualContainer) {
-			return ((VirtualContainer) treeElement).getFullPath().toString();
-		} else if (treeElement instanceof VirtualResource) {
-			return ((VirtualResource) ((VirtualResource) treeElement).getParent(treeElement))
-					.getFullPath().toString();
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Set the selected element of the tree view.
-	 *
-	 * @param resource
-	 *            The virtual resource to select
-	 */
-	private void setSelectedElement(VirtualResource resource) {
-		this.treeViewer.setSelection(new StructuredSelection(resource));
-	}
-
-	/**
-	 * Set the selected element. Clears all virtual children from the tree.
-	 *
-	 * @param resource
-	 *            The existing resource to select
-	 */
-	private void setSelectedElement(IResource resource) {
-		this.treeRoot.clearVirtualChildren();
-		this.treeViewer.refresh();
-		this.treeViewer.setSelection(new StructuredSelection(resource));
-	}
-
-	/**
-	 * Insert a virtual resource at given container for the actual tree root.
-	 *
-	 * @param name
-	 *            The name of the new virtual resource
-	 * @param container
-	 *            The existing container of the new resource
-	 * @return The new virtual resource
-	 */
-	private VirtualResource insertVirtualResourceAt(String name, IContainer container) {
-		return VirtualResource.insertAt(
-				new VirtualResource(name, VirtualResource.RESOURCE_ICON),
-				container, this.treeRoot);
-	}
-
-	/**
-	 * Insert a virtual resource at given container for the actual tree root.
-	 *
-	 * @param name
-	 *            The name of the new virtual resource
-	 * @param container
-	 *            The virtual container of the new resource
-	 * @return The new virtual resource
-	 */
-	private VirtualResource insertVirtualResourceAt(String name, VirtualContainer container) {
-		container.clearVirtualChildren();
-		return VirtualResource.insertAt(
-				new VirtualResource(name, VirtualResource.RESOURCE_ICON),
-				container);
-	}
-
-	@Override
-	protected void elementInputChanged() {
-		String elementName = elementNameInput.getText() + elementNameInput.getSuffix();
-		Object treeViewSelection = treeViewer.getStructuredSelection().getFirstElement();
-
-		boolean isValidName = inputValidator.isValid(elementName) == null;
-		String basepath = basepathForTreeElement(treeViewSelection);
-		boolean isExistingSelection = (treeViewSelection instanceof IResource);
-
-		if (!isValidName) { // Do nothing on invalid input
-			return;
-		}
-
-		if (basepath == null) { // basepath shouldn't be null.
-			return;
-		}
-
-		IResource workspaceModuleResource = workspaceRoot.findMember(new Path(basepath).append(elementName));
-
-		// The basepath + module name points to an existing file
-		if (workspaceModuleResource != null && workspaceModuleResource.exists()) {
-			if (isExistingSelection) { // An existing element is selected in the tree view
-				if (treeViewSelection instanceof IContainer) {
-					setSelectedElement(workspaceModuleResource); // Select the existing child of the container
-					return;
-				} else if (treeViewSelection instanceof IResource) {
-					// The basepath + module name points to the already selected element
-					if (((IResource) treeViewSelection).getName().equals(elementName)) {
-						this.treeRoot.clearVirtualChildren();
-						this.treeViewer.refresh();
-						return;
-					} else { // The selected element is different from the basepath + module name
-						setSelectedElement(workspaceModuleResource);
-						return;
-					}
-				} else {
-					// Encountered unknown tree element type
-					return;
-				}
-			} else { // An non-existent element is selected in the tree view
-				setSelectedElement(workspaceModuleResource);
-			}
-		} else { // The basepath + module name points to an non-existent file
-			if (isExistingSelection) { // An existing element is selected in the tree view
-				if (treeViewSelection instanceof IContainer) { // An existing container is selected
-					VirtualResource res = insertVirtualResourceAt(elementName, (IContainer) treeViewSelection);
-					this.treeViewer.refresh();
-					this.setSelectedElement(res);
-					return;
-				} else if (treeViewSelection instanceof IResource) { // An existing resource is selected
-					VirtualResource res = insertVirtualResourceAt(elementName,
-							((IResource) treeViewSelection).getParent());
-					this.treeViewer.refresh();
-					this.setSelectedElement(res);
-					return;
-				}
-			} else { // A non-existent element is selected in the tree view
-				if (treeViewSelection instanceof VirtualContainer) { // A virtual container is selected.
-					VirtualResource res = insertVirtualResourceAt(elementName, (VirtualContainer) treeViewSelection);
-					this.treeViewer.refresh();
-					this.setSelectedElement(res);
-				} else if (treeViewSelection instanceof VirtualResource) { // A virtual resource is selected
-					// If the names are equal don't do anything
-					if (((VirtualResource) treeViewSelection).getName().equals(elementName)) {
-						return;
-					} else { // Otherwise rename the selected virtual resource
-						((VirtualResource) treeViewSelection).setName(elementName);
-						this.treeViewer.refresh();
-						return;
-					}
-				}
-			}
-		}
-	}
-
-	private VirtualContainer appendVirtualContainer(VirtualContainer tail, String containerName) {
-		VirtualContainer container = new VirtualContainer(containerName);
-		tail.addChild(container);
-		return container;
-	}
-
-	private VirtualContainer appendWrappedContainer(VirtualContainer tail, IContainer container) {
-		VirtualContainer wrappedContainer = new WrappingVirtualContainer(container);
-		tail.addChild(wrappedContainer);
-		return wrappedContainer;
-	}
-
-	private VirtualResource appendVirtualResource(VirtualContainer tail, String resourceName) {
-		VirtualResource resource = new VirtualResource(resourceName, VirtualResource.RESOURCE_ICON);
-		tail.addChild(resource);
-		return resource;
-	}
-
-	/**
-	 * Compute the initial selection object from a given module specifier.
+	 * In the case that the initial module specifier points to a non-existing location, a dialog is displayed which
+	 * allows the user to automatically create not yet existing folders.
 	 *
 	 * @param initialModuleSpecifier
 	 *            The module specifier
 	 * @return A {@link IWorkbenchAdapter} adaptable object or null on failure
 	 */
-	public Object computeInitialSelection(String initialModuleSpecifier) {
+	private Object processInitialSelection(String initialModuleSpecifier) {
 
-		IPath projectFolderPath = sourceFolder.getFullPath().removeLastSegments(1);
 		IPath sourceFolderPath = sourceFolder.getFullPath();
+		IPath initialModulePath = new Path(initialModuleSpecifier);
 
+		// Use the root element source folder for empty selections
 		if (initialModuleSpecifier.isEmpty()) {
 			return this.sourceFolder;
 		}
 
-		IPath fullModuleSpecifierPath = sourceFolderPath.append(initialModuleSpecifier);
-
-		// If the initialModuleSpecifier is a valid module path
-		IResource existingSelection = computeExistingModuleSpecifierSelection(fullModuleSpecifierPath);
-
-		if (existingSelection != null) {
-			return existingSelection;
-		} else { // Otherwise resolve path and create virtual resources
-
-			VirtualContainer parent = this.treeRoot; // Is a wrapping container
-
-			IPath rootRelativePath = fullModuleSpecifierPath.makeRelativeTo(projectFolderPath);
-
-			String[] segments = rootRelativePath.segments();
-
-			/*
-			 * Iterate through all specifier segements. If a segment points to an existing location, replace it with a
-			 * WrappingVirtualContainer. If a segment has no file system equivalent, create a new virtual resource.
-			 */
-			for (int i = 0; i < segments.length; i++) {
-				final String segment = segments[i];
-
-				// For the last segment if it represents a file not a folder
-				if (i == segments.length - 1 && isModuleFileSpecifier(rootRelativePath)) {
-					return appendVirtualResource(parent, segment);
-				} else { // For the other segments
-					// parent is a wrapping container
-					if (parent instanceof WrappingVirtualContainer) {
-						IContainer wrappedContainer = ((WrappingVirtualContainer) parent).getWrappedContainer();
-						IResource segmentResource = wrappedContainer.findMember(segment);
-
-						// If the segment represents an existing container in the file system
-						if (segmentResource != null && segmentResource.exists()) {
-
-							if (segmentResource instanceof IContainer) {
-								// Create a new wrapping container and continue with the next segment
-								parent = appendWrappedContainer(parent, (IContainer) segmentResource);
-								continue;
-							} else { // Otherwise the module specifier is invalid, as it contains a folder segment which
-										// is
-										// a file on the file system
-								return parent;
-							}
-						}
-					}
-					// parent is a purely virtual container
-					parent = appendVirtualContainer(parent, segment);
-
-				}
-
-			}
-
-			return parent;
+		// Use the root element source folder for invalid module specifiers
+		if (!WorkspaceWizardValidatorUtils.isValidFolderPath(initialModulePath)) {
+			return this.sourceFolder;
 		}
 
+		// The project relative full path of a module specifier
+		IPath fullPath = sourceFolderPath.append(new Path(initialModuleSpecifier));
+
+		// If the module specifier refers to an existing n4js resource
+		if (!fullPath.hasTrailingSeparator()) {
+			IFile n4jsModuleFile = workspaceRoot.getFile(fullPath.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
+			IFile n4jsdModuleFile = workspaceRoot.getFile(fullPath.addFileExtension(N4JSGlobals.N4JSD_FILE_EXTENSION));
+
+			if (n4jsModuleFile.exists()) {
+				return n4jsModuleFile;
+			}
+			if (n4jsdModuleFile.exists()) {
+				return n4jsdModuleFile;
+			}
+
+		}
+
+		// Otherwise use the existing part of the path as initial selection
+
+		// If the module specifier specifies the module name, infer it and remove the segment.
+		if (isModuleFileSpecifier(initialModulePath)) {
+			initialModuleName = initialModulePath.lastSegment();
+			initialModulePath = initialModulePath.removeLastSegments(1);
+		}
+
+		IResource selection = this.sourceFolder;
+
+		// Accumulate path segments to search for the longest existing path
+		IPath accumulatedPath = sourceFolderPath;
+
+		// Collect the path of all non-existing segments
+		// These are relative to the last existing segment of the path
+		List<IPath> nonExistingSegmentPaths = new ArrayList<>();
+
+		for (Iterator<String> segmentIterator = Arrays.asList(initialModulePath.segments()).iterator(); segmentIterator
+				.hasNext(); /**/) {
+
+			accumulatedPath = accumulatedPath.append(segmentIterator.next());
+
+			// null if non-existing
+			IResource nextSegmentResource = workspaceRoot.findMember(accumulatedPath);
+
+			// If the current segment is an existing file and not the last specifier segment
+			// show an file overlap error message
+			if (null != nextSegmentResource && !(nextSegmentResource instanceof IContainer)
+					&& segmentIterator.hasNext()) {
+
+				MessageDialog.open(MessageDialog.ERROR, getShell(), SPECIFIER_OVERLAPS_WITH_FILE_TITLE,
+						String.format(SPECIFIER_OVERLAPS_WITH_FILE_MESSAGE, initialModuleSpecifier, accumulatedPath),
+						SWT.NONE);
+
+				return selection;
+			}
+
+			// If the segment exist go ahead with the next one
+			if (null != nextSegmentResource && nextSegmentResource.exists()) {
+				selection = nextSegmentResource;
+			} else { // If not add it to the list of non existing segments.
+				nonExistingSegmentPaths.add(accumulatedPath.makeRelativeTo(selection.getFullPath()));
+			}
+		}
+
+		// If any non-existing folders need to be created
+		if (nonExistingSegmentPaths.size() > 0) {
+			// Ask the user if he wants to create the missing folders
+			boolean create = MessageDialog.open(MessageDialog.QUESTION, getShell(), NON_EXISTING_MODULE_LOCATION_TITLE,
+					NON_EXISTING_MODULE_LOCATION_MESSAGE, SWT.NONE);
+
+			// Create the missing folders
+			if (create) {
+				ProgressMonitorDialog progressMonitorDialog = new ProgressMonitorDialog(getShell());
+				progressMonitorDialog.open();
+				IProgressMonitor progressMonitor = progressMonitorDialog.getProgressMonitor();
+
+				IPath deepestPath = nonExistingSegmentPaths.get(nonExistingSegmentPaths.size() - 1);
+				selection = createFolderPath(deepestPath, (IContainer) selection, progressMonitor);
+
+				progressMonitor.done();
+				progressMonitorDialog.close();
+			}
+
+		}
+		return selection;
 	}
 
-	private IResource computeExistingModuleSpecifierSelection(IPath moduleSpecifierPath) {
-		if (isModuleFileSpecifier(moduleSpecifierPath)) {
-			IFile existingFile = workspaceRoot.getFile(moduleSpecifierPath);
-			return existingFile.exists() ? existingFile : null;
-		} else {
-			IContainer container = workspaceRoot.getFolder(moduleSpecifierPath);
-			if (container.exists()) {
-				return container;
+	/**
+	 * Creates the folder in the given container.
+	 *
+	 * @param name
+	 *            The name of the new folder
+	 * @param parent
+	 *            The parent container
+	 * @param monitor
+	 *            The progress monitor. May be {@code null}.
+	 * @throws CoreException
+	 *             for {@link IFolder#create(boolean, boolean, IProgressMonitor)} exceptions
+	 * @return The created folder
+	 */
+	private IFolder createFolder(String name, IContainer parent, IProgressMonitor monitor) throws CoreException {
+		IFolder folder = parent.getFolder(new Path(name));
+		folder.create(true, true, monitor);
+		return folder;
+	}
+
+	/**
+	 * Creates all non-existing segments of the given path.
+	 *
+	 * @param path
+	 *            The path to create
+	 * @param parent
+	 *            The container in which the path should be created in
+	 * @param monitor
+	 *            A progress monitor. May be {@code null}
+	 *
+	 * @return The folder specified by the path
+	 */
+	private IContainer createFolderPath(IPath path, IContainer parent, IProgressMonitor monitor) {
+		IContainer activeContainer = parent;
+
+		if (null != monitor) {
+			monitor.beginTask("Creating folders", path.segmentCount());
+		}
+
+		for (String segment : path.segments()) {
+			IFolder folderToCreate = activeContainer.getFolder(new Path(segment));
+			try {
+				if (!folderToCreate.exists()) {
+					createFolder(segment, activeContainer, monitor);
+				}
+				if (null != monitor) {
+					monitor.worked(1);
+				}
+				activeContainer = folderToCreate;
+			} catch (CoreException e) {
+				e.printStackTrace();
+				MessageDialog.open(MessageDialog.ERROR, getShell(),
+						FAILED_TO_CREATE_FOLDER_TITLE, String.format(FAILED_TO_CREATE_FOLDER_MESSAGE,
+								folderToCreate.getFullPath().toString(), e.getMessage()),
+						SWT.NONE);
 			}
 		}
-		return null;
+		return activeContainer;
 	}
 
 	/**
@@ -390,83 +460,48 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		return stringPath.charAt(stringPath.length() - 1) != '/';
 	}
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		// If the initial selection is empty select the root source folder
-		if (getInitialElementSelections().isEmpty()) {
-			// Handle case of a non-existing virtual source folder
-			if (this.sourceFolder instanceof WrappingVirtualContainer) {
-				setInitialSelection(((WrappingVirtualContainer) this.sourceFolder).getWrappedContainer());
-			} else {
-				setInitialSelection(this.sourceFolder);
-				// Add the virtual source folder resource to the tree root
-				this.treeRoot.addChild(this.sourceFolder);
-			}
-		}
-
-		Control dialog = super.createDialogArea(parent);
-
-		elementNameInput.setSuffix("." + this.defaultFileExtension);
-
-		this.setInput(this.treeRoot);
-
-		// Sync the tree view selection with the element name input
-		this.treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				syncElementInput(treeViewer.getStructuredSelection().getFirstElement());
-			}
-		});
-
-		// Refire initial selection change
-		this.treeViewer.setSelection(this.treeViewer.getSelection());
-
-		// Make initial sync between the tree view and the text input
-		Object selectedElement = this.treeViewer.getStructuredSelection().getFirstElement();
-		if (selectedElement instanceof IFile) {
-			updateElementNameInput(((IResource) selectedElement).getName());
-		} else if (selectedElement instanceof VirtualResource && !(selectedElement instanceof VirtualContainer)) {
-			updateElementNameInput(((VirtualResource) selectedElement).getName());
-		} else {
-			validateElementInput();
-		}
-
-		elementNameInput.setFocus();
-
-		return dialog;
-	}
-
 	/**
-	 * Sync the element name input with the tree view selection.
-	 *
-	 * @param selection
-	 *            The selected element of the tree view
+	 * Updates the file extension according to the current selection. (tree + element name input)
 	 */
-	private void syncElementInput(Object selection) {
-		if (selection == null) {
-			return;
-		}
-		if (selection instanceof IFile) {
-			String selectedFileExtension = ((IFile) selection).getFileExtension();
-			if (!selectedFileExtension.equals(this.defaultFileExtension)) {
-				elementNameInput.setSuffix("." + selectedFileExtension);
-			} else {
-				elementNameInput.setSuffix("." + this.defaultFileExtension);
-			}
+	private void updateFileExtension() {
+		Object selection = treeViewer.getStructuredSelection().getFirstElement();
+		String elementFileName = elementNameInput.getText();
 
-			updateElementNameInput(((IFile) selection).getFullPath().removeFileExtension().lastSegment());
-		} else if (selection instanceof IContainer) {
-			treeRoot.clearVirtualChildren();
-			elementInputChanged();
-		} else {
-			elementInputChanged();
+		if (null == selection) {
+			setFileExtension(defaultFileExtension);
+		}
+
+		// If an existing file is selected and element name input equals its name
+		if (selection instanceof IFile && elementFileName.equals(((IFile) selection).getName())) {
+			// Use the file's extension
+			setFileExtension(((IFile) selection).getFileExtension());
+		} else if (selection instanceof IResource) {
+			// Otherwise compute the path of the selected element
+			IPath basepath;
+			if (selection instanceof IFile) {
+				basepath = ((IFile) selection).getParent().getFullPath();
+			} else {
+				basepath = ((IResource) selection).getFullPath();
+			}
+			IPath pathOfSelection = basepath.append(elementFileName);
+
+			IFile n4jsFile = workspaceRoot.getFile(pathOfSelection.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
+			IFile n4jsdFile = workspaceRoot.getFile(pathOfSelection.addFileExtension(N4JSGlobals.N4JSD_FILE_EXTENSION));
+
+			// If a n4js or n4jsd file with the specified location exists, use the proper file extension. Otherwise use
+			// the default file extension.
+			if (n4jsdFile.exists()) {
+				setFileExtension(N4JSGlobals.N4JSD_FILE_EXTENSION);
+			} else if (n4jsFile.exists()) {
+				setFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION);
+			} else {
+				setFileExtension(defaultFileExtension);
+			}
 		}
 	}
 
-	private void updateElementNameInput(String value) {
-		if (!elementNameInput.getText().equals(value)) {
-			elementNameInput.setText(value);
-		}
+	private void setFileExtension(String fileExtension) {
+		elementNameInput.setSuffix("." + fileExtension);
 	}
 
 	/**
@@ -477,71 +512,12 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 * @return The systems path relative to the source folder
 	 */
 	private IPath sourceFolderRelativePath(IResource resource) {
-		return resource.getFullPath().makeRelativeTo(this.sourceFolder.getFullPath());
-	}
+		IPath path = resource.getFullPath().makeRelativeTo(this.sourceFolder.getFullPath());
 
-	/**
-	 * Return the source folder relative path of given virtual resource
-	 *
-	 * @param resource
-	 *            The virtual resource
-	 * @return The resources path relative to the source folder
-	 */
-	private IPath sourceFolderRelativePath(VirtualResource resource) {
-		return resource.getFullPath().makeRelativeTo(this.sourceFolder.getFullPath());
-	}
-
-	/**
-	 * Open a dialog to create a new module folder
-	 */
-	@Override
-	protected void createPressed() {
-		InputDialog dialog = new InputDialog(this.getShell(), "Create a new module folder",
-				"Enter the module folder name.", "",
-				new ModuleFolderValidator());
-		dialog.open();
-
-		if (dialog.getReturnCode() == CANCEL) {
-			return;
+		if (path.toString().equals(IPath.SEPARATOR)) {
+			return new Path("");
 		}
-
-		Object firstElement = this.treeViewer.getStructuredSelection().getFirstElement();
-
-		// If nothing is selected use the root source folder
-		if (firstElement == null) {
-			firstElement = this.sourceFolder;
-		}
-
-		if (firstElement instanceof VirtualContainer) {
-			((VirtualContainer) firstElement).clearVirtualChildren();
-		}
-
-		if (firstElement instanceof VirtualResource && !(firstElement instanceof VirtualContainer)) {
-			firstElement = ((VirtualResource) firstElement).getParent(firstElement);
-			((VirtualContainer) firstElement).clearVirtualChildren();
-		}
-		if (firstElement instanceof IFile) {
-			firstElement = ((IFile) firstElement).getParent();
-		}
-
-		VirtualResource newModuleContainer = insertVirtualContainerAtObject(dialog.getValue(), firstElement);
-
-		this.treeViewer.refresh();
-		this.treeViewer.setSelection(new StructuredSelection(newModuleContainer), true);
-	}
-
-	private VirtualContainer insertVirtualContainerAtObject(String name, Object container) {
-		if (container instanceof IContainer) {
-			return (VirtualContainer) VirtualResource.insertAt(
-					new VirtualContainer(name),
-					(IContainer) container, this.treeRoot);
-		} else if (container instanceof VirtualResource) {
-			return (VirtualContainer) VirtualResource.insertAt(
-					new VirtualContainer(name),
-					(VirtualResource) container);
-		} else {
-			return null;
-		}
+		return path;
 	}
 
 	/**
@@ -555,7 +531,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 * called "src"
 	 * </p>
 	 */
-	public static class ModuleFolderFilter extends ViewerFilter {
+	private static class ModuleFolderFilter extends ViewerFilter {
 
 		private final IPath prefix;
 
@@ -575,10 +551,6 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 				IPath p = ((IContainer) element).getFullPath();
 				return this.prefix.isPrefixOf(p);
 			}
-			if (element instanceof VirtualResource) {
-				IPath p = ((VirtualResource) element).getFullPath();
-				return this.prefix.isPrefixOf(p);
-			}
 			if (element instanceof IFile) {
 				IPath p = ((IFile) element).getFullPath();
 				return isN4JSResource(p) && this.prefix.isPrefixOf(p);
@@ -595,62 +567,10 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	}
 
-	@Override
-	protected void computeResult() {
-
-		Object selection = treeViewer.getStructuredSelection().getFirstElement();
-
-		if (selection == null) {
-			return;
-		}
-
-		// Handle real folders as well as virtual folders as result values
-		// Return them as source folder relative string paths
-		if (selection instanceof IContainer) {
-			/*
-			 * Don't add the slash for an empty result
-			 */
-			if (sourceFolderRelativePath((IContainer) selection).segmentCount() < 1) {
-				this.setResult(Arrays.asList(""));
-				return;
-			}
-			this.setResult(Arrays.asList(sourceFolderRelativePath((IContainer) selection).toString() + "/"));
-			return;
-		} else if (selection instanceof IFile) {
-			IPath fileSpec = sourceFolderRelativePath((IResource) selection);
-			this.setResult(Arrays.asList(fileSpec.toString()));
-			return;
-		} else if (selection instanceof VirtualContainer) {
-			IPath containerPath = sourceFolderRelativePath((VirtualContainer) selection);
-			if (containerPath.isEmpty() || containerPath.equals("/")) {
-				this.setResult(Arrays.asList(""));
-				return;
-			} else {
-				this.setResult(Arrays.asList(containerPath.toString() + "/"));
-				return;
-			}
-		} else if (selection instanceof VirtualResource) {
-			this.setResult(Arrays.asList(sourceFolderRelativePath((VirtualResource) selection).toString()));
-			return;
-		}
-		updateError("Invalid selection type.");
-
-	}
-
-	/**
-	 * Set the default file extension which is used for newly created files.
-	 *
-	 * @param defaultFileExtension
-	 *            The extension to use by default
-	 */
-	public void setDefaultFileExtension(String defaultFileExtension) {
-		this.defaultFileExtension = defaultFileExtension;
-	}
-
 	/**
 	 * An input validator to validate module folder names
 	 */
-	public static final class ModuleFolderValidator implements IInputValidator {
+	private static final class ModuleFolderValidator implements IInputValidator {
 		@Override
 		public String isValid(String newText) {
 			if (newText.isEmpty()) {
@@ -666,7 +586,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	/**
 	 * An input validator to validate module file names
 	 */
-	public static final class ModuleFileValidator implements IInputValidator {
+	private final class ModuleFileValidator implements IInputValidator {
 		@Override
 		public String isValid(String newText) {
 			IPath path = new Path(newText);
@@ -693,6 +613,9 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			}
 			if (path.segmentCount() > 1) {
 				return IPath.SEPARATOR + " is not allowed in a module file specifier.";
+			}
+			if (treeViewer.getStructuredSelection().getFirstElement() == null) {
+				return "Please select a module container";
 			}
 
 			return null;

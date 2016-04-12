@@ -12,6 +12,8 @@ package eu.numberfour.n4js.ui.wizard.workspace;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IPath;
+
 /**
  *
  */
@@ -29,6 +31,20 @@ public class WorkspaceWizardValidatorUtils {
 	 */
 	public static boolean isValidFolderName(String name) {
 		return VALID_FOLDER_NAME_PATTERN.matcher(name).matches();
+	}
+
+	/**
+	 * Returns {@code true} if path is a valid folder path.
+	 *
+	 * That means that every segment needs to be a valid folder name.
+	 */
+	public static boolean isValidFolderPath(IPath path) {
+		for (String segment : path.segments()) {
+			if (!isValidFolderName(segment)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private WorkspaceWizardValidatorUtils() {

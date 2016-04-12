@@ -48,6 +48,9 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	@SuppressWarnings("javadoc")
 	protected static class ErrorMessages {
 
+		// General errors
+		public static final String UNKNOWN_VALIDATION_ERROR = "Unknown validation error";
+
 		// Project errors
 		public static final String PROJECT_DOES_NOT_EXIST = "The given project does not exist";
 		public static final String INVALID_PROJECT = "Not a valid project";
@@ -56,6 +59,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		// Source folder errors
 		public static final String SOURCE_FOLDER_MUST_NOT_BE_EMPTY = "The source folder field must not be empty";
 		public static final String SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME = "The source folder is not a valid folder name";
+		public static final String SOURCE_FOLDER_DOES_NOT_EXIST = "The source folder does not exist";
 
 		// Module specifier errors
 		public static final String MODULE_SPECIFIER_MUST_NOT_BE_EMPTY = "The module specifier field must not be empty";
@@ -301,7 +305,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		this.setSourceFolderValid(false);
 
 		// 1. The source folder property must not be empty
-		String sourceFolder = getModel().getSourceFolder().toString();
+		String sourceFolder = getModel().getSourceFolder().removeTrailingSeparator().toString();
 
 		if (sourceFolder.trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
@@ -309,15 +313,31 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		}
 
 		// 2. All segments of the source folder path must be valid folder names
-		for (String segment : getModel().getSourceFolder().segments()) {
-			if (!WorkspaceWizardValidatorUtils.isValidFolderName(segment)) {
-				throw new ValidationException(
-						ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
-						WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
-			}
+		if (!WorkspaceWizardValidatorUtils.isValidFolderPath(getModel().getSourceFolder())) {
+			throw new ValidationException(
+					ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
+					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
 
+		// 3. The source folder must be a valid {@link IN4JSSourceContainer}
+		// The source container must exist, and not be of type external or library
+
+		URI projectUri = URI.createPlatformResourceURI(getModel().getProject().segment(0), true);
+		IN4JSProject project = n4jsCore.findProject(projectUri).orNull();
+
+		if (null == project) {
+			throw new ValidationException(ErrorMessages.UNKNOWN_VALIDATION_ERROR);
+		}
+
+		if (project.getSourceContainers().stream()
+				.filter(src -> (src.isSource() || src.isTest())) // Filter source type
+				.filter(src -> src.getRelativeLocation().equals(sourceFolder)) // Filter name
+				.count() == 0)
+			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_DOES_NOT_EXIST,
+					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
+
 		this.setSourceFolderValid(true);
+
 	}
 
 	/**
