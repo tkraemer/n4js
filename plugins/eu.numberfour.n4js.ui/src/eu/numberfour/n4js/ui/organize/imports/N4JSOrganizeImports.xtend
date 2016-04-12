@@ -63,6 +63,7 @@ import static eu.numberfour.n4js.parser.InternalSemicolonInjectingParser.SEMICOL
 
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
+import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import org.eclipse.xtext.nodemodel.impl.LeafNode
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 
@@ -186,23 +187,24 @@ public class N4JSOrganizeImports {
 					// no documentation, go before the statement:
 					var listLeafNodes = realScriptElementNode.leafNodes.toList;
 					
-					// looking for a position right after the last the last comment and before (WS+EOL)* NOT_HIDDEN_LEAF
+					// looking for a position right after the last comment and before (WS+EOL)* NOT_HIDDEN_LEAF
 					{
 						val iterLeaves = listLeafNodes.iterator;
 						var ILeafNode curr; 
 						var ILeafNode firstEOL;
 						var ILeafNode afterFirstEOL;
 						var ILeafNode lastNode;
+						var boolean sawComment = false;
 						// got to first non-hidden:
 						while( iterLeaves.hasNext && ( (curr = iterLeaves.next).isHidden) ) {  
 							if( curr.grammarElement instanceof TerminalRule ){
 								if( curr.grammarElement == typeExpressionGrammmarAccess.ML_COMMENTRule )
 								{
 									// reset EOLs
-									firstEOL = null; afterFirstEOL = null;
+									firstEOL = null; afterFirstEOL = null; sawComment = true;
 								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.SL_COMMENTRule 	) {
 									// reset EOLs
-									firstEOL = null;afterFirstEOL = null;
+									firstEOL = null;afterFirstEOL = null; sawComment = true;
 								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.EOLRule 	) {
 									if( firstEOL === null ) {
 										// store 
@@ -228,17 +230,29 @@ public class N4JSOrganizeImports {
 						
 						insertionPoint.notAfterTotalOffset = curr.totalOffset;
 						
-						var begin2 = if( afterFirstEOL !== null ) {
+						var begin2 = if( afterFirstEOL !== null && sawComment ) {
 							afterFirstEOL.totalOffset;
 						} else {
 							if( hasNoCommentUpTo(curr) ) {
 								0; // all the imports before will be removed, so put at the beginning.
 							} else {
+								// make the comments above the import.
 								curr.totalOffset;
 							}
 						}
 						begin = Math.max(begin,begin2);
 					}
+					
+					if( lastSeenDirective > -1 ) {
+						// have directive, so insert not before last directive.
+						val lastDirectiveNode = elements.get(lastSeenDirective).findActualNodeFor;
+						val lastDirectiveEndOffset = lastDirectiveNode.totalEndOffset;
+						// update not before,
+						insertionPoint.notBeforeTotalOffset = Math.max( lastDirectiveEndOffset, insertionPoint.notBeforeTotalOffset );
+						// update begin
+						begin = Math.max( begin, lastDirectiveEndOffset ); 
+					}
+					
 				}
 				
 				
@@ -292,16 +306,7 @@ public class N4JSOrganizeImports {
 	}
 	
 	
-	/** returns true for expression statements containing a single string literal. (e.g. a JS directive like '"use strict"' ) */
-	private def boolean isStringLiteralExpression(ScriptElement element) {
-		if( element instanceof ExpressionStatement ) {
-			val expression = element.expression;
-			if( expression instanceof StringLiteral ) {
-				return true; 
-			}
-		}
-		return false;
-	}
+
 
 	/**
 	 * @param xtextResource
