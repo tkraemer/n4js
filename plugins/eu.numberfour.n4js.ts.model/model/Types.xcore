@@ -1082,7 +1082,7 @@ abstract class TStructMember extends TMember {
 	 * the AST model. This property is set by the types builder and should never be changed by code
 	 * outside the types builder.
 	 */
-	refers TStructMember definedMember
+	refers transient TStructMember definedMember
 
 	/**
 	 * The default access modifier for struct members is public. This cannot be changed.

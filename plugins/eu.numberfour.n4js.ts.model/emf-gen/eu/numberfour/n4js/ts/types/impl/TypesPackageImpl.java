@@ -3451,7 +3451,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTMemberWithAccessModifier__GetMemberAccessModifier(), this.getMemberAccessModifier(), "getMemberAccessModifier", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(tStructMemberEClass, TStructMember.class, "TStructMember", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTStructMember_DefinedMember(), this.getTStructMember(), null, "definedMember", null, 0, 1, TStructMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTStructMember_DefinedMember(), this.getTStructMember(), null, "definedMember", null, 0, 1, TStructMember.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTStructMember__GetDefaultMemberAccessModifier(), this.getMemberAccessModifier(), "getDefaultMemberAccessModifier", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

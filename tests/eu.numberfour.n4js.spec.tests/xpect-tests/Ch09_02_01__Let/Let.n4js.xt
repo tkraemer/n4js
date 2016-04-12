@@ -10,6 +10,8 @@ if(true) {
 	for(let v2a=2;v2a<10;v2a++) {
 		
 		let v3 = 3;
+		let {prop: v4} = {prop: 4};
+		let {prop: [,v5]} = {prop: [0,5]};
 		
 		// XPECT noerrors -->
 		v0;
@@ -19,6 +21,10 @@ if(true) {
 		v2a;
 		// XPECT noerrors -->
 		v3;
+		// XPECT noerrors -->
+		v4;
+		// XPECT noerrors -->
+		v5;
 	}
 	
 	for(let v2b=2;v2b<10;v2b++)
@@ -35,6 +41,10 @@ if(true) {
 	v2b;
 	// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v3'." at "v3"
 	v3;
+	// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v4'." at "v4"
+	v4;
+	// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v5'." at "v5"
+	v5;
 }
 
 // XPECT noerrors -->
@@ -47,4 +57,8 @@ v2a;
 v2b;
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v3'." at "v3"
 v3;
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v4'." at "v4"
+v4;
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'v5'." at "v5"
+v5;
 

@@ -1,7 +1,0 @@
-
-
-export public class TestDescriptor{
-	public origin : string;
-	public fqn : string;
-	public testMethods : Array<string>;
-}

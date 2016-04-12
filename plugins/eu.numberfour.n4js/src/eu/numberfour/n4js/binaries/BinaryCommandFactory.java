@@ -51,8 +51,7 @@ public class BinaryCommandFactory {
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
 						packageName, saveDependnecy);
-				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME);
-				return processResult;
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* verbose */ false);
 			}
 		};
 	}
@@ -70,8 +69,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
-				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, COMMAND_NAME);
-				return processResult;
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* verbose */ false);
 			}
 		};
 	}
@@ -88,8 +86,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.createVersionCheckProcess(binary);
-				ProcessResult processResult = processExecutor.createAndExecute(processBuilder, binary.getLabel());
-				return processResult;
+				return processExecutor.createAndExecute(processBuilder, binary.getLabel(), /* silent */ true);
 			}
 		};
 	}

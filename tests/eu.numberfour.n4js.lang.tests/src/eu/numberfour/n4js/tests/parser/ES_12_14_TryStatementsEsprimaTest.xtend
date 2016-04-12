@@ -78,7 +78,7 @@ class ES_12_14_TryStatementsEsprimaTest extends AbstractParserTest {
 		assertEquals("e", catchBlock.catchVariable.name)
 		val callExpr = (catchBlock.block.statements.head as ExpressionStatement).expression as ParameterizedCallExpression
 		assertEquals("say", (callExpr.target as IdentifierRef).text)
-		assertEquals("e", (callExpr.arguments.head as IdentifierRef).text)
+		assertEquals("e", (callExpr.arguments.head.expression as IdentifierRef).text)
 	}
 
 	@Test
@@ -94,7 +94,7 @@ class ES_12_14_TryStatementsEsprimaTest extends AbstractParserTest {
 		val finallyBlock = tryStmt.^finally
 		val callExpr = (finallyBlock.block.statements.head as ExpressionStatement).expression as ParameterizedCallExpression
 		assertEquals("cleanup", (callExpr.target as IdentifierRef).text)
-		assertEquals("stuff", (callExpr.arguments.head as IdentifierRef).text)
+		assertEquals("stuff", (callExpr.arguments.head.expression as IdentifierRef).text)
 	}
 
 	@Test
@@ -113,7 +113,7 @@ class ES_12_14_TryStatementsEsprimaTest extends AbstractParserTest {
 		assertEquals("e", catchBlock.catchVariable.name)
 		val callExpr = (catchBlock.block.statements.head as ExpressionStatement).expression as ParameterizedCallExpression
 		assertEquals("say", (callExpr.target as IdentifierRef).text)
-		assertEquals("e", (callExpr.arguments.head as IdentifierRef).text)
+		assertEquals("e", (callExpr.arguments.head.expression as IdentifierRef).text)
 	}
 
 	@Test
@@ -131,12 +131,12 @@ class ES_12_14_TryStatementsEsprimaTest extends AbstractParserTest {
 		assertEquals("e", catchBlock.catchVariable.name)
 		val callExpr = (catchBlock.block.statements.head as ExpressionStatement).expression as ParameterizedCallExpression
 		assertEquals("say", (callExpr.target as IdentifierRef).text)
-		assertEquals("e", (callExpr.arguments.head as IdentifierRef).text)
+		assertEquals("e", (callExpr.arguments.head.expression as IdentifierRef).text)
 
 		val finallyBlock = tryStmt.^finally
 		val callExpr1 = (finallyBlock.block.statements.head as ExpressionStatement).expression as ParameterizedCallExpression
 		assertEquals("cleanup", (callExpr1.target as IdentifierRef).text)
-		assertEquals("stuff", (callExpr1.arguments.head as IdentifierRef).text)
+		assertEquals("stuff", (callExpr1.arguments.head.expression as IdentifierRef).text)
 	}
 
 	@Test

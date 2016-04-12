@@ -20,8 +20,6 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanBuild;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanWorkspace;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -34,6 +32,7 @@ import org.junit.Before;
 
 import com.google.common.base.Supplier;
 
+import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -42,7 +41,7 @@ import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
  * Responsible for setting up the workspace for the tests.
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractIDEBUG_Test {
+public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest {
 
 	/** Shared logger instance. */
 	protected static final Logger LOGGER = getLogger(AbstractIDEBUG_Test.class);
@@ -87,14 +86,14 @@ public abstract class AbstractIDEBUG_Test {
 		 */
 		public ProjectImporter(final File rootFolder) {
 			assertNotNull("Root folder cannot be null.", rootFolder);
+			assertTrue("Root folder does not exist: " + rootFolder, rootFolder.exists());
 			assertTrue("Root folder must be a folder. But was a file: " + rootFolder, rootFolder.isDirectory());
-			assertTrue("Root folder does not exist: " + rootFolder, rootFolder.isDirectory());
 			assertTrue("Root folder directory content cannot be read: " + rootFolder, rootFolder.canRead());
 			assertTrue("No files were found in the directory: " + rootFolder, null != rootFolder.listFiles());
 			this.rootFolder = rootFolder;
 		}
 
-				/* default */ void importProjects() throws Exception {
+		/* default */ void importProjects() throws Exception {
 			for (final File file : rootFolder.listFiles()) {
 				if (file.exists() && file.isDirectory() && null != file.listFiles() && 0 < file.listFiles().length) {
 

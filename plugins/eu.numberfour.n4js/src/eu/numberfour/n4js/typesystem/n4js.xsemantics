@@ -56,6 +56,7 @@ import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.misc.DestructureHelper
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.ArrayPadding
@@ -810,6 +811,12 @@ from {
 	} else {
 		T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 	}
+}
+
+rule typeArgument
+	G |- Argument arg : TypeRef T
+from {
+	G |- arg.expression: T
 }
 
 
@@ -1689,106 +1696,111 @@ from {
 axiom expectedTypeNone
 	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
 
-rule expectedTypeOfArgumentInNewExpression
-	G |- NewExpression e |> Expression argument: TypeRef T
+rule expectedTypeOfArgument
+	G |- Argument argument |> Expression argumentExpression: TypeRef T
 from {
-	// since the callee is contained in the NewExpression
-	// the validator calls this method also passing the callee as argument
-	if(!e.arguments.contains(argument)) {
-		// expected type of the callee
+	val expr = argument.eContainer;
+	if(expr instanceof NewExpression) {
+		// ############################################################################################################
+		// CODE FROM OLD RULE expectedTypeOfArgumentInNewExpression:
 
-		// callee must be any constructor
-		// --> no type available for this
-		// --> must be checked as a validation
-	}
-	else {
-		// expected type of argument
+		// since the callee is contained in the NewExpression
+		// the validator calls this method also passing the callee as argument
+		if(!expr.arguments.contains(argument)) {
+			// expected type of the callee
 
-		// compute ctor
-		G |- e.callee : var ConstructorTypeRef ctorTypeRef
+			// callee must be any constructor
+			// --> no type available for this
+			// --> must be checked as a validation
+		}
+		else {
+			// expected type of argument
 
-		// add type variable mappings based on the type
-		// of the instance to be created
-		// --> for this, create a ParameterizedTypeRef taking the staticType from
-		//     the CtorTypeRef and the type arguments from the NewExpression
-		var typeRefOfInstanceToCreate = ctorTypeRef.createTypeRefFromStaticType(e.typeArgs)
-		var typeOfInstanceToCreate = typeRefOfInstanceToCreate.declaredType as ContainerType<?>
-		val G2 = G.wrap
-		typeSystemHelper.addSubstitutions(G2,typeRefOfInstanceToCreate)
-		G2.addThisType(typeRefOfInstanceToCreate)	// required if we refer to a ctor with a parameter of type [~]~this (esp. default ctor)
+			// compute ctor
+			G |- expr.callee : var ConstructorTypeRef ctorTypeRef
 
-		var TMethod ctor = containerTypesHelper.fromContext(e.eResource).findConstructor(typeOfInstanceToCreate)
+			// add type variable mappings based on the type
+			// of the instance to be created
+			// --> for this, create a ParameterizedTypeRef taking the staticType from
+			//     the CtorTypeRef and the type arguments from the NewExpression
+			var typeRefOfInstanceToCreate = ctorTypeRef.createTypeRefFromStaticType(expr.typeArgs)
+			var typeOfInstanceToCreate = typeRefOfInstanceToCreate.declaredType as ContainerType<?>
+			val G2 = G.wrap
+			typeSystemHelper.addSubstitutions(G2,typeRefOfInstanceToCreate)
+			G2.addThisType(typeRefOfInstanceToCreate)	// required if we refer to a ctor with a parameter of type [~]~this (esp. default ctor)
 
-		val fpar = ctor?.getFparForArgIdx(ECollections.indexOf(e.arguments, argument, 0));
-		if (fpar==null) {
-			// consequential error or ignored:
-			T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
-		} else {
-			val paramType = fpar.typeRef;
-			if (paramType==null) {
-				T = G2.anyTypeRef
+			var TMethod ctor = containerTypesHelper.fromContext(expr.eResource).findConstructor(typeOfInstanceToCreate)
+
+			val fpar = ctor?.getFparForArgIdx(ECollections.indexOf(expr.arguments, argument, 0));
+			if (fpar==null) {
+				// consequential error or ignored:
+				T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 			} else {
-				// bind type variables in function type's parameter type
-				G2 |- paramType ~> T
+				val paramType = fpar.typeRef;
+				if (paramType==null) {
+					T = G2.anyTypeRef
+				} else {
+					// bind type variables in function type's parameter type
+					G2 |- paramType ~> T
+				}
 			}
 		}
-	}
-}
+		// ############################################################################################################
+	} else if(expr instanceof ParameterizedCallExpression) {
+		// ############################################################################################################
+		// CODE FROM OLD RULE expectedTypeOfArgumentInCallExpression:
 
+		// since the target is contained in the CallExpression
+		// the validator calls this method also passing the target as argument
+		// but this rule is intended only for arguments of the call expression
+		expr.arguments.contains(argument)
 
-/* @see [N4JS] 6.1.9. FunctionCalls */
-rule expectedTypeOfArgumentInCallExpression
-	G |- ParameterizedCallExpression expr |> Expression argument: TypeRef T
-from {
-	// since the target is contained in the CallExpression
-	// the validator calls this method also passing the target as argument
-	// but this rule is intended only for arguments of the call expression
-	expr.arguments.contains(argument)
+		G |- expr.target : var TypeRef targetTypeRef
 
-	G |- expr.target : var TypeRef targetTypeRef
-
-	if (targetTypeRef instanceof FunctionTypeExprOrRef)
-	{
-		val F = targetTypeRef
-		val argIndex = ECollections.indexOf(expr.arguments, argument, 0);
-		val fpar = F.getFparForArgIdx(argIndex);
-		if (fpar==null) {
-			// consequential error or ignored:
-			T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
-		} else {
-			val paramType = fpar.typeRef;
-			if (paramType==null) {
-				T = G.anyTypeRef
+		if (targetTypeRef instanceof FunctionTypeExprOrRef)
+		{
+			val F = targetTypeRef
+			val argIndex = ECollections.indexOf(expr.arguments, argument, 0);
+			val fpar = F.getFparForArgIdx(argIndex);
+			if (fpar==null) {
+				// consequential error or ignored:
+				T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 			} else {
-				val G2 = G.wrap;
+				val paramType = fpar.typeRef;
+				if (paramType==null) {
+					T = G.anyTypeRef
+				} else {
+					val G2 = G.wrap;
 
-				typeSystemHelper.addSubstitutions(G2, expr, F);
+					typeSystemHelper.addSubstitutions(G2, expr, F);
 
-				if(expr.target instanceof SuperLiteral) {
-					// required only in case of super(...) referring to a ctor with a parameter of type [~]~this (esp. default ctor)
-					// although we must be inside a TClass, implemented robustly in order to minimize errors
-					// TODO can/should this be moved to one of the #addSubstitutions() methods?
-					val containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType;
-					if (containingClass instanceof TClass) {
-						G2.addThisType(containingClass.ref)
-						if (containingClass.superClassRef!==null) {
-							typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef)
-						}
-						// IDEBUG-262 special handling of spec-style constructor fpars:
-						if (paramType instanceof ThisTypeRefStructural) {
-							// needs this-type Binding to parent-class
-							G2.addThisType(containingClass.superClassRef)
+					if(expr.target instanceof SuperLiteral) {
+						// required only in case of super(...) referring to a ctor with a parameter of type [~]~this (esp. default ctor)
+						// although we must be inside a TClass, implemented robustly in order to minimize errors
+						// TODO can/should this be moved to one of the #addSubstitutions() methods?
+						val containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType;
+						if (containingClass instanceof TClass) {
+							G2.addThisType(containingClass.ref)
+							if (containingClass.superClassRef!==null) {
+								typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef)
+							}
+							// IDEBUG-262 special handling of spec-style constructor fpars:
+							if (paramType instanceof ThisTypeRefStructural) {
+								// needs this-type Binding to parent-class
+								G2.addThisType(containingClass.superClassRef)
+							}
 						}
 					}
-				}
 
-				// bind type variables in function type's parameter type
-				G2 |- paramType ~> T
+					// bind type variables in function type's parameter type
+					G2 |- paramType ~> T
+				}
 			}
 		}
-	}
-	else {
-		T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+		else {
+			T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+		}
+		// ############################################################################################################
 	}
 }
 

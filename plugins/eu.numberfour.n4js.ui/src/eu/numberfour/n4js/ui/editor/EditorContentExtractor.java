@@ -110,6 +110,11 @@ public class EditorContentExtractor {
 		final ResourceSet resSet = core.createResourceSet(Optional.of(project));
 		final IResourceDescriptions index = core.getXtextIndex(resSet);
 		final IResourceDescription resDesc = index.getResourceDescription(trimmedUri);
+
+		if (null == resDesc) {
+			return absent();
+		}
+
 		final TModule module = core.loadModuleFromIndex(resSet, resDesc, false);
 		if (null == module || null == module.eResource() || null == module.eResource().getResourceSet()) {
 			return absent();

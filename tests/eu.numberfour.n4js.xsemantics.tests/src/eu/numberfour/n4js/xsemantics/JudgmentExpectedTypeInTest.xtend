@@ -228,8 +228,8 @@ class JudgmentExpectedTypeInTest extends AbstractTypesystemTest {
 
 		val issues = script.validate();
 		assertEquals(0, issues.size)
-		val arg = script.callExpressions.head.arguments.head
-		"A".assertExpectedTypeName(arg)
+		val argExpr = script.callExpressions.head.arguments.head.expression
+		"A".assertExpectedTypeName(argExpr)
 	}
 
 	@Test
@@ -245,8 +245,8 @@ class JudgmentExpectedTypeInTest extends AbstractTypesystemTest {
 
 		val issues = script.validate();
 		assertEquals(0, issues.size)
-		val arg = script.callExpressions.head.arguments.head
-		"B".assertExpectedTypeName(arg)
+		val argExpr = script.callExpressions.head.arguments.head.expression
+		"B".assertExpectedTypeName(argExpr)
 	}
 
 }

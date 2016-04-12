@@ -35,12 +35,14 @@ public class OutputStreamPrinterThread extends Thread implements AutoCloseable {
 	private final InputStream is;
 	private final OutputStream os;
 	private final ByteArrayOutputStream baos;
+	private final boolean silent;
 
-	/* default */ OutputStreamPrinterThread(final InputStream is, final OutputStream os) {
+	/* default */ OutputStreamPrinterThread(final InputStream is, final OutputStream os, boolean silent) {
 		this.is = checkNotNull(is, "is");
 		this.os = checkNotNull(os, "os");
 		setName(this.getClass().getSimpleName());
-		baos = new ByteArrayOutputStream();
+		this.baos = new ByteArrayOutputStream();
+		this.silent = silent;
 	}
 
 	@Override
@@ -52,8 +54,10 @@ public class OutputStreamPrinterThread extends Thread implements AutoCloseable {
 			while ((numberOfReadBytes = bis.read(buffer)) != -1) {
 				final byte[] clearedBuffer = new byte[numberOfReadBytes];
 				System.arraycopy(buffer, 0, clearedBuffer, 0, numberOfReadBytes);
-				os.write(clearedBuffer);
 				baos.write(clearedBuffer);
+				if (!silent) {
+					os.write(clearedBuffer);
+				}
 			}
 		} catch (final Exception e) {
 			final String message = "Error reading output of running process.";
