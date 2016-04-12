@@ -34,12 +34,14 @@ public class WorkspaceWizardValidatorUtils {
 	/**
 	 * Check whether all segments in a proposed path are valid folder names. Calls segments are separated by {@code '/'}
 	 * slashes, calls {@link #isValidFolderName(String)}.
-	 * 
+	 *
 	 * @param pathName
 	 *            folder to check
 	 * @return true if pathName passes the check.
 	 */
 	public static boolean isValidSubFolderStructure(String pathName) {
+
+		// TODO revise for Windows-systems, c.f. Path.isValidPath() and the Separator handling there.
 		String[] split = pathName.split("/");
 		for (String path : split) {
 			if (!isValidFolderName(path))
