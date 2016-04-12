@@ -21,17 +21,12 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.builder.builderState.EMFBasedPersister;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceDescriptions;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.ui.building.ResourceDescriptionWithoutModuleUserData;
 import eu.numberfour.n4js.ui.resource.IResourceDescriptionPersisterContribution;
 
 /**
@@ -49,40 +44,6 @@ public class ContributingResourceDescriptionPersister extends EMFBasedPersister 
 			.memoize(() -> getContributions());
 
 	private final AtomicBoolean requiresRecoveryBuild = new AtomicBoolean(false);
-
-	/**
-	 * Unlike in the {@link EMFBasedPersister} superclass this class not just saves all {@link IResourceDescription
-	 * resource description} instances that are an instance of {@link EObject} but checks whether any description
-	 * instances of the argument is an instance of {@link ResourceDescriptionWithoutModuleUserData resource description
-	 * without TModule user data}. If so, checks whether the delegate is an instance of {@link EObject} and saves that
-	 * description as well. This is required because the customized resource description (which is not a subclass of
-	 * {@link EObject}) gets into the {@link IResourceDescriptions Xtext index} in the builder state.
-	 *
-	 * @see ResourceDescriptionWithoutModuleUserData
-	 */
-	@Override
-	public void saveToResource(final Resource res, final Iterable<IResourceDescription> descriptions) {
-		super.saveToResource(res, descriptions);
-		for (final IResourceDescription description : descriptions) {
-			if (description instanceof EObject) {
-				res.getContents().add((EObject) description);
-				/**
-				 * This case was introduced to supply a pragmatic solution for the incorrect Xtext index persistence
-				 * issue due to the customized {@link ResourceDescriptionWithoutModuleUserData} that gets into the
-				 * {@link IBuilderState builder state's} index although they do not supposed to show up there. This
-				 * happens only for index elements for external libraries.
-				 *
-				 * IDEBUG-855 and IDEBUG-857
-				 */
-			} else if (description instanceof ResourceDescriptionWithoutModuleUserData) {
-				final IResourceDescription delegate = ((ResourceDescriptionWithoutModuleUserData) description)
-						.getDelegate();
-				if (delegate instanceof EObject) {
-					res.getContents().add((EObject) delegate);
-				}
-			}
-		}
-	}
 
 	@Override
 	protected void scheduleRecoveryBuild() {

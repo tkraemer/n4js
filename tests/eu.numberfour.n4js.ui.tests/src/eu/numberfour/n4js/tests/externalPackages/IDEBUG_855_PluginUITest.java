@@ -78,10 +78,10 @@ public class IDEBUG_855_PluginUITest extends AbstractBuilderParticipantTest {
 		externalLibraryPreferenceStore.add(externalRootLocation);
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
 		assertTrue("Error while saving external library preference changes.", result.isOK());
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 		final File projectsRoot = new File(getResourceUri(PROBANDS, WORKSPACE_LOC));
 		ProjectUtils.importProject(projectsRoot, PROJECT);
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class IDEBUG_855_PluginUITest extends AbstractBuilderParticipantTest {
 		externalLibraryPreferenceStore.remove(externalRootLocation);
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
 		assertTrue("Error while saving external library preference changes.", result.isOK());
-		waitForAutoBuild(false);
+		waitForAutoBuild();
 		super.tearDown();
 	}
 

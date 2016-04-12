@@ -18,11 +18,9 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.xtext.util.Files
 import org.junit.Test
 
+import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.METHOD_STACKTRACE_SUFFIX
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.fullBuild
-import static org.junit.Assert.assertTrue
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.METHOD_STACKTRACE_SUFFIX
-
 
 /**
  * Test for checking that the correctly polyfilled non-accessor members will not have auto-generated{@code API not implemented yet} stubs.
@@ -53,7 +51,7 @@ class IDEBUG_650_PluginUITest extends AbstractIDEBUG_Test {
 
 	@Override
 	override protected AbstractIDEBUG_Test.ProjectImporter getProjectImporter() {
-		return new eu.numberfour.n4js.tests.bugs.AbstractIDEBUG_Test.ProjectImporter(new File(new File('probands/IDEBUG_650/').absolutePath));
+		return new AbstractIDEBUG_Test.ProjectImporter(new File(new File('probands/IDEBUG_650/').absolutePath));
 	}
 
 }
