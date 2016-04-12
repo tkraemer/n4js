@@ -12,7 +12,6 @@ package eu.numberfour.n4js.tests.bugs;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.fullBuild;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 

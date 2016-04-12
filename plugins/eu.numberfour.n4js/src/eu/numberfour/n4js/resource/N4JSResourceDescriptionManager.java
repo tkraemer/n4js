@@ -122,16 +122,22 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	 * 'delta'.
 	 */
 	private boolean hasDependencyTo(IResourceDescription candidate, IResourceDescription.Delta delta) {
-		final URI from = candidate.getURI();
-		final URI to = delta.getUri();
-		final IN4JSProject fromP = n4jsCore.findProject(from).orNull();
-		final IN4JSProject toP = n4jsCore.findProject(to).orNull();
-		if (Objects.equals(fromP, toP)) {
-			return true;
-		}
-		if (null != fromP) { // Consider libraries. TODO: implement it at #findProject(URI)
-			for (IN4JSProject depP : fromP.getDependenciesAndImplementedApis()) {
-				if (Objects.equals(depP, toP)) {
+		final URI fromUri = candidate.getURI();
+		final URI toUri = delta.getUri();
+		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
+		final IN4JSProject toProject = n4jsCore.findProject(toUri).orNull();
+
+		if (null != fromProject && null != toProject) { // Consider libraries. TODO: implement it at #findProject(URI)
+
+			if (Objects.equals(fromProject, toProject)) {
+				return true;
+			}
+
+			for (IN4JSProject fromProjectDependency : fromProject.getDependenciesAndImplementedApis()) {
+
+				// Never mark a resource as effected if the dependency is an external one.
+				// The library manager already knows about the build older.
+				if (Objects.equals(fromProjectDependency, toProject) && !fromProjectDependency.isExternal()) {
 					return true;
 				}
 			}

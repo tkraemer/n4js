@@ -255,11 +255,19 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 	 */
 	protected void assertXtextIndexIsValid() {
 		final IResourceDescriptions index = getXtextIndex();
+		final StringBuilder sb = new StringBuilder();
 		for (IResourceDescription desc : index.getAllResourceDescriptions()) {
-			assertFalse(
-					"IResourceDescriptions in index must not be instances of ResourceDescriptionWithoutModuleUserData but was "
-							+ desc.getClass().getName() + "[" + desc.getURI() + "]",
-					desc instanceof ResourceDescriptionWithoutModuleUserData);
+			if (desc instanceof ResourceDescriptionWithoutModuleUserData) {
+				if (sb.length() > 0) {
+					sb.append("\n");
+				}
+				sb.append(IResourceDescription.class.getSimpleName());
+				sb.append(" in index must not be an instance of ");
+				sb.append(ResourceDescriptionWithoutModuleUserData.class.getSimpleName());
+				sb.append(" but it was. URI: ");
+				sb.append(desc.getURI());
+			}
 		}
+		assertTrue(sb.toString(), 0 == sb.length());
 	}
 }

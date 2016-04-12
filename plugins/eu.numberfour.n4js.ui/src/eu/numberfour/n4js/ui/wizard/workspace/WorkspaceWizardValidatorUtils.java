@@ -39,6 +39,7 @@ public class WorkspaceWizardValidatorUtils {
 	 * That means that every segment needs to be a valid folder name.
 	 */
 	public static boolean isValidFolderPath(IPath path) {
+		// TODO revise for Windows-systems, c.f. Path.isValidPath() and the Separator handling there.
 		for (String segment : path.segments()) {
 			if (!isValidFolderName(segment)) {
 				return false;

@@ -49,7 +49,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	protected static class ErrorMessages {
 
 		// General errors
-		public static final String UNKNOWN_VALIDATION_ERROR = "Unknown validation error";
+		public static final String INVALID_STATE_VALIDATION_ERROR = "Invalid state validation error";
 
 		// Project errors
 		public static final String PROJECT_DOES_NOT_EXIST = "The given project does not exist";
@@ -267,6 +267,39 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		return validationResult;
 	}
 
+	/**
+	 * @return True if the project property is valid
+	 */
+	public boolean getProjectValid() {
+		return projectValid;
+	}
+
+	/**
+	 *
+	 * @param projectValid
+	 *            The new validity of the project property
+	 */
+	private void setProjectValid(boolean projectValid) {
+		this.firePropertyChange(PROJECT_PROPERTY_VALID, this.projectValid, this.projectValid = projectValid);
+	}
+
+	/**
+	 * @return True if the source folder property is valid
+	 */
+	public boolean getSourceFolderValid() {
+		return sourceFolderValid;
+	}
+
+	/**
+	 *
+	 * @param sourceFolderValid
+	 *            The new validity of the source folder property
+	 */
+	private void setSourceFolderValid(boolean sourceFolderValid) {
+		this.firePropertyChange(SOURCE_FOLDER_PROPERTY_VALID, this.sourceFolderValid,
+				this.sourceFolderValid = sourceFolderValid);
+	}
+
 	private void setValidationResult(ValidationResult validationResult) {
 		this.firePropertyChange(VALIDATION_RESULT, this.validationResult, this.validationResult = validationResult);
 	}
@@ -326,7 +359,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		IN4JSProject project = n4jsCore.findProject(projectUri).orNull();
 
 		if (null == project) {
-			throw new ValidationException(ErrorMessages.UNKNOWN_VALIDATION_ERROR);
+			throw new ValidationException(ErrorMessages.INVALID_STATE_VALIDATION_ERROR);
 		}
 
 		if (project.getSourceContainers().stream()
@@ -387,38 +420,5 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 			}
 		}
 
-	}
-
-	/**
-	 * @return True if the project property is valid
-	 */
-	public boolean getProjectValid() {
-		return projectValid;
-	}
-
-	/**
-	 *
-	 * @param projectValid
-	 *            The new validity of the project property
-	 */
-	private void setProjectValid(boolean projectValid) {
-		this.firePropertyChange(PROJECT_PROPERTY_VALID, this.projectValid, this.projectValid = projectValid);
-	}
-
-	/**
-	 * @return True if the source folder property is valid
-	 */
-	public boolean getSourceFolderValid() {
-		return sourceFolderValid;
-	}
-
-	/**
-	 *
-	 * @param sourceFolderValid
-	 *            The new validity of the source folder property
-	 */
-	private void setSourceFolderValid(boolean sourceFolderValid) {
-		this.firePropertyChange(SOURCE_FOLDER_PROPERTY_VALID, this.sourceFolderValid,
-				this.sourceFolderValid = sourceFolderValid);
 	}
 }
