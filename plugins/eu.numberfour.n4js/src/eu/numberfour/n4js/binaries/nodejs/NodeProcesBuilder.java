@@ -51,13 +51,13 @@ public class NodeProcesBuilder {
 		NodeJsBinary nodeBinary = nodeBinaryProvider.get();
 		if (isWindows()) {
 			builder.add(WIN_SHELL_COMAMNDS);
-			builder.add("\"" + nodeBinary.getBinaryAbsolutePath() + "\" ");
+			builder.add(escapeBinaryPath(nodeBinary.getBinaryAbsolutePath()));
 			builder.add("-e");
 			builder.add("console.log(require.resolve('" + packageRoot.getName() + "'));");
 		} else {
 			builder.add(NIX_SHELL_COMAMNDS);
-			builder.add("\"" + nodeBinary.getBinaryAbsolutePath()
-					+ "\" -e \"console.log(require.resolve('" + packageRoot.getName() + "'));\"");
+			builder.add(escapeBinaryPath(nodeBinary.getBinaryAbsolutePath())
+					+ " -e \"console.log(require.resolve('" + packageRoot.getName() + "'));\"");
 		}
 
 		return create(builder.build(), nodeBinary, packageRoot, false);
@@ -77,15 +77,15 @@ public class NodeProcesBuilder {
 	public ProcessBuilder getNpmInstallProcessBuilder(File installPath, String packageName, boolean save) {
 		Builder<String> builder = ImmutableList.<String> builder();
 		NpmBinary npmBinary = npmBinaryProvider.get();
-		String saveCommand = save ? " --save" : "";
+		String saveCommand = save ? "--save" : "";
 
 		if (isWindows()) {
 			builder.add(WIN_SHELL_COMAMNDS);
-			builder.add(npmBinary.getBinaryAbsolutePath(), "install", packageName + saveCommand);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), "install", packageName, saveCommand);
 		} else {
 			builder.add(NIX_SHELL_COMAMNDS);
-			builder.add(npmBinary.getBinaryAbsolutePath() + " install " + packageName + saveCommand);
-
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " install " + packageName + " "
+					+ saveCommand);
 		}
 
 		return create(builder.build(), npmBinary, installPath, false);
@@ -108,8 +108,8 @@ public class NodeProcesBuilder {
 		} else {
 			builder.add(NIX_SHELL_COMAMNDS);
 		}
-		// Escaping path for example C:\Program Files\nodejs will be "C:\Program Files\nodejs".
-		builder.add("\"" + binary.getBinaryAbsolutePath() + "\" " + binary.getVersionArgument());
+
+		builder.add(escapeBinaryPath(binary.getBinaryAbsolutePath()) + " " + binary.getVersionArgument());
 
 		return create(builder.build(), binary, null, false);
 	}
@@ -124,4 +124,11 @@ public class NodeProcesBuilder {
 		return processBuilder;
 	}
 
+	/**
+	 * Escaping path for example <code>C:\Program Files\node.exe</code> will be <code>"C:\Program Files\node.exe"</code>
+	 * .
+	 */
+	private String escapeBinaryPath(String path) {
+		return "\"" + path + "\"";
+	}
 }

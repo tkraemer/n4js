@@ -141,4 +141,16 @@ public interface ForStatement extends VariableDeclarationContainer, IterationSta
 	 */
 	boolean isForPlain();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * * See {@link VariableEnvironmentElement#appliesOnlyToBlockScopedElements()}.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return true;'"
+	 * @generated
+	 */
+	boolean appliesOnlyToBlockScopedElements();
+
 } // ForStatement

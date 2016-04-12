@@ -580,6 +580,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				SwitchStatement switchStatement = (SwitchStatement)theEObject;
 				T result = caseSwitchStatement(switchStatement);
 				if (result == null) result = caseStatement(switchStatement);
+				if (result == null) result = caseVariableEnvironmentElement(switchStatement);
 				if (result == null) result = caseScriptElement(switchStatement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -953,6 +954,13 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseExpression(parameterizedCallExpression);
 				if (result == null) result = caseParameterizedAccess(parameterizedCallExpression);
 				if (result == null) result = caseTypableElement(parameterizedCallExpression);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case N4JSPackage.ARGUMENT: {
+				Argument argument = (Argument)theEObject;
+				T result = caseArgument(argument);
+				if (result == null) result = caseTypableElement(argument);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -3044,6 +3052,21 @@ public class N4JSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameterizedCallExpression(ParameterizedCallExpression object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Argument</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArgument(Argument object) {
 		return null;
 	}
 

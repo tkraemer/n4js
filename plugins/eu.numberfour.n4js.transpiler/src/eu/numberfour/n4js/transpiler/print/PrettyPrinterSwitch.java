@@ -26,6 +26,7 @@ import org.eclipse.xtext.EcoreUtil2;
 import eu.numberfour.n4js.conversion.N4JSStringValueConverter;
 import eu.numberfour.n4js.n4JS.AdditiveExpression;
 import eu.numberfour.n4js.n4JS.Annotation;
+import eu.numberfour.n4js.n4JS.Argument;
 import eu.numberfour.n4js.n4JS.ArrayElement;
 import eu.numberfour.n4js.n4JS.ArrayLiteral;
 import eu.numberfour.n4js.n4JS.ArrayPadding;
@@ -116,10 +117,10 @@ import eu.numberfour.n4js.transpiler.im.ParameterizedPropertyAccessExpression_IM
 import eu.numberfour.n4js.transpiler.im.Script_IM;
 import eu.numberfour.n4js.transpiler.im.Snippet;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
-import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 
 /**
  * Traverses an intermediate model and serializes it to a {@link SourceMapAwareAppendable}. Client code should only use
@@ -699,6 +700,15 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 		write('(');
 		process(original.getArguments(), ", ");
 		write(')');
+		return DONE;
+	}
+
+	@Override
+	public Boolean caseArgument(Argument original) {
+		if (original.isSpread()) {
+			write("... ");
+		}
+		process(original.getExpression());
 		return DONE;
 	}
 

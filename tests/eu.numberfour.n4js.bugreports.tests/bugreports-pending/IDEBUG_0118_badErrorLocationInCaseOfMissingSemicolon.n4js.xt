@@ -1,6 +1,5 @@
 // XPECT FIXME errors --> "No semicolon after function expression"
 var safeEval = function safeEval(dyn) { eval(dyn) }
 (function(){
-	// XPECT warnings --> "Reference to variable safeEval within the initializer expression of the declaration of safeEval." at "safeEval"
 	safeEval('logFactors(1)');
 })();

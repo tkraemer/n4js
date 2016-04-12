@@ -70,6 +70,7 @@ import eu.numberfour.n4js.n4JS.SuperLiteral
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.Variable
+import eu.numberfour.n4js.n4JS.VariableBinding
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.n4JS.VariableStatementKeyword
@@ -78,7 +79,6 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -86,6 +86,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.Set
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
@@ -1517,6 +1518,28 @@ class ASTStructureValidator {
 			return container.name === null
 		}
 		return false
+	}
+
+	def dispatch void validateASTStructure(
+		VariableBinding model,
+		ASTStructureDiagnosticProducer producer,
+		Set<LabelledStatement> validLabels,
+		Constraints constraints
+	) {
+		// no need to assert model.expression!==null (it is enforced by the grammar)
+		
+		recursiveValidateASTStructure(
+			model,
+			producer,
+			validLabels,
+			// initializers of variable declarations below a VariableBinding are always optional, even if we are in the
+			// context of a const declaration, e.g. the following should not show an error about missing initializer:
+			//   const [c1, c2] = [10, 20];
+			// Requiring an initializer of variable declarations below VariableBindings would render the above code
+			// invalid and require something like:
+			//   const [c1=1, c2=2] = [10, 20];
+			constraints.allowVarWithoutInitializer(true)
+		)
 	}
 
 	def dispatch void validateASTStructure(

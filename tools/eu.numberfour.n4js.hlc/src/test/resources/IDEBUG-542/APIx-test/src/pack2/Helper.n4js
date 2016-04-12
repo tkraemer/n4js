@@ -1,4 +1,4 @@
-import { IExtendsIterator } from "runtime/es6/Iterator"
-import { X } from "pack1/T1"
+import { IteratorExt } from 'Iterator';
+import { X } from 'pack1/T1';
 
 

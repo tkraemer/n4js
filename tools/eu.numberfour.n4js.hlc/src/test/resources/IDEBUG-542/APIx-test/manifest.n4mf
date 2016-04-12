@@ -13,7 +13,10 @@ Sources {
 		"test"
 	}
 }
-RequiredRuntimeLibraries { rtlib }
+
+RequiredRuntimeLibraries { 
+	n4js-runtime-es2015
+}
 
 TestedProjects { 
     APIx

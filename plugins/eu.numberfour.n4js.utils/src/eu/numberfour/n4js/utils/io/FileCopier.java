@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.utils.io;
 
+import static com.google.common.base.Predicates.alwaysTrue;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.nio.file.FileVisitResult.SKIP_SUBTREE;
 
@@ -27,7 +28,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 /**
  * Copies a single file resource or recursively a whole folder with its content to a different location. <br>
@@ -39,16 +39,14 @@ public class FileCopier implements FileVisitor<Path> {
 
 	private final Path source;
 	private final Path target;
-
 	private final Predicate<Path> shouldCopyFile;
+	private final boolean logToStdErr;
 
-	/** Default predicate, always passes */
-	private static Predicate<Path> PASS_THROUGH = Predicates.alwaysTrue();
-
-	private FileCopier(Path source, Path target, Predicate<Path> shouldCopyFile) {
+	private FileCopier(Path source, Path target, Predicate<Path> shouldCopyFile, boolean logToStdErr) {
 		this.source = source;
 		this.target = target;
 		this.shouldCopyFile = shouldCopyFile;
+		this.logToStdErr = logToStdErr;
 	}
 
 	/**
@@ -60,7 +58,21 @@ public class FileCopier implements FileVisitor<Path> {
 	 *            path to the target to copy.
 	 */
 	public static void copy(Path from, Path to) throws IOException {
-		Files.walkFileTree(from, new FileCopier(from, to, PASS_THROUGH));
+		copy(from, to, false);
+	}
+
+	/**
+	 * Copies a single file or a recursively a whole folder with its content to the given destination. Just like
+	 * {@link #copy(Path, Path)} but it logs any errors message to the standard error output instead of the logger
+	 * instance. This factory method could come handy when using from the headless tool.
+	 *
+	 * @param from
+	 *            path to the source to copy.
+	 * @param to
+	 *            path to the target to copy.
+	 */
+	public static void copy(Path from, Path to, boolean logToStdErr) throws IOException {
+		Files.walkFileTree(from, new FileCopier(from, to, alwaysTrue(), logToStdErr));
 	}
 
 	/**
@@ -75,7 +87,7 @@ public class FileCopier implements FileVisitor<Path> {
 	 *            predicate checking if given file should be copied
 	 */
 	public static void copy(Path from, Path to, Predicate<Path> shouldCopyFile) throws IOException {
-		Files.walkFileTree(from, new FileCopier(from, to, shouldCopyFile));
+		Files.walkFileTree(from, new FileCopier(from, to, shouldCopyFile, false));
 	}
 
 	@Override
@@ -88,7 +100,7 @@ public class FileCopier implements FileVisitor<Path> {
 		} catch (FileAlreadyExistsException e) {
 			// ignore
 		} catch (IOException e) {
-			LOGGER.error("Error while creating folder: " + newdir, e);
+			logError(newdir, e);
 			return SKIP_SUBTREE;
 		}
 		return CONTINUE;
@@ -114,5 +126,14 @@ public class FileCopier implements FileVisitor<Path> {
 			LOGGER.error("Error while copying resource: " + file, exc);
 		}
 		return CONTINUE;
+	}
+
+	private void logError(Path newdir, IOException e) {
+		if (logToStdErr) {
+			System.err.println("Error while creating folder: " + newdir);
+			e.printStackTrace();
+		} else {
+			LOGGER.error("Error while creating folder: " + newdir, e);
+		}
 	}
 }

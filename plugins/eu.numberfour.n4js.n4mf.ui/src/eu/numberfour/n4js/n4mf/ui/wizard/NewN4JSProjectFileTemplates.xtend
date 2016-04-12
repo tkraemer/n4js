@@ -26,10 +26,13 @@ class NewN4JSProjectFileTemplates {
 	 */
 	static def getSourceFileWithGreeterClass(String projectName, String safeProjectName) '''
 		export class GreeterFor_«safeProjectName» {
+
 		    public greet() {
 		        console.log("Hello World from '«projectName»'!");
 		    }
+
 		}
+
 		var greeter = new GreeterFor_«safeProjectName»();
 		greeter.greet();
 		//right click this module and select "Run As -> Launch in Node.js" to see
@@ -46,11 +49,17 @@ class NewN4JSProjectFileTemplates {
 		import { Assert } from "n4/mangel/assert/Assert"
 		
 		export public class Test_«safeProjectName» {
+
 			@Test
-			test(){
-				Assert.isTrue(true, "Testing works!")
+			testPass() {
+				Assert.isTrue(true, "Testing works!");
 			}
-			
+
+			@Test
+			testFail() {
+				Assert.fail("Test failed.");
+			}
+
 		}
 		//right click this module and select "Run As -> Test in Node.js" to see the test results
 	'''

@@ -117,7 +117,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 					createMemberDefinitions(classDecl, false),
 					createMemberDefinitions(classDecl, true),
 					createN4TypeMetaInfoFactoryFunction(classDecl, superClassSTE)
-				];
+				].map[_Argument(it)];
 			]
 		);
 	}
@@ -183,7 +183,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 				arguments += #[
 					_IdentRef(findSymbolTableEntryForElement(ifcDecl, false)),
 					createN4TypeMetaInfoFactoryFunction(ifcDecl, null)
-				];
+				].map[_Argument(it)];
 			]
 		);
 	}
@@ -221,7 +221,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 					_BooleanLiteral(isStringBased),
 					enumLiteralArray,
 					createN4TypeMetaInfoFactoryFunction(enumDecl, null)
-				];
+				].map[_Argument(it)];
 			]
 		);
 	}

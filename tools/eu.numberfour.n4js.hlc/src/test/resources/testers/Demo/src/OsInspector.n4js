@@ -1,6 +1,3 @@
-import { os } from "node/os"
-
-
-export public function getOsName() :string{
-	return "detected os :: " + os.osType();
+export public function getOsName(): string {
+	return 'detected os :: ' + 'fakeOsName';
 }

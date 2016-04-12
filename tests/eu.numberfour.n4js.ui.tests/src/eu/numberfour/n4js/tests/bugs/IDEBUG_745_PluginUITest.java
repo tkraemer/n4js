@@ -12,8 +12,6 @@ package eu.numberfour.n4js.tests.bugs;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.fullBuild;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -25,7 +23,8 @@ import org.junit.Test;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
 
 /**
- * Class for checking whether the order of the source containers influences the indexing order and the scoping for imports.
+ * Class for checking whether the order of the source containers influences the indexing order and the scoping for
+ * imports.
  */
 @SuppressWarnings("restriction")
 public class IDEBUG_745_PluginUITest extends AbstractIDEBUG_Test {

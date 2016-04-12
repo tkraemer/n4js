@@ -74,7 +74,7 @@ class TranspilerStateOperations {
 	}
 
 	def public static void addArgument(TranspilerState state, ParameterizedCallExpression callExpr, int index, Expression newArgument) {
-		callExpr.arguments.add(index, newArgument);
+		callExpr.arguments.add(index, _Argument(newArgument));
 	}
 
 	def public static void remove(TranspilerState state, EObject elementInIM) {

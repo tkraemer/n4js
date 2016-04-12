@@ -48,8 +48,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
+import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.external.libraries.PackageJson;
@@ -190,7 +190,7 @@ public class NpmManager {
 				}
 			} catch (IOException | InterruptedException e) {
 				final IStatus status = statusHelper
-						.createError("Errors occurred while installing npm package '" + packageName + "'.", e);
+						.createError("Error occurred while installing npm package '" + packageName + "'.", e);
 				logError(status);
 				return status;
 			}
@@ -268,9 +268,9 @@ public class NpmManager {
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, packageNames.size() + 1);
 		try {
 
-			performGitPull();
+			subMonitor.setTaskName("Refreshing cache for type definitions files...");
 
-			subMonitor.worked(1);
+			performGitPull(subMonitor.newChild(1, SubMonitor.SUPPRESS_ALL_LABELS));
 
 			// Initial pessimistic.
 			final MultiStatus errorStatus = statusHelper
@@ -318,10 +318,12 @@ public class NpmManager {
 	private IStatus refreshInstalledNpmPackage(final String packageName, final boolean performGitPull,
 			final IProgressMonitor monitor) {
 
+		final SubMonitor progress = SubMonitor.convert(monitor, 2);
+
 		logInfo("================================================================");
 		final String taskName = "Refreshing type definitions for '" + packageName + "' npm package...";
 		logInfo(taskName);
-		monitor.beginTask(taskName, 1);
+		progress.setTaskName(taskName);
 
 		try {
 
@@ -338,7 +340,7 @@ public class NpmManager {
 			}
 
 			if (performGitPull) {
-				performGitPull();
+				performGitPull(progress.newChild(1));
 			}
 
 			final File packageRoot = new File(uri);
@@ -371,7 +373,6 @@ public class NpmManager {
 			logError(error);
 			return error;
 		} finally {
-			monitor.worked(1);
 			monitor.done();
 		}
 	}
@@ -394,15 +395,15 @@ public class NpmManager {
 		return ImmutableMap.copyOf(mappings);
 	}
 
-	private void performGitPull() {
+	private void performGitPull(final IProgressMonitor monitor) {
 		final URI repositoryLocation = locationProvider.getTargetPlatformLocalGitRepositoryLocation();
-		GitUtils.pull(new File(repositoryLocation).toPath());
+		GitUtils.pull(new File(repositoryLocation).toPath(), monitor);
 	}
 
 	private void logInfo(final String message) {
 		LOGGER.info(message);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		pw.flush();
 	}
@@ -419,7 +420,7 @@ public class NpmManager {
 	private void logError(final String message, final Throwable t) {
 		LOGGER.error(message, t);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR, false));
 		pw.append(getTimestamp() + message + lineSeparator());
 		if (null != t) {
 			pw.append(getTimestamp() + getStackTraceAsString(t) + lineSeparator());
