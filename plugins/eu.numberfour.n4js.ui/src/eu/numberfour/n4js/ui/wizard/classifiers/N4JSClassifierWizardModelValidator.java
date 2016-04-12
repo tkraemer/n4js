@@ -17,7 +17,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -214,7 +217,35 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		super.run();
 
 		validateClassifierName();
+		validateFileLocation();
 		validateInterfaces();
+	}
+
+	private void validateFileLocation() throws ValidationException {
+		IPath path = getModel().computeFileLocation();
+
+		IContainer activeContainer = ResourcesPlugin.getWorkspace().getRoot();
+
+		for (int i = 0; i < path.segmentCount(); i++) {
+			String segment = path.segment(i);
+
+			IResource member = activeContainer.findMember(segment);
+
+			// If a segment does not exist and its not the last segment (module file)
+			if (null == member && i < path.segmentCount() - 1) {
+				// Abort validation as this is fine
+				break;
+			}
+			// If a segment isn't the module file but a file exists at its path
+			if (member instanceof IFile && i < path.segmentCount() - 1) {
+				throw new ValidationException(
+						String.format("The specified file location overlaps with the file %s", member.getFullPath()));
+			}
+
+			if (member instanceof IContainer) {
+				activeContainer = (IContainer) member;
+			}
+		}
 	}
 
 	private boolean isValidReferenceOfType(String absoluteSpecifier, EClass type) {
