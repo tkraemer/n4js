@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.ui.handler;
 
-import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -30,10 +28,13 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.wizards.IWizardDescriptor;
 
-import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizard;
 
@@ -48,38 +49,36 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 	private static final String WIZARD_ID_PARAMETER_ID = "eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId";
 	private static final String NESTED_PARAMETER_ID = "eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested";
 
+	@Inject
+	Injector injector;
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		String wizardId = event.getParameter(WIZARD_ID_PARAMETER_ID);
-		String nested = event.getParameter(NESTED_PARAMETER_ID);
-
-		boolean isNested = false;
 
 		if (wizardId == null) {
 			return null;
 		}
 
-		if (nested != null) {
-			isNested = nested.equals("true");
-		}
+		boolean isNested = Boolean.parseBoolean(event.getParameter(NESTED_PARAMETER_ID));
 
 		IStructuredSelection selection;
 
 		// Try to get editor file
-		IFile editorFile = getOpenEditorFile();
+		IFile editorFile = getActiveEditorFile();
 
 		if (null != editorFile) {
 			selection = new StructuredSelection(editorFile);
 		} else {
 			// Try to get the selection from the project explorer tree view
-			IResource resourceTreeFile = getTreeSelection();
+			IResource resourceTreeFile = getActiveTreeResourceSelection(event);
 			if (null != resourceTreeFile) {
 				// If it's a tree selection set nested to false
 				isNested = false;
 				selection = new StructuredSelection(resourceTreeFile);
 			} else {
 				// If not selection can be retrieved, launch the wizard with an empty selection
-				selection = new StructuredSelection();
+				selection = StructuredSelection.EMPTY;
 			}
 		}
 
@@ -89,11 +88,11 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 	}
 
 	/**
-	 * Returns the file which is currently open in the active editor.
+	 * Returns the opened file of the currently active editor.
 	 *
 	 * Returns null if no editor is open.
 	 */
-	private static IFile getOpenEditorFile() {
+	private static IFile getActiveEditorFile() {
 		IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getActiveEditor();
 
@@ -112,14 +111,18 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 	}
 
 	/**
-	 * Returns the selection file if the active selection is of type {@link TreeSelection}.
+	 * Returns the active tree resource selection if there is one.
 	 *
-	 * Returns null if it fails.
+	 * Examines the active workspace selection and if it is a resource inside of a tree returns it.
+	 *
+	 * @param event
+	 *            The execution event
+	 * @returns The resource or {@code null} on failure.
 	 *
 	 */
-	private static IResource getTreeSelection() {
-		ISelection activeSelection = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
-				.getSelection();
+	private static IResource getActiveTreeResourceSelection(ExecutionEvent event) {
+
+		ISelection activeSelection = HandlerUtil.getCurrentSelection(event);
 
 		if (activeSelection instanceof TreeSelection) {
 			Object firstElement = ((TreeSelection) activeSelection).getFirstElement();
@@ -152,7 +155,7 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 			IWorkbenchWizard wizard = wizardDescriptor.createWizard();
 
 			// Inject wizard members
-			N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS).injectMembers(wizard);
+			injector.injectMembers(wizard);
 
 			// Create and open a new wizard dialog
 			WizardDialog wizardDialog = new WizardDialog(UIUtils.getShell(), wizard);
@@ -165,7 +168,7 @@ public class CreateNewN4JSElementInModuleHandler extends AbstractHandler {
 				wizard.init(PlatformUI.getWorkbench(), selection);
 			}
 
-			wizardDialog.setTitle(wizard.getWindowTitle());
+			// wizardDialog.setTitle(wizard.getWindowTitle());
 			wizardDialog.open();
 
 		} catch (CoreException e) {

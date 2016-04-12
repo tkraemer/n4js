@@ -121,12 +121,8 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 		dataBindingContext.bindValue(suffixVisibilityValue, moduleSpecifierValue, noUpdateValueStrategy(),
 				WizardComponentDataConverters.strategyForPredicate(m -> {
 					String moduleSpecifier = (String) m;
-					if (moduleSpecifier.isEmpty()
-							|| moduleSpecifier
-									.charAt(moduleSpecifier.length() - 1) == IPath.SEPARATOR) {
-						return true;
-					}
-					return false;
+					return (moduleSpecifier.isEmpty()
+							|| moduleSpecifier.charAt(moduleSpecifier.length() - 1) == IPath.SEPARATOR);
 				}));
 
 		//// interface name to module specifier suffix binding
