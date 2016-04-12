@@ -124,11 +124,13 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	@Override
 	public int open() {
-		Object initialSelection = getInitialElementSelections().get(0);
+		if (getInitialElementSelections().size() > 0) {
+			Object initialSelection = getInitialElementSelections().get(0);
 
-		// Preprocess intial string selections and replace them with their file system equivalent
-		if (initialSelection instanceof String) {
-			setInitialSelection(processInitialSelection((String) initialSelection));
+			// Preprocess intial string selections and replace them with their file system equivalent
+			if (initialSelection instanceof String) {
+				setInitialSelection(processInitialSelection((String) initialSelection));
+			}
 		}
 
 		return super.open();
@@ -204,9 +206,9 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 				selection = ((IFile) selection).getParent();
 			}
 
+			IFile moduleFile = ((IContainer) selection).getFile(new Path(moduleName + moduleFileExtension));
 			this.setResult(
-					Arrays.asList(sourceFolderRelativePath((IContainer) selection).toString() + "/" + moduleName
-							+ moduleFileExtension));
+					Arrays.asList(moduleFile.getFullPath().makeRelativeTo(sourceFolder.getFullPath()).toString()));
 
 			return;
 		} else
