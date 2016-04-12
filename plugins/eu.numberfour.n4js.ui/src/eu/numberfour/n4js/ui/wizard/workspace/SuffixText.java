@@ -15,8 +15,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -81,7 +81,7 @@ public class SuffixText extends Composite {
 	 */
 	public SuffixText(Composite parent, int style) {
 
-		super(parent, style);
+		super(parent, style | SWT.BORDER);
 
 		// Initialize transparent image to work around theming issues
 		TRANSPARENT = ImageDescriptorCache.ImageRef.TRANSPARENT.asImage().orNull();
@@ -120,13 +120,7 @@ public class SuffixText extends Composite {
 		this.addMouseListener(focusCatcher);
 
 		// Whenever focus is put on suffix text redirect it to the userInput
-		this.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				// Do nothing
-			}
-
+		this.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				userInput.setFocus();
@@ -159,11 +153,13 @@ public class SuffixText extends Composite {
 			}
 		});
 
-		// Redirect key events from user input to this
-		// to make content proposal activation work
-		userInput.addListener(SWT.KeyDown, e -> {
-			notifyListeners(SWT.KeyDown, e);
-		});
+		// Redirect focus and key down events to support content proposal behavior
+		int[] passThroughEventTypes = new int[] { SWT.FocusIn, SWT.FocusOut, SWT.KeyDown };
+		for (int eventType : passThroughEventTypes) {
+			userInput.addListener(eventType, e -> {
+				notifyListeners(eventType, e);
+			});
+		}
 
 		// Relayout when suffix label changes
 		this.addPropertyChangeListener(new PropertyChangeListener() {
@@ -245,82 +241,10 @@ public class SuffixText extends Composite {
 	}
 
 	/**
-	 * @return The fully merged value. User input + completed suffix.
+	 * @return The joined text. User input + completed suffix.
 	 */
 	public String getText() {
 		return this.text;
-	}
-
-	/**
-	 * Sets the selection to the range specified by the given start and end indices.
-	 *
-	 * See {@link Text#setSelection(int, int)}
-	 *
-	 * @param start
-	 *            the start of the range
-	 * @param end
-	 *            the end of the range
-	 */
-	public void setSelection(int start, int end) {
-		this.userInput.setSelection(start, end);
-	}
-
-	/**
-	 * Returns the suffix text selection.
-	 *
-	 * See {@link Text#getSelection()}
-	 */
-	public Point getSelection() {
-		return this.userInput.getSelection();
-	}
-
-	/**
-	 * Inserts a string.
-	 * <p>
-	 * The old selection is replaced with the new text.
-	 * </p>
-	 *
-	 * See {@link Text#insert(String)}
-	 *
-	 * @param string
-	 *            The new text
-	 */
-	public void insert(String string) {
-		this.userInput.insert(string);
-	}
-
-	/**
-	 * Returns the character position of the caret.
-	 * <p>
-	 * Indexing is zero based.
-	 * </p>
-	 *
-	 * See {@link Text#getCaretPosition()}
-	 *
-	 * @return the position of the caret
-	 */
-	public int getCaretPosition() {
-		return this.userInput.getCaretPosition();
-	}
-
-	/**
-	 * Returns a point describing the location of the caret relative to the receiver.
-	 *
-	 * See {@link Text#getCaretLocation()}
-	 */
-	public Point getCaretLocation() {
-		return this.userInput.getCaretLocation();
-	}
-
-	/**
-	 * Returns the height of a line.
-	 *
-	 * See {@link Text#getLineHeight()}
-	 *
-	 * @return the height of a row of text
-	 */
-	public int getLineHeight() {
-		return this.userInput.getLineHeight();
 	}
 
 	/**
@@ -381,6 +305,13 @@ public class SuffixText extends Composite {
 	 */
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
 		this.changeSupport.firePropertyChange(propertyName, oldValue, newValue);
+	}
+
+	/**
+	 * Returns the internally used swt text.
+	 */
+	Text getInternalText() {
+		return this.userInput;
 	}
 
 	/**

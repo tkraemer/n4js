@@ -24,13 +24,17 @@ import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.keys.IBindingService;
@@ -48,12 +52,11 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.StringToPathConverter;
-import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProvider;
-import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProvider.ModuleSpecifierProposalLabelProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProviderFactory;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProviderFactory.ModuleSpecifierProposalLabelProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.ProjectContentProposalProvider;
 import eu.numberfour.n4js.ui.wizard.contentproposal.SimpleImageContentProposalLabelProvider;
-import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProposalProvider;
-import eu.numberfour.n4js.ui.wizard.contentproposal.SuffixTextContentAdapter;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProposalProviderFactory;
 
 /**
  * An abstract wizard page for {@link WorkspaceWizardModel}s.
@@ -73,6 +76,9 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	/** Available after invocation of #createControl */
 	protected WorkspaceWizardPageForm workspaceWizardForm;
 
+	/** Available after the invocation of {@link #setupResources(Device)} */
+	private Image contentProposalDecorationImage = null;
+
 	// Browse dialogs
 	@Inject
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
@@ -82,9 +88,14 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	@Inject
 	private ProjectContentProposalProvider projectContentProposalProvider;
 	@Inject
-	private SourceFolderContentProposalProvider sourceFolderContentProvider;
+	private SourceFolderContentProposalProviderFactory sourceFolderContentProvider;
 	@Inject
-	private ModuleSpecifierContentProposalProvider moduleSpecifierContentProvider;
+	private ModuleSpecifierContentProposalProviderFactory moduleSpecifierContentProvider;
+
+	// Content proposal adapters
+	private ContentProposalAdapter sourceFolderContentProposalAdapter;
+
+	private ContentProposalAdapter moduleSpecifierContentProposalAdapter;
 
 	/**
 	 * Sole constructor.
@@ -97,6 +108,8 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	@Override
 	public void createControl(Composite parent) {
 		workspaceWizardForm = new WorkspaceWizardPageForm(parent, SWT.FILL);
+
+		setupResources(parent.getDisplay());
 
 		setupBindings(workspaceWizardForm);
 		setupBrowseDialogs(workspaceWizardForm);
@@ -177,6 +190,111 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		}
 	}
 
+	/**
+	 * @param model
+	 *            WorkspaceWizardModel to use
+	 */
+	public void setModel(M model) {
+		this.model = model;
+		getValidator().setModel(this.model);
+		this.model.addPropertyChangeListener(evt -> getValidator().validate());
+	}
+
+	/**
+	 * Returns with the underlying module instance.
+	 *
+	 * @return the model instance used for data binding.
+	 */
+	public M getModel() {
+		return model;
+	}
+
+	/**
+	 * Set the initial focus when the pages is visible
+	 */
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+
+		if (visible) {
+			this.setInitialFocus();
+		}
+
+	}
+
+	/**
+	 * Set the input focus depending on the initially given model.
+	 *
+	 * This method is only invoked when all ui is initialized and visible.
+	 *
+	 * @return True if the focus was claimed.
+	 */
+	protected boolean setInitialFocus() {
+		// Set the focus to the first empty field beginning with project
+		if (model.getProject().toString().isEmpty()) {
+			workspaceWizardForm.getProjectText().setFocus();
+		} else if (model.getSourceFolder().toString().isEmpty()) {
+			workspaceWizardForm.getSourceFolderText().setFocus();
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public DataBindingContext getDataBindingContext() {
+		return databindingContext;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (databindingContext != null) {
+			databindingContext.dispose();
+		}
+		contentProposalDecorationImage.dispose();
+	}
+
+	@Override
+	public Composite getComposite() {
+		return workspaceWizardForm;
+	}
+
+	/**
+	 * Get the validator for this wizard page.
+	 *
+	 * Subclasses need to provide their own ModelValidator through this method and configure it to work with the model.
+	 *
+	 * @return A {@link WorkspaceWizardModelValidator}
+	 */
+	public abstract WorkspaceWizardModelValidator<M> getValidator();
+
+	/**
+	 * Implement this method to add custom form components.
+	 * <p>
+	 * Note that the parent composite is a 3 column grid.
+	 * </p>
+	 *
+	 * @param parent
+	 *            The parent composite
+	 */
+	public abstract void createComponents(WizardComponentContainer parent);
+
+	/**
+	 * Initializes the resources for the given device
+	 *
+	 * @param device
+	 *            The device
+	 */
+	private void setupResources(Device device) {
+		Image originalImage = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB.asImage().orNull();
+
+		if (null != originalImage) {
+			contentProposalDecorationImage = new Image(device, originalImage.getImageData().scaledTo(10, 10));
+			originalImage.dispose();
+		}
+	}
+
 	private void setupBindings(WorkspaceWizardPageForm wizardForm) {
 		databindingContext = new DataBindingContext();
 
@@ -247,113 +365,6 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 				moduleSpecifierBrowseableConverter.updatingValueStrategy());
 	}
 
-	/**
-	 * Returns the active key binding for content assist.
-	 *
-	 * If no binding is set null is returned.
-	 */
-	private KeyStroke getActiveContentAssistBinding() {
-		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
-		TriggerSequence[] activeBindingsFor = bindingService
-				.getActiveBindingsFor(CONTENT_ASSIST_ECLIPSE_COMMAND_ID);
-
-		if (activeBindingsFor.length > 0 && activeBindingsFor[0] instanceof KeySequence) {
-			KeyStroke[] strokes = ((KeySequence) activeBindingsFor[0]).getKeyStrokes();
-			if (strokes.length == 1) {
-				return strokes[0];
-			}
-		}
-		return null;
-	}
-
-	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
-		// Get the active binding's content assist key strokes
-		KeyStroke keyInitiator = getActiveContentAssistBinding();
-
-		// If unbound don't configure the content proposal
-		if (null == keyInitiator) {
-			return;
-		}
-
-		// Setup project content proposal
-		ContentProposalAdapter projectAdapter = new ContentProposalAdapter(wizardForm.getProjectText(),
-				new TextContentAdapter(), projectContentProposalProvider,
-				keyInitiator, null);
-		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-
-		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
-		projectAdapter.setLabelProvider(
-				new SimpleImageContentProposalLabelProvider(projectSymbol));
-
-		// Setup source folder content proposal
-		ContentProposalAdapter sourceFolderAdapter = new ContentProposalAdapter(wizardForm.getSourceFolderText(),
-				new TextContentAdapter(), sourceFolderContentProvider,
-				keyInitiator, null);
-		sourceFolderAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-
-		sourceFolderAdapter.setLabelProvider(
-				new SimpleImageContentProposalLabelProvider(
-						ImageDescriptorCache.ImageRef.SRC_FOLDER.asImageDescriptor().orNull()));
-
-		// Setup module specifier content proposal
-		ContentProposalAdapter moduleSpecifierAdapter = new ContentProposalAdapter(
-				wizardForm.getModuleSpecifierText(),
-				new SuffixTextContentAdapter(), moduleSpecifierContentProvider, keyInitiator, null);
-
-		// Update proposal context whenever the model changes
-		model.addPropertyChangeListener(evt -> {
-			if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY ||
-					evt.getPropertyName() == WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY) {
-				updateProposalContext();
-			}
-		});
-		updateProposalContext();
-
-		moduleSpecifierAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-		moduleSpecifierAdapter
-				.setLabelProvider(new ModuleSpecifierProposalLabelProvider());
-	}
-
-	/**
-	 * This method should be invoked whenever source folder or project value change, to update the proposal contexts for
-	 * the field source folder and module specifier
-	 */
-	private void updateProposalContext() {
-		IPath projectPath = model.getProject();
-		IPath sourceFolderPath = model.getSourceFolder();
-
-		// Early exit for empty project value
-		if (projectPath.isEmpty()) {
-			sourceFolderContentProvider.setContextProject(null);
-			moduleSpecifierContentProvider.setProposalRoot(null);
-			return;
-		}
-
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectPath.toString());
-
-		if (null == project || !project.exists()) {
-			// Disable source folder and module specifier proposals
-			sourceFolderContentProvider.setContextProject(null);
-			moduleSpecifierContentProvider.setProposalRoot(null);
-		} else {
-			// Try to retrieve the source folder and if not specified set it to null
-			IContainer sourceFolder = sourceFolderPath.segmentCount() != 0 ? project.getFolder(sourceFolderPath) : null;
-
-			// If the project exists, enable source folder proposals
-			sourceFolderContentProvider.setContextProject(project);
-
-			if (null != sourceFolder && sourceFolder.exists()) {
-				// If source folder exists as well enable module specifier proposal
-				moduleSpecifierContentProvider.setProposalRoot(sourceFolder.getFullPath());
-			} else {
-				// Otherwise disable module specifier proposals
-				moduleSpecifierContentProvider.setProposalRoot(null);
-			}
-		}
-	}
-
 	private void setupBrowseDialogs(WorkspaceWizardPageForm wizardForm) {
 		wizardForm.getProjectBrowseButton().addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -377,93 +388,132 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		});
 	}
 
-	/**
-	 * @param model
-	 *            WorkspaceWizardModel to use
-	 */
-	public void setModel(M model) {
-		this.model = model;
-		getValidator().setModel(this.model);
-		this.model.addPropertyChangeListener(evt -> getValidator().validate());
-	}
+	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
+		// Get the active binding's content assist key strokes
+		KeyStroke keyInitiator = getActiveContentAssistBinding();
 
-	/**
-	 * Returns with the underlying module instance.
-	 *
-	 * @return the model instance used for data binding.
-	 */
-	public M getModel() {
-		return model;
-	}
-
-	/**
-	 * Set the initial focus when the pages is visible
-	 */
-	@Override
-	public void setVisible(boolean visible) {
-		super.setVisible(visible);
-
-		if (visible) {
-			this.setInitialFocus();
+		// If unbound don't configure the content proposal
+		if (null == keyInitiator) {
+			return;
 		}
 
+		// Setup project content proposal
+		ContentProposalAdapter projectAdapter = new ContentProposalAdapter(wizardForm.getProjectText(),
+				new TextContentAdapter(), projectContentProposalProvider,
+				keyInitiator, null);
+		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
+		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
+		projectAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(projectSymbol));
+
+		createContentProposalDecoration(wizardForm.getProjectText());
+
+		sourceFolderContentProposalAdapter = new ContentProposalAdapter(
+				wizardForm.getSourceFolderText(),
+				new TextContentAdapter(), null,
+				keyInitiator, null);
+		sourceFolderContentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
+		sourceFolderContentProposalAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(
+						ImageDescriptorCache.ImageRef.SRC_FOLDER.asImageDescriptor().orNull()));
+
+		createContentProposalDecoration(wizardForm.getSourceFolderText());
+
+		moduleSpecifierContentProposalAdapter = new ContentProposalAdapter(
+				wizardForm.getModuleSpecifierText().getInternalText(),
+				new TextContentAdapter(), null,
+				keyInitiator, null);
+
+		createContentProposalDecoration(wizardForm.getModuleSpecifierText());
+
+		// Update proposal context whenever the model changes
+		model.addPropertyChangeListener(evt -> {
+			if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY ||
+					evt.getPropertyName() == WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY) {
+				updateProposalContext();
+			}
+		});
+		updateProposalContext();
+
+		moduleSpecifierContentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		moduleSpecifierContentProposalAdapter
+				.setLabelProvider(new ModuleSpecifierProposalLabelProvider());
 	}
 
 	/**
-	 * Set the input focus depending on the initially given model.
+	 * Returns the active key binding for content assist.
 	 *
-	 * This method is only invoked when all ui is initialized and visible.
-	 *
-	 * @return True if the focus was claimed.
+	 * If no binding is set null is returned.
 	 */
-	protected boolean setInitialFocus() {
-		// Set the focus to the first empty field beginning with project
-		if (model.getProject().toString().isEmpty()) {
-			workspaceWizardForm.getProjectText().setFocus();
-		} else if (model.getSourceFolder().toString().isEmpty()) {
-			workspaceWizardForm.getSourceFolderText().setFocus();
+	private KeyStroke getActiveContentAssistBinding() {
+		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
+		TriggerSequence[] activeBindingsFor = bindingService
+				.getActiveBindingsFor(CONTENT_ASSIST_ECLIPSE_COMMAND_ID);
+
+		if (activeBindingsFor.length > 0 && activeBindingsFor[0] instanceof KeySequence) {
+			KeyStroke[] strokes = ((KeySequence) activeBindingsFor[0]).getKeyStrokes();
+			if (strokes.length == 1) {
+				return strokes[0];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Adds the content proposal field decoration to a given control.
+	 *
+	 * @param control
+	 *            The control to decorate
+	 */
+	private ControlDecoration createContentProposalDecoration(Control control) {
+		ControlDecoration projectDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+		projectDecoration.setImage(contentProposalDecorationImage);
+		projectDecoration.setShowOnlyOnFocus(true);
+		return projectDecoration;
+	}
+
+	/**
+	 * This method should be invoked whenever source folder or project value change, to update the proposal contexts for
+	 * the field source folder and module specifier
+	 */
+	private void updateProposalContext() {
+		IPath projectPath = model.getProject();
+		IPath sourceFolderPath = model.getSourceFolder();
+
+		// Early exit for empty project value
+		if (projectPath.isEmpty()) {
+			sourceFolderContentProposalAdapter.setContentProposalProvider(null);
+			moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
+			return;
+		}
+
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectPath.toString());
+
+		if (null == project || !project.exists()) {
+			// Disable source folder and module specifier proposals
+			sourceFolderContentProposalAdapter.setContentProposalProvider(null);
+			moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
 		} else {
-			return false;
+			// Try to retrieve the source folder and if not specified set it to null
+			IContainer sourceFolder = sourceFolderPath.segmentCount() != 0 ? project.getFolder(sourceFolderPath) : null;
+
+			// If the project exists, enable source folder proposals
+			sourceFolderContentProposalAdapter
+					.setContentProposalProvider(sourceFolderContentProvider.createProviderForProject(project));
+
+			if (null != sourceFolder && sourceFolder.exists()) {
+				// If source folder exists as well enable module specifier proposal
+				moduleSpecifierContentProposalAdapter.setContentProposalProvider(
+						moduleSpecifierContentProvider.createProviderForPath(sourceFolder.getFullPath()));
+			} else {
+				// Otherwise disable module specifier proposals
+				moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
+			}
 		}
-		return true;
 	}
-
-	@Override
-	public DataBindingContext getDataBindingContext() {
-		return databindingContext;
-	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		if (databindingContext != null) {
-			databindingContext.dispose();
-		}
-	}
-
-	@Override
-	public Composite getComposite() {
-		return workspaceWizardForm;
-	}
-
-	/**
-	 * Get the validator for this wizard page.
-	 *
-	 * Subclasses need to provide their own ModelValidator through this method and configure it to work with the model.
-	 *
-	 * @return A {@link WorkspaceWizardModelValidator}
-	 */
-	public abstract WorkspaceWizardModelValidator<M> getValidator();
-
-	/**
-	 * Implement this method to add custom form components.
-	 * <p>
-	 * Note that the parent composite is a 3 column grid.
-	 * </p>
-	 *
-	 * @param parent
-	 *            The parent composite
-	 */
-	public abstract void createComponents(WizardComponentContainer parent);
 
 }

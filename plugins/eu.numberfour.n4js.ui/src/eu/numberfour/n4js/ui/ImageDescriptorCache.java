@@ -90,6 +90,9 @@ public enum ImageDescriptorCache {
 		/** Wizard banner for the new N4JS enum wizard. */
 		NEW_ENUM_WIZBAN("newenum_wiz.png"),
 
+		/** Smart light bulb icon */
+		SMART_LIGHTBULB("smartmode_co.png"),
+
 		/** A transparent 1x1 image */
 		TRANSPARENT("transparent.png");
 
