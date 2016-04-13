@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -238,23 +239,21 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			parent = this.sourceFolder;
 		}
 
-		String folderName = dialog.getValue();
-		IFolder createdFolder = null;
+		String dialogValue = dialog.getValue();
+
+		if (isWin32Platform()) {
+			dialogValue = convertToUnixPath(dialogValue);
+		}
+
+		IPath folderPath = new Path(dialogValue);
+		IContainer createdFolder = null;
 
 		if (Window.OK == dialog.getReturnCode()) {
 			ProgressMonitorDialog progressMonitorDialog = new ProgressMonitorDialog(getShell());
 			progressMonitorDialog.open();
 			IProgressMonitor progressMonitor = progressMonitorDialog.getProgressMonitor();
 
-			try {
-				createdFolder = createFolder(folderName, parent, null);
-			} catch (CoreException e) {
-				MessageDialog.open(MessageDialog.ERROR, getShell(), FAILED_TO_CREATE_FOLDER_TITLE,
-						String.format(FAILED_TO_CREATE_FOLDER_MESSAGE,
-								parent.getFullPath().append(folderName).toString(),
-								e.getMessage()),
-						SWT.NONE);
-			}
+			createdFolder = createFolderPath(folderPath, parent, null);
 
 			progressMonitor.done();
 			progressMonitorDialog.close();
@@ -528,6 +527,24 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	}
 
 	/**
+	 * Converts backslash separated or mixed separator paths to a pure slash separated Unix paths.
+	 *
+	 * @param path
+	 *            The path to convert
+	 * @return A slash separated path
+	 */
+	private static String convertToUnixPath(String path) {
+		return path.replaceAll("[\\\\]", "/");
+	}
+
+	/**
+	 * Returns {@code true} if running on a win32 OS
+	 */
+	private static boolean isWin32Platform() {
+		return Platform.getOS() == Platform.OS_WIN32;
+	}
+
+	/**
 	 * Filter to only show module containers (=folders) with a specified base path.
 	 *
 	 * <p>
@@ -579,11 +596,18 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 */
 	private static final class ModuleFolderValidator implements IInputValidator {
 		@Override
-		public String isValid(String newText) {
-			if (newText.isEmpty()) {
+		public String isValid(String text) {
+			String textToValidate = text;
+
+			// Convert mixed and windows separated paths to unix paths for validation
+			if (isWin32Platform()) {
+				textToValidate = convertToUnixPath(text);
+			}
+
+			if (textToValidate.isEmpty()) {
 				return "The module folder must not be empty";
 			}
-			if (!isValidFolderName(newText)) {
+			if (!WorkspaceWizardValidatorUtils.isValidFolderPath(new Path(textToValidate))) {
 				return "The module name is not a valid file system name";
 			}
 			return null;
