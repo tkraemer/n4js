@@ -250,7 +250,7 @@ Contributors:
 						<dependency>
 							<groupId>org.eclipse.equinox</groupId>
 							<artifactId>common</artifactId>
-							<version>${equinox-common-version}</version>
+							<version>${org.eclipse.equinox.common-version}</version>
 						</dependency>
 						<dependency>
 							<groupId>org.eclipse.xtext</groupId>
