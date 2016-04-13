@@ -132,7 +132,7 @@ Contributors:
 					MWE2 file contained by this project -->
 
 <!--
- # Switch back to the exec plugin, problem is that fornax plugin creates command lien call exceeding 32K characters
+ # Switch back to the exec plugin, problem is that fornax plugin creates command line call exceeding 32K characters
  # which breaks Windows api https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx 
 	
 			<plugin>
