@@ -84,8 +84,15 @@ Contributors:
 		<skip.mwe2>true</skip.mwe2>
 		<!--MWE2: Additional dependency to artifacts of the current reactor for MWE Generation. 
 			See IDE-1433 --> 
+		<!--  Variant a)	
 		<additional-classes-of-n4ide.unicode>${basedir}/../eu.numberfour.n4js.common.unicode/target/classes</additional-classes-of-n4ide.unicode>
 		<additional-classes-of-n4ide.releng.utils>${basedir}/../../releng/eu.numberfour.n4js.releng.utils/target/classes</additional-classes-of-n4ide.releng.utils>
+		 	-->
+		<!-- Variant b) --> 
+		<additional-classes-of-n4ide.unicode>${basedir}/../eu.numberfour.n4js.common.unicode/target/eu.numberfour.n4js.common.unicode-${project.version}.jar</additional-classes-of-n4ide.unicode>
+		<additional-classes-of-n4ide.releng.utils>${basedir}/../../releng/eu.numberfour.n4js.releng.utils/target/eu.numberfour.n4js.releng.utils-${project.version}.jar</additional-classes-of-n4ide.releng.utils>
+ 		
+
 		<fornax-oaw-m2-plugin.version>3.6.0</fornax-oaw-m2-plugin.version>
 
 		<antlr-generator-version>[2.1.1, 3.0)</antlr-generator-version>
@@ -114,7 +121,6 @@ Contributors:
 					</filesets>
 				</configuration>
 			</plugin>
-			<plugin>
 				<!-- The plug-in to execute the language MWE2 workflows inside the grammar 
 					projects. This is base configuration, that is: * setting the timestampFileName, 
 					to be used to determine changes that makes regeneration of the code for the 
@@ -124,6 +130,12 @@ Contributors:
 					here so that the actual grammar project need to set * fill the property skip.mwe2 
 					to false * fill the property mwe2descriptor with the module name of the actual 
 					MWE2 file contained by this project -->
+
+<!--
+ # Switch back to the exec plugin, problem is that fornax plugin creates command line call exceeding 32K characters
+ # which breaks Windows api https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx 
+	
+			<plugin>
 				<groupId>org.fornax.toolsupport</groupId>
 				<artifactId>fornax-oaw-m2-plugin</artifactId>
 				<version>${fornax-oaw-m2-plugin.version}</version>
@@ -159,6 +171,8 @@ Contributors:
 					</execution>
 				</executions>
 			</plugin>
+
+ -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -199,7 +213,7 @@ Contributors:
 					</executions>
 				</plugin>			
 				
-				<!--
+
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
@@ -225,9 +239,9 @@ Contributors:
 										runtimeProject=/${project.basedir}
 									</argument>
 								</arguments>
-								<! - - Following switch:
+								<!-- Following switch:
 									 do not try to kill the daemons of MWE, default timed out after 15s and gave Exceptins to build
-									 - - >
+									 -->
 								<cleanupDaemonThreads>false</cleanupDaemonThreads>
 							</configuration>
 						</execution>
@@ -236,7 +250,7 @@ Contributors:
 						<dependency>
 							<groupId>org.eclipse.equinox</groupId>
 							<artifactId>common</artifactId>
-							<version>${equinox-common-version}</version>
+							<version>${org.eclipse.equinox.common-version}</version>
 						</dependency>
 						<dependency>
 							<groupId>org.eclipse.xtext</groupId>
@@ -265,7 +279,7 @@ Contributors:
 						</dependency>
 					</dependencies>
 				</plugin>
--->
+
 				<plugin>
 					<groupId>org.eclipse.xtext</groupId>
 					<artifactId>xtext-maven-plugin</artifactId>
