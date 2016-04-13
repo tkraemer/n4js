@@ -155,9 +155,8 @@ class BlockTransformationTest extends AbstractTranspilerTest {
 					return $spawn(function*() {
 
 						var module, normalizedPath = (yield System2.normalize(p));«/* await -> yield */»
-						(yield module);
-						return;
-					}.bind(this));
+						return module;
+					}.apply(this,arguments));
 				};
 				System2 = function System2() {};
 				$n4Export('System2', System2);
@@ -170,9 +169,8 @@ class BlockTransformationTest extends AbstractTranspilerTest {
 								value: function normalize___n4(p) {
 									return $spawn(function*() {
 
-									         (yield  "!NORMAL!/"+p);
-									         return;
-									        }.bind(this));
+									         return "!NORMAL!/"+p;
+									        }.apply(this,arguments));
 									}
 							}
 						}, function(instanceProto, staticProto) {

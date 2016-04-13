@@ -29,6 +29,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -49,6 +50,16 @@ public class SourceFolderSelectionDialogProvider {
 	 * Filter to only let valid n4js source folders pass.
 	 */
 	public class SourceFolderFilter extends ViewerFilter {
+		private final IProject project;
+
+		/**
+		 * @param project
+		 *            limit the sources to this project
+		 */
+		public SourceFolderFilter(IProject project) {
+			this.project = project;
+		}
+
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			if (element instanceof VirtualResource) {
@@ -56,7 +67,39 @@ public class SourceFolderSelectionDialogProvider {
 			}
 			if (element instanceof IResource) {
 
-				URI resourceURI = URI.createPlatformResourceURI(((IResource) element).getFullPath().toString(), true);
+				// TODO GH-157 optimize and revise.
+
+				IResource ires = (IResource) element;
+
+				if (ires.getProject() != project) {
+					return false;
+				}
+
+				URI resourceURI = URI.createPlatformResourceURI(ires.getFullPath().toString(), true);
+				ImmutableList<? extends IN4JSSourceContainer> allSourceContainer = n4jsCore.findProject(resourceURI)
+						.get().getSourceContainers();
+
+				String resourceUriString = resourceURI.toPlatformString(true);
+
+				java.util.Optional<? extends IN4JSSourceContainer> match = allSourceContainer.stream()
+						.filter(sc -> {
+							if (!(sc.isSource()
+									|| sc.isTest() // no External, no Library here.
+							))
+								return false;
+
+							// check parent-folder part.
+							String stringUriSC = sc.getLocation().toPlatformString(true);
+							if (stringUriSC.startsWith(resourceUriString)) {
+								return true; // allow parent
+							}
+							return false;
+						})
+						.findFirst();
+				if (match.isPresent()) {
+					return true;
+				}
+
 				Optional<? extends IN4JSSourceContainer> sourceContainer = n4jsCore
 						.findN4JSSourceContainer(resourceURI);
 
@@ -80,7 +123,7 @@ public class SourceFolderSelectionDialogProvider {
 		private final WrappingVirtualContainer treeRoot;
 		private final IProject project;
 
-		private final SourceFolderFilter sourceFolderFilter = new SourceFolderFilter();
+		private final SourceFolderFilter sourceFolderFilter;
 
 		/**
 		 * @param parent
@@ -94,12 +137,14 @@ public class SourceFolderSelectionDialogProvider {
 			this.project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 			treeRoot = new WrappingVirtualContainer(this.project);
 
+			this.sourceFolderFilter = new SourceFolderFilter(this.project);
+
 			if (initialSelection != null && !initialSelection.toString().isEmpty()) {
 				IFolder folder = this.project.getFolder(initialSelection);
 
 				// If the element passes the filter select it
 				if (this.sourceFolderFilter.select(this.getTreeViewer(), null, folder)) {
-					this.setInitialSelection(this.project.getFolder(initialSelection));
+					this.setInitialSelection(folder);
 				}
 				// If the element doesn't exist create a virtual resource representing it
 				else if (!folder.exists()) {

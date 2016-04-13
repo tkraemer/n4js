@@ -59,14 +59,15 @@ public class OutputStreamPrinterThreadProvider {
 	 *
 	 * @param process
 	 *            the process to read its standard input.
-	 * @param redirect
-	 *            the captured out stream to this process output stream.
+	 * @param silent
+	 *            if {@code true} the captured out stream of the process will be swallowed at all. If {@code false} then
+	 *            the output stream of the process will be redirected to another output stream as user notification purposes.
 	 * @return a thread that reads the input stream of the process and writes it to the process output stream.
 	 */
 	@SuppressWarnings("resource")
-	public OutputStreamPrinterThread getPrinterThreadForStdOut(Process process, boolean redirect) {
-		final OutputStream os = osProvider.getOutputStream(STD_OUT, redirect);
-		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getInputStream(), os, redirect);
+	public OutputStreamPrinterThread getPrinterThreadForStdOut(Process process, boolean silent) {
+		final OutputStream os = osProvider.getOutputStream(STD_OUT, silent);
+		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getInputStream(), os, silent);
 		thread.start();
 		return thread;
 	}
@@ -78,14 +79,15 @@ public class OutputStreamPrinterThreadProvider {
 	 *
 	 * @param process
 	 *            the process to read its error stream.
-	 * @param redirect
-	 *            the captured out stream to this process output stream.
+	 * @param silent
+	 *            if {@code true} the captured out stream of the process will be swallowed at all. If {@code false} then
+	 *            the output stream of the process will be redirected to another output stream.
 	 * @return a thread that reads the input stream of the process and writes it to the process output stream.
 	 */
 	@SuppressWarnings("resource")
-	public OutputStreamPrinterThread getPrinterThreadForStdErr(Process process, boolean redirect) {
-		final OutputStream os = osProvider.getOutputStream(STD_ERR, redirect);
-		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getErrorStream(), os, redirect);
+	public OutputStreamPrinterThread getPrinterThreadForStdErr(Process process, boolean silent) {
+		final OutputStream os = osProvider.getOutputStream(STD_ERR, silent);
+		final OutputStreamPrinterThread thread = new OutputStreamPrinterThread(process.getErrorStream(), os, silent);
 		thread.start();
 		return thread;
 	}
