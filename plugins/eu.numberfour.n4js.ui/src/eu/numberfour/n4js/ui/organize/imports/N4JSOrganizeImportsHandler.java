@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -67,6 +68,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
@@ -328,62 +330,12 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 								final String organizedImportSection = organizeImports
 										.getOrganizedImportSection(xtextResource, NL, interaction);
-								if (organizedImportSection != null) { // remove old imports
+								if (organizedImportSection != null) {
+									// remove old imports
 									changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
-									if (!organizedImportSection.isEmpty()) {
-										// advance ImportRegion-offset if not nil and not right before a jsdoc:
-										int offset = insertionPoint.offset;
-										if (offset != 0 && !insertionPoint.isBeforeJsdocDocumentation) {
-											offset += NL.length();
-										}
-										// if the line above is part of a ML-comment, then line-break:
-										IRegion lineRegion = document.getLineInformationOfOffset(offset);
-
-										ILeafNode leafNodeAtBeginOfLine = NodeModelUtils.findLeafNodeAtOffset(
-												xtextResource.getParseResult().getRootNode(), lineRegion.getOffset());
-
-										if (leafNodeAtBeginOfLine.getGrammarElement() == typeExpressionsGrammarAccess
-												.getML_COMMENTRule() // plain ML
-										) {
-
-											int insertOffset = insertionPoint.offset;
-											// it is inside a ML, so we need to insert a line-break;
-											boolean atStartOfLine = insertionPoint.offset == lineRegion.getOffset();
-											String finalText = (atStartOfLine ? "" : NL) + organizedImportSection + NL;
-											changes.add(new Replacement(xtextResource.getURI().trimFragment(),
-													insertOffset, 0, finalText));
-
-										} else if (UtilN4.isIgnoredSyntaxErrorNode(leafNodeAtBeginOfLine,
-												InternalSemicolonInjectingParser.SEMICOLON_INSERTED)
-												// ASI overlapping something
-												&& (leafNodeAtBeginOfLine.getTotalOffset() < lineRegion.getOffset()
-										// this ASI something starts before the beginning of the line
-										)) {
-											int insertOffset = insertionPoint.offset; // concrete
-																						// position
-
-											if ((!insertionPoint.isBeforeJsdocDocumentation) &&
-											// if this was an ASI case shadowing a jsdoc-/**-style comment
-											// we should insert before this comment. Still need to double-check the
-											// concrete content:
-													n4JSDocumentationProvider.isDocumentationStyle(
-															NodeModelUtils.getTokenText(leafNodeAtBeginOfLine))) {
-												// it's an active jsdoc comment, shadowed by ASI-insertions
-												insertOffset = leafNodeAtBeginOfLine.getTotalOffset();
-
-											}
-											// it is ML, so we need to insert a line-break;
-											String finalText = NL + organizedImportSection + NL;
-											changes.add(new Replacement(xtextResource.getURI().trimFragment(),
-													insertOffset, 0, finalText));
-
-										} else {
-											// The line above is not part of a ML-comment, so do this:
-											changes.add(ChangeProvider.insertLineAbove(document,
-													offset, organizedImportSection, false)); // indentation doesn't work
-																								// with multiple lines
-										}
-									}
+									// insert new imports
+									changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
+											organizedImportSection));
 									return changes;
 								}
 							} catch (BreakException e) {
@@ -393,6 +345,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 						}
 						return null;
 					}
+
 				});
 
 		if (result != null && !result.isEmpty()) {
@@ -421,6 +374,95 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 		}
 
+	}
+
+	/**
+	 * Computes the change for real insertion. If nothing is inserted (e.g. organizedImportSection is empty) then an
+	 * empty list is returned.
+	 *
+	 * This method computes the real offset based on the information given in the passed in insertion point and creates
+	 * an replacement.
+	 *
+	 * @param document
+	 *            current Xtext document under modification
+	 * @param xtextResource
+	 *            associated Xtext-resource of the document
+	 * @param insertionPoint
+	 *            data about possible insertion-range.
+	 * @param NL
+	 *            current new line sequence
+	 * @param organizedImportSection
+	 *            text of imports
+	 * @return empty list or a single-element list with an replacement.
+	 */
+	private List<IChange> prepareRealInsertion(final IXtextDocument document, XtextResource xtextResource,
+			InsertionPoint insertionPoint, final String NL,
+			final String organizedImportSection) throws BadLocationException {
+		if (organizedImportSection.isEmpty()) {
+			// nothing to insert, then issue no change:
+			return Collections.emptyList();
+		}
+
+		// advance ImportRegion-offset if not nil and not right before a jsdoc:
+		int offset = insertionPoint.offset;
+		if (offset != 0 && !insertionPoint.isBeforeJsdocDocumentation) {
+			offset += NL.length();
+		}
+		// if the line above is part of a ML-comment, then line-break:
+		IRegion lineRegion = document.getLineInformationOfOffset(offset);
+
+		ILeafNode leafNodeAtBeginOfLine = NodeModelUtils.findLeafNodeAtOffset(
+				xtextResource.getParseResult().getRootNode(), lineRegion.getOffset());
+
+		//
+		// Three cases have to be considered:
+		// A) the begin of line is inside of an ML-comment.
+		// B) the begin of line is some ASI overlapping some real text (e.g. a ML-commen) this is not coverd in A!
+		// C) the begin of line is some ordinary location.
+		//
+		if (leafNodeAtBeginOfLine.getGrammarElement() == typeExpressionsGrammarAccess
+				.getML_COMMENTRule() // plain ML
+		) {
+			// CASE A)
+			int insertOffset = insertionPoint.offset;
+			// it is inside a ML, so we need to insert a line-break;
+			boolean atStartOfLine = insertionPoint.offset == lineRegion.getOffset();
+			String finalText = (atStartOfLine ? "" : NL) + organizedImportSection + NL;
+			return Lists.newArrayList(new Replacement(xtextResource.getURI().trimFragment(),
+					insertOffset, 0, finalText));
+
+		} else if (UtilN4.isIgnoredSyntaxErrorNode(leafNodeAtBeginOfLine,
+				InternalSemicolonInjectingParser.SEMICOLON_INSERTED)
+				// ASI overlapping something
+				&& (leafNodeAtBeginOfLine.getTotalOffset() < lineRegion.getOffset()
+		// this ASI something starts before the beginning of the line
+		)) {
+			// CASE B)
+			int insertOffset = insertionPoint.offset; // concrete
+														// position
+
+			if ((!insertionPoint.isBeforeJsdocDocumentation) &&
+			// if this was an ASI case shadowing a jsdoc-/**-style comment
+			// we should insert before this comment. Still need to double-check the
+			// concrete content:
+					n4JSDocumentationProvider.isDocumentationStyle(
+							NodeModelUtils.getTokenText(leafNodeAtBeginOfLine))) {
+				// it's an active jsdoc comment, shadowed by ASI-insertions
+				insertOffset = leafNodeAtBeginOfLine.getTotalOffset();
+
+			}
+			// it is ML, so we need to insert a line-break;
+			String finalText = NL + organizedImportSection + NL;
+			return Lists.newArrayList(new Replacement(xtextResource.getURI().trimFragment(),
+					insertOffset, 0, finalText));
+
+		} else {
+			// CASE C)
+			// The line above is not part of a ML-comment, so do this:
+			return Lists.newArrayList(ChangeProvider.insertLineAbove(document,
+					offset, organizedImportSection, false)); // indentation doesn't work
+																// with multiple lines
+		}
 	}
 
 	/**
