@@ -106,7 +106,7 @@ public class ProjectSelectionDialog extends ListDialog {
 					List<IResource> projects = Arrays.asList(((IContainer) inputElement).members()).stream()
 							.filter(member -> member instanceof IProject)
 							.filter(project -> isN4JSProject((IProject) project))
-							.sorted(new ProjectComparator())
+							.sorted(new ResourceComparator())
 							.collect(Collectors.toList());
 
 					return projects.toArray(new IResource[projects.size()]);
@@ -124,7 +124,7 @@ public class ProjectSelectionDialog extends ListDialog {
 	/**
 	 * A simple comparator for {@link IResource}s
 	 */
-	private static final class ProjectComparator implements Comparator<IResource> {
+	private static final class ResourceComparator implements Comparator<IResource> {
 		@Override
 		public int compare(IResource o1, IResource o2) {
 			return o1.getName().compareTo(o2.getName());
@@ -149,7 +149,7 @@ public class ProjectSelectionDialog extends ListDialog {
 			if (element instanceof IResource) {
 				return ((IResource) element).getName();
 			}
-			return null;
+			return super.getText(element);
 		}
 	}
 }

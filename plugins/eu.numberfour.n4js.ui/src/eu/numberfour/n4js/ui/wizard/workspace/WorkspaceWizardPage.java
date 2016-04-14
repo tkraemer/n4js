@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.Shell;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialog;
@@ -146,9 +145,8 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 		Object firstResult = dialog.getFirstResult();
 
-		if (firstResult instanceof IN4JSSourceContainer) {
-			model.setSourceFolder(
-					new Path(((IN4JSSourceContainer) firstResult).getRelativeLocation()).addTrailingSeparator());
+		if (firstResult instanceof String) {
+			model.setSourceFolder(new Path((String) firstResult));
 		}
 	}
 

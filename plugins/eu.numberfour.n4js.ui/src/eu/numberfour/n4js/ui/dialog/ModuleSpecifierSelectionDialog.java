@@ -52,14 +52,16 @@ import eu.numberfour.n4js.utils.OSInfo;
  * are directly written to the file system.
  *
  * Returns values of type {@link String} that are a representation of the path of the selected module folder. The
- * specified file may not exist, but it is ensured that all containing folders exist.
+ * specified file may not exist, but it is ensured that all folders in the path exist.
  */
 public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog {
 
-	private static final String CREATE_A_NEW_FOLDER_MESSAGE = "Enter the name of the new folder";
-	private static final String CREATE_A_NEW_FOLDER_TITLE = "Create a new folder";
 	private final static String MODULE_ELEMENT_NAME = "Module:";
 	private final static String CREATE_FOLDER_LABEL = "Create Folder";
+
+	/** Create a new folder dialog */
+	private static final String CREATE_A_NEW_FOLDER_MESSAGE = "Enter the name of the new folder";
+	private static final String CREATE_A_NEW_FOLDER_TITLE = "Create a new folder";
 
 	/** Failed to create folder dialog */
 	private static final String FAILED_TO_CREATE_FOLDER_TITLE = "Failed to create the folders";
@@ -77,7 +79,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	private final IContainer sourceFolder;
 	private final IContainer treeRoot;
 
-	private final ModuleFileValidator inputValidator = new ModuleFileValidator();
+	private final ModuleSpecifierValidator inputValidator = new ModuleSpecifierValidator();
 
 	private String defaultFileExtension = N4JSGlobals.N4JS_FILE_EXTENSION;
 
@@ -132,7 +134,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		if (getInitialElementSelections().size() > 0) {
 			Object initialSelection = getInitialElementSelections().get(0);
 
-			// Preprocess initial string selection and replace it with their file system equivalent
+			// Preprocess initial string selection and replace it with its file system equivalent
 			if (initialSelection instanceof String) {
 				setInitialSelection(processInitialSelection((String) initialSelection));
 			}
@@ -142,6 +144,9 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 	/**
 	 * Sets the default file extension which is used for created files.
+	 *
+	 * This means, that the user still is able to select files with a different file extension. If he however specifies
+	 * a not yet existing file, it will have the default file extension.
 	 *
 	 * @param defaultFileExtension
 	 *            The extension to use by default
@@ -161,9 +166,10 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		this.treeViewer.addSelectionChangedListener(selectionChange -> {
 			updateFileExtension();
 
+			// Also validate the element input, as the tree selection may change the element
 			validateElementInput();
 
-			// When selecting a file use its name as element name
+			// When selecting a file, use its name as element name
 			Object selection = treeViewer.getStructuredSelection().getFirstElement();
 			if (selection instanceof IFile) {
 				String extensionFreeFileName = ((IFile) selection).getFullPath().removeFileExtension().lastSegment();
@@ -206,7 +212,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			this.setResult(Arrays.asList(fileSpec.toString()));
 			return;
 		} else if (selection instanceof IResource) {
-			// For files with different element name input value, use their container as selection
+			// For files with different element name input value, use their container as basepath
 			if (selection instanceof IFile) {
 				selection = ((IFile) selection).getParent();
 			}
@@ -216,9 +222,9 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 					Arrays.asList(moduleFile.getFullPath().makeRelativeTo(sourceFolder.getFullPath()).toString()));
 
 			return;
-		} else
+		} else {
 			updateError("Invalid selection type.");
-
+		}
 	}
 
 	@Override
@@ -228,9 +234,9 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		dialog.open();
 
 		Object selection = treeViewer.getStructuredSelection().getFirstElement();
-		IContainer parent;
 
 		// Infer parent folder from selection
+		IContainer parent;
 		if (selection instanceof IFile) {
 			parent = ((IFile) selection).getParent();
 		} else if (selection instanceof IContainer) {
@@ -291,7 +297,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 		IPath sourceFolderPath = sourceFolder.getFullPath();
 		IPath initialModulePath = new Path(initialModuleSpecifier);
 
-		// Use the root element source folder for empty selections
+		// Use the root element source folder for an empty initial selection
 		if (initialModuleSpecifier.isEmpty()) {
 			return this.sourceFolder;
 		}
@@ -301,7 +307,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			return this.sourceFolder;
 		}
 
-		// The project relative full path of a module specifier
+		// The project relative path of a module specifier
 		IPath fullPath = sourceFolderPath.append(new Path(initialModuleSpecifier));
 
 		// If the module specifier refers to an existing n4js resource
@@ -319,7 +325,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 		}
 
-		// Otherwise use the existing part of the path as initial selection
+		//// Otherwise use the existing part of the path as initial selection:
 
 		// If the module specifier specifies the module name, extract it and remove its segment.
 		if (isModuleFileSpecifier(initialModulePath)) {
@@ -608,9 +614,11 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	}
 
 	/**
-	 * An input validator to validate module file names
+	 * An input validator to validate the selected module specifier.
+	 *
+	 * The validator validates the module name as well as the selected container.
 	 */
-	private final class ModuleFileValidator implements IInputValidator {
+	private final class ModuleSpecifierValidator implements IInputValidator {
 		@Override
 		public String isValid(String newText) {
 			IPath path = new Path(newText);
