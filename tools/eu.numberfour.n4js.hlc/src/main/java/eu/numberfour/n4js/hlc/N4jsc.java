@@ -920,7 +920,7 @@ public class N4jsc {
 					return id_len >= r_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - r_len, id_len).equalsIgnoreCase(runnerId)
-							// b) full segment match (either full string or previous char is .)
+					// b) full segment match (either full string or previous char is .)
 							&& (id_len == r_len || id.charAt(id_len - r_len - 1) == '.');
 				})
 				.map(id -> runnerRegistry.getDescriptor(id))
@@ -943,7 +943,7 @@ public class N4jsc {
 					return id_len >= t_len
 							// a) id ends with runnerId (ignore case)
 							&& id.substring(id_len - t_len, id_len).equalsIgnoreCase(testerId)
-							// b) full segment match (either full string or previous char is .)
+					// b) full segment match (either full string or previous char is .)
 							&& (id_len == t_len || id.charAt(id_len - t_len - 1) == '.');
 				})
 				.map(id -> testerRegistry.getDescriptor(id))
@@ -990,9 +990,9 @@ public class N4jsc {
 		checkAllFilesAreSourcesAndReadable(srcFiles);
 
 		if (projectLocations == null) {
-			headless.compileSingleFiles(convertToFilesAndCheckWritableDir(""), srcFiles);
+			headless.compileSingleFiles(convertToFilesAddTargetPlatformAndCheckWritableDir(""), srcFiles);
 		} else {
-			headless.compileSingleFiles(convertToFilesAndCheckWritableDir(projectLocations), srcFiles);
+			headless.compileSingleFiles(convertToFilesAddTargetPlatformAndCheckWritableDir(projectLocations), srcFiles);
 		}
 
 		return headless;
@@ -1011,9 +1011,9 @@ public class N4jsc {
 	private N4HeadlessCompiler compileArgumentsAsProjects() throws ExitCodeException, N4JSCompileException {
 
 		if (projectLocations == null) {
-			headless.compileProjects(convertToFilesAndCheckWritableDir(""), srcFiles);
+			headless.compileProjects(convertToFilesAddTargetPlatformAndCheckWritableDir(""), srcFiles);
 		} else {
-			headless.compileProjects(convertToFilesAndCheckWritableDir(projectLocations), srcFiles);
+			headless.compileProjects(convertToFilesAddTargetPlatformAndCheckWritableDir(projectLocations), srcFiles);
 		}
 
 		return headless;
@@ -1031,7 +1031,6 @@ public class N4jsc {
 	 */
 	private N4HeadlessCompiler compileAllProjects() throws N4JSCompileException, ExitCodeException {
 		if (projectLocations == null) {
-			// headless.compileAllProjects();Projects(srcFiles);
 			throw new ExitCodeException(EXITCODE_WRONG_CMDLINE_OPTIONS,
 					"Require option for projectlocations to compile all projects.");
 		} else {
@@ -1039,7 +1038,7 @@ public class N4jsc {
 				warn("The list of source files is obsolete for built all projects. The following will be ignored: "
 						+ Joiner.on(", ").join(srcFiles));
 			}
-			headless.compileAllProjects(convertToFilesAndCheckWritableDir(projectLocations)); // , srcFiles);
+			headless.compileAllProjects(convertToFilesAddTargetPlatformAndCheckWritableDir(projectLocations));
 		}
 		return headless;
 	}
@@ -1052,7 +1051,8 @@ public class N4jsc {
 			throw new ExitCodeException(EXITCODE_WRONG_CMDLINE_OPTIONS,
 					"Require option for projectlocations.");
 		} else {
-			HeadlessHelper.registerProjects(convertToFilesAndCheckWritableDir(projectLocations), fbWorkspace);
+			HeadlessHelper.registerProjects(convertToFilesAddTargetPlatformAndCheckWritableDir(projectLocations),
+					fbWorkspace);
 		}
 	}
 
@@ -1123,16 +1123,23 @@ public class N4jsc {
 				});
 	}
 
-	private List<File> convertToFilesAndCheckWritableDir(String dirpaths) {
+	/**
+	 * @param dirpaths
+	 *            one or more paths separated by {@link File#pathSeparatorChar} OR empty string if no paths given.
+	 */
+	private List<File> convertToFilesAddTargetPlatformAndCheckWritableDir(String dirpaths) {
 		List<File> retList = new ArrayList<>();
-		if (null != targetPlatformInstallLocation) {
-			dirpaths = (dirpaths.trim().length() > 0 ? dirpaths + File.pathSeparator : "")
-					+ new File(installLocationProvider.getTargetPlatformNodeModulesLocation()).getAbsolutePath();
+		if (dirpaths.length() > 0) {
+			for (String dirpath : Splitter.on(File.pathSeparatorChar).split(dirpaths)) {
+				File ret = new File(dirpath);
+				checkFileIsDirAndWriteable(ret);
+				retList.add(ret);
+			}
 		}
-		for (String dirpath : Splitter.on(File.pathSeparatorChar).split(dirpaths)) {
-			File ret = new File(dirpath);
-			checkFileIsDirAndWriteable(ret);
-			retList.add(ret);
+		if (null != targetPlatformInstallLocation) {
+			final File tpLoc = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+			checkFileIsDirAndWriteable(tpLoc);
+			retList.add(tpLoc);
 		}
 		return retList;
 	}
