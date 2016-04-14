@@ -990,9 +990,9 @@ public class N4jsc {
 		checkAllFilesAreSourcesAndReadable(srcFiles);
 
 		if (projectLocations == null) {
-			headless.compileSingleFiles(srcFiles);
+			headless.compileSingleFiles(convertToFilesAndCheckWritableDir(""), srcFiles);
 		} else {
-			headless.compileSourceFiles(convertToFilesAndCheckWritableDir(projectLocations), srcFiles);
+			headless.compileSingleFiles(convertToFilesAndCheckWritableDir(projectLocations), srcFiles);
 		}
 
 		return headless;
@@ -1011,7 +1011,7 @@ public class N4jsc {
 	private N4HeadlessCompiler compileArgumentsAsProjects() throws ExitCodeException, N4JSCompileException {
 
 		if (projectLocations == null) {
-			headless.compileProjects(srcFiles);
+			headless.compileProjects(convertToFilesAndCheckWritableDir(""), srcFiles);
 		} else {
 			headless.compileProjects(convertToFilesAndCheckWritableDir(projectLocations), srcFiles);
 		}
@@ -1126,7 +1126,7 @@ public class N4jsc {
 	private List<File> convertToFilesAndCheckWritableDir(String dirpaths) {
 		List<File> retList = new ArrayList<>();
 		if (null != targetPlatformInstallLocation) {
-			dirpaths = dirpaths + File.pathSeparator
+			dirpaths = (dirpaths.trim().length() > 0 ? dirpaths + File.pathSeparator : "")
 					+ new File(installLocationProvider.getTargetPlatformNodeModulesLocation()).getAbsolutePath();
 		}
 		for (String dirpath : Splitter.on(File.pathSeparatorChar).split(dirpaths)) {
