@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -60,7 +61,7 @@ public class SuffixText extends Composite {
 	private String text = "";
 
 	private final Text userInput;
-	private final Label completeLabel;
+	private final StyledText completeLabel;
 
 	// private final Composite packComposite;
 
@@ -86,12 +87,17 @@ public class SuffixText extends Composite {
 
 		this.setLayout(new SuffixLayout());
 
-		userInput = new Text(this, SWT.NONE);
-		userInput.setBackgroundImage(TRANSPARENT);
-
-		completeLabel = new Label(this, SWT.HORIZONTAL);
+		// completeLabel = new Label(this, SWT.HORIZONTAL | SWT.NO_BACKGROUND);
+		completeLabel = new StyledText(this, SWT.TRANSPARENT);
 		completeLabel.setText("/Test");
 		completeLabel.setForeground(GREY);
+		completeLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		completeLabel.setEditable(false);
+		completeLabel.setEnabled(false);
+
+		userInput = new Text(this, SWT.NONE);
+
+		this.setBackground(getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
 
 		MouseListener focusCatcher = new MouseListener() {
 			@Override
@@ -123,7 +129,6 @@ public class SuffixText extends Composite {
 			@Override
 			public void paintControl(PaintEvent e) {
 				setBackground(userInput.getBackground());
-				completeLabel.setBackground(userInput.getBackground());
 			}
 		});
 
@@ -288,10 +293,10 @@ public class SuffixText extends Composite {
 	private class SuffixLayout extends Layout {
 
 		// Negative vertical spacing to imitate seamless character flow
-		private static final int NEGATIVE_VERTICAL_SPACING = 8;
+		private static final int NEGATIVE_VERTICAL_SPACING = 15; // 8
 
 		// Amount of additional pixels for text dimensions to avoid clipping
-		private static final int AVOID_CLIPPING_PADDING = 8;
+		private static final int AVOID_CLIPPING_PADDING = 16; // 8
 
 		@Override
 		protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
@@ -346,10 +351,10 @@ public class SuffixText extends Composite {
 				if (child instanceof Text) {
 
 					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
-					child.setBounds(0, verticalCenterY, textDimension.x, textDimension.y);
+					child.setBounds(0, verticalCenterY, clientArea.width, textDimension.y);
 				}
-				if (child instanceof Label) {
-
+				if (child instanceof StyledText) {
+					System.out.println(textDimension.x);
 					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
 					child.setBounds(textDimension.x - NEGATIVE_VERTICAL_SPACING, verticalCenterY,
 							labelDimension.x, labelDimension.y);
