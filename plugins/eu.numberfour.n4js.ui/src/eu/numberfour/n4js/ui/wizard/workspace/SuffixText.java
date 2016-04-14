@@ -14,6 +14,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
@@ -94,6 +96,7 @@ public class SuffixText extends Composite {
 		completeLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 		completeLabel.setEditable(false);
 		completeLabel.setEnabled(false);
+		completeLabel.setLeftMargin(0);
 
 		userInput = new Text(this, SWT.NONE);
 
@@ -292,11 +295,14 @@ public class SuffixText extends Composite {
 	 */
 	private class SuffixLayout extends Layout {
 
-		// Negative vertical spacing to imitate seamless character flow
-		private static final int NEGATIVE_VERTICAL_SPACING = 15; // 8
-
-		// Amount of additional pixels for text dimensions to avoid clipping
+		// Amount of additional pixels for label dimensions to avoid clipping
 		private static final int AVOID_CLIPPING_PADDING = 16; // 8
+
+		// OS dependent left padding of the text widget
+		private final int osTextLeftPadding = (Platform.getOS() == Platform.OS_WIN32) ? 2 : 0;
+		// Negative vertical spacing to imitate seamless character flow
+		private final int verticalSpacing = osTextLeftPadding
+				+ (gc.textExtent(Character.toString(IPath.SEPARATOR)).x) / 2;
 
 		@Override
 		protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
@@ -321,7 +327,6 @@ public class SuffixText extends Composite {
 
 		private Point textDimensions() {
 			Point tDimensions = gc.textExtent(userInput.getText());
-			tDimensions.x += AVOID_CLIPPING_PADDING;
 			return tDimensions;
 		}
 
@@ -356,7 +361,7 @@ public class SuffixText extends Composite {
 				if (child instanceof StyledText) {
 					System.out.println(textDimension.x);
 					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
-					child.setBounds(textDimension.x - NEGATIVE_VERTICAL_SPACING, verticalCenterY,
+					child.setBounds(textDimension.x + verticalSpacing, verticalCenterY,
 							labelDimension.x, labelDimension.y);
 				}
 
