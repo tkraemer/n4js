@@ -31,7 +31,7 @@ import eu.numberfour.n4js.antlr.n4js.NoLineTerminatorHandlingInjector;
  */
 public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment {
 
-	private final static Logger log = Logger.getLogger(AntlrGeneratorWithCustomKeywordLogic.class);
+	private final static Logger LOGGER = Logger.getLogger(AntlrGeneratorWithCustomKeywordLogic.class);
 
 	@Override
 	public void generate(final Grammar grammar, XpandExecutionContext ctx) {
@@ -46,18 +46,21 @@ public class AntlrGeneratorWithCustomKeywordLogic extends AntlrGeneratorFragment
 	private void massageGrammar(String absoluteParserFileName, String encoding) {
 		try {
 			String javaFile = absoluteParserFileName.replaceAll("\\.g$", getParserFileNameSuffix());
+
 			String content = Files.toString(new File(javaFile), Charset.forName(encoding));
 			String normalizedContent = content.replace("\r\n", "\n");
 
 			String newContent = fixIdentifierAsKeywordWithEOLAwareness(normalizedContent);
 
 			if (normalizedContent.equals(newContent)) {
-				log.warn("Replacement not found in " + javaFile);
+				LOGGER.warn("Replacement not found in " + javaFile);
 				// throw new IllegalStateException("Replacement not found in " + javaFile);
 			}
+
 			if (!content.equals(newContent)) {
 				Files.write(newContent, new File(javaFile), Charset.forName(encoding));
 			}
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
