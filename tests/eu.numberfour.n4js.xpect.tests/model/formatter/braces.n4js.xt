@@ -1,0 +1,69 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+/* no spaces inside braces of import statements */
+/* XPECT formattedLines 1 ---
+	import {Class1} from  "formatter/MultipleClasses";
+--- */
+import  {  Class1  }  from  "formatter/MultipleClasses"
+
+
+/* keep single-line formatting */
+/* XPECT formattedLines 1 ---
+	{ var x = 1 }
+--- */
+{  var x = 1  }
+
+
+/* keep multi-line formatting */
+/* XPECT formattedLines 3 ---
+{
+	var y = 1;
+}
+--- */
+{  
+var y = 1;
+}
+
+
+/* keep multi-line formatting with multiple braces */
+/* XPECT formattedLines 5 ---
+{{var y =[
+	7
+];}}
+--- */
+{ { var y = [ 
+7
+];
+}
+}
+
+
+/* keep single-line formatting with multiple braces */
+/* XPECT formattedLines 1 ---
+{{var y =[ 7 ];}}
+--- */
+{ { var y = [ 7 ]; } }
+
+
+/* keep single-line formatting with comma */
+/* XPECT formattedLines 1 ---
+	{var x1 =[ 1, 2, 3 ]}
+--- */
+{  var x1 = [1,2,3]  }
+
+
+/* keep multi-line formatting */
+/* XPECT formattedLines 4 ---
+{
+	var y1 =[
+		1,
+		2,
+		3
+	];
+}
+--- */
+{  
+var y1 = [1,2,3
+];
+}
