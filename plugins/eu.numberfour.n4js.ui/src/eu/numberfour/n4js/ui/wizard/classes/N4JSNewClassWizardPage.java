@@ -21,7 +21,6 @@ import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
 /**
@@ -50,11 +49,6 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 		this.setTitle("New N4JS Class");
 		this.setMessage("Create a new N4JS Class");
 		this.setPageComplete(false);
-	}
-
-	@Override
-	protected boolean isInternalAccessModifierEnabled(AccessModifier modifier) {
-		return super.isInternalAccessModifierEnabled(modifier) || modifier == AccessModifier.PROJECT;
 	}
 
 	@SuppressWarnings("unused")

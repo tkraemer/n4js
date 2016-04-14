@@ -241,7 +241,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 		String dialogValue = dialog.getValue();
 
-		if (isWin32Platform()) {
+		if (isWin32()) {
 			dialogValue = convertToUnixPath(dialogValue);
 		}
 
@@ -540,8 +540,8 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	/**
 	 * Returns {@code true} if running on a win32 OS
 	 */
-	private static boolean isWin32Platform() {
-		return Platform.getOS() == Platform.OS_WIN32;
+	private static boolean isWin32() {
+		return Platform.getOS().equals(Platform.OS_WIN32);
 	}
 
 	/**
@@ -600,7 +600,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			String textToValidate = text;
 
 			// Convert mixed and windows separated paths to unix paths for validation
-			if (isWin32Platform()) {
+			if (isWin32()) {
 				textToValidate = convertToUnixPath(text);
 			}
 

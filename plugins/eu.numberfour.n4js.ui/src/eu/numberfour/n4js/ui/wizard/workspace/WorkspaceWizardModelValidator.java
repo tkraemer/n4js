@@ -201,7 +201,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	public void setModel(M model) {
 		this.model = model;
 
-		// Reset state and revalidate
+		// Reset state and validate
 		this.setSourceFolderValid(false);
 		this.setProjectValid(false);
 
