@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -44,6 +43,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardValidatorUtils;
+import eu.numberfour.n4js.utils.OSInfo;
 
 /**
  * Browse dialog to select and create module folders inside of a given source folder location.
@@ -241,7 +241,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 
 		String dialogValue = dialog.getValue();
 
-		if (isWin32()) {
+		if (OSInfo.isWindows()) {
 			dialogValue = convertToUnixPath(dialogValue);
 		}
 
@@ -511,7 +511,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	}
 
 	/**
-	 * Return the source folder relative path of given resource
+	 * Returns the source folder relative path of a given resource
 	 *
 	 * @param resource
 	 *            The file system resource
@@ -535,13 +535,6 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 	 */
 	private static String convertToUnixPath(String path) {
 		return path.replaceAll("[\\\\]", "/");
-	}
-
-	/**
-	 * Returns {@code true} if running on a win32 OS
-	 */
-	private static boolean isWin32() {
-		return Platform.getOS().equals(Platform.OS_WIN32);
 	}
 
 	/**
@@ -600,7 +593,7 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 			String textToValidate = text;
 
 			// Convert mixed and windows separated paths to unix paths for validation
-			if (isWin32()) {
+			if (OSInfo.isWindows()) {
 				textToValidate = convertToUnixPath(text);
 			}
 
