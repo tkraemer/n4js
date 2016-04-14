@@ -74,7 +74,7 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_ignore_java_strings"
-          value="true"/>
+          value="false"/>
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_ignore_mixed"
