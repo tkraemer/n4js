@@ -214,7 +214,6 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public URI findProjectWith(URI nestedLocation) {
-		ensureInitialized();
 		final String path = nestedLocation.toFileString();
 		if (null == path) {
 			return null;
