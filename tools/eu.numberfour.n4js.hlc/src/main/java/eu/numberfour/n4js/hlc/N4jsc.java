@@ -1128,18 +1128,18 @@ public class N4jsc {
 	 *            one or more paths separated by {@link File#pathSeparatorChar} OR empty string if no paths given.
 	 */
 	private List<File> convertToFilesAddTargetPlatformAndCheckWritableDir(String dirpaths) {
-		List<File> retList = new ArrayList<>();
-		if (dirpaths.length() > 0) {
-			for (String dirpath : Splitter.on(File.pathSeparatorChar).split(dirpaths)) {
-				File ret = new File(dirpath);
-				checkFileIsDirAndWriteable(ret);
-				retList.add(ret);
-			}
-		}
+		final List<File> retList = new ArrayList<>();
 		if (null != targetPlatformInstallLocation) {
 			final File tpLoc = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
 			checkFileIsDirAndWriteable(tpLoc);
 			retList.add(tpLoc);
+		}
+		if (!dirpaths.isEmpty()) {
+			for (String dirpath : Splitter.on(File.pathSeparatorChar).split(dirpaths)) {
+				final File ret = new File(dirpath);
+				checkFileIsDirAndWriteable(ret);
+				retList.add(ret);
+			}
 		}
 		return retList;
 	}
