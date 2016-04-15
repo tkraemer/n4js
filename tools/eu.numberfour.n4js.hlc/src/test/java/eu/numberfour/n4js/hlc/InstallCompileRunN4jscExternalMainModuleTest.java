@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
@@ -53,7 +52,6 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 	 * Test for checking the npm support in the headless case by downloading third party package, importing it and
 	 * running it with Common JS.
 	 */
-	@Ignore("Disabled test due to insufficient jenkins user privileges to checkout n4jsd-sandbox repository for N4JS definitions files.")
 	@Test
 	public void testCompileAndRunWithExternalDependencies() throws IOException, ExitCodeException {
 		System.out.println(name.getMethodName());
