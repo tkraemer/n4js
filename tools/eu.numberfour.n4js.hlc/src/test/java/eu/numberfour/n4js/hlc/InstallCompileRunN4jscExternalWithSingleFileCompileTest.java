@@ -24,9 +24,9 @@ import eu.numberfour.n4js.hlc.N4jsc.Type;
 import eu.numberfour.n4js.hlc.helper.N4CliHelper;
 
 /**
- * Downloads, installs, compiles and runs 'express' with N4JS definition file support.
+ * Downloads, installs, compiles and runs 'express'.
  */
-public class InstallCompileRunN4jscExternalWithDefinitionFilesTest extends BaseN4jscExternalTest {
+public class InstallCompileRunN4jscExternalWithSingleFileCompileTest extends BaseN4jscExternalTest {
 
 	@Override
 	protected Map<String, String> getNpmDependencies() {
@@ -38,11 +38,12 @@ public class InstallCompileRunN4jscExternalWithDefinitionFilesTest extends BaseN
 	 * running it with Common JS.
 	 */
 	@Test
-	public void testCompileAndRunWithExternalDependenciesAndDefinitionFiles() throws IOException, ExitCodeException {
+	public void testCompileAndRunWithExternalDependencies() throws IOException, ExitCodeException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_singleProjectOrFileCompile");
 		final String wsRoot = TARGET + "/" + WSP;
-		final String fileToRun = wsRoot + "/external.project/src/Main.n4js";
+		final String fileToCompile = wsRoot + "/external.project/src/Main.n4js";
+		final String fileToRun = fileToCompile;
 
 		final String[] args = {
 				"--systemLoader", COMMON_JS.getId(),
@@ -52,13 +53,12 @@ public class InstallCompileRunN4jscExternalWithDefinitionFilesTest extends BaseN
 				"-r", fileToRun,
 				"--debug",
 				"--verbose",
-				"--projectlocations", wsRoot,
-				"-t", Type.allprojects.toString()
+				"-t", Type.singlefile.toString(),
+				fileToCompile
 		};
 		final String out = runCaptureOut(args);
 		N4CliHelper.assertExpectedOutput(
-				"express properties: init, defaultConfiguration, lazyrouter, handle, use, route, engine, param, set, path, enabled, disabled, enable, disable, acl, bind, checkout, connect, copy, delete, get, head, link, lock, m-search, merge, mkactivity, mkcalendar, mkcol, move, notify, options, patch, post, propfind, proppatch, purge, put, rebind, report, search, subscribe, trace, unbind, unlink, unlock, unsubscribe, all, del, render, listen",
-				out);
+				"Application was created!", out);
 	}
 
 }

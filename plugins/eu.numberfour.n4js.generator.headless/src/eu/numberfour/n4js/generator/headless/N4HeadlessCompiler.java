@@ -1096,21 +1096,6 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compile all provided source-files.
-	 *
-	 * @param projectRoot
-	 *            common workspace.
-	 * @param sourceFiles
-	 *            all sources to compile
-	 * @throws N4JSCompileException
-	 *             signals compile errors
-	 */
-	public void compileSourceFiles(List<File> projectRoot, List<File> sourceFiles) throws N4JSCompileException {
-
-		compileSingleFiles(projectRoot, sourceFiles);
-	}
-
-	/**
 	 *
 	 * @return if compile should proceed as far as possible
 	 */
