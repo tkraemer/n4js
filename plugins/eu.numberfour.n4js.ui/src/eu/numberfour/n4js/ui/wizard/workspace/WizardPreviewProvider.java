@@ -61,36 +61,6 @@ public class WizardPreviewProvider {
 	}
 
 	/**
-	 * A text block of content which can be active or inactive.
-	 *
-	 */
-	public static class ContentBlock {
-		/** Active state of the block */
-		public final boolean active;
-		/** Text content of the block */
-		public final String content;
-
-		private ContentBlock(String content, boolean active) {
-			this.active = active;
-			this.content = content;
-		}
-
-		/**
-		 * Returns a active content block with given content.
-		 */
-		public static ContentBlock active(String content) {
-			return new ContentBlock(content, true);
-		}
-
-		/**
-		 * Returns an inactive content block with the given content.
-		 */
-		public static ContentBlock inactive(String content) {
-			return new ContentBlock(content, false);
-		}
-	}
-
-	/**
 	 * A preview window which attaches to the side of a given shell.
 	 */
 	public class WizardPreview extends Composite {
@@ -173,47 +143,6 @@ public class WizardPreviewProvider {
 				editorDocument.set(content);
 			}
 
-		}
-
-		/**
-		 * Sets the content of the preview.
-		 *
-		 * For inactive content blocks the syntax highlighting is turned off.
-		 */
-		public void setContent(ContentBlock... blocks) {
-			if (null == editorDocument) {
-				return;
-			}
-			String content = "";
-
-			for (ContentBlock contentBlock : blocks) {
-				content += contentBlock.content;
-			}
-
-			editorDocument.set(content);
-
-			// Accumulates iterated content block length
-			int offset = 0;
-
-			for (ContentBlock contentBlock : blocks) {
-				if (!contentBlock.active) {
-					unhighlightText(offset, contentBlock.content.length());
-				}
-				offset += contentBlock.content.length();
-			}
-		}
-
-		/**
-		 * Turns off syntax coloring for the given region.
-		 *
-		 * @param offset
-		 *            Start offset
-		 * @param length
-		 *            Length
-		 */
-		private void unhighlightText(int offset, int length) {
-			sourceViewer.getTextWidget().setStyleRange(
-					new StyleRange(offset, length, LIGHT_TEXT_COLOR, sourceViewer.getTextWidget().getBackground()));
 		}
 
 		/**

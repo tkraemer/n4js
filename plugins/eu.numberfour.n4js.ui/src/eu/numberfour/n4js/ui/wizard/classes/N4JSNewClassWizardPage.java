@@ -22,8 +22,8 @@ import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent
 import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
-import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
 /**
  * A wizard page to allow the user to specify the informations about the creation of a new class.
@@ -63,8 +63,10 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 
 	@Override
 	protected void updateContentPreview(WizardPreview contentPreview) {
+		String code = generator.generateContent(getModel());
+		contentPreview.setContent(code);
 		contentPreview.setInfo(getModel().computeFileLocation().toString());
-		contentPreview.setContent(generator.generateContent(getModel()));
+
 	}
 
 	@SuppressWarnings("unused")
