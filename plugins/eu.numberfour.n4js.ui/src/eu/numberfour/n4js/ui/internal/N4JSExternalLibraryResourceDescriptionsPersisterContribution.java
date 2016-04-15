@@ -16,7 +16,10 @@ import static org.eclipse.core.runtime.Status.OK_STATUS;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IResourceRuleFactory;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
@@ -28,7 +31,6 @@ import eu.numberfour.n4js.external.ExternalLibrariesReloadHelper;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.ui.resource.IResourceDescriptionPersisterContribution;
 import eu.numberfour.n4js.utils.StatusHelper;
-import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
 
 /**
  * Resource description persister contribution to restore the state of the Xtext index for the external libraries on
@@ -57,9 +59,27 @@ public class N4JSExternalLibraryResourceDescriptionsPersisterContribution
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				try {
-					externalLibraryWorkspace.updateState();
-					externalLibrariesReloadHelper.reloadLibraries(false, monitor);
-				} catch (final InvocationTargetException e) {
+					final IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+						@Override
+						public void run(final IProgressMonitor progress) throws CoreException {
+							try {
+								externalLibraryWorkspace.updateState();
+								externalLibrariesReloadHelper.reloadLibraries(false, progress);
+							} catch (final InvocationTargetException e) {
+								throw new CoreException(statusHelper.createError(e));
+							}
+						}
+
+					};
+					final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+					// Workspace is already locked.
+					if (workspace.isTreeLocked()) {
+						runnable.run(monitor);
+					} else {
+						workspace.run(runnable, null, IWorkspace.AVOID_UPDATE, monitor);
+					}
+				} catch (final CoreException e) {
 					final String message = "Unexpected error occurred while initializing N4JS Built-ins.";
 					LOGGER.error(message, e);
 					return statusHelper.createError(message, e);
@@ -68,11 +88,6 @@ public class N4JSExternalLibraryResourceDescriptionsPersisterContribution
 			}
 
 		};
-
-		final IResourceRuleFactory ruleFactory = new DelegatingWorkspace().getRuleFactory();
-		if (null != ruleFactory) {
-			job.setRule(ruleFactory.buildRule());
-		}
 
 		job.setUser(true);
 		job.setSystem(false);
