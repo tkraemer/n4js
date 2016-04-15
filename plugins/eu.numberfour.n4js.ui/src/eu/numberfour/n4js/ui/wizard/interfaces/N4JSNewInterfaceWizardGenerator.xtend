@@ -27,11 +27,12 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
 
 /**
  * A file generator for {@link N4JSInterfaceWizardModel}.
  */
-class N4JSNewInterfaceWizardGenerator {
+class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSInterfaceWizardModel> {
 	
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -45,18 +46,18 @@ class N4JSNewInterfaceWizardGenerator {
 	/**
 	 *  Generate the class code
 	 */
-	private def String generateInterface(N4JSInterfaceWizardModel model, Map<URI,String> aliasBindings) {
-'''«IF model.n4jsAnnotated»@N4JS«ENDIF»
-«IF model.isInternal»@Internal «ENDIF
-»«model.accessModifier.exportDeclaration
-»«IF model.isDefinitionFile»external «ENDIF
-»«accessModifierString(model.accessModifier)»interface «model.name»«
-IF model.interfaces.length > 0 » extends «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
-iface.realOrAliasName(aliasBindings)»«ENDFOR» {
-	
-}
+	private def String generateInterface(N4JSInterfaceWizardModel model, Map<URI,String> aliasBindings)
 		'''
-	}
+		«IF model.n4jsAnnotated»@N4JS«ENDIF»
+		«IF model.isInternal»@Internal «ENDIF
+		»«model.accessModifier.exportDeclaration
+		»«IF model.isDefinitionFile»external «ENDIF
+		»«accessModifierString(model.accessModifier)»interface «model.name»«
+		IF model.interfaces.length > 0 » extends «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
+		iface.realOrAliasName(aliasBindings)»«ENDFOR» {
+			
+		}
+		'''
 	
 	/**
 	 * Return the real or bound name of the classifier reference.
@@ -92,24 +93,10 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 			if ( moduleFile.exists ) {
 				insertIntoFile(moduleFile, model);
 			} else {
-				//Collect the import requirements
-				val importRequirements = model.importRequirements;
-				
-				//Resolve occurring name conflicts
-				val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
-				
-				//Generate import statements
-				var importStatements = requirementResolver.generateImportStatements(importRequirements)
-				
-				//If there are import statements, add a line break after statements and an additional empty line to have some space to the code
-				if ( !importRequirements.empty) 
-					importStatements = importStatements + "\n\n";
-				
-				//Generate interface code
-				val classCode = generateInterface(model, aliasBindings);
+				val content = generateContent(model);
 				
 				//Write to file 
-				val classTextStream = new ByteArrayInputStream((importStatements+classCode).getBytes(StandardCharsets.UTF_8));
+				val classTextStream = new ByteArrayInputStream((content).getBytes(StandardCharsets.UTF_8));
 				moduleFile.create(classTextStream, true, null);
 			}
 		} catch ( CoreException e ) {
@@ -117,6 +104,26 @@ iface.realOrAliasName(aliasBindings)»«ENDFOR» {
 		}
 		
 		return true;
+	}
+	
+	override String generateContent(N4JSInterfaceWizardModel model) {
+		//Collect the import requirements
+		val importRequirements = model.importRequirements;
+				
+		//Resolve occurring name conflicts
+		val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
+				
+		//Generate import statements
+		var importStatements = requirementResolver.generateImportStatements(importRequirements)
+				
+		//If there are import statements, add a line break after statements and an additional empty line to have some space to the code
+		if ( !importRequirements.empty) 
+			importStatements = importStatements + "\n\n";
+				
+		//Generate interface code
+		val classCode = generateInterface(model, aliasBindings);
+		
+		return importStatements+classCode;
 	}
 	
 	private def void insertIntoFile(IFile file, N4JSInterfaceWizardModel model) throws CoreException {

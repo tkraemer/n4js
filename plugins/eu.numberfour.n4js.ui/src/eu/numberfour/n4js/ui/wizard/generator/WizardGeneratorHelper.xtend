@@ -88,7 +88,6 @@ class WizardGeneratorHelper {
 	 * <p>The method tries to find the files import region and append the import statements to it</p> 
 	 */
 	public def void insertImportStatements(XtextResource moduleResource, List<ImportRequirement> importRequirements ) {
-		
 		val importReplacement = requirementResolver.getImportStatementChanges(moduleResource, importRequirements);
 		moduleResource.applyChanges(#[importReplacement]);
 	}

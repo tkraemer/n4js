@@ -28,11 +28,12 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
 
 /**
  * A file generator for {@link N4JSClassWizardModel}
  */
-class N4JSNewClassWizardGenerator {
+class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassWizardModel>{
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -43,6 +44,21 @@ class N4JSNewClassWizardGenerator {
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
 
+
+	override generateContent(N4JSClassWizardModel model) {
+		//Collect the import requirements
+		val importRequirements = model.importRequirements;
+		
+		//Resolve occurring name conflicts
+		val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
+		var importStatements = requirementResolver.generateImportStatements(importRequirements);
+		
+		if (!importStatements.empty) {
+			importStatements += "\n\n";
+		}
+		
+		return importStatements + generateClass(model, aliasBindings);
+	}
 	/**
 	 *  Generates the class code.
 	 */

@@ -23,6 +23,7 @@ import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
+import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
 
 /**
  * A wizard page to allow the user to specify the informations about the creation of a new class.
@@ -43,6 +44,9 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@Inject
 	private SuperClassComponentProvider superClassComponentProvider;
 
+	@Inject
+	private N4JSNewClassWizardGenerator generator;
+
 	/**
 	 * Instantiates a New N4JS Class wizard main page
 	 */
@@ -57,10 +61,15 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 		return super.isInternalAccessModifierEnabled(modifier) || modifier == AccessModifier.PROJECT;
 	}
 
+	@Override
+	protected void updateContentPreview(WizardPreview contentPreview) {
+		contentPreview.setInfo(getModel().computeFileLocation().toString());
+		contentPreview.setContent(generator.generateContent(getModel()));
+	}
+
 	@SuppressWarnings("unused")
 	@Override
 	public void createComponents(WizardComponentContainer container) {
-
 		nameComponent = new NameComponent(getModel(), container);
 
 		new EmptyComponent(container);

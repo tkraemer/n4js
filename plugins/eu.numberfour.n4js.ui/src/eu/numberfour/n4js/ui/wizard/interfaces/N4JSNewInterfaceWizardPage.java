@@ -20,6 +20,7 @@ import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
+import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
 
 /**
  * A wizard page to allow the user to specify the informations about the creation of a new interface.
@@ -37,6 +38,9 @@ public class N4JSNewInterfaceWizardPage extends N4JSNewClassifierWizardPage<N4JS
 
 	@Inject
 	private InterfacesComponentProvider interfacesComponentProvider;
+
+	@Inject
+	private N4JSNewInterfaceWizardGenerator generator;
 
 	/**
 	 * Instantiates a New N4JS Interface wizard main page
@@ -68,6 +72,12 @@ public class N4JSNewInterfaceWizardPage extends N4JSNewClassifierWizardPage<N4JS
 		interfacesComponentProvider.create(getModel(), container);
 
 		setupBindings();
+	}
+
+	@Override
+	protected void updateContentPreview(WizardPreview contentPreview) {
+		contentPreview.setInfo(getModel().computeFileLocation().toString());
+		contentPreview.setContent(generator.generateContent(getModel()));
 	}
 
 	@Override

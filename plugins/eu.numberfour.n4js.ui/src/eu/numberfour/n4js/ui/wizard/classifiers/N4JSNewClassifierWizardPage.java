@@ -30,16 +30,17 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters;
 import eu.numberfour.n4js.ui.wizard.interfaces.N4JSInterfaceWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
+import eu.numberfour.n4js.ui.wizard.workspace.PreviewableWizardPage;
 import eu.numberfour.n4js.ui.wizard.workspace.SuffixText;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator.ValidationResult;
-import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardPage;
 
 /**
  * Generic wizard page for all N4JS classifieris.
  */
-public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizardModel> extends WorkspaceWizardPage<M> {
+public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizardModel>
+		extends PreviewableWizardPage<M> {
 
 	/** Component for the classifier name. */
 	protected NameComponent nameComponent;
@@ -117,7 +118,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 		moduleSpecifierValue.addValueChangeListener(new IValueChangeListener() {
 			@Override
 			public void handleValueChange(ValueChangeEvent event) {
-				SuffixText input = workspaceWizardForm.getModuleSpecifierText();
+				SuffixText input = workspaceWizardControl.getModuleSpecifierText();
 				String inputText = input.getText();
 				if (inputText.isEmpty() || inputText.charAt(inputText.length() - 1) == '/') {
 					input.setSuffixVisible(true);
@@ -131,7 +132,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 		IObservableValue interfaceNameModelValue = BeanProperties
 				.value(N4JSInterfaceWizardModel.class, N4JSClassifierWizardModel.NAME_PROPERTY).observe(getModel());
 		IObservableValue greySuffixValue = BeanProperties.value(SuffixText.class, SuffixText.SUFFIX_PROPERTY)
-				.observe(workspaceWizardForm.getModuleSpecifierText());
+				.observe(workspaceWizardControl.getModuleSpecifierText());
 		dataBindingContext.bindValue(greySuffixValue,
 				interfaceNameModelValue, noUpdateValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));

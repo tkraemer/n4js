@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -49,17 +50,17 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.Str
 public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extends WizardPage
 		implements WizardComponentContainer {
 
-	private M model;
-	private DataBindingContext databindingContext;
-
-	/** Available after invocation of #createControl */
-	protected WorkspaceWizardPageForm workspaceWizardForm;
-
 	// Browse dialogs
 	@Inject
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
 	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
+
+	private M model;
+	private DataBindingContext databindingContext;
+
+	/** Available after invocation of #createControl */
+	protected WorkspaceWizardPageForm workspaceWizardControl;
 
 	/**
 	 * Sole constructor.
@@ -71,18 +72,19 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 	@Override
 	public void createControl(Composite parent) {
-		workspaceWizardForm = new WorkspaceWizardPageForm(parent, SWT.FILL);
+		workspaceWizardControl = new WorkspaceWizardPageForm(parent, SWT.NONE);
+		workspaceWizardControl.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 
-		setupBindings(workspaceWizardForm);
-		setupBrowseDialogs(workspaceWizardForm);
+		setupBindings(workspaceWizardControl);
+		setupBrowseDialogs(workspaceWizardControl);
 
 		createComponents(this);
 
 		// Synchronize background color to work around a dark theme issue where the wizard content background appears
 		// white
-		workspaceWizardForm.setBackground(parent.getBackground());
+		workspaceWizardControl.setBackground(parent.getBackground());
 
-		setControl(workspaceWizardForm);
+		setControl(workspaceWizardControl);
 	}
 
 	/**
@@ -150,6 +152,95 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 			model.setSourceFolder(new Path(((VirtualResource) firstResult).getName()).append("/"));
 		}
 	}
+
+	/**
+	 * @param model
+	 *            WorkspaceWizardModel to use
+	 */
+	public void setModel(M model) {
+		this.model = model;
+		getValidator().setModel(this.model);
+		this.model.addPropertyChangeListener(evt -> getValidator().validate());
+	}
+
+	/**
+	 * Returns with the underlying module instance.
+	 *
+	 * @return the model instance used for data binding.
+	 */
+	public M getModel() {
+		return model;
+	}
+
+	/**
+	 * Set the initial focus when the pages is visible
+	 */
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+
+		if (visible) {
+			this.setInitialFocus();
+		}
+
+	}
+
+	/**
+	 * Set the input focus depending on the initially given model.
+	 *
+	 * This method is only invoked when all ui is initialized and visible.
+	 *
+	 * @return True if the focus was claimed.
+	 */
+	protected boolean setInitialFocus() {
+		// Set the focus to the first empty field beginning with project
+		if (model.getProject().toString().isEmpty()) {
+			workspaceWizardControl.getProjectText().setFocus();
+		} else if (model.getSourceFolder().toString().isEmpty()) {
+			workspaceWizardControl.getSourceFolderText().setFocus();
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public DataBindingContext getDataBindingContext() {
+		return databindingContext;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (databindingContext != null) {
+			databindingContext.dispose();
+		}
+	}
+
+	@Override
+	public Composite getComposite() {
+		return workspaceWizardControl;
+	}
+
+	/**
+	 * Get the validator for this wizard page.
+	 *
+	 * Subclasses need to provide their own ModelValidator through this method and configure it to work with the model.
+	 *
+	 * @return A {@link WorkspaceWizardModelValidator}
+	 */
+	public abstract WorkspaceWizardModelValidator<M> getValidator();
+
+	/**
+	 * Implement this method to add custom form components.
+	 * <p>
+	 * Note that the parent composite is a 3 column grid.
+	 * </p>
+	 *
+	 * @param parent
+	 *            The parent composite
+	 */
+	public abstract void createComponents(WizardComponentContainer parent);
 
 	private void setupBindings(WorkspaceWizardPageForm wizardForm) {
 		databindingContext = new DataBindingContext();
@@ -243,94 +334,5 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 			}
 		});
 	}
-
-	/**
-	 * @param model
-	 *            WorkspaceWizardModel to use
-	 */
-	public void setModel(M model) {
-		this.model = model;
-		getValidator().setModel(this.model);
-		this.model.addPropertyChangeListener(evt -> getValidator().validate());
-	}
-
-	/**
-	 * Returns with the underlying module instance.
-	 *
-	 * @return the model instance used for data binding.
-	 */
-	public M getModel() {
-		return model;
-	}
-
-	/**
-	 * Set the initial focus when the pages is visible
-	 */
-	@Override
-	public void setVisible(boolean visible) {
-		super.setVisible(visible);
-
-		if (visible) {
-			this.setInitialFocus();
-		}
-
-	}
-
-	/**
-	 * Set the input focus depending on the initially given model.
-	 *
-	 * This method is only invoked when all ui is initialized and visible.
-	 *
-	 * @return True if the focus was claimed.
-	 */
-	protected boolean setInitialFocus() {
-		// Set the focus to the first empty field beginning with project
-		if (model.getProject().toString().isEmpty()) {
-			workspaceWizardForm.getProjectText().setFocus();
-		} else if (model.getSourceFolder().toString().isEmpty()) {
-			workspaceWizardForm.getSourceFolderText().setFocus();
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public DataBindingContext getDataBindingContext() {
-		return databindingContext;
-	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		if (databindingContext != null) {
-			databindingContext.dispose();
-		}
-	}
-
-	@Override
-	public Composite getComposite() {
-		return workspaceWizardForm;
-	}
-
-	/**
-	 * Get the validator for this wizard page.
-	 *
-	 * Subclasses need to provide their own ModelValidator through this method and configure it to work with the model.
-	 *
-	 * @return A {@link WorkspaceWizardModelValidator}
-	 */
-	public abstract WorkspaceWizardModelValidator<M> getValidator();
-
-	/**
-	 * Implement this method to add custom form components.
-	 * <p>
-	 * Note that the parent composite is a 3 column grid.
-	 * </p>
-	 *
-	 * @param parent
-	 *            The parent composite
-	 */
-	public abstract void createComponents(WizardComponentContainer parent);
 
 }

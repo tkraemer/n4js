@@ -10,12 +10,14 @@
  */
 package eu.numberfour.n4js.ui.wizard.classes;
 
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
+import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizard;
 
 /**
@@ -38,6 +40,11 @@ public class N4JSNewClassWizard extends N4JSNewClassifierWizard<N4JSClassWizardM
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		setDefaultPageImageDescriptor(ImageRef.NEW_CLASS_WIZBAN.asImageDescriptor().orNull());
 		super.init(workbench, selection);
+	}
+
+	@Override
+	public IDialogSettings getDialogSettings() {
+		return N4JSActivator.getInstance().getDialogSettings();
 	}
 
 	@Override
