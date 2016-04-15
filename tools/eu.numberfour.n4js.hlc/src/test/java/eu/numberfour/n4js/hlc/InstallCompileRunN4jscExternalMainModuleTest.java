@@ -73,12 +73,14 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 		final String out = runCaptureOut(args);
 		StringBuilder message = new StringBuilder();
 		message
+				.append("(node) sys is deprecated. Use util instead.") // one of the libraries being tested seems to be
+																		// using a deprecated package
 				.append("express imported").append("\n")
 				.append("jade imported").append("\n")
 				.append("lodash imported").append("\n")
 				.append("karma imported").append("\n")
 				.append("bar imported").append("\n")
-				.append("body-parser imported").append("\n");
+				.append("body-parser imported");
 
 		N4CliHelper.assertExpectedOutput(
 				message.toString(), out);
