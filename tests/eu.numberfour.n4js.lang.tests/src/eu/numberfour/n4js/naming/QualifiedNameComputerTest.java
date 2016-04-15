@@ -61,8 +61,8 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetQualifiedModuleName() {
-		assertEquals("p.C", qnc.getQualifiedModuleName(module));
-		assertEquals("p.C", qnc.getQualifiedModuleName(script));
+		assertEquals("p/C", qnc.getQualifiedModuleName(module));
+		assertEquals("p/C", qnc.getQualifiedModuleName(script));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetQualifiedTypeName() {
-		assertEquals("p.C.C", qnc.getFullyQualifiedTypeName(type));
+		assertEquals("p/C/C", qnc.getFullyQualifiedTypeName(type));
 	}
 
 	/**

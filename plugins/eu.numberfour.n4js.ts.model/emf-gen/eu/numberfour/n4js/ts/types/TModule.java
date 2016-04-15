@@ -343,12 +343,17 @@ public interface TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Returns the qualified module name as a file path, using '/' as a segment delimiter. No file extension is added, though.
+	 * Returns the qualified module name as a file path, using '/' as a segment delimiter. No file extension is added,
+	 * though.
+	 * <p>
+	 * TODO Since we changed the delimiter for our internal qualified names from '.' to '/', this is no longer required.
+	 * However, qualified names will soon be revisited in IDE-2227 and this might change again, so we keep this method.
+	 * Also see method <code>QualifiedNameComputer#getFullyQualifiedTypeName_WITH_LEGACY_SUPPORT(Type)</code>.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Module Specifier</em>' attribute.
 	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTModule_ModuleSpecifier()
 	 * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='<%java.lang.String%> _qualifiedName = this.getQualifiedName();\nreturn _qualifiedName.replace(\".\", \"/\");'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='return this.getQualifiedName();'"
 	 * @generated
 	 */
 	String getModuleSpecifier();

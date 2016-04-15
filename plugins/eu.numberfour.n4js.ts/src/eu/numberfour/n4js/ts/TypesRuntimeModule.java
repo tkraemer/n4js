@@ -13,6 +13,7 @@ package eu.numberfour.n4js.ts;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.findReferences.IReferenceFinder;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -20,6 +21,7 @@ import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 
 import eu.numberfour.n4js.ts.conversions.TypesValueConverterService;
 import eu.numberfour.n4js.ts.findReferences.ConcreteSyntaxAwareReferenceFinder;
+import eu.numberfour.n4js.ts.naming.N4TSQualifiedNameConverter;
 import eu.numberfour.n4js.ts.resource.BuiltInSchemeAwareResource;
 import eu.numberfour.n4js.ts.resource.TypesResourceDescriptionStrategy;
 import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
@@ -62,6 +64,13 @@ public class TypesRuntimeModule extends eu.numberfour.n4js.ts.AbstractTypesRunti
 	@Override
 	public Class<? extends XtextResourceSet> bindXtextResourceSet() {
 		return ResourceSetWithBuiltInScheme.class;
+	}
+
+	/**
+	 * Binds a custom qualified name converter changing the delimiter to "/".
+	 */
+	public Class<? extends IQualifiedNameConverter> bindIQualifiedNameConverter() {
+		return N4TSQualifiedNameConverter.class;
 	}
 
 	@Override

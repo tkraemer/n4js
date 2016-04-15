@@ -132,10 +132,15 @@ class TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 */
 	contains Type[] exposedInternalTypes
 	/**
-	 * Returns the qualified module name as a file path, using '/' as a segment delimiter. No file extension is added, though.
+	 * Returns the qualified module name as a file path, using '/' as a segment delimiter. No file extension is added,
+	 * though.
+	 * <p>
+	 * TODO Since we changed the delimiter for our internal qualified names from '.' to '/', this is no longer required.
+	 * However, qualified names will soon be revisited in IDE-2227 and this might change again, so we keep this method.
+	 * Also see method <code>QualifiedNameComputer#getFullyQualifiedTypeName_WITH_LEGACY_SUPPORT(Type)</code>.
 	 */
 	derived String moduleSpecifier get {
-		return qualifiedName.replace('.', '/')
+		return qualifiedName
 	}
 }
 

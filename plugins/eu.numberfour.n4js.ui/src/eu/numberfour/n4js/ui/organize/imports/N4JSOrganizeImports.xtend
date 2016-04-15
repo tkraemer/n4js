@@ -58,6 +58,7 @@ import static eu.numberfour.n4js.parser.InternalSemicolonInjectingParser.SEMICOL
 
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
+import org.eclipse.xtext.naming.IQualifiedNameConverter
 
 /**
  */
@@ -68,6 +69,9 @@ public class N4JSOrganizeImports {
 
 	@Inject
 	private N4JSScopeProvider scopeProvider;
+
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Inject
 	private ImportProvidedElementLabelprovider ImportProvidedElementLabelprovider;
@@ -284,7 +288,7 @@ public class N4JSOrganizeImports {
 
 	/** Creates a new named import of 'name' from 'module'*/
 	private def ImportDeclaration createNamedImport(String name, QualifiedName module) {
-		return createNamedImport(name, module.toString)
+		return createNamedImport(name, qualifiedNameConverter.toString(module))
 	}
 
 	/** Creates a new named import of 'name' from 'moduleName'*/

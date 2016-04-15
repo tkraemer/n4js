@@ -61,6 +61,7 @@ import eu.numberfour.n4js.n4JS.Literal;
 import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.StringLiteral;
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
@@ -548,20 +549,12 @@ public class XpectN4JSES5TranspilerHelper {
 		return file;
 	}
 
-	/** Splits up the script's qualified name along the dots. */
+	/** Splits up the script's qualified name along the delimiters. */
 	private LinkedList<String> moduleQualifiedNameSegments(final Script script) {
-		return newLinkedList(on(".").split(script.getModule().getQualifiedName()));
+		return newLinkedList(on(N4JSQualifiedNameConverter.DELIMITER).split(script.getModule().getQualifiedName()));
 	}
 
 	private String getProjectName(final Script script) {
-		// Cannot use script.module.projectName since all '.'-s are replaced with '_'-s.
-		// See N4JSTypesBuilder.createTModuleFromSource
-		final IN4JSProject project = core.findProject(script.eResource().getURI()).orNull();
-		if (null == project) {
-			throw new NullPointerException(
-					"Cannot find project for script in resource: " + script.eResource().getURI());
-		}
-		return project.getProjectName();
+		return script.getModule().getProjectName();
 	}
-
 }

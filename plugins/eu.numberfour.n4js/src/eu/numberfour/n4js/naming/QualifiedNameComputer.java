@@ -83,7 +83,7 @@ public class QualifiedNameComputer {
 	 * The fully qualified name (FQN) of a declared type is its simple name, prefixed by the fully qualified module name
 	 * it is defined in.
 	 * <p>
-	 * Example: <code>p.C.C</code> for class C in file/module C in package p of project with version 1.0.0.
+	 * Example: <code>p/C/C</code> for class C in file/module C in package p of project with version 1.0.0.
 	 * </p>
 	 */
 	public String getFullyQualifiedTypeName(Type type) {
@@ -98,6 +98,18 @@ public class QualifiedNameComputer {
 			moduleFQN = moduleFQN.skipFirst(1);
 		}
 		return converter.toString(moduleFQN.append(getSimpleTypeName(type)));
+	}
+
+	/**
+	 * Like {@link #getFullyQualifiedTypeName(Type)}, but uses "." instead of the correct delimiter.
+	 * <p>
+	 * <b>THIS IS ONLY INTENDED FOR LEGACY PURPOSES WHEN CREATING THE QUALIFIED NAMES FOR THE META-DATA (e.g.
+	 * N4Class)!</b>
+	 * <p>
+	 * TODO IDE-2227 remove legacy support for old FQNs
+	 */
+	public String getFullyQualifiedTypeName_WITH_LEGACY_SUPPORT(Type type) {
+		return getFullyQualifiedTypeName(type).replace(N4JSQualifiedNameConverter.DELIMITER, ".");
 	}
 
 	/**

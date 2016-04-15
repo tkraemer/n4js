@@ -62,7 +62,7 @@ class N4JSScopingTestWithIndexTest {
 			"src/eu/numberfour/n4js/tests/scoping/Client.n4js",
 			'''
 				<?xml version="1.0" encoding="ASCII"?>
-				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu.numberfour.n4js.tests.scoping.Supplier" vendorID="eu.numberfour" projectName="eu_numberfour_n4js_lang_tests" moduleLoader="N4JS">
+				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/Supplier" vendorID="eu.numberfour" projectName="eu.numberfour.n4js.lang.tests" moduleLoader="N4JS">
 				  <astElement href="#/0"/>
 				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
 				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
@@ -85,7 +85,7 @@ class N4JSScopingTestWithIndexTest {
 			"SupplierWithBuiltIn", "src/eu/numberfour/n4js/tests/scoping/ClientWithBuiltIn.n4js",
 			'''
 				<?xml version="1.0" encoding="ASCII"?>
-				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu.numberfour.n4js.tests.scoping.SupplierWithBuiltIn" vendorID="eu.numberfour" projectName="eu_numberfour_n4js_lang_tests" moduleLoader="N4JS">
+				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/SupplierWithBuiltIn" vendorID="eu.numberfour" projectName="eu.numberfour.n4js.lang.tests" moduleLoader="N4JS">
 				  <astElement href="#/0"/>
 				  <topLevelTypes xsi:type="types:TClass" name="SupplierWithBuiltIn" exportedName="SupplierWithBuiltIn">
 				    <ownedMembers xsi:type="types:TField" name="s" declaredMemberAccessModifier="public">
@@ -230,7 +230,7 @@ class N4JSScopingTestWithIndexTest {
 		clientResource.load(
 			new StringInputStream(
 				'''
-					import { Supplier } from "eu.numberfour.n4js/tests/scoping/Supplier"
+					import { Supplier } from "eu/numberfour/n4js/tests/scoping/Supplier"
 					var a: Supplier;
 					var b: Supplier;
 					a.foo();
@@ -238,7 +238,7 @@ class N4JSScopingTestWithIndexTest {
 				'''), emptyMap)
 
 		EcoreUtil.resolveAll(clientResource)
-		assertTrue(clientResource.errors.isEmpty)
+		assertTrue(clientResource.errors.toString, clientResource.errors.isEmpty)
 		supplierResource = rs.getResource(supplierJS, false)
 		assertNotNull(supplierResource)
 		assertFalse("Resource was loaded transparently due to index access in scope provider", supplierResource.loaded)
