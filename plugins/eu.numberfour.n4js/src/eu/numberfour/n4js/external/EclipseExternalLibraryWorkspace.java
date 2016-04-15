@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.external;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Predicates.notNull;
 import static com.google.common.collect.FluentIterable.from;
@@ -128,6 +129,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public ProjectDescription getProjectDescription(URI location) {
+		ensureInitialized();
 		final Pair<ExternalProject, ProjectDescription> pair = get(location);
 		return null == pair ? null : pair.getSecond();
 	}
@@ -136,6 +138,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 	public URI getLocation(URI projectURI, ProjectReference reference,
 			N4JSSourceContainerType expectedN4JSSourceContainerType) {
 
+		ensureInitialized();
 		if (PROJECT.equals(expectedN4JSSourceContainerType)) {
 
 			final String name = reference.getProject().getArtifactId();
@@ -159,12 +162,13 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public Iterator<URI> getArchiveIterator(URI archiveLocation, String archiveRelativeLocation) {
+		ensureInitialized();
 		return emptyIterator();
 	}
 
 	@Override
 	public Iterator<URI> getFolderIterator(URI folderLocation) {
-
+		ensureInitialized();
 		final URI findProjectWith = findProjectWith(folderLocation);
 		if (null != findProjectWith) {
 			final String projectName = findProjectWith.lastSegment();
@@ -195,7 +199,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public URI findArtifactInFolder(URI folderLocation, String folderRelativePath) {
-
+		ensureInitialized();
 		final IResource folder = getResource(folderLocation);
 		if (folder instanceof IFolder) {
 			final IFile file = ((IFolder) folder).getFile(folderRelativePath);
@@ -210,7 +214,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public URI findProjectWith(URI nestedLocation) {
-
+		ensureInitialized();
 		final String path = nestedLocation.toFileString();
 		if (null == path) {
 			return null;
@@ -239,7 +243,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public void storeUpdated(final ExternalLibraryPreferenceStore store, final IProgressMonitor monitor) {
-
+		ensureInitialized();
 		final Set<java.net.URI> oldLocations = newLinkedHashSet(locations);
 		final Set<java.net.URI> newLocation = newLinkedHashSet(store.getLocations());
 		final Collection<java.net.URI> removedLocations = difference(oldLocations, newLocation);
@@ -283,8 +287,8 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public void registerProjects(NpmProjectAdaptionResult result, IProgressMonitor monitor) {
-
 		checkState(result.isOK(), "Expected OK result: " + result);
+		ensureInitialized();
 
 		final SubMonitor subMonitor = convert(monitor, 3);
 
@@ -325,13 +329,14 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public Iterable<IProject> getProjects() {
+		ensureInitialized();
 		final Map<String, ExternalProject> projects = getProjectMapping();
 		return unmodifiableCollection(projects.values());
 	}
 
 	@Override
 	public Iterable<IProject> getProjects(java.net.URI rootLocation) {
-
+		ensureInitialized();
 		final File rootFolder = new File(rootLocation);
 
 		final Map<String, IProject> projectsMapping = newTreeMap();
@@ -354,12 +359,13 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 
 	@Override
 	public IProject getProject(final String projectName) {
+		ensureInitialized();
 		return getProjectMapping().get(projectName);
 	}
 
 	@Override
 	public IResource getResource(URI location) {
-
+		ensureInitialized();
 		final String path = location.toFileString();
 		if (null == path) {
 			return null;
@@ -447,6 +453,10 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 				.transform(pair -> pair.getFirst())
 				.filter(project -> null != project && project.exists())
 				.filter(IProject.class);
+	}
+
+	private void ensureInitialized() {
+		checkNotNull(getProjectMapping(), "Eclipse based external library workspace is not initialized yet.");
 	}
 
 	private Map<String, ExternalProject> getProjectMapping() {
