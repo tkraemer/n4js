@@ -33,7 +33,6 @@ import eu.numberfour.n4js.ts.types.Type;
 /**
  * Access to the n4 specific cached data during a find references operation.
  */
-@SuppressWarnings("restriction")
 public class TargetURIKey {
 
 	/**
