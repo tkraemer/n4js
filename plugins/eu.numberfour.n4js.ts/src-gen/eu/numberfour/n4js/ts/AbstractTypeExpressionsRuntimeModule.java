@@ -63,4 +63,14 @@ public abstract class AbstractTypeExpressionsRuntimeModule extends org.eclipse.x
 		return org.eclipse.xtext.serializer.impl.Serializer.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
+		return eu.numberfour.n4js.ts.formatting2.TypeExpressionsFormatter.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public void configureFormatterPreferences(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
+	}
+
 }
