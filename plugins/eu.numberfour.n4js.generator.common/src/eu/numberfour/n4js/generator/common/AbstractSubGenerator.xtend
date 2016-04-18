@@ -30,6 +30,7 @@ import org.eclipse.xtext.validation.Issue
 
 import static org.eclipse.xtext.diagnostics.Severity.*
 import eu.numberfour.n4js.utils.ResourceType
+import org.eclipse.core.runtime.Platform
 
 /**
  */
@@ -106,7 +107,11 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 		return (autobuildEnabled
 			&& input.hasValidFileExtension
 			&& projectUtils.isSource(input.URI)
-			&& (projectUtils.isNoValidate(input.URI) || projectUtils.isExternal(input.URI) || hasNoErrors(input, monitor)))
+			&& (projectUtils.isNoValidate(input.URI) 
+				|| projectUtils.isExternal(input.URI) 
+				// if platform is running the generator is called from the builder, hence cannot have any validation errors
+				|| (Platform.running || hasNoErrors(input, monitor)) 
+			))
 			&& (!input.isStaticPolyfillingModule) // compile driven by filled type
 			&& ( hasNoPolyfillErrors(input,monitor))
 	}

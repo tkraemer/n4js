@@ -123,7 +123,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 	/***/
 	@Test
-	public void runClientWithAllOpenedWorkspaceProjects() {
+	public void runClientWithAllOpenedWorkspaceProjects() throws CoreException {
+		waitForAutoBuildCheckIndexRigid();
 		final ProcessResult result = runClient();
 		// @formatter:off
 		assertEquals("Unexpected output after running the client module: " + result,
@@ -142,7 +143,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -162,7 +163,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -182,7 +183,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -197,7 +198,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).open(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -217,7 +218,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -237,7 +238,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -257,7 +258,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -273,7 +274,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 			final File projectsRoot = new File(getResourceUri(PROBANDS, WORKSPACE_LOC));
 			ProjectUtils.importProject(projectsRoot, libProjectName);
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -284,6 +285,16 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace D<init>" + NL,
 				secondResult.getStdOut());
 		// @formatter:on
+	}
+
+	/**
+	 * Besides waiting for auto-build to finish, performs a clean build and checks if the Xtext index content is still
+	 * valid. This method can be used to ensure Xtext index content does not get messed up after a clean build either.
+	 */
+	private void waitForAutoBuildCheckIndexRigid() throws CoreException {
+		waitForAutoBuild();
+		cleanBuild();
+		waitForAutoBuild();
 	}
 
 	private ProcessResult runClient() {

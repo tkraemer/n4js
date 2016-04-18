@@ -16,9 +16,11 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.DerivedStateAwareResource;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
 import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
@@ -26,12 +28,12 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.impl.DefaultResourceDescription;
 import org.eclipse.xtext.resource.impl.EObjectDescriptionLookUp;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.external.ExternalLibraryBuilderHelper.ExternalBuildAdapter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
@@ -43,6 +45,7 @@ import eu.numberfour.n4js.ts.utils.TypeHelper;
  * only a double check that the correct resource description strategy is bound in the runtime module.
  */
 @Singleton
+@SuppressWarnings("restriction")
 public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDescriptionManager implements N4Scheme {
 
 	@Inject
@@ -85,7 +88,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	@Override
 	public boolean isAffected(Collection<IResourceDescription.Delta> deltas, IResourceDescription candidate,
 			IResourceDescriptions context) {
-		boolean result = basicIsAffected(deltas, candidate);
+		boolean result = basicIsAffected(deltas, candidate, context);
 		if (!result) {
 			for (IResourceDescription.Delta delta : deltas) {
 				URI uri = delta.getUri();
@@ -100,7 +103,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return result;
 	}
 
-	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate) {
+	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate,
+			IResourceDescriptions context) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
 		Collection<QualifiedName> importedNames = getImportedNames(candidate);
@@ -108,7 +112,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 			if (delta.haveEObjectDescriptionsChanged() &&
 					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
 				if (isAffected(importedNames, delta.getNew()) || isAffected(importedNames, delta.getOld())) {
-					if (hasDependencyTo(candidate, delta)) {
+					final boolean externalBuild = isExternalBuild(context);
+					if (hasDependencyTo(candidate, delta, externalBuild)) {
 						return true;
 					}
 				}
@@ -117,11 +122,20 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return false;
 	}
 
+	private boolean isExternalBuild(IResourceDescriptions context) {
+		if (context instanceof CurrentDescriptions) {
+			final ResourceSet resourceSet = ((CurrentDescriptions) context).getBuildData().getResourceSet();
+			return null != EcoreUtil.getAdapter(resourceSet.eAdapters(), ExternalBuildAdapter.class);
+		}
+		return false;
+	}
+
 	/**
 	 * Returns true iff project containing the 'candidate' has a direct dependency to the project containing the
 	 * 'delta'.
 	 */
-	private boolean hasDependencyTo(IResourceDescription candidate, IResourceDescription.Delta delta) {
+	private boolean hasDependencyTo(IResourceDescription candidate, IResourceDescription.Delta delta,
+			boolean externalBuild) {
 		final URI fromUri = candidate.getURI();
 		final URI toUri = delta.getUri();
 		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
@@ -137,7 +151,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 
 				// Never mark a resource as effected if the dependency is an external one.
 				// The library manager already knows about the build older.
-				if (Objects.equals(fromProjectDependency, toProject) && !fromProjectDependency.isExternal()) {
+				if (Objects.equals(fromProjectDependency, toProject)
+						&& (externalBuild && !fromProjectDependency.isExternal())) {
 					return true;
 				}
 			}
@@ -171,15 +186,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	}
 
 	@Override
-	protected IResourceDescription internalGetResourceDescription(Resource resource,
-			IDefaultResourceDescriptionStrategy strategy) {
-		// Overridden to enable non-derived state aware Resources to be processed as well.
-		if (resource instanceof DerivedStateAwareResource) {
-			// default behavior
-			return super.internalGetResourceDescription(resource, strategy);
-		} else {
-			// do what "super.super.internalGetResourceDescription(resource, strategy);" would do:
-			return new DefaultResourceDescription(resource, strategy, getCache());
-		}
+	public Delta createDelta(IResourceDescription oldDescription, IResourceDescription newDescription) {
+		return new N4JSResourceDescriptionDelta(oldDescription, newDescription);
 	}
 }

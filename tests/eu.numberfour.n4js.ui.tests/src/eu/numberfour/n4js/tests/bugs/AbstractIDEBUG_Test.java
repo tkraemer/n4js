@@ -18,7 +18,6 @@ import static eu.numberfour.n4js.tests.util.ProjectUtils.importProject;
 import static org.apache.log4j.Logger.getLogger;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
-import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanBuild;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanWorkspace;
 
 import java.io.File;
@@ -28,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil;
 import org.junit.Before;
 
 import com.google.common.base.Supplier;
@@ -93,7 +93,7 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 			this.rootFolder = rootFolder;
 		}
 
-		/* default */ void importProjects() throws Exception {
+				/* default */ void importProjects() throws Exception {
 			for (final File file : rootFolder.listFiles()) {
 				if (file.exists() && file.isDirectory() && null != file.listFiles() && 0 < file.listFiles().length) {
 
@@ -120,7 +120,7 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 				}
 			}
 			LOGGER.info("Waiting for full-build to complete...");
-			cleanBuild(); // using full build after imports.
+			IResourcesSetupUtil.cleanBuild(); // using full build after imports.
 			LOGGER.info("Auto-build successfully completed.");
 		}
 
