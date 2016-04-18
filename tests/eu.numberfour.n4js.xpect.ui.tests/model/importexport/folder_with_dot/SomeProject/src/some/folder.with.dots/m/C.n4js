@@ -1,0 +1,12 @@
+
+
+// before the bug fix, the following error showed up in this file:
+// "A duplicate module some.folder.with.dots.m.C is also defined in GH162/src/some/folder/with/dots/m/C.n4js."
+
+
+export public class C {
+	m() {
+		console.log('message from C located in folder WITH dots');
+	}
+}
+
