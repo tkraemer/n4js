@@ -145,13 +145,13 @@ public class JSDocSerializer extends DomSwitch<Boolean> {
 
 	@Override
 	public Boolean caseText(Text text) {
-		strb.append(text.getText().replaceAll("\\n", NL));
+		strb.append(text.getText().replaceAll("\\r?\\n", NL));
 		return false;
 	}
 
 	@Override
 	public Boolean caseLineTag(LineTag lineTag) {
-		strb.append(NL).append('@').append(lineTag.getTitle().getTitle());
+		strb.append(NL).append(JSDocCharScanner.TAG_START).append(lineTag.getTitle().getTitle());
 
 		if (!lineTag.getValues().isEmpty()) {
 			strb.append(" ");
@@ -171,7 +171,7 @@ public class JSDocSerializer extends DomSwitch<Boolean> {
 
 	@Override
 	public Boolean caseInlineTag(InlineTag object) {
-		strb.append("{@").append(object.getTitle().getTitle());
+		strb.append("{").append(JSDocCharScanner.TAG_START).append(object.getTitle().getTitle());
 		for (TagValue tagValue : object.getValues()) {
 			doSwitch(tagValue);
 		}

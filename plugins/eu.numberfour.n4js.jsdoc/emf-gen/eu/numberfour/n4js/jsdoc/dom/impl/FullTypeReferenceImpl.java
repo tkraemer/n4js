@@ -153,9 +153,9 @@ public class FullTypeReferenceImpl extends SimpleTypeReferenceImpl implements Fu
 			String _moduleName = this.getModuleName();
 			strb.append(_moduleName);
 		}
-		strb.append(".");
 		boolean _typeNameSet = this.typeNameSet();
 		if (_typeNameSet) {
+			strb.append(".");
 			String _typeName = this.getTypeName();
 			strb.append(_typeName);
 		}
