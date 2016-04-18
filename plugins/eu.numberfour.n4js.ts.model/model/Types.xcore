@@ -53,8 +53,7 @@ class TypeDefs {
  */
 class TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	/**
-	 * The qualified name of the module, which is derived from the file name. However,
-	 * qualified string delimiters ('.') are used rather then file delimiters ('/').
+	 * The qualified name of the module, which is derived from the file name.
 	 */
 	String qualifiedName
 	/**

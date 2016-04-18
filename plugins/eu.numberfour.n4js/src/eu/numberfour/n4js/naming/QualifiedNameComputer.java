@@ -103,8 +103,8 @@ public class QualifiedNameComputer {
 	/**
 	 * Like {@link #getFullyQualifiedTypeName(Type)}, but uses "." instead of the correct delimiter.
 	 * <p>
-	 * <b>THIS IS ONLY INTENDED FOR LEGACY PURPOSES WHEN CREATING THE QUALIFIED NAMES FOR THE META-DATA (e.g.
-	 * N4Class)!</b>
+	 * <b>THIS IS ONLY INTENDED FOR LEGACY PURPOSES WHEN CREATING THE QUALIFIED NAMES FOR THE META-DATA (e.g. N4Class in
+	 * transpiler, test catalog)!</b>
 	 * <p>
 	 * TODO IDE-2227 remove legacy support for old FQNs
 	 */

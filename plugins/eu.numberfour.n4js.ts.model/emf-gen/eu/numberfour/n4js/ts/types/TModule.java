@@ -49,8 +49,7 @@ public interface TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * The qualified name of the module, which is derived from the file name. However,
-	 * qualified string delimiters ('.') are used rather then file delimiters ('/').
+	 * The qualified name of the module, which is derived from the file name.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Qualified Name</em>' attribute.
 	 * @see #setQualifiedName(String)
