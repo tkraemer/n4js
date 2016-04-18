@@ -96,11 +96,9 @@ public abstract class ExportableElementImpl extends MinimalEObjectImpl.Container
 			final ExportableElement me = this;
 			String _switchResult = null;
 			boolean _matched = false;
-			if (!_matched) {
-				if (me instanceof NamedElement) {
-					_matched=true;
-					_switchResult = ((NamedElement)me).getName();
-				}
+			if (me instanceof NamedElement) {
+				_matched=true;
+				_switchResult = ((NamedElement)me).getName();
 			}
 			if (!_matched) {
 				if (me instanceof IdentifiableElement) {
