@@ -23,17 +23,16 @@ public abstract class AbstractTypeExpressionsRuntimeModule extends org.eclipse.x
 		properties = tryBindProperties(binder, "eu/numberfour/n4js/ts/TypeExpressions.properties");
 		super.configure(binder);
 	}
-
+	
 	public void configureLanguageName(Binder binder) {
-		binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME))
-				.toInstance("eu.numberfour.n4js.ts.TypeExpressions");
+		binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance("eu.numberfour.n4js.ts.TypeExpressions");
 	}
-
+	
 	public void configureFileExtensions(Binder binder) {
 		if (properties == null || properties.getProperty(Constants.FILE_EXTENSIONS) == null)
 			binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS)).toInstance("n4ts");
 	}
-
+	
 	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
 	public java.lang.ClassLoader bindClassLoaderToInstance() {
 		return getClass().getClassLoader();
@@ -50,7 +49,6 @@ public abstract class AbstractTypeExpressionsRuntimeModule extends org.eclipse.x
 	}
 
 	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	@Override
 	public Class<? extends org.eclipse.xtext.serializer.sequencer.ISemanticSequencer> bindISemanticSequencer() {
 		return eu.numberfour.n4js.ts.serializer.TypeExpressionsSemanticSequencer.class;
 	}
@@ -61,21 +59,18 @@ public abstract class AbstractTypeExpressionsRuntimeModule extends org.eclipse.x
 	}
 
 	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	@Override
 	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
 		return org.eclipse.xtext.serializer.impl.Serializer.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
 	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
-		return eu.numberfour.n4js.ts.formatting2.TypeExpressionFormatterNoOp.class;
+		return eu.numberfour.n4js.ts.formatting2.TypeExpressionsFormatter.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
 	public void configureFormatterPreferences(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class)
-				.annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class)
-				.to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
+		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
 	}
 
 }

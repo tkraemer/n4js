@@ -15,4 +15,12 @@ package eu.numberfour.n4js.ts;
  */
 public class TypeExpressionsRuntimeModule extends eu.numberfour.n4js.ts.AbstractTypeExpressionsRuntimeModule {
 	// no customizing necessary
+
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	@SuppressWarnings("restriction")
+	@Override
+	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
+		return eu.numberfour.n4js.ts.formatting2.TypeExpressionFormatterNoOp.class;
+	}
+
 }
