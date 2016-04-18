@@ -30,6 +30,7 @@ import * as bazProjectImport from "foo.bar"
 
 console.log("project import is correct :", bazProjectImport.myVar === "my var val")
 
+
 /* XPECT output --- 
 <==
 stdout:

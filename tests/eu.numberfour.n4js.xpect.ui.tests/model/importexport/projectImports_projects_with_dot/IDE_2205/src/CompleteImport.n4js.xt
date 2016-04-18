@@ -25,10 +25,11 @@
 */
 
 
-
 import * as bazCompleteImport from "foo.bar/some/deep/path/baz"
 
+
 console.log("complete import is correct :", bazCompleteImport.myVar === "my var val")
+
 
 /* XPECT output --- 
 <==
