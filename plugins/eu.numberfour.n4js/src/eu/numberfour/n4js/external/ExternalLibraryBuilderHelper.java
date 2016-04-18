@@ -37,7 +37,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.builder.impl.BuildData;
 import org.eclipse.xtext.builder.impl.QueuedBuildData;
 import org.eclipse.xtext.builder.impl.ToBeBuilt;
 import org.eclipse.xtext.builder.impl.ToBeBuiltComputer;
-import org.eclipse.xtext.resource.IResourceDescription.Manager;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -416,8 +414,6 @@ public class ExternalLibraryBuilderHelper {
 						((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
 					}
 
-					resourceSet.eAdapters().add(new ExternalBuildAdapter());
-
 					final BuildData buildData = new BuildData(
 							project.getName(),
 							resourceSet,
@@ -447,15 +443,6 @@ public class ExternalLibraryBuilderHelper {
 
 		}
 
-	}
-
-	/**
-	 * Marker {@link ResourceSet resource set} adapter to distinguish between triggered external library build and
-	 * regular workspace clean/build operations. This adapter is required at the {@link Manager resource description} to
-	 * avoid leaking customized resource description instances to the Xtext index.
-	 */
-	public static final class ExternalBuildAdapter extends AdapterImpl {
-		// Just a marker adapter.
 	}
 
 }
