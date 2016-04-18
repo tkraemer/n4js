@@ -29,7 +29,9 @@ import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryIMOnly;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryInternal;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal;
+
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 import org.eclipse.emf.ecore.EAttribute;

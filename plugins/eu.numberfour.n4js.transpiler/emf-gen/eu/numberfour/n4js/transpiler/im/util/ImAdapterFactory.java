@@ -40,6 +40,7 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
 import eu.numberfour.n4js.transpiler.im.*;
+
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural;
@@ -47,6 +48,7 @@ import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 import org.eclipse.emf.common.notify.Adapter;
