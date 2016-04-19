@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.ui.building;
 
+import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -40,14 +42,18 @@ import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 
 /**
  * Produces the compiled js files immediately after the validation in order save CPU cycles, e.g. the file is already
@@ -65,6 +71,12 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 
 	@Inject
 	private ContributingResourceDescriptionPersister descriptionPersister;
+
+	private final IN4JSEclipseCore core = getN4jsEclipseCore();
+
+	private IN4JSEclipseCore getN4jsEclipseCore() {
+		return N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS).getInstance(IN4JSEclipseCore.class);
+	}
 
 	/**
 	 * After the load phase, checks whether the underlying index content is empty or a recovery builder was scheduled,
@@ -208,6 +220,22 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			Collection<Delta> allDeltas,
 			BuildData buildData,
 			final IProgressMonitor monitor) {
+
+		// If all deltas is empty, we will not hit the resource description manager anyway.
+		if (!allDeltas.isEmpty()) {
+			final Collection<URI> copyAllRemainingURIs = newHashSet(allRemainingURIs);
+			Multimap<IN4JSProject, URI> projectMapping = Multimaps.index(copyAllRemainingURIs,
+					uri -> core.findProject(uri).orNull());
+			allRemainingURIs.clear();
+			IN4JSProject[] sortedProjects = core.getAllAccessibleProjectsSorted();
+			ArrayUtils.reverse(sortedProjects);
+			for (IN4JSProject p : sortedProjects) {
+				Collection<URI> collection = projectMapping.get(p);
+				if (null != collection) {
+					allRemainingURIs.addAll(collection);
+				}
+			}
+		}
 
 		// don't wanna copy super-class method, so using this helper to get the set of affected URIs:
 		final Set<URI> affectedURIs = new HashSet<>(allRemainingURIs);

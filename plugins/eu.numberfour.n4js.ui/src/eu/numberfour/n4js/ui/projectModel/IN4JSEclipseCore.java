@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.URI;
 import com.google.common.base.Optional;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 
 /**
@@ -76,4 +77,6 @@ public interface IN4JSEclipseCore extends IN4JSCore {
 	 * @return the n4js archive corresponding to the given project.
 	 */
 	Optional<? extends IN4JSEclipseArchive> findArchive(URI archiveLocation);
+
+	IN4JSProject[] getAllAccessibleProjectsSorted();
 }

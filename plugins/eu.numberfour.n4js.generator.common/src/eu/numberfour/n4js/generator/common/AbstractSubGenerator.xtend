@@ -83,6 +83,9 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 */
 	override doGenerate(Resource input, extension IFileSystemAccess fsa) {
 		try {
+			
+			System.err.println('generating: ' + input.URI)
+			
 			// remove error-marker
 			genMarkerSupport.deleteMarker( input )
 

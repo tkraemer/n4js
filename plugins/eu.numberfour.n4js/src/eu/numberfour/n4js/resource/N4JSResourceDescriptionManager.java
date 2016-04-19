@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
@@ -83,7 +84,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	@Override
 	public boolean isAffected(Collection<IResourceDescription.Delta> deltas, IResourceDescription candidate,
 			IResourceDescriptions context) {
-		boolean result = basicIsAffected(deltas, candidate);
+		boolean result = basicIsAffected(deltas, candidate, context);
 		if (!result) {
 			for (IResourceDescription.Delta delta : deltas) {
 				URI uri = delta.getUri();
@@ -98,7 +99,9 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return result;
 	}
 
-	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate) {
+	@SuppressWarnings("restriction")
+	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate,
+			IResourceDescriptions context) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
 		Collection<QualifiedName> importedNames = getImportedNames(candidate);
@@ -108,6 +111,20 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 				if (isAffected(importedNames, delta.getNew()) || isAffected(importedNames, delta.getOld())) {
 					if (hasDependencyTo(candidate, delta)) {
 						return true;
+					} else {
+						// Otherwise do nothing since we are not in the middle of an auto/incremental build.
+						if (context instanceof CurrentDescriptions) {
+							Iterable<URI> allRemainingURIs = ((CurrentDescriptions) context).getBuildData()
+									.getAllRemainingURIs();
+							for (URI queuedResourceUrs : allRemainingURIs) {
+								IResourceDescription queuedDescription = ((CurrentDescriptions) context)
+										.getResourceDescription(queuedResourceUrs);
+								if (hasDependencyTo(queuedDescription.getURI(), delta.getUri())
+										&& hasDependencyTo(candidate.getURI(), queuedDescription.getURI())) {
+									return true;
+								}
+							}
+						}
 					}
 				}
 			}
@@ -120,8 +137,14 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	 * 'delta'.
 	 */
 	private boolean hasDependencyTo(IResourceDescription candidate, IResourceDescription.Delta delta) {
-		final URI fromUri = candidate.getURI();
-		final URI toUri = delta.getUri();
+		return hasDependencyTo(candidate.getURI(), delta.getUri());
+	}
+
+	/**
+	 * Returns true iff project containing the 'candidate' has a direct dependency to the project containing the
+	 * 'delta'.
+	 */
+	private boolean hasDependencyTo(URI fromUri, URI toUri) {
 		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
 		final IN4JSProject toProject = n4jsCore.findProject(toUri).orNull();
 
