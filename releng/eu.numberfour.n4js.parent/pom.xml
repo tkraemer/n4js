@@ -697,11 +697,15 @@ Contributors:
 		<profile>
 						<id>staging</id>
 						<activation>
-								<activeByDefault>false</activeByDefault>
+							<!-- As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
+								TODO IDE-2231 remove activation when switching back to stable release. 	
+							 -->
+							<property>
+								<name>!noStaging</name>
+							</property>
 						</activation>
 						<properties>
 							<xtext.version>2.10.0-SNAPSHOT</xtext.version>
-<!-- 							<xtend-maven-plugin.version>${xtext.version}-SNAPSHOT</xtend-maven-plugin.version> -->
 						</properties>
 						<repositories>
 								<repository>
