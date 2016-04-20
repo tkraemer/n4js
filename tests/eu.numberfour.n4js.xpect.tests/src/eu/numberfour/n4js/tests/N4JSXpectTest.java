@@ -20,23 +20,25 @@ import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.AccessModifierAxpectMethod;
+import eu.numberfour.n4js.xpect.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
-import eu.numberfour.n4js.xpect.validation.ReturnXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.ReturnXpectMethod;
 
 /**
  * Xpect test class, also configured in fragment.xml, executes all Xpect tests found in model folder.
  */
 @XpectSuiteClasses({
-	AccessModifierAxpectMethod.class,
-	LinkingTest.class,
-	ReturnXpectMethod.class,
-	TypeXpectMethod.class,
-	ScopeXpectMethod.class,
-	NoerrorsXpectMethod.class,
-	ResourceDescriptionTest.class,
-	ValidationTest.class,
+		AccessModifierAxpectMethod.class,
+		LinkingTest.class,
+		ReturnXpectMethod.class,
+		TypeXpectMethod.class,
+		ScopeXpectMethod.class,
+		NoerrorsXpectMethod.class,
+		ResourceDescriptionTest.class,
+		ValidationTest.class,
+		FormatterXpectMethod.class,
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model", fileExtensions = { "xt" })

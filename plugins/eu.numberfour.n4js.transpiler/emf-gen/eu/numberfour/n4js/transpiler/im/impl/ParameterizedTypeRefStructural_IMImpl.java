@@ -13,6 +13,7 @@ import eu.numberfour.n4js.transpiler.im.ImPackage;
 import eu.numberfour.n4js.transpiler.im.ParameterizedTypeRefStructural_IM;
 import eu.numberfour.n4js.transpiler.im.ParameterizedTypeRef_IM;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
+
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
@@ -20,6 +21,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
+
 import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TStructuralType;
 import eu.numberfour.n4js.ts.types.Type;

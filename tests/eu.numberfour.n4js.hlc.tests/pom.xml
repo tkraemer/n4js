@@ -142,6 +142,7 @@ Contributors:
 				<version>${maven-failsafe-plugin.version}</version>
 				<executions>
 					<execution>
+<phase />
 						<goals>
 							<goal>integration-test</goal>
 							<goal>verify</goal>
@@ -266,6 +267,37 @@ Contributors:
 			<artifactId>eu.numberfour.n4js.utils</artifactId>
 			<groupId>eu.numberfour.n4js</groupId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		
+		
+		<!--  
+		TODO IDE-2231:	Additionally introduced dependencies, since automatic resolution failed to correctly 
+		distinguish between SNAPSHOT and released version for Xtext 2.10.0-SNAPSHOT -->
+		<dependency>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<groupId>org.eclipse.xtext</groupId>
+			<version>${xtext.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>org.eclipse.xtext.common.types</artifactId>
+			<groupId>org.eclipse.xtext</groupId>
+			<version>${xtext.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+			<groupId>org.eclipse.xtext</groupId>
+			<version>${xtext.version}</version>
+		</dependency>
+		<!-- END OF IDE-2231 additions. -->
+		
+		
+		
+		<!-- Fixed version of guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>[15.0.0]</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
