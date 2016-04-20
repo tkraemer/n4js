@@ -3,9 +3,9 @@
 
 /* no spaces inside braces of import statements */
 /* XPECT formattedLines 1 ---
-	import {Class1} from  "formatter/MultipleClasses";
+	import {Class1} from  "formatter2/MultipleClasses";
 --- */
-import  {  Class1  }  from  "formatter/MultipleClasses"
+import  {  Class1  }  from  "formatter2/MultipleClasses"
 
 
 /* keep single-line formatting */
