@@ -3,7 +3,7 @@ language: java
 sudo: false
 
 before_install:
-  - export MAVEN_OPTS="-Xmx4048m"
+  - export MAVEN_OPTS="-Xmx4048m -XX:-UseGCOverheadLimit"
   
 jdk:
   - oraclejdk8
@@ -14,3 +14,5 @@ os:
 branches:
   only:
     - master
+
+install: mvn -V -B -X -e clean 
