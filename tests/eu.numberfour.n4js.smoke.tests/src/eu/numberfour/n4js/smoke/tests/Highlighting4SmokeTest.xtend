@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
- package eu.numberfour.n4js.smoke.tests
+package eu.numberfour.n4js.smoke.tests
 
 import com.google.inject.Inject
 import com.google.inject.Singleton

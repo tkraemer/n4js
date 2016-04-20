@@ -2164,11 +2164,6 @@ class GeneratedSmokeTestCases2 {
 	@Test
 	def void test_0559() {
 		'''
-			// Options: --block-binding
-
-			// These tests are from:
-			// http://wiki.ecmascript.org/doku.php?id=strawman:arrow_function_syntax
-
 			const obj = {
 			  method: function () {
 			    return () => this;
