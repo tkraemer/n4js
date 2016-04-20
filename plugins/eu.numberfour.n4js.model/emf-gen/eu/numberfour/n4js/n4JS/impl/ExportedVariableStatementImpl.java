@@ -226,9 +226,11 @@ public class ExportedVariableStatementImpl extends VariableStatementImpl impleme
 			final ExportableElement me = this;
 			String _switchResult = null;
 			boolean _matched = false;
-			if (me instanceof NamedElement) {
-				_matched=true;
-				_switchResult = ((NamedElement)me).getName();
+			if (!_matched) {
+				if (me instanceof NamedElement) {
+					_matched=true;
+					_switchResult = ((NamedElement)me).getName();
+				}
 			}
 			if (!_matched) {
 				if (me instanceof IdentifiableElement) {

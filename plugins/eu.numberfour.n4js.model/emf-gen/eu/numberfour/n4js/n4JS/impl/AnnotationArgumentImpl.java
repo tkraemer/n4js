@@ -75,9 +75,11 @@ public abstract class AnnotationArgumentImpl extends MinimalEObjectImpl.Containe
 		}
 		String _switchResult = null;
 		boolean _matched = false;
-		if (value instanceof Literal) {
-			_matched=true;
-			_switchResult = ((Literal)value).getValueAsString();
+		if (!_matched) {
+			if (value instanceof Literal) {
+				_matched=true;
+				_switchResult = ((Literal)value).getValueAsString();
+			}
 		}
 		if (!_matched) {
 			if (value instanceof TypeRef) {

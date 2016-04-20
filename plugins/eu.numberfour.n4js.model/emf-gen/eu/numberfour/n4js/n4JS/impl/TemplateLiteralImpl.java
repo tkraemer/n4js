@@ -97,10 +97,12 @@ public class TemplateLiteralImpl extends PrimaryExpressionImpl implements Templa
 			public StringBuilder apply(final Expression expr) {
 				StringBuilder _switchResult = null;
 				boolean _matched = false;
-				if (expr instanceof Literal) {
-					_matched=true;
-					String _valueAsString = TemplateLiteralImpl.this.getValueAsString();
-					_switchResult = result.append(_valueAsString);
+				if (!_matched) {
+					if (expr instanceof Literal) {
+						_matched=true;
+						String _valueAsString = TemplateLiteralImpl.this.getValueAsString();
+						_switchResult = result.append(_valueAsString);
+					}
 				}
 				if (!_matched) {
 					StringBuilder _append = result.append("<<");

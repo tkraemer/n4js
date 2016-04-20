@@ -62,9 +62,11 @@ public abstract class VariableDeclarationOrBindingImpl extends MinimalEObjectImp
 	public EList<VariableDeclaration> getVariableDeclarations() {
 		EList<VariableDeclaration> _switchResult = null;
 		boolean _matched = false;
-		if (this instanceof VariableDeclaration) {
-			_matched=true;
-			_switchResult = ECollections.<VariableDeclaration>toEList(java.util.Collections.<VariableDeclaration>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<VariableDeclaration>newArrayList(((VariableDeclaration) this))));
+		if (!_matched) {
+			if (this instanceof VariableDeclaration) {
+				_matched=true;
+				_switchResult = ECollections.<VariableDeclaration>toEList(java.util.Collections.<VariableDeclaration>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<VariableDeclaration>newArrayList(((VariableDeclaration) this))));
+			}
 		}
 		if (!_matched) {
 			if (this instanceof VariableBinding) {
