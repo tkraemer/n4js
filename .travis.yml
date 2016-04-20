@@ -15,7 +15,7 @@ branches:
   only:
     - master
 
-#install: mvn -V -B -X -e clean 
-install: mvn --version 
+install: mvn -V -B -X -e clean verify -DnoVpn 
+#install: mvn --version 
 
 script: echo "done."
