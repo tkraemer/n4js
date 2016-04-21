@@ -17,9 +17,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -82,6 +80,9 @@ public class WizardPreviewProvider {
 
 			createEditor(this);
 			createInfoBar(this);
+
+			// Enable editor theming by assigning a CSS class
+			sourceViewer.getTextWidget().setData("org.eclipse.e4.ui.css.CssClassName", "Editor active");
 		}
 
 		private void createInfoBar(Composite parent) {
@@ -89,7 +90,7 @@ public class WizardPreviewProvider {
 			infoComposite
 					.setLayoutData(GridDataFactory.fillDefaults()
 							.grab(true, false)
-							.indent(new Point(12, 0)) // Extra indent to align with source viewer
+							// .indent(new Point(12, 0)) // Extra indent to align with source viewer
 							.create());
 
 			infoComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
@@ -105,7 +106,7 @@ public class WizardPreviewProvider {
 						return (XtextResource) n4jsCore.createResourceSet(Optional.absent())
 								.createResource(URI.createPlatformResourceURI("/TempProject/temp.n4js", true));
 					})
-					.showErrorAndWarningAnnotations() // To make the vertical ruler visible
+					.showErrorAndWarningAnnotations() // Make the vertical ruler visible
 					.withParent(parent);
 
 			editor.getViewer().getControl().setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
@@ -125,7 +126,6 @@ public class WizardPreviewProvider {
 			viewer.setEditable(false);
 
 			LineNumberRulerColumn lineNumberRuler = new LineNumberRulerColumn();
-			// lineNumberRuler.setForeground(LIGHT_TEXT_COLOR);
 			viewer.addVerticalRulerColumn(lineNumberRuler);
 		}
 
@@ -142,7 +142,6 @@ public class WizardPreviewProvider {
 			if (null != editorDocument) {
 				editorDocument.set(content);
 			}
-
 		}
 
 		/**
@@ -170,8 +169,7 @@ public class WizardPreviewProvider {
 		public void setEnabled(boolean enabled) {
 			super.setEnabled(enabled);
 			if (!enabled) {
-				sourceViewer.getTextWidget().setStyleRange(new StyleRange(0, getContent().length(), LIGHT_TEXT_COLOR,
-						sourceViewer.getTextWidget().getBackground()));
+				setContent("");
 			}
 		}
 
