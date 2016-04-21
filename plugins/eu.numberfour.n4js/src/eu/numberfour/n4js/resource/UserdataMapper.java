@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Charsets;
@@ -65,7 +66,7 @@ public class UserdataMapper {
 	/**
 	 * Flag indicating whether the string representation contains binary or human readable data.
 	 */
-	private final static Boolean BINARY = Boolean.FALSE;
+	private final static Boolean BINARY = Boolean.TRUE;
 
 	private final static String TRANSFORMATION_CHARSET_NAME = Charsets.UTF_8.name();
 
@@ -126,9 +127,10 @@ public class UserdataMapper {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		resourceForUserData.save(baos, getOptions(resourceURI));
+		resourceForUserData.save(baos, getOptions(resourceURI, BINARY));
 
-		String serializedScript = baos.toString(TRANSFORMATION_CHARSET_NAME);
+		String serializedScript = BINARY ? XMLTypeFactory.eINSTANCE.convertBase64Binary(baos.toByteArray())
+				: baos.toString(TRANSFORMATION_CHARSET_NAME);
 
 		final HashMap<String, String> ret = new HashMap<>();
 		ret.put(USERDATA_KEY_SERIALIZED_SCRIPT, serializedScript);
@@ -161,8 +163,8 @@ public class UserdataMapper {
 		return Collections.singletonMap("timestamp", String.valueOf(timestamp));
 	}
 
-	private Map<Object, Object> getOptions(URI resourceURI) {
-		return ImmutableMap.<Object, Object> of(XMLResource.OPTION_BINARY, BINARY, XMLResource.OPTION_URI_HANDLER,
+	private Map<Object, Object> getOptions(URI resourceURI, Boolean binary) {
+		return ImmutableMap.<Object, Object> of(XMLResource.OPTION_BINARY, binary, XMLResource.OPTION_URI_HANDLER,
 				new LocalResourceAwareURIHandler(resourceURI));
 	}
 
@@ -179,8 +181,12 @@ public class UserdataMapper {
 		}
 		XMIResource xres = new XMIResourceImpl(uri);
 		try {
-			ByteArrayInputStream bais = new ByteArrayInputStream(serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
-			xres.load(bais, getOptions(uri));
+			boolean binary = !serializedData.startsWith("<");
+			ByteArrayInputStream bais = new ByteArrayInputStream(
+					binary ? XMLTypeFactory.eINSTANCE.createBase64Binary(serializedData)
+							: serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
+			Map<Object, Object> options = getOptions(uri, binary);
+			xres.load(bais, options);
 		} catch (Exception e) {
 			LOGGER.error("Error deserializing type", e); //$NON-NLS-1$
 			throw new WrappedException(e); // TODO reconsider this

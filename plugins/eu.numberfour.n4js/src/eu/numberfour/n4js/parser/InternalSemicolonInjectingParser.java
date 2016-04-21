@@ -12,6 +12,7 @@ package eu.numberfour.n4js.parser;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -23,6 +24,8 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.RecognizerSharedState;
 import org.antlr.runtime.Token;
 import org.antlr.runtime.TokenStream;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 
@@ -41,7 +44,23 @@ import eu.numberfour.n4js.services.N4JSGrammarAccess;
  */
 public class InternalSemicolonInjectingParser extends InternalN4JSParser implements SemicolonInjectionHelper.Callback {
 
+	private static final Field ALL_RULES_FIELD;
+
+	private static Map<String, AbstractRule> allRules;
+
 	private final Field reflectCurrentError;
+
+	static {
+		Field f = null;
+		try {
+			f = AbstractInternalAntlrParser.class.getDeclaredField("allRules");
+			f.setAccessible(true);
+		} catch (Exception e) {
+			// Ignore.
+		}
+
+		ALL_RULES_FIELD = f;
+	}
 
 	/**
 	 * Issue code for syntactical occurrences of automatically inserted semicolon.
@@ -50,12 +69,14 @@ public class InternalSemicolonInjectingParser extends InternalN4JSParser impleme
 
 	private final RecoverySets recoverySets;
 
-	private NoViableAltException asiRecoveredEx=null;
+	private NoViableAltException asiRecoveredEx = null;
+
 	@Override
 	public boolean allowASI(final RecognitionException re) {
 		if (re instanceof NoViableAltException) {
 			final NoViableAltException nvae = (NoViableAltException) re;
-			if (asiRecoveredEx!=null && re.index==asiRecoveredEx.index && nvae.decisionNumber==asiRecoveredEx.decisionNumber) {
+			if (asiRecoveredEx != null && re.index == asiRecoveredEx.index
+					&& nvae.decisionNumber == asiRecoveredEx.decisionNumber) {
 				return false;
 			}
 			asiRecoveredEx = nvae;
@@ -78,6 +99,26 @@ public class InternalSemicolonInjectingParser extends InternalN4JSParser impleme
 		}
 		this.reflectCurrentError = f;
 		recoverySets = computeRecoverySets();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void registerRules(Grammar grammar) {
+		if (ALL_RULES_FIELD != null) {
+			try {
+				Map<String, AbstractRule> localAllRules = (Map<String, AbstractRule>) ALL_RULES_FIELD.get(this);
+				if (allRules == null) {
+					super.registerRules(grammar);
+					allRules = localAllRules;
+				} else {
+					localAllRules.putAll(allRules);
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			super.registerRules(grammar);
+		}
 	}
 
 	/**
