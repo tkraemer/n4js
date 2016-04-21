@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.ui.building;
 
-import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newLinkedHashSet;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
@@ -222,8 +222,8 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			final IProgressMonitor monitor) {
 
 		// If all deltas is empty, we will not hit the resource description manager anyway.
-		if (!allDeltas.isEmpty()) {
-			final Collection<URI> copyAllRemainingURIs = newHashSet(allRemainingURIs);
+		if (!allDeltas.isEmpty() && !allRemainingURIs.isEmpty()) {
+			final Collection<URI> copyAllRemainingURIs = newLinkedHashSet(allRemainingURIs);
 			Multimap<IN4JSProject, URI> projectMapping = Multimaps.index(copyAllRemainingURIs,
 					uri -> core.findProject(uri).orNull());
 			allRemainingURIs.clear();
@@ -233,8 +233,12 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 				Collection<URI> collection = projectMapping.get(p);
 				if (null != collection) {
 					allRemainingURIs.addAll(collection);
+					copyAllRemainingURIs.removeAll(collection);
 				}
 			}
+
+			// Just add all unvisited URIs, consider manifest deletion.
+			allRemainingURIs.addAll(copyAllRemainingURIs);
 		}
 
 		// don't wanna copy super-class method, so using this helper to get the set of affected URIs:

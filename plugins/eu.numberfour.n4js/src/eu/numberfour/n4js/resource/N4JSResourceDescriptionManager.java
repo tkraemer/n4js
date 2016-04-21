@@ -42,6 +42,7 @@ import eu.numberfour.n4js.ts.utils.TypeHelper;
  * only a double check that the correct resource description strategy is bound in the runtime module.
  */
 @Singleton
+@SuppressWarnings("restriction")
 public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDescriptionManager implements N4Scheme {
 
 	@Inject
@@ -99,27 +100,31 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return result;
 	}
 
-	@SuppressWarnings("restriction")
 	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate,
 			IResourceDescriptions context) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
-		Collection<QualifiedName> importedNames = getImportedNames(candidate);
+		Collection<QualifiedName> importedNames = null;
 		for (IResourceDescription.Delta delta : deltas) {
 			if (delta.haveEObjectDescriptionsChanged() &&
 					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
+
+				if (null == importedNames) {
+					importedNames = getImportedNames(candidate);
+				}
+
 				if (isAffected(importedNames, delta.getNew()) || isAffected(importedNames, delta.getOld())) {
 					if (hasDependencyTo(candidate, delta)) {
 						return true;
 					} else {
 						// Otherwise do nothing since we are not in the middle of an auto/incremental build.
 						if (context instanceof CurrentDescriptions) {
-							Iterable<URI> allRemainingURIs = ((CurrentDescriptions) context).getBuildData()
+							Iterable<URI> queuedURIs = ((CurrentDescriptions) context).getBuildData()
 									.getAllRemainingURIs();
-							for (URI queuedResourceUrs : allRemainingURIs) {
-								IResourceDescription queuedDescription = ((CurrentDescriptions) context)
-										.getResourceDescription(queuedResourceUrs);
-								if (hasDependencyTo(queuedDescription.getURI(), delta.getUri())
+							for (URI queuedURI : queuedURIs) {
+								IResourceDescription queuedDescription = context.getResourceDescription(queuedURI);
+								if (fileExtensionProvider.isValid(queuedDescription.getURI().fileExtension())
+										&& hasDependencyTo(queuedDescription.getURI(), delta.getUri())
 										&& hasDependencyTo(candidate.getURI(), queuedDescription.getURI())) {
 									return true;
 								}

@@ -18,8 +18,10 @@ import eu.numberfour.n4js.resource.N4JSCache
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.utils.ResourceType
 import java.nio.file.Path
 import java.nio.file.Paths
+import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.generator.AbstractFileSystemAccess
@@ -29,8 +31,6 @@ import org.eclipse.xtext.validation.IResourceValidator
 import org.eclipse.xtext.validation.Issue
 
 import static org.eclipse.xtext.diagnostics.Severity.*
-import eu.numberfour.n4js.utils.ResourceType
-import org.eclipse.core.runtime.Platform
 
 /**
  */
@@ -40,25 +40,29 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	@Accessors
 	private CompilerDescriptor compilerDescriptor = null
 
+	@Inject 
+	ProjectUtils projectUtils
+	
+	@Inject 
+	IN4JSCore core
 
-	@Inject ProjectUtils projectUtils
-	@Inject IN4JSCore core
-
-	@Inject CompilerUtils compilerUtils
-
-	@Inject extension ExceptionHandler
-
-	@Inject
-	private extension N4JSPreferenceAccess
+	@Inject 
+	CompilerUtils compilerUtils
 
 	@Inject
-	private IResourceValidator resVal
+	IResourceValidator resVal
 
 	@Inject
-	private N4JSCache cache
+	N4JSCache cache
 
 	@Inject
-	private IGeneratorMarkerSupport genMarkerSupport
+	IGeneratorMarkerSupport genMarkerSupport
+
+	@Inject 
+	extension ExceptionHandler
+
+	@Inject
+	extension N4JSPreferenceAccess
 
 	override getCompilerDescriptor() {
 		if (compilerDescriptor === null) {
@@ -84,24 +88,23 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	override doGenerate(Resource input, extension IFileSystemAccess fsa) {
 		try {
 			
-			System.err.println('generating: ' + input.URI)
-			
 			// remove error-marker
-			genMarkerSupport.deleteMarker( input )
+			genMarkerSupport.deleteMarker(input)
 
 			updateOutputPath(fsa, getCompilerID, input);
 			internalDoGenerate(input, fsa);
-		} catch (Exception e){
+		} catch (Exception e) {
 			// issue error marker
 			val target = if (input instanceof N4JSResource) input.module.moduleSpecifier else input.URI;
-			genMarkerSupport.createMarker( input , "Unexpected error occurred while compiling module "+target+". Check error log for details about the failure.")
+			genMarkerSupport.createMarker(input , "Unexpected error occurred while compiling module " + target + ". Check error log for details about the failure.")
 
 			// re-throw as GeneratorException to have the frameworks notify the error.
-			if( e instanceof GeneratorException ) throw e;
+			if (e instanceof GeneratorException) {
+				throw e;
+			}
 
-			var msg = if( e.message === null) "type="+e.class.name else "message="+e.message;
-
-			handleError( "Severe problem detected in compiler="+compilerID+" "+msg+".",  e);
+			var msg = if (e.message === null) "type=" + e.class.name else "message=" + e.message;
+			handleError('''Severe problem detected in compiler=«compilerID» «msg».''',  e);
 		}
 	}
 
@@ -116,7 +119,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 				|| (Platform.running || hasNoErrors(input, monitor)) 
 			))
 			&& (!input.isStaticPolyfillingModule) // compile driven by filled type
-			&& ( hasNoPolyfillErrors(input,monitor))
+			&& hasNoPolyfillErrors(input,monitor)
 	}
 
 	/** If the resource has a static polyfill, then ensure it is error-free.
@@ -124,8 +127,10 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 */
 	private def boolean hasNoPolyfillErrors(Resource input, CancelIndicator monitor) {
 		val resSPoly = projectUtils.getStaticPolyfillResource(input)
-		if( resSPoly === null ) return true;
-		return hasNoErrors( resSPoly, monitor )
+		if (resSPoly === null) {
+			return true;
+		}
+		return hasNoErrors(resSPoly, monitor)
 	}
 
 	/**
@@ -146,13 +151,13 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 			return true
 		}
 		if (logger.isDebugEnabled) {
-			errors.forEach[ logger.debug( input.URI+"  "+it.message+"  "+it.severity +" @L_"+it.lineNumber+" " )]
+			errors.forEach[logger.debug(input.URI + "  " + it.message + "  " + it.severity + " @L_" + it.lineNumber + " ")]
 		}
 		return false
 	}
 
 	private def void warnDueToCancelation(Resource input, Throwable exc) {
-		val msg = "User canceled the validation of "+input.URI+". Will not compile.  ";
+		val msg = "User canceled the validation of " + input.URI + ". Will not compile.";
 		if (null === exc) {
 			logger.warn(msg)
 		} else {
@@ -177,9 +182,9 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 		 * assuming hasValidFileExtension was called, so care only about double extension
 		 */
 		var souceURI =
-			if(ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI)){
+			if (ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI)) {
 				n4jsSourceFile.URI.trimFileExtension
-			}else{
+			} else {
 				n4jsSourceFile.URI
 			}
 
@@ -229,9 +234,9 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	/** Adjust output-path of the generator to match the N4JS projects-settings. */
 	def void updateOutputPath(IFileSystemAccess fsa, String compilerID, Resource input) {
 		val outputPath = projectUtils.getOutputPath(input.URI)
-		if(fsa instanceof AbstractFileSystemAccess) {
+		if (fsa instanceof AbstractFileSystemAccess) {
 			val conf = fsa.outputConfigurations.get(compilerID)
-			if(conf !== null) {
+			if (conf !== null) {
 				conf.setOutputDirectory(calculateOutputDirectory(outputPath, compilerID))
 			}
 		}
@@ -305,16 +310,15 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	/** Checking the availability of a static polyfill, which will override the compilation of this module.
 	 **/
-	def boolean isNotStaticallyPolyfilled(Resource resource)
-	{
+	def boolean isNotStaticallyPolyfilled(Resource resource) {
 		//		val TModule tmodule = (N4JSResource::getModule(resource) ); // for some reason xtend cannot see static getModule ?!
-		if( resource instanceof N4JSResource) {
+		if (resource instanceof N4JSResource) {
 			val TModule tmodule = compilerUtils.retrieveModule(resource)
 			// 1. resource must be StaticPolyfillAware and
 			// 2. there must exist a polyfilling instance (second instance with same fqn)
-			if( tmodule.isStaticPolyfillAware ) {
+			if (tmodule.isStaticPolyfillAware) {
 				// search for second instance.
-				if( projectUtils.hasStaticPolyfill(resource) ) {
+				if (projectUtils.hasStaticPolyfill(resource)) {
 					return false;
 				}
 			}
@@ -326,8 +330,8 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 **/
 	def boolean isStaticPolyfillingModule(Resource resource)
 	{
-		val TModule tmodule = (N4JSResource::getModule(resource) );
-		if( null !== tmodule ) {
+		val TModule tmodule = (N4JSResource::getModule(resource));
+		if (null !== tmodule) {
 			return tmodule.isStaticPolyfillModule;
 		}
 		return false;

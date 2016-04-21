@@ -17,7 +17,10 @@ import org.eclipse.e4.ui.internal.workbench.TopologicalSort;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 
 /**
+ * Topological sort of N4JS projects based on their dependencies and implemented APIs. The sorting algorithm is
+ * described at {@link TopologicalSort}.
  *
+ * @see TopologicalSort
  */
 @SuppressWarnings("restriction")
 public class N4JSProjectTopologicalSort extends TopologicalSort<IN4JSProject, IN4JSProject> {
