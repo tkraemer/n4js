@@ -7,9 +7,9 @@
  */
 package eu.numberfour.n4js.transpiler.im;
 
-import org.eclipse.emf.ecore.EObject;
-
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->

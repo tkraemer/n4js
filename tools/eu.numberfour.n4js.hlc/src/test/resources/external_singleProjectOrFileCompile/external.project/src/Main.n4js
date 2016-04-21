@@ -1,0 +1,8 @@
+import express from "express";
+import {Application, Response} from "express";
+
+let app: Application = express();
+
+if(app) {
+	console.log('Application was created!');
+}
