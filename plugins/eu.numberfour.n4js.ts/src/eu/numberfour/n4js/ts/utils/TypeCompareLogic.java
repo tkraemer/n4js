@@ -98,8 +98,11 @@ import eu.numberfour.n4js.ts.types.Type;
 			// standard behavior relying on a fqnProvider
 			final QualifiedName name1 = fqnProvider.getFullyQualifiedName(t1);
 			final QualifiedName name2 = fqnProvider.getFullyQualifiedName(t2);
-			if (name1 == name2) {
-				return 0;
+			if (name1 == null && name2 == null) {
+				// since we know t1!=null && t2!=null, this means t1 and t2 are types without a FQN (i.e. for which
+				// fqnProvider returns null), e.g. type variables, and since we know t1!=t2 (from above) we must
+				// report a difference here!
+				return 1;
 			}
 			if (name1 == null) {
 				return -1;
