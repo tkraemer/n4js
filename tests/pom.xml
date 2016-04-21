@@ -78,6 +78,7 @@ Contributors:
 		<!--  **************************************Other tests -->
 
 		<!-- Smoke tests -->
+		<module>/eu.numberfour.n4js.smoke.tests</module>
 		<module>/eu.numberfour.n4js.jsdoc.tests</module>
 		<!-- utils -->
 		<module>/eu.numberfour.n4js.utils.tests</module>

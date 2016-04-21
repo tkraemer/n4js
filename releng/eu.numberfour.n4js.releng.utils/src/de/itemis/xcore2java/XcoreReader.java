@@ -43,7 +43,7 @@ import com.google.inject.Injector;
 public class XcoreReader extends AbstractWorkflowComponent2 {
 	private static final String XCORE_FILE_EXT = "xcore";
 
-	private static final Logger logger = Logger.getLogger(XcoreReader.class);
+	private static final Logger LOGGER = Logger.getLogger(XcoreReader.class);
 
 	private final List<String> pathes = Lists.newArrayList();
 
@@ -106,11 +106,11 @@ public class XcoreReader extends AbstractWorkflowComponent2 {
 		});
 		List<Resource> resources = new ArrayList<>();
 		for (URI uri : uris.values()) {
-			logger.info(uri);
+			LOGGER.info(uri);
 			try {
 				resources.add(parse(uri, resourceSet));
 			} catch (Exception e) {
-				logger.error("Problem during loading of resource @ " + uri, e);
+				LOGGER.error("Problem during loading of resource @ " + uri, e);
 			}
 		}
 		installIndex(resourceSet);

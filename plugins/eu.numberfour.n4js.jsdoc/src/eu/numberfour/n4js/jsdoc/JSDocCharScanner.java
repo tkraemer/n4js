@@ -24,6 +24,23 @@ import java.util.Stack;
 public class JSDocCharScanner {
 
 	/**
+	 * Start of a JSDoc comment.
+	 */
+	public static final String JSDOC_START = "/**";
+	/**
+	 * Start of a multi-line comment.
+	 */
+	public static final String MLDOC_START = "/*";
+	/**
+	 * Character indicating start of a tag
+	 */
+	public static final char TAG_START = '@';
+	/**
+	 * Start of a comment line, usually ignored.
+	 */
+	public static final char COMMENT_LINE_PREFIX = '*';
+
+	/**
 	 * Utility class to save& restore scanner state.
 	 */
 	public final class ScannerState {
@@ -37,6 +54,9 @@ public class JSDocCharScanner {
 
 	}
 
+	/**
+	 * The scanned string, set in the constructor.
+	 */
 	private final String s;
 	/**
 	 * Offset of the character returned by next {@link #next()}.
@@ -119,12 +139,11 @@ public class JSDocCharScanner {
 	}
 
 	private void skipJSDocStart() {
-		// TODO hardcoded comment markers
-		if (nextOffset == 0 && s.startsWith("/**")) {
+		if (nextOffset == 0 && s.startsWith(JSDOC_START)) {
 			nextOffset += 3;
 			skipWhiteSpaces();
 			skipLineStart();
-		} else if (nextOffset == 0 && s.startsWith("/*")) {
+		} else if (nextOffset == 0 && s.startsWith(MLDOC_START)) {
 			nextOffset += 2;
 			skipWhiteSpaces();
 			skipLineStart();
@@ -169,7 +188,7 @@ public class JSDocCharScanner {
 		if (more()) {
 			if (offset >= 0) {
 				char c = s.charAt(offset);
-				if (c == '\n') {
+				if (isNL(c)) {
 					skipLineStart();
 				}
 			}
@@ -193,16 +212,16 @@ public class JSDocCharScanner {
 		try {
 			nextOffset = offset;
 			while (nextOffset < nextFencePost) {
-				while (nextOffset < nextFencePost && s.charAt(nextOffset) != '\n')
+				while (nextOffset < nextFencePost && !isNL(s.charAt(nextOffset)))
 					nextOffset++;
 				int nlpos = nextOffset;
 				while (nextOffset < nextFencePost && Character.isWhitespace(s.charAt(nextOffset)))
 					nextOffset++;
-				if (nextOffset < nextFencePost && s.charAt(nextOffset) == '*')
+				if (nextOffset < nextFencePost && s.charAt(nextOffset) == COMMENT_LINE_PREFIX)
 					nextOffset++;
 				while (nextOffset < nextFencePost && isWhitespaceNoNL(s.charAt(nextOffset)))
 					nextOffset++;
-				if (nextOffset < nextFencePost && s.charAt(nextOffset) == '@') {
+				if (nextOffset < nextFencePost && s.charAt(nextOffset) == TAG_START) {
 					return nlpos;
 				}
 			}
@@ -212,8 +231,15 @@ public class JSDocCharScanner {
 		}
 	}
 
-	private boolean isWhitespaceNoNL(char c) {
-		if (c == '\n') {
+	/**
+	 * Returns true if character is a newline character, that is '\n' or '\r'.
+	 */
+	public static boolean isNL(char c) {
+		return c == '\n' || c == '\r';
+	}
+
+	private static boolean isWhitespaceNoNL(char c) {
+		if (isNL(c)) {
 			return false;
 		}
 		return Character.isWhitespace(c);
@@ -224,23 +250,19 @@ public class JSDocCharScanner {
 		if (!more())
 			return;
 		char c = peekNextChar();
-		if (c != '*')
+		if (c != COMMENT_LINE_PREFIX)
 			return;
 		nextOffset++;
-		if (more() && isWSButNotNL(peekNextChar())) {
+		if (more() && isWhitespaceNoNL(peekNextChar())) {
 			nextOffset++;
 		}
 		int savedNextOffset = nextOffset;
-		while (more() && isWSButNotNL(peekNextChar())) {
+		while (more() && isWhitespaceNoNL(peekNextChar())) {
 			nextOffset++;
 		}
-		if (more() && peekNextChar() != '@') {
+		if (more() && peekNextChar() != TAG_START) {
 			nextOffset = savedNextOffset;
 		}
-	}
-
-	private boolean isWSButNotNL(char c) {
-		return c != '\n' && Character.isWhitespace(c);
 	}
 
 	/**

@@ -74,7 +74,7 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_ignore_java_strings"
-          value="true"/>
+          value="false"/>
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_ignore_mixed"
@@ -330,7 +330,7 @@
       storageURI="scope://Workspace"
       label="Target Platform">
     <choice
-        value="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.9.2  +(Xcore 1.3.2) , Xsemantics 1.9, XpectN4"
+        value="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0-SNAPSHOT  +(Xcore 1.3.2) , Xsemantics 1.9, XpectN4"
         label="N4JS"/>
     <description>The NumberFour target platform choice</description>
   </setupTask>

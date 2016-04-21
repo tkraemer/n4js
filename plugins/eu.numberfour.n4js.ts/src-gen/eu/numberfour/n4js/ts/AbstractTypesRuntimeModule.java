@@ -118,9 +118,4 @@ public abstract class AbstractTypesRuntimeModule extends org.eclipse.xtext.servi
 		binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
 	}
 
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-		return eu.numberfour.n4js.ts.formatting.TypesFormatter.class;
-	}
-
 }
