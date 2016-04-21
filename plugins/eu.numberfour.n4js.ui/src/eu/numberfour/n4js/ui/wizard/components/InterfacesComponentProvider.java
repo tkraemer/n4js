@@ -251,7 +251,11 @@ public class InterfacesComponentProvider {
 			Composite parent = getParentComposite();
 
 			Label interfacesLabel = new Label(parent, SWT.NONE);
-			interfacesLabel.setLayoutData(fillLabelDefaults());
+
+			GridData interfacesLabelGridData = fillLabelDefaults();
+			interfacesLabelGridData.verticalAlignment = SWT.TOP;
+			interfacesLabel.setLayoutData(interfacesLabelGridData);
+
 			interfacesLabel.setText("Interfaces:");
 
 			interfacesTable = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
