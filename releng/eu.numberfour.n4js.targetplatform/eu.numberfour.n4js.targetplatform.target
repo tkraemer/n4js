@@ -16,7 +16,7 @@ This has two advantages:
 -->
 
 <!-- Features added to the target platform -->
-<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.9.2  +(Xcore 1.3.2) , Xsemantics 1.9, XpectN4" sequenceNumber="96">
+<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0-SNAPSHOT  +(Xcore 1.3.2) , Xsemantics 1.9, XpectN4" sequenceNumber="96">
 	<locations>
 		<!-- Main target platform, that is: Eclipse 4.5 Mars -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -102,12 +102,19 @@ This has two advantages:
 			<repository location="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.8.3/"/>
 		</location>
 
+		<!-- Xtext + Xtend -->
+<!--
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<!-- Xtend -->
 			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.9.2.v201603040440"/>
-			<!-- Xtext -->
 			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.2.v201603040440"/>
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.9.2/"/>
+		</location>
+-->		
+		<!-- LAST touch for mirror: 2016-04-15_1215 -->
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
 		</location>
 
 		<!-- ANTLR parser generator (not runtime), used by Xtext during code generation -->

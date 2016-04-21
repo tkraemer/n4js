@@ -83,8 +83,9 @@ Contributors:
 		<!-- <eclipse-signing-maven-plugin.version>1.0.5</eclipse-signing-maven-plugin.version> -->
 
 		<!-- current xtext version -->
-		<xtext.version>2.9.2</xtext.version>
+		<xtext.version>2.10.0</xtext.version>
 		<!-- compile xtend files to java -->
+<!-- 		<xtend-maven-plugin.version>${xtext.version}-SNAPSHOT</xtend-maven-plugin.version> -->
 		<xtend-maven-plugin.version>${xtext.version}</xtend-maven-plugin.version>
 		<xtend-library.version>${xtend-maven-plugin.version}</xtend-library.version>
 		<fornax-oaw-m2-plugin.version>3.6.0</fornax-oaw-m2-plugin.version>
@@ -696,8 +697,16 @@ Contributors:
 		<profile>
 						<id>staging</id>
 						<activation>
-								<activeByDefault>false</activeByDefault>
+							<!-- As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
+								TODO IDE-2231 remove activation when switching back to stable release. 	
+							 -->
+							<property>
+								<name>!noStaging</name>
+							</property>
 						</activation>
+						<properties>
+							<xtext.version>2.10.0-SNAPSHOT</xtext.version>
+						</properties>
 						<repositories>
 								<repository>
 										<id>sonatype-staging</id>

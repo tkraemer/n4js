@@ -654,13 +654,6 @@ Contributors:
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
              sequence="M1+M2+O">
         </key>
-        <!-- Disabled format binding in Xtext editors. -->
-        <key
-             commandId="" 
-             contextId="org.eclipse.xtext.ui.XtextEditorScope"
-             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-             sequence="M1+M2+F">
-        </key>
         <!-- Disabled refactor/rename binding in Xtext editor. -->
         <key
              commandId=""

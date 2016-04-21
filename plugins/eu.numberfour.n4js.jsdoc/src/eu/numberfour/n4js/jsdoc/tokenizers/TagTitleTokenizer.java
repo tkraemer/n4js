@@ -27,7 +27,7 @@ public class TagTitleTokenizer extends AbstractJSDocTokenizer {
 	@Override
 	public JSDocToken nextToken(JSDocCharScanner scanner) {
 		char x = scanner.nextNonWS();
-		if (x != '@') {
+		if (x != JSDocCharScanner.TAG_START) {
 			return null;
 		}
 		int start = scanner.offset() + 1;
