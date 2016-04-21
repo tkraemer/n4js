@@ -258,13 +258,14 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		}
 		subMonitor.worked(1);
 
-		// Update internal state.
-		locations.clear();
-		locations.addAll(store.getLocations());
-		updateState();
+		// Invalidate before collecting dependencies.
+		invalidateCache(store);
 
 		final Collection<IProject> workspaceProjectsToRebuild = newHashSet(
 				collector.collectProjectsWithDirectExternalDependencies(projectsToClean));
+
+		// Cache could be polluted with external projects while collecting associated workspace ones.
+		invalidateCache(store);
 
 		// Rebuild whole external workspace. Filter out projects that are present in the Eclipse workspace (if any).
 		final Collection<String> eclipseWorkspaceProjectNames = getAllEclipseWorkspaceProjectNames();
@@ -284,6 +285,12 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		addAll(workspaceProjectsToRebuild, collector.collectProjectsWithDirectExternalDependencies(projectsToBuild));
 		scheduler.scheduleBuildIfNecessary(workspaceProjectsToRebuild);
 
+	}
+
+	private void invalidateCache(final ExternalLibraryPreferenceStore store) {
+		locations.clear();
+		locations.addAll(store.getLocations());
+		updateState();
 	}
 
 	@Override
