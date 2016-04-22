@@ -14,9 +14,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -27,7 +27,6 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -39,8 +38,6 @@ import org.eclipse.swt.widgets.Text;
 
 import com.google.common.primitives.Ints;
 
-import eu.numberfour.n4js.ui.ImageDescriptorCache;
-
 /**
  * Custom {@link org.eclipse.swt.widgets.Text} widget to optionally display a grey suffix at the end of the user input.
  */
@@ -48,23 +45,22 @@ public class SuffixText extends Composite {
 
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
-	// Databinding properties
+	// data binding properties
 	/** Text property name */
 	public static final String TEXT_PROPERTY = "text";
 	/** Complete text property name */
 	public static final String SUFFIX_PROPERTY = "suffix";
 
-	// Color constants
-	private static Color GREY = Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
-	private final Image TRANSPARENT;
+	// color constants
+	private static Color INACTIVE_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 
+	// values
 	private String suffix = "";
 	private String text = "";
 
-	private final Text userInput;
-	private final Label completeLabel;
-
-	// private final Composite packComposite;
+	// widgets
+	private final Text editableText;
+	private final StyledText suffixText;
 
 	private boolean mousePressed = false;
 
@@ -72,7 +68,7 @@ public class SuffixText extends Composite {
 	private final GC gc = new GC(getDisplay());
 
 	/**
-	 * Create the composite.
+	 * Create the suffix text.
 	 *
 	 * @param parent
 	 *            Parent composite
@@ -83,18 +79,22 @@ public class SuffixText extends Composite {
 
 		super(parent, style);
 
-		// Initialize transparent image to work around theming issues
-		TRANSPARENT = ImageDescriptorCache.ImageRef.TRANSPARENT.asImage().orNull();
-
 		this.setLayout(new SuffixLayout());
 
-		userInput = new Text(this, SWT.TRANSPARENT);
-		userInput.setBackgroundImage(TRANSPARENT);
+		// Configure suffix text
+		suffixText = new StyledText(this, SWT.TRANSPARENT);
+		suffixText.setText("/Test");
+		suffixText.setForeground(INACTIVE_COLOR);
+		suffixText.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		suffixText.setEditable(false);
+		suffixText.setEnabled(false);
+		suffixText.setLeftMargin(0);
 
-		completeLabel = new Label(this, SWT.HORIZONTAL);
-		completeLabel.setText("/Test");
-		completeLabel.setForeground(GREY);
+		editableText = new Text(this, SWT.NONE);
 
+		this.setBackground(getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+
+		// Redirect focus to internal editable text widget
 		MouseListener focusCatcher = new MouseListener() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -104,64 +104,40 @@ public class SuffixText extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				userInput.forceFocus();
-				userInput.setSelection(userInput.getText().length());
+				editableText.forceFocus();
+				editableText.setSelection(editableText.getText().length());
 				mousePressed = true;
 			}
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				userInput.setSelection(0, userInput.getText().length());
+				editableText.setSelection(0, editableText.getText().length());
 			}
 		};
 
 		this.addMouseListener(focusCatcher);
-		completeLabel.addMouseListener(focusCatcher);
+		suffixText.addMouseListener(focusCatcher);
 		this.addMouseListener(focusCatcher);
-
-		// Whenever focus is put on suffix text redirect it to the userInput
-		this.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				userInput.setFocus();
-			}
-		});
-
-		// Make tab traversal skip the suffix text and traverse the userInput instead
-		this.userInput.addListener(SWT.Traverse, traverseEvent -> {
-			if (traverseEvent.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
-				traverse(traverseEvent.detail);
-				traverseEvent.doit = false;
-			}
-		});
 
 		// Workaround theme dependent background color issues:
 		// Reset the background color for every paint event
 		addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				setBackground(userInput.getBackground());
-				completeLabel.setBackground(userInput.getBackground());
+				setBackground(editableText.getBackground());
 			}
 		});
 
-		userInput.addModifyListener(new ModifyListener() {
+		// Copy over the text from the internal editable text whenever it changes
+		editableText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				layout();
-				setText(userInput.getText());
+				setText(editableText.getText());
 			}
 		});
 
-		// Redirect focus and key down events to support content proposal behavior
-		int[] passThroughEventTypes = new int[] { SWT.FocusIn, SWT.FocusOut, SWT.KeyDown };
-		for (int eventType : passThroughEventTypes) {
-			userInput.addListener(eventType, e -> {
-				notifyListeners(eventType, e);
-			});
-		}
-
-		// Relayout when suffix label changes
+		// Relayout when the suffix text changes
 		this.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -172,7 +148,7 @@ public class SuffixText extends Composite {
 		});
 
 		// Make the graphic context use the font settings of the input
-		gc.setFont(userInput.getFont());
+		gc.setFont(editableText.getFont());
 
 		// Tracks dragging mouse movement in this widget and applies it to the text field userInput to
 		// fake proper text selection behavior
@@ -180,9 +156,9 @@ public class SuffixText extends Composite {
 			@Override
 			public void mouseMove(MouseEvent e) {
 				if (mousePressed) {
-					int userInputRightEdgeOffset = userInput.getBounds().x + userInput.getBounds().width;
+					int userInputRightEdgeOffset = editableText.getBounds().x + editableText.getBounds().width;
 					if (e.x < userInputRightEdgeOffset) {
-						String inputString = userInput.getText();
+						String inputString = editableText.getText();
 
 						int selectedPixels = (userInputRightEdgeOffset - e.x);
 						int i = 1;
@@ -190,14 +166,14 @@ public class SuffixText extends Composite {
 						// Compute the index of the character the cursor is floating above and
 						// adapt the text selection.
 						while (inputString.length() - i >= 0
-								&& gc.textExtent(userInput.getText().substring(inputString.length() - i,
+								&& gc.textExtent(editableText.getText().substring(inputString.length() - i,
 										inputString.length() - 1)).x < selectedPixels) {
 							i++;
 						}
 
 						int startIndex = Ints.max(0, inputString.length() - i + 1);
 
-						userInput.setSelection(startIndex, inputString.length());
+						editableText.setSelection(startIndex, inputString.length());
 					}
 				}
 
@@ -214,7 +190,6 @@ public class SuffixText extends Composite {
 	public void dispose() {
 		super.dispose();
 		gc.dispose();
-		TRANSPARENT.dispose();
 	}
 
 	@Override
@@ -237,11 +212,11 @@ public class SuffixText extends Composite {
 	 */
 	public void setSuffix(String suffix) {
 		this.firePropertyChange(SUFFIX_PROPERTY, this.suffix, this.suffix = suffix);
-		this.completeLabel.setText(this.suffix);
+		this.suffixText.setText(this.suffix);
 	}
 
 	/**
-	 * @return The joined text. User input + completed suffix.
+	 * @return The fully merged value. User input + completed suffix.
 	 */
 	public String getText() {
 		return this.text;
@@ -253,8 +228,8 @@ public class SuffixText extends Composite {
 	 */
 	public void setText(String text) {
 		this.firePropertyChange(TEXT_PROPERTY, this.text, this.text = text);
-		if (!this.userInput.getText().equals(text)) {
-			this.userInput.setText(text);
+		if (!this.editableText.getText().equals(text)) {
+			this.editableText.setText(text);
 		}
 	}
 
@@ -265,12 +240,19 @@ public class SuffixText extends Composite {
 	 *            The new state to adapt
 	 */
 	public void setSuffixVisible(boolean state) {
-		this.completeLabel.setVisible(state);
+		this.suffixText.setVisible(state);
 	}
 
 	@Override
 	public boolean setFocus() {
-		return this.userInput.setFocus();
+		return this.editableText.setFocus();
+	}
+
+	/**
+	 * Returns the internally used SWT text.
+	 */
+	public Text getInternalText() {
+		return this.editableText;
 	}
 
 	/**
@@ -308,23 +290,14 @@ public class SuffixText extends Composite {
 	}
 
 	/**
-	 * Returns the internally used SWT text.
-	 */
-	Text getInternalText() {
-		return this.userInput;
-	}
-
-	/**
-	 * Custom layout to position the suffix label directly after the text. The layout also makes sure that neither text
-	 * nor label ever scroll horizontally
+	 * Custom layout to position the suffix label directly after the text and avoid clipping.
 	 */
 	private class SuffixLayout extends Layout {
 
-		// Negative vertical spacing to imitate seamless character flow
-		private static final int NEGATIVE_VERTICAL_SPACING = 8;
+		// Amount of additional pixels for label dimensions to avoid clipping
+		private static final int AVOID_CLIPPING_PADDING = 16;
 
-		// Amount of additional pixels for text dimensions to avoid clipping
-		private static final int AVOID_CLIPPING_PADDING = 8;
+		private final int verticalSpacing = Platform.getOS().equals(Platform.OS_WIN32) ? 4 : 2;
 
 		@Override
 		protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
@@ -348,8 +321,7 @@ public class SuffixText extends Composite {
 		}
 
 		private Point textDimensions() {
-			Point tDimensions = gc.textExtent(userInput.getText());
-			tDimensions.x += AVOID_CLIPPING_PADDING;
+			Point tDimensions = gc.textExtent(editableText.getText());
 			return tDimensions;
 		}
 
@@ -360,7 +332,7 @@ public class SuffixText extends Composite {
 		}
 
 		/**
-		 * Returns the top margin to vertically center an element of given height in an area with given total height.
+		 * Return the top margin to vertically center an element of given height in an area with given total height.
 		 */
 		private int marginTopCenter(int height, int totalHeight) {
 			return new Double(Math.floor((totalHeight - height) / 2.0)).intValue();
@@ -377,14 +349,12 @@ public class SuffixText extends Composite {
 			for (Control child : children) {
 
 				if (child instanceof Text) {
-
 					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
-					child.setBounds(0, verticalCenterY, textDimension.x, textDimension.y);
+					child.setBounds(0, verticalCenterY, clientArea.width, textDimension.y);
 				}
-				if (child instanceof Label) {
-
+				if (child instanceof StyledText) {
 					int verticalCenterY = marginTopCenter(textDimension.y, clientArea.height);
-					child.setBounds(textDimension.x - NEGATIVE_VERTICAL_SPACING, verticalCenterY,
+					child.setBounds(textDimension.x + verticalSpacing, verticalCenterY,
 							labelDimension.x, labelDimension.y);
 				}
 

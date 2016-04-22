@@ -129,7 +129,7 @@ public class DescriptionParser extends AbstractJSDocParser {
 				}
 			}
 			scanner.next(); // consume c
-			if (c == '\n') {
+			if (JSDocCharScanner.isNL(c)) {
 				if (scanner.hasNext() && !nextIsTagTitle(scanner)) {
 					end = scanner.offset();
 				} else {
@@ -174,7 +174,7 @@ public class DescriptionParser extends AbstractJSDocParser {
 		ScannerState state = scanner.saveState();
 		try {
 			scanner.skipWS();
-			if (scanner.hasNext() && scanner.peek() == '@') {
+			if (scanner.hasNext() && scanner.peek() == JSDocCharScanner.TAG_START) {
 				return TagTitleTokenizer.INSTANCE.nextToken(scanner.copy()) != null;
 			}
 		} finally {

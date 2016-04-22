@@ -15,8 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
-
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualWorkbenchLabelProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * A base class for workspace element selection dialog.
@@ -41,7 +40,7 @@ public class WorkspaceElementSelectionDialog extends ElementTreeSelectionDialog 
 	 *            Show create button and dialog
 	 */
 	public WorkspaceElementSelectionDialog(Shell parent, boolean createButton) {
-		super(parent, new VirtualWorkbenchLabelProvider(),
+		super(parent, new WorkbenchLabelProvider(),
 				new WorkbenchContentProvider());
 
 		this.setHelpAvailable(false);

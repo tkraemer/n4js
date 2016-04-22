@@ -11,19 +11,12 @@
 package eu.numberfour.n4js.ui.wizard.interfaces;
 
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModelValidator;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 
 /**
  * A validator for {@link N4JSInterfaceWizardModel interface wizard model} instances.
  */
 public class N4JSInterfaceWizardModelValidator extends N4JSClassifierWizardModelValidator<N4JSInterfaceWizardModel> {
-
-	@Override
-	protected void prepare() {
-		super.prepare();
-		if (getModel().getAccessModifier() == AccessModifier.PROJECT && getModel().isInternal()) {
-			getModel().setInternal(false);
-		}
-	}
-
+	/**
+	 * This class is a placeholder for future interface specific model validation.
+	 */
 }

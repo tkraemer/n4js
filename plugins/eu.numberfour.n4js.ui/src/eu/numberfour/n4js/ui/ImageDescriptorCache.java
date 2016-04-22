@@ -21,7 +21,6 @@ import org.eclipse.swt.graphics.Image;
 import com.google.common.base.Optional;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 
 /**
@@ -75,9 +74,6 @@ public enum ImageDescriptorCache {
 		/** Image reference for projects that are treated as either external or built-in libraries. */
 		EXTERNAL_LIB_PROJECT("jar_l_obj.gif"),
 
-		/** The decorator for {@link VirtualResource} elements */
-		FOLDER_DECORATOR_PLUS("staged_added.gif"),
-
 		/** Wizard banner for the new N4JS project wizard. */
 		NEW_PROJECT_WIZBAN("newprj_wiz.png"),
 
@@ -92,9 +88,6 @@ public enum ImageDescriptorCache {
 
 		/** Smart light bulb icon */
 		SMART_LIGHTBULB("smartmode_co.png"),
-
-		/** A transparent 1x1 image */
-		TRANSPARENT("transparent.png");
 
 		private final String fileName;
 

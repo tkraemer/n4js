@@ -29,7 +29,7 @@ public abstract class AbstractJSDocTokenizer implements IJSDocTokenizer {
 		ScannerState state = scanner.saveState();
 		try {
 			scanner.skipWS();
-			if (scanner.hasNext() && scanner.peek() == '@') {
+			if (scanner.hasNext() && scanner.peek() == JSDocCharScanner.TAG_START) {
 				return TagTitleTokenizer.INSTANCE.nextToken(scanner.copy()) != null;
 			}
 		} finally {
