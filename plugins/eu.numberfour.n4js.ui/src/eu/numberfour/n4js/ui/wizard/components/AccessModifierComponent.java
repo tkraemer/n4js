@@ -18,9 +18,9 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.SelectObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -64,7 +64,8 @@ public class AccessModifierComponent extends WizardComponent {
 		accessModifierLabel.setText("Access modifier:");
 
 		Composite accessModifiersComposite = new Composite(componentContainer.getComposite(), SWT.NONE);
-		accessModifiersComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+		accessModifiersComposite.setLayout(RowLayoutFactory.swtDefaults().extendedMargins(0, 0, 0, 0).create());
+
 		GridData accessModifiersCompositeLayoutData = fillTextDefaults();
 		accessModifiersCompositeLayoutData.horizontalSpan = 2;
 		accessModifiersComposite.setLayoutData(accessModifiersCompositeLayoutData);

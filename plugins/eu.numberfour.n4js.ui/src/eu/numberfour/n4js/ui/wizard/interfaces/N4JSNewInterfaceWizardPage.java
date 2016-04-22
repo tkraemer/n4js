@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardPage;
 import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
-import eu.numberfour.n4js.ui.wizard.components.DefinitionFileComponent;
+import eu.numberfour.n4js.ui.wizard.components.FileTypeComponent;
 import eu.numberfour.n4js.ui.wizard.components.EmptyComponent;
 import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
@@ -56,7 +56,7 @@ public class N4JSNewInterfaceWizardPage extends N4JSNewClassifierWizardPage<N4JS
 
 		new EmptyComponent(container);
 
-		new DefinitionFileComponent(getModel(), container);
+		new FileTypeComponent(getModel(), container);
 
 		accessModifierComponent = new AccessModifierComponent(getModel(), container);
 
