@@ -26,7 +26,7 @@ import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
 /**
  * A component which allows the selection of a checkbox specifying the Definition File property
  */
-public class DefinitionFileComponent extends WizardComponent {
+public class FileTypeComponent extends WizardComponent {
 
 	/** The definition file checkbox */
 	private final Button definitionFileBox;
@@ -40,7 +40,7 @@ public class DefinitionFileComponent extends WizardComponent {
 	 * @param container
 	 *            The container to create it in
 	 */
-	public DefinitionFileComponent(DefinitionFileModel model, WizardComponentContainer container) {
+	public FileTypeComponent(DefinitionFileModel model, WizardComponentContainer container) {
 		super(container);
 		this.model = model;
 
@@ -48,9 +48,10 @@ public class DefinitionFileComponent extends WizardComponent {
 
 		Label definitionFileLabel = new Label(parent, SWT.NONE);
 		definitionFileLabel.setLayoutData(fillLabelDefaults());
-		definitionFileLabel.setText("Definition file:");
+		definitionFileLabel.setText("File type:");
 
 		definitionFileBox = new Button(parent, SWT.CHECK);
+		definitionFileBox.setText("Definition file (.n4jsd)");
 		definitionFileBox.setLayoutData(fillLabelDefaults());
 
 		WizardComponentUtils.emptyGridCell(parent);

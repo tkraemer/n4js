@@ -31,8 +31,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.SelectionStatusDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualWorkbenchLabelProvider;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.wizard.workspace.SuffixText;
 
@@ -120,7 +120,7 @@ public abstract class CustomElementSelectionDialog extends SelectionStatusDialog
 		this.treeViewer = v;
 
 		WorkbenchContentProvider contentProvider = new WorkbenchContentProvider();
-		ILabelProvider labelProvider = new VirtualWorkbenchLabelProvider();
+		ILabelProvider labelProvider = new WorkbenchLabelProvider();
 
 		this.treeViewer.setContentProvider(contentProvider);
 		this.treeViewer.setLabelProvider(labelProvider);
