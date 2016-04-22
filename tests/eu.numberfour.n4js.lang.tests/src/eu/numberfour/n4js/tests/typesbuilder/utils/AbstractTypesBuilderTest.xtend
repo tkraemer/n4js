@@ -103,7 +103,7 @@ abstract class AbstractTypesBuilderTest {
 
 		assertExampleTypeStructure(phase, testResource)
 
-		assertSerializedUserdata(eoDescs, expectedTypesSerialization, enableUserDataCompare)
+		assertSerializedUserdata(eoDescs, expectedTypesSerialization, enableUserDataCompare, testResource as N4JSResource)
 
 		return getResourceDescription(testResource)
 	}

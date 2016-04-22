@@ -35,7 +35,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.ts,
  eu.numberfour.n4js.ts.conversions,
  eu.numberfour.n4js.ts.findReferences,
- eu.numberfour.n4js.ts.formatting,
+ eu.numberfour.n4js.ts.formatting2,
  eu.numberfour.n4js.ts.generator,
  eu.numberfour.n4js.ts.naming,
  eu.numberfour.n4js.ts.parseTreeConstruction,

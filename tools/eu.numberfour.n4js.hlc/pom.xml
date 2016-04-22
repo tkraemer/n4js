@@ -568,6 +568,13 @@ Contributors:
 			<version>1.7.12</version>
 		</dependency>
 
+		<!-- Fixed version of guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>[15.0.0]</version>
+		</dependency>
+
 		<!--  # # Below are dependencies which don't go into the jar # # # # # # # # # # # # # # # # # # # # # # # #
 				They are required for testing.
 		-->

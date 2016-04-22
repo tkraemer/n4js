@@ -427,20 +427,35 @@ class N4JSScopingTest {
 
 		assertEquals("one EResourceDescription", 2/* exported with one name  + BuiltInTypesScopeFilter.EXPECTED_PREDEFINED_TYPES*/,
 			eoDescs.size)
+			
 		assertEquals("Stored user data",
-			'''
-				<?xml version="1.0" encoding="ASCII"?>
-				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/Supplier">
-				  <astElement href="#/0"/>
-				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
-				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
-				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
-				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
-				    </ownedMembers>
-				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
-				  </topLevelTypes>
-				</types:TModule>
-			'''.toString, eoDescs.iterator.next.getUserData(UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))
+//		// If there are any problems here, switch to string-based comparison (eu.numberfour.n4js.resource.UserdataMapper.BINARY = false) 
+//      // with this equivalent value:
+//			'''
+//				<?xml version="1.0" encoding="ASCII"?>
+//				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/Supplier">
+//				  <astElement href="#/0"/>
+//				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
+//				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
+//				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
+//				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
+//				    </ownedMembers>
+//				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
+//				  </topLevelTypes>
+//				</types:TModule>
+//			'''.toString
+			"iWVtZgoNGgoAAgEBJmh0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvdHMvVHlwZXMBJmh0dHA6Ly93d3cubnVtYmVyZm91ci5l"+
+			"dS9pZGUvdHMvVHlwZXMCLwEIVE1vZHVsZQILYXN0RWxlbWVudAICJ2h0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvbjRqcy9O"+
+			"NEpTAidodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL240anMvTjRKUwIvAQdTY3JpcHQAAwYjbnVsbAMvMAQOcXVhbGlmaWVk"+
+			"TmFtZSpldS5udW1iZXJmb3VyLm40anMudGVzdHMuc2NvcGluZy5TdXBwbGllcgwOdG9wTGV2ZWxUeXBlcwIDAQIHVENsYXNzAgVu"+
+			"YW1lCVN1cHBsaWVyAw1leHBvcnRlZE5hbWUJU3VwcGxpZXIGDW93bmVkTWVtYmVycwIEAQMIVE1ldGhvZAIFbmFtZQRmb28HC2Fz"+
+			"dEVsZW1lbnQFAgIUTjRNZXRob2REZWNsYXJhdGlvbgADOS8wL0BzY3JpcHRFbGVtZW50cy4wL0BleHBvcnRlZEVsZW1lbnQvQG93"+
+			"bmVkTWVtYmVyc1Jhdy4wCg5yZXR1cm5UeXBlUmVmBgMpaHR0cDovL3d3dy5udW1iZXJmb3VyLmV1L2lkZS90cy9UeXBlUmVmcwQp"+
+			"aHR0cDovL3d3dy5udW1iZXJmb3VyLmV1L2lkZS90cy9UeXBlUmVmcwIvARVQYXJhbWV0ZXJpemVkVHlwZVJlZgUNZGVjbGFyZWRU"+
+			"eXBlAwESCmhhc05vQm9keQETHWRlY2xhcmVkTWVtYmVyQWNjZXNzTW9kaWZpZXIHcHVibGljAQkLYXN0RWxlbWVudAcCAxNONENs"+
+			"YXNzRGVjbGFyYXRpb24AAyYvMC9Ac2NyaXB0RWxlbWVudHMuMC9AZXhwb3J0ZWRFbGVtZW50AQEB"
+			.toString
+			, eoDescs.iterator.next.getUserData(UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))
 
 		rs.resources.forEach[it.unload];
 

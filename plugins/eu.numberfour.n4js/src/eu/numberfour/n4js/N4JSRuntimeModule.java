@@ -107,7 +107,6 @@ import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-@SuppressWarnings("restriction")
 public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeModule {
 
 	/**

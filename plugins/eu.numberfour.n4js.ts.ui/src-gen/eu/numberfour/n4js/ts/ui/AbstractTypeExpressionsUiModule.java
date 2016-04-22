@@ -27,5 +27,10 @@ public abstract class AbstractTypeExpressionsUiModule extends org.eclipse.xtext.
 		return eu.numberfour.n4js.ts.ui.contentassist.TypeExpressionsProposalProvider.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public Class<? extends org.eclipse.xtext.ui.editor.formatting.IContentFormatterFactory> bindIContentFormatterFactory() {
+		return org.eclipse.xtext.ui.editor.formatting2.ContentFormatterFactory.class;
+	}
+
 
 }
