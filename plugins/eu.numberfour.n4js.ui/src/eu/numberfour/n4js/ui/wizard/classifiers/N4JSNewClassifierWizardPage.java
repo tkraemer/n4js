@@ -51,13 +51,6 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 	/** Component for the other modifier, such as @N4JS or @Internal. */
 	protected OtherClassifierModifiersComponent otherClassifierModifiersComponent;
 
-	/**
-	 * Initializes a new {@link N4JSNewClassifierWizardPage}
-	 */
-	protected N4JSNewClassifierWizardPage() {
-		super(0);
-	}
-
 	@Override
 	public void openModuleSpecifierDialog(org.eclipse.swt.widgets.Shell shell) {
 

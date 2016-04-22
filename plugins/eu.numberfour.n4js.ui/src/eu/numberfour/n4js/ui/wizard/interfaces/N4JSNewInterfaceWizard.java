@@ -10,7 +10,9 @@
  */
 package eu.numberfour.n4js.ui.wizard.interfaces;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
@@ -51,9 +53,20 @@ public class N4JSNewInterfaceWizard extends N4JSNewClassifierWizard<N4JSInterfac
 	}
 
 	@Override
-	protected void doGenerateClassifier() {
-		generator.performManifestChanges(model);
-		generator.writeToFile(model);
+	protected void doGenerateClassifier(IProgressMonitor monitor) {
+		if (!generator.performManifestChanges(model, monitor)) {
+			monitor.setCanceled(true);
+			MessageDialog.openError(getShell(), "Failed to create the new interface",
+					"Couldn't perform manifest changes.");
+		}
+		monitor.worked(5);
+
+		if (!generator.writeToFile(model, monitor)) {
+			monitor.setCanceled(true);
+			MessageDialog.openError(getShell(), "Failed to create the new interface",
+					"Couldn't write the interface file.");
+		}
+		monitor.worked(5);
 	}
 
 	@Override

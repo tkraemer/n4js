@@ -42,6 +42,9 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
+import java.io.InputStreamReader
+import java.io.UnsupportedEncodingException
+import java.io.IOException
 
 /**
  * This class contains commonly used methods when writing wizard generators.
@@ -80,6 +83,36 @@ class WizardGeneratorHelper {
 		} catch (CoreException exc) {
 			return "";
 		};
+	}
+	
+	/**
+	 * Returns the given string with a trailing line break.
+	 * 
+	 * If the string is empty no line break is added.
+	 */
+	public def String addLineBreak(String str) {
+		if (str.empty) {
+			str
+		} else {
+			str + "\n";
+		}
+	}
+	
+	/**
+	 * Returns the content of the file as a string.
+	 */
+	public def String readFileAsString(IFile file) throws IOException, CoreException, UnsupportedEncodingException {
+		var InputStreamReader inputReader;
+			inputReader = new InputStreamReader(file.getContents(), file.getCharset());
+			val scanner = new Scanner(inputReader);
+			scanner.useDelimiter("\\A");
+
+			var content = if (scanner.hasNext()) { scanner.next(); } else { "" }
+
+			inputReader.close();
+			scanner.close();
+
+			return content;
 	}
 	
 	/**

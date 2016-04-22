@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
 import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
  * A file generator for {@link N4JSInterfaceWizardModel}.
@@ -86,7 +87,9 @@ class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSIn
 	 *  
 	 */
 	
-	def boolean writeToFile(N4JSInterfaceWizardModel model) {
+	override boolean writeToFile(N4JSInterfaceWizardModel model, IProgressMonitor monitor) {
+		monitor.subTask("Creating the interface");
+		
 		val modulePath = model.computeFileLocation();
 		val moduleFile = ResourcesPlugin.workspace.root.getFile(modulePath);
 		
@@ -182,24 +185,31 @@ class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSIn
 	 * <p> IMPORTANT: This method should always be called before invoking {@link #writeToFile(N4JSClassWizardModel)} as 
 	 * writeToFile may need manifest changes to resolve all imports.</p>
 	 */
-	def performManifestChanges(N4JSInterfaceWizardModel model) {
+	override performManifestChanges(N4JSInterfaceWizardModel model, IProgressMonitor monitor) {
+		monitor.subTask("Performing manifest changes");
+		
 		val project = n4jsCore.findProject(URI.createPlatformResourceURI(model.computeFileLocation.toString, true));
 		
-		if ( project.present ) {
-			val manifestLocation = project.get().manifestLocation;
-			val manifest = manifestLocation.get().getResource();
-			
-			// Gather the referenced projects
-			var referencedProjects = model.interfaces.map[uri.projectOfUri];
-			
-			// Create manifest changes
-			val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
-			val manifestChanges = manifest.manifestChanges(model,referencedProjects,moduleURI);
-			
-			//Only perform non-empty changes. (To prevent useless history entries)
-			if (manifestChanges.length>0) {
-				manifest.applyChanges(manifestChanges);
-			}
+		if (!project.present) {
+			return false;
+		}
+		
+		val manifestLocation = project.get().manifestLocation;
+		val manifest = manifestLocation.get().getResource();
+		
+		// Gather the referenced projects
+		var referencedProjects = model.interfaces.map[uri.projectOfUri];
+		
+		// Create manifest changes
+		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
+		val manifestChanges = manifest.manifestChanges(model,referencedProjects,moduleURI);
+		
+		//Only perform non-empty changes. (To prevent useless history entries)
+		if (manifestChanges.length>0) {
+			manifest.applyChanges(manifestChanges);
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

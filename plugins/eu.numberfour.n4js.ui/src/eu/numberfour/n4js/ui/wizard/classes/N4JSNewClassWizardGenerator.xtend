@@ -19,6 +19,8 @@ import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.Impo
 import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
+import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
 import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
 import java.util.ArrayList
@@ -28,18 +30,15 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
-import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
-import java.util.Scanner
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.UnsupportedEncodingException
-import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock
-import org.eclipse.core.runtime.IPath
+import org.apache.log4j.Logger
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
  * A file generator for {@link N4JSClassWizardModel}
  */
 class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassWizardModel>{
+
+	private val LOGGER = Logger.getLogger(eu.numberfour.n4js.ui.wizard.classes.N4JSNewClassWizardGenerator);
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -49,46 +48,8 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 	
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
-
-
-	private def String readFileAsString(IFile file) {
-		var InputStreamReader inputReader;
-		try {
-			inputReader = new InputStreamReader(file.getContents(), file.getCharset());
-			val scanner = new Scanner(inputReader);
-			scanner.useDelimiter("\\A");
-
-			var content = if (scanner.hasNext()) { scanner.next(); } else { "" }
-
-			inputReader.close();
-			scanner.close();
-
-			return content;
-
-		} catch (CoreException e) {
-			return "";
-		} catch (UnsupportedEncodingException e) {
-			return "";
-		} catch (IOException e) {
-			return "";
-		}
-	}
-	/**
-	 * Returns the given string with a trailing line break.
-	 * 
-	 * If the string is empty no line break is added.
-	 */
-	private def String addLineBreak(String str) {
-		if (str.empty) {
-			str
-		} else {
-			str + "\n";
-		}
-	}
 	
 	override generateContentPreview(N4JSClassWizardModel model) {
-
-		val workspaceRoot = ResourcesPlugin.workspace.root;
 
 		val modulePath = model.computeFileLocation;
 
@@ -98,8 +59,15 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 			
 			val importAnalysis = requirementResolver.analyzeImportRequirements(requirements, resource);
 			
+			val workspaceRoot = ResourcesPlugin.workspace.root;	
 			val file = workspaceRoot.getFile(modulePath);
-			val fileContent = readFileAsString(file);
+			
+			val fileContent = try { 
+				readFileAsString(file)
+			} catch (Exception e) {
+				LOGGER.error("Failed to create a content preview for existing module " + modulePath.toString);
+				return #[];
+			}
 			
 			val importStatements = requirementResolver.generateImportStatements(importAnalysis.importRequirements);
 			val classCode = generateClass(model, importAnalysis.aliasBindings);
@@ -172,7 +140,7 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 	 *
 	 */
 
-	def boolean writeToFile(N4JSClassWizardModel model) {
+	override boolean writeToFile(N4JSClassWizardModel model, IProgressMonitor monitor) {
 		val modulePath = model.computeFileLocation();
 		val moduleFile = ResourcesPlugin.workspace.root.getFile(modulePath);
 
@@ -210,7 +178,6 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 	private def void insertIntoFile(IFile file, N4JSClassWizardModel model) throws CoreException {
 		//Retrieve XtextResource
 		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString, true);
-
 		val moduleResource = getResource(moduleURI);
 
 		//Collect the import requirements
@@ -247,30 +214,35 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 	 * <p> IMPORTANT: This method should always be called before invoking {@link #writeToFile(N4JSClassWizardModel)} as
 	 * writeToFile may need manifest changes to resolve all imports.</p>
 	 */
-	def performManifestChanges(N4JSClassWizardModel model) {
+	override performManifestChanges(N4JSClassWizardModel model, IProgressMonitor monitor) {
+		monitor.subTask("Performing manifest changes");
+		
 		val project = n4jsCore.findProject(URI.createPlatformResourceURI(model.computeFileLocation.toString, true));
 
-		if (project.present) {
-			val manifestLocation = project.get().manifestLocation;
-
-			val manifest = getResource(manifestLocation.get());
-			
-			// Gather referenced projects
-			var referencedProjects = new ArrayList<IN4JSProject>(model.interfaces.map[uri.projectOfUri]);
-
-			if (model.superClass.isComplete) {
-				referencedProjects.add(model.superClass.uri.projectOfUri);
-			}
-			
-			// Create manifest changes
-			val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
-			val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
-			
-			//Only perform non-empty changes. (To prevent useless history entries)
-			if (manifestChanges.length > 0) {
-				manifest.applyChanges(manifestChanges);
-			}
+		if (!project.present) {
+			return false;
 		}
+		
+		val manifestLocation = project.get().manifestLocation;
+		val manifest = getResource(manifestLocation.get());
+			
+		// Gather referenced projects
+		var referencedProjects = new ArrayList<IN4JSProject>(model.interfaces.map[uri.projectOfUri]);
+
+		if (model.superClass.isComplete) {
+			referencedProjects.add(model.superClass.uri.projectOfUri);
+		}
+			
+		// Create manifest changes
+		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString,true);
+		val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
+		
+			
+		//Only perform non-empty changes. (To prevent useless history entries)
+		if (manifestChanges.length > 0) {
+			manifest.applyChanges(manifestChanges);
+		}
+		return true;
 	}
 	/**
 	 * Returns the export statement if the access modifier requires it. Return an empty string otherwise.

@@ -61,8 +61,13 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@Override
 	protected void updateContentPreview(WizardPreview contentPreview) {
 		Display.getCurrent().asyncExec(() -> {
-			ContentBlock[] code = generator.generateContentPreview(getModel());
-			contentPreview.setContent(code);
+			ContentBlock[] codeBlocks = generator.generateContentPreview(getModel());
+			contentPreview.setContent(codeBlocks);
+
+			// Reveal last content block (class code)
+			contentPreview.revealContentBlock(codeBlocks[codeBlocks.length - 1]);
+
+			// Show file location in the info bar
 			contentPreview.setInfo(getModel().computeFileLocation().toString());
 		});
 	}

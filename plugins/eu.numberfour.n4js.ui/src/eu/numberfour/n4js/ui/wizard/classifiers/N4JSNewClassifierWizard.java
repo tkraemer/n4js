@@ -15,8 +15,10 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -77,7 +79,16 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 			}
 		}
 
-		doGenerateClassifier();
+		ProgressMonitorDialog dialog = new ProgressMonitorDialog(getShell());
+		dialog.open();
+
+		IProgressMonitor monitor = dialog.getProgressMonitor();
+		monitor.beginTask("Creating element", 10);
+
+		doGenerateClassifier(monitor);
+
+		monitor.done();
+		dialog.close();
 
 		// Open the written file
 		uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true), true);
@@ -99,7 +110,7 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 	/**
 	 * Performs the actual generation of {@link #performFinish()} call.
 	 */
-	protected abstract void doGenerateClassifier();
+	protected abstract void doGenerateClassifier(IProgressMonitor monitor);
 
 	/**
 	 * Returns with the one single {@link N4JSNewClassifierWizardPage classifier wizard page}.

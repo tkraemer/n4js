@@ -38,9 +38,6 @@ public class WizardPreviewProvider {
 	private static final Color INACTIVE_COLOR = Display.getCurrent()
 			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 
-	private static final Color INACTIVE_BACKGROUND = Display.getCurrent()
-			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND);
-
 	@Inject
 	@SuppressWarnings("restriction")
 	private org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory editorFactory;
@@ -126,7 +123,8 @@ public class WizardPreviewProvider {
 
 			configureSourceViewer(sourceViewer);
 
-			setContent("");
+			// Clear content
+			editorDocument.set("");
 		}
 
 		private void configureSourceViewer(SourceViewer viewer) {
@@ -143,7 +141,7 @@ public class WizardPreviewProvider {
 				}
 			});
 
-			viewer.getTextWidget().setAlwaysShowScrollBars(false);
+			// viewer.getTextWidget().setAlwaysShowScrollBars(false);
 		}
 
 		/**
@@ -189,22 +187,6 @@ public class WizardPreviewProvider {
 		}
 
 		/**
-		 * Sets the content of the preview.
-		 *
-		 * The content is parsed and highlighted as n4js code
-		 *
-		 *
-		 * @param content
-		 *            The preview content.
-		 */
-		public void setContent(String content) {
-			if (null != editorDocument) {
-				this.setContent(
-						new ContentBlock[] { ContentBlock.inactive("class B { }\n"), ContentBlock.active(content) });
-			}
-		}
-
-		/**
 		 *
 		 */
 		public void setContent(ContentBlock[] blocks) {
@@ -224,7 +206,7 @@ public class WizardPreviewProvider {
 		}
 
 		/**
-		 * Returns the current content of the preview.
+		 * Returns the current string content of the preview.
 		 *
 		 */
 		public String getContent() {
@@ -232,6 +214,28 @@ public class WizardPreviewProvider {
 				return editorDocument.get();
 			}
 			return "";
+		}
+
+		/**
+		 * Reveals the given content block.
+		 *
+		 * Note that the content block reference must be content of this preview by calling
+		 * {@link #setContent(ContentBlock[])}
+		 */
+		public void revealContentBlock(ContentBlock block) {
+			int accumulatedOffset = 0;
+			ContentBlock blockToShow = null;
+			for (ContentBlock contentBlock : contentBlocks) {
+				if (block == contentBlock) {
+					blockToShow = block;
+					break;
+				} else {
+					accumulatedOffset += contentBlock.content.length();
+				}
+			}
+			if (null != blockToShow) {
+				sourceViewer.revealRange(accumulatedOffset, blockToShow.content.length());
+			}
 		}
 
 		/**
