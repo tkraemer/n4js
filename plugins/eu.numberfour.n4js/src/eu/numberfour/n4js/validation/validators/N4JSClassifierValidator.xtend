@@ -12,11 +12,11 @@ package eu.numberfour.n4js.validation.validators
 
 import com.google.common.collect.Multimaps
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
+import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
@@ -24,6 +24,9 @@ import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import java.util.Collection
 import java.util.HashMap
 import java.util.List
@@ -58,6 +61,24 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	override register(EValidatorRegistrar registrar) {
 		// nop
+	}
+
+	/**
+	 * Constraints 38.3: Wildcards may not be used as type argument when binding a supertype’s type parameters.
+	 */
+	@Check
+	def checkWildcardInExtendsImplements(N4ClassifierDefinition n4ClassifierDef) {
+		val superTypeRefs = switch(n4ClassifierDef) {
+			N4ClassDefinition: #[ n4ClassifierDef.superClassRef ] + n4ClassifierDef.implementedInterfaceRefs
+			N4InterfaceDeclaration: n4ClassifierDef.superInterfaceRefs
+		}.filterNull;
+		for(typeRef : superTypeRefs) {
+			for(typeArg : typeRef.typeArgs) {
+				if(typeArg instanceof Wildcard) {
+					addIssue(getMessageForCLF_IMPLEMENT_EXTEND_WITH_WILDCARD, typeArg, CLF_IMPLEMENT_EXTEND_WITH_WILDCARD);
+				}
+			}
+		}
 	}
 
 	/**
