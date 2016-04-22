@@ -10,22 +10,14 @@
  */
 package eu.numberfour.n4js.external;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.FluentIterable.from;
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.eclipse.core.runtime.jobs.Job.RUNNING;
-import static org.eclipse.core.runtime.jobs.Job.WAITING;
-import static org.eclipse.xtext.xbase.lib.Exceptions.sneakyThrow;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
@@ -35,8 +27,6 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -46,32 +36,9 @@ import eu.numberfour.n4js.utils.Cancelable;
  * Helper class for reloading the registered external libraries by recreating the Xtext index for them.
  */
 @Singleton
-@SuppressWarnings("restriction")
 public class ExternalLibrariesReloadHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(ExternalLibrariesReloadHelper.class);
-
-	/**
-	 * Timeout to wait for the idle auto build job after cleaning external workspace.
-	 */
-	private static final long AUTO_BUILD_JOB_WAIT_TIMEOUT = TimeUnit.MINUTES.toMillis(10L);
-
-	/**
-	 * Unique name of the {@code org.eclipse.core.internal.events.AutoBuildJob}.
-	 */
-	private static final String AUTO_BUILD_JOB_NAME = Messages.events_building_0;
-
-	/**
-	 * Predicate for filtering out all jobs without {@link Job#RUNNING running} and/or without {@link Job#WAITING
-	 * waiting} state.
-	 */
-	private static final Predicate<Job> SCHEDULED_JOBS_PREDICATE = j -> RUNNING != j.getState()
-			&& WAITING != j.getState();
-
-	/**
-	 * Predicate for filtering by name.
-	 */
-	private static final Predicate<Job> AUTO_BUILD_JOB_PREDICATE = j -> AUTO_BUILD_JOB_NAME.equals(j.getName());
 
 	@Inject
 	private NpmManager npmManager;
@@ -141,9 +108,6 @@ public class ExternalLibrariesReloadHelper {
 	}
 
 	private void waitForWorkspaceLock(final IProgressMonitor monitor) {
-
-		waitForIdleAutoBuildJob(AUTO_BUILD_JOB_WAIT_TIMEOUT);
-
 		// Wait for the workspace lock to avoid starting the external build.
 		final IWorkspaceRoot root = getWorkspace().getRoot();
 		try {
@@ -153,37 +117,6 @@ public class ExternalLibrariesReloadHelper {
 		} finally {
 			Job.getJobManager().endRule(root);
 		}
-	}
-
-	private void waitForIdleAutoBuildJob(final long timeout) {
-
-		checkArgument(timeout > 0, "Timeout must be a positive long.");
-		final long now = System.currentTimeMillis();
-
-		while (!getScheduledAutoBuildJobs().isEmpty()) {
-
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("Waiting for workspace build job to finish...");
-			}
-
-			try {
-				Thread.sleep(100L);
-			} catch (final Exception e) {
-				LOGGER.error("Error while checking whether auto build job is idle or not.", e);
-			}
-
-			if (System.currentTimeMillis() > now + timeout) {
-				throw sneakyThrow(new TimeoutException("Timeouted while waiting for idle auto build job."));
-			}
-
-		}
-	}
-
-	private FluentIterable<Job> getScheduledAutoBuildJobs() {
-		final FluentIterable<Job> allJobs = from(Arrays.asList(Job.getJobManager().find(null)));
-		final FluentIterable<Job> autoBuildJobs = allJobs.filter(AUTO_BUILD_JOB_PREDICATE);
-		final FluentIterable<Job> scheduledJobs = autoBuildJobs.filter(SCHEDULED_JOBS_PREDICATE);
-		return scheduledJobs;
 	}
 
 }

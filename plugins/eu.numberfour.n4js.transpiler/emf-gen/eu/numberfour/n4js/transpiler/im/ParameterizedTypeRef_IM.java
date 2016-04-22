@@ -8,6 +8,7 @@
 package eu.numberfour.n4js.transpiler.im;
 
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
+
 import eu.numberfour.n4js.ts.types.Type;
 
 /**

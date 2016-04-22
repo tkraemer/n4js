@@ -11,6 +11,7 @@ import eu.numberfour.n4js.n4JS.ImportSpecifier;
 
 import eu.numberfour.n4js.transpiler.im.ImPackage;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TExportableElement;
 

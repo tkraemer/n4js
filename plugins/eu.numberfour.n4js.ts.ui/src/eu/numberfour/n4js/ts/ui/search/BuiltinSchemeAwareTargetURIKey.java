@@ -22,7 +22,6 @@ import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 /**
  * Specialization of the TargetURIKey that knows how to find objects by an {@link N4Scheme#SCHEME n4scheme}.
  */
-@SuppressWarnings("restriction")
 public class BuiltinSchemeAwareTargetURIKey extends TargetURIKey {
 
 	@Inject
