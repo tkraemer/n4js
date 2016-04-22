@@ -17,9 +17,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.xtext.resource.XtextResource;
 
@@ -32,9 +30,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
  * A preview window for wizards which shows a preview of the created class.
  */
 public class WizardPreviewProvider {
-
-	private final Color LIGHT_TEXT_COLOR = Display.getCurrent()
-			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 
 	@Inject
 	@SuppressWarnings("restriction")

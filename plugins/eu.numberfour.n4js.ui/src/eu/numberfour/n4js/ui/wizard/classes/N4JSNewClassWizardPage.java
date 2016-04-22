@@ -66,7 +66,6 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 		String code = generator.generateContent(getModel());
 		contentPreview.setContent(code);
 		contentPreview.setInfo(getModel().computeFileLocation().toString());
-
 	}
 
 	@SuppressWarnings("unused")

@@ -144,7 +144,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 	/**
 	 * This method is invoked whenever the model or validation status changes.
 	 *
-	 * Here subclasses should configure the content preview with their generated preview and info.
+	 * Override this method to implement a custom preview content.
 	 */
 	protected abstract void updateContentPreview(WizardPreview contentPreview);
 
