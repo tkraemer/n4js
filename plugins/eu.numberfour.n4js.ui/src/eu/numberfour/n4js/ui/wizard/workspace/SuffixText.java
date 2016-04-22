@@ -15,8 +15,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -27,6 +30,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -67,6 +71,8 @@ public class SuffixText extends Composite {
 	// Graphics context for text selection pixel calculation
 	private final GC gc = new GC(getDisplay());
 
+	private ControlDecoration contentProposalDecoration;
+
 	/**
 	 * Create the suffix text.
 	 *
@@ -99,7 +105,6 @@ public class SuffixText extends Composite {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				mousePressed = false;
-
 			}
 
 			@Override
@@ -144,6 +149,19 @@ public class SuffixText extends Composite {
 				if (evt.getPropertyName() == SUFFIX_PROPERTY) {
 					layout(true);
 				}
+			}
+		});
+
+		// Bind content proposal decoration to editable text focus state
+		this.editableText.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				setDecorationVisibility(false);
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				setDecorationVisibility(true);
 			}
 		});
 
@@ -253,6 +271,33 @@ public class SuffixText extends Composite {
 	 */
 	public Text getInternalText() {
 		return this.editableText;
+	}
+
+	/**
+	 * Creates a decoration with the given image for this text.
+	 *
+	 * Note that the decoration is only displayed in focus.
+	 */
+	public void createDecoration(Image decorationImage) {
+		contentProposalDecoration = new ControlDecoration(this, SWT.TOP | SWT.LEFT);
+		contentProposalDecoration.setImage(decorationImage);
+		contentProposalDecoration.hide();
+	}
+
+	/**
+	 * Sets the decoration visibility.
+	 *
+	 * This method does not have any effect if the decoration wasn't created before. See
+	 * {@link #createDecoration(Image)}
+	 */
+	private void setDecorationVisibility(boolean state) {
+		if (null != contentProposalDecoration) {
+			if (state) {
+				contentProposalDecoration.show();
+			} else {
+				contentProposalDecoration.hide();
+			}
+		}
 	}
 
 	/**

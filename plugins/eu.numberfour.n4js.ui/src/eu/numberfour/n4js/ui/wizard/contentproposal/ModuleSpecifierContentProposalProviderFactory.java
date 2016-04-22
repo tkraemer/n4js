@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4js.ui.wizard.contentproposal;
 
 import java.util.Arrays;
@@ -44,16 +54,16 @@ public class ModuleSpecifierContentProposalProviderFactory {
 	 */
 	public static final class ModuleSpecifierProposalLabelProvider extends LabelProvider {
 
-		private final Image folderSymbol = PlatformUI.getWorkbench().getSharedImages()
+		private final static Image FOLDER_SYMBOL = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_OBJ_FOLDER);
-		private final Image fileSymbol = PlatformUI.getWorkbench().getSharedImages()
+		private final static Image FILE_SYMBOL = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_OBJ_FILE);
 
 		@Override
 		public Image getImage(Object element) {
 			if (element instanceof ModuleSpecifierProposal) {
 				ModuleSpecifierProposal.ModuleProposalType type = ((ModuleSpecifierProposal) element).getModuleType();
-				return type == ModuleSpecifierProposal.ModuleProposalType.FOLDER ? folderSymbol : fileSymbol;
+				return type == ModuleSpecifierProposal.ModuleProposalType.FOLDER ? FOLDER_SYMBOL : FILE_SYMBOL;
 			}
 			return super.getImage(element);
 		}

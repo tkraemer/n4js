@@ -31,12 +31,12 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.keys.IBindingService;
 
 import com.google.inject.Inject;
@@ -68,14 +68,14 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 	private static final String CONTENT_ASSIST_ECLIPSE_COMMAND_ID = "org.eclipse.ui.edit.text.contentAssist.proposals";
 
+	private final Image CONTENT_PROPOSAL_DECORATION_IMAGE = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB.asImage()
+			.orNull();
+
 	private M model;
 	private DataBindingContext databindingContext;
 
 	/** Available after invocation of #createControl */
 	protected WorkspaceWizardPageForm workspaceWizardForm;
-
-	/** Available after the invocation of {@link #setupResources(Device)} */
-	private Image contentProposalDecorationImage = null;
 
 	// Browse dialogs
 	@Inject
@@ -105,8 +105,6 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	@Override
 	public void createControl(Composite parent) {
 		workspaceWizardForm = new WorkspaceWizardPageForm(parent, SWT.FILL);
-
-		setupResources(parent.getDisplay());
 
 		setupBindings(workspaceWizardForm);
 		setupBrowseDialogs(workspaceWizardForm);
@@ -185,21 +183,6 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 		if (firstResult instanceof String) {
 			model.setSourceFolder(new Path((String) firstResult));
-		}
-	}
-
-	/**
-	 * Initializes the resources for the given device
-	 *
-	 * @param device
-	 *            The device
-	 */
-	private void setupResources(Device device) {
-		Image originalImage = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB.asImage().orNull();
-
-		if (null != originalImage) {
-			contentProposalDecorationImage = new Image(device, originalImage.getImageData().scaledTo(10, 10));
-			originalImage.dispose();
 		}
 	}
 
@@ -312,7 +295,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
 		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
+				.getImageDescriptor(IDE.SharedImages.IMG_OBJ_PROJECT);
 		projectAdapter.setLabelProvider(
 				new SimpleImageContentProposalLabelProvider(projectSymbol));
 
@@ -335,7 +318,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 				new TextContentAdapter(), null,
 				keyInitiator, null);
 
-		createContentProposalDecoration(wizardForm.getModuleSpecifierText());
+		wizardForm.getModuleSpecifierText().createDecoration(CONTENT_PROPOSAL_DECORATION_IMAGE);
 
 		// Update proposal context whenever the model changes
 		model.addPropertyChangeListener(evt -> {
@@ -378,7 +361,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	 */
 	private ControlDecoration createContentProposalDecoration(Control control) {
 		ControlDecoration projectDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
-		projectDecoration.setImage(contentProposalDecorationImage);
+		projectDecoration.setImage(CONTENT_PROPOSAL_DECORATION_IMAGE);
 		projectDecoration.setShowOnlyOnFocus(true);
 		return projectDecoration;
 	}
@@ -486,7 +469,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		if (databindingContext != null) {
 			databindingContext.dispose();
 		}
-		contentProposalDecorationImage.dispose();
+		CONTENT_PROPOSAL_DECORATION_IMAGE.dispose();
 	}
 
 	@Override
