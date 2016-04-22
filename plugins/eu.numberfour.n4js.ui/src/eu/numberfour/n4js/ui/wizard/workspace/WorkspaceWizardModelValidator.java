@@ -48,6 +48,9 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	@SuppressWarnings("javadoc")
 	protected static class ErrorMessages {
 
+		// General errors
+		public static final String INVALID_STATE_VALIDATION_ERROR = "Invalid state validation error";
+
 		// Project errors
 		public static final String PROJECT_DOES_NOT_EXIST = "The given project does not exist";
 		public static final String INVALID_PROJECT = "Not a valid project";
@@ -56,6 +59,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		// Source folder errors
 		public static final String SOURCE_FOLDER_MUST_NOT_BE_EMPTY = "The source folder field must not be empty";
 		public static final String SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME = "The source folder is not a valid folder name";
+		public static final String SOURCE_FOLDER_DOES_NOT_EXIST = "The source folder does not exist";
 
 		// Module specifier errors
 		public static final String MODULE_SPECIFIER_MUST_NOT_BE_EMPTY = "The module specifier field must not be empty";
@@ -197,7 +201,7 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 	public void setModel(M model) {
 		this.model = model;
 
-		// Reset state and revalidate
+		// Reset state and validate
 		this.setSourceFolderValid(false);
 		this.setProjectValid(false);
 
@@ -263,6 +267,39 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		return validationResult;
 	}
 
+	/**
+	 * @return True if the project property is valid
+	 */
+	public boolean getProjectValid() {
+		return projectValid;
+	}
+
+	/**
+	 *
+	 * @param projectValid
+	 *            The new validity of the project property
+	 */
+	private void setProjectValid(boolean projectValid) {
+		this.firePropertyChange(PROJECT_PROPERTY_VALID, this.projectValid, this.projectValid = projectValid);
+	}
+
+	/**
+	 * @return True if the source folder property is valid
+	 */
+	public boolean getSourceFolderValid() {
+		return sourceFolderValid;
+	}
+
+	/**
+	 *
+	 * @param sourceFolderValid
+	 *            The new validity of the source folder property
+	 */
+	private void setSourceFolderValid(boolean sourceFolderValid) {
+		this.firePropertyChange(SOURCE_FOLDER_PROPERTY_VALID, this.sourceFolderValid,
+				this.sourceFolderValid = sourceFolderValid);
+	}
+
 	private void setValidationResult(ValidationResult validationResult) {
 		this.firePropertyChange(VALIDATION_RESULT, this.validationResult, this.validationResult = validationResult);
 	}
@@ -301,21 +338,39 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 		this.setSourceFolderValid(false);
 
 		// 1. The source folder property must not be empty
-		String sourceFolder = getModel().getSourceFolder().toString();
+		String sourceFolder = getModel().getSourceFolder().removeTrailingSeparator().toString();
 
 		if (sourceFolder.trim().isEmpty()) {
 			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_MUST_NOT_BE_EMPTY,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
 
-		// 2. The folder must be a valid folder name - structure
-		if (!WorkspaceWizardValidatorUtils.isValidSubFolderStructure(sourceFolder)) {
+		// 2. All segments of the source folder path must be valid folder names
+		if (!WorkspaceWizardValidatorUtils.isValidFolderPath(getModel().getSourceFolder())) {
 			throw new ValidationException(
 					ErrorMessages.SOURCE_FOLDER_IS_NOT_A_VALID_FOLDER_NAME,
 					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
 		}
 
+		// 3. The source folder must be a valid {@link IN4JSSourceContainer}
+		// The source container must exist, and not be of type external or library
+
+		URI projectUri = URI.createPlatformResourceURI(getModel().getProject().segment(0), true);
+		IN4JSProject project = n4jsCore.findProject(projectUri).orNull();
+
+		if (null == project) {
+			throw new ValidationException(ErrorMessages.INVALID_STATE_VALIDATION_ERROR);
+		}
+
+		if (project.getSourceContainers().stream()
+				.filter(src -> (src.isSource() || src.isTest())) // Filter source type
+				.filter(src -> src.getRelativeLocation().equals(sourceFolder)) // Filter name
+				.count() == 0)
+			throw new ValidationException(ErrorMessages.SOURCE_FOLDER_DOES_NOT_EXIST,
+					WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY);
+
 		this.setSourceFolderValid(true);
+
 	}
 
 	/**
@@ -365,38 +420,5 @@ public abstract class WorkspaceWizardModelValidator<M extends WorkspaceWizardMod
 			}
 		}
 
-	}
-
-	/**
-	 * @return True if the project property is valid
-	 */
-	public boolean getProjectValid() {
-		return projectValid;
-	}
-
-	/**
-	 *
-	 * @param projectValid
-	 *            The new validity of the project property
-	 */
-	private void setProjectValid(boolean projectValid) {
-		this.firePropertyChange(PROJECT_PROPERTY_VALID, this.projectValid, this.projectValid = projectValid);
-	}
-
-	/**
-	 * @return True if the source folder property is valid
-	 */
-	public boolean getSourceFolderValid() {
-		return sourceFolderValid;
-	}
-
-	/**
-	 *
-	 * @param sourceFolderValid
-	 *            The new validity of the source folder property
-	 */
-	private void setSourceFolderValid(boolean sourceFolderValid) {
-		this.firePropertyChange(SOURCE_FOLDER_PROPERTY_VALID, this.sourceFolderValid,
-				this.sourceFolderValid = sourceFolderValid);
 	}
 }
