@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
@@ -34,7 +35,6 @@ import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -251,22 +251,28 @@ public class InterfacesComponentProvider {
 			Composite parent = getParentComposite();
 
 			Label interfacesLabel = new Label(parent, SWT.NONE);
-			interfacesLabel.setLayoutData(fillLabelDefaults());
+
+			GridData interfacesLabelGridData = fillLabelDefaults();
+			interfacesLabelGridData.verticalAlignment = SWT.TOP;
+			interfacesLabel.setLayoutData(interfacesLabelGridData);
+
 			interfacesLabel.setText("Interfaces:");
 
 			interfacesTable = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
 			interfacesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 			Composite interfacesButtonsComposite = new Composite(parent, SWT.NONE);
-			interfacesButtonsComposite.setLayout(new GridLayout(1, false));
+			interfacesButtonsComposite.setLayoutData(GridDataFactory.fillDefaults().create());
+
+			interfacesButtonsComposite.setLayout(GridLayoutFactory.swtDefaults().numColumns(1).margins(0, 0).create());
 
 			interfacesAddButton = new Button(interfacesButtonsComposite, SWT.NONE);
 			interfacesAddButton.setText("Add...");
-			interfacesAddButton.setLayoutData(GridDataFactory.fillDefaults().create());
+			interfacesAddButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 
 			interfacesRemoveButton = new Button(interfacesButtonsComposite, SWT.NONE);
 			interfacesRemoveButton.setText("Remove");
-			interfacesRemoveButton.setLayoutData(GridDataFactory.fillDefaults().create());
+			interfacesRemoveButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 
 			setupBindings();
 		}
