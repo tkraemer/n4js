@@ -217,9 +217,6 @@ public class N4JSResource extends PostProcessingAwareResource {
 	private boolean removingAdapters;
 
 	@Inject
-	private UserdataMapper typeUserdataMapper;
-
-	@Inject
 	private BuiltInSchemeRegistrar registrar;
 
 	/**
@@ -304,7 +301,7 @@ public class N4JSResource extends PostProcessingAwareResource {
 			Iterable<IEObjectDescription> modules = description.getExportedObjectsByType(TypesPackage.Literals.TMODULE);
 			for (IEObjectDescription module : modules) {
 				try {
-					List<EObject> deserializedModules = typeUserdataMapper.getDeserializedModulesFromDescription(
+					List<EObject> deserializedModules = UserdataMapper.getDeserializedModulesFromDescription(
 							module,
 							getURI());
 					for (EObject deserializedModule : deserializedModules) {
@@ -882,4 +879,5 @@ public class N4JSResource extends PostProcessingAwareResource {
 	public void clearResolving() {
 		resolving.clear();
 	}
+
 }

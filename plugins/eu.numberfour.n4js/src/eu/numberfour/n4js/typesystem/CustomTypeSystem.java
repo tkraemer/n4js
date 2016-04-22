@@ -14,13 +14,14 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.postprocessing.ASTProcessor;
 import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.resource.N4JSResource;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.ErrorInformation;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
@@ -29,6 +30,7 @@ import it.xsemantics.runtime.RuleFailedException;
 
 /**
  */
+@Singleton
 public class CustomTypeSystem extends N4JSTypeSystem {
 
 	@Inject
@@ -180,5 +182,10 @@ public class CustomTypeSystem extends N4JSTypeSystem {
 	public Result<TypeRef> use_type_judgment_from_PostProcessors(RuleEnvironment _environment_,
 			RuleApplicationTrace _trace_, TypableElement expression) {
 		return super.typeInternal(_environment_, _trace_, expression);
+	}
+
+	@Override
+	protected String stringRepForEnv(RuleEnvironment ruleEnvironment) {
+		return "[...]";
 	}
 }
