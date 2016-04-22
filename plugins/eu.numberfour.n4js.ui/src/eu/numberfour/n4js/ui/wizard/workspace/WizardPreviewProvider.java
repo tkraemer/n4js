@@ -14,10 +14,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.xtext.resource.XtextResource;
 
@@ -30,6 +32,9 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
  * A preview window for wizards which shows a preview of the created class.
  */
 public class WizardPreviewProvider {
+
+	private static final Color INACTIVE_COLOR = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 
 	@Inject
 	@SuppressWarnings("restriction")
@@ -54,6 +59,33 @@ public class WizardPreviewProvider {
 	}
 
 	/**
+	 * A {@link ContentBlock} represents a paragraph in a text view.
+	 *
+	 * It additionally holds an active state which toggles syntax highlighting for the paragraph.
+	 */
+	public static final class ContentBlock {
+		/** The active state of the block */
+		public final boolean active;
+		/** The content of the block */
+		public final String content;
+
+		/** Returns a new active content block with the given content */
+		public static ContentBlock active(String content) {
+			return new ContentBlock(content, true);
+		}
+
+		/** Returns a new inactive content block with the given content */
+		public static ContentBlock inactive(String content) {
+			return new ContentBlock(content, false);
+		}
+
+		private ContentBlock(String content, boolean active) {
+			this.active = active;
+			this.content = content;
+		}
+	}
+
+	/**
 	 * A preview window which attaches to the side of a given shell.
 	 */
 	public class WizardPreview extends Composite {
@@ -63,6 +95,9 @@ public class WizardPreviewProvider {
 
 		// Info label
 		private Label infoLabel;
+
+		// Content blocks
+		private ContentBlock[] contentBlocks;
 
 		/**
 		 * Creates a new wizard preview for a given shell.
@@ -77,7 +112,7 @@ public class WizardPreviewProvider {
 			createInfoBar(this);
 
 			// Enable editor theming by assigning a CSS class
-			sourceViewer.getTextWidget().setData("org.eclipse.e4.ui.css.CssClassName", "Editor active");
+			this.sourceViewer.getTextWidget().setData("org.eclipse.e4.ui.css.CssClassName", "MPart active");
 		}
 
 		private void createInfoBar(Composite parent) {
@@ -85,7 +120,6 @@ public class WizardPreviewProvider {
 			infoComposite
 					.setLayoutData(GridDataFactory.fillDefaults()
 							.grab(true, false)
-							// .indent(new Point(12, 0)) // Extra indent to align with source viewer
 							.create());
 
 			infoComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).create());
@@ -99,9 +133,9 @@ public class WizardPreviewProvider {
 			org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor editor = editorFactory.newEditor(
 					() -> {
 						return (XtextResource) n4jsCore.createResourceSet(Optional.absent())
-								.createResource(URI.createPlatformResourceURI("/TempProject/temp.n4js", true));
+								// Use a non-existing invalid URI to prevent conflicts with existing workspace resources
+								.createResource(URI.createPlatformResourceURI("/1TempProject/temp.n4js", true));
 					})
-					.showErrorAndWarningAnnotations() // Make the vertical ruler visible
 					.withParent(parent);
 
 			editor.getViewer().getControl().setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
@@ -120,8 +154,48 @@ public class WizardPreviewProvider {
 		private void configureSourceViewer(SourceViewer viewer) {
 			viewer.setEditable(false);
 
-			LineNumberRulerColumn lineNumberRuler = new LineNumberRulerColumn();
-			viewer.addVerticalRulerColumn(lineNumberRuler);
+			viewer.getTextWidget().addPaintListener(paintEvent -> updateHighlighting());
+		}
+
+		/**
+		 * Unhighlights all text in the editor.
+		 */
+		private void unhighlightAll() {
+			for (StyleRange range : sourceViewer.getTextWidget().getStyleRanges()) {
+				if (range.foreground != INACTIVE_COLOR) {
+					range.foreground = INACTIVE_COLOR;
+					sourceViewer.getTextWidget().setStyleRange(range);
+				}
+			}
+		}
+
+		/**
+		 * Updates the syntax highlighting.
+		 *
+		 * Disables highlighting for inactive blocks, or all blocks if the editor is disabled.
+		 */
+		private void updateHighlighting() {
+			if (!getEnabled()) {
+				unhighlightAll();
+			} else {
+				int accumulatedOffset = 0;
+				for (ContentBlock block : contentBlocks) {
+					if (!block.active) {
+						StyleRange range = new StyleRange(accumulatedOffset, block.content.length(), INACTIVE_COLOR,
+								sourceViewer.getTextWidget().getBackground());
+						sourceViewer.getTextWidget().setStyleRange(range);
+					}
+					accumulatedOffset += block.content.length();
+				}
+			}
+		}
+
+		@Override
+		public void setEnabled(boolean enabled) {
+			super.setEnabled(enabled);
+			if (!enabled) {
+				unhighlightAll();
+			}
 		}
 
 		/**
@@ -135,8 +209,28 @@ public class WizardPreviewProvider {
 		 */
 		public void setContent(String content) {
 			if (null != editorDocument) {
-				editorDocument.set(content);
+				this.setContent(
+						new ContentBlock[] { ContentBlock.inactive("class B { }\n"), ContentBlock.active(content) });
 			}
+		}
+
+		/**
+		 *
+		 */
+		public void setContent(ContentBlock[] blocks) {
+			if (null == editorDocument) {
+				return;
+			}
+
+			this.contentBlocks = blocks;
+
+			String joinedContent = "";
+			for (ContentBlock block : blocks) {
+				joinedContent += block.content;
+			}
+			editorDocument.set(joinedContent);
+
+			updateHighlighting();
 		}
 
 		/**
@@ -158,14 +252,6 @@ public class WizardPreviewProvider {
 		 */
 		public void setInfo(String info) {
 			this.infoLabel.setText(info);
-		}
-
-		@Override
-		public void setEnabled(boolean enabled) {
-			super.setEnabled(enabled);
-			if (!enabled) {
-				setContent("");
-			}
 		}
 
 		@Override

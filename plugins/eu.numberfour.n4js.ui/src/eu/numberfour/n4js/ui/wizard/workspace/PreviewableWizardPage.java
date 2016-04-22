@@ -62,6 +62,19 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 
 	private boolean previewVisible = true;
 
+	private long lastModelChange = 0;
+	private final int previewUpdateDelay;
+
+	/**
+	 * Creates a new {@link PreviewableWizardPage} with the given preview update delay.
+	 *
+	 * @param previewUpdateDelay
+	 *            The update delay in milliseconds
+	 */
+	public PreviewableWizardPage(int previewUpdateDelay) {
+		this.previewUpdateDelay = previewUpdateDelay;
+	}
+
 	@Override
 	public void createControl(Composite parent) {
 		paneComposite = new Composite(parent, SWT.NONE);
@@ -156,16 +169,24 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		wizardContentPreview = previewProvider.create(parent, SWT.NONE);
 		wizardContentPreview.setLayoutData(PREVIEW_GRID_DATA_FACTORY.create());
 
+		// Connect a delayed property change listener to the model
 		getModel().addPropertyChangeListener(propertyChange -> {
-			ValidationResult result = getValidator().getValidationResult();
+			long time = currentSystemTime();
+			lastModelChange = time;
 
-			if (result.valid) {
-				wizardContentPreview.setEnabled(true);
-				updateContentPreview(wizardContentPreview);
-			} else {
-				wizardContentPreview.setEnabled(false);
-				wizardContentPreview.setInfo("");
-			}
+			getShell().getDisplay().timerExec(previewUpdateDelay, () -> {
+				if (lastModelChange == time) {
+					ValidationResult result = getValidator().getValidationResult();
+
+					if (result.valid) {
+						wizardContentPreview.setEnabled(true);
+						updateContentPreview(wizardContentPreview);
+					} else {
+						wizardContentPreview.setEnabled(false);
+						wizardContentPreview.setInfo("");
+					}
+				}
+			});
 		});
 	}
 
@@ -194,6 +215,13 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 				}
 			}
 		});
+	}
+
+	/**
+	 * Returns the current system time in milliseconds
+	 */
+	private long currentSystemTime() {
+		return System.currentTimeMillis();
 	}
 
 }
