@@ -311,7 +311,14 @@ class N4JSImportRequirementResolver {
 						importStatements
 		);
 	}
-
+	
+	/**
+	 * Returns the offset of import statements in the given resource.
+	 */
+	public def int getImportStatementOffset(XtextResource resource) {
+		getImportRegion(resource).offset
+	}
+	
 	/**
 	 * Generate the code for the given importRequirements
 	 * */

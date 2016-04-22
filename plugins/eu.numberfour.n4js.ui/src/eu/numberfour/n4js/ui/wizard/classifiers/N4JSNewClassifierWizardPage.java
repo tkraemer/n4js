@@ -55,7 +55,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 	 * Initializes a new {@link N4JSNewClassifierWizardPage}
 	 */
 	protected N4JSNewClassifierWizardPage() {
-		super(300);
+		super(0);
 	}
 
 	@Override

@@ -95,6 +95,22 @@ class WizardGeneratorHelper {
 	
 	
 	/**
+	 * Returns true if the given path exists in the workspace.
+	 * 
+	 * Note that the path must contain a project segment and at least one additional segment.
+	 */
+	public def boolean exists(IPath path) {
+		if (null === path) {
+			return false;
+		}
+		val member = ResourcesPlugin.workspace.root.findMember(path)
+		if (null === member) {
+			return false;
+		}
+		member.exists
+	}
+	
+	/**
 	 * Load and return the {@link XtextResource} at the given URI
 	 */
 	public def XtextResource getResource(URI moduleURI) {

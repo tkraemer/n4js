@@ -81,6 +81,8 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		paneComposite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).create());
 
 		super.createControl(paneComposite);
+		workspaceWizardControl.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+
 		createPreview(paneComposite);
 		createBottomControls(paneComposite);
 
@@ -198,7 +200,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 
 		bottomControls
 				.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).align(SWT.RIGHT, SWT.CENTER).create());
-		bottomControls.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).extendedMargins(0, 10, 0, 0).create());
+		bottomControls.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).extendedMargins(0, 5, 0, 0).create());
 
 		previewToggleButton = new Button(bottomControls, SWT.PUSH);
 		previewToggleButton.setText(HIDE_PREVIEW_TEXT);

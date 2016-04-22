@@ -29,6 +29,12 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
+import java.util.Scanner
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.UnsupportedEncodingException
+import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock
+import org.eclipse.core.runtime.IPath
 
 /**
  * A file generator for {@link N4JSClassWizardModel}
@@ -45,19 +51,81 @@ class N4JSNewClassWizardGenerator implements WorkspaceWizardGenerator<N4JSClassW
 	private N4JSImportRequirementResolver requirementResolver;
 
 
-	override generateContent(N4JSClassWizardModel model) {
-		//Collect the import requirements
-		val importRequirements = model.importRequirements;
-		
-		//Resolve occurring name conflicts
-		val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
-		var importStatements = requirementResolver.generateImportStatements(importRequirements);
-		
-		if (!importStatements.empty) {
-			importStatements += "\n\n";
+	private def String readFileAsString(IFile file) {
+		var InputStreamReader inputReader;
+		try {
+			inputReader = new InputStreamReader(file.getContents(), file.getCharset());
+			val scanner = new Scanner(inputReader);
+			scanner.useDelimiter("\\A");
+
+			var content = if (scanner.hasNext()) { scanner.next(); } else { "" }
+
+			inputReader.close();
+			scanner.close();
+
+			return content;
+
+		} catch (CoreException e) {
+			return "";
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		} catch (IOException e) {
+			return "";
 		}
-		
-		return importStatements + generateClass(model, aliasBindings);
+	}
+	/**
+	 * Returns the given string with a trailing line break.
+	 * 
+	 * If the string is empty no line break is added.
+	 */
+	private def String addLineBreak(String str) {
+		if (str.empty) {
+			str
+		} else {
+			str + "\n";
+		}
+	}
+	
+	override generateContentPreview(N4JSClassWizardModel model) {
+
+		val workspaceRoot = ResourcesPlugin.workspace.root;
+
+		val modulePath = model.computeFileLocation;
+
+		if (generatorUtils.exists(modulePath)) {
+			val resource = getResource(URI.createPlatformResourceURI(modulePath.toString, true));
+			val requirements = model.importRequirements;
+			
+			val importAnalysis = requirementResolver.analyzeImportRequirements(requirements, resource);
+			
+			val file = workspaceRoot.getFile(modulePath);
+			val fileContent = readFileAsString(file);
+			
+			val importStatements = requirementResolver.generateImportStatements(importAnalysis.importRequirements);
+			val classCode = generateClass(model, importAnalysis.aliasBindings);
+			
+			val importStatementOffset = requirementResolver.getImportStatementOffset(resource);
+			
+			return #[
+				ContentBlock.inactive(fileContent.substring(0, importStatementOffset).addLineBreak),
+				ContentBlock.active(importStatements.addLineBreak),
+				ContentBlock.inactive(fileContent.substring(importStatementOffset, fileContent.length - 1).addLineBreak),
+				ContentBlock.active(classCode)
+			] 
+		} else {
+			//Collect the import requirements
+			val importRequirements = model.importRequirements;
+			
+			//Resolve occurring name conflicts
+			val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
+			var importStatements = requirementResolver.generateImportStatements(importRequirements);
+			
+			if (!importStatements.empty) {
+				importStatements += "\n\n";
+			}
+			
+			return #[ ContentBlock.active(importStatements + generateClass(model, aliasBindings)) ];	
+		}
 	}
 	/**
 	 *  Generates the class code.

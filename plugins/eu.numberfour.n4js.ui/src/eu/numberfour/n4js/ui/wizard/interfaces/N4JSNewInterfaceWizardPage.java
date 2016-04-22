@@ -77,7 +77,7 @@ public class N4JSNewInterfaceWizardPage extends N4JSNewClassifierWizardPage<N4JS
 	@Override
 	protected void updateContentPreview(WizardPreview contentPreview) {
 		contentPreview.setInfo(getModel().computeFileLocation().toString());
-		contentPreview.setContent(generator.generateContent(getModel()));
+		contentPreview.setContent(generator.generateContentPreview(getModel()));
 	}
 
 	@Override

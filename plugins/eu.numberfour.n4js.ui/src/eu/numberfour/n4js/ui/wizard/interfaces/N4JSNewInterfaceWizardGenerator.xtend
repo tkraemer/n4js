@@ -28,6 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.common.util.URI
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardGenerator
+import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock
 
 /**
  * A file generator for {@link N4JSInterfaceWizardModel}.
@@ -93,7 +94,21 @@ class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSIn
 			if ( moduleFile.exists ) {
 				insertIntoFile(moduleFile, model);
 			} else {
-				val content = generateContent(model);
+				//Collect the import requirements
+				val importRequirements = model.importRequirements;
+						
+				//Resolve occurring name conflicts
+				val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
+						
+				//Generate import statements
+				var importStatements = requirementResolver.generateImportStatements(importRequirements)
+						
+				//If there are import statements, add a line break after statements and an additional empty line to have some space to the code
+				if ( !importRequirements.empty) 
+					importStatements = importStatements + "\n\n";
+						
+				//Generate interface code
+				val content = generateInterface(model, aliasBindings);
 				
 				//Write to file 
 				val classTextStream = new ByteArrayInputStream((content).getBytes(StandardCharsets.UTF_8));
@@ -106,7 +121,7 @@ class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSIn
 		return true;
 	}
 	
-	override String generateContent(N4JSInterfaceWizardModel model) {
+	override ContentBlock[] generateContentPreview(N4JSInterfaceWizardModel model) {
 		//Collect the import requirements
 		val importRequirements = model.importRequirements;
 				
@@ -123,7 +138,7 @@ class N4JSNewInterfaceWizardGenerator implements WorkspaceWizardGenerator<N4JSIn
 		//Generate interface code
 		val classCode = generateInterface(model, aliasBindings);
 		
-		return importStatements+classCode;
+		return #[ ContentBlock.active(importStatements+classCode) ];
 	}
 	
 	private def void insertIntoFile(IFile file, N4JSInterfaceWizardModel model) throws CoreException {

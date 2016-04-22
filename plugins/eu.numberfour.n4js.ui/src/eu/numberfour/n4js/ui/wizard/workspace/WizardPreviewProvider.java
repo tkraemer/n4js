@@ -14,6 +14,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.ITextListener;
+import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -36,6 +38,9 @@ public class WizardPreviewProvider {
 	private static final Color INACTIVE_COLOR = Display.getCurrent()
 			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
 
+	private static final Color INACTIVE_BACKGROUND = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND);
+
 	@Inject
 	@SuppressWarnings("restriction")
 	private org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory editorFactory;
@@ -56,33 +61,6 @@ public class WizardPreviewProvider {
 	 */
 	public WizardPreview create(Composite parent, int style) {
 		return new WizardPreview(parent, style);
-	}
-
-	/**
-	 * A {@link ContentBlock} represents a paragraph in a text view.
-	 *
-	 * It additionally holds an active state which toggles syntax highlighting for the paragraph.
-	 */
-	public static final class ContentBlock {
-		/** The active state of the block */
-		public final boolean active;
-		/** The content of the block */
-		public final String content;
-
-		/** Returns a new active content block with the given content */
-		public static ContentBlock active(String content) {
-			return new ContentBlock(content, true);
-		}
-
-		/** Returns a new inactive content block with the given content */
-		public static ContentBlock inactive(String content) {
-			return new ContentBlock(content, false);
-		}
-
-		private ContentBlock(String content, boolean active) {
-			this.active = active;
-			this.content = content;
-		}
 	}
 
 	/**
@@ -154,7 +132,18 @@ public class WizardPreviewProvider {
 		private void configureSourceViewer(SourceViewer viewer) {
 			viewer.setEditable(false);
 
-			viewer.getTextWidget().addPaintListener(paintEvent -> updateHighlighting());
+			viewer.getTextWidget().addModifyListener(modifyEvent -> {
+				System.out.println("Text changed");
+			});
+
+			viewer.addTextListener(new ITextListener() {
+				@Override
+				public void textChanged(TextEvent event) {
+					updateHighlighting();
+				}
+			});
+
+			viewer.getTextWidget().setAlwaysShowScrollBars(false);
 		}
 
 		/**
@@ -164,6 +153,7 @@ public class WizardPreviewProvider {
 			for (StyleRange range : sourceViewer.getTextWidget().getStyleRanges()) {
 				if (range.foreground != INACTIVE_COLOR) {
 					range.foreground = INACTIVE_COLOR;
+					range.fontStyle = SWT.NORMAL;
 					sourceViewer.getTextWidget().setStyleRange(range);
 				}
 			}
@@ -182,7 +172,7 @@ public class WizardPreviewProvider {
 				for (ContentBlock block : contentBlocks) {
 					if (!block.active) {
 						StyleRange range = new StyleRange(accumulatedOffset, block.content.length(), INACTIVE_COLOR,
-								sourceViewer.getTextWidget().getBackground());
+								null);
 						sourceViewer.getTextWidget().setStyleRange(range);
 					}
 					accumulatedOffset += block.content.length();

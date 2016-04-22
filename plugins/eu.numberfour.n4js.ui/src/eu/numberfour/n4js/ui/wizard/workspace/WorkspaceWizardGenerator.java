@@ -24,5 +24,5 @@ public interface WorkspaceWizardGenerator<M extends WorkspaceWizardModel> {
 	 *            The model for which a preview should be generated
 	 * @return The file content
 	 */
-	public String generateContent(M model);
+	public ContentBlock[] generateContentPreview(M model);
 }
