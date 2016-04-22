@@ -13,7 +13,7 @@ class A1 implements I<string> {}
 class A2 extends A1 {}
 // XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T: string, number." at "A3"
 class A3 extends A2 implements I<number> {}
-// XPECT noerrors --> "avoid follow-up error"
+// XPECT noerrors --> "Cannot implement interface I multiple times with different type arguments for T: string, number." at "A4"
 class A4 extends A3 {}
 
 
