@@ -20,7 +20,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -174,7 +173,7 @@ public class SuffixText extends Composite {
 		this.addMouseMoveListener(mouseMoveSelectionListener);
 
 		// Set text cursor
-		this.setCursor(new Cursor(getDisplay(), SWT.CURSOR_IBEAM));
+		this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_IBEAM));
 
 	}
 
@@ -238,7 +237,7 @@ public class SuffixText extends Composite {
 	/**
 	 * Returns the visibility state of the suffix label
 	 */
-	public boolean getSuffixVisible() {
+	public boolean isSuffixVisible() {
 		return suffixVisible;
 	}
 
