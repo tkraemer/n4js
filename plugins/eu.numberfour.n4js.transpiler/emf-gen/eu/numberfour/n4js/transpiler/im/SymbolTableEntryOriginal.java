@@ -8,6 +8,7 @@
 package eu.numberfour.n4js.transpiler.im;
 
 import eu.numberfour.n4js.n4JS.ImportSpecifier;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 /**

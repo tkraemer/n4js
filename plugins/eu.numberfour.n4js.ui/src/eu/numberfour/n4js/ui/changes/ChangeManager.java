@@ -62,7 +62,7 @@ public class ChangeManager {
 	}
 
 	/**
-	 * flatten {@link ChangeManager#flatten(Collection)} and sort in reverse order, to apply in correct order.}
+	 * flatten {@link ChangeManager#flatten(Collection)} and sort in reverse order, to apply in correct order.
 	 *
 	 * @param changes
 	 *            list of arbitrary changes.

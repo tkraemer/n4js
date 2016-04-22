@@ -193,38 +193,32 @@ class WizardGeneratorHelper {
 	 * @returns A list of {@link IAtomicChange}s for the manifest resource. 
 	 */
 	public def Collection<IAtomicChange> manifestChanges(Resource manifest, WorkspaceWizardModel model, Collection<IN4JSProject> referencedProjects, URI moduleURI) {
-			// Remove the containing project from the dependencies
-			referencedProjects.removeIf[ it.artifactId.equals(model.project.lastSegment) ];
-			
-			//Remove duplicates
-			val referencedProjectsSet = new HashSet<IN4JSProject>();
-			referencedProjectsSet.addAll(referencedProjects);
-			
-			var List<IAtomicChange> manifestChanges = new ArrayList<IAtomicChange>();
-			
-			val projectDescription = manifest.allContents.filter(ProjectDescription).head;
-			
-			//Add project dependency changes
-			val dependencyChange = ManifestChangeProvider.insertProjectDependencies(manifest, 
-																					referencedProjectsSet.filter[projectType != ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
-																					projectDescription)
-			//Add required runtime library changes
-			val runtimeLibraryChange = ManifestChangeProvider.insertRequiredRuntimeLibraries(manifest, 
-																					referencedProjectsSet.filter[projectType == ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
-																					projectDescription)
-			if (dependencyChange !== null) {
-				manifestChanges.add(dependencyChange);
-			}
-			if (runtimeLibraryChange !== null) {
-				manifestChanges.add(runtimeLibraryChange);
-			}
-			
-			//If unknown source folder, add source folder changes
-			val sourceFolder = n4jsCore.findN4JSSourceContainer(moduleURI);
-			if (!sourceFolder.present) {
-				manifestChanges.add(ManifestChangeProvider.addSourceFoldersToManifest(manifest, #[model.sourceFolder.toString]))
-			}
-			
-			return manifestChanges;
+		// Remove the containing project from the dependencies
+		referencedProjects.removeIf[ it.artifactId.equals(model.project.lastSegment) ];
+		
+		//Remove duplicates
+		val referencedProjectsSet = new HashSet<IN4JSProject>();
+		referencedProjectsSet.addAll(referencedProjects);
+		
+		var List<IAtomicChange> manifestChanges = new ArrayList<IAtomicChange>();
+		
+		val projectDescription = manifest.allContents.filter(ProjectDescription).head;
+		
+		//Add project dependency changes
+		val dependencyChange = ManifestChangeProvider.insertProjectDependencies(manifest, 
+																				referencedProjectsSet.filter[projectType != ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
+																				projectDescription)
+		//Add required runtime library changes
+		val runtimeLibraryChange = ManifestChangeProvider.insertRequiredRuntimeLibraries(manifest, 
+																				referencedProjectsSet.filter[projectType == ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
+																				projectDescription)
+		if (dependencyChange !== null) {
+			manifestChanges.add(dependencyChange);
+		}
+		if (runtimeLibraryChange !== null) {
+			manifestChanges.add(runtimeLibraryChange);
+		}
+		
+		return manifestChanges;
 	}
 }

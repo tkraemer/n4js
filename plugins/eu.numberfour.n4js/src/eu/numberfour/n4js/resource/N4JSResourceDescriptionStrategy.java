@@ -99,9 +99,6 @@ public class N4JSResourceDescriptionStrategy extends DefaultResourceDescriptionS
 	public static final String STATIC_POLYFILL_KEY = "STATIC_POLYFILL_KEY";
 
 	@Inject
-	private UserdataMapper typeUserdataMapper;
-
-	@Inject
 	private IQualifiedNameProvider qualifiedNameProvider;
 
 	@Override
@@ -134,7 +131,7 @@ public class N4JSResourceDescriptionStrategy extends DefaultResourceDescriptionS
 
 	private Map<String, String> createUserData(final TModule module) {
 		if (module.isPreLinkingPhase()) {
-			return getTypeUserdataMapper().createTimestampUserData(module);
+			return UserdataMapper.createTimestampUserData(module);
 		}
 		return new ForwardingMap<String, String>() {
 
@@ -144,7 +141,7 @@ public class N4JSResourceDescriptionStrategy extends DefaultResourceDescriptionS
 			protected Map<String, String> delegate() {
 				if (delegate == null) {
 					try {
-						delegate = getTypeUserdataMapper().createUserData(module);
+						delegate = UserdataMapper.createUserData(module);
 					} catch (Exception e) {
 						throw new IllegalStateException(e);
 					}
@@ -205,7 +202,4 @@ public class N4JSResourceDescriptionStrategy extends DefaultResourceDescriptionS
 		}
 	}
 
-	private UserdataMapper getTypeUserdataMapper() {
-		return typeUserdataMapper;
-	}
 }

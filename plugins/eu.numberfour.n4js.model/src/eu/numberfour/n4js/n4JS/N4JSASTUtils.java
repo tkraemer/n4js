@@ -455,4 +455,18 @@ public abstract class N4JSASTUtils {
 			return ((SyntaxRelatedTElement) obj).getAstElement();
 		return null;
 	}
+
+	/**
+	 * @return {@code true} for expression statements containing a single string literal. (e.g. a JS directive like '
+	 *         "use strict"' )
+	 */
+	public static boolean isStringLiteralExpression(ScriptElement element) {
+		if (element instanceof ExpressionStatement) {
+			Expression expression = ((ExpressionStatement) element).getExpression();
+			if (expression instanceof StringLiteral) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

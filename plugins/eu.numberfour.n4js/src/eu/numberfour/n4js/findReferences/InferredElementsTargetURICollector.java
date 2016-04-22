@@ -23,7 +23,6 @@ import eu.numberfour.n4js.resource.InferredElements;
  * Collector of target URIs when find referencs is triggered. Collects the URI of the given object and of all objects
  * that have been inferred from that.
  */
-@SuppressWarnings("restriction")
 public class InferredElementsTargetURICollector extends TargetURICollector {
 
 	@Inject

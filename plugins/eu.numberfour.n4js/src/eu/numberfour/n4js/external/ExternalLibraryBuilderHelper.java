@@ -11,13 +11,19 @@
 package eu.numberfour.n4js.external;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static eu.numberfour.n4js.utils.Arrays2.transform;
+import static eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider.getBuildOrder;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_BEGINTASK;
 import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_NONE;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.internal.events.BuildManager;
@@ -52,7 +58,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
-import eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider;
 
 /**
  * Helper class for building projects outside from the {@link IWorkspace Eclipse workspace} directly with the
@@ -117,9 +122,7 @@ public class ExternalLibraryBuilderHelper {
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
 	public void build(final IProgressMonitor monitor) {
-		final Iterable<ExternalProject> projects = collector.collectExternalProjects();
-		final IBuildConfiguration[] buildOrder = ExternalProjectBuildOrderProvider.getBuildOrder(projects);
-		build(buildOrder, monitor);
+		build(collector.collectExternalProjects(), monitor);
 	}
 
 	/**
@@ -153,30 +156,20 @@ public class ExternalLibraryBuilderHelper {
 	 * @param monitor
 	 *            monitor for the build process.
 	 */
-	public void build(final Iterable<IProject> projects, final IProgressMonitor monitor) {
+	public void build(final Iterable<? extends IProject> projects, final IProgressMonitor monitor) {
 		build(TO_CONFIGS_FUNC.apply(projects), monitor);
-	}
-
-	/**
-	 * Sugar for performing a full build on multiple {@link IProject project} instances.
-	 *
-	 * @param projects
-	 *            the projects that has to be build.
-	 */
-	public void builds(final Iterable<IProject> projects) {
-		build(TO_CONFIGS_FUNC.apply(projects), new NullProgressMonitor());
 	}
 
 	/**
 	 * Full builds the projects given as an array of build configuration.
 	 *
-	 * @param buildOrder
-	 *            the ordered build configuration representing the project to be built and the build order as well.
+	 * @param buildConfigs
+	 *            the build configurations representing the projects to be built.
 	 * @param monitor
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
-	public void build(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
-		doPerformOperation(buildOrder, BuildOperation.BUILD, monitor);
+	public void build(final IBuildConfiguration[] buildConfigs, final IProgressMonitor monitor) {
+		doPerformOperation(buildConfigs, BuildOperation.BUILD, monitor);
 	}
 
 	/**
@@ -195,9 +188,7 @@ public class ExternalLibraryBuilderHelper {
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
 	public void clean(final IProgressMonitor monitor) {
-		final Iterable<ExternalProject> projects = collector.collectExternalProjects();
-		final IBuildConfiguration[] buildOrder = ExternalProjectBuildOrderProvider.getBuildOrder(projects);
-		clean(buildOrder, monitor);
+		clean(collector.collectExternalProjects(), monitor);
 	}
 
 	/**
@@ -231,7 +222,7 @@ public class ExternalLibraryBuilderHelper {
 	 * @param monitor
 	 *            monitor for the clean process.
 	 */
-	public void clean(final Iterable<IProject> projects, final IProgressMonitor monitor) {
+	public void clean(final Iterable<? extends IProject> projects, final IProgressMonitor monitor) {
 		clean(TO_CONFIGS_FUNC.apply(projects), monitor);
 	}
 
@@ -239,24 +230,36 @@ public class ExternalLibraryBuilderHelper {
 	 * Performs a clean (without rebuild) on the projects given as an array of build configuration. The clean order is
 	 * identical with the order of the elements in the {@code buildOrder} argument.
 	 *
-	 * @param buildOrder
-	 *            the ordered build configuration representing the order and the project to be cleaned.
+	 * @param buildConfigs
+	 *            the build configurations representing the the projects to be cleaned.
 	 * @param monitor
 	 *            the monitor for the progress. Must not be {@code null}.
 	 */
-	public void clean(final IBuildConfiguration[] buildOrder, final IProgressMonitor monitor) {
-		doPerformOperation(buildOrder, BuildOperation.CLEAN, monitor);
+	public void clean(final IBuildConfiguration[] buildConfigs, final IProgressMonitor monitor) {
+		doPerformOperation(buildConfigs, BuildOperation.CLEAN, monitor);
 	}
 
-	private void doPerformOperation(final IBuildConfiguration[] buildOrder, final BuildOperation operation,
+	private void doPerformOperation(final IBuildConfiguration[] configs, final BuildOperation operation,
 			final IProgressMonitor monitor) {
 
-		if (!Arrays2.isEmpty(buildOrder)) {
+		if (!Arrays2.isEmpty(configs)) {
+
+			final List<ExternalProject> projects = transform(configs, config -> (ExternalProject) config.getProject());
+			final List<IBuildConfiguration> buildOrder = newArrayList(getBuildOrder(projects));
+			if (BuildOperation.CLEAN.equals(operation)) {
+				Collections.reverse(buildOrder);
+			}
+
+			checkState(buildOrder.size() == configs.length,
+					"Inconsistency between build configuration and the ordered projects:" +
+							"\n\tInput was: " + getProjectNames(configs) +
+							"\n\tOrdered was: " + getProjectNames(buildOrder));
+
 			ensureDynamicDependenciesSetForWorkspaceProjects();
 			final String prefix = Strings.toFirstUpper(operation.toString().toLowerCase());
-			final String projectNames = Iterables.toString(transform(buildOrder, c -> c.getProject().getName()));
+			final String projectNames = getProjectNames(buildOrder);
 			LOGGER.info(prefix + "ing external libraries: " + projectNames);
-			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.length);
+			final SubMonitor subMonitor = SubMonitor.convert(monitor, buildOrder.size());
 			for (final IBuildConfiguration configuration : buildOrder) {
 				final IProject project = configuration.getProject();
 				LOGGER.info(prefix + "ing external library: " + project.getName());
@@ -264,6 +267,14 @@ public class ExternalLibraryBuilderHelper {
 			}
 		}
 
+	}
+
+	private String getProjectNames(final Iterable<IBuildConfiguration> buildOrder) {
+		return Iterables.toString(from(buildOrder).transform(c -> c.getProject().getName()));
+	}
+
+	private String getProjectNames(final IBuildConfiguration[] buildOrder) {
+		return Iterables.toString(transform(buildOrder, c -> c.getProject().getName()));
 	}
 
 	private IBuildConfiguration getBuildConfiguration(final IProject project) {
@@ -345,7 +356,7 @@ public class ExternalLibraryBuilderHelper {
 		 * @param monitor
 		 *            monitor for the operation.
 		 */
-		void run(final ExternalLibraryBuilderHelper helper, IProject project, IProgressMonitor monitor) {
+		private void run(final ExternalLibraryBuilderHelper helper, IProject project, IProgressMonitor monitor) {
 
 			checkArgument(project instanceof ExternalProject, "Expected external project: " + project);
 

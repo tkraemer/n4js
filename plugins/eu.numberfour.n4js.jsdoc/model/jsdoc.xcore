@@ -162,8 +162,8 @@ class FullTypeReference extends SimpleTypeReference {
 		if (moduleNameSet()) {
 			strb.append(moduleName);
 		}
-		strb.append(".");
 		if (typeNameSet()) {
+			strb.append(".");
 			strb.append(typeName);
 		}
 		return strb.toString();

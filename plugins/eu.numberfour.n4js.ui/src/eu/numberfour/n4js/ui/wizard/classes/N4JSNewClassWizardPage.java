@@ -10,18 +10,20 @@
  */
 package eu.numberfour.n4js.ui.wizard.classes;
 
+import org.eclipse.swt.widgets.Display;
+
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardPage;
 import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
-import eu.numberfour.n4js.ui.wizard.components.DefinitionFileComponent;
 import eu.numberfour.n4js.ui.wizard.components.EmptyComponent;
+import eu.numberfour.n4js.ui.wizard.components.FileTypeComponent;
 import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
-import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
+import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock;
 import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
@@ -57,15 +59,12 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	}
 
 	@Override
-	protected boolean isInternalAccessModifierEnabled(AccessModifier modifier) {
-		return super.isInternalAccessModifierEnabled(modifier) || modifier == AccessModifier.PROJECT;
-	}
-
-	@Override
 	protected void updateContentPreview(WizardPreview contentPreview) {
-		String code = generator.generateContent(getModel());
-		contentPreview.setContent(code);
-		contentPreview.setInfo(getModel().computeFileLocation().toString());
+		Display.getCurrent().asyncExec(() -> {
+			ContentBlock[] code = generator.generateContentPreview(getModel());
+			contentPreview.setContent(code);
+			contentPreview.setInfo(getModel().computeFileLocation().toString());
+		});
 	}
 
 	@SuppressWarnings("unused")
@@ -75,7 +74,7 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 
 		new EmptyComponent(container);
 
-		new DefinitionFileComponent(getModel(), container);
+		new FileTypeComponent(getModel(), container);
 
 		accessModifierComponent = new AccessModifierComponent(getModel(), container);
 		otherClassifierModifiersComponent = new OtherClassifierModifiersComponent(getModel(), container, true);

@@ -14,20 +14,13 @@ import org.eclipse.ui.IStartup;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
-import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 
 /**
- * N4JS IDE startup hook to populate the state of the N4JS external library workspace based on the
- * {@link ExternalLibraryPreferenceStore external library preference store}. Also makes sure that the local Git
- * repository exists for the type definition files.
+ * N4JS IDE startup hook to makes sure that the local Git repository exists for the type definition files.
  */
 public class N4JSExternalLibraryStartup implements IStartup {
-
-	@Inject
-	private ExternalLibraryWorkspace externalLibraryWorkspace;
 
 	@Inject
 	private GitCloneSupplier gitCloneSupplier;
@@ -40,7 +33,6 @@ public class N4JSExternalLibraryStartup implements IStartup {
 				gitCloneSupplier.get();
 			}).start();
 		}
-		externalLibraryWorkspace.updateState();
 	}
 
 }

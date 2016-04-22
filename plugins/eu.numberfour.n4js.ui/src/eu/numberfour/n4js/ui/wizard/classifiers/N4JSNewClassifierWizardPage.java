@@ -72,8 +72,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 				dialog.setDefaultFileExtension(fileExtension);
 			}
 
-			Object initialSelection = dialog.computeInitialSelection(initialSelectionSpecifier);
-			dialog.setInitialSelection(initialSelection);
+			dialog.setInitialSelection(initialSelectionSpecifier);
 		}
 
 		dialog.open();

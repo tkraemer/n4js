@@ -34,6 +34,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.utils.ResourceType
 
@@ -191,7 +192,7 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 		var boolean stillInHeader = true
 		for (se : script.scriptElements) {
 			if (stillInHeader) {
-				if (! ( se instanceof ImportDeclaration || se instanceof EmptyStatement )) stillInHeader = false;
+				if (! ( se instanceof ImportDeclaration || se instanceof EmptyStatement || se.isStringLiteralExpression )) stillInHeader = false;
 			} else {
 				if (se instanceof ImportDeclaration) handleScatteredImport(se)
 			}
