@@ -87,7 +87,7 @@ public enum ImageDescriptorCache {
 		NEW_ENUM_WIZBAN("newenum_wiz.png"),
 
 		/** Smart light bulb icon */
-		SMART_LIGHTBULB("smartmode_co.png"),
+		SMART_LIGHTBULB("smartmode_co.png");
 
 		private final String fileName;
 
