@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest   
+
+ 	ResourceSet {
+		ThisFile {}
+		File "Exporter.n4js" {}
+	}
+
+END_SETUP */
+
+// XPECT warnings --> "The import of f1 is unused." at "f1"
+import { f1 } from "Ch09_02_04__ImportStatements/Exporter";
+
+// redefintion
+// XPECT errors --> "Function f1 duplicates named import f1 (line 11)." at "f1"
+function f1():string { return null; }
+
+
+
+
