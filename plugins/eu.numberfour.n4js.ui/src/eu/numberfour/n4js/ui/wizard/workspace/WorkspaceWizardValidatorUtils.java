@@ -12,13 +12,16 @@ package eu.numberfour.n4js.ui.wizard.workspace;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IPath;
+
 /**
  *
  */
 public class WorkspaceWizardValidatorUtils {
 
 	private static final Pattern VALID_FOLDER_NAME_PATTERN = Pattern
-			.compile("[a-zA-z_](([\\.][a-zA-z_0-9\\-])|[a-zA-z_0-9\\-])*");
+			.compile("[a-zA-z_](([\\.][a-zA-z_0-9-])|[a-zA-z_0-9-])*");
+	private static final Pattern NO_BACKSLASH_PATTERN = Pattern.compile("[^\\\\]+");
 
 	/**
 	 * Check whether name is a valid folder name.
@@ -28,24 +31,22 @@ public class WorkspaceWizardValidatorUtils {
 	 * @return valid state
 	 */
 	public static boolean isValidFolderName(String name) {
-		return VALID_FOLDER_NAME_PATTERN.matcher(name).matches();
+		// Explicitly check for no backslashes
+		return VALID_FOLDER_NAME_PATTERN.matcher(name).matches() &&
+				NO_BACKSLASH_PATTERN.matcher(name).matches();
 	}
 
 	/**
-	 * Check whether all segments in a proposed path are valid folder names. Calls segments are separated by {@code '/'}
-	 * slashes, calls {@link #isValidFolderName(String)}.
+	 * Returns {@code true} if path is a valid folder path.
 	 *
-	 * @param pathName
-	 *            folder to check
-	 * @return true if pathName passes the check.
+	 * That means that every segment needs to be a valid folder name.
+	 *
 	 */
-	public static boolean isValidSubFolderStructure(String pathName) {
-
-		// TODO revise for Windows-systems, c.f. Path.isValidPath() and the Separator handling there.
-		String[] split = pathName.split("/");
-		for (String path : split) {
-			if (!isValidFolderName(path))
+	public static boolean isValidFolderPath(IPath path) {
+		for (String segment : path.segments()) {
+			if (!isValidFolderName(segment)) {
 				return false;
+			}
 		}
 		return true;
 	}

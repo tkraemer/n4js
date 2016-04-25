@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Charsets;
@@ -50,7 +51,7 @@ import eu.numberfour.n4js.utils.EcoreUtilN4;
  * The {@link UserdataMapper} provides this serialized representation and the logic to recreate the {@link EObject
  * types} from that.
  */
-public class UserdataMapper {
+public final class UserdataMapper {
 	/**
 	 * Logger for this class
 	 */
@@ -74,7 +75,7 @@ public class UserdataMapper {
 	/**
 	 * Flag indicating whether the string representation contains binary or human readable data.
 	 */
-	private final static Boolean BINARY = Boolean.FALSE;
+	private final static Boolean BINARY = Boolean.TRUE;
 
 	private final static String TRANSFORMATION_CHARSET_NAME = Charsets.UTF_8.name();
 
@@ -107,7 +108,7 @@ public class UserdataMapper {
 	 * Serializes an exported script (or other {@link EObject}) stored in given resource content at index 1, and stores
 	 * that in a map under key {@link #USERDATA_KEY_SERIALIZED_SCRIPT}.
 	 */
-	public Map<String, String> createUserData(final TModule exportedModule) throws IOException,
+	public static Map<String, String> createUserData(final TModule exportedModule) throws IOException,
 			UnsupportedEncodingException {
 		if (exportedModule.isPreLinkingPhase()) {
 			throw new AssertionError("Module may not be from the preLinkingPhase");
@@ -135,9 +136,10 @@ public class UserdataMapper {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		resourceForUserData.save(baos, getOptions(resourceURI));
+		resourceForUserData.save(baos, getOptions(resourceURI, BINARY));
 
-		String serializedScript = baos.toString(TRANSFORMATION_CHARSET_NAME);
+		String serializedScript = BINARY ? XMLTypeFactory.eINSTANCE.convertBase64Binary(baos.toByteArray())
+				: baos.toString(TRANSFORMATION_CHARSET_NAME);
 
 		final HashMap<String, String> ret = new HashMap<>();
 		ret.put(USERDATA_KEY_SERIALIZED_SCRIPT, serializedScript);
@@ -160,7 +162,7 @@ public class UserdataMapper {
 	 * models that are otherwise broken, e.g no module will be written to the index. We still want to have change
 	 * affection, though.
 	 */
-	public Map<String, String> createTimestampUserData(TModule module) {
+	public static Map<String, String> createTimestampUserData(TModule module) {
 		Resource resource = module.eResource();
 		long timestamp = 0L;
 		if (resource instanceof N4JSResource) {
@@ -171,8 +173,8 @@ public class UserdataMapper {
 		return Collections.singletonMap("timestamp", String.valueOf(timestamp));
 	}
 
-	private Map<Object, Object> getOptions(URI resourceURI) {
-		return ImmutableMap.<Object, Object> of(XMLResource.OPTION_BINARY, BINARY, XMLResource.OPTION_URI_HANDLER,
+	private static Map<Object, Object> getOptions(URI resourceURI, Boolean binary) {
+		return ImmutableMap.<Object, Object> of(XMLResource.OPTION_BINARY, binary, XMLResource.OPTION_URI_HANDLER,
 				new LocalResourceAwareURIHandler(resourceURI));
 	}
 
@@ -182,15 +184,19 @@ public class UserdataMapper {
 	 *
 	 * @return deserialized types as EObject
 	 */
-	public List<EObject> getDeserializedModulesFromDescription(IEObjectDescription eObjectDescription, URI uri) {
+	public static List<EObject> getDeserializedModulesFromDescription(IEObjectDescription eObjectDescription, URI uri) {
 		String serializedData = eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT);
 		if (Strings.isNullOrEmpty(serializedData)) {
 			return new ArrayList<>();
 		}
 		XMIResource xres = new XMIResourceImpl(uri);
 		try {
-			ByteArrayInputStream bais = new ByteArrayInputStream(serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
-			xres.load(bais, getOptions(uri));
+			boolean binary = !serializedData.startsWith("<");
+			ByteArrayInputStream bais = new ByteArrayInputStream(
+					binary ? XMLTypeFactory.eINSTANCE.createBase64Binary(serializedData)
+							: serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
+			Map<Object, Object> options = getOptions(uri, binary);
+			xres.load(bais, options);
 		} catch (Exception e) {
 			LOGGER.error("Error deserializing type", e); //$NON-NLS-1$
 			throw new WrappedException(e); // TODO reconsider this

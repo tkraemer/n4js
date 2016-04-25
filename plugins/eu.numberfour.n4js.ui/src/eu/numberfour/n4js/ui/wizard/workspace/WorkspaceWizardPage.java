@@ -14,8 +14,8 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -31,9 +31,7 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
-import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialogProvider;
-import eu.numberfour.n4js.ui.dialog.WorkspaceElementSelectionDialog;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
+import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialog;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
@@ -59,7 +57,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	@Inject
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
-	private SourceFolderSelectionDialogProvider sourceFolderSelectionDialogProvider;
+	private Provider<SourceFolderSelectionDialog> sourceFolderSelectionDialogProvider;
 
 	/**
 	 * Sole constructor.
@@ -98,8 +96,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		if (!model.getModuleSpecifier().isEmpty()) {
 			String initialSelectionSpecifier = model.getModuleSpecifier();
 
-			Object initialSelection = dialog.computeInitialSelection(initialSelectionSpecifier);
-			dialog.setInitialSelection(initialSelection);
+			dialog.setInitialSelection(initialSelectionSpecifier);
 		}
 
 		dialog.open();
@@ -136,18 +133,20 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	 *            The Shell to open the dialog in
 	 */
 	public void openSourceFolderBrowseDialog(Shell shell) {
-		WorkspaceElementSelectionDialog dialog = sourceFolderSelectionDialogProvider.createDialog(
-				shell,
-				model.getProject().toString(),
-				model.getSourceFolder());
+		SourceFolderSelectionDialog dialog = sourceFolderSelectionDialogProvider.get();
+
+		// Get the IProject from the workspace. This is save as the validator ensures the project exists at this point
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(model.getProject().segment(0));
+
+		dialog.setInput(project);
+		dialog.setInitialSelections(new Object[] { model.getSourceFolder().removeTrailingSeparator().toString() });
+
 		dialog.open();
 
 		Object firstResult = dialog.getFirstResult();
 
-		if (firstResult instanceof IContainer) {
-			model.setSourceFolder(((IContainer) firstResult).getProjectRelativePath().append("/"));
-		} else if (firstResult instanceof VirtualResource) {
-			model.setSourceFolder(new Path(((VirtualResource) firstResult).getName()).append("/"));
+		if (firstResult instanceof String) {
+			model.setSourceFolder(new Path((String) firstResult));
 		}
 	}
 
