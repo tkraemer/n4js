@@ -48,7 +48,7 @@ import eu.numberfour.n4js.utils.process.ProcessResult;
  */
 public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTest {
 
-	private static final String NL = System.lineSeparator();
+	private static final String NL = "\n"; // node is not using system line separator
 
 	private static final String PROBANDS = "probands";
 
