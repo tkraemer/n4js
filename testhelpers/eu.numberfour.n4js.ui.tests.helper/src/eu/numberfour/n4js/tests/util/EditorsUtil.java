@@ -127,7 +127,7 @@ public class EditorsUtil {
 		long end = start;
 		do {
 			end = System.currentTimeMillis();
-		} while (page.getActiveEditor() != internalFileEditor || (end - start) < 5000);
+		} while (page.getActiveEditor() != internalFileEditor && (end - start) < 5000);
 
 		if (page.getActiveEditor() != internalFileEditor)
 			logger.warn("selected editor was not activated within timout");

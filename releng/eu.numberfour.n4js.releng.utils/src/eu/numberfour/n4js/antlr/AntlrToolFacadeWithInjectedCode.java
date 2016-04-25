@@ -54,7 +54,8 @@ public class AntlrToolFacadeWithInjectedCode extends AntlrToolFacade {
 			} else {
 				throw new IllegalArgumentException(grammarFullPath);
 			}
-			Files.write(grammarContent, new File(grammarFullPath), Charsets.UTF_8);
+			File fileToWrite = new File(grammarFullPath);
+			Files.write(grammarContent, fileToWrite, Charsets.UTF_8);
 		} catch (IOException e) {
 			throw new RuntimeException();
 		}

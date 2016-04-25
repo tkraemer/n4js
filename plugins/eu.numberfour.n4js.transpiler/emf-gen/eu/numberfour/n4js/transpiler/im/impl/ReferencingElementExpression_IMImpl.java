@@ -12,6 +12,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 
 import eu.numberfour.n4js.transpiler.im.ImPackage;
 import eu.numberfour.n4js.transpiler.im.ReferencingElementExpression_IM;
+
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 import java.lang.reflect.InvocationTargetException;

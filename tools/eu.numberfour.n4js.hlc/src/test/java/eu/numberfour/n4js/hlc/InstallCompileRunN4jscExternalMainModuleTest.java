@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
@@ -53,7 +52,6 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 	 * Test for checking the npm support in the headless case by downloading third party package, importing it and
 	 * running it with Common JS.
 	 */
-	@Ignore("Disabled test due to insufficient jenkins user privileges to checkout n4jsd-sandbox repository for N4JS definitions files.")
 	@Test
 	public void testCompileAndRunWithExternalDependencies() throws IOException, ExitCodeException {
 		System.out.println(name.getMethodName());
@@ -75,12 +73,14 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 		final String out = runCaptureOut(args);
 		StringBuilder message = new StringBuilder();
 		message
+				.append("(node) sys is deprecated. Use util instead.") // one of the libraries being tested seems to be
+																		// using a deprecated package
 				.append("express imported").append("\n")
 				.append("jade imported").append("\n")
 				.append("lodash imported").append("\n")
 				.append("karma imported").append("\n")
 				.append("bar imported").append("\n")
-				.append("body-parser imported").append("\n");
+				.append("body-parser imported");
 
 		N4CliHelper.assertExpectedOutput(
 				message.toString(), out);

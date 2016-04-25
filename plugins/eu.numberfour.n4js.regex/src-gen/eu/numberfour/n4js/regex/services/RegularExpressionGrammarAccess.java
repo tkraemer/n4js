@@ -1111,7 +1111,7 @@ public class RegularExpressionGrammarAccess extends AbstractGrammarElementFinder
 		//	UNICODE_DIGIT+
 		@Override public ParserRule getRule() { return rule; }
 
-		//// TODO validate only valid ints 
+		//// TODO validate only valid ints
 		//UNICODE_DIGIT+
 		public RuleCall getUNICODE_DIGITTerminalRuleCall() { return cUNICODE_DIGITTerminalRuleCall; }
 	}

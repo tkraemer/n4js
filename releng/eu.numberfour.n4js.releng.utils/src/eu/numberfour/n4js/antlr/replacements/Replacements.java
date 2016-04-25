@@ -93,9 +93,13 @@ public class Replacements {
 	 */
 	public static String applyReplacement(String in, String replacementName) {
 		try {
-			URL url = ClassLoader.getSystemResource(
-					Replacements.class.getPackage().getName().replace(".", "/")
-							+ "/" + replacementName);
+			String replacementBase = Replacements.class.getPackage().getName().replace(".", "/");
+			String replacementResourceName = replacementBase + "/" + replacementName;
+			URL url = Replacements.class.getClassLoader().getResource(replacementResourceName);
+			if (url == null) {
+				throw new NullPointerException(
+						"cannot replacement :: " + replacementResourceName);
+			}
 			// normalize string to run on Windows and Mac/Unix
 			String replacement = Resources.toString(url, Charsets.UTF_8).replace("\r\n", "\n");
 

@@ -29,7 +29,15 @@ class ES_07_04_CommentParserEsprimaTest extends AbstractParserTest {
 		val statement = script.scriptElements.head as ExpressionStatement
 		val i = statement.expression as IntLiteral
 		assertEquals(42, i.toInt)
-		assertEquals("block comment", i.documentation)
+		assertNull("No jsdoc-style comment here.", i.documentation)
+	}
+	@Test
+	def void testBlockComment_01_b() {
+		val script = '/** jsdoc block comment */ 42'.parseSuccessfully
+		val statement = script.scriptElements.head as ExpressionStatement
+		val i = statement.expression as IntLiteral
+		assertEquals(42, i.toInt)
+		assertEquals("jsdoc block comment", i.documentation)
 	}
 
 	@Test
@@ -54,7 +62,15 @@ class ES_07_04_CommentParserEsprimaTest extends AbstractParserTest {
 		val statement = script.scriptElements.head as ExpressionStatement
 		val i = statement.expression as IntLiteral
 		assertEquals(42, i.toInt)
-		assertEquals("multiline\ncomment\nshould\nbe\nignored", i.documentation)
+		assertNull("simple multiline comment should be ignored", i.documentation)
+	}
+	@Test
+	def void testBlockComment_04_b() {
+		val script = '/** jsdoc multiline\ncomment\nshould\nbe\nignored */ 42'.parseSuccessfully
+		val statement = script.scriptElements.head as ExpressionStatement
+		val i = statement.expression as IntLiteral
+		assertEquals(42, i.toInt)
+		assertEquals("jsdoc multiline\ncomment\nshould\nbe\nignored", i.documentation)
 	}
 
 	@Test

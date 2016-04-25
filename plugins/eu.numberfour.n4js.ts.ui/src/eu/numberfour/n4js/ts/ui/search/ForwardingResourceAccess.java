@@ -20,10 +20,10 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 
 /**
- * A specialized {@link IReferenceFinder.IResourceAccess} that handles resources with the {@link N4Scheme#SCHEME n4js}
- * scheme. It has to provide a resource set even though no directly associated project is found.
+ * A specialized {@link org.eclipse.xtext.findReferences.IReferenceFinder.IResourceAccess } that handles resources with
+ * the {@link N4Scheme#SCHEME n4js} scheme. It has to provide a resource set even though no directly associated project
+ * is found.
  */
-@SuppressWarnings("restriction")
 public class ForwardingResourceAccess implements IReferenceFinder.IResourceAccess, N4Scheme {
 
 	private final IResourceSetProvider resourceSetProvider;

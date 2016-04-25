@@ -15,6 +15,7 @@ import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.conversion.impl.STRINGValueConverter;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProviderExtension;
+import org.eclipse.xtext.documentation.impl.AbstractMultiLineCommentProvider;
 import org.eclipse.xtext.findReferences.IReferenceFinder;
 import org.eclipse.xtext.findReferences.TargetURICollector;
 import org.eclipse.xtext.linking.ILinker;
@@ -104,7 +105,6 @@ import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-@SuppressWarnings("restriction")
 public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeModule {
 
 	/**
@@ -290,6 +290,11 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 		final ScopeManager scopeManager = new ScopeManager();
 		binder.bind(ScopeManager.class).toInstance(scopeManager);
 		binder.bindScope(TransformationScoped.class, scopeManager);
+
+		// setup documentation provider to match jsdoc-style exactly two stars only:
+		binder.bind(String.class)
+				.annotatedWith(Names.named(AbstractMultiLineCommentProvider.START_TAG))
+				.toInstance("/\\*\\*[^*]");
 	}
 
 	/**

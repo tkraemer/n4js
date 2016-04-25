@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.jsdoc;
 
-import eu.numberfour.n4js.jsdoc.DocletParser;
-import eu.numberfour.n4js.jsdoc.TagDictionary;
 import eu.numberfour.n4js.jsdoc.tags.AbstractInlineTagDefinition;
 import eu.numberfour.n4js.jsdoc.tags.AbstractLineTagDefinition;
 import eu.numberfour.n4js.jsdoc.tags.DefaultInlineTagDefinition;
@@ -33,6 +31,11 @@ public class N4JSDocletParser extends DocletParser {
 	 * Link inside a description.
 	 */
 	public final static DefaultInlineTagDefinition TAG_LINK = new DefaultInlineTagDefinition("link");
+
+	/**
+	 * Todo marker (cf. IDE-2163)
+	 */
+	public final static LineTagWithSimpleTextDefinition TAG_TODO = new LineTagWithSimpleTextDefinition("todo");
 
 	/**
 	 * Standard inline tags.
@@ -123,7 +126,7 @@ public class N4JSDocletParser extends DocletParser {
 	 * All N4JS tag comments.
 	 */
 	final static AbstractLineTagDefinition[] N4JS_LINE_TAGS = {
-			TAG_SPEC, TAG_AUTHOR, TAG_PARAM, TAG_RETURN, TAG_SPECFROMDESCR, TAG_TASK, TAG_REQID,
+			TAG_SPEC, TAG_AUTHOR, TAG_TODO, TAG_PARAM, TAG_RETURN, TAG_SPECFROMDESCR, TAG_TASK, TAG_REQID,
 			TAG_API_NOTE,
 			TAG_API_STATE,
 			TAG_TESTEE, TAG_TESTEEFROMTYPE, TAG_TESTEETYPE, TAG_TESTEEMEMBER

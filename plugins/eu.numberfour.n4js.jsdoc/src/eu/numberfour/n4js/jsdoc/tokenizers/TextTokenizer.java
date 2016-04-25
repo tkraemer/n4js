@@ -46,7 +46,7 @@ public class TextTokenizer extends AbstractJSDocTokenizer {
 				break;
 			}
 			scanner.next(); // consume c
-			if (c == '\n') {
+			if (JSDocCharScanner.isNL(c)) {
 				if (scanner.hasNext() && !nextIsTagTitle(scanner)) {
 					strb.append(c);
 					end = scanner.offset();
