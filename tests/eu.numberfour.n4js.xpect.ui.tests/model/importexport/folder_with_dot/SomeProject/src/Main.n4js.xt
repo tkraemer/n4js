@@ -7,6 +7,7 @@
 					Folder "folder.with.dots" {
 						Folder "m" {
 							File "C.n4js" { from="some/folder.with.dots/m/C.n4js" }
+							File "I.n4js" { from="some/folder.with.dots/m/I.n4js" }
 						}
 					}
 					Folder "folder" {
@@ -14,6 +15,7 @@
 							Folder "dots" {
 								Folder "m" {
 									File "C.n4js" { from="some/folder/with/dots/m/C.n4js" }
+									File "I.n4js" { from="some/folder/with/dots/m/I.n4js" }
 								}
 							}
 						}
@@ -32,10 +34,18 @@
 // XPECT noerrors -->
 import { C as C_withDots    } from "some/folder.with.dots/m/C"
 import { C as C_withoutDots } from "some/folder/with/dots/m/C"
+import { I as I_withDots    } from "some/folder.with.dots/m/I"
+import { I as I_withoutDots } from "some/folder/with/dots/m/I"
 
+// XPECT noerrors --> "Cannot consume some.folder.with.dots.m.I.I multiple times." at "I_withDots"
+class CI implements I_withDots, I_withoutDots {}
 
 new C_withDots().m();
 new C_withoutDots().m();
+
+const ci = new CI();
+ci.mi_withDots();
+ci.mi_withoutDots();
 
 
 /* XPECT output --- 
@@ -43,6 +53,8 @@ new C_withoutDots().m();
 stdout:
 message from C located in folder WITH dots
 message from C located in folder WITHOUT dots
+message from I located in folder WITH dots
+message from I located in folder WITHOUT dots
 stderr:
 ==>
 --- */
