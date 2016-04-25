@@ -16,10 +16,14 @@ import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
+import eu.numberfour.n4js.n4JS.N4FieldDeclaration
+import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
+import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NumericLiteral
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
@@ -28,13 +32,15 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
+import eu.numberfour.n4js.ts.types.MemberAccessModifier
+import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
@@ -44,7 +50,10 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
@@ -214,6 +223,66 @@ class N4JSLanguageUtils {
 		} else {
 			return N4JSLanguageUtils.isAsync(tfunction, tscope)
 		}
+	}
+
+
+	/**
+	 * Either returns the variance of the position where <code>typeRef</code> is located in a classifier declaration or
+	 * <code>null</code> if it is located at a position where type variables of all variances may be located, i.e.
+	 * a position that need not be checked (e.g. type of local variable, type of a private field).
+	 */
+	def public static Variance getVarianceOfPosition(ParameterizedTypeRef typeRef) {
+		
+		// FIXME only partial implementation for testing, not all cases supported (esp. nesting in wildcards, etc.)
+		
+		val tv = typeRef.declaredType as TypeVariable;
+		val tClassifier = tv.eContainer as TClassifier; // safety of this cast not checked above, but should be safe bet
+		val parent = typeRef.eContainer;
+		val grandParent = parent?.eContainer;
+		return switch(parent) {
+			FormalParameter case parent.declaredTypeRef===typeRef && grandParent.isNonPrivateMemberOf(tClassifier):
+				Variance.CONTRA
+			N4MethodDeclaration case parent.returnTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier):
+				Variance.CO
+			N4GetterDeclaration case parent.declaredTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier):
+				Variance.CO
+			N4FieldDeclaration case parent.declaredTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier): {
+				val tField = parent.definedField;
+				if(tField.final) {
+					Variance.CO // final field is like a getter
+				} else {
+					Variance.INV
+				}
+			}
+			ParameterizedTypeRef case
+				parent.declaredType instanceof ContainerType<?>
+				&& parent.typeArgs.contains(typeRef)
+				&& grandParent instanceof N4ClassifierDeclaration
+				&& (grandParent as N4ClassifierDeclaration).superClassifierRefs.exists[it===parent]: {
+				
+				// typeRef is used in the "extends" or "implements" clause of the declaration of tClassifier
+				
+				// class C<T> extends G<T> {}
+				val parentDeclType = parent.declaredType as ContainerType<?>;
+				val idx = parent.typeArgs.indexOf(typeRef);
+				val matchingTypeVar = if(idx>=0 && idx<parentDeclType.typeVars.size) parentDeclType.typeVars.get(idx) else null;
+				if(matchingTypeVar===null) {
+					null // error that will be covered by another validation
+				} else {
+					matchingTypeVar.variance
+				}
+			}
+			default:
+				null
+		}
+	}
+
+	def private static boolean isNonPrivateMemberOf(EObject member, TClassifier tClassifier) {
+		if(member instanceof N4MemberDeclaration)
+			member?.definedTypeElement?.memberAccessModifier!==MemberAccessModifier.PRIVATE
+			&& member.definedTypeElement.containingType === tClassifier
+		else
+			false
 	}
 
 

@@ -14,9 +14,7 @@ import com.google.common.collect.Multimaps
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
@@ -24,6 +22,12 @@ import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import java.util.Collection
 import java.util.HashMap
 import java.util.List
@@ -196,6 +200,27 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 						firstDup.descriptionWithLine());
 					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
 						CLF_DUP_MEMBER)
+				}
+			}
+		}
+	}
+
+	/**
+	 * Ensures that type variables declared as covariant only appear in covariant positions and type variables declared
+	 * as contravariant only appear in contravariant positions. Type variables declared to be invariant do not require
+	 * such a check.
+	 */
+	@Check
+	def void checkTypeVariableVariance(ParameterizedTypeRef typeRefInAST) {
+		val tv = typeRefInAST.declaredType;
+		if(tv instanceof TypeVariable) {
+			val variance = tv.variance;
+			if(variance!==Variance.INV) {
+				val varianceOfPos = N4JSLanguageUtils.getVarianceOfPosition(typeRefInAST);
+				if(varianceOfPos!==null && variance!==varianceOfPos) {
+					val msg = getMessageForCLF_TYPE_VARIABLE_AT_INVALID_POSITION(variance.descriptiveString,
+						varianceOfPos.descriptiveString);
+					addIssue(msg, typeRefInAST, CLF_TYPE_VARIABLE_AT_INVALID_POSITION);
 				}
 			}
 		}

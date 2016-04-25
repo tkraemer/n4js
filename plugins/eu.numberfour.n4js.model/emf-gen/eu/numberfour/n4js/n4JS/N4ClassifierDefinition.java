@@ -150,7 +150,20 @@ public interface N4ClassifierDefinition extends N4TypeDefinition {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Derived, returns implemented or extended interface.
+	 * Derived, returns extended class (if any) and implemented or extended interfaces.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%java.util.Collections%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>emptyList();'"
+	 * @generated
+	 */
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * Derived, returns implemented or extended interfaces.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%java.util.Collections%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>emptyList();'"

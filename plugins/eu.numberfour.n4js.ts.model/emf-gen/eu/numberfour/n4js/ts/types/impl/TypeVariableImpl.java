@@ -14,6 +14,8 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.lang.Iterable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -183,6 +185,39 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Variance getVariance() {
+		final boolean co = this.isDeclaredCovariant();
+		final boolean contra = this.isDeclaredContravariant();
+		boolean _and = false;
+		if (!co) {
+			_and = false;
+		} else {
+			_and = (!contra);
+		}
+		if (_and) {
+			return Variance.CO;
+		}
+		else {
+			boolean _and_1 = false;
+			if (!contra) {
+				_and_1 = false;
+			} else {
+				_and_1 = (!co);
+			}
+			if (_and_1) {
+				return Variance.CONTRA;
+			}
+			else {
+				return Variance.INV;
+			}
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<TypeVariable> getTypeVars() {
 		return XcoreCollectionLiterals.<TypeVariable>emptyEList();
 	}
@@ -343,6 +378,8 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.TYPE_VARIABLE___GET_VARIANCE:
+				return getVariance();
 			case TypesPackage.TYPE_VARIABLE___GET_TYPE_VARS:
 				return getTypeVars();
 			case TypesPackage.TYPE_VARIABLE___GET_TYPE_AS_STRING:

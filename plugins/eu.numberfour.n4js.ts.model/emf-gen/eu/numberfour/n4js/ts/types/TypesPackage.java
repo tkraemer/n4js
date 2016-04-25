@@ -1043,13 +1043,22 @@ public interface TypesPackage extends EPackage {
 	int TYPE_VARIABLE___GET_RAW_TYPE_AS_STRING = TYPE___GET_RAW_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Variance</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_VARIABLE___GET_VARIANCE = TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE___GET_TYPE_VARS = TYPE_OPERATION_COUNT + 0;
+	int TYPE_VARIABLE___GET_TYPE_VARS = TYPE_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Type As String</em>' operation.
@@ -1058,7 +1067,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE___GET_TYPE_AS_STRING = TYPE_OPERATION_COUNT + 1;
+	int TYPE_VARIABLE___GET_TYPE_AS_STRING = TYPE_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Type Variable As String</em>' operation.
@@ -1067,7 +1076,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = TYPE_OPERATION_COUNT + 2;
+	int TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Type Variable</em>' class.
@@ -1076,7 +1085,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 3;
+	int TYPE_VARIABLE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.DeclaredTypeWithAccessModifierImpl <em>Declared Type With Access Modifier</em>}' class.
@@ -10005,6 +10014,16 @@ public interface TypesPackage extends EPackage {
 	int COLLECTION_OF_TYPE_REF = 55;
 
 	/**
+	 * The meta object id for the '<em>Variance</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.types.util.Variance
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
+	 * @generated
+	 */
+	int VARIANCE = 56;
+
+	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10012,7 +10031,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 56;
+	int NAME_AND_ACCESS = 57;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -10022,7 +10041,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 57;
+	int MEMBER_LIST = 58;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -10032,7 +10051,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 58;
+	int TCLASSIFIER_ITERABLE = 59;
 
 
 	/**
@@ -10478,6 +10497,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTypeVariable_DeclaredUpperBounds();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getVariance() <em>Get Variance</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Variance</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TypeVariable#getVariance()
+	 * @generated
+	 */
+	EOperation getTypeVariable__GetVariance();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getTypeVars() <em>Get Type Vars</em>}' operation.
@@ -12488,6 +12517,17 @@ public interface TypesPackage extends EPackage {
 	EDataType getCollectionOfTypeRef();
 
 	/**
+	 * Returns the meta object for data type '{@link eu.numberfour.n4js.ts.types.util.Variance <em>Variance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Variance</em>'.
+	 * @see eu.numberfour.n4js.ts.types.util.Variance
+	 * @model instanceClass="eu.numberfour.n4js.ts.types.util.Variance"
+	 * @generated
+	 */
+	EDataType getVariance();
+
+	/**
 	 * Returns the meta object for data type '{@link eu.numberfour.n4js.ts.types.NameAndAccess <em>Name And Access</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12900,6 +12940,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TYPE_VARIABLE__DECLARED_UPPER_BOUNDS = eINSTANCE.getTypeVariable_DeclaredUpperBounds();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Variance</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE_VARIABLE___GET_VARIANCE = eINSTANCE.getTypeVariable__GetVariance();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type Vars</b></em>' operation.
@@ -14550,6 +14598,16 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType COLLECTION_OF_TYPE_REF = eINSTANCE.getCollectionOfTypeRef();
+
+		/**
+		 * The meta object literal for the '<em>Variance</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.types.util.Variance
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
+		 * @generated
+		 */
+		EDataType VARIANCE = eINSTANCE.getVariance();
 
 		/**
 		 * The meta object literal for the '<em>Name And Access</em>' data type.

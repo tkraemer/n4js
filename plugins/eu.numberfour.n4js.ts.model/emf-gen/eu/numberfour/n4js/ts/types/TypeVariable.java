@@ -10,6 +10,8 @@ package eu.numberfour.n4js.ts.types;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
@@ -100,6 +102,15 @@ public interface TypeVariable extends Type {
 	 * @generated
 	 */
 	EList<ParameterizedTypeRef> getDeclaredUpperBounds();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.types.Variance" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final boolean co = this.isDeclaredCovariant();\nfinal boolean contra = this.isDeclaredContravariant();\nboolean _and = false;\nif (!co)\n{\n\t_and = false;\n} else\n{\n\t_and = (!contra);\n}\nif (_and)\n{\n\treturn <%eu.numberfour.n4js.ts.types.util.Variance%>.CO;\n}\nelse\n{\n\tboolean _and_1 = false;\n\tif (!contra)\n\t{\n\t\t_and_1 = false;\n\t} else\n\t{\n\t\t_and_1 = (!co);\n\t}\n\tif (_and_1)\n\t{\n\t\treturn <%eu.numberfour.n4js.ts.types.util.Variance%>.CONTRA;\n\t}\n\telse\n\t{\n\t\treturn <%eu.numberfour.n4js.ts.types.util.Variance%>.INV;\n\t}\n}'"
+	 * @generated
+	 */
+	Variance getVariance();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -292,6 +292,15 @@ public abstract class N4ClassifierDeclarationImpl extends N4TypeDeclarationImpl 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
+		return Collections.<ParameterizedTypeRef>emptyList();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs() {
 		return Collections.<ParameterizedTypeRef>emptyList();
 	}
@@ -478,6 +487,7 @@ public abstract class N4ClassifierDeclarationImpl extends N4TypeDeclarationImpl 
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_OWNED_FIELDS: return N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_OWNED_FIELDS;
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_OWNED_GETTERS: return N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_OWNED_GETTERS;
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS: return N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_OWNED_SETTERS;
+				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS: return N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_SUPER_CLASSIFIER_REFS;
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				default: return -1;
 			}
@@ -517,6 +527,8 @@ public abstract class N4ClassifierDeclarationImpl extends N4TypeDeclarationImpl 
 				return getOwnedGetters();
 			case N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_OWNED_SETTERS:
 				return getOwnedSetters();
+			case N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 		}

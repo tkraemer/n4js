@@ -1,0 +1,131 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+// ------------------------------------------------
+// base cases
+
+class C01<T> {
+	// XPECT noerrors -->
+	field: T;
+	// XPECT noerrors -->
+	@Final fieldFinal: T = null;
+	// XPECT noerrors -->
+	get g(): T {return null;}
+	// XPECT noerrors -->
+	set s(p: T) {}
+	// XPECT noerrors -->
+	m1(): T {return null;}
+	// XPECT noerrors -->
+	m2(p: T) {}
+}
+class C02<+T> {
+	// XPECT errors --> "Cannot use covariant type variable at invariant position." at "T"
+	field: T;
+	// XPECT noerrors -->
+	@Final fieldFinal: T = null;
+	// XPECT noerrors -->
+	get g(): T {return null;}
+	// XPECT errors --> "Cannot use covariant type variable at contravariant position." at "T"
+	set s(p: T) {}
+	// XPECT noerrors -->
+	m1(): T {return null;}
+	// XPECT errors --> "Cannot use covariant type variable at contravariant position." at "T"
+	m2(p: T) {}
+}
+class C03<-T> {
+	// XPECT errors --> "Cannot use contravariant type variable at invariant position." at "T"
+	field: T;
+	// XPECT errors --> "Cannot use contravariant type variable at covariant position." at "T"
+	@Final fieldFinal: T = null;
+	// XPECT errors --> "Cannot use contravariant type variable at covariant position." at "T"
+	get g(): T {return null;}
+	// XPECT noerrors -->
+	set s(p: T) {}
+	// XPECT errors --> "Cannot use contravariant type variable at covariant position." at "T"
+	m1(): T {return null;}
+	// XPECT noerrors -->
+	m2(p: T) {}
+}
+
+
+// ------------------------------------------------
+// private visibility
+
+class C11<T> {
+	// XPECT noerrors -->
+	private field: T;
+	// XPECT noerrors -->
+	@Final private fieldFinal: T = null;
+	// XPECT noerrors -->
+	private get g(): T {return null;}
+	// XPECT noerrors -->
+	private set s(p: T) {}
+	// XPECT noerrors -->
+	private m1(): T {return null;}
+	// XPECT noerrors -->
+	private m2(p: T) {}
+}
+class C12<+T> {
+	// XPECT noerrors -->
+	private field: T;
+	// XPECT noerrors -->
+	@Final private fieldFinal: T = null;
+	// XPECT noerrors -->
+	private get g(): T {return null;}
+	// XPECT noerrors -->
+	private set s(p: T) {}
+	// XPECT noerrors -->
+	private m1(): T {return null;}
+	// XPECT noerrors -->
+	private m2(p: T) {}
+}
+class C13<-T> {
+	// XPECT noerrors -->
+	private field: T;
+	// XPECT noerrors -->
+	@Final private fieldFinal: T = null;
+	// XPECT noerrors -->
+	private get g(): T {return null;}
+	// XPECT noerrors -->
+	private set s(p: T) {}
+	// XPECT noerrors -->
+	private m1(): T {return null;}
+	// XPECT noerrors -->
+	private m2(p: T) {}
+}
+
+
+// ------------------------------------------------
+// passing on a type variable as a type argument
+
+class G2a<S1, S2,S3> {}
+class G2b<S1,+S2,S3> {}
+class G2c<S1,-S2,S3> {}
+
+// XPECT noerrors -->
+class C21a<T> extends G2a<string,T,number> {}
+// XPECT noerrors -->
+class C21b<T> extends G2b<string,T,number> {}
+// XPECT noerrors -->
+class C21c<T> extends G2c<string,T,number> {}
+
+class C22a<+T>
+	// XPECT errors --> "Cannot use covariant type variable at invariant position." at "T"
+	extends G2a<string,T,number> {}
+class C22b<+T>
+	// XPECT noerrors -->
+	extends G2b<string,T,number> {}
+class C22c<+T>
+	// XPECT errors --> "Cannot use covariant type variable at contravariant position." at "T"
+	extends G2c<string,T,number> {}
+
+class C23a<-T>
+	// XPECT errors --> "Cannot use contravariant type variable at invariant position." at "T"
+	extends G2a<string,T,number> {}
+class C23b<-T>
+	// XPECT errors --> "Cannot use contravariant type variable at covariant position." at "T"
+	extends G2b<string,T,number> {}
+class C23c<-T>
+	// XPECT noerrors -->
+	extends G2c<string,T,number> {}
+

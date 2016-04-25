@@ -53,6 +53,22 @@ public enum Variance {
 	}
 
 	/**
+	 * Return human-readable string representation for this variance.
+	 */
+	public String getDescriptiveString() {
+		switch (this) {
+		case CO:
+			return "covariant";
+		case CONTRA:
+			return "contravariant";
+		case INV:
+			return "invariant";
+		default:
+			throw new UnsupportedOperationException("unsupported literal: " + this);
+		}
+	}
+
+	/**
 	 * Returns an operator-like representation of this literal.
 	 */
 	public String getRelationString() {
