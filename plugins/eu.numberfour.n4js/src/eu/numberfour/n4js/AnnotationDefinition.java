@@ -117,7 +117,7 @@ public final class AnnotationDefinition {
 	/**
 	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
 	 */
-	public final static AnnotationDefinition WRITEABLE = define("Writable")
+	public final static AnnotationDefinition WRITABLE = define("Writable")
 			.args(BOOLEAN_LITERAL)
 			.targets(N4_FIELD_DECLARATION)
 			.retention(RetentionPolicy.TYPE).end();
