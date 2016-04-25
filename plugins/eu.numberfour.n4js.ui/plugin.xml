@@ -976,15 +976,14 @@ Contributors:
 		
 		      <triggerPoints>
 				<or>
-					<instanceof
-						value="java.lang.Object">
-						value="org.eclipse.core.resources.IResource">
- 	              	</instanceof>
-					<instanceof
-						value="eu.numberfour.n4js.ui.navigator.internal.Node">
-					</instanceof>
+					<instanceof value="org.eclipse.core.resources.IResource"/>
+					<instanceof value="eu.numberfour.n4js.ui.navigator.internal.Node"/>
+					<instanceof value="org.eclipse.ui.IWorkingSet"/>
 				</or>
 		      </triggerPoints>
+              <possibleChildren>
+                  <instanceof value="java.lang.Object"/>
+              </possibleChildren>
 		      
 			<commonSorter
 	              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.navigator.internal.N4JSResourceExtensionSorter"
@@ -999,7 +998,7 @@ Contributors:
 
 			<override
 					policy="InvokeAlwaysRegardlessOfSuppressedExt"
-					suppressedExtensionId="org.eclipse.ui.navigator.resourceContent"/>
+					suppressedExtensionId="org.eclipse.ui.navigator.resources.workingSets"/>
 
 		   </navigatorContent>
 		   

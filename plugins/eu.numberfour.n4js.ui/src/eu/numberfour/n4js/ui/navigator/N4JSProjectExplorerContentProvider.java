@@ -62,8 +62,6 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 
 	private static final Logger LOGGER = Logger.getLogger(N4JSProjectExplorerContentProvider.class);
 
-	private static final Object[] EMPTY_ARRAY = new Object[0];
-
 	@Inject
 	private N4JSProjectExplorerHelper helper;
 
@@ -139,7 +137,6 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 						return getWorkingSetElements(workingSet);
 					}
 				}
-				return EMPTY_ARRAY;
 			}
 		}
 
