@@ -21,7 +21,7 @@ import eu.numberfour.n4js.utils.Log
 import eu.numberfour.n4js.utils.ResourceType
 import java.nio.file.Path
 import java.nio.file.Paths
-import org.eclipse.core.runtime.Platform
+import org.eclipse.emf.common.EMFPlugin
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.generator.AbstractFileSystemAccess
@@ -116,7 +116,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 			&& (projectUtils.isNoValidate(input.URI) 
 				|| projectUtils.isExternal(input.URI) 
 				// if platform is running the generator is called from the builder, hence cannot have any validation errors
-				|| (Platform.running || hasNoErrors(input, monitor)) 
+				|| (EMFPlugin.IS_ECLIPSE_RUNNING || hasNoErrors(input, monitor)) 
 			))
 			&& (!input.isStaticPolyfillingModule) // compile driven by filled type
 			&& hasNoPolyfillErrors(input,monitor)

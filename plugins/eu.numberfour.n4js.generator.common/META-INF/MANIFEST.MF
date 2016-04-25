@@ -11,6 +11,5 @@ Require-Bundle: org.eclipse.emf.ecore,
  eu.numberfour.n4js,
  eu.numberfour.n4js.utils,
  eu.numberfour.n4js.n4mf.model,
- eu.numberfour.n4js.ts.model,
- org.eclipse.core.runtime
+ eu.numberfour.n4js.ts.model
 Export-Package: eu.numberfour.n4js.generator.common

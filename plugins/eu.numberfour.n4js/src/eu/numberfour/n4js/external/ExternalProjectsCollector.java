@@ -17,7 +17,6 @@ import static java.util.Collections.emptyList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.core.internal.resources.BuildConfiguration;
@@ -28,6 +27,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -69,7 +71,7 @@ public class ExternalProjectsCollector {
 	/**
 	 * Hooks up the {@link IProjectDescription#getDynamicReferences() dynamic project references} among the given subset
 	 * of external projects. If the dynamic projects are already set, then this method has no side effect.
-	 * 
+	 *
 	 * @param externalProjects
 	 *            an iterable of external projects to update with respect to their dynamic project references.
 	 * @return an iterable of external projects with the updated/configured dynamic project references.
@@ -87,7 +89,6 @@ public class ExternalProjectsCollector {
 		hookUpReferencedBuildConfigs(visitedProjects);
 
 		return from(visitedProjects.values()).filter(ExternalProject.class);
-
 	}
 
 	/**
@@ -129,16 +130,17 @@ public class ExternalProjectsCollector {
 		}
 
 		final Collection<String> externalIds = from(externalProjects).transform(p -> p.getName()).toSet();
+		final Predicate<String> externalIdsFilter = Predicates.in(externalIds);
 
 		return from(asList(getWorkspace().getRoot().getProjects()))
-				.filter(p -> Collections.disjoint(getDirectExternalDependencyIds(p), externalIds));
+				.filter(p -> Iterables.any(getDirectExternalDependencyIds(p), externalIdsFilter));
 
 	}
 
 	/**
 	 * Returns with all external project dependency artifact ID for a particular non-external, accessible project.
 	 */
-	private Collection<String> getDirectExternalDependencyIds(final IProject project) {
+	private Iterable<String> getDirectExternalDependencyIds(final IProject project) {
 
 		if (null == project || !project.isAccessible()) {
 			return emptyList();
@@ -152,8 +154,7 @@ public class ExternalProjectsCollector {
 		return from(n4Project.getAllDirectDependencies())
 				.filter(IN4JSProject.class)
 				.filter(p -> p.exists() && p.isExternal())
-				.transform(p -> p.getArtifactId())
-				.toSet();
+				.transform(p -> p.getArtifactId());
 
 	}
 

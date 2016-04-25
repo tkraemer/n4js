@@ -93,7 +93,7 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 			this.rootFolder = rootFolder;
 		}
 
-				/* default */ void importProjects() throws Exception {
+		void importProjects() throws Exception {
 			for (final File file : rootFolder.listFiles()) {
 				if (file.exists() && file.isDirectory() && null != file.listFiles() && 0 < file.listFiles().length) {
 

@@ -41,6 +41,8 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
@@ -72,7 +74,7 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 	@Inject
 	private ContributingResourceDescriptionPersister descriptionPersister;
 
-	private final IN4JSEclipseCore core = getN4jsEclipseCore();
+	private final Supplier<IN4JSEclipseCore> core = Suppliers.memoize(() -> getN4jsEclipseCore());
 
 	private IN4JSEclipseCore getN4jsEclipseCore() {
 		return N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS).getInstance(IN4JSEclipseCore.class);
@@ -221,16 +223,20 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			BuildData buildData,
 			final IProgressMonitor monitor) {
 
-		// If all deltas is empty, we will not hit the resource description manager anyway.
+		// If 'all deltas' is empty and no remaining URIs are available we will not hit the resource description manager
+		// anyway.
 		if (!allDeltas.isEmpty() && !allRemainingURIs.isEmpty()) {
 			final Collection<URI> copyAllRemainingURIs = newLinkedHashSet(allRemainingURIs);
-			Multimap<IN4JSProject, URI> projectMapping = Multimaps.index(copyAllRemainingURIs,
-					uri -> core.findProject(uri).orNull());
+			final IN4JSEclipseCore eclipseCore = core.get();
+			final Multimap<IN4JSProject, URI> projectMapping = Multimaps.index(copyAllRemainingURIs,
+					uri -> {
+						return eclipseCore.findProject(uri).orNull();
+					});
 			allRemainingURIs.clear();
-			IN4JSProject[] sortedProjects = core.getAllAccessibleProjectsSorted();
+			final IN4JSProject[] sortedProjects = eclipseCore.getAllAccessibleProjectsSorted();
 			ArrayUtils.reverse(sortedProjects);
-			for (IN4JSProject p : sortedProjects) {
-				Collection<URI> collection = projectMapping.get(p);
+			for (final IN4JSProject p : sortedProjects) {
+				final Collection<URI> collection = projectMapping.get(p);
 				if (null != collection) {
 					allRemainingURIs.addAll(collection);
 					copyAllRemainingURIs.removeAll(collection);

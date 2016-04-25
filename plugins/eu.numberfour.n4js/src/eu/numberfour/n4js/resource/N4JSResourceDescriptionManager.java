@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.resource;
 
+import static java.util.Collections.emptyList;
+
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -105,6 +107,13 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
 		Collection<QualifiedName> importedNames = null;
+		final Iterable<URI> queuedURIs;
+		if (context instanceof CurrentDescriptions) {
+			queuedURIs = ((CurrentDescriptions) context).getBuildData().getAllRemainingURIs();
+		} else {
+			queuedURIs = emptyList();
+		}
+
 		for (IResourceDescription.Delta delta : deltas) {
 			if (delta.haveEObjectDescriptionsChanged() &&
 					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
@@ -117,12 +126,13 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 					if (hasDependencyTo(candidate, delta)) {
 						return true;
 					} else {
+
 						// Otherwise do nothing since we are not in the middle of an auto/incremental build.
 						if (context instanceof CurrentDescriptions) {
-							Iterable<URI> queuedURIs = ((CurrentDescriptions) context).getBuildData()
-									.getAllRemainingURIs();
 							for (URI queuedURI : queuedURIs) {
 								IResourceDescription queuedDescription = context.getResourceDescription(queuedURI);
+
+								// Considering transitive dependencies.
 								if (fileExtensionProvider.isValid(queuedDescription.getURI().fileExtension())
 										&& hasDependencyTo(queuedDescription.getURI(), delta.getUri())
 										&& hasDependencyTo(candidate.getURI(), queuedDescription.getURI())) {
@@ -146,8 +156,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	}
 
 	/**
-	 * Returns true iff project containing the 'candidate' has a direct dependency to the project containing the
-	 * 'delta'.
+	 * Returns true iff the project containing the 'fromUri' has a direct dependency to the project containing the
+	 * 'toUri'.
 	 */
 	private boolean hasDependencyTo(URI fromUri, URI toUri) {
 		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
