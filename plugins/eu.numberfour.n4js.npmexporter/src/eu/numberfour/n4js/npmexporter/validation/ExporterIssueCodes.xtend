@@ -18,6 +18,4 @@ import eu.numberfour.n4js.utils.NLS
  * insert a space and save, undo the change and save again. That way the SCM is not polluted.)
  */
 @NLS(propertyFileName="messages")
-class ExporterIssueCodes {
-	//
-}
+class ExporterIssueCodes {}
