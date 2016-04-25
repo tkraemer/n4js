@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -52,6 +53,8 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 	@Inject
 	private IN4JSCore n4jsCore;
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	private IResourceDescriptions descriptions;
 
@@ -223,8 +226,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 			this.descriptions = n4jsCore.getXtextIndex(set);
 		}
 
-		String[] segments = absoluteSpecifier.split("\\.");
-		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
+		QualifiedName name = qualifiedNameConverter.toQualifiedName(absoluteSpecifier);
 		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(type, name, false);
 		return foundObjects.iterator().hasNext();
 	}
