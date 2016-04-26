@@ -148,6 +148,7 @@ import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.NullType
+import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
@@ -165,6 +166,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
 import eu.numberfour.n4js.ts.types.VoidType
+import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
@@ -1215,6 +1217,8 @@ rule subtypeParameterizedTypeRef
 from {
 	val left = G.getReplacement(leftOriginal)
 	val right = G.getReplacement(rightOriginal)
+	val leftDeclType = left.declaredType;
+	val rightDeclType = right.declaredType;
 	if (right.declaredType == null || left.declaredType == null) {
 		true;
 	} else	if (right.declaredType.eIsProxy || left.declaredType.eIsProxy) {
@@ -1232,10 +1236,16 @@ from {
 	} else if ((left.declaredType === G.intType && right.declaredType === G.numberType)
 				|| (left.declaredType === G.numberType && right.declaredType === G.intType)) {
 		true // int <: number AND number <: int (for now, int and number are synonymous)
-	} else if (right.declaredType===G.n4EnumType && left.declaredType instanceof TEnum ) { // @see [N4JS] 4.13. Enums
+	} else if (left.declaredType instanceof TEnum && right.declaredType===G.n4EnumType) { // @see [N4JS] 4.13. Enums
 		 !AnnotationDefinition.STRING_BASED.hasAnnotation( left.declaredType )
-	} else if (right.declaredType===G.n4StringBasedEnumType && left.declaredType instanceof TEnum ) { // @see [N4JS] 4.15.2 String based Enums, IDEBUG-294
+	} else if (left.declaredType instanceof TEnum && (right.declaredType===G.n4StringBasedEnumType || right.declaredType===G.stringType || right.declaredType===G.stringObjectType)) { // @see [N4JS] 4.15.2 String based Enums, IDEBUG-294
 		 AnnotationDefinition.STRING_BASED.hasAnnotation( left.declaredType )
+	} else if (left.declaredType===G.n4StringBasedEnumType && (right.declaredType===G.stringType || right.declaredType===G.stringObjectType)) {
+		true
+	} else if (leftDeclType instanceof PrimitiveType && (leftDeclType as PrimitiveType).assignmentCompatible===rightDeclType) {
+		true
+	} else if (rightDeclType instanceof PrimitiveType && leftDeclType===(rightDeclType as PrimitiveType).assignmentCompatible) {
+		true
 	} else {
 		var structuralTyping = false;
 		if (right.isUseSiteStructuralTyping()) { // e.g. foo(~A right){..} foo(left) --> left ~<: right
@@ -1335,45 +1345,67 @@ from {
 					}
 				}
 			} else {
-				val localG = G.wrap
-				val localG_left = localG.wrap; // don't confuse type variable bindings for lhs and rhs
-				val localG_right = localG.wrap;
-				typeSystemHelper.addSubstitutions(localG_left,left)
-				typeSystemHelper.addSubstitutions(localG_right,right)
+//				val localG = G.wrap
+//				val localG_left = localG.wrap; // don't confuse type variable bindings for lhs and rhs
+//				val localG_right = localG.wrap;
+//				typeSystemHelper.addSubstitutions(localG_left,left)
+//				typeSystemHelper.addSubstitutions(localG_right,right)
 				// note: it's fine to use declared types (instead of TypeRefs) in next recursion guard,
 				// because we are only interested in loops in the inheritance hierarchy of left.declaredType
-				localG.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->left.declaredType,Boolean.TRUE);
-				val declSuperTypesSanitized = TypeUtils.declaredSuperTypes(left.declaredType)
-						.filter[localG.get(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->it.declaredType)!==Boolean.TRUE];
-				val superTypes = (declSuperTypesSanitized+
-					localG.collectAllImplicitSuperTypes(left)+
-					localG.assignmentCompatibleTypes(left)).toSet;
-				superTypes.exists[
-					// try/catch only required to avoid Java compile error (XBase bug?)
-					// Xsemantics seems to generate black box Java code but does not announce the
-					// exceptions to Xbase thus no try catch is generated
-					// but still you did not want a propagated exception from #exists but false
-					// as the return type
-					try {
-						localG_left |- it ~> var TypeRef bound	// substitute type variables
-						localG |- bound <: right
-					} catch(Exception e) {
-						false
-					}
-				] || {
-					val rightAssignmentCompatibles = localG.assignmentCompatibleTypes(right);
-					!rightAssignmentCompatibles.isEmpty && rightAssignmentCompatibles.exists [ rightCompatibible |
-						left.declaredType == rightCompatibible.declaredType
-						|| superTypes.exists [ superType |
-							try {
-								localG_right |- superType ~> var TypeRef bound	// substitute type variables
-								localG |- bound <: rightCompatibible
-							} catch(Exception e) {
-								false
-							}
-						]
-					]
-				}
+
+val allSuperTypeRefs = if(leftDeclType instanceof ContainerType<?>) AllSuperTypeRefsCollector.collect(leftDeclType) else newArrayList;
+val superTypes = allSuperTypeRefs
+	+G.collectAllImplicitSuperTypes(left);
+val matchingSuperTypeRef = superTypes.findFirst[it.declaredType===rightDeclType];
+if(matchingSuperTypeRef!==null) {
+	val localG = G.wrap
+	val localG_left = localG.wrap; // don't confuse type variable bindings for lhs and rhs
+	//val localG_right = localG.wrap;
+	typeSystemHelper.addSubstitutions(localG_left,left)
+	//typeSystemHelper.addSubstitutions(localG_right,right)
+	try {
+		localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst // substitute type variables
+		localG |- matchingSuperTypeRefSubst <: right
+	} catch(Exception e) {
+		false
+	}
+} else {
+	false
+}
+
+
+//				localG.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->left.declaredType,Boolean.TRUE);
+//				val declSuperTypesSanitized = TypeUtils.declaredSuperTypes(left.declaredType)
+//						.filter[localG.get(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->it.declaredType)!==Boolean.TRUE];
+//				val superTypes = (declSuperTypesSanitized+
+//					localG.collectAllImplicitSuperTypes(left)+
+//					localG.assignmentCompatibleTypes(left)).toSet;
+//				superTypes.exists[
+//					// try/catch only required to avoid Java compile error (XBase bug?)
+//					// Xsemantics seems to generate black box Java code but does not announce the
+//					// exceptions to Xbase thus no try catch is generated
+//					// but still you did not want a propagated exception from #exists but false
+//					// as the return type
+//					try {
+//						localG_left |- it ~> var TypeRef bound	// substitute type variables
+//						localG |- bound <: right
+//					} catch(Exception e) {
+//						false
+//					}
+//				] || {
+//					val rightAssignmentCompatibles = localG.assignmentCompatibleTypes(right);
+//					!rightAssignmentCompatibles.isEmpty && rightAssignmentCompatibles.exists [ rightCompatibible |
+//						left.declaredType == rightCompatibible.declaredType
+//						|| superTypes.exists [ superType |
+//							try {
+//								localG_right |- superType ~> var TypeRef bound	// substitute type variables
+//								localG |- bound <: rightCompatibible
+//							} catch(Exception e) {
+//								false
+//							}
+//						]
+//					]
+//				}
 			}
 		} // end nominal
 	}
