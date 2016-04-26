@@ -120,7 +120,9 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		}
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
 		assertTrue("Error while saving external library preference changes.", result.isOK());
-		waitForAutoBuild();
+		// This is expected since we are in the middle of tear down phase and the 'Assert' module is missing anyway.
+		// Externals are not available any more and workspace project rebuild has been triggered due to unload.
+		waitForAutoBuild(false);
 	}
 
 	@Override
