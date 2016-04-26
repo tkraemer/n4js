@@ -7,3 +7,5 @@ export public class A {
 		
 	}
 }
+
+export public class B {}
