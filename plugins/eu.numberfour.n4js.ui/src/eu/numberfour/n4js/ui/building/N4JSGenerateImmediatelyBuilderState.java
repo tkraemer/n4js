@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -321,8 +320,8 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 					});
 			allRemainingURIs.clear();
 			final IN4JSProject[] sortedProjects = eclipseCore.getAllAccessibleProjectsSorted();
-			ArrayUtils.reverse(sortedProjects);
-			for (final IN4JSProject p : sortedProjects) {
+			for (int i = sortedProjects.length - 1; i >= 0; i--) {
+				final IN4JSProject p = sortedProjects[i];
 				final Collection<URI> collection = projectMapping.get(p);
 				if (null != collection) {
 					allRemainingURIs.addAll(collection);

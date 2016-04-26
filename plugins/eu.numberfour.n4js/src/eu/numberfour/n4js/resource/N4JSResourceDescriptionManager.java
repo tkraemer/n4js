@@ -102,11 +102,15 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return result;
 	}
 
-	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate,
+	/**
+	 * Computes if a candidate is affected by any change, aka delta. It is affected, if
+	 */
+	private boolean basicIsAffected(Collection<Delta> deltas, final IResourceDescription candidate,
 			IResourceDescriptions context) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
-		Collection<QualifiedName> importedNames = null;
+		Collection<QualifiedName> namesImportedByCandidate = null; // computed the first time we need it, do not compute
+																	// upfront
 		final Iterable<URI> queuedURIs;
 		if (context instanceof CurrentDescriptions) {
 			queuedURIs = ((CurrentDescriptions) context).getBuildData().getAllRemainingURIs();
@@ -118,32 +122,21 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 			if (delta.haveEObjectDescriptionsChanged() &&
 					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
 
-				if (null == importedNames) {
-					importedNames = getImportedNames(candidate);
+				if (null == namesImportedByCandidate) {
+					// note: this does not only contain the explicitly imported names, but indirectly
+					// imported names as well!
+					namesImportedByCandidate = getImportedNames(candidate);
 				}
 
-				if (isAffected(importedNames, delta.getNew()) || isAffected(importedNames, delta.getOld())) {
-					if (hasDependencyTo(candidate, delta)) {
+				if (isAffected(namesImportedByCandidate, delta.getNew()) // we may added a new exported name!
+						|| isAffected(namesImportedByCandidate, delta.getOld())) { // we may removed an exported name
+					if (hasTranstiveDependencyTo(candidate, delta)) { // isAffected does not compare project names
 						return true;
-					} else {
-
-						// Otherwise do nothing since we are not in the middle of an auto/incremental build.
-						if (context instanceof CurrentDescriptions) {
-							for (URI queuedURI : queuedURIs) {
-								IResourceDescription queuedDescription = context.getResourceDescription(queuedURI);
-
-								// Considering transitive dependencies by checking direct dependencies from the build
-								// queue.
-								if (fileExtensionProvider.isValid(queuedDescription.getURI().fileExtension())
-										&& hasDependencyTo(queuedDescription.getURI(), delta.getUri())) {
-									return true;
-								}
-							}
-						}
 					}
 				}
 			}
 		}
+
 		return false;
 	}
 
@@ -196,12 +189,17 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	/**
 	 * Overrides super implementation to replace case insensitive comparison logic by case sensitive comparison of
 	 * names.
+	 * <p>
+	 * It returns true, if there is a dependency (i.e. name imported by a candidate) to any name exported by the
+	 * description from a delta. That is, it computes if a candidate (with given importedNames) is affected by a change
+	 * represented by the description from the delta.
 	 */
 	@Override
-	protected boolean isAffected(Collection<QualifiedName> importedNames, IResourceDescription description) {
-		if (description != null) {
-			for (IEObjectDescription desc : description.getExportedObjects())
-				if (importedNames.contains(desc.getName()))
+	protected boolean isAffected(Collection<QualifiedName> namesImportedByCandidate,
+			IResourceDescription descriptionFromDelta) {
+		if (descriptionFromDelta != null) {
+			for (IEObjectDescription desc : descriptionFromDelta.getExportedObjects())
+				if (namesImportedByCandidate.contains(desc.getName()))
 					return true;
 		}
 		return false;
