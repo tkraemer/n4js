@@ -1,6 +1,6 @@
-export class B {
+export public class B {
 	
-	b() {
+	public b() {
 		console.log("b")
 	}
 }

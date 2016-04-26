@@ -24,6 +24,7 @@ import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
@@ -77,6 +78,9 @@ public class ImportRewriter {
 			return result;
 		}
 	}
+
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Inject
 	private IValueConverterService valueConverters;
@@ -179,7 +183,7 @@ public class ImportRewriter {
 			String optionalAlias,
 			int insertionOffset, MultiTextEdit result) {
 		String syntacticModuleName = valueConverters.toString(
-				moduleName.toString(),
+				qualifiedNameConverter.toString(moduleName),
 				grammarAccess.getModuleSpecifierRule().getName());
 
 		AliasLocation aliasLocation = null;

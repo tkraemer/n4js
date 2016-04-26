@@ -38,7 +38,7 @@ abstract class AbstractApiImplCompareTest extends Assert {
 
 		// checking class Clazz
 
-		comparison.assertCorrectChildEntries("x.y.M","Clazz",
+		comparison.assertCorrectChildEntries("x/y/M","Clazz",
 
 			// format:
 			// childName  ->  expected comparison status  ->  expected comparison description
@@ -64,7 +64,7 @@ abstract class AbstractApiImplCompareTest extends Assert {
 
 		// checking enum Color
 
-		comparison.assertCorrectChildEntries("x.y.M", "Color",
+		comparison.assertCorrectChildEntries("x/y/M", "Color",
 
 			// format:
 			// childName  ->  expected comparison status  ->  expected comparison description
@@ -77,23 +77,23 @@ abstract class AbstractApiImplCompareTest extends Assert {
 
 		// checking interface I
 
-		comparison.assertCorrectChildEntries("x.y.M", "I",
+		comparison.assertCorrectChildEntries("x/y/M", "I",
 			"methodOK" -> Status.EQUAL -> null,
 			"methodDefaultImpl" -> Status.EQUAL -> null,
 			"methodMissingDefaultImpl" -> Status.ERROR -> "no body in implementation but @ProvidesDefaultImplementation in API"
 		)
 
-		comparison.assertCorrectChildEntries("x.y.M", "DB",
+		comparison.assertCorrectChildEntries("x/y/M", "DB",
 			"method" -> Status.COMPLIANT -> null,
 			"mFromSuperClassInImpl" -> Status.EQUAL -> null,
 			"mFromInterfaceInImpl" -> Status.EQUAL -> null
 		)
 
-		comparison.assertCorrectChildEntries("x.y.M", "DC",
+		comparison.assertCorrectChildEntries("x/y/M", "DC",
 			"method" -> Status.COMPLIANT -> null
 		)
 
-		comparison.assertCorrectChildEntries("x.y.M", "DD",
+		comparison.assertCorrectChildEntries("x/y/M", "DD",
 			"method" -> Status.EQUAL -> null
 		)
 	}

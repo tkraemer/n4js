@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -80,6 +81,9 @@ public class OpenTypeSelectionDialog extends FilteredItemsSelectionDialog {
 
 	@Inject
 	private IURIEditorOpener uriEditorOpener;
+
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	private final Supplier<IResourceDescriptions> indexSupplier = Suppliers
 			.memoize(new Supplier<IResourceDescriptions>() {
@@ -329,7 +333,7 @@ public class OpenTypeSelectionDialog extends FilteredItemsSelectionDialog {
 		}
 
 		private String getFqn(final IEObjectDescription description) {
-			final String fqn = description.getQualifiedName().toString();
+			final String fqn = qualifiedNameConverter.toString(description.getQualifiedName());
 			final String name = nullToEmpty(description.getQualifiedName().getLastSegment());
 			final int lastIndexOf = fqn.lastIndexOf(name);
 			return 0 < lastIndexOf ? fqn.substring(0, lastIndexOf - 1) : fqn;

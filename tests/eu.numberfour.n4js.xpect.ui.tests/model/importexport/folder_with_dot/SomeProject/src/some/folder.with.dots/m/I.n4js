@@ -1,0 +1,8 @@
+
+
+export public interface I {
+	mi_withDots() {
+		console.log('message from I located in folder WITH dots');
+	}
+}
+
