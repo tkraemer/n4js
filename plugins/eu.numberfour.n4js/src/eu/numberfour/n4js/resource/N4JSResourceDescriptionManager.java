@@ -132,10 +132,10 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 							for (URI queuedURI : queuedURIs) {
 								IResourceDescription queuedDescription = context.getResourceDescription(queuedURI);
 
-								// Considering transitive dependencies.
+								// Considering transitive dependencies by checking direct dependencies from the build
+								// queue.
 								if (fileExtensionProvider.isValid(queuedDescription.getURI().fileExtension())
-										&& hasDependencyTo(queuedDescription.getURI(), delta.getUri())
-										&& hasDependencyTo(candidate.getURI(), queuedDescription.getURI())) {
+										&& hasDependencyTo(queuedDescription.getURI(), delta.getUri())) {
 									return true;
 								}
 							}

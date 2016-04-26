@@ -24,9 +24,11 @@ import org.junit.Test
  */
 class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 
+	IProject dProjectUnderTest
 	IProject cProjectUnderTest
 	IProject bProjectUnderTest
 	IProject aProjectUnderTest
+	IFolder srcD
 	IFolder srcC
 	IFolder srcB
 	IFolder srcA
@@ -34,9 +36,11 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 	@Before
 	override void setUp() {
 		super.setUp
+		dProjectUnderTest = createJSProject("multiProjectTest.d")
 		cProjectUnderTest = createJSProject("multiProjectTest.c")
 		bProjectUnderTest = createJSProject("multiProjectTest.b")
 		aProjectUnderTest = createJSProject("multiProjectTest.a")
+		srcD = configureProjectWithXtext(dProjectUnderTest)
 		srcC = configureProjectWithXtext(cProjectUnderTest)
 		srcB = configureProjectWithXtext(bProjectUnderTest)
 		srcA = configureProjectWithXtext(aProjectUnderTest)
@@ -281,5 +285,50 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		a.setContents(new StringInputStream("export public class A {}", a.charset), false, true, null)
 		waitForAutoBuild
 		assertMarkers("file should have an error", c, 1);
+	}
+	
+	@Test
+	def void testModifyTransitiveDependency3() throws Exception {
+		val d = createTestFile(srcD, "D",
+			'''
+				import { C } from "C"
+				export @Internal public class D extends C {
+					public k() : void {
+						this.m()
+					}
+				}
+			'''
+		);
+		val c = createTestFile(srcC, "C",
+			'''
+				import { B } from "B"
+				export @Internal public class C extends B {}
+			'''
+		);
+		val b = createTestFile(srcB, "B",
+			'''
+				import { A } from "A"
+				export public class B extends A {}
+			'''
+		);
+		val a = createTestFile(srcA, "A",
+			'''
+				export public class A {
+					public m() : void {}
+				}
+			'''
+		);
+		bProjectUnderTest.dependsOn = aProjectUnderTest
+		cProjectUnderTest.dependsOn = bProjectUnderTest
+		dProjectUnderTest.dependsOn = cProjectUnderTest
+
+		assertMarkers("file should have no errors", a, 0);
+		assertMarkers("file should have no errors", b, 0);
+		assertMarkers("file should have no errors", c, 0);
+		assertMarkers("file should have no errors", d, 0);
+
+		a.setContents(new StringInputStream("export public class A {}", a.charset), false, true, null)
+		waitForAutoBuild
+		assertMarkers("file should have an error", d, 1);
 	}
 }
