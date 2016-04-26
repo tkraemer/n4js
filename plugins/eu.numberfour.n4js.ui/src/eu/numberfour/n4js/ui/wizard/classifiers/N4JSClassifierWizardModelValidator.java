@@ -17,7 +17,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -71,8 +74,11 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		private static final String THE_INTERFACE_CANNOT_BE_FOUND = "The interface %s cannot be found.";
 
 		// Definition file collision errors
-		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file.";
-		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file.";
+		private static final String THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE = "The new source module collides with the definition file: %s";
+		private static final String THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE = "The new definition module collides with the source file: %s";
+
+		// File location errors
+		private static final String FILE_LOCATION_OVERLAPS = "The specified file location overlaps with the file %s";
 	}
 
 	/**
@@ -128,11 +134,13 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 					.append(effectiveModulePath.addFileExtension(N4JSGlobals.N4JS_FILE_EXTENSION));
 
 			if (getModel().isDefinitionFile() && moduleProject.exists(n4jsPath)) {
-				throw new ValidationException(ErrorMessages.THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE
-						+ n4jsPath);
+				throw new ValidationException(
+						String.format(ErrorMessages.THE_NEW_DEFINITION_MODULE_COLLIDES_WITH_THE_SOURCE_FILE,
+								moduleProject.getFullPath().append(n4jsPath)));
 			} else if (!getModel().isDefinitionFile() && moduleProject.exists(n4jsdPath)) {
-				throw new ValidationException(ErrorMessages.THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE
-						+ n4jsdPath);
+				throw new ValidationException(String
+						.format(ErrorMessages.THE_NEW_SOURCE_MODULE_COLLIDES_WITH_THE_DEFINITION_FILE,
+								moduleProject.getFullPath().append(n4jsdPath)));
 			}
 		}
 
@@ -184,8 +192,9 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		if (!getModel().isDefinitionFile() && getModel().isN4jsAnnotated()) {
 			getModel().setN4jsAnnotated(false);
 		}
-		// Auto disable the Internal annotation for the private access modifier
-		if (getModel().getAccessModifier() == AccessModifier.PRIVATE && getModel().isInternal()) {
+		// Auto disable the Internal annotation for the private and project access modifier
+		if ((getModel().getAccessModifier() == AccessModifier.PRIVATE
+				|| getModel().getAccessModifier() == AccessModifier.PROJECT) && getModel().isInternal()) {
 			getModel().setInternal(false);
 		}
 		// Auto disable the N4JS annotation for the private access modifier
@@ -217,7 +226,35 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		super.run();
 
 		validateClassifierName();
+		validateFileLocation();
 		validateInterfaces();
+	}
+
+	private void validateFileLocation() throws ValidationException {
+		IPath path = getModel().computeFileLocation();
+
+		IContainer activeContainer = ResourcesPlugin.getWorkspace().getRoot();
+
+		for (int i = 0; i < path.segmentCount(); i++) {
+			String segment = path.segment(i);
+
+			IResource member = activeContainer.findMember(segment);
+
+			// If a segment does not exist and its not the last segment (module file)
+			if (null == member && i < path.segmentCount() - 1) {
+				// Abort validation as this is fine
+				break;
+			}
+			// If a segment isn't the module file but a file exists at its path
+			if (member instanceof IFile && i < path.segmentCount() - 1) {
+				throw new ValidationException(
+						String.format(ErrorMessages.FILE_LOCATION_OVERLAPS, member.getFullPath()));
+			}
+
+			if (member instanceof IContainer) {
+				activeContainer = (IContainer) member;
+			}
+		}
 	}
 
 	private boolean isValidReferenceOfType(String absoluteSpecifier, EClass type) {
