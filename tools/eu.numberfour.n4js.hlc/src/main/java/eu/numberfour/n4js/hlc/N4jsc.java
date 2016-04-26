@@ -520,13 +520,13 @@ public class N4jsc {
 				}
 			}
 
-			if (null != targetPlatformFile) {
+			if (null != targetPlatformFile && null != targetPlatformInstallLocation) {
 
-				// convert target platform file into package JSON for now. later all internal logic should rely on the
+				// Convert target platform file into package JSON for now. Later all internal logic should rely on the
 				// target platform file.
 				TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
 				PackageJson packageJson = PackageJson.createN4DefaultWithDependencies(model);
-				File packageJsonFile = new File(targetPlatformFile.getParentFile(), PackageJson.PACKAGE_JSON);
+				File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
 				try {
 					if (!packageJsonFile.exists()) {
 						packageJsonFile.createNewFile();
