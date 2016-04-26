@@ -13,7 +13,6 @@ package eu.numberfour.n4js.ui.wizard.classifiers;
 import static java.lang.String.format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -304,8 +303,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	 * @return the index entry representing the classifier.
 	 */
 	protected IEObjectDescription getClassifierObjectDescriptionForFQN(String fqn) {
-		String[] segments = fqn.split("\\.");
-		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
+		QualifiedName name = qualifiedNameConverter.toQualifiedName(fqn);
 		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(
 				TypesPackage.eINSTANCE.getTClassifier(),
 				name, false);
