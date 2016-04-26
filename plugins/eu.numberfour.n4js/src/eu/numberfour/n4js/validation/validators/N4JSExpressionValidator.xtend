@@ -583,9 +583,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkPostfixExpression(PostfixExpression postfixExpression) {
 
 		val expression = postfixExpression.expression;
-		validateWritabelePropertyAccess(expression)
-		&& validateWritableIdentifier(expression)
-		&& internalCheckLefthandsideNotConst(expression);
+		holdsWritabelePropertyAccess(expression)
+		&& holdsWritableIdentifier(expression)
+		&& holdsLefthandsideNotConst(expression);
 	}
 
 	/** IDE-731 / IDE-768 unary expressions of type ++ or -- need both of getter/setter.
@@ -594,13 +594,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkUnaryExpressionWithWriteAccess(UnaryExpression unaryExpression) {
 		if (UnaryOperator.DEC === unaryExpression.op || UnaryOperator.INC === unaryExpression.op) {
-			validateWritabelePropertyAccess(unaryExpression.expression)
-			&& validateWritableIdentifier(unaryExpression.expression)
-			&& internalCheckLefthandsideNotConst(unaryExpression.expression);
+			holdsWritabelePropertyAccess(unaryExpression.expression)
+			&& holdsWritableIdentifier(unaryExpression.expression)
+			&& holdsLefthandsideNotConst(unaryExpression.expression);
 		}
 	}
 
-	private def boolean validateWritabelePropertyAccess(Expression expression) {
+	private def boolean holdsWritabelePropertyAccess(Expression expression) {
 		if (expression instanceof ParameterizedPropertyAccessExpression) {
 			val property = expression.property
 			if (property instanceof TGetter) {
@@ -628,17 +628,15 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * Ensures that imported elements get not reassigned any value.
 	 * @returns true if validation hold, false if some issue was generated.
 	 */
-	private def boolean validateWritableIdentifier(Expression expression) {
+	private def boolean holdsWritableIdentifier(Expression expression) {
 		if( expression instanceof IdentifierRef ) {
 			val id = expression.id;
 			switch(id) {
-				TClass,
-				TVariable,
-				TExportableElement
+				TExportableElement /* includes TClass, TVariable */
 				: {
 					val module = EcoreUtil2.getContainerOfType(expression,Script).module;
 					if( id.containingModule != module ) {
-						// imported variable
+						// imported variable, class, etc.
 						addIssue(IssueCodes.getMessageForIMP_IMPORTED_ELEMENT_READ_ONLY(expression.idAsText), expression, IssueCodes.IMP_IMPORTED_ELEMENT_READ_ONLY	);
 						return false;
 					}
@@ -646,7 +644,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			} 	
 		} else if ( expression instanceof ParenExpression ) {
 			// resolve parent-expressions wrapping simple identifiers:
-			return validateWritableIdentifier( expression.expression );
+			return holdsWritableIdentifier( expression.expression );
 		} else if ( expression instanceof ParameterizedPropertyAccessExpression ) {
 			val target = expression.target;
 			// guard against broken models:
@@ -656,9 +654,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					// handle namespace imports:
 					if( id instanceof ModuleNamespaceVirtualType) {
 						if( id.module !=  EcoreUtil2.getContainerOfType(expression,Script).module )	{
-							// naïve approch for reporting : "target.idAsText+"."+expression.property.name;" results
+							// naive approach for reporting : "target.idAsText+"."+expression.property.name;" results
 							// in revealing the name of the default-exported element, but the user can only see 'default' in the validated file
-							// so we pick the actual written excpression for the error-message generation from the AST:
+							// so we pick the actual written expression for the error-message generation from the AST:
 							val importedElmentText = NodeModelUtils.getTokenText( NodeModelUtils.findActualNodeFor(expression));
 							
 							addIssue(IssueCodes.getMessageForIMP_IMPORTED_ELEMENT_READ_ONLY( importedElmentText ), expression, IssueCodes.IMP_IMPORTED_ELEMENT_READ_ONLY	);
@@ -1286,11 +1284,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def checkAssignmentToConstVariable(AssignmentExpression assExpr) { // TODO rename
+	def checkAssignmentExpression(AssignmentExpression assExpr) { 
 		val lhs = assExpr.lhs;
 		// GH-119 imported elements
-		validateWritableIdentifier(lhs)
-		&& internalCheckLefthandsideNotConst(lhs);
+		holdsWritableIdentifier(lhs)
+		&& holdsLefthandsideNotConst(lhs);
 
 		val rhs = assExpr.rhs
 		if( rhs instanceof IdentifierRef ){
@@ -1309,18 +1307,18 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 	
 	/** @return true if nothing was issued  */
-	private def boolean internalCheckLefthandsideNotConst(Expression lhs) {
+	private def boolean holdsLefthandsideNotConst(Expression lhs) {
 		
 		if( lhs instanceof ParenExpression ) {
-			return internalCheckLefthandsideNotConst( lhs.expression );
+			return holdsLefthandsideNotConst( lhs.expression );
 		} else if ( lhs instanceof IdentifierRef) {
-			return internalCheckLefthandsideNotConst( lhs );
+			return holdsLefthandsideNotConst( lhs );
 		} 
 		return true;
 	}	
 
 	/** @return true if nothing was issued  */
-	private def boolean internalCheckLefthandsideNotConst(IdentifierRef lhs) {
+	private def boolean holdsLefthandsideNotConst(IdentifierRef lhs) {
 		val id = lhs.id;
 		switch(id) {
 			VariableDeclaration case id.const:
