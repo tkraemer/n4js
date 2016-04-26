@@ -33,6 +33,7 @@ import org.junit.Before;
 import com.google.common.base.Supplier;
 
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
+import eu.numberfour.n4js.utils.io.FileUtils;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -76,8 +77,17 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 	 */
 	protected static class ProjectImporter {
 
+		/**
+		 * The NOOP importer. Does not import anything into the workspace.
+		 */
+		public static ProjectImporter NOOP = new ProjectImporter();
+		
 		private final File rootFolder;
 
+		private ProjectImporter() {
+			this(FileUtils.createTempDirectory().toFile());
+		}
+		
 		/**
 		 * Creates a project importer with the root folder of all projects that has to be imported for the test.
 		 *
