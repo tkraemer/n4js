@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -73,14 +73,38 @@ function filterClickHandler(e: Event, showOnly: Array<TestStatus>) {
 }
 
 export public class HTMLReporter implements ITestReporter {
+    constructor() {
+        this.timers = document.createElement("div");
+        this.testsElm = document.createElement("div")
+        this.countersElm = document.createElement("div")
+        this.testsElm.classList.add("mangelhaft");
+        this.spinner = document.createElement("pre");
+        this.spinner.classList.add("mangelhaft-spinner");
+        let ii:number = 0;
+        setInterval(() => {
+           this.spinner.innerText += '░';
+       }, 500);
+       this.timers.innerHTML = `Fetching catalog: `;
+       this.timers.appendChild(this.spinner);
+       this.testsElm.appendChild(this.timers);
+       this.catalogTime = new Date().getTime();
+       document.body.appendChild(this.testsElm);
+       
+    }
     @Inject @Override protected spy: TestSpy;
     private setFavIconRed() {
         document.getElementById("page_favicon").setAttribute("href", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAH0lEQVQ4T2P8z8AAROQDxlEDGEbDgGE0DIBZaBikAwCl1B/x0/RuTAAAAABJRU5ErkJggg==")
     }
+    private timers:HTMLElement;
+    private testsElm:HTMLElement;
+    private countersElm:HTMLElement;
+    private spinner:HTMLElement;
     private reRunning = false;
-    private groupDivs: Map<IInstrumentedTest, Element> = new Map<IInstrumentedTest, Element>();
-    private testDivs: Map<string, Element> = new Map<string, Element>();
-    private statuses: Map<string, Element> = new Map<string, Element>();
+    private groupDivs = new Map<IInstrumentedTest, Element>();
+    private testDivs = new Map<TestMethodDescriptor, Element>();
+    private statuses = new Map<TestMethodDescriptor, Element>();
+    private catalogTime = 0;
+    private testingTime = 0;
     private showOnly = getParm("showOnly")
                                      .split(",")
                                      .map((showType)=>showType.trim())
@@ -138,25 +162,24 @@ export public class HTMLReporter implements ITestReporter {
     }
     @Override public async register(): any {
         let that = this
-            , testsElm: Element = document.createElement("div")
-            , header: Element = document.createElement("div")
-            , countersElm: Element = document.createElement("div")
-            , numGroupsElm: Element = document.createElement("span")
-            , numGroups: number = 0
-            , numTestsElm: Element = document.createElement("span")
-            , numTests: number = 0
-            , numTestsOkElm: Element = document.createElement("span")
-            , numTestsOk: number = 0
-            , numTestsFailElm: Element = document.createElement("span")
-            , numTestsFail: number = 0
-            , totalTestsElm: Element = document.createElement("span")
-            , numTestsRun: number = 0
-            , numTestsSkipped: number = 0
-            , numTestsSkippedElm: Element = document.createElement("span")
+          , testsElm: Element = this.testsElm
+          , header: Element = document.createElement("div")
+          , countersElm: Element = this.countersElm
+          , numGroupsElm: Element = document.createElement("span")
+          , numGroups: number = 0
+          , numTestsElm: Element = document.createElement("span")
+          , numTests: number = 0
+          , numTestsOkElm: Element = document.createElement("span")
+          , numTestsOk: number = 0
+          , numTestsFailElm: Element = document.createElement("span")
+          , numTestsFail: number = 0
+          , totalTestsElm: Element = document.createElement("span")
+          , numTestsRun: number = 0
+          , numTestsSkipped: number = 0
+          , numTestsSkippedElm: Element = document.createElement("span")
 
         ;
 
-        testsElm.classList.add("mangelhaft");
         countersElm.classList.add("mangelhaft-counters");
         header.classList.add("mangelhaft-header");
         // preserve package id that the page has been booted with:
@@ -180,7 +203,15 @@ export public class HTMLReporter implements ITestReporter {
             "mangelhaft-num-total-ran", "Show only non-skipped results"));
         countersElm.appendChild(this.wrapFilterElement(numTestsSkippedElm, [TestStatus.skipped, TestStatus.skipped_not_implemented, TestStatus.skipped_precondition, TestStatus.skipped_ignore, TestStatus.skipped_fixme],
             "mangelhaft-num-SKIPPED", "Show only skipped results"));
-
+        if (!that.reRunning) {
+            document.body.innerHTML = "";
+            document.body.appendChild(testsElm);
+            this.catalogTime = new Date().getTime() - this.catalogTime;
+            this.testingTime = new Date().getTime();
+            this.spinner.innerText = "";
+            this.timers.innerHTML = `Fetching catalog: ${that.catalogTime/1000}s Testing: `;
+            this.timers.appendChild(this.spinner);
+        }
         function updateTotals() {
             numGroupsElm.innerText = numGroups.toString();
             numTestsElm.innerText = numTests.toString();
@@ -192,7 +223,6 @@ export public class HTMLReporter implements ITestReporter {
         }
         this.spy.testingStarted.add(function (numAllGroups: number, sessionId: string, numAllTests: number) {
             if (that.reRunning) {return;}
-            document.body.appendChild(testsElm);
             numGroups = numAllGroups;
             numTests = numAllTests;
             updateTotals();
@@ -237,7 +267,7 @@ export public class HTMLReporter implements ITestReporter {
                     if (nameParts[1]) {
                         testName = "<span class='mangelhaft-test-name-prefix'>" + nameParts[1] + "</span>"
                     } else {
-                        testName = ""
+                        testName = "";
                     }
                     testName += nameParts[2].replace(/_/g, " ") + " <span class='mangelhaft-test-name-suffix'>"+ nameParts[3] + "</span>";
                 }
@@ -263,8 +293,8 @@ export public class HTMLReporter implements ITestReporter {
                 testElm.appendChild(status);
                 status.classList.add("mangelhaft-status");
                 groupElm.appendChild(testElm);
-                that.testDivs.set(testUrl, testElm);
-                that.statuses.set(testUrl, status);
+                that.testDivs.set(test, testElm);
+                that.statuses.set(test, status);
             })
 
         });
@@ -281,10 +311,12 @@ export public class HTMLReporter implements ITestReporter {
             , elapsedStr: string
             ;
             groupElm = that.groupDivs.get(group);
-            testElm = that.testDivs.get(testUrl);
+            testElm = that.testDivs.get(test);
 
-
-            status = that.statuses.get(testUrl);
+            if (!(groupElm && testElm)) {
+                throw new Error(`Missing group (${group.name}) or test (${test.name}) html element in reporter (reload) `)
+            }
+            status = that.statuses.get(test);
             if (!that.reRunning) {
                numTestsRun += 1;
             }
@@ -359,7 +391,7 @@ export public class HTMLReporter implements ITestReporter {
                         status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>Running...</a>";
                         if (stackElm) {
                             stackElm.innerHTML = "";
-                        }
+                        } 
                         if (elapsed) {
                             elapsed.innerHTML = "";
                         }
@@ -390,9 +422,13 @@ export public class HTMLReporter implements ITestReporter {
         this.spy.testingFinished.add(function(resultGroups: ResultGroups) {
             if (that.reRunning) {return null;}
                 let done = document.createElement("span")
-                , groupElm: Element
+                  , timers = document.createElement("div")
+                  , groupElm: Element
                 ;
-                done.innerText = "DONE";
+                that.testingTime = new Date().getTime() - that.testingTime;
+                that.timers.innerHTML = `Fetching catalog: ${that.catalogTime/1000}s Testing: ${that.testingTime/1000}s`;
+                
+                done.innerText = "DONE"
                 countersElm.appendChild(done);
                 window.prettyPrint();
                 return resultGroups;
