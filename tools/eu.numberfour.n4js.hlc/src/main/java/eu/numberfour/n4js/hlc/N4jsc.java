@@ -92,6 +92,7 @@ import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
 import eu.numberfour.n4js.ts.TypesStandaloneSetup;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.utils.io.FileDeleter;
 
 /**
  * N4JS Compiler.
@@ -576,6 +577,13 @@ public class N4jsc {
 		}
 	}
 
+	/**
+	 * Checks state of target platform related configurations. Can perform file system modifications to make it
+	 * consistent with provided data, in particular can clean {@link #targetPlatformInstallLocation}.
+	 *
+	 * @throws ExitCodeException
+	 *             if configuration is inconsistent or cannot be fixed.
+	 */
 	private void checkTargetPlatformConfigurations() throws ExitCodeException {
 		if (targetPlatformSkipInstall) {
 			return;
@@ -585,25 +593,34 @@ public class N4jsc {
 			throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
 					"Target platform install location has to be specified, or `--targetPlatformSkipInstall ` flag must be provided.");
 		} else {
-			if (!targetPlatformInstallLocation.exists()) {
+			if (targetPlatformInstallLocation.exists()) {
+				if (!targetPlatformInstallLocation.isDirectory()) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform install location does not point to a directory at: "
+									+ targetPlatformInstallLocation + ".");
+				}
+				if (!targetPlatformInstallLocation.canWrite()) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform install location cannot be accessed at: " + targetPlatformInstallLocation
+									+ ".");
+				}
+
 				try {
-					targetPlatformInstallLocation.mkdirs();
+					FileDeleter.delete(targetPlatformFile);
 				} catch (Exception e) {
 					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-							"Target platform install location cannot be created at: " + targetPlatformInstallLocation
-									+ ".",
+							"Existing target platform install location cannot be cleared at: "
+									+ targetPlatformInstallLocation + ".",
 							e);
 				}
 			}
-			if (!targetPlatformInstallLocation.isDirectory()) {
+
+			try {
+				targetPlatformInstallLocation.mkdirs();
+			} catch (Exception e) {
 				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform install location does not point to a directory at: "
-								+ targetPlatformInstallLocation + ".");
-			}
-			if (!targetPlatformInstallLocation.canWrite()) {
-				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform install location cannot be accessed at: " + targetPlatformInstallLocation
-								+ ".");
+						"Target platform install location cannot be created at: " + targetPlatformInstallLocation + ".",
+						e);
 			}
 
 			if (null == targetPlatformFile) {
