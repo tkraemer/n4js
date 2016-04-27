@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -383,7 +384,9 @@ public class XpectN4JSES5TranspilerHelper {
 	 * @return string representation of compilation result
 	 */
 	public String compile(Script depRoot, boolean replaceQuotes) {
-		final AbstractSubGenerator generator = getGeneratorForResource(depRoot.eResource());
+		final Resource resource = depRoot.eResource();
+		EcoreUtil2.resolveLazyCrossReferences(resource, CancelIndicator.NullImpl);
+		final AbstractSubGenerator generator = getGeneratorForResource(resource);
 		String compileResultStr = generator.getCompileResultAsText(depRoot);
 		if (replaceQuotes) {
 			// Windows Node.js has problems with " as it interprets it as ending of script to execute

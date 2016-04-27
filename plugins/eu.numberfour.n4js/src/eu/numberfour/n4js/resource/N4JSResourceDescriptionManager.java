@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.DerivedStateAwareResource;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
 import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
@@ -26,7 +25,6 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.impl.DefaultResourceDescription;
 import org.eclipse.xtext.resource.impl.EObjectDescriptionLookUp;
 
 import com.google.inject.Inject;
@@ -100,20 +98,35 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		return result;
 	}
 
-	private boolean basicIsAffected(Collection<Delta> deltas, IResourceDescription candidate) {
+	/**
+	 * Computes if a candidate is affected by any change, aka delta. It is affected, if
+	 */
+	private boolean basicIsAffected(Collection<Delta> deltas, final IResourceDescription candidate) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
-		Collection<QualifiedName> importedNames = getImportedNames(candidate);
+
+		// computed the first time we need it, do not compute eagerly
+		Collection<QualifiedName> namesImportedByCandidate = null;
+
 		for (IResourceDescription.Delta delta : deltas) {
 			if (delta.haveEObjectDescriptionsChanged() &&
 					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
-				if (isAffected(importedNames, delta.getNew()) || isAffected(importedNames, delta.getOld())) {
-					if (hasDependencyTo(candidate, delta)) {
+
+				if (null == namesImportedByCandidate) {
+					// note: this does not only contain the explicitly imported names, but indirectly
+					// imported names as well!
+					namesImportedByCandidate = getImportedNames(candidate);
+				}
+
+				if (isAffected(namesImportedByCandidate, delta.getNew()) // we may added a new exported name!
+						|| isAffected(namesImportedByCandidate, delta.getOld())) { // we may removed an exported name
+					if (hasDependencyTo(candidate, delta)) { // isAffected does not compare project names
 						return true;
 					}
 				}
 			}
 		}
+
 		return false;
 	}
 
@@ -122,8 +135,14 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	 * 'delta'.
 	 */
 	private boolean hasDependencyTo(IResourceDescription candidate, IResourceDescription.Delta delta) {
-		final URI fromUri = candidate.getURI();
-		final URI toUri = delta.getUri();
+		return hasDependencyTo(candidate.getURI(), delta.getUri());
+	}
+
+	/**
+	 * Returns true iff the project containing the 'fromUri' has a direct dependency to the project containing the
+	 * 'toUri'.
+	 */
+	private boolean hasDependencyTo(URI fromUri, URI toUri) {
 		final IN4JSProject fromProject = n4jsCore.findProject(fromUri).orNull();
 		final IN4JSProject toProject = n4jsCore.findProject(toUri).orNull();
 
@@ -135,14 +154,14 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 
 			for (IN4JSProject fromProjectDependency : fromProject.getDependenciesAndImplementedApis()) {
 
-				// Never mark a resource as effected if the dependency is an external one.
-				// The library manager already knows about the build older.
-				if (Objects.equals(fromProjectDependency, toProject) && !fromProjectDependency.isExternal()) {
+				// Never mark a resource as effected when trying to resolve its dependency from an external to a
+				// workspace one and/or vice versa.
+				if (Objects.equals(fromProjectDependency, toProject)
+						&& fromProjectDependency.isExternal() == fromProject.isExternal()) {
 					return true;
 				}
 			}
 		}
-
 		return false;
 	}
 
@@ -159,27 +178,19 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	/**
 	 * Overrides super implementation to replace case insensitive comparison logic by case sensitive comparison of
 	 * names.
+	 * <p>
+	 * It returns true, if there is a dependency (i.e. name imported by a candidate) to any name exported by the
+	 * description from a delta. That is, it computes if a candidate (with given importedNames) is affected by a change
+	 * represented by the description from the delta.
 	 */
 	@Override
-	protected boolean isAffected(Collection<QualifiedName> importedNames, IResourceDescription description) {
-		if (description != null) {
-			for (IEObjectDescription desc : description.getExportedObjects())
-				if (importedNames.contains(desc.getName()))
+	protected boolean isAffected(Collection<QualifiedName> namesImportedByCandidate,
+			IResourceDescription descriptionFromDelta) {
+		if (descriptionFromDelta != null) {
+			for (IEObjectDescription desc : descriptionFromDelta.getExportedObjects())
+				if (namesImportedByCandidate.contains(desc.getName()))
 					return true;
 		}
 		return false;
-	}
-
-	@Override
-	protected IResourceDescription internalGetResourceDescription(Resource resource,
-			IDefaultResourceDescriptionStrategy strategy) {
-		// Overridden to enable non-derived state aware Resources to be processed as well.
-		if (resource instanceof DerivedStateAwareResource) {
-			// default behavior
-			return super.internalGetResourceDescription(resource, strategy);
-		} else {
-			// do what "super.super.internalGetResourceDescription(resource, strategy);" would do:
-			return new DefaultResourceDescription(resource, strategy, getCache());
-		}
 	}
 }
