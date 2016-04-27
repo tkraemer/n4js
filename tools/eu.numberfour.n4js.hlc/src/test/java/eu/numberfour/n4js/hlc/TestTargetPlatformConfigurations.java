@@ -44,7 +44,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoTargetPlatformFile() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -69,7 +69,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -96,7 +96,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileCreatesInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		// force creating install location
@@ -125,7 +125,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileCleanInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		// force creating install location
@@ -158,7 +158,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoTargetPlatformFileWithSkipped() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -184,7 +184,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoInstallLocationWithSkipped() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -210,7 +210,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileForceSkippInstall() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -234,7 +234,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileSkippInstallAndForceSkipInstall() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd_" + name.getMethodName());
+		setupWorkspace("external_with_n4jsd");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
