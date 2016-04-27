@@ -76,5 +76,4 @@ public interface IN4JSEclipseCore extends IN4JSCore {
 	 * @return the n4js archive corresponding to the given project.
 	 */
 	Optional<? extends IN4JSEclipseArchive> findArchive(URI archiveLocation);
-
 }

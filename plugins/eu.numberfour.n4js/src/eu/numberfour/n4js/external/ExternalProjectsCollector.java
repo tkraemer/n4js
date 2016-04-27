@@ -155,7 +155,6 @@ public class ExternalProjectsCollector {
 				.filter(IN4JSProject.class)
 				.filter(p -> p.exists() && p.isExternal())
 				.transform(p -> p.getArtifactId());
-
 	}
 
 	private void hookUpReferencedBuildConfigs(final Map<String, N4JSExternalProject> visitedProjects) {

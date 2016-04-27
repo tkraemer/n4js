@@ -10,9 +10,6 @@
  */
 package eu.numberfour.n4js.resource;
 
-import static com.google.common.base.Charsets.UTF_8;
-import static com.google.common.hash.Hashing.sha512;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,11 +58,6 @@ public final class UserdataMapper {
 	 * The key in the user data map of the module's description.
 	 */
 	public final static String USERDATA_KEY_SERIALIZED_SCRIPT = "serializedScript";
-
-	/**
-	 * The key in the user data map for the string hash of the serialized TModule.
-	 */
-	public final static String USERDATA_KEY_CONTENTHASH = "serializedScriptContentHash";
 
 	/**
 	 * The key in the user data map of static-polyfill contents-hash
@@ -143,7 +135,6 @@ public final class UserdataMapper {
 
 		final HashMap<String, String> ret = new HashMap<>();
 		ret.put(USERDATA_KEY_SERIALIZED_SCRIPT, serializedScript);
-		ret.put(USERDATA_KEY_CONTENTHASH, sha512().hashString(serializedScript, UTF_8).toString());
 
 		ret.put(N4JSResourceDescriptionStrategy.MAIN_MODULE_KEY, Boolean.toString(exportedModule.isMainModule()));
 
