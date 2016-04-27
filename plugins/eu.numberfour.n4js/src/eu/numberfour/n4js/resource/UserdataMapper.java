@@ -58,7 +58,6 @@ public final class UserdataMapper {
 	 * The key in the user data map of the module's description.
 	 */
 	public final static String USERDATA_KEY_SERIALIZED_SCRIPT = "serializedScript";
-
 	/**
 	 * The key in the user data map of static-polyfill contents-hash
 	 */

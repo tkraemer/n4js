@@ -162,7 +162,6 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 				}
 			}
 		}
-
 		return false;
 	}
 
