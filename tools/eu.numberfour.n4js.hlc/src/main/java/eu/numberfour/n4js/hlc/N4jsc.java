@@ -1161,7 +1161,7 @@ public class N4jsc {
 	 */
 	private List<File> convertToFilesAddTargetPlatformAndCheckWritableDir(String dirpaths) {
 		final List<File> retList = new ArrayList<>();
-		if (null != targetPlatformInstallLocation) {
+		if (null != installLocationProvider.getTargetPlatformInstallLocation()) {
 			final File tpLoc = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
 			checkFileIsDirAndWriteable(tpLoc);
 			retList.add(tpLoc);
