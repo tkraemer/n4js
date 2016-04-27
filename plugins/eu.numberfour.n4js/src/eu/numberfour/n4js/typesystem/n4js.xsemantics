@@ -156,6 +156,7 @@ import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
+import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TStructuralType
@@ -1246,6 +1247,9 @@ from {
 		true
 	} else if (rightDeclType instanceof PrimitiveType && leftDeclType===(rightDeclType as PrimitiveType).assignmentCompatible) {
 		true
+	} else if (leftDeclType instanceof TInterface && !(rightDeclType instanceof TInterface)
+				&& !(rightDeclType===G.n4ObjectType || rightDeclType===G.objectType || rightDeclType===G.anyType)) {
+		false
 	} else {
 		var structuralTyping = false;
 		if (right.isUseSiteStructuralTyping()) { // e.g. foo(~A right){..} foo(left) --> left ~<: right
