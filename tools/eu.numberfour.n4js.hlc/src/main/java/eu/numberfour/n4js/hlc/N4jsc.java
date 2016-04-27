@@ -176,12 +176,14 @@ public class N4jsc {
 
 	@Option(name = "--targetPlatformFile", aliases = "-tp", required = false, usage = "if specified, then all third party dependencies declared in the target platform file "
 			+ "will be downloaded, installed and made available for all the N4JS projects before the compile (and run) phase. If the target platform file is given but the "
-			+ "target platform install location is not specified (via the --targetPlatformInstallLocation flag), then a the compilation phase will be aborted and the execution will be interrupted.")
+			+ "target platform install location is not specified (via the --targetPlatformInstallLocation flag), then a the compilation phase will be aborted and the execution will be interrupted."
+			+ "If --targetPlatformSkipInstall is provided this parameter is ignored.")
 	File targetPlatformFile;
 
 	@Option(name = "--targetPlatformInstallLocation", aliases = "-tl", required = false, usage = "if specified and the target platform file is given as well, then all third party dependencies "
 			+ "specified in the target platform file will be downloaded to that given location. If the target platform file is given, but the target platform install location is not specified, "
-			+ "then a the compilation phase will be aborted and the execution will be interrupted.")
+			+ "then a the compilation phase will be aborted and the execution will be interrupted."
+			+ "If --targetPlatformSkipInstall is provided this parameter is ignored.")
 	File targetPlatformInstallLocation;
 
 	@Option(name = "--targetPlatformSkipInstall", required = false, usage = "usually dependencies defined in the target platform file will be installed into the folder defined by option --targetPlatformInstallLocation. "
@@ -502,68 +504,64 @@ public class N4jsc {
 	}
 
 	private void cloneGitRepositoryAndInstallNpmPackages() throws ExitCodeException {
+		if (targetPlatformSkipInstall) {
+			return;
+		}
+
 		checkState(installLocationProvider instanceof HeadlessTargetPlatformInstallLocationProvider);
 
 		try {
 
-			if (null != targetPlatformInstallLocation) {
-				((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
-						.setTargetPlatformInstallLocation(targetPlatformInstallLocation.toURI());
+			((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
+					.setTargetPlatformInstallLocation(targetPlatformInstallLocation.toURI());
 
-				if (!targetPlatformSkipInstall) {
-					java.net.URI gitRepositoryLocation = installLocationProvider
-							.getTargetPlatformLocalGitRepositoryLocation();
-					Path localClonePath = new File(gitRepositoryLocation).toPath();
-					hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
-							getMasterBranch(), true);
-					pull(localClonePath);
+			// pull n4jsd to install location
+			java.net.URI gitRepositoryLocation = installLocationProvider
+					.getTargetPlatformLocalGitRepositoryLocation();
+			Path localClonePath = new File(gitRepositoryLocation).toPath();
+			hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
+					getMasterBranch(), true);
+			pull(localClonePath);
+
+			// Convert target platform file into package JSON for now.
+			TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
+			PackageJson packageJson = PackageJson.createN4DefaultWithDependencies(model);
+			File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
+			try {
+				if (!packageJsonFile.exists()) {
+					packageJsonFile.createNewFile();
 				}
-			}
+				try (PrintWriter pw = new PrintWriter(packageJsonFile)) {
+					pw.write(packageJson.toString());
+					pw.flush();
+					((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
+							.setTargetPlatformFileLocation(packageJsonFile.toURI());
 
-			if (null != targetPlatformFile && null != targetPlatformInstallLocation) {
-
-				// Convert target platform file into package JSON for now. Later all internal logic should rely on the
-				// target platform file.
-				TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
-				PackageJson packageJson = PackageJson.createN4DefaultWithDependencies(model);
-				File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
-				try {
-					if (!packageJsonFile.exists()) {
-						packageJsonFile.createNewFile();
-					}
-					try (PrintWriter pw = new PrintWriter(packageJsonFile)) {
-						pw.write(packageJson.toString());
-						pw.flush();
-					}
-				} catch (IOException e) {
-					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-							"Error while consuming target platform file.",
-							e);
-				}
-
-				((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
-						.setTargetPlatformFileLocation(packageJsonFile.toURI());
-			}
-
-			if (null != installLocationProvider.getTargetPlatformFileLocation() && !targetPlatformSkipInstall) {
-				final PackageJson packageJson = installLocationProvider.getTargetPlatformContent();
-				final Map<String, String> dependencies = packageJson.getDependencies();
-				if (null != dependencies) {
-					final Iterable<String> packageNames = dependencies.keySet();
-					for (final String packageName : packageNames) {
-						try {
-							final IStatus status = npmManager.installDependency(packageName, new NullProgressMonitor());
-							if (!status.isOK()) {
+					// install dependencies if needed
+					final Map<String, String> dependencies = packageJson.getDependencies();
+					if (null != dependencies) {
+						final Iterable<String> packageNames = dependencies.keySet();
+						for (final String packageName : packageNames) {
+							try {
+								final IStatus status = npmManager.installDependency(packageName,
+										new NullProgressMonitor());
+								if (!status.isOK()) {
+									throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR, status.getMessage(),
+											status.getException());
+								}
+							} catch (final IllegalBinaryStateException e) {
+								final IStatus status = e.getStatus();
 								throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR, status.getMessage(),
 										status.getException());
 							}
-						} catch (final IllegalBinaryStateException e) {
-							final IStatus status = e.getStatus();
-							throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR, status.getMessage(),
-									status.getException());
 						}
 					}
+
 				}
+			} catch (IOException e) {
+				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+						"Error while consuming target platform file.",
+						e);
 			}
 
 		} catch (Exception e) {
@@ -579,31 +577,23 @@ public class N4jsc {
 	}
 
 	private void checkTargetPlatformConfigurations() throws ExitCodeException {
-		if (null == targetPlatformFile && null != targetPlatformInstallLocation) {
-			throw new ExitCodeException(
-					EXITCODE_CONFIGURATION_ERROR,
-					"Target platform install location should be specified when a target platform file is configured.");
+		if (targetPlatformSkipInstall) {
+			return;
 		}
 
-		if (null != targetPlatformFile) {
-			if (!targetPlatformFile.exists()) {
-				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform file does not exist at: " + targetPlatformFile + ".");
-			}
-			if (!targetPlatformFile.isFile()) {
-				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform file does not point to a file at: " + targetPlatformFile + ".");
-			}
-			if (!targetPlatformFile.canRead()) {
-				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform file content cannot be read at: " + targetPlatformFile + ".");
-			}
-		}
-
-		if (null != targetPlatformInstallLocation) {
+		if (null == targetPlatformInstallLocation) {
+			throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+					"Target platform install location has to be specified, or `--targetPlatformSkipInstall ` flag must be provided.");
+		} else {
 			if (!targetPlatformInstallLocation.exists()) {
-				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-						"Target platform install location does not exist at: " + targetPlatformInstallLocation + ".");
+				try {
+					targetPlatformInstallLocation.mkdirs();
+				} catch (Exception e) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform install location cannot be created at: " + targetPlatformInstallLocation
+									+ ".",
+							e);
+				}
 			}
 			if (!targetPlatformInstallLocation.isDirectory()) {
 				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
@@ -615,7 +605,27 @@ public class N4jsc {
 						"Target platform install location cannot be accessed at: " + targetPlatformInstallLocation
 								+ ".");
 			}
+
+			if (null == targetPlatformFile) {
+				throw new ExitCodeException(
+						EXITCODE_CONFIGURATION_ERROR,
+						"Target platform install location should be specified when a target platform file is configured.");
+			} else {
+				if (!targetPlatformFile.exists()) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform file does not exist at: " + targetPlatformFile + ".");
+				}
+				if (!targetPlatformFile.isFile()) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform file does not point to a file at: " + targetPlatformFile + ".");
+				}
+				if (!targetPlatformFile.canRead()) {
+					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
+							"Target platform file content cannot be read at: " + targetPlatformFile + ".");
+				}
+			}
 		}
+
 	}
 
 	/**
