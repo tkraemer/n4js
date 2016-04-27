@@ -169,6 +169,22 @@ public final class UserdataMapper {
 	}
 
 	/**
+	 * <b>ONLY INTENDED FOR TESTS OR DEBUGGING. DON'T USE IN PRODUCTION CODE.</b>
+	 * <p>
+	 * Same as {@link #getDeserializedModulesFromDescription(IEObjectDescription, URI)}, but always returns the module
+	 * as an XMI-serialized string.
+	 */
+	public static String getDeserializedModulesFromDescriptionAsString(IEObjectDescription eObjectDescription,
+			URI uri) throws IOException {
+		final List<EObject> objects = getDeserializedModulesFromDescription(eObjectDescription, uri);
+		final XMIResource resourceForUserData = new XMIResourceImpl(uri);
+		resourceForUserData.getContents().addAll(objects);
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		resourceForUserData.save(baos, getOptions(uri, false));
+		return baos.toString(TRANSFORMATION_CHARSET_NAME);
+	}
+
+	/**
 	 * Creates exported scripts (or other {@link EObject}s found (serialized) in the user data of given
 	 * {@link IEObjectDescription}.
 	 *

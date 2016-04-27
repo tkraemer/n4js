@@ -16,11 +16,11 @@
 import { Class2 } from "validation/imports/MultipleClasses"
 
 /* XPECT issues ---
-"Name Class2 is already used as name for named import Class2 from validation.imports.MultipleClasses." at "Class2"
+"Name Class2 is already used as name for named import Class2 from validation/imports/MultipleClasses." at "Class2"
 --- */
 import { Class2 } from "validation/imports/DifferentClasses"
 
 /* XPECT issues --- 
-	"Name Class2 is already used as name for named import Class2 from validation.imports.MultipleClasses." at "Class1 as Class2"
+	"Name Class2 is already used as name for named import Class2 from validation/imports/MultipleClasses." at "Class1 as Class2"
  --- */
 import { Class1 as Class2 } from "validation/imports/MultipleClasses"

@@ -21,6 +21,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.Type
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
 
 /**
  * Helper methods for testing API / implementation compare functionality.
@@ -45,7 +46,7 @@ class ApiImplCompareTestHelper {
 		String fqnOfModule, String nameOfType,
 		Pair<Pair<String,Status>,String>... expectedChildrenNameStatusDescription
 	) {
-		val fqnOfType = fqnOfModule + '.' + nameOfType;
+		val fqnOfType = fqnOfModule + N4JSQualifiedNameConverter.DELIMITER + nameOfType;
 		val entryForType = comparison.findEntryForType(fqnOfType);
 		assertNotNull("cannot find entry for type "+fqnOfType, entryForType);
 		val childEntriesOfType = entryForType.children;
@@ -86,7 +87,7 @@ class ApiImplCompareTestHelper {
 		entry.allElements.filter(IdentifiableElement).map[name].head
 	}
 	public def String getElementFqnForEntry(ProjectComparisonEntry entry) {
-		entry.allElements.filter(Type).map[containingModule?.qualifiedName + '.' + name].head
+		entry.allElements.filter(Type).map[containingModule?.qualifiedName + N4JSQualifiedNameConverter.DELIMITER + name].head
 	}
 	private def Status getStatusForFirstImplementation(ProjectComparisonEntry entry) {
 		// note 0 in next line: always returns status of comparing API with implementation at index 0

@@ -34,6 +34,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.scoping.utils.UnresolvableObjectDescription;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
@@ -44,6 +45,11 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  * for them. This is only done, when validation is enabled.
  */
 public class ErrorAwareLinkingService extends DefaultLinkingService {
+
+	private static final EReference PARAMETERIZED_TYPE_REF__DECLARED_TYPE = TypeRefsPackage.eINSTANCE
+			.getParameterizedTypeRef_DeclaredType();
+	private static final EReference NAMED_IMPORT_SPECIFIER__IMPORTED_ELEMENT = N4JSPackage.eINSTANCE
+			.getNamedImportSpecifier_ImportedElement();
 
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
@@ -92,13 +98,18 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 	 * handling is required. By default, simply delegates to {@code #getCrossRefNodeAsString(INode)}.
 	 */
 	protected String getCrossRefNodeAsString(EObject context, EReference ref, INode node) {
-		if (ref == N4JSPackage.eINSTANCE.getNamedImportSpecifier_ImportedElement()
-				&& context instanceof DefaultImportSpecifier) {
-			// we got a default import of the form: import localName from "some/module"
+		if (ref == NAMED_IMPORT_SPECIFIER__IMPORTED_ELEMENT && context instanceof DefaultImportSpecifier) {
+			// special case: we got a default import of the form: import localName from "some/module"
 			return "default";
 		}
 		// standard cases:
-		return getCrossRefNodeAsString(node);
+		String result = getCrossRefNodeAsString(node);
+		if (ref == PARAMETERIZED_TYPE_REF__DECLARED_TYPE && context instanceof ParameterizedTypeRef) {
+			// special case: we might have a reference to a type C imported via namespace import: NS.C
+			// -> replace '.' by '/' to make it a valid qualified name
+			result = result != null ? result.replace('.', '/') : null;
+		}
+		return result;
 	}
 
 	/**

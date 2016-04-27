@@ -52,7 +52,7 @@ interface I2 extends I<number> {}
 // XPECT errors --> "Inheritance cycle detected: IC, IC." at "IC"
 abstract class IC extends IC implements I1, I2 {}
 
-// XPECT errors --> "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes.I multiple times." at "I<string>"
+// XPECT errors --> "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes/I multiple times." at "I<string>"
 abstract class IC2 implements I<string>, I<number> {}
 
 var ic : IC = null;

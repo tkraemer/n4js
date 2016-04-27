@@ -23,6 +23,7 @@ import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
+import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -49,20 +50,20 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.TerminalRule
+import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.BidiTreeIterator
 import org.eclipse.xtext.nodemodel.ILeafNode
 import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.nodemodel.impl.LeafNode
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
 
 import static eu.numberfour.n4js.parser.InternalSemicolonInjectingParser.SEMICOLON_INSERTED
 
+import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
-import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
-import org.eclipse.xtext.nodemodel.impl.LeafNode
-import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 
 /**
  */
@@ -73,6 +74,9 @@ public class N4JSOrganizeImports {
 
 	@Inject
 	private N4JSScopeProvider scopeProvider;
+
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Inject
 	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
@@ -475,7 +479,7 @@ public class N4JSOrganizeImports {
 
 	/** Creates a new named import of 'name' from 'module'*/
 	private def ImportDeclaration createNamedImport(String name, QualifiedName module) {
-		return createNamedImport(name, module.toString)
+		return createNamedImport(name, qualifiedNameConverter.toString(module))
 	}
 
 	/** Creates a new named import of 'name' from 'moduleName'*/

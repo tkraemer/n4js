@@ -20,11 +20,11 @@
 
 // XPECT warnings --> "The import of * as NB from outline/test/B is unused." at "* as NB"
 import * as NB from "outline/test/B"
-// XPECT errors --> "Z from outline.test.B is already imported as NB.Z." at "Z"
+// XPECT errors --> "Z from outline/test/B is already imported as NB.Z." at "Z"
 import { Z } from "outline/test/B"
 /* XPECT errors ---
- "B1 from outline.test.B is already imported as NB.B1." at "B1"
- "X from outline.test.B is already imported as NB.X." at "X as Y"
+ "B1 from outline/test/B is already imported as NB.B1." at "B1"
+ "X from outline/test/B is already imported as NB.X." at "X as Y"
 --- */
 import {B1, X as Y} from "outline/test/B"
 

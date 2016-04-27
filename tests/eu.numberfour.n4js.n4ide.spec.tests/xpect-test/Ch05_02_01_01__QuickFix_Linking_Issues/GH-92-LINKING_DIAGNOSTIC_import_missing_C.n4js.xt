@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest
+
+	Workspace {
+		JavaProject "N4JSXPECTTests" {
+			Folder "src" {
+				Folder "proposal" {
+					Folder "module" {
+						ThisFile {}
+						File "A.n4js" {}						
+					}
+				}
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from="../../test-config/manifest.n4mf" }
+		}
+	}
+   END_SETUP
+ */
+
+
+
+
+// 
+/* XPECT quickFix at 'var b: B;<|>' apply 'Import B - proposal/module/A' --- 
+  
+  // 
+  import {A} from "proposal/module/A"// single line comment in ASI place
++ import { B } from "
+| [var|proposal/module/A"]
+| [|var] a: A;
+  var b: B; 
+---
+*/ 
+import {A} from "proposal/module/A"// single line comment in ASI place
+var a: A;
+// XPECT errors --> "Couldn't resolve reference to Type 'B'." at "B"
+var b: B; 
+
