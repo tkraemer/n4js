@@ -12,6 +12,7 @@ package eu.numberfour.n4js.xpect;
 
 import java.util.List;
 
+import org.eclipse.xtext.formatting2.FormatterPreferenceKeys;
 import org.eclipse.xtext.formatting2.FormatterRequest;
 import org.eclipse.xtext.formatting2.IFormatter2;
 import org.eclipse.xtext.formatting2.regionaccess.ILineRegion;
@@ -87,6 +88,7 @@ public class FormatterXpectMethod {
 
 		MapBasedPreferenceValues preferenceValues = new MapBasedPreferenceValues();
 		preferenceValues.put(N4JSFormatterPreferenceKeys.FORMAT_PARENTHESIS, true);
+		preferenceValues.put(FormatterPreferenceKeys.lineSeparator, "\n");
 
 		FormatterRequest request = formatterRequestProvider.get();
 		request.setTextRegionAccess(reg);

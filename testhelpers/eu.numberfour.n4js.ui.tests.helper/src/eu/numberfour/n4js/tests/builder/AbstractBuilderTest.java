@@ -15,7 +15,6 @@ import static org.apache.log4j.Logger.getLogger;
 import static org.eclipse.core.resources.IContainer.INCLUDE_HIDDEN;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
-import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanBuild;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanWorkspace;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.root;
 import static org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS;
@@ -36,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.xtext.junit4.InjectWith;
 import org.eclipse.xtext.junit4.XtextRunner;
+import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Event;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -58,6 +58,7 @@ import eu.numberfour.n4js.ui.internal.N4JSActivator;
 /**
  * @author Sven Efftinge - Initial contribution and API
  */
+@SuppressWarnings("restriction")
 @RunWith(XtextRunner.class)
 @InjectWith(N4JSUiInjectorProvider.class)
 public abstract class AbstractBuilderTest extends Assert implements IResourceDescription.Event.Listener {
@@ -74,7 +75,6 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	/***/
-	@SuppressWarnings("restriction")
 	@Before
 	public void setUp() throws Exception {
 		if (checkForCleanWorkspace()) {
@@ -111,7 +111,6 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	private void tryCleanXtextIndex(final StringBuilder error) {
 		try {
 			LOGGER.info("Xtext index was not empty. Trying to clean up index...");
@@ -127,7 +126,6 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	private void tryCleanWorkspace(final StringBuilder error) {
 		deleteProjects(root().getProjects(), error);
 		deleteProjects(root().getProjects(INCLUDE_HIDDEN), error);
@@ -179,7 +177,6 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 	}
 
 	/***/
-	@SuppressWarnings("restriction")
 	@After
 	public void tearDown() throws Exception {
 		// save the files as otherwise the projects cannot be deleted
@@ -205,7 +202,11 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 	}
 
 	/***/
-	@SuppressWarnings("restriction")
+	public void cleanBuild() throws CoreException {
+		IResourcesSetupUtil.cleanBuild();
+	}
+
+	/***/
 	protected IWorkbenchPage getActivePage() {
 		IWorkbenchPage page = null;
 		if (org.eclipse.ui.internal.Workbench.getInstance() != null) {
@@ -258,9 +259,7 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 		final StringBuilder sb = new StringBuilder();
 		for (IResourceDescription desc : index.getAllResourceDescriptions()) {
 			if (desc instanceof ResourceDescriptionWithoutModuleUserData) {
-				if (sb.length() > 0) {
-					sb.append("\n");
-				}
+				sb.append("\n");
 				sb.append(IResourceDescription.class.getSimpleName());
 				sb.append(" in index must not be an instance of ");
 				sb.append(ResourceDescriptionWithoutModuleUserData.class.getSimpleName());

@@ -248,7 +248,7 @@ public class ImportRewriter {
 				// this is required for the linebreak handling for automatic semicolon insertion.
 				final ICompositeNode importNode = NodeModelUtils.findActualNodeFor(element);
 				if (null != importNode) {
-					result = importNode.getOffset() + getLengthWithoutAutomaticSemicolon(importNode);
+					result = importNode.getTotalOffset() + getLengthWithoutAutomaticSemicolon(importNode);
 				}
 			} else {
 				// Otherwise, we assume there is no import declarations yet, we can put it to the top of the document.
