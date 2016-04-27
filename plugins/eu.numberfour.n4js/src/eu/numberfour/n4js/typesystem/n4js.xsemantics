@@ -1219,28 +1219,28 @@ from {
 	val right = G.getReplacement(rightOriginal)
 	val leftDeclType = left.declaredType;
 	val rightDeclType = right.declaredType;
-	if (right.declaredType == null || left.declaredType == null) {
+	if (leftDeclType == null || rightDeclType == null) {
 		true;
-	} else	if (right.declaredType.eIsProxy || left.declaredType.eIsProxy) {
+	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
-	} else if (left.declaredType instanceof VoidType
-				&& right.declaredType instanceof VoidType) {
+	} else if (leftDeclType instanceof VoidType
+				&& rightDeclType instanceof VoidType) {
 		true
-	} else if (left.declaredType instanceof VoidType
-				|| right.declaredType instanceof VoidType) {
+	} else if (leftDeclType instanceof VoidType
+				|| rightDeclType instanceof VoidType) {
 		false
-	} else if (right.declaredType instanceof AnyType
-				|| left.declaredType instanceof NullType
-				|| left.declaredType instanceof UndefinedType) {
+	} else if (leftDeclType instanceof NullType
+				|| leftDeclType instanceof UndefinedType
+				|| rightDeclType instanceof AnyType) {
 		true
-	} else if ((left.declaredType === G.intType && right.declaredType === G.numberType)
-				|| (left.declaredType === G.numberType && right.declaredType === G.intType)) {
+	} else if ((leftDeclType === G.intType && rightDeclType === G.numberType)
+				|| (leftDeclType === G.numberType && rightDeclType === G.intType)) {
 		true // int <: number AND number <: int (for now, int and number are synonymous)
-	} else if (left.declaredType instanceof TEnum && right.declaredType===G.n4EnumType) { // @see [N4JS] 4.13. Enums
-		 !AnnotationDefinition.STRING_BASED.hasAnnotation( left.declaredType )
-	} else if (left.declaredType instanceof TEnum && (right.declaredType===G.n4StringBasedEnumType || right.declaredType===G.stringType || right.declaredType===G.stringObjectType)) { // @see [N4JS] 4.15.2 String based Enums, IDEBUG-294
-		 AnnotationDefinition.STRING_BASED.hasAnnotation( left.declaredType )
-	} else if (left.declaredType===G.n4StringBasedEnumType && (right.declaredType===G.stringType || right.declaredType===G.stringObjectType)) {
+	} else if (leftDeclType instanceof TEnum && rightDeclType===G.n4EnumType) { // @see [N4JS] 4.13. Enums
+		 !AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )
+	} else if (leftDeclType instanceof TEnum && (rightDeclType===G.n4StringBasedEnumType || rightDeclType===G.stringType || rightDeclType===G.stringObjectType)) { // @see [N4JS] 4.15.2 String based Enums, IDEBUG-294
+		 AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )
+	} else if (leftDeclType===G.n4StringBasedEnumType && (rightDeclType===G.stringType || rightDeclType===G.stringObjectType)) {
 		true
 	} else if (leftDeclType instanceof PrimitiveType && (leftDeclType as PrimitiveType).assignmentCompatible===rightDeclType) {
 		true
@@ -1278,7 +1278,7 @@ from {
 		if (! structuralTyping) { // do nominal, right is not a structural type
 			if( (left.isUseSiteStructuralTyping || left.isDefSiteStructuralTyping)
 				&&
-				! (left.declaredType instanceof TypeVariable || right.declaredType instanceof TypeVariable)
+				! (leftDeclType instanceof TypeVariable || rightDeclType instanceof TypeVariable)
 				&&
 				{G |- right <: G.n4ObjectTypeRef}
 				)
@@ -1288,20 +1288,19 @@ from {
 					data PRIORITY_ERROR
 			}
 			// nominal typing (the default behavior)
-			if (left.declaredType instanceof TypeVariable || right.declaredType instanceof TypeVariable) {
+			if (leftDeclType instanceof TypeVariable || rightDeclType instanceof TypeVariable) {
 				// we have a type variable on one or both sides
-				if (left.declaredType == right.declaredType) {
+				if (leftDeclType == rightDeclType) {
 					true
-				} else if(left.declaredType instanceof TypeVariable) {
+				} else if(leftDeclType instanceof TypeVariable) {
 					// a case like: (T extends B) <: A  (with T being an unbound type variable and A,B two classes with B <: A)
-					val typeVar = left.declaredType as TypeVariable;
-					if(typeVar.declaredUpperBounds.isEmpty) {
+					if(leftDeclType.declaredUpperBounds.isEmpty) {
 						// T does not have declaredUpperBounds, so T <: A is always false
 						false
 					}
 					else {
 						// T has declaredUpperBounds, so return true iff all upper bounds are subtype of 'right'
-						G |- typeSystemHelper.createIntersectionType(G, typeVar.declaredUpperBounds) <: right
+						G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right
 					}
 				} else {
 					// all other cases are always false, for example:
@@ -1309,7 +1308,7 @@ from {
 					//   (T extends A) <: (S extends B)  is always false, even if A === B (note the difference to existential types)
 					false
 				}
-			} else if (left.declaredType == right.declaredType) {
+			} else if (leftDeclType == rightDeclType) {
 				if (left.typeArgs.size>0 && left.typeArgs.size <= right.typeArgs.size) { // ignore raw types
 					val leftIter = left.typeArgs.iterator
 					val rightIter = right.typeArgs.iterator
@@ -1345,67 +1344,21 @@ from {
 					}
 				}
 			} else {
-//				val localG = G.wrap
-//				val localG_left = localG.wrap; // don't confuse type variable bindings for lhs and rhs
-//				val localG_right = localG.wrap;
-//				typeSystemHelper.addSubstitutions(localG_left,left)
-//				typeSystemHelper.addSubstitutions(localG_right,right)
-				// note: it's fine to use declared types (instead of TypeRefs) in next recursion guard,
-				// because we are only interested in loops in the inheritance hierarchy of left.declaredType
-
-val allSuperTypeRefs = if(leftDeclType instanceof ContainerType<?>) AllSuperTypeRefsCollector.collect(leftDeclType) else newArrayList;
-val superTypes = allSuperTypeRefs
-	+G.collectAllImplicitSuperTypes(left);
-val matchingSuperTypeRef = superTypes.findFirst[it.declaredType===rightDeclType];
-if(matchingSuperTypeRef!==null) {
-	val localG = G.wrap
-	val localG_left = localG.wrap; // don't confuse type variable bindings for lhs and rhs
-	//val localG_right = localG.wrap;
-	typeSystemHelper.addSubstitutions(localG_left,left)
-	//typeSystemHelper.addSubstitutions(localG_right,right)
-	try {
-		localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst // substitute type variables
-		localG |- matchingSuperTypeRefSubst <: right
-	} catch(Exception e) {
-		false
-	}
-} else {
-	false
-}
-
-
-//				localG.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->left.declaredType,Boolean.TRUE);
-//				val declSuperTypesSanitized = TypeUtils.declaredSuperTypes(left.declaredType)
-//						.filter[localG.get(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL->it.declaredType)!==Boolean.TRUE];
-//				val superTypes = (declSuperTypesSanitized+
-//					localG.collectAllImplicitSuperTypes(left)+
-//					localG.assignmentCompatibleTypes(left)).toSet;
-//				superTypes.exists[
-//					// try/catch only required to avoid Java compile error (XBase bug?)
-//					// Xsemantics seems to generate black box Java code but does not announce the
-//					// exceptions to Xbase thus no try catch is generated
-//					// but still you did not want a propagated exception from #exists but false
-//					// as the return type
-//					try {
-//						localG_left |- it ~> var TypeRef bound	// substitute type variables
-//						localG |- bound <: right
-//					} catch(Exception e) {
-//						false
-//					}
-//				] || {
-//					val rightAssignmentCompatibles = localG.assignmentCompatibleTypes(right);
-//					!rightAssignmentCompatibles.isEmpty && rightAssignmentCompatibles.exists [ rightCompatibible |
-//						left.declaredType == rightCompatibible.declaredType
-//						|| superTypes.exists [ superType |
-//							try {
-//								localG_right |- superType ~> var TypeRef bound	// substitute type variables
-//								localG |- bound <: rightCompatibible
-//							} catch(Exception e) {
-//								false
-//							}
-//						]
-//					]
-//				}
+				val allSuperTypeRefs = if(leftDeclType instanceof ContainerType<?>) AllSuperTypeRefsCollector.collect(leftDeclType) else newArrayList;
+				val superTypes = allSuperTypeRefs + G.collectAllImplicitSuperTypes(left);
+				val matchingSuperTypeRef = superTypes.findFirst[it.declaredType===rightDeclType];
+				if(matchingSuperTypeRef!==null) {
+					val localG_left = G.wrap;
+					typeSystemHelper.addSubstitutions(localG_left,left)
+					try {
+						localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst // substitute type variables
+						G |- matchingSuperTypeRefSubst <: right
+					} catch(Exception e) {
+						false
+					}
+				} else {
+					false
+				}
 			}
 		} // end nominal
 	}
