@@ -10,11 +10,9 @@
  */
 package eu.numberfour.n4js.ui.building;
 
-import static com.google.common.collect.Sets.newLinkedHashSet;
 import static eu.numberfour.n4js.projectModel.IN4JSProject.N4MF_MANIFEST;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
-import java.security.MessageDigest;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,30 +36,22 @@ import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant;
 import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant.DeferredBuilderParticipant;
 import org.eclipse.xtext.builder.impl.ToBeBuilt;
 import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.resource.N4JSResourceDescriptionManager;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 
 /**
  * Produces the compiled js files immediately after the validation in order save CPU cycles, e.g. the file is already
@@ -100,7 +90,7 @@ import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
  * getting rid of the method {@code foo} in class {@code A} and saving the editor content the incremental builder kicks
  * in and we arrive in the {@link ClusteringBuilderState}.
  *
- * First iteration with project <b>PA</b> (as of 26.04.2016):
+ * First iteration with project <b>PA</b> (as of 27.04.2016):
  * <p>
  * <ol>
  * <li>{@link ToBeBuilt} contains one URI that has to be updated. The URI of the module with class {@code A}.</li>
@@ -129,27 +119,6 @@ import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
  * "invalidated" the serialized {@link TModule} information for module B we will consider class {@code B} as a changed
  * one and based on the above described workflow we will rebuild module B and queue module C.
  *
- * <p>
- * Introduced changes with GH-134:
- * <p>
- * The serialized {@link TModule} information is not considered any more when checking whether a
- * {@link ResourceDescriptionsData} represents a change or not. That user data information will still exist on the
- * {@link IEObjectDescription} of the module and can be invalidated by wrapping it into a custom resource description
- * delta but will be ignored when comparing the user data keys values. Instead of that, a unique {@link MessageDigest}
- * is calculated from the serialized {@link TModule} and the will be involved in the comparison logic. Based on the
- * above example, module B with class {@code B} will <b>NOT</b> be considered as a change in the second iteration, hence
- * class {@code C} will not be queued, hence revalidated and no validation errors would be generated for class {@code C}
- * which is the proper behavior and our expectation as well.</li>
- *
- * <p>
- * To tackle the transitive dependency issues we have to modify the order of the processed resources when queuing the
- * affected ones. To achieve that the resource URIs are being processed after a topological sort (based on the project
- * dependencies). After the sorting it is ensured that module A, then B finally C will be the order when visiting all
- * resource URIs for the affected ones. Furthermore the {@link N4JSResourceDescriptionManager} will consider not only
- * direct dependencies but will check if there is a direct dependency to an already enqueued resource, if so, then
- * queues the current candidate as well.
- *
- *
  */
 @SuppressWarnings("restriction")
 public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState {
@@ -159,12 +128,6 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 
 	@Inject
 	private ContributingResourceDescriptionPersister descriptionPersister;
-
-	private final Supplier<IN4JSEclipseCore> core = Suppliers.memoize(() -> getN4jsEclipseCore());
-
-	private IN4JSEclipseCore getN4jsEclipseCore() {
-		return N4JSActivator.getInstance().getInjector(EU_NUMBERFOUR_N4JS_N4JS).getInstance(IN4JSEclipseCore.class);
-	}
 
 	/**
 	 * After the load phase, checks whether the underlying index content is empty or a recovery builder was scheduled,
@@ -308,30 +271,6 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 			Collection<Delta> allDeltas,
 			BuildData buildData,
 			final IProgressMonitor monitor) {
-
-		// If 'all deltas' is empty and no remaining URIs are available we will not hit the resource description manager
-		// anyway.
-		if (!allDeltas.isEmpty() && !allRemainingURIs.isEmpty()) {
-			final Collection<URI> copyAllRemainingURIs = newLinkedHashSet(allRemainingURIs);
-			final IN4JSEclipseCore eclipseCore = core.get();
-			final Multimap<IN4JSProject, URI> projectMapping = Multimaps.index(copyAllRemainingURIs,
-					uri -> {
-						return eclipseCore.findProject(uri).orNull();
-					});
-			allRemainingURIs.clear();
-			final IN4JSProject[] sortedProjects = eclipseCore.getAllAccessibleProjectsSorted();
-			for (int i = sortedProjects.length - 1; i >= 0; i--) {
-				final IN4JSProject p = sortedProjects[i];
-				final Collection<URI> collection = projectMapping.get(p);
-				if (null != collection) {
-					allRemainingURIs.addAll(collection);
-					copyAllRemainingURIs.removeAll(collection);
-				}
-			}
-
-			// Just add all unvisited URIs, consider manifest deletion.
-			allRemainingURIs.addAll(copyAllRemainingURIs);
-		}
 
 		// don't wanna copy super-class method, so using this helper to get the set of affected URIs:
 		final Set<URI> affectedURIs = new HashSet<>(allRemainingURIs);

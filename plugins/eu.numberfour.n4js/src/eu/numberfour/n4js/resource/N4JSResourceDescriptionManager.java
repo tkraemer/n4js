@@ -10,15 +10,12 @@
  */
 package eu.numberfour.n4js.resource;
 
-import static java.util.Collections.emptyList;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
@@ -44,7 +41,6 @@ import eu.numberfour.n4js.ts.utils.TypeHelper;
  * only a double check that the correct resource description strategy is bound in the runtime module.
  */
 @Singleton
-@SuppressWarnings("restriction")
 public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDescriptionManager implements N4Scheme {
 
 	@Inject
@@ -87,7 +83,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	@Override
 	public boolean isAffected(Collection<IResourceDescription.Delta> deltas, IResourceDescription candidate,
 			IResourceDescriptions context) {
-		boolean result = basicIsAffected(deltas, candidate, context);
+		boolean result = basicIsAffected(deltas, candidate);
 		if (!result) {
 			for (IResourceDescription.Delta delta : deltas) {
 				URI uri = delta.getUri();
@@ -105,18 +101,12 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	/**
 	 * Computes if a candidate is affected by any change, aka delta. It is affected, if
 	 */
-	private boolean basicIsAffected(Collection<Delta> deltas, final IResourceDescription candidate,
-			IResourceDescriptions context) {
+	private boolean basicIsAffected(Collection<Delta> deltas, final IResourceDescription candidate) {
 		// The super implementation DefaultResourceDescriptionManager#isAffected is based on a tradeoff / some
 		// assumptions which do not hold for n4js wrt to manifest changes
-		Collection<QualifiedName> namesImportedByCandidate = null; // computed the first time we need it, do not compute
-																	// upfront
-		final Iterable<URI> queuedURIs;
-		if (context instanceof CurrentDescriptions) {
-			queuedURIs = ((CurrentDescriptions) context).getBuildData().getAllRemainingURIs();
-		} else {
-			queuedURIs = emptyList();
-		}
+
+		// computed the first time we need it, do not compute eagerly
+		Collection<QualifiedName> namesImportedByCandidate = null;
 
 		for (IResourceDescription.Delta delta : deltas) {
 			if (delta.haveEObjectDescriptionsChanged() &&
@@ -130,7 +120,7 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 
 				if (isAffected(namesImportedByCandidate, delta.getNew()) // we may added a new exported name!
 						|| isAffected(namesImportedByCandidate, delta.getOld())) { // we may removed an exported name
-					if (hasTranstiveDependencyTo(candidate, delta)) { // isAffected does not compare project names
+					if (hasDependencyTo(candidate, delta)) { // isAffected does not compare project names
 						return true;
 					}
 				}

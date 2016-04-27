@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.ui.internal;
 
-import static com.google.common.collect.FluentIterable.from;
 import static java.lang.Boolean.TRUE;
 import static org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS;
 
@@ -33,7 +32,6 @@ import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseArchive;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseProject;
-import eu.numberfour.n4js.ui.projectModel.N4JSProjectTopologicalSort;
 
 /**
  */
@@ -157,10 +155,4 @@ public class N4JSEclipseCore extends AbstractN4JSCore implements IN4JSEclipseCor
 		return resourceDescriptionsProvider.getResourceDescriptions(resourceSet);
 	}
 
-	@Override
-	@SuppressWarnings("restriction")
-	public IN4JSProject[] getAllAccessibleProjectsSorted() {
-		return new N4JSProjectTopologicalSort()
-				.sort(from(model.findAllProjects()).filter(p -> p.exists()).toArray(IN4JSProject.class));
-	}
 }

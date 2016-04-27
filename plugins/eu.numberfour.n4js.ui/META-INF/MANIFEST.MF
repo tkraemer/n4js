@@ -38,9 +38,7 @@ Require-Bundle: eu.numberfour.n4js;visibility:=reexport,
  org.eclipse.jdt.ui,
  eu.numberfour.n4js.external.libraries,
  org.eclipse.ui.console,
- eu.numberfour.n4js.generator.ui,
- org.eclipse.e4.ui.workbench,
- org.apache.commons.lang
+ eu.numberfour.n4js.generator.ui
 Import-Package: com.ibm.icu.text,
  org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

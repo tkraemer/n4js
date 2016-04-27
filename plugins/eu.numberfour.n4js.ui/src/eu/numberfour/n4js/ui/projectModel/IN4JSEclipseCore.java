@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.URI;
 import com.google.common.base.Optional;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 
 /**
@@ -78,12 +77,4 @@ public interface IN4JSEclipseCore extends IN4JSCore {
 	 */
 	Optional<? extends IN4JSEclipseArchive> findArchive(URI archiveLocation);
 
-	/**
-	 * Returns with an ordered array of accessible N4JS projects after performing a topological sorting on the projects
-	 * based on their dependencies. The sorting algorithm is described at
-	 * {@code org.eclipse.e4.ui.internal.workbench.TopologicalSort}.
-	 *
-	 * @return an array of topologically sorted accessible N4JS projects.
-	 */
-	IN4JSProject[] getAllAccessibleProjectsSorted();
 }
