@@ -589,6 +589,13 @@ public class N4jsc {
 			return;
 		}
 
+		if (null == targetPlatformInstallLocation && null == targetPlatformFile) {
+			System.out.println(
+					"Missing target platform related configuration. Forcing `--targetPlatformSkipInstall` option.");
+			targetPlatformSkipInstall = true;
+			return;
+		}
+
 		if (null == targetPlatformInstallLocation) {
 			throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
 					"Target platform install location has to be specified, or `--targetPlatformSkipInstall ` flag must be provided.");
