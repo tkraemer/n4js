@@ -611,7 +611,7 @@ public class N4jsc {
 				}
 
 				try {
-					FileDeleter.delete(targetPlatformFile);
+					FileDeleter.delete(targetPlatformInstallLocation);
 				} catch (Exception e) {
 					throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
 							"Existing target platform install location cannot be cleared at: "

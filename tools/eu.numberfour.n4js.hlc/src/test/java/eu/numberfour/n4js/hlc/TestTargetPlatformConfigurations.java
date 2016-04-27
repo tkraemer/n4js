@@ -31,8 +31,6 @@ import eu.numberfour.n4js.utils.io.FileDeleter;
  */
 public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 
-	private static int EXPECTED_COMPILE_ERRORS = 1;
-
 	@Override
 	protected Map<String, String> getNpmDependencies() {
 		return singletonMap("express", "^4.13.4");
@@ -114,10 +112,9 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 		};
 		try {
 			new N4jsc().doMain(args);
-			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
 			assertTrue("install location was not created", getTargetPlatformInstallLocation().exists());
-			assertEquals(N4jsc.EXITCODE_CONFIGURATION_ERROR, e.getExitCode());
+			assertEquals(N4jsc.EXITCODE_SUCCESS, e.getExitCode());
 		}
 	}
 
@@ -147,7 +144,8 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertFalse("install location was not cleaned", testFile.exists());
+			assertFalse("install location was not cleaned, test file exists at " + testFile.getAbsolutePath(),
+					testFile.exists());
 			assertEquals(N4jsc.EXITCODE_CONFIGURATION_ERROR, e.getExitCode());
 		}
 	}
@@ -176,7 +174,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
+			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
 	}
 
@@ -202,7 +200,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
+			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
 	}
 
@@ -227,7 +225,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
+			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
 	}
 
