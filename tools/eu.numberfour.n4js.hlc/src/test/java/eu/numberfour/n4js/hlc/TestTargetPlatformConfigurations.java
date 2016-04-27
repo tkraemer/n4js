@@ -31,6 +31,8 @@ import eu.numberfour.n4js.utils.io.FileDeleter;
  */
 public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 
+	private static int EXPECTED_COMPILE_ERRORS = 1;
+
 	@Override
 	protected Map<String, String> getNpmDependencies() {
 		return singletonMap("express", "^4.13.4");
@@ -44,7 +46,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoTargetPlatformFile() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -69,7 +71,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -96,7 +98,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileCreatesInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		// force creating install location
@@ -125,7 +127,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileCleanInstallLocation() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		// force creating install location
@@ -158,7 +160,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoTargetPlatformFileWithSkipped() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -174,7 +176,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertEquals(N4jsc.EXITCODE_CONFIGURATION_ERROR, e.getExitCode());
+			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
 		}
 	}
 
@@ -184,7 +186,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileFailsIfNoInstallLocationWithSkipped() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -200,7 +202,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 			new N4jsc().doMain(args);
 			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			assertEquals(N4jsc.EXITCODE_CONFIGURATION_ERROR, e.getExitCode());
+			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
 		}
 	}
 
@@ -210,7 +212,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileForceSkippInstall() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
@@ -223,8 +225,9 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 		};
 		try {
 			new N4jsc().doMain(args);
+			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
-			fail("no exceptions, but was: " + e);
+			assertEquals(EXPECTED_COMPILE_ERRORS, e.getExitCode());
 		}
 	}
 
@@ -234,7 +237,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 	@Test
 	public void testCompileSkippInstallAndForceSkipInstall() throws IOException {
 		System.out.println(name.getMethodName());
-		setupWorkspace("external_with_n4jsd");
+		setupWorkspace("external_with_n4jsd_tpt");
 		final String wsRoot = TARGET + "/" + WSP;
 
 		final String[] args = {
