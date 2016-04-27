@@ -190,7 +190,7 @@ public class N4jsc {
 	@Option(name = "--targetPlatformSkipInstall", required = false, usage = "usually dependencies defined in the target platform file will be installed into the folder defined by option --targetPlatformInstallLocation. "
 			+ "If this flag is provided, this installation will be skipped, assuming the given folder already contains the required files and everything is up-to-date."
 			+ "Use with care, because no checks will be performed whether the location actually contains all required dependencies.")
-	boolean targetPlatformSkipInstall;
+	boolean targetPlatformSkipInstall = false;
 
 	@Option(name = "--keepCompiling", usage = "keep compiling - even if errors are encountered")
 	boolean keepCompiling = false;
@@ -590,8 +590,6 @@ public class N4jsc {
 		}
 
 		if (null == targetPlatformInstallLocation && null == targetPlatformFile) {
-			System.out.println(
-					"Missing target platform related configuration. Forcing `--targetPlatformSkipInstall` option.");
 			targetPlatformSkipInstall = true;
 			return;
 		}
