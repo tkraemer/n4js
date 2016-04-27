@@ -1,4 +1,14 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest 
+   
+    ResourceSet {
+		ThisFile { }
+		Resource "error_helper.n4js" { }
+	}
+   
+   END_SETUP
+ */
+ 
+import { getNodeJs5xErrorToString } from "builtin_js/object/error_helper"
 
 // Object.isExtensible()
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible
@@ -21,7 +31,7 @@ var empty3 : Object = {};
 Object.freeze(empty3);
 console.log("not extensible = " + (Object.isExtensible(empty3) === false));
 try { empty3["b"] = 5; }
-catch(e) { console.log(e); }
+catch(e) { console.log(getNodeJs5xErrorToString(e)); }
 console.log("not extended: " + JSON.stringify(empty3));
 
 /* XPECT output --- 

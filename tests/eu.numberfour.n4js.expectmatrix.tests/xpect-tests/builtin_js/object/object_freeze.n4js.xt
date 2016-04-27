@@ -1,4 +1,14 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest 
+   
+    ResourceSet {
+		ThisFile { }
+		Resource "error_helper.n4js" { }
+	}
+   
+   END_SETUP
+ */
+ 
+import { getNodeJs5xErrorToString } from "builtin_js/object/error_helper"
 
 // Object.freeze()
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
@@ -20,8 +30,8 @@ console.log("returned: " + JSON.stringify(o));
 console.log("frozen = " + (Object.isFrozen(obj) === true));
 
 // Now any changes will fail (note: N4JS is now always in strict mode)
-try { obj.foo = "quux"; } catch(e) { console.log(e); }
-try { obj.quaxxor = "the friendly duck"; } catch(e) { console.log(e); }
+try { obj.foo = "quux"; } catch(e) { console.log(getNodeJs5xErrorToString(e)); }
+try { obj.quaxxor = "the friendly duck"; } catch(e) { console.log(getNodeJs5xErrorToString(e)); }
 
 console.log("unchanged: " + JSON.stringify(obj));
 
@@ -31,12 +41,12 @@ function fail(){
   try { 
   	obj.foo = "sparky"; // throws a TypeError
   }
-  catch (e) { console.log(e); }
+  catch (e) { console.log(getNodeJs5xErrorToString(e)); }
   
   try {
   	obj.sparky = "arf"; // throws a TypeError
   }
-  catch (e1) { console.log(e1); }
+  catch (e1) { console.log(getNodeJs5xErrorToString(e1)); }
 }
 
 // Attempted changes through Object.defineProperty will also throw TypeError
@@ -44,12 +54,12 @@ function attemptChanges() {
 	try {
 		Object.defineProperty(obj, "ohai", { value: 17 }); // throws a TypeError
 	}
-	catch (e) { console.log(e);
+	catch (e) { console.log(getNodeJs5xErrorToString(e));
 	}
 	try {
 		Object.defineProperty(obj, "foo", { value: "eit" }); // throws a TypeError
 	}
-	catch (e1) { console.log(e1);}
+	catch (e1) { console.log(getNodeJs5xErrorToString(e1));}
 	}
 	
 fail();
@@ -60,10 +70,10 @@ attemptChanges();
 stdout:
 returned: {"foo":"baz","lumpy":"woof"}
 frozen = true
-[TypeError: Cannot assign to read only property 'foo' of #<Object>]
+[TypeError: Cannot assign to read only property 'foo' of object '#<Object>']
 [TypeError: Can't add property quaxxor, object is not extensible]
 unchanged: {"foo":"baz","lumpy":"woof"}
-[TypeError: Cannot assign to read only property 'foo' of #<Object>]
+[TypeError: Cannot assign to read only property 'foo' of object '#<Object>']
 [TypeError: Can't add property sparky, object is not extensible]
 [TypeError: Cannot define property:ohai, object is not extensible.]
 [TypeError: Cannot redefine property: foo]

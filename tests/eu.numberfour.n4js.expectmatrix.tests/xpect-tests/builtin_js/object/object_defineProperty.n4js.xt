@@ -1,4 +1,14 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest 
+   
+    ResourceSet {
+		ThisFile { }
+		Resource "error_helper.n4js" { }
+	}
+   
+   END_SETUP
+ */
+ 
+import { getNodeJs5xErrorToString } from "builtin_js/object/error_helper"
 
 // Object.defineProperty()
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
@@ -29,7 +39,7 @@ function fail () {
 	try {
 		Object.defineProperty(o, "conflict", { value: 0x9f91102, get: function() { return 0xdeadbeef; } });
 	}
-	catch (e) { console.log(e);}
+	catch (e) { console.log(getNodeJs5xErrorToString(e)); }
 }
 
 fail();
@@ -40,7 +50,7 @@ fail();
 stdout:
 {"a":37}
 38 = 38
-[TypeError: Invalid property.  A property cannot both have accessors and be writable or have a value, #<Object>]
+[TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute, #<Object>]
 stderr:
 ==>
 --- */

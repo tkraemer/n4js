@@ -1,5 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
+// function to get back the Node.js 5.x behavior. (Type + message instead of stack.)
+function getNodeJs5xErrorToString(e): string {
+    return '[' + Error.prototype.toString.call(e) + ']';
+}
 
 //taken from /xpect-tests/ChD/D_6_3_ES7_Async_Functions/dboTests.n4js.xt
 function setTimeout(fn:{function():void}, t:number):void{
@@ -27,11 +31,11 @@ async function testWithFooOne(allDone : {function()}) {
 	
 	console.log('use case #1: with await, long syntax');
 	try { console.log(await @Promisify fooOne('some path')); }
-	catch(err01) { console.log('-> got expected error err01:', err01); }
+	catch(err01) { console.log('-> got expected error err01:', getNodeJs5xErrorToString(err01)); }
 	
 	console.log('use case #2: with await, short syntax');
 	try { console.log(await fooOne('some path')); }
-	catch(err02) { console.log('-> got expected error err02:', err02); }
+	catch(err02) { console.log('-> got expected error err02:', getNodeJs5xErrorToString(err02)); }
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify fooOne('some path');
@@ -40,12 +44,12 @@ async function testWithFooOne(allDone : {function()}) {
 			console.log('TEST FAILURE:', res);
 		},
 		function(err03){
-			console.log('-> got expected error err03:', err03);
+			console.log('-> got expected error err03:', getNodeJs5xErrorToString(err03));
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');
 			fooOne('some path', function(err04,res) {
 				if(err04) {
-					console.log('-> got expected error err04:', err04);
+					console.log('-> got expected error err04:', getNodeJs5xErrorToString(err04));
 				} else {
 					console.log('TEST FAILURE:', res);
 				}
@@ -63,11 +67,11 @@ async function testWithFooMany(allDone : {function()}) {
 	
 	console.log('use case #1: with await, long syntax');
 	try { console.log(await @Promisify fooMany('some path')); }
-	catch(err11) { console.log('-> got expected error err11:', err11); }
+	catch(err11) { console.log('-> got expected error err11:', getNodeJs5xErrorToString(err11)); }
 	
 	console.log('use case #2: with await, short syntax');
 	try { console.log(await fooMany('some path')); }
-	catch(err12) { console.log('-> got expected error err12:', err12); }
+	catch(err12) { console.log('-> got expected error err12:', getNodeJs5xErrorToString(err12)); }
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify fooMany('some path');
@@ -76,12 +80,12 @@ async function testWithFooMany(allDone : {function()}) {
 			console.log('TEST FAILURE:', res);
 		},
 		function(err13){
-			console.log('-> got expected error err13:', err13);
+			console.log('-> got expected error err13:', getNodeJs5xErrorToString(err13));
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');
 			fooMany('some path', function(err14,res) {
 				if(err14) {
-					console.log('-> got expected error err14:', err14);
+					console.log('-> got expected error err14:', getNodeJs5xErrorToString(err14));
 				} else {
 					console.log('TEST FAILURE:', res);
 				}
@@ -99,11 +103,11 @@ async function testWithFooNone(allDone : {function()}) {
 	
 	console.log('use case #1: with await, long syntax');
 	try { await @Promisify fooNone('some path'); }
-	catch(err21) { console.log('-> got expected error err21:', err21); }
+	catch(err21) { console.log('-> got expected error err21:', getNodeJs5xErrorToString(err21)); }
 	
 	console.log('use case #2: with await, short syntax');
 	try { await fooNone('some path'); }
-	catch(err22) { console.log('-> got expected error err22:', err22); }
+	catch(err22) { console.log('-> got expected error err22:', getNodeJs5xErrorToString(err22)); }
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify fooNone('some path');
@@ -112,12 +116,12 @@ async function testWithFooNone(allDone : {function()}) {
 			console.log('TEST FAILURE');
 		},
 		function(err23){
-			console.log('-> got expected error err23:', err23);
+			console.log('-> got expected error err23:', getNodeJs5xErrorToString(err23));
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');
 			fooNone('some path', function(err24) {
 				if(err24) {
-					console.log('-> got expected error err24:', err24);
+					console.log('-> got expected error err24:', getNodeJs5xErrorToString(err24));
 				} else {
 					console.log('TEST FAILURE');
 				}

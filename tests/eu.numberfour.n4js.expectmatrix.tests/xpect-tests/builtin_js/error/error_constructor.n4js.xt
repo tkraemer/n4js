@@ -6,7 +6,7 @@
 try {
   throw new Error("Whoops!");
 } catch (e) {
-	console.log(e);
+	console.log('[' + Error.prototype.toString.call(e) + ']');
 }
 
 // Message is optional
