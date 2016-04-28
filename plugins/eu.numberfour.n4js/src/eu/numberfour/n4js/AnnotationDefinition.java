@@ -16,6 +16,7 @@ import static com.google.common.collect.Iterables.concat;
 import static com.google.common.collect.Iterables.getFirst;
 import static com.google.common.collect.Iterables.tryFind;
 import static eu.numberfour.n4js.AnnotationDefinition.RetentionPolicy.RUNTIME;
+import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.BOOLEAN_LITERAL;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.EXPORTABLE_ELEMENT;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.EXPORT_DECLARATION;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.FORMAL_PARAMETER;
@@ -112,6 +113,30 @@ public final class AnnotationDefinition {
 	public final static AnnotationDefinition FINAL = define("Final")
 			.targets(N4_CLASS_DECLARATION, N4_MEMBER_DECLARATION)
 			.targetsWithCustomError(N4_INTERFACE_DECLARATION).end();
+
+	/**
+	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
+	 */
+	public final static AnnotationDefinition WRITABLE = define("Writable")
+			.args(BOOLEAN_LITERAL)
+			.targets(N4_FIELD_DECLARATION)
+			.retention(RetentionPolicy.TYPE).end();
+
+	/**
+	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
+	 */
+	public final static AnnotationDefinition ENUMERABLE = define("Enumerable")
+			.args(BOOLEAN_LITERAL)
+			.targets(N4_FIELD_DECLARATION, N4_FIELD_ACCESSOR)
+			.retention(RetentionPolicy.TYPE).end();
+
+	/**
+	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
+	 */
+	public final static AnnotationDefinition CONFIGURABLE = define("Configurable")
+			.args(BOOLEAN_LITERAL)
+			.targets(N4_FIELD_DECLARATION, N4_FIELD_ACCESSOR)
+			.retention(RetentionPolicy.TYPE).end();
 
 	/**
 	 * 5.1.2.2. Observable Classes
