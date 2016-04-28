@@ -142,11 +142,10 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 		};
 		try {
 			new N4jsc().doMain(args);
-			fail("Expecting exit code: " + N4jsc.EXITCODE_CONFIGURATION_ERROR);
 		} catch (final ExitCodeException e) {
 			assertFalse("install location was not cleaned, test file exists at " + testFile.getAbsolutePath(),
 					testFile.exists());
-			assertEquals(N4jsc.EXITCODE_CONFIGURATION_ERROR, e.getExitCode());
+			assertEquals(N4jsc.EXITCODE_SUCCESS, e.getExitCode());
 		}
 	}
 
@@ -250,7 +249,7 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 		try {
 			new N4jsc().doMain(args);
 		} catch (final ExitCodeException e) {
-			fail("no exceptions, but was: " + e);
+			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
 	}
 
