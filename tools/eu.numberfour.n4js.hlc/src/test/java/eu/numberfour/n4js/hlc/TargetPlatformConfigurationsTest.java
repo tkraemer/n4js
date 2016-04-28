@@ -27,9 +27,9 @@ import eu.numberfour.n4js.hlc.N4jsc.Type;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 
 /**
- * Downloads, installs, compiles and runs 'express'.
+ * Downloads, installs, compiles and runs 'express' for different target platform configurations.
  */
-public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
+public class TargetPlatformConfigurationsTest extends BaseN4jscExternalTest {
 
 	@Override
 	protected Map<String, String> getNpmDependencies() {
@@ -253,4 +253,47 @@ public class TestTargetPlatformConfigurations extends BaseN4jscExternalTest {
 		}
 	}
 
+	// combined compiler invocations
+	/**
+	 * Test compiling with external libraries installation, then invoke compilation without installing. We expect second
+	 * invocation to re-use installed external libraries in first invocation.
+	 */
+	@Test
+	public void testCompileWithInstallPlusCompileSkipInstall() throws IOException {
+		System.out.println(name.getMethodName());
+		setupWorkspace("external_with_n4jsd_tpt");
+		final String wsRoot = TARGET + "/" + WSP;
+
+		final String[] argsInstall = {
+				"--targetPlatformFile", getTargetPlatformFile().getAbsolutePath(),
+				"--targetPlatformInstallLocation", getTargetPlatformInstallLocation().getAbsolutePath(),
+				"--debug",
+				"--verbose",
+				"--projectlocations", wsRoot,
+				"-t", Type.allprojects.toString()
+		};
+		try {
+			new N4jsc().doMain(argsInstall);
+		} catch (final ExitCodeException e) {
+			assertTrue("install location was not created", getTargetPlatformInstallLocation().exists());
+			assertEquals(N4jsc.EXITCODE_SUCCESS, e.getExitCode());
+		}
+
+		final String[] argsSkipInstall = {
+				"--targetPlatformFile", getTargetPlatformFile().getAbsolutePath(),
+				"--targetPlatformInstallLocation", getTargetPlatformInstallLocation().getAbsolutePath(),
+				"--targetPlatformSkipInstall",
+				"--debug",
+				"--verbose",
+				"--projectlocations", wsRoot,
+				"-t", Type.allprojects.toString()
+		};
+		try {
+			new N4jsc().doMain(argsSkipInstall);
+		} catch (final ExitCodeException e) {
+			assertTrue("install location still exists", getTargetPlatformInstallLocation().exists());
+			assertEquals(N4jsc.EXITCODE_SUCCESS, e.getExitCode());
+		}
+
+	}
 }

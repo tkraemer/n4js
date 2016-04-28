@@ -505,11 +505,43 @@ public class N4jsc {
 	}
 
 	private void cloneGitRepositoryAndInstallNpmPackages() throws ExitCodeException {
+		checkState(installLocationProvider instanceof HeadlessTargetPlatformInstallLocationProvider);
+
 		if (targetPlatformSkipInstall) {
-			return;
+
+			/**
+			 * TLDR; Silent check in case of invocation `--targetPlatformInstallLocation foo
+			 * --targetPlatformSkipInstall`, provided <code>foo</code> can be used as location of extra resources (i.e.
+			 * external libraries).
+			 *
+			 *
+			 * With `targetPlatformSkipInstall` {@link #checkTargetPlatformConfigurations} is not validating install
+			 * location but we might want to use it for extra sources (we assume user have manually prepared that, e.g.
+			 * by previous invocation of the compiler). In such case subsequent invocations can skip installing, skip
+			 * normal validation of the location (i.e. one that throws errors), but need to consider
+			 * `targetPlatformInstallLocation`. Thus we set provided value in the
+			 * HeadlessTargetPlatformInstallLocationProvider, other wise
+			 * {@link #convertToFilesAddTargetPlatformAndCheckWritableDir} will not add resources to build.
+			 *
+			 * Note that {@link #convertToFilesAddTargetPlatformAndCheckWritableDir} cannot use raw user input (i.e.
+			 * {@link #targetPlatformInstallLocation}) as it would get NPE when compiler is invoked without
+			 * `targetPlatformInstallLocation` but with `targetPlatformSkipInstall`.
+			 *
+			 */
+
+			if (null != targetPlatformInstallLocation
+					&& targetPlatformInstallLocation.exists()
+					&& targetPlatformInstallLocation.isDirectory()
+					&& targetPlatformInstallLocation.canRead()
+					&& targetPlatformInstallLocation.canWrite()) {
+				((HeadlessTargetPlatformInstallLocationProvider) installLocationProvider)
+						.setTargetPlatformInstallLocation(targetPlatformInstallLocation.toURI());
+			}
+			return;// no git setup, no package.json creation, no npm install
 		}
 
-		checkState(installLocationProvider instanceof HeadlessTargetPlatformInstallLocationProvider);
+		// at this point `targetPlatformSkipInstall=false`, `targetPlatformInstallLocation!=null`,
+		// `targetPlatformFile=null` -> see {@link #checkTargetPlatformConfigurations}
 
 		try {
 
@@ -581,22 +613,34 @@ public class N4jsc {
 	 * Checks state of target platform related configurations. Can perform file system modifications to make it
 	 * consistent with provided data, in particular can clean {@link #targetPlatformInstallLocation}.
 	 *
+	 * <ul>
+	 * <li>if it does not exist and --targetPlatformSkipInstall is not specified, location is created
+	 * <li>if it does exist and --targetPlatformSkipInstall is not specified, delete contents of that location if any
+	 * <li>if it does not exist and --targetPlatformSkipInstall is specified, proceed
+	 * <li>if it does exist and --targetPlatformSkipInstall is not specified, proceed
+	 * </ul>
+	 *
 	 * @throws ExitCodeException
 	 *             if configuration is inconsistent or cannot be fixed.
 	 */
 	private void checkTargetPlatformConfigurations() throws ExitCodeException {
 		if (targetPlatformSkipInstall) {
+			// don't validate, target platform locations should not be used (but see special case in {@link
+			// #cloneGitRepositoryAndInstallNpmPackages}
 			return;
 		}
 
 		if (null == targetPlatformInstallLocation && null == targetPlatformFile) {
+			// force `targetPlatformSkipInstall` for old setups and tests (previously we have treated `null ==
+			// targetPlatformFile` similar to `targetPlatformSkipInstall` in some cases).
+			// In general assume that if user provides no target platform data, it means skip installing npms
 			targetPlatformSkipInstall = true;
 			return;
 		}
 
 		if (null == targetPlatformInstallLocation) {
 			throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
-					"Target platform install location has to be specified, or `--targetPlatformSkipInstall ` flag must be provided.");
+					"Target platform install location has to be specified, or `--targetPlatformSkipInstall` flag must be provided.");
 		} else {
 			if (targetPlatformInstallLocation.exists()) {
 				if (!targetPlatformInstallLocation.isDirectory()) {
@@ -610,6 +654,7 @@ public class N4jsc {
 									+ ".");
 				}
 
+				// GH-176 clean directory (but not <code>if(targetPlatformSkipInstall)</code>)
 				try {
 					FileDeleter.delete(targetPlatformInstallLocation);
 				} catch (Exception e) {
@@ -621,7 +666,7 @@ public class N4jsc {
 			}
 
 			try {
-				targetPlatformInstallLocation.mkdirs();
+				checkState(targetPlatformInstallLocation.mkdirs());
 			} catch (Exception e) {
 				throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR,
 						"Target platform install location cannot be created at: " + targetPlatformInstallLocation + ".",
