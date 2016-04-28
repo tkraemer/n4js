@@ -38,10 +38,12 @@ class WorkspaceWizardModel {
 	 *            The model
 	 * @param selection
 	 *            The selection
+	 * @param extractModuleFile 
+	 *            {@code true} if the module file should be filled in as well, {@code false} otherwise
 	 * @param n4jsCore
 	 *            IN4JSCore implementation
 	 */
-	public static def fillModelFromInitialSelection(WorkspaceWizardModel model, IStructuredSelection selection, IN4JSCore n4jsCore) {
+	public static def populateModelFromInitialSelection(WorkspaceWizardModel model, IStructuredSelection selection, boolean extractModuleFile, IN4JSCore n4jsCore) {
 
 		val firstElement = selection.getFirstElement();
 		if (firstElement instanceof IResource) {
@@ -76,6 +78,11 @@ class WorkspaceWizardModel {
 
 						if (!moduleSpecifier.isEmpty()) {
 							model.setModuleSpecifier(moduleSpecifier + "/");
+						}
+						
+						// If extractModuleFile is true and the selection is a file
+						if (extractModuleFile && firstElement instanceof IFile) {
+							model.moduleSpecifier = model.moduleSpecifier + firstElement.fullPath.removeFileExtension.lastSegment;
 						}
 					}
 
