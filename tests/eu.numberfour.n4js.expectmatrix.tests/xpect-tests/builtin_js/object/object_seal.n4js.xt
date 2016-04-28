@@ -1,14 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest 
-   
-    ResourceSet {
-		ThisFile { }
-		Resource "error_helper.n4js" { }
-	}
-   
-   END_SETUP
- */
- 
-import { getNodeJs5xErrorToString } from "builtin_js/object/error_helper"
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP */
 
 // Object.seal()
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
@@ -39,14 +29,14 @@ function fail1 () {
 	try {
 		Object.defineProperty(obj, "foo", { get: function() { return "g"; } }); // throws a TypeError
 	}
-	catch (e) { console.log(getNodeJs5xErrorToString(e)); }
+	catch (e) { console.log((e as Object).toString()); }
 }
 
 fail1();
 
 // Now any changes, other than to property values, will fail (note: N4JS is now always in strict mode)
-try { obj.quaxxor = "the friendly duck"; } catch(e) { console.log(getNodeJs5xErrorToString(e)); }
-try { delete obj.foo; } catch(e) { console.log(getNodeJs5xErrorToString(e)); }
+try { obj.quaxxor = "the friendly duck"; } catch(e) { console.log((e as Object).toString()); }
+try { delete obj.foo; } catch(e) { console.log((e as Object).toString()); }
 
 console.log("unchanged: " + JSON.stringify(obj));
 
@@ -56,12 +46,12 @@ function fail2() {
   try {
   	delete obj.foo; // throws a TypeError 	
   }
-  catch (e) { console.log(getNodeJs5xErrorToString(e)); }
+  catch (e) { console.log((e as Object).toString()); }
   
   try {
 	  obj.sparky = "arf"; // throws a TypeError
   }
-  catch (e1) { console.log(getNodeJs5xErrorToString(e1)); }
+  catch (e1) { console.log((e1 as Object).toString()); }
 }
 
 fail2();
@@ -71,7 +61,7 @@ function fail3 () {
 	try {
 		Object.defineProperty(obj, "ohai", { value: 17 }); // throws a TypeError
 	}
-	catch (e) { console.log(getNodeJs5xErrorToString(e));}
+	catch (e) { console.log((e as Object).toString());}
 }
 
 fail3();
@@ -86,13 +76,13 @@ stdout:
 true = true
 true = true
 { foo: 'quux', lumpy: 'woof' }
-[TypeError: Cannot redefine property: foo]
-[TypeError: Can't add property quaxxor, object is not extensible]
-[TypeError: Cannot delete property 'foo' of #<Object>]
+TypeError: Cannot redefine property: foo
+TypeError: Can't add property quaxxor, object is not extensible
+TypeError: Cannot delete property 'foo' of #<Object>
 unchanged: {"foo":"quux","lumpy":"woof"}
-[TypeError: Cannot delete property 'foo' of #<Object>]
-[TypeError: Can't add property sparky, object is not extensible]
-[TypeError: Cannot define property:ohai, object is not extensible.]
+TypeError: Cannot delete property 'foo' of #<Object>
+TypeError: Can't add property sparky, object is not extensible
+TypeError: Cannot define property:ohai, object is not extensible.
 eit
 stderr:
 ==>

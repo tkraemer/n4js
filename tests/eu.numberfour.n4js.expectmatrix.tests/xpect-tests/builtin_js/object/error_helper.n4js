@@ -1,4 +1,0 @@
-// function to get back the Node.js 5.x behavior. (Type + message instead of stack.)
-export public function getNodeJs5xErrorToString(e): string {
-    return '[' + Error.prototype.toString.call(e) + ']';
-}
