@@ -273,6 +273,18 @@ public final class AnnotationDefinition {
 	/**
 	 * N4JSIDESpec : chapter 9 Testing
 	 */
+	public final static AnnotationDefinition PARAMETERS = define("Parameters").targets(N4_METHOD_DECLARATION)
+			.retention(RetentionPolicy.RUNTIME).args(STRING_LITERAL).argsOptional().end();
+
+	/**
+	 * N4JSIDESpec : chapter 9 Testing
+	 */
+	public final static AnnotationDefinition PARAMETER = define("Parameter").targets(N4_FIELD_DECLARATION,
+			N4_SETTER_DECLARATION).retention(RetentionPolicy.RUNTIME).args(INT_LITERAL).argsOptional().end();
+
+	/**
+	 * N4JSIDESpec : chapter 9 Testing
+	 */
 	public final static AnnotationDefinition BEFOREALL_SETUP = define("BeforeAll").targets(N4_METHOD_DECLARATION)
 			.retention(RetentionPolicy.RUNTIME).end();
 
