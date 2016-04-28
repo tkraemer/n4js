@@ -44,7 +44,7 @@
      */
     function $makeClass(ctor, superCtor, implementedInterfaces, instanceMethods, staticMethods, n4typeFn) {
         if (typeof superCtor === "function") {
-            ctor.__proto__ = superCtor;
+            Object.setPrototypeOf(ctor, superCtor);
         }
         Object.defineProperties(ctor, staticMethods);
 

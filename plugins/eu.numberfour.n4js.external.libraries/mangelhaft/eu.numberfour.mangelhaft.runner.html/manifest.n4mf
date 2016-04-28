@@ -30,6 +30,5 @@ ProjectDependencies {
     n4js.lang,
     eu.numberfour.mangelhaft.mangeltypes,
     eu.numberfour.mangelhaft,
-    eu.numberfour.mangelhaft.reporter.html,
-    eu.numberfour.mangelhaft.reporter.console
+    eu.numberfour.mangelhaft.reporter.html
 }

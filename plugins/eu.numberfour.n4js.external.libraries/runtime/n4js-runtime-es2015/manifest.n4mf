@@ -13,7 +13,7 @@ VendorId: eu.numberfour
 ProjectName: "n4js-runtime-es2015"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
-ProjectVersion: 0.3.1
+ProjectVersion: 0.3.2
 Output: "src-gen"
 Sources {
     source {

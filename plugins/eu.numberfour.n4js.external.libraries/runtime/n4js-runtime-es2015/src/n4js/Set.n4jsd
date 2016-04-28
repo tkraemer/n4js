@@ -18,7 +18,7 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     @Override public [Symbol.iterator](): IteratorExt<ValueT>;
 
     /**
-     * Length property is 1.
+     * Length property is 0.
      */
     @Final public length: int;
 

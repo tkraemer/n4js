@@ -11,8 +11,8 @@
 @@Global @@ProvidedByRuntime
 
 export external public class ~ProxyHandler<T extends Object> {
-    public construct: {function(/*target: */T, /*argumentsList: */Array<any>): T}?;
-    public apply: {function(/*target: */T, /*thisArg: */T, /*argumentsList: */Array<any>): any}?;
+    public construct: {function(/*target: */T, /*argumentsList: */Array<any>): Object}?;
+    public apply: {function(/*target: */T, /*thisArg: */Object, /*argumentsList: */Array<any>): any}?;
     public has: {function(/*target: */T, /*property: */union{string, symbol}): boolean}?;
     public get: {function(/*target: */T, /*property: */union{string, symbol}, /*receiver: */T): any}?;
     public set: {function(/*target: */T, /*property: */union{string, symbol}, /*value: */any, /*receiver: */T): boolean}?;
