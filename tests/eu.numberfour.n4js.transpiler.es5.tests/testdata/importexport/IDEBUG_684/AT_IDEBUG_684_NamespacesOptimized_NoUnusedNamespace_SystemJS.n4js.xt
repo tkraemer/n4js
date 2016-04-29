@@ -41,7 +41,7 @@
 <==
 stdout:
 [Function: Error]
-Module { C1: [Function: C1] }
+ModuleRecord { C1: [Function: C1] }
 stderr:
 ==>
 --- */

@@ -79,21 +79,17 @@
 													clearTimeout(timeoutId);
 												}
 												resolve(res);
-												(yield undefined);
-												return;
-											}.bind(this));
+											}.apply(this, arguments));
 										}
 										testResult = (yield new Promise(doPromise));
-										(yield testResult);
-										return;
-									}.bind(this));
+										return testResult;
+									}.apply(this, arguments));
 								};
 								if (testMethodDescriptors) {
 									results = (((yield Promise.all(testMethodDescriptors.map(runTest)))));
 								}
-								(yield results);
-								return;
-							}.bind(this));
+								return results;
+							}.apply(this, arguments));
 						}
 					},
 					getAncestorTestMethods: {
@@ -115,11 +111,10 @@
 					runTestAsync: {
 						value: function runTestAsync___n4(instrumentedTest) {
 							return $spawn(function*() {
-								(yield this.runTestsAsync([
+								return this.runTestsAsync([
 									instrumentedTest
-								]));
-								return;
-							}.bind(this));
+								]);
+							}.apply(this, arguments));
 						}
 					},
 					runTestsAsync: {
@@ -129,7 +124,7 @@
 								;
 								var runGroup = function runGroup(iTest) {
 									return $spawn(function*() {
-										let rg, testResults = [], beforeAlls = that.getAncestorTestMethods(iTest, "beforeAlls"), befores = that.getAncestorTestMethods(iTest, "befores"), afters = that.getAncestorTestMethods(iTest, "afters").reverse(), afterAlls = that.getAncestorTestMethods(iTest, "afterAlls").reverse(), numTests, ii, start, end;
+										let rg, testObject, testRes, testResults = [], beforeAlls = that.getAncestorTestMethods(iTest, "beforeAlls"), befores = that.getAncestorTestMethods(iTest, "befores"), afters = that.getAncestorTestMethods(iTest, "afters").reverse(), afterAlls = that.getAncestorTestMethods(iTest, "afterAlls").reverse(), numTests, ii, start, end;
 										;
 										(yield that.spy.groupStarted.dispatch([
 											iTest
@@ -141,7 +136,7 @@
 												(yield that.callAll(iTest, beforeAlls));
 												numTests = iTest.tests.length;
 												for(ii = 0;ii < numTests;++ii) {
-													let testObject = iTest.tests[ii], testRes;
+													testObject = iTest.tests[ii];
 													try {
 														(yield that.spy.testStarted.dispatch([
 															iTest,
@@ -191,9 +186,7 @@
 																} finally {
 																	iTest.tests = allTests;
 																}
-																(yield undefined);
-																return;
-															}.bind(this));
+															}.apply(this, arguments));
 														}).bind(this)
 													]));
 													testResults.push(testRes);
@@ -204,48 +197,24 @@
 												testResults = testResults.concat(results);
 											}
 										}
-										let successes = testResults.reduce(function(successes, testResult) {
-											if (testResult.testStatus === 'PASSED') {
-												successes = successes + 1;
-											}
-											return successes;
-										}, 0), failures = testResults.length - successes;
-										;
-										rg = new ResultGroup({
-											testResults: testResults,
-											description: iTest.name,
-											failures: failures,
-											successes: successes
-										});
+										rg = new ResultGroup(testResults, iTest.name);
 										(yield that.spy.groupFinished.dispatch([
 											iTest,
 											rg
 										]));
-										(yield rg);
-										return;
-									}.bind(this));
+										return rg;
+									}.apply(this, arguments));
 								};
-								let result = [];
+								let results = [];
 								for(let test of instrumentedTests) {
 									if (test) {
 										let testRes = (yield runGroup(test));
-										result.push(testRes);
+										results.push(testRes);
 									}
 								}
-								let ranResultGroups = result, successes = ranResultGroups.reduce(function(successes, resultGroup) {
-									successes = successes + resultGroup.successes;
-									return successes;
-								}, 0), failures = ranResultGroups.reduce(function(failures, resultGroup) {
-									failures = failures + resultGroup.failures;
-									return failures;
-								}, 0), results = new ResultGroups({
-									results: ranResultGroups,
-									failures: failures,
-									successes: successes
-								});
-								(yield results);
-								return;
-							}.bind(this));
+								let resultGroups = new ResultGroups(results);
+								return resultGroups;
+							}.apply(this, arguments));
 						}
 					},
 					errorTests: {
@@ -268,9 +237,8 @@
 									]));
 									testResults.push(testResult);
 								}
-								(yield testResults);
-								return;
-							}.bind(this));
+								return testResults;
+							}.apply(this, arguments));
 						}
 					},
 					spy: {

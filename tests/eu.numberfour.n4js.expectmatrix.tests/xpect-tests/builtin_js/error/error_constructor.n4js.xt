@@ -6,7 +6,7 @@
 try {
   throw new Error("Whoops!");
 } catch (e) {
-	console.log(e);
+	console.log((e as Object).toString());
 }
 
 // Message is optional
@@ -30,7 +30,7 @@ console.log(ue.toString());
 /* XPECT output --- 
 <==
 stdout:
-[Error: Whoops!]
+Error: Whoops!
 Error
 EvalError: Eval error is bad
 RangeError: RAGE!!!

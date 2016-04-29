@@ -1,0 +1,93 @@
+/*
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import {FIXME1} from "n4/mangel/Test"
+import {FIXME2} from "n4/mangel/Test"
+import {IFIXME} from "n4/mangel/Test"
+import {IFIXME2} from "n4/mangel/Test"
+import {TestController} from "n4/mangel/TestController"
+import { ITestReporter } from "n4/mangel/mangeltypes/ITestReporter"
+import { TestDIComponent } from "n4/mangel/mangeltypes/TestDIComponent"
+import { TestInfo } from "n4/mangel/mangeltypes/TestInfo"
+import { TestInfos } from "n4/mangel/mangeltypes/TestInfos"
+import { ConsoleReporter } from "n4/mangel/reporter/console/ConsoleReporter"
+import { XUnitReporter } from "n4/mangel/reporter/xunit/XUnitReporter"
+import NodeTestCLI from "n4/mangel/runner/node/NodeTestCLI"
+import {N4Injector} from "n4js/lang/N4Injector"
+import * as lib_fs from "fs"
+
+class NodeTestRunner  {
+    @Inject
+    protected controller: TestController;
+    @Inject
+    public consoleReporter: ConsoleReporter;
+    @Inject
+    public xunitReporter: XUnitReporter;
+
+    @Final protected async run(): void {
+        let options = NodeTestCLI.parseCommandLine(),
+            testCatalog: TestInfos;
+
+        if (!options) {
+            return;
+        }
+
+        if (options.testCatalog.startsWith("http://")) { // running IDE
+            let req = await fetch(options.testCatalog, {
+                headers: {
+                    "Content-Type": "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
+                }
+            });
+            testCatalog = (await req.json()) as TestInfos;
+        } else {
+            testCatalog = {
+                testDescriptors: JSON.parse(await lib_fs.readFile(options.testCatalog, { encoding: "UTF-8" })) as Array<TestInfo>
+            } as TestInfos;
+        }
+
+        if (options.filter && options.filter.length) {
+            testCatalog.testDescriptors = testCatalog.testDescriptors.filter(info => {
+                return options.filter.some(f => info.fqn.indexOf(f) >= 0);
+            });
+        }
+
+        let reporters: Array<ITestReporter> = [this.consoleReporter];
+        if (options.xunitReportFile) {
+            this.xunitReporter.spec = options;
+            reporters.push(this.xunitReporter);
+        }
+        this.controller.reporters = reporters;
+
+        let resGroups = await this.controller.runGroups(testCatalog, 420187);
+        if ((resGroups.failures !== 0) || (resGroups.errors !== 0)) {
+            throw new Error(`Test run failed with ${resGroups.errors} errors and ${resGroups.failures} failures.`);
+        }
+    }
+}
+
+@Bind(IFIXME, FIXME1)
+@Bind(IFIXME2, FIXME2)
+@Binder
+class TestBinder {}
+
+@GenerateInjector
+@WithParentInjector(TestDIComponent)
+@UseBinder(TestBinder)
+class Root {
+    @Inject
+    runner: NodeTestRunner;
+}
+
+const parentinj = N4Injector.of(TestDIComponent);
+const root = N4Injector.of(Root, parentinj).create(Root);
+
+export default public const main = root.runner;
+
+/* -*- mode: typescript;-*- */

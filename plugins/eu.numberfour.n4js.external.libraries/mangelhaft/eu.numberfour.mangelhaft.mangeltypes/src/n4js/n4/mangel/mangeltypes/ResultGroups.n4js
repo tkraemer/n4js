@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,32 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+
 import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
 export public class ResultGroups {
     public results: Array<ResultGroup>;
     public successes: number = 0;
     public failures: number = 0;
+    public skipped: number = 0;
+    public errors: number = 0;
 
-    public constructor(@Spec spec: ~i~this) {}
+    public constructor(results: Array<ResultGroup>) {
+        this.results = results;
+        ResultGroups.accumulateResults(this, results);
+    }
+
+    private static accumulateResults(target:ResultGroups, results:Array<? extends ~~ResultGroup>): ResultGroups {
+        for (let result of results) {
+            target.successes += result.successes;
+            target.failures += result.failures;
+            target.errors += result.errors;
+            target.skipped += result.skipped;
+            if (result instanceof ResultGroups) {
+                target.results = target.results.concat((result as ResultGroups).results);
+            }
+        }
+        return target;
+    }
 
     /**
      * combines multiple ResultGroups into one single resultGroups
@@ -22,19 +41,12 @@ export public class ResultGroups {
      * return a ResultGroups instance
      */
     public static concat(...resultGroups: ResultGroups): ResultGroups {
-        return ResultGroups.concatArray(resultGroups);
+        return this.concatArray(resultGroups);
     }
     /**
      * same as concat but takes a whole array
      */
     public static concatArray(resultGroupss: Array<ResultGroups>): ResultGroups {
-        return resultGroupss.reduce(function(acc: ResultGroups, resultGroups: ResultGroups) {
-            if (acc) {
-                acc.results = acc.results.concat(resultGroups.results);
-                acc.successes += resultGroups.successes;
-                acc.failures += resultGroups.failures;
-            }
-            return acc;
-        }, new ResultGroups({Array<ResultGroup> results: [], successes: 0, failures: 0}));
+        return this.accumulateResults(new ResultGroups([]), resultGroupss);
     }
 }

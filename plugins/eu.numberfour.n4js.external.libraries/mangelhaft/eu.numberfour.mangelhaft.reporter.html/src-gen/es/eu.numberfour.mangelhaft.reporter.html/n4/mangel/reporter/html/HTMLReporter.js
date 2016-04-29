@@ -53,10 +53,16 @@
 		};
 		HTMLReporter = function HTMLReporter() {
 			this.spy = undefined;
+			this.timers = undefined;
+			this.testsElm = undefined;
+			this.countersElm = undefined;
+			this.spinner = undefined;
 			this.reRunning = false;
 			this.groupDivs = new Map();
 			this.testDivs = new Map();
 			this.statuses = new Map();
+			this.catalogTime = 0;
+			this.testingTime = 0;
 			this.showOnly = getParm("showOnly").split(",").map((function(showType) {
 				return showType.trim();
 			}).bind(this)).filter((function(showType) {
@@ -64,12 +70,33 @@
 			}).bind(this));
 			ITestReporter.$fieldInit(this, undefined, {
 				spy: undefined,
+				timers: undefined,
+				testsElm: undefined,
+				countersElm: undefined,
+				spinner: undefined,
 				reRunning: undefined,
 				groupDivs: undefined,
 				testDivs: undefined,
 				statuses: undefined,
+				catalogTime: undefined,
+				testingTime: undefined,
 				showOnly: undefined
 			});
+			this.timers = document.createElement("div");
+			this.testsElm = document.createElement("div");
+			this.countersElm = document.createElement("div");
+			this.testsElm.classList.add("mangelhaft");
+			this.spinner = document.createElement("pre");
+			this.spinner.classList.add("mangelhaft-spinner");
+			let ii = 0;
+			setInterval((function() {
+				this.spinner.innerText += '░';
+			}).bind(this), 500);
+			this.timers.innerHTML = 'Fetching catalog: ';
+			this.timers.appendChild(this.spinner);
+			this.testsElm.appendChild(this.timers);
+			this.catalogTime = new Date().getTime();
+			document.body.appendChild(this.testsElm);
 		};
 		$n4Export('HTMLReporter', HTMLReporter);
 		return {
@@ -151,9 +178,8 @@
 					register: {
 						value: function register___n4() {
 							return $spawn(function*() {
-								let that = this, testsElm = document.createElement("div"), header = document.createElement("div"), countersElm = document.createElement("div"), numGroupsElm = document.createElement("span"), numGroups = 0, numTestsElm = document.createElement("span"), numTests = 0, numTestsOkElm = document.createElement("span"), numTestsOk = 0, numTestsFailElm = document.createElement("span"), numTestsFail = 0, totalTestsElm = document.createElement("span"), numTestsRun = 0, numTestsSkipped = 0, numTestsSkippedElm = document.createElement("span");
+								let that = this, testsElm = this.testsElm, header = document.createElement("div"), countersElm = this.countersElm, numGroupsElm = document.createElement("span"), numGroups = 0, numTestsElm = document.createElement("span"), numTests = 0, numTestsOkElm = document.createElement("span"), numTestsOk = 0, numTestsFailElm = document.createElement("span"), numTestsFail = 0, totalTestsElm = document.createElement("span"), numTestsRun = 0, numTestsSkipped = 0, numTestsSkippedElm = document.createElement("span");
 								;
-								testsElm.classList.add("mangelhaft");
 								countersElm.classList.add("mangelhaft-counters");
 								header.classList.add("mangelhaft-header");
 								header.innerHTML = "<h1><a title='all tests' href='/test.html'>Mangelhaft</a></h1>";
@@ -182,6 +208,15 @@
 									'SKIPPED_IGNORE',
 									'SKIPPED_FIXME'
 								], "mangelhaft-num-SKIPPED", "Show only skipped results"));
+								if (!that.reRunning) {
+									document.body.innerHTML = "";
+									document.body.appendChild(testsElm);
+									this.catalogTime = new Date().getTime() - this.catalogTime;
+									this.testingTime = new Date().getTime();
+									this.spinner.innerText = "";
+									this.timers.innerHTML = ('Fetching catalog: ' + (that.catalogTime / 1000) + 's Testing: ');
+									this.timers.appendChild(this.spinner);
+								}
 								var updateTotals = function updateTotals() {
 									numGroupsElm.innerText = numGroups.toString();
 									numTestsElm.innerText = numTests.toString();
@@ -194,7 +229,6 @@
 									if (that.reRunning) {
 										return;
 									}
-									document.body.appendChild(testsElm);
 									numGroups = numAllGroups;
 									numTests = numAllTests;
 									updateTotals();
@@ -253,16 +287,19 @@
 										testElm.appendChild(status);
 										status.classList.add("mangelhaft-status");
 										groupElm.appendChild(testElm);
-										that.testDivs.set(testUrl, testElm);
-										that.statuses.set(testUrl, status);
+										that.testDivs.set(test, testElm);
+										that.statuses.set(test, status);
 									});
 								});
 								this.spy.testFinished.add(function(group, test, testResult, rerunTestFunc) {
 									let reason, stackElm = null, elapsed = document.createElement("span"), groupElm, testElm, status, module = group.fqn, groupUrl = updateURLParameter(getLocation(), "filter", module), testUrl = updateURLParameter(groupUrl, "tests", test.name), elapsedStr;
 									;
 									groupElm = that.groupDivs.get(group);
-									testElm = that.testDivs.get(testUrl);
-									status = that.statuses.get(testUrl);
+									testElm = that.testDivs.get(test);
+									if (!(groupElm && testElm)) {
+										throw new Error(('Missing group (' + group.name + ') or test (' + test.name + ') html element in reporter (reload) '));
+									}
+									status = that.statuses.get(test);
 									if (!that.reRunning) {
 										numTestsRun += 1;
 									}
@@ -366,19 +403,36 @@
 									if (that.reRunning) {
 										return null;
 									}
-									let done = document.createElement("span"), groupElm;
+									let done = document.createElement("span"), timers = document.createElement("div"), groupElm;
 									;
+									that.testingTime = new Date().getTime() - that.testingTime;
+									that.timers.innerHTML = ('Fetching catalog: ' + (that.catalogTime / 1000) + 's Testing: ' + (that.testingTime / 1000) + 's');
 									done.innerText = "DONE";
 									countersElm.appendChild(done);
 									window.prettyPrint();
 									return resultGroups;
 								});
-								(yield this);
-								return;
-							}.bind(this));
+								return this;
+							}.apply(this, arguments));
 						}
 					},
 					spy: {
+						value: undefined,
+						writable: true
+					},
+					timers: {
+						value: undefined,
+						writable: true
+					},
+					testsElm: {
+						value: undefined,
+						writable: true
+					},
+					countersElm: {
+						value: undefined,
+						writable: true
+					},
+					spinner: {
 						value: undefined,
 						writable: true
 					},
@@ -398,6 +452,14 @@
 						value: undefined,
 						writable: true
 					},
+					catalogTime: {
+						value: undefined,
+						writable: true
+					},
+					testingTime: {
+						value: undefined,
+						writable: true
+					},
 					showOnly: {
 						value: undefined,
 						writable: true
@@ -412,6 +474,12 @@
 							'n4.mangel.mangeltypes.ITestReporter.ITestReporter'
 						],
 						ownedMembers: [
+							new N4Method({
+								name: 'constructor',
+								isStatic: false,
+								jsFunction: instanceProto['constructor'],
+								annotations: []
+							}),
 							new N4DataField({
 								name: 'spy',
 								isStatic: false,
@@ -426,6 +494,26 @@
 								name: 'setFavIconRed',
 								isStatic: false,
 								jsFunction: instanceProto['setFavIconRed'],
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'timers',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'testsElm',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'countersElm',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'spinner',
+								isStatic: false,
 								annotations: []
 							}),
 							new N4DataField({
@@ -445,6 +533,16 @@
 							}),
 							new N4DataField({
 								name: 'statuses',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'catalogTime',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'testingTime',
 								isStatic: false,
 								annotations: []
 							}),
