@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,19 +15,24 @@ import {TestMethodDescriptor} from "n4/mangel/mangeltypes/TestMethodDescriptor"
 import {TestResult} from "n4/mangel/mangeltypes/TestResult"
 import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
 import {TestStatus} from "n4/mangel/mangeltypes/TestStatus"
+import { cli_color_ } from "n4/mangel/reporter/console/cli_color"
+//import * as cli_color from "cli-color"
+const cli_color = System._nodeRequire("cli-color") as cli_color_;
 
 export public class ConsoleReporter implements ITestReporter {
     public timeoutBuffer: number = 1000 * 30;
     private logger: {function(...any):void} = function(... messages: any) {console.log.apply(console, messages);};
     private buffered = false;
     public buffer: Array<Array<?>> = [];
-    @Override
+    
     @Inject
-    public spy: TestSpy;
+    @Override public spy: TestSpy;
+
     public setLogger(logger: {function(...any):void}): this {
         this.logger = logger;
         return this;
     }
+    
     public setBuffered(shouldBuffer: boolean): this {
         let that = this;
         this.buffered = shouldBuffer;
@@ -38,78 +43,69 @@ export public class ConsoleReporter implements ITestReporter {
         }
         return this;
     }
+
     @Override public async register() {
-        let that = this
-            , sessionId: string = null
-        ;
-        async function handleTestingStart(numAllGroups: number, sid: string, numAllTests: number) {
-            that.logger.call(this, "Begin tests")
-        }
-        this.spy.testingStarted.add(handleTestingStart);
-        
-        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
-            that.logger.call(this, ["  ", "Group", group.name, ":"].join(" "));
+        let sessionId: string = null;
+
+        this.spy.testingStarted.add((numAllGroups: number, sid: string, numAllTests: number) => {
+            this.logger.call(this, "Begin tests")
+        });
+        this.spy.groupStarted.add(group => {
+            this.logger.call(this, ["  ", "Group", group.name, ":"].join(" "));
         });
 
-        async function handleTestStart(group: IInstrumentedTest, test: TestMethodDescriptor) {
-            //console.log(test);
-        }
-        this.spy.testStarted.add (handleTestStart);
-
-        async function handleTestFinished (group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult) {
+        this.spy.testFinished.add((group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult): boolean? => {
             let unsuccessString = "FAIL";
-            let err: any+;
-            if (!testResult) {
-                err = new Error("testResult is null in handleTestFinished");
 
-                console.error(that.constructor.n4type.fqn,test? test.name: "unknown test", err, err.stack);
+            if (!testResult) {
+                let err = new Error("testResult is null in handleTestFinished");
+                console.error(this.constructor.n4type.fqn,test? test.name: "unknown test", err, err.stack);
                 return true;
             }
             switch(testResult.testStatus) {
                 case TestStatus.passed: {
-//                    that.logger.call(this, ["  ","  ", test.name, ":", "%cOK"].join(" "), "color:green; font-weight:900");
-                    that.logger.call(this, ["  ","  ", test.name, ":", "OK"].join(" "));
+                    this.logger.call(this, ["  ","  ", test.name, ":", cli_color.green("OK")].join(" "));
                     break;
                 }
                 case TestStatus.error:
-                    unsuccessString = "ERROR";
+                    unsuccessString = cli_color.red("ERROR");
                 //fallthrough
                 case TestStatus.failed: {
                     let trace: string;
                     try {
-                        trace = testResult && testResult.trace && testResult.trace.length ?
-                        testResult.trace.join("\n"): "NO TRACE";
+                        trace = cli_color.red(testResult && testResult.trace && testResult.trace.length ?
+                        testResult.trace.join("\n"): "NO TRACE");
                     } catch (er) {
-                        that.logger(er, typeof (testResult.trace));
+                        this.logger(er, cli_color.red(typeof (testResult.trace)));
                         trace = testResult.trace.toString();
                     }
-                    that.logger(["  ","  ", test.name, ":", unsuccessString].join(" "));
-                    that.logger(["  ", "  ", "  ", testResult.message].join(" "));
-                    that.logger(["  ", "  ", "  ","Stack:", trace.split(/\n/).join("\n                ")].join(" "));
+                    this.logger(["  ","  ", test.name, ":", unsuccessString].join(" "));
+                    this.logger(["  ", "  ", "  ", cli_color.red(testResult.message)].join(" "));
+                    this.logger(["  ", "  ", "  ","Stack:", trace.split(/\n/).join("\n                ")].join(" "));
                     break;
                 }
                 case TestStatus.skipped_precondition: {
-                    that.logger.call(this, ["  ","  ", test.name, ":", "SKIPPED_PRECONDITION"].join(" "));
+                    this.logger.call(this, ["  ","  ", test.name, ":", cli_color.cyan("SKIPPED_PRECONDITION")].join(" "));
                     break;
                 }
                 case TestStatus.skipped_not_implemented: {
-                    that.logger.call(this, ["  ","  ", test.name, ":", "SKIPPED_NOT_IMPLEMENTED"].join(" "));
+                    this.logger.call(this, ["  ","  ", test.name, ":", cli_color.cyan("SKIPPED_NOT_IMPLEMENTED")].join(" "));
                     break;
                 }
 
                 case TestStatus.skipped: {
-                    that.logger.call(this, ["  ","  ", test.name, ":", "SKIPPED"].join(" "));
+                    this.logger.call(this, ["  ","  ", test.name, ":", cli_color.yellow("SKIPPED")].join(" "));
                     break;
                 }
-
             }
-        }
-        this.spy.testFinished.add(handleTestFinished);
+        });
 
-        async function handleTestingFinished(resultGroups: ResultGroups) {
-            that.logger.call(this, "Tests done.")
-        }
-        this.spy.testingFinished.add(handleTestingFinished);
+        this.spy.testingFinished.add(async (resultGroups: ResultGroups) => {
+            this.logger.call(this, "Tests done.")
+        });
+
         return this;
     }
 }
+
+/* -*- mode: typescript;-*- */

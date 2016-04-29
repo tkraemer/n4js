@@ -19,9 +19,11 @@ import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -48,7 +50,7 @@ import eu.numberfour.n4js.utils.process.ProcessResult;
  */
 public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTest {
 
-	private static final String NL = System.lineSeparator();
+	private static final String NL = "\n"; // node is not using system line separator
 
 	private static final String PROBANDS = "probands";
 
@@ -95,6 +97,9 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 	 */
 	@Before
 	public void setupWorkspace() throws Exception {
+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		assertTrue("Expected empty workspace. Projects were in workspace: " + Arrays.toString(projects),
+				0 == projects.length);
 		final URI externalRootLocation = getResourceUri(PROBANDS, EXT_LOC);
 		externalLibraryPreferenceStore.add(externalRootLocation);
 		final IStatus result = externalLibraryPreferenceStore.save(new NullProgressMonitor());
@@ -123,7 +128,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 	/***/
 	@Test
-	public void runClientWithAllOpenedWorkspaceProjects() {
+	public void runClientWithAllOpenedWorkspaceProjects() throws CoreException {
+		waitForAutoBuildCheckIndexRigid();
 		final ProcessResult result = runClient();
 		// @formatter:off
 		assertEquals("Unexpected output after running the client module: " + result,
@@ -142,7 +148,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -157,12 +163,12 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 	/***/
 	@Test
-	public void runClientWithTwoClosedWorkspaceProjects() throws CoreException {
+	public void runClientWithTwoClosedWorkspaceProjectsWithTransitiveDependency() throws CoreException {
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -177,12 +183,32 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 	/***/
 	@Test
+	public void runClientWithTwoClosedWorkspaceProjectsWithDirectDependency() throws CoreException {
+
+		for (final String libProjectName : newArrayList(PB, PC)) {
+			getProjectByName(libProjectName).close(new NullProgressMonitor());
+		}
+		waitForAutoBuildCheckIndexRigid();
+
+		final ProcessResult result = runClient();
+		// @formatter:off
+		assertEquals("Unexpected output after running the client module: " + result,
+				"Workspace A<init>" + NL +
+				"External B<init>" + NL +
+				"External C<init>" + NL +
+				"Workspace D<init>" + NL,
+				result.getStdOut());
+		// @formatter:on
+	}
+
+	/***/
+	@Test
 	public void runClientWithTwoClosedWorkspaceProjectsThenReopenThem() throws CoreException {
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -197,7 +223,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).open(new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -217,7 +243,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -237,7 +263,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -257,7 +283,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -273,7 +299,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 			final File projectsRoot = new File(getResourceUri(PROBANDS, WORKSPACE_LOC));
 			ProjectUtils.importProject(projectsRoot, libProjectName);
 		}
-		waitForAutoBuild();
+		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -284,6 +310,16 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 				"Workspace D<init>" + NL,
 				secondResult.getStdOut());
 		// @formatter:on
+	}
+
+	/**
+	 * Besides waiting for auto-build to finish, performs a clean build and checks if the Xtext index content is still
+	 * valid. This method can be used to ensure Xtext index content does not get messed up after a clean build either.
+	 */
+	private void waitForAutoBuildCheckIndexRigid() throws CoreException {
+		waitForAutoBuild();
+		cleanBuild();
+		waitForAutoBuild();
 	}
 
 	private ProcessResult runClient() {

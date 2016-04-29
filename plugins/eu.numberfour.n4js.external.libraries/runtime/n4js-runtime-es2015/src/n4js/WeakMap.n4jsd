@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,33 +14,28 @@ export external public class WeakMap<KeyT extends Object, ValueT> extends Object
     public constructor(arg: Iterable<Array<union{KeyT, ValueT}>>?);
 
     /**
-    * Length property is 1.
-    */
+     * Length property is 1.
+     */
     @Final public length: number;
 
     /**
-    * Removes all key/value pairs.
-    */
-    public clear(): void;
-
-    /**
-    * Removes any value associated with the key.
-    */
+     * Removes any value associated with the key.
+     */
     public delete(key: KeyT): boolean;
 
     /**
-    * Gets the value associated with the key.
-    */
+     * Gets the value associated with the key.
+     */
     public get(key: KeyT): ValueT;
 
     /**
-    * Tests whether a value has been associated with the key.
-    */
+     * Tests whether a value has been associated with the key.
+     */
     public has(key: KeyT): boolean;
 
     /**
-    * Sets a key/value.
-    */
+     * Sets a key/value.
+     */
     public set(key: KeyT, value: ValueT): this;
 }
 

@@ -12,7 +12,7 @@
 import { Class2 as X } from "validation/imports/MultipleClasses"
 // A warning duplicates the error-message, as the real error shows below 
 /* XPECT issues ---
- "Class2 from validation.imports.MultipleClasses is already imported as X." at "* as Ndc"
+ "Class2 from validation/imports/MultipleClasses is already imported as X." at "* as Ndc"
  --- */
 import * as Ndc from "validation/imports/MultipleClasses"
 // XPECT errors --> "Import of Ndc.Class2 cannot be resolved." at "Ndc.Class2"

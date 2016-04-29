@@ -324,7 +324,7 @@ class N4JSImportRequirementResolver {
 	 * */
 	public def String generateImportStatements(List<ImportRequirement> importRequirements) {
 		importRequirements.map[dep |
-			'''import {«dep.typeName»«IF !dep.alias.empty» as «dep.alias»«ENDIF»} from "«dep.moduleSpecifier.replace('.','/')»"'''
+			'''import {«dep.typeName»«IF !dep.alias.empty» as «dep.alias»«ENDIF»} from "«dep.moduleSpecifier»"'''
 		].join("\n")
 	}
 

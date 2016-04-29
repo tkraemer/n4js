@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,15 +13,19 @@ VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.reporter.console"
 VendorName: "NumberFour AG"
 ProjectType: library
-ProjectVersion: 0.3.0
+ProjectVersion: 0.3.1
 Output: "src-gen"
 
 RequiredRuntimeLibraries {
-    n4js-runtime-n4
-	,n4js-runtime-v8
-	,n4js-runtime-es2015
-	,eu.numberfour.mangelhaft.mangeltypes
+    n4js-runtime-n4,
+    n4js-runtime-v8,
+	n4js-runtime-es2015,
+	eu.numberfour.mangelhaft.mangeltypes
 } 
+
+ProjectDependencies {
+    cli-color
+}
 
 Sources {
     source {

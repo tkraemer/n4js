@@ -1,0 +1,14 @@
+ArtifactId: foo.bar
+VendorId: eu.numberfour
+ProjectName: "foo.bar"
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}
+
+MainModule: "some/deep/path/baz"

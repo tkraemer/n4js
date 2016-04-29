@@ -42,6 +42,6 @@ class ModuleNameComputerTest {
 		assertNotNull("resource should be not null", supplierResource)
 		val qualifiedModuleName = supplierResource.qualifiedModuleName
 		assertNotNull("path should be not null", qualifiedModuleName)
-		assertEquals("expected module path", "eu.numberfour.n4js.tests.scoping.Supplier", qualifiedNameConverter.toString(qualifiedModuleName))
+		assertEquals("expected module path", "eu/numberfour/n4js/tests/scoping/Supplier", qualifiedNameConverter.toString(qualifiedModuleName))
 	}
 }

@@ -39,9 +39,9 @@ public class N4JSNewClassWizard extends N4JSNewClassifierWizard<N4JSClassWizardM
 	private N4JSNewClassWizardPage wizardPage;
 
 	@Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
+	public void init(IWorkbench workbench, IStructuredSelection selection, boolean nested) {
 		setDefaultPageImageDescriptor(ImageRef.NEW_CLASS_WIZBAN.asImageDescriptor().orNull());
-		super.init(workbench, selection);
+		super.init(workbench, selection, nested);
 	}
 
 	@Override

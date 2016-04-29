@@ -56,7 +56,7 @@ import eu.numberfour.n4js.utils.resources.ExternalProject;
 	 *            the configuration to attach.
 	 * @return {@link Set#add(Object)}.
 	 */
-	/* default */ boolean add(final IBuildConfiguration config) {
+	boolean add(final IBuildConfiguration config) {
 		return referencedBuildConfigs.add(config);
 	}
 
@@ -66,8 +66,9 @@ import eu.numberfour.n4js.utils.resources.ExternalProject;
 	 *
 	 * @return an iterable of direct dependency artifact IDs.
 	 */
-	/* default */ Iterable<String> getAllDirectDependencyIds() {
-		return from(externalPackage.getAllDirectDependencies()).transform(dep -> dep.getArtifactId()).toSet();
+	Iterable<String> getAllDirectDependencyIds() {
+		return from(externalPackage.getAllDirectDependencies()).filter(IN4JSProject.class).filter(p -> p.exists())
+				.transform(p -> p.getArtifactId()).toSet();
 	}
 
 }

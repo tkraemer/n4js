@@ -28,6 +28,7 @@ import org.eclipse.xtext.resource.IResourceDescription
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.xbase.lib.Pair
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
 
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)
@@ -151,6 +152,6 @@ abstract class AbstractTypesBuilderTest {
 	 * the prefix is similar to the Java test's package name. Subclasses may override to adjust the prefix. The prefix must end with a dot if not empty.
 	 */
 	def getQualifiedNamePrefix() {
-		this.class.package.name + ".";
+		this.class.package.name.replace(".", N4JSQualifiedNameConverter.DELIMITER) + N4JSQualifiedNameConverter.DELIMITER;
 	}
 }

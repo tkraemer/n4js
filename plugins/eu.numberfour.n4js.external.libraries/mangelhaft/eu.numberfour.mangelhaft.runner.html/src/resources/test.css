@@ -1,0 +1,222 @@
+.mangelhaft {
+    font-family: Sans-Serif;
+}
+
+.mangelhaft a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}
+
+.mangelhaft-counters {
+    margin-bottom: 1em;
+}
+
+.mangelhaft-num-groups::before {
+    content:"Groups: ";
+    
+}
+
+.mangelhaft-num-groups {
+    margin-right: 1em;
+}
+
+.mangelhaft-num-tests::before {
+    content:"Tests: ";
+    font-weight: bold;
+    color:black;
+    
+}
+
+.mangelhaft-num-tests {
+    color: dimgrey;
+    margin-right: 1em;
+    font-weight: bold;
+    
+}
+
+.mangelhaft-num-OK::before {
+    content:"Tests successful: ";
+    font-weight: bold;
+    color:black;
+}
+
+.mangelhaft-num-OK {
+    color: green;
+    font-weight: bold;
+    margin-right: 1em;
+}
+
+.mangelhaft-num-SKIPPED::before {
+    content:"Tests Skipped: ";
+    font-weight: normal;
+    color:black;
+    font-weight:bold;
+}
+
+.mangelhaft-num-SKIPPED {
+    color: darkkhaki;
+    font-weight: bold;
+    margin-right: 1em;
+}
+  
+.mangelhaft-num-FAIL::before {
+    content:"Tests Unsuccessful: ";
+    font-weight: bold;
+    color:black;
+}
+
+.mangelhaft-num-FAIL {
+    color: red;
+    font-weight: bold;
+    margin-right: 1em;
+}
+
+.mangelhaft-num-total-ran::before {
+    content:"Total Tests Run: ";
+    font-weight: bold;
+    color:black;
+}
+
+.mangelhaft-num-total-ran {
+    font-weight: bold;
+    margin-right: 1em;
+}
+
+.mangelhaft-group {
+    /*border: 1px solid #000;*/
+    /*width: 50%;*/
+    margin-bottom: 10px;
+}
+ 
+.mangelhaft-group-title-name {
+    text-align: left;
+    font-weight: bold;
+}
+.mangelhaft-group-title-fqn {
+    font-weight: 100;
+    font-family: monospace;
+}
+
+.mangelhaft-group-title-fqn::before{
+    content: " (";
+}
+
+.mangelhaft-group-title-fqn::after{
+    content: ")";
+}
+
+.mangelhaft-test {
+    margin-left: 2em;
+}
+
+.mangelhaft-test-name:hover .mangelhaft-test-tooltip {
+    display:block;
+}
+
+.mangelhaft-test-tooltip {
+    display:none;
+    background: #333;
+    margin-left: 28px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+}
+
+.mangelhaft-test-name-prefix {
+    color: darkgray;
+    font-weight: 150;
+}
+
+.mangelhaft-test-name-prefix::after {
+    content: ": ";
+}
+
+.mangelhaft-test-name {
+    color: midnightblue;
+    font-weight: 150;
+}
+
+.mangelhaft-test-name-suffix { 
+    color: darkgrey;
+    font-weight: 150;
+}
+.mangelhaft-spinner {
+	display: inline;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.mangelhaft-status {
+    margin-left: .5em;
+    font-weight: bold;
+    font-family: Sans-Serif;
+}
+
+.mangelhaft-OK {
+    color: green;
+    font-weight:bold;
+}
+
+.mangelhaft-OK a:link, .mangelhaft-OK a:visited {
+    color: green;
+}
+ 
+.mangelhaft-FAIL {
+    font-weight:bold;
+    color:red;
+}
+
+.mangelhaft-FAIL a:link, .mangelhaft-FAIL a:visited {
+    color: red;
+}
+
+.mangelhaft-SKIPPED {
+    font-weight:bold;
+    color: darkkhaki;
+}
+
+.mangelhaft-SKIPPED a:link, .mangelhaft-SKIPPED a:visited {
+    color: darkkhaki;
+}
+
+.mangelhaft-SKIPPED-FIXME {
+    font-weight:bold;
+    color: darkgoldenrod;
+}
+
+.mangelhaft-SKIPPED-FIXME a:link, .mangelhaft-SKIPPED-FIXME a:visited {
+    color: darkgoldenrod;
+}
+
+.mangelhaft-reason {
+    font-weight: normal;
+    font-size: small;
+    opacity: 1;
+}
+
+.mangelhaft-FAIL-stack {
+    margin-left: 4em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mangelhaft-filterbox a:link, .mangelhaft-filterbox a:visited{
+    color: black;
+}
+ 
+.mangelhaft-filterbox {
+    font-size: small;
+    font-weight: bold;
+    color: black;
+    overflow: auto;
+    border: 1px solid #000000;
+    display: inline-block;
+    padding: 1em;
+}
+
+.mangelhaft-filterbox-left {
+    float: left;
+}
+
+.mangelhaft-filterbox-right {
+    float: right;
+    margin-left: 1em;
+}
