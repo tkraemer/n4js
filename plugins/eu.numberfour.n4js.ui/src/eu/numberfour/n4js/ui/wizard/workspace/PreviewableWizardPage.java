@@ -92,6 +92,11 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		if (previewVisible) {
 			return;
 		}
+		// Update content
+		if (getValidator().getValidationResult().valid) {
+			updateContentPreview(wizardContentPreview);
+		}
+
 		// Switch to two panes
 		paneComposite.setLayout(TWO_PANES_LAYOUT);
 
@@ -161,6 +166,10 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		// Connect a delayed property change listener to the model
 		getModel().addPropertyChangeListener(propertyChange -> {
 			ValidationResult result = getValidator().getValidationResult();
+
+			if (!previewVisible) {
+				return;
+			}
 
 			if (result.valid) {
 				wizardContentPreview.setEnabled(true);

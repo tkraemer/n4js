@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
@@ -27,17 +29,20 @@ import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters;
+import eu.numberfour.n4js.ui.wizard.generator.ContentBlock;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
 import eu.numberfour.n4js.ui.wizard.interfaces.N4JSInterfaceWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.DefinitionFileModel;
 import eu.numberfour.n4js.ui.wizard.workspace.PreviewableWizardPage;
 import eu.numberfour.n4js.ui.wizard.workspace.SuffixText;
+import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator.ValidationResult;
 
 /**
- * Generic wizard page for all N4JS classifieris.
+ * Generic wizard page for all N4JS classifiers.
  */
 public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizardModel>
 		extends PreviewableWizardPage<M> {
@@ -52,7 +57,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 	protected OtherClassifierModifiersComponent otherClassifierModifiersComponent;
 
 	@Override
-	public void openModuleSpecifierDialog(org.eclipse.swt.widgets.Shell shell) {
+	public void openModuleSpecifierDialog(Shell shell) {
 
 		ModuleSpecifierSelectionDialog dialog = new ModuleSpecifierSelectionDialog(shell,
 				getModel().getProject().append(getModel().getSourceFolder()));
@@ -193,7 +198,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 	 *            the currently selected modifier on the UI.
 	 * @return {@code true} if the internal visibility should be enabled on the UI, otherwise {@code false}.
 	 */
-	protected boolean isInternalAccessModifierEnabled(AccessModifier modifier) {
+	private boolean isInternalAccessModifierEnabled(AccessModifier modifier) {
 		return modifier == AccessModifier.PUBLIC;
 	}
 
@@ -212,6 +217,25 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 		}
 		return false;
 	}
+
+	@Override
+	protected void updateContentPreview(WizardPreview contentPreview) {
+		Display.getCurrent().asyncExec(() -> {
+			ContentBlock[] codeBlocks = getGenerator().generateContentPreview(getModel());
+			contentPreview.setContent(codeBlocks);
+
+			// Reveal last content block (class code)
+			contentPreview.revealContentBlock(codeBlocks[codeBlocks.length - 1]);
+
+			// Show file location in the info bar
+			contentPreview.setInfo(getModel().computeFileLocation().toString());
+		});
+	}
+
+	/**
+	 * Returns the {@link WorkspaceWizardGenerator} of this page.
+	 */
+	public abstract WorkspaceWizardGenerator<M> getGenerator();
 
 	/**
 	 * Invoked when the validation result of the model has changed.

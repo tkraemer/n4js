@@ -14,13 +14,13 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardPage;
 import eu.numberfour.n4js.ui.wizard.components.AccessModifierComponent;
-import eu.numberfour.n4js.ui.wizard.components.FileTypeComponent;
 import eu.numberfour.n4js.ui.wizard.components.EmptyComponent;
+import eu.numberfour.n4js.ui.wizard.components.FileTypeComponent;
 import eu.numberfour.n4js.ui.wizard.components.InterfacesComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
-import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
 
 /**
  * A wizard page to allow the user to specify the informations about the creation of a new interface.
@@ -75,9 +75,8 @@ public class N4JSNewInterfaceWizardPage extends N4JSNewClassifierWizardPage<N4JS
 	}
 
 	@Override
-	protected void updateContentPreview(WizardPreview contentPreview) {
-		contentPreview.setInfo(getModel().computeFileLocation().toString());
-		contentPreview.setContent(generator.generateContentPreview(getModel()));
+	public WorkspaceWizardGenerator<N4JSInterfaceWizardModel> getGenerator() {
+		return generator;
 	}
 
 	@Override

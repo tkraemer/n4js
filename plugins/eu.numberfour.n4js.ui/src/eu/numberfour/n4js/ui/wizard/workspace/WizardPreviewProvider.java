@@ -10,6 +10,11 @@
  */
 package eu.numberfour.n4js.ui.wizard.workspace;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -29,6 +34,7 @@ import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
+import eu.numberfour.n4js.ui.wizard.generator.ContentBlock;
 
 /**
  * A preview window for wizards which shows a preview of the created class.
@@ -86,8 +92,114 @@ public class WizardPreviewProvider {
 			createEditor(this);
 			createInfoBar(this);
 
-			// Enable editor theming by assigning a CSS class
+			// Apply the editor theme by assigning a CSS class
 			this.sourceViewer.getTextWidget().setData("org.eclipse.e4.ui.css.CssClassName", "MPart active");
+		}
+
+		@Override
+		public void setEnabled(boolean enabled) {
+			super.setEnabled(enabled);
+			if (!enabled) {
+				unhighlightAll();
+			}
+		}
+
+		/**
+		 * Sets the content blocks of this preview.
+		 */
+		public void setContent(ContentBlock[] blocks) {
+			// Return if the control hasn't been created yet.
+			if (null == editorDocument) {
+				return;
+			}
+
+			// Only update changed content blocks
+			// to avoid flickering in the source viewer
+			List<ContentBlock> blockList = new ArrayList<>(Arrays.asList(blocks));
+
+			// The offset from which the document content needs to be replaced.
+			int replaceStart = 0;
+
+			if (null != this.contentBlocks) {
+				int index = 0;
+				for (Iterator<ContentBlock> itr = blockList.iterator(); itr.hasNext(); /**/) {
+					// Assure that there is an existing content block with the same index
+					if (this.contentBlocks.length > index) {
+						ContentBlock currentBlock = itr.next();
+						// If they're unequal break the loop
+						if (!this.contentBlocks[index].content.equals(currentBlock.content)) {
+							break;
+						}
+						// Otherwise keep the current block and only update the document
+						// from the offset of the next block.
+						replaceStart += currentBlock.content.length();
+						index++;
+						itr.remove();
+					}
+				}
+			}
+			this.contentBlocks = blocks;
+
+			String joinedContent = "";
+			for (ContentBlock block : blockList) {
+				joinedContent += block.content;
+			}
+			try {
+				editorDocument.replace(replaceStart, getContent().length() - replaceStart, joinedContent);
+			} catch (Exception e) {
+				// Failed to insert changed blocks
+			}
+
+			sourceViewer.invalidateTextPresentation();
+			updateHighlighting();
+		}
+
+		/**
+		 * Returns the current content of the preview.
+		 *
+		 */
+		public String getContent() {
+			if (null != editorDocument) {
+				return editorDocument.get();
+			}
+			return "";
+		}
+
+		/**
+		 * Reveals the given content block.
+		 *
+		 * Note that the content block reference must be set as content before. See {@link #setContent(ContentBlock[])}.
+		 */
+		public void revealContentBlock(ContentBlock block) {
+			int accumulatedOffset = 0;
+			ContentBlock blockToShow = null;
+			for (ContentBlock contentBlock : contentBlocks) {
+				if (block == contentBlock) {
+					blockToShow = block;
+					break;
+				} else {
+					accumulatedOffset += contentBlock.content.length();
+				}
+			}
+			if (null != blockToShow) {
+				sourceViewer.revealRange(accumulatedOffset, blockToShow.content.length());
+			}
+		}
+
+		/**
+		 * Sets the new info bar content
+		 *
+		 * @param info
+		 *            The new info
+		 */
+		public void setInfo(String info) {
+			this.infoLabel.setText(info);
+		}
+
+		@Override
+		protected void checkSubclass() {
+			// Allow subclassing
+			return;
 		}
 
 		private void createInfoBar(Composite parent) {
@@ -160,7 +272,7 @@ public class WizardPreviewProvider {
 		/**
 		 * Updates the syntax highlighting.
 		 *
-		 * Disables highlighting for inactive blocks, or all blocks if the editor is disabled.
+		 * Disables highlighting for inactive blocks, or for all blocks if the editor is disabled.
 		 */
 		private void updateHighlighting() {
 			if (!getEnabled()) {
@@ -168,7 +280,7 @@ public class WizardPreviewProvider {
 			} else {
 				int accumulatedOffset = 0;
 				for (ContentBlock block : contentBlocks) {
-					if (!block.active) {
+					if (!block.highlighted) {
 						StyleRange range = new StyleRange(accumulatedOffset, block.content.length(), INACTIVE_COLOR,
 								null);
 						sourceViewer.getTextWidget().setStyleRange(range);
@@ -176,82 +288,6 @@ public class WizardPreviewProvider {
 					accumulatedOffset += block.content.length();
 				}
 			}
-		}
-
-		@Override
-		public void setEnabled(boolean enabled) {
-			super.setEnabled(enabled);
-			if (!enabled) {
-				unhighlightAll();
-			}
-		}
-
-		/**
-		 *
-		 */
-		public void setContent(ContentBlock[] blocks) {
-			if (null == editorDocument) {
-				return;
-			}
-
-			this.contentBlocks = blocks;
-
-			String joinedContent = "";
-			for (ContentBlock block : blocks) {
-				joinedContent += block.content;
-			}
-			editorDocument.set(joinedContent);
-
-			updateHighlighting();
-		}
-
-		/**
-		 * Returns the current string content of the preview.
-		 *
-		 */
-		public String getContent() {
-			if (null != editorDocument) {
-				return editorDocument.get();
-			}
-			return "";
-		}
-
-		/**
-		 * Reveals the given content block.
-		 *
-		 * Note that the content block reference must be content of this preview by calling
-		 * {@link #setContent(ContentBlock[])}
-		 */
-		public void revealContentBlock(ContentBlock block) {
-			int accumulatedOffset = 0;
-			ContentBlock blockToShow = null;
-			for (ContentBlock contentBlock : contentBlocks) {
-				if (block == contentBlock) {
-					blockToShow = block;
-					break;
-				} else {
-					accumulatedOffset += contentBlock.content.length();
-				}
-			}
-			if (null != blockToShow) {
-				sourceViewer.revealRange(accumulatedOffset, blockToShow.content.length());
-			}
-		}
-
-		/**
-		 * Sets the new info bar content
-		 *
-		 * @param info
-		 *            The new info
-		 */
-		public void setInfo(String info) {
-			this.infoLabel.setText(info);
-		}
-
-		@Override
-		protected void checkSubclass() {
-			// Allow subclassing
-			return;
 		}
 	}
 }

@@ -8,36 +8,36 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspace;
+package eu.numberfour.n4js.ui.wizard.generator;
 
 /**
  * A {@link ContentBlock} represents a paragraph in a wizard content preview.
  *
- * It additionally holds an active state which toggles syntax highlighting for the paragraph.
+ * It additionally holds a state which toggles syntax highlighting for the paragraph.
  */
 public final class ContentBlock {
 	/** The active state of the block */
-	public final boolean active;
+	public final boolean highlighted;
 	/** The content of the block */
 	public final String content;
 
 	/** Returns a new active content block with the given content */
-	public static ContentBlock active(String content) {
+	public static ContentBlock highlighted(String content) {
 		return new ContentBlock(content, true);
 	}
 
 	/** Returns a new inactive content block with the given content */
-	public static ContentBlock inactive(String content) {
+	public static ContentBlock unhighlighted(String content) {
 		return new ContentBlock(content, false);
 	}
 
-	private ContentBlock(String content, boolean active) {
-		this.active = active;
+	private ContentBlock(String content, boolean highlighted) {
+		this.highlighted = highlighted;
 		this.content = content;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{active=" + active + ", content='" + content + "'}";
+		return "{active=" + highlighted + ", content='" + content + "'}";
 	}
 }

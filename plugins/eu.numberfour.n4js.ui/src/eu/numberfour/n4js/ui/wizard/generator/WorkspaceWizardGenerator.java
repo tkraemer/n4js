@@ -8,19 +8,21 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.wizard.workspace;
+package eu.numberfour.n4js.ui.wizard.generator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
+
 /**
- * A wizard generator which allows to preview the generated file.
+ * A wizard generator for workspace N4JS elements.
  *
  */
 public interface WorkspaceWizardGenerator<M extends WorkspaceWizardModel> {
 	/**
-	 * Returns the string of code specified by the given model.
+	 * Returns a preview of the generated code specified by the model.
 	 *
-	 * For existing target modules the import statements are fully aliased
+	 * For existing target modules the import statements are fully aliased to avoid naming conflicts.
 	 *
 	 * @param model
 	 *            The model for which a preview should be generated

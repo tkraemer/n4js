@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.ui.wizard.classes;
 
-import org.eclipse.swt.widgets.Display;
-
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardPage;
@@ -23,8 +21,7 @@ import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
-import eu.numberfour.n4js.ui.wizard.workspace.ContentBlock;
-import eu.numberfour.n4js.ui.wizard.workspace.WizardPreviewProvider.WizardPreview;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
 /**
@@ -58,20 +55,6 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 		this.setPageComplete(false);
 	}
 
-	@Override
-	protected void updateContentPreview(WizardPreview contentPreview) {
-		Display.getCurrent().asyncExec(() -> {
-			ContentBlock[] codeBlocks = generator.generateContentPreview(getModel());
-			contentPreview.setContent(codeBlocks);
-
-			// Reveal last content block (class code)
-			contentPreview.revealContentBlock(codeBlocks[codeBlocks.length - 1]);
-
-			// Show file location in the info bar
-			contentPreview.setInfo(getModel().computeFileLocation().toString());
-		});
-	}
-
 	@SuppressWarnings("unused")
 	@Override
 	public void createComponents(WizardComponentContainer container) {
@@ -95,6 +78,11 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@Override
 	public WorkspaceWizardModelValidator<N4JSClassWizardModel> getValidator() {
 		return validator;
+	}
+
+	@Override
+	public WorkspaceWizardGenerator<N4JSClassWizardModel> getGenerator() {
+		return generator;
 	}
 
 }

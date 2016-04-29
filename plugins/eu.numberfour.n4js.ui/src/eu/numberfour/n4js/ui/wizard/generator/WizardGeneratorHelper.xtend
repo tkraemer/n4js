@@ -45,6 +45,9 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
 import java.io.IOException
+import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
+import java.util.Map
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 
 /**
  * This class contains commonly used methods when writing wizard generators.
@@ -95,6 +98,31 @@ class WizardGeneratorHelper {
 			str
 		} else {
 			str + "\n";
+		}
+	}
+	
+	/** 
+	 * Returns the given string with a trailing space.
+	 * 
+	 * If the string is empty an empty string is returned.
+	 * */
+	public def String addSpace(String str) {
+		if (str.empty) {
+			str
+		} else {
+			str + " ";
+		}
+	}
+	
+	/**
+	 * Returns the export statement if the modifier 
+	 * requires it or an empty string if not.
+	 */
+	public def String exportStatement(AccessModifier modifier) {
+		if (modifier == AccessModifier.PROJECT || modifier == AccessModifier.PUBLIC) {
+			"export"
+		} else {
+			""
 		}
 	}
 	
@@ -228,6 +256,21 @@ class WizardGeneratorHelper {
 			return projectOptional.get();
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the real or bound name of the classifier reference.
+	 *
+	 * Always prioritizes alias name over real name.
+	 *
+	 * @param reference The classifier reference
+	 * @param aliasBindings The alias bindings, may be null
+	 */
+	public def String realOrAliasName(ClassifierReference reference, Map<URI,String> aliasBindings) {
+		if (aliasBindings !== null && aliasBindings.containsKey(reference.uri)) {
+			return aliasBindings.get(reference.uri);
+		}
+		return reference.classifierName;
 	}
 	
 	/**
