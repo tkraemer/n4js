@@ -10,15 +10,12 @@
  */
 package eu.numberfour.n4js.npmexporter.ui;
 
-import com.google.inject.Injector;
-
-import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.utils.injector.AbstractGuiceUIPlugin;
+import eu.numberfour.n4js.ui.utils.N4JSGuiceUIPlugin;
 
 /**
  * Activator for the N4JS {@code npm} exporter UI plug-in in order to set up injector correctly.
  */
-public class NpmExporterActivator extends AbstractGuiceUIPlugin {
+public class NpmExporterActivator extends N4JSGuiceUIPlugin {
 
 	/** The unique global identifier of the plug-in. */
 	public static final String PLUGIN_ID = "eu.numberfour.n4js.npmexporter.ui";
@@ -32,8 +29,4 @@ public class NpmExporterActivator extends AbstractGuiceUIPlugin {
 		return (NpmExporterActivator) INSTANCE;
 	}
 
-	@Override
-	protected Injector getParentInjector(final String id) {
-		return N4JSActivator.getInstance().getInjector(id);
-	}
 }

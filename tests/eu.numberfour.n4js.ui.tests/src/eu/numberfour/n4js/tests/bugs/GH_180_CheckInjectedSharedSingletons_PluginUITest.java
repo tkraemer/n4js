@@ -19,8 +19,8 @@ import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.ui.utils.N4JSGuiceUIPlugin;
 import eu.numberfour.n4js.utils.Arrays2;
-import eu.numberfour.n4js.utils.injector.AbstractGuiceUIPlugin;
 
 /**
  * Class for checking whether singleton instances are shared among parent-child injectors.
@@ -46,32 +46,15 @@ public class GH_180_CheckInjectedSharedSingletons_PluginUITest extends AbstractI
 
 		final String injectorId = N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 		final Injector parentInjector = N4JSActivator.getInstance().getInjector(injectorId);
-		final AbstractGuiceUIPlugin mockBundle = new AbstractGuiceUIPlugin() {
-
-			@Override
-			protected Injector getParentInjector(final String id) {
-				return parentInjector;
-			}
-
-			@Override
-			protected void doStart(BundleContext context) throws Exception {
-				// Nothing.
-			}
-
-			@Override
-			protected void doStop(BundleContext context) throws Exception {
-				// Nothing.
-			}
-
-		};
+		final MockUIPlugin mockBundle = new MockUIPlugin();
 
 		try {
 			mockBundle.start(/* context */ null);
 			assertTrue("Mock bundle is not running yet.", Bundle.ACTIVE == mockBundle.getBundle().getState());
 			final Injector childInjector = mockBundle.getInjector(injectorId);
 
-			final N4JSTypeInferencer instanceFromChild = parentInjector.getInstance(testedType);
-			final N4JSTypeInferencer instanceFromParent = childInjector.getInstance(testedType);
+			final N4JSTypeInferencer instanceFromParent = parentInjector.getInstance(testedType);
+			final N4JSTypeInferencer instanceFromChild = childInjector.getInstance(testedType);
 
 			assertTrue(
 					"Expected the same instance of " + testedType.getSimpleName() + " from parent and child injectors.",
@@ -80,6 +63,23 @@ public class GH_180_CheckInjectedSharedSingletons_PluginUITest extends AbstractI
 		} finally {
 			mockBundle.stop(/* context */ null);
 		}
+	}
+
+	/**
+	 * Mock UI plugin.
+	 */
+	private static final class MockUIPlugin extends N4JSGuiceUIPlugin {
+
+		@Override
+		protected void doStart(final BundleContext context) throws Exception {
+			// Nothing.
+		}
+
+		@Override
+		protected void doStop(final BundleContext context) throws Exception {
+			// Nothing.
+		}
+
 	}
 
 }
