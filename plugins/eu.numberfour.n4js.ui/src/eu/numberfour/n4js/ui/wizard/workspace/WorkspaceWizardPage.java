@@ -67,15 +67,16 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		implements WizardComponentContainer {
 
 	private static final String CONTENT_ASSIST_ECLIPSE_COMMAND_ID = "org.eclipse.ui.edit.text.contentAssist.proposals";
-
-	private final Image CONTENT_PROPOSAL_DECORATION_IMAGE = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB.asImage()
-			.orNull();
+	private static final Image CONTENT_PROPOSAL_DECORATION_IMAGE = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB
+			.asImage().orNull();
 
 	private M model;
 	private DataBindingContext databindingContext;
 
 	/** Available after invocation of #createControl */
 	protected WorkspaceWizardPageForm workspaceWizardForm;
+
+	private Image contentProposalDecorationImage;
 
 	// Browse dialogs
 	@Inject
@@ -104,7 +105,12 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 	@Override
 	public void createControl(Composite parent) {
+
 		workspaceWizardForm = new WorkspaceWizardPageForm(parent, SWT.FILL);
+
+		if (null == contentProposalDecorationImage || contentProposalDecorationImage.isDisposed()) {
+			contentProposalDecorationImage = CONTENT_PROPOSAL_DECORATION_IMAGE;
+		}
 
 		setupBindings(workspaceWizardForm);
 		setupBrowseDialogs(workspaceWizardForm);
@@ -318,7 +324,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 				new TextContentAdapter(), null,
 				keyInitiator, null);
 
-		wizardForm.getModuleSpecifierText().createDecoration(CONTENT_PROPOSAL_DECORATION_IMAGE);
+		wizardForm.getModuleSpecifierText().createDecoration(contentProposalDecorationImage);
 
 		// Update proposal context whenever the model changes
 		model.addPropertyChangeListener(evt -> {
@@ -360,10 +366,10 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	 *            The control to decorate
 	 */
 	private ControlDecoration createContentProposalDecoration(Control control) {
-		ControlDecoration projectDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
-		projectDecoration.setImage(CONTENT_PROPOSAL_DECORATION_IMAGE);
-		projectDecoration.setShowOnlyOnFocus(true);
-		return projectDecoration;
+		ControlDecoration decoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+		decoration.setImage(contentProposalDecorationImage);
+		decoration.setShowOnlyOnFocus(true);
+		return decoration;
 	}
 
 	/**
@@ -469,7 +475,6 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		if (databindingContext != null) {
 			databindingContext.dispose();
 		}
-		CONTENT_PROPOSAL_DECORATION_IMAGE.dispose();
 	}
 
 	@Override

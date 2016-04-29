@@ -104,12 +104,6 @@ public class SourceFolderSelectionDialog extends ListDialog {
 		private final Image sourceFolderImage = ImageDescriptorCache.ImageRef.SRC_FOLDER.asImage().orNull();
 
 		@Override
-		public void dispose() {
-			sourceFolderImage.dispose();
-			super.dispose();
-		}
-
-		@Override
 		public Image getImage(Object element) {
 			return sourceFolderImage;
 		}

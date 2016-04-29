@@ -42,9 +42,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -54,11 +51,11 @@ import com.google.common.collect.HashMultimap;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
+import eu.numberfour.n4js.naming.QualifiedNameComputer;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.resource.N4JSResource;
-import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.tester.domain.ID;
 import eu.numberfour.n4js.tester.domain.TestCase;
 import eu.numberfour.n4js.tester.domain.TestSuite;
@@ -69,6 +66,7 @@ import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.utils.ContainerTypesHelper;
 
 /**
  * Helper to collect all tests in a given N4JS project, sub-folder, or file.
@@ -94,9 +92,7 @@ public class TestDiscoveryHelper {
 	@Inject
 	private IN4JSCore n4jsCore;
 	@Inject
-	private IQualifiedNameProvider qualifiedNameProvider;
-	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
+	private QualifiedNameComputer qualifiedNameComputer;
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
 
@@ -355,12 +351,8 @@ public class TestDiscoveryHelper {
 	}
 
 	private TestCase createTestCase(final TMethod method, final TModule module, final String clazzFqnStr) {
-		final String projectName = n4jsCore.findProject(EcoreUtil.getURI(module).trimFragment()).get().getProjectName();
-		final String originFqnStr = projectName; // note: before the version "-0.0.1" was appended here
-
 		final TestCase testCase = new TestCase(createTestCaseId(clazzFqnStr, method), clazzFqnStr,
-				originFqnStr, method.getName(), method.getName(), EcoreUtil.getURI(method));
-
+				module.getProjectName(), method.getName(), method.getName(), EcoreUtil.getURI(method));
 		return testCase;
 	}
 
@@ -368,13 +360,22 @@ public class TestDiscoveryHelper {
 		return getClassName(getContainerOfType(method, TClass.class));
 	}
 
+	/**
+	 * Returns the name to be used in the test catalog for the given {@link TClass}. We use the fully qualified name for
+	 * this purpose.
+	 */
 	private String getClassName(final TClass clazz) {
-		final QualifiedName clsFqn = qualifiedNameProvider.getFullyQualifiedName(clazz);
-		return qualifiedNameConverter.toString(clsFqn);
+		return qualifiedNameComputer.getFullyQualifiedTypeName_WITH_LEGACY_SUPPORT(clazz); // intended for external use,
+																							// so return the FQN with
+																							// legacy support for the
+																							// time being (i.e. using
+																							// "." instead of "/" as
+																							// delimiter; IDE-2227)
 	}
 
 	private Map<URI, TModule> loadModules(final Iterable<URI> moduleUris, final IResourceDescriptions index,
 			final ResourceSet resSet) {
+
 		final Map<URI, TModule> uri2Modules = newHashMap();
 		for (final URI moduleUri : moduleUris) {
 			final IResourceDescription resDesc = index.getResourceDescription(moduleUri);

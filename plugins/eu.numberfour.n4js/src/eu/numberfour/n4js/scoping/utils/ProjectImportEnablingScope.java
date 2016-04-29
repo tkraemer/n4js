@@ -31,10 +31,11 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.n4JS.ImportDeclaration;
+import eu.numberfour.n4js.n4mf.ProjectDescription;
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
@@ -331,7 +332,8 @@ public class ProjectImportEnablingScope implements IScope {
 		if (project != null) {
 			final String mainModuleSpec = project.getMainModule();
 			if (mainModuleSpec != null) {
-				final QualifiedName mainModuleQN = QualifiedName.create(mainModuleSpec.split("/"));
+				final QualifiedName mainModuleQN = QualifiedName.create(
+						mainModuleSpec.split(N4JSQualifiedNameConverter.DELIMITER));
 				return mainModuleQN;
 			}
 		}

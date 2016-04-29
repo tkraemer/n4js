@@ -10,7 +10,7 @@
 
 
 /* XPECT errors ---
-"Class2 from validation.imports.MultipleClasses is already imported as X." at "Class2"
+"Class2 from validation/imports/MultipleClasses is already imported as X." at "Class2"
 --- */
 import { Class2 as X, Class2 } from "validation/imports/MultipleClasses"
 // XPECT errors --> "Import of Class2 cannot be resolved." at "Class2"

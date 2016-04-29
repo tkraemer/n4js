@@ -13,6 +13,7 @@ package eu.numberfour.n4js.ui.organize.imports;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.inject.Inject;
@@ -27,7 +28,9 @@ import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider;
 public class ImportProvidedElementLabelprovider implements ILabelProvider {
 
 	@Inject
-	N4JSLabelProvider n4Labelprovider;
+	private N4JSLabelProvider n4Labelprovider;
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Override
 	public void addListener(ILabelProviderListener listener) {
@@ -65,7 +68,8 @@ public class ImportProvidedElementLabelprovider implements ILabelProvider {
 			return "" + ele.localname + " from " + moduleText;
 		} else if (element instanceof IEObjectDescription) {
 			IEObjectDescription ieO = (IEObjectDescription) element;
-			return ieO.getName().getLastSegment() + " from " + ieO.getName().skipLast(1);
+			return ieO.getName().getLastSegment() + " from "
+					+ qualifiedNameConverter.toString(ieO.getName().skipLast(1));
 		}
 
 		return n4Labelprovider.getText(element);

@@ -10,41 +10,46 @@
  */
 package eu.numberfour.n4js.ui.wizard.components
 
+import java.util.regex.Pattern
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
+
 /**
- * Utility class to handle the dot separated specifiers.
+ * Utility class to handle the {@link N4JSQualifiedNameConverter#DELIMITER delimiter} separated specifiers.
+ * <p>
+ * TODO rename & clean up this class and, if possible, use an injected IQualifiedNameConverter instead
  */
 class DotPathUtils {
 
 		/**
-		 * Returns all dot separated segments but the last one.
+		 * Returns all {@link N4JSQualifiedNameConverter#DELIMITER delimiter} separated segments but the last one.
 		 *
-		 * @param dotSeparatedString
-		 *            A dot separated string
+		 * @param delimiterSeparatedString
+		 *            A delimiter separated string
 		 * @return The front segments
 		 */
-		public static def String frontDotSegments(String dotSeparatedString) {
-			if (dotSeparatedString.nullOrEmpty) {
+		public static def String frontDotSegments(String delimiterSeparatedString) {
+			if (delimiterSeparatedString.nullOrEmpty) {
 				return "";
 			}
 			
-			val lastSegment = lastDotSegment(dotSeparatedString);
-			if (lastSegment.length == dotSeparatedString.length) {
+			val lastSegment = lastDotSegment(delimiterSeparatedString);
+			if (lastSegment.length == delimiterSeparatedString.length) {
 				return "";
 			}
-			return dotSeparatedString.substring(0, dotSeparatedString.length() - 1 - lastSegment.length());
+			return delimiterSeparatedString.substring(0, delimiterSeparatedString.length() - 1 - lastSegment.length());
 		}
 
 		/**
-		 * Returns the last dot separated segment.
+		 * Returns the last {@link N4JSQualifiedNameConverter#DELIMITER delimiter} separated segment.
 		 * 
 		 * <p>Note: Returns an empty string if no dot is found in the string.</p>
 		 *
-		 * @param dotSeparatedString
-		 *            A dot separated string
+		 * @param delimiterSeparatedString
+		 *            A delimiter separated string
 		 * @return The last segment
 		 */
-		public static def String lastDotSegment(String dotSeparatedString) {
-			val segments = dotSeparatedString.split("\\.");
+		public static def String lastDotSegment(String delimiterSeparatedString) {
+			val segments = delimiterSeparatedString.split(Pattern.quote(N4JSQualifiedNameConverter.DELIMITER));
 			if (segments.length > 0) {
 				return segments.last;
 			}

@@ -10,7 +10,7 @@
 
 //expected errors form import validation not from duplicates validation
 /* XPECT issues ---
-	"Name a is already used as name for named import a from validation.IDE_549_DuplicateVars.simple.Exports." at "a"
+	"Name a is already used as name for named import a from validation/IDE_549_DuplicateVars/simple/Exports." at "a"
 	"The import of a is unused." at "a"
 	"The import of b is unused." at "b"
 ---
@@ -23,7 +23,7 @@ import {a,b,a} from "validation/IDE_549_DuplicateVars/simple/Exports";
 --- */
 import { d } from "validation/IDE_549_DuplicateVars/simple/Exports";
 /* XPECT issues ---
-	"Name d is already used as name for named import d from validation.IDE_549_DuplicateVars.simple.Exports." at "d"
+	"Name d is already used as name for named import d from validation/IDE_549_DuplicateVars/simple/Exports." at "d"
 --- */
 import { d } from "validation/IDE_549_DuplicateVars/simple/Exports";
 
@@ -43,7 +43,7 @@ var c;
 --- */
 import { x } from "validation/IDE_549_DuplicateVars/simple/Exports";
 /* XPECT issues ---
-	"Name x is already used as name for named import x from validation.IDE_549_DuplicateVars.simple.Exports." at "x"
+	"Name x is already used as name for named import x from validation/IDE_549_DuplicateVars/simple/Exports." at "x"
 	"The import statement should be placed on top of other statements." at "import { x } from "validation/IDE_549_DuplicateVars/simple/Exports";"
 --- */
 import { x } from "validation/IDE_549_DuplicateVars/simple/Exports";

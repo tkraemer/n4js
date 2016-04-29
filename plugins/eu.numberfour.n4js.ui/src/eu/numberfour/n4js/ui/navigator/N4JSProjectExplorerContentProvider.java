@@ -156,10 +156,19 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		final IAdaptable[] children = workingSet.getElements();
 		for (int i = 0; i < children.length; i++) {
 			final Object resource = children[i].getAdapter(IResource.class);
-			if (resource instanceof IProject)
+			if (resource instanceof IProject) {
 				children[i] = (IProject) resource;
+			}
 		}
 		return children;
+	}
+
+	/**
+	 * Returns with {@code true} if the working sets are enabled in the {@code Project Explorer}. Otherwise returns with
+	 * {@code false}.
+	 */
+	protected boolean isWorkingSetsEnabled() {
+		return null != projectExplorer && ProjectExplorer.WORKING_SETS == projectExplorer.getRootMode();
 	}
 
 	@Override

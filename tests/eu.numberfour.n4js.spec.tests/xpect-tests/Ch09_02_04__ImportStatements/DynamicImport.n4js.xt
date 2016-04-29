@@ -14,12 +14,12 @@ END_SETUP */
 
 /* XPECT errors ---
 "Cannot resolve import target :: resolving simple module import : found no matching modules" at ""Ch09_02_04__ImportStatements/Unknown1""
-"Couldn't resolve reference to TModule 'Ch09_02_04__ImportStatements.Unknown1'." at ""Ch09_02_04__ImportStatements/Unknown1""
+"Couldn't resolve reference to TModule 'Ch09_02_04__ImportStatements/Unknown1'." at ""Ch09_02_04__ImportStatements/Unknown1""
 --- */
 import * as UnknownStatic from "Ch09_02_04__ImportStatements/Unknown1"
 /* XPECT errors ---
 "Cannot resolve import target :: resolving simple module import : found no matching modules" at ""Ch09_02_04__ImportStatements/Unknown1""
-"Couldn't resolve reference to TModule 'Ch09_02_04__ImportStatements.Unknown1'." at ""Ch09_02_04__ImportStatements/Unknown1""
+"Couldn't resolve reference to TModule 'Ch09_02_04__ImportStatements/Unknown1'." at ""Ch09_02_04__ImportStatements/Unknown1""
 --- */
 import * as UnknownDynamic+ from "Ch09_02_04__ImportStatements/Unknown1"
 
