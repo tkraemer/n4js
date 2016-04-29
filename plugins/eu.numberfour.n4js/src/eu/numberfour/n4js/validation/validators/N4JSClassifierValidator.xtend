@@ -31,6 +31,7 @@ import java.util.Collection
 import java.util.HashMap
 import java.util.List
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
@@ -52,6 +53,8 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 	protected N4JSTypeSystem ts;
 	@Inject
 	protected extension IQualifiedNameProvider qualifiedNameProvider;
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter
 
 	/**
 	 * NEEEDED
@@ -123,7 +126,7 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 
 		if (names.nullOrEmpty) return;
 
-		val duplicates = names.map[toString].computeStringOccurance.filter[value > 1]
+		val duplicates = names.map[qualifiedNameConverter.toString(it)].computeStringOccurance.filter[value > 1]
 
 		for (dupe : duplicates) {
 			val message = getMessageForCLF_MULTIPLE_ROLE_CONSUME(dupe.key)
@@ -133,7 +136,7 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Computes occurrence of every String in the Collection.
-	 * Returns Iterable<Pair<String, Integer>>, where {@link Pair} keys are
+	 * Returns Iterable&lt;Pair&lt;String, Integer>>, where {@link Pair} keys are
 	 * items of original collection and values are number of occurrences in collection
 	 */
 	def static private computeStringOccurance(Collection<String> collection) {

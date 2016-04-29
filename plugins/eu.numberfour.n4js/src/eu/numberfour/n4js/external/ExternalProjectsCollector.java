@@ -65,6 +65,18 @@ public class ExternalProjectsCollector {
 	 * @return an iterable of all external projects that can be resolved from the configured external library paths.
 	 */
 	public Iterable<ExternalProject> collectExternalProjects() {
+		return hookUpReferencedBuildConfigs(externalLibraryWorkspace.getProjects());
+	}
+
+	/**
+	 * Hooks up the {@link IProjectDescription#getDynamicReferences() dynamic project references} among the given subset
+	 * of external projects. If the dynamic projects are already set, then this method has no side effect.
+	 *
+	 * @param externalProjects
+	 *            an iterable of external projects to update with respect to their dynamic project references.
+	 * @return an iterable of external projects with the updated/configured dynamic project references.
+	 */
+	public Iterable<ExternalProject> hookUpReferencedBuildConfigs(Iterable<? extends IProject> externalProjects) {
 
 		final Map<String, N4JSExternalProject> visitedProjects = newHashMap();
 		for (IProject project : externalLibraryWorkspace.getProjects()) {

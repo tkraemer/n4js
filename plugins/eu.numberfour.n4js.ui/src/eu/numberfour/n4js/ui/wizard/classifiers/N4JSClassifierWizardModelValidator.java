@@ -13,7 +13,6 @@ package eu.numberfour.n4js.ui.wizard.classifiers;
 import static java.lang.String.format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -55,6 +55,8 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 	@Inject
 	private IN4JSCore n4jsCore;
+	@Inject
+	private IQualifiedNameConverter qualifiedNameConverter;
 
 	private IResourceDescriptions descriptions;
 
@@ -260,8 +262,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 			this.descriptions = n4jsCore.getXtextIndex(set);
 		}
 
-		String[] segments = absoluteSpecifier.split("\\.");
-		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
+		QualifiedName name = qualifiedNameConverter.toQualifiedName(absoluteSpecifier);
 		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(type, name, false);
 		return foundObjects.iterator().hasNext();
 	}
@@ -302,8 +303,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	 * @return the index entry representing the classifier.
 	 */
 	protected IEObjectDescription getClassifierObjectDescriptionForFQN(String fqn) {
-		String[] segments = fqn.split("\\.");
-		QualifiedName name = QualifiedName.create(Arrays.asList(segments));
+		QualifiedName name = qualifiedNameConverter.toQualifiedName(fqn);
 		Iterable<IEObjectDescription> foundObjects = descriptions.getExportedObjects(
 				TypesPackage.eINSTANCE.getTClassifier(),
 				name, false);

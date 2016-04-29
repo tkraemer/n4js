@@ -29,7 +29,7 @@
 
 // XPECT warnings --> "The import of * as N from a/a1/A is unused." at "* as N"
 import * as N from "a/a1/A" // <-- obsolete
-// XPECT errors -->"IA from a.a1.A is already imported as N.IA." at "IA"
+// XPECT errors -->"IA from a/a1/A is already imported as N.IA." at "IA"
 import { IA } from "a/a1/A" // <-- obsolete
 import { B, IB } from "a/a2/A"
 

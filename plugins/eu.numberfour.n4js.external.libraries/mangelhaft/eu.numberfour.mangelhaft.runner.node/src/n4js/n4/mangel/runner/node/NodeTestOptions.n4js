@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import { XUnitReportSpec } from "n4/mangel/reporter/xunit/XUnitReporter"
+
+/**
+ * All options of the test runner/compilation.
+ */
+export default public class ~NodeTestOptions extends XUnitReportSpec {
+    /**
+     * Scan for projects in directories.
+     */
+    public scan: Array<string>;
+    
+    /**
+     * Project directories.
+     */
+    public projects: Array<string>;
+    
+    /**
+     * Filter for matching test cases.
+     */
+    public filter: Array<string>;
+
+    /**
+     * Definition of n4js runtime options key=value.
+     */
+    public define: Array<string>;
+
+    /**
+     * Compiles the given targets, generating a test catalog.
+     */
+    public compile: boolean;
+    
+    /**
+     * Test catalog (JSON) to be used. If file path, will be written on --compile.
+     */
+    public testCatalog: string;
+    
+    /**
+     * NPM dependency definitions.
+     */
+    public targetPlatformFile: string;
+    
+    /**
+     * NPM dependencies install location.
+     */
+    public targetPlatformInstallLocation: string;
+    
+    /**
+     * Skips NPM dependency installation, assuming already existing.
+     */
+    public targetPlatformSkipInstall: boolean;
+    
+    /**
+     * Debug output.
+     */
+    public debug: boolean;
+}
+
+/* -*- mode: typescript;-*- */

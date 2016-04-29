@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -179,6 +179,8 @@ export public class TestExecutor {
         ;
         async function runGroup(iTest: InstrumentedTest): ResultGroup {
             let rg: ResultGroup
+              , testObject: TestMethodDescriptor
+              , testRes: TestResult
               , testResults: Array<TestResult> = []
               , beforeAlls: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "beforeAlls")
               , befores: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "befores")
@@ -195,8 +197,7 @@ export public class TestExecutor {
                     await that.callAll(iTest, beforeAlls);
                     numTests = iTest.tests.length;
                     for (ii = 0; ii < numTests; ++ii) {
-                        let testObject: TestMethodDescriptor = iTest.tests[ii]
-                        , testRes: TestResult;
+                        testObject = iTest.tests[ii];
                         try {
                             await that.spy.testStarted.dispatch([iTest, testObject]);
                             start = new Date().getTime();
@@ -247,45 +248,21 @@ export public class TestExecutor {
                     testResults = testResults.concat(results);
                 }
             }
-            let successes: number = testResults.reduce(function(successes, testResult){
-                if (testResult.testStatus === TestStatus.passed) {
-                    successes = successes + 1;
-                }
-                return successes;
-            }, 0)
-            , failures = testResults.length - successes
-            ;
-
-            rg = new ResultGroup({  testResults:testResults
-                                    , description:iTest.name
-                                    , failures: failures
-                                    , successes: successes
-            })
+            
+            rg = new ResultGroup(testResults, iTest.name);
             await that.spy.groupFinished.dispatch([iTest, rg]);
             return rg;
         }
-        let result: Array<ResultGroup> = [];
+        let results: Array<ResultGroup> = [];
 
         for (let test of instrumentedTests) {
             if (test) {
                 let testRes = await runGroup(test);
-                result.push(testRes)
+                results.push(testRes)
             }
         }
-
-        let ranResultGroups: Array<ResultGroup> = result
-            , successes: number  = ranResultGroups.reduce(function(successes, resultGroup){
-                    successes = successes + resultGroup.successes;
-                    return successes;
-            }, 0)
-            , failures: number = ranResultGroups.reduce(function(failures, resultGroup){
-                    failures = failures + resultGroup.failures;
-                    return failures;
-            }, 0)
-            , results: ResultGroups = new ResultGroups(
-                {results:ranResultGroups, failures: failures, successes: successes}
-            )
-       return results;
+        let resultGroups = new ResultGroups(results);
+        return resultGroups;
     }
     public async errorTests(instrumentedTest: InstrumentedTest, error: any): Array<TestResult> {
         let len = instrumentedTest.tests.length
