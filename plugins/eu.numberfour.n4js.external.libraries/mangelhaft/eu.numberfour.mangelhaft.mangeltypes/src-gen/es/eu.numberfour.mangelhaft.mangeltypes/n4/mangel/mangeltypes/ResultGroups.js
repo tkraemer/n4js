@@ -2,11 +2,14 @@
 	'use strict';
 	System.register([], function($n4Export) {
 		var ResultGroups;
-		ResultGroups = function ResultGroups(spec) {
-			this.results = spec && 'results' in spec ? spec.results : undefined;
-			this.successes = spec && 'successes' in spec ? spec.successes : 0;
-			this.failures = spec && 'failures' in spec ? spec.failures : 0;
-			if (spec) {}
+		ResultGroups = function ResultGroups(results) {
+			this.results = undefined;
+			this.successes = 0;
+			this.failures = 0;
+			this.skipped = 0;
+			this.errors = 0;
+			this.results = results;
+			ResultGroups.accumulateResults(this, results);
 		};
 		$n4Export('ResultGroups', ResultGroups);
 		return {
@@ -24,28 +27,39 @@
 					failures: {
 						value: undefined,
 						writable: true
+					},
+					skipped: {
+						value: undefined,
+						writable: true
+					},
+					errors: {
+						value: undefined,
+						writable: true
 					}
 				}, {
+					accumulateResults: {
+						value: function accumulateResults___n4(target, results) {
+							for(let result of results) {
+								target.successes += result.successes;
+								target.failures += result.failures;
+								target.errors += result.errors;
+								target.skipped += result.skipped;
+								if (result instanceof ResultGroups) {
+									target.results = target.results.concat((result).results);
+								}
+							}
+							return target;
+						}
+					},
 					concat: {
 						value: function concat___n4() {
 							var resultGroups = Array.prototype.slice.call(arguments, 0);
-							return ResultGroups.concatArray(resultGroups);
+							return this.concatArray(resultGroups);
 						}
 					},
 					concatArray: {
 						value: function concatArray___n4(resultGroupss) {
-							return resultGroupss.reduce(function(acc, resultGroups) {
-								if (acc) {
-									acc.results = acc.results.concat(resultGroups.results);
-									acc.successes += resultGroups.successes;
-									acc.failures += resultGroups.failures;
-								}
-								return acc;
-							}, new ResultGroups({
-								results: [],
-								successes: 0,
-								failures: 0
-							}));
+							return this.accumulateResults(new ResultGroups([]), resultGroupss);
 						}
 					}
 				}, function(instanceProto, staticProto) {
@@ -71,10 +85,26 @@
 								isStatic: false,
 								annotations: []
 							}),
+							new N4DataField({
+								name: 'skipped',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'errors',
+								isStatic: false,
+								annotations: []
+							}),
 							new N4Method({
 								name: 'constructor',
 								isStatic: false,
 								jsFunction: instanceProto['constructor'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'accumulateResults',
+								isStatic: true,
+								jsFunction: staticProto['accumulateResults'],
 								annotations: []
 							}),
 							new N4Method({

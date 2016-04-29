@@ -128,7 +128,6 @@
 						value: function dispatch___n4(params) {
 							return $spawn(function*() {
 								if (!this.active) {
-									(yield undefined);
 									return;
 								}
 								let paramsArr = params.slice(), n = this.bindings.length, bindings;
@@ -136,7 +135,6 @@
 									this.previousParams = paramsArr;
 								}
 								if (!n) {
-									(yield undefined);
 									return;
 								}
 								bindings = this.bindings.slice();
@@ -148,9 +146,8 @@
 										executeNext = res !== false;
 									}
 								}
-								(yield true);
-								return;
-							}.bind(this));
+								return true;
+							}.apply(this, arguments));
 						}
 					},
 					forget: {

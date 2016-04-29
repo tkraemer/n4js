@@ -93,14 +93,10 @@
 								}
 								(yield this.spy.groupFinished.dispatch([
 									testObject,
-									new ResultGroup({
-										description: info.fqn,
-										testResults: testResults
-									})
+									new ResultGroup(testResults, info.fqn)
 								]));
-								(yield true);
-								return;
-							}.bind(this));
+								return true;
+							}.apply(this, arguments));
 						}
 					},
 					instrument: {
@@ -115,8 +111,7 @@
 									groupModule = System.throwPendingError((yield System.import(info.origin + "/" + moduleName)));
 								} catch(ex) {
 									(yield this.errorGroup(info, info.origin + "/" + moduleName, null, ex));
-									(yield null);
-									return;
+									return null;
 								}
 								groupCTORs = [
 									groupModule[ctorName]
@@ -162,15 +157,13 @@
 									}
 								} else {
 									(yield this.errorGroup(info, info.origin + "/" + parts.join("/")));
-									(yield null);
-									return;
+									return null;
 								}
 								let arr = ((yield Promise.all(instrumentedTestObjects))).filter((function(item) {
 									return item !== null;
 								}).bind(this));
-								(yield (arr));
-								return;
-							}.bind(this));
+								return (arr);
+							}.apply(this, arguments));
 						}
 					},
 					runGroups: {
@@ -222,9 +215,8 @@
 								(yield this.spy.testingFinished.dispatch([
 									res
 								]));
-								(yield res);
-								return;
-							}.bind(this));
+								return res;
+							}.apply(this, arguments));
 						}
 					},
 					reporters: {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,41 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-import {TestResult} from "n4/mangel/mangeltypes/TestResult"
 
+import {TestResult} from "n4/mangel/mangeltypes/TestResult"
+import { TestStatus } from "n4/mangel/mangeltypes/TestStatus"
 export public class ResultGroup {
-    public description: string;
-    public testResults: Array<TestResult>;
+    public description: string? = "";
+    public testResults: Array<TestResult>? = [];
     public successes: number = 0;
     public failures: number = 0;
+    public errors: number = 0;
+    public skipped: number = 0;
 
-    public constructor(@Spec spec: ~i~this) {}
+    public constructor(testResults: Array<TestResult>, description: string) {
+        this.testResults = testResults;
+        this.description = description;
+        for (let testResult of testResults) {
+            switch(testResult.testStatus) {
+                    case TestStatus.passed:
+                        this.successes += 1;
+                        break;
+                    case TestStatus.error:
+                        this.errors += 1;
+                        break;
+                    case TestStatus.failed:
+                        this.failures += 1;
+                        break;
+                    case TestStatus.skipped:
+                    case TestStatus.skipped_fixme:
+                    case TestStatus.skipped_ignore:
+                    case TestStatus.skipped_not_implemented:
+                    case TestStatus.skipped_precondition:
+                        this.skipped += 1;
+                        break
+                    default: 
+                    throw new Error("Unhandled TestStatus type");
+            }
+        }
+    }
 }
