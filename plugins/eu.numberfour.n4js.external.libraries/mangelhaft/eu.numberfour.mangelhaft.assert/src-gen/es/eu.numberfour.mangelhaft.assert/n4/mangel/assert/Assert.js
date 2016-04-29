@@ -48,7 +48,7 @@
 			return Object.getPrototypeOf({}).toString.call(object) == '[object Arguments]';
 		};
 		objEquiv = function objEquiv(aAny, bAny, ignorePrototype) {
-			let a = aAny, b = bAny;
+			let a = aAny, b = bAny, ka, kb, key, i;
 			if (isUndefinedOrNull(a) || isUndefinedOrNull(b)) {
 				return false;
 			}
@@ -64,7 +64,8 @@
 				return _deepEqual(a, b, ignorePrototype);
 			}
 			try {
-				var ka = Object_keys(a), kb = Object_keys(b), key, i;
+				ka = Object_keys(a);
+				kb = Object_keys(b);
 			} catch(e) {
 				return false;
 			}
@@ -379,9 +380,8 @@
 								if (!threw) {
 									this.fail_(null, null, message, "throws", this.throwsAsync);
 								}
-								(yield this.thrownCheck(true, actual, expectedErrorType, message, "throws", this.throwsAsync));
-								return;
-							}.bind(this));
+								return this.thrownCheck(true, actual, expectedErrorType, message, "throws", this.throwsAsync);
+							}.apply(this, arguments));
 						}
 					},
 					doesNotThrowAsync: {
@@ -398,9 +398,7 @@
 								if (threw) {
 									this.fail_(actual, null, message, "does not throw", this.doesNotThrowAsync);
 								}
-								(yield undefined);
-								return;
-							}.bind(this));
+							}.apply(this, arguments));
 						}
 					},
 					waitForCondition: {

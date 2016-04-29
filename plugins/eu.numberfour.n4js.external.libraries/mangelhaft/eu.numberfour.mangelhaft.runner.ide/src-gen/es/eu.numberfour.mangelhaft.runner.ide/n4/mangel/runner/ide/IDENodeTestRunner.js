@@ -64,9 +64,7 @@
 									console.error(err + "\nstack: " + errObj.stack.replace(/^Error:?\s*/, ""));
 									throw err;
 								}
-								(yield undefined);
-								return;
-							}.bind(this));
+							}.apply(this, arguments));
 						}
 					},
 					controller: {

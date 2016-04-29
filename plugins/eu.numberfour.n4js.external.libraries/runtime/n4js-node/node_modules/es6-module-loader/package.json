@@ -2,7 +2,7 @@
   "_args": [
     [
       "es6-module-loader@https://registry.npmjs.org/es6-module-loader/-/es6-module-loader-0.17.11.tgz",
-      "/var/lib/build/workspace/CI_stdlib_n4js/stdlib_n4js/rtenvs/n4js-node"
+      "/var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/rtenvs/n4js-node"
     ]
   ],
   "_from": "es6-module-loader@>=0.17.10 <0.18.0",
@@ -25,7 +25,7 @@
   "_shasum": "094f042e3b4d3086bcfd17380affabdfc99f35d7",
   "_shrinkwrap": null,
   "_spec": "es6-module-loader@https://registry.npmjs.org/es6-module-loader/-/es6-module-loader-0.17.11.tgz",
-  "_where": "/var/lib/build/workspace/CI_stdlib_n4js/stdlib_n4js/rtenvs/n4js-node",
+  "_where": "/var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/rtenvs/n4js-node",
   "author": {
     "email": "addyosmani@gmail.com",
     "name": "Guy Bedford, Luke Hoban, Addy Osmani",
@@ -67,10 +67,10 @@
   },
   "homepage": "https://github.com/ModuleLoader/es6-module-loader",
   "keywords": [
-    "es6",
-    "harmony",
+    "script",
     "loader",
-    "script"
+    "es6",
+    "harmony"
   ],
   "licenses": [
     {

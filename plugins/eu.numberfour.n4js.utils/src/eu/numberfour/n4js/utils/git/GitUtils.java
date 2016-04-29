@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,9 +48,11 @@ import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.transport.SshTransport;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
+import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.utils.io.FileDeleter;
 
@@ -153,10 +158,36 @@ public abstract class GitUtils {
 
 		final Path[] paths = toArray(localClonePaths, Path.class);
 		int i = 0;
+		final CountDownLatch latch = new CountDownLatch(Iterables.size(remoteUris));
+		final AtomicReference<Exception> resetExc = new AtomicReference<>();
+		final Object mutex = new Object();
 		for (final String remoteUri : remoteUris) {
-			hardReset(remoteUri, paths[i++], branch, cloneIfMissing);
+			final int pathIndex = i++;
+			new Thread(() -> {
+				try {
+					hardReset(remoteUri, paths[pathIndex], branch, cloneIfMissing);
+				} catch (final Exception e) {
+					if (null == resetExc.get()) {
+						synchronized (mutex) {
+							if (null == resetExc.get()) {
+								resetExc.set(e);
+							}
+						}
+					}
+				} finally {
+					latch.countDown();
+				}
+			}, "Thread-Git-Hard-Reset-" + remoteUri).start();
 		}
-
+		try {
+			latch.await(5L, TimeUnit.MINUTES);
+			if (null != resetExc.get()) {
+				Exceptions.sneakyThrow(resetExc.get());
+			}
+		} catch (final InterruptedException e) {
+			throw new RuntimeException(
+					"Timeouted while checking out remote Git repositories: " + Iterables.toString(remoteUris), e);
+		}
 	}
 
 	/**

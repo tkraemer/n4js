@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,20 +26,20 @@
 
     n4.handleMainModule = function(system) {
         var mod = options["main"] || options["exec"],
-            mainSym = "default";
+            mainSym;
 
         // Check for module to startup: main=<module-path>[:export]
         if (!mod) {
             return Promise.reject(new Error("No main nor exec option given!"));
-        }
-        if (options.debug) {
-            console.log("## Loading " + mod);
         }
 
         var mainSymIndex = mod.lastIndexOf(":");
         if (mainSymIndex > 0) {
             mainSym = mod.substr(mainSymIndex + 1);
             mod = mod.substring(0, mainSymIndex);
+        }
+        if (!mainSym) {
+            mainSym = "default";
         }
 
         function onload(main) {
@@ -57,6 +57,10 @@
                 }
             }
             return main;
+        }
+
+        if (options.debug) {
+            console.log("## Loading " + mod);
         }
         return (system || System).import(mod).then(function(exp) {
             System.throwPendingError(exp);
