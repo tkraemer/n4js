@@ -60,6 +60,7 @@ public class N4JSNewClassWizard extends N4JSNewClassifierWizard<N4JSClassWizardM
 		if (!generator.performManifestChanges(model, monitor)) {
 			monitor.setCanceled(true);
 			MessageDialog.openError(getShell(), "Failed to create the new class", "Couldn't perform manifest changes.");
+			return;
 		}
 		monitor.worked(5);
 
@@ -67,6 +68,7 @@ public class N4JSNewClassWizard extends N4JSNewClassifierWizard<N4JSClassWizardM
 		if (!generator.writeToFile(model, monitor)) {
 			monitor.setCanceled(true);
 			MessageDialog.openError(getShell(), "Failed to create the new class", "Couldn't write the class file.");
+			return;
 		}
 		monitor.worked(5);
 	}

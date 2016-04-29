@@ -100,7 +100,7 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 		dialog.open();
 
 		IProgressMonitor monitor = dialog.getProgressMonitor();
-		monitor.beginTask("Creating element", 10);
+		monitor.beginTask("Creating classifier", 10);
 
 		doGenerateClassifier(monitor);
 
@@ -126,6 +126,8 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 
 	/**
 	 * Performs the actual generation of {@link #performFinish()} call.
+	 *
+	 * The total work of the monitor is specified as 10.
 	 */
 	protected abstract void doGenerateClassifier(IProgressMonitor monitor);
 

@@ -45,7 +45,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 			.exclude(true);
 
 	//// Dialog settings
-	private static final String DIALOG_SETTING_HIDE_PREVIEW_KEY = "eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardPage.ShowPreview";
+	private static final String DIALOG_SETTING_HIDE_PREVIEW_KEY = "eu.numberfour.n4js.ui.wizard.workspaces.PreviewableWizardPage.ShowPreview";
 
 	//// Preview toggle labels
 	private static final String SHOW_PREVIEW_TEXT = "Show preview >>";
@@ -157,7 +157,6 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 
 	/**
 	 * Creates the right pane content, which is the preview area.
-	 *
 	 */
 	private void createPreview(Composite parent) {
 		wizardContentPreview = previewProvider.create(parent, SWT.NONE);
@@ -167,6 +166,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		getModel().addPropertyChangeListener(propertyChange -> {
 			ValidationResult result = getValidator().getValidationResult();
 
+			// Don't update if the preview is hidden
 			if (!previewVisible) {
 				return;
 			}
@@ -183,7 +183,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 	}
 
 	/**
-	 * Creates the bottom controls which are additional controls below the wizard components
+	 * Creates the bottom controls.
 	 */
 	private void createBottomControls(Composite parent) {
 		Composite bottomControls = new Composite(parent, SWT.NONE);

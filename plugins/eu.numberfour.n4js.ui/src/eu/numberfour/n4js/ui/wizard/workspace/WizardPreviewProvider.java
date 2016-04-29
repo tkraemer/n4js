@@ -140,12 +140,11 @@ public class WizardPreviewProvider {
 			}
 			this.contentBlocks = blocks;
 
-			String joinedContent = "";
-			for (ContentBlock block : blockList) {
-				joinedContent += block.content;
-			}
+			StringBuilder joinedContent = new StringBuilder();
+			blockList.stream().forEach((block) -> joinedContent.append(block.content));
+
 			try {
-				editorDocument.replace(replaceStart, getContent().length() - replaceStart, joinedContent);
+				editorDocument.replace(replaceStart, getContent().length() - replaceStart, joinedContent.toString());
 			} catch (Exception e) {
 				// Failed to insert changed blocks
 			}
@@ -157,12 +156,14 @@ public class WizardPreviewProvider {
 		/**
 		 * Returns the current content of the preview.
 		 *
+		 * Returns {@code null} if the controls hasn't been created yet.
+		 *
 		 */
 		public String getContent() {
 			if (null != editorDocument) {
 				return editorDocument.get();
 			}
-			return "";
+			return null;
 		}
 
 		/**
@@ -194,12 +195,6 @@ public class WizardPreviewProvider {
 		 */
 		public void setInfo(String info) {
 			this.infoLabel.setText(info);
-		}
-
-		@Override
-		protected void checkSubclass() {
-			// Allow subclassing
-			return;
 		}
 
 		private void createInfoBar(Composite parent) {

@@ -22,7 +22,7 @@ public interface WorkspaceWizardGenerator<M extends WorkspaceWizardModel> {
 	/**
 	 * Returns a preview of the generated code specified by the model.
 	 *
-	 * For existing target modules the import statements are fully aliased to avoid naming conflicts.
+	 * In the preview, the import statements are aliased in the case of an existing target module file.
 	 *
 	 * @param model
 	 *            The model for which a preview should be generated
@@ -31,12 +31,12 @@ public interface WorkspaceWizardGenerator<M extends WorkspaceWizardModel> {
 	public ContentBlock[] generateContentPreview(M model);
 
 	/**
-	 * Writes the given model to its file.
+	 * Writes the element specified by the model to its target module file.
 	 *
 	 * This may imply the creation of a new file or insertion into an existing file.
 	 *
 	 * @param model
-	 *            The model to write
+	 *            The specifying model
 	 * @param monitor
 	 *            A monitor to report progress to
 	 * @return {@code true} on success, {@code false} otherwise
