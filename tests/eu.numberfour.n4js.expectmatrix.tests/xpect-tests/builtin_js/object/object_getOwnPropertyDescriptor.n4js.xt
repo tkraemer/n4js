@@ -19,7 +19,7 @@ console.log(d);
 /* XPECT output --- 
 <==
 stdout:
-{ get: [Function: foo],
+{ get: [Function: get foo],
   set: undefined,
   enumerable: true,
   configurable: true }

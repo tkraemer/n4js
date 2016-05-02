@@ -23,6 +23,7 @@ import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_NONE;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -250,6 +251,15 @@ public class ExternalLibraryBuilderHelper {
 				Collections.reverse(buildOrder);
 			}
 
+			// Remove external projects that have the workspace counterpart if it is a build operation.
+			if (BuildOperation.BUILD.equals(operation)) {
+				for (final Iterator<IBuildConfiguration> itr = buildOrder.iterator(); itr.hasNext(); /**/) {
+					if (hasWorkspaceCounterpart(itr.next())) {
+						itr.remove();
+					}
+				}
+			}
+
 			checkState(buildOrder.size() == configs.length,
 					"Inconsistency between build configuration and the ordered projects:" +
 							"\n\tInput was: " + getProjectNames(configs) +
@@ -267,6 +277,15 @@ public class ExternalLibraryBuilderHelper {
 			}
 		}
 
+	}
+
+	/**
+	 * Returns with {@code true} if the external project is accessible in the workspace as well.
+	 */
+	private boolean hasWorkspaceCounterpart(IBuildConfiguration config) {
+		final URI uri = URI.createPlatformResourceURI(config.getProject().getName(), true);
+		final IN4JSProject n4Project = core.findProject(uri).orNull();
+		return null != n4Project && n4Project.exists() && !n4Project.isExternal();
 	}
 
 	private String getProjectNames(final Iterable<IBuildConfiguration> buildOrder) {
@@ -382,27 +401,38 @@ public class ExternalLibraryBuilderHelper {
 				final URI uri = URI.createFileURI(path);
 				final IN4JSProject n4Project = core.findProject(uri).orNull();
 
-				final ResourceSet resourceSet = core.createResourceSet(Optional.of(n4Project));
-				if (!resourceSet.getLoadOptions().isEmpty()) {
-					resourceSet.getLoadOptions().clear();
-				}
-				resourceSet.getLoadOptions().put(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE, Boolean.TRUE);
-				if (resourceSet instanceof ResourceSetImpl) {
-					((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
-				}
+				ResourceSet resourceSet = null;
 
-				final BuildData buildData = new BuildData(
-						project.getName(),
-						resourceSet,
-						toBeBuilt,
-						queuedBuildData,
-						true /* indexingOnly */);
+				try {
 
-				monitor.setTaskName("Building '" + project.getName() + "'...");
-				final IProgressMonitor buildMonitor = subMonitor.newChild(1, SUPPRESS_BEGINTASK);
-				builderState.update(buildData, buildMonitor);
-				resourceSet.getResources().clear();
-				resourceSet.eAdapters().clear();
+					resourceSet = core.createResourceSet(Optional.of(n4Project));
+					if (!resourceSet.getLoadOptions().isEmpty()) {
+						resourceSet.getLoadOptions().clear();
+					}
+					resourceSet.getLoadOptions().put(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE, Boolean.TRUE);
+					if (resourceSet instanceof ResourceSetImpl) {
+						((ResourceSetImpl) resourceSet).setURIResourceMap(newHashMap());
+					}
+
+					final BuildData buildData = new BuildData(
+							project.getName(),
+							resourceSet,
+							toBeBuilt,
+							queuedBuildData,
+							true /* indexingOnly */);
+
+					monitor.setTaskName("Building '" + project.getName() + "'...");
+					final IProgressMonitor buildMonitor = subMonitor.newChild(1, SUPPRESS_BEGINTASK);
+					builderState.update(buildData, buildMonitor);
+
+				} finally {
+
+					if (null != resourceSet) {
+						resourceSet.getResources().clear();
+						resourceSet.eAdapters().clear();
+					}
+
+				}
 
 			} catch (Exception e) {
 				final String message = "Error occurred while " + toString().toLowerCase() + "ing external library "

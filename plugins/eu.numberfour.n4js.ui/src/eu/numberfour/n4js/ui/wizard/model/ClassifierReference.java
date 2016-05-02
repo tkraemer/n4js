@@ -16,6 +16,8 @@ import java.util.StringJoiner;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.naming.QualifiedName;
 
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
+
 /**
  * Helper type to represent classifier references in a wizard. ClassifierReferences may be resolved or unresolved. *
  * <p>
@@ -65,7 +67,7 @@ public class ClassifierReference {
 		this.classifierName = qualifiedName.getLastSegment();
 		List<String> frontSegments = qualifiedName.getSegments();
 		if (frontSegments.size() > 0) {
-			StringJoiner joiner = new StringJoiner(".");
+			StringJoiner joiner = new StringJoiner(N4JSQualifiedNameConverter.DELIMITER);
 			for (String segment : frontSegments.subList(0, frontSegments.size() - 1)) {
 				joiner.add(segment);
 			}
@@ -85,8 +87,8 @@ public class ClassifierReference {
 	 */
 	public String getFullSpecifier() {
 		if (!this.classifierName.isEmpty())
-			return (this.classifierModuleSpecifier.isEmpty() ? "" : this.classifierModuleSpecifier + ".")
-					+ this.classifierName;
+			return (this.classifierModuleSpecifier.isEmpty() ? ""
+					: this.classifierModuleSpecifier + N4JSQualifiedNameConverter.DELIMITER) + this.classifierName;
 		return "";
 	}
 

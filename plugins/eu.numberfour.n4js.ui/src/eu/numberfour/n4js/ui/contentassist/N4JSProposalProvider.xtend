@@ -13,10 +13,10 @@ package eu.numberfour.n4js.ui.contentassist
 import com.google.common.base.Predicate
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.ui.proposals.imports.ImportsAwareReferenceProposalCreator
-import eu.numberfour.n4js.ui.proposals.linkedEditing.N4JSCompletionProposal
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.ui.proposals.imports.ImportsAwareReferenceProposalCreator
+import eu.numberfour.n4js.ui.proposals.linkedEditing.N4JSCompletionProposal
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.jface.viewers.StyledString
@@ -24,9 +24,11 @@ import org.eclipse.swt.graphics.Image
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.Keyword
 import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.ui.editor.contentassist.AbstractJavaBasedContentProposalProvider
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 
@@ -40,6 +42,9 @@ class N4JSProposalProvider extends AbstractN4JSProposalProvider {
 
 	@Inject
 	IQualifiedNameProvider qualifiedNameProvider
+
+	@Inject
+	IQualifiedNameConverter qualifiedNameConverter
 
 	override completeRuleCall(RuleCall ruleCall, ContentAssistContext contentAssistContext,
 			ICompletionProposalAcceptor acceptor) {
@@ -73,6 +78,31 @@ class N4JSProposalProvider extends AbstractN4JSProposalProvider {
 	}
 
 	/**
+	 * <b>TEMPORARY WORK-AROUND</b>
+	 * <p>
+	 * Our proposal provider implementation makes heavy use of some Xtext base implementations intended for Java (esp.
+	 * the abstract base class AbstractJavaBasedContentProposalProvider) which in many places has '.' hard-code as the
+	 * delimiter of qualified names (e.g. FQNPrefixMatcher). This wasn't a problem as long as we used '.' as delimiter
+	 * in N4JS qualified names, but this was changed to '/' as of GH-162. Thus, the base implementations intended for
+	 * Java now get confused.
+	 * </p><p>
+	 * <b>TEMPORARY PARTIAL SOLUTION</b>: to not confuse the implementations intended for Java, we do not provide our
+	 * "official" N4JSQualifiedNameComputer obtained via injection, but instead provide a fake IQualifiedNameComputer
+	 * that uses '.' as delimiter.<br>
+	 * However, this <em>will</em> break in case of project/folder names containing '.' (which is valid in Javascript).
+	 * </p><p>
+	 * TODO IDE-2227 fix handling of qualified names in content assist or create follow-up task
+	 * </p>
+	 * 
+	 * @see AbstractJavaBasedContentProposalProvider
+	 */
+	override protected getProposalFactory(String ruleName, ContentAssistContext contentAssistContext) {
+		return new DefaultProposalCreator(contentAssistContext, ruleName,
+			new IQualifiedNameConverter.DefaultImpl() // provide a fake implementation using '.' as delimiter like Java
+		);
+	}
+
+	/**
 	 * Provide reasonable labels for qualified proposals. The produced labels look like this:
 	 * <pre>
 	 * MyTypeName - com.acme.my_module
@@ -89,10 +119,10 @@ class N4JSProposalProvider extends AbstractN4JSProposalProvider {
 			val result = new StyledString(name)
 			if (it.segmentCount > 1) {
 				if (it.lastSegment.endsWith(name)) {
-					result.append(' - ' + it.skipLast(1), StyledString.QUALIFIER_STYLER)
+					result.append(' - ' + qualifiedNameConverter.toString(it.skipLast(1)), StyledString.QUALIFIER_STYLER)
 				} else {
 					// aliased - print the alias and the original name
-					result.append(' - ' + it.skipLast(1) + ' alias for ' + it.lastSegment, StyledString.QUALIFIER_STYLER)
+					result.append(' - ' + qualifiedNameConverter.toString(it.skipLast(1)) + ' alias for ' + it.lastSegment, StyledString.QUALIFIER_STYLER)
 				}
 			}
 			return result

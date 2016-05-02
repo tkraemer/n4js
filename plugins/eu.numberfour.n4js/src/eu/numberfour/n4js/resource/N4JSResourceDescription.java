@@ -57,6 +57,8 @@ public class N4JSResourceDescription extends DefaultResourceDescription {
 
 	private final IDefaultResourceDescriptionStrategy strategy;
 
+	private Iterable<QualifiedName> lazyImportedNames;
+	
 	/**
 	 * Creates a new description for the given resource.
 	 */
@@ -121,47 +123,61 @@ public class N4JSResourceDescription extends DefaultResourceDescription {
 
 	@Override
 	public Iterable<QualifiedName> getImportedNames() {
-		// get imported names collected during global scoping
-		// the scope provider registers every request in scoping so that by this
-		// also all names are collected that cannot be resolved
-		Iterable<QualifiedName> superImportedNames = super.getImportedNames();
-		Set<QualifiedName> importedNames = Sets.newHashSet();
-		if (superImportedNames != null) {
-			importedNames = Sets.newHashSet(superImportedNames);
-		} else {
-			importedNames = Sets.<QualifiedName> newHashSet();
-		}
-		// import our own module name to get a proper change notification
-		Resource resource = getResource();
-		List<EObject> contents = resource.getContents();
-		if (contents.size() > 1) {
-			TModule module = (TModule) contents.get(1);
-			importedNames.add(qualifiedNameProvider.getFullyQualifiedName(module));
-		}
-		final Set<EObject> crossRefTypes = Sets.newHashSet();
-		IAcceptor<EObject> acceptor = getCrossRefTypeAcceptor(crossRefTypes);
-		crossReferenceComputer.computeCrossRefs(resource, acceptor);
-		for (EObject type : crossRefTypes) {
-			// TODO TS handle also generics (later with working type system)
-			if (type instanceof TFunction) {
-				// TODO TS work around for not yet inferred return types of methods and functions
-				// later for all expressions the types have to be calculated and for those types
-				// all super types have to be collected as well
-				// for methods and functions: -> declaredType != returnType (as returnType is
-				// inferred at runtime)
-				TypeRef returnTypeRef = ((TFunction) type).getReturnTypeRef();
-				if (returnTypeRef != null) {
-					handleType(importedNames, returnTypeRef.getDeclaredType());
+
+		if (null == lazyImportedNames) {
+			synchronized (this) {
+				if (null == lazyImportedNames) {
+
+					// System.out.println("######\t" + getURI());
+
+					// get imported names collected during global scoping
+					// the scope provider registers every request in scoping so that by this
+					// also all names are collected that cannot be resolved
+					Iterable<QualifiedName> superImportedNames = super.getImportedNames();
+					Set<QualifiedName> importedNames = Sets.newHashSet();
+					if (superImportedNames != null) {
+						importedNames = Sets.newHashSet(superImportedNames);
+					} else {
+						importedNames = Sets.<QualifiedName> newHashSet();
+					}
+					// import our own module name to get a proper change notification
+					Resource resource = getResource();
+					List<EObject> contents = resource.getContents();
+					if (contents.size() > 1) {
+						TModule module = (TModule) contents.get(1);
+						importedNames.add(qualifiedNameProvider.getFullyQualifiedName(module));
+					}
+					final Set<EObject> crossRefTypes = Sets.newHashSet();
+					IAcceptor<EObject> acceptor = getCrossRefTypeAcceptor(crossRefTypes);
+					crossReferenceComputer.computeCrossRefs(resource, acceptor);
+					for (EObject type : crossRefTypes) {
+						// TODO TS handle also generics (later with working type system)
+						if (type instanceof TFunction) {
+							// TODO TS work around for not yet inferred return types of methods and functions
+							// later for all expressions the types have to be calculated and for those types
+							// all super types have to be collected as well
+							// for methods and functions: -> declaredType != returnType (as returnType is
+							// inferred at runtime)
+							TypeRef returnTypeRef = ((TFunction) type).getReturnTypeRef();
+							if (returnTypeRef != null) {
+								handleType(importedNames, returnTypeRef.getDeclaredType());
+							}
+						} else if (type instanceof Type) {
+							handleType(importedNames, type);
+						} else if (type instanceof TVariable) {
+							handleTVariable(importedNames, (TVariable) type);
+						} else if (type instanceof TEnumLiteral) {
+							handleTEnumLiteral(importedNames, (TEnumLiteral) type);
+						}
+					}
+
+					this.lazyImportedNames = importedNames;
+
 				}
-			} else if (type instanceof Type) {
-				handleType(importedNames, type);
-			} else if (type instanceof TVariable) {
-				handleTVariable(importedNames, (TVariable) type);
-			} else if (type instanceof TEnumLiteral) {
-				handleTEnumLiteral(importedNames, (TEnumLiteral) type);
 			}
 		}
-		return importedNames;
+
+		return lazyImportedNames;
 	}
 
 	private void handleTEnumLiteral(Set<QualifiedName> importedNames, TEnumLiteral literal) {

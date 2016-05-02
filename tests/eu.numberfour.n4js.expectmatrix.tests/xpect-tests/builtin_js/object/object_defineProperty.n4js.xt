@@ -29,7 +29,7 @@ function fail () {
 	try {
 		Object.defineProperty(o, "conflict", { value: 0x9f91102, get: function() { return 0xdeadbeef; } });
 	}
-	catch (e) { console.log(e);}
+	catch (e) { console.log((e as Object).toString()); }
 }
 
 fail();
@@ -40,7 +40,7 @@ fail();
 stdout:
 {"a":37}
 38 = 38
-[TypeError: Invalid property.  A property cannot both have accessors and be writable or have a value, #<Object>]
+TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute, #<Object>
 stderr:
 ==>
 --- */

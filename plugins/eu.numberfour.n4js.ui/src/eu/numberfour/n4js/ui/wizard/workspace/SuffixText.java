@@ -10,22 +10,16 @@
  */
 package eu.numberfour.n4js.ui.wizard.workspace;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -50,6 +44,8 @@ public class SuffixText extends Composite {
 	public static final String TEXT_PROPERTY = "text";
 	/** Complete text property name */
 	public static final String SUFFIX_PROPERTY = "suffix";
+	/** Suffix visibility property name */
+	public static final String SUFFIX_VISIBILITY_PROPERTY = "suffixVisible";
 
 	// color constants
 	private static Color INACTIVE_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
@@ -63,6 +59,8 @@ public class SuffixText extends Composite {
 	private final StyledText suffixText;
 
 	private boolean mousePressed = false;
+
+	private boolean suffixVisible = true;
 
 	// Graphics context for text selection pixel calculation
 	private final GC gc = new GC(getDisplay());
@@ -121,29 +119,25 @@ public class SuffixText extends Composite {
 
 		// Workaround theme dependent background color issues:
 		// Reset the background color for every paint event
-		addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-				setBackground(editableText.getBackground());
-			}
-		});
+		addPaintListener(paintEvent -> setBackground(editableText.getBackground()));
 
 		// Copy over the text from the internal editable text whenever it changes
-		editableText.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				layout();
-				setText(editableText.getText());
-			}
+		editableText.addModifyListener(modifyEvent -> {
+			layout();
+			setText(editableText.getText());
 		});
 
 		// Relayout when the suffix text changes
-		this.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName() == SUFFIX_PROPERTY) {
-					layout(true);
-				}
+		this.addPropertyChangeListener(propertyChange -> {
+			if (propertyChange.getPropertyName() == SUFFIX_PROPERTY) {
+				layout(true);
+			}
+		});
+
+		// Connect the internal suffix visibility state to the swt label visibility
+		this.addPropertyChangeListener(propertyChange -> {
+			if (propertyChange.getPropertyName() == SUFFIX_VISIBILITY_PROPERTY) {
+				suffixText.setVisible(suffixVisible);
 			}
 		});
 
@@ -152,37 +146,34 @@ public class SuffixText extends Composite {
 
 		// Tracks dragging mouse movement in this widget and applies it to the text field userInput to
 		// fake proper text selection behavior
-		MouseMoveListener mouseMoveSelectionListener = new MouseMoveListener() {
-			@Override
-			public void mouseMove(MouseEvent e) {
-				if (mousePressed) {
-					int userInputRightEdgeOffset = editableText.getBounds().x + editableText.getBounds().width;
-					if (e.x < userInputRightEdgeOffset) {
-						String inputString = editableText.getText();
+		MouseMoveListener mouseMoveSelectionListener = mouseMoveEvent -> {
+			if (mousePressed) {
+				int userInputRightEdgeOffset = editableText.getBounds().x + editableText.getBounds().width;
+				if (mouseMoveEvent.x < userInputRightEdgeOffset) {
+					String inputString = editableText.getText();
 
-						int selectedPixels = (userInputRightEdgeOffset - e.x);
-						int i = 1;
+					int selectedPixels = (userInputRightEdgeOffset - mouseMoveEvent.x);
+					int i = 1;
 
-						// Compute the index of the character the cursor is floating above and
-						// adapt the text selection.
-						while (inputString.length() - i >= 0
-								&& gc.textExtent(editableText.getText().substring(inputString.length() - i,
-										inputString.length() - 1)).x < selectedPixels) {
-							i++;
-						}
-
-						int startIndex = Ints.max(0, inputString.length() - i + 1);
-
-						editableText.setSelection(startIndex, inputString.length());
+					// Compute the index of the character the cursor is floating above and
+					// adapt the text selection.
+					while (inputString.length() - i >= 0
+							&& gc.textExtent(editableText.getText().substring(inputString.length() - i,
+									inputString.length() - 1)).x < selectedPixels) {
+						i++;
 					}
-				}
 
+					int startIndex = Ints.max(0, inputString.length() - i + 1);
+
+					editableText.setSelection(startIndex, inputString.length());
+				}
 			}
+
 		};
 		this.addMouseMoveListener(mouseMoveSelectionListener);
 
 		// Set text cursor
-		this.setCursor(new Cursor(getDisplay(), SWT.CURSOR_IBEAM));
+		this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_IBEAM));
 
 	}
 
@@ -240,7 +231,14 @@ public class SuffixText extends Composite {
 	 *            The new state to adapt
 	 */
 	public void setSuffixVisible(boolean state) {
-		this.suffixText.setVisible(state);
+		this.firePropertyChange(SUFFIX_VISIBILITY_PROPERTY, this.suffixVisible, this.suffixVisible = state);
+	}
+
+	/**
+	 * Returns the visibility state of the suffix label
+	 */
+	public boolean isSuffixVisible() {
+		return suffixVisible;
 	}
 
 	@Override
