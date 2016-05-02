@@ -14,13 +14,20 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.findReferences.ReferenceFinder;
 import org.eclipse.xtext.findReferences.TargetURIs;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
 import org.eclipse.xtext.linking.lazy.LazyURIEncoder;
 import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.IResourceDescription;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -63,39 +70,38 @@ public class ConcreteSyntaxAwareReferenceFinder extends ReferenceFinder {
 			}
 		}
 	}
-	// TODO compare with Design-document.
-// @formatter:off
-//
-//	@Override
-//	public void findReferences(TargetURIs targetURIs, Resource resource, Acceptor acceptor, IProgressMonitor monitor) {
-//		// make sure data is present
-//		keys.getData(targetURIs, new SimpleResourceAccess(resource.getResourceSet()));
-//		super.findReferences(targetURIs, resource, acceptor, monitor);
-//	}
-//
-//	@Override
-//	protected boolean doProcess(EReference reference, TargetURIs targetURISet) {
-//		return targetURISet.getUserData(TargetURIKey.KEY).isEReferenceTypeApplicable(reference.getEReferenceType());
-//	}
-//
-//	@Override
-//	protected EObject toValidInstanceOrNull(Resource resource, TargetURIs targetURIs, EObject value) {
-//		EObject result = value;
-//		if (result.eIsProxy()) {
-//			URI proxyURI = EcoreUtil.getURI(result);
-//			if (uriEncoder.isCrossLinkFragment(resource, proxyURI.fragment())) {
-//				INode node = uriEncoder.decode(resource, proxyURI.fragment()).getThird();
-//				String string = linkingHelper.getCrossRefNodeAsString(node, true);
-//				if (targetURIs.getUserData(TargetURIKey.KEY).isMatchingConcreteSyntax(string)) {
-//					result = resolveInternalProxy(value, resource);
-//				} else {
-//					result = null;
-//				}
-//			} else {
-//				result = resolveInternalProxy(value, resource);
-//			}
-//		}
-//		return result;
-//	}
-// @formatter:on
+
+	@Override
+	public void findReferences(Predicate<URI> targetURIs, Resource resource, Acceptor acceptor,
+			IProgressMonitor monitor) {
+		// make sure data is present
+		keys.getData((TargetURIs) targetURIs, new SimpleResourceAccess(resource.getResourceSet()));
+		super.findReferences(targetURIs, resource, acceptor, monitor);
+	}
+
+	@Override
+	protected boolean doProcess(EReference reference, Predicate<URI> targetURISet) {
+		return ((TargetURIs) targetURISet).getUserData(TargetURIKey.KEY)
+				.isEReferenceTypeApplicable(reference.getEReferenceType());
+	}
+
+	@Override
+	protected EObject toValidInstanceOrNull(Resource resource, Predicate<URI> targetURIs, EObject value) {
+		EObject result = value;
+		if (result.eIsProxy()) {
+			URI proxyURI = EcoreUtil.getURI(result);
+			if (uriEncoder.isCrossLinkFragment(resource, proxyURI.fragment())) {
+				INode node = uriEncoder.decode(resource, proxyURI.fragment()).getThird();
+				String string = linkingHelper.getCrossRefNodeAsString(node, true);
+				if (((TargetURIs) targetURIs).getUserData(TargetURIKey.KEY).isMatchingConcreteSyntax(string)) {
+					result = resolveInternalProxy(value, resource);
+				} else {
+					result = null;
+				}
+			} else {
+				result = resolveInternalProxy(value, resource);
+			}
+		}
+		return result;
+	}
 }
