@@ -51,7 +51,7 @@ public class GH_180_CheckInjectedSharedSingletons_PluginUITest extends AbstractI
 		try {
 			mockBundle.start(/* context */ null);
 			assertTrue("Mock bundle is not running yet.", Bundle.ACTIVE == mockBundle.getBundle().getState());
-			final Injector childInjector = mockBundle.getInjector(injectorId);
+			final Injector childInjector = mockBundle.getN4JSChildInjector();
 
 			final N4JSTypeInferencer instanceFromParent = parentInjector.getInstance(testedType);
 			final N4JSTypeInferencer instanceFromChild = childInjector.getInstance(testedType);
