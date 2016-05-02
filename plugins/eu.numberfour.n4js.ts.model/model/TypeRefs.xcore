@@ -737,27 +737,23 @@ class ExistentialTypeRef extends TypeRef {
 }
 
 /*
- * Unknown type references are the result of an unresolved link.
- * Unresolved bindings may be ok due to the dynamic nature of Java script
- * or the result of an unresolved binding. No follow up errors should be
- * produced for these cases.
- * <p>
- * var x = doesNotExist // error here
- * x.doesNotExistEither // no error here
- * var String s = x // no error here, too
- * x = s // or here
+ * Unknown type references are the result of an unresolved link or other form of error.
+ * No follow up errors should be produced for such unknown type references.
+ * <pre>
+ * var x = doesNotExist // error here; type of x will be UnknownTypeRef
+ * x.cannotKnowIfThisExists // no error here
+ * var s: String = x // no error here, either
+ * x = s // nor here
+ * </pre>
+ * Because {@code UnknownTypeRef}s suppress consequential errors, they must never
+ * appear in an N4JSResource that does not have any original parse or validation errors!
  */
 class UnknownTypeRef extends TypeRef {
-	/*
-	 * The optionally known name of the unknown type, e.g.
-	 * var UnknownThing x; // UnknownThing is the name of the type
-	 */
-	String typeName
 	/*
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		return typeName ?: "[unknown]"
+		return "[unknown]";
 	}
 }
 

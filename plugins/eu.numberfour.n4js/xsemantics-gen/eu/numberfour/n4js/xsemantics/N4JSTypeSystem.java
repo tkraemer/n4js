@@ -7341,11 +7341,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRef thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = G.getThisType() as BoundThisTypeRef; val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef); boundRef.setTypingStrategy(thisTypeRef.typingStrategy); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        TypeRef _thisType = RuleEnvironmentExtensions.getThisType(G);
+        final BoundThisTypeRef boundRefFromEnv = ((BoundThisTypeRef) _thisType);
         ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRef(_actualThisTypeRef);
         TypingStrategy _typingStrategy = thisTypeRef.getTypingStrategy();
@@ -7381,11 +7382,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesThisTypeRefStructural(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ThisTypeRefStructural thisTypeRef) throws RuleFailedException {
     ThisTypeRef T = null; // output parameter
-    /* { val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef) val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
+    /* { val BoundThisTypeRef boundRefFromEnv = G.getThisType() as BoundThisTypeRef; val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef); TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); T = boundRef; } or { T = thisTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        final BoundThisTypeRef boundRefFromEnv = this.<BoundThisTypeRef>env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef.class);
+        TypeRef _thisType = RuleEnvironmentExtensions.getThisType(G);
+        final BoundThisTypeRef boundRefFromEnv = ((BoundThisTypeRef) _thisType);
         ParameterizedTypeRef _actualThisTypeRef = boundRefFromEnv.getActualThisTypeRef();
         final BoundThisTypeRef boundRef = TypeUtils.createBoundThisTypeRefStructural(_actualThisTypeRef, thisTypeRef);
         TypeUtils.copyTypeModifiers(boundRef, thisTypeRef);
@@ -7577,7 +7579,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -7636,7 +7638,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter result = if(needUnionInsteadIntersection) typeSystemHelper.createUnionType(G,l) else typeSystemHelper.createIntersectionType(G,l) TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
@@ -7703,16 +7705,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                   }
                 }
               }
-              EObject _eContainer = typeRef.eContainer();
-              final boolean needUnionInsteadIntersection = (_eContainer instanceof TFormalParameter);
-              TypeRef _xifexpression = null;
-              if (needUnionInsteadIntersection) {
-                _xifexpression = this.typeSystemHelper.createUnionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
-              } else {
-                _xifexpression = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
-              }
-              result = _xifexpression;
+              UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+              result = _createUnknownTypeRef;
               TypeUtils.copyTypeModifiers(result, typeRef);
+              RuleEnvironmentExtensions.addInconsistentSubstitutions(G, typeVar, l);
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
             }

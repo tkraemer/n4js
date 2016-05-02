@@ -171,7 +171,6 @@ import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
@@ -2383,7 +2382,7 @@ rule substTypeVariablesThisTypeRef
 	G |- ThisTypeRef thisTypeRef ~> ThisTypeRef T
 from {
 	{
-		val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
+		val BoundThisTypeRef boundRefFromEnv = G.getThisType() as BoundThisTypeRef;
 		val boundRef = TypeUtils.createBoundThisTypeRef(boundRefFromEnv.actualThisTypeRef);
 		boundRef.setTypingStrategy(thisTypeRef.typingStrategy); // note: must take use-site typing-strategy from 'thisTypeRef', not the one stored in the environment
 		TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); // note: must take use-site type modifiers (e.g. optional)
@@ -2399,7 +2398,7 @@ rule substTypeVariablesThisTypeRefStructural
 	G |- ThisTypeRefStructural thisTypeRef ~> ThisTypeRef T
 from {
 	{
-		val BoundThisTypeRef boundRefFromEnv = env(G, RuleEnvironmentExtensions.KEY__THIS_BINDING, BoundThisTypeRef)
+		val BoundThisTypeRef boundRefFromEnv = G.getThisType() as BoundThisTypeRef;
 		val boundRef = TypeUtils.createBoundThisTypeRefStructural(boundRefFromEnv.actualThisTypeRef, thisTypeRef);
 		TypeUtils.copyTypeModifiers(boundRef, thisTypeRef); // note: must take use-site type modifiers (e.g. optional)
 		T = boundRef;
@@ -2513,12 +2512,15 @@ from {
 					l += TypeUtils.copy(temp); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
 				}
 			}
-			val needUnionInsteadIntersection = typeRef.eContainer instanceof TFormalParameter
-			result = if(needUnionInsteadIntersection)
-					typeSystemHelper.createUnionType(G,l)
-				else
-					typeSystemHelper.createIntersectionType(G,l)
-			TypeUtils.copyTypeModifiers(result, typeRef)
+			result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+//			val needUnionInsteadIntersection = TODO
+//			result = if(needUnionInsteadIntersection)
+//					typeSystemHelper.createUnionType(G,l)
+//				else
+//					typeSystemHelper.createIntersectionType(G,l);
+			TypeUtils.copyTypeModifiers(result, typeRef);
+			G.addInconsistentSubstitutions(typeVar, l); // will have no effect unless recording was turned on
+			// by a validation (see method RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment))
 		}
 		or
 		{
