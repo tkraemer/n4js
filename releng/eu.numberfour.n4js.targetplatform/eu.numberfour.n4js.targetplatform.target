@@ -110,7 +110,7 @@ This has two advantages:
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.9.2/"/>
 		</location>
 -->		
-		<!-- LAST touch for mirror: 2016-04-15_1215 -->
+		<!-- LAST touch for mirror: 2016-04-26_1529 -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
 			<unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
