@@ -15,8 +15,6 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-import eu.numberfour.n4js.ui.internal.N4JSActivator;
-
 /** */
 public class NpmExporterExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,7 +25,7 @@ public class NpmExporterExecutableExtensionFactory extends AbstractGuiceAwareExe
 
 	@Override
 	protected Injector getInjector() {
-		return NpmExporterActivator.getInstance().getInjector(N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS);
+		return NpmExporterActivator.getInstance().getN4JSChildInjector();
 	}
 
 }

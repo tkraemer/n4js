@@ -62,11 +62,11 @@ public abstract class AbstractGuiceUIPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns with the cached injector for the given unique injector identifier. If the injector is not yet available,
 	 * then this method will create and cache a new injector instance and also associates it with the unique ID
-	 * argument.
+	 * argument. Clients may expand the visibility of this method by overriding it.
 	 *
 	 * @return the unique ID of the injector.
 	 */
-	public Injector getInjector(String id) {
+	protected Injector getInjector(final String id) {
 		return cache.getUnchecked(id);
 	}
 
@@ -79,14 +79,14 @@ public abstract class AbstractGuiceUIPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the parent injector to inherit all the bindings and shared singletons.
 	 */
-	protected abstract Injector getParentInjector(String id);
+	protected abstract Injector getParentInjector(final String id);
 
 	/**
 	 * Returns with an iterable of modules that will be used to declare any additional bindings for the injector
 	 * provided by this instance. Returns with an {@link Collections#emptyList() empty list} by default, hence does not
 	 * contribute/declare any additional bindings for the provided injector.
 	 *
-	 * @return an iterable of modules that will be used to declare additional bindings..
+	 * @return an iterable of modules that will be used to declare additional bindings.
 	 */
 	protected Iterable<Module> getModules() {
 		return emptyList();
