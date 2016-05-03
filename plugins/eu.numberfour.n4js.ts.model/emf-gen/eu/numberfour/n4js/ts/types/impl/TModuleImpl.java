@@ -529,8 +529,7 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 	 * @generated
 	 */
 	public String getModuleSpecifier() {
-		String _qualifiedName = this.getQualifiedName();
-		return _qualifiedName.replace(".", "/");
+		return this.getQualifiedName();
 	}
 
 	/**

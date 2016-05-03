@@ -495,7 +495,7 @@
 							}
 							var pairInjectorBinding = this.findBinding(ctor);
 							if (pairInjectorBinding) {
-								var $destruct = $sliceToArrayForDestruct((pairInjectorBinding), 2), injector = $destruct[0], binder = $destruct[1];
+								var $destruct0 = $sliceToArrayForDestruct((pairInjectorBinding), 2), injector = $destruct0[0], binder = $destruct0[1];
 								if (binder && injector) {
 									return injector.createFromBinder(ctor, binder, delegate, cachedInstances);
 								}
@@ -649,9 +649,10 @@
 									throw new DIConfigurationError("Tried to create instance from enum" + getOFQN(ctor));
 								}
 							}
-							var instance = Object.create(ctor.prototype);
-							instance = (ctor).apply(instance, parameters) || instance;
-							return instance;
+							var args = parameters.slice();
+							args.unshift(null);
+							ctor = Function.prototype.bind.apply(ctor, args);
+							return new ctor();
 						}
 					},
 					createFromInjectedTypeMeta: {

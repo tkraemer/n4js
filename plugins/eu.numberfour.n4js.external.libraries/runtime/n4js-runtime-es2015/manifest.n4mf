@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,7 @@ VendorId: eu.numberfour
 ProjectName: "n4js-runtime-es2015"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
-ProjectVersion: 0.3.0
+ProjectVersion: 0.3.2
 Output: "src-gen"
 Sources {
     source {

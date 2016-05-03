@@ -29,6 +29,7 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.utils.UIUtils;
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
@@ -38,6 +39,7 @@ import eu.numberfour.n4js.utils.Arrays2;
 public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 
 	private static final Image SRC_FOLDER_IMG = ImageRef.SRC_FOLDER.asImage().orNull();
+	private static final Image WORKING_SET_IMG = ImageRef.WORKING_SET.asImage().orNull();
 
 	@Inject
 	private N4JSProjectExplorerHelper helper;
@@ -73,11 +75,19 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 
 	@Override
 	public String getText(final Object element) {
-		return delegate.getText(element);
+		if (element instanceof WorkingSet) {
+			return ((WorkingSet) element).getLabel();
+		} else {
+			return delegate.getText(element);
+		}
 	}
 
 	@Override
 	public Image getImage(final Object element) {
+
+		if (element instanceof WorkingSet) {
+			return WORKING_SET_IMG;
+		}
 
 		if (element instanceof IFolder) {
 			final IFolder folder = (IFolder) element;

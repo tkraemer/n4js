@@ -47,6 +47,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
 
 /**
  */
@@ -82,7 +83,7 @@ abstract class AbstractTranspilerTest {
 		val resSet = state.resource.resourceSet;
 		val remoteModule = resSet.resources.filter(N4JSResource).filter[it!==state.resource].map[module].filterNull
 		.findFirst[
-			qualifiedName==moduleName || qualifiedName.endsWith('.'+moduleName)
+			qualifiedName==moduleName || qualifiedName.endsWith(N4JSQualifiedNameConverter.DELIMITER + moduleName)
 		];
 		if(remoteModule===null) {
 			fail("no remote module found with name '"+moduleName+"'");

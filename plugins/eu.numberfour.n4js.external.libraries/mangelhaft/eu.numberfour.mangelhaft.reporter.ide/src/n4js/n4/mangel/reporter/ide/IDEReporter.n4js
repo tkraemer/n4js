@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,7 +33,9 @@ export public class IDEReporter implements ITestReporter {
     protected spy: TestSpy;
 
     public async send(uri: string, method: Method, headers: union{Headers,Array<Array<string>>,Object}, body: Object) {
-        let bodyStr: string;
+        let ret: Response,
+            bodyStr: string;
+
         try {
             bodyStr = JSON.stringify(body, (key: string, value: any) => {
                        if (key === "description") {
@@ -41,7 +43,7 @@ export public class IDEReporter implements ITestReporter {
                        }
                        return value;
                    }, 2)
-            var ret = await this.fetch.call(null, this.endpoint + uri, {
+            ret = await this.fetch.call(null, this.endpoint + uri, {
                    Method method: method,
                    union{Headers,Array<Array<string>>,Object} headers: headers,
                    string body: bodyStr
@@ -51,6 +53,7 @@ export public class IDEReporter implements ITestReporter {
             console.error(err);
             console.error(err.stack);
         }
+
         if (ret) {
             //console.log(ret.url, ret.status);
             if (Math.floor(ret.status / 100) != 2) {
@@ -91,8 +94,8 @@ export public class IDEReporter implements ITestReporter {
             return response;
         }
         this.spy.testingStarted.add(handleTestingStart);
-        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
-        });
+//        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
+//        });
 
         async function handleTestStart(group: IInstrumentedTest, test: TestMethodDescriptor) {
             if (!sessionId) {

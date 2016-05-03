@@ -13,17 +13,11 @@ package eu.numberfour.n4js.dirtystate.testdata
 class InheritanceTestFiles {
 
 	def static module1() {
-		"my.deep.nested.pack"
+		"my/deep/nested/pack"
 	}
 
 	def static module2() {
-		"my.deep.nested.pack2"
-	}
-	def static fileModule2() {
 		"my/deep/nested/pack2"
-	}
-	def static fileModule1() {
-		"my/deep/nested/pack"
 	}
 
 
@@ -46,7 +40,7 @@ class InheritanceTestFiles {
 	'''
 
 	def static B() '''
-		import { A as AObjectLiteral } from "«fileModule1»/A";
+		import { A as AObjectLiteral } from "«module1»/A";
 		export public class B {
 			@Internal public foo() : B {return null;}
 		}
@@ -56,7 +50,7 @@ class InheritanceTestFiles {
 	'''
 
 	def static C() '''
-		import { A as AObjectLiteral } from "«fileModule1»/A";
+		import { A as AObjectLiteral } from "«module1»/A";
 		export public class C extends AObjectLiteral {
 			@Internal public getA() : AObjectLiteral {return null;}
 		}
@@ -65,7 +59,7 @@ class InheritanceTestFiles {
 	'''
 
 	def static CWithAssignmentToSuperType() '''
-		import { A as AObjectLiteral } from "«fileModule1»/A";
+		import { A as AObjectLiteral } from "«module1»/A";
 		export public class C extends AObjectLiteral {
 			@Internal public getA() : AObjectLiteral {return null;}
 		}
@@ -74,7 +68,7 @@ class InheritanceTestFiles {
 	'''
 
 	def static CWithAssignmentToActualType() '''
-		import { A as AObjectLiteral } from "«fileModule1»/A";
+		import { A as AObjectLiteral } from "«module1»/A";
 		import { B } from "«module2»/B"
 		export public class C extends AObjectLiteral {
 			@Internal public getA() : AObjectLiteral {return null;}
@@ -84,7 +78,7 @@ class InheritanceTestFiles {
 	'''
 
 	def static D() '''
-		import { C as CObjectLiteral } from "«fileModule2»/C";
+		import { C as CObjectLiteral } from "«module2»/C";
 		import { A } from "«module1»/A"
 		import { B } from "«module2»/B"
 		export public class D {

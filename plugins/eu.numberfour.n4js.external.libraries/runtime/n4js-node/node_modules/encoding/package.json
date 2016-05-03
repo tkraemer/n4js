@@ -2,7 +2,7 @@
   "_args": [
     [
       "encoding@https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz",
-      "/var/lib/build/workspace/CI_stdlib_n4js/stdlib_n4js/rtenvs/n4js-node"
+      "/var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/rtenvs/n4js-node"
     ]
   ],
   "_from": "encoding@>=0.1.11 <0.2.0",
@@ -25,7 +25,7 @@
   "_shasum": "538b66f3ee62cd1ab51ec323829d1f9480c74beb",
   "_shrinkwrap": null,
   "_spec": "encoding@https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz",
-  "_where": "/var/lib/build/workspace/CI_stdlib_n4js/stdlib_n4js/rtenvs/n4js-node",
+  "_where": "/var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/rtenvs/n4js-node",
   "author": {
     "name": "Andris Reinman"
   },

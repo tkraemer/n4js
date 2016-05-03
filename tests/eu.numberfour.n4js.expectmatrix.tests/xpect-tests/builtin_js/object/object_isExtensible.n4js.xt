@@ -21,7 +21,7 @@ var empty3 : Object = {};
 Object.freeze(empty3);
 console.log("not extensible = " + (Object.isExtensible(empty3) === false));
 try { empty3["b"] = 5; }
-catch(e) { console.log(e); }
+catch(e) { console.log((e as Object).toString()); }
 console.log("not extended: " + JSON.stringify(empty3));
 
 /* XPECT output --- 
@@ -32,7 +32,7 @@ extended: {"a":5}
 not extensible = true
 not extended: {}
 not extensible = true
-[TypeError: Can't add property b, object is not extensible]
+TypeError: Can't add property b, object is not extensible
 not extended: {}
 stderr:
 ==>

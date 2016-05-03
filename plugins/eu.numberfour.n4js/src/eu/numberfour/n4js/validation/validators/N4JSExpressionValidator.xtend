@@ -122,6 +122,8 @@ import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.types.TExportableElement
+import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 
 /**
  */
@@ -580,8 +582,10 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkPostfixExpression(PostfixExpression postfixExpression) {
 
-		val expression = postfixExpression.expression
-		validateWritabelePropertyAccess(expression)
+		val expression = postfixExpression.expression;
+		holdsWritabelePropertyAccess(expression)
+		&& holdsWritableIdentifier(expression)
+		&& holdsLefthandsideNotConst(expression);
 	}
 
 	/** IDE-731 / IDE-768 unary expressions of type ++ or -- need both of getter/setter.
@@ -590,11 +594,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkUnaryExpressionWithWriteAccess(UnaryExpression unaryExpression) {
 		if (UnaryOperator.DEC === unaryExpression.op || UnaryOperator.INC === unaryExpression.op) {
-			validateWritabelePropertyAccess(unaryExpression.expression)
+			holdsWritabelePropertyAccess(unaryExpression.expression)
+			&& holdsWritableIdentifier(unaryExpression.expression)
+			&& holdsLefthandsideNotConst(unaryExpression.expression);
 		}
 	}
 
-	private def validateWritabelePropertyAccess(Expression expression) {
+	private def boolean holdsWritabelePropertyAccess(Expression expression) {
 		if (expression instanceof ParameterizedPropertyAccessExpression) {
 			val property = expression.property
 			if (property instanceof TGetter) {
@@ -609,12 +615,60 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 						val msg = IssueCodes.getMessageForTYS_PROPERTY_HAS_NO_SETTER(property.name)
 						addIssue(msg, expression,
 							N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY,
-							IssueCodes.TYS_PROPERTY_HAS_NO_SETTER)
+							IssueCodes.TYS_PROPERTY_HAS_NO_SETTER);
+						return false;	
 					}
 				}
 			}
 		}
+		return true;
 	}
+	
+	/**
+	 * Ensures that imported elements get not reassigned any value.
+	 * @returns true if validation hold, false if some issue was generated.
+	 */
+	private def boolean holdsWritableIdentifier(Expression expression) {
+		if( expression instanceof IdentifierRef ) {
+			val id = expression.id;
+			switch(id) {
+				TExportableElement /* includes TClass, TVariable */
+				: {
+					val module = EcoreUtil2.getContainerOfType(expression,Script).module;
+					if( id.containingModule != module ) {
+						// imported variable, class, etc.
+						addIssue(IssueCodes.getMessageForIMP_IMPORTED_ELEMENT_READ_ONLY(expression.idAsText), expression, IssueCodes.IMP_IMPORTED_ELEMENT_READ_ONLY	);
+						return false;
+					}
+				}
+			} 	
+		} else if ( expression instanceof ParenExpression ) {
+			// resolve parent-expressions wrapping simple identifiers:
+			return holdsWritableIdentifier( expression.expression );
+		} else if ( expression instanceof ParameterizedPropertyAccessExpression ) {
+			val target = expression.target;
+			// guard against broken models:
+			if( expression.property !== null && !expression.property.eIsProxy) {
+				if( target instanceof IdentifierRef ) {
+					val id = target.id;
+					// handle namespace imports:
+					if( id instanceof ModuleNamespaceVirtualType) {
+						if( id.module !=  EcoreUtil2.getContainerOfType(expression,Script).module )	{
+							// naive approach for reporting : "target.idAsText+"."+expression.property.name;" results
+							// in revealing the name of the default-exported element, but the user can only see 'default' in the validated file
+							// so we pick the actual written expression for the error-message generation from the AST:
+							val importedElmentText = NodeModelUtils.getTokenText( NodeModelUtils.findActualNodeFor(expression));
+							
+							addIssue(IssueCodes.getMessageForIMP_IMPORTED_ELEMENT_READ_ONLY( importedElmentText ), expression, IssueCodes.IMP_IMPORTED_ELEMENT_READ_ONLY	);
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 
 	@Check
 	def checkCallExpressionParameters(ParameterizedCallExpression callExpression) {
@@ -1230,11 +1284,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def checkAssignmentToConstVariable(AssignmentExpression assExpr) {
+	def checkAssignmentExpression(AssignmentExpression assExpr) { 
 		val lhs = assExpr.lhs;
-		if(lhs instanceof IdentifierRef) {
-			internalCheckLefthandsideWritable(lhs)
-		}
+		// GH-119 imported elements
+		holdsWritableIdentifier(lhs)
+		&& holdsLefthandsideNotConst(lhs);
+
 		val rhs = assExpr.rhs
 		if( rhs instanceof IdentifierRef ){
 			val id = rhs.id;
@@ -1250,21 +1305,43 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
+	
+	/** @return true if nothing was issued  */
+	private def boolean holdsLefthandsideNotConst(Expression lhs) {
+		
+		if( lhs instanceof ParenExpression ) {
+			return holdsLefthandsideNotConst( lhs.expression );
+		} else if ( lhs instanceof IdentifierRef) {
+			return holdsLefthandsideNotConst( lhs );
+		} 
+		return true;
+	}	
 
-	def internalCheckLefthandsideWritable(IdentifierRef lhs) {
+	/** @return true if nothing was issued  */
+	private def boolean holdsLefthandsideNotConst(IdentifierRef lhs) {
 		val id = lhs.id;
 		switch(id) {
-		VariableDeclaration case id.const:
-			addIssue(getMessageForEXP_ASSIGN_CONST_VARIABLE(id.name),lhs,EXP_ASSIGN_CONST_VARIABLE)
-		TVariable case id.const:
-			addIssue(getMessageForEXP_ASSIGN_CONST_VARIABLE(id.name),lhs,EXP_ASSIGN_CONST_VARIABLE)
-		TField case !id.writeable:
-			// note: this case can happen only when referring to globals in GlobalObject (see file global.n4ts);
-			// in all other cases of referencing a field, 'lhs' will be a PropertyAccessExpression (those cases
-			// will be handled in class AbstractMemberScope as part of scoping)
-			addIssue(getMessageForVIS_WRONG_READ_WRITE_ACCESS("built-in constant", id.name, "read-only"),
-					lhs, VIS_WRONG_READ_WRITE_ACCESS)
+			VariableDeclaration case id.const:
+			{
+				addIssue(getMessageForEXP_ASSIGN_CONST_VARIABLE(id.name),lhs,EXP_ASSIGN_CONST_VARIABLE); 
+				return false;
+			}
+			TVariable case id.const:
+			{
+				addIssue(getMessageForEXP_ASSIGN_CONST_VARIABLE(id.name),lhs,EXP_ASSIGN_CONST_VARIABLE);
+				return false;
+			}
+			TField case !id.writeable:
+			{
+				// note: this case can happen only when referring to globals in GlobalObject (see file global.n4ts);
+				// in all other cases of referencing a field, 'lhs' will be a PropertyAccessExpression (those cases
+				// will be handled in class AbstractMemberScope as part of scoping)
+				addIssue(getMessageForVIS_WRONG_READ_WRITE_ACCESS("built-in constant", id.name, "read-only"),
+						lhs, VIS_WRONG_READ_WRITE_ACCESS);
+				return false;
+			}
 		}
+		return true;
 	}
 
 

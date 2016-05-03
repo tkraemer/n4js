@@ -23,15 +23,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.ui.IAggregateWorkingSet;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.internal.navigator.NavigatorContentService;
 import org.eclipse.ui.internal.navigator.workingsets.WorkingSetsContentProvider;
 import org.eclipse.ui.model.WorkbenchContentProvider;
@@ -44,12 +42,16 @@ import org.eclipse.ui.navigator.PipelinedShapeModification;
 import org.eclipse.ui.navigator.PipelinedViewerUpdate;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetBroker;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
@@ -64,6 +66,9 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 
 	@Inject
 	private N4JSProjectExplorerHelper helper;
+
+	@Inject
+	private WorkingSetBroker workingSetBroker;
 
 	private IExtensionStateModel extensionStateModel;
 
@@ -129,13 +134,13 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 
 		if (null != projectExplorer) {
 			if (ProjectExplorer.WORKING_SETS == projectExplorer.getRootMode()) {
-				if (element instanceof IWorkingSet) {
-					final IWorkingSet workingSet = (IWorkingSet) element;
-					if (workingSet.isAggregateWorkingSet()) {
-						return ((IAggregateWorkingSet) workingSet).getComponents();
-					} else {
-						return getWorkingSetElements(workingSet);
+				if (element instanceof IWorkspaceRoot) {
+					final WorkingSetManager manager = workingSetBroker.getActive();
+					if (manager != null) {
+						return Iterables.toArray(manager.getWorkingSets(), Object.class);
 					}
+				} else if (element instanceof WorkingSet) {
+					return ((WorkingSet) element).getElements();
 				}
 			}
 		}
@@ -146,17 +151,6 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 			return Arrays2.add(children, getVirtualNodes((IProject) element));
 		}
 
-		return children;
-	}
-
-	private IAdaptable[] getWorkingSetElements(final IWorkingSet workingSet) {
-		final IAdaptable[] children = workingSet.getElements();
-		for (int i = 0; i < children.length; i++) {
-			final Object resource = children[i].getAdapter(IResource.class);
-			if (resource instanceof IProject) {
-				children[i] = (IProject) resource;
-			}
-		}
 		return children;
 	}
 

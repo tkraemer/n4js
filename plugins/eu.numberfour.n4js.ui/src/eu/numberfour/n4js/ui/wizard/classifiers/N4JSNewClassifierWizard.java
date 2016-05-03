@@ -42,14 +42,31 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 	private LanguageSpecificURIEditorOpener uriOpener;
 
 	@Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.setNeedsProgressMonitor(false);
-		this.setWindowTitle("New N4JS " + StringExtensions.toFirstUpper(getModel().getClassifierName()));
-		parseIntialSelection(selection);
+	public final void init(IWorkbench workbench, IStructuredSelection selection) {
+		init(workbench, selection, false);
 	}
 
-	private void parseIntialSelection(IStructuredSelection selection) {
-		WorkspaceWizardModel.fillModelFromInitialSelection(getModel(), selection, n4jsCore);
+	/**
+	 * Initiates the classifier wizard with given workbench, selection and nested option.
+	 *
+	 * The nested option specifies if the initial selection should try to infer the module file or just use its
+	 * container.
+	 *
+	 * @param workbench
+	 *            The workbench
+	 * @param selection
+	 *            The selection
+	 * @param nested
+	 *            The nested option
+	 */
+	public void init(IWorkbench workbench, IStructuredSelection selection, boolean nested) {
+		this.setNeedsProgressMonitor(false);
+		this.setWindowTitle("New N4JS " + StringExtensions.toFirstUpper(getModel().getClassifierName()));
+		parseIntialSelection(selection, nested);
+	}
+
+	private void parseIntialSelection(IStructuredSelection selection, boolean nested) {
+		WorkspaceWizardModel.populateModelFromInitialSelection(getModel(), selection, nested, n4jsCore);
 		getPage().setModel(getModel());
 	}
 

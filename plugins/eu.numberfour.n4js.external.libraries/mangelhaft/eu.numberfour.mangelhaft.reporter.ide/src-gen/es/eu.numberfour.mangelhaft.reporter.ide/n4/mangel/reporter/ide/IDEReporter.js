@@ -41,7 +41,7 @@
 					send: {
 						value: function send___n4(uri, method, headers, body) {
 							return $spawn(function*() {
-								let bodyStr;
+								let ret, bodyStr;
 								try {
 									bodyStr = JSON.stringify(body, (function(key, value) {
 										if (key === "description") {
@@ -49,7 +49,7 @@
 										}
 										return value;
 									}).bind(this), 2);
-									var ret = (yield this.fetch.call(null, this.endpoint + uri, {
+									ret = (yield this.fetch.call(null, this.endpoint + uri, {
 										method: method,
 										headers: headers,
 										body: bodyStr
@@ -67,9 +67,8 @@
 										}
 									}
 								}
-								(yield ret);
-								return;
-							}.bind(this));
+								return ret;
+							}.apply(this, arguments));
 						}
 					},
 					register: {
@@ -88,12 +87,10 @@
 											'Content-Type': "application/vnd.n4.ide.start_session_req.tm+json",
 											Accept: "application/json"
 										}, undefined));
-										(yield response);
-										return;
-									}.bind(this));
+										return response;
+									}.apply(this, arguments));
 								};
 								this.spy.testingStarted.add(handleTestingStart);
-								this.spy.groupStarted.add(function(group) {});
 								var handleTestStart = function handleTestStart(group, test) {
 									return $spawn(function*() {
 										if (!sessionId) {
@@ -111,9 +108,7 @@
 										}, {
 											timeout: test.timeout + that.timeoutBuffer
 										}));
-										(yield undefined);
-										return;
-									}.bind(this));
+									}.apply(this, arguments));
 								};
 								this.spy.testStarted.add(handleTestStart);
 								var handleTestFinished = function handleTestFinished(group, test, testResult) {
@@ -131,9 +126,7 @@
 											'Content-Type': "application/vnd.n4.ide.end_test_req.tm+json",
 											Accept: "application/json"
 										}, testResult));
-										(yield undefined);
-										return;
-									}.bind(this));
+									}.apply(this, arguments));
 								};
 								this.spy.testFinished.add(handleTestFinished);
 								var handleTestingFinished = function handleTestingFinished(resultGroups) {
@@ -146,14 +139,12 @@
 											'Content-Type': "application/vnd.n4.ide.end_session_req.tm+json",
 											Accept: "application/json"
 										}, undefined));
-										(yield response);
-										return;
-									}.bind(this));
+										return response;
+									}.apply(this, arguments));
 								};
 								this.spy.testingFinished.add(handleTestingFinished);
-								(yield this);
-								return;
-							}.bind(this));
+								return this;
+							}.apply(this, arguments));
 						}
 					},
 					endpoint: {
