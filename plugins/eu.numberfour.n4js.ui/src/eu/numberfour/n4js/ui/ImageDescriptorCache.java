@@ -90,7 +90,10 @@ public enum ImageDescriptorCache {
 		NEW_INTERFACE_WIZBAN("newint_wiz.png"),
 
 		/** Wizard banner for the new N4JS enum wizard. */
-		NEW_ENUM_WIZBAN("newenum_wiz.png");
+		NEW_ENUM_WIZBAN("newenum_wiz.png"),
+
+		/** Image reference for working sets. */
+		WORKING_SET("workset.gif");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 
