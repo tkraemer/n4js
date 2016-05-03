@@ -62,6 +62,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
 import static extension eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
 import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.n4JS.ExportDeclaration
 
 /**
  */
@@ -474,6 +475,35 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	}
 
+	/** additional check on top of {@link #checkFunctionName()} */
+	@Check
+	def checkFunctionDeclarationName(FunctionDeclaration functionDeclaration) {
+		if( functionDeclaration.name === null ) {
+			// Function declaration without name is only allowed for default-exported functions.
+			val container = functionDeclaration.eContainer;
+			if( container instanceof ExportDeclaration){
+				if( container.isDefaultExport ) {
+					// ECMAScript 2015 allows "export default" for anonymous function declarations.
+					return;
+				}
+			}
+			// not on "default export":
+			// add message "function declarations must have a name"
+			if( functionDeclaration.body !== null) {
+				// mark up to body
+				val firstNode = NodeModelUtils.findActualNodeFor(functionDeclaration);
+				val lastNode = NodeModelUtils.findActualNodeFor(functionDeclaration.body);
+				val off = firstNode.offset;
+				val len = lastNode.offset - firstNode.offset;
+				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,off,len,FUN_NAME_MISSING);				
+			} else { 
+			  	// mark complete function.	
+				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,FUN_NAME_MISSING);				
+			}
+			
+		}
+	}
+
 	@Check
 	def checkFunctionDeclarationBody(FunctionDeclaration functionDeclaration) {
 		if (functionDeclaration.body === null && functionDeclaration.definedType instanceof TFunction &&
@@ -705,5 +735,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkFunctionDeclarationInStaticPolyfillModule(FunctionDeclaration functionDeclaration) {
 		internalCheckNotInStaticPolyfillModule(functionDeclaration, this)
 	}
+	
+	
 
 }
