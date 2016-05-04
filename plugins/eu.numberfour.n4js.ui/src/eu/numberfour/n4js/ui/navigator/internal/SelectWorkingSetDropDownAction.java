@@ -61,6 +61,12 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 			createSeparator(parent);
 			final MenuItem item = new MenuItem(parent, SWT.CHECK);
 			item.setText("Configure " + activeManager.getLabel() + "...");
+			item.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(final SelectionEvent e) {
+					activeManager.configure();
+				}
+			});
 		}
 
 	}

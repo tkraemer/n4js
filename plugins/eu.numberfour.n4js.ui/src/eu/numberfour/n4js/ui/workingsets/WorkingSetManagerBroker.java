@@ -13,11 +13,14 @@ package eu.numberfour.n4js.ui.workingsets;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Suppliers.memoize;
 import static com.google.common.collect.Sets.newHashSet;
+import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSetManager.EXTENSION_POINT_ID;
 import static java.util.Collections.emptyMap;
 import static org.eclipse.core.runtime.Platform.getExtensionRegistry;
 import static org.eclipse.core.runtime.Platform.isRunning;
 import static org.eclipse.core.runtime.Status.OK_STATUS;
+import static org.eclipse.ui.PlatformUI.getWorkbench;
+import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +41,6 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.osgi.service.prefs.BackingStoreException;
@@ -53,12 +55,11 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.StatusHelper;
 
 /**
- *
+ * Manages the available {@link WorkingSetManager working set manager} instances.
  */
 @Singleton
 public class WorkingSetManagerBroker {
@@ -114,7 +115,7 @@ public class WorkingSetManagerBroker {
 	 * @param workingSetManager
 	 *            the working set manager that has to be selected as the active one.
 	 */
-	public void setActive(WorkingSetManager workingSetManager) {
+	public void setActive(final WorkingSetManager workingSetManager) {
 		checkNotNull(workingSetManager, "workingSetManager");
 		activeWorkingSetManager.set(workingSetManager);
 		saveState();
@@ -131,7 +132,7 @@ public class WorkingSetManagerBroker {
 	 *            the working set manager to test whether it is the currently active one or not.
 	 * @return {@code true} if the argument is the currently active one, otherwise {@code false}
 	 */
-	public boolean isActive(WorkingSetManager workingSetManager) {
+	public boolean isActive(final WorkingSetManager workingSetManager) {
 		return Objects.equal(workingSetManager, activeWorkingSetManager.get());
 	}
 
@@ -160,9 +161,10 @@ public class WorkingSetManagerBroker {
 	 * {@code true}, then working sets are configured to be the top level elements, if {@code false}, then projects.
 	 *
 	 * @param b
-	 *            the boolean flag whether working sets has to be top level elements or not.
+	 *            the boolean flag whether working sets has to be top level elements or not. {@code true} if the working
+	 *            sets should be the top level elements in the navigator.
 	 */
-	public void setWorkingSetTopLevel(boolean b) {
+	public void setWorkingSetTopLevel(final boolean b) {
 		if (b != workingSetTopLevel.get()) {
 			workingSetTopLevel.set(b);
 			saveState();
@@ -180,11 +182,11 @@ public class WorkingSetManagerBroker {
 	 *            the monitor for the save operation.
 	 * @return status representing the outcome of the save operation.
 	 */
-	public IStatus save(IProgressMonitor monitor) {
+	public IStatus save(final IProgressMonitor monitor) {
 		final Collection<WorkingSetManager> managers = getWorkingSetManagers();
 		final SubMonitor subMonitor = SubMonitor.convert(monitor, managers.size() + 1);
 		final MultiStatus error = statusHelper.createMultiError("Error occurred while saving state.");
-		for (WorkingSetManager manager : managers) {
+		for (final WorkingSetManager manager : managers) {
 			final IStatus result = manager.save(subMonitor.newChild(1));
 			if (!result.isOK()) {
 				error.add(result);
@@ -205,7 +207,7 @@ public class WorkingSetManagerBroker {
 	 * @param listener
 	 *            the listener to add. Should not be {@code null}.
 	 */
-	public void addTopLevelElementChangedListener(TopLevelElementChangedListener listener) {
+	public void addTopLevelElementChangedListener(final TopLevelElementChangedListener listener) {
 		topLevelElementChangeListeners.add(checkNotNull(listener, "listener"));
 	}
 
@@ -216,21 +218,21 @@ public class WorkingSetManagerBroker {
 	 * @param listener
 	 *            the listener to remove. Should not be {@code null}.
 	 */
-	public void removeTopLevelElementChangedListener(TopLevelElementChangedListener listener) {
+	public void removeTopLevelElementChangedListener(final TopLevelElementChangedListener listener) {
 		topLevelElementChangeListeners.remove(checkNotNull(listener, "listener"));
 	}
 
 	private void refreshNavigator() {
-		if (PlatformUI.isWorkbenchRunning()) {
-			IWorkbench workbench = PlatformUI.getWorkbench();
-			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+		if (isWorkbenchRunning()) {
+			final IWorkbench workbench = getWorkbench();
+			final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			if (window != null) {
-				IWorkbenchPage page = window.getActivePage();
+				final IWorkbenchPage page = window.getActivePage();
 				if (page != null) {
-					IViewPart view = page.findView(ProjectExplorer.VIEW_ID);
+					final IViewPart view = page.findView(ProjectExplorer.VIEW_ID);
 					if (view instanceof ProjectExplorer) {
-						CommonViewer viewer = ((ProjectExplorer) view).getCommonViewer();
-						UIUtils.getDisplay().asyncExec(() -> viewer.refresh(true));
+						final CommonViewer viewer = ((ProjectExplorer) view).getCommonViewer();
+						getDisplay().asyncExec(() -> viewer.refresh(true));
 					}
 				}
 			}
@@ -239,9 +241,15 @@ public class WorkingSetManagerBroker {
 
 	private IStatus saveState() {
 		final IEclipsePreferences node = InstanceScope.INSTANCE.getNode(QUALIFIER);
+
+		// Top level element.
+		node.putBoolean(IS_WORKINGSET_TOP_LEVEL_KEY, workingSetTopLevel.get());
+
+		// Active working set manager.
 		final WorkingSetManager active = getActive();
 		final String activeId = active == null ? null : active.getId();
 		node.put(ACTIVE_MANAGER_KEY, Strings.nullToEmpty(activeId));
+
 		try {
 			node.flush();
 			return OK_STATUS;
@@ -258,7 +266,7 @@ public class WorkingSetManagerBroker {
 		// Top level element.
 		workingSetTopLevel.set(node.getBoolean(IS_WORKINGSET_TOP_LEVEL_KEY, false));
 
-		// Active selection.
+		// Active working set manager.
 		final String value = node.get(ACTIVE_MANAGER_KEY, "");
 		final WorkingSetManager workingSetManager = contributions.get().get(value);
 		setActive(workingSetManager);
@@ -272,14 +280,16 @@ public class WorkingSetManagerBroker {
 				return emptyMap();
 			}
 
-			Builder<String, WorkingSetManager> builder = ImmutableMap.builder();
-			IConfigurationElement[] elements = getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
-			for (IConfigurationElement element : elements) {
+			final Builder<String, WorkingSetManager> builder = ImmutableMap.builder();
+			final IConfigurationElement[] elements = getExtensionRegistry()
+					.getConfigurationElementsFor(EXTENSION_POINT_ID);
+			for (final IConfigurationElement element : elements) {
 				try {
-					WorkingSetManager manager = (WorkingSetManager) element.createExecutableExtension(CLASS_ATTRIBUTE);
+					final WorkingSetManager manager = (WorkingSetManager) element
+							.createExecutableExtension(CLASS_ATTRIBUTE);
 					injector.injectMembers(manager);
 					builder.put(manager.getId(), manager);
-				} catch (CoreException e) {
+				} catch (final CoreException e) {
 					LOGGER.error("Error while trying to instantiate working set manager.", e);
 				}
 			}

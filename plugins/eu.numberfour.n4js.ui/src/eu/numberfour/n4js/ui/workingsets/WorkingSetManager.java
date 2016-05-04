@@ -136,6 +136,13 @@ public interface WorkingSetManager extends Comparator<WorkingSet> {
 	}
 
 	/**
+	 * Configures the state of the working set manager.
+	 */
+	default void configure() {
+		new WorkingSetConfigurationDialog(this).open();
+	}
+
+	/**
 	 * By default returns with {@code 0}. Clients may override it.
 	 *
 	 * <p>
@@ -188,6 +195,11 @@ public interface WorkingSetManager extends Comparator<WorkingSet> {
 
 		@Override
 		public void unselect(Iterable<WorkingSet> workingSets) {
+			// NOOP
+		}
+
+		@Override
+		public void configure() {
 			// NOOP
 		}
 

@@ -16,11 +16,6 @@ package eu.numberfour.n4js.ui.workingsets;
 public interface MutableWorkingSetManager extends WorkingSetManager {
 
 	/**
-	 * Configures the state of the working set manager.
-	 */
-	void configure();
-
-	/**
 	 * Associated the working set arguments with the current manager instance by adding them to the manager. Has no side
 	 * effect if the argument working sets are already managed by this instance.
 	 *
@@ -44,7 +39,7 @@ public interface MutableWorkingSetManager extends WorkingSetManager {
 
 	/**
 	 * Performs an update on an existing working set.
-	 * 
+	 *
 	 * @param oldState
 	 *            the old state of an existing working set.
 	 * @param newState
