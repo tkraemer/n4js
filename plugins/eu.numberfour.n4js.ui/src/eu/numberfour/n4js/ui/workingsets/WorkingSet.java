@@ -21,4 +21,6 @@ public interface WorkingSet {
 
 	IAdaptable[] getElements();
 
+	WorkingSetManager getWorkingSetManager();
+
 }

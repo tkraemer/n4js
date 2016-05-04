@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
-import static java.util.Collections.emptyList;
+import java.util.Comparator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,13 +26,18 @@ import eu.numberfour.n4js.ui.internal.N4JSActivator;
 /**
  *
  */
-public interface WorkingSetManager {
+public interface WorkingSetManager extends Comparator<WorkingSet> {
 
 	/**
 	 * The unique ID of the {@code workingSetManager} extension point.
 	 */
 	String EXTENSION_POINT_ID = N4JSActivator.getInstance().getBundle().getSymbolicName()
 			+ "." + Strings.toFirstLower(WorkingSetManager.class.getSimpleName());
+
+	/**
+	 * An empty array of working sets.
+	 */
+	WorkingSet[] EMPTY_ARRAY = new WorkingSet[0];
 
 	/**
 	 * Returns with the unique identifier of the working set manager.
@@ -65,7 +70,7 @@ public interface WorkingSetManager {
 	 *
 	 * @return an iterable of visible working sets.
 	 */
-	Iterable<WorkingSet> getWorkingSets();
+	WorkingSet[] getWorkingSets();
 
 	/**
 	 * Returns with an iterable of all working sets that are manager by the current instance. Invisible working sets are
@@ -73,7 +78,7 @@ public interface WorkingSetManager {
 	 *
 	 * @return an iterable of all working sets. Including visible and invisible ones as well.
 	 */
-	Iterable<WorkingSet> getAllWorkingSets();
+	WorkingSet[] getAllWorkingSets();
 
 	/**
 	 * Saves the state of the working set manager.
@@ -131,26 +136,15 @@ public interface WorkingSetManager {
 	}
 
 	/**
-	 * Associated the working set arguments with the current manager instance by adding them to the manager. Has no side
-	 * effect if the argument working sets are already managed by this instance.
+	 * By default returns with {@code 0}. Clients may override it.
 	 *
-	 * @param first
-	 *            the working set to be added to this manager.
-	 * @param others
-	 *            other working sets to be added to this manager.
+	 * <p>
+	 * {@inheritDoc}
 	 */
-	void add(WorkingSet first, WorkingSet... others);
-
-	/**
-	 * Detach the working set arguments from the current manager instance by removing them to the manager. Has no side
-	 * effect if the argument working sets are not managed by this instance.
-	 *
-	 * @param first
-	 *            the working set to be removed from this manager.
-	 * @param others
-	 *            other working sets to be removed from this manager.
-	 */
-	void remove(WorkingSet first, WorkingSet... others);
+	@Override
+	default int compare(WorkingSet left, WorkingSet right) {
+		return 0;
+	}
 
 	/**
 	 * The NOOP instance. Does nothing at all.
@@ -168,13 +162,13 @@ public interface WorkingSetManager {
 		}
 
 		@Override
-		public Iterable<WorkingSet> getWorkingSets() {
-			return emptyList();
+		public WorkingSet[] getWorkingSets() {
+			return EMPTY_ARRAY;
 		}
 
 		@Override
-		public Iterable<WorkingSet> getAllWorkingSets() {
-			return emptyList();
+		public WorkingSet[] getAllWorkingSets() {
+			return EMPTY_ARRAY;
 		}
 
 		@Override
@@ -199,16 +193,6 @@ public interface WorkingSetManager {
 
 		@Override
 		public void unselect(WorkingSet first, WorkingSet... others) {
-			// NOOP
-		}
-
-		@Override
-		public void add(WorkingSet first, WorkingSet... others) {
-			// NOOP
-		}
-
-		@Override
-		public void remove(WorkingSet first, WorkingSet... others) {
 			// NOOP
 		}
 

@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.ui.navigator;
 
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.jdt.internal.ui.packageview.PackageExplorerProblemsDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator.ProblemsLabelChangedEvent;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -20,8 +19,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.IWorkingSetManager;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import com.google.inject.Inject;
@@ -30,12 +27,13 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
  * Label provider extension for the N4JS specific Project Explorer view.
  */
-@SuppressWarnings("restriction")
 public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 
 	private static final Image SRC_FOLDER_IMG = ImageRef.SRC_FOLDER.asImage().orNull();
@@ -45,10 +43,9 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	private N4JSProjectExplorerHelper helper;
 
 	@Inject
-	private N4JSProjectExplorerContentProvider contentProvider;
+	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	private final LabelProvider delegate;
-	private final IWorkingSetManager workingSetManager;
 	private final ProblemsLabelDecorator decorator;
 	private final ILabelProviderListener workingSetLabelProviderListener;
 
@@ -56,9 +53,8 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	 * Sole constructor.
 	 */
 	public N4JSProjectExplorerLabelProvider() {
-		decorator = new PackageExplorerProblemsDecorator();
+		decorator = new N4JSProjectExplorerProblemsDecorator();
 		delegate = new DecoratingLabelProvider(new WorkbenchLabelProvider(), decorator);
-		workingSetManager = PlatformUI.getWorkbench().getWorkingSetManager();
 		workingSetLabelProviderListener = new ILabelProviderListener() {
 
 			@Override
@@ -86,7 +82,7 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	public Image getImage(final Object element) {
 
 		if (element instanceof WorkingSet) {
-			return WORKING_SET_IMG;
+			return decorator.decorateImage(WORKING_SET_IMG, element);
 		}
 
 		if (element instanceof IFolder) {
@@ -115,10 +111,13 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	 *         viewer refresh is needed.
 	 */
 	private LabelProviderChangedEvent createWorkingSetWrapperEvent(final LabelProviderChangedEvent event) {
-		if (event instanceof ProblemsLabelChangedEvent && contentProvider.isWorkingSetsEnabled()) {
-			final IWorkingSet[] workingSets = workingSetManager.getWorkingSets();
-			if (!Arrays2.isEmpty(workingSets)) {
-				return new LabelProviderChangedEvent(delegate, workingSets);
+		if (event instanceof ProblemsLabelChangedEvent && workingSetManagerBroker.isWorkingSetTopLevel()) {
+			final WorkingSetManager manager = workingSetManagerBroker.getActive();
+			if (null != manager) {
+				final WorkingSet[] workingSets = manager.getWorkingSets();
+				if (!Arrays2.isEmpty(workingSets)) {
+					return new LabelProviderChangedEvent(delegate, workingSets);
+				}
 			}
 		}
 		return null;

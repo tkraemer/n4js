@@ -15,12 +15,21 @@ import java.io.File;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.ui.internal.navigator.resources.workbench.ResourceExtensionSorter;
 
+import com.google.inject.Inject;
+
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
+
 /**
  * Viewer sorter extension for the {@code Project Explorer} with N4JS content. Uses the default behavior when dealing
  * with Eclipse {@link IResource resource} instances and also handles {@link ResourceNode resource node} elements.
  */
 @SuppressWarnings("restriction")
 public class N4JSResourceExtensionSorter extends ResourceExtensionSorter {
+
+	@Inject
+	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	@Override
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -34,6 +43,13 @@ public class N4JSResourceExtensionSorter extends ResourceExtensionSorter {
 				return -1;
 			} else if (f1.isFile() && f2.isDirectory()) {
 				return 1;
+			}
+		} else if (e1 instanceof WorkingSet && e2 instanceof WorkingSet) {
+			final WorkingSetManager workingSetManager = workingSetManagerBroker.getActive();
+			if (null != workingSetManager) {
+				final WorkingSet ws1 = (WorkingSet) e1;
+				final WorkingSet ws2 = (WorkingSet) e2;
+				return workingSetManager.compare(ws1, ws2);
 			}
 		}
 		return super.compareClass(e1, e2);

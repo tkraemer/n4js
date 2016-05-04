@@ -42,12 +42,14 @@ import eu.numberfour.n4js.utils.StatusHelper;
  */
 public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 
-	private final Supplier<Iterable<WorkingSet>> allWorkingSets = memoize(new Supplier<Iterable<WorkingSet>>() {
+	private final Supplier<WorkingSet[]> allWorkingSets = memoize(new Supplier<WorkingSet[]>() {
 
 		@Override
-		public Iterable<WorkingSet> get() {
+		public WorkingSet[] get() {
 			return from(Arrays.asList(ProjectType.values()))
-					.transform(type -> new ProjectTypeFilterinWorkingSet(type, core));
+					.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this))
+					.filter(WorkingSet.class)
+					.toArray(WorkingSet.class);
 		}
 
 	});
@@ -71,12 +73,12 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 	}
 
 	@Override
-	public Iterable<WorkingSet> getWorkingSets() {
+	public WorkingSet[] getWorkingSets() {
 		return allWorkingSets.get();
 	}
 
 	@Override
-	public Iterable<WorkingSet> getAllWorkingSets() {
+	public WorkingSet[] getAllWorkingSets() {
 		return allWorkingSets.get();
 	}
 
@@ -96,23 +98,23 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 	}
 
 	@Override
-	public void add(WorkingSet first, WorkingSet... others) {
-		// Unsupported.
+	public int compare(WorkingSet left, WorkingSet right) {
+		if (left == null) {
+			return right == null ? 0 : 1;
+		}
+		return left.getLabel().compareTo(right.getLabel());
 	}
 
-	@Override
-	public void remove(WorkingSet first, WorkingSet... others) {
-		// Unsupported.
-	}
-
-	private static final class ProjectTypeFilterinWorkingSet implements WorkingSet {
+	private static final class ProjectTypeWorkingSet implements WorkingSet {
 
 		private final ProjectType type;
 		private final IN4JSCore core;
+		private final WorkingSetManager manager;
 
-		private ProjectTypeFilterinWorkingSet(ProjectType type, IN4JSCore core) {
+		private ProjectTypeWorkingSet(ProjectType type, IN4JSCore core, WorkingSetManager manager) {
 			this.type = type;
 			this.core = core;
+			this.manager = manager;
 		}
 
 		@Override
@@ -137,6 +139,11 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 				}
 			}
 			return Arrays.copyOfRange(elements, 0, elementCount);
+		}
+
+		@Override
+		public WorkingSetManager getWorkingSetManager() {
+			return manager;
 		}
 
 		private URI toUri(final IProject project) {
