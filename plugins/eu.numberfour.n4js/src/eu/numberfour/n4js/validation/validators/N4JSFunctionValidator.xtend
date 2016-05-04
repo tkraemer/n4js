@@ -63,6 +63,8 @@ import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
 import static extension eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.n4JS.ExportDeclaration
+import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
+import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 
 /**
  */
@@ -76,6 +78,10 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	protected ReturnOrThrowAnalysis returnOrThrowAnalysis
+	
+	@Inject
+	private HiddenLeafAccess hla;
+	
 
 	/**
 	 * NEEEDED
@@ -490,11 +496,13 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			// not on "default export":
 			// add message "function declarations must have a name"
 			if( functionDeclaration.body !== null) {
-				// mark up to body
+				// mark up to closing parameter parenthesis
 				val firstNode = NodeModelUtils.findActualNodeFor(functionDeclaration);
 				val lastNode = NodeModelUtils.findActualNodeFor(functionDeclaration.body);
+				val HiddenLeafs hLeafs = hla.getHiddenLeafsBefore(lastNode);
+				
 				val off = firstNode.offset;
-				val len = lastNode.offset - firstNode.offset;
+				val len = hLeafs.offset - firstNode.offset;
 				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,off,len,FUN_NAME_MISSING);				
 			} else { 
 			  	// mark complete function.	
