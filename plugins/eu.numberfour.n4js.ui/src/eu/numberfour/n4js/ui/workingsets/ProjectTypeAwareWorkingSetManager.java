@@ -17,6 +17,7 @@ import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static org.eclipse.xtext.util.Strings.toFirstUpper;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -31,7 +32,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 
 /**
- *
+ * N4JS project type aware working set manager implementation.
  */
 public class ProjectTypeAwareWorkingSetManager extends ImmutableWorkingSetManager {
 
@@ -45,16 +46,15 @@ public class ProjectTypeAwareWorkingSetManager extends ImmutableWorkingSetManage
 
 	@Override
 	public String getLabel() {
-		return "N4JS Working Set";
+		return "N4JS Project Type";
 	}
 
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
-		final List<ProjectType> types = newArrayList(ProjectType.values());
+		final Collection<ProjectType> types = newArrayList(ProjectType.values());
 		types.add(null); // For 'Others'.
 		return newArrayList(from(types)
-				.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this))
-				.filter(WorkingSet.class));
+				.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this)));
 	}
 
 	private static final class ProjectTypeWorkingSet implements WorkingSet {
@@ -75,7 +75,7 @@ public class ProjectTypeAwareWorkingSetManager extends ImmutableWorkingSetManage
 		public String getLabel() {
 
 			if (null == type) {
-				return "Others";
+				return OTHERS_WORKING_SET_LABEL;
 			}
 
 			return API.equals(type)
@@ -115,7 +115,7 @@ public class ProjectTypeAwareWorkingSetManager extends ImmutableWorkingSetManage
 
 		@Override
 		public String toString() {
-			return null == type ? "Others" : getLabel();
+			return null == type ? OTHERS_WORKING_SET_LABEL : getLabel();
 		}
 
 	}

@@ -142,19 +142,23 @@ public abstract class ImmutableWorkingSetManager implements WorkingSetManager {
 
 	@Override
 	public void updateState(final Diff<WorkingSet> diff) {
-		// Deselect all.
-		visibleWorkingSetLabels.clear();
 
-		// Select visible ones.
-		select(Arrays.asList(diff.getNewItems()));
+		if (!diff.isEmpty()) {
+			// Deselect all.
+			visibleWorkingSetLabels.clear();
 
-		// Update order.
-		orderedWorkingSetLabels.clear();
-		for (final WorkingSet workingSet : diff.getNewAllItems()) {
-			orderedWorkingSetLabels.add(workingSet.getLabel());
+			// Select visible ones.
+			select(Arrays.asList(diff.getNewItems()));
+
+			// Update order.
+			orderedWorkingSetLabels.clear();
+			for (final WorkingSet workingSet : diff.getNewAllItems()) {
+				orderedWorkingSetLabels.add(workingSet.getLabel());
+			}
+
+			discardWorkingSetState();
 		}
 
-		discardWorkingSetState();
 	}
 
 	/**

@@ -10,9 +10,10 @@
  */
 package eu.numberfour.n4js.utils
 
+import com.google.common.collect.Iterables
+import java.util.Arrays
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
-import com.google.common.collect.Iterables
 
 /**
  * Simple POJO for representing a difference. 
@@ -54,6 +55,19 @@ class Diff<T> {
 	 * The final, ordered state of all items.
 	 */
 	val T[] newAllItems;
+	
+	/**
+	 * Returns with {@code true} if the diff contains no addition, deletion and no edition 
+	 * and the state of all and relevant items equals with the new state of all and relevant items.
+	 * Otherwise returns with {@code false}. 
+	 */
+	def isEmpty() {
+		return addedItems.empty
+			&& deletedItems.empty
+			&& editedItems.empty
+			&& Arrays.equals(newItems, oldItems)
+			&& Arrays.equals(newAllItems, oldAllItems)
+	}
 	
 	@Override
 	override toString() {

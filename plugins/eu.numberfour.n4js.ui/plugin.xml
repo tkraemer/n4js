@@ -1257,6 +1257,9 @@ Contributors:
       <manager
             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager">
       </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.GitRepositoryAwareWorkingSetManager">
+      </manager>
    </extension>
 
 
