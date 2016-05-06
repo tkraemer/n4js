@@ -58,7 +58,9 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 
 	private final List<String> orderedWorkingSetLabels = newArrayList();
 	private final Collection<String> visibleWorkingSetLabels = newHashSet();
+
 	private List<WorkingSet> allWorkingSets = null;
+	private List<WorkingSet> visibleWorkingSets = null;
 
 	@Inject
 	private IN4JSCore core;
@@ -78,26 +80,12 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 
 	@Override
 	public WorkingSet[] getWorkingSets() {
-		if (allWorkingSets == null) {
-			allWorkingSets = initAllWorkingSets();
-		}
-
-		if (visibleWorkingSetLabels.isEmpty()) {
-			return getAllWorkingSets();
-		}
-
-		final Iterable<WorkingSet> visibleWorkingSets = from(allWorkingSets)
-				.filter(ws -> visibleWorkingSetLabels.contains(ws.getLabel()));
-
-		return Iterables.toArray(visibleWorkingSets, WorkingSet.class);
+		return Iterables.toArray(getOrCreateVisibleWorkingSets(), WorkingSet.class);
 	}
 
 	@Override
 	public WorkingSet[] getAllWorkingSets() {
-		if (allWorkingSets == null) {
-			allWorkingSets = initAllWorkingSets();
-		}
-		return Iterables.toArray(allWorkingSets, WorkingSet.class);
+		return Iterables.toArray(getOrCreateAllWorkingSets(), WorkingSet.class);
 	}
 
 	@Override
@@ -123,7 +111,7 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 
 		try {
 			node.flush();
-		} catch (BackingStoreException e) {
+		} catch (final BackingStoreException e) {
 			final String message = "Error occurred while saving state to preference store.";
 			LOGGER.error(message, e);
 			return statusHelper.createError(message, e);
@@ -149,7 +137,7 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 			visibleWorkingSetLabels.addAll(Arrays.asList(visibleLabels.split(SEPARATOR)));
 		}
 
-		allWorkingSets = null;
+		discardWorkingSetState();
 
 		return statusHelper.OK();
 	}
@@ -167,6 +155,8 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 		for (final WorkingSet workingSet : diff.getNewAllItems()) {
 			orderedWorkingSetLabels.add(workingSet.getLabel());
 		}
+
+		discardWorkingSetState();
 	}
 
 	@Override
@@ -185,14 +175,46 @@ public class ProjectTypeAwareWorkingSetManager implements WorkingSetManager {
 		return orderedWorkingSetLabels.indexOf(leftId) - orderedWorkingSetLabels.indexOf(rightId);
 	}
 
-	private List<WorkingSet> initAllWorkingSets() {
+	private void discardWorkingSetState() {
+		allWorkingSets = null;
+		visibleWorkingSets = null;
+	}
+
+	private List<WorkingSet> getOrCreateAllWorkingSets() {
+
+		if (allWorkingSets != null) {
+			return allWorkingSets;
+		}
+
 		final List<WorkingSet> workingSets = newArrayList(from(Arrays.asList(ProjectType.values()))
 				.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this))
 				.filter(WorkingSet.class));
 
 		Collections.sort(workingSets, this);
 
-		return workingSets;
+		allWorkingSets = workingSets;
+
+		return allWorkingSets;
+	}
+
+	private List<WorkingSet> getOrCreateVisibleWorkingSets() {
+
+		if (visibleWorkingSets != null) {
+			return visibleWorkingSets;
+		}
+
+		if (allWorkingSets == null) {
+			allWorkingSets = getOrCreateAllWorkingSets();
+		}
+
+		if (visibleWorkingSetLabels.isEmpty()) {
+			visibleWorkingSets = newArrayList(allWorkingSets);
+		} else {
+			visibleWorkingSets = from(allWorkingSets).filter(ws -> visibleWorkingSetLabels.contains(ws.getLabel()))
+					.toList();
+		}
+
+		return visibleWorkingSets;
 	}
 
 	private static final class ProjectTypeWorkingSet implements WorkingSet {

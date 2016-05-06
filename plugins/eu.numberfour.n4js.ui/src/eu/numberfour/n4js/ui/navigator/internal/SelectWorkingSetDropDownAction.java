@@ -65,6 +65,7 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
 					activeManager.configure();
+					workingSetManagerBroker.refreshNavigator();
 				}
 			});
 		}

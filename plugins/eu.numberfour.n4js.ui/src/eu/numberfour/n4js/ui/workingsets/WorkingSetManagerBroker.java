@@ -240,7 +240,10 @@ public class WorkingSetManagerBroker implements IMementoAware {
 		topLevelElementChangeListeners.remove(checkNotNull(listener, "listener"));
 	}
 
-	private void refreshNavigator() {
+	/**
+	 * Asynchronously refreshes the navigator content.
+	 */
+	public void refreshNavigator() {
 		if (isWorkbenchRunning()) {
 			final IWorkbench workbench = getWorkbench();
 			final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
