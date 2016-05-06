@@ -112,7 +112,7 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	 */
 	private LabelProviderChangedEvent createWorkingSetWrapperEvent(final LabelProviderChangedEvent event) {
 		if (event instanceof ProblemsLabelChangedEvent && workingSetManagerBroker.isWorkingSetTopLevel()) {
-			final WorkingSetManager manager = workingSetManagerBroker.getActive();
+			final WorkingSetManager manager = workingSetManagerBroker.getActiveManger();
 			if (null != manager) {
 				final WorkingSet[] workingSets = manager.getWorkingSets();
 				if (!Arrays2.isEmpty(workingSets)) {

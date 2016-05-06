@@ -11,7 +11,8 @@
 package eu.numberfour.n4js.ui.workingsets;
 
 /**
- * Configurable working set representation.
+ * Configurable working set representation. Working sets can be added and removed from the current manager. Besides that
+ * existing working sets can be edited as well.
  */
 public interface MutableWorkingSetManager extends WorkingSetManager {
 

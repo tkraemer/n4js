@@ -49,14 +49,14 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 			item.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
-					workingSetManagerBroker.setActive(manager);
+					workingSetManagerBroker.setActiveManager(manager);
 				}
 			});
-			item.setSelection(workingSetManagerBroker.isActive(manager));
+			item.setSelection(workingSetManagerBroker.isActiveManger(manager));
 
 		}
 
-		final WorkingSetManager activeManager = workingSetManagerBroker.getActive();
+		final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManger();
 		if (null != activeManager) {
 			createSeparator(parent);
 			final MenuItem item = new MenuItem(parent, SWT.CHECK);

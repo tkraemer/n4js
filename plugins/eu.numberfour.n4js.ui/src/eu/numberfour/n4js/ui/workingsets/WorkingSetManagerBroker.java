@@ -34,8 +34,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
@@ -62,7 +63,7 @@ import eu.numberfour.n4js.utils.StatusHelper;
  * Manages the available {@link WorkingSetManager working set manager} instances.
  */
 @Singleton
-public class WorkingSetManagerBroker {
+public class WorkingSetManagerBroker implements IMementoAware {
 
 	private static final Logger LOGGER = Logger.getLogger(WorkingSetManagerBroker.class);
 
@@ -97,7 +98,48 @@ public class WorkingSetManagerBroker {
 		this.workingSetTopLevel = new AtomicBoolean(false);
 		this.contributions = initContributions();
 		topLevelElementChangeListeners = newHashSet();
-		restoreState();
+		restoreState(new NullProgressMonitor());
+	}
+
+	@Override
+	public IStatus saveState(final IProgressMonitor monitor) {
+		final Collection<WorkingSetManager> managers = getWorkingSetManagers();
+		final SubMonitor subMonitor = SubMonitor.convert(monitor, managers.size() + 1);
+		final MultiStatus error = statusHelper.createMultiError("Error occurred while saving state.");
+		for (final WorkingSetManager manager : managers) {
+			final IStatus result = manager.saveState(subMonitor.newChild(1));
+			if (!result.isOK()) {
+				error.add(result);
+			}
+		}
+		final IStatus result = saveState();
+		if (!result.isOK()) {
+			error.add(result);
+		}
+		return Arrays2.isEmpty(error.getChildren()) ? statusHelper.OK() : error;
+	}
+
+	@Override
+	public IStatus restoreState(final IProgressMonitor monitor) {
+		final Collection<WorkingSetManager> managers = getWorkingSetManagers();
+		final SubMonitor subMonitor = SubMonitor.convert(monitor, managers.size() + 1);
+		final MultiStatus error = statusHelper.createMultiError("Error occurred while restoring state.");
+		for (final WorkingSetManager manager : managers) {
+			final IStatus result = manager.restoreState(subMonitor.newChild(1));
+			if (!result.isOK()) {
+				error.add(result);
+			}
+		}
+		final IStatus result = restoreState();
+		if (!result.isOK()) {
+			error.add(result);
+		}
+		return Arrays2.isEmpty(error.getChildren()) ? statusHelper.OK() : error;
+	}
+
+	@Override
+	public Preferences getPreferences() {
+		return InstanceScope.INSTANCE.getNode(QUALIFIER);
 	}
 
 	/**
@@ -115,7 +157,7 @@ public class WorkingSetManagerBroker {
 	 * @param workingSetManager
 	 *            the working set manager that has to be selected as the active one.
 	 */
-	public void setActive(final WorkingSetManager workingSetManager) {
+	public void setActiveManager(final WorkingSetManager workingSetManager) {
 		checkNotNull(workingSetManager, "workingSetManager");
 		activeWorkingSetManager.set(workingSetManager);
 		saveState();
@@ -132,7 +174,7 @@ public class WorkingSetManagerBroker {
 	 *            the working set manager to test whether it is the currently active one or not.
 	 * @return {@code true} if the argument is the currently active one, otherwise {@code false}
 	 */
-	public boolean isActive(final WorkingSetManager workingSetManager) {
+	public boolean isActiveManger(final WorkingSetManager workingSetManager) {
 		return Objects.equal(workingSetManager, activeWorkingSetManager.get());
 	}
 
@@ -142,7 +184,7 @@ public class WorkingSetManagerBroker {
 	 *
 	 * @return the active working set manager, or {@code null}, if not yet available.
 	 */
-	public WorkingSetManager getActive() {
+	public WorkingSetManager getActiveManger() {
 		return activeWorkingSetManager.get();
 	}
 
@@ -173,30 +215,6 @@ public class WorkingSetManagerBroker {
 			}
 			refreshNavigator();
 		}
-	}
-
-	/**
-	 * Saves the state of the current working set broker.
-	 *
-	 * @param monitor
-	 *            the monitor for the save operation.
-	 * @return status representing the outcome of the save operation.
-	 */
-	public IStatus save(final IProgressMonitor monitor) {
-		final Collection<WorkingSetManager> managers = getWorkingSetManagers();
-		final SubMonitor subMonitor = SubMonitor.convert(monitor, managers.size() + 1);
-		final MultiStatus error = statusHelper.createMultiError("Error occurred while saving state.");
-		for (final WorkingSetManager manager : managers) {
-			final IStatus result = manager.save(subMonitor.newChild(1));
-			if (!result.isOK()) {
-				error.add(result);
-			}
-		}
-		final IStatus result = saveState();
-		if (!result.isOK()) {
-			error.add(result);
-		}
-		return Arrays2.isEmpty(error.getChildren()) ? statusHelper.OK() : error;
 	}
 
 	/**
@@ -240,13 +258,13 @@ public class WorkingSetManagerBroker {
 	}
 
 	private IStatus saveState() {
-		final IEclipsePreferences node = InstanceScope.INSTANCE.getNode(QUALIFIER);
 
+		final Preferences node = getPreferences();
 		// Top level element.
 		node.putBoolean(IS_WORKINGSET_TOP_LEVEL_KEY, workingSetTopLevel.get());
 
 		// Active working set manager.
-		final WorkingSetManager active = getActive();
+		final WorkingSetManager active = getActiveManger();
 		final String activeId = active == null ? null : active.getId();
 		node.put(ACTIVE_MANAGER_KEY, Strings.nullToEmpty(activeId));
 
@@ -260,16 +278,18 @@ public class WorkingSetManagerBroker {
 		}
 	}
 
-	private void restoreState() {
-		final Preferences node = InstanceScope.INSTANCE.getNode(QUALIFIER);
+	private IStatus restoreState() {
 
+		final Preferences node = getPreferences();
 		// Top level element.
 		workingSetTopLevel.set(node.getBoolean(IS_WORKINGSET_TOP_LEVEL_KEY, false));
 
 		// Active working set manager.
 		final String value = node.get(ACTIVE_MANAGER_KEY, "");
 		final WorkingSetManager workingSetManager = contributions.get().get(value);
-		setActive(workingSetManager);
+		setActiveManager(workingSetManager);
+
+		return Status.OK_STATUS;
 	}
 
 	private Supplier<Map<String, WorkingSetManager>> initContributions() {

@@ -10,18 +10,18 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
+import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -43,31 +43,30 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.dialogs.SelectionDialog;
 
 import eu.numberfour.n4js.ui.utils.UIUtils;
+import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.Diff;
 
 /**
  * Dialog for configuring the currently active working set for the navigator.
  */
 public class WorkingSetConfigurationDialog extends SelectionDialog {
 
+	private final WorkingSetManager manager;
+	private final WorkingSetDiffBuilder diffBuilder;
+	private final AtomicReference<Diff<WorkingSet>> diff;
+
 	private List<WorkingSet> allWorkingSets;
-	private CheckboxTableViewer viewer;
+	private CheckboxTableViewer tableViewer;
 
 	private Button newButton;
 	private Button editButton;
 	private Button removeButton;
 	private Button upButton;
 	private Button downButton;
-	private Button selectAll;
-	private Button deselectAll;
-
-	private WorkingSet[] result;
-	private List<WorkingSet> addedWorkingSets;
-	private List<WorkingSet> removedWorkingSets;
-	private Map<WorkingSet, WorkingSet> editedWorkingSets;
+	private Button selectAllButton;
+	private Button deselectAllButton;
 
 	private int nextButtonId = IDialogConstants.CLIENT_ID + 1;
-
-	private final WorkingSetManager manager;
 
 	/**
 	 * Creates a new dialog for the configuration of the working set manager argument.
@@ -80,27 +79,10 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		this.manager = manager;
 		setTitle("Configure Working Sets");
 		setMessage("Select and sort &working sets visible in Project Explorer:");
+		diffBuilder = new WorkingSetDiffBuilder(manager);
+		diff = new AtomicReference<>(WorkingSetDiffBuilder.EMPTY_DIFF);
 		allWorkingSets = newArrayList(manager.getAllWorkingSets());
-	}
-
-	/**
-	 * Returns the selected working sets
-	 *
-	 * @return the selected working sets
-	 */
-	public WorkingSet[] getSelection() {
-		return result;
-	}
-
-	/**
-	 * Sets the initial selection
-	 *
-	 * @param workingSets
-	 *            the initial selection
-	 */
-	public void setSelection(final WorkingSet[] workingSets) {
-		result = workingSets;
-		setInitialSelections(workingSets);
+		setInitialSelections(this.manager.getWorkingSets());
 	}
 
 	@Override
@@ -129,15 +111,29 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		if (manager instanceof MutableWorkingSetManager) {
 			createModifyButtons(composite);
 		}
-		viewer.setInput(allWorkingSets);
+		tableViewer.setInput(allWorkingSets);
 		applyDialogFont(composite);
 
 		return composite;
 	}
 
+	@Override
+	protected void okPressed() {
+
+		final WorkingSet[] newItems = Arrays2.filter(tableViewer.getCheckedElements(), WorkingSet.class);
+		final WorkingSet[] newAllItems = from(Arrays.asList(tableViewer.getTable().getItems()))
+				.transform(item -> item.getData()).filter(WorkingSet.class).toArray(WorkingSet.class);
+		diff.set(diffBuilder.build(newItems, newAllItems));
+
+		manager.updateState(diff.get());
+		manager.saveState(new NullProgressMonitor());
+
+		super.okPressed();
+	}
+
 	private void createTableViewer(final Composite parent) {
-		viewer = CheckboxTableViewer.newCheckList(parent, SWT.BORDER | SWT.MULTI);
-		viewer.addCheckStateListener(new ICheckStateListener() {
+		tableViewer = CheckboxTableViewer.newCheckList(parent, SWT.BORDER | SWT.MULTI);
+		tableViewer.addCheckStateListener(new ICheckStateListener() {
 			@Override
 			public void checkStateChanged(final CheckStateChangedEvent event) {
 				updateButtonAvailability();
@@ -146,17 +142,17 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		final GridData data = new GridData(GridData.FILL_BOTH);
 		data.heightHint = convertHeightInCharsToPixels(20);
 		data.widthHint = convertWidthInCharsToPixels(50);
-		viewer.getTable().setLayoutData(data);
+		tableViewer.getTable().setLayoutData(data);
 
-		viewer.setLabelProvider(WorkingSetLabelProvider.INSTANCE);
-		viewer.setContentProvider(ArrayContentProvider.getInstance());
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		tableViewer.setLabelProvider(WorkingSetLabelProvider.INSTANCE);
+		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(final SelectionChangedEvent event) {
 				handleSelectionChanged();
 			}
 		});
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
+		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(final DoubleClickEvent event) {
 				if (editButton.isEnabled())
@@ -217,7 +213,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 			@Override
 			@SuppressWarnings("unchecked")
 			public void widgetSelected(final SelectionEvent e) {
-				moveUp(((IStructuredSelection) viewer.getSelection()).toList());
+				moveUp(((IStructuredSelection) tableViewer.getSelection()).toList());
 			}
 		});
 
@@ -228,24 +224,24 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 			@Override
 			@SuppressWarnings("unchecked")
 			public void widgetSelected(final SelectionEvent e) {
-				moveDown(((IStructuredSelection) viewer.getSelection()).toList());
+				moveDown(((IStructuredSelection) tableViewer.getSelection()).toList());
 			}
 		});
 
-		selectAll = new Button(buttons, SWT.PUSH);
-		selectAll.setText("Select All");
-		setButtonLayoutData(selectAll);
-		selectAll.addSelectionListener(new SelectionAdapter() {
+		selectAllButton = new Button(buttons, SWT.PUSH);
+		selectAllButton.setText("Select All");
+		setButtonLayoutData(selectAllButton);
+		selectAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				selectAll();
 			}
 		});
 
-		deselectAll = new Button(buttons, SWT.PUSH);
-		deselectAll.setText("Deselect All");
-		setButtonLayoutData(deselectAll);
-		deselectAll.addSelectionListener(new SelectionAdapter() {
+		deselectAllButton = new Button(buttons, SWT.PUSH);
+		deselectAllButton.setText("Deselect All");
+		setButtonLayoutData(deselectAllButton);
+		deselectAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				deselectAll();
@@ -253,33 +249,11 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		});
 	}
 
-	@Override
-	protected void okPressed() {
-		final List<WorkingSet> newResult = getResultWorkingSets();
-		result = newResult.toArray(new WorkingSet[newResult.size()]);
-		setResult(newResult);
-		super.okPressed();
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List<WorkingSet> getResultWorkingSets() {
-		final Object[] checked = viewer.getCheckedElements();
-		return new ArrayList(Arrays.asList(checked));
-	}
-
-	@Override
-	protected void cancelPressed() {
-		restoreAddedWorkingSets();
-		restoreChangedWorkingSets();
-		restoreRemovedWorkingSets();
-		super.cancelPressed();
-	}
-
 	private void setInitialSelection() {
 		@SuppressWarnings("unchecked")
 		final List<Object[]> selections = getInitialElementSelections();
 		if (!selections.isEmpty()) {
-			viewer.setCheckedElements(selections.toArray());
+			tableViewer.setCheckedElements(selections.toArray());
 		}
 	}
 
@@ -338,14 +312,6 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		updateButtonAvailability();
 	}
 
-	@Override
-	public int open() {
-		addedWorkingSets = newArrayList();
-		removedWorkingSets = newArrayList();
-		editedWorkingSets = newHashMap();
-		return super.open();
-	}
-
 	/**
 	 * Removes the selected working sets from the workbench.
 	 */
@@ -375,56 +341,10 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	}
 
 	/**
-	 * Removes newly created working sets from the working set manager.
-	 */
-	private void restoreAddedWorkingSets() {
-		// Iterator<WorkingSet> iterator = fAddedWorkingSets.iterator();
-		//
-		// while (iterator.hasNext()) {
-		// manager.removeWorkingSet(iterator.next());
-		// }
-	}
-
-	/**
-	 * Rolls back changes to working sets.
-	 */
-	private void restoreChangedWorkingSets() {
-		// Iterator<WorkingSet> iterator = fEditedWorkingSets.keySet().iterator();
-		//
-		// while (iterator.hasNext()) {
-		// WorkingSet editedWorkingSet = iterator.next();
-		// WorkingSet originalWorkingSet = fEditedWorkingSets.get(editedWorkingSet);
-		//
-		// if (editedWorkingSet.getLabel().equals(originalWorkingSet.getLabel()) == false) {
-		// editedWorkingSet.setName(originalWorkingSet.getLabel());
-		// }
-		// if (editedWorkingSet.getElements().equals(originalWorkingSet.getElements()) == false) {
-		// editedWorkingSet.setElements(originalWorkingSet.getElements());
-		// }
-		// }
-	}
-
-	/**
-	 * Adds back removed working sets to the working set manager.
-	 */
-	private void restoreRemovedWorkingSets() {
-		// WorkingSetManager manager = PlatformUI.getWorkbench().getWorkingSetManager();
-		// Iterator<WorkingSet> iterator = fRemovedWorkingSets.iterator();
-		//
-		// while (iterator.hasNext()) {
-		// manager.addWorkingSet(iterator.next());
-		// }
-		// iterator = fRemovedMRUWorkingSets.iterator();
-		// while (iterator.hasNext()) {
-		// manager.addRecentWorkingSet(iterator.next());
-		// }
-	}
-
-	/**
 	 * Updates the modify buttons' enabled state based on the current selection.
 	 */
 	private void updateButtonAvailability() {
-		final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+		final IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 		final boolean hasSelection = !selection.isEmpty();
 		final boolean hasSingleSelection = selection.size() == 1;
 
@@ -452,42 +372,42 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	private void moveUp(final List<WorkingSet> toMoveUp) {
 		if (toMoveUp.size() > 0) {
 			setElements(moveUp(allWorkingSets, toMoveUp));
-			viewer.reveal(toMoveUp.get(0));
+			tableViewer.reveal(toMoveUp.get(0));
 		}
 	}
 
 	private void moveDown(final List<WorkingSet> toMoveDown) {
 		if (toMoveDown.size() > 0) {
 			setElements(reverse(moveUp(reverse(allWorkingSets), toMoveDown)));
-			viewer.reveal(toMoveDown.get(toMoveDown.size() - 1));
+			tableViewer.reveal(toMoveDown.get(toMoveDown.size() - 1));
 		}
 	}
 
 	private void setElements(final List<WorkingSet> elements) {
 		allWorkingSets = elements;
-		viewer.setInput(allWorkingSets);
+		tableViewer.setInput(allWorkingSets);
 		updateButtonAvailability();
 	}
 
 	private List<WorkingSet> moveUp(final List<WorkingSet> elements, final List<WorkingSet> move) {
 		final int nElements = elements.size();
-		final List<WorkingSet> res = newArrayList();
+		final List<WorkingSet> result = newArrayList();
 		WorkingSet floating = null;
 		for (int i = 0; i < nElements; i++) {
 			final WorkingSet curr = elements.get(i);
 			if (move.contains(curr)) {
-				res.add(curr);
+				result.add(curr);
 			} else {
 				if (floating != null) {
-					res.add(floating);
+					result.add(floating);
 				}
 				floating = curr;
 			}
 		}
 		if (floating != null) {
-			res.add(floating);
+			result.add(floating);
 		}
-		return res;
+		return result;
 	}
 
 	private List<WorkingSet> reverse(final List<WorkingSet> p) {
@@ -497,9 +417,9 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	}
 
 	private boolean canMoveUp() {
-		final int[] indc = viewer.getTable().getSelectionIndices();
-		for (int i = 0; i < indc.length; i++) {
-			if (indc[i] != i) {
+		final int[] indices = tableViewer.getTable().getSelectionIndices();
+		for (int i = 0; i < indices.length; i++) {
+			if (indices[i] != i) {
 				return true;
 			}
 		}
@@ -507,43 +427,22 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	}
 
 	private boolean canMoveDown() {
-		final int[] indc = viewer.getTable().getSelectionIndices();
+		final int[] indices = tableViewer.getTable().getSelectionIndices();
 		int k = allWorkingSets.size() - 1;
-		for (int i = indc.length - 1; i >= 0; i--, k--) {
-			if (indc[i] != k) {
+		for (int i = indices.length - 1; i >= 0; i--, k--) {
+			if (indices[i] != k) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	// ---- select / deselect --------------------------------------------------
-
 	private void selectAll() {
-		viewer.setAllChecked(true);
+		tableViewer.setAllChecked(true);
 	}
 
 	private void deselectAll() {
-		viewer.setAllChecked(false);
+		tableViewer.setAllChecked(false);
 	}
 
-	/**
-	 * Returns the list of newly added working sets through this dialog.
-	 *
-	 * @return the list of newly added working sets
-	 *
-	 */
-	public List<WorkingSet> getNewlyAddedWorkingSets() {
-		return addedWorkingSets;
-
-	}
-
-	/**
-	 * Returns all the working sets.
-	 *
-	 * @return all the working sets
-	 */
-	public WorkingSet[] getAllWorkingSets() {
-		return allWorkingSets.toArray(new WorkingSet[allWorkingSets.size()]);
-	}
 }

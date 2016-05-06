@@ -13,20 +13,21 @@ package eu.numberfour.n4js.ui.workingsets;
 import java.util.Comparator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.xtext.util.Strings;
+import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.utils.Diff;
 
 /**
- *
+ * Representation of a working set manager.
  */
-public interface WorkingSetManager extends Comparator<WorkingSet> {
+public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware {
 
 	/**
 	 * The unique ID of the {@code workingSetManager} extension point.
@@ -81,13 +82,13 @@ public interface WorkingSetManager extends Comparator<WorkingSet> {
 	WorkingSet[] getAllWorkingSets();
 
 	/**
-	 * Saves the state of the working set manager.
+	 * Updates its internal state based on the {@link Diff diff} argument. Clients should call
+	 * {@link #saveState(IProgressMonitor)} if they want to persist the updated state.
 	 *
-	 * @param monitor
-	 *            the monitor for the save operation.
-	 * @return status representing the outcome of the save operation.
+	 * @param diff
+	 *            the difference describing the changes were made on the actual instance.
 	 */
-	IStatus save(IProgressMonitor monitor);
+	void updateState(Diff<WorkingSet> diff);
 
 	/**
 	 * Marks the argument working sets as a selected one. Selected working sets will be visible for the CNF (Common
@@ -153,61 +154,9 @@ public interface WorkingSetManager extends Comparator<WorkingSet> {
 		return 0;
 	}
 
-	/**
-	 * The NOOP instance. Does nothing at all.
-	 */
-	WorkingSetManager NOOP = new WorkingSetManager() {
-
-		@Override
-		public String getId() {
-			return WorkingSetManager.class.getName() + ".NOOP";
-		}
-
-		@Override
-		public String getLabel() {
-			return "";
-		}
-
-		@Override
-		public WorkingSet[] getWorkingSets() {
-			return EMPTY_ARRAY;
-		}
-
-		@Override
-		public WorkingSet[] getAllWorkingSets() {
-			return EMPTY_ARRAY;
-		}
-
-		@Override
-		public IStatus save(IProgressMonitor monitor) {
-			return Status.OK_STATUS;
-		}
-
-		@Override
-		public void select(Iterable<WorkingSet> workingSets) {
-			// NOOP
-		}
-
-		@Override
-		public void select(WorkingSet first, WorkingSet... others) {
-			// NOOP
-		}
-
-		@Override
-		public void unselect(Iterable<WorkingSet> workingSets) {
-			// NOOP
-		}
-
-		@Override
-		public void configure() {
-			// NOOP
-		}
-
-		@Override
-		public void unselect(WorkingSet first, WorkingSet... others) {
-			// NOOP
-		}
-
-	};
+	@Override
+	default Preferences getPreferences() {
+		return InstanceScope.INSTANCE.getNode(getId());
+	}
 
 }

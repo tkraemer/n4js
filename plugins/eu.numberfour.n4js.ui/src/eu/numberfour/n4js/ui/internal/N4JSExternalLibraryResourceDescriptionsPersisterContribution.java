@@ -91,7 +91,7 @@ public class N4JSExternalLibraryResourceDescriptionsPersisterContribution
 
 		job.setUser(true);
 		job.setSystem(false);
-		job.schedule();
+		// job.schedule(); //TODO do not commit this
 
 	}
 
