@@ -17,6 +17,8 @@ import org.eclipse.core.runtime.IAdaptable;
  */
 public interface WorkingSet {
 
+	String OTHERS_WORKING_SET_LABEL = "Others";
+
 	String getLabel();
 
 	IAdaptable[] getElements();
