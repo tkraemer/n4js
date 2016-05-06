@@ -29,6 +29,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.ISaveContext;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,6 +41,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -56,6 +60,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.StatusHelper;
 
@@ -99,6 +104,20 @@ public class WorkingSetManagerBroker implements IMementoAware {
 		this.contributions = initContributions();
 		topLevelElementChangeListeners = newHashSet();
 		restoreState(new NullProgressMonitor());
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			final String pluginId = N4JSActivator.getInstance().getBundle().getSymbolicName();
+			final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			try {
+				workspace.addSaveParticipant(pluginId, new SaveParticipantAdapter() {
+					@Override
+					public void saving(final ISaveContext context) throws CoreException {
+						saveState(new NullProgressMonitor());
+					}
+				});
+			} catch (final CoreException e) {
+				LOGGER.error("Error occurred while attaching save participant to workspace.", e);
+			}
+		}
 	}
 
 	@Override
