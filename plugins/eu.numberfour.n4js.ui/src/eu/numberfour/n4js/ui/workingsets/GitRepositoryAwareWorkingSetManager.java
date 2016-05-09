@@ -31,7 +31,7 @@ import org.eclipse.jgit.lib.Repository;
  * Working set manager based on Git repositories.
  */
 @SuppressWarnings("restriction")
-public class GitRepositoryAwareWorkingSetManager extends ImmutableWorkingSetManager {
+public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 	private final RepositoryCache repositoryCache;
 

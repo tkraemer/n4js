@@ -34,7 +34,7 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 /**
  * N4JS project type aware working set manager implementation.
  */
-public class ProjectTypeAwareWorkingSetManager extends ImmutableWorkingSetManager {
+public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 	@Inject
 	private IN4JSCore core;

@@ -40,9 +40,9 @@ import eu.numberfour.n4js.utils.StatusHelper;
  * sets can be modified. This implementation is not thread safe. It is the clients responsibility to synchronize on it
  * when thread safety is required.
  */
-public abstract class ImmutableWorkingSetManager implements WorkingSetManager {
+public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 
-	private static final Logger LOGGER = Logger.getLogger(ImmutableWorkingSetManager.class);
+	private static final Logger LOGGER = Logger.getLogger(WorkingSetManagerImpl.class);
 
 	/**
 	 * Separator used when persisting key value pairs into the OSGi preference store.

@@ -45,7 +45,7 @@ import eu.numberfour.n4js.utils.Diff;
  * Working set manager that groups projects to contained working sets by applying a regular expression filter on the
  * project names.
  */
-public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManager implements MutableWorkingSetManager {
+public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl implements MutableWorkingSetManager {
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectNameFilterWorkingSetManager.class);
 
