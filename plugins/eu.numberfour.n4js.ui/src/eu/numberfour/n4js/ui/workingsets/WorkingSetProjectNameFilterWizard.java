@@ -44,7 +44,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 	public void addPages() {
 		addPage(new WizardPage("") {
 
-			private Text labelText;
+			private Text nameText;
 			private Text filterText;
 
 			@Override
@@ -54,9 +54,9 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 				composite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).create());
 				composite.setLayoutData(GridDataFactory.fillDefaults().align(FILL, FILL).grab(true, true).create());
 
-				new Label(composite, NONE).setText("Label:");
-				labelText = new Text(composite, BORDER);
-				labelText.setLayoutData(GridDataFactory.fillDefaults().align(FILL, CENTER).grab(true, false).create());
+				new Label(composite, NONE).setText("Working set name:");
+				nameText = new Text(composite, BORDER);
+				nameText.setLayoutData(GridDataFactory.fillDefaults().align(FILL, CENTER).grab(true, false).create());
 
 				new Label(composite, NONE).setText("Project name filter:");
 				filterText = new Text(composite, BORDER);
@@ -74,12 +74,12 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 				if (editedWorkingSet.isPresent()) {
 					final ProjectNameFilterWorkingSet workingSet = (ProjectNameFilterWorkingSet) editedWorkingSet.get();
 					workingSetRef.set(workingSet);
-					labelText.setText(workingSet.getLabel());
+					nameText.setText(workingSet.getName());
 					filterText.setText(workingSet.getFilter().pattern());
-					labelText.selectAll();
+					nameText.selectAll();
 				}
 
-				labelText.addModifyListener(e -> setPageComplete(validatePage()));
+				nameText.addModifyListener(e -> setPageComplete(validatePage()));
 				filterText.addModifyListener(e -> setPageComplete(validatePage()));
 
 			}
@@ -89,7 +89,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 
 				String errorMessage = null;
 
-				final String label = labelText.getText();
+				final String name = nameText.getText();
 				final String filter = filterText.getText();
 				final WorkingSetManager manager = getManager();
 
@@ -98,14 +98,14 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 				}
 
 				if (errorMessage == null) {
-					if (label == null || label.trim().length() == 0) {
+					if (name == null || name.trim().length() == 0) {
 						errorMessage = "Working set name should be specified.";
 					}
 				}
 
 				if (errorMessage == null) {
-					if (Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getLabel()).contains(label)) {
-						errorMessage = "A working set already exists with name '" + label + "'.";
+					if (Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
+						errorMessage = "A working set already exists with name '" + name + "'.";
 					}
 				}
 
@@ -128,7 +128,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 				if (errorMessage != null || pattern == null) {
 					workingSetRef.set(null);
 				} else {
-					workingSetRef.set(new ProjectNameFilterWorkingSet(pattern, label, manager));
+					workingSetRef.set(new ProjectNameFilterWorkingSet(pattern, name, manager));
 				}
 
 				setMessage(errorMessage, ERROR);

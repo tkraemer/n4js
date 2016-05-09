@@ -1255,13 +1255,16 @@ Contributors:
    <extension
          point="eu.numberfour.n4js.ui.workingSetManager">
       <manager
-            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager">
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager">
+      </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectNameFilterWorkingSetManager">
       </manager>
       <manager
             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.GitRepositoryAwareWorkingSetManager">
       </manager>
       <manager
-            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectNameFilterWorkingSetManager">
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager">
       </manager>
    </extension>
 

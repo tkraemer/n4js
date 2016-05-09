@@ -13,6 +13,7 @@ package eu.numberfour.n4js.ui.workingsets;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.utils.Arrays2.isEmpty;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -140,6 +141,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 			@Override
 			public void checkStateChanged(final CheckStateChangedEvent event) {
 				updateButtonAvailability();
+				getButton(IDialogConstants.OK_ID).setEnabled(!isEmpty(tableViewer.getCheckedElements()));
 			}
 		});
 		final GridData data = new GridData(GridData.FILL_BOTH);
@@ -290,7 +292,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 			final Object firstElement = selection.getFirstElement();
 			if (firstElement instanceof WorkingSet) {
 				final WorkingSet oldState = (WorkingSet) firstElement;
-				if (!OTHERS_WORKING_SET_LABEL.equals(oldState.getLabel())) {
+				if (!OTHERS_WORKING_SET_LABEL.equals(oldState.getName())) {
 					final WorkingSetEditWizard wizard = ((MutableWorkingSetManager) manager).createEditWizard();
 					wizard.init(PlatformUI.getWorkbench(), selection);
 					final WizardDialog dialog = new WizardDialog(getShell(), wizard);
@@ -383,7 +385,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		for (final Iterator<?> itr = selection.iterator(); itr.hasNext();) {
 			final Object next = itr.next();
 			if (next instanceof WorkingSet) {
-				if (OTHERS_WORKING_SET_LABEL.equals(((WorkingSet) next).getLabel())) {
+				if (OTHERS_WORKING_SET_LABEL.equals(((WorkingSet) next).getName())) {
 					return false;
 				}
 			}

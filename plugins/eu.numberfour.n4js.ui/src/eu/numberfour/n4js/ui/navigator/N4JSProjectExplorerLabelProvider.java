@@ -72,7 +72,7 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	@Override
 	public String getText(final Object element) {
 		if (element instanceof WorkingSet) {
-			return ((WorkingSet) element).getLabel();
+			return ((WorkingSet) element).getName();
 		} else {
 			return delegate.getText(element);
 		}

@@ -96,7 +96,13 @@ public enum ImageDescriptorCache {
 		WORKING_SET("workset.gif"),
 
 		/** Image reference for working set wizard. */
-		WORKING_SET_WIZBAN("workset_wiz.png");
+		WORKING_SET_WIZBAN("workset_wiz.png"),
+
+		/** Image reference for left/backward arrow. */
+		LEFT_ARROW("nav_backward.gif"),
+
+		/** Image reference for right/forward arrow. */
+		RIGHT_ARROW("nav_forward.gif");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 

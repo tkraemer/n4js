@@ -40,7 +40,7 @@ public class WorkingSetLabelProvider extends LabelProvider {
 	@Override
 	public String getText(final Object element) {
 		if (element instanceof WorkingSet) {
-			return ((WorkingSet) element).getLabel();
+			return ((WorkingSet) element).getName();
 		}
 		return super.getText(element);
 	}

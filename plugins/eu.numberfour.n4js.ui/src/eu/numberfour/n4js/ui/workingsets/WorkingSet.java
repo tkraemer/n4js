@@ -25,12 +25,12 @@ public interface WorkingSet {
 	String OTHERS_WORKING_SET_LABEL = "Others";
 
 	/**
-	 * The label of the working set. Working sets that belong to the same {@link #getWorkingSetManager() working set
-	 * manager} must have unique name.
+	 * Returns with the name of the working set. Working sets that belong to the same {@link #getWorkingSetManager()
+	 * working set manager} must have unique name.
 	 *
-	 * @return the label of the working set.
+	 * @return the name of the working set.
 	 */
-	String getLabel();
+	String getName();
 
 	/**
 	 * The container manager of the working set.

@@ -43,11 +43,6 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 	}
 
 	@Override
-	public String getId() {
-		return GitRepositoryAwareWorkingSetManager.class.getName();
-	}
-
-	@Override
 	public String getLabel() {
 		return "Git Repository";
 	}
@@ -64,30 +59,27 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 		private final WorkingSetManager manager;
 		private final String rootUri;
-		private String label;
+		private String name;
 
 		private GitRepositoryWorkingSet(/* nullable */final Repository repository, final WorkingSetManager manager) {
 			if (repository == null) {
 				rootUri = null;
-				label = OTHERS_WORKING_SET_LABEL;
+				name = OTHERS_WORKING_SET_LABEL;
 			} else {
 				final File directory = repository.getDirectory().getParentFile();
 				rootUri = toUriString(directory.toURI());
-				label = directory.getName();
+				name = directory.getName();
 			}
 			this.manager = manager;
 		}
 
 		@Override
-		public String getLabel() {
-			return label;
+		public String getName() {
+			return name;
 		}
 
 		@Override
 		public IAdaptable[] getElements() {
-			if (label.contains("datamodel")) {
-				System.out.println();
-			}
 			final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 			final IProject[] elements = new IProject[projects.length];
 			int elementCount = 0;
@@ -125,7 +117,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 		@Override
 		public String toString() {
-			return getLabel();
+			return getName();
 		}
 
 	}

@@ -40,11 +40,6 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 	private IN4JSCore core;
 
 	@Override
-	public String getId() {
-		return ProjectTypeAwareWorkingSetManager.class.getName();
-	}
-
-	@Override
 	public String getLabel() {
 		return "N4JS Project Type";
 	}
@@ -72,7 +67,7 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 		}
 
 		@Override
-		public String getLabel() {
+		public String getName() {
 
 			if (null == type) {
 				return OTHERS_WORKING_SET_LABEL;
@@ -115,7 +110,7 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 		@Override
 		public String toString() {
-			return null == type ? OTHERS_WORKING_SET_LABEL : getLabel();
+			return null == type ? OTHERS_WORKING_SET_LABEL : getName();
 		}
 
 	}

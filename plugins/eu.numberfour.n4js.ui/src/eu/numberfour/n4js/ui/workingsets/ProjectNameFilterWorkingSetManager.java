@@ -11,21 +11,15 @@
 package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.osgi.service.prefs.BackingStoreException;
@@ -33,9 +27,7 @@ import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -49,8 +41,6 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectNameFilterWorkingSetManager.class);
 
-	private static final String ANY_MATCH = ".*";
-
 	private static final String ORDERED_FILTERS_KEY = ".orderedFilters";
 
 	/**
@@ -60,11 +50,6 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 	@Inject
 	private Provider<WorkingSetProjectNameFilterWizard> wizardProvider;
-
-	@Override
-	public String getId() {
-		return ProjectNameFilterWorkingSetManager.class.getName();
-	}
 
 	@Override
 	public String getLabel() {
@@ -134,22 +119,22 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
-		checkState(orderedWorkingSetFilters.size() == orderedWorkingSetLabels.size(),
-				"Expected same number of working set labels as working set filters. Labels was: "
-						+ Iterables.toString(orderedWorkingSetLabels)
-						+ " Filters was: " + Iterables.toString(orderedWorkingSetFilters) + ".");
+		checkState(orderedWorkingSetFilters.size() == orderedWorkingSetNames.size(),
+				"Expected same number of working set names as working set filters."
+						+ "\nNames were: " + Iterables.toString(orderedWorkingSetNames)
+						+ "\nFilters were: " + Iterables.toString(orderedWorkingSetFilters));
 
 		if (orderedWorkingSetFilters.isEmpty()) {
-			orderedWorkingSetFilters.add(ANY_MATCH);
-			orderedWorkingSetLabels.add(OTHERS_WORKING_SET_LABEL);
+			orderedWorkingSetFilters.add(OTHERS_WORKING_SET_LABEL);
+			orderedWorkingSetNames.add(OTHERS_WORKING_SET_LABEL);
 		}
 
 		final int size = orderedWorkingSetFilters.size();
 		final WorkingSet[] workingSets = new WorkingSet[size];
 		for (int i = 0; i < size; i++) {
 			final String regex = orderedWorkingSetFilters.get(i);
-			final String label = orderedWorkingSetLabels.get(i);
-			workingSets[i] = new ProjectNameFilterWorkingSet(Pattern.compile(regex), label, this);
+			final String name = orderedWorkingSetNames.get(i);
+			workingSets[i] = new ProjectNameFilterWorkingSet(Pattern.compile(regex), name, this);
 		}
 
 		return Arrays.asList(workingSets);
@@ -168,85 +153,30 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 	/**
 	 * Working set implementation with project name filter support.
 	 */
-	protected static final class ProjectNameFilterWorkingSet implements WorkingSet {
+	protected static final class ProjectNameFilterWorkingSet extends WorkingSetImpl {
 
 		private final Pattern filter;
-		private final String label;
-		private final WorkingSetManager manager;
 
 		/**
-		 * Creates a new working set manager with the given label, project name pattern and the container manager.
+		 * Creates a new working set manager with the given name, project name pattern and the container manager.
 		 *
 		 * @param filter
 		 *            the project name filter.
-		 * @param label
-		 *            the label of the working set.
+		 * @param name
+		 *            the name of the working set.
 		 * @param manager
 		 *            the container manager where this working set belongs to.
 		 */
-		protected ProjectNameFilterWorkingSet(final Pattern filter, final String label,
+		protected ProjectNameFilterWorkingSet(final Pattern filter, final String name,
 				final WorkingSetManager manager) {
 
+			super(name, manager);
 			this.filter = filter;
-			this.label = label;
-			this.manager = manager;
 		}
 
 		@Override
-		public String getLabel() {
-			return label;
-		}
-
-		@Override
-		public IAdaptable[] getElements() {
-
-			final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			if (OTHERS_WORKING_SET_LABEL.equals(label)) {
-
-				// No other working sets are available at all.
-				final WorkingSet[] allWorkingSets = manager.getAllWorkingSets();
-				if (allWorkingSets.length == 1) {
-					return projects;
-				} else {
-
-					// We have to exclude all those projects that are associated with at least one other working set.
-					final FluentIterable<WorkingSet> others = from(Arrays.asList(allWorkingSets))
-							.filter(ws -> !OTHERS_WORKING_SET_LABEL.equals(ws.getLabel()));
-
-					// Mapping between non-built-in working sets and their elements.
-					final Map<WorkingSet, Collection<IAdaptable>> elementMapping = Maps.toMap(others,
-							ws -> newHashSet(ws.getElements()));
-
-					final IProject[] elements = new IProject[projects.length];
-					int elementCount = 0;
-					for (int i = 0, size = projects.length; i < size; i++) {
-						final IProject project = projects[i];
-						// If the project is not assigned to any other working set, then assign it to the built-in one.
-						if (!Iterables.any(others, ws -> elementMapping.get(ws).contains(project))) {
-							elements[elementCount++] = project;
-						}
-					}
-
-					return Arrays.copyOfRange(elements, 0, elementCount);
-				}
-
-			} else {
-				final IProject[] elements = new IProject[projects.length];
-				int elementCount = 0;
-				for (int i = 0, size = projects.length; i < size; i++) {
-					final IProject project = projects[i];
-					if (filter.matcher(project.getName()).matches()) {
-						elements[elementCount++] = project;
-					}
-				}
-				return Arrays.copyOfRange(elements, 0, elementCount);
-			}
-
-		}
-
-		@Override
-		public WorkingSetManager getWorkingSetManager() {
-			return manager;
+		public boolean apply(final IProject project) {
+			return filter.matcher(project.getName()).matches();
 		}
 
 		/**
@@ -260,7 +190,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 		@Override
 		public String toString() {
-			return getLabel() + " [" + filter + "]";
+			return getName() + " [" + filter + "]";
 		}
 
 	}
