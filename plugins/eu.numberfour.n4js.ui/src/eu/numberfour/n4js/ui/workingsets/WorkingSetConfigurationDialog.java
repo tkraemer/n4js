@@ -12,13 +12,13 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -32,6 +32,8 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -258,21 +260,26 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	}
 
 	private void createWorkingSet() {
-		// WorkingSetNewWizard wizard = manager.createWorkingSetNewWizard(new String[] { WorkingSetIDs.JAVA });
-		// // the wizard can't be null since we have at least the Java working set.
-		// WizardDialog dialog = new WizardDialog(getShell(), wizard);
-		// dialog.create();
-		// if (dialog.open() == Window.OK) {
-		// WorkingSet workingSet = wizard.getSelection();
-		// if (WorkingSetModel.isSupportedAsTopLevelElement(workingSet)) {
-		// allWorkingSets.add(workingSet);
-		// viewer.add(workingSet);
-		// viewer.setSelection(new StructuredSelection(workingSet), true);
-		// viewer.setChecked(workingSet, true);
-		// manager.addWorkingSet(workingSet);
-		// fAddedWorkingSets.add(workingSet);
-		// }
-		// }
+		if (manager instanceof MutableWorkingSetManager) {
+			final WorkingSetNewWizard wizard = ((MutableWorkingSetManager) manager).createNewWizard();
+			final WizardDialog dialog = new WizardDialog(getShell(), wizard);
+			if (dialog.open() == Window.OK) {
+				final WorkingSet workingSet = wizard.getWorkingSet().orNull();
+				if (workingSet != null) {
+					diffBuilder.add(workingSet);
+					getShell().getDisplay().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							allWorkingSets.add(workingSet);
+							tableViewer.add(workingSet);
+							tableViewer.setChecked(workingSet, true);
+						}
+
+					});
+				}
+			}
+		}
 	}
 
 	private void editSelectedWorkingSet() {
@@ -316,28 +323,38 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	 * Removes the selected working sets from the workbench.
 	 */
 	private void removeSelectedWorkingSets() {
-		// ISelection selection = viewer.getSelection();
-		// if (selection instanceof IStructuredSelection) {
-		// Iterator<?> iter = ((IStructuredSelection) selection).iterator();
-		// while (iter.hasNext()) {
-		// WorkingSet workingSet = (WorkingSet) iter.next();
-		// if (fAddedWorkingSets.contains(workingSet)) {
-		// fAddedWorkingSets.remove(workingSet);
-		// } else {
-		// WorkingSet[] recentWorkingSets = manager.getRecentWorkingSets();
-		// for (int i = 0; i < recentWorkingSets.length; i++) {
-		// if (workingSet.equals(recentWorkingSets[i])) {
-		// fRemovedMRUWorkingSets.add(workingSet);
-		// break;
-		// }
-		// }
-		// fRemovedWorkingSets.add(workingSet);
-		// }
-		// allWorkingSets.remove(workingSet);
-		// manager.removeWorkingSet(workingSet);
-		// }
-		// viewer.remove(((IStructuredSelection) selection).toArray());
-		// }
+		if (manager instanceof MutableWorkingSetManager) {
+
+			final IStructuredSelection selection = tableViewer.getStructuredSelection();
+			final Object[] objects = selection.toArray();
+			final Collection<WorkingSet> removedWorkingSets = newArrayList();
+
+			for (int i = 0, size = objects.length; i < size; i++) {
+				final Object object = objects[i];
+				if (object instanceof WorkingSet) {
+					final WorkingSet workingSet = (WorkingSet) object;
+					if (!OTHERS_WORKING_SET_LABEL.equals(workingSet)) {
+						removedWorkingSets.add(workingSet);
+					}
+				}
+			}
+
+			if (!removedWorkingSets.isEmpty()) {
+				for (final WorkingSet workingSet : removedWorkingSets) {
+					diffBuilder.delete(workingSet);
+				}
+				getShell().getDisplay().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						tableViewer.remove(removedWorkingSets.toArray());
+						allWorkingSets.removeAll(removedWorkingSets);
+					}
+
+				});
+			}
+		}
+
 	}
 
 	/**
@@ -349,7 +366,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		final boolean hasSingleSelection = selection.size() == 1;
 
 		if (manager instanceof MutableWorkingSetManager) {
-			removeButton.setEnabled(hasSelection && areAllGlobalWorkingSets(selection));
+			removeButton.setEnabled(hasSelection && containsNoBuiltInWorkingSets(selection));
 			editButton.setEnabled(hasSingleSelection);
 		}
 		if (upButton != null) {
@@ -360,11 +377,14 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		}
 	}
 
-	private boolean areAllGlobalWorkingSets(final IStructuredSelection selection) {
-		final Set<WorkingSet> globals = newHashSet(manager.getAllWorkingSets());
-		for (final Iterator<?> iter = selection.iterator(); iter.hasNext();) {
-			if (!globals.contains(iter.next()))
-				return false;
+	private boolean containsNoBuiltInWorkingSets(final IStructuredSelection selection) {
+		for (final Iterator<?> itr = selection.iterator(); itr.hasNext();) {
+			final Object next = itr.next();
+			if (next instanceof WorkingSet) {
+				if (OTHERS_WORKING_SET_LABEL.equals(((WorkingSet) next).getLabel())) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}

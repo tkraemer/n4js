@@ -44,7 +44,16 @@ public abstract class ImmutableWorkingSetManager implements WorkingSetManager {
 
 	private static final Logger LOGGER = Logger.getLogger(ImmutableWorkingSetManager.class);
 
-	private static final String SEPARATOR = "#";
+	/**
+	 * Separator used when persisting key value pairs into the OSGi preference store.
+	 */
+	protected static final String SEPARATOR = "#";
+
+	/**
+	 * An empty string for representing not yet persisted configuration.
+	 */
+	protected static final String EMPTY_STRING = "";
+
 	private static final String ORDERED_LABELS_KEY = ".orderedLabels";
 	private static final String VISIBLE_LABELS_KEY = ".visibleLabels";
 
@@ -122,14 +131,14 @@ public abstract class ImmutableWorkingSetManager implements WorkingSetManager {
 		final Preferences node = getPreferences();
 
 		// Restore ordered labels.
-		final String orderedLabels = node.get(ORDERED_LABELS_KEY, "");
+		final String orderedLabels = node.get(ORDERED_LABELS_KEY, EMPTY_STRING);
 		if (!Strings.isNullOrEmpty(orderedLabels)) {
 			orderedWorkingSetLabels.clear();
 			orderedWorkingSetLabels.addAll(Arrays.asList(orderedLabels.split(SEPARATOR)));
 		}
 
 		// Restore visible labels.
-		final String visibleLabels = node.get(VISIBLE_LABELS_KEY, "");
+		final String visibleLabels = node.get(VISIBLE_LABELS_KEY, EMPTY_STRING);
 		if (!Strings.isNullOrEmpty(visibleLabels)) {
 			visibleWorkingSetLabels.clear();
 			visibleWorkingSetLabels.addAll(Arrays.asList(visibleLabels.split(SEPARATOR)));

@@ -93,7 +93,10 @@ public enum ImageDescriptorCache {
 		NEW_ENUM_WIZBAN("newenum_wiz.png"),
 
 		/** Image reference for working sets. */
-		WORKING_SET("workset.gif");
+		WORKING_SET("workset.gif"),
+
+		/** Image reference for working set wizard. */
+		WORKING_SET_WIZBAN("workset_wiz.png");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 
