@@ -44,7 +44,7 @@ public abstract class WorkingSetNewWizard extends Wizard {
 	protected WorkingSetManager getManager() {
 		return workingSetManagerBroker.getActiveManger();
 	}
-
+	
 	@Override
 	public Image getDefaultPageImage() {
 		return ImageRef.WORKING_SET_WIZBAN.asImage().orNull();

@@ -10,17 +10,36 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWizard;
+
+import com.google.common.base.Optional;
 
 /**
- *
+ * Base wizard implementation for editing an existing working set.
  */
-public class WorkingSetEditWizard extends Wizard {
+public abstract class WorkingSetEditWizard extends WorkingSetNewWizard implements IWorkbenchWizard {
+
+	private WorkingSet editedWorkingSet;
 
 	@Override
-	public boolean performFinish() {
-		// TODO Auto-generated method stub
-		return false;
+	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+		if (selection != null && !selection.isEmpty()) {
+			final Object firstElement = selection.getFirstElement();
+			if (firstElement instanceof WorkingSet) {
+				editedWorkingSet = (WorkingSet) firstElement;
+			}
+		}
+	}
+
+	/**
+	 * Returns with the edited working set if it was initialized from the actual selection.
+	 *
+	 * @return the edited working set. Could be {@link Optional#absent() absent}.
+	 */
+	protected Optional<WorkingSet> getEditedWorkingSet() {
+		return Optional.fromNullable(editedWorkingSet);
 	}
 
 }

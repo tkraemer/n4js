@@ -31,9 +31,12 @@ import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterWorkingSetManager.Proj
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
- * Wizard for creating project name filter based working sets.
+ * Wizard for creating and editing project name filter based working sets.
  */
-public class WorkingSetProjectNameFilterNewWizard extends WorkingSetNewWizard {
+public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
+
+	private static final String TITLE = "Project Name Filter Working Set";
+	private static final String DESCRIPTION = "Enter a working set name and specify a project name filter using a regular expression.";
 
 	private final AtomicReference<WorkingSet> workingSetRef = new AtomicReference<>();
 
@@ -54,26 +57,30 @@ public class WorkingSetProjectNameFilterNewWizard extends WorkingSetNewWizard {
 				new Label(composite, NONE).setText("Label:");
 				labelText = new Text(composite, BORDER);
 				labelText.setLayoutData(GridDataFactory.fillDefaults().align(FILL, CENTER).grab(true, false).create());
-				labelText.addModifyListener(e -> setPageComplete(validatePage()));
 
 				new Label(composite, NONE).setText("Project name filter:");
 				filterText = new Text(composite, BORDER);
 				filterText.setLayoutData(GridDataFactory.fillDefaults().align(FILL, CENTER).grab(true, false).create());
-				filterText.addModifyListener(e -> setPageComplete(validatePage()));
 
 				setPageComplete(false);
 				setControl(composite);
 
-				composite.getDisplay().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						setTitle("Project Name Filter Working Set");
-						setDescription(
-								"Enter a working set name and specify a project name filter using a regular expression.");
-					}
-
+				composite.getDisplay().asyncExec(() -> {
+					setTitle(TITLE);
+					setDescription(DESCRIPTION);
 				});
+
+				final Optional<WorkingSet> editedWorkingSet = getEditedWorkingSet();
+				if (editedWorkingSet.isPresent()) {
+					ProjectNameFilterWorkingSet workingSet = (ProjectNameFilterWorkingSet) editedWorkingSet.get();
+					workingSetRef.set(workingSet);
+					labelText.setText(workingSet.getLabel());
+					filterText.setText(workingSet.getFilter().pattern());
+					labelText.selectAll();
+				}
+
+				labelText.addModifyListener(e -> setPageComplete(validatePage()));
+				filterText.addModifyListener(e -> setPageComplete(validatePage()));
 
 			}
 
@@ -104,7 +111,7 @@ public class WorkingSetProjectNameFilterNewWizard extends WorkingSetNewWizard {
 
 				if (errorMessage == null) {
 					if (filter == null || filter.trim().length() == 0) {
-						errorMessage = "Project name filter should be specified";
+						errorMessage = "Project name filter should be specified.";
 					}
 				}
 

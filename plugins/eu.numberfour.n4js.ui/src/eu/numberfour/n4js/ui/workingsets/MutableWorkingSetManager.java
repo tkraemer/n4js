@@ -16,39 +16,6 @@ package eu.numberfour.n4js.ui.workingsets;
  */
 public interface MutableWorkingSetManager extends WorkingSetManager {
 
-	// /**
-	// * Associated the working set arguments with the current manager instance by adding them to the manager. Has no
-	// side
-	// * effect if the argument working sets are already managed by this instance.
-	// *
-	// * @param first
-	// * the working set to be added to this manager.
-	// * @param others
-	// * other working sets to be added to this manager.
-	// */
-	// void add(WorkingSet first, WorkingSet... others);
-	//
-	// /**
-	// * Detach the working set arguments from the current manager instance by removing them to the manager. Has no side
-	// * effect if the argument working sets are not managed by this instance.
-	// *
-	// * @param first
-	// * the working set to be removed from this manager.
-	// * @param others
-	// * other working sets to be removed from this manager.
-	// */
-	// void remove(WorkingSet first, WorkingSet... others);
-	//
-	// /**
-	// * Performs an update on an existing working set.
-	// *
-	// * @param oldState
-	// * the old state of an existing working set.
-	// * @param newState
-	// * the new state of an existing working set.
-	// */
-	// void update(WorkingSet oldState, WorkingSet newState);
-
 	/**
 	 * Creates a new wizard for creating a new working set for the current working set manager.
 	 *

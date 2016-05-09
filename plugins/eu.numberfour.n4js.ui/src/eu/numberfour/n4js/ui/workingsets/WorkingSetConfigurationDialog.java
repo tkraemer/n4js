@@ -42,6 +42,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SelectionDialog;
 
 import eu.numberfour.n4js.ui.utils.UIUtils;
@@ -283,33 +284,33 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 	}
 
 	private void editSelectedWorkingSet() {
-		// WorkingSet editWorkingSet = (WorkingSet) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
-		// WorkingSetEditWizard wizard = manager.createWorkingSetEditWizard(editWorkingSet);
-		// WizardDialog dialog = new WizardDialog(getShell(), wizard);
-		// WorkingSet originalWorkingSet = fEditedWorkingSets.get(editWorkingSet);
-		// boolean firstEdit = originalWorkingSet == null;
-		//
-		// // save the original working set values for restoration when selection
-		// // dialog is cancelled.
-		// if (firstEdit) {
-		// originalWorkingSet = PlatformUI.getWorkbench().getWorkingSetManager()
-		// .createWorkingSet(editWorkingSet.getLabel(), editWorkingSet.getElements());
-		// } else {
-		// fEditedWorkingSets.remove(editWorkingSet);
-		// }
-		// dialog.create();
-		// if (dialog.open() == Window.OK) {
-		// editWorkingSet = wizard.getSelection();
-		// if (fIsSortingEnabled)
-		// viewer.refresh();
-		// else
-		// viewer.update(editWorkingSet, null);
-		//
-		// // make sure ok button is enabled when the selected working set
-		// // is edited. Fixes bug 33386.
-		// updateButtonAvailability();
-		// }
-		// fEditedWorkingSets.put(editWorkingSet, originalWorkingSet);
+		if (manager instanceof MutableWorkingSetManager) {
+			final IStructuredSelection selection = tableViewer.getStructuredSelection();
+			final Object firstElement = selection.getFirstElement();
+			if (firstElement instanceof WorkingSet) {
+				final WorkingSet oldState = (WorkingSet) firstElement;
+				if (!OTHERS_WORKING_SET_LABEL.equals(oldState.getLabel())) {
+					final WorkingSetEditWizard wizard = ((MutableWorkingSetManager) manager).createEditWizard();
+					wizard.init(PlatformUI.getWorkbench(), selection);
+					final WizardDialog dialog = new WizardDialog(getShell(), wizard);
+					if (dialog.open() == Window.OK) {
+						final WorkingSet newState = wizard.getWorkingSet().orNull();
+						diffBuilder.edit(oldState, newState);
+						getShell().getDisplay().asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								allWorkingSets.remove(oldState);
+								tableViewer.remove(oldState);
+								tableViewer.add(newState);
+								tableViewer.setChecked(newState, true);
+							}
+
+						});
+					}
+				}
+			}
+		}
 	}
 
 	/**

@@ -53,7 +53,7 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 	private final List<String> orderedWorkingSetFilters = newArrayList();
 
 	@Inject
-	private Provider<WorkingSetProjectNameFilterNewWizard> newWizardProvider;
+	private Provider<WorkingSetProjectNameFilterWizard> wizardProvider;
 
 	@Override
 	public String getId() {
@@ -118,7 +118,7 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
 				ProjectNameFilterWorkingSet nameFilterWorkingSet = (ProjectNameFilterWorkingSet) workingSet;
-				orderedWorkingSetFilters.add(nameFilterWorkingSet.filter.toString());
+				orderedWorkingSetFilters.add(nameFilterWorkingSet.getFilter().pattern());
 			}
 
 			discardWorkingSetState();
@@ -151,13 +151,12 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 
 	@Override
 	public WorkingSetNewWizard createNewWizard() {
-		return newWizardProvider.get();
+		return wizardProvider.get();
 	}
 
 	@Override
 	public WorkingSetEditWizard createEditWizard() {
-		// TODO Auto-generated method stub
-		return null;
+		return wizardProvider.get();
 	}
 
 	/**
@@ -211,9 +210,18 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 			return manager;
 		}
 
+		/**
+		 * Returns with the project name filter pattern.
+		 *
+		 * @return the project name filter pattern.
+		 */
+		public Pattern getFilter() {
+			return filter;
+		}
+
 		@Override
 		public String toString() {
-			return getLabel() + "[" + filter + "]";
+			return getLabel() + " [" + filter + "]";
 		}
 
 	}
