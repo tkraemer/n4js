@@ -109,7 +109,7 @@ public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware
 	 * @param others
 	 *            other optional working sets to be marked as visible.
 	 */
-	default void select(WorkingSet first, WorkingSet... others) {
+	default void select(final WorkingSet first, final WorkingSet... others) {
 		select(Lists.asList(first, others));
 	}
 
@@ -132,7 +132,7 @@ public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware
 	 * @param others
 	 *            other optional working sets to be marked as invisible.
 	 */
-	default void unselect(WorkingSet first, WorkingSet... others) {
+	default void unselect(final WorkingSet first, final WorkingSet... others) {
 		unselect(Lists.asList(first, others));
 	}
 
@@ -150,7 +150,7 @@ public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware
 	 * {@inheritDoc}
 	 */
 	@Override
-	default int compare(WorkingSet left, WorkingSet right) {
+	default int compare(final WorkingSet left, final WorkingSet right) {
 		return 0;
 	}
 

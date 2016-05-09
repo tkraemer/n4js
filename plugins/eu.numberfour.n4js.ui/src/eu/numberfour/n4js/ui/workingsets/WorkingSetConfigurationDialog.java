@@ -158,8 +158,9 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(final DoubleClickEvent event) {
-				if (editButton.isEnabled())
+				if (editButton.isEnabled()) {
 					editSelectedWorkingSet();
+				}
 			}
 		});
 	}
@@ -368,7 +369,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 
 		if (manager instanceof MutableWorkingSetManager) {
 			removeButton.setEnabled(hasSelection && containsNoBuiltInWorkingSets(selection));
-			editButton.setEnabled(hasSingleSelection);
+			editButton.setEnabled(hasSingleSelection && containsNoBuiltInWorkingSets(selection));
 		}
 		if (upButton != null) {
 			upButton.setEnabled(canMoveUp());

@@ -11,11 +11,15 @@
 package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -29,7 +33,9 @@ import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -110,14 +116,14 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 	}
 
 	@Override
-	public void updateState(Diff<WorkingSet> diff) {
+	public void updateState(final Diff<WorkingSet> diff) {
 		super.updateState(diff);
 		if (!diff.isEmpty()) {
 			// Update ordered filters.
 			orderedWorkingSetFilters.clear();
 
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
-				ProjectNameFilterWorkingSet nameFilterWorkingSet = (ProjectNameFilterWorkingSet) workingSet;
+				final ProjectNameFilterWorkingSet nameFilterWorkingSet = (ProjectNameFilterWorkingSet) workingSet;
 				orderedWorkingSetFilters.add(nameFilterWorkingSet.getFilter().pattern());
 			}
 
@@ -193,16 +199,49 @@ public class ProjectNameFilterWorkingSetManager extends ImmutableWorkingSetManag
 
 		@Override
 		public IAdaptable[] getElements() {
+
 			final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			final IProject[] elements = new IProject[projects.length];
-			int elementCount = 0;
-			for (int i = 0, size = projects.length; i < size; i++) {
-				final IProject project = projects[i];
-				if (filter.matcher(project.getName()).matches()) {
-					elements[elementCount++] = project;
+			if (OTHERS_WORKING_SET_LABEL.equals(label)) {
+
+				// No other working sets are available at all.
+				final WorkingSet[] allWorkingSets = manager.getAllWorkingSets();
+				if (allWorkingSets.length == 1) {
+					return projects;
+				} else {
+
+					// We have to exclude all those projects that are associated with at least one other working set.
+					final FluentIterable<WorkingSet> others = from(Arrays.asList(allWorkingSets))
+							.filter(ws -> !OTHERS_WORKING_SET_LABEL.equals(ws.getLabel()));
+
+					// Mapping between non-built-in working sets and their elements.
+					final Map<WorkingSet, Collection<IAdaptable>> elementMapping = Maps.toMap(others,
+							ws -> newHashSet(ws.getElements()));
+
+					final IProject[] elements = new IProject[projects.length];
+					int elementCount = 0;
+					for (int i = 0, size = projects.length; i < size; i++) {
+						final IProject project = projects[i];
+						// If the project is not assigned to any other working set, then assign it to the built-in one.
+						if (!Iterables.any(others, ws -> elementMapping.get(ws).contains(project))) {
+							elements[elementCount++] = project;
+						}
+					}
+
+					return Arrays.copyOfRange(elements, 0, elementCount);
 				}
+
+			} else {
+				final IProject[] elements = new IProject[projects.length];
+				int elementCount = 0;
+				for (int i = 0, size = projects.length; i < size; i++) {
+					final IProject project = projects[i];
+					if (filter.matcher(project.getName()).matches()) {
+						elements[elementCount++] = project;
+					}
+				}
+				return Arrays.copyOfRange(elements, 0, elementCount);
 			}
-			return Arrays.copyOfRange(elements, 0, elementCount);
+
 		}
 
 		@Override

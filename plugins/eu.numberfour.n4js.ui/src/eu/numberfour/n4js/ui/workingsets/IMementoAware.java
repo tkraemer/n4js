@@ -28,7 +28,7 @@ public interface IMementoAware {
 	 *            the monitor for the process.
 	 * @return a status instance representing the whether the save operation was successful or not.
 	 */
-	IStatus saveState(IProgressMonitor monitor);
+	IStatus saveState(final IProgressMonitor monitor);
 
 	/**
 	 * Restores the state of the current instance by reading the saved values from the {@link #getPreferences()
@@ -38,7 +38,7 @@ public interface IMementoAware {
 	 *            the monitor for the process.
 	 * @return a status instance representing the whether the state restore operation was successful or not.
 	 */
-	IStatus restoreState(IProgressMonitor monitor);
+	IStatus restoreState(final IProgressMonitor monitor);
 
 	/**
 	 * Returns with the OSGi based preferences that can be used to save to and to restore from its internal state.

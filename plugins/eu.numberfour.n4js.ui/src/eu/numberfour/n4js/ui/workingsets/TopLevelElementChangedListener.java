@@ -22,6 +22,6 @@ public interface TopLevelElementChangedListener {
 	 *            the new value. {@code true} if working sets were selected as top level elements, otherwise
 	 *            {@code false}.
 	 */
-	void topLevelElementChanged(boolean workingSetTopLevel);
+	void topLevelElementChanged(final boolean workingSetTopLevel);
 
 }

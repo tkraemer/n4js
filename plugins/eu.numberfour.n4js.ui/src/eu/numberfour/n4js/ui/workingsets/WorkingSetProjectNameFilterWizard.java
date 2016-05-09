@@ -72,7 +72,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 
 				final Optional<WorkingSet> editedWorkingSet = getEditedWorkingSet();
 				if (editedWorkingSet.isPresent()) {
-					ProjectNameFilterWorkingSet workingSet = (ProjectNameFilterWorkingSet) editedWorkingSet.get();
+					final ProjectNameFilterWorkingSet workingSet = (ProjectNameFilterWorkingSet) editedWorkingSet.get();
 					workingSetRef.set(workingSet);
 					labelText.setText(workingSet.getLabel());
 					filterText.setText(workingSet.getFilter().pattern());

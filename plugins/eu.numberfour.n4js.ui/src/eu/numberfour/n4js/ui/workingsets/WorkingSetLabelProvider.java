@@ -30,7 +30,7 @@ public class WorkingSetLabelProvider extends LabelProvider {
 	}
 
 	@Override
-	public Image getImage(Object element) {
+	public Image getImage(final Object element) {
 		if (element instanceof WorkingSet) {
 			return ImageRef.WORKING_SET.asImage().orNull();
 		}
@@ -38,7 +38,7 @@ public class WorkingSetLabelProvider extends LabelProvider {
 	}
 
 	@Override
-	public String getText(Object element) {
+	public String getText(final Object element) {
 		if (element instanceof WorkingSet) {
 			return ((WorkingSet) element).getLabel();
 		}
