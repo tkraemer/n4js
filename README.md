@@ -65,7 +65,11 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Build the N4JS IDE from command line
 
-Ensure you have Java 8 and Maven 3 installed on your system.
+Ensure you have 
+- Java 8
+- Maven 3 and
+- Node.js 6
+installed on your system.
 
 Clone the repository 
 ```
