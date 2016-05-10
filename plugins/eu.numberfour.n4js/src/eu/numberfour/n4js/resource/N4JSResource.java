@@ -59,6 +59,7 @@ import org.eclipse.xtext.util.Triple;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter;
 import eu.numberfour.n4js.conversion.LegacyOctalIntValueConverter;
 import eu.numberfour.n4js.conversion.N4JSStringValueConverter;
@@ -72,6 +73,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
  * Special resource that stores the N4JS AST in slot 0, and types exported by this module as containments of a
@@ -222,6 +224,9 @@ public class N4JSResource extends PostProcessingAwareResource {
 
 	@Inject
 	private BuiltInSchemeRegistrar registrar;
+
+	@Inject
+	private IN4JSCore n4jsCore;
 
 	/**
 	 *
@@ -610,6 +615,63 @@ public class N4JSResource extends PostProcessingAwareResource {
 		}
 	}
 
+	@Override
+	@SuppressWarnings("restriction")
+	public EObject getEObject(String uriFragment) {
+		if (M2MUriUtil.isM2MUriFragment(uriFragment)) {
+			return getEObjectFromM2MUri(uriFragment, true);
+		}
+		return super.getEObject(uriFragment);
+	}
+
+	/**
+	 * Special handling when resolving proxies with module-to-module URIs (a.k.a. m2m URIs).
+	 */
+	private EObject getEObjectFromM2MUri(String uriFragment, boolean loadOnDemand) {
+		final URI targetUri = M2MUriUtil.convertFromM2M(uriFragment);
+		final ResourceSet resSet = getResourceSet();
+		final URI targetResourceUri = targetUri.trimFragment();
+		final String fileExt = targetResourceUri.fileExtension();
+		if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(fileExt)
+				|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)
+				|| N4JSGlobals.N4TS_FILE_EXTENSION.equals(fileExt) // FIXME reconsider .n4ts in this line!!!!!!!
+		) {
+			final String targetFragment = targetUri.fragment();
+			final Resource targetResource = resSet.getResource(targetResourceUri, false);
+			// special handling #1:
+			// if targetResource is not loaded yet, try to load it from index first
+			if (targetResource == null) {
+				if (targetFragment != null && (targetFragment.equals("/1") || targetFragment.startsWith("/1/"))) {
+					// uri points to a TModule element in a resource not yet contained in our resource set
+					// --> try to load target resource from index
+					final IResourceDescriptions index = n4jsCore.getXtextIndex(resSet);
+					final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
+					if (resDesc != null) {
+						// next line will add the new resource to resSet.resources
+						final N4JSResource targetResourceNew = (N4JSResource) resSet.createResource(targetResourceUri,
+								ContentHandler.UNSPECIFIED_CONTENT_TYPE);
+						targetResourceNew.loadFromDescription(resDesc);
+						// FIXME consider using IN4JSCore#loadModuleFromIndex() here!
+					}
+				}
+			}
+			// standard behavior:
+			// obtain target EObject from targetResource
+			final EObject targetObject = resSet.getEObject(targetUri, loadOnDemand);
+			// special handling #2:
+			// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
+			if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
+				final Resource targetResource2 = targetObject.eResource();
+				if (targetResource2 instanceof N4JSResource) {
+					((N4JSResource) targetResource2).performPostProcessing(); // no harm if already running/completed
+				}
+			}
+			return targetObject;
+		}
+		// FIXME consider returning null here!!!!!!!!
+		return resSet.getEObject(targetUri, loadOnDemand);
+	}
+
 	/**
 	 * Copied from {@link ResourceImpl#getEObjectForURIFragmentRootSegment(String)} only differs, that instead of
 	 * getContent contents is accessed directly.
@@ -882,67 +944,5 @@ public class N4JSResource extends PostProcessingAwareResource {
 	 */
 	public void clearResolving() {
 		resolving.clear();
-	}
-
-	@Override
-	@SuppressWarnings("restriction")
-	public EObject getEObject(String uriFragment) {
-		if (uriFragment != null && uriFragment.startsWith("m2m!")) {
-			try {
-				final URI targetUri = URI.createURI(URI.decode(uriFragment.substring(4)));
-				return getEObjectFromTModuleOfRemoteResource(targetUri, true);
-			} catch (Throwable th) {
-				// FIXME make this fail fast?
-				th.printStackTrace(); // FIXME
-				return null;
-			}
-		}
-		return super.getEObject(uriFragment);
-	}
-
-	@Inject
-	private IN4JSCore n4jsCore;
-
-	private EObject getEObjectFromTModuleOfRemoteResource(URI targetUri, boolean loadOnDemand) {
-		final ResourceSet resSet = getResourceSet();
-		final URI targetResourceUri = targetUri.trimFragment();
-		final String fileExt = targetResourceUri.fileExtension();
-		if ("n4js".equals(fileExt)
-				|| "n4jsd".equals(fileExt)
-				// FIXME reconsider .n4ts in next line!!!!!!!
-				|| "n4ts".equals(fileExt)) {
-			final String targetFragment = targetUri.fragment();
-			final Resource targetResource = resSet.getResource(targetResourceUri, false);
-			// if targetResource is not loaded yet, try to load it from index first
-			if (targetResource == null) {
-				if (targetFragment != null && targetFragment.startsWith("/1")) { // FIXME explain
-					// uri points to a TModule element in a resource not yet contained in our resource set
-					// --> try to load from index
-					final IResourceDescriptions index = n4jsCore.getXtextIndex(resSet);
-					final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
-					if (resDesc != null) {
-						// next line will add the new resource to resSet.resources
-						final N4JSResource targetResourceNew = (N4JSResource) resSet.createResource(targetResourceUri,
-								ContentHandler.UNSPECIFIED_CONTENT_TYPE);
-						targetResourceNew.loadFromDescription(resDesc);
-					}
-				}
-			}
-			// obtain target EObject from targetResource
-			final EObject targetObject = resSet.getEObject(targetUri, loadOnDemand);
-			// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
-			if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
-				final Resource targetResource2 = targetObject.eResource();
-				if (targetResource2 instanceof N4JSResource) {
-					// if (!(((N4JSResource) targetResource2).isProcessing()
-					// || ((N4JSResource) targetResource2).isFullyProcessed())) {
-					((N4JSResource) targetResource2).performPostProcessing();
-					// }
-				}
-			}
-			return targetObject;
-		}
-		// FIXME consider returning null here!!!!!!!!
-		return resSet.getEObject(targetUri, loadOnDemand);
 	}
 }

@@ -44,6 +44,7 @@ import com.google.common.collect.Lists;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
  * The user data for exported modules contains a serialized representation of the module's content. This allows to
@@ -242,32 +243,15 @@ public final class UserdataMapper {
 				}
 			}
 		}
-		// change proxy uris to our N4JS module-to-module uris
-		// FIXME it would be more efficient to do this during serialization!
+		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
+		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
+		// we need the entire, absolute original URI, including its fragment)
 		for (EObject currRoot : result) {
 			if (currRoot instanceof TModule) {
 				final TreeIterator<EObject> iter = currRoot.eAllContents();
 				while (iter.hasNext()) {
-					final EObject currObj = iter.next();
-					for (EReference currRef : currObj.eClass().getEAllReferences()) {
-						final Object targets = currObj.eGet(currRef, false);
-						if (targets != null) {
-							for (Object currTarget : currRef.isMany() ? (List<?>) targets
-									: Collections.singletonList(targets)) {
-								if (currTarget instanceof EObject) {
-									if (((EObject) currTarget).eIsProxy()) {
-										final URI currUri = ((BasicEObjectImpl) currTarget).eProxyURI();
-										// make sure proxy points to another resource (required because links from
-										// TModule to AST will be represented as proxies within the same resource!)
-										if (!currUri.trimFragment().equals(uri)) {
-											final URI newUri = uri.appendFragment(URI.encodeFragment(
-													"m2m!" + currUri.toString(), false));
-											((BasicEObjectImpl) currTarget).eSetProxyURI(newUri);
-										}
-									}
-								}
-							}
-						}
+					for (EObject currObj : iter.next().eCrossReferences()) {
+						M2MUriUtil.convertProxyUriToM2M(uri, currObj);
 					}
 				}
 			}
