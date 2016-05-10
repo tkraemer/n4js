@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
@@ -90,6 +91,16 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 					}
 				}
 			}
+
+			// Or contains exactly one working set for rearrange purposes.
+			final Object[] elements = ((IStructuredSelection) selection).toArray();
+			if (elements.length == 1 && elements[0] instanceof WorkingSet) {
+				getCommonDropAdapter().setExpandEnabled(false);
+				getCommonDropAdapter().setFeedbackEnabled(true);
+
+				return statusHelper.OK();
+			}
+
 		}
 
 		return statusHelper.cancel();
@@ -99,15 +110,8 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 	public IStatus handleDrop(CommonDropAdapter dropAdapter, DropTargetEvent dropTargetEvent,
 			Object target) {
 
-		if (!(target instanceof ManualAssociationWorkingSet)) {
-			return statusHelper.cancel();
-		}
-
-		ManualAssociationWorkingSet oldTarget = (ManualAssociationWorkingSet) target;
+		WorkingSet oldTarget = (ManualAssociationWorkingSet) target;
 		WorkingSetManager manager = oldTarget.getWorkingSetManager();
-		if (!ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
-			return statusHelper.cancel();
-		}
 
 		List<WorkingSet> allItems = newArrayList(manager.getAllWorkingSets());
 		List<WorkingSet> visibleItems = newArrayList(manager.getWorkingSets());
@@ -118,10 +122,20 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 			for (TreePath path : ((ITreeSelection) selection).getPaths()) {
 				IProject project = ((IAdaptable) path.getLastSegment()).getAdapter(IProject.class);
 				if (project != null) {
+
+					if (!(target instanceof ManualAssociationWorkingSet)) {
+						return statusHelper.cancel();
+					}
+
+					if (!ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
+						return statusHelper.cancel();
+					}
+
 					if (!workingSetContains(oldTarget, project)
 							&& !OTHERS_WORKING_SET_LABEL.equals(oldTarget.getName())) {
 
-						Collection<String> projectNames = newHashSet(oldTarget.getAssociatedProjectNames());
+						Collection<String> projectNames = newHashSet(
+								((ManualAssociationWorkingSet) oldTarget).getAssociatedProjectNames());
 						projectNames.add(project.getName());
 						ManualAssociationWorkingSet newTarget = new ManualAssociationWorkingSet(projectNames,
 								oldTarget.getName(), manager);
@@ -164,6 +178,44 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 							diffBuilder.edit(oldSource, newSource);
 						}
 					}
+				} else if (path.getLastSegment() instanceof WorkingSet) {
+
+					WorkingSet movedWorkingSet = (WorkingSet) path.getLastSegment();
+					int sourceVisibleIndex = indexOfByName(movedWorkingSet, visibleItems);
+					int sourceAllIndex = indexOfByName(movedWorkingSet, allItems);
+
+					if (sourceVisibleIndex == -1 || sourceAllIndex == -1) {
+						return statusHelper.cancel();
+					}
+
+					final Object currentTarget = getCommonDropAdapter().getCurrentTarget();
+					if (currentTarget instanceof WorkingSet) {
+						int targetVisibleIndex = indexOfByName((WorkingSet) currentTarget, visibleItems);
+						int targetAllIndex = indexOfByName((WorkingSet) currentTarget, allItems);
+
+						if (targetVisibleIndex == -1 || targetAllIndex == -1) {
+							return statusHelper.cancel();
+						}
+
+						if (getCommonDropAdapter().getCurrentLocation() == ViewerDropAdapter.LOCATION_AFTER) {
+							targetVisibleIndex++;
+							targetAllIndex++;
+						}
+
+						WorkingSet visibleRemoved = visibleItems.remove(sourceVisibleIndex);
+						visibleItems.add(
+								sourceVisibleIndex >= targetVisibleIndex ? targetVisibleIndex : targetVisibleIndex - 1,
+								visibleRemoved);
+
+						WorkingSet allRemoved = allItems.remove(sourceAllIndex);
+						allItems.add(
+								sourceAllIndex >= targetAllIndex ? targetAllIndex : targetAllIndex - 1,
+								allRemoved);
+
+					} else {
+						return statusHelper.cancel();
+					}
+
 				}
 			}
 
@@ -173,7 +225,8 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 				if (project != null && !workingSetContains(oldTarget, project)
 						&& !OTHERS_WORKING_SET_LABEL.equals(oldTarget.getName())) {
 
-					Collection<String> projectNames = newHashSet(oldTarget.getAssociatedProjectNames());
+					Collection<String> projectNames = newHashSet(
+							((ManualAssociationWorkingSet) oldTarget).getAssociatedProjectNames());
 					projectNames.add(project.getName());
 					ManualAssociationWorkingSet newTarget = new ManualAssociationWorkingSet(projectNames,
 							oldTarget.getName(), manager);
