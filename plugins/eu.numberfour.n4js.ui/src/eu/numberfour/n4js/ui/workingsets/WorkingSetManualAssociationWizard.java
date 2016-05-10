@@ -69,6 +69,7 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 	};
 
 	private final AtomicReference<WorkingSet> workingSetRef = new AtomicReference<>();
+	private final AtomicReference<String> originalName = new AtomicReference<>();
 
 	@Inject
 	private N4JSProjectExplorerLabelProvider labelProvider;
@@ -190,6 +191,7 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 					nameText.selectAll();
 					workingSetProjects.addAll(workingSet.getAssociatedProjects());
 					workspaceProjects.removeAll(workingSetProjects);
+					originalName.set(workingSet.getName());
 				}
 
 				composite.getDisplay().asyncExec(() -> {
@@ -222,7 +224,8 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 				}
 
 				if (errorMessage == null) {
-					if (Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
+					if (!name.equals(originalName.get())
+							&& Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
 						errorMessage = "A working set already exists with name '" + name + "'.";
 					}
 				}

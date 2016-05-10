@@ -1099,6 +1099,13 @@ Contributors:
 			<override
 					policy="InvokeAlwaysRegardlessOfSuppressedExt"
 					suppressedExtensionId="org.eclipse.jdt.java.ui.javaContent"/>
+   <dropAssistant
+         class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant"
+         id="eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant">
+         <possibleDropTargets>
+             <adapt type="eu.numberfour.n4js.ui.workingsets.WorkingSet"/>
+           </possibleDropTargets>
+   </dropAssistant>
 
 		   </navigatorContent>
 		   

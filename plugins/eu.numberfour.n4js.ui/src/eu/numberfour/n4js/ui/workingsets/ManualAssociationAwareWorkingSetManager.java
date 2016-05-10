@@ -128,7 +128,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
 				final ManualAssociationWorkingSet associationWorkingSet = (ManualAssociationWorkingSet) workingSet;
-				final Collection<String> projectNames = associationWorkingSet.projectNames;
+				final Collection<String> projectNames = associationWorkingSet.getAssociatedProjectNames();
 				final String name = associationWorkingSet.getName();
 				if (OTHERS_WORKING_SET_LABEL.equals(name)) {
 					projectAssociations.put(name, emptyList());
@@ -192,7 +192,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	/**
 	 * Working set that represents manual associations between workspace projects and working sets.
 	 */
-	protected static final class ManualAssociationWorkingSet extends WorkingSetImpl {
+	public static final class ManualAssociationWorkingSet extends WorkingSetImpl {
 
 		private final Collection<String> projectNames;
 
@@ -206,7 +206,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 		 * @param manager
 		 *            the container manager where this working set belongs to.
 		 */
-		protected ManualAssociationWorkingSet(final Iterable<String> projectNames, final String name,
+		public ManualAssociationWorkingSet(final Iterable<String> projectNames, final String name,
 				final WorkingSetManager manager) {
 
 			super(name, manager);
@@ -226,6 +226,18 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 		public Collection<IProject> getAssociatedProjects() {
 			return from(Arrays.asList(getAllProjects()))
 					.filter(p -> projectNames.contains(p.getName()))
+					.toSet();
+		}
+
+		/**
+		 * Returns with a view of project names that are associated with the working set.
+		 *
+		 * @return a collection of associated project names.
+		 */
+		public Collection<String> getAssociatedProjectNames() {
+			return from(Arrays.asList(getAllProjects()))
+					.filter(p -> projectNames.contains(p.getName()))
+					.transform(p -> p.getName())
 					.toSet();
 		}
 

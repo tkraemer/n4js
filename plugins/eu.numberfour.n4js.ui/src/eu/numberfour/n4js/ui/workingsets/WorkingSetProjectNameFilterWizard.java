@@ -39,6 +39,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 	private static final String DESCRIPTION = "Enter a working set name and specify a project name filter using a regular expression.";
 
 	private final AtomicReference<WorkingSet> workingSetRef = new AtomicReference<>();
+	private final AtomicReference<String> originalName = new AtomicReference<>();
 
 	@Override
 	public void addPages() {
@@ -77,6 +78,7 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 					nameText.setText(workingSet.getName());
 					filterText.setText(workingSet.getFilter().pattern());
 					nameText.selectAll();
+					originalName.set(workingSet.getName());
 				}
 
 				nameText.addModifyListener(e -> setPageComplete(validatePage()));
@@ -104,7 +106,8 @@ public class WorkingSetProjectNameFilterWizard extends WorkingSetEditWizard {
 				}
 
 				if (errorMessage == null) {
-					if (Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
+					if (!name.equals(originalName.get())
+							&& Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
 						errorMessage = "A working set already exists with name '" + name + "'.";
 					}
 				}
