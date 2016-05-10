@@ -14,26 +14,24 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static java.util.Collections.emptyList;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -49,15 +47,16 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 	private static final String ORDERED_ASSOCIATIONS_KEY = ".orderedAssociations";
 
-	private static final String KEY_VALUE_SEPARATOR = "$";
-
 	/**
 	 * Ordered multimap of working set and workspace project associations.
 	 */
-	private final Multimap<String, String> orderedProjectAssociations = LinkedHashMultimap.create();
+	private final ProjectAssociation projectAssociations = new ProjectAssociation();
 
 	@Inject
 	private Provider<WorkingSetManualAssociationWizard> wizardProvider;
+
+	@Inject
+	private ObjectMapper mapper;
 
 	@Override
 	public String getLabel() {
@@ -71,13 +70,17 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 		if (superSaveResult.isOK()) {
 
 			final Preferences node = getPreferences();
-			node.put(ORDERED_ASSOCIATIONS_KEY, Joiner.on(SEPARATOR).withKeyValueSeparator(KEY_VALUE_SEPARATOR)
-					.join(orderedProjectAssociations.asMap()));
 
 			try {
+				final String associationString = mapper.writeValueAsString(projectAssociations);
+				node.put(ORDERED_ASSOCIATIONS_KEY, associationString);
 				node.flush();
 			} catch (final BackingStoreException e) {
 				final String message = "Error occurred while saving state to preference store.";
+				LOGGER.error(message, e);
+				return statusHelper.createError(message, e);
+			} catch (final IOException e) {
+				final String message = "Error occurred while serializing project associations.";
 				LOGGER.error(message, e);
 				return statusHelper.createError(message, e);
 			}
@@ -97,13 +100,14 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 			final Preferences node = getPreferences();
 			final String orderedFilters = node.get(ORDERED_ASSOCIATIONS_KEY, EMPTY_STRING);
 			if (!Strings.isNullOrEmpty(orderedFilters)) {
-				orderedProjectAssociations.clear();
-				final Map<String, String> storedMap = Splitter.on(SEPARATOR).withKeyValueSeparator(KEY_VALUE_SEPARATOR)
-						.split(orderedFilters);
-
-				for (final Entry<String, String> entry : storedMap.entrySet()) {
-					final List<String> values = Arrays.asList(entry.getValue().split(KEY_VALUE_SEPARATOR));
-					orderedProjectAssociations.putAll(entry.getKey(), values);
+				try {
+					final ProjectAssociation association = mapper.readValue(orderedFilters, ProjectAssociation.class);
+					projectAssociations.clear();
+					projectAssociations.putAll(association);
+				} catch (final IOException e) {
+					final String message = "Error occurred while deserializing project associations.";
+					LOGGER.error(message, e);
+					return statusHelper.createError(message, e);
 				}
 			}
 
@@ -120,16 +124,16 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 		super.updateState(diff);
 		if (!diff.isEmpty()) {
 			// Update ordered filters.
-			orderedProjectAssociations.clear();
+			projectAssociations.clear();
 
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
 				final ManualAssociationWorkingSet associationWorkingSet = (ManualAssociationWorkingSet) workingSet;
 				final Collection<String> projectNames = associationWorkingSet.projectNames;
 				final String name = associationWorkingSet.getName();
 				if (OTHERS_WORKING_SET_LABEL.equals(name)) {
-					orderedProjectAssociations.put(name, /* handled as all projects */ null);
+					projectAssociations.put(name, emptyList());
 				} else {
-					orderedProjectAssociations.putAll(name, projectNames);
+					projectAssociations.put(name, projectNames);
 				}
 			}
 
@@ -140,21 +144,21 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
-		checkState(orderedProjectAssociations.keySet().size() == orderedWorkingSetNames.size(),
+		checkState(projectAssociations.keySet().size() == orderedWorkingSetNames.size(),
 				"Expected same number of working set names as working set filters."
 						+ "\nNames were: " + Iterables.toString(orderedWorkingSetNames)
-						+ "\nAssociations were: " + orderedProjectAssociations);
+						+ "\nAssociations were: " + projectAssociations);
 
-		if (orderedProjectAssociations.isEmpty()) {
-			orderedProjectAssociations.put(OTHERS_WORKING_SET_LABEL, /* handled as all projects */ null);
+		if (projectAssociations.isEmpty()) {
+			projectAssociations.put(OTHERS_WORKING_SET_LABEL, emptyList());
 			orderedWorkingSetNames.add(OTHERS_WORKING_SET_LABEL);
 		}
 
-		final int size = orderedProjectAssociations.keySet().size();
+		final int size = projectAssociations.keySet().size();
 		final WorkingSet[] workingSets = new WorkingSet[size];
 		for (int i = 0; i < size; i++) {
 			final String name = orderedWorkingSetNames.get(i);
-			final Collection<String> projectNames = orderedProjectAssociations.get(name);
+			final Collection<String> projectNames = projectAssociations.get(name);
 			workingSets[i] = new ManualAssociationWorkingSet(projectNames, name, this);
 		}
 
@@ -169,6 +173,20 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	@Override
 	public WorkingSetEditWizard createEditWizard() {
 		return wizardProvider.get();
+	}
+
+	/**
+	 * Custom linked hash map implementation used as the manual project associations.
+	 */
+	public static final class ProjectAssociation extends LinkedHashMap<String, Collection<String>> {
+
+		/**
+		 * Creates a new project association with the default map capacity and load factor.
+		 */
+		public ProjectAssociation() {
+			super(16, 0.75F);
+		}
+
 	}
 
 	/**
@@ -192,8 +210,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				final WorkingSetManager manager) {
 
 			super(name, manager);
-			this.projectNames = Iterables.size(projectNames) == 1 && Iterables.getOnlyElement(projectNames) == null
-					? newHashSet() : newHashSet(projectNames);
+			this.projectNames = newHashSet(projectNames);
 		}
 
 		@Override
