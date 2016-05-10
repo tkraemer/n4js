@@ -12,7 +12,6 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
 
@@ -125,7 +124,13 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
 				final ManualAssociationWorkingSet associationWorkingSet = (ManualAssociationWorkingSet) workingSet;
-				orderedProjectAssociations.putAll(associationWorkingSet.getName(), associationWorkingSet.projectNames);
+				final Collection<String> projectNames = associationWorkingSet.projectNames;
+				final String name = associationWorkingSet.getName();
+				if (OTHERS_WORKING_SET_LABEL.equals(name)) {
+					orderedProjectAssociations.put(name, /* handled as all projects */ null);
+				} else {
+					orderedProjectAssociations.putAll(name, projectNames);
+				}
 			}
 
 			discardWorkingSetState();
@@ -141,7 +146,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 						+ "\nAssociations were: " + orderedProjectAssociations);
 
 		if (orderedProjectAssociations.isEmpty()) {
-			orderedProjectAssociations.putAll(ORDERED_ASSOCIATIONS_KEY, newArrayList());
+			orderedProjectAssociations.put(OTHERS_WORKING_SET_LABEL, /* handled as all projects */ null);
 			orderedWorkingSetNames.add(OTHERS_WORKING_SET_LABEL);
 		}
 
@@ -167,7 +172,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	}
 
 	/**
-	 * Working set that represents manual workspace project - working set associations.
+	 * Working set that represents manual associations between workspace projects and working sets.
 	 */
 	protected static final class ManualAssociationWorkingSet extends WorkingSetImpl {
 
@@ -187,7 +192,8 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				final WorkingSetManager manager) {
 
 			super(name, manager);
-			this.projectNames = newHashSet(projectNames);
+			this.projectNames = Iterables.size(projectNames) == 1 && Iterables.getOnlyElement(projectNames) == null
+					? newHashSet() : newHashSet(projectNames);
 		}
 
 		@Override

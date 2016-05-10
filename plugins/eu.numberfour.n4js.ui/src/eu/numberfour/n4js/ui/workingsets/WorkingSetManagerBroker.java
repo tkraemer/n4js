@@ -308,8 +308,15 @@ public class WorkingSetManagerBroker implements IMementoAware {
 
 		// Active working set manager.
 		final String value = node.get(ACTIVE_MANAGER_KEY, "");
-		final WorkingSetManager workingSetManager = contributions.get().get(value);
-		setActiveManager(workingSetManager);
+		WorkingSetManager workingSetManager = contributions.get().get(value);
+		if (workingSetManager == null) {
+			if (!contributions.get().isEmpty()) {
+				workingSetManager = contributions.get().values().iterator().next();
+			}
+		}
+		if (workingSetManager != null) {
+			setActiveManager(workingSetManager);
+		}
 
 		return Status.OK_STATUS;
 	}
