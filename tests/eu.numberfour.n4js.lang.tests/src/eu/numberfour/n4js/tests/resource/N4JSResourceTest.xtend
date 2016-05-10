@@ -314,10 +314,6 @@ class N4JSResourceTest {
 		val TModule module = script.eResource.contents.get(1) as TModule;
 		val udata = UserdataMapper.createUserData(module);
 		
-		udata.keySet.forEach[ println(it) ];
-		// error-case only has time-stamp.
-		println("keys - done.");		
-
 		assertTrue("Serialized script missing.",udata.containsKey( UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT))
 		assertFalse("Time stamp not expected.",udata.containsKey( UserdataMapper.USERDATA_KEY_TIMESTAMP))
 		
@@ -338,11 +334,6 @@ class N4JSResourceTest {
 		'''.parse(rs)
 		val TModule module = script.eResource.contents.get(1) as TModule;
 		val udata = UserdataMapper.createUserData(module);
-		
-		
-		udata.keySet.forEach[ println(it) ];
-		// error-case only has time-stamp.
-		println("keys - done.");		
 		
 		assertTrue("Main module data missing.",udata.containsKey( UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT))
 		assertFalse("Time stamp not expected.",udata.containsKey( UserdataMapper.USERDATA_KEY_TIMESTAMP))
