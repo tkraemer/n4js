@@ -65,10 +65,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 
 		WorkingSet targetWorkingSet = null;
 		if (target instanceof WorkingSet) {
-			WorkingSetManager manager = ((WorkingSet) target).getWorkingSetManager();
-			if (ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
-				targetWorkingSet = (WorkingSet) target;
-			}
+			targetWorkingSet = (WorkingSet) target;
 		}
 
 		if (targetWorkingSet == null) {
@@ -86,7 +83,10 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 				if (item instanceof IAdaptable) {
 					IProject project = ((IAdaptable) item).getAdapter(IProject.class);
 					if (project != null && !workingSetContains(targetWorkingSet, project)) {
-						return statusHelper.OK();
+						WorkingSetManager manager = ((WorkingSet) target).getWorkingSetManager();
+						if (ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
+							return statusHelper.OK();
+						}
 					}
 				}
 			}
@@ -126,11 +126,11 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 						ManualAssociationWorkingSet newTarget = new ManualAssociationWorkingSet(projectNames,
 								oldTarget.getName(), manager);
 
-						int allIndex = allItems.indexOf(oldTarget);
+						int allIndex = indexOfByName(oldTarget, allItems);
 						allItems.remove(allIndex);
 						allItems.add(allIndex, newTarget);
 
-						int visibleIndex = visibleItems.indexOf(oldTarget);
+						int visibleIndex = indexOfByName(oldTarget, visibleItems);
 						if (visibleIndex >= 0) {
 							visibleItems.remove(visibleIndex);
 							visibleItems.add(visibleIndex, newTarget);
@@ -151,11 +151,11 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 							ManualAssociationWorkingSet newSource = new ManualAssociationWorkingSet(projectNames,
 									oldSource.getName(), manager);
 
-							int allIndex = allItems.indexOf(oldSource);
+							int allIndex = indexOfByName(oldSource, allItems);
 							allItems.remove(allIndex);
 							allItems.add(allIndex, newSource);
 
-							int visibleIndex = visibleItems.indexOf(oldSource);
+							int visibleIndex = indexOfByName(oldSource, visibleItems);
 							if (visibleIndex >= 0) {
 								visibleItems.remove(visibleIndex);
 								visibleItems.add(visibleIndex, newSource);
@@ -200,6 +200,15 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 		}
 
 		return statusHelper.OK();
+	}
+
+	private int indexOfByName(WorkingSet element, List<WorkingSet> items) {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getName().equals(element.getName())) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private boolean workingSetContains(WorkingSet workingSet, IProject project) {
