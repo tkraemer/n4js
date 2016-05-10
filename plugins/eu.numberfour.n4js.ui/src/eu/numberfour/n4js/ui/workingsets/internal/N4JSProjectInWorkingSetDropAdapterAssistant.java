@@ -110,7 +110,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 	public IStatus handleDrop(CommonDropAdapter dropAdapter, DropTargetEvent dropTargetEvent,
 			Object target) {
 
-		WorkingSet oldTarget = (ManualAssociationWorkingSet) target;
+		WorkingSet oldTarget = (WorkingSet) target;
 		WorkingSetManager manager = oldTarget.getWorkingSetManager();
 
 		List<WorkingSet> allItems = newArrayList(manager.getAllWorkingSets());

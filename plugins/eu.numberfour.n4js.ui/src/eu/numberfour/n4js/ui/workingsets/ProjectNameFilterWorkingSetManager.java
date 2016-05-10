@@ -153,7 +153,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 	/**
 	 * Working set implementation with project name filter support.
 	 */
-	protected static final class ProjectNameFilterWorkingSet extends WorkingSetImpl {
+	protected static final class ProjectNameFilterWorkingSet extends DefaultWorkingSetImpl {
 
 		private final Pattern filter;
 

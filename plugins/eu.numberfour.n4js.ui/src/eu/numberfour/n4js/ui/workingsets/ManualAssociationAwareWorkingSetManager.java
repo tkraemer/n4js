@@ -192,7 +192,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	/**
 	 * Working set that represents manual associations between workspace projects and working sets.
 	 */
-	public static final class ManualAssociationWorkingSet extends WorkingSetImpl {
+	public static final class ManualAssociationWorkingSet extends DefaultWorkingSetImpl {
 
 		private final Collection<String> projectNames;
 

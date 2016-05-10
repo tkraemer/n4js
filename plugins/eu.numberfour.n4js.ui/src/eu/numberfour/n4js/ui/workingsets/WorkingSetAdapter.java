@@ -11,7 +11,10 @@
 package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Suppliers.memoize;
+import static com.google.common.collect.Lists.newArrayList;
 import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
+
+import java.util.ArrayList;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.mapping.ResourceMapping;
@@ -25,10 +28,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Arrays;
 
 import com.google.common.base.Supplier;
+import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.utils.Arrays2;
 
@@ -69,7 +72,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 
 	@Override
 	public WorkingSetManager getWorkingSetManager() {
-		return (WorkingSetManager) PlatformUI.getWorkbench().getWorkingSetManager();
+		return delegate.getWorkingSetManager();
 	}
 
 	@Override
@@ -151,7 +154,9 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 
 	@Override
 	public IAdaptable[] adaptElements(final IAdaptable[] objects) {
-		return null;
+		final ArrayList<IAdaptable> elements = newArrayList(getElements());
+		elements.retainAll(newArrayList(objects));
+		return Iterables.toArray(elements, IAdaptable.class);
 	}
 
 	@Override
@@ -170,7 +175,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 	}
 
 	@Override
-	public ResourceTraversal[] getTraversals(ResourceMappingContext context, IProgressMonitor monitor)
+	public ResourceTraversal[] getTraversals(final ResourceMappingContext context, final IProgressMonitor monitor)
 			throws CoreException {
 
 		return new ResourceTraversal[] { new ResourceTraversal(getProjects(), DEPTH_INFINITE, 0) };
