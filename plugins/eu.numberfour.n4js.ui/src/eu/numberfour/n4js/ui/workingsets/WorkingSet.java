@@ -10,14 +10,17 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
+import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.ui.IWorkingSet;
 
 /**
  * Representation of a working set. A working set holds a number of {@link IAdaptable adaptable} elements. A working set
  * is intended to group elements for presentation to the user or for operations on a set of elements. Each working set
  * must have a unique name per container working set manager.
  */
-public interface WorkingSet {
+public interface WorkingSet extends IAdaptable {
 
 	/**
 	 * The reserved name of the default built-in working set.
@@ -45,5 +48,16 @@ public interface WorkingSet {
 	 * @return the working set elements.
 	 */
 	IAdaptable[] getElements();
+
+	@SuppressWarnings("unchecked")
+	@Override
+	default <T> T getAdapter(final Class<T> adapter) {
+
+		if (IWorkingSet.class == adapter || ResourceMapping.class == adapter) {
+			return (T) new WorkingSetAdapter(this);
+		}
+
+		return Platform.getAdapterManager().getAdapter(this, adapter);
+	}
 
 }
