@@ -34,7 +34,6 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -633,9 +632,7 @@ public class N4JSResource extends PostProcessingAwareResource {
 		final URI targetResourceUri = targetUri.trimFragment();
 		final String fileExt = targetResourceUri.fileExtension();
 		if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(fileExt)
-				|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)
-				|| N4JSGlobals.N4TS_FILE_EXTENSION.equals(fileExt) // FIXME reconsider .n4ts in this line!!!!!!!
-		) {
+				|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)) {
 			final String targetFragment = targetUri.fragment();
 			final Resource targetResource = resSet.getResource(targetResourceUri, false);
 			// special handling #1:
@@ -648,18 +645,18 @@ public class N4JSResource extends PostProcessingAwareResource {
 					final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
 					if (resDesc != null) {
 						// next line will add the new resource to resSet.resources
-						final N4JSResource targetResourceNew = (N4JSResource) resSet.createResource(targetResourceUri,
-								ContentHandler.UNSPECIFIED_CONTENT_TYPE);
-						targetResourceNew.loadFromDescription(resDesc);
-						// FIXME consider using IN4JSCore#loadModuleFromIndex() here!
+						n4jsCore.loadModuleFromIndex(resSet, resDesc, false);
 					}
 				}
 			}
 			// standard behavior:
-			// obtain target EObject from targetResource
+			// obtain target EObject from targetResource in the usual way
+			// (might load targetResource from disk if it wasn't loaded from index above)
 			final EObject targetObject = resSet.getEObject(targetUri, loadOnDemand);
 			// special handling #2:
 			// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
+			// (only relevant in case targetResource wasn't loaded from index, because after loading from index it is
+			// always marked as fullyPostProcessed==true)
 			if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
 				final Resource targetResource2 = targetObject.eResource();
 				if (targetResource2 instanceof N4JSResource) {
@@ -668,7 +665,8 @@ public class N4JSResource extends PostProcessingAwareResource {
 			}
 			return targetObject;
 		}
-		// FIXME consider returning null here!!!!!!!!
+		// we will get here, for example, if targetUri points to an n4ts resource
+		// --> above special handling not required, so just take the old-school route
 		return resSet.getEObject(targetUri, loadOnDemand);
 	}
 
