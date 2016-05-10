@@ -46,6 +46,9 @@ import org.eclipse.xtext.resource.OutdatedStateManager
 import org.eclipse.xtext.resource.IDerivedStateComputer
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 import org.junit.Assert
+import org.eclipse.xtext.junit4.util.ParseHelper
+import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.resource.UserdataMapper
 
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)
@@ -65,6 +68,8 @@ class N4JSResourceTest {
 	ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	IResourceDescription emptyDescription = new EmptyResourceDescription
+	
+	@Inject extension ParseHelper<Script> 
 
 	@Test
 	def void testASTProxy() {
@@ -291,6 +296,57 @@ class N4JSResourceTest {
 		Assert.assertFalse(someResource.script.eIsProxy)
 		doc.disposeInput // no exception
 	}
+
+
+	/** 
+	 * Explicitly given type on property in object literal must lead to valid ResourceDescription.
+	 * (Was broken and reported by GH-183)
+	 */
+	@Test
+	def void testDescriptionOfInternalObjectLiteralExplicitTypesNotBroken() {
+		var rs = resourceSetProvider.get();
+		val script = '''
+			export let someObjectLiteral =  
+			{
+					string  g : ""              
+			};
+		'''.parse(rs)
+		val TModule module = script.eResource.contents.get(1) as TModule;
+		val udata = UserdataMapper.createUserData(module);
+		
+		udata.keySet.forEach[ println(it) ];
+		// error-case only has time-stamp.
+		println("keys - done.");		
+
+		assertTrue("Serialized script missing.",udata.containsKey( UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT))
+		assertFalse("Time stamp not expected.",udata.containsKey( UserdataMapper.USERDATA_KEY_TIMESTAMP))
+		
+	}
+
+	/** 
+	 * Inferred type on property in object literal must lead to valid ResourceDescription.
+	 * (Sibling to {@link #testDescriptionOfInternalObjectLiteralExplicitTypesNotBroken()} )
+	 */
+	@Test
+	def void testDescriptionOfInternalObjectLiteralWithInferredTypeNotBroken() {
+		var rs = resourceSetProvider.get();
+		val script = '''
+			export let someObjectLiteral =  
+			{
+					/*string*/  g : ""              
+			};
+		'''.parse(rs)
+		val TModule module = script.eResource.contents.get(1) as TModule;
+		val udata = UserdataMapper.createUserData(module);
+		
+		
+		udata.keySet.forEach[ println(it) ];
+		// error-case only has time-stamp.
+		println("keys - done.");		
+		
+		assertTrue("Main module data missing.",udata.containsKey( UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT))
+		assertFalse("Time stamp not expected.",udata.containsKey( UserdataMapper.USERDATA_KEY_TIMESTAMP))
+	}	
 }
 
 package class RecordingAdapter extends AdapterImpl {
