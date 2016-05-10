@@ -17,13 +17,17 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -104,7 +108,26 @@ public final class UserdataMapper {
 		if (exportedModule.isPreLinkingPhase()) {
 			throw new AssertionError("Module may not be from the preLinkingPhase");
 		}
-		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule)) {
+		// ----
+		final Iterator<EObject> iter = exportedModule.eAllContents();
+		while (iter.hasNext()) {
+			final EObject eobj = iter.next();
+			for (EReference ref : eobj.eClass().getEAllReferences()) {
+				if (!ref.isContainment() && !ref.isDerived()
+				/* TODO: */ && !ref.isMany()) {
+					final EObject value = (EObject) eobj.eGet(ref, false);
+					if (value != null && value.eIsProxy()) {
+						final String frag = ((BasicEObjectImpl) value).eProxyURI().fragment();
+						if (frag != null && frag.startsWith("|")) {
+							eobj.eGet(ref, true);
+							break;
+						}
+					}
+				}
+			}
+		}
+		// ----
+		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule)) { // FIXME show an error!
 			return createTimestampUserData(exportedModule);
 		}
 		final Resource originalResource = exportedModule.eResource();
@@ -216,6 +239,36 @@ public final class UserdataMapper {
 				TModule currTModule = (TModule) currObj;
 				if (!currTModule.isPreLinkingPhase()) {
 					TypeUtils.assertNoDeferredTypeRefs(currTModule);
+				}
+			}
+		}
+		// change proxy uris to our N4JS module-to-module uris
+		// FIXME it would be more efficient to do this during serialization!
+		for (EObject currRoot : result) {
+			if (currRoot instanceof TModule) {
+				final TreeIterator<EObject> iter = currRoot.eAllContents();
+				while (iter.hasNext()) {
+					final EObject currObj = iter.next();
+					for (EReference currRef : currObj.eClass().getEAllReferences()) {
+						final Object targets = currObj.eGet(currRef, false);
+						if (targets != null) {
+							for (Object currTarget : currRef.isMany() ? (List<?>) targets
+									: Collections.singletonList(targets)) {
+								if (currTarget instanceof EObject) {
+									if (((EObject) currTarget).eIsProxy()) {
+										final URI currUri = ((BasicEObjectImpl) currTarget).eProxyURI();
+										// make sure proxy points to another resource (required because links from
+										// TModule to AST will be represented as proxies within the same resource!)
+										if (!currUri.trimFragment().equals(uri)) {
+											final URI newUri = uri.appendFragment(URI.encodeFragment(
+													"m2m!" + currUri.toString(), false));
+											((BasicEObjectImpl) currTarget).eSetProxyURI(newUri);
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

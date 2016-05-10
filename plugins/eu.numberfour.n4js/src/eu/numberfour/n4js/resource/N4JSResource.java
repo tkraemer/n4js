@@ -34,7 +34,9 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -46,6 +48,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnosticWithRange;
 import org.eclipse.xtext.util.CancelIndicator;
@@ -64,6 +67,7 @@ import eu.numberfour.n4js.n4JS.N4JSFactory;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
+import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
@@ -880,4 +884,65 @@ public class N4JSResource extends PostProcessingAwareResource {
 		resolving.clear();
 	}
 
+	@Override
+	@SuppressWarnings("restriction")
+	public EObject getEObject(String uriFragment) {
+		if (uriFragment != null && uriFragment.startsWith("m2m!")) {
+			try {
+				final URI targetUri = URI.createURI(URI.decode(uriFragment.substring(4)));
+				return getEObjectFromTModuleOfRemoteResource(targetUri, true);
+			} catch (Throwable th) {
+				// FIXME make this fail fast?
+				th.printStackTrace(); // FIXME
+				return null;
+			}
+		}
+		return super.getEObject(uriFragment);
+	}
+
+	@Inject
+	private IN4JSCore n4jsCore;
+
+	private EObject getEObjectFromTModuleOfRemoteResource(URI targetUri, boolean loadOnDemand) {
+		final ResourceSet resSet = getResourceSet();
+		final URI targetResourceUri = targetUri.trimFragment();
+		final String fileExt = targetResourceUri.fileExtension();
+		if ("n4js".equals(fileExt)
+				|| "n4jsd".equals(fileExt)
+				// FIXME reconsider .n4ts in next line!!!!!!!
+				|| "n4ts".equals(fileExt)) {
+			final String targetFragment = targetUri.fragment();
+			final Resource targetResource = resSet.getResource(targetResourceUri, false);
+			// if targetResource is not loaded yet, try to load it from index first
+			if (targetResource == null) {
+				if (targetFragment != null && targetFragment.startsWith("/1")) { // FIXME explain
+					// uri points to a TModule element in a resource not yet contained in our resource set
+					// --> try to load from index
+					final IResourceDescriptions index = n4jsCore.getXtextIndex(resSet);
+					final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
+					if (resDesc != null) {
+						// next line will add the new resource to resSet.resources
+						final N4JSResource targetResourceNew = (N4JSResource) resSet.createResource(targetResourceUri,
+								ContentHandler.UNSPECIFIED_CONTENT_TYPE);
+						targetResourceNew.loadFromDescription(resDesc);
+					}
+				}
+			}
+			// obtain target EObject from targetResource
+			final EObject targetObject = resSet.getEObject(targetUri, loadOnDemand);
+			// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
+			if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
+				final Resource targetResource2 = targetObject.eResource();
+				if (targetResource2 instanceof N4JSResource) {
+					// if (!(((N4JSResource) targetResource2).isProcessing()
+					// || ((N4JSResource) targetResource2).isFullyProcessed())) {
+					((N4JSResource) targetResource2).performPostProcessing();
+					// }
+				}
+			}
+			return targetObject;
+		}
+		// FIXME consider returning null here!!!!!!!!
+		return resSet.getEObject(targetUri, loadOnDemand);
+	}
 }
