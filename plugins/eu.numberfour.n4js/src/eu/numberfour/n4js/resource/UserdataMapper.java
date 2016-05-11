@@ -209,10 +209,10 @@ public final class UserdataMapper {
 			return null;
 		}
 		final List<EObject> contents = xres.getContents();
-		if (contents.isEmpty() || !(contents.get(1) instanceof TModule)) {
+		if (contents.isEmpty() || !(contents.get(0) instanceof TModule)) {
 			return null;
 		}
-		final TModule module = (TModule) contents.get(1);
+		final TModule module = (TModule) contents.get(0);
 		xres.getContents().clear();
 		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
 		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
