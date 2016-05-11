@@ -45,16 +45,12 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
-import com.google.inject.Inject;
 
 /**
  * Working set manager based on Git repositories.
  */
 @SuppressWarnings("restriction")
 public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
-
-	@Inject
-	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	private final RepositoryCache repositoryCache;
 	private final IPreferenceChangeListener repositoryChangeListener;
@@ -98,6 +94,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 				discardWorkingSetState();
 				saveState(new NullProgressMonitor());
 
+				WorkingSetManagerBroker workingSetManagerBroker = getWorkingSetManagerBroker();
 				if (workingSetManagerBroker.isWorkingSetTopLevel()) {
 					final WorkingSetManager activeManger = workingSetManagerBroker.getActiveManger();
 					if (activeManger != null) {

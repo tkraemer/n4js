@@ -159,4 +159,11 @@ public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware
 		return InstanceScope.INSTANCE.getNode(getId());
 	}
 
+	/**
+	 * Returns with the working set manager broker.
+	 *
+	 * @return the broker for all available working set managers.
+	 */
+	WorkingSetManagerBroker getWorkingSetManagerBroker();
+
 }

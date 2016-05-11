@@ -83,9 +83,17 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 	@Inject
 	protected StatusHelper statusHelper;
 
+	@Inject
+	private WorkingSetManagerBroker workingSetManagerBroker;
+
 	@Override
 	public String getId() {
 		return getClass().getName();
+	}
+
+	@Override
+	public WorkingSetManagerBroker getWorkingSetManagerBroker() {
+		return workingSetManagerBroker;
 	}
 
 	@Override

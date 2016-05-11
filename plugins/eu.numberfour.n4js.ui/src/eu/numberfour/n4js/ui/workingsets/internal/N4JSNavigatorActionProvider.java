@@ -26,6 +26,7 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 @SuppressWarnings("restriction")
 public class N4JSNavigatorActionProvider extends CommonActionProvider {
 
+	private ManagerWorkingSetActionGroup manageGroup;
 	private EditActionGroup editGroup;
 	private N4JSNewWizardsActionGroup newWizardsGroup;
 	private ImportActionGroup importExportGroup;
@@ -36,6 +37,7 @@ public class N4JSNavigatorActionProvider extends CommonActionProvider {
 	@Override
 	public void fillActionBars(final IActionBars actionBars) {
 		if (inViewPart) {
+			manageGroup.fillActionBars(actionBars);
 			editGroup.fillActionBars(actionBars);
 			newWizardsGroup.fillActionBars(actionBars);
 			importExportGroup.fillActionBars(actionBars);
@@ -46,6 +48,7 @@ public class N4JSNavigatorActionProvider extends CommonActionProvider {
 	@Override
 	public void fillContextMenu(final IMenuManager menu) {
 		if (inViewPart) {
+			manageGroup.fillContextMenu(menu);
 			editGroup.fillContextMenu(menu);
 			newWizardsGroup.fillContextMenu(menu);
 			importExportGroup.fillContextMenu(menu);
@@ -64,6 +67,7 @@ public class N4JSNavigatorActionProvider extends CommonActionProvider {
 			if (workbenchSite.getPart() != null && workbenchSite.getPart() instanceof IViewPart) {
 				final IViewPart viewPart = (IViewPart) workbenchSite.getPart();
 
+				manageGroup = new ManagerWorkingSetActionGroup(viewPart);
 				editGroup = new EditActionGroup(viewPart.getSite().getShell());
 				newWizardsGroup = new N4JSNewWizardsActionGroup(viewPart.getSite());
 				importExportGroup = new ImportActionGroup(viewPart);
@@ -77,6 +81,7 @@ public class N4JSNavigatorActionProvider extends CommonActionProvider {
 	public void setContext(final ActionContext context) {
 		super.setContext(context);
 		if (inViewPart) {
+			manageGroup.setContext(context);
 			editGroup.setContext(context);
 			newWizardsGroup.setContext(context);
 			importExportGroup.setContext(context);
@@ -87,6 +92,7 @@ public class N4JSNavigatorActionProvider extends CommonActionProvider {
 	@Override
 	public void dispose() {
 		if (inViewPart) {
+			manageGroup.dispose();
 			editGroup.dispose();
 			newWizardsGroup.dispose();
 			importExportGroup.dispose();
