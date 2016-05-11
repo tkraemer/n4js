@@ -13,12 +13,17 @@ package eu.numberfour.n4js.ui.workingsets;
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.toMap;
+import static com.google.common.collect.Sets.newHashSet;
+import static java.io.File.pathSeparator;
 
 import java.io.File;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -38,6 +43,9 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
 /**
@@ -65,26 +73,28 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 					return;
 				}
 
-				final String newValue = (String) event.getNewValue();
-				final String oldValue = (String) event.getOldValue();
-
 				if (!orderedWorkingSetNames.isEmpty() && !visibleWorkingSetNames.isEmpty()) {
 
-					// Deletion
-					if (newValue == null) {
+					MapDifference<String, String> diff = calculateDifference(event);
+					if (!diff.areEqual()) {
 
-						final String name = getRepositoryName(oldValue);
-						orderedWorkingSetNames.remove(name);
-						visibleWorkingSetNames.remove(name);
+						// Deletion
+						final Set<String> deletions = diff.entriesOnlyOnLeft().keySet();
+						for (String deletedUrl : deletions) {
+							final String name = getRepositoryName(deletedUrl);
+							orderedWorkingSetNames.remove(name);
+							visibleWorkingSetNames.remove(name);
+						}
 
 						// Addition
-					} else if (oldValue == null) {
+						final Set<String> additions = diff.entriesOnlyOnRight().keySet();
+						for (String addedUrl : additions) {
+							final String name = getRepositoryName(addedUrl);
+							orderedWorkingSetNames.add(name);
+							visibleWorkingSetNames.add(name);
+						}
 
-						final String name = getRepositoryName(newValue);
-						orderedWorkingSetNames.add(name);
-						visibleWorkingSetNames.add(name);
-
-					} // Update is not handled
+					}
 
 				}
 
@@ -108,6 +118,17 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 						.omitEmptyStrings()
 						.splitToList(nullToEmpty(localUrl));
 				return fragments.get(fragments.size() - 2);
+			}
+
+			private MapDifference<String, String> calculateDifference(PreferenceChangeEvent event) {
+				String oldValue = Strings.nullToEmpty((String) event.getOldValue());
+				String newValue = Strings.nullToEmpty((String) event.getNewValue());
+
+				Map<String, String> oldMappings = toMap(newHashSet(Splitter.on(pathSeparator).split(oldValue)), i -> i);
+				Map<String, String> newMappings = toMap(newHashSet(Splitter.on(pathSeparator).split(newValue)), i -> i);
+
+				return Maps.difference(oldMappings, newMappings);
+
 			}
 
 		};
