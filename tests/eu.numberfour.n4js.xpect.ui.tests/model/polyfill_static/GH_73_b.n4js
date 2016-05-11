@@ -1,0 +1,14 @@
+@@StaticPolyfillAware
+
+export public class A implements I1 {
+	@Override
+	public m1():void {}
+}
+
+export public interface I1 {
+	public m1():void;
+}
+
+export public interface I2 {
+	public m1():void;
+}

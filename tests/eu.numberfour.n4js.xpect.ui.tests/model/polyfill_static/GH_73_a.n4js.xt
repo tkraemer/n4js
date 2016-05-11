@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+    Workspace {
+   	 Project "P_USERTL_B01" {
+   	 	Folder "src" {
+	   	 	Folder "n4js" { 
+	   	 		ThisFile {  }
+	   	 	}
+	   	 	Folder "n4js-gen" {
+	   	 		File "GH_73_a.n4js" {from="GH_73_b.n4js"}
+	   	 	}
+	   	}
+   	 	File "manifest.n4mf" { from="manifest_uses_b00.n4mf" }
+   	 }
+   }
+   
+   END_SETUP
+   
+*/
+ 
+
+@@StaticPolyfillModule
+
+@StaticPolyfill
+// XPECT errors --> "The filling class can not add interfaces, the interface needs to be added to the filled class." at "implements I2"
+export public class A extends A implements I2 {
+
+}
+
