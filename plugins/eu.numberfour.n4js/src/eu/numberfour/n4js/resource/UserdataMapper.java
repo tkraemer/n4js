@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
@@ -36,7 +34,6 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -172,67 +169,55 @@ public final class UserdataMapper {
 	/**
 	 * <b>ONLY INTENDED FOR TESTS OR DEBUGGING. DON'T USE IN PRODUCTION CODE.</b>
 	 * <p>
-	 * Same as {@link #getDeserializedModulesFromDescription(IEObjectDescription, URI)}, but always returns the module
-	 * as an XMI-serialized string.
+	 * Same as {@link #getDeserializedModuleFromDescription(IEObjectDescription, URI)}, but always returns the module as
+	 * an XMI-serialized string.
 	 */
-	public static String getDeserializedModulesFromDescriptionAsString(IEObjectDescription eObjectDescription,
+	public static String getDeserializedModuleFromDescriptionAsString(IEObjectDescription eObjectDescription,
 			URI uri) throws IOException {
-		final List<EObject> objects = getDeserializedModulesFromDescription(eObjectDescription, uri);
+		final TModule module = getDeserializedModuleFromDescription(eObjectDescription, uri);
 		final XMIResource resourceForUserData = new XMIResourceImpl(uri);
-		resourceForUserData.getContents().addAll(objects);
+		resourceForUserData.getContents().add(module);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		resourceForUserData.save(baos, getOptions(uri, false));
 		return baos.toString(TRANSFORMATION_CHARSET_NAME);
 	}
 
 	/**
-	 * Creates exported scripts (or other {@link EObject}s found (serialized) in the user data of given
-	 * {@link IEObjectDescription}.
-	 *
-	 * @return deserialized types as EObject
+	 * Reads the TModule stored in the given IEObjectDescription.
 	 */
-	public static List<EObject> getDeserializedModulesFromDescription(IEObjectDescription eObjectDescription, URI uri) {
-		String serializedData = eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT);
+	public static TModule getDeserializedModuleFromDescription(IEObjectDescription eObjectDescription, URI uri) {
+		final String serializedData = eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT);
 		if (Strings.isNullOrEmpty(serializedData)) {
-			return new ArrayList<>();
+			return null;
 		}
-		XMIResource xres = new XMIResourceImpl(uri);
+		final XMIResource xres = new XMIResourceImpl(uri);
 		try {
-			boolean binary = !serializedData.startsWith("<");
-			ByteArrayInputStream bais = new ByteArrayInputStream(
+			final boolean binary = !serializedData.startsWith("<");
+			final ByteArrayInputStream bais = new ByteArrayInputStream(
 					binary ? XMLTypeFactory.eINSTANCE.createBase64Binary(serializedData)
 							: serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
-			Map<Object, Object> options = getOptions(uri, binary);
-			xres.load(bais, options);
+			xres.load(bais, getOptions(uri, binary));
 		} catch (Exception e) {
-			LOGGER.error("Error deserializing type", e); //$NON-NLS-1$
-			throw new WrappedException(e); // TODO reconsider this
+			LOGGER.error("error deserializing module from IEObjectDescription: " + uri, e); //$NON-NLS-1$
+			// fail safe, because not uncommon (serialized data might have been created with an old version of the N4JS
+			// IDE, so the format could be out of date (after an update of the IDE))
+			return null;
 		}
-		List<EObject> result = Lists.newArrayList(xres.getContents());
+		final List<EObject> contents = xres.getContents();
+		if (contents.isEmpty() || !(contents.get(1) instanceof TModule)) {
+			return null;
+		}
+		final TModule module = (TModule) contents.get(1);
 		xres.getContents().clear();
-		// TModules are flattened before serialization (i.e. all DeferredTypeRefs resolved & removed),
-		// but we double-check that at this point
-		for (EObject currObj : result) {
-			if (currObj instanceof TModule) {
-				TModule currTModule = (TModule) currObj;
-				if (!currTModule.isPreLinkingPhase()) {
-					TypeUtils.assertNoDeferredTypeRefs(currTModule);
-				}
-			}
-		}
 		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
 		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
 		// we need the entire, absolute original URI, including its fragment)
-		for (EObject currRoot : result) {
-			if (currRoot instanceof TModule) {
-				final TreeIterator<EObject> iter = currRoot.eAllContents();
-				while (iter.hasNext()) {
-					for (EObject currObj : iter.next().eCrossReferences()) {
-						M2MUriUtil.convertProxyUriToM2M(uri, currObj);
-					}
-				}
+		final TreeIterator<EObject> iter = module.eAllContents();
+		while (iter.hasNext()) {
+			for (EObject currObj : iter.next().eCrossReferences()) {
+				M2MUriUtil.convertProxyUriToM2M(uri, currObj);
 			}
 		}
-		return result;
+		return module;
 	}
 }

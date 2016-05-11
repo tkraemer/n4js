@@ -124,7 +124,7 @@ class N4JSScopingTestWithIndexTest {
 
 		val eoDescs = resourceDescriptions.getResourceDescription(supplierJS).exportedObjects
 		assertEquals("Wrong number, found: " + eoDescs.map[it.name], 2, eoDescs.size)
-		assertEquals("Stored user data", supplierUserData, UserdataMapper.getDeserializedModulesFromDescriptionAsString(
+		assertEquals("Stored user data", supplierUserData, UserdataMapper.getDeserializedModuleFromDescriptionAsString(
 				eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName], supplierJS))
 //			eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName].getUserData(
 //				UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))

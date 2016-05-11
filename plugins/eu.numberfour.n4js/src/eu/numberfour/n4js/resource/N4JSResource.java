@@ -308,32 +308,15 @@ public class N4JSResource extends PostProcessingAwareResource {
 			boolean didLoadModule = false;
 			Iterable<IEObjectDescription> modules = description.getExportedObjectsByType(TypesPackage.Literals.TMODULE);
 			for (IEObjectDescription module : modules) {
-				try {
-					List<EObject> deserializedModules = UserdataMapper.getDeserializedModulesFromDescription(
-							module,
-							getURI());
-					for (EObject deserializedModule : deserializedModules) {
-						if (deserializedModule.eResource() != null) {
-							throw new IllegalStateException("The read script may not be contained in a resource");
-						}
-						theContents.sneakyAdd(deserializedModule);
-						didLoadModule = true;
-					}
-				} catch (WrappedException e) {
-					if (e.getCause() instanceof IOException) {
-						// ok - index data out of sync - no exception because it may have been created with an older
-						// version
-					} else {
-						throw e;
-					}
+				TModule deserializedModule = UserdataMapper.getDeserializedModuleFromDescription(module, getURI());
+				if (deserializedModule != null) {
+					theContents.sneakyAdd(deserializedModule);
+					didLoadModule = true;
+					break;
 				}
 			}
 			if (didLoadModule) {
 				fullyInitialized = true;
-				TModule module = (TModule) theContents.get(1);
-				if (module.isPreLinkingPhase()) {
-					throw new AssertionError("Module may not be from the preLinkingPhase");
-				}
 				// TModule loaded from index had been fully post-processed prior to serialization
 				fullyPostProcessed = true;
 				return true;
