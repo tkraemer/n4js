@@ -14,9 +14,12 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator.ProblemsLabelChangedEvent;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -35,7 +38,7 @@ import eu.numberfour.n4js.utils.Arrays2;
 /**
  * Label provider extension for the N4JS specific Project Explorer view.
  */
-public class N4JSProjectExplorerLabelProvider extends LabelProvider {
+public class N4JSProjectExplorerLabelProvider extends LabelProvider implements IStyledLabelProvider {
 
 	private static final Image SRC_FOLDER_IMG = ImageRef.SRC_FOLDER.asImage().orNull();
 	private static final Image WORKING_SET_IMG = ImageRef.WORKING_SET.asImage().orNull();
@@ -46,16 +49,18 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	@Inject
 	private WorkingSetManagerBroker workingSetManagerBroker;
 
-	private final LabelProvider delegate;
+	private final ILabelProvider delegate;
 	private final ProblemsLabelDecorator decorator;
 	private final ILabelProviderListener workingSetLabelProviderListener;
+	private final WorkbenchLabelProvider workbenchLabelProvider;
 
 	/**
 	 * Sole constructor.
 	 */
 	public N4JSProjectExplorerLabelProvider() {
 		decorator = new N4JSProjectExplorerProblemsDecorator();
-		delegate = new DecoratingLabelProvider(new WorkbenchLabelProvider(), decorator);
+		workbenchLabelProvider = new WorkbenchLabelProvider();
+		delegate = new DecoratingLabelProvider(workbenchLabelProvider, decorator);
 		workingSetLabelProviderListener = new ILabelProviderListener() {
 
 			@Override
@@ -100,6 +105,14 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	public void dispose() {
 		super.dispose();
 		delegate.removeListener(workingSetLabelProviderListener);
+	}
+
+	@Override
+	public StyledString getStyledText(final Object element) {
+		if (element instanceof WorkingSet) {
+			return WorkingSetLabelProvider.INSTANCE.getStyledText(element);
+		}
+		return workbenchLabelProvider.getStyledText(element);
 	}
 
 	/**

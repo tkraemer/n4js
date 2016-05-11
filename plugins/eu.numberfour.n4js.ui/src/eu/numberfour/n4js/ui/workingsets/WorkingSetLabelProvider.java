@@ -10,7 +10,15 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
+import static eu.numberfour.n4js.utils.Arrays2.transform;
+import static org.eclipse.jface.viewers.StyledString.COUNTER_STYLER;
+
+import java.util.List;
+
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
@@ -18,12 +26,12 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 /**
  * Label provider for working sets.
  */
-public class WorkingSetLabelProvider extends LabelProvider {
+public class WorkingSetLabelProvider extends LabelProvider implements IStyledLabelProvider, ILabelDecorator {
 
 	/**
 	 * Shared label provider instance for working sets.
 	 */
-	public static LabelProvider INSTANCE = new WorkingSetLabelProvider();
+	public static WorkingSetLabelProvider INSTANCE = new WorkingSetLabelProvider();
 
 	private WorkingSetLabelProvider() {
 		// Singleton.
@@ -43,6 +51,47 @@ public class WorkingSetLabelProvider extends LabelProvider {
 			return ((WorkingSet) element).getName();
 		}
 		return super.getText(element);
+	}
+
+	@Override
+	public StyledString getStyledText(Object element) {
+		if (element instanceof WorkingSet) {
+			final WorkingSet workingSet = (WorkingSet) element;
+			final WorkingSetManager manager = workingSet.getWorkingSetManager();
+
+			final String name = workingSet.getName();
+			final List<String> allNames = transform(manager.getAllWorkingSets(), ws -> ws.getName());
+			if (containsDuplicates(name, allNames)) {
+				final String suffix = " [" + workingSet.getId() + "]";
+				final StyledString string = new StyledString(name);
+				string.append(suffix, COUNTER_STYLER);
+				return string;
+			}
+		}
+		return new StyledString(getText(element));
+	}
+
+	private boolean containsDuplicates(String toCheck, Iterable<String> elements) {
+		int counter = 0;
+		for (String element : elements) {
+			if (counter > 1) {
+				return true;
+			}
+			if (toCheck.equals(element)) {
+				counter++;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Image decorateImage(Image image, Object element) {
+		return image;
+	}
+
+	@Override
+	public String decorateText(String text, Object element) {
+		return text;
 	}
 
 }

@@ -27,6 +27,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -149,7 +150,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		data.widthHint = convertWidthInCharsToPixels(50);
 		tableViewer.getTable().setLayoutData(data);
 
-		tableViewer.setLabelProvider(WorkingSetLabelProvider.INSTANCE);
+		tableViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(WorkingSetLabelProvider.INSTANCE));
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
