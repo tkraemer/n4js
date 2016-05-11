@@ -52,30 +52,30 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 				.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this)));
 	}
 
-	private static final class ProjectTypeWorkingSet implements WorkingSet {
+	/**
+	 * Working set for logically grouping N4JS projects based on their project type.
+	 */
+	public static final class ProjectTypeWorkingSet extends WorkingSetImpl {
 
 		private final ProjectType type;
 		private final IN4JSCore core;
-		private final WorkingSetManager manager;
 
-		private ProjectTypeWorkingSet(/* nullable */ final ProjectType type, final IN4JSCore core,
-				final WorkingSetManager manager) {
-
-			this.type = type;
-			this.core = core;
-			this.manager = manager;
-		}
-
-		@Override
-		public String getName() {
-
+		private static String typeToId(ProjectType type) {
 			if (null == type) {
-				return OTHERS_WORKING_SET_LABEL;
+				return OTHERS_WORKING_SET_ID;
 			}
 
 			return API.equals(type)
 					? API.getLiteral()
 					: toFirstUpper(nullToEmpty(type.getLiteral()).replaceAll("_", " ").toLowerCase());
+		}
+
+		private ProjectTypeWorkingSet(/* nullable */ final ProjectType type, final IN4JSCore core,
+				final WorkingSetManager manager) {
+
+			super(typeToId(type), manager);
+			this.type = type;
+			this.core = core;
 		}
 
 		@Override
@@ -99,18 +99,8 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 			return Arrays.copyOfRange(elements, 0, elementCount);
 		}
 
-		@Override
-		public WorkingSetManager getWorkingSetManager() {
-			return manager;
-		}
-
 		private URI toUri(final IProject project) {
 			return URI.createPlatformResourceURI(project.getName(), true);
-		}
-
-		@Override
-		public String toString() {
-			return null == type ? OTHERS_WORKING_SET_LABEL : getName();
 		}
 
 	}

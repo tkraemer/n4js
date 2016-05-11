@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
-import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,8 +54,8 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 	 */
 	protected static final String EMPTY_STRING = "";
 
-	private static final String ORDERED_NAMES_KEY = ".orderedNames";
-	private static final String VISIBLE_NAMES_KEY = ".visibleNames";
+	private static final String ORDERED_IDS_KEY = ".orderedIds";
+	private static final String VISIBLE_IDS_KEY = ".visibleIds";
 
 	/**
 	 * List of all working sets. Used internally for caching purposes.
@@ -68,14 +68,14 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 	private List<WorkingSet> visibleWorkingSets = null;
 
 	/**
-	 * Ordered list of the working set names.
+	 * Ordered list of the working set IDs.
 	 */
-	protected final List<String> orderedWorkingSetNames = newArrayList();
+	protected final List<String> orderedWorkingSetIds = newArrayList();
 
 	/**
-	 * A collection of working set names that are configured to be visible on the UI.
+	 * A collection of working set IDs that are configured to be visible on the UI.
 	 */
-	protected final Collection<String> visibleWorkingSetNames = newHashSet();
+	protected final Collection<String> visibleWorkingSetIds = newHashSet();
 
 	/**
 	 * Status helper for creating {@link IStatus status} instances in a convenient way.
@@ -100,12 +100,12 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 
 	@Override
 	public void select(final Iterable<WorkingSet> workingSets) {
-		visibleWorkingSetNames.addAll(from(workingSets).transform(ws -> ws.getName()).toList());
+		visibleWorkingSetIds.addAll(from(workingSets).transform(ws -> ws.getId()).toList());
 	}
 
 	@Override
 	public void unselect(final Iterable<WorkingSet> workingSets) {
-		visibleWorkingSetNames.removeAll(from(workingSets).transform(ws -> ws.getName()).toList());
+		visibleWorkingSetIds.removeAll(from(workingSets).transform(ws -> ws.getId()).toList());
 	}
 
 	@Override
@@ -114,10 +114,10 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 		final Preferences node = getPreferences();
 
 		// Save ordered labels.
-		node.put(ORDERED_NAMES_KEY, Joiner.on(SEPARATOR).join(orderedWorkingSetNames));
+		node.put(ORDERED_IDS_KEY, Joiner.on(SEPARATOR).join(orderedWorkingSetIds));
 
 		// Save visible labels.
-		node.put(VISIBLE_NAMES_KEY, Joiner.on(SEPARATOR).join(visibleWorkingSetNames));
+		node.put(VISIBLE_IDS_KEY, Joiner.on(SEPARATOR).join(visibleWorkingSetIds));
 
 		try {
 			node.flush();
@@ -136,17 +136,17 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 		final Preferences node = getPreferences();
 
 		// Restore ordered labels.
-		final String orderedLabels = node.get(ORDERED_NAMES_KEY, EMPTY_STRING);
+		final String orderedLabels = node.get(ORDERED_IDS_KEY, EMPTY_STRING);
 		if (!Strings.isNullOrEmpty(orderedLabels)) {
-			orderedWorkingSetNames.clear();
-			orderedWorkingSetNames.addAll(Arrays.asList(orderedLabels.split(SEPARATOR)));
+			orderedWorkingSetIds.clear();
+			orderedWorkingSetIds.addAll(Arrays.asList(orderedLabels.split(SEPARATOR)));
 		}
 
 		// Restore visible labels.
-		final String visibleLabels = node.get(VISIBLE_NAMES_KEY, EMPTY_STRING);
+		final String visibleLabels = node.get(VISIBLE_IDS_KEY, EMPTY_STRING);
 		if (!Strings.isNullOrEmpty(visibleLabels)) {
-			visibleWorkingSetNames.clear();
-			visibleWorkingSetNames.addAll(Arrays.asList(visibleLabels.split(SEPARATOR)));
+			visibleWorkingSetIds.clear();
+			visibleWorkingSetIds.addAll(Arrays.asList(visibleLabels.split(SEPARATOR)));
 		}
 
 		discardWorkingSetState();
@@ -159,15 +159,15 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 
 		if (!diff.isEmpty()) {
 			// Deselect all.
-			visibleWorkingSetNames.clear();
+			visibleWorkingSetIds.clear();
 
 			// Select visible ones.
 			select(Arrays.asList(diff.getNewItems()));
 
 			// Update order.
-			orderedWorkingSetNames.clear();
+			orderedWorkingSetIds.clear();
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
-				orderedWorkingSetNames.add(workingSet.getName());
+				orderedWorkingSetIds.add(workingSet.getId());
 			}
 
 			discardWorkingSetState();
@@ -176,8 +176,8 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 	}
 
 	/**
-	 * Orders by case sensitive name order, if no explicit ordering is specified yet. The
-	 * {@link WorkingSet#OTHERS_WORKING_SET_LABEL Others} reserved working set name is considered to be the first one.
+	 * Orders by case sensitive name ordering, if no explicit ordering is specified yet. The
+	 * {@link WorkingSet#OTHERS_WORKING_SET_ID Others} reserved working set name/ID is considered to be the first one.
 	 */
 	@Override
 	public int compare(final WorkingSet left, final WorkingSet right) {
@@ -185,26 +185,32 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 			return right == null ? 0 : 1;
 		}
 
-		final String rightName = right.getName();
-		final String leftName = left.getName();
+		final String rightId = right.getId();
+		final String leftId = left.getId();
 
-		checkNotNull(leftName, "The name of the working set must not be null. Working set: " + left);
-		checkNotNull(rightName, "The name of the working set must not be null. Working set: " + right);
+		checkNotNull(leftId, "The ID of the working set must not be null. Working set: " + left);
+		checkNotNull(rightId, "The ID of the working set must not be null. Working set: " + right);
 
-		if (orderedWorkingSetNames.isEmpty()) {
+		if (orderedWorkingSetIds.isEmpty()) {
 
-			if (OTHERS_WORKING_SET_LABEL.equals(leftName)) {
-				return OTHERS_WORKING_SET_LABEL.equals(rightName) ? 0 : -1;
+			if (OTHERS_WORKING_SET_ID.equals(leftId)) {
+				return OTHERS_WORKING_SET_ID.equals(rightId) ? 0 : -1;
 			}
 
-			if (OTHERS_WORKING_SET_LABEL.equals(rightName)) {
-				return OTHERS_WORKING_SET_LABEL.equals(leftName) ? 0 : 1;
+			if (OTHERS_WORKING_SET_ID.equals(rightId)) {
+				return OTHERS_WORKING_SET_ID.equals(leftId) ? 0 : 1;
 			}
+
+			final String rightName = right.getName();
+			final String leftName = left.getName();
+
+			checkNotNull(leftName, "The name of the working set must not be null. Working set: " + left);
+			checkNotNull(rightName, "The name of the working set must not be null. Working set: " + right);
 
 			return leftName.compareTo(rightName);
 		}
 
-		return orderedWorkingSetNames.indexOf(leftName) - orderedWorkingSetNames.indexOf(rightName);
+		return orderedWorkingSetIds.indexOf(leftId) - orderedWorkingSetIds.indexOf(rightId);
 	}
 
 	/**
@@ -258,10 +264,10 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 			allWorkingSets = getOrCreateAllWorkingSets();
 		}
 
-		if (visibleWorkingSetNames.isEmpty()) {
+		if (visibleWorkingSetIds.isEmpty()) {
 			visibleWorkingSets = newArrayList(allWorkingSets);
 		} else {
-			visibleWorkingSets = from(allWorkingSets).filter(ws -> visibleWorkingSetNames.contains(ws.getName()))
+			visibleWorkingSets = from(allWorkingSets).filter(ws -> visibleWorkingSetIds.contains(ws.getId()))
 					.toList();
 		}
 

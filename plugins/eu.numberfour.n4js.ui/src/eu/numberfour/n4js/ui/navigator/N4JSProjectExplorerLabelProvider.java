@@ -27,6 +27,7 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetLabelProvider;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.utils.Arrays2;
@@ -72,7 +73,7 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	@Override
 	public String getText(final Object element) {
 		if (element instanceof WorkingSet) {
-			return ((WorkingSet) element).getName();
+			return WorkingSetLabelProvider.INSTANCE.getText(element);
 		} else {
 			return delegate.getText(element);
 		}

@@ -12,7 +12,7 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
-import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 import static eu.numberfour.n4js.utils.Arrays2.isEmpty;
 
 import java.util.Arrays;
@@ -292,7 +292,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 			final Object firstElement = selection.getFirstElement();
 			if (firstElement instanceof WorkingSet) {
 				final WorkingSet oldState = (WorkingSet) firstElement;
-				if (!OTHERS_WORKING_SET_LABEL.equals(oldState.getName())) {
+				if (!OTHERS_WORKING_SET_ID.equals(oldState.getId())) {
 					final WorkingSetEditWizard wizard = ((MutableWorkingSetManager) manager).createEditWizard();
 					wizard.init(PlatformUI.getWorkbench(), selection);
 					final WizardDialog dialog = new WizardDialog(getShell(), wizard);
@@ -337,7 +337,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 				final Object object = objects[i];
 				if (object instanceof WorkingSet) {
 					final WorkingSet workingSet = (WorkingSet) object;
-					if (!OTHERS_WORKING_SET_LABEL.equals(workingSet)) {
+					if (!OTHERS_WORKING_SET_ID.equals(workingSet)) {
 						removedWorkingSets.add(workingSet);
 					}
 				}
@@ -385,7 +385,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		for (final Iterator<?> itr = selection.iterator(); itr.hasNext();) {
 			final Object next = itr.next();
 			if (next instanceof WorkingSet) {
-				if (OTHERS_WORKING_SET_LABEL.equals(((WorkingSet) next).getName())) {
+				if (OTHERS_WORKING_SET_ID.equals(((WorkingSet) next).getId())) {
 					return false;
 				}
 			}

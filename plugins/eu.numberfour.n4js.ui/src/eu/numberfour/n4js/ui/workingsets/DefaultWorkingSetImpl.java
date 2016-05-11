@@ -29,27 +29,27 @@ import com.google.common.collect.Maps;
 
 /**
  * Default working set implementation that provides a convenient {@link #getElements() element providing} logic for the
- * built-in '{@link WorkingSet#OTHERS_WORKING_SET_LABEL Others}' working set. These dynamic working sets depends on all
- * the other working sets provided by the container manager.
+ * built-in '{@link WorkingSet#OTHERS_WORKING_SET_ID Others}' working set. These dynamic working sets depends on all the
+ * other working sets provided by the container manager.
  */
 public abstract class DefaultWorkingSetImpl extends WorkingSetImpl implements Predicate<IProject> {
 
 	/**
-	 * Creates a new working set manager with the given name and the container manager.
+	 * Creates a new working set manager with the given ID and the container manager.
 	 *
-	 * @param name
-	 *            the name of the working set.
+	 * @param id
+	 *            the unique identifier of the working set.
 	 * @param manager
 	 *            the container manager where this working set belongs to.
 	 */
-	protected DefaultWorkingSetImpl(final String name, final WorkingSetManager manager) {
-		super(name, manager);
+	protected DefaultWorkingSetImpl(final String id, final WorkingSetManager manager) {
+		super(id, manager);
 	}
 
 	@Override
 	public IAdaptable[] getElements() {
 		final IProject[] projects = getAllProjects();
-		if (OTHERS_WORKING_SET_LABEL.equals(getName())) {
+		if (OTHERS_WORKING_SET_ID.equals(getId())) {
 
 			// No other working sets are available at all.
 			final WorkingSet[] allWorkingSets = getWorkingSetManager().getAllWorkingSets();
@@ -59,7 +59,7 @@ public abstract class DefaultWorkingSetImpl extends WorkingSetImpl implements Pr
 
 				// We have to exclude all those projects that are associated with at least one other working set.
 				final FluentIterable<WorkingSet> others = from(asList(allWorkingSets))
-						.filter(ws -> !OTHERS_WORKING_SET_LABEL.equals(ws.getName()));
+						.filter(ws -> !OTHERS_WORKING_SET_ID.equals(ws.getId()));
 
 				// Mapping between non-built-in working sets and their elements.
 				final Map<WorkingSet, Collection<IAdaptable>> elementMapping = Maps.toMap(others,

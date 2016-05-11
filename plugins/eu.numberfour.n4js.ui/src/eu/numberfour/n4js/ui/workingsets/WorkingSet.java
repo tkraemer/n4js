@@ -18,22 +18,36 @@ import org.eclipse.ui.IWorkingSet;
 /**
  * Representation of a working set. A working set holds a number of {@link IAdaptable adaptable} elements. A working set
  * is intended to group elements for presentation to the user or for operations on a set of elements. Each working set
- * must have a unique name per container working set manager.
+ * must have a unique {@link #getId() ID} in the container working set manager.
  */
 public interface WorkingSet extends IAdaptable {
 
 	/**
-	 * The reserved name of the default built-in working set.
+	 * The reserved ID of the default built-in working set.
+	 * <p>
+	 * ID: {@value}
 	 */
-	String OTHERS_WORKING_SET_LABEL = "Others";
+	String OTHERS_WORKING_SET_ID = "Others";
 
 	/**
-	 * Returns with the name of the working set. Working sets that belong to the same {@link #getWorkingSetManager()
-	 * working set manager} must have unique name.
+	 * Returns with the unique ID of the working set. Each working set must have its unique identifier in the same
+	 * container {@link WorkingSetManager manager}.
 	 *
-	 * @return the name of the working set.
+	 * @return the unique ID of the working set.
 	 */
-	String getName();
+	String getId();
+
+	/**
+	 * Returns with the name of the working set.
+	 *
+	 * <p>
+	 * By default returns with the {@link #getId() unique identifier} of the working set.
+	 *
+	 * @return the human readable name of the working set.
+	 */
+	default String getName() {
+		return getId();
+	}
 
 	/**
 	 * The container manager of the working set.

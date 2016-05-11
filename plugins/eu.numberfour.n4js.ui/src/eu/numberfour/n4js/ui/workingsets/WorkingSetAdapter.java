@@ -82,7 +82,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 
 	@Override
 	public String getId() {
-		return delegate.getName();
+		return delegate.getId();
 	}
 
 	@Override
@@ -98,7 +98,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 
 	@Override
 	public String getName() {
-		return getId();
+		return delegate.getName();
 	}
 
 	@Override
@@ -179,6 +179,45 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 			throws CoreException {
 
 		return new ResourceTraversal[] { new ResourceTraversal(getProjects(), DEPTH_INFINITE, 0) };
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		result = prime * result
+				+ ((getWorkingSetManager().getId() == null) ? 0 : getWorkingSetManager().getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof WorkingSetImpl)) {
+			return false;
+		}
+		WorkingSetImpl other = (WorkingSetImpl) obj;
+		if (getId() == null) {
+			if (other.getId() != null) {
+				return false;
+			}
+		} else if (!getId().equals(other.getId())) {
+			return false;
+		}
+		if (getWorkingSetManager().getId() == null) {
+			if (other.getWorkingSetManager().getId() != null) {
+				return false;
+			}
+		} else if (!getWorkingSetManager().getId().equals(other.getWorkingSetManager().getId())) {
+			return false;
+		}
+		return true;
 	}
 
 }

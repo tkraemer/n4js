@@ -225,6 +225,7 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 
 				if (errorMessage == null) {
 					if (!name.equals(originalName.get())
+							// This case ID and name are equal. Intentionally name.
 							&& Arrays2.transform(manager.getAllWorkingSets(), ws -> ws.getName()).contains(name)) {
 						errorMessage = "A working set already exists with name '" + name + "'.";
 					}

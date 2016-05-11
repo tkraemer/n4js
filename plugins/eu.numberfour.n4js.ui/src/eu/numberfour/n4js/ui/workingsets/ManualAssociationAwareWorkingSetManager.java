@@ -13,7 +13,7 @@ package eu.numberfour.n4js.ui.workingsets;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newHashSet;
-import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 import static java.util.Collections.emptyList;
 
 import java.io.IOException;
@@ -129,11 +129,11 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 			for (final WorkingSet workingSet : diff.getNewAllItems()) {
 				final ManualAssociationWorkingSet associationWorkingSet = (ManualAssociationWorkingSet) workingSet;
 				final Collection<String> projectNames = associationWorkingSet.getAssociatedProjectNames();
-				final String name = associationWorkingSet.getName();
-				if (OTHERS_WORKING_SET_LABEL.equals(name)) {
-					projectAssociations.put(name, emptyList());
+				final String id = associationWorkingSet.getId();
+				if (OTHERS_WORKING_SET_ID.equals(id)) {
+					projectAssociations.put(id, emptyList());
 				} else {
-					projectAssociations.put(name, projectNames);
+					projectAssociations.put(id, projectNames);
 				}
 			}
 
@@ -144,20 +144,20 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
-		checkState(projectAssociations.keySet().size() == orderedWorkingSetNames.size(),
+		checkState(projectAssociations.keySet().size() == orderedWorkingSetIds.size(),
 				"Expected same number of working set names as project associations."
-						+ "\nNames were: " + Iterables.toString(orderedWorkingSetNames)
+						+ "\nNames were: " + Iterables.toString(orderedWorkingSetIds)
 						+ "\nAssociations were: " + projectAssociations);
 
 		if (projectAssociations.isEmpty()) {
-			projectAssociations.put(OTHERS_WORKING_SET_LABEL, emptyList());
-			orderedWorkingSetNames.add(OTHERS_WORKING_SET_LABEL);
+			projectAssociations.put(OTHERS_WORKING_SET_ID, emptyList());
+			orderedWorkingSetIds.add(OTHERS_WORKING_SET_ID);
 		}
 
 		final int size = projectAssociations.keySet().size();
 		final WorkingSet[] workingSets = new WorkingSet[size];
 		for (int i = 0; i < size; i++) {
-			final String name = orderedWorkingSetNames.get(i);
+			final String name = orderedWorkingSetIds.get(i);
 			final Collection<String> projectNames = projectAssociations.get(name);
 			workingSets[i] = new ManualAssociationWorkingSet(projectNames, name, this);
 		}
@@ -243,7 +243,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 		@Override
 		public String toString() {
-			return getName() + " " + Iterables.toString(projectNames);
+			return super.toString() + " " + Iterables.toString(projectNames);
 		}
 
 	}

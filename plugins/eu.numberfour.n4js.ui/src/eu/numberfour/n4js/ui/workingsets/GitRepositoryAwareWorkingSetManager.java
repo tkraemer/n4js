@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
-import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.toMap;
@@ -73,7 +72,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 					return;
 				}
 
-				if (!orderedWorkingSetNames.isEmpty() && !visibleWorkingSetNames.isEmpty()) {
+				if (!orderedWorkingSetIds.isEmpty() && !visibleWorkingSetIds.isEmpty()) {
 
 					MapDifference<String, String> diff = calculateDifference(event);
 					if (!diff.areEqual()) {
@@ -81,17 +80,15 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 						// Deletion
 						final Set<String> deletions = diff.entriesOnlyOnLeft().keySet();
 						for (String deletedUrl : deletions) {
-							final String name = getRepositoryName(deletedUrl);
-							orderedWorkingSetNames.remove(name);
-							visibleWorkingSetNames.remove(name);
+							orderedWorkingSetIds.remove(deletedUrl);
+							visibleWorkingSetIds.remove(deletedUrl);
 						}
 
 						// Addition
 						final Set<String> additions = diff.entriesOnlyOnRight().keySet();
 						for (String addedUrl : additions) {
-							final String name = getRepositoryName(addedUrl);
-							orderedWorkingSetNames.add(name);
-							visibleWorkingSetNames.add(name);
+							orderedWorkingSetIds.add(addedUrl);
+							visibleWorkingSetIds.add(addedUrl);
 						}
 
 					}
@@ -110,14 +107,6 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 					}
 				}
 
-			}
-
-			private String getRepositoryName(final String localUrl) {
-				final List<String> fragments = Splitter.on("/")
-						.trimResults()
-						.omitEmptyStrings()
-						.splitToList(nullToEmpty(localUrl));
-				return fragments.get(fragments.size() - 2);
 			}
 
 			private MapDifference<String, String> calculateDifference(PreferenceChangeEvent event) {
@@ -162,22 +151,31 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 				.transform(repository -> new GitRepositoryWorkingSet(repository, this)));
 	}
 
-	private static final class GitRepositoryWorkingSet implements WorkingSet {
+	/**
+	 * Working set for grouping projects based on the attached local Git repository.
+	 */
+	public static final class GitRepositoryWorkingSet extends WorkingSetImpl {
 
-		private final WorkingSetManager manager;
 		private final String rootUri;
-		private String name;
+		private final String name;
+
+		private static String repositoryToId(Repository repository) {
+			if (null == repository) {
+				return OTHERS_WORKING_SET_ID;
+			}
+			return toUriString(repository.getDirectory().getParentFile().toURI());
+		}
 
 		private GitRepositoryWorkingSet(/* nullable */final Repository repository, final WorkingSetManager manager) {
+			super(repositoryToId(repository), manager);
 			if (repository == null) {
 				rootUri = null;
-				name = OTHERS_WORKING_SET_LABEL;
+				name = OTHERS_WORKING_SET_ID;
 			} else {
 				final File directory = repository.getDirectory().getParentFile();
 				rootUri = toUriString(directory.toURI());
 				name = directory.getName();
 			}
-			this.manager = manager;
 		}
 
 		@Override
@@ -208,23 +206,13 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 		/**
 		 * Returns with the {@link URI#toString()} of the argument. Trims the trailing forward slash if any.
 		 */
-		private String toUriString(final URI uri) {
+		private static String toUriString(final URI uri) {
 			final String uriString = uri.toString();
 			final int length = uriString.length();
 			if (uriString.charAt(length - 1) == '/') {
 				return uriString.substring(0, length - 1);
 			}
 			return uriString;
-		}
-
-		@Override
-		public WorkingSetManager getWorkingSetManager() {
-			return manager;
-		}
-
-		@Override
-		public String toString() {
-			return getName();
 		}
 
 	}

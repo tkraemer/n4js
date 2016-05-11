@@ -12,7 +12,7 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Lists.newArrayList;
-import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 
 import java.util.Arrays;
 import java.util.List;
@@ -119,21 +119,21 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
-		checkState(orderedWorkingSetFilters.size() == orderedWorkingSetNames.size(),
+		checkState(orderedWorkingSetFilters.size() == orderedWorkingSetIds.size(),
 				"Expected same number of working set names as working set filters."
-						+ "\nNames were: " + Iterables.toString(orderedWorkingSetNames)
+						+ "\nNames were: " + Iterables.toString(orderedWorkingSetIds)
 						+ "\nFilters were: " + Iterables.toString(orderedWorkingSetFilters));
 
 		if (orderedWorkingSetFilters.isEmpty()) {
-			orderedWorkingSetFilters.add(OTHERS_WORKING_SET_LABEL);
-			orderedWorkingSetNames.add(OTHERS_WORKING_SET_LABEL);
+			orderedWorkingSetFilters.add(OTHERS_WORKING_SET_ID);
+			orderedWorkingSetIds.add(OTHERS_WORKING_SET_ID);
 		}
 
 		final int size = orderedWorkingSetFilters.size();
 		final WorkingSet[] workingSets = new WorkingSet[size];
 		for (int i = 0; i < size; i++) {
 			final String regex = orderedWorkingSetFilters.get(i);
-			final String name = orderedWorkingSetNames.get(i);
+			final String name = orderedWorkingSetIds.get(i);
 			workingSets[i] = new ProjectNameFilterWorkingSet(Pattern.compile(regex), name, this);
 		}
 
@@ -153,7 +153,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 	/**
 	 * Working set implementation with project name filter support.
 	 */
-	protected static final class ProjectNameFilterWorkingSet extends DefaultWorkingSetImpl {
+	public static final class ProjectNameFilterWorkingSet extends DefaultWorkingSetImpl {
 
 		private final Pattern filter;
 
@@ -190,7 +190,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 
 		@Override
 		public String toString() {
-			return getName() + " [" + filter + "]";
+			return super.toString() + " [" + filter + "]";
 		}
 
 	}

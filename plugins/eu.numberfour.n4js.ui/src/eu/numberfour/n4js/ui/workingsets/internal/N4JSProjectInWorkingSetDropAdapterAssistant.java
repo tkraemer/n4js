@@ -12,7 +12,7 @@ package eu.numberfour.n4js.ui.workingsets.internal;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
-import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_LABEL;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 
 import java.util.Collection;
 import java.util.List;
@@ -132,19 +132,19 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 					}
 
 					if (!workingSetContains(oldTarget, project)
-							&& !OTHERS_WORKING_SET_LABEL.equals(oldTarget.getName())) {
+							&& !OTHERS_WORKING_SET_ID.equals(oldTarget.getId())) {
 
 						Collection<String> projectNames = newHashSet(
 								((ManualAssociationWorkingSet) oldTarget).getAssociatedProjectNames());
 						projectNames.add(project.getName());
 						ManualAssociationWorkingSet newTarget = new ManualAssociationWorkingSet(projectNames,
-								oldTarget.getName(), manager);
+								oldTarget.getId(), manager);
 
-						int allIndex = indexOfByName(oldTarget, allItems);
+						int allIndex = indexOfById(oldTarget, allItems);
 						allItems.remove(allIndex);
 						allItems.add(allIndex, newTarget);
 
-						int visibleIndex = indexOfByName(oldTarget, visibleItems);
+						int visibleIndex = indexOfById(oldTarget, visibleItems);
 						if (visibleIndex >= 0) {
 							visibleItems.remove(visibleIndex);
 							visibleItems.add(visibleIndex, newTarget);
@@ -158,18 +158,18 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 						ManualAssociationWorkingSet oldSource = ((ManualAssociationWorkingSet) path
 								.getFirstSegment());
 
-						if (oldSource != null && !OTHERS_WORKING_SET_LABEL.equals(oldSource.getName())) {
+						if (oldSource != null && !OTHERS_WORKING_SET_ID.equals(oldSource.getId())) {
 
 							Collection<String> projectNames = newHashSet(oldSource.getAssociatedProjectNames());
 							projectNames.remove(project.getName());
 							ManualAssociationWorkingSet newSource = new ManualAssociationWorkingSet(projectNames,
-									oldSource.getName(), manager);
+									oldSource.getId(), manager);
 
-							int allIndex = indexOfByName(oldSource, allItems);
+							int allIndex = indexOfById(oldSource, allItems);
 							allItems.remove(allIndex);
 							allItems.add(allIndex, newSource);
 
-							int visibleIndex = indexOfByName(oldSource, visibleItems);
+							int visibleIndex = indexOfById(oldSource, visibleItems);
 							if (visibleIndex >= 0) {
 								visibleItems.remove(visibleIndex);
 								visibleItems.add(visibleIndex, newSource);
@@ -181,8 +181,8 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 				} else if (path.getLastSegment() instanceof WorkingSet) {
 
 					WorkingSet movedWorkingSet = (WorkingSet) path.getLastSegment();
-					int sourceVisibleIndex = indexOfByName(movedWorkingSet, visibleItems);
-					int sourceAllIndex = indexOfByName(movedWorkingSet, allItems);
+					int sourceVisibleIndex = indexOfById(movedWorkingSet, visibleItems);
+					int sourceAllIndex = indexOfById(movedWorkingSet, allItems);
 
 					if (sourceVisibleIndex == -1 || sourceAllIndex == -1) {
 						return statusHelper.cancel();
@@ -190,8 +190,8 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 
 					final Object currentTarget = getCommonDropAdapter().getCurrentTarget();
 					if (currentTarget instanceof WorkingSet) {
-						int targetVisibleIndex = indexOfByName((WorkingSet) currentTarget, visibleItems);
-						int targetAllIndex = indexOfByName((WorkingSet) currentTarget, allItems);
+						int targetVisibleIndex = indexOfById((WorkingSet) currentTarget, visibleItems);
+						int targetAllIndex = indexOfById((WorkingSet) currentTarget, allItems);
 
 						if (targetVisibleIndex == -1 || targetAllIndex == -1) {
 							return statusHelper.cancel();
@@ -223,13 +223,13 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 			for (Object item : ((IStructuredSelection) selection).toArray()) {
 				IProject project = ((IAdaptable) item).getAdapter(IProject.class);
 				if (project != null && !workingSetContains(oldTarget, project)
-						&& !OTHERS_WORKING_SET_LABEL.equals(oldTarget.getName())) {
+						&& !OTHERS_WORKING_SET_ID.equals(oldTarget.getId())) {
 
 					Collection<String> projectNames = newHashSet(
 							((ManualAssociationWorkingSet) oldTarget).getAssociatedProjectNames());
 					projectNames.add(project.getName());
 					ManualAssociationWorkingSet newTarget = new ManualAssociationWorkingSet(projectNames,
-							oldTarget.getName(), manager);
+							oldTarget.getId(), manager);
 
 					allItems.remove(oldTarget);
 					allItems.add(newTarget);
@@ -255,9 +255,9 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 		return statusHelper.OK();
 	}
 
-	private int indexOfByName(WorkingSet element, List<WorkingSet> items) {
+	private int indexOfById(WorkingSet element, List<WorkingSet> items) {
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getName().equals(element.getName())) {
+			if (items.get(i).getId().equals(element.getId())) {
 				return i;
 			}
 		}
