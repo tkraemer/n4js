@@ -39,6 +39,7 @@ import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 import eu.numberfour.n4js.utils.M2MUriUtil;
+import eu.numberfour.n4js.utils.UtilN4;
 
 /**
  * The user data for exported modules contains a serialized representation of the module's content. This allows to
@@ -111,11 +112,15 @@ public final class UserdataMapper {
 
 		// resolve resource (i.e. resolve lazy cross-references, resolve DeferredTypeRefs, etc.)
 		originalResource.performPostProcessing();
-		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule)) { // FIXME show an error!
+		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule) || TypeUtils.containsDeferredTypeRefs(exportedModule)) {
+			// don't write invalid TModule to index (but make sure to report this error)
+			// TODO reconsider handling of this error case
+			// 2016-05-11: keeping fail-safe behavior for now (in place at least since end of 2014); but adding code
+			// to report the error)
+			UtilN4.reportError(new IllegalStateException(
+					"attempt to write module to index that contains unresolved proxies or DeferredTypeRefs"));
 			return createTimestampUserData(exportedModule);
 		}
-		// TODO consider moving the following check into #performPostProcessing() or some similar place
-		TypeUtils.assertNoDeferredTypeRefs(exportedModule);
 
 		// add copy -- EObjects can only be contained in a single resource, and
 		// we do not want to mess up the original resource
