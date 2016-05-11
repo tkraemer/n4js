@@ -118,7 +118,8 @@ public final class UserdataMapper {
 			// 2016-05-11: keeping fail-safe behavior for now (in place at least since end of 2014); but adding code
 			// to report the error)
 			UtilN4.reportError(new IllegalStateException(
-					"attempt to write module to index that contains unresolved proxies or DeferredTypeRefs"));
+					"attempt to write module to index that contains unresolved proxies or DeferredTypeRefs: "
+							+ originalResource.getURI()));
 			return createTimestampUserData(exportedModule);
 		}
 
