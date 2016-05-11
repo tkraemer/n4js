@@ -49,6 +49,7 @@ import eu.numberfour.n4js.utils.UtilN4;
  * types} from that.
  */
 public final class UserdataMapper {
+
 	/**
 	 * Logger for this class
 	 */
@@ -58,10 +59,16 @@ public final class UserdataMapper {
 	 * The key in the user data map of the module's description.
 	 */
 	public final static String USERDATA_KEY_SERIALIZED_SCRIPT = "serializedScript";
+
 	/**
 	 * The key in the user data map of static-polyfill contents-hash
 	 */
 	public final static String USERDATA_KEY_STATIC_POLYFILL_CONTENTHASH = "staticPolyfillContentHash";
+
+	/**
+	 * The key in the user data map of time stamp data. Value is a String representations of long (milliseconds).
+	 */
+	public static final String USERDATA_KEY_TIMESTAMP = "timestamp";
 
 	/**
 	 * Flag indicating whether the string representation contains binary or human readable data.
@@ -164,7 +171,7 @@ public final class UserdataMapper {
 		} else {
 			timestamp = System.currentTimeMillis();
 		}
-		return Collections.singletonMap("timestamp", String.valueOf(timestamp));
+		return Collections.singletonMap(USERDATA_KEY_TIMESTAMP, String.valueOf(timestamp));
 	}
 
 	private static Map<Object, Object> getOptions(URI resourceURI, Boolean binary) {
