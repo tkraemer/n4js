@@ -607,7 +607,8 @@ public class N4JSResource extends PostProcessingAwareResource {
 	}
 
 	/**
-	 * Special handling when resolving proxies with module-to-module URIs (a.k.a. m2m URIs).
+	 * Special handling when resolving proxies with module-to-module URIs (a.k.a. m2m URIs). For details, see
+	 * {@link M2MUriUtil}.
 	 */
 	private EObject getEObjectFromM2MUri(String uriFragment, boolean loadOnDemand) {
 		final URI targetUri = M2MUriUtil.convertFromM2M(uriFragment);
