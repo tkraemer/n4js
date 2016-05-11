@@ -29,6 +29,7 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.utils.UtilN4;
 
 /**
  * Performs post-processing of N4JS resources. Main responsibilities are proxy resolution, types model creation, and
@@ -55,6 +56,17 @@ public class N4JSPostProcessor implements PostProcessor {
 
 	@Override
 	public void performPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
+		try {
+			doPerformPostProcessing(resource, cancelIndicator);
+		} catch (Throwable th) {
+			// make sure this error is being reported, even if exception will be suppressed up by calling code!
+			throw UtilN4.reportError(
+					// use Error instead of RuntimeException to ensure smoke tests will fail
+					new RuntimeException("exception while post-processing resource " + resource.getURI(), th));
+		}
+	}
+
+	private void doPerformPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
 		final N4JSResource resCasted = (N4JSResource) resource;
 		// step 1: process the AST (resolve all proxies in AST, infer type of all typable AST nodes, etc.)
 		astProcessor.processAST(resCasted, cancelIndicator);
