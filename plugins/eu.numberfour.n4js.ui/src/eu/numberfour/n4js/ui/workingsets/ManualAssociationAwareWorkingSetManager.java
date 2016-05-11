@@ -145,7 +145,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
 		checkState(projectAssociations.keySet().size() == orderedWorkingSetNames.size(),
-				"Expected same number of working set names as working set filters."
+				"Expected same number of working set names as project associations."
 						+ "\nNames were: " + Iterables.toString(orderedWorkingSetNames)
 						+ "\nAssociations were: " + projectAssociations);
 

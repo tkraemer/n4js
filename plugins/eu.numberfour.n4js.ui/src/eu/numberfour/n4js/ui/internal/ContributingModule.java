@@ -12,6 +12,7 @@ package eu.numberfour.n4js.ui.internal;
 
 import static com.google.inject.Scopes.SINGLETON;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.xtext.builder.builderState.IBuilderState;
@@ -65,8 +66,14 @@ import eu.numberfour.n4js.ui.containers.CompositeStorage2UriMapperContribution;
 import eu.numberfour.n4js.ui.containers.N4JSExternalLibraryStorage2UriMapperContribution;
 import eu.numberfour.n4js.ui.containers.N4JSToBeBuiltComputer;
 import eu.numberfour.n4js.ui.containers.NfarStorageMapper;
+import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerLabelProvider;
+import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.scoping.builtin.ScopeInitializer;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManualAssociationWizard;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetProjectNameFilterWizard;
 import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.process.OutputStreamPrinterThreadProvider;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
@@ -121,6 +128,13 @@ public class ContributingModule implements Module {
 		binder.bind(ProjectDescriptionLoadListener.Strategy.class).to(N4MFProjectDependencyStrategy.class);
 		binder.bind(IResourceSetInitializer.class).to(ScopeInitializer.class);
 		binder.bind(ClassLoader.class).toInstance(getClass().getClassLoader());
+
+		binder.bind(WorkingSetManagerBroker.class).to(WorkingSetManagerBrokerImpl.class).in(SINGLETON);
+		binder.bind(WorkingSetManualAssociationWizard.class);
+		binder.bind(WorkingSetProjectNameFilterWizard.class);
+		binder.bind(N4JSProjectExplorerLabelProvider.class);
+		binder.bind(N4JSProjectExplorerHelper.class);
+		binder.bind(ObjectMapper.class);
 
 		binder.bind(ResourceDescriptionsProvider.class);
 		binder.bind(ResourceSetBasedResourceDescriptions.class);

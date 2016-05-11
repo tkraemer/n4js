@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
+import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -22,10 +23,22 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
+
+import com.google.common.base.Splitter;
+import com.google.inject.Inject;
 
 /**
  * Working set manager based on Git repositories.
@@ -33,13 +46,86 @@ import org.eclipse.jgit.lib.Repository;
 @SuppressWarnings("restriction")
 public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
+	@Inject
+	private WorkingSetManagerBroker workingSetManagerBroker;
+
 	private final RepositoryCache repositoryCache;
+	private final IPreferenceChangeListener repositoryChangeListener;
 
 	/**
 	 * Sole constructor for creating the working set manager. Internally initializes the cache for repositories.
 	 */
 	public GitRepositoryAwareWorkingSetManager() {
 		repositoryCache = Activator.getDefault().getRepositoryCache();
+		repositoryChangeListener = new IPreferenceChangeListener() {
+
+			@Override
+			public void preferenceChange(final PreferenceChangeEvent event) {
+				if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey())) {
+					return;
+				}
+
+				final String newValue = (String) event.getNewValue();
+				final String oldValue = (String) event.getOldValue();
+
+				if (!orderedWorkingSetNames.isEmpty() && !visibleWorkingSetNames.isEmpty()) {
+
+					// Deletion
+					if (newValue == null) {
+
+						final String name = getRepositoryName(oldValue);
+						orderedWorkingSetNames.remove(name);
+						visibleWorkingSetNames.remove(name);
+
+						// Addition
+					} else if (oldValue == null) {
+
+						final String name = getRepositoryName(newValue);
+						orderedWorkingSetNames.add(name);
+						visibleWorkingSetNames.add(name);
+
+					} // Update is not handled
+
+				}
+
+				discardWorkingSetState();
+				saveState(new NullProgressMonitor());
+
+				if (workingSetManagerBroker.isWorkingSetTopLevel()) {
+					final WorkingSetManager activeManger = workingSetManagerBroker.getActiveManger();
+					if (activeManger != null) {
+						if (activeManger.getId().equals(getId())) {
+							workingSetManagerBroker.refreshNavigator();
+						}
+					}
+				}
+
+			}
+
+			private String getRepositoryName(final String localUrl) {
+				final List<String> fragments = Splitter.on("/")
+						.trimResults()
+						.omitEmptyStrings()
+						.splitToList(nullToEmpty(localUrl));
+				return fragments.get(fragments.size() - 2);
+			}
+
+		};
+
+		final IEclipsePreferences gitNode = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
+		gitNode.addPreferenceChangeListener(repositoryChangeListener);
+
+		final BundleContext context = Activator.getDefault().getBundle().getBundleContext();
+		context.addBundleListener(new BundleListener() {
+
+			@Override
+			public void bundleChanged(final BundleEvent event) {
+				if (BundleEvent.STOPPING == event.getType()) {
+					gitNode.removePreferenceChangeListener(repositoryChangeListener);
+				}
+			}
+
+		});
 	}
 
 	@Override
