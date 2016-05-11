@@ -17,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +25,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -109,41 +106,22 @@ public final class UserdataMapper {
 		if (exportedModule.isPreLinkingPhase()) {
 			throw new AssertionError("Module may not be from the preLinkingPhase");
 		}
-		// ----
-		final Iterator<EObject> iter = exportedModule.eAllContents();
-		while (iter.hasNext()) {
-			final EObject eobj = iter.next();
-			for (EReference ref : eobj.eClass().getEAllReferences()) {
-				if (!ref.isContainment() && !ref.isDerived()
-				/* TODO: */ && !ref.isMany()) {
-					final EObject value = (EObject) eobj.eGet(ref, false);
-					if (value != null && value.eIsProxy()) {
-						final String frag = ((BasicEObjectImpl) value).eProxyURI().fragment();
-						if (frag != null && frag.startsWith("|")) {
-							eobj.eGet(ref, true);
-							break;
-						}
-					}
-				}
-			}
+		final Resource originalResourceUncasted = exportedModule.eResource();
+		if (!(originalResourceUncasted instanceof N4JSResource)) {
+			throw new IllegalArgumentException("module must be contained in an N4JSResource");
 		}
-		// ----
+		final N4JSResource originalResource = (N4JSResource) originalResourceUncasted;
+
+		// resolve resource (i.e. resolve lazy cross-references, resolve DeferredTypeRefs, etc.)
+		originalResource.performPostProcessing();
 		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule)) { // FIXME show an error!
 			return createTimestampUserData(exportedModule);
 		}
-		final Resource originalResource = exportedModule.eResource();
-
-		// resolve resource (i.e. resolve lazy cross-references, resolve ComputedTypeRefs, etc.)
-		if (originalResource instanceof N4JSResource)
-			((N4JSResource) originalResource).performPostProcessing();
-		if (!exportedModule.isPreLinkingPhase()) {
-			// TODO consider moving the following check into #performPostProcessing() or some similar place
-			TypeUtils.assertNoDeferredTypeRefs(exportedModule);
-		}
+		// TODO consider moving the following check into #performPostProcessing() or some similar place
+		TypeUtils.assertNoDeferredTypeRefs(exportedModule);
 
 		// add copy -- EObjects can only be contained in a single resource, and
-		// we do not want to
-		// mess up the original resource
+		// we do not want to mess up the original resource
 		URI resourceURI = originalResource.getURI();
 		XMIResource resourceForUserData = new XMIResourceImpl(resourceURI);
 
@@ -163,9 +141,8 @@ public final class UserdataMapper {
 
 		// in case of filling file store fingerprint to keep filled type updated by the incremental builder.
 		// required to trigger rebuilds even if only minor changes happened to the content.
-		if (exportedModule.isStaticPolyfillModule() && originalResource instanceof N4JSResource) {
-			N4JSResource n4jsres = (N4JSResource) originalResource;
-			String contentHash = Integer.toHexString(n4jsres.getParseResult().getRootNode().hashCode());
+		if (exportedModule.isStaticPolyfillModule()) {
+			final String contentHash = Integer.toHexString(originalResource.getParseResult().getRootNode().hashCode());
 			ret.put(USERDATA_KEY_STATIC_POLYFILL_CONTENTHASH, contentHash);
 		}
 		return ret;
