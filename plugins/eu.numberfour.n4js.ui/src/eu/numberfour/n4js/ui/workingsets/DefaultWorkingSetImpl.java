@@ -29,8 +29,8 @@ import com.google.common.collect.Maps;
 
 /**
  * Default working set implementation that provides a convenient {@link #getElements() element providing} logic for the
- * built-in '{@link WorkingSet#OTHERS_WORKING_SET_ID Others}' working set. These dynamic working sets depends on all the
- * other working sets provided by the container manager.
+ * built-in '{@link WorkingSet#OTHERS_WORKING_SET_ID Other Projects}' working set. These dynamic working sets depends on
+ * all the other working sets provided by the container manager.
  */
 public abstract class DefaultWorkingSetImpl extends WorkingSetImpl implements Predicate<IProject> {
 

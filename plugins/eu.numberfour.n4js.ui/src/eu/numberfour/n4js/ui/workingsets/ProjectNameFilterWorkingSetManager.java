@@ -162,15 +162,15 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 		 *
 		 * @param filter
 		 *            the project name filter.
-		 * @param name
-		 *            the name of the working set.
+		 * @param id
+		 *            the ID of the working set.
 		 * @param manager
 		 *            the container manager where this working set belongs to.
 		 */
-		protected ProjectNameFilterWorkingSet(final Pattern filter, final String name,
+		protected ProjectNameFilterWorkingSet(final Pattern filter, final String id,
 				final WorkingSetManager manager) {
 
-			super(name, manager);
+			super(id, manager);
 			this.filter = filter;
 		}
 

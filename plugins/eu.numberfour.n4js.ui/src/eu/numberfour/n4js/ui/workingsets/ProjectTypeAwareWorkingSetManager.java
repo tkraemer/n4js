@@ -47,7 +47,7 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
 		final Collection<ProjectType> types = newArrayList(ProjectType.values());
-		types.add(null); // For 'Others'.
+		types.add(null); // For 'Other Projects'.
 		return newArrayList(from(types)
 				.transform(type -> new ProjectTypeWorkingSet(type, core, ProjectTypeAwareWorkingSetManager.this)));
 	}
@@ -86,7 +86,7 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 			for (int i = 0, size = projects.length; i < size; i++) {
 				final IProject project = projects[i];
 				final IN4JSProject n4Project = core.findProject(toUri(project)).orNull();
-				if (type == null) { // Others
+				if (type == null) { // Other Projects
 					if (n4Project == null || !n4Project.exists()) {
 						elements[elementCount++] = project;
 					}

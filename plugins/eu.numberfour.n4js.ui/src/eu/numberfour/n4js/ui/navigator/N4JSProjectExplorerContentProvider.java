@@ -159,8 +159,7 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 
 	@Override
 	public void init(ICommonContentExtensionSite aConfig) {
-		// TODO Auto-generated method stub
-
+		// Nothing to initialize here.
 	}
 
 	@Override

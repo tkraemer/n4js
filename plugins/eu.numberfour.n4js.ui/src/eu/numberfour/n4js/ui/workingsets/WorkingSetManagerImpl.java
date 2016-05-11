@@ -177,7 +177,8 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 
 	/**
 	 * Orders by case sensitive name ordering, if no explicit ordering is specified yet. The
-	 * {@link WorkingSet#OTHERS_WORKING_SET_ID Others} reserved working set name/ID is considered to be the first one.
+	 * {@link WorkingSet#OTHERS_WORKING_SET_ID Other Projects} reserved working set name/ID is considered to be the
+	 * first one.
 	 */
 	@Override
 	public int compare(final WorkingSet left, final WorkingSet right) {

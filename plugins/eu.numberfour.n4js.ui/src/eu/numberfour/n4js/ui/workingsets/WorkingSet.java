@@ -27,7 +27,7 @@ public interface WorkingSet extends IAdaptable {
 	 * <p>
 	 * ID: {@value}
 	 */
-	String OTHERS_WORKING_SET_ID = "Others";
+	String OTHERS_WORKING_SET_ID = "Other Projects";
 
 	/**
 	 * Returns with the unique ID of the working set. Each working set must have its unique identifier in the same

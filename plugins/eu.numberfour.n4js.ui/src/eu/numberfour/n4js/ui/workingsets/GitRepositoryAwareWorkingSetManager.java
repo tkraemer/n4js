@@ -77,14 +77,14 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 					MapDifference<String, String> diff = calculateDifference(event);
 					if (!diff.areEqual()) {
 
-						// Deletion
+						// Deletions
 						final Set<String> deletions = diff.entriesOnlyOnLeft().keySet();
 						for (String deletedUrl : deletions) {
 							orderedWorkingSetIds.remove(deletedUrl);
 							visibleWorkingSetIds.remove(deletedUrl);
 						}
 
-						// Addition
+						// Additions
 						final Set<String> additions = diff.entriesOnlyOnRight().keySet();
 						for (String addedUrl : additions) {
 							orderedWorkingSetIds.add(addedUrl);
@@ -146,7 +146,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
 		final Collection<Repository> repositories = newArrayList(repositoryCache.getAllRepositories());
-		repositories.add(null); // For 'Others'.
+		repositories.add(null); // For 'Other Projects'.
 		return newArrayList(from(repositories)
 				.transform(repository -> new GitRepositoryWorkingSet(repository, this)));
 	}
@@ -166,7 +166,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 			return toUriString(repository.getDirectory().getParentFile().toURI());
 		}
 
-		private GitRepositoryWorkingSet(/* nullable */final Repository repository, final WorkingSetManager manager) {
+		private GitRepositoryWorkingSet(/* nullable */ final Repository repository, final WorkingSetManager manager) {
 			super(repositoryToId(repository), manager);
 			if (repository == null) {
 				rootUri = null;
