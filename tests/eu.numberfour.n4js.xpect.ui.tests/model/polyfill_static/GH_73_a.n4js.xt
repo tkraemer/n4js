@@ -22,7 +22,7 @@
 @@StaticPolyfillModule
 
 @StaticPolyfill
-// XPECT errors --> "The filling class can not add interfaces, the interface needs to be added to the filled class." at "implements I2"
+// XPECT errors --> "The filling class can not add interfaces, the interface needs to be added to the filled class." at "I2"
 export public class A extends A implements I2 {
 
 }
