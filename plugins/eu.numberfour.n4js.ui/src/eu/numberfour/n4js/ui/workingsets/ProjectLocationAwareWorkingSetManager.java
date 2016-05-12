@@ -26,10 +26,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.swt.graphics.Image;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
+
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 
 /**
  * Manager for project location aware working sets.
@@ -54,7 +58,15 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 	}
 
 	@Override
+	public Optional<Image> getImage() {
+		return ImageRef.URL_LOCATION.asImage();
+	}
+
+	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
+		if (projectLocations.isEmpty()) {
+			projectLocations.putAll(initProjectLocation());
+		}
 		return newArrayList(from(projectLocations.keySet()).transform(id -> new ProjectLocationWorkingSet(id, this)));
 	}
 

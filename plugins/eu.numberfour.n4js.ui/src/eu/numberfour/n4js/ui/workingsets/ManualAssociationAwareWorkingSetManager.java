@@ -27,14 +27,17 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.swt.graphics.Image;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.utils.Diff;
 
 /**
@@ -48,7 +51,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	private static final String ORDERED_ASSOCIATIONS_KEY = ".orderedAssociations";
 
 	/**
-	 * Ordered multimap of working set and workspace project associations.
+	 * Ordered map of working set and workspace project associations.
 	 */
 	private final ProjectAssociation projectAssociations = new ProjectAssociation();
 
@@ -60,7 +63,12 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 
 	@Override
 	public String getLabel() {
-		return "Manual";
+		return "Manual Association";
+	}
+
+	@Override
+	public Optional<Image> getImage() {
+		return ImageRef.PROJECT_MODE.asImage();
 	}
 
 	@Override

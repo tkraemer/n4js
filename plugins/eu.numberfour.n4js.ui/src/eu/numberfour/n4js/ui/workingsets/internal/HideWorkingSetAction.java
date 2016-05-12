@@ -21,6 +21,7 @@ import org.eclipse.ui.actions.SelectionListenerAction;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetDiffBuilder;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
@@ -37,6 +38,7 @@ public class HideWorkingSetAction extends SelectionListenerAction implements IWo
 	 */
 	public HideWorkingSetAction() {
 		super("Hide Selected Working Set");
+		setImageDescriptor(ImageRef.CLEAR.asImageDescriptor().orNull());
 	}
 
 	@Override

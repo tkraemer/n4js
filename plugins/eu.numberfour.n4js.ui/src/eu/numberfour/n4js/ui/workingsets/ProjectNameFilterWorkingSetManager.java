@@ -22,15 +22,18 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.swt.graphics.Image;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.utils.Diff;
 
 /**
@@ -54,6 +57,11 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 	@Override
 	public String getLabel() {
 		return "Project Name Filter";
+	}
+
+	@Override
+	public Optional<Image> getImage() {
+		return ImageRef.VARIABLE_TAB.asImage();
 	}
 
 	@Override

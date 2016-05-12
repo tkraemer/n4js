@@ -24,12 +24,15 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.swt.graphics.Image;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 
 /**
  * N4JS project type aware working set manager implementation.
@@ -42,6 +45,11 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 	@Override
 	public String getLabel() {
 		return "N4JS Project Type";
+	}
+
+	@Override
+	public Optional<Image> getImage() {
+		return ImageRef.TYPES.asImage();
 	}
 
 	@Override

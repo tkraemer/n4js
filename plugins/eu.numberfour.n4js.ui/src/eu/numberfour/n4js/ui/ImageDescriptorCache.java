@@ -102,7 +102,25 @@ public enum ImageDescriptorCache {
 		LEFT_ARROW("nav_backward.gif"),
 
 		/** Image reference for right/forward arrow. */
-		RIGHT_ARROW("nav_forward.gif");
+		RIGHT_ARROW("nav_forward.gif"),
+
+		/** Clear image reference. */
+		CLEAR("clear.gif"),
+
+		/** Image reference for repository. */
+		REPOSITORY("remote_history_mode.gif"),
+
+		/** Reference for URL location. */
+		URL_LOCATION("url.gif"),
+
+		/** Variable tab image reference. */
+		VARIABLE_TAB("variable_tab.gif"),
+
+		/** Types image reference. */
+		TYPES("javaassist_co.gif"),
+
+		/** Project mode image reference. */
+		PROJECT_MODE("prj_mode.gif");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 

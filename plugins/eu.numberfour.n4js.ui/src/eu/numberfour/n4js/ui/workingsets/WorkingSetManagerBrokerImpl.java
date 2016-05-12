@@ -99,7 +99,7 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	 *
 	 */
 	@Inject
-	public WorkingSetManagerBrokerImpl(final Injector injector, final StatusHelper statusHelper) {
+	private WorkingSetManagerBrokerImpl(final Injector injector, final StatusHelper statusHelper) {
 		this.injector = injector;
 		this.statusHelper = statusHelper;
 		this.activeWorkingSetManager = new AtomicReference<>();

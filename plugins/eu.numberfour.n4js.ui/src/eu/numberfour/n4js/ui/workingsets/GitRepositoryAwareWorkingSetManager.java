@@ -37,14 +37,18 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
+
+import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 
 /**
  * Working set manager based on Git repositories.
@@ -138,6 +142,11 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 	@Override
 	public String getLabel() {
 		return "Git Repository";
+	}
+
+	@Override
+	public Optional<Image> getImage() {
+		return ImageRef.REPOSITORY.asImage();
 	}
 
 	@Override
