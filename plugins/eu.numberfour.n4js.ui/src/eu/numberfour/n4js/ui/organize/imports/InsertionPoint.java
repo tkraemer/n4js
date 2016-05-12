@@ -24,7 +24,7 @@ import org.eclipse.xtext.util.TextRegion;
  * ML-comments.
  *
  */
-public class InsertionPoint {
+/* default */ class InsertionPoint {
 
 	/** Insertion point, a value of {@code -1} means not set. Zero-based total offset. */
 	public int offset = -1;

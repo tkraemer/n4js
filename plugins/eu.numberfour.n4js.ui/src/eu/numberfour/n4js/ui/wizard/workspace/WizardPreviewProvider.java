@@ -90,7 +90,6 @@ public class WizardPreviewProvider {
 		/**
 		 * Creates a new wizard preview for a given shell.
 		 *
-		 * Using the style parameter the direction of the preview shell can be set.
 		 */
 		public WizardPreview(Composite parent, int style) {
 			super(parent, style);
@@ -269,8 +268,6 @@ public class WizardPreviewProvider {
 					updateHighlighting();
 				}
 			});
-
-			// viewer.getTextWidget().setAlwaysShowScrollBars(false);
 		}
 
 		/**
