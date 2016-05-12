@@ -32,11 +32,6 @@ public class GH_170_ImageCachint_PluginUITest extends AbstractIDEBUG_Test {
 		assertTrue("Expected running workbench.", PlatformUI.isWorkbenchRunning());
 	}
 
-	@Override
-	protected ProjectImporter getProjectImporter() {
-		return ProjectImporter.NOOP;
-	}
-
 	/**
 	 * Checks the direct {@link ImageDescriptor image descriptor} caching.
 	 */

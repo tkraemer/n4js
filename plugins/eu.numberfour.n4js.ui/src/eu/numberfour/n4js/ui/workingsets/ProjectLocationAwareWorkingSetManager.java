@@ -70,6 +70,12 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 		return newArrayList(from(projectLocations.keySet()).transform(id -> new ProjectLocationWorkingSet(id, this)));
 	}
 
+	@Override
+	protected void discardWorkingSetState() {
+		super.discardWorkingSetState();
+		projectLocations.clear();
+	}
+
 	private Multimap<String, IProject> initProjectLocation() {
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		final IProject[] projects = root.getProjects();

@@ -17,7 +17,7 @@ import eu.numberfour.n4js.utils.Diff;
 /**
  * Representation of a broker for registered {@link WorkingSetManager working set manager} instances.
  */
-public interface WorkingSetManagerBroker extends IMementoAware {
+public interface WorkingSetManagerBroker extends MementoAware {
 
 	/**
 	 * Returns with all the available working set managers.
@@ -122,7 +122,9 @@ public interface WorkingSetManagerBroker extends IMementoAware {
 	public void fireWorkingSetManagerUpdated(final String id, final Diff<WorkingSet> diff);
 
 	/**
-	 * Asynchronously refreshes the navigator content.
+	 * Asynchronously refreshes the navigator content. If the navigator is currently not visible, then a refresh event
+	 * will be queued and the navigator will be refreshed on the next available time. Queuing multiple delayed refresh
+	 * event have no side effect.
 	 */
 	void refreshNavigator();
 

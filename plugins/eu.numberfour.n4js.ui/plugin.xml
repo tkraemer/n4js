@@ -160,6 +160,10 @@ Contributors:
               class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.handler.OpenGeneratedSourceInEditorHandler"
               commandId="eu.numberfour.n4js.ui.openGeneratedSourceInEditor">
         </handler>
+        <handler
+              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler"
+              commandId="eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler">
+        </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
         <definition id="eu.numberfour.n4js.N4JS.Editor.opened">
@@ -274,6 +278,10 @@ Contributors:
               id="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
               name="nested">
             </commandParameter>
+      </command>
+      <command
+            id="eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler"
+            name="Reset Working Sets">
       </command>
     </extension>
     <extension point="org.eclipse.ui.menus">

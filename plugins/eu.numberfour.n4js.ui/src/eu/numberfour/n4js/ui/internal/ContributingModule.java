@@ -129,6 +129,7 @@ public class ContributingModule implements Module {
 		binder.bind(IResourceSetInitializer.class).to(ScopeInitializer.class);
 		binder.bind(ClassLoader.class).toInstance(getClass().getClassLoader());
 
+		binder.bind(WorkingSetManagerBrokerImpl.class).in(SINGLETON);
 		binder.bind(WorkingSetManagerBroker.class).to(WorkingSetManagerBrokerImpl.class).in(SINGLETON);
 		binder.bind(WorkingSetManualAssociationWizard.class);
 		binder.bind(WorkingSetProjectNameFilterWizard.class);

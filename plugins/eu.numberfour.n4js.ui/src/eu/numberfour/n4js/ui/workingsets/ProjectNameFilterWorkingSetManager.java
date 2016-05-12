@@ -100,7 +100,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 				orderedWorkingSetFilters.addAll(Arrays.asList(orderedFilters.split(SEPARATOR)));
 			}
 
-			discardWorkingSetState();
+			discardWorkingSetCaches();
 			return statusHelper.OK();
 
 		}
@@ -120,7 +120,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 				orderedWorkingSetFilters.add(nameFilterWorkingSet.getFilter().pattern());
 			}
 
-			discardWorkingSetState();
+			discardWorkingSetCaches();
 			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 
 		}
@@ -147,6 +147,12 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 		}
 
 		return Arrays.asList(workingSets);
+	}
+
+	@Override
+	protected void discardWorkingSetState() {
+		super.discardWorkingSetState();
+		orderedWorkingSetFilters.clear();
 	}
 
 	@Override

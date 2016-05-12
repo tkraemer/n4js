@@ -18,7 +18,7 @@ import org.osgi.service.prefs.Preferences;
  * Representation of a memento aware concept. The internal state can be saved to and restored from {@link Preferences
  * OSGi based preferences}.
  */
-public interface IMementoAware {
+public interface MementoAware {
 
 	/**
 	 * Saves the state of the current instance by updating the {@link #getPreferences() preferences}. It is the

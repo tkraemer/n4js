@@ -27,7 +27,7 @@ import eu.numberfour.n4js.utils.Diff;
 /**
  * Representation of a working set manager.
  */
-public interface WorkingSetManager extends Comparator<WorkingSet>, IMementoAware {
+public interface WorkingSetManager extends Comparator<WorkingSet>, MementoAware {
 
 	/**
 	 * The unique ID of the {@code workingSetManager} extension point.

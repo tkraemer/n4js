@@ -95,7 +95,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 				}
 
-				discardWorkingSetState();
+				discardWorkingSetCaches();
 				saveState(new NullProgressMonitor());
 
 				WorkingSetManagerBroker workingSetManagerBroker = getWorkingSetManagerBroker();

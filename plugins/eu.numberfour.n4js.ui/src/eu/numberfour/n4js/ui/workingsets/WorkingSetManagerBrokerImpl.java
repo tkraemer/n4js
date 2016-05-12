@@ -12,6 +12,7 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Suppliers.memoize;
+import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSetManager.EXTENSION_POINT_ID;
@@ -52,6 +53,7 @@ import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
@@ -233,45 +235,7 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 
 	@Override
 	public void refreshNavigator() {
-		UIUtils.getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				final IWorkbench workbench = getWorkbench();
-				final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-				if (window != null) {
-					final IWorkbenchPage page = window.getActivePage();
-					if (page != null) {
-						final IViewPart view = page.findView(ProjectExplorer.VIEW_ID);
-						if (view instanceof ProjectExplorer) {
-							asyncRefreshCommonViewer((ProjectExplorer) view);
-						} else {
-							if (alreadyQueuedNavigatorRefresh.compareAndSet(false, true)) {
-								final IPartListener2 listener = new PartListener2Adapter() {
-
-									@Override
-									public void partActivated(final IWorkbenchPartReference partRef) {
-										@SuppressWarnings("hiding")
-										final IViewPart view = partRef.getPage().findView(ProjectExplorer.VIEW_ID);
-										if (view instanceof ProjectExplorer) {
-											asyncRefreshCommonViewer((ProjectExplorer) view);
-											// Already refreshed remove itself from the listeners.
-											page.removePartListener(this);
-											alreadyQueuedNavigatorRefresh.compareAndSet(true, false);
-										}
-									}
-
-								};
-
-								// Refresh on next activation.
-								page.addPartListener(listener);
-							}
-						}
-					}
-				}
-			}
-
-		});
+		refreshNavigator(false);
 	}
 
 	@Override
@@ -291,9 +255,99 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 		}
 	}
 
-	private void asyncRefreshCommonViewer(final ProjectExplorer explorer) {
+	/**
+	 * (non-API)
+	 *
+	 * <p>
+	 * Resets the actual and the persistent state of the current broker instance and of all available working set
+	 * managers. This method does not remove any registered listeners. Also refreshes the common navigator view.
+	 *
+	 * <p>
+	 * This method is exposed only for testing and recovery purposes. It is highly discouraged to invoke from production
+	 * code.
+	 */
+	@VisibleForTesting
+	public void resetState() {
+
+		for (final Resetable resetable : from(getWorkingSetManagers()).filter(Resetable.class)) {
+			resetable.reset();
+		}
+
+		try {
+			getPreferences().clear();
+			getPreferences().flush();
+			workingSetTopLevel.set(false);
+			for (final TopLevelElementChangedListener listener : topLevelElementChangeListeners) {
+				listener.topLevelElementChanged(workingSetTopLevel.get());
+			}
+			final Collection<WorkingSetManager> managers = getWorkingSetManagers();
+			if (!managers.isEmpty()) {
+				activeWorkingSetManager.set(managers.iterator().next());
+			} else {
+				activeWorkingSetManager.set(null);
+			}
+
+			refreshNavigator(true);
+		} catch (final BackingStoreException e) {
+			LOGGER.error("Error occurred while reseting persisted the state.", e);
+		}
+
+	}
+
+	/**
+	 * Sugar for {@link #refreshNavigator() refreshing the navigator}. If the {@code resetInput} argument is
+	 * {@code true}, then the viewer input will be reset, otherwise just a refresh will be performed on the underlying
+	 * viewer.
+	 */
+	private void refreshNavigator(final boolean resetInput) {
+		UIUtils.getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				final IWorkbench workbench = getWorkbench();
+				final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+				if (window != null) {
+					final IWorkbenchPage page = window.getActivePage();
+					if (page != null) {
+						final IViewPart view = page.findView(ProjectExplorer.VIEW_ID);
+						if (view instanceof ProjectExplorer) {
+							asyncRefreshCommonViewer((ProjectExplorer) view, resetInput);
+						} else {
+							if (alreadyQueuedNavigatorRefresh.compareAndSet(false, true)) {
+								final IPartListener2 listener = new PartListener2Adapter() {
+
+									@Override
+									public void partActivated(final IWorkbenchPartReference partRef) {
+										@SuppressWarnings("hiding")
+										final IViewPart view = partRef.getPage().findView(ProjectExplorer.VIEW_ID);
+										if (view instanceof ProjectExplorer) {
+											asyncRefreshCommonViewer((ProjectExplorer) view, resetInput);
+											// Already refreshed remove itself from the listeners.
+											page.removePartListener(this);
+											alreadyQueuedNavigatorRefresh.compareAndSet(true, false);
+										}
+									}
+
+								};
+
+								// Refresh on next activation.
+								page.addPartListener(listener);
+							}
+						}
+					}
+				}
+			}
+
+		});
+	}
+
+	private void asyncRefreshCommonViewer(final ProjectExplorer explorer, final boolean resetInput) {
 		final CommonViewer viewer = explorer.getCommonViewer();
-		getDisplay().asyncExec(() -> viewer.refresh(true));
+		if (resetInput) {
+			getDisplay().asyncExec(() -> viewer.setInput(viewer.getInput()));
+		} else {
+			getDisplay().asyncExec(() -> viewer.refresh(true));
+		}
 	}
 
 	private IStatus saveState() {

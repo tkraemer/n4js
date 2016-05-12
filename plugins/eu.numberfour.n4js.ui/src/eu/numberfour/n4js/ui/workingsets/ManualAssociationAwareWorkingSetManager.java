@@ -119,7 +119,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				}
 			}
 
-			discardWorkingSetState();
+			discardWorkingSetCaches();
 			return statusHelper.OK();
 
 		}
@@ -145,7 +145,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				}
 			}
 
-			discardWorkingSetState();
+			discardWorkingSetCaches();
 			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 
 		}
@@ -182,6 +182,12 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	@Override
 	public WorkingSetEditWizard createEditWizard() {
 		return wizardProvider.get();
+	}
+
+	@Override
+	protected void discardWorkingSetState() {
+		super.discardWorkingSetState();
+		projectAssociations.clear();
 	}
 
 	/**

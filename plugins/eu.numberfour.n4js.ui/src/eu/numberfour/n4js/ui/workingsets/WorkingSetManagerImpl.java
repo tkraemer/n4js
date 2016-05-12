@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -40,7 +41,7 @@ import eu.numberfour.n4js.utils.StatusHelper;
  * sets can be modified. This implementation is not thread safe. It is the clients responsibility to synchronize on it
  * when thread safety is required.
  */
-public abstract class WorkingSetManagerImpl implements WorkingSetManager {
+public abstract class WorkingSetManagerImpl implements WorkingSetManager, Resetable {
 
 	private static final Logger LOGGER = Logger.getLogger(WorkingSetManagerImpl.class);
 
@@ -157,7 +158,7 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 			visibleWorkingSetIds.addAll(Arrays.asList(visibleLabels.split(SEPARATOR)));
 		}
 
-		discardWorkingSetState();
+		discardWorkingSetCaches();
 
 		return statusHelper.OK();
 	}
@@ -178,7 +179,7 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 				orderedWorkingSetIds.add(workingSet.getId());
 			}
 
-			discardWorkingSetState();
+			discardWorkingSetCaches();
 			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 		}
 
@@ -223,6 +224,19 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 		return orderedWorkingSetIds.indexOf(leftId) - orderedWorkingSetIds.indexOf(rightId);
 	}
 
+	@Override
+	public void reset() {
+		try {
+			getPreferences().clear();
+			getPreferences().flush();
+			discardWorkingSetState();
+			discardWorkingSetCaches();
+			restoreState(new NullProgressMonitor());
+		} catch (BackingStoreException e) {
+			LOGGER.error("Error occurred while clearing persisted state.", e);
+		}
+	}
+
 	/**
 	 * Initializes and returns with all available working sets. The returning list includes the hidden ones as well.
 	 *
@@ -231,11 +245,20 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 	protected abstract List<WorkingSet> initializeWorkingSets();
 
 	/**
-	 * Discards the state of cached working sets.
+	 * Discards the state of caches used by the current manager.
 	 */
-	protected void discardWorkingSetState() {
+	protected void discardWorkingSetCaches() {
 		allWorkingSets = null;
 		visibleWorkingSets = null;
+	}
+
+	/**
+	 * Discards the state of the working set manager. This state is equivalent with the persisted state. Overriding
+	 * methods should call super to make sure the entire state of the working set manager is discarded.
+	 */
+	protected void discardWorkingSetState() {
+		visibleWorkingSetIds.clear();
+		orderedWorkingSetIds.clear();
 	}
 
 	/**
