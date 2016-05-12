@@ -120,7 +120,10 @@ public enum ImageDescriptorCache {
 		TYPES("javaassist_co.gif"),
 
 		/** Project mode image reference. */
-		PROJECT_MODE("prj_mode.gif");
+		PROJECT_MODE("prj_mode.gif"),
+
+		/** Reference to the image 'Showing hidden working sets'. */
+		SHOW_HIDDEN_WORKING_SETS("show_hidden.gif");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 

@@ -146,6 +146,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 			}
 
 			discardWorkingSetState();
+			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 
 		}
 	}

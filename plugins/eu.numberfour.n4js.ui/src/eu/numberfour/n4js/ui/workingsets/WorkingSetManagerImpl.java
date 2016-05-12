@@ -179,6 +179,7 @@ public abstract class WorkingSetManagerImpl implements WorkingSetManager {
 			}
 
 			discardWorkingSetState();
+			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 		}
 
 	}

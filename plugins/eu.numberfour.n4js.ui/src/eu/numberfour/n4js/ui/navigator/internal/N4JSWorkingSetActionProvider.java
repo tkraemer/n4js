@@ -21,13 +21,18 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.workingsets.TopLevelElementChangedListener;
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerStateChangedListener;
+import eu.numberfour.n4js.utils.Diff;
 
 /**
  * Customized working set provider for the CNF (Common Navigator Framework).
  */
 @SuppressWarnings("restriction")
-public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider implements TopLevelElementChangedListener {
+public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider
+		implements TopLevelElementChangedListener, WorkingSetManagerStateChangedListener {
 
 	@Inject
 	private SelectWorkingSetDropDownAction selectWorkingSetAction;
@@ -36,16 +41,22 @@ public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider imple
 	private SelectTopLevelElementActionGroup selectTopLevelElementAction;
 
 	@Inject
+	private ShowHiddenWorkingSetsDropDownAction showHiddenWorkingSetsAction;
+
+	@Inject
 	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	private IActionBars actionBars;
 	private boolean alreadyContributedToViewer;
 	private ActionContributionItem selectWorkingSetDelegate;
+	private ActionContributionItem showHiddenWorkingSetsDelegate;
 
 	@Override
 	public void init(final ICommonActionExtensionSite site) {
 		selectWorkingSetDelegate = new ActionContributionItem(selectWorkingSetAction);
+		showHiddenWorkingSetsDelegate = new ActionContributionItem(showHiddenWorkingSetsAction);
 		workingSetManagerBroker.addTopLevelElementChangedListener(this);
+		workingSetManagerBroker.addWorkingSetManagerStateChangedListener(this);
 	}
 
 	@Override
@@ -85,14 +96,48 @@ public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider imple
 
 	@Override
 	public void topLevelElementChanged(final boolean workingSetTopLevel) {
-		if (selectWorkingSetDelegate != null && actionBars != null) {
+		if (actionBars != null) {
 			final IToolBarManager toolBarManager = actionBars.getToolBarManager();
 			toolBarManager.remove(selectWorkingSetDelegate);
 			if (workingSetManagerBroker.isWorkingSetTopLevel()) {
 				toolBarManager.add(selectWorkingSetDelegate);
+				final WorkingSetManager manager = workingSetManagerBroker.getActiveManger();
+				if (manager != null) {
+					WorkingSet[] allItems = manager.getAllWorkingSets();
+					WorkingSet[] items = manager.getWorkingSets();
+					updateShowHiddenAction(allItems, items);
+				}
 			}
 			selectTopLevelElementAction.fillActionBars(actionBars);
 			actionBars.updateActionBars();
+		}
+	}
+
+	@Override
+	public void workingSetManagerStateChanged(final WorkingSetManagerChangeEvent event) {
+
+		final Diff<WorkingSet> diff = event.getDiff();
+		final WorkingSetManager activeManger = workingSetManagerBroker.getActiveManger();
+		final String changedId = event.getId();
+
+		if (actionBars != null
+				&& activeManger != null
+				&& !diff.isEmpty()
+				&& workingSetManagerBroker.isWorkingSetTopLevel()
+				&& activeManger.getId().equals(changedId)) {
+
+			final WorkingSet[] allItems = diff.getNewAllItems();
+			final WorkingSet[] items = diff.getNewItems();
+			updateShowHiddenAction(allItems, items);
+			actionBars.updateActionBars();
+		}
+	}
+
+	private void updateShowHiddenAction(final WorkingSet[] allItems, final WorkingSet[] items) {
+		final IToolBarManager toolBarManager = actionBars.getToolBarManager();
+		toolBarManager.remove(showHiddenWorkingSetsDelegate);
+		if (allItems.length > items.length) {
+			toolBarManager.add(showHiddenWorkingSetsDelegate);
 		}
 	}
 

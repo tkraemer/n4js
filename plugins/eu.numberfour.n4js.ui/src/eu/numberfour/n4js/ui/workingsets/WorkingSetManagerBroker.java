@@ -12,6 +12,8 @@ package eu.numberfour.n4js.ui.workingsets;
 
 import java.util.Collection;
 
+import eu.numberfour.n4js.utils.Diff;
+
 /**
  * Representation of a broker for registered {@link WorkingSetManager working set manager} instances.
  */
@@ -69,7 +71,7 @@ public interface WorkingSetManagerBroker extends IMementoAware {
 	void setWorkingSetTopLevel(boolean b);
 
 	/**
-	 * Adds a top level element configuration changed listener to the broker. Listeners will be notified when the
+	 * Adds a top level element configuration change listener to the broker. Listeners will be notified when the
 	 * configuration has been changed via {@link #setWorkingSetTopLevel(boolean)} method. Has no effect if the identical
 	 * listener has been already added.
 	 *
@@ -79,13 +81,45 @@ public interface WorkingSetManagerBroker extends IMementoAware {
 	void addTopLevelElementChangedListener(TopLevelElementChangedListener listener);
 
 	/**
-	 * Removed a top level element configuration changed listener from the broker. Has no effect if the listener
-	 * argument was not added to this broker previously.
+	 * Removes a top level element configuration change listener from the broker. Has no effect if the listener argument
+	 * was not added to this broker previously.
 	 *
 	 * @param listener
 	 *            the listener to remove. Should not be {@code null}.
 	 */
 	void removeTopLevelElementChangedListener(TopLevelElementChangedListener listener);
+
+	/**
+	 * Adds a working set manager state change listener to the broker. Listeners will be notified when the internal
+	 * state of any available working set manager has been modified. Has no effect if the identical listener has been
+	 * already added.
+	 *
+	 * @param listener
+	 *            the listener to add. Should not be {@code null}.
+	 */
+	void addWorkingSetManagerStateChangedListener(WorkingSetManagerStateChangedListener listener);
+
+	/**
+	 * Removes the working set manager state change listener the broker. Has no effect if the listener argument was not
+	 * added to this broker previously.
+	 *
+	 * @param listener
+	 *            the listener to remove. Should not be {@code null}.
+	 */
+	void removeWorkingSetManagerStateChangedListener(WorkingSetManagerStateChangedListener listener);
+
+	/**
+	 * Called when the state of a working set manager has been changed. Notifies all registered
+	 * {@link WorkingSetManagerStateChangedListener listener} instances.
+	 *
+	 * @param id
+	 *            the unique identifier of the working set manager that has been changed.
+	 *
+	 * @param diff
+	 *            the difference describing the actual change.
+	 *
+	 */
+	public void fireWorkingSetManagerUpdated(final String id, final Diff<WorkingSet> diff);
 
 	/**
 	 * Asynchronously refreshes the navigator content.

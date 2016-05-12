@@ -13,11 +13,13 @@ package eu.numberfour.n4js.ui.navigator.internal;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolItem;
 
 import com.google.common.base.Strings;
@@ -116,5 +118,16 @@ public abstract class DropDownAction extends Action implements IMenuCreator {
 	 *            the parent menu of the new items that has to be created.
 	 */
 	protected abstract void createMenuItems(Menu parent);
+
+	/**
+	 * Creates a new separator by hooking it into the given {@code parent} menu argument.
+	 * 
+	 * @param parent
+	 *            the parent menu.
+	 * @return the new separator instance.
+	 */
+	protected MenuItem createSeparator(final Menu parent) {
+		return new MenuItem(parent, SWT.SEPARATOR);
+	}
 
 }

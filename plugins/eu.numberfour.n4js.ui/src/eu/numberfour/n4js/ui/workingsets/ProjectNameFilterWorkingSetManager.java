@@ -121,6 +121,7 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 			}
 
 			discardWorkingSetState();
+			getWorkingSetManagerBroker().fireWorkingSetManagerUpdated(getId(), diff);
 
 		}
 	}

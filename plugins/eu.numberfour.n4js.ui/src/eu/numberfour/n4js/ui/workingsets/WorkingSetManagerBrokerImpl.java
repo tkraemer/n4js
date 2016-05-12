@@ -63,7 +63,9 @@ import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerStateChangedListener.WorkingSetManagerChangeEvent;
 import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.Diff;
 import eu.numberfour.n4js.utils.StatusHelper;
 
 /**
@@ -86,6 +88,7 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	private final AtomicBoolean alreadyQueuedNavigatorRefresh;
 	private final Supplier<Map<String, WorkingSetManager>> contributions;
 	private final Collection<TopLevelElementChangedListener> topLevelElementChangeListeners;
+	private final Collection<WorkingSetManagerStateChangedListener> workingSetManagerStateChangeListeners;
 
 	/**
 	 * Creates a new working set broker instance with the given injector and status helper arguments. The injector is
@@ -107,6 +110,7 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 		this.alreadyQueuedNavigatorRefresh = new AtomicBoolean(false);
 		this.contributions = initContributions();
 		topLevelElementChangeListeners = newHashSet();
+		workingSetManagerStateChangeListeners = newHashSet();
 		restoreState(new NullProgressMonitor());
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			final String pluginId = N4JSActivator.getInstance().getBundle().getSymbolicName();
@@ -218,6 +222,16 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	}
 
 	@Override
+	public void addWorkingSetManagerStateChangedListener(final WorkingSetManagerStateChangedListener listener) {
+		workingSetManagerStateChangeListeners.add(checkNotNull(listener, "listener"));
+	}
+
+	@Override
+	public void removeWorkingSetManagerStateChangedListener(final WorkingSetManagerStateChangedListener listener) {
+		workingSetManagerStateChangeListeners.remove(checkNotNull(listener, "listener"));
+	}
+
+	@Override
 	public void refreshNavigator() {
 		UIUtils.getDisplay().asyncExec(new Runnable() {
 
@@ -236,7 +250,7 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 								final IPartListener2 listener = new PartListener2Adapter() {
 
 									@Override
-									public void partActivated(IWorkbenchPartReference partRef) {
+									public void partActivated(final IWorkbenchPartReference partRef) {
 										@SuppressWarnings("hiding")
 										final IViewPart view = partRef.getPage().findView(ProjectExplorer.VIEW_ID);
 										if (view instanceof ProjectExplorer) {
@@ -260,7 +274,24 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 		});
 	}
 
-	private void asyncRefreshCommonViewer(ProjectExplorer explorer) {
+	@Override
+	public void fireWorkingSetManagerUpdated(final String id, final Diff<WorkingSet> diff) {
+		if (!diff.isEmpty() && isWorkingSetTopLevel()) {
+			final WorkingSetManagerChangeEvent event = new WorkingSetManagerChangeEvent(id, diff);
+			getDisplay().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					for (final WorkingSetManagerStateChangedListener listener : workingSetManagerStateChangeListeners) {
+						listener.workingSetManagerStateChanged(event);
+					}
+				}
+
+			});
+		}
+	}
+
+	private void asyncRefreshCommonViewer(final ProjectExplorer explorer) {
 		final CommonViewer viewer = explorer.getCommonViewer();
 		getDisplay().asyncExec(() -> viewer.refresh(true));
 	}

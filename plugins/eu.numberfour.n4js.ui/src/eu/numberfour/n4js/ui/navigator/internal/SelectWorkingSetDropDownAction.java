@@ -10,9 +10,10 @@
  */
 package eu.numberfour.n4js.ui.navigator.internal;
 
+import static org.eclipse.swt.SWT.CHECK;
+
 import java.util.Collection;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
@@ -37,13 +38,14 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 	 */
 	public SelectWorkingSetDropDownAction() {
 		super(ImageRef.WORKING_SET.asImageDescriptor().orNull());
+		setToolTipText("Select Active Working Set Manager");
 	}
 
 	@Override
 	protected void createMenuItems(final Menu parent) {
 		final Collection<WorkingSetManager> managers = workingSetManagerBroker.getWorkingSetManagers();
 		for (final WorkingSetManager manager : managers) {
-			final MenuItem item = new MenuItem(parent, SWT.CHECK);
+			final MenuItem item = new MenuItem(parent, CHECK);
 			item.setText(manager.getLabel());
 			item.setImage(manager.getImage().orNull());
 			item.addSelectionListener(new SelectionAdapter() {
@@ -59,7 +61,7 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 		final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManger();
 		if (null != activeManager) {
 			createSeparator(parent);
-			final MenuItem item = new MenuItem(parent, SWT.CHECK);
+			final MenuItem item = new MenuItem(parent, CHECK);
 			item.setText("Configure " + activeManager.getLabel() + "...");
 			item.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -70,10 +72,6 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 			});
 		}
 
-	}
-
-	private MenuItem createSeparator(final Menu parent) {
-		return new MenuItem(parent, SWT.SEPARATOR);
 	}
 
 }
