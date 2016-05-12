@@ -50,6 +50,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 	//// Preview toggle labels
 	private static final String SHOW_PREVIEW_TEXT = "Show preview >>";
 	private static final String HIDE_PREVIEW_TEXT = "<< Hide preview";
+	private static final String PREVIEW_BUTTON_TOOLTIP = "Toggles the preview";
 
 	@Inject
 	private WizardPreviewProvider previewProvider;
@@ -73,6 +74,8 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		createPreview(paneComposite);
 		createBottomControls(paneComposite);
 
+		setControl(paneComposite);
+
 		boolean hidePreviewSetting = getDialogSettings().getBoolean(DIALOG_SETTING_HIDE_PREVIEW_KEY);
 
 		if (hidePreviewSetting) {
@@ -81,8 +84,6 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 			// Otherwise just make sure the shell size is set
 			getShell().setMinimumSize(PREVIEW_MINIMUM_SHELL_SIZE);
 		}
-
-		setControl(paneComposite);
 	}
 
 	/**
@@ -196,6 +197,7 @@ public abstract class PreviewableWizardPage<M extends WorkspaceWizardModel> exte
 		previewToggleButton.setText(HIDE_PREVIEW_TEXT);
 		previewToggleButton.setSelection(true);
 		previewToggleButton.setLayoutData(GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.BOTTOM).create());
+		previewToggleButton.setToolTipText(PREVIEW_BUTTON_TOOLTIP);
 
 		previewToggleButton.addSelectionListener(new SelectionAdapter() {
 			@Override

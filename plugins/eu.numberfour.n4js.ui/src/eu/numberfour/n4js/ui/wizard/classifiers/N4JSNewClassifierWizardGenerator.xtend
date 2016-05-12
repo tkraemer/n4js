@@ -75,11 +75,21 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 			
 			val importStatementOffset = requirementResolver.getImportStatementOffset(resource);
 			
-			// Overlay contents with existing target module file
+			val importStatementFileContent = fileContent.substring(0, importStatementOffset);
+			
+			// Allow for empty body files  
+			val bodyFileContent = if (fileContent.length > 0) { 
+				fileContent.substring(importStatementOffset, fileContent.length).addLineBreak
+			} else {
+				""
+			}
+			
+			// Return to be inserted content as highlighted and 
+			// the existing file content as unhighlighted.
 			return #[
-				ContentBlock.unhighlighted(fileContent.substring(0, importStatementOffset).addLineBreak),
+				ContentBlock.unhighlighted(importStatementFileContent),
 				ContentBlock.highlighted(importStatements.addLineBreak),
-				ContentBlock.unhighlighted(fileContent.substring(importStatementOffset, fileContent.length - 1).addLineBreak),
+				ContentBlock.unhighlighted(bodyFileContent),
 				ContentBlock.highlighted(classCode)
 			] 
 		} else { // For new target module files

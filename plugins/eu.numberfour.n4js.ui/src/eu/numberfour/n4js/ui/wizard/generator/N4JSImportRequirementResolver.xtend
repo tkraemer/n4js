@@ -22,6 +22,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.Replacement
+import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import java.util.ArrayList
 import java.util.Collection
@@ -30,12 +31,10 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.xtext.nodemodel.INode
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.util.TextRegion
 
 /**
  * The N4JSImportRequirementResolver provides functionality to resolve import name conflicts and requirements.
@@ -47,6 +46,9 @@ class N4JSImportRequirementResolver {
 
 	@Inject
 	private N4JSScopeProvider scopeProvider;
+	
+	@Inject
+	private N4JSOrganizeImports organizeImports;
 
 	/**
 	 * Represents an import requirement.
@@ -238,7 +240,10 @@ class N4JSImportRequirementResolver {
 	 *
 	 */
 	private def ImportSpecifier findFulfillingImportSpecifier(ImportDeclaration declaration, ImportRequirement requirement) {
-		if ( !declaration.module.eResource.getURI.equals(requirement.typeUri.moduleContainingUri) ) {
+		// Use EcoreUtil to handle unresolved proxies
+		val declarationModuleURI = EcoreUtil.getURI(declaration.module).toContainingModuleURI;
+		
+		if (!declarationModuleURI.equals(requirement.typeUri.toContainingModuleURI)) {
 			return null
 		}
 		for ( ImportSpecifier specifier : declaration.importSpecifiers ) {
@@ -253,43 +258,23 @@ class N4JSImportRequirementResolver {
 		}
 		null
 	}
-
+	
+	/**
+	 * Returns an absolute URI which consists of the resource part and the 
+	 * path inside of the resource separated with a '#' character.
+	 */
 	private def URI uriOfEObject(EObject object) {
 		object.eResource.getURI.appendFragment(object.eResource.getURIFragment(object))
 
 	}
 
-	private def URI moduleContainingUri(URI uri) {
+	/**
+	 * Returns the URI of the module containing the element with the given URI.
+	 */
+	private def URI toContainingModuleURI(URI uri) {
 		URI.createURI(uri.toString.split("#").get(0));
 	}
-
-	private static def TextRegion getImportRegion(XtextResource resource) {
-		// In N4js imports can appear anywhere in the Script as top-level elements. So even as a last
-		// statement and more importantly scattered around.
-		var TextRegion ret = null;
-
-		// First Position
-		var int begin = 0;
-
-		val Script script = getScript(resource);
-		if (script !== null) {
-			val List<INode> scriptAnnos = NodeModelUtils.findNodesForFeature(script, N4JSPackage.Literals.SCRIPT__ANNOTATIONS);
-			if (!scriptAnnos.isEmpty()) {
-				val INode lastAnno = scriptAnnos.get(scriptAnnos.size() - 1);
-				begin = lastAnno.getTotalEndOffset();
-
-			// advance over linefeed, since newlines are in the hidden token
-			// channel of the following element
-			// ChangeManager has information of current linefeed length.
-			}
-
-			// create new insertion point.
-			ret = new TextRegion(begin, 0);
-		}
-
-		return ret;
-	}
-
+	
 	/**
 	 * Return the {@link IAtomicChange} to insert the import statement for requirements into the the resource.
 	 *
@@ -306,7 +291,7 @@ class N4JSImportRequirementResolver {
 		}
 
 		new Replacement(resource.getURI,
-						getImportRegion(resource).offset,
+						getImportStatementOffset(resource),
 						0,
 						importStatements
 		);
@@ -316,7 +301,7 @@ class N4JSImportRequirementResolver {
 	 * Returns the offset of import statements in the given resource.
 	 */
 	public def int getImportStatementOffset(XtextResource resource) {
-		getImportRegion(resource).offset
+		organizeImports.getImportRegion(resource).offset;
 	}
 	
 	/**

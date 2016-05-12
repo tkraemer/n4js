@@ -26,9 +26,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.HighlightingStyles;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.PreferenceStoreAccessor;
+import org.eclipse.xtext.ui.editor.utils.TextStyle;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -41,8 +44,7 @@ import eu.numberfour.n4js.ui.wizard.generator.ContentBlock;
  */
 public class WizardPreviewProvider {
 
-	private static final Color INACTIVE_COLOR = Display.getCurrent()
-			.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND);
+	private static final DefaultHighlightingConfiguration DEFAULT_HIGHLIGHTING_CONFIGURATION = new DefaultHighlightingConfiguration();
 
 	@Inject
 	@SuppressWarnings("restriction")
@@ -50,6 +52,9 @@ public class WizardPreviewProvider {
 
 	@Inject
 	private IN4JSCore n4jsCore;
+
+	@Inject
+	private PreferenceStoreAccessor preferenceStoreAccessor;
 
 	/**
 	 * Opens a new wizard with the give shell as parent.
@@ -80,6 +85,8 @@ public class WizardPreviewProvider {
 		// Content blocks
 		private ContentBlock[] contentBlocks;
 
+		private final Color inactiveColor;
+
 		/**
 		 * Creates a new wizard preview for a given shell.
 		 *
@@ -92,8 +99,16 @@ public class WizardPreviewProvider {
 			createEditor(this);
 			createInfoBar(this);
 
+			inactiveColor = createInactiveColor();
+
 			// Apply the editor theme by assigning a CSS class
 			this.sourceViewer.getTextWidget().setData("org.eclipse.e4.ui.css.CssClassName", "MPart active");
+		}
+
+		@Override
+		public void dispose() {
+			inactiveColor.dispose();
+			super.dispose();
 		}
 
 		@Override
@@ -197,6 +212,13 @@ public class WizardPreviewProvider {
 			this.infoLabel.setText(info);
 		}
 
+		private Color createInactiveColor() {
+			TextStyle commentTextStyle = new TextStyle();
+			preferenceStoreAccessor.populateTextStyle(HighlightingStyles.COMMENT_ID, commentTextStyle,
+					DEFAULT_HIGHLIGHTING_CONFIGURATION.commentTextStyle());
+			return new Color(getDisplay(), commentTextStyle.getColor());
+		}
+
 		private void createInfoBar(Composite parent) {
 			Composite infoComposite = new Composite(parent, SWT.BORDER);
 			infoComposite
@@ -256,8 +278,8 @@ public class WizardPreviewProvider {
 		 */
 		private void unhighlightAll() {
 			for (StyleRange range : sourceViewer.getTextWidget().getStyleRanges()) {
-				if (range.foreground != INACTIVE_COLOR) {
-					range.foreground = INACTIVE_COLOR;
+				if (range.foreground != inactiveColor) {
+					range.foreground = inactiveColor;
 					range.fontStyle = SWT.NORMAL;
 					sourceViewer.getTextWidget().setStyleRange(range);
 				}
@@ -276,7 +298,7 @@ public class WizardPreviewProvider {
 				int accumulatedOffset = 0;
 				for (ContentBlock block : contentBlocks) {
 					if (!block.highlighted) {
-						StyleRange range = new StyleRange(accumulatedOffset, block.content.length(), INACTIVE_COLOR,
+						StyleRange range = new StyleRange(accumulatedOffset, block.content.length(), inactiveColor,
 								null);
 						sourceViewer.getTextWidget().setStyleRange(range);
 					}
