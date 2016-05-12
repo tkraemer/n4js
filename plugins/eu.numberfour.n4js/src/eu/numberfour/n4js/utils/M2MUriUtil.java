@@ -14,16 +14,25 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.IEObjectDescription;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * Utility methods for handling <em>module-to-module URIs</em> (a.k.a. "m2m URIs"). These URIs are created by the
- * {@link UserdataMapper} after deserializing a TModule from the index to allow some special handling when resolving
- * references from the deserialized module to another TModule in a different resource. This special handling is located
- * in method {@link N4JSResource#getEObjectFromM2MUri(String, boolean)}.
+ * Utility methods for handling <em>module-to-module URIs</em> (a.k.a. "m2m URIs"). These URIs are created by
+ * <ol>
+ * <li>the {@link UserdataMapper#getDeserializedModuleFromDescription(IEObjectDescription, URI) UserdataMapper} after
+ * deserializing a TModule from the index, and
+ * <li>the {@link N4JSResource#unload() N4JSResource} after unloading an N4JS resource
+ * </ol>
+ * to allow some special handling when resolving references from one TModule to another TModule in a different resource.
+ * This special handling is located in method {@link N4JSResource#getEObjectFromM2MUri(String, boolean)}.
  * <p>
  * For example, assuming we are deserializing the TModule of a resource B.n4js having a reference to another resource
  * C.n4js in form of a proxy with an original URI of
@@ -49,6 +58,9 @@ import eu.numberfour.n4js.resource.UserdataMapper;
  * been post-processed (will only have an effect if <code>C.n4js</code> was loaded from disk).
  * </ol>
  * For details, see the code of method {@link N4JSResource#getEObjectFromM2MUri(String, boolean)}.
+ * <p>
+ * The above example would apply accordingly if we were <em>unloading</em> resource <code>C.n4js</code> in a resource
+ * set already containing above resources <code>B.n4js</code> and <code>C.n4js</code> (with all links resolved).
  */
 public class M2MUriUtil {
 
@@ -81,6 +93,13 @@ public class M2MUriUtil {
 	}
 
 	/**
+	 * Same as {@link #convertProxyUriToM2M(URI, EObject, boolean)} with argument <code>copy</code> set to false.
+	 */
+	public static final void convertProxyUriToM2M(URI baseUri, EObject potentialProxy) {
+		convertProxyUriToM2M(baseUri, potentialProxy, false);
+	}
+
+	/**
 	 * If and only if the given EObject is a proxy, its proxy URI will be converted to a
 	 * {@link N4JSGlobals#URI_FRAGMENT_PREFIX_M2M m2m URI}.
 	 *
@@ -88,16 +107,85 @@ public class M2MUriUtil {
 	 *            resource containing the <code>potentialProxy</code>.
 	 * @param potentialProxy
 	 *            the EObject to convert, in case it is a proxy.
+	 * @param copy
+	 *            if <code>true</code>, the given potential proxy will be copied before changing its URI; if
+	 *            <code>false</code>, the URI will be directly changed in the given instance.
+	 * @return the given proxy with a converted URI or a copy of the given proxy with a converted URI or
+	 *         <code>null</code> if the URI need not or cannot be converted.
 	 */
-	public static final void convertProxyUriToM2M(URI baseUri, EObject potentialProxy) {
+	public static final EObject convertProxyUriToM2M(URI baseUri, EObject potentialProxy, boolean copy) {
 		if (potentialProxy.eIsProxy()) {
-			final URI proxyUri = ((BasicEObjectImpl) potentialProxy).eProxyURI();
-			if (proxyUri != null && !proxyUri.isRelative() && proxyUri.hasFragment() && !isM2MUri(proxyUri)) {
+			final URI oldUri = ((BasicEObjectImpl) potentialProxy).eProxyURI();
+			if (oldUri != null && !oldUri.isRelative() && oldUri.hasFragment() && !isM2MUri(oldUri)) {
 				// make sure proxy points to another resource (required because links from TModule to AST of same
 				// resource will be represented as proxies and we do not want to convert those!)
-				if (!proxyUri.trimFragment().equals(baseUri)) {
-					final URI newUri = M2MUriUtil.convertToM2M(baseUri, proxyUri);
-					((BasicEObjectImpl) potentialProxy).eSetProxyURI(newUri);
+				if (!oldUri.trimFragment().equals(baseUri)) {
+					final URI newUri = M2MUriUtil.convertToM2M(baseUri, oldUri);
+					if (copy) {
+						final EObject newProxy = TypeUtils.copyWithProxies(potentialProxy);
+						((BasicEObjectImpl) newProxy).eSetProxyURI(newUri);
+						return newProxy;
+					} else {
+						((BasicEObjectImpl) potentialProxy).eSetProxyURI(newUri);
+						return potentialProxy;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * For all proxies in in the given {@link TModule}, convert their URIs to {@link N4JSGlobals#URI_FRAGMENT_PREFIX_M2M
+	 * m2m URIs}.
+	 *
+	 * @param targetUriToProcess
+	 *            if non-<code>null</code>, will limit conversion to proxies that point to a resource with this URI.
+	 * @param copy
+	 *            if <code>true</code>, proxies will be copied before changing their URI; if <code>false</code>, the URI
+	 *            will be directly changed in the proxy instances.
+	 */
+	public static final void convertAllProxiesToM2M(TModule module, URI targetUriToProcess, boolean copy) {
+		if (targetUriToProcess != null && targetUriToProcess.hasFragment())
+			throw new IllegalArgumentException("targetUriToProcess must not have a fragment");
+		final URI baseUri = module.eResource().getURI();
+		EcoreUtilN4.handleProxyCrossReferences(module, (source, eReference, oldProxy) -> {
+			final URI oldUri = oldProxy.eProxyURI();
+			final boolean mustProcessOldProxy = targetUriToProcess == null
+					|| (oldUri != null && oldUri.trimFragment().equals(targetUriToProcess));
+			if (mustProcessOldProxy) {
+				final EObject newProxy = convertProxyUriToM2M(baseUri, oldProxy, copy);
+				if (copy) {
+					if (newProxy != null && newProxy != oldProxy) {
+						EcoreUtilN4.doWithDeliver(false, () -> {
+							EcoreUtil.replace(source, eReference, oldProxy, newProxy);
+						}, source);
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * For all proxies in all {@link TModule}s contained in the given resource set, convert their URIs to
+	 * {@link N4JSGlobals#URI_FRAGMENT_PREFIX_M2M m2m URIs}. Similar to
+	 * {@link #convertAllProxiesToM2M(ResourceSet, URI)}, but copying proxies is mandatory in this case.
+	 *
+	 * @param targetUriToProcess
+	 *            if non-<code>null</code>, will limit conversion to proxies that point to a resource with this URI.
+	 */
+	public static final void convertAllProxiesToM2M(ResourceSet resourceSet, URI targetUriToProcess) {
+		for (Resource resource : resourceSet.getResources()) {
+			if (resource instanceof N4JSResource) {
+				final String fileExt = resource.getURI().fileExtension();
+				if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(fileExt)
+						|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)) {
+					final TModule module = ((N4JSResource) resource).getModule();
+					if (module != null) {
+						// note: always have to set argument 'copy' to true in next line, because different resources
+						// might point to the identical proxy but will then need different m2m URIs!
+						convertAllProxiesToM2M(module, targetUriToProcess, true);
+					}
 				}
 			}
 		}

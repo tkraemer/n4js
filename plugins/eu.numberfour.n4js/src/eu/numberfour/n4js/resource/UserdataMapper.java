@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -226,12 +225,7 @@ public final class UserdataMapper {
 		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
 		// we need the entire, absolute original URI, including its fragment)
 		// TODO IDE-2250 discuss with Ed Merks if there is a better solution
-		final TreeIterator<EObject> iter = module.eAllContents();
-		while (iter.hasNext()) {
-			for (EObject currObj : iter.next().eCrossReferences()) {
-				M2MUriUtil.convertProxyUriToM2M(uri, currObj);
-			}
-		}
+		M2MUriUtil.convertAllProxiesToM2M(module, null, false);
 		return module;
 	}
 }
