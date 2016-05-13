@@ -36,9 +36,9 @@ import com.google.common.collect.Iterables;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
- * Adapter between {@link WorkingSet N4JS} and {@link IWorkingSet Eclipse based} working sets.
+ * Bridge between {@link WorkingSet N4JS specific} and {@link IWorkingSet Eclipse based} working sets.
  */
-class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingSet {
+final class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingSet {
 
 	private final WorkingSet delegate;
 
@@ -192,7 +192,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -202,7 +202,7 @@ class WorkingSetAdapter extends ResourceMapping implements IWorkingSet, WorkingS
 		if (!(obj instanceof WorkingSetImpl)) {
 			return false;
 		}
-		WorkingSetImpl other = (WorkingSetImpl) obj;
+		final WorkingSetImpl other = (WorkingSetImpl) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;

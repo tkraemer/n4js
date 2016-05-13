@@ -45,7 +45,7 @@ public class N4JSResourceExtensionSorter extends ResourceExtensionSorter {
 				return 1;
 			}
 		} else if (e1 instanceof WorkingSet && e2 instanceof WorkingSet) {
-			final WorkingSetManager workingSetManager = workingSetManagerBroker.getActiveManger();
+			final WorkingSetManager workingSetManager = workingSetManagerBroker.getActiveManager();
 			if (null != workingSetManager) {
 				final WorkingSet ws1 = (WorkingSet) e1;
 				final WorkingSet ws2 = (WorkingSet) e2;

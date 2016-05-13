@@ -26,6 +26,7 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
@@ -40,9 +41,9 @@ import eu.numberfour.n4js.utils.Diff;
  * Working set manager that groups projects to contained working sets by applying a regular expression filter on the
  * project names.
  */
-public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl implements MutableWorkingSetManager {
+public class ProjectNameFilterAwareWorkingSetManager extends WorkingSetManagerImpl implements MutableWorkingSetManager {
 
-	private static final Logger LOGGER = Logger.getLogger(ProjectNameFilterWorkingSetManager.class);
+	private static final Logger LOGGER = Logger.getLogger(ProjectNameFilterAwareWorkingSetManager.class);
 
 	private static final String ORDERED_FILTERS_KEY = ".orderedFilters";
 
@@ -182,7 +183,8 @@ public class ProjectNameFilterWorkingSetManager extends WorkingSetManagerImpl im
 		 * @param manager
 		 *            the container manager where this working set belongs to.
 		 */
-		protected ProjectNameFilterWorkingSet(final Pattern filter, final String id,
+		@VisibleForTesting
+		public ProjectNameFilterWorkingSet(final Pattern filter, final String id,
 				final WorkingSetManager manager) {
 
 			super(id, manager);

@@ -110,7 +110,7 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 
 		if (workingSetManagerBroker.isWorkingSetTopLevel()) {
 			if (element instanceof IWorkspaceRoot) {
-				final WorkingSetManager manager = workingSetManagerBroker.getActiveManger();
+				final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();
 				if (manager != null) {
 					return manager.getWorkingSets();
 				}

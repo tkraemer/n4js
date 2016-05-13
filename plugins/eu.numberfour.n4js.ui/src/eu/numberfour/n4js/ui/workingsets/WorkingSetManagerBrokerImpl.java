@@ -187,12 +187,12 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	}
 
 	@Override
-	public boolean isActiveManger(final WorkingSetManager workingSetManager) {
+	public boolean isActiveManager(final WorkingSetManager workingSetManager) {
 		return Objects.equal(workingSetManager, activeWorkingSetManager.get());
 	}
 
 	@Override
-	public WorkingSetManager getActiveManger() {
+	public WorkingSetManager getActiveManager() {
 		return activeWorkingSetManager.get();
 	}
 
@@ -357,8 +357,8 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 		node.putBoolean(IS_WORKINGSET_TOP_LEVEL_KEY, workingSetTopLevel.get());
 
 		// Active working set manager.
-		final WorkingSetManager active = getActiveManger();
-		final String activeId = active == null ? null : active.getId();
+		final WorkingSetManager activeManager = getActiveManager();
+		final String activeId = activeManager == null ? null : activeManager.getId();
 		node.put(ACTIVE_MANAGER_KEY, Strings.nullToEmpty(activeId));
 
 		try {

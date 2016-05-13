@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Optional;
 
-import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterWorkingSetManager.ProjectNameFilterWorkingSet;
+import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager.ProjectNameFilterWorkingSet;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**

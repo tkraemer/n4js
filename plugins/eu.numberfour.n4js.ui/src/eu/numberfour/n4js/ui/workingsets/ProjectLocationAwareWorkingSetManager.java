@@ -28,6 +28,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.swt.graphics.Image;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
@@ -87,9 +88,9 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 		return locations;
 	}
 
-	private String getWorkingSetId(IProject project) {
-		Path projectPath = project.getLocation().toFile().toPath();
-		Path parentPath = projectPath.getParent();
+	private String getWorkingSetId(final IProject project) {
+		final Path projectPath = project.getLocation().toFile().toPath();
+		final Path parentPath = projectPath.getParent();
 		if (WS_ROOT_PATH.equals(parentPath)) {
 			return OTHERS_WORKING_SET_ID;
 		}
@@ -101,7 +102,7 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 		final Collection<Path> repositoryPaths = from(asList(getRepositoryCache().getAllRepositories()))
 				.transform(r -> r.getDirectory().getParentFile().toPath()).toSet();
 
-		for (Path repositoryPath : repositoryPaths) {
+		for (final Path repositoryPath : repositoryPaths) {
 			if (repositoryPath.equals(projectPath)) {
 				return projectPath.toFile().getName();
 			} else if (projectPath.startsWith(repositoryPath)) {
@@ -121,7 +122,16 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 	 */
 	public static final class ProjectLocationWorkingSet extends WorkingSetImpl {
 
-		private ProjectLocationWorkingSet(String id, ProjectLocationAwareWorkingSetManager manager) {
+		/**
+		 * Creates a new working set manager with the unique ID and the container manager.
+		 *
+		 * @param id
+		 *            the unique ID of the working set. This ID is calculated by the container manager.
+		 * @param manager
+		 *            the container manager.
+		 */
+		@VisibleForTesting
+		public ProjectLocationWorkingSet(final String id, final ProjectLocationAwareWorkingSetManager manager) {
 			super(id, manager);
 		}
 

@@ -54,11 +54,11 @@ public class SelectWorkingSetDropDownAction extends DropDownAction {
 					workingSetManagerBroker.setActiveManager(manager);
 				}
 			});
-			item.setSelection(workingSetManagerBroker.isActiveManger(manager));
+			item.setSelection(workingSetManagerBroker.isActiveManager(manager));
 
 		}
 
-		final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManger();
+		final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManager();
 		if (null != activeManager) {
 			createSeparator(parent);
 			final MenuItem item = new MenuItem(parent, CHECK);

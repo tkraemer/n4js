@@ -1288,7 +1288,7 @@ Contributors:
             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager">
       </manager>
       <manager
-            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectNameFilterWorkingSetManager">
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager">
       </manager>
       <manager
             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.GitRepositoryAwareWorkingSetManager">

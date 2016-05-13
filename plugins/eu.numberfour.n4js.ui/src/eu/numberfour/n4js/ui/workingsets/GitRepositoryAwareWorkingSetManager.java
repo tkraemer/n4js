@@ -42,6 +42,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -100,9 +101,9 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 
 				WorkingSetManagerBroker workingSetManagerBroker = getWorkingSetManagerBroker();
 				if (workingSetManagerBroker.isWorkingSetTopLevel()) {
-					final WorkingSetManager activeManger = workingSetManagerBroker.getActiveManger();
-					if (activeManger != null) {
-						if (activeManger.getId().equals(getId())) {
+					final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManager();
+					if (activeManager != null) {
+						if (activeManager.getId().equals(getId())) {
 							workingSetManagerBroker.refreshNavigator();
 						}
 					}
@@ -172,7 +173,18 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 			return toUriString(repository.getDirectory().getParentFile().toURI());
 		}
 
-		private GitRepositoryWorkingSet(/* nullable */ final Repository repository, final WorkingSetManager manager) {
+		/**
+		 * Creates a new working set instance with the optional {@link Repository Git repository} and the container
+		 * working set manager.
+		 *
+		 * @param repository
+		 *            the associated Git repository. Could be {@code null} if the working set is for
+		 *            {@link WorkingSet#OTHERS_WORKING_SET_ID <em>'Other Project'</em>} purposes.
+		 * @param manager
+		 *            the container manager.
+		 */
+		@VisibleForTesting
+		public GitRepositoryWorkingSet(/* nullable */ final Repository repository, final WorkingSetManager manager) {
 			super(repositoryToId(repository), manager);
 			if (repository == null) {
 				rootUri = null;

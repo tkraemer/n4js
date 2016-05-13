@@ -12,6 +12,7 @@ package eu.numberfour.n4js.tests.bugs;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Iterables.toArray;
 import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static eu.numberfour.n4js.n4mf.ProjectType.RUNTIME_ENVIRONMENT;
@@ -22,6 +23,7 @@ import static eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorat
 import static eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator.WARNING;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
 import static java.util.Arrays.asList;
+import static java.util.regex.Pattern.compile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +31,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
@@ -46,18 +51,23 @@ import org.junit.Test;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager.ProjectNameFilterWorkingSet;
 import eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager.ProjectTypeWorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetDiffBuilder;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
 import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.Diff;
 
 /**
  * Class for testing the functionality of the N4JS working set support.
@@ -178,13 +188,13 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	@Test
 	public void testProjectTypeWorkingSetGrouping() throws CoreException {
 
-		final Multimap<ProjectType, String> typeNameMapping = HashMultimap.create();
-		typeNameMapping.putAll(LIBRARY, newArrayList("L1", "L2", "L3"));
-		typeNameMapping.putAll(TEST, newArrayList("T1", "T2"));
-		typeNameMapping.putAll(RUNTIME_ENVIRONMENT, newArrayList("RE1", "RE2", "RE3", "RE4"));
-		typeNameMapping.putAll(RUNTIME_LIBRARY, newArrayList("RL1"));
+		final Multimap<ProjectType, String> typeNamesMapping = HashMultimap.create();
+		typeNamesMapping.putAll(LIBRARY, newArrayList("L1", "L2", "L3"));
+		typeNamesMapping.putAll(TEST, newArrayList("T1", "T2"));
+		typeNamesMapping.putAll(RUNTIME_ENVIRONMENT, newArrayList("RE1", "RE2", "RE3", "RE4"));
+		typeNamesMapping.putAll(RUNTIME_LIBRARY, newArrayList("RL1"));
 
-		for (final Entry<ProjectType, Collection<String>> entry : typeNameMapping.asMap().entrySet()) {
+		for (final Entry<ProjectType, Collection<String>> entry : typeNamesMapping.asMap().entrySet()) {
 			for (final String projectName : entry.getValue()) {
 				createN4JSProject(projectName, entry.getKey());
 			}
@@ -217,9 +227,160 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 			if (null == type) {
 				expectedProjectNames = othersProjectNames;
 			} else {
-				expectedProjectNames = typeNameMapping.get(type);
+				expectedProjectNames = typeNamesMapping.get(type);
 			}
-			assertEquals("Child item count mismatch: " + treeItem, expectedProjectNames.size() + ".",
+			assertEquals("Child item count mismatch: " + treeItem, expectedProjectNames.size(),
+					treeItem.getItemCount());
+			for (final TreeItem child : treeItem.getItems()) {
+				final String childText = child.getText();
+				assertTrue("Unexpected tree item label: " + childText + ". Expected any of: "
+						+ Iterables.toString(expectedProjectNames),
+						expectedProjectNames.contains(childText));
+			}
+		}
+
+	}
+
+	/***/
+	@SuppressWarnings("restriction")
+	@Test
+	public void testProjectNameFilterWorkingSetGrouping() throws CoreException {
+
+		final Multimap<String, String> filterNamesMapping = LinkedHashMultimap.create();
+		filterNamesMapping.putAll(OTHERS_WORKING_SET_ID, newArrayList(
+				"eu.numberfour.mangelhaft",
+				"eu.numberfour.mangelhaft.assert",
+				"eu.numberfour.mangelhaft.assert.test",
+				"eu.numberfour.mangelhaft.mangeltypes",
+				"eu.numberfour.mangelhaft.reporter.console",
+				"eu.numberfour.mangelhaft.reporter.html",
+				"eu.numberfour.mangelhaft.reporter.ide",
+				"eu.numberfour.mangelhaft.reporter.ide.test",
+				"eu.numberfour.mangelhaft.reporter.xunit",
+				"eu.numberfour.mangelhaft.runner.html",
+				"eu.numberfour.mangelhaft.runner.ide",
+				"eu.numberfour.mangelhaft.runner.node",
+				"eu.numberfour.mangelhaft.test"));
+
+		filterNamesMapping.putAll(".*stdlib.*", newArrayList(
+				"eu.numberfour.stdlib.format",
+				"eu.numberfour.stdlib.format.api",
+				"eu.numberfour.stdlib.format.api-tests",
+				"eu.numberfour.stdlib.i18n.api",
+				"eu.numberfour.stdlib.i18n.api-tests",
+				"eu.numberfour.stdlib.jtl",
+				"eu.numberfour.stdlib.jtl.api",
+				"eu.numberfour.stdlib.jtl.api-tests",
+				"eu.numberfour.stdlib.jtl.tests",
+				"eu.numberfour.stdlib.model.base",
+				"eu.numberfour.stdlib.model.base.api",
+				"eu.numberfour.stdlib.model.base.api-tests",
+				"eu.numberfour.stdlib.model.base.tests",
+				"eu.numberfour.stdlib.model.common",
+				"eu.numberfour.stdlib.model.common.api",
+				"eu.numberfour.stdlib.model.common.api-tests",
+				"eu.numberfour.stdlib.model.common.tests",
+				"eu.numberfour.stdlib.model.core",
+				"eu.numberfour.stdlib.model.core.api",
+				"eu.numberfour.stdlib.model.core.api-tests",
+				"eu.numberfour.stdlib.model.core.zoo.berlin",
+				"eu.numberfour.stdlib.model.gen",
+				"eu.numberfour.stdlib.model.gen.api",
+				"eu.numberfour.stdlib.model.gen.api-tests",
+				"eu.numberfour.stdlib.notificationCenter.api",
+				"eu.numberfour.stdlib.notificationCenter.api-tests",
+				"eu.numberfour.stdlib.npm-dependencies",
+				"eu.numberfour.stdlib.transaction",
+				"eu.numberfour.stdlib.transaction.api",
+				"eu.numberfour.stdlib.transaction.api-tests",
+				"eu.numberfour.stdlib.util"));
+
+		filterNamesMapping.putAll(".*stdlib.*api.*", newArrayList(
+				"eu.numberfour.stdlib.format.api",
+				"eu.numberfour.stdlib.format.api-tests",
+				"eu.numberfour.stdlib.i18n.api",
+				"eu.numberfour.stdlib.i18n.api-tests",
+				"eu.numberfour.stdlib.jtl.api",
+				"eu.numberfour.stdlib.jtl.api-tests",
+				"eu.numberfour.stdlib.model.base.api",
+				"eu.numberfour.stdlib.model.base.api-tests",
+				"eu.numberfour.stdlib.model.common.api",
+				"eu.numberfour.stdlib.model.common.api-tests",
+				"eu.numberfour.stdlib.model.core.api",
+				"eu.numberfour.stdlib.model.core.api-tests",
+				"eu.numberfour.stdlib.model.gen.api",
+				"eu.numberfour.stdlib.model.gen.api-tests",
+				"eu.numberfour.stdlib.notificationCenter.api",
+				"eu.numberfour.stdlib.notificationCenter.api-tests",
+				"eu.numberfour.stdlib.transaction.api",
+				"eu.numberfour.stdlib.transaction.api-tests"));
+
+		filterNamesMapping.putAll(".*stdlib.*api.*test.*", newArrayList(
+				"eu.numberfour.stdlib.format.api-tests",
+				"eu.numberfour.stdlib.i18n.api-tests",
+				"eu.numberfour.stdlib.jtl.api-tests",
+				"eu.numberfour.stdlib.model.base.api-tests",
+				"eu.numberfour.stdlib.model.common.api-tests",
+				"eu.numberfour.stdlib.model.core.api-tests",
+				"eu.numberfour.stdlib.model.gen.api-tests",
+				"eu.numberfour.stdlib.notificationCenter.api-tests",
+				"eu.numberfour.stdlib.transaction.api-tests"));
+
+		final IWorkspaceDescription workspaceDescription = ResourcesPlugin.getWorkspace().getDescription();
+		final boolean autoBuild = workspaceDescription.isAutoBuilding();
+		try {
+			// No need for the build at all.
+			workspaceDescription.setAutoBuilding(false);
+			for (final String projectName : filterNamesMapping.values()) {
+				org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil.createSimpleProject(projectName);
+			}
+		} finally {
+			workspaceDescription.setAutoBuilding(autoBuild);
+		}
+
+		activateWorkingSetManager(ProjectNameFilterAwareWorkingSetManager.class);
+		final WorkingSetManager manager = broker.getActiveManager();
+		final WorkingSetDiffBuilder builder = new WorkingSetDiffBuilder(manager);
+		final List<WorkingSet> workingSets = newArrayList();
+
+		final WorkingSet other = new ProjectNameFilterWorkingSet(compile(OTHERS_WORKING_SET_ID), OTHERS_WORKING_SET_ID,
+				manager);
+		builder.add(other);
+		workingSets.add(other);
+
+		for (final String workingSetId : filterNamesMapping.keySet()) {
+			final WorkingSet workingSet = new ProjectNameFilterWorkingSet(compile(workingSetId), workingSetId, manager);
+			builder.add(workingSet);
+			workingSets.add(workingSet);
+		}
+
+		Diff<WorkingSet> diff = builder.build(toArray(workingSets, WorkingSet.class),
+				toArray(workingSets, WorkingSet.class));
+
+		manager.updateState(diff);
+		broker.refreshNavigator();
+		waitForJobs();
+
+		commonViewer.expandToLevel(2);
+		waitForJobs();
+
+		final TreeItem[] treeItems = commonViewer.getTree().getItems();
+		final int expectedItemCount = filterNamesMapping.keySet().size();
+		assertTrue("Expected exactly " + expectedItemCount + "items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		final List<ProjectNameFilterWorkingSet> workingSetsFromTree = from(asList(treeItems))
+				.transform(item -> item.getData())
+				.filter(ProjectNameFilterWorkingSet.class)
+				.toList();
+
+		assertEquals("Mismatching number of working sets.", expectedItemCount, workingSetsFromTree.size());
+
+		for (final TreeItem treeItem : treeItems) {
+			final Pattern filter = ((ProjectNameFilterWorkingSet) treeItem.getData()).getFilter();
+			final Collection<String> expectedProjectNames = filterNamesMapping.get(filter.pattern());
+			assertEquals("Child item count mismatch: " + treeItem, expectedProjectNames.size(),
 					treeItem.getItemCount());
 			for (final TreeItem child : treeItem.getItems()) {
 				final String childText = child.getText();

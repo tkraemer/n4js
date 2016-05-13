@@ -54,7 +54,7 @@ public class ShowHiddenWorkingSetsDropDownAction extends DropDownAction {
 
 	@Override
 	protected void createMenuItems(final Menu parent) {
-		final WorkingSetManager manager = workingSetManagerBroker.getActiveManger();
+		final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();
 		final WorkingSet[] allWorkingSets = manager.getAllWorkingSets();
 		final WorkingSet[] workingSets = manager.getWorkingSets();
 		for (final WorkingSet workingSet : allWorkingSets) {

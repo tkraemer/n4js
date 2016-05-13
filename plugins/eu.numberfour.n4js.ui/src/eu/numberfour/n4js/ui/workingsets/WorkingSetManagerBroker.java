@@ -42,7 +42,7 @@ public interface WorkingSetManagerBroker extends MementoAware {
 	 *            the working set manager to test whether it is the currently active one or not.
 	 * @return {@code true} if the argument is the currently active one, otherwise {@code false}
 	 */
-	boolean isActiveManger(final WorkingSetManager workingSetManager);
+	boolean isActiveManager(final WorkingSetManager workingSetManager);
 
 	/**
 	 * Returns with the active working set manager. Could return with {@code null} if no active working set manager is
@@ -50,7 +50,7 @@ public interface WorkingSetManagerBroker extends MementoAware {
 	 *
 	 * @return the active working set manager, or {@code null}, if not yet available.
 	 */
-	WorkingSetManager getActiveManger();
+	WorkingSetManager getActiveManager();
 
 	/**
 	 * Returns with {@code true} if working sets are configured to be shown as top level elements in the common

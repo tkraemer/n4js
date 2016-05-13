@@ -101,7 +101,7 @@ public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider
 			toolBarManager.remove(selectWorkingSetDelegate);
 			if (workingSetManagerBroker.isWorkingSetTopLevel()) {
 				toolBarManager.add(selectWorkingSetDelegate);
-				final WorkingSetManager manager = workingSetManagerBroker.getActiveManger();
+				final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();
 				if (manager != null) {
 					WorkingSet[] allItems = manager.getAllWorkingSets();
 					WorkingSet[] items = manager.getWorkingSets();
@@ -117,14 +117,14 @@ public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider
 	public void workingSetManagerStateChanged(final WorkingSetManagerChangeEvent event) {
 
 		final Diff<WorkingSet> diff = event.getDiff();
-		final WorkingSetManager activeManger = workingSetManagerBroker.getActiveManger();
+		final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManager();
 		final String changedId = event.getId();
 
 		if (actionBars != null
-				&& activeManger != null
+				&& activeManager != null
 				&& !diff.isEmpty()
 				&& workingSetManagerBroker.isWorkingSetTopLevel()
-				&& activeManger.getId().equals(changedId)) {
+				&& activeManager.getId().equals(changedId)) {
 
 			final WorkingSet[] allItems = diff.getNewAllItems();
 			final WorkingSet[] items = diff.getNewItems();

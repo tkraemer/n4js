@@ -78,7 +78,19 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 					: toFirstUpper(nullToEmpty(type.getLiteral()).replaceAll("_", " ").toLowerCase());
 		}
 
-		private ProjectTypeWorkingSet(/* nullable */ final ProjectType type, final IN4JSCore core,
+		/**
+		 * Creates a new working set instance with the optional {@link ProjectType N4JS project type} and the container
+		 * working set manager.
+		 *
+		 * @param type
+		 *            the associated project type. Could be {@code null} if the working set is for
+		 *            {@link WorkingSet#OTHERS_WORKING_SET_ID <em>'Other Project'</em>} purposes.
+		 * @param core
+		 *            the N4JS core to retrieve N4JS specific properties of the grouped projects.
+		 * @param manager
+		 *            the container manager.
+		 */
+		public ProjectTypeWorkingSet(/* nullable */ final ProjectType type, final IN4JSCore core,
 				final WorkingSetManager manager) {
 
 			super(typeToId(type), manager);
@@ -110,7 +122,7 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 		/**
 		 * Returns with the wrapped N4JS project type, or {@code null} if the working set has no associated project
 		 * type.
-		 * 
+		 *
 		 * @return the project type or {@code null}.
 		 */
 		public ProjectType getType() {

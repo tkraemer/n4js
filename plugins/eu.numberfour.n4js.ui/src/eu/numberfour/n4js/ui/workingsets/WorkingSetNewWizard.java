@@ -36,13 +36,13 @@ public abstract class WorkingSetNewWizard extends Wizard {
 
 	/**
 	 * Returns with the working set manager that is being currently edited by creating the new working set instance. By
-	 * default returns with the {@link WorkingSetManagerBroker#getActiveManger() active manager} from the shared
+	 * default returns with the {@link WorkingSetManagerBroker#getActiveManager() active manager} from the shared
 	 * {@link WorkingSetManagerBroker} instance.
 	 *
 	 * @return the working set manager.
 	 */
 	protected WorkingSetManager getManager() {
-		return workingSetManagerBroker.getActiveManger();
+		return workingSetManagerBroker.getActiveManager();
 	}
 
 	@Override
