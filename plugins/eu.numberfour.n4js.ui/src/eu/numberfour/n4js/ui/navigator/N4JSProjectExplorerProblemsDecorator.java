@@ -40,7 +40,7 @@ public class N4JSProjectExplorerProblemsDecorator extends TreeHierarchyLayoutPro
 	public static final int WARNING = JavaElementImageDescriptor.WARNING;
 
 	/**
-	 * Flag to render the no adornments at all.
+	 * Flag to render no adornments at all.
 	 */
 	public static final int NO_ADORNMENT = 0;
 

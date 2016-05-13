@@ -40,12 +40,12 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	}
 
 	/**
-	 * Returns with the {@link Display#getCurrent() current} display. Could be {@code null}.
+	 * Returns with the {@link Display#getCurrent() current} display.
 	 *
-	 * @return the current display or {@code null} if not available.
+	 * @return the current display.
 	 */
 	protected Display getDisplay() {
-		return Display.getCurrent();
+		return checkNotNull(Display.getCurrent(), "Not on UI thread.");
 	}
 
 	/**
@@ -117,23 +117,11 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	protected void delay(final long millisToWait) {
 		checkState(millisToWait > 0, "millisToWait > 0 Was: " + millisToWait);
 		final Display display = getDisplay();
-
-		if (display != null) {
-			final long endTimeMillis = System.currentTimeMillis() + millisToWait;
-			while (System.currentTimeMillis() < endTimeMillis) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-			display.update();
-		} else {
-			try {
-				Thread.sleep(millisToWait);
-			} catch (final InterruptedException e) {
-				LOGGER.warn("Interrupted while waiting for " + millisToWait + " milliseconds.", e);
-			}
+		final long endTimeMillis = System.currentTimeMillis() + millisToWait;
+		while (System.currentTimeMillis() < endTimeMillis && display.readAndDispatch()) {
+			// Wait until time out. Interrupt wait period if nothing to do on the UI thread.
 		}
-
+		display.update();
 	}
 
 	/**
