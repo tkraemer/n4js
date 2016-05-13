@@ -179,9 +179,9 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	@Override
 	public void setActiveManager(final WorkingSetManager workingSetManager) {
 		checkNotNull(workingSetManager, "workingSetManager");
-		activeWorkingSetManager.set(workingSetManager);
-		saveState();
-		if (workingSetManager.equals(activeWorkingSetManager.get())) {
+		if (!workingSetManager.equals(activeWorkingSetManager.get())) {
+			activeWorkingSetManager.set(workingSetManager);
+			saveState();
 			refreshNavigator();
 		}
 	}

@@ -202,7 +202,7 @@ public class ProjectUtils {
 		projectDesc.setVendorName("NumberFour AG");
 		projectDesc.setArtifactId(project.getName());
 		projectDesc.setProjectName(project.getName());
-		projectDesc.setProjectType(ProjectType.SYSTEM);
+		projectDesc.setProjectType(ProjectType.LIBRARY);
 		DeclaredVersion projectVersion = N4mfFactory.eINSTANCE.createDeclaredVersion();
 		projectVersion.setMajor(0);
 		projectVersion.setMinor(0);
@@ -218,6 +218,12 @@ public class ProjectUtils {
 		ResourceSet rs = createResourceSet(project);
 		Resource res = rs.createResource(uri);
 		res.getContents().add(projectDesc);
+
+		// Workaround to avoid any unnecessary warnings due to empty project dependency block
+		if (projectDesc.getAllProjectDependencies().isEmpty()) {
+			projectDesc.setProjectDependencies(null);
+		}
+
 		try {
 			res.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {

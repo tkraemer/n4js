@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
 
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
@@ -139,8 +140,9 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	 * Wait until all background tasks are complete.
 	 */
 	protected void waitForJobs() {
-		while (Job.getJobManager().currentJob() != null) {
-			delay(1000);
+		final IJobManager manager = Job.getJobManager();
+		while (manager.currentJob() != null) {
+			delay(100);
 		}
 	}
 

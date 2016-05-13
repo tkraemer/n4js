@@ -10,12 +10,11 @@
  */
 package eu.numberfour.n4js.ui.navigator;
 
-import static org.eclipse.jdt.ui.JavaElementImageDescriptor.BUILDPATH_ERROR;
-import static org.eclipse.jdt.ui.JavaElementImageDescriptor.ERROR;
-import static org.eclipse.jdt.ui.JavaElementImageDescriptor.WARNING;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.internal.ui.viewsupport.TreeHierarchyLayoutProblemsDecorator;
+import org.eclipse.jdt.ui.JavaElementImageDescriptor;
+
+import com.google.common.annotations.VisibleForTesting;
 
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 
@@ -25,8 +24,35 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 @SuppressWarnings("restriction")
 public class N4JSProjectExplorerProblemsDecorator extends TreeHierarchyLayoutProblemsDecorator {
 
+	/**
+	 * Flag to render the build path error adornment.
+	 */
+	public static final int BUILDPATH_ERROR = JavaElementImageDescriptor.BUILDPATH_ERROR;
+
+	/**
+	 * Flag to render the error adornment.
+	 */
+	public static final int ERROR = JavaElementImageDescriptor.ERROR;
+
+	/**
+	 * Flag to render the warning adornment.
+	 */
+	public static final int WARNING = JavaElementImageDescriptor.WARNING;
+
+	/**
+	 * Flag to render the no adornments at all.
+	 */
+	public static final int NO_ADORNMENT = 0;
+
+	/**
+	 * Increased visibility for testing purposes.
+	 *
+	 * <p>
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected int computeAdornmentFlags(final Object obj) {
+	@VisibleForTesting
+	public int computeAdornmentFlags(final Object obj) {
 		if (!(obj instanceof WorkingSet)) {
 			return super.computeAdornmentFlags(obj);
 		}
@@ -47,7 +73,7 @@ public class N4JSProjectExplorerProblemsDecorator extends TreeHierarchyLayoutPro
 		} else if ((result & WARNING) != 0) {
 			return WARNING;
 		} else {
-			return 0;
+			return NO_ADORNMENT;
 		}
 	}
 
