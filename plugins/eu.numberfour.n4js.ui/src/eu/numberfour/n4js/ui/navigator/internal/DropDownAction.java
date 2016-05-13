@@ -111,6 +111,11 @@ public abstract class DropDownAction extends Action implements IMenuCreator {
 		return null;
 	}
 
+	@Override
+	public String getId() {
+		return this.getClass().getName();
+	}
+
 	/**
 	 * Creates the menu items for the drop down action by hooking up the created items to the parent menu argument.
 	 *
@@ -121,7 +126,7 @@ public abstract class DropDownAction extends Action implements IMenuCreator {
 
 	/**
 	 * Creates a new separator by hooking it into the given {@code parent} menu argument.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent menu.
 	 * @return the new separator instance.

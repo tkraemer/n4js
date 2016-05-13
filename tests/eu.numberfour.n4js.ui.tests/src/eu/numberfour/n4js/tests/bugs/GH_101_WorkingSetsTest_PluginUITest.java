@@ -39,6 +39,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -57,6 +63,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator;
+import eu.numberfour.n4js.ui.navigator.internal.ShowHiddenWorkingSetsDropDownAction;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager.ProjectNameFilterWorkingSet;
@@ -66,6 +73,7 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetDiffBuilder;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
+import eu.numberfour.n4js.ui.workingsets.internal.HideWorkingSetAction;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
 
@@ -93,7 +101,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		waitForJobs();
+		waitIdle();
 		projectExplorer = (ProjectExplorer) showView(ProjectExplorer.VIEW_ID);
 		waitForUiThread();
 		assertNotNull("Cannot show Project Explorer.", projectExplorer);
@@ -104,7 +112,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	public void tearDown() throws Exception {
 		super.tearDown();
 		broker.resetState();
-		waitForJobs();
+		waitIdle();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		assertTrue("Expected empty Project Explorer. Input was: " + Arrays.toString(treeItems),
@@ -207,11 +215,11 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		activateWorkingSetManager(ProjectTypeAwareWorkingSetManager.class);
 		commonViewer.expandToLevel(2);
-		waitForJobs();
+		waitIdle();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		final int expectedItemCount = ProjectType.values().length + 1;
-		assertTrue("Expected exactly " + expectedItemCount + "items in the Project Explorer. Input was: "
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
 				+ Arrays.toString(treeItems),
 				treeItems.length == expectedItemCount);
 
@@ -261,6 +269,17 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 				"eu.numberfour.mangelhaft.runner.ide",
 				"eu.numberfour.mangelhaft.runner.node",
 				"eu.numberfour.mangelhaft.test"));
+
+		filterNamesMapping.putAll(".*-runtime-.*", newArrayList(
+				"n4js-runtime-es2015",
+				"n4js-runtime-esnext",
+				"n4js-runtime-fetch",
+				"n4js-runtime-html5",
+				"n4js-runtime-n4",
+				"n4js-runtime-n4-tests",
+				"n4js-runtime-node",
+				"n4js-runtime-node-tests",
+				"n4js-runtime-v8"));
 
 		filterNamesMapping.putAll(".*stdlib.*", newArrayList(
 				"eu.numberfour.stdlib.format",
@@ -354,19 +373,19 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 			workingSets.add(workingSet);
 		}
 
-		Diff<WorkingSet> diff = builder.build(toArray(workingSets, WorkingSet.class),
+		final Diff<WorkingSet> diff = builder.build(toArray(workingSets, WorkingSet.class),
 				toArray(workingSets, WorkingSet.class));
 
 		manager.updateState(diff);
 		broker.refreshNavigator();
-		waitForJobs();
+		waitIdle();
 
 		commonViewer.expandToLevel(2);
-		waitForJobs();
+		waitIdle();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		final int expectedItemCount = filterNamesMapping.keySet().size();
-		assertTrue("Expected exactly " + expectedItemCount + "items in the Project Explorer. Input was: "
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
 				+ Arrays.toString(treeItems),
 				treeItems.length == expectedItemCount);
 
@@ -392,6 +411,120 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 	}
 
+	/***/
+	@Test
+	public void testHideShowWorkingSets() {
+		activateWorkingSetManager(ProjectTypeAwareWorkingSetManager.class);
+		TreeItem[] treeItems = commonViewer.getTree().getItems();
+		final int expectedItemCount = ProjectType.values().length + 1;
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		List<ProjectTypeWorkingSet> workingSets = from(asList(treeItems)).transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		assertEquals("Mismatching number of working sets.", expectedItemCount, workingSets.size());
+
+		List<ProjectTypeWorkingSet> workingSetsToHide = workingSets;
+		final HideWorkingSetAction hideAction = new HideWorkingSetAction();
+
+		commonViewer.setSelection(new StructuredSelection(workingSets.toArray()));
+		waitIdle();
+
+		treeItems = commonViewer.getTree().getItems();
+		final List<ProjectTypeWorkingSet> selectedWorkingSets = from(asList(treeItems))
+				.transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		assertEquals(workingSetsToHide, selectedWorkingSets);
+		hideAction.selectionChanged(commonViewer.getStructuredSelection());
+		waitIdle();
+
+		assertFalse("Expected disabled action.", hideAction.isEnabled());
+
+		workingSetsToHide = newArrayList(workingSets.subList(0, 3));
+
+		commonViewer.setSelection(new StructuredSelection(workingSetsToHide.toArray()));
+		hideAction.selectionChanged(commonViewer.getStructuredSelection());
+		waitIdle();
+
+		assertTrue("Expected enabled action.", hideAction.isEnabled());
+
+		hideAction.run();
+		waitIdle();
+
+		treeItems = commonViewer.getTree().getItems();
+		workingSets = from(asList(treeItems)).transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		assertEquals("Mismatching number of working sets.", expectedItemCount - workingSetsToHide.size(),
+				workingSets.size());
+
+		for (final WorkingSet workingSet : workingSetsToHide) {
+			assertTrue("Working set must not be visible in the navigator: " + workingSet,
+					!workingSets.contains(workingSet));
+		}
+
+		IContributionItem showHiddenWorkingSetsItem = from(
+				Arrays.asList(projectExplorer.getViewSite().getActionBars().getToolBarManager().getItems()))
+						.firstMatch(i -> ShowHiddenWorkingSetsDropDownAction.class.getName().equals(i.getId()))
+						.orNull();
+
+		assertNotNull("Expected visible toolbar item, since there are hidden working sets", showHiddenWorkingSetsItem);
+		assertTrue("Expected a type of " + ActionContributionItem.class,
+				showHiddenWorkingSetsItem instanceof ActionContributionItem);
+
+		final IAction action = ((ActionContributionItem) showHiddenWorkingSetsItem).getAction();
+		assertTrue("Expected a type of " + ShowHiddenWorkingSetsDropDownAction.class,
+				action instanceof ShowHiddenWorkingSetsDropDownAction);
+		final ShowHiddenWorkingSetsDropDownAction showHiddenWorkingSetsAction = (ShowHiddenWorkingSetsDropDownAction) action;
+
+		Menu menu = showHiddenWorkingSetsAction.getMenu(commonViewer.getControl());
+
+		assertTrue(
+				"Expected " + workingSetsToHide.size()
+						+ " menu item plus a separator plus an item for showing all hidden elements.",
+				workingSetsToHide.size() + 2 == menu.getItemCount());
+
+		menu.getItem(0).notifyListeners(SWT.Selection, null);
+		waitIdle();
+		workingSetsToHide.remove(0);
+
+		treeItems = commonViewer.getTree().getItems();
+		workingSets = from(asList(treeItems)).transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		assertEquals("Mismatching number of working sets.", expectedItemCount - workingSetsToHide.size(),
+				workingSets.size());
+
+		menu = showHiddenWorkingSetsAction.getMenu(commonViewer.getControl());
+		assertTrue(
+				"Expected " + workingSetsToHide.size()
+						+ " menu item plus a separator plus an item for showing all hidden elements.",
+				workingSetsToHide.size() + 2 == menu.getItemCount());
+
+		menu.getItem(menu.getItemCount() - 1).notifyListeners(SWT.Selection, null);
+		waitIdle();
+
+		treeItems = commonViewer.getTree().getItems();
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		showHiddenWorkingSetsItem = from(
+				Arrays.asList(projectExplorer.getViewSite().getActionBars().getToolBarManager().getItems()))
+						.firstMatch(i -> ShowHiddenWorkingSetsDropDownAction.class.getName().equals(i.getId()))
+						.orNull();
+
+		assertNull("Expected not visible toolbar item, since all working sets are visible.", showHiddenWorkingSetsItem);
+
+	}
+
 	private void activateWorkingSetManager(final Class<? extends WorkingSetManager> clazz) {
 		final WorkingSetManager manager = from(broker.getWorkingSetManagers())
 				.firstMatch(m -> m.getId().equals(clazz.getName()))
@@ -399,7 +532,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		checkNotNull(manager, "Working set manager does not exist with ID: " + clazz);
 		broker.setActiveManager(manager);
 		broker.setWorkingSetTopLevel(true);
-		waitForJobs();
+		waitIdle();
 	}
 
 }

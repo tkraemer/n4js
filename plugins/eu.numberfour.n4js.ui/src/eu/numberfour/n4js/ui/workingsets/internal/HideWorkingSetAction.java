@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.actions.SelectionListenerAction;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
@@ -68,7 +69,8 @@ public class HideWorkingSetAction extends SelectionListenerAction implements IWo
 	}
 
 	@Override
-	protected boolean updateSelection(IStructuredSelection selection) {
+	@VisibleForTesting
+	public boolean updateSelection(IStructuredSelection selection) {
 		if (selection == null || selection.isEmpty()) {
 			return false;
 		}

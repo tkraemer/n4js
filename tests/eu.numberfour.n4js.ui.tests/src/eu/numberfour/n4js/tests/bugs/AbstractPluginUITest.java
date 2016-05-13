@@ -119,9 +119,9 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	}
 
 	/**
-	 * Wait until all background tasks are complete.
+	 * Wait until all background tasks are complete then makes sure that the UI thread is idle as well.
 	 */
-	protected void waitForJobs() {
+	protected void waitIdle() {
 		final IJobManager manager = Job.getJobManager();
 		while (manager.currentJob() != null) {
 			waitForUiThread();

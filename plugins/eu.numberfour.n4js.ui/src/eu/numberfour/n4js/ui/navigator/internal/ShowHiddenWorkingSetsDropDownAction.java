@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.xtext.util.Arrays;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
@@ -40,6 +41,12 @@ import eu.numberfour.n4js.utils.Diff;
  * Drop down action to make hidden working sets visible on the UI.
  */
 public class ShowHiddenWorkingSetsDropDownAction extends DropDownAction {
+
+	/**
+	 * Menu item text for showing all hidden working set elements.
+	 */
+	@VisibleForTesting
+	public static final String SHOW_ALL_HIDDEN_WORKING_SETS = "Show All Hidden Working Sets";
 
 	@Inject
 	private WorkingSetManagerBroker workingSetManagerBroker;
@@ -74,7 +81,7 @@ public class ShowHiddenWorkingSetsDropDownAction extends DropDownAction {
 
 		createSeparator(parent);
 		final MenuItem item = new MenuItem(parent, CHECK);
-		item.setText("Show All Hidden Working Sets");
+		item.setText(SHOW_ALL_HIDDEN_WORKING_SETS);
 		item.addSelectionListener(new SelectionAdapter() {
 
 			@Override
