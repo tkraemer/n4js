@@ -63,6 +63,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator;
+import eu.numberfour.n4js.ui.navigator.internal.SelectWorkingSetDropDownAction;
 import eu.numberfour.n4js.ui.navigator.internal.ShowHiddenWorkingSetsDropDownAction;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager;
@@ -106,6 +107,11 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		waitForUiThread();
 		assertNotNull("Cannot show Project Explorer.", projectExplorer);
 		commonViewer = projectExplorer.getCommonViewer();
+		assertFalse("Expected projects as top level elements in navigator.", broker.isWorkingSetTopLevel());
+		assertNull(
+				"Select working set drop down contribution was visible when projects are configured as top level elements.",
+				getWorkingSetDropDownContribution());
+
 	}
 
 	@Override
@@ -117,6 +123,10 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		assertTrue("Expected empty Project Explorer. Input was: " + Arrays.toString(treeItems),
 				Arrays2.isEmpty(treeItems));
+		assertFalse("Expected projects as top level elements in navigator.", broker.isWorkingSetTopLevel());
+		assertNull(
+				"Select working set drop down contribution was visible when projects are configured as top level elements.",
+				getWorkingSetDropDownContribution());
 	}
 
 	/***/
@@ -533,6 +543,19 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		broker.setActiveManager(manager);
 		broker.setWorkingSetTopLevel(true);
 		waitIdle();
+		final IContributionItem dropDownContribution = getWorkingSetDropDownContribution();
+		assertNotNull(
+				"Select working set drop down contribution was null when working sets are configured as top level elements.",
+				dropDownContribution);
+	}
+
+	/**
+	 * Returns with the 'Select Working Set' action contribution if visible on the toolbar of the Project Explorer.
+	 * Otherwise returns with {@code null}.
+	 */
+	private IContributionItem getWorkingSetDropDownContribution() {
+		return from(asList(projectExplorer.getViewSite().getActionBars().getToolBarManager().getItems()))
+				.firstMatch(item -> SelectWorkingSetDropDownAction.class.getName().equals(item.getId())).orNull();
 	}
 
 }
