@@ -91,7 +91,7 @@ public class NpmPackageToProjectAdapter {
 	};
 
 	/**
-	 * Adapts NPM packages in provided folder to the N4JS project structure. Only package folders which match requested
+	 * Adapts npm packages in provided folder to the N4JS project structure. Only package folders which match requested
 	 * packages are adapted. It is expected that npm flattens packages structures, therefore it is assumed that other
 	 * folders are dependencies (also transitive) of the requested packages.
 	 *
@@ -177,11 +177,11 @@ public class NpmPackageToProjectAdapter {
 	}
 
 	/**
-	 * Reads, parses and returns with the content of the {@code package.json} file as a POJO for the given NPM package
+	 * Reads, parses and returns with the content of the {@code package.json} file as a POJO for the given npm package
 	 * root location.
 	 *
 	 * @param packageRoot
-	 *            the root location of the NPM package.
+	 *            the root location of the npm package.
 	 *
 	 * @return the POJO instance that represents the read, parsed content of the {@code package.json} file.
 	 *
