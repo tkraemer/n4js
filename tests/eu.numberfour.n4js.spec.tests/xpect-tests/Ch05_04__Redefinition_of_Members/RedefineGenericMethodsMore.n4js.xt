@@ -20,7 +20,9 @@ interface I2 extends I1<I2> {
 }
 interface I3 extends I1<I3> {
 }
+// XPECT errors --> "Cannot extend interface I1 multiple times with different type arguments for T: I2, I3." at "I4"
 interface I4 extends I2, I3 {}
+// XPECT errors --> "Cannot implement interface I1 multiple times with different type arguments for T: I2, I3." at "C3"
 class C3 implements I2, I3 {
 	@Override
 	/* 
@@ -28,7 +30,8 @@ class C3 implements I2, I3 {
 	   overridden. Even though this case looks like it would be sound at a first glance, it violates liskovs
 	   substitution principle. C3 implements I2 but cannot be used to invoke 'm' with the type arg I2 
 	 */
-	// XPECT errors --> "Signature of method C3.m does not conform to implemented method I1.m: {function<V extends I4>(union{I2,I3}):V} is not a subtype of {function<V extends intersection{I2,I3}>(union{I2,I3}):V}." at "m"
+	// TODO IDE-2226 revisit test case
+	// XPECT noerrors --> "Signature of method C3.m does not conform to implemented method I1.m: {function<V extends I4>(union{I2,I3}):V} is not a subtype of {function<V extends intersection{I2,I3}>(union{I2,I3}):V}." at "m"
 	public <V extends I4> m(t : union{I2,I3}) : V { return null; }
 }
 

@@ -3952,22 +3952,13 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF__UNDEF_MODIFIER = TYPE_REF__UNDEF_MODIFIER;
 
 	/**
-	 * The feature id for the '<em><b>Type Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNKNOWN_TYPE_REF__TYPE_NAME = TYPE_REF_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Unknown Type Ref</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNKNOWN_TYPE_REF_FEATURE_COUNT = TYPE_REF_FEATURE_COUNT + 1;
+	int UNKNOWN_TYPE_REF_FEATURE_COUNT = TYPE_REF_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -7443,17 +7434,6 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getUnknownTypeRef();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef#getTypeName <em>Type Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type Name</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef#getTypeName()
-	 * @see #getUnknownTypeRef()
-	 * @generated
-	 */
-	EAttribute getUnknownTypeRef_TypeName();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8818,14 +8798,6 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass UNKNOWN_TYPE_REF = eINSTANCE.getUnknownTypeRef();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute UNKNOWN_TYPE_REF__TYPE_NAME = eINSTANCE.getUnknownTypeRef_TypeName();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.

@@ -41,7 +41,7 @@ function <T> FA23() : {function(T):T} { return FA03; }
 
 // + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
 // inheritance in type parameters:
-class CB1 <T> extends CA<T> implements IA<?> {}
+class CB1 <T> extends CA<T> implements IA<T> {}  // note: was "... implements IA<?>" but this is disallowed (affects only a single test case, see *** below)
 class CB2 <T> extends CA<T> implements IA<T> {}
 class CB3 <T,S> extends CA<T> implements IA<S> {}
 
@@ -82,8 +82,9 @@ var cbfa06c : CB1<string> = <CB1<string>,number>FA06(new CB1<string>() , 1,2,3,"
 // OK XPECT errors -->
 var cbfa07a : CB1<string> = FA07(new CB1<string>() , new CB1<string>() );
 
-// class implementing wildcard variant of interface cannot be bound to concrete variant XPECT errors --> "CB1<string> is not a subtype of IA<string>."  at "new CB1<string>()"
-var ia00 : IA<string> = new CB1<string>();
+// *** deactivated, because "... implements IA<?>" is now allowed
+//// class implementing wildcard variant of interface cannot be bound to concrete variant X---PECT errors --> "CB1<string> is not a subtype of IA<string>."  at "new CB1<string>()"
+//var ia00 : IA<string> = new CB1<string>();
 
 // OK XPECT errors -->
 var ia01 : IA<string> = new CB2<string>();

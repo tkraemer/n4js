@@ -49,14 +49,20 @@ interface I<T> {
 interface I1 extends I<string> {}
 interface I2 extends I<number> {}
 
-// XPECT errors --> "Inheritance cycle detected: IC, IC." at "IC"
+// XPECT errors ---
+// "Cannot implement interface I multiple times with different type arguments for T: string, number." at "IC"
+// "Inheritance cycle detected: IC, IC." at "IC"
+// ---
 abstract class IC extends IC implements I1, I2 {}
 
-// XPECT errors --> "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes/I multiple times." at "I<string>"
+// XPECT errors ---
+// "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes/I multiple times." at "I<string>"
+// "Cannot implement interface I multiple times with different type arguments for T: string, number." at "IC2"
+// ---
 abstract class IC2 implements I<string>, I<number> {}
 
 var ic : IC = null;
-// XPECT errors --> "boolean is not a subtype of union{number,string}." at "false"
+// XPECT noerrors --> "don't show follow-up error"
 ic.foo(false);
-// XPECT errors --> "intersection{number,string} is not a subtype of boolean." at "ic.foo(null)"
+// XPECT noerrors --> "don't show follow-up error"
 var x : boolean = ic.foo(null);

@@ -14,23 +14,18 @@ package eu.numberfour.n4js.ts.typeRefs;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * Unknown type references are the result of an unresolved link.
- * Unresolved bindings may be ok due to the dynamic nature of Java script
- * or the result of an unresolved binding. No follow up errors should be
- * produced for these cases.
- * <p>
- * var x = doesNotExist // error here
- * x.doesNotExistEither // no error here
- * var String s = x // no error here, too
- * x = s // or here
+ * Unknown type references are the result of an unresolved link or other form of error.
+ * No follow up errors should be produced for such unknown type references.
+ * <pre>
+ * var x = doesNotExist // error here; type of x will be UnknownTypeRef
+ * x.cannotKnowIfThisExists // no error here
+ * var s: String = x // no error here, either
+ * x = s // nor here
+ * </pre>
+ * Because {@code UnknownTypeRef}s suppress consequential errors, they must never
+ * appear in an N4JSResource that does not have any original parse or validation errors!
  * <!-- end-model-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef#getTypeName <em>Type Name</em>}</li>
- * </ul>
  *
  * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getUnknownTypeRef()
  * @model
@@ -38,39 +33,13 @@ package eu.numberfour.n4js.ts.typeRefs;
  */
 public interface UnknownTypeRef extends TypeRef {
 	/**
-	 * Returns the value of the '<em><b>Type Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The optionally known name of the unknown type, e.g.
-	 * var UnknownThing x; // UnknownThing is the name of the type
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Type Name</em>' attribute.
-	 * @see #setTypeName(String)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getUnknownTypeRef_TypeName()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getTypeName();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef#getTypeName <em>Type Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type Name</em>' attribute.
-	 * @see #getTypeName()
-	 * @generated
-	 */
-	void setTypeName(String value);
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _elvis = null;\n<%java.lang.String%> _typeName = this.getTypeName();\nif (_typeName != null)\n{\n\t_elvis = _typeName;\n} else\n{\n\t_elvis = \"[unknown]\";\n}\nreturn _elvis;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"[unknown]\";'"
 	 * @generated
 	 */
 	String getTypeRefAsString();

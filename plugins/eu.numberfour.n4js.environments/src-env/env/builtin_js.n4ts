@@ -909,7 +909,7 @@ public providedByRuntime final object Number extends Object @Global {
 	 *
 	 * @see ES5, 15.7.4.1
 	 */
-	public constructor(value: number?): void
+	public constructor(value: any?): void
 	/**
 	 * The optional radix should be an integer value in the inclusive range 2 to 36. If radix not present or is undefined
      * the Number 10 is used as the value of radix. If ToInteger(radix) is the Number 10 then this Number value is
