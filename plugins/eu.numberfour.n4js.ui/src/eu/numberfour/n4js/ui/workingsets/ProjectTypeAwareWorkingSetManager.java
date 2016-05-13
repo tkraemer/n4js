@@ -107,6 +107,16 @@ public class ProjectTypeAwareWorkingSetManager extends WorkingSetManagerImpl {
 			return Arrays.copyOfRange(elements, 0, elementCount);
 		}
 
+		/**
+		 * Returns with the wrapped N4JS project type, or {@code null} if the working set has no associated project
+		 * type.
+		 * 
+		 * @return the project type or {@code null}.
+		 */
+		public ProjectType getType() {
+			return type;
+		}
+
 		private URI toUri(final IProject project) {
 			return URI.createPlatformResourceURI(project.getName(), true);
 		}

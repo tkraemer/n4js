@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.tests.bugs;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
 
@@ -109,17 +108,12 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	}
 
 	/**
-	 * Processes UI input but does not return for the specified time interval.
-	 *
-	 * @param millisToWait
-	 *            the number of milliseconds.
+	 * Processes UI input and does not return until there are things to do on the UI thread.
 	 */
-	protected void delay(final long millisToWait) {
-		checkState(millisToWait > 0, "millisToWait > 0 Was: " + millisToWait);
+	protected void waitForUiThread() {
 		final Display display = getDisplay();
-		final long endTimeMillis = System.currentTimeMillis() + millisToWait;
-		while (System.currentTimeMillis() < endTimeMillis && display.readAndDispatch()) {
-			// Wait until time out. Interrupt wait period if nothing to do on the UI thread.
+		while (display.readAndDispatch()) {
+			// Wait until there is anything to process.
 		}
 		display.update();
 	}
@@ -130,8 +124,9 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	protected void waitForJobs() {
 		final IJobManager manager = Job.getJobManager();
 		while (manager.currentJob() != null) {
-			delay(100);
+			waitForUiThread();
 		}
+		waitForUiThread();
 	}
 
 }

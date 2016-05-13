@@ -12,14 +12,23 @@ package eu.numberfour.n4js.tests.bugs;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Lists.newArrayList;
+import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
+import static eu.numberfour.n4js.n4mf.ProjectType.RUNTIME_ENVIRONMENT;
+import static eu.numberfour.n4js.n4mf.ProjectType.RUNTIME_LIBRARY;
+import static eu.numberfour.n4js.n4mf.ProjectType.TEST;
 import static eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator.ERROR;
 import static eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator.NO_ADORNMENT;
 import static eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator.WARNING;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
+import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -35,10 +44,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager.ProjectTypeWorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
@@ -70,7 +85,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		super.setUp();
 		waitForJobs();
 		projectExplorer = (ProjectExplorer) showView(ProjectExplorer.VIEW_ID);
-		delay(1000L);
+		waitForUiThread();
 		assertNotNull("Cannot show Project Explorer.", projectExplorer);
 		commonViewer = projectExplorer.getCommonViewer();
 	}
@@ -80,7 +95,6 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		super.tearDown();
 		broker.resetState();
 		waitForJobs();
-		delay(1000L);
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		assertTrue("Expected empty Project Explorer. Input was: " + Arrays.toString(treeItems),
@@ -109,10 +123,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	/***/
 	@Test
 	public void testMarkerSupportForWorkingSets() throws CoreException, IOException {
-		final IProject project = createJSProject("P1");
-		assertTrue("Project " + project + " is not accessible.", project.isAccessible());
-
-		configureProjectWithXtext(project);
+		final IProject project = createN4JSProject("P1", LIBRARY);
 		createTestFile(project.getFolder("src"), "A", "class a { }");
 
 		final IFile moduleFile = project.getFolder("src").getFile("A.n4js");
@@ -156,11 +167,67 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		}
 		waitForAutoBuild();
 
-		// line 1: Couldn't resolve reference to IdentifiableElement 'someBrokenContent'
 		assertMarkers("Expected exactly zero validation issues.", project, 0);
 
 		adornmentFlag = decorator.computeAdornmentFlags(workingSet);
 		assertEquals("Adornment mismatch.", NO_ADORNMENT, adornmentFlag);
+
+	}
+
+	/***/
+	@Test
+	public void testProjectTypeWorkingSetGrouping() throws CoreException {
+
+		final Multimap<ProjectType, String> typeNameMapping = HashMultimap.create();
+		typeNameMapping.putAll(LIBRARY, newArrayList("L1", "L2", "L3"));
+		typeNameMapping.putAll(TEST, newArrayList("T1", "T2"));
+		typeNameMapping.putAll(RUNTIME_ENVIRONMENT, newArrayList("RE1", "RE2", "RE3", "RE4"));
+		typeNameMapping.putAll(RUNTIME_LIBRARY, newArrayList("RL1"));
+
+		for (final Entry<ProjectType, Collection<String>> entry : typeNameMapping.asMap().entrySet()) {
+			for (final String projectName : entry.getValue()) {
+				createN4JSProject(projectName, entry.getKey());
+			}
+		}
+
+		final Collection<String> othersProjectNames = newArrayList("O1", "O2");
+		for (final String projectName : othersProjectNames) {
+			createJSProject(projectName);
+		}
+
+		activateWorkingSetManager(ProjectTypeAwareWorkingSetManager.class);
+		commonViewer.expandToLevel(2);
+		waitForJobs();
+
+		final TreeItem[] treeItems = commonViewer.getTree().getItems();
+		final int expectedItemCount = ProjectType.values().length + 1;
+		assertTrue("Expected exactly " + expectedItemCount + "items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		final List<ProjectTypeWorkingSet> workingSets = from(asList(treeItems)).transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		assertEquals("Mismatching number of working sets.", expectedItemCount, workingSets.size());
+
+		for (final TreeItem treeItem : treeItems) {
+			final ProjectType type = ((ProjectTypeWorkingSet) treeItem.getData()).getType();
+			final Collection<String> expectedProjectNames;
+			if (null == type) {
+				expectedProjectNames = othersProjectNames;
+			} else {
+				expectedProjectNames = typeNameMapping.get(type);
+			}
+			assertEquals("Child item count mismatch: " + treeItem, expectedProjectNames.size() + ".",
+					treeItem.getItemCount());
+			for (final TreeItem child : treeItem.getItems()) {
+				final String childText = child.getText();
+				assertTrue("Unexpected tree item label: " + childText + ". Expected any of: "
+						+ Iterables.toString(expectedProjectNames),
+						expectedProjectNames.contains(childText));
+			}
+		}
 
 	}
 
@@ -172,7 +239,6 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		broker.setActiveManager(manager);
 		broker.setWorkingSetTopLevel(true);
 		waitForJobs();
-		delay(1000L);
 	}
 
 }
