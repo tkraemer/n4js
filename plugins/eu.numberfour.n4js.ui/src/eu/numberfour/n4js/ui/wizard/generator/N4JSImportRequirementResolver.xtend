@@ -287,7 +287,7 @@ class N4JSImportRequirementResolver {
 
 		var importStatements = requirements.generateImportStatements;
 		if ( ! importStatements.empty ) {
-			importStatements += "\n"
+			importStatements += WizardGeneratorHelper.LINEBREAK
 		}
 
 		new Replacement(resource.getURI,
@@ -310,7 +310,7 @@ class N4JSImportRequirementResolver {
 	public def String generateImportStatements(List<ImportRequirement> importRequirements) {
 		importRequirements.map[dep |
 			'''import {«dep.typeName»«IF !dep.alias.empty» as «dep.alias»«ENDIF»} from "«dep.moduleSpecifier»"'''
-		].join("\n")
+		].join(WizardGeneratorHelper.LINEBREAK)
 	}
 
 	/**

@@ -22,12 +22,16 @@ import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier
+import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
+import java.io.IOException
+import java.io.UnsupportedEncodingException
 import java.util.ArrayList
 import java.util.Collection
 import java.util.HashSet
 import java.util.List
-import java.util.Scanner
+import java.util.Map
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
@@ -41,13 +45,8 @@ import org.eclipse.ui.part.FileEditorInput
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
+import org.eclipse.xtext.util.Files
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import java.io.InputStreamReader
-import java.io.UnsupportedEncodingException
-import java.io.IOException
-import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
-import java.util.Map
-import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 
 /**
  * This class contains commonly used methods when writing wizard generators.
@@ -69,23 +68,18 @@ class WizardGeneratorHelper {
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
 	
+	public static val LINEBREAK = "\n"; 
 	
 	/**
 	 * Return the last character of a given file.
 	 */
 	public def String lastCharacterInFile(IFile file) {
 		try {
-			val scanner = new Scanner(file.contents)
-			scanner.useDelimiter("");
-			var line = "";
-			while (scanner.hasNext) {
-				line = scanner.next;
-			}
-			scanner.close();
-			return line;
-		} catch (CoreException exc) {
+			val contents = readFileAsString(file)
+			return contents.charAt(contents.length-1).toString;
+		} catch (Exception exc) {
 			return "";
-		};
+		}
 	}
 	
 	/**
@@ -97,7 +91,7 @@ class WizardGeneratorHelper {
 		if (str.empty) {
 			str
 		} else {
-			str + "\n";
+			str + WizardGeneratorHelper.LINEBREAK;
 		}
 	}
 	
@@ -130,17 +124,7 @@ class WizardGeneratorHelper {
 	 * Returns the content of the file as a string.
 	 */
 	public def String readFileAsString(IFile file) throws IOException, CoreException, UnsupportedEncodingException {
-		var InputStreamReader inputReader;
-			inputReader = new InputStreamReader(file.getContents(), file.getCharset());
-			val scanner = new Scanner(inputReader);
-			scanner.useDelimiter("\\A");
-
-			var content = if (scanner.hasNext()) { scanner.next(); } else { "" }
-
-			inputReader.close();
-			scanner.close();
-
-			return content;
+		Files.readFileIntoString(file.location.toString);
 	}
 	
 	/**

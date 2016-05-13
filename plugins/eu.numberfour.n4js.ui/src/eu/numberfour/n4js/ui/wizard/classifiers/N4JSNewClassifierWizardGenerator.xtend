@@ -13,23 +13,21 @@ package eu.numberfour.n4js.ui.wizard.classifiers
 import com.google.inject.Inject
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.projectModel.IN4JSProject
+import eu.numberfour.n4js.ui.wizard.generator.ContentBlock
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportAnalysis
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
-import eu.numberfour.n4js.ui.wizard.generator.ContentBlock
 import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator
-import java.io.ByteArrayInputStream
-import java.nio.charset.StandardCharsets
 import java.util.List
 import java.util.Map
+import org.apache.log4j.Logger
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.emf.common.util.URI
-import org.apache.log4j.Logger
 import org.eclipse.core.runtime.IProgressMonitor
-import eu.numberfour.n4js.ui.wizard.classifiers.N4JSClassifierWizardModel
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.util.StringInputStream
 
 /**
  * A file generator for a {@link N4JSClassifierWizardModel}
@@ -45,7 +43,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
 	
-	private val LOGGER = Logger.getLogger(eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardGenerator);
+	private val LOGGER = Logger.getLogger(N4JSNewClassifierWizardGenerator);
 	
 	override generateContentPreview(M model) {
 		val modulePath = model.computeFileLocation;
@@ -143,7 +141,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 				val classifierCode = generateClassifierCode(model, aliasBindings);
 
 				//Write to file
-				val classifierTextStream = new ByteArrayInputStream((importStatements+classifierCode).getBytes(StandardCharsets.UTF_8));
+				val classifierTextStream = new StringInputStream(importStatements+classifierCode);
 				moduleFile.create(classifierTextStream, true, null);
 			}
 		} catch (CoreException e) {
@@ -182,7 +180,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 		val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
 		
 			
-		//Only perform non-empty changes. (To prevent useless history entries)
+		// Only perform non-empty changes. (To prevent useless history entries)
 		if (manifestChanges.length > 0) {
 			manifest.applyChanges(manifestChanges);
 		}
@@ -221,18 +219,18 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 		var classCode = generateClassifierCode(model,importAnalysis.aliasBindings);
 
 		//Add an additional line break for non-line-break terminated files
-		if (lastCharacterInFile(file) != "\n") {
-			classCode = "\n"+classCode;
+		if (lastCharacterInFile(file) != WizardGeneratorHelper.LINEBREAK) {
+			classCode = WizardGeneratorHelper.LINEBREAK+classCode;
 		}
 
 		//Get stream for code
-		val classCodeStream = new ByteArrayInputStream(classCode.getBytes(StandardCharsets.UTF_8));
+		val classifierCodeStream = new StringInputStream(classCode);
 
 		//Insert import statement at the top
 		insertImportStatements(moduleResource,importAnalysis.importRequirements);
 
 		//Append classifier code
-		file.appendContents(classCodeStream, true, true, null);
+		file.appendContents(classifierCodeStream, true, true, null);
 
 		//Finally organize imports
 		organizeImports(file, null);
