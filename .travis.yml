@@ -22,4 +22,6 @@ install:
   - cat /proc/meminfo
 
 #script: echo "done."
-script: mvn -V -B -e -q clean verify -DnoVPN -DnoTests
+#script: mvn -V -B -e -q clean verify -DnoVPN -DnoTests
+# Just run the resolution of the target platform:
+script: mvn -V -B -e -q clean -DnoVPN -DnoTests
