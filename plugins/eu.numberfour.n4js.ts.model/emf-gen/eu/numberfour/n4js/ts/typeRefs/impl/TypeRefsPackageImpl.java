@@ -1175,15 +1175,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnknownTypeRef_TypeName() {
-		return (EAttribute)unknownTypeRefEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getUnknownTypeRef__GetTypeRefAsString() {
 		return unknownTypeRefEClass.getEOperations().get(0);
 	}
@@ -1794,7 +1785,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(existentialTypeRefEClass, EXISTENTIAL_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		unknownTypeRefEClass = createEClass(UNKNOWN_TYPE_REF);
-		createEAttribute(unknownTypeRefEClass, UNKNOWN_TYPE_REF__TYPE_NAME);
 		createEOperation(unknownTypeRefEClass, UNKNOWN_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		constructorTypeRefEClass = createEClass(CONSTRUCTOR_TYPE_REF);
@@ -2100,7 +2090,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getExistentialTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(unknownTypeRefEClass, UnknownTypeRef.class, "UnknownTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getUnknownTypeRef_TypeName(), theEcorePackage.getEString(), "typeName", null, 0, 1, UnknownTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getUnknownTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

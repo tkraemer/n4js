@@ -69,8 +69,7 @@ public class GitCloneSupplier implements Supplier<File> {
 			try {
 				GitUtils.hardReset(remoteURL, gitRoot.toPath(), getMasterBranch(), true);
 				GitUtils.pull(gitRoot.toPath());
-				log(statusHelper.createInfo(
-						"Local N4JS type definition files have been successfully prepared for npm support."));
+				LOGGER.info("Local N4JS type definition files have been successfully prepared for npm support.");
 				successfullyCloned = true;
 				return gitRoot;
 			} catch (final Exception e) {

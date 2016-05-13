@@ -10,7 +10,9 @@
  */
 package eu.numberfour.n4js.typesystem
 
+import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ListMultimap
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
@@ -53,6 +55,7 @@ import java.util.Collection
 import java.util.Collections
 import java.util.List
 import java.util.Map
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -72,28 +75,29 @@ class RuleEnvironmentExtensions {
 	 * {@link RuleEnvironmentExtensions#addThisType(RuleEnvironment,TypeRef) addThisType(RuleEnvironment G, TypeRef actualThisTypeRef)} and
 	 * {@link RuleEnvironmentExtensions#getThisType(RuleEnvironment) getThisType(RuleEnvironment G)}.
 	 */
-	public static final String KEY__THIS_BINDING = "this";
+	private static final String KEY__THIS_BINDING = "this";
 
 	/**
-	 * Key used for storing the 'allow traverse AST' flag in a rule environment. Client code should not use
-	 * this constant directly, but instead use methods
-	 * {@link RuleEnvironmentExtensions#setAllowTraverseAST(RuleEnvironment,Resource,boolean) setAllowTraverseAST()} and
-	 * {@link RuleEnvironmentExtensions#getAllowTraverseAST(RuleEnvironment,Resource) getAllowTraverseAST()}.
+	 * Key used for storing inconsistent substitutions in a rule environment. Client code should not use this constant
+	 * directly, but instead use methods
+	 * {@link RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment)},
+	 * {@link RuleEnvironmentExtensions#addInconsistentSubstitutions(RuleEnvironment,TypeVariable,Collection)}, and
+	 * {@link RuleEnvironmentExtensions#getInconsistentSubstitutions(RuleEnvironment,TypeVariable)}.
 	 */
-	public static final String KEY__ALLOW_TRAVERSE_AST = "allowTraverseAST";
+	private static final String KEY__INCONSISTENT_SUBSTITUTIONS = "inconsistentSubstitutions";
 
 	/**
 	 * Key for a List&lt;ExistentialTypeRef> with existential type references that should be re-opened during
-	 * type inference, ie. they should be treated like the Wildcard they were created from.
+	 * type inference, i.e. they should be treated like the Wildcard they were created from.
 	 * For detailed semantics, see xsemantics rules subtypeRefExistentialTypeRefLeft/Right.
 	 */
-	public static final String KEY__REOPEN_EXISTENTIAL_TYPES = "reopenExistentialTypes";
+	private static final String KEY__REOPEN_EXISTENTIAL_TYPES = "reopenExistentialTypes";
 
 	/**
 	 * Key for storing an ITypeReplacementProvider defining a replacement of some types by other types within
 	 * the context of a rule environment. Used when dealing with replacing an API by its implementation project.
 	 */
-	public static final String KEY__TYPE_REPLACEMENT = "typeReplacement";
+	private static final String KEY__TYPE_REPLACEMENT = "typeReplacement";
 
 	public static final String GUARD_VARIABLE_DECLARATION = "varDecl";
 	public static final String GUARD_TYPE_CALL_EXPRESSION = "typeCallExpression";
@@ -210,6 +214,37 @@ class RuleEnvironmentExtensions {
 	 */
 	def static TypeRef getThisType(RuleEnvironment G) {
 		G.get(KEY__THIS_BINDING) as TypeRef;
+	}
+
+	/**
+	 * Turn on recording of inconsistent substitutions in Xsemantics judgment {@code substTypeVariables}.
+	 * This is used by a validation which will then produce a corresponding error.
+	 */
+	def static void recordInconsistentSubstitutions(RuleEnvironment G) {
+		G.add(KEY__INCONSISTENT_SUBSTITUTIONS, ArrayListMultimap.<TypeVariable,TypeRef>create());
+	}
+
+	/**
+	 * Iff recording of inconsistent substitutions has been turned on for the given rule environment (see method
+	 * {@link #recordInconsistentSubstitutions(RuleEnvironment)}), then this method will store such substitutions
+	 * in the given rule environment.
+	 */
+	def static void addInconsistentSubstitutions(RuleEnvironment G, TypeVariable typeVar,
+		Collection<? extends TypeRef> substitutions) {
+		val storage = G.get(KEY__INCONSISTENT_SUBSTITUTIONS) as ListMultimap<TypeVariable,TypeRef>;
+		if(storage!==null) {
+			storage.putAll(typeVar, substitutions);
+		}
+	}
+
+	/**
+	 * Iff recording of inconsistent substitutions has been turned on for the given rule environment (see method
+	 * {@link #recordInconsistentSubstitutions(RuleEnvironment)}), then this method will return those substitutions.
+	 * Otherwise, an empty list is returned.
+	 */
+	def static List<TypeRef> getInconsistentSubstitutions(RuleEnvironment G, TypeVariable typeVar) {
+		val storage = G.get(KEY__INCONSISTENT_SUBSTITUTIONS) as ListMultimap<TypeVariable,TypeRef>;
+		return if(storage!==null) storage.get(typeVar) else Collections.emptyList();
 	}
 
 	/**
@@ -626,6 +661,18 @@ class RuleEnvironmentExtensions {
 		return TypeUtils.wrapTypeInTypeRef(G.predefinedTypes.builtInTypeScope, type, typeArgs);
 	}
 
+	/**
+	 * Returns all type variables for which a type mapping is defined in the given rule environment.
+	 */
+	public static def Set<TypeVariable> getTypeMappingKeys(RuleEnvironment G) {
+		val result = newLinkedHashSet;
+		var env = G;
+		while(env!==null) {
+			result += env.getEnvironment().keySet().filter(TypeVariable);
+			env = env.getNext();
+		}
+		return result;
+	}
 	/**
 	 * Convenience method. Same as {@link #addTypeMapping(RuleEnvironment,TypeVariable,TypeArgument)},
 	 * but for adding several mappings.
