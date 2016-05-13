@@ -14,21 +14,35 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.bindings.TriggerSequence;
+import org.eclipse.jface.bindings.keys.KeySequence;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.keys.IBindingService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.ui.ImageDescriptorCache;
 import eu.numberfour.n4js.ui.dialog.ModuleSpecifierSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.ProjectSelectionDialog;
 import eu.numberfour.n4js.ui.dialog.SourceFolderSelectionDialog;
@@ -36,6 +50,11 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponent;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.ConditionalConverter;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.StringToPathConverter;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProviderFactory;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ModuleSpecifierContentProposalProviderFactory.ModuleSpecifierProposalLabelProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.ProjectContentProposalProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SimpleImageContentProposalLabelProvider;
+import eu.numberfour.n4js.ui.wizard.contentproposal.SourceFolderContentProposalProviderFactory;
 
 /**
  * An abstract wizard page for {@link WorkspaceWizardModel}s.
@@ -47,17 +66,34 @@ import eu.numberfour.n4js.ui.wizard.components.WizardComponentDataConverters.Str
 public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extends WizardPage
 		implements WizardComponentContainer {
 
+	private static final String CONTENT_ASSIST_ECLIPSE_COMMAND_ID = "org.eclipse.ui.edit.text.contentAssist.proposals";
+	private static final Image CONTENT_PROPOSAL_DECORATION_IMAGE = ImageDescriptorCache.ImageRef.SMART_LIGHTBULB
+			.asImage().orNull();
+
 	private M model;
 	private DataBindingContext databindingContext;
 
 	/** Available after invocation of #createControl */
 	protected WorkspaceWizardPageForm workspaceWizardControl;
 
+	private Image contentProposalDecorationImage;
+
 	// Browse dialogs
 	@Inject
 	private Provider<ProjectSelectionDialog> projectSelectionDialogProvider;
 	@Inject
 	private Provider<SourceFolderSelectionDialog> sourceFolderSelectionDialogProvider;
+
+	@Inject
+	private ProjectContentProposalProvider projectContentProposalProvider;
+	@Inject
+	private SourceFolderContentProposalProviderFactory sourceFolderContentProviderFactory;
+	@Inject
+	private ModuleSpecifierContentProposalProviderFactory moduleSpecifierContentProviderFactory;
+
+	// Content proposal adapters
+	private ContentProposalAdapter sourceFolderContentProposalAdapter;
+	private ContentProposalAdapter moduleSpecifierContentProposalAdapter;
 
 	/**
 	 * Sole constructor.
@@ -71,8 +107,13 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	public void createControl(Composite parent) {
 		workspaceWizardControl = new WorkspaceWizardPageForm(parent, SWT.FILL);
 
+		if (null == contentProposalDecorationImage || contentProposalDecorationImage.isDisposed()) {
+			contentProposalDecorationImage = CONTENT_PROPOSAL_DECORATION_IMAGE;
+		}
+
 		setupBindings(workspaceWizardControl);
 		setupBrowseDialogs(workspaceWizardControl);
+		setupContentProposal(workspaceWizardControl);
 
 		createComponents(this);
 
@@ -241,6 +282,134 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 				openModuleSpecifierDialog(wizardForm.getShell());
 			}
 		});
+	}
+
+	private void setupContentProposal(WorkspaceWizardPageForm wizardForm) {
+		// Get the active binding's content assist key strokes
+		KeyStroke keyInitiator = getActiveContentAssistBinding();
+
+		// If unbound don't configure the content proposal
+		if (null == keyInitiator) {
+			return;
+		}
+
+		// Setup project content proposal
+		ContentProposalAdapter projectAdapter = new ContentProposalAdapter(wizardForm.getProjectText(),
+				new TextContentAdapter(), projectContentProposalProvider,
+				keyInitiator, null);
+		projectAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
+		ImageDescriptor projectSymbol = PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(IDE.SharedImages.IMG_OBJ_PROJECT);
+		projectAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(projectSymbol));
+
+		createContentProposalDecoration(wizardForm.getProjectText());
+
+		sourceFolderContentProposalAdapter = new ContentProposalAdapter(
+				wizardForm.getSourceFolderText(),
+				new TextContentAdapter(), null,
+				keyInitiator, null);
+		sourceFolderContentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
+		sourceFolderContentProposalAdapter.setLabelProvider(
+				new SimpleImageContentProposalLabelProvider(
+						ImageDescriptorCache.ImageRef.SRC_FOLDER.asImageDescriptor().orNull()));
+
+		createContentProposalDecoration(wizardForm.getSourceFolderText());
+
+		moduleSpecifierContentProposalAdapter = new ContentProposalAdapter(
+				wizardForm.getModuleSpecifierText().getInternalText(),
+				new TextContentAdapter(), null,
+				keyInitiator, null);
+
+		wizardForm.getModuleSpecifierText().createDecoration(contentProposalDecorationImage);
+
+		// Update proposal context whenever the model changes
+		model.addPropertyChangeListener(evt -> {
+			if (evt.getPropertyName() == WorkspaceWizardModel.PROJECT_PROPERTY ||
+					evt.getPropertyName() == WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY) {
+				updateProposalContext();
+			}
+		});
+		updateProposalContext();
+
+		moduleSpecifierContentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		moduleSpecifierContentProposalAdapter
+				.setLabelProvider(new ModuleSpecifierProposalLabelProvider());
+	}
+
+	/**
+	 * Returns the active key binding for content assist.
+	 *
+	 * If no binding is set null is returned.
+	 */
+	private KeyStroke getActiveContentAssistBinding() {
+		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
+		TriggerSequence[] activeBindingsFor = bindingService
+				.getActiveBindingsFor(CONTENT_ASSIST_ECLIPSE_COMMAND_ID);
+
+		if (activeBindingsFor.length > 0 && activeBindingsFor[0] instanceof KeySequence) {
+			KeyStroke[] strokes = ((KeySequence) activeBindingsFor[0]).getKeyStrokes();
+			if (strokes.length == 1) {
+				return strokes[0];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Adds the content proposal field decoration to a given control.
+	 *
+	 * @param control
+	 *            The control to decorate
+	 */
+	private ControlDecoration createContentProposalDecoration(Control control) {
+		ControlDecoration decoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+		decoration.setImage(contentProposalDecorationImage);
+		decoration.setShowOnlyOnFocus(true);
+		return decoration;
+	}
+
+	/**
+	 * This method should be invoked whenever source folder or project value change, to update the proposal contexts for
+	 * the field source folder and module specifier
+	 */
+	private void updateProposalContext() {
+		IPath projectPath = model.getProject();
+		IPath sourceFolderPath = model.getSourceFolder();
+
+		// Early exit for empty project value
+		if (projectPath.isEmpty()) {
+			sourceFolderContentProposalAdapter.setContentProposalProvider(null);
+			moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
+			return;
+		}
+
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectPath.toString());
+
+		if (null == project || !project.exists()) {
+			// Disable source folder and module specifier proposals
+			sourceFolderContentProposalAdapter.setContentProposalProvider(null);
+			moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
+		} else {
+			// Try to retrieve the source folder and if not specified set it to null
+			IContainer sourceFolder = sourceFolderPath.segmentCount() != 0 ? project.getFolder(sourceFolderPath) : null;
+
+			// If the project exists, enable source folder proposals
+			sourceFolderContentProposalAdapter
+					.setContentProposalProvider(sourceFolderContentProviderFactory.createProviderForProject(project));
+
+			if (null != sourceFolder && sourceFolder.exists()) {
+				// If source folder exists as well enable module specifier proposal
+				moduleSpecifierContentProposalAdapter.setContentProposalProvider(
+						moduleSpecifierContentProviderFactory.createProviderForPath(sourceFolder.getFullPath()));
+			} else {
+				// Otherwise disable module specifier proposals
+				moduleSpecifierContentProposalAdapter.setContentProposalProvider(null);
+			}
+		}
 	}
 
 	/**

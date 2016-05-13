@@ -90,7 +90,10 @@ public enum ImageDescriptorCache {
 		NEW_INTERFACE_WIZBAN("newint_wiz.png"),
 
 		/** Wizard banner for the new N4JS enum wizard. */
-		NEW_ENUM_WIZBAN("newenum_wiz.png");
+		NEW_ENUM_WIZBAN("newenum_wiz.png"),
+
+		/** Smart light bulb icon */
+		SMART_LIGHTBULB("smartmode_co.png");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 
@@ -114,6 +117,8 @@ public enum ImageDescriptorCache {
 		 * Returns with a new image instance created from the cached image descriptor. May return with
 		 * {@link Optional#absent() absent}, if the image descriptor cannot be created due to missing resource, or the
 		 * image cannot be created from the image descriptor instance.
+		 *
+		 * Do not dispose the returned image instance, as the resource is managed by the {@link ImageDescriptorCache}.
 		 *
 		 * @return the new image instance wrapped into an {@link Optional}. Can be {@link Optional#absent() missing} if
 		 *         the image reference cannot be created.
