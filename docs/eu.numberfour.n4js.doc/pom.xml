@@ -5,6 +5,7 @@
 
 
     <artifactId>eu.numberfour.n4js.doc</artifactId>
+    <packaging>eclipse-plugin</packaging>
 
   <!---  <name>AsciiDoc to HTML + TOC.xml</name> -->
     <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files to generate toc.xml in basedir (same dir as plugin.xml)</description>
