@@ -1,11 +1,10 @@
-﻿N4JS Documentation
-===================
-NumberFour AG
-v1.0, 2016-05
+﻿:doctype: book
 :experimental:
 :commandkey: &#8984;
 :revdate: {localdate}
 
+.N4JS Documentation
+= N4JS Documentation
 
 .All the resources you need to begin type safe development with the N4JS IDE
 

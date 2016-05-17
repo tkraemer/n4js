@@ -2,21 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-
-    <artifactId>eu.numberfour.n4js.doc</artifactId>
-    <packaging>eclipse-plugin</packaging>
-
-  <!---  <name>AsciiDoc to HTML + TOC.xml</name> -->
+    <groupId>org.asciidoctor.maven</groupId>
+    <artifactId>eu.numberfour.n4js.docs</artifactId>
+    <version>PageList</version>
+    <name>AsciiDoc to HTML + TOC.xml</name>
     <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files to generate toc.xml in basedir (same dir as plugin.xml)</description>
-
-   <parent>
-       <groupId>eu.numberfour.n4js</groupId>
-       <artifactId>eu.numberfour.n4js.docs</artifactId>
-       <version>0.0.1-SNAPSHOT</version>
-       <relativePath>../pom.xml</relativePath>
-   </parent>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,7 +33,6 @@
     <build>
       <defaultGoal>process-resources</defaultGoal>
         <plugins>
-<!-- PREVENT GENERATION OF MAVEN JAR 
             <plugin> 
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
@@ -54,7 +43,6 @@
                   </execution>
                 </executions>
               </plugin> 
--->
            <plugin>
                 <!-- ASCIIDOC TO HTML -->
                 <groupId>org.asciidoctor</groupId>
@@ -132,7 +120,7 @@
                             </attributes>
                         </configuration>
                     </execution>             
--->                   <execution>
+                 <execution>
                         <id>asciidoc-to-pdf</id>
                         <phase>generate-resources</phase>
                         <goals>
@@ -143,7 +131,6 @@
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
-
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -151,10 +138,25 @@
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                    </execution>
-
+                    </execution> -->  
                 </executions>
             </plugin> 
+            <plugin>
+              <artifactId>exec-maven-plugin</artifactId>
+              <groupId>org.codehaus.mojo</groupId>
+              <executions>
+                <execution><!-- Run the pagelist generation script -->
+                  <id>Version Calculation</id>
+                  <phase>generate-resources</phase>
+                  <goals>
+                    <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                    <executable>createpagelist.sh</executable>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
                  <!-- HTML TO ECLIPSE TOC.XML -->
            <plugin>
               <groupId>com.bsiag.geneclipsetoc</groupId>
@@ -167,9 +169,9 @@
                     <goal>geneclipsetoc</goal>
                   </goals>
                   <configuration>
-                    <sourceFolder>target/html/docs/</sourceFolder>
+                    <sourceFolder>target</sourceFolder>
                     <pagesListFile>help-pages.txt</pagesListFile>
-                    <outputTocFile>toc.xml</outputTocFile>
+                    <outputTocFile>target/toc.xml</outputTocFile>
                   </configuration>
                 </execution>
               </executions>

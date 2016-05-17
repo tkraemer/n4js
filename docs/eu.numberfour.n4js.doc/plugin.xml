@@ -15,7 +15,7 @@ Contributors:
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="toc.xml"
+            file="target/toc.xml"
             primary="true">
       </toc>
    </extension>
