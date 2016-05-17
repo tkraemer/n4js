@@ -16,27 +16,27 @@
     </properties>
     
     <parent>
-        <groupId>eu.numberfour.n4js</groupId>
+    <groupId>eu.numberfour.n4js</groupId>
 	<artifactId>eu.numberfour.n4js.docs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<relativePath>../pom.xml</relativePath>
     </parent>
 
     <pluginRepositories>
-    <pluginRepository>
-      <id>bintray.jmini.maven</id>
-      <url>http://dl.bintray.com/jmini/maven/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
+        <pluginRepository>
+            <id>bintray.jmini.maven</id>
+            <url>http://dl.bintray.com/jmini/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
-      <defaultGoal>process-resources</defaultGoal>
+    <defaultGoal>process-resources</defaultGoal>
         <plugins>
            <plugin>
                 <!-- ASCIIDOC TO HTML -->
@@ -116,61 +116,61 @@
                         </configuration>
                     </execution>
 -->
-                 <execution>
-			<!-- Generate PDF -->
-                        <id>asciidoc-to-pdf</id> 
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                          <outputDirectory>${project.build.directory}/pdf</outputDirectory>
+                    <execution>
+    			             <!-- Generate PDF -->
+                            <id>asciidoc-to-pdf</id> 
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                            <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
-                            </attributes>
-                        </configuration>
-                </execution> -->  
+                                <attributes>
+                                    <icons>font</icons>
+                                    <sectanchors>true</sectanchors>
+                                    <idprefix/>
+                                    <idseparator>-</idseparator>
+                                    <docinfo1>false</docinfo1>
+                                </attributes>
+                            </configuration>
+                    </execution>  
                 </executions>
 		</plugin> 
 		<plugin>
 			<artifactId>exec-maven-plugin</artifactId>
 			<groupId>org.codehaus.mojo</groupId>
 			<executions>
-			<execution> <!-- Run the pagelist generation script -->
-			 <id>Version Calculation</id>
-			  <phase>generate-resources</phase>
-			  <goals>
-			    <goal>exec</goal>
-			  </goals>
-			  <configuration>
-			    <executable>createpagelist.sh</executable>
-			  </configuration>
-			</execution>
+    			<execution> <!-- Run the pagelist generation script -->
+        			<id>Version Calculation</id>
+        			<phase>generate-resources</phase>
+        			<goals>
+        			    <goal>exec</goal>
+        			</goals>
+        			<configuration>
+        			    <executable>createpagelist.sh</executable>
+        			</configuration>
+    			</execution>
 			</executions>
 		</plugin>
-		<plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
-              <groupId>com.bsiag.geneclipsetoc</groupId>
-              <artifactId>geneclipsetoc-maven-plugin</artifactId>
-              <version>1.0.2</version>
-              <executions>
+	    <plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
+            <groupId>com.bsiag.geneclipsetoc</groupId>
+            <artifactId>geneclipsetoc-maven-plugin</artifactId>
+            <version>1.0.2</version>
+            <executions>
                 <execution>
-                  <phase>generate-resources</phase>
-                  <goals>
-                    <goal>geneclipsetoc</goal>
-                  </goals>
-                  <configuration>
-                    <sourceFolder>${basedir}</sourceFolder>
-                    <pagesListFile>help-pages.txt</pagesListFile>
-                    <outputTocFile>toc.xml</outputTocFile>
-                  </configuration>
-                </execution>
-              </executions>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>geneclipsetoc</goal>
+                    </goals>
+                    <configuration>
+                        <sourceFolder>${basedir}</sourceFolder>
+                        <pagesListFile>help-pages.txt</pagesListFile>
+                        <outputTocFile>toc.xml</outputTocFile>
+                    </configuration>
+                    </execution>
+                </executions>
             </plugin> <!-- END HTML TO ECLIPSE TOC.XML -->
         </plugins>
     </build>
