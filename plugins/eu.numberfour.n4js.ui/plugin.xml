@@ -280,6 +280,7 @@ Contributors:
             </commandParameter>
       </command>
       <command
+            description="Resets the current and persisten state of all working set managers and their working sets to the default state"
             id="eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler"
             name="Reset Working Sets">
       </command>
