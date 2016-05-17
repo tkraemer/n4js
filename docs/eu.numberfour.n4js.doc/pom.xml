@@ -2,11 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.asciidoctor.maven</groupId>
     <artifactId>eu.numberfour.n4js.doc</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <version>PageList</version>
-    <name>AsciiDoc to HTML + TOC.xml</name>
     <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files to generate toc.xml in basedir (same dir as plugin.xml)</description>
 
     <properties>
@@ -117,9 +114,10 @@
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                    </execution>             
+                    </execution>
+-->
                  <execution>
-PDF Currently Disabled to speed up docs build
+			<!-- Generate PDF -->
                         <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
                         <goals>
@@ -137,26 +135,26 @@ PDF Currently Disabled to speed up docs build
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                    </execution> -->  
+                </execution> -->  
                 </executions>
-            </plugin> 
-            <plugin>
-              <artifactId>exec-maven-plugin</artifactId>
-              <groupId>org.codehaus.mojo</groupId>
-              <executions>
-                <execution> <!-- Run the pagelist generation script -->
-                  <id>Version Calculation</id>
-                  <phase>generate-resources</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>createpagelist.sh</executable>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-           <plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
+		</plugin> 
+		<plugin>
+			<artifactId>exec-maven-plugin</artifactId>
+			<groupId>org.codehaus.mojo</groupId>
+			<executions>
+			<execution> <!-- Run the pagelist generation script -->
+			 <id>Version Calculation</id>
+			  <phase>generate-resources</phase>
+			  <goals>
+			    <goal>exec</goal>
+			  </goals>
+			  <configuration>
+			    <executable>createpagelist.sh</executable>
+			  </configuration>
+			</execution>
+			</executions>
+		</plugin>
+		<plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
               <groupId>com.bsiag.geneclipsetoc</groupId>
               <artifactId>geneclipsetoc-maven-plugin</artifactId>
               <version>1.0.2</version>
