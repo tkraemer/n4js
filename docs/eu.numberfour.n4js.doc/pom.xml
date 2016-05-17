@@ -111,7 +111,8 @@
                         </configuration>
                     </execution>             
                  <execution>
-                        <id>asciidoc-to-pdf</id>
+PDF Currently Disabled to speed up docs build
+                        <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
@@ -135,7 +136,7 @@
               <artifactId>exec-maven-plugin</artifactId>
               <groupId>org.codehaus.mojo</groupId>
               <executions>
-                <execution><!-- Run the pagelist generation script -->
+                <execution> <!-- Run the pagelist generation script -->
                   <id>Version Calculation</id>
                   <phase>generate-resources</phase>
                   <goals>
@@ -147,8 +148,7 @@
                 </execution>
               </executions>
             </plugin>
-                 <!-- HTML TO ECLIPSE TOC.XML -->
-           <plugin>
+           <plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
               <groupId>com.bsiag.geneclipsetoc</groupId>
               <artifactId>geneclipsetoc-maven-plugin</artifactId>
               <version>1.0.2</version>
@@ -159,9 +159,9 @@
                     <goal>geneclipsetoc</goal>
                   </goals>
                   <configuration>
-                    <sourceFolder>target</sourceFolder>
+                    <sourceFolder>${basedir}</sourceFolder>
                     <pagesListFile>help-pages.txt</pagesListFile>
-                    <outputTocFile>target/toc.xml</outputTocFile>
+                    <outputTocFile>toc.xml</outputTocFile>
                   </configuration>
                 </execution>
               </executions>
