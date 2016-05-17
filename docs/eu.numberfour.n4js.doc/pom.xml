@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.asciidoctor.maven</groupId>
     <artifactId>eu.numberfour.n4js.docs</artifactId>
+    <packaging>eclipse-plugin</packaging>
     <version>PageList</version>
     <name>AsciiDoc to HTML + TOC.xml</name>
     <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files to generate toc.xml in basedir (same dir as plugin.xml)</description>
