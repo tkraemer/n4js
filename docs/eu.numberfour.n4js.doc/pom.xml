@@ -16,6 +16,13 @@
         <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
         <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
     </properties>
+    
+	<parent>
+		<groupId>eu.numberfour.n4js</groupId>
+		<artifactId>eu.numberfour.n4js.distribution</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
     <pluginRepositories>
     <pluginRepository>
