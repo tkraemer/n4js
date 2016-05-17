@@ -14,13 +14,17 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -33,7 +37,7 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.primitives.Ints;
 
 /**
- * Custom {@link org.eclipse.swt.widgets.Text} widget to optionally display a grey suffix at the end of the user input.
+ * Custom {@link org.eclipse.swt.widgets.Text} control to optionally display a grey suffix at the end of the user input.
  */
 public class SuffixText extends Composite {
 
@@ -54,16 +58,18 @@ public class SuffixText extends Composite {
 	private String suffix = "";
 	private String text = "";
 
-	// widgets
+	// controls
 	private final Text editableText;
 	private final StyledText suffixText;
 
+	// internal states
 	private boolean mousePressed = false;
-
 	private boolean suffixVisible = true;
 
 	// Graphics context for text selection pixel calculation
 	private final GC gc = new GC(getDisplay());
+
+	private ControlDecoration contentProposalDecoration;
 
 	/**
 	 * Create the suffix text.
@@ -74,30 +80,42 @@ public class SuffixText extends Composite {
 	 *            additional style configuration
 	 */
 	public SuffixText(Composite parent, int style) {
-
 		super(parent, style);
-
 		this.setLayout(new SuffixLayout());
 
-		// Configure suffix text
-		suffixText = new StyledText(this, SWT.TRANSPARENT);
-		suffixText.setText("/Test");
-		suffixText.setForeground(INACTIVE_COLOR);
-		suffixText.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
-		suffixText.setEditable(false);
-		suffixText.setEnabled(false);
-		suffixText.setLeftMargin(0);
-
+		suffixText = createSuffixText();
 		editableText = new Text(this, SWT.NONE);
 
-		this.setBackground(getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+		configureListeners();
 
+		this.setBackground(getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+		this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_IBEAM));
+	}
+
+	/**
+	 * Creates, configures and returns the suffix text control.
+	 */
+	private StyledText createSuffixText() {
+		StyledText styledText = new StyledText(this, SWT.TRANSPARENT);
+		styledText.setText("");
+		styledText.setForeground(INACTIVE_COLOR);
+		styledText.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		styledText.setEditable(false);
+		styledText.setEnabled(false);
+		styledText.setLeftMargin(0);
+
+		return styledText;
+	}
+
+	/**
+	 * Configures the listeners of the suffix text control.
+	 */
+	private void configureListeners() {
 		// Redirect focus to internal editable text widget
 		MouseListener focusCatcher = new MouseListener() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				mousePressed = false;
-
 			}
 
 			@Override
@@ -134,10 +152,23 @@ public class SuffixText extends Composite {
 			}
 		});
 
-		// Connect the internal suffix visibility state to the swt label visibility
+		// Connect the internal suffix visibility state to the SWT label visibility
 		this.addPropertyChangeListener(propertyChange -> {
 			if (propertyChange.getPropertyName() == SUFFIX_VISIBILITY_PROPERTY) {
 				suffixText.setVisible(suffixVisible);
+			}
+		});
+
+		// Bind content proposal decoration to editable text focus state
+		this.editableText.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				setDecorationVisibility(false);
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				setDecorationVisibility(true);
 			}
 		});
 
@@ -171,10 +202,6 @@ public class SuffixText extends Composite {
 
 		};
 		this.addMouseMoveListener(mouseMoveSelectionListener);
-
-		// Set text cursor
-		this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_IBEAM));
-
 	}
 
 	@Override
@@ -244,6 +271,40 @@ public class SuffixText extends Composite {
 	@Override
 	public boolean setFocus() {
 		return this.editableText.setFocus();
+	}
+
+	/**
+	 * Returns the internally used SWT text.
+	 */
+	public Text getInternalText() {
+		return this.editableText;
+	}
+
+	/**
+	 * Creates a decoration with the given image for this text.
+	 *
+	 * Note that the decoration is only displayed in focus.
+	 */
+	public void createDecoration(Image decorationImage) {
+		contentProposalDecoration = new ControlDecoration(this, SWT.TOP | SWT.LEFT);
+		contentProposalDecoration.setImage(decorationImage);
+		contentProposalDecoration.hide();
+	}
+
+	/**
+	 * Sets the decoration visibility.
+	 *
+	 * This method does not have any effect if the decoration wasn't created before. See
+	 * {@link #createDecoration(Image)}
+	 */
+	private void setDecorationVisibility(boolean state) {
+		if (null != contentProposalDecoration) {
+			if (state) {
+				contentProposalDecoration.show();
+			} else {
+				contentProposalDecoration.hide();
+			}
+		}
 	}
 
 	/**
