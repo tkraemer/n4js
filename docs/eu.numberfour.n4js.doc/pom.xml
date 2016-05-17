@@ -33,6 +33,7 @@
     <build>
       <defaultGoal>process-resources</defaultGoal>
         <plugins>
+           <plugin>
                 <!-- ASCIIDOC TO HTML -->
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
