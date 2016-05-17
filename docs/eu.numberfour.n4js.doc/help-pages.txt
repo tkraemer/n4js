@@ -1,0 +1,17 @@
+documentation/index.html
+documentation/npm-export-guide.html
+documentation/ide-setup.html
+documentation/tutorial.html
+faq/comparison-typescript.html
+faq/index.html
+faq/comparison-java.html
+features/async-await.html
+features/dependency-injection.html
+features/generics.html
+features/index.html
+features/modules.html
+features/nodejs-support.html
+features/nominal-and-structural-typing.html
+features/testing.html
+releases/index.html
+releases/reporting-bugs.html
