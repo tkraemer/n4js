@@ -102,7 +102,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		waitIdle();
+		waitForIdleState();
 		projectExplorer = (ProjectExplorer) showView(ProjectExplorer.VIEW_ID);
 		waitForUiThread();
 		assertNotNull("Cannot show Project Explorer.", projectExplorer);
@@ -118,7 +118,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 	public void tearDown() throws Exception {
 		super.tearDown();
 		broker.resetState();
-		waitIdle();
+		waitForIdleState();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		assertTrue("Expected empty Project Explorer. Input was: " + Arrays.toString(treeItems),
@@ -225,7 +225,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		activateWorkingSetManager(ProjectTypeAwareWorkingSetManager.class);
 		commonViewer.expandToLevel(2);
-		waitIdle();
+		waitForIdleState();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		final int expectedItemCount = ProjectType.values().length + 1;
@@ -388,10 +388,10 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		manager.updateState(diff);
 		broker.refreshNavigator();
-		waitIdle();
+		waitForIdleState();
 
 		commonViewer.expandToLevel(2);
-		waitIdle();
+		waitForIdleState();
 
 		final TreeItem[] treeItems = commonViewer.getTree().getItems();
 		final int expectedItemCount = filterNamesMapping.keySet().size();
@@ -441,7 +441,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		final HideWorkingSetAction hideAction = new HideWorkingSetAction();
 
 		commonViewer.setSelection(new StructuredSelection(workingSets.toArray()));
-		waitIdle();
+		waitForIdleState();
 
 		treeItems = commonViewer.getTree().getItems();
 		final List<ProjectTypeWorkingSet> selectedWorkingSets = from(asList(treeItems))
@@ -451,7 +451,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		assertEquals(workingSetsToHide, selectedWorkingSets);
 		hideAction.selectionChanged(commonViewer.getStructuredSelection());
-		waitIdle();
+		waitForIdleState();
 
 		assertFalse("Expected disabled action.", hideAction.isEnabled());
 
@@ -459,12 +459,12 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		commonViewer.setSelection(new StructuredSelection(workingSetsToHide.toArray()));
 		hideAction.selectionChanged(commonViewer.getStructuredSelection());
-		waitIdle();
+		waitForIdleState();
 
 		assertTrue("Expected enabled action.", hideAction.isEnabled());
 
 		hideAction.run();
-		waitIdle();
+		waitForIdleState();
 
 		treeItems = commonViewer.getTree().getItems();
 		workingSets = from(asList(treeItems)).transform(item -> item.getData())
@@ -501,7 +501,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 				workingSetsToHide.size() + 2 == menu.getItemCount());
 
 		menu.getItem(0).notifyListeners(SWT.Selection, null);
-		waitIdle();
+		waitForIdleState();
 		workingSetsToHide.remove(0);
 
 		treeItems = commonViewer.getTree().getItems();
@@ -519,7 +519,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 				workingSetsToHide.size() + 2 == menu.getItemCount());
 
 		menu.getItem(menu.getItemCount() - 1).notifyListeners(SWT.Selection, null);
-		waitIdle();
+		waitForIdleState();
 
 		treeItems = commonViewer.getTree().getItems();
 		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
@@ -542,7 +542,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		checkNotNull(manager, "Working set manager does not exist with ID: " + clazz);
 		broker.setActiveManager(manager);
 		broker.setWorkingSetTopLevel(true);
-		waitIdle();
+		waitForIdleState();
 		final IContributionItem dropDownContribution = getWorkingSetDropDownContribution();
 		assertNotNull(
 				"Select working set drop down contribution was null when working sets are configured as top level elements.",

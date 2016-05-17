@@ -64,7 +64,7 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	protected IWorkbenchWindow getWindow() {
 		return checkNotNull(
 				getWorkbench().getActiveWorkbenchWindow(),
-				"Active workbench window was null. Is the caller thread the UI thread?");
+				"Active workbench window was null. Is this method called from the UI thread?");
 	}
 
 	/**
@@ -121,7 +121,7 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	/**
 	 * Wait until all background tasks are complete then makes sure that the UI thread is idle as well.
 	 */
-	protected void waitIdle() {
+	protected void waitForIdleState() {
 		final IJobManager manager = Job.getJobManager();
 		while (manager.currentJob() != null) {
 			waitForUiThread();

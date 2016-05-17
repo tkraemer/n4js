@@ -33,6 +33,8 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -45,6 +47,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerLabelProvider;
+import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TableViewerBuilder;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager.ManualAssociationWorkingSet;
 import eu.numberfour.n4js.utils.Arrays2;
@@ -57,6 +60,8 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 
 	private static final String TITLE = "Manual Association Working Set";
 	private static final String DESCRIPTION = "Enter a working set name and select projects that have to be associated with the working set.";
+
+	private static final Point SHELL_SIZE = new Point(600, 650);
 
 	private static final Comparator<IProject> PROJECT_NAME_COMPARATOR = (left, right) -> {
 		if (left == null) {
@@ -203,6 +208,15 @@ public class WorkingSetManualAssociationWizard extends WorkingSetEditWizard {
 
 				nameText.addModifyListener(e -> setPageComplete(validatePage()));
 
+			}
+
+			@Override
+			public void setVisible(boolean visible) {
+				if (visible) {
+					Rectangle location = UIUtils.getConstrainedShellBounds(getShell(), SHELL_SIZE);
+					getShell().setBounds(location);
+				}
+				super.setVisible(visible);
 			}
 
 			@SuppressWarnings("null")
