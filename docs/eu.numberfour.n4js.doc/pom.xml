@@ -143,7 +143,6 @@
 			<artifactId>exec-maven-plugin</artifactId>
 			<version>${codehaus-exec-maven-plugin.version}</version>
 			<groupId>org.codehaus.mojo</groupId>
-			<id>pagelist-generation</id>
 			<executions>
     			<execution> <!-- Run the pagelist generation script -->
         			<phase>generate-resources</phase>
