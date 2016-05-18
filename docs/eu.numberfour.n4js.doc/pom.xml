@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>eu.numberfour.n4js.doc</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files to generate toc.xml in basedir (same dir as plugin.xml)</description>
+    <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,10 +36,10 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <build>
+<build>
     <defaultGoal>process-resources</defaultGoal>
         <plugins>
-           <plugin>
+            <plugin>
                 <!-- ASCIIDOC TO HTML -->
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -62,73 +62,50 @@
                         <artifactId>asciidoctorj-pdf</artifactId>
                         <version>${asciidoctorj.pdf.version}</version>
                     </dependency>
-                    <dependency>
-                      <groupId>org.asciidoctor</groupId>
-                      <artifactId>asciidoctorj-epub3</artifactId>
-                      <version>${asciidoctor-epub3.version}</version>
+                        <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-epub3</artifactId>
+                        <version>${asciidoctor-epub3.version}</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <preserveDirectories>true</preserveDirectories> <!--  FOLDER STRUCTURE PRESERVED -->
-                    <sourceDirectory>src/</sourceDirectory>
+                <executions> <!-- GENERATE RESOURCES -->
+                <execution>
+                    <id>asciidoc-to-html</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>process-asciidoc</goal>
+                    </goals>
+                    <configuration>
+                        <sourceDirectory>src/</sourceDirectory>
+                        <preserveDirectories>true</preserveDirectories> <!-- Currently preserved to copy across images TODO - embed images -->
+                        <outputDirectory>${project.build.directory}/html</outputDirectory>
+                        <backend>html5</backend>
+                        <sourceHighlighter>coderay</sourceHighlighter>
+                        <attributes>
+                            <imagesdir>../../images</imagesdir>
+                            <toc>left</toc>
+                            <icons>font</icons>
+                            <sectanchors>true</sectanchors>
+                            <idprefix/>
+                            <idseparator>-</idseparator>
+                            <docinfo1>false</docinfo1>
+                        </attributes>
                     </configuration>
-                    <executions> <!-- GENERATE RESOURCES -->
-                    <execution>
-                        <id>asciidoc-to-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                          <outputDirectory>${project.build.directory}/html</outputDirectory>
-                            <backend>html5</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>
-                                <imagesdir>../../images</imagesdir>
-                                <toc>left</toc>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
-                            </attributes>
-                        </configuration>
-                    </execution>
-<!-- EPUB format currently breaking for lack of "references"     
-                    <execution>
-                        <id>asciidoc-to-epub</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                          <outputDirectory>${project.build.directory}/epub</outputDirectory>
-                            <backend>epub3</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>
-                                <imagesdir>fig</imagesdir>
-                                <toc>left</toc>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
-                            </attributes>
-                        </configuration>
-                    </execution>
--->
-                    <execution>
-    			             <!-- Generate PDF -->
-                            <id>asciidoc-to-pdf</id> 
+                </execution>
+    <!-- EPUB format currently breaking for lack of "references"     
+                        <execution>
+                            <id>asciidoc-to-epub</id>
                             <phase>generate-resources</phase>
                             <goals>
                                 <goal>process-asciidoc</goal>
                             </goals>
                             <configuration>
-                            <outputDirectory>${project.build.directory}/pdf</outputDirectory>
-                            <backend>pdf</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                              <outputDirectory>${project.build.directory}/epub</outputDirectory>
+                                <backend>epub3</backend>
+                                <sourceHighlighter>coderay</sourceHighlighter>
                                 <attributes>
+                                    <imagesdir>fig</imagesdir>
+                                    <toc>left</toc>
                                     <icons>font</icons>
                                     <sectanchors>true</sectanchors>
                                     <idprefix/>
@@ -136,15 +113,38 @@
                                     <docinfo1>false</docinfo1>
                                 </attributes>
                             </configuration>
-                    </execution>  
-                </executions>
+                        </execution>
+    -->
+                <execution> <!-- Generate PDF -->
+                    <id>asciidoc-to-pdf</id> 
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>process-asciidoc</goal>
+                    </goals>
+                    <configuration>
+                          <sourceDirectory>src/pdf</sourceDirectory>
+                          <outputDirectory>${project.build.directory}/pdf</outputDirectory>
+                            <backend>pdf</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes>
+                                <imagesdir>../images</imagesdir>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                </execution>  
+            </executions>
 		</plugin> 
+<!-- Pagelist generation script, help-pages.txt manually updated
 		<plugin>
 			<artifactId>exec-maven-plugin</artifactId>
 			<version>${exec-maven-plugin.version}</version>
 			<groupId>org.codehaus.mojo</groupId>
 			<executions>
-    			<execution> <!-- Run the pagelist generation script -->
+    			<execution>  
         			<phase>generate-resources</phase>
         			<goals>
         			    <goal>exec</goal>
@@ -155,6 +155,7 @@
     			</execution>
 			</executions>
 		</plugin>
+-->
 	    <plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
             <groupId>com.bsiag.geneclipsetoc</groupId>
             <artifactId>geneclipsetoc-maven-plugin</artifactId>

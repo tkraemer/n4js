@@ -1,0 +1,17 @@
+target/html/documentation/ide-setup.html
+target/html/documentation/index.html
+target/html/documentation/npm-export-guide.html
+target/html/documentation/tutorial.html
+target/html/faq/comparison-java.html
+target/html/faq/comparison-typescript.html
+target/html/faq/index.html
+target/html/features/async-await.html
+target/html/features/dependency-injection.html
+target/html/features/generics.html
+target/html/features/index.html
+target/html/features/modules.html
+target/html/features/nodejs-support.html
+target/html/features/nominal-and-structural-typing.html
+target/html/features/testing.html
+target/html/releases/index.html
+target/html/releases/reporting-bugs.html
