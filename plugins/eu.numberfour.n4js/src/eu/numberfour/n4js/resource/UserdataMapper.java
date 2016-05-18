@@ -225,7 +225,7 @@ public final class UserdataMapper {
 		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
 		// we need the entire, absolute original URI, including its fragment)
 		// TODO IDE-2250 discuss with Ed Merks if there is a better solution
-		M2MUriUtil.convertAllProxiesToM2M(module, null, false);
+		M2MUriUtil.convertAllProxiesToM2M(module, uri, null, false);
 		return module;
 	}
 }

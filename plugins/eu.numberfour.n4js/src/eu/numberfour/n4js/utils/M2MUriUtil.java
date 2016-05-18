@@ -139,22 +139,29 @@ public class M2MUriUtil {
 	 * For all proxies in in the given {@link TModule}, convert their URIs to {@link N4JSGlobals#URI_FRAGMENT_PREFIX_M2M
 	 * m2m URIs}.
 	 *
+	 * @param module
+	 *            the module to process.
+	 * @param sourceUri
+	 *            URI of the resource the given {@code TModule} belongs to. Provided as argument to allow processing
+	 *            modules that are not (yet) contained in a resource.
 	 * @param targetUriToProcess
 	 *            if non-<code>null</code>, will limit conversion to proxies that point to a resource with this URI.
 	 * @param copy
 	 *            if <code>true</code>, proxies will be copied before changing their URI; if <code>false</code>, the URI
 	 *            will be directly changed in the proxy instances.
 	 */
-	public static final void convertAllProxiesToM2M(TModule module, URI targetUriToProcess, boolean copy) {
+	public static final void convertAllProxiesToM2M(TModule module, URI sourceUri, URI targetUriToProcess,
+			boolean copy) {
+		if (sourceUri == null || sourceUri.hasFragment())
+			throw new IllegalArgumentException("sourceUri must be non-null and must not have a fragment");
 		if (targetUriToProcess != null && targetUriToProcess.hasFragment())
 			throw new IllegalArgumentException("targetUriToProcess must not have a fragment");
-		final URI baseUri = module.eResource().getURI();
 		EcoreUtilN4.handleProxyCrossReferences(module, (source, eReference, oldProxy) -> {
 			final URI oldUri = oldProxy.eProxyURI();
 			final boolean mustProcessOldProxy = targetUriToProcess == null
 					|| (oldUri != null && oldUri.trimFragment().equals(targetUriToProcess));
 			if (mustProcessOldProxy) {
-				final EObject newProxy = convertProxyUriToM2M(baseUri, oldProxy, copy);
+				final EObject newProxy = convertProxyUriToM2M(sourceUri, oldProxy, copy);
 				if (copy) {
 					if (newProxy != null && newProxy != oldProxy) {
 						EcoreUtilN4.doWithDeliver(false, () -> {
@@ -175,16 +182,17 @@ public class M2MUriUtil {
 	 *            if non-<code>null</code>, will limit conversion to proxies that point to a resource with this URI.
 	 */
 	public static final void convertAllProxiesToM2M(ResourceSet resourceSet, URI targetUriToProcess) {
-		for (Resource resource : resourceSet.getResources()) {
-			if (resource instanceof N4JSResource) {
-				final String fileExt = resource.getURI().fileExtension();
-				if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(fileExt)
-						|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)) {
-					final TModule module = ((N4JSResource) resource).getModule();
-					if (module != null) {
+		for (Resource currResource : resourceSet.getResources()) {
+			if (currResource instanceof N4JSResource) {
+				final URI currUri = currResource.getURI();
+				final String currFileExt = currUri.fileExtension();
+				if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(currFileExt)
+						|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(currFileExt)) {
+					final TModule currModule = ((N4JSResource) currResource).getModule();
+					if (currModule != null) {
 						// note: always have to set argument 'copy' to true in next line, because different resources
 						// might point to the identical proxy but will then need different m2m URIs!
-						convertAllProxiesToM2M(module, targetUriToProcess, true);
+						convertAllProxiesToM2M(currModule, currUri, targetUriToProcess, true);
 					}
 				}
 			}
