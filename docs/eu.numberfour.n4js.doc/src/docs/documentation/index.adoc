@@ -1,10 +1,14 @@
-﻿:doctype: book
-:experimental:
+﻿:experimental:
 :commandkey: &#8984;
+:imagesdir: fig
 :revdate: {localdate}
+:toc:
+:source-highlighter: prettify
+:doctype: book
 
-.N4JS Documentation
-= N4JS Documentation
+.Title Test
+= Another titles
+
 
 .All the resources you need to begin type safe development with the N4JS IDE
 

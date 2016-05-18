@@ -12,6 +12,7 @@
 .N4JS IDE Setup
 = N4JS IDE Setup
 
+
 *Get the most from type safe development with the custom-built N4JS IDE*
 
 In order to fully utilize the strengths of the language, N4JS has its own Eclipse-based IDE
@@ -190,7 +191,9 @@ easily search for fields, methods and classes.
 
 To run this file, right-click inside the editor view and select *Run as | Launch in Node.js*:
 
+ifdef::backend-html5[]
 image::runhello.gif[]
+endif[]
 
 The Console View will display the result of our +console.log+ command, and our Hello World!
 example is running in the N4JS IDE without

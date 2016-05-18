@@ -7,7 +7,8 @@
 :doctype: book
 
 .N4JS npm Export Guide
-= Exporting to npm with N4JS
+= N4JS npm Export Guide
+
 
 N4JS was created with the intention of supporting safe and intuitive Node.js development.
 When a Node application

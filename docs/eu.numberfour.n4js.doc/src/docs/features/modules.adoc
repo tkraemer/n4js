@@ -57,8 +57,9 @@ Simply write the type or variable you require and press kbd:[Ctrl+SPACE].
 Content assist within the IDE will add the missing import statement for you.
 
 
+ifdef::backend-html5[]
 image::moduleImport.gif[]
-
+endif[]
 
 When pasting in a code snippet, you could use kbd:[Ctrl+Shift+O]
 (on Windows and Linux, kbd:[Alt+Cmd+O] on Mac) which organizes your imports and
