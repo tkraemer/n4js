@@ -1,9 +1,9 @@
 :doctype: book
 :experimental:
 :commandkey: &#8984;
-:imagesdir: ../../images
 :revdate: {localdate}
 :references: drop
+:data-uri:
 
 ////
 :data-uri:

@@ -4,6 +4,7 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:data-uri:
 
 .Testing
 = Testing

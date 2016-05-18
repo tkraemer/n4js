@@ -1,10 +1,10 @@
 ﻿:experimental:
 :commandkey: &#8984;
-:imagesdir: fig
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:data-uri:
 
 .Title Test
 = Another titles

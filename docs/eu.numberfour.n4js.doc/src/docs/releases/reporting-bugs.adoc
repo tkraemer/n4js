@@ -1,6 +1,6 @@
 :experimental:
 :commandkey: &#8984;
-:imagesdir: fig
+:data-uri:
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify

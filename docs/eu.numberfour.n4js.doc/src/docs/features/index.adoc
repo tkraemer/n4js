@@ -1,6 +1,6 @@
 :experimental:
 :commandkey: &#8984;
-:imagesdir: fig
+:data-uri:
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
@@ -24,10 +24,11 @@ does not introduce any new keywords to ECMAScript 2015/ES.next. If additional fu
 explicit declarations, this is done via annotations similar to Java a (using "@"). There are no user
 defined annotations supported at the moment (this is why we do not list annotations as feature).
 
+////
 
 TODO: Feature Table goes here
 
-////
+
 
 |=================
 | **Feature** | **Similar to** 3+| **Description**
