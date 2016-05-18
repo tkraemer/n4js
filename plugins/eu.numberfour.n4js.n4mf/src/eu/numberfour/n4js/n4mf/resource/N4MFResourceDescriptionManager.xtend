@@ -10,13 +10,16 @@
  */
 package eu.numberfour.n4js.n4mf.resource
 
+import eu.numberfour.n4js.n4mf.N4mfPackage
 import java.util.Collection
+import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceDescription
 import org.eclipse.xtext.resource.IResourceDescription.Delta
 import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionManager
 
 import static eu.numberfour.n4js.n4mf.utils.N4MFConstants.N4MF_MANIFEST
+import static extension eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.*
 
 /**
  * Resource description manager for N4 manifests. Considers a {@link Delta change} as relevant to the current
@@ -26,11 +29,37 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 
 	@Override
 	override boolean isAffected(Collection<Delta> deltas, IResourceDescription candidate, IResourceDescriptions context) {
-		candidate.isManifest && deltas.exists[isManifest];
+
+		if (candidate.manifest) {
+			// Contains only those project IDs those are affected via the N4 manifest.
+			val affectedProjectIds = deltas.map[uri].filter[isManifest].map[segment(segmentCount - 2)].toSet;
+
+			// Collect all referenced project IDs of the candidate.
+			val referencedProjectIds = newLinkedList;
+			candidate.getExportedObjectsByType(N4mfPackage.eINSTANCE.projectDescription).forEach[
+				referencedProjectIds.addAll(testedProjectIds);
+				referencedProjectIds.addAll(implementedProjectIds);
+				referencedProjectIds.addAll(projectDependencyIds);
+				referencedProjectIds.addAll(providedRuntimeLibraryIds);
+				referencedProjectIds.addAll(requiredRuntimeLibraryIds);
+				val extRuntimeEnvironmentId = extendedRuntimeEnvironmentId;
+				if (!extRuntimeEnvironmentId.nullOrEmpty) {
+					referencedProjectIds.add(extRuntimeEnvironmentId);
+				}
+			];
+			
+			for (referencedProjectId : referencedProjectIds) {
+				if (affectedProjectIds.contains(referencedProjectId)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
-	private def isManifest(Delta it) {
-		null !== it && N4MF_MANIFEST.equals(uri.lastSegment);
+	private def isManifest(URI it) {
+		null !== it && N4MF_MANIFEST == lastSegment;
 	}
 
 	private def isManifest(IResourceDescription it) {
