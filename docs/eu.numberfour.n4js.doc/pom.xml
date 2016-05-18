@@ -150,7 +150,7 @@
         			    <goal>exec</goal>
         			</goals>
         			<configuration>
-        			    <executable>src/main/scripts/createpagelist.sh</executable>
+        			    <executable>${project.build.directory}/src/main/scripts/createpagelist.sh</executable>
         			</configuration>
     			</execution>
 			</executions>
