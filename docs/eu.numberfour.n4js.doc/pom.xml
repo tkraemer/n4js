@@ -151,6 +151,9 @@
         			</goals>
         			<configuration>
         			    <executable>${basedir}/createpagelist.sh</executable>
+					<arguments>
+				    	<argument>${basedir}</argument>
+					</arguments>
         			</configuration>
     			</execution>
 			</executions>
