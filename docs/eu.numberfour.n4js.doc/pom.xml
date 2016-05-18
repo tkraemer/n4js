@@ -145,7 +145,6 @@
 			<groupId>org.codehaus.mojo</groupId>
 			<executions>
     			<execution> <!-- Run the pagelist generation script -->
-        			<id>Version Calculation</id>
         			<phase>generate-resources</phase>
         			<goals>
         			    <goal>exec</goal>
