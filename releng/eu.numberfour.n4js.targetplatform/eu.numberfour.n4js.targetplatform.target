@@ -201,13 +201,11 @@ This has two advantages:
 			<repository location="http://sourceforge.net/projects/eclipsejsonedit/files/update/"/>
 		</location>
 
-		<!-- Path Tools 
-		Disabled as of 2016-05-12 no updatesite is available for the given repository.		
+		<!-- Path Tools -->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="PathToolsFeature.feature.group" version="1.0.67"/>
 			<repository location="http://pathtools.googlecode.com/svn/trunk/PathToolsUpdateSite/"/>
 		</location>
-		-->
 
 		<!-- Jetty stuff, aligned version with built-eclipse jetty components. -->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
