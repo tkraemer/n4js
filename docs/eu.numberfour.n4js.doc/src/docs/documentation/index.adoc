@@ -6,8 +6,8 @@
 :doctype: book
 :data-uri:
 
-.Title Test
-= Another titles
+.N4JS Docomentation
+= N4JS Docomentation
 
 
 .All the resources you need to begin type safe development with the N4JS IDE
