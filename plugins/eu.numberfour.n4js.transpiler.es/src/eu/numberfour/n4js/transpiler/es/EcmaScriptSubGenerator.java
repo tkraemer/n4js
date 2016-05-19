@@ -25,7 +25,6 @@ import org.eclipse.xtext.util.CancelIndicator;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.CancelIndicatorBaseExtractor;
 import eu.numberfour.n4js.generator.common.AbstractSubGenerator;
 import eu.numberfour.n4js.generator.common.CompilerDescriptor;
@@ -89,7 +88,7 @@ public class EcmaScriptSubGenerator extends AbstractSubGenerator {
 		}
 		final N4JSResource resourceCasted = (N4JSResource) resource;
 
-		if (AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(resourceCasted.getModule())) {
+		if (resourceCasted.getModule().isStaticPolyfillModule()) {
 			return; // do not transpile static polyfill modules (i.e. the fillers)
 		}
 

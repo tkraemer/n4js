@@ -34,8 +34,9 @@ import eu.numberfour.n4js.ts.types.TModule
 import java.util.Set
 import org.eclipse.xtext.EcoreUtil2
 
-import static eu.numberfour.n4js.AnnotationDefinition.*
-import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*;
+
 
 /**
  */
@@ -69,7 +70,7 @@ class StaticPolyfillTransformation extends Transformation {
 	}
 
 	override transform() {
-		val isAware = STATIC_POLYFILL_AWARE.hasAnnotation(state.resource.script);
+		val isAware = state.resource.script.isContainedInStaticPolyfillAware;
 		if(isAware) {
 			val fillingResource = projectUtils.getStaticPolyfillResource(state.resource);
 			if(fillingResource!==null) {
