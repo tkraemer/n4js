@@ -31,6 +31,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.LanguageSpecificURIEditorOpener;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -119,6 +120,11 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 				doGenerateClassifier(subMonitor);
 
 				monitor.done();
+
+				PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+					// Open the written file
+					uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true), true);
+				});
 			}
 		};
 
@@ -136,9 +142,6 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 			// Interruption isn't handled.
 			return false;
 		}
-
-		// Open the written file
-		uriOpener.open(URI.createPlatformResourceURI(fileLocation.toString(), true), true);
 
 		return true;
 	}
