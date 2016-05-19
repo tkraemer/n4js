@@ -25,8 +25,10 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.HighlightingStyles;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
@@ -87,6 +89,9 @@ public class WizardPreviewProvider {
 
 		private final Color inactiveColor;
 
+		private final Font editorFont = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+				.getFontRegistry().get("org.eclipse.jface.textfont");
+
 		/**
 		 * Creates a new wizard preview for a given shell.
 		 *
@@ -95,8 +100,8 @@ public class WizardPreviewProvider {
 			super(parent, style);
 			this.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).extendedMargins(0, 0, 0, 0).create());
 
-			createEditor(this);
-			createInfoBar(this);
+			createEditor();
+			createInfoBar();
 
 			inactiveColor = createInactiveColor();
 
@@ -218,8 +223,8 @@ public class WizardPreviewProvider {
 			return new Color(getDisplay(), commentTextStyle.getColor());
 		}
 
-		private void createInfoBar(Composite parent) {
-			Composite infoComposite = new Composite(parent, SWT.BORDER);
+		private void createInfoBar() {
+			Composite infoComposite = new Composite(this, SWT.BORDER);
 			infoComposite
 					.setLayoutData(GridDataFactory.fillDefaults()
 							.grab(true, false)
@@ -232,14 +237,14 @@ public class WizardPreviewProvider {
 		}
 
 		@SuppressWarnings("restriction")
-		private void createEditor(Composite parent) {
+		private void createEditor() {
 			org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor editor = editorFactory.newEditor(
 					() -> {
 						return (XtextResource) n4jsCore.createResourceSet(Optional.absent())
 								// Use a non-existing invalid URI to prevent conflicts with existing workspace resources
 								.createResource(URI.createPlatformResourceURI("/1TempProject/temp.n4js", true));
 					})
-					.withParent(parent);
+					.withParent(this);
 
 			editor.getViewer().getControl().setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 
@@ -266,8 +271,10 @@ public class WizardPreviewProvider {
 				@Override
 				public void textChanged(TextEvent event) {
 					updateHighlighting();
+					sourceViewer.getTextWidget().setFont(editorFont);
 				}
 			});
+
 		}
 
 		/**

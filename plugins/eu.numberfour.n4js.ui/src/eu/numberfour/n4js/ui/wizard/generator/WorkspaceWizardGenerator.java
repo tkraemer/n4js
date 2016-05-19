@@ -39,17 +39,16 @@ public interface WorkspaceWizardGenerator<M extends WorkspaceWizardModel> {
 	 *            The specifying model
 	 * @param monitor
 	 *            A monitor to report progress to
-	 * @return {@code true} on success, {@code false} otherwise
+	 * @throw {@link WorkspaceWizardGeneratorException} when problems during the process occur.
 	 */
-	public boolean writeToFile(M model, IProgressMonitor monitor);
+	public void writeToFile(M model, IProgressMonitor monitor) throws WorkspaceWizardGeneratorException;
 
 	/**
 	 * Performs all necessary changes in the manifest file to prepare the creation of the model's workspace element.
 	 *
 	 * @param model
 	 *            The model to change the manifest for
-	 * @return {@code true} on success, {@code false} otherwise
+	 * @throw {@link WorkspaceWizardGeneratorException} when problems during the process occur.
 	 */
-	public boolean performManifestChanges(M model, IProgressMonitor monitor);
-
+	public void performManifestChanges(M model, IProgressMonitor monitor) throws WorkspaceWizardGeneratorException;
 }

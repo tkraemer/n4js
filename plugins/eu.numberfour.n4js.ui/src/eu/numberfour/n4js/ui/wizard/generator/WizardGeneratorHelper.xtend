@@ -68,7 +68,7 @@ class WizardGeneratorHelper {
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
 	
-	public static val LINEBREAK = "\n"; 
+	public static val LINEBREAK = "\n";
 	
 	/**
 	 * Return the last character of a given file.
@@ -176,7 +176,7 @@ class WizardGeneratorHelper {
 	public def boolean applyChanges(XtextResource resource,Collection<? extends IAtomicChange> changes){
 		val IPath resourcePath = new Path(resource.getURI.toString).makeRelativeTo(new Path("platform:/resource/"));
 		val IFile resourceFile = ResourcesPlugin.workspace.root.getFile(resourcePath);
-		if ( resourceFile.exists ) {
+		if (resourceFile.exists) {
 			try {
 				val FileEditorInput fileInput = new FileEditorInput(resourceFile);
 				docProvider.connect(fileInput);
@@ -199,7 +199,7 @@ class WizardGeneratorHelper {
 				docProvider.changed(fileInput);
 				docProvider.disconnect(fileInput);
 				
-			} catch ( Exception all ) {
+			} catch (Exception all) {
 				return false;
 			}
 		} else {

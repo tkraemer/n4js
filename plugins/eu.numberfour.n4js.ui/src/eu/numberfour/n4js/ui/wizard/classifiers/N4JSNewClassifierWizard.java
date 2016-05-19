@@ -11,8 +11,8 @@
 package eu.numberfour.n4js.ui.wizard.classifiers;
 
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.FileSystemException;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -23,8 +23,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -35,6 +38,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGeneratorException;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
 
 /**
@@ -42,6 +46,8 @@ import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel;
  */
 public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardModel> extends Wizard
 		implements INewWizard {
+
+	private static Logger LOGGER = Logger.getLogger(N4JSNewClassifierWizard.class);
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -105,7 +111,7 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 							parent = subfolder;
 						}
 					} catch (CoreException e) {
-						throw new InvocationTargetException(new Throwable("Failed to create module folders"));
+						throw new InvocationTargetException(e);
 					}
 				}
 				SubMonitor subMonitor = SubMonitor.convert(monitor);
@@ -119,8 +125,12 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 		try {
 			getContainer().run(true, false, createClassifierRunnable);
 		} catch (InvocationTargetException e) {
-			e.getTargetException().printStackTrace();
-			getPage().setErrorMessage(e.getTargetException().getMessage());
+			String classifierName = getModel().getClassifierName();
+
+			LOGGER.error("Failed to create the new " + classifierName, e.getTargetException());
+			setErrorMessage(
+					"Failed to create the new " + classifierName + ": "
+							+ e.getTargetException().getMessage());
 			return false;
 		} catch (InterruptedException e) {
 			// Interruption isn't handled.
@@ -139,6 +149,21 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 	}
 
 	/**
+	 * Sets the error message for the active wizard page.
+	 *
+	 * Note that this method has no effect if the current page doesn't support error messages.
+	 */
+	private void setErrorMessage(String message) {
+		IWizardContainer container = getContainer();
+		if (container != null) {
+			IWizardPage currentPage = container.getCurrentPage();
+			if (currentPage instanceof DialogPage) {
+				((DialogPage) currentPage).setErrorMessage(message);
+			}
+		}
+	}
+
+	/**
 	 * Returns with the model used for data binding purposes during the life of the wizard.
 	 */
 	protected abstract M getModel();
@@ -146,24 +171,20 @@ public abstract class N4JSNewClassifierWizard<M extends N4JSClassifierWizardMode
 	/**
 	 * Performs the actual generation of {@link #performFinish()} call.
 	 *
+	 * @throw {@link WorkspaceWizardGeneratorException} in case of any problem during the generation process. The
+	 *        message of these exceptions is reported on the UI.
+	 *
 	 */
-	protected void doGenerateClassifier(IProgressMonitor monitor) throws InvocationTargetException {
+	protected void doGenerateClassifier(IProgressMonitor monitor)
+			throws WorkspaceWizardGeneratorException {
 		monitor = SubMonitor.convert(monitor, 2);
 
-		// Perform manifest changes
-		if (!getGenerator().performManifestChanges(getModel(), monitor)) {
-			throw new InvocationTargetException(
-					new FileSystemException("Failed to create the new " + getModel().getClassifierName()
-							+ ": Couldn't perform manifest changes"));
-		}
+		WorkspaceWizardGenerator<M> generator = getGenerator();
+
+		generator.performManifestChanges(getModel(), monitor);
 		monitor.worked(1);
 
-		// Write the class to file
-		if (!getGenerator().writeToFile(getModel(), monitor)) {
-			throw new InvocationTargetException(
-					new FileSystemException("Failed to create the new " + getModel().getClassifierName()
-							+ ": Couldn't write the " + getModel().getClassifierName() + " file."));
-		}
+		generator.writeToFile(getModel(), monitor);
 		monitor.worked(1);
 	}
 
