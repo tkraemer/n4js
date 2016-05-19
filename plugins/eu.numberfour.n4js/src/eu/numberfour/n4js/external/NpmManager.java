@@ -62,7 +62,7 @@ import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 
 /**
- * Class for installing NPM dependencies into the external library.
+ * Class for installing npm dependencies into the external library.
  */
 @Singleton
 public class NpmManager {
@@ -147,7 +147,7 @@ public class NpmManager {
 	}
 
 	/**
-	 * Installs the given NPM package in a blocking fashion. Sugar for {@link #installDependencyInBackground(String)}.
+	 * Installs the given npm package in a blocking fashion. Sugar for {@link #installDependencyInBackground(String)}.
 	 *
 	 * @param packageName
 	 *            the name of the package that has to be installed via package manager.
