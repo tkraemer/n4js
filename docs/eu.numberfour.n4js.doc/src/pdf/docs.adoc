@@ -1,9 +1,0 @@
-= N4JS Documentation
-:includedir: ../docs/documentation
-:doctype: book
-
-include::{includedir}/ide-setup.adoc[]
-
-include::{includedir}/npm-export-guide.adoc[]
-
-include::{includedir}/tutorial.adoc[]

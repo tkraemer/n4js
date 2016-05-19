@@ -77,12 +77,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     </goals>
                     <configuration>
                         <sourceDirectory>src/</sourceDirectory>
+                        <imagesdir>images</imagesdir>
                         <preserveDirectories>true</preserveDirectories> <!-- Currently preserved to copy across images TODO - embed images -->
                         <outputDirectory>${project.build.directory}/html</outputDirectory>
                         <backend>html5</backend>
                         <sourceHighlighter>coderay</sourceHighlighter>
                         <attributes>
-                            <imagesdir>../../images</imagesdir>
                             <toc>left</toc>
                             <icons>font</icons>
                             <sectanchors>true</sectanchors>
@@ -122,12 +122,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <goal>process-asciidoc</goal>
                     </goals>
                     <configuration>
-                          <sourceDirectory>src/pdf</sourceDirectory>
-                          <outputDirectory>${project.build.directory}/pdf</outputDirectory>
+                        <sourceDirectory>src/docs/documentation</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>
-                                <imagesdir>../images</imagesdir>
+                            <attributes>  
+                                <imagesdir>../../images</imagesdir>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -135,7 +135,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                </execution>  
+                </execution> 
             </executions>
 		</plugin> 
 <!-- Pagelist generation script, help-pages.txt manually updated
