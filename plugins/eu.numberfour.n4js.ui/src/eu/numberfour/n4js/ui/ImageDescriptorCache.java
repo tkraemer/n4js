@@ -14,14 +14,19 @@ import static com.google.common.base.Optional.absent;
 import static java.io.File.separator;
 import static org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin;
 
+import java.util.concurrent.ExecutionException;
+
+import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
 import com.google.common.base.Optional;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import eu.numberfour.n4js.n4mf.ProjectType;
-import eu.numberfour.n4js.ui.dialog.virtualresource.VirtualResource;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 
 /**
@@ -75,9 +80,6 @@ public enum ImageDescriptorCache {
 		/** Image reference for projects that are treated as either external or built-in libraries. */
 		EXTERNAL_LIB_PROJECT("jar_l_obj.gif"),
 
-		/** The decorator for {@link VirtualResource} elements */
-		FOLDER_DECORATOR_PLUS("staged_added.gif"),
-
 		/** Wizard banner for the new N4JS project wizard. */
 		NEW_PROJECT_WIZBAN("newprj_wiz.png"),
 
@@ -90,8 +92,10 @@ public enum ImageDescriptorCache {
 		/** Wizard banner for the new N4JS enum wizard. */
 		NEW_ENUM_WIZBAN("newenum_wiz.png"),
 
-		/** A transparent 1x1 image */
-		TRANSPARENT("transparent.png");
+		/** Smart light bulb icon */
+		SMART_LIGHTBULB("smartmode_co.png");
+
+		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 
 		private final String fileName;
 
@@ -114,12 +118,18 @@ public enum ImageDescriptorCache {
 		 * {@link Optional#absent() absent}, if the image descriptor cannot be created due to missing resource, or the
 		 * image cannot be created from the image descriptor instance.
 		 *
+		 * Do not dispose the returned image instance, as the resource is managed by the {@link ImageDescriptorCache}.
+		 *
 		 * @return the new image instance wrapped into an {@link Optional}. Can be {@link Optional#absent() missing} if
 		 *         the image reference cannot be created.
 		 */
 		public Optional<Image> asImage() {
-			final ImageDescriptor descriptor = asImageDescriptor().orNull();
-			return Optional.fromNullable(null == descriptor ? null : descriptor.createImage());
+			try {
+				return ImageDescriptorCache.IMAGE_CACHE.get(asImageDescriptor());
+			} catch (final ExecutionException e) {
+				LOGGER.error("Error while trying to get image from image descriptor of: " + this);
+				return Optional.absent();
+			}
 		}
 
 	}
@@ -141,5 +151,18 @@ public enum ImageDescriptorCache {
 		}
 		return Optional.fromNullable(descriptor);
 	}
+
+	private static final LoadingCache<Optional<ImageDescriptor>, Optional<Image>> IMAGE_CACHE = CacheBuilder
+			.newBuilder().build(new CacheLoader<Optional<ImageDescriptor>, Optional<Image>>() {
+
+				@Override
+				public Optional<Image> load(Optional<ImageDescriptor> key) throws Exception {
+					if (null == key || !key.isPresent()) {
+						return Optional.fromNullable(ImageDescriptor.getMissingImageDescriptor().createImage());
+					}
+					return Optional.fromNullable(key.get().createImage());
+				}
+
+			});
 
 }

@@ -13,8 +13,8 @@ package eu.numberfour.n4js.ui.wizard.components;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -55,7 +55,8 @@ public class OtherClassifierModifiersComponent extends WizardComponent {
 		otherModifiersLabel.setText("Other modifiers:");
 
 		Composite otherModifierComposite = new Composite(this.getParentComposite(), SWT.NONE);
-		otherModifierComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+		otherModifierComposite.setLayout(RowLayoutFactory.swtDefaults().extendedMargins(0, 0, 0, 0).create());
 
 		if (createFinalButton) {
 			finalAnnotationBox = new Button(otherModifierComposite, SWT.CHECK);

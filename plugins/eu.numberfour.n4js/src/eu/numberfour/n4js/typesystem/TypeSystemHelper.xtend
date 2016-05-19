@@ -186,6 +186,18 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	//   small utility methods that do not have their own strategy class
 	// *****************************************************************************************************
 
+	public def boolean allEqualType(RuleEnvironment G, TypeRef... typeRefs) {
+		val len = typeRefs.size;
+		if(len>=2) {
+			val firstRef = typeRefs.head;
+			for(var i=1;i<len;i++) {
+				if(!ts.equaltypeSucceeded(G, firstRef, typeRefs.get(i)))
+					return false;
+			}
+		}
+		return true;
+	}
+
 	public def TypeRef sanitizeTypeOfVariableFieldProperty(RuleEnvironment G, TypeArgument typeRaw) {
 		if (typeRaw===null || typeRaw instanceof UnknownTypeRef) {
 			return G.anyTypeRef;

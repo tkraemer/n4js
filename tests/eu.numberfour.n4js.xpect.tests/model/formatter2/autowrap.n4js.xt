@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+class Class1 {
+	someField:Class1;
+}
+
+// Additional Linebreak after last statement required! 
+// If missing, then automatic semicolon insertion / replacement behaves differently.
+/* XPECT formattedLines 1 ---
+   var x = new Class1().someField.someField.someField.someField.someField.someField.someField.someField.someField.
+   someField.someField.someField.someField;
+--- */
+var x = new Class1().someField . someField . someField.someField.someField.someField.someField.someField.someField.someField.someField.someField.someField

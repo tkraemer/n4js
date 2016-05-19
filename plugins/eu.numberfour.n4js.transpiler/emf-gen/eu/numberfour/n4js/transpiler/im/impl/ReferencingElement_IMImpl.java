@@ -11,6 +11,7 @@ import eu.numberfour.n4js.transpiler.im.ImPackage;
 import eu.numberfour.n4js.transpiler.im.ReferencingElement_IM;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 import java.lang.reflect.InvocationTargetException;

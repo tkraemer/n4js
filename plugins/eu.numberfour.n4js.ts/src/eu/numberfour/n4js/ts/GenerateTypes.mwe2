@@ -68,6 +68,7 @@ Workflow {
 			fragment = contentAssist.ContentAssistFragment auto-inject {
 				inheritImplementation = false
 			}
+			fragment = formatting2.Formatter2Fragment auto-inject {}
 
 		}
 		language = auto-inject {
@@ -115,9 +116,6 @@ Workflow {
 
 			// generator API
 //			fragment = generator.GeneratorFragment auto-inject {}
-
-			// formatter API
-			fragment = formatting.FormatterFragment auto-inject {}
 
 			// labeling API
 			fragment = labeling.LabelProviderFragment auto-inject {}

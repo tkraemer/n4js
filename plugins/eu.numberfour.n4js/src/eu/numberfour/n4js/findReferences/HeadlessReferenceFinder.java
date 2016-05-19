@@ -33,7 +33,6 @@ import eu.numberfour.n4js.ts.findReferences.SimpleResourceAccess;
 /**
  * A reference finder that does not need any user interaction. This may be used during the build.
  */
-@SuppressWarnings("restriction")
 public class HeadlessReferenceFinder {
 
 	@Inject

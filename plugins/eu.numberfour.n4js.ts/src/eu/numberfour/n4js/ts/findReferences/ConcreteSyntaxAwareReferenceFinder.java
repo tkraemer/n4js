@@ -27,13 +27,13 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.IResourceDescription;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
  * A reference finder that will check the concrete syntax in the document before it attempts to resolve a proxy.
  */
-@SuppressWarnings("restriction")
 @Singleton
 public class ConcreteSyntaxAwareReferenceFinder extends ReferenceFinder {
 
@@ -72,26 +72,28 @@ public class ConcreteSyntaxAwareReferenceFinder extends ReferenceFinder {
 	}
 
 	@Override
-	public void findReferences(TargetURIs targetURIs, Resource resource, Acceptor acceptor, IProgressMonitor monitor) {
+	public void findReferences(Predicate<URI> targetURIs, Resource resource, Acceptor acceptor,
+			IProgressMonitor monitor) {
 		// make sure data is present
-		keys.getData(targetURIs, new SimpleResourceAccess(resource.getResourceSet()));
+		keys.getData((TargetURIs) targetURIs, new SimpleResourceAccess(resource.getResourceSet()));
 		super.findReferences(targetURIs, resource, acceptor, monitor);
 	}
 
 	@Override
-	protected boolean doProcess(EReference reference, TargetURIs targetURISet) {
-		return targetURISet.getUserData(TargetURIKey.KEY).isEReferenceTypeApplicable(reference.getEReferenceType());
+	protected boolean doProcess(EReference reference, Predicate<URI> targetURISet) {
+		return ((TargetURIs) targetURISet).getUserData(TargetURIKey.KEY)
+				.isEReferenceTypeApplicable(reference.getEReferenceType());
 	}
 
 	@Override
-	protected EObject toValidInstanceOrNull(Resource resource, TargetURIs targetURIs, EObject value) {
+	protected EObject toValidInstanceOrNull(Resource resource, Predicate<URI> targetURIs, EObject value) {
 		EObject result = value;
 		if (result.eIsProxy()) {
 			URI proxyURI = EcoreUtil.getURI(result);
 			if (uriEncoder.isCrossLinkFragment(resource, proxyURI.fragment())) {
 				INode node = uriEncoder.decode(resource, proxyURI.fragment()).getThird();
 				String string = linkingHelper.getCrossRefNodeAsString(node, true);
-				if (targetURIs.getUserData(TargetURIKey.KEY).isMatchingConcreteSyntax(string)) {
+				if (((TargetURIs) targetURIs).getUserData(TargetURIKey.KEY).isMatchingConcreteSyntax(string)) {
 					result = resolveInternalProxy(value, resource);
 				} else {
 					result = null;
@@ -102,5 +104,4 @@ public class ConcreteSyntaxAwareReferenceFinder extends ReferenceFinder {
 		}
 		return result;
 	}
-
 }

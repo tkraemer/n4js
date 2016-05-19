@@ -175,10 +175,6 @@ Contributors:
       </activityPatternBinding>
       <activityPatternBinding
 			activityId="eu.numberfour.n4js.product.activity"
-			pattern=".*/org.eclipse.xtext.ui.FormatAction">
-	  </activityPatternBinding>
-      <activityPatternBinding
-			activityId="eu.numberfour.n4js.product.activity"
 			pattern=".*/org.eclipse.xtext.ui.refactoring.RenameElement">
 	  </activityPatternBinding>
       <activityPatternBinding

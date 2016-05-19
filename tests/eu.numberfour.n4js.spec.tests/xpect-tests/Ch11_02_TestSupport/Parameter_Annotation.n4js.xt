@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class C {
+	
+	@Parameter
+	f1;
+	
+	@Parameter(42)
+	f2;
+	
+	@Parameter(43)
+	set s(value) {}
+	
+	@Parameters
+	static m1() {}
+	
+	@Parameters("woot!")
+	static m2() {}
+}
+
+
+console.log(C.n4type.dataFields()[0].annotations);
+console.log(C.n4type.dataFields()[1].annotations);
+console.log(C.n4type.members()[2].annotations);
+console.log(C.n4type.methods()[0].annotations);
+console.log(C.n4type.methods()[1].annotations);
+
+
+/* XPECT output --- 
+<==
+stdout:
+[ N4Annotation { name: 'Parameter', details: [] } ]
+[ N4Annotation { name: 'Parameter', details: [ '42' ] } ]
+[ N4Annotation { name: 'Parameter', details: [ '43' ] } ]
+[ N4Annotation { name: 'Parameters', details: [] } ]
+[ N4Annotation { name: 'Parameters', details: [ 'woot!' ] } ]
+stderr:
+==>
+--- */
+

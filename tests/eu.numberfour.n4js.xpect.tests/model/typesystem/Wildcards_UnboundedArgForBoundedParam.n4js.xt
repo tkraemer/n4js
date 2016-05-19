@@ -44,22 +44,26 @@ g.foo().other();
 
 
 // note: now unbounded ? is contained within the inheritance hierarchy
+// XPECT errors --> "Wildcards may not be used as type argument when declaring an extended or implemented type." at "?"
 class H extends G<?> {}
 
 var h : H;
 
+// the following test cases do not make sense because this scenario is disallowed
+/*
 
-// XPECT noerrors -->
+// X---PECT noerrors -->
 g = h;
 
-// XPECT noerrors -->
+// X---PECT noerrors -->
 var test11 : A = h.foo();
-// XPECT errors --> "? extends A is not a subtype of X." at "h.foo()"
+// X---PECT errors --> "? extends A is not a subtype of X." at "h.foo()"
 var test12 : X = h.foo();
 
-// XPECT noerrors -->
+// X---PECT noerrors -->
 h.foo().m();
-// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'other'." at "other"
+// X---PECT errors --> "Couldn't resolve reference to IdentifiableElement 'other'." at "other"
 h.foo().other();
 
+*/
 

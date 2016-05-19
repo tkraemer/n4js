@@ -28,13 +28,13 @@ import eu.numberfour.n4js.transpiler.Transformation
 import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM
 import eu.numberfour.n4js.transpiler.im.ParameterizedPropertyAccessExpression_IM
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal
-import eu.numberfour.n4js.utils.PromisifyHelper
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.utils.PromisifyHelper
 import java.util.ArrayList
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
@@ -84,7 +84,7 @@ class ExpressionTransformation extends Transformation {
 			val replacement = if(rhsType instanceof TInterface) {
 				// case 1: direct reference to an interface on RHS -> can directly use own $implements function
 				val $implementsSTE = steFor_$implements;
-				val fqn = qualifiedNameComputer.getFullyQualifiedTypeName(rhsType);
+				val fqn = qualifiedNameComputer.getFullyQualifiedTypeName_WITH_LEGACY_SUPPORT(rhsType)
 				_CallExpr(_IdentRef($implementsSTE), relExpr.lhs, _StringLiteral(fqn))
 			} else if(rhsType instanceof TClass) {
 				// case 2: direct reference to a class on RHS -> can use native Javascript 'instanceof' operator

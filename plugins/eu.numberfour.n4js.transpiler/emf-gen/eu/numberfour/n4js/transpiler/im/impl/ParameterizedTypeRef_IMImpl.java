@@ -12,10 +12,12 @@ import eu.numberfour.n4js.transpiler.im.ParameterizedTypeRef_IM;
 import eu.numberfour.n4js.transpiler.im.ReferencingElement_IM;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal;
+
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
 import eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.Type;
 

@@ -14,7 +14,8 @@ Require-Bundle: eu.numberfour.n4js.npmexporter;bundle-version="0.0.1",
  eu.numberfour.n4js.environments,
  org.eclipse.ui.ide,
  org.eclipse.equinox.bidi,
- org.eclipse.compare
+ org.eclipse.compare,
+ eu.numberfour.n4js.utils
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

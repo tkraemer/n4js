@@ -13,7 +13,7 @@
 import DefImp1 from "importexport/default_duplicates/M"
 
 // duplicate default import is NOT ok
-// XPECT errors --> "C from importexport.default_duplicates.M is already imported as DefImp1." at "DefImp2"
+// XPECT errors --> "C from importexport/default_duplicates/M is already imported as DefImp1." at "DefImp2"
 import DefImp2 from "importexport/default_duplicates/M"
 
 // duplicate import through namespace is ok!

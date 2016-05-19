@@ -4,7 +4,7 @@
 		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ITestReporter',
 		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy'
 	], function($n4Export) {
-		var ITestReporter, TestSpy, ConsoleReporter;
+		var ITestReporter, TestSpy, cli_color, ConsoleReporter;
 		ConsoleReporter = function ConsoleReporter() {
 			this.timeoutBuffer = 1000 * 30;
 			this.logger = function() {
@@ -33,6 +33,7 @@
 				}
 			],
 			execute: function() {
+				cli_color = System._nodeRequire("cli-color");
 				$makeClass(ConsoleReporter, Object, [
 					ITestReporter
 				], {
@@ -58,136 +59,112 @@
 					register: {
 						value: function register___n4() {
 							return $spawn(function*() {
-								let that = this, sessionId = null;
-								;
-								var handleTestingStart = function handleTestingStart(numAllGroups, sid, numAllTests) {
-									return $spawn(function*() {
-										that.logger.call(this, "Begin tests");
-										(yield undefined);
-										return;
-									}.bind(this));
-								};
-								this.spy.testingStarted.add(handleTestingStart);
-								this.spy.groupStarted.add(function(group) {
-									that.logger.call(this, [
+								let sessionId = null;
+								this.spy.testingStarted.add((function(numAllGroups, sid, numAllTests) {
+									this.logger.call(this, "Begin tests");
+								}).bind(this));
+								this.spy.groupStarted.add((function(group) {
+									this.logger.call(this, [
 										"  ",
 										"Group",
 										group.name,
 										":"
 									].join(" "));
-								});
-								var handleTestStart = function handleTestStart(group, test) {
+								}).bind(this));
+								this.spy.testFinished.add((function(group, test, testResult) {
+									let unsuccessString = "FAIL";
+									if (!testResult) {
+										let err = new Error("testResult is null in handleTestFinished");
+										console.error(this.constructor.n4type.fqn, test ? test.name : "unknown test", err, err.stack);
+										return true;
+									}
+									switch(testResult.testStatus) {
+										case 'PASSED':
+											{
+												this.logger.call(this, [
+													"  ",
+													"  ",
+													test.name,
+													":",
+													cli_color.green("OK")
+												].join(" "));
+												break;
+											}
+										case 'ERROR':
+											unsuccessString = cli_color.red("ERROR");
+										case 'FAILED':
+											{
+												let trace;
+												try {
+													trace = cli_color.red(testResult && testResult.trace && testResult.trace.length ? testResult.trace.join("\n") : "NO TRACE");
+												} catch(er) {
+													this.logger(er, cli_color.red(typeof (testResult.trace)));
+													trace = testResult.trace.toString();
+												}
+												this.logger([
+													"  ",
+													"  ",
+													test.name,
+													":",
+													unsuccessString
+												].join(" "));
+												this.logger([
+													"  ",
+													"  ",
+													"  ",
+													cli_color.red(testResult.message)
+												].join(" "));
+												this.logger([
+													"  ",
+													"  ",
+													"  ",
+													"Stack:",
+													trace.split(/\n/).join("\n                ")
+												].join(" "));
+												break;
+											}
+										case 'SKIPPED_PRECONDITION':
+											{
+												this.logger.call(this, [
+													"  ",
+													"  ",
+													test.name,
+													":",
+													cli_color.cyan("SKIPPED_PRECONDITION")
+												].join(" "));
+												break;
+											}
+										case 'SKIPPED_NOT_IMPLEMENTED':
+											{
+												this.logger.call(this, [
+													"  ",
+													"  ",
+													test.name,
+													":",
+													cli_color.cyan("SKIPPED_NOT_IMPLEMENTED")
+												].join(" "));
+												break;
+											}
+										case 'SKIPPED':
+											{
+												this.logger.call(this, [
+													"  ",
+													"  ",
+													test.name,
+													":",
+													cli_color.yellow("SKIPPED")
+												].join(" "));
+												break;
+											}
+									}
+								}).bind(this));
+								this.spy.testingFinished.add((function(resultGroups) {
 									return $spawn(function*() {
-										(yield undefined);
-										return;
-									}.bind(this));
-								};
-								this.spy.testStarted.add(handleTestStart);
-								var handleTestFinished = function handleTestFinished(group, test, testResult) {
-									return $spawn(function*() {
-										let unsuccessString = "FAIL";
-										let err;
-										if (!testResult) {
-											err = new Error("testResult is null in handleTestFinished");
-											console.error(that.constructor.n4type.fqn, test ? test.name : "unknown test", err, err.stack);
-											(yield true);
-											return;
-										}
-										switch(testResult.testStatus) {
-											case 'PASSED':
-												{
-													that.logger.call(this, [
-														"  ",
-														"  ",
-														test.name,
-														":",
-														"OK"
-													].join(" "));
-													break;
-												}
-											case 'ERROR':
-												unsuccessString = "ERROR";
-											case 'FAILED':
-												{
-													let trace;
-													try {
-														trace = testResult && testResult.trace && testResult.trace.length ? testResult.trace.join("\n") : "NO TRACE";
-													} catch(er) {
-														that.logger(er, typeof (testResult.trace));
-														trace = testResult.trace.toString();
-													}
-													that.logger([
-														"  ",
-														"  ",
-														test.name,
-														":",
-														unsuccessString
-													].join(" "));
-													that.logger([
-														"  ",
-														"  ",
-														"  ",
-														testResult.message
-													].join(" "));
-													that.logger([
-														"  ",
-														"  ",
-														"  ",
-														"Stack:",
-														trace.split(/\n/).join("\n                ")
-													].join(" "));
-													break;
-												}
-											case 'SKIPPED_PRECONDITION':
-												{
-													that.logger.call(this, [
-														"  ",
-														"  ",
-														test.name,
-														":",
-														"SKIPPED_PRECONDITION"
-													].join(" "));
-													break;
-												}
-											case 'SKIPPED_NOT_IMPLEMENTED':
-												{
-													that.logger.call(this, [
-														"  ",
-														"  ",
-														test.name,
-														":",
-														"SKIPPED_NOT_IMPLEMENTED"
-													].join(" "));
-													break;
-												}
-											case 'SKIPPED':
-												{
-													that.logger.call(this, [
-														"  ",
-														"  ",
-														test.name,
-														":",
-														"SKIPPED"
-													].join(" "));
-													break;
-												}
-										}
-										(yield undefined);
-										return;
-									}.bind(this));
-								};
-								this.spy.testFinished.add(handleTestFinished);
-								var handleTestingFinished = function handleTestingFinished(resultGroups) {
-									return $spawn(function*() {
-										that.logger.call(this, "Tests done.");
-										(yield undefined);
-										return;
-									}.bind(this));
-								};
-								this.spy.testingFinished.add(handleTestingFinished);
-								(yield this);
-								return;
-							}.bind(this));
+										this.logger.call(this, "Tests done.");
+									}.apply(this, arguments));
+								}).bind(this));
+								return this;
+							}.apply(this, arguments));
 						}
 					},
 					timeoutBuffer: {

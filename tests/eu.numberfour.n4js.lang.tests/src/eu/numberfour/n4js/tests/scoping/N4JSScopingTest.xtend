@@ -427,10 +427,11 @@ class N4JSScopingTest {
 
 		assertEquals("one EResourceDescription", 2/* exported with one name  + BuiltInTypesScopeFilter.EXPECTED_PREDEFINED_TYPES*/,
 			eoDescs.size)
+			
 		assertEquals("Stored user data",
 			'''
 				<?xml version="1.0" encoding="ASCII"?>
-				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu.numberfour.n4js.tests.scoping.Supplier">
+				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/Supplier">
 				  <astElement href="#/0"/>
 				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
 				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
@@ -440,7 +441,8 @@ class N4JSScopingTest {
 				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
 				  </topLevelTypes>
 				</types:TModule>
-			'''.toString, eoDescs.iterator.next.getUserData(UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))
+			'''.toString,
+			UserdataMapper.getDeserializedModulesFromDescriptionAsString(eoDescs.head, supplierResource.URI));
 
 		rs.resources.forEach[it.unload];
 

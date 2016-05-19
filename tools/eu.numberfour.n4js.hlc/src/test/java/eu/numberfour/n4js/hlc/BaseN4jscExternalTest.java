@@ -61,9 +61,8 @@ public abstract class BaseN4jscExternalTest extends AbstractN4jscTest {
 		for (final Entry<String, String> dependencyEntry : getNpmDependencies().entrySet()) {
 			model.addNpmDependency(dependencyEntry.getKey(), dependencyEntry.getValue());
 		}
-		// model.setDependencies(singletonMap("express", "^4.13.4"));
 
-		targetPlatformFile = new File(targetPlatformInstallLocation, TP_FILE_NAME);
+		targetPlatformFile = new File(tempRoot.toFile(), TP_FILE_NAME);
 		targetPlatformFile.createNewFile();
 
 		try (FileWriter fw = new FileWriter(targetPlatformFile)) {

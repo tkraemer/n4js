@@ -52,7 +52,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Documentation
 
-- [User Guide](https://numberfour.github.io/n4js/userguide/): How to write type safe Node.js modules with N4JS
+- [User Guides and Tutorials](http://numberfour.github.io/n4js/documentation/): IDE Setup, writing type safe Node.js modules and exporting as npm with the N4JS IDE
 - [N4JS Language Specification (PDF)](https://goo.gl/2Lv2Te)
 - [Complete Feature Table](https://numberfour.github.io/n4js/features/)
 - [Release Notes](https://numberfour.github.io/n4js/releases/)
@@ -65,7 +65,13 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Build the N4JS IDE from command line
 
-Ensure you have Java 8 and Maven 3 installed on your system.
+Ensure you have 
+
+- Java 8
+- Maven 3 and
+- Node.js 6
+
+installed on your system.
 
 Clone the repository 
 ```

@@ -24,7 +24,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 
 	@Test def void testTypeProposals_importAdded() {
 		//TODO IDE-1869 should be ...assertProposal("MyFirstClass")
-		newBuilder().append("var x: My").assertProposal("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path.Libs').apply.expectContent('''
+		newBuilder().append("var x: My").assertProposal("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path/Libs').apply.expectContent('''
 			import { MyFirstClass } from "path/Libs"
 			var x: MyFirstClass''')
 	}
@@ -59,7 +59,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 			import { MySecondClass } from 'path/Libs'
 
 			var varName: MyF<|>
-		''').assertProposalAtCursor("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path.Libs').apply.expectContent(
+		''').assertProposalAtCursor("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path/Libs').apply.expectContent(
 // original expectation:
 //		'''
 //			import { MySecondClass , MyFirstClass } from 'path/Libs'
@@ -164,6 +164,6 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 	@Test def void testTypeProposals_aliasExplained() {
 		newBuilder().append("import { MyFirstClass as MyRenamedClass } from 'path/Libs' var varName: my")
 			.assertProposal("MyRenamedClass")
-			.withDisplayString('MyRenamedClass - path.Libs alias for MyFirstClass')
+			.withDisplayString('MyRenamedClass - path/Libs alias for MyFirstClass')
 	}
 }

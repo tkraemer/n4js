@@ -403,7 +403,7 @@ public class ProjectUtils {
 	def public boolean isDescriptionOfModuleWith(IEObjectDescription eoDescription, EObject eObject) {
 		//check if module names are the same
 		val eobjectModuleName = EcoreUtil2.getContainerOfType(eObject, Script).module.qualifiedName
-		if (!eobjectModuleName.equals(eoDescription.qualifiedName.toString)) {
+		if (!eobjectModuleName.equals(qualifiedNameConverter.toString(eoDescription.qualifiedName))) {
 			return false
 		}
 

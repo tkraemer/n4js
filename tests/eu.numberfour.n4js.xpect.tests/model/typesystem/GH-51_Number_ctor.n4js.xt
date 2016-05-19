@@ -1,0 +1,8 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+// XPECT noerrors --> "boolean is not a subtype of number?." at "true"
+new Number(true);
+
+
+

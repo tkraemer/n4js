@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -80,7 +80,11 @@ const Object_keys = typeof Object.keys === 'function'
 ;
 
 function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
-    let a = aAny as Object, b = bAny as Object;
+    let a = aAny as Object,
+        b = bAny as Object,
+        ka: Array<string>, kb: Array<string>,
+        key: string, i: int;
+
     if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
         return false;
     if (!ignorePrototype && (a["prototype"] !== b["prototype"])){
@@ -90,15 +94,14 @@ function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
     if (isArguments(a)) {
         if (!isArguments(b)) {
             return false;
-    }
-    a = pSlice.call(a) as Object;
-    b = pSlice.call(b) as Object;
-    return _deepEqual(a, b, ignorePrototype);
+        }
+        a = pSlice.call(a) as Object;
+        b = pSlice.call(b) as Object;
+        return _deepEqual(a, b, ignorePrototype);
     }
     try {
-        var ka = Object_keys(a),
-        kb = Object_keys(b),
-        key, i: number;
+        ka = Object_keys(a);
+        kb = Object_keys(b);
     } catch (e) {
         return false;
     }
@@ -574,5 +577,5 @@ export public class Assert {
     }
 }
 
-export public let deepEqual = _deepEqual;
+export public const deepEqual = _deepEqual;
 /* -*- mode: typescript;-*- */

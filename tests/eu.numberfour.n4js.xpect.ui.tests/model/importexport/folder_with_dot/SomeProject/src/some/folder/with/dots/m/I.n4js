@@ -1,0 +1,8 @@
+
+
+export public interface I {
+	mi_withoutDots() {
+		console.log('message from I located in folder WITHOUT dots');
+	}
+}
+

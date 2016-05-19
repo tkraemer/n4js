@@ -64,8 +64,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 				dialog.setDefaultFileExtension(fileExtension);
 			}
 
-			Object initialSelection = dialog.computeInitialSelection(initialSelectionSpecifier);
-			dialog.setInitialSelection(initialSelection);
+			dialog.setInitialSelection(initialSelectionSpecifier);
 		}
 
 		dialog.open();
@@ -113,19 +112,17 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 		IObservableValue moduleSpecifierValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY).observe(getModel());
 
+		IObservableValue suffixVisibilityValue = BeanProperties
+				.value(SuffixText.class, SuffixText.SUFFIX_VISIBILITY_PROPERTY)
+				.observe(workspaceWizardForm.getModuleSpecifierText());
+
 		//// Only show the suffix on input values ending with a '/' character or empty module specifiers.
-		moduleSpecifierValue.addValueChangeListener(new IValueChangeListener() {
-			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				SuffixText input = workspaceWizardForm.getModuleSpecifierText();
-				String inputText = input.getText();
-				if (inputText.isEmpty() || inputText.charAt(inputText.length() - 1) == '/') {
-					input.setSuffixVisible(true);
-				} else {
-					input.setSuffixVisible(false);
-				}
-			}
-		});
+		dataBindingContext.bindValue(suffixVisibilityValue, moduleSpecifierValue, noUpdateValueStrategy(),
+				WizardComponentDataConverters.strategyForPredicate(m -> {
+					String moduleSpecifier = (String) m;
+					return (moduleSpecifier.isEmpty()
+							|| moduleSpecifier.charAt(moduleSpecifier.length() - 1) == IPath.SEPARATOR);
+				}));
 
 		//// interface name to module specifier suffix binding
 		IObservableValue interfaceNameModelValue = BeanProperties

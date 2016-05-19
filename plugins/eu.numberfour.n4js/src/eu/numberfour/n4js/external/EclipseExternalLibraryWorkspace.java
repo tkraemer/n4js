@@ -251,8 +251,6 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		final SubMonitor subMonitor = convert(monitor, 3);
 
 		final Iterable<IProject> projectsToClean = getProjects(removedLocations);
-		final Collection<IProject> workspaceProjectsToRebuild = newHashSet(
-				collector.collectProjectsWithDirectExternalDependencies(projectsToClean));
 
 		// Clean projects.
 		if (!Iterables.isEmpty(projectsToClean)) {
@@ -260,17 +258,22 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		}
 		subMonitor.worked(1);
 
-		// Update internal state.
-		locations.clear();
-		locations.addAll(store.getLocations());
-		updateState();
+		// Invalidate before collecting dependencies.
+		invalidateCache(store);
+
+		final Collection<IProject> workspaceProjectsToRebuild = newHashSet(
+				collector.collectProjectsWithDirectExternalDependencies(projectsToClean));
+
+		// Cache could be polluted with external projects while collecting associated workspace ones.
+		invalidateCache(store);
 
 		// Rebuild whole external workspace. Filter out projects that are present in the Eclipse workspace (if any).
 		final Collection<String> eclipseWorkspaceProjectNames = getAllEclipseWorkspaceProjectNames();
 		final Predicate<String> eclipseWorkspaceProjectNamesFilter = Predicates.in(eclipseWorkspaceProjectNames);
 
-		final Iterable<IProject> projectsToBuild = from(getProjects(addedLocations))
-				.filter(p -> !eclipseWorkspaceProjectNamesFilter.apply(p.getName()));
+		final Iterable<ExternalProject> projectsToBuild = from(
+				collector.hookUpReferencedBuildConfigs(getProjects(addedLocations)))
+						.filter(p -> !eclipseWorkspaceProjectNamesFilter.apply(p.getName()));
 
 		// Build recently added projects that do not exist in workspace.
 		// XXX akitta: consider filtering out external projects that exists in index already. (@ higher priority level)
@@ -282,6 +285,12 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		addAll(workspaceProjectsToRebuild, collector.collectProjectsWithDirectExternalDependencies(projectsToBuild));
 		scheduler.scheduleBuildIfNecessary(workspaceProjectsToRebuild);
 
+	}
+
+	private void invalidateCache(final ExternalLibraryPreferenceStore store) {
+		locations.clear();
+		locations.addAll(store.getLocations());
+		updateState();
 	}
 
 	@Override

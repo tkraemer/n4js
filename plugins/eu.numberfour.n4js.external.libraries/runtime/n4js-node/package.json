@@ -2,7 +2,7 @@
   "name": "n4js-node",
   "author": "NumberFour AG <npm@numberfour.eu>",
   "license": "EPL-1.0",
-  "repository": "https://github.com/NumberFour/n4js",
+  "repository": "https://github.com/NumberFour/n4js-libs",
   "description": "N4JS node.js runtime environment.",
   "keywords": [
     "n4js",
@@ -20,8 +20,8 @@
     "n4js": "./n4js-cli.js"
   },
   "dependencies": {
-    "node-fetch": "bitinn/node-fetch",
-    "systemjs": "^0.19.20"
+    "node-fetch": "^1.4.0",
+    "systemjs": "^0.19.24"
   },
   "files": [
     "manifest.n4mf",
