@@ -188,7 +188,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		destinationSelectionGroup.setFont(font);
 
 		Label destinationLabel = new Label(destinationSelectionGroup, SWT.NONE);
-		destinationLabel.setText("Npm Target Folder");
+		destinationLabel.setText("npm Target Folder");
 		destinationLabel.setFont(font);
 
 		// destination name entry field
