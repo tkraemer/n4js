@@ -194,8 +194,7 @@ find target/html -name *.html | cut -sd / -f 1- >help-pages.txt
 
 This code is saved as ``createpagelist.sh`` and is located at ``n4js/docs/eu.numberfour.n4js.doc/createpagelist.sh``. In order to execute this shell script, the ``exec-maven-plugin`` is added to the POM **before** the ``genecelipsetoc`` plugin execution:
 
-[source]
-<!-- Pagelist generation script -->
+[source,xml]
 <plugin>
 	<artifactId>exec-maven-plugin</artifactId>
 	<version>${exec-maven-plugin.version}</version>
@@ -204,13 +203,13 @@ This code is saved as ``createpagelist.sh`` and is located at ``n4js/docs/eu.num
 		<execution>
 			<phase>generate-resources</phase>
 			<goals>
-			    <goal>exec</goal>
+			<goal>exec</goal>
 			</goals>
 			<configuration>
-			    <executable>${basedir}/createpagelist.sh</executable>
+				<executable>${basedir}/createpagelist.sh</executable>
 				<arguments>
-			    		<argument>${basedir}</argument>
-      			</arguments>
+					<argument>${basedir}</argument>
+				</arguments>
 			</configuration>
 		</execution>
 	</executions>
