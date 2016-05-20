@@ -29,6 +29,7 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.util.IResourceScopeCache
 
 import static eu.numberfour.n4js.utils.UtilN4.reportError
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 
 @Singleton
 class TypingCacheHelper {
@@ -41,6 +42,8 @@ class TypingCacheHelper {
 		public final Resource resource;
 		private final Map<EObject, Result<TypeRef>> actualTypes = newHashMap;
 		private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = newHashMap;
+		
+		private final Map<VariableDeclaration, List<EObject>> localVariableReferences = newHashMap;
 
 		public boolean isTypingInProgress = false;
 		public boolean isFullyTyped = false;
@@ -55,7 +58,7 @@ class TypingCacheHelper {
 		new(Resource resource) {
 			this.resource = resource;
 		}
-
+		
 		def void put(EObject astNode, Result<TypeRef> actualType) {
 			if (actualType === null) {
 				throw new IllegalArgumentException("actualType may not be null");
@@ -76,6 +79,22 @@ class TypingCacheHelper {
 			}
 			return result;
 		}
+		
+		def void addLocalVariableReference(VariableDeclaration targetNode, EObject sourceNode) {
+			if (localVariableReferences.containsKey(targetNode)) {
+				val references = localVariableReferences.get(targetNode);
+				references.add(sourceNode);
+			} else {
+				val references = newArrayList();
+				references.add(sourceNode);
+				localVariableReferences.put(targetNode, references);
+			}
+		}
+		
+		def List<EObject> getLocalVariableReferences(EObject targetNode) {
+			return localVariableReferences.get(targetNode);
+		}
+		
 		def Result<TypeRef> getFailSafe(EObject astNode) {
 			return actualTypes.get(astNode);
 		}
@@ -142,6 +161,31 @@ class TypingCacheHelper {
 	 */
 	def Result<TypeRef> resultOf(EObject astNode) {
 		return getOrCreate(astNode.eResource()).getFailSafe(astNode);
+	}
+	
+	/**
+	 * Returns all local references to the variable
+	 */
+	def List<EObject> getLocalVariableReferences(VariableDeclaration targetNode) {
+		val references = getOrCreate(targetNode.eResource).getLocalVariableReferences(targetNode);
+		if (references !== null) {
+			return Collections.unmodifiableList(references);
+		} else {
+			return emptyList;
+		}
+	}
+	
+	/**
+	 * Stores a new local reference to the variable
+	 * 
+	 * Note that all stored local references are saved as a list.
+	 * 
+	 * @param declaration The declaration of the referred variable
+	 * @param referringNode The AST node from which it is referred from
+	 *  
+	 */
+	def void storeLocalVariableReference(VariableDeclaration declaration, EObject referringNode) {
+		getOrCreate(declaration.eResource).addLocalVariableReference(declaration, referringNode);
 	}
 
 	def package void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {

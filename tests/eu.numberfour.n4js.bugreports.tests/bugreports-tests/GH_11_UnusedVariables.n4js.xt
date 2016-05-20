@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+class D {}
+
+var obj = {
+	"a": 3,
+	"b": 4,
+	"c": 5
+};
+var array = [4,5,1,2,3,4];
+
+// Simple variable declaration XPECT warnings --> "The value of the local variable aVariable is not used" at "aVariable"
+var aVariable = "s";
+var anotherVariable = "a";
+
+// Object desctructuring assignment XPECT warnings --> "The value of the local variable b is not used" at "b"
+var {a,b,c} = obj
+
+// Array desctructing assignment XPECT warnings --> "The value of the local variable e is not used" at "e"
+var [d,,,e,,f] = array
+
+var dar = new D();
+
+// Double variable declaration XPECT warnings --> "The value of the local variable h is not used" at "h"
+var g,h = 2;
+
+//// Uses
+
+// Use as function parameter
+console.log(a, c, d, f, dar,g);
+
+// Use on the right hand side of a variable declaration
+var z = anotherVariable;
+
+function fct(dar1 : D) {
+	// Shadowing declaration inside a function XPECT warnings --> "The value of the local variable a is not used" at "a"
+	var a,dar = 2;
+	
+	// Use from parent scope
+	console.log(dar,z);
+}

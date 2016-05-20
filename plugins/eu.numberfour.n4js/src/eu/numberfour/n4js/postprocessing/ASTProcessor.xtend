@@ -42,6 +42,8 @@ import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.emf.ecore.EReference
+import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -368,8 +370,27 @@ class ASTProcessor extends AbstractProcessor {
 	def private void resolveProxiesInNode(EObject astNode) {
 		for(eRef : astNode.eClass.EReferences) {
 			if(!eRef.isContainment) { // only cross-references have proxies (in our case)
-				astNode.eGet(eRef, true);
+				val node = astNode.eGet(eRef, true);
+				
+				if (node instanceof EObject) {
+					processResolvedReference(eRef, astNode, node);
+				}
 			}
+		}
+	}
+	
+	def private processResolvedReference(EReference reference, EObject sourceNode, EObject targetNode) {
+		// Skip non-local references
+		if (sourceNode.eResource.URI != targetNode.eResource.URI) {
+			return;
+		}
+		if (targetNode instanceof VariableDeclaration) {
+			// Don't save references for exported variable declarations
+			if (targetNode instanceof ExportedVariableDeclaration) {
+				return;
+			}
+			
+			typingCacheHelper.storeLocalVariableReference(targetNode, sourceNode);
 		}
 	}
 
