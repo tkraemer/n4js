@@ -56,11 +56,11 @@ NumberFour AG - Initial API and implementation
    <includes
          id="jsonedit-feature"
          version="0.0.0"/>
-<!--
+
    <includes
          id="PathToolsFeature"
          version="0.0.0"/>
--->
+
    <plugin
          id="org.eclipse.debug.ui"
          download-size="0"
