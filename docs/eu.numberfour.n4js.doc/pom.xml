@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>eu.numberfour.n4js.doc</artifactId>
-    <packaging>eclipse-plugin</packaging>
-    <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
+<modelVersion>4.0.0</modelVersion>
+<artifactId>eu.numberfour.n4js.doc</artifactId>
+<packaging>eclipse-plugin</packaging>
+<description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
-        <asciidoctorj.version>1.5.4</asciidoctorj.version>
-        <jruby.version>1.7.21</jruby.version>
-        <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
-        <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
-        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-    </properties>
-    
-    <parent>
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
+    <asciidoctorj.version>1.5.4</asciidoctorj.version>
+    <jruby.version>1.7.21</jruby.version>
+    <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
+    <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
+    <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+</properties>
+
+<parent>
     <groupId>eu.numberfour.n4js</groupId>
-	<artifactId>eu.numberfour.n4js.docs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<relativePath>../pom.xml</relativePath>
-    </parent>
+    <artifactId>eu.numberfour.n4js.docs</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+</parent>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>bintray.jmini.maven</id>
-            <url>http://dl.bintray.com/jmini/maven/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+<pluginRepositories>
+    <pluginRepository>
+        <id>bintray.jmini.maven</id>
+        <url>http://dl.bintray.com/jmini/maven/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
 
 <build>
     <defaultGoal>process-resources</defaultGoal>
         <plugins>
             <plugin>
-                <!-- ASCIIDOC TO HTML -->
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>${asciidoctor.maven.plugin.version}</version>              
@@ -69,60 +68,60 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     </dependency>
                 </dependencies>
                 <executions> <!-- GENERATE RESOURCES -->
-                <execution>
-                    <id>asciidoc-to-html</id>
-                    <phase>generate-resources</phase>
-                    <goals>
-                        <goal>process-asciidoc</goal>
-                    </goals>
-                    <configuration>
-                        <sourceDirectory>src/</sourceDirectory>
-                        <imagesdir>images</imagesdir>
-                        <preserveDirectories>true</preserveDirectories> <!-- Currently preserved to copy across images TODO - embed images -->
-                        <outputDirectory>${project.build.directory}/html</outputDirectory>
-                        <backend>html5</backend>
-                        <sourceHighlighter>coderay</sourceHighlighter>
-                        <attributes>
-                            <toc>left</toc>
-                            <icons>font</icons>
-                            <sectanchors>true</sectanchors>
-                            <idprefix/>
-                            <idseparator>-</idseparator>
-                            <docinfo1>false</docinfo1>
-                        </attributes>
-                    </configuration>
-                </execution>
-    <!-- EPUB format currently breaking for lack of "references"     
-                        <execution>
-                            <id>asciidoc-to-epub</id>
-                            <phase>generate-resources</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                              <outputDirectory>${project.build.directory}/epub</outputDirectory>
-                                <backend>epub3</backend>
-                                <sourceHighlighter>coderay</sourceHighlighter>
-                                <attributes>
-                                    <imagesdir>fig</imagesdir>
-                                    <toc>left</toc>
-                                    <icons>font</icons>
-                                    <sectanchors>true</sectanchors>
-                                    <idprefix/>
-                                    <idseparator>-</idseparator>
-                                    <docinfo1>false</docinfo1>
-                                </attributes>
-                            </configuration>
-                        </execution>
-    -->
-                <execution> <!-- Generate PDF -->
-                    <id>asciidoc-to-pdf</id> 
-                    <phase>generate-resources</phase>
-                    <goals>
-                        <goal>process-asciidoc</goal>
-                    </goals>
-                    <configuration>
-                        <sourceDirectory>src/docs/documentation</sourceDirectory>
+                    <execution>
+                        <id>asciidoc-to-html</id> <!-- Convert ADOC to HTML -->
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <imagesdir>images</imagesdir>
+                            <preserveDirectories>true</preserveDirectories> <!-- Currently preserved to copy across images -->
+                            <outputDirectory>${project.build.directory}/html</outputDirectory>
+                            <backend>html5</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes> <!-- Individual attributes per conversion execution -->
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+<!-- EPUB format currently breaking for lack of "references"     
+                    <execution>
+                        <id>asciidoc-to-epub</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                          <outputDirectory>${project.build.directory}/epub</outputDirectory>
+                            <backend>epub3</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes>
+                                <imagesdir>fig</imagesdir>
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+-->
+                    <execution> <!-- Begin PDF Generation -->
+                        <id>asciidoc-to-pdf</id> 
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/docs/documentation</sourceDirectory>
                             <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
@@ -135,48 +134,48 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                </execution> 
-            </executions>
-		</plugin> 
+                    </execution> 
+                </executions>
+    		</plugin> 
 <!-- Pagelist generation script, help-pages.txt manually updated
-		<plugin>
-			<artifactId>exec-maven-plugin</artifactId>
-			<version>${exec-maven-plugin.version}</version>
-			<groupId>org.codehaus.mojo</groupId>
-			<executions>
-    			<execution>  
-        			<phase>generate-resources</phase>
-        			<goals>
-        			    <goal>exec</goal>
-        			</goals>
-        			<configuration>
-        			    <executable>${basedir}/createpagelist.sh</executable>
-        				<arguments>
-        			    		<argument>${basedir}</argument>
-	          			</arguments>
-        			</configuration>
-    			</execution>
-			</executions>
-		</plugin>
+    		<plugin>
+    			<artifactId>exec-maven-plugin</artifactId>
+    			<version>${exec-maven-plugin.version}</version>
+    			<groupId>org.codehaus.mojo</groupId>
+    			<executions>
+        			<execution>  
+            			<phase>generate-resources</phase>
+            			<goals>
+            			    <goal>exec</goal>
+            			</goals>
+            			<configuration>
+            			    <executable>${basedir}/createpagelist.sh</executable>
+            				<arguments>
+            			    		<argument>${basedir}</argument>
+    	          			</arguments>
+            			</configuration>
+        			</execution>
+    			</executions>
+    		</plugin>
 -->
-	    <plugin>  <!-- HTML TO ECLIPSE TOC.XML -->
-            <groupId>com.bsiag.geneclipsetoc</groupId>
-            <artifactId>geneclipsetoc-maven-plugin</artifactId>
-            <version>1.0.2</version>
-            <executions>
-                <execution>
-                    <phase>generate-resources</phase>
-                    <goals>
-                        <goal>geneclipsetoc</goal>
-                    </goals>
-                    <configuration>
-                        <sourceFolder>${basedir}</sourceFolder>
-                        <pagesListFile>help-pages.txt</pagesListFile>
-                        <outputTocFile>toc.xml</outputTocFile>
-                    </configuration>
+            <plugin> <!-- Begin HTML to Eclipse TOC.XML -->
+                <groupId>com.bsiag.geneclipsetoc</groupId>
+                <artifactId>geneclipsetoc-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>geneclipsetoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFolder>${basedir}</sourceFolder>
+                            <pagesListFile>help-pages.txt</pagesListFile>
+                            <outputTocFile>toc.xml</outputTocFile>
+                        </configuration>
                     </execution>
                 </executions>
-            </plugin> <!-- END HTML TO ECLIPSE TOC.XML -->
+            </plugin> <!-- End HTML to Eclipse TOC.XML -->
         </plugins>
     </build>
 </project>
