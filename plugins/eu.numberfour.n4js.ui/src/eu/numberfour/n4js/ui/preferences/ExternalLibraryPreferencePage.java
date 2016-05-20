@@ -376,7 +376,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify NPM package
+	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
 	 * name that will be downloaded and installed to the external libraries.
 	 *
 	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
