@@ -45,7 +45,7 @@ to manage issues found by public users. When we move to a different bug tracking
 these issues shall be migrated.
 
 
-The N4JS IDE comes with special tool support for <<reporting_bugs.html#reporting_bugs,writing
+The N4JS IDE comes with special tool support for <<reporting-bugs#reporting_bugs,writing
 bug reports>>.
 
 == New Features

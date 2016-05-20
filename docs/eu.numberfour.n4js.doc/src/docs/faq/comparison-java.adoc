@@ -48,7 +48,7 @@ This example will produce an error in the last line because `C` is not a nominal
 
 
 Overriding of members in N4JS is quite similar to Java although N4JS allows for slightly more flexibility due to the underlying
-ECMAScript semantics (see "Function Subtyping" below).
+ECMAScript semantics (see <<Function Subtyping>>).
 
 
 === Generics
@@ -101,11 +101,11 @@ modifiers of N4JS compared to Java:
 
 
 |=======================
-|*Java*|*N4JS* 2+|  *Remark*
-2+^|Public  2+|types and members, similar semantic
-2+^|Protected 2+|members only, similar semantic
-|Package
-|Project 2+|see below
+^|*Java* ^|*N4JS* 2+|  *Remark*
+2+^|Public  2+| Types and members, similar semantic
+2+^|Protected 2+| Members only, similar semantic
+^|Package
+^|Project 2+| See below
 |private
 |members only, similar semantic
 |=======================

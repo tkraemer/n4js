@@ -41,7 +41,7 @@ assignment would lead to an error:
 foo = 42; // error
 
 * N4JS would issue `int is not a subtype of string.`,
-* TypeScript would issue "Type `number` is not assignable to type `string`"
+* TypeScript would issue ``Type `number` is not assignable to type `string```
 
 === Structural Types
 
@@ -102,7 +102,7 @@ In both languages, an error will be issued on the last line:
 * _N4JS:_ `Point is not a structural subtype of Point3D: missing field z.`
 * _Typescript:_ `Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.`
 
-The difference between structural and nominal typeing is described in further detail <<features/nominal-vs-structural-typing.html#nominal_vs_structural_typing,here>>.
+The difference between structural and nominal typing is described in further detail in the <<features/nominal-vs-structural-typing.html#nominal_vs_structural_typing,nominal vs. structural subtyping feature>>.
 
 
 === Using Existing JavaScript Libraries
@@ -172,7 +172,7 @@ Of course, you would get an error at runtime: `TypeError: p.charAt is not a func
 
 
 The different interpretation of `any` reflects the different approaches visualized in the figure at the beginning.
-`any` in TypeScript is JavaScript in pure form: access anything, assign to everything. `any` in N4JS is even more rigor
+`any` in TypeScript is JavaScript in pure form: access anything, assign to everything. `any` in N4JS is even more rigorous
 than type `Object` in Java: access nothing, assign to nothing (except `any` itself).
 
 ////////
@@ -283,19 +283,19 @@ we assume it contains `B` s, and again we get a problem when calling `foo()`.
 
 That means that `List<T>` is invariant! In practice this is very inconvenient. Assume that we only want
 to read from the list. In that case, it would be ok to use `lb` instead of `la`. On the other hand, if we only
-want to write to the list, then we could use `la` instead of `lb` (since adding `B`s to a list expecting `A`
+want to write to the list, then we could use `la` instead of `lb` (since adding ``B``'s to a list expecting `A`
 does not do any harm).
 
 
-There are different solutions to that problem. N4JS follows Java and uses <b>use-site variance</b>. This means,
+There are different solutions to that problem. N4JS follows Java and uses **use-site variance**. This means,
 when the list is used, we can define whether we want to read or write from it. This can be done by using so-called
 "wildcards" and constraints when parameterizing the list, for example:
 
-[source]
+[source,javascript]
 function copy(readOnlyList: List<? extends A>, writeOnlyList: List<? super A>) {
     writeOnlyList.write( readOnlyList.read );
 }
-}
+
 
 In practice, reading (from a list) is much more often used then writing. And in this case TypeScript's covariant
 assumption causes no problems. When writing, however, it can cause the above problems.

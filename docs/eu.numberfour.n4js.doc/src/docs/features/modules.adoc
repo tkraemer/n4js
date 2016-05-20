@@ -21,7 +21,7 @@ correspond or are related.
 ECMAScript 2015 allows for this with the module syntax it defines. The good news is
 that N4JS already supports most of it:
 
-[source]
+[source,javascript]
 ----
 export public function inc(): void { ++count; }
 export public var count = 5;
@@ -32,7 +32,7 @@ export default public class Foo {
 
 Importing an ECMAScript 2015 module and consuming exports is as easy as the following:
 
-[source]
+[source,javascript]
 ----
 import { inc, count } from 'Counter';// Named imports
 import Foo from 'Counter'; // Default import
@@ -43,7 +43,7 @@ import * as plainJsModule+ from 'plainJsModule'; // Dynamic import
 
 The module could also be imported as a whole:
 
-[source]
+[source,javascript]
 import * as foo from 'Counter'; // Namespace import
 
 NOTE: Anonymous default exports and relative module paths are not yet supported. The module specifier is the relative path of the
@@ -60,7 +60,7 @@ Content assist within the IDE will add the missing import statement for you.
 
 ifdef::backend-html5[]
 image::moduleImport.gif[]
-endif[]
+
 
 When pasting in a code snippet, you could use kbd:[Ctrl+Shift+O]
 (on Windows and Linux, kbd:[Alt+Cmd+O] on Mac) which organizes your imports and

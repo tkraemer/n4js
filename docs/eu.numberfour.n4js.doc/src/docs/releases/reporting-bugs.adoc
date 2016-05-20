@@ -39,10 +39,10 @@ can be executed. This is even possible within the N4JS IDE, and the result is sh
 of the screenshot above. In order to do that, all you have to do is
 
 
-  * create a new file with extension `n4js.xt` ("xt" will activate Xpect)
-  * write the bug report or feature request, using comments and the keyword `XPECT` together with a known
+  * Create a new file with extension `n4js.xt` (".xt" will activate Xpect)
+  * Write the bug report or feature request, using comments and the keyword `XPECT` together with a known
 xpectation type (see below)
-  * run the Xpect test from the context menu ("Run As.../Xpect run").
+  * Run the Xpect test from the context menu **menu:Run As[Xpect run]**.
 
 
 **Instead of writing long explanations, just file the `n4js.xt` file as bug report (and a short explanation)!**

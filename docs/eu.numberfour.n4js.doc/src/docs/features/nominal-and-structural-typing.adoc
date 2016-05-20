@@ -89,11 +89,11 @@ In other words, if they have the same public fields and methods of compatible ty
 T~1~ is deemed a subtype of a type T~2~ if and only if T~1~ has
 all public members (of compatible type/signature) that T~2~ has (but may have more).
 
-In the example from the previous section, we said `Product` is not a (nominal) subtype
-of Person. In a structural type system, however, `Product` would indeed be deemed a (structual)
-subtype of `Person` because it has all of `Person`'s public members of compatible type (only field
-name" in this case). The opposite is, in fact, not true: `Person` is not a subtype of `Product`
-because it lacks `Product`'s field "price".
+In the example from the previous section, we said ``Product`` is not a (nominal) subtype
+of Person. In a structural type system, however, ``Product`` would indeed be deemed a (structual)
+subtype of ``Person`` because it has all of ``Person``'s public members of compatible type (only field
+name" in this case). The opposite is, in fact, not true: ``Person`` is not a subtype of ``Product``
+because it lacks ``Product``'s field ``price``.
 
 == Comparison
 
@@ -101,7 +101,7 @@ Both classes of type systems have their http://lambda-the-ultimate.org/node/5286
 Nominal type systems
 are usually said to provide more type safety and better maintainability whereas structual typing is mostly believed
 to be more flexible. As a matter of fact, nominal typing **is** structural typing extended with an extra relation
-explicitly declaring the subtype relation (like the `extends` clause). So the real question is: What are the
+explicitly declaring the subtype relation (like the ``extends`` clause). So the real question is: What are the
 advantages and disadvantages of such an explicit relation?
 
 Let's assume you want to provide a framework or library as follows:
@@ -235,9 +235,9 @@ class A implements Identifiable {
 
 
 For the argument of method "check" we use a (use-site) structural
-type by prefixing the type reference with a `~` (tilde), which means
-we are allowed, in the last line, to pass in an instance of `Product`
-even though `Product` is not a nominal subtype of `Identifiable`.
+type by prefixing the type reference with a +++~+++ (tilde), which means
+we are allowed, in the last line, to pass in an instance of ``Product``
+even though ``Product`` is not a nominal subtype of ``Identifiable``.
 
 
 
@@ -260,10 +260,10 @@ This is comparable to access modifiers which serve the same purpose.
 
 N4JS provides some variants of structural types. Usually two structural types are compatible, if they
 provide the same properties, or in case of classes, public members. In ECMAScript we often only need to
-access the fields. In N4JS, we can use `~~` to refer to the so called "field structural type".
-Two field structural types are compatible, if they provide the same `public` fields - methods
+access the fields. In N4JS, we can use ``~~`` to refer to the so called "field structural type".
+Two field structural types are compatible, if they provide the same ``public`` fields - methods
 are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter
-the properties or members to be considered: `\~r~` only considers getters or data fields,
-`~w~` only setters and data fields. `\~i~`  is used for initializer parameters:
-For every setter or (non-optional) data field in the type, the `~i~` -type needs to provide
+the properties or members to be considered: ``\~r~`` only considers getters or data fields,
+``~w~`` only setters and data fields. ``\~i~``  is used for initializer parameters:
+For every setter or (non-optional) data field in the type, the ``~i~`` -type needs to provide
 at least a getter (or readable data field).

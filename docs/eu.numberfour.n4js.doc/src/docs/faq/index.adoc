@@ -48,7 +48,7 @@ to Java's type system.
 We explain the <<comparison-java#comparison_java,differences and similarities between N4JS and Java on an
 extra page>>.
 
-== TypeScript">How does N4JS compare to TypeScript?
+== How does N4JS compare to TypeScript?
 
 We created N4JS with the goal to enable writing large ECMAScript projects that are as maintainable as
 Java. To do this, we took the Java type system and adjusted it to ECMAScript's characteristics. The N4JS
