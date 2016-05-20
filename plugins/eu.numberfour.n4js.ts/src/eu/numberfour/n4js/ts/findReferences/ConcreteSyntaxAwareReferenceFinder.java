@@ -34,6 +34,7 @@ import com.google.inject.Singleton;
 /**
  * A reference finder that will check the concrete syntax in the document before it attempts to resolve a proxy.
  */
+@SuppressWarnings("restriction")
 @Singleton
 public class ConcreteSyntaxAwareReferenceFinder extends ReferenceFinder {
 

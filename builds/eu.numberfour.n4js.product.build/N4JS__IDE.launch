@@ -34,6 +34,8 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="eu.numberfour.n4js.product.product"/>
 <setAttribute key="selected_features">
+<setEntry value="PathToolsFeature:default"/>
+<setEntry value="PathToolsRSEFeature:default"/>
 <setEntry value="eu.numberfour.n4js.compiler.sdk:default"/>
 <setEntry value="eu.numberfour.n4js.dependencies.sdk:default"/>
 <setEntry value="eu.numberfour.n4js.dependencies.ui.sdk:default"/>

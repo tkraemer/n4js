@@ -265,7 +265,7 @@ public class ExternalLibrariesActivator implements BundleActivator {
 
 		final Map<URI, String> uriMappings = newLinkedHashMap();
 
-		// NPMs first to be able to shadow runtime libraries and Mangelhaft from NPMs.
+		// npm packages first to be able to shadow runtime libraries and Mangelhaft from npm packages.
 		final File targetPlatformInstallLocation = N4_NPM_FOLDER_SUPPLIER.get();
 		final File nodeModulesFolder = new File(targetPlatformInstallLocation, N4_NPM_CATEGORY);
 		uriMappings.put(nodeModulesFolder.toURI(), N4_NPM_CATEGORY);
