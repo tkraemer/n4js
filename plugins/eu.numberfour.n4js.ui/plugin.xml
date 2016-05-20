@@ -1236,6 +1236,13 @@ Contributors:
          </description>
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.building.BuilderStateLogger$Factory"
+            label="Builder State">
+      </consoleFactory>
+   </extension>
 
 
 </plugin>
