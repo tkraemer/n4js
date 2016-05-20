@@ -42,13 +42,17 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.CommonDropAdapter;
+import org.eclipse.ui.navigator.CommonDropAdapterAssistant;
 import org.eclipse.ui.navigator.CommonViewer;
+import org.eclipse.ui.navigator.INavigatorDnDService;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.xtext.util.StringInputStream;
 import org.junit.Before;
@@ -58,6 +62,7 @@ import org.junit.Test;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
@@ -66,6 +71,7 @@ import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerProblemsDecorator;
 import eu.numberfour.n4js.ui.navigator.internal.SelectWorkingSetDropDownAction;
 import eu.numberfour.n4js.ui.navigator.internal.ShowHiddenWorkingSetsDropDownAction;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager.ManualAssociationWorkingSet;
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager.ProjectNameFilterWorkingSet;
 import eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager;
@@ -75,6 +81,7 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSetDiffBuilder;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
 import eu.numberfour.n4js.ui.workingsets.internal.HideWorkingSetAction;
+import eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
 
@@ -127,6 +134,15 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 		assertNull(
 				"Select working set drop down contribution was visible when projects are configured as top level elements.",
 				getWorkingSetDropDownContribution());
+
+		IContributionItem showHiddenWorkingSetsItem = from(
+				Arrays.asList(projectExplorer.getViewSite().getActionBars().getToolBarManager().getItems()))
+						.firstMatch(i -> ShowHiddenWorkingSetsDropDownAction.class.getName().equals(i.getId()))
+						.orNull();
+
+		assertNull(
+				"Show hidden working set drop down contribution was visible when projects are configured as top level elements.",
+				showHiddenWorkingSetsItem);
 	}
 
 	/***/
@@ -484,7 +500,7 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 						.firstMatch(i -> ShowHiddenWorkingSetsDropDownAction.class.getName().equals(i.getId()))
 						.orNull();
 
-		assertNotNull("Expected visible toolbar item, since there are hidden working sets", showHiddenWorkingSetsItem);
+		assertNotNull("Expected visible toolbar item, since there are hidden working sets.", showHiddenWorkingSetsItem);
 		assertTrue("Expected a type of " + ActionContributionItem.class,
 				showHiddenWorkingSetsItem instanceof ActionContributionItem);
 
@@ -533,6 +549,166 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 
 		assertNull("Expected not visible toolbar item, since all working sets are visible.", showHiddenWorkingSetsItem);
 
+		treeItems = commonViewer.getTree().getItems();
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		workingSets = from(asList(treeItems)).transform(item -> item.getData())
+				.filter(ProjectTypeWorkingSet.class)
+				.toList();
+
+		workingSetsToHide = newArrayList(workingSets.subList(0, 3));
+
+		commonViewer.setSelection(new StructuredSelection(workingSetsToHide.toArray()));
+		hideAction.selectionChanged(commonViewer.getStructuredSelection());
+		waitForIdleState();
+
+		assertTrue("Expected enabled action.", hideAction.isEnabled());
+
+		hideAction.run();
+		waitForIdleState();
+
+		showHiddenWorkingSetsItem = from(
+				Arrays.asList(projectExplorer.getViewSite().getActionBars().getToolBarManager().getItems()))
+						.firstMatch(i -> ShowHiddenWorkingSetsDropDownAction.class.getName().equals(i.getId()))
+						.orNull();
+
+		// This state will be reseted in tear down phase.
+		assertNotNull("Expected visible toolbar item, since there are hidden working sets.", showHiddenWorkingSetsItem);
+
+	}
+
+	/***/
+	@Test
+	@SuppressWarnings("restriction")
+	public void testDndSupport() throws CoreException {
+
+		final Collection<String> projectNames = newArrayList("A", "B", "C", "D", "E");
+		final IWorkspaceDescription workspaceDescription = ResourcesPlugin.getWorkspace().getDescription();
+		final boolean autoBuild = workspaceDescription.isAutoBuilding();
+		try {
+			// No need for the build at all.
+			workspaceDescription.setAutoBuilding(false);
+			for (final String projectName : projectNames) {
+				org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil.createSimpleProject(projectName);
+				assertTrue(
+						"Project " + projectName + " is not accessible.",
+						getProjectByName(projectName).isAccessible());
+			}
+		} finally {
+			workspaceDescription.setAutoBuilding(autoBuild);
+		}
+
+		activateWorkingSetManager(ManualAssociationAwareWorkingSetManager.class);
+		WorkingSetManager manager = broker.getActiveManager();
+		WorkingSetDiffBuilder builder = new WorkingSetDiffBuilder(manager);
+
+		List<WorkingSet> workingSets = newArrayList();
+		workingSets.add(new ManualAssociationWorkingSet(newArrayList(), "WS1", manager));
+		workingSets.add(new ManualAssociationWorkingSet(newArrayList(), "WS2", manager));
+		workingSets.add(new ManualAssociationWorkingSet(newArrayList(), "WS3", manager));
+
+		for (WorkingSet workingSet : workingSets) {
+			builder.add(workingSet);
+		}
+
+		workingSets.add(0, manager.getWorkingSets()[0]);
+		Diff<WorkingSet> diff = builder.build(
+				Iterables.toArray(workingSets, WorkingSet.class),
+				Iterables.toArray(workingSets, WorkingSet.class));
+
+		manager.updateState(diff);
+		waitForIdleState();
+
+		broker.refreshNavigator();
+		waitForIdleState();
+
+		commonViewer.expandToLevel(2);
+		waitForIdleState();
+
+		TreeItem[] treeItems = commonViewer.getTree().getItems();
+		final int expectedItemCount = workingSets.size();
+		assertTrue("Expected exactly " + expectedItemCount + " items in the Project Explorer. Input was: "
+				+ Arrays.toString(treeItems),
+				treeItems.length == expectedItemCount);
+
+		for (TreeItem item : treeItems) {
+			Object data = item.getData();
+			assertTrue("Expected instance of working set. Was: " + data, data instanceof WorkingSet);
+			WorkingSet workingSet = (WorkingSet) data;
+			if (WorkingSet.OTHERS_WORKING_SET_ID.equals(workingSet.getId())) {
+				assertEquals(
+						"Expected " + projectNames.size() + " elements. Got: " + item.getItemCount(),
+						projectNames.size(), item.getItemCount());
+			} else {
+				assertEquals(
+						"Expected 0 elements. Got: " + item.getItemCount(),
+						0, item.getItemCount());
+			}
+		}
+
+		StructuredSelection selection = new StructuredSelection(getProjectsByName("A", "B", "C"));
+		commonViewer.setSelection(selection);
+		assertEquals(3, commonViewer.getTree().getSelection().length);
+
+		INavigatorDnDService dnDService = projectExplorer.getNavigatorContentService().getDnDService();
+		CommonDropAdapterAssistant[] dropAdapterAssistants = dnDService
+				.findCommonDropAdapterAssistants(manager.getWorkingSets()[1], commonViewer.getStructuredSelection());
+		assertTrue(!Arrays2.isEmpty(dropAdapterAssistants));
+
+		N4JSProjectInWorkingSetDropAdapterAssistant[] n4DropAdapterAssistants = Arrays2.filter(dropAdapterAssistants,
+				N4JSProjectInWorkingSetDropAdapterAssistant.class);
+
+		assertTrue(!Arrays2.isEmpty(n4DropAdapterAssistants));
+
+		N4JSProjectInWorkingSetDropAdapterAssistant assistant = n4DropAdapterAssistants[0];
+		CommonDropAdapter adapter = assistant.getCommonDropAdapter();
+
+		LocalSelectionTransfer.getTransfer().setSelection(commonViewer.getStructuredSelection());
+		assistant.handleDrop(adapter, null, manager.getWorkingSets()[1]);
+		waitForIdleState();
+
+		broker.refreshNavigator();
+		waitForIdleState();
+
+		commonViewer.expandToLevel(2);
+		waitForIdleState();
+
+		treeItems = commonViewer.getTree().getItems();
+
+		for (TreeItem item : treeItems) {
+			Object data = item.getData();
+			assertTrue("Expected instance of working set. Was: " + data, data instanceof WorkingSet);
+			WorkingSet workingSet = (WorkingSet) data;
+			if (WorkingSet.OTHERS_WORKING_SET_ID.equals(workingSet.getId())) {
+				assertEquals(
+						"Expected " + (projectNames.size() - 3) + " elements. Got: " + item.getItemCount(),
+						projectNames.size() - 3, item.getItemCount());
+			} else if ("WS1".equals(workingSet.getId())) {
+				assertEquals(
+						"Expected 3 elements. Got: " + item.getItemCount(),
+						3, item.getItemCount());
+			} else {
+				assertEquals(
+						"Expected 0 elements. Got: " + item.getItemCount(),
+						0, item.getItemCount());
+			}
+		}
+
+	}
+
+	private IProject getProjectByName(final String projectName) {
+		return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+	}
+
+	private IProject[] getProjectsByName(final String projectName, final String otherName, final String... rest) {
+		final List<String> projectNames = Lists.asList(projectName, otherName, rest);
+		final IProject[] projects = new IProject[projectNames.size()];
+		for (int i = 0; i < projects.length; i++) {
+			projects[i] = getProjectByName(projectNames.get(i));
+		}
+		return projects;
 	}
 
 	private void activateWorkingSetManager(final Class<? extends WorkingSetManager> clazz) {

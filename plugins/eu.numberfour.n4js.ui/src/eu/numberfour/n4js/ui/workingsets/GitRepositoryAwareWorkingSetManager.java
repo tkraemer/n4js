@@ -18,15 +18,12 @@ import static java.io.File.pathSeparator;
 
 import java.io.File;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
@@ -35,7 +32,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
@@ -161,7 +157,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 	/**
 	 * Working set for grouping projects based on the attached local Git repository.
 	 */
-	public static final class GitRepositoryWorkingSet extends WorkingSetImpl {
+	public static final class GitRepositoryWorkingSet extends DefaultWorkingSetImpl {
 
 		private final String rootUri;
 		private final String name;
@@ -197,28 +193,13 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 		}
 
 		@Override
-		public String getName() {
-			return name;
+		public boolean apply(final IProject project) {
+			return rootUri != null && toUriString(project.getLocationURI()).startsWith(rootUri);
 		}
 
 		@Override
-		public IAdaptable[] getElements() {
-			final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			final IProject[] elements = new IProject[projects.length];
-			int elementCount = 0;
-			for (int i = 0, size = projects.length; i < size; i++) {
-				final IProject project = projects[i];
-				if (null == rootUri) {
-					if (!ResourceUtil.isSharedWithGit(project)) {
-						elements[elementCount++] = project;
-					}
-				} else {
-					if (toUriString(project.getLocationURI()).startsWith(rootUri)) {
-						elements[elementCount++] = project;
-					}
-				}
-			}
-			return Arrays.copyOfRange(elements, 0, elementCount);
+		public String getName() {
+			return name;
 		}
 
 		/**

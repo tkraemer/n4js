@@ -99,6 +99,7 @@ public class N4JSWorkingSetActionProvider extends WorkingSetActionProvider
 		if (actionBars != null) {
 			final IToolBarManager toolBarManager = actionBars.getToolBarManager();
 			toolBarManager.remove(selectWorkingSetDelegate);
+			toolBarManager.remove(showHiddenWorkingSetsDelegate);
 			if (workingSetManagerBroker.isWorkingSetTopLevel()) {
 				toolBarManager.add(selectWorkingSetDelegate);
 				final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();

@@ -33,6 +33,7 @@ import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.ui.navigator.CommonDropAdapter;
 import org.eclipse.ui.navigator.CommonDropAdapterAssistant;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
@@ -119,6 +120,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 
 		ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
 		if (selection instanceof ITreeSelection) {
+			ManualAssociationWorkingSet oldSource = null;
 			for (TreePath path : ((ITreeSelection) selection).getPaths()) {
 				IProject project = ((IAdaptable) path.getLastSegment()).getAdapter(IProject.class);
 				if (project != null) {
@@ -151,12 +153,14 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 						}
 
 						diffBuilder.edit(oldTarget, newTarget);
+						oldTarget = newTarget;
 					}
 
 					// Check if our top-level element is a working set so that we can perform a move
 					if (path.getFirstSegment() instanceof ManualAssociationWorkingSet) {
-						ManualAssociationWorkingSet oldSource = ((ManualAssociationWorkingSet) path
-								.getFirstSegment());
+						if (oldSource == null) {
+							oldSource = ((ManualAssociationWorkingSet) path.getFirstSegment());
+						}
 
 						if (oldSource != null && !OTHERS_WORKING_SET_ID.equals(oldSource.getId())) {
 
@@ -176,6 +180,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 							}
 
 							diffBuilder.edit(oldSource, newSource);
+							oldSource = newSource;
 						}
 					}
 				} else if (path.getLastSegment() instanceof WorkingSet) {
@@ -238,6 +243,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 					}
 
 					diffBuilder.edit(oldTarget, newTarget);
+					oldTarget = newTarget;
 
 				}
 			}
@@ -253,6 +259,18 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 		}
 
 		return statusHelper.OK();
+	}
+
+	/**
+	 * Made public for testing purposes.
+	 *
+	 * <p>
+	 * {@inheritDoc}
+	 */
+	@Override
+	@VisibleForTesting
+	public CommonDropAdapter getCommonDropAdapter() {
+		return super.getCommonDropAdapter();
 	}
 
 	private int indexOfById(WorkingSet element, List<WorkingSet> items) {
