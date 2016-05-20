@@ -69,7 +69,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 </dependencies>
                 <executions> <!-- GENERATE RESOURCES -->
                     <execution>
-                        <id>asciidoc-to-html</id> <!-- Convert ADOC to HTML -->
+                        <id>asciidoc-to-eclipse-html</id> <!-- Generate Eclipse HTML without TOC-->
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
@@ -77,12 +77,39 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
                             <imagesdir>images</imagesdir>
-                            <preserveDirectories>true</preserveDirectories> <!-- Currently preserved to copy across images -->
-                            <outputDirectory>${project.build.directory}/html</outputDirectory>
+                            <preserveDirectories>true</preserveDirectories> 
+                            <outputDirectory>${project.build.directory}/eclipse-html</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
-                                <toc>left</toc>
+                                <toc>false</toc> <!-- No embedded TOC -->
+                                <stylesdir>styles</stylesdir>
+                                <stylesheet>default.min.css</stylesheet>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>asciidoc-to-website-html</id> <!-- Convert ADOC to HTML -->
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <imagesdir>images</imagesdir>
+                            <preserveDirectories>true</preserveDirectories> 
+                            <outputDirectory>${project.build.directory}/website-html</outputDirectory>
+                            <backend>html5</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes> <!-- Individual attributes per conversion execution -->
+                                <toc>left</toc> <!-- Left-aligned embedded TOC in each page -->
+                                <stylesdir>styles</stylesdir>
+                                <stylesheet>default.min.css</stylesheet>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -114,7 +141,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution>
 -->
-                    <execution> <!-- Begin PDF Generation -->
+                    <execution> <!-- Begin PDF Generation of User Guides -->
                         <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
                         <goals>
