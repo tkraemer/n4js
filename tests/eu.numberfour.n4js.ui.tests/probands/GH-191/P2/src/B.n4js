@@ -1,0 +1,5 @@
+import { A } from "A"
+
+export public class B extends A {
+
+}

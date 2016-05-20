@@ -69,7 +69,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		super(name, null);
 		this.setTitle(name);
 		this.initialSelection = iProjects;
-		setMessage("Select NPM export root folder.");
+		setMessage("Select npm export root folder.");
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		destinationSelectionGroup.setFont(font);
 
 		Label destinationLabel = new Label(destinationSelectionGroup, SWT.NONE);
-		destinationLabel.setText("NPM Target Folder");
+		destinationLabel.setText("npm Target Folder");
 		destinationLabel.setFont(font);
 
 		// destination name entry field
@@ -258,8 +258,8 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 	protected void handleDestinationBrowseButtonPressed() {
 		DirectoryDialog dialog = new DirectoryDialog(getContainer().getShell(),
 				SWT.SAVE | SWT.SHEET);
-		dialog.setMessage("Select NPM destination folder");
-		dialog.setText("Select NPM destination folder");
+		dialog.setMessage("Select npm destination folder");
+		dialog.setText("Select npm destination folder");
 		dialog.setFilterPath(getDestinationValue());
 		String selectedDirectoryName = dialog.open();
 

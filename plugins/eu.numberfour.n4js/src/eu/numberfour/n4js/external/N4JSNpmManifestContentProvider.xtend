@@ -28,7 +28,7 @@ class N4JSNpmManifestContentProvider {
 		ArtifactId: «projectName»
 		VendorId: npm
 		ProjectName: "«projectName»"
-		VendorName: "NPM"
+		VendorName: "npm"
 		ProjectType: library
 		ProjectVersion: 0.0.1-SNAPSHOT
 		Output: "«outputFolder»"
