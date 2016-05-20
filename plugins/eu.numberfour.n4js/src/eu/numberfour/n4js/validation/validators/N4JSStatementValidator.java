@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.validation.validators;
 
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isContainedInStaticPolyfillModule;
 import static eu.numberfour.n4js.validation.IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 import static eu.numberfour.n4js.validation.IssueCodes.TYS_FOR_IN_VAR_STRING;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
@@ -21,7 +22,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.n4JS.ForStatement;
 import eu.numberfour.n4js.n4JS.FunctionDeclaration;
 import eu.numberfour.n4js.n4JS.Script;
@@ -31,11 +31,11 @@ import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding;
 import eu.numberfour.n4js.n4JS.VariableStatement;
 import eu.numberfour.n4js.n4JS.VariableStatementKeyword;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -91,7 +91,7 @@ public class N4JSStatementValidator extends AbstractN4JSDeclarativeValidator {
 		EObject con = statement.eContainer();
 		if (con instanceof Script) { // top-level elements will be checked only.
 			Script script = (Script) con;
-			if (!AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(script)) {
+			if (!isContainedInStaticPolyfillModule(script)) {
 				return;
 			}
 			// FunctionDeclarations have finer grained check in own validator.

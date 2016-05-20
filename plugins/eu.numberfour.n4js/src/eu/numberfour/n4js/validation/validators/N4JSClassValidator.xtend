@@ -53,6 +53,8 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 
+import static extension eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
+
 /**
  * superfluous properties in {@code @Spec} constructor.
  */
@@ -190,19 +192,20 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 
 		// wrong parsed
 		if (!(n4Class.definedType instanceof TClass)) {
-			return
+			return;
 		}
 
 		if (polyfillValidatorFragment.holdsPolyfill(this, n4Class)) {
-			val tClass = n4Class.definedType as TClass
-			internalCheckAbstractFinal(tClass)
+			val tClass = n4Class.definedType as TClass;
+			internalCheckAbstractFinal(tClass);
 
 			if (holdsSuperClass(n4Class)) { // avoid consequential errors
-				holdsNoCyclicInheritance(n4Class)
+				holdsNoCyclicInheritance(n4Class);
 			}
-
-			internalCheckImplementedInterfaces(n4Class)
-			internalCheckSpecAnnotation(n4Class)
+			
+			internalCheckPolyFilledClassWithAdditionalInterface(n4Class,this);
+			internalCheckImplementedInterfaces(n4Class);
+			internalCheckSpecAnnotation(n4Class);
 		}
 	}
 
@@ -216,18 +219,18 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private internalCheckAbstractFinal(TClass tClass) {
 		if (tClass.abstract && tClass.final) {
-			val message = getMessageForCLF_ABSTRACT_FINAL("class")
-			addIssue(message, tClass.astElement, N4_TYPE_DECLARATION__NAME, CLF_ABSTRACT_FINAL)
+			val message = getMessageForCLF_ABSTRACT_FINAL("class");
+			addIssue(message, tClass.astElement, N4_TYPE_DECLARATION__NAME, CLF_ABSTRACT_FINAL);
 		}
 	}
 
 	def private boolean holdsSuperClass(N4ClassDeclaration n4Class) {
-		val superType = n4Class.superClassRef?.declaredType
+		val superType = n4Class.superClassRef?.declaredType;
 		if (superType !== null && superType.name !== null) { // note: in case superType.name===null, the type reference is completely invalid and other, more appropriate error messages have been created elsewhere
 
 			if (superType instanceof PrimitiveType) {
 				val message = getMessageForCLF_EXTENDS_PRIMITIVE_GENERIC_TYPE(superType.name);
-				addIssue(message, n4Class.superClassRef, null, CLF_EXTENDS_PRIMITIVE_GENERIC_TYPE)
+				addIssue(message, n4Class.superClassRef, null, CLF_EXTENDS_PRIMITIVE_GENERIC_TYPE);
 			} else if (!(superType instanceof TClass) && !(superType instanceof TObjectPrototype)) {
 				if (superType instanceof TInterface) {
 					val message = getMessageForSYN_KW_EXTENDS_IMPLEMENTS_MIXED_UP(n4Class.description, "extend",
@@ -235,7 +238,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 					addIssue(message, n4Class.superClassRef, null, SYN_KW_EXTENDS_IMPLEMENTS_MIXED_UP);
 				} else {
 					val message = getMessageForCLF_WRONG_META_TYPE(n4Class.description, "extend", superType.description);
-					addIssue(message, n4Class.superClassRef, null, CLF_WRONG_META_TYPE)
+					addIssue(message, n4Class.superClassRef, null, CLF_WRONG_META_TYPE);
 					return false;
 				}
 			} else if (superType instanceof TClass) {
@@ -247,7 +250,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 				if (superType.final) {
 					val message = getMessageForCLF_EXTEND_FINAL(superType.name);
 
-					val superClassUri = EcoreUtil.getURI(superType.astElement).toString
+					val superClassUri = EcoreUtil.getURI(superType.astElement).toString;
 
 					addIssue(message, n4Class.superClassRef, null, CLF_EXTEND_FINAL,IssueUserDataKeys.CLF_EXTEND_FINAL.SUPER_TYPE_DECLARATION_URI,superClassUri);
 					return false;
@@ -256,7 +259,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 				// if super class is observable, then this class must be observable as well
 				if (superType.observable && !(n4Class.definedType as TClass).observable) {
 					val message = getMessageForCLF_OBSERVABLE_MISSING(n4Class.name, superType.name);
-					addIssue(message, n4Class, N4_TYPE_DECLARATION__NAME, CLF_OBSERVABLE_MISSING)
+					addIssue(message, n4Class, N4_TYPE_DECLARATION__NAME, CLF_OBSERVABLE_MISSING);
 					return false;
 				}
 			}
@@ -266,7 +269,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private internalCheckImplementedInterfaces(N4ClassDeclaration n4Class) {
 		n4Class.implementedInterfaceRefs.forEach [
-			val consumedType = it.declaredType
+			val consumedType = it.declaredType;
 			if (consumedType !== null && consumedType.name !== null) { // note: in case consumedType.name===null, the type reference is completely invalid and other, more appropriate error messages have been created elsewhere
 
 				// consumed type must be an interface
@@ -292,7 +295,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 			var specAnnotations = newArrayList;
 			var int i = 0;
 			for (FormalParameter currFPar : ctor.fpars) {
-				val annSpec = SPEC.getAnnotation(currFPar)
+				val annSpec = SPEC.getAnnotation(currFPar);
 				if (annSpec !== null) {
 					specAnnotations.add(annSpec);
 					if (!(currFPar.declaredTypeRef instanceof ThisTypeRef &&
@@ -326,15 +329,15 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 		int parIndex
 	) {
 		val TClass tclass = n4ClassDeclaration.definedType as TClass;
-		val fpars = (ctor.definedType as TFunction).fpars
+		val fpars = (ctor.definedType as TFunction).fpars;
 		if (parIndex >= fpars.size) return; //broken AST
 		val TFormalParameter fpar = fpars.get(parIndex);
-		val fparType = fpar.typeRef
-		val G = RuleEnvironmentExtensions.newRuleEnvironment(n4ClassDeclaration)
+		val fparType = fpar.typeRef;
+		val G = RuleEnvironmentExtensions.newRuleEnvironment(n4ClassDeclaration);
 
 		var int memberIndex = 0;
 		for (smember : fparType.structuralMembers) {
-			val tfield = tclass.ownedMembers.findFirst[name == smember.name]
+			val tfield = tclass.ownedMembers.findFirst[name == smember.name];
 			if (tfield !== null && (tfield.isField || tfield.isSetter)) {
 				val fieldType = typeInferencer.tau(tfield, tclass);
 				val smemberType = typeInferencer.tau(smember, tclass);

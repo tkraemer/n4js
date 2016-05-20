@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.validation.validators
 
-import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumDeclaration
@@ -18,6 +17,9 @@ import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * Collecting special validation logic only related to static polyfill modules.
@@ -25,40 +27,50 @@ import eu.numberfour.n4js.validation.IssueCodes
  */
 public class StaticPolyfillValidatorExtension {
 
-   /** $140 (Restriction on static-polyfilling): §140.1 only classes in staticPolyfillModule allowed. */
+   /** §143 (Restriction on static-polyfilling): §143.1 only classes in staticPolyfillModule allowed. */
 	public static def internalCheckNotInStaticPolyfillModule(N4InterfaceDeclaration n4InterfaceDeclaration, N4JSInterfaceValidator host) {
-		if (AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(n4InterfaceDeclaration)) { // transetively inherited
-			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES
+		if (n4InterfaceDeclaration.isContainedInStaticPolyfillModule) { 
+			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 			host.addIssue(msg, n4InterfaceDeclaration, N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME,
-				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES)
+				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
 		}
 	}
 
 
-   /** $140 (Restriction on static-polyfilling): §140.1 only classes in staticPolyfillModule allowed. */
+   /** §143 (Restriction on static-polyfilling): §143.1 only classes in staticPolyfillModule allowed. */
 	public static def internalCheckNotInStaticPolyfillModule(N4EnumDeclaration n4EnumDecl, N4JSEnumValidator host) {
-		if (AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(n4EnumDecl)) { // transetively inherited
-			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES
+		if (n4EnumDecl.isContainedInStaticPolyfillModule) { 
+			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 			host.addIssue(msg, n4EnumDecl, N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME,
-				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES)
+				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
 		}
 	}
 
-   /** $140 (Restriction on static-polyfilling): §140.1 only classes in staticPolyfillModule allowed. */
+   /** §143 (Restriction on static-polyfilling): §143.1 only classes in staticPolyfillModule allowed. */
 	public static def internalCheckNotInStaticPolyfillModule(FunctionDeclaration functionDeclaration, N4JSFunctionValidator host) {
 		// top level functionDeclarations:
 		var cont = functionDeclaration.eContainer;
 		while ( cont instanceof ExportDeclaration ) cont = cont.eContainer;
 		if( cont instanceof Script)
 		{
-			if (AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(functionDeclaration)) { // transetively inherited
-				val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES
+			if ( functionDeclaration.isContainedInStaticPolyfillModule ) { 
+				val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 				host.addIssue(msg, functionDeclaration, N4JSPackage.Literals.FUNCTION_DECLARATION__NAME,
-					IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES)
+					IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
 			}
 		}
 	}
 
-
+ 	 /** §143 (Restriction on static-polyfilling): §143.4 P must not implement any interfaces */
+	public static def internalCheckPolyFilledClassWithAdditionalInterface(N4ClassDeclaration classDeclaration, N4JSClassValidator host) {
+		if( classDeclaration.isStaticPolyfill ) {
+			if( ! classDeclaration.implementedInterfaceRefs.isEmpty ) { 
+				val msg = IssueCodes.messageForPOLY_IMPLEMENTING_INTERFACE_NOT_ALLOWED;
+				host.addIssue(msg, classDeclaration, N4JSPackage.Literals.N4_CLASS_DEFINITION__IMPLEMENTED_INTERFACE_REFS,
+					IssueCodes.POLY_IMPLEMENTING_INTERFACE_NOT_ALLOWED);
+					
+			}
+		}
+	}
 
 }
