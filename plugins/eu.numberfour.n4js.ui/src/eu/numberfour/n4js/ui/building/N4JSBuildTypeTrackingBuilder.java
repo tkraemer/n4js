@@ -13,13 +13,18 @@ package eu.numberfour.n4js.ui.building;
 import static eu.numberfour.n4js.ui.internal.N4JSActivator.EU_NUMBERFOUR_N4JS_N4JS;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant.BuildType;
+import org.eclipse.xtext.builder.debug.IBuildLogger;
 import org.eclipse.xtext.builder.impl.ToBeBuilt;
 import org.eclipse.xtext.builder.impl.XtextBuilder;
 
+import com.google.inject.Inject;
+
+import eu.numberfour.n4js.ui.building.BuilderStateLogger.BuilderState;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.internal.ProjectDescriptionLoadListener;
 
@@ -30,7 +35,25 @@ import eu.numberfour.n4js.ui.internal.ProjectDescriptionLoadListener;
 @SuppressWarnings("restriction")
 public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 
-	private final static Logger logger = Logger.getLogger(N4JSBuildTypeTrackingBuilder.class);
+	private final static Logger LOGGER = Logger.getLogger(N4JSBuildTypeTrackingBuilder.class);
+
+	@Inject
+	@BuilderState
+	private IBuildLogger builderStateLogger;
+
+	/**
+	 * Overridden only for logging purposes. Does nothing else but calls super.
+	 *
+	 * <p>
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void incrementalBuild(IResourceDelta delta, IProgressMonitor monitor) throws CoreException {
+		builderStateLogger.log("N4JSBuildTypeTrackingBuilder.incrementalBuild() >>>");
+		builderStateLogger.log("Resource delta: " + delta);
+		super.incrementalBuild(delta, monitor);
+		builderStateLogger.log("N4JSBuildTypeTrackingBuilder.incrementalBuild() <<<");
+	}
 
 	@Override
 	protected void doClean(ToBeBuilt toBeBuilt, IProgressMonitor monitor)
@@ -56,7 +79,7 @@ public class N4JSBuildTypeTrackingBuilder extends XtextBuilder {
 		} catch (OperationCanceledException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error in n4js-build", e);
+			LOGGER.error("Error in n4js-build", e);
 			throw e;
 		} finally {
 			N4JSBuildTypeTracker.clearBuildType(getProject());
