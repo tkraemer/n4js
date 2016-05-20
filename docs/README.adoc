@@ -6,7 +6,7 @@
 
 We are currently testing AsciiDoc(tor) as a means of generating single-source documentation. This README contains the following:
 
-* A brief introduction to AsciiDoc and AsciiDoctor
+* An introduction to AsciiDoc and AsciiDoctor
 * A list of resources and recommended tools.
 * **Documenting the documentation** of the documentation ... of the build.
 
@@ -20,7 +20,7 @@ It is written in Ruby and is published to https://rubygems.org/gems/asciidoctor[
 === AsciiDoc Documentation
 
 AsciiDoc files can be written in any text editor and should (for our build) be saved with the ``.adoc`` extension.
-The following are two useful guides for writing AsciiDoc:
+These are the two main guides/references for writing AsciiDoc:
 
 http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc Syntax Quick Reference]
 
@@ -41,8 +41,24 @@ For quickly converting existing GitHub Flavoured Markdown (``.md``) to AsciiDoc:
 
 https://github.com/opendevise/kramdown-asciidoc[Kramdown] - Convert GitHub Flavoured Markdown to AsciiDoc
 
+=== Developing AsciiDoc
 
-=== Converting with AsciiDoctor
+There are several ports of AsciiDoctor, notably:
+
+* https://github.com/asciidoctor/asciidoctor.js[AsciiDoctor.js] - A JavaScript port of AsciiDoctor
+
+[quote]
+The asciidoctor.js script can be run on any JavaScript platform, including Node.js, Nashorn and, of course, a web browser.
+
+
+* https://github.com/asciidoctor/asciidoctorj[AsciidoctorJ] - Java bindings for AsciiDoctor
+
+[quote]
+AsciidoctorJ is the official library for running Asciidoctor on the JVM.
+Using AsciidoctorJ, you can convert AsciiDoc content or analyze the structure of a parsed AsciiDoc document from Java and other JVM languages.
+
+
+=== Converting with AsciiDoctor in Command Line
 
 AsciiDoctor can be invoked from the command line to convert ``.adoc`` plain text to a number of file formats. This can be tested locally with the AsciiDoctor RubyGem:
 
@@ -85,11 +101,11 @@ Asciidoctor also has several add-on converters, which can be plugged in by addin
 
 == N4JS IDE Docs Plugin
 
-All content from the http://numberfour.github.io/n4js/[N4JS website] has been converted to AsciiDoc and is placed in the following folder
+All content from the https://github.numberfour.eu/NumberFour/n4js-webpage/tree/master/src[N4JS website] has been converted to AsciiDoc and is placed in the following folder
 
 ``n4js/docs/eu.numberfour.n4js.doc/src``
 
-At the moment, the commands ``mvn install`` or ``mvn verify`` will trigger the generation of documentation in the following folder:
+The commands ``mvn install`` or ``mvn verify`` will trigger the generation of documentation in the following folder:
 
 ``n4js/docs/eu.numberfour.n4js.doc/target``
 
@@ -99,7 +115,9 @@ The files that are generated in the ``n4js/docs/eu.numberfour.n4js.doc/target`` 
 
 ``n4js/docs/eu.numberfour.n4js.doc/pom.xml``
 
-In this ``pom.xml``, the https://github.com/asciidoctor/asciidoctor-maven-plugin[AsciiDoctor Maven Plugin] is invoked to convert our source ``.adoc`` files to the required output.
+In this ``pom.xml``, the AsciiDoctor Maven Plugin is invoked to convert our source ``.adoc`` files to the required output.
+
+**https://github.com/asciidoctor/asciidoctor-maven-plugin[AsciiDoctor Maven Plugin] Documentation**
 
 A single execution of the ``asciidoctor-maven-plugin`` to convert our source files to HTML in the ``generate-resources`` phase of a Maven build looks like the following:
 
@@ -130,7 +148,7 @@ A single execution of the ``asciidoctor-maven-plugin`` to convert our source fil
 
 These executions can then be run consecutively with different backends, target folders and with specific attributes that will override those in the headers of the source ``.adoc`` files.
 
-For generating PDF and EPUB from the source AsciiDoc files, the addition of the following dependencies are required in the ``asciidoctor-maven-plugin``:
+For generating PDF and EPUB from the source AsciiDoc files, the addition of the following dependencies are required in the ``asciidoctor-maven-plugin`` before declaring attributes or executions:
 
 [source,xml]
 <dependency>
@@ -152,13 +170,11 @@ In the Maven build, the POM at ``n4js/docs/eu.numberfour.n4js.doc/pom.xml`` is c
 . The ``asciidoctor-maven-plugin`` converts source AsciiDoc files to HTML
 . The ``geneclipsetoc-maven-plugin`` scans the **generated** HTML files and creates the ``toc.xml``
 
-The geneclipsetoc-maven-plugin searches for headings (<h1> etc.) in the generated HTML and creates a structured toc file based on this hierarchy that the N4JS IDE can index.
+The geneclipsetoc-maven-plugin searches for headings (<h1> etc.) in the generated HTML and creates a structured toc file based on this hierarchy that the N4JS IDE can display in the help content.
 
-==== The toc.xml
+In order to avoid polluting the Maven POM, we use a help-pages.txt file (located at ``n4js/docs/eu.numberfour.n4js.doc/help-pages.txt``) to point the ``geneclipsetoc`` plugin at the correct paths of the generated HTML files.
 
-In order to avoid polluting the Maven POM, we use a help-pages.txt file (located at ``n4js/docs/eu.numberfour.n4js.doc/help-pages.txt``) to point the geneclipsetoc plugin at the correct paths of the generated HTML files.
-
-A sample configuration of the geneclipsetoc plugin looks like the following:
+A sample configuration of the ``geneclipsetoc`` plugin looks like the following:
 
 [source,xml]
 <plugin>
@@ -185,7 +201,7 @@ The help-pages.txt file is **currently handwritten** with the target HTML paths.
 This process has to be automated!
 
 
-===== Automated Build of help-pages.txt
+==== Automated Build of help-pages.txt
 
 A work-in-progress method of generating the help-pages.txt file is the use of the command:
 
@@ -229,19 +245,3 @@ image::runhello.gif[]
 Where the animated .gif is embedded/processed in the target **only if the html5** backend is used.
 
 This presents the opportunity for custom content per document type (i.e. html header/footer)
-
-== Developing AsciiDoc
-
-There are several ports of AsciiDoctor, notably:
-
-* https://github.com/asciidoctor/asciidoctor.js[AsciiDoctor.js] - A JavaScript port of AsciiDoctor
-
-[quote]
-The asciidoctor.js script can be run on any JavaScript platform, including Node.js, Nashorn and, of course, a web browser.
-
-
-* https://github.com/asciidoctor/asciidoctorj[AsciidoctorJ] - Java bindings for AsciiDoctor
-
-[quote]
-AsciidoctorJ is the official library for running Asciidoctor on the JVM.
-Using AsciidoctorJ, you can convert AsciiDoc content or analyze the structure of a parsed AsciiDoc document from Java and other JVM languages.
