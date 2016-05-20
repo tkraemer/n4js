@@ -20,7 +20,7 @@ import org.eclipse.xtend.lib.annotations.Delegate
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 /**
- * Representation of an NPM project adaption result.
+ * Representation of an npm project adaption result.
  */
 @FinalFieldsConstructor
 class NpmProjectAdaptionResult implements IStatus {

@@ -33,7 +33,7 @@ import eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamTy
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 
 /**
- * Output stream provider to the NPM console.
+ * Output stream provider to the npm console.
  */
 @Singleton
 public class ConsoleOutputStreamProvider implements OutputStreamProvider {

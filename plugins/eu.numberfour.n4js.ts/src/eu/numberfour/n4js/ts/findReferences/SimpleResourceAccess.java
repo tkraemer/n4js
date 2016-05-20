@@ -19,6 +19,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 /**
  * Simple implementation of the {@link IResourceAccess} that uses a pre assigned resource set.
  */
+@SuppressWarnings("restriction")
 public class SimpleResourceAccess implements IReferenceFinder.IResourceAccess {
 	private final ResourceSet resourceSet;
 

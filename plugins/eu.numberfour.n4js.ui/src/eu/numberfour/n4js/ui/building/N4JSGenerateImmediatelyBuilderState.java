@@ -31,6 +31,7 @@ import org.eclipse.xtext.builder.IXtextBuilderParticipant;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant.BuildType;
 import org.eclipse.xtext.builder.clustering.ClusteringBuilderState;
 import org.eclipse.xtext.builder.clustering.CurrentDescriptions;
+import org.eclipse.xtext.builder.debug.IBuildLogger;
 import org.eclipse.xtext.builder.impl.BuildData;
 import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant;
 import org.eclipse.xtext.builder.impl.RegistryBuilderParticipant.DeferredBuilderParticipant;
@@ -42,6 +43,8 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -49,9 +52,11 @@ import com.google.inject.Injector;
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ui.building.BuilderStateLogger.BuilderState;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.utils.Arrays2;
 
 /**
  * Produces the compiled js files immediately after the validation in order save CPU cycles, e.g. the file is already
@@ -129,6 +134,10 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 	@Inject
 	private ContributingResourceDescriptionPersister descriptionPersister;
 
+	@Inject
+	@BuilderState
+	private IBuildLogger builderStateLogger;
+
 	/**
 	 * After the load phase, checks whether the underlying index content is empty or a recovery builder was scheduled,
 	 * if so, populates the index content with the external libraries as well.
@@ -161,6 +170,9 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 	protected Collection<Delta> doUpdate(BuildData buildData, ResourceDescriptionsData newData,
 			IProgressMonitor monitor) {
 
+		builderStateLogger.log("N4JSGenerateImmediatelyBuilderState.doUpdate() >>>");
+		logBuildData(buildData, " of before #doUpdate");
+
 		IProject project = getProject(buildData);
 		try {
 			BuildType buildType = N4JSBuildTypeTracker.getBuildType(project);
@@ -176,7 +188,25 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 		} catch (CoreException e) {
 			handleCoreException(e);
 		}
-		return super.doUpdate(buildData, newData, monitor);
+		Collection<Delta> modifiedDeltas = super.doUpdate(buildData, newData, monitor);
+
+		logBuildData(buildData, " of after #doUpdate");
+		builderStateLogger.log("Modified deltas: " + modifiedDeltas);
+		builderStateLogger.log("N4JSGenerateImmediatelyBuilderState.doUpdate() <<<");
+
+		return modifiedDeltas;
+	}
+
+	private void logBuildData(BuildData buildData, String... tags) {
+		String tag = Arrays2.isEmpty(tags) ? "" : Joiner.on(" - ").join(tags);
+		String header = "---------------------- Build data" + tag + " --------------------------------------";
+		builderStateLogger.log(header);
+		builderStateLogger.log("Project name: " + buildData.getProjectName());
+		builderStateLogger.log("To be deleted: " + ensureNotNull(buildData.getToBeDeleted()));
+		builderStateLogger.log("To be updated: " + ensureNotNull(buildData.getToBeUpdated()));
+		builderStateLogger.log("URI queue: " + buildData.getURIQueue());
+		builderStateLogger.log("All remaining URIs: " + buildData.getAllRemainingURIs());
+		builderStateLogger.log(Strings.repeat("-", header.length()) + "\n");
 	}
 
 	@Override

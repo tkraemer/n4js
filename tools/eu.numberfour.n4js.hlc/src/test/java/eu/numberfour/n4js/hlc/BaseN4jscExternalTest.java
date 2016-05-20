@@ -87,11 +87,11 @@ public abstract class BaseN4jscExternalTest extends AbstractN4jscTest {
 	}
 
 	/**
-	 * Returns with a map of desired NPM package dependencies. Keys are the package identifier, values are the desired
+	 * Returns with a map of desired npm package dependencies. Keys are the package identifier, values are the desired
 	 * package versions. Values (versions), can be {@code null}. In such cases the version will not be specified for the
 	 * corresponding dependency. By default returns with an empty map.
 	 *
-	 * @return a map of NPM dependencies. Keys are package names, values are the package versions.
+	 * @return a map of npm dependencies. Keys are package names, values are the package versions.
 	 */
 	protected Map<String, String> getNpmDependencies() {
 		return emptyMap();
