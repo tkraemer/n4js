@@ -72,6 +72,7 @@ import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.scoping.builtin.ScopeInitializer;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerModificationStrategyProvider;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManualAssociationWizard;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetProjectNameFilterWizard;
 import eu.numberfour.n4js.utils.StatusHelper;
@@ -132,6 +133,7 @@ public class ContributingModule implements Module {
 		binder.bind(WorkingSetManagerBrokerImpl.class).in(SINGLETON);
 		binder.bind(WorkingSetManagerBroker.class).to(WorkingSetManagerBrokerImpl.class).in(SINGLETON);
 		binder.bind(WorkingSetManualAssociationWizard.class);
+		binder.bind(WorkingSetManagerModificationStrategyProvider.class);
 		binder.bind(WorkingSetProjectNameFilterWizard.class);
 		binder.bind(N4JSProjectExplorerLabelProvider.class);
 		binder.bind(N4JSProjectExplorerHelper.class);

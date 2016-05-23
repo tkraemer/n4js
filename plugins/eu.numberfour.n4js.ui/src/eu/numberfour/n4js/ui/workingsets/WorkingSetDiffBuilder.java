@@ -15,6 +15,8 @@ import static java.util.Collections.emptyMap;
 
 import java.util.function.Function;
 
+import com.google.common.collect.Iterables;
+
 import eu.numberfour.n4js.utils.Diff;
 import eu.numberfour.n4js.utils.DiffBuilder;
 
@@ -29,6 +31,16 @@ public class WorkingSetDiffBuilder extends DiffBuilder<WorkingSetManager, Workin
 	 */
 	public static final Diff<WorkingSet> EMPTY_DIFF = new Diff<>(
 			EMPTY_ARRAY, EMPTY_ARRAY, EMPTY_ARRAY, EMPTY_ARRAY, emptyMap(), EMPTY_ARRAY, EMPTY_ARRAY);
+
+	/**
+	 * Builds the difference based on the new items and all new items arguments. This is just a sugar for
+	 * {@link #build(WorkingSet[], WorkingSet[])} method.
+	 */
+	public Diff<WorkingSet> build(final Iterable<? extends WorkingSet> newItems,
+			final Iterable<? extends WorkingSet> newAllItems) {
+
+		return build(Iterables.toArray(newItems, WorkingSet.class), Iterables.toArray(newAllItems, WorkingSet.class));
+	}
 
 	/**
 	 * Creates a new diff builder instance with the given working set manager argument. The working set manager is used

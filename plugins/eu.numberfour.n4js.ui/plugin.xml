@@ -1033,6 +1033,9 @@ Contributors:
            <startup
                  class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.N4JSExternalLibraryStartup">
            </startup>
+           <startup
+                 class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.WorkingSetManagerStartup">
+           </startup>
         </extension>
         <extension
               point="eu.numberfour.n4js.ui.resourceDescriptionsPersisterContribution">

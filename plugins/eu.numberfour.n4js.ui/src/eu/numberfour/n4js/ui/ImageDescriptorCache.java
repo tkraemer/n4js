@@ -152,7 +152,7 @@ public enum ImageDescriptorCache {
 		 * image cannot be created from the image descriptor instance.
 		 *
 		 * <p>
-         * Do not dispose the returned image instance, as the resource is managed by the {@link ImageDescriptorCache}.
+		 * Do not dispose the returned image instance, as the resource is managed by the {@link ImageDescriptorCache}.
 		 *
 		 * @return the new image instance wrapped into an {@link Optional}. Can be {@link Optional#absent() missing} if
 		 *         the image reference cannot be created.

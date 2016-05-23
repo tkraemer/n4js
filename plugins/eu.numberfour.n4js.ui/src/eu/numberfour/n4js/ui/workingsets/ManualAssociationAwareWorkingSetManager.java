@@ -14,11 +14,15 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
+import static eu.numberfour.n4js.ui.workingsets.WorkingSetManagerModificationStrategy.RESOURCE_WORKING_SETS;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static org.eclipse.ui.PlatformUI.getWorkbench;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -27,7 +31,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.IWorkingSetManager;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -44,7 +52,9 @@ import eu.numberfour.n4js.utils.Diff;
  * Working set manager implementation for managing working sets that have been manually configured by picking and
  * associating workspace projects with one ore more working sets.
  */
-public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerImpl implements MutableWorkingSetManager {
+@SuppressWarnings("restriction")
+public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerImpl
+		implements MutableWorkingSetManager, IPropertyChangeListener {
 
 	private static final Logger LOGGER = Logger.getLogger(ManualAssociationAwareWorkingSetManager.class);
 
@@ -55,8 +65,19 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	 */
 	private final ProjectAssociation projectAssociations = new ProjectAssociation();
 
+	/**
+	 * Creates a new instance of the this working set manager. Registers itself to the Eclipse based
+	 * {@link IWorkingSetManager working set manager} to keep the content of this and that manager in sync.
+	 */
+	public ManualAssociationAwareWorkingSetManager() {
+		getWorkbench().getWorkingSetManager().addPropertyChangeListener(this);
+	}
+
 	@Inject
 	private Provider<WorkingSetManualAssociationWizard> wizardProvider;
+
+	@Inject
+	private WorkingSetManagerModificationStrategyProvider strategyProvider;
 
 	@Inject
 	private ObjectMapper mapper;
@@ -93,6 +114,8 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				return statusHelper.createError(message, e);
 			}
 
+			resetEclipseWorkingSetsBaseOnCurrentState();
+
 			return statusHelper.OK();
 		}
 
@@ -120,6 +143,7 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 			}
 
 			discardWorkingSetCaches();
+
 			return statusHelper.OK();
 
 		}
@@ -188,6 +212,69 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	protected void discardWorkingSetState() {
 		super.discardWorkingSetState();
 		projectAssociations.clear();
+	}
+
+	@Override
+	public void propertyChange(final PropertyChangeEvent event) {
+		strategyProvider.getStrategy(event).execute(this);
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		deleteEclipseResourcesWorkingSets();
+	}
+
+	/**
+	 * Resets the state of all Eclipse based working sets that belong to the 'Resources' type.
+	 */
+	private void resetEclipseWorkingSetsBaseOnCurrentState() {
+		try {
+			// Removed listener otherwise due to the Eclipse based working set deletion
+			// we would delete our content.
+			getWorkbench().getWorkingSetManager().removePropertyChangeListener(this);
+			deleteEclipseResourcesWorkingSets();
+			final IWorkingSetManager manager = getWorkbench().getWorkingSetManager();
+			for (final WorkingSet workingSet : getAllWorkingSets()) {
+				if (!OTHERS_WORKING_SET_ID.equals(workingSet.getId())) {
+					org.eclipse.ui.internal.WorkingSet eclipseWorkingSet = createEclipseWorkingSet(workingSet);
+					eclipseWorkingSet.setId(WorkingSetManagerModificationStrategy.RESOURCE_WORKING_SET_ID);
+					manager.addWorkingSet(eclipseWorkingSet);
+				}
+			}
+		} finally {
+			getWorkbench().getWorkingSetManager().addPropertyChangeListener(this);
+		}
+	}
+
+	private org.eclipse.ui.internal.WorkingSet createEclipseWorkingSet(final WorkingSet workingSet) {
+		final String name = workingSet.getName();
+		return new org.eclipse.ui.internal.WorkingSet(name, name, workingSet.getElements());
+	}
+
+	/**
+	 * Deletes all Eclipse based working sets that belong to the 'Resources' working set type.
+	 */
+	private void deleteEclipseResourcesWorkingSets() {
+		// Discard the Eclipse based working set manager state by deleting all 'Resources' working sets.
+		final Iterator<IWorkingSet> itr = getAllEclipseResourceWorkingSetsIterator();
+		final IWorkingSetManager manager = getWorkbench().getWorkingSetManager();
+		while (itr.hasNext()) {
+			final IWorkingSet next = itr.next();
+			manager.removeWorkingSet(next);
+		}
+	}
+
+	/**
+	 * Returns with an iterator of all existing Eclipse based {@link IWorkingSet working sets} that belong to the
+	 * 'Resources' type. Includes all visible and hidden working sets.
+	 *
+	 * @return an iterator to all Eclipse based working sets form the 'Resources' type.
+	 */
+	private Iterator<IWorkingSet> getAllEclipseResourceWorkingSetsIterator() {
+		final IWorkingSetManager manager = getWorkbench().getWorkingSetManager();
+		final Iterable<IWorkingSet> allWorkingSets = asList(manager.getAllWorkingSets());
+		return from(allWorkingSets).filter(RESOURCE_WORKING_SETS).iterator();
 	}
 
 	/**
