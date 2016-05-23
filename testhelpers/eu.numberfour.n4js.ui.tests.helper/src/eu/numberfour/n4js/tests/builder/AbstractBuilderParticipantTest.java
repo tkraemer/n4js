@@ -43,8 +43,12 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.IDirtyStateManager;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.resource.IResourceSetProvider;
+import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
+import org.eclipse.xtext.validation.CheckMode;
+import org.eclipse.xtext.validation.IResourceValidator;
+import org.eclipse.xtext.validation.Issue;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
@@ -229,7 +233,9 @@ public abstract class AbstractBuilderParticipantTest extends AbstractBuilderTest
 		return ProjectUtils.assertMarkers(assertMessage, resource, markerType, count);
 	}
 
-	/***/
+	/**
+	 * Will only return parse errors, not validation errors!
+	 */
 	protected List<Resource.Diagnostic> getEditorErrors(XtextEditor fileXtextEditor) {
 		return fileXtextEditor.getDocument().readOnly(new IUnitOfWork<List<Diagnostic>, XtextResource>() {
 
@@ -237,6 +243,19 @@ public abstract class AbstractBuilderParticipantTest extends AbstractBuilderTest
 			public List<Resource.Diagnostic> exec(XtextResource state) throws Exception {
 				EcoreUtil.resolveAll(state);
 				return state.getErrors();
+			}
+		});
+	}
+
+	/**
+	 * Returns validation errors in given Xtext editor.
+	 */
+	protected List<Issue> getEditorValidationErrors(XtextEditor editor) {
+		return editor.getDocument().readOnly(new IUnitOfWork<List<Issue>, XtextResource>() {
+			@Override
+			public List<Issue> exec(XtextResource state) throws Exception {
+				final IResourceValidator validator = state.getResourceServiceProvider().getResourceValidator();
+				return validator.validate(state, CheckMode.ALL, CancelIndicator.NullImpl);
 			}
 		});
 	}

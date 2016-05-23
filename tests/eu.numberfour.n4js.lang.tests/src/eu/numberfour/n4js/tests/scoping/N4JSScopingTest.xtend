@@ -442,7 +442,7 @@ class N4JSScopingTest {
 				  </topLevelTypes>
 				</types:TModule>
 			'''.toString,
-			UserdataMapper.getDeserializedModulesFromDescriptionAsString(eoDescs.head, supplierResource.URI));
+			UserdataMapper.getDeserializedModuleFromDescriptionAsString(eoDescs.head, supplierResource.URI));
 
 		rs.resources.forEach[it.unload];
 
