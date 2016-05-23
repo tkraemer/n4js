@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.QualifiedName
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * Calculates the fully qualified name for the passed in objects.
@@ -107,9 +108,8 @@ class N4JSQualifiedNameProvider extends N4TSQualifiedNameProvider {
 	}
 	private def QualifiedName fqnTypeDeclaration(N4TypeDeclaration typeDecl) {
 		var prefix = typeDecl.rootContainer.fullyQualifiedName;
-		if (AnnotationDefinition.POLYFILL.hasAnnotation(typeDecl)
-			|| AnnotationDefinition.STATIC_POLYFILL.hasAnnotation(typeDecl)
-		) {
+		if ( typeDecl.isPolyfill || typeDecl.isStaticPolyfill )
+		{
 			prefix = append(prefix, POLYFILL_SEGMENT);
 		}
 		val fqn = append(prefix, typeDecl.exportedName ?: typeDecl.name);

@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.utils;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -18,6 +20,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -125,8 +128,7 @@ public class EcoreUtilN4 {
 			if (obj instanceof EObject) {
 				oldDeliver[i] = ((EObject) obj).eDeliver();
 				((EObject) obj).eSetDeliver(deliver);
-			}
-			else if (obj instanceof Resource) {
+			} else if (obj instanceof Resource) {
 				oldDeliver[i] = ((Resource) obj).eDeliver();
 				((Resource) obj).eSetDeliver(deliver);
 			}
@@ -140,8 +142,7 @@ public class EcoreUtilN4 {
 				final Object obj = eObjects[i];
 				if (obj instanceof EObject) {
 					((EObject) obj).eSetDeliver(oldDeliver[i]);
-				}
-				else if (obj instanceof Resource) {
+				} else if (obj instanceof Resource) {
 					((Resource) obj).eSetDeliver(oldDeliver[i]);
 				}
 			}
@@ -173,9 +174,66 @@ public class EcoreUtilN4 {
 	 * Returns an empty tree iterator.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> TreeIterator<T> emptyTreeIterator()
-	{
+	public static <T> TreeIterator<T> emptyTreeIterator() {
 		return (TreeIterator<T>) EMPTY_TREE_ITERATOR;
+	}
+
+	/**
+	 * Interface for handlers that perform some functionality on proxies (one at a time).
+	 */
+	public static interface ProxyHandler {
+		/**
+		 * Will be invoked for each proxy.
+		 */
+		public void handle(InternalEObject source, EReference eReference, BasicEObjectImpl targetProxy);
+	}
+
+	private static final class ProxyTraverser extends EcoreUtil.ProxyCrossReferencer {
+
+		private final ProxyHandler handler;
+
+		private ProxyTraverser(Collection<?> emfObjects, ProxyHandler handler) {
+			super(emfObjects);
+			this.handler = handler;
+		}
+
+		/**
+		 * Will be called by super class once for each proxy. Super class will ensure that
+		 * <code>crossReferencedEObject</code> is a proxy.
+		 */
+		@Override
+		protected void add(InternalEObject eObject, EReference eReference, EObject crossReferencedEObject) {
+			handler.handle(eObject, eReference, (BasicEObjectImpl) crossReferencedEObject);
+		}
+
+		private void handleProxyCrossReferences() {
+			findProxyCrossReferences();
+		}
+	}
+
+	/** Apply given proxy handler to all proxies in the given resource set. Nothing will be resolved. */
+	public static final void handleProxyCrossReferences(ResourceSet resourceSet, ProxyHandler handler) {
+		new ProxyTraverser(Collections.singleton(resourceSet), handler).handleProxyCrossReferences();
+	}
+
+	/** Apply given proxy handler to all proxies in the given resource. Nothing will be resolved. */
+	public static final void handleProxyCrossReferences(Resource resource, ProxyHandler handler) {
+		new ProxyTraverser(Collections.singleton(resource), handler).handleProxyCrossReferences();
+	}
+
+	/** Apply given proxy handler to all proxies in the given object and its contents. Nothing will be resolved. */
+	public static final void handleProxyCrossReferences(EObject root, ProxyHandler handler) {
+		new ProxyTraverser(Collections.singleton(root), handler).handleProxyCrossReferences();
+	}
+
+	/**
+	 * Apply given proxy handler to all proxies in the given EMF objects. Nothing will be resolved.
+	 *
+	 * @param roots
+	 *            must be "EMF objects", i.e. one of ResourceSet, Resource, or EObject.
+	 */
+	public static final void convertProxyCrossReferences(Collection<?> roots, ProxyHandler handler) {
+		new ProxyTraverser(roots, handler).handleProxyCrossReferences();
 	}
 
 	/**

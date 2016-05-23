@@ -10,14 +10,13 @@
  */
 package eu.numberfour.n4js.tests.typesbuilder.extensions
 
+import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.resource.UserdataMapper
 import eu.numberfour.n4js.tests.typesbuilder.utils.OrderedEmfFormatter
+import eu.numberfour.n4js.ts.types.TModule
 import org.eclipse.xtext.resource.IEObjectDescription
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.resource.N4JSResource
-import org.eclipse.emf.ecore.EObject
-import java.util.List
 
 /**
  */
@@ -26,14 +25,14 @@ class UserdataAssertionsExtension {
 	def assertSerializedUserdata(Iterable<IEObjectDescription> eoDescs, CharSequence expectedTypesSerialization, boolean enableUserDataCompare, N4JSResource resource) {
 		val syntaxEoDesc = eoDescs.head;
 		
-		val List<EObject> fromUserData = UserdataMapper.getDeserializedModulesFromDescription(syntaxEoDesc,resource.URI)
+		val fromUserData = UserdataMapper.getDeserializedModuleFromDescription(syntaxEoDesc,resource.URI)
 		
 		if(enableUserDataCompare) {
 			compareUserData(syntaxEoDesc, fromUserData, expectedTypesSerialization.toString)
 		}
 	}
 
-	def compareUserData(IEObjectDescription syntaxEoDesc, List<EObject> fromUserData, String expectedTypesSerialization) {
-		assertEquals("Stored user data " + syntaxEoDesc, expectedTypesSerialization, OrderedEmfFormatter.objToStr(fromUserData.head))
+	def compareUserData(IEObjectDescription syntaxEoDesc, TModule fromUserData, String expectedTypesSerialization) {
+		assertEquals("Stored user data " + syntaxEoDesc, expectedTypesSerialization, OrderedEmfFormatter.objToStr(fromUserData))
 	}
 }
