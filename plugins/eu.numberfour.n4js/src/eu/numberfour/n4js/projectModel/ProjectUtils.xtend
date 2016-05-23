@@ -288,18 +288,20 @@ public class ProjectUtils {
 	/** For a given N4JSResource annotated with {@code @@StaticPolyfillAware} lookup the filling Module.
 	 * returns {@code true} if the filling Module exists in the project.
 	 */
-	@Deprecated
 	def boolean hasStaticPolyfill(Resource res) {
 		// ensure right resource
 		if( res instanceof N4JSResource ) {
 			if ( res.script.isContainedInStaticPolyfillAware ) {
 
 
-				// TODO IDE-1735 two strategies are possible:
-				// 1. query index
+				// TODO GH-196 resolve inconsistency in logic between this method and #findStaticPolyfiller(Resource)
+				// (i.e. if possible, delete strategy #1 and only use strategy #2; but make sure this isn't a
+				// performance issue, esp. with respect to the call "srcConti.findArtifact(fqn, fileExtension)" in
+				// #findStaticPolyfiller(Resource))
 				var boolean strategyIndex = true;
 
 				if( strategyIndex ) {
+					// 1. query index
 					val QualifiedName qnFilled = qualifiedNameConverter.toQualifiedName(res.module.qualifiedName);
 					val index = indexAccess.getResourceDescriptions(res.resourceSet);
 					val optQnFilling = N4TSQualifiedNameProvider.toStaticPolyfillFQN(qnFilled);
