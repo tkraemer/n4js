@@ -20,7 +20,7 @@ N4JS helps Node.js developers to use third-party npm packages with support both 
 required packages can be downloaded and installed on-demand into the IDE via the library manager and this feature is also
 supported in the headless tooling.
 
-image::quickfixNpmInstall.png[]
+image::quickfixnpminstall.png[]
 
 === Dynamic Import
 

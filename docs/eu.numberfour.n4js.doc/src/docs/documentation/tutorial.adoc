@@ -75,7 +75,7 @@ application. In order to keep this example small, we will use only one project.
 The "New N4JS Project" wizard can be accessed at menu:File[New, N4JS Project] (Or using the
 keyboard shortcuts kbd:[{commandkey} + n] for Mac, kbd:[Alt+Shift+n] on Windows)
 
-image::newProjectWizard.png[New Project Wizard, 700]
+image::newprojectwizard.png[New Project Wizard, 700]
 
 When we select btn:[Finish], a new project folder is created with the following content:
 
@@ -99,7 +99,7 @@ We will begin by defining Task which is extended by Appointment and Todo.
 In our new N4JS project, we can begin creating our entities. The easiest way to
 complete this is to utilize the New N4JS Class wizard, accessed at menu:File[New,N4JS Class]
 
-image::newClassWizard.png[, 700]
+image::newclasswizard.png[, 700]
 
 N4JS supports modules introduced by ECMAScript 2015. A module contains functions,
 classes and other declarations and code. The declared elements can be exported
@@ -413,12 +413,12 @@ We then launch this module with Node.js. The easiest way to do that is with the 
 (accessed by right-clicking in the editor) and selecting "Launch in Node.js". as shown in the
 following screenshot:
 
-image::firstLaunch.png[]
+image::firstlaunch.png[]
 
 This will run the module currently opened in the editor. The output will be printed to the console
 view, for example
 
-image::firstLaunchConsole.png[]
+image::firstlaunchconsole.png[]
 
 == Extend Entities with Spec-Constructor
 
@@ -558,11 +558,11 @@ export public interface Storage {
 Adding "async" to the size method and without adding the "await" keyword, you will get a
 warning in method `isEmpty` similar to the following:
 
-image::awaitWarning.png[]
+image::awaitwarning.png[]
 
 You will also get a lot of other errors in other files:
 
-image::asyncErrors.png[]
+image::asyncerrors.png[]
 
 Without an async/await and type aware IDE you probably would have missed one or the other of these errors.
 We can easily fix that by simply adding `async` to all the indicated methods.
@@ -614,7 +614,7 @@ restructure or rewrite your code specifically to run tests.
 Since we use a tier architecture, it is quite easy to add a test: We simply replace one tier with
 appropriate tests:
 
-image::controllerTest.svg[]
+image::controllertest.svg[]
 
 
 === Testing
@@ -622,7 +622,7 @@ image::controllerTest.svg[]
 Since we do not want to mix up the application with the tests, we create a new project. We use the new
 project wizard
 
-image::createTestProject.png[]
+image::createtestproject.png[]
 
 We adjust the `manifest.n4mf` accordingly:
 
@@ -686,12 +686,12 @@ We can run the test via the IDE. This works similar to launching the code with N
 context menu. The IDE will detect a test and it will automatically add the correct menu entry to the context
 menu:
 
-image::testInNodejs.png[]
+image::testinnodejs.png[]
 
 This will run the test and the test view will show the result of the first test:
 
 
-image::firstTestResults.png[]
+image::firsttestresults.png[]
 
 
 == Storage using MongoDB
@@ -715,7 +715,7 @@ ProjectDependencies {
 }
 ----
 
-image::quickfixNPMinstall.png[]
+image::quickfixnpminstall.png[]
 
 The quick-fix will automatically download all required npm packages, that is mongodb and all its
 dependencies. We can now use mongodb from our N4JS code.
@@ -939,7 +939,7 @@ export public class TaskManagerTest {
 The IDE helps us in finding problems: since the TaskManager class uses injection to get the storage field,
 it needs to be injected itself. The IDE warns us in the TaskManagerTest class:
 
-image::injectionWarning.png[]
+image::injectionwarning.png[]
 
 This is hard to find but easy to fix: We just have to replace the initalizer with an `@Inject` annotation.
 
@@ -1276,7 +1276,7 @@ to define more https://docs.npmjs.com/files/package.json[specifics in the packag
 are not covered by the N4JS export wizard.
 
 
-image::npmExport.png[]
+image::npmexport.png[]
 
 == Run from command line with Node.js
 
