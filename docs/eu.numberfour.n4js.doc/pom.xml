@@ -161,14 +161,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>src/</sourceDirectory>
+                            <sourceDirectory>src/epub/</sourceDirectory>
                             <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
                             <preserveDirectories>false</preserveDirectories> 
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
                                 <imagesdir>images</imagesdir>
-                                <toc>left</toc>
+                                <doctype>book</doctype>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
