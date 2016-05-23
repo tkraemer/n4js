@@ -153,7 +153,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
-<!-- EPUB format currently breaking for lack of "references"     
+                    <!-- Begin EPUB Generation of User Guides -->
                     <execution>
                         <id>asciidoc-to-epub</id>
                         <phase>generate-resources</phase>
@@ -165,7 +165,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
-                                <imagesdir>fig</imagesdir>
+                                <imagesdir>images</imagesdir>
                                 <toc>left</toc>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
@@ -175,7 +175,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
--->
+
                     <!-- Begin PDF Generation of User Guides -->
                     <execution> 
                         <id>asciidoc-to-pdf</id> 
