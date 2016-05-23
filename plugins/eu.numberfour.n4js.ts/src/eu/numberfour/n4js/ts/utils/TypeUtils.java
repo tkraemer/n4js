@@ -522,15 +522,25 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Checks if the given objects contains a {@link DeferredTypeRef} and, if so, throws an exception.
+	 * Tells if the given object contains a {@link DeferredTypeRef}.
 	 */
-	public static void assertNoDeferredTypeRefs(EObject object) {
+	public static boolean containsDeferredTypeRefs(EObject object) {
 		final Iterator<EObject> i = object.eAllContents();
 		while (i.hasNext()) {
 			Object local = i.next();
 			if (local instanceof DeferredTypeRef) {
-				throw new IllegalStateException("found a DeferredTypeRef in " + object.eResource().getURI());
+				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the given object contains a {@link DeferredTypeRef} and, if so, throws an exception.
+	 */
+	public static void assertNoDeferredTypeRefs(EObject object) {
+		if (containsDeferredTypeRefs(object)) {
+			throw new IllegalStateException("found a DeferredTypeRef in " + object.eResource().getURI());
 		}
 	}
 

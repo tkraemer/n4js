@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.util.CancelIndicator;
 
 import com.google.inject.Inject;
@@ -28,6 +29,7 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.utils.UtilN4;
 
 /**
  * Performs post-processing of N4JS resources. Main responsibilities are proxy resolution, types model creation, and
@@ -54,17 +56,37 @@ public class N4JSPostProcessor implements PostProcessor {
 
 	@Override
 	public void performPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
-		final N4JSResource resCasted = (N4JSResource) resource;
-		astProcessor.processAST(resCasted, cancelIndicator);
 		try {
-			exposeReferencedInternalTypes(resCasted); // FIXME move this somewhere else?
+			doPerformPostProcessing(resource, cancelIndicator);
+		} catch (Throwable th) {
+			// make sure this error is being reported, even if exception will be suppressed up by calling code!
+			throw UtilN4.reportError(
+					// use Error instead of RuntimeException to ensure smoke tests will fail
+					new RuntimeException("exception while post-processing resource " + resource.getURI(), th));
+		}
+	}
+
+	private void doPerformPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
+		final N4JSResource resCasted = (N4JSResource) resource;
+		// step 1: process the AST (resolve all proxies in AST, infer type of all typable AST nodes, etc.)
+		astProcessor.processAST(resCasted, cancelIndicator);
+		// step 2: expose internal types visible from outside
+		// (i.e. if they are referenced from a type that is visible form the outside)
+		try {
+			exposeReferencedInternalTypes(resCasted);
 		} catch (Throwable ex) {
 			if (resource.getErrors().isEmpty()) {
 				throw ex;
 			}
 			// swallow exception, AST is broken due to parse error anyway
 		}
-
+		// step 3: resolve remaining proxies in TModule
+		// (the TModule was created programmatically, so it usually does not contain proxies; however, in case of
+		// explicitly declared types, the types builder copies type references from the AST to the corresponding
+		// TModule element *without* resolving proxies, so the TModule might contain lazy-cross-ref proxies; most of
+		// these should have been resolved during AST traversal and exposing internal types, but some can be left)
+		final TModule module = resCasted.getModule();
+		EcoreUtil.resolveAll(module);
 	}
 
 	/**
@@ -122,7 +144,7 @@ public class N4JSPostProcessor implements PostProcessor {
 			final EObject rootFinal = root;
 			EcoreUtilN4.doWithDeliver(false, () -> {
 				module.getExposedInternalTypes().add((Type) rootFinal);
-			} , module, root); // note: root already contained in resource, so suppress notifications also in root!
+			}, module, root); // note: root already contained in resource, so suppress notifications also in root!
 		}
 	}
 }

@@ -48,6 +48,7 @@ import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.validation.JavaScriptVariant.*
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * Annotation validation rules for N4JS.
@@ -326,7 +327,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		val Script script = element as Script
 
 		// mutual exclusive with poly-fill aware.
-		if( STATIC_POLYFILL_AWARE.hasAnnotation(script) ) {
+		if( script.isContainedInStaticPolyfillAware ) {
 			addIssue( messageForANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE, annotation, ANNOTATION__NAME, ANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE )
 			return
 		}
@@ -382,7 +383,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		// inside a static-polyfill module (IDE-1735)
-		if( ! STATIC_POLYFILL_MODULE.hasAnnotation(element) ) { //transitively inherited
+		if( ! element.isContainedInStaticPolyfillModule ) { //transitively inherited
 			// not in a polyfill-module
 			addIssue( messageForANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE, annotation, ANNOTATION__NAME, ANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE )
 			return

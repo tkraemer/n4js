@@ -13,6 +13,7 @@ package eu.numberfour.n4js.utils;
 import static eu.numberfour.n4js.scoping.members.TMemberEntry.MemberSource.INHERITED;
 import static eu.numberfour.n4js.scoping.members.TMemberEntry.MemberSource.MIXEDIN;
 import static eu.numberfour.n4js.scoping.members.TMemberEntry.MemberSource.OWNED;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isContainedInStaticPolyfillAware;
 import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.scoping.members.TMemberEntry;
@@ -686,7 +686,7 @@ public class ContainerTypesHelper {
 									polyFill -> TypeUtils.createTypeRef(polyFill)).collect(Collectors.toList());
 						}
 					}
-					if (isStaticPolyfillAware(filledType) // static-polyfilled work as well
+					if (isContainedInStaticPolyfillAware(filledType) // static-polyfilled work as well
 					) {
 						QualifiedName qn = N4TSQualifiedNameProvider.getStaticPolyfillFQN(tClassifier,
 								qualifiedNameProvider);
@@ -702,17 +702,6 @@ public class ContainerTypesHelper {
 				}
 				return Collections.emptyList();
 			}
-		}
-
-		/**
-		 * Helper checking for annotation {@code @StaticPolyfillAware}
-		 *
-		 * @param t
-		 *            type to check
-		 * @return true if present.
-		 */
-		private boolean isStaticPolyfillAware(Type t) {
-			return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation(t);
 		}
 
 		private class AllMembersCollector extends AbstractMemberCollector<MemberList<TMember>> {

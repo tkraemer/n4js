@@ -13,7 +13,6 @@ package eu.numberfour.n4js.projectModel
 import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.conversion.ValueConverters
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
@@ -40,6 +39,7 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
 
 /**
  * Provides utilities for generating resource (file or module) descriptors that are based on containing project and its properties.
@@ -71,7 +71,7 @@ public class ProjectUtils {
 	 * @fileExtension String with containing project info (a.k.a. origin)
 	 */
 	def generateProjectDescriptor(URI n4jsSourceURI) {
-		formatDescriptor(n4jsSourceURI.resolveProject, "", "-", ".", "", false)
+		formatDescriptor(n4jsSourceURI.resolveProject, "", "-", ".", "", false);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class ProjectUtils {
 	 */
 	def generateFileDescriptor(URI n4jsSourceURI, String fileExtension) {
 		formatDescriptor(n4jsSourceURI.resolveProject, n4jsSourceURI.resolvePackageAndFileName, "-", ".", "/", false) +
-			fileExtension
+			fileExtension;
 	}
 
 	/**
@@ -104,48 +104,48 @@ public class ProjectUtils {
 	 */
 	def public final static String formatDescriptor(IN4JSProject project, String unitPath, String sep1, String sep2,
 		String sep3, boolean includeProjectVersion) {
-		if(includeProjectVersion) {
-			project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath
-		} else {
-			project.projectName + sep3 + unitPath
-		}
+		return if(includeProjectVersion) {
+					project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath;
+				} else {
+					project.projectName + sep3 + unitPath;
+				};
 	}
 	def public final static formatDescriptor(ProjectDescription project, String unitPath, String sep1, String sep2,
 		String sep3) {
-		project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath
+		return project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath;
 	}
 
 	def public final formatDescriptorAsIdentifier(IN4JSProject project, String unitPath, String sep1, String sep2,
 		String sep3, boolean includeProjectVersion) {
-		if(includeProjectVersion) {
-			project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath.getValidUnitPath
-		} else {
-			project.projectName.getValidJavascriptIdentifierName + sep3 + unitPath.getValidUnitPath
-		}
+		return if(includeProjectVersion) {
+					project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath.getValidUnitPath;
+				} else {
+					project.projectName.getValidJavascriptIdentifierName + sep3 + unitPath.getValidUnitPath;
+				}
 	}
 	def public final formatDescriptorAsModuleParameterName(ProjectDescription project, String unitPath, String sep1, String sep2,
 		String sep3) {
-		project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath.getValidUnitPath
+		return project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath.getValidUnitPath;
 	}
 
 	public def String getValidUnitPath(String unitPath) {
-		unitPath.split('/').map[getValidJavascriptIdentifierName].join('/')
+		return unitPath.split('/').map[getValidJavascriptIdentifierName].join('/');
 	}
 
 	public def String getValidJavascriptIdentifierName(String moduleSpecifier) {
 		try {
 			return valueConverter.toValue(moduleSpecifier, null);
 		} catch (Exception e) {
-			val string = "at position "
-			val message = e.getMessage
-			val index = message.indexOf(string)
+			val string = "at position ";
+			val message = e.getMessage;
+			val index = message.indexOf(string);
 			if (index > 0) {
-				val numberStr = message.substring(index + string.length, e.getMessage.length - 1)
-				val number = Integer.valueOf(numberStr)
-				val chars = moduleSpecifier.toCharArray
-				val charAtPos = chars.get(number - 1)
+				val numberStr = message.substring(index + string.length, e.getMessage.length - 1);
+				val number = Integer.valueOf(numberStr);
+				val chars = moduleSpecifier.toCharArray;
+				val charAtPos = chars.get(number - 1);
 				val newModuleSpecifier = moduleSpecifier.substring(0, number - 1) +
-						charAtPos.toUnicode + moduleSpecifier.substring(number)
+						charAtPos.toUnicode + moduleSpecifier.substring(number);
 				return getValidJavascriptIdentifierName(newModuleSpecifier);
 			}
 			return moduleSpecifier;
@@ -153,7 +153,7 @@ public class ProjectUtils {
 	}
 
 	def private toUnicode(char charAtPos) {
-		"_u" + Integer.toHexString(charAtPos.bitwiseOr(0x10000)).substring(1)
+		return "_u" + Integer.toHexString(charAtPos.bitwiseOr(0x10000)).substring(1);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class ProjectUtils {
 			throw new RuntimeException('''Cannot locate source container for module «uri.lastSegment».«details»''');
 		}
 
-		uri.deresolve(optionalSourceContainer.get.location.appendSegment('')).trimFileExtension.toString
+		return uri.deresolve(optionalSourceContainer.get.location.appendSegment('')).trimFileExtension.toString;
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class ProjectUtils {
 	 * returns the project relative path to the folder where the generated files should be placed
 	 */
 	def getOutputPath(URI uri) {
-		n4jsCore.getOutputPath(uri)
+		return n4jsCore.getOutputPath(uri);
 	}
 
 	/**
@@ -211,38 +211,37 @@ public class ProjectUtils {
 	 * returns true if for the given URI module wrapping is enabled
 	 */
 	def isModuleWrappingEnabled(URI n4jsSourceURI) {
-		return !n4jsCore.isNoModuleWrapping(n4jsSourceURI)
+		return !n4jsCore.isNoModuleWrapping(n4jsSourceURI);
 	}
 
 	def isSource(URI n4jsSourceURI) {
-		n4jsCore.findN4JSSourceContainer(n4jsSourceURI).present
+		return n4jsCore.findN4JSSourceContainer(n4jsSourceURI).present;
 	}
 
 	/**
 	 * returns true if for the given URI module validation is disabled
 	 */
 	def isNoValidate(URI n4jsSourceURI) {
-		n4jsCore.isNoValidate(n4jsSourceURI)
+		return n4jsCore.isNoValidate(n4jsSourceURI);
 	}
 
 	/**
 	 * returns true if the given URI points to an external implementation
 	 */
 	def isExternal(URI n4jsSourceURI) {
-		val sourceContainerOpt = n4jsCore.findN4JSSourceContainer(n4jsSourceURI)
+		val sourceContainerOpt = n4jsCore.findN4JSSourceContainer(n4jsSourceURI);
 		if(sourceContainerOpt.present) {
-			val sourceContainer = sourceContainerOpt.get
-			return sourceContainer.external
-
+			val sourceContainer = sourceContainerOpt.get;
+			return sourceContainer.external;
 		}
-		return false
+		return false;
 	}
 
 	/**
 	 * Same as {@link IN4JSProject#getInitModules()}, but returns the initialization modules as URIs.
 	 */
 	def List<URI> getInitModulesAsURIs(IN4JSProject project) {
-		return project.initModules.map[BootstrapModule bm|findArtifact(project, bm.moduleSpecifierWithWildcard, Optional.of(".js"))].filterNull.toList
+		return project.initModules.map[BootstrapModule bm|findArtifact(project, bm.moduleSpecifierWithWildcard, Optional.of(".js"))].filterNull.toList;
 	}
 
 	/**
@@ -279,9 +278,9 @@ public class ProjectUtils {
 
 	/** Checking if the given n4jsSourceUri is part of a project implementing a API definition */
 	def boolean isApiImplementation(URI n4jsSourceUri) {
-		val project = n4jsCore.findProject(n4jsSourceUri)
+		val project = n4jsCore.findProject(n4jsSourceUri);
 		if( project.present ) {
-			return project.get.implementationId.isPresent
+			return project.get.implementationId.isPresent;
 		}
 		return false;
 	}
@@ -289,26 +288,28 @@ public class ProjectUtils {
 	/** For a given N4JSResource annotated with {@code @@StaticPolyfillAware} lookup the filling Module.
 	 * returns {@code true} if the filling Module exists in the project.
 	 */
-	@Deprecated
 	def boolean hasStaticPolyfill(Resource res) {
 		// ensure right resource
 		if( res instanceof N4JSResource ) {
-			if (AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation(res.script)) {
+			if ( res.script.isContainedInStaticPolyfillAware ) {
 
 
-				// TODO IDE-1735 two strategies are possible:
-				// 1. query index
+				// TODO GH-196 resolve inconsistency in logic between this method and #findStaticPolyfiller(Resource)
+				// (i.e. if possible, delete strategy #1 and only use strategy #2; but make sure this isn't a
+				// performance issue, esp. with respect to the call "srcConti.findArtifact(fqn, fileExtension)" in
+				// #findStaticPolyfiller(Resource))
 				var boolean strategyIndex = true;
 
 				if( strategyIndex ) {
-					val QualifiedName qnFilled = qualifiedNameConverter.toQualifiedName(res.module.qualifiedName)
-					val index = indexAccess.getResourceDescriptions(res.resourceSet)
-					val optQnFilling = N4TSQualifiedNameProvider.toStaticPolyfillFQN(qnFilled)
+					// 1. query index
+					val QualifiedName qnFilled = qualifiedNameConverter.toQualifiedName(res.module.qualifiedName);
+					val index = indexAccess.getResourceDescriptions(res.resourceSet);
+					val optQnFilling = N4TSQualifiedNameProvider.toStaticPolyfillFQN(qnFilled);
 					if( optQnFilling.isPresent )
 					{
 						val qnFilling = optQnFilling.get;
 
-						val modules = index.getExportedObjectsByType(TypesPackage.Literals.TMODULE)
+						val modules = index.getExportedObjectsByType(TypesPackage.Literals.TMODULE);
 						for( module:modules ) {
 							if ( module.qualifiedName == qnFilling ) {
 								return true;
@@ -317,8 +318,8 @@ public class ProjectUtils {
 					}
 				} else {
 					// 2. query all source-containers for file with same QN
-					var fillingURI = findStaticPolyfiller(res)
-					if( null !== fillingURI) return true
+					var fillingURI = findStaticPolyfiller(res);
+					if( null !== fillingURI) return true;
 				}
 			}
 		}
@@ -331,13 +332,13 @@ public class ProjectUtils {
 	def URI findStaticPolyfiller(Resource res) {
 				// ensure right resource
 		if( res instanceof N4JSResource ) {
-			if (! AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation(res.script)) return null;
+			if (! res.script.isContainedInStaticPolyfillAware ) return null;
 
-			val QualifiedName qnFilled = qualifiedNameConverter.toQualifiedName(res.module.qualifiedName)
-			val project = resolveProject(res.URI)
+			val QualifiedName qnFilled = qualifiedNameConverter.toQualifiedName(res.module.qualifiedName);
+			val project = resolveProject(res.URI);
 			val fqn = qnFilled;
-			val fileExtension = Optional.of( N4JSGlobals.N4JS_FILE_EXTENSION )
-			val filledSrcContainer = n4jsCore.findN4JSSourceContainer(res.URI ).get
+			val fileExtension = Optional.of( N4JSGlobals.N4JS_FILE_EXTENSION );
+			val filledSrcContainer = n4jsCore.findN4JSSourceContainer(res.URI ).get;
 			for (IN4JSSourceContainer srcConti : project.sourceContainers) {
 				if( filledSrcContainer != srcConti) {
 					val uri = srcConti.findArtifact(fqn, fileExtension);
@@ -355,11 +356,11 @@ public class ProjectUtils {
 	 * Returns the filling resource if any or {@code null}
 	 */
 	def N4JSResource getStaticPolyfillResource(Resource res){
-		val uri = res?.findStaticPolyfiller
+		val uri = res?.findStaticPolyfiller;
 		if( null !== uri ) {
-			return res.resourceSet.getResource( uri , true ) as N4JSResource
+			return res.resourceSet.getResource( uri , true ) as N4JSResource;
 		}
-		return null
+		return null;
 	}
 
 	/**
@@ -378,7 +379,7 @@ public class ProjectUtils {
 	def N4ClassDeclaration getStaticPolyfill(N4JSResource fillingResource, Type type) {
 		if( type instanceof TClass )
 		{
-			val scriptFiller = fillingResource?.scriptResolved
+			val scriptFiller = fillingResource?.scriptResolved;
 			if( null !== scriptFiller )
 			{
 				val staticPolyfiller = EcoreUtil2.getAllContentsOfType(scriptFiller, N4ClassDeclaration).filter[
@@ -386,10 +387,10 @@ public class ProjectUtils {
 					&& 	it.superClassRef.declaredType == type // extends this class explicitly
 				].head;
 
-				return staticPolyfiller
+				return staticPolyfiller;
 			}
 		}
-		return null
+		return null;
 	}
 
 	/**
@@ -402,20 +403,21 @@ public class ProjectUtils {
 	 */
 	def public boolean isDescriptionOfModuleWith(IEObjectDescription eoDescription, EObject eObject) {
 		//check if module names are the same
-		val eobjectModuleName = EcoreUtil2.getContainerOfType(eObject, Script).module.qualifiedName
+		val eobjectModuleName = EcoreUtil2.getContainerOfType(eObject, Script).module.qualifiedName;
 		if (!eobjectModuleName.equals(qualifiedNameConverter.toString(eoDescription.qualifiedName))) {
-			return false
+			return false;
 		}
 
 		//check if  not a main module, assume true
-		val mainModuelUserData = eoDescription.getUserData(N4JSResourceDescriptionStrategy.MAIN_MODULE_KEY)
+		val mainModuelUserData = eoDescription.getUserData(N4JSResourceDescriptionStrategy.MAIN_MODULE_KEY);
 		if (mainModuelUserData === null || !Boolean.getBoolean(mainModuelUserData)) {
 			return true;
 		}
 
 		//for main modules we check containing project
-		val targetProject = n4jsCore.findProject(eoDescription.EObjectURI).orNull
-		val currentProject = n4jsCore.findProject(eObject.eResource.URI).orNull
-		targetProject == currentProject
+		val targetProject = n4jsCore.findProject(eoDescription.EObjectURI).orNull;
+		val currentProject = n4jsCore.findProject(eObject.eResource.URI).orNull;
+		
+		return	targetProject == currentProject;
 	}
 }
