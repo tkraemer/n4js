@@ -1,0 +1,8 @@
+= N4JS Documentation
+
+
+include::{includesdir}/ide-setup.adoc[]
+
+include::{includesdir}/npm-export-guide.adoc[]
+
+include::{includesdir}/tutorial.adoc[]

@@ -1,44 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<artifactId>eu.numberfour.n4js.doc</artifactId>
-<packaging>eclipse-plugin</packaging>
-<description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>eu.numberfour.n4js.doc</artifactId>
+    <packaging>eclipse-plugin</packaging>
+    <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>1.5.4</asciidoctorj.version>
+        <jruby.version>1.7.21</jruby.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
+        <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        
+        <eclipse.html>eclipse-html</eclipse.html>
+        <website.html>website-html</website.html>
+        <epub.dir>epub</epub.dir>
+        <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
+        <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
+        <help.pages.list>help-pages.txt</help.pages.list>
+        
+    </properties>
+    
+    <parent>
+        <groupId>eu.numberfour.n4js</groupId>
+        <artifactId>eu.numberfour.n4js.docs</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>bintray.jmini.maven</id>
+            <url>http://dl.bintray.com/jmini/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
-<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
-    <asciidoctorj.version>1.5.4</asciidoctorj.version>
-    <jruby.version>1.7.21</jruby.version>
-    <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
-    <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
-    <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-</properties>
-
-<parent>
-    <groupId>eu.numberfour.n4js</groupId>
-    <artifactId>eu.numberfour.n4js.docs</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-</parent>
-
-<pluginRepositories>
-    <pluginRepository>
-        <id>bintray.jmini.maven</id>
-        <url>http://dl.bintray.com/jmini/maven/</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-    </pluginRepository>
-</pluginRepositories>
-
-<build>
-    <defaultGoal>process-resources</defaultGoal>
+    <build>
+        <defaultGoal>process-resources</defaultGoal>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesets combine.children="append">
+                        <fileset>
+                            <directory>./</directory>
+                            <includes>
+                                <include>${eclipse.html}/**</include>
+                                <include>${help.pages.list}</include>
+                            </includes>
+                            <excludes>
+                                <exclude>${eclipse.html}</exclude>
+                                <exclude>**/.placeholder.txt</exclude>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -67,9 +98,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <version>${asciidoctor-epub3.version}</version>
                     </dependency>
                 </dependencies>
-                <executions> <!-- GENERATE RESOURCES -->
+                
+                <executions> 
+                    <!-- Generate Eclipse HTML without TOC-->
                     <execution>
-                        <id>asciidoc-to-eclipse-html</id> <!-- Generate Eclipse HTML without TOC-->
+                        <id>asciidoc-to-eclipse-html</id> 
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
@@ -78,7 +111,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <sourceDirectory>src/</sourceDirectory>
                             <imagesdir>images</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
-                            <outputDirectory>${project.build.directory}/eclipse-html</outputDirectory>
+                            <outputDirectory>${eclipseHelpDir}</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
@@ -93,8 +126,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
+                    
+                    <!-- Convert ADOC to HTML (website) -->
                     <execution>
-                        <id>asciidoc-to-website-html</id> <!-- Convert ADOC to HTML -->
+                        <id>asciidoc-to-website-html</id> 
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
@@ -103,7 +138,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <sourceDirectory>src/</sourceDirectory>
                             <imagesdir>images</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
-                            <outputDirectory>${project.build.directory}/website-html</outputDirectory>
+                            <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
@@ -126,7 +161,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                          <outputDirectory>${project.build.directory}/epub</outputDirectory>
+                          <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
@@ -141,7 +176,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution>
 -->
-                    <execution> <!-- Begin PDF Generation of User Guides -->
+                    <!-- Begin PDF Generation of User Guides -->
+                    <execution> 
                         <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
                         <goals>
@@ -163,8 +199,34 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution> 
                 </executions>
-    		</plugin> 
-            <plugin> <!-- Begin HTML to Eclipse TOC.XML -->
+            </plugin> 
+            
+            <!-- eclipse-help file list generation -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo>Running directory listing dir=${eclipseHelpDir}</echo>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html"/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
+                                    <map from="${eclipseHelpBaseDir}/" to="" />
+                                </pathconvert> 
+                                <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${help.pages.list}">${prop.dist.contents}</echo>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>           
+            </plugin>
+
+            <!-- HTML to Eclipse TOC.XML -->
+            <plugin>
                 <groupId>com.bsiag.geneclipsetoc</groupId>
                 <artifactId>geneclipsetoc-maven-plugin</artifactId>
                 <version>1.0.2</version>
@@ -176,12 +238,60 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <sourceFolder>${basedir}</sourceFolder>
-                            <pagesListFile>help-pages.txt</pagesListFile>
+                            <pagesListFile>${help.pages.list}</pagesListFile>
                             <outputTocFile>toc.xml</outputTocFile>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> <!-- End HTML to Eclipse TOC.XML -->
+            </plugin> 
         </plugins>
     </build>
+    
+    
+    <profiles>
+        <!-- disable tycho functionality in case of "-Dtycho.mode=maven" on command line -->
+        <profile>
+          <id>tycho.mode.maven</id>
+          <activation>
+            <property>
+                <name>tycho.mode</name>
+                <value>maven</value>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-packaging-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-build-qualifier</id> <phase /> </execution>
+                        <execution> <id>default-validate-version</id> <phase /> </execution>
+                        <execution> <id>default-validate-id</id> <phase /> </execution>
+                        <execution> <id>default-package-plugin</id> <phase /> </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-compiler-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-compile</id> <phase /> </execution>
+                    </executions>
+                </plugin> 
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-p2-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
+                        <execution> <id>attach-p2-metadata</id> <phase /> </execution>
+                    </executions>
+                </plugin>
+                
+            </plugins>
+          </build>
+        </profile>
+    </profiles>
+    
 </project>
