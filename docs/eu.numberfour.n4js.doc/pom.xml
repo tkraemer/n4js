@@ -164,27 +164,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     </execution> 
                 </executions>
     		</plugin> 
-<!-- Pagelist generation script, help-pages.txt manually updated
-    		<plugin>
-    			<artifactId>exec-maven-plugin</artifactId>
-    			<version>${exec-maven-plugin.version}</version>
-    			<groupId>org.codehaus.mojo</groupId>
-    			<executions>
-        			<execution>  
-            			<phase>generate-resources</phase>
-            			<goals>
-            			    <goal>exec</goal>
-            			</goals>
-            			<configuration>
-            			    <executable>${basedir}/createpagelist.sh</executable>
-            				<arguments>
-            			    		<argument>${basedir}</argument>
-    	          			</arguments>
-            			</configuration>
-        			</execution>
-    			</executions>
-    		</plugin>
--->
             <plugin> <!-- Begin HTML to Eclipse TOC.XML -->
                 <groupId>com.bsiag.geneclipsetoc</groupId>
                 <artifactId>geneclipsetoc-maven-plugin</artifactId>
