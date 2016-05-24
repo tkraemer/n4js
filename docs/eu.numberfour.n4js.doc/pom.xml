@@ -109,7 +109,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
-                            <imagesdir>images</imagesdir>
+                            <imagesdir>../images</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${eclipseHelpDir}</outputDirectory>
                             <backend>html5</backend>
@@ -124,6 +124,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idseparator>-</idseparator>
                                 <docinfo1>false</docinfo1>
                             </attributes>
+                            <fileset>
+                                <excludes>
+                                    <exclude>userguides.adoc</exclude>
+                                </excludes>
+                            </fileset>
                         </configuration>
                     </execution>
                     
@@ -135,7 +140,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                          <sourceDirectory>${basedir}/src/epub</sourceDirectory>
+                          <sourceDirectory>${basedir}/src</sourceDirectory>
                             <imagesdir>images</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
@@ -151,9 +156,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idseparator>-</idseparator>
                                 <docinfo1>false</docinfo1>
                             </attributes>
+                            <fileset>
+                                <excludes>
+                                    <exclude>userguides.adoc</exclude>
+                                </excludes>
+                            </fileset>
                         </configuration>
                     </execution>
-                    <!-- Begin EPUB Generation of User Guides -->
+<!--                     Begin EPUB Generation of User Guides 
                     <execution>
                         <id>asciidoc-to-epub</id>
                         <phase>generate-resources</phase>
@@ -161,12 +171,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>src/epub/</sourceDirectory>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <sourceDocumentName>userguides.adoc</sourceDocumentName>
                             <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
                             <preserveDirectories>false</preserveDirectories> 
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
+                                <includesdir>docs/documentation</includesdir>
                                 <imagesdir>images</imagesdir>
                                 <doctype>book</doctype>
                                 <icons>font</icons>
@@ -177,7 +189,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
-
+-->
                     <!-- Begin PDF Generation of User Guides -->
                     <execution> 
                         <id>asciidoc-to-pdf</id> 
@@ -190,7 +202,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes>  
+                            <attributes> 
+                                <toc>left</toc> 
                                 <imagesdir>../../images</imagesdir>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
