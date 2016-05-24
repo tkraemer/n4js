@@ -194,7 +194,7 @@ To run this file, right-click inside the editor view and select *Run as | Launch
 
 ifdef::backend-html5[]
 image::runhello.gif[]
-endif[]
+
 
 The Console View will display the result of our +console.log+ command, and our Hello World!
 example is running in the N4JS IDE without

@@ -116,20 +116,20 @@ A single execution of the ``asciidoctor-maven-plugin`` to convert our source fil
 
 [source,xml]
 <execution>
-    <id>asciidoc-to-html</id>
+    <id>asciidoc-to-eclipse-html</id>
     <phase>generate-resources</phase>
     <goals>
         <goal>process-asciidoc</goal>
     </goals>
     <configuration>
         <sourceDirectory>src/</sourceDirectory>
-        <imagesdir>images</imagesdir>
+        <imagesdir>../images</imagesdir>
         <preserveDirectories>true</preserveDirectories>
-        <outputDirectory>${project.build.directory}/html</outputDirectory>
+        <outputDirectory>${eclipseHelpDir}</outputDirectory>
         <backend>html5</backend>
         <sourceHighlighter>coderay</sourceHighlighter>
         <attributes>
-            <toc>left</toc>
+            <toc>false</toc>
             <icons>font</icons>
             <sectanchors>true</sectanchors>
             <idprefix/>
