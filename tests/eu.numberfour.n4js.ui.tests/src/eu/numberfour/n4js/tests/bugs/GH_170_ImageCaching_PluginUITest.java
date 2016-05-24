@@ -22,7 +22,7 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 /**
  * Class for testing the {@link ImageDescriptor} and {@link Image} caching.
  */
-public class GH_170_ImageCachint_PluginUITest extends AbstractIDEBUG_Test {
+public class GH_170_ImageCaching_PluginUITest extends AbstractIDEBUG_Test {
 
 	/**
 	 * Asserts the test setup, namely that the {@link IWorkbench workbench} is running.
@@ -30,11 +30,6 @@ public class GH_170_ImageCachint_PluginUITest extends AbstractIDEBUG_Test {
 	@BeforeClass
 	public static void assertWorkbenchIsRunning() {
 		assertTrue("Expected running workbench.", PlatformUI.isWorkbenchRunning());
-	}
-
-	@Override
-	protected ProjectImporter getProjectImporter() {
-		return ProjectImporter.NOOP;
 	}
 
 	/**

@@ -10,11 +10,17 @@
  */
 package eu.numberfour.n4js.ui.utils;
 
+import org.eclipse.jface.util.Geometry;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Resource;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Collection of convenient SWT and JFace utility methods.
@@ -28,7 +34,7 @@ public abstract class UIUtils {
 	 * @param resource
 	 *            the resource to dispose. Optional, can be {@code null}.
 	 */
-	public static void dispose(Resource resource) {
+	public static void dispose(final Resource resource) {
 		if (null != resource && !resource.isDisposed()) {
 			resource.dispose();
 		}
@@ -41,7 +47,7 @@ public abstract class UIUtils {
 	 * @param widget
 	 *            the widget to dispose. Optional, can be {@code null}.
 	 */
-	public static void dispose(Widget widget) {
+	public static void dispose(final Widget widget) {
 		if (null != widget && !widget.isDisposed()) {
 			widget.dispose();
 		}
@@ -80,6 +86,111 @@ public abstract class UIUtils {
 	 */
 	public static Color getSystemColor(final int swtColorConstantId) {
 		return getDisplay().getSystemColor(swtColorConstantId);
+	}
+
+	/**
+	 * Given the desired position of the shell, this method returns an adjusted position such that the window is no
+	 * larger than its monitor, and does not extend beyond the edge of the monitor. This is used for computing the
+	 * initial window position via the parent shell, clients can use this as a utility method if they want to limit the
+	 * region in which the window may be moved.
+	 *
+	 * @param shell
+	 *            the shell which shell bounds is being calculated.
+	 * @param preferredSize
+	 *            the preferred position of the window.
+	 * @return a rectangle as close as possible to preferredSize that does not extend outside the monitor.
+	 */
+	public static Rectangle getConstrainedShellBounds(final Shell shell, final Point preferredSize) {
+
+		final Point location = getInitialLocation(shell, preferredSize);
+		final Rectangle result = new Rectangle(location.x, location.y, preferredSize.x, preferredSize.y);
+
+		final Monitor monitor = getClosestMonitor(shell.getDisplay(), Geometry.centerPoint(result));
+
+		final Rectangle bounds = monitor.getClientArea();
+
+		if (result.height > bounds.height) {
+			result.height = bounds.height;
+		}
+
+		if (result.width > bounds.width) {
+			result.width = bounds.width;
+		}
+
+		result.x = Math.max(bounds.x, Math.min(result.x, bounds.x
+				+ bounds.width - result.width));
+		result.y = Math.max(bounds.y, Math.min(result.y, bounds.y
+				+ bounds.height - result.height));
+
+		return result;
+	}
+
+	/**
+	 * Returns the initial location to use for the shell. The default implementation centers the shell horizontally (1/2
+	 * of the difference to the left and 1/2 to the right) and vertically (1/3 above and 2/3 below) relative to the
+	 * active workbench windows shell, or display bounds if there is no parent shell.
+	 *
+	 * @param shell
+	 *            the shell which initial location has to be calculated.
+	 * @param initialSize
+	 *            the initial size of the shell, as returned by <code>getInitialSize</code>.
+	 * @return the initial location of the shell
+	 */
+	public static Point getInitialLocation(final Shell shell, final Point initialSize) {
+		final Composite parent = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+
+		Monitor monitor = shell.getDisplay().getPrimaryMonitor();
+		if (parent != null) {
+			monitor = parent.getMonitor();
+		}
+
+		final Rectangle monitorBounds = monitor.getClientArea();
+		Point centerPoint;
+		if (parent != null) {
+			centerPoint = Geometry.centerPoint(parent.getBounds());
+		} else {
+			centerPoint = Geometry.centerPoint(monitorBounds);
+		}
+
+		return new Point(centerPoint.x - (initialSize.x / 2), Math.max(
+				monitorBounds.y, Math.min(centerPoint.y
+						- (initialSize.y * 2 / 3), monitorBounds.y
+								+ monitorBounds.height - initialSize.y)));
+	}
+
+	/**
+	 * Returns the monitor whose client area contains the given point. If no monitor contains the point, returns the
+	 * monitor that is closest to the point.
+	 *
+	 * @param toSearch
+	 *            point to find (display coordinates).
+	 * @param toFind
+	 *            point to find (display coordinates).
+	 * @return the monitor closest to the given point.
+	 */
+	private static Monitor getClosestMonitor(final Display toSearch, final Point toFind) {
+		int closest = Integer.MAX_VALUE;
+
+		final Monitor[] monitors = toSearch.getMonitors();
+		Monitor result = monitors[0];
+
+		for (int index = 0; index < monitors.length; index++) {
+			final Monitor current = monitors[index];
+
+			final Rectangle clientArea = current.getClientArea();
+
+			if (clientArea.contains(toFind)) {
+				return current;
+			}
+
+			final int distance = Geometry.distanceSquared(Geometry.centerPoint(clientArea), toFind);
+			if (distance < closest) {
+				closest = distance;
+				result = current;
+			}
+		}
+
+		return result;
 	}
 
 	private UIUtils() {

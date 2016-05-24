@@ -14,6 +14,7 @@ import static com.google.common.collect.Maps.newConcurrentMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,26 +24,16 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.ui.IAggregateWorkingSet;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.internal.navigator.NavigatorContentService;
-import org.eclipse.ui.internal.navigator.workingsets.WorkingSetsContentProvider;
 import org.eclipse.ui.model.WorkbenchContentProvider;
-import org.eclipse.ui.navigator.CommonNavigator;
-import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
-import org.eclipse.ui.navigator.IExtensionStateModel;
 import org.eclipse.ui.navigator.IPipelinedTreeContentProvider2;
 import org.eclipse.ui.navigator.PipelinedShapeModification;
 import org.eclipse.ui.navigator.PipelinedViewerUpdate;
-import org.eclipse.ui.navigator.resources.ProjectExplorer;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -50,39 +41,27 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
  * Customized content provider for tuning the Project Explorer view with N4JS specific content.
  */
-@SuppressWarnings("restriction")
 @Singleton
 public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		implements ExternalLibraryPreferenceStore.StoreUpdatedListener, IPipelinedTreeContentProvider2 {
 
 	private static final Logger LOGGER = Logger.getLogger(N4JSProjectExplorerContentProvider.class);
 
-	private static final Object[] EMPTY_ARRAY = new Object[0];
-
 	@Inject
 	private N4JSProjectExplorerHelper helper;
 
-	private IExtensionStateModel extensionStateModel;
-
-	private CommonNavigator projectExplorer;
+	@Inject
+	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	private final Map<IProject, Object[]> virtualNodeCache = newConcurrentMap();
-
-	private final IPropertyChangeListener rootModeListener = new IPropertyChangeListener() {
-
-		@Override
-		public void propertyChange(final PropertyChangeEvent event) {
-			if (WorkingSetsContentProvider.SHOW_TOP_LEVEL_WORKING_SETS.equals(event.getProperty())) {
-				updateRootMode();
-			}
-		}
-
-	};
 
 	/**
 	 * Creates a new content provider for the navigator with N4JS content support.
@@ -129,17 +108,14 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 	@Override
 	public Object[] getChildren(final Object element) {
 
-		if (null != projectExplorer) {
-			if (ProjectExplorer.WORKING_SETS == projectExplorer.getRootMode()) {
-				if (element instanceof IWorkingSet) {
-					final IWorkingSet workingSet = (IWorkingSet) element;
-					if (workingSet.isAggregateWorkingSet()) {
-						return ((IAggregateWorkingSet) workingSet).getComponents();
-					} else {
-						return getWorkingSetElements(workingSet);
-					}
+		if (workingSetManagerBroker.isWorkingSetTopLevel()) {
+			if (element instanceof IWorkspaceRoot) {
+				final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();
+				if (manager != null) {
+					return manager.getWorkingSets();
 				}
-				return EMPTY_ARRAY;
+			} else if (element instanceof WorkingSet) {
+				return ((WorkingSet) element).getElements();
 			}
 		}
 
@@ -150,25 +126,6 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		}
 
 		return children;
-	}
-
-	private IAdaptable[] getWorkingSetElements(final IWorkingSet workingSet) {
-		final IAdaptable[] children = workingSet.getElements();
-		for (int i = 0; i < children.length; i++) {
-			final Object resource = children[i].getAdapter(IResource.class);
-			if (resource instanceof IProject) {
-				children[i] = (IProject) resource;
-			}
-		}
-		return children;
-	}
-
-	/**
-	 * Returns with {@code true} if the working sets are enabled in the {@code Project Explorer}. Otherwise returns with
-	 * {@code false}.
-	 */
-	protected boolean isWorkingSetsEnabled() {
-		return null != projectExplorer && ProjectExplorer.WORKING_SETS == projectExplorer.getRootMode();
 	}
 
 	@Override
@@ -196,28 +153,27 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		return objects;
 	}
 
-	@Override
-	public void dispose() {
-		if (null != extensionStateModel) {
-			extensionStateModel.removePropertyChangeListener(rootModeListener);
-		}
-		super.dispose();
-	}
-
 	// ------------------------------------------------------------------------------------
 	// IPipelinedTreeContentProvider2
 	// ------------------------------------------------------------------------------------
 
 	@Override
+	public void init(ICommonContentExtensionSite aConfig) {
+		// Nothing to initialize here.
+	}
+
+	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void getPipelinedChildren(final Object aParent, final Set theCurrentChildren) {
 		theCurrentChildren.addAll(newHashSet(getChildren(aParent)));
+		filterProjectsOnDemand(aParent, theCurrentChildren);
 	}
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void getPipelinedElements(final Object anInput, final Set theCurrentElements) {
 		theCurrentElements.addAll(newHashSet(getElements(anInput)));
+		filterProjectsOnDemand(anInput, theCurrentElements);
 	}
 
 	@Override
@@ -246,17 +202,6 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 	}
 
 	@Override
-	public void init(final ICommonContentExtensionSite config) {
-		final NavigatorContentService contentService = (NavigatorContentService) config.getService();
-		final CommonViewer viewer = (CommonViewer) contentService.getViewer();
-		projectExplorer = viewer.getCommonNavigator();
-
-		extensionStateModel = config.getExtensionStateModel();
-		extensionStateModel.addPropertyChangeListener(rootModeListener);
-		updateRootMode();
-	}
-
-	@Override
 	public void restoreState(final IMemento aMemento) {
 		// NOOP
 	}
@@ -271,14 +216,15 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		return currentHasChildren || getChildren(anInput).length > 0;
 	}
 
-	private void updateRootMode() {
-		if (projectExplorer == null) {
-			return;
-		}
-		if (extensionStateModel.getBooleanProperty(WorkingSetsContentProvider.SHOW_TOP_LEVEL_WORKING_SETS)) {
-			projectExplorer.setRootMode(ProjectExplorer.WORKING_SETS);
-		} else {
-			projectExplorer.setRootMode(ProjectExplorer.PROJECTS);
+	@SuppressWarnings("rawtypes")
+	private void filterProjectsOnDemand(Object element, final Set theCurrentChildren) {
+		if (element instanceof IWorkspaceRoot && workingSetManagerBroker.isWorkingSetTopLevel()) {
+			for (Iterator itr = theCurrentChildren.iterator(); itr.hasNext(); /**/) {
+				Object next = itr.next();
+				if (next instanceof IProject) {
+					itr.remove();
+				}
+			}
 		}
 	}
 

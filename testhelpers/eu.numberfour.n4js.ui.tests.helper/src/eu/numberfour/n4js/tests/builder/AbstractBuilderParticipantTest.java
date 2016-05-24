@@ -56,6 +56,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.n4mf.ProjectDescription;
+import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 
@@ -80,6 +81,26 @@ public abstract class AbstractBuilderParticipantTest extends AbstractBuilderTest
 	protected IProject createJSProject(String projectName, String sourceFolder, String outputFolder,
 			Consumer<ProjectDescription> manifestAdjustments) throws CoreException {
 		return ProjectUtils.createJSProject(projectName, sourceFolder, outputFolder, manifestAdjustments);
+	}
+
+	/**
+	 * Creates a new N4JS project with the given name and project type. The source and output folders will be named as
+	 * {@code src} and {@code src-gen}. The Xtext project nature will be already configured on the N4JS project. Blocks
+	 * until the auto-build job is terminated.
+	 *
+	 * @param projectName
+	 *            the name of the project.
+	 * @param type
+	 *            the desired project type of the new project.
+	 * @return the new N4JS project with the desired type.
+	 * @throws CoreException
+	 *             if the project creation failed.
+	 */
+	protected IProject createN4JSProject(String projectName, ProjectType type) throws CoreException {
+		final IProject project = createJSProject(projectName, "src", "src-gen", t -> t.setProjectType(type));
+		configureProjectWithXtext(project);
+		waitForAutoBuild();
+		return project;
 	}
 
 	/***/
