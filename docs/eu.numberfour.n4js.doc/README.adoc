@@ -7,9 +7,7 @@ Updating, maintaining and improving documentation can be done by experts or comp
 Bring your experience or fresh perspectives to enrich help resources that assist N4JS developers everywhere.
 
 * <<How to Contribute,How to Contribute Help Content>>
-** <<N4JS IDE Docs Plugin, The N4JS Docs Plugin>>
 ** <<N4JS Documentation Plugin, Configuring The Documentation Build>>
-*** <<The toc.xml>>
 * <<About AsciiDoc & AsciiDoctor>>
 ** <<Tools, Tools for Writing>>
 ** <<Developing AsciiDoc>>
@@ -23,12 +21,9 @@ The source AsciiDoc documentation is located at the NumberFour N4JS repository a
 
 ``https://github.numberfour.eu/NumberFour/n4js/tree/master/docs/eu.numberfour.n4js.doc/src[n4js/docs/eu.numberfour.n4js.doc/src]``
 
-The N4JS IDE is built using https://maven.apache.org/[Apache Maven].
-The command ``mvn verify`` will trigger the build of the N4JS IDE and target documentation is generated in the following folder:
+As the N4JS IDE is built using https://maven.apache.org/[Apache Maven], the command ``mvn verify`` will trigger the build of the N4JS IDE and documentation is generated at ``n4js/docs/eu.numberfour.n4js.doc/target``.
 
-``https://github.com/NumberFour/n4js/tree/master/docs/eu.numberfour.n4js.doc/target[n4js/docs/eu.numberfour.n4js.doc/target]``
-
-To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo/[fork the N4JS repo], create a pull request with edited or new AsciiDoc files in the source folder and your pull request will be reviewed for inclusion in the distrobution.
+To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo/[fork the N4JS repo], create a pull request with edited or new AsciiDoc files in the source folder and your contribution will be reviewed for inclusion.
 
 == Details on the Maven Build
 
@@ -51,8 +46,8 @@ The POM in the root folder points at several modules:
     <module>tools</module>
 </modules>
 
-Each module contains a POM that can inherit attributes from the 'parent' and specify further settings for the build of its particular module.
-If we navigate to the docs module at ``n4js/docs/``, we can see that the contained POM specifies a parent (``n4js/pom.xml``) and a nested module (``eu.numberfour.n4js.doc``) which is where our documentation source and target live:
+Each module contains a POM that can inherit attributes from the parent and specify additional settings for the build of its module.
+If we navigate to the module at ``n4js/docs/``, we can see that the contained POM specifies a parent (``n4js/pom.xml``) and a nested module (``eu.numberfour.n4js.doc``) which is where our documentation source and target live:
 
 .n4js/docs/pom.xml
 [source,xml]
@@ -104,17 +99,18 @@ n4js/docs/eu.numberfour.n4js.doc/
 * **toc.xml** - Table Of Contents; contains a structured index of the help pages so they may be registered online or within the N4JS IDE
 * **build.properties** - Describes which items in the root folder are to be included in the N4JS IDE build
 
+TIP: Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
+Generating the documentation using this method reduces the build time to approximately 1 minute.
+
+
 === Generating N4JS IDE Help
 
 The Eclipse Help bundled with the N4JS IDE is essentially HTML files accompanied by a ``toc.xml`` that lists the structure of these help files.
 In the Maven build, the POM at ``n4js/docs/eu.numberfour.n4js.doc/pom.xml`` is configured to execute these plugins in the following order:
 
 . The ``asciidoctor-maven-plugin`` converts source AsciiDoc files (``src`` folder) to HTML (``target`` folder).
-. The ``geneclipsetoc-maven-plugin`` scans the generated HTML files in the ``target`` folder and creates the ``toc.xml``
-
-The geneclipsetoc-maven-plugin searches for headings (<h1> etc.) in the generated HTML and creates a structured toc file based on this hierarchy that the N4JS IDE can index.
-
-In this ``pom.xml``, the https://github.com/asciidoctor/asciidoctor-maven-plugin[AsciiDoctor Maven Plugin] is invoked to convert our source ``.adoc`` files to the required output.
+. An ``antrun-plugin`` creates a .txt file containing the paths to the generated HTML pages called ``help-pages.txt``.
+. The ``geneclipsetoc-maven-plugin`` searches for headings in the generated HTML in the ``target`` folder and creates a structured ``toc.xml`` based on this hierarchy that the N4JS IDE can index.
 
 A single execution of the ``asciidoctor-maven-plugin`` to convert our source files to HTML in the ``generate-resources`` phase of a Maven build looks like the following:
 
@@ -158,38 +154,6 @@ For generating PDF and EPUB from the source AsciiDoc files, the addition of the 
 	<artifactId>asciidoctorj-epub3</artifactId>
 	<version>${asciidoctor-epub3.version}</version>
 </dependency>
-
-
-
-==== The toc.xml
-
-In order to avoid polluting the Maven POM, we use a help-pages.txt file (located at ``n4js/docs/eu.numberfour.n4js.doc/help-pages.txt``) to point the ``geneclipsetoc`` plugin at the correct paths of the generated HTML files.
-
-A sample configuration of the geneclipsetoc plugin looks like the following:
-
-[source,xml]
-<plugin>
-    <groupId>com.bsiag.geneclipsetoc</groupId>
-    <artifactId>geneclipsetoc-maven-plugin</artifactId>
-    <version>1.0.2</version>
-    <executions>
-        <execution>
-            <phase>generate-resources</phase>
-            <goals>
-                <goal>geneclipsetoc</goal>
-            </goals>
-            <configuration>
-                <sourceFolder>${basedir}</sourceFolder>
-                <pagesListFile>help-pages.txt</pagesListFile>
-                <outputTocFile>toc.xml</outputTocFile>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
-
-IMPORTANT: The help-pages.txt file is handwritten with the target HTML paths.
-If any resources in the documentation ``src`` folder are renamed, moved or added, the ``help-pages.txt`` file must be updated with the **target** html paths. This process will be automated in future.
-
 
 == About AsciiDoc & AsciiDoctor
 
