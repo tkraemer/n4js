@@ -14,13 +14,12 @@ static type checker. However, in their relation to JavaScript, they follow diffe
 
 image::ts_n4js.svg[]
 
-TypeScript tries to make ECMAScript type-safe without breaking existing ECMAScript code. It's
-type system is optional and the TypeScript transpiler aims to accept plain ECMAScript, as far as possible.
+TypeScript tries to make ECMAScript type-safe without invalidating existing ECMAScript code. It's
+type system is optional and the TypeScript transpiler aims to accept plain ECMAScript as far as possible.
 
-
-Although N4JS is a super set of ECMAScript feature-wise and in terms of syntax, it does not
-try to be compatible to ECMAScript at all cost. It kind of takes ECMAScript, adds Java's strict
-and rigor type system, and then tries to make it as flexible as possible to fulfill the expectations
+Although N4JS is a superset of ECMAScript feature-wise and in terms of syntax, it does not
+try to be compatible to ECMAScript at all cost. One way of looking at it is beginning with ECMAScript, adding Java's strict
+and rigorous type system then making this amalgamation as flexible as possible, fulfilling the expectations
 of JavaScript programmers while keeping the type system sound.
 
 == Similarities
@@ -28,7 +27,7 @@ of JavaScript programmers while keeping the type system sound.
 === Explicit and Implicit typing
 
 In both languages, types can either be defined explicitly (via a type annotation) or implicitly.
-In the latter case the type is to be inferred by the type system. A simple example is the assignment
+In the latter case, the type is to be inferred by the type system. A simple example is the assignment
 of a value to a newly declared variable, such as
 
 [source,javascript]
@@ -94,7 +93,7 @@ interface Point {
 ----
 
 
-NOTE: N4JS is using different default for access modifiers, e.g. `public` is not the default. For that reason, the interfaces have to be marked as public (and exported).
+NOTE: N4JS is using different defaults for access modifiers, e.g. `public` is not the default. For that reason, the interfaces have to be marked as public (and exported).
 
 
 In both languages, an error will be issued on the last line:
@@ -108,15 +107,15 @@ The difference between structural and nominal typing is described in further det
 === Using Existing JavaScript Libraries
 
 
-Important part of being an ECMAScript superset is to enable developers to use existing JavaScript libraries. N4JS and
-TypeScript support type definitions for existing code. For TypeScript there exists a great project
-http://definitelytyped.org/[DefinitelyTyped] where these type definitions are collected. For
-N4JS a similar https://github.com/NumberFour/n4jsd[GitHub project] exists, but it contains
+An important aspect of being an ECMAScript superset is to enable developers to use existing JavaScript libraries. N4JS and
+TypeScript support type definitions for existing code. For TypeScript, there is a great project called
+http://definitelytyped.org/[DefinitelyTyped] where type definitions are collected. For
+N4JS, a similar https://github.com/NumberFour/n4jsd[GitHub project] exists, but it contains
 very few definitions at the moment. Contributions are welcome for both projects.
 
-It is also possible in both languages to use existing code, in particular Common.js modules, without type definitions.
+It is also possible to use existing code in both languages without type definitions, Common.js modules in particular.
 The N4JS IDE <<features/nodejs#nodejs,integrates support for NPM>>, so that these modules, even without a
-type definition, can be seamlessly used in N4JS.
+type definition, can seamlessly be used in N4JS.
 
 
 == Differences
@@ -132,13 +131,9 @@ Both languages introduce a type called `any`. Whenever an explicit type declarat
 inferred by the system, the type `any` is used. However, the precise meaning of `any` is probably the most important
 difference between N4JS and TypeScript. Simply put:
 
-
 **In N4JS you can do *nothing* with `any`, in TypeScript you can do anything.**
 
-
-
 The following example illustrates the difference:
-
 
 [source,javascript]
 function f(p: any) {
@@ -185,7 +180,7 @@ alternative concepts are provided, the less often any is to be used. With the in
 === Dynamic Type Modifiers
 
 N4JS allows developers to use types in dynamic way, by using the `+` type modifier. This so-called ** dynamic
-type modifier**  allows for accessing arbitrary properties, even when they are not known to the type system. The following
+type modifier**  allows for accessing arbitrary properties even when they are not known to the type system. The following
 example shows the effect:
 
 [source]
@@ -211,10 +206,10 @@ it has to be declared explicitly; and a value of type `any+` still cannot be ass
 
 N4JS has two general levels of issues reported by the compiler: ** warning**  and ** error** .
 Serious issues like type errors are treated as errors in N4JS and all errors will prevent
-the transpiler to emit any JavaScript code in order to avoid as far as possible producing
+the transpiler to emit any JavaScript code in order to avoid producing
 code that might break at runtime.
-For TypeScript, on the other hand, it is a main concern to never get in the way of the developer,
-and its transpiler will thus produce JavaScript output code even in case of compile errors.
+For TypeScript, on the other hand, it is a main concern to never impede of the developer,
+and its transpiler will thus produce JavaScript output code even in the case of compile errors.
 Given the example from the beginning
 
 [source,javascript]
@@ -222,11 +217,8 @@ var str = 'Hello';
 str = 42;  // both N4JS and TypeScript show an error here
 str.charAt(2);
 
-
-
 The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
 that breaks at runtime in the last line.
-
 
 === Use-Site Variance vs. Assumed Co-Variance
 One of the tricky subtleties of generics is co- and contra-variance. What's that? Let's have a look at the hello-world
