@@ -68,9 +68,15 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 	/**
 	 * Returns with the project importer for the {@link WorkspaceInitializer workspace initializer}.
 	 *
+	 * <p>
+	 * By default returns with the {@link ProjectImporter#NOOP NOOP} importer. Clients may override this method if
+	 * importing projects is required as the part of the test setup.
+	 *
 	 * @return the new project importer instance.
 	 */
-	protected abstract ProjectImporter getProjectImporter();
+	protected ProjectImporter getProjectImporter() {
+		return ProjectImporter.NOOP;
+	}
 
 	/**
 	 * Simple project importer implementation.
@@ -81,13 +87,13 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 		 * The NOOP importer. Does not import anything into the workspace.
 		 */
 		public static ProjectImporter NOOP = new ProjectImporter();
-		
+
 		private final File rootFolder;
 
 		private ProjectImporter() {
 			this(FileUtils.createTempDirectory().toFile());
 		}
-		
+
 		/**
 		 * Creates a project importer with the root folder of all projects that has to be imported for the test.
 		 *

@@ -13,8 +13,8 @@ Contributors:
 
 <plugin>
    <extension-point id="composedgenerator" name="N4JS Composed Generator" schema="schema/composedgenerator.exsd"/>
-   <extension-point id="jsengine" name="N4 JavaScript Engine" schema="schema/jsengine.exsd"/>
    <extension-point id="resourceDescriptionsPersisterContribution" name="Resource Descriptions Persister Contribution" schema="schema/resourceDescriptionsPersisterContribution.exsd"/>
+   <extension-point id="workingSetManager" name="N4JS Working Set Manager" schema="schema/workingSetManager.exsd"/>
 
 <!-- CUSTOM CODE -->
 <!--
@@ -160,6 +160,10 @@ Contributors:
               class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.handler.OpenGeneratedSourceInEditorHandler"
               commandId="eu.numberfour.n4js.ui.openGeneratedSourceInEditor">
         </handler>
+        <handler
+              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler"
+              commandId="eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler">
+        </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
         <definition id="eu.numberfour.n4js.N4JS.Editor.opened">
@@ -274,6 +278,11 @@ Contributors:
               id="eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.nested"
               name="nested">
             </commandParameter>
+      </command>
+      <command
+            description="Resets the current and persisten state of all working set managers and their working sets to the default state"
+            id="eu.numberfour.n4js.ui.workingsets.ResetWorkingSetManagersHandler"
+            name="Reset Working Sets">
       </command>
     </extension>
     <extension point="org.eclipse.ui.menus">
@@ -1024,6 +1033,9 @@ Contributors:
            <startup
                  class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.N4JSExternalLibraryStartup">
            </startup>
+           <startup
+                 class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.WorkingSetManagerStartup">
+           </startup>
         </extension>
         <extension
               point="eu.numberfour.n4js.ui.resourceDescriptionsPersisterContribution">
@@ -1052,6 +1064,12 @@ Contributors:
          <actionExtension
                pattern="eu.numberfour.n4js.ui.navigator.internal.N4JSOpenActions.open">
          </actionExtension>
+         <actionExtension
+               pattern="eu.numberfour.n4js.ui.navigator.internal.N4JSWorkingSetActionProvider">
+         </actionExtension>
+         <actionExtension
+               pattern="eu.numberfour.n4js.ui.workingsets.internal.N4JSNavigatorActionProvider">
+         </actionExtension>
       </includes>
    </viewerActionBinding>
 		</extension>
@@ -1070,15 +1088,14 @@ Contributors:
 		
 		      <triggerPoints>
 				<or>
-					<instanceof
-						value="java.lang.Object">
-						value="org.eclipse.core.resources.IResource">
- 	              	</instanceof>
-					<instanceof
-						value="eu.numberfour.n4js.ui.navigator.internal.Node">
-					</instanceof>
+					<instanceof value="org.eclipse.core.resources.IResource"/>
+					<instanceof value="eu.numberfour.n4js.ui.navigator.internal.Node"/>
+					<instanceof value="eu.numberfour.n4js.ui.workingsets.WorkingSet"/>
 				</or>
 		      </triggerPoints>
+              <possibleChildren>
+                  <instanceof value="java.lang.Object"/>
+              </possibleChildren>
 		      
 			<commonSorter
 	              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.navigator.internal.N4JSResourceExtensionSorter"
@@ -1093,7 +1110,14 @@ Contributors:
 
 			<override
 					policy="InvokeAlwaysRegardlessOfSuppressedExt"
-					suppressedExtensionId="org.eclipse.ui.navigator.resourceContent"/>
+					suppressedExtensionId="org.eclipse.jdt.java.ui.javaContent"/>
+   <dropAssistant
+         class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant"
+         id="eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant">
+         <possibleDropTargets>
+             <adapt type="eu.numberfour.n4js.ui.workingsets.WorkingSet"/>
+           </possibleDropTargets>
+   </dropAssistant>
 
 		   </navigatorContent>
 		   
@@ -1113,6 +1137,32 @@ Contributors:
            </or>
         </enablement>
      </actionProvider>
+       <actionProvider
+             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.navigator.internal.N4JSWorkingSetActionProvider"
+             id="eu.numberfour.n4js.ui.navigator.internal.N4JSWorkingSetActionProvider"
+             overrides="org.eclipse.ui.navigator.resources.WorkingSetActions"
+             priority="highest">
+           <enablement>
+                <or>
+					<adapt type="org.eclipse.core.resources.IResource" />	 
+					<adapt type="java.util.Collection"> 
+						<count value="0" />
+					</adapt>
+				</or>
+           </enablement> 
+       </actionProvider>
+       
+		<actionProvider
+				class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.internal.N4JSNavigatorActionProvider"
+				id="eu.numberfour.n4js.ui.workingsets.internal.N4JSNavigatorActionProvider"
+				overrides="org.eclipse.ui.navigator.resources.actions.EditActions"> 
+			<enablement>
+				<or>   
+					<instanceof value="eu.numberfour.n4js.ui.workingsets.WorkingSet" />
+				</or>
+			</enablement>
+		</actionProvider> 
+       
        <commonWizard
              type="new"
              wizardId="eu.numberfour.n4js.ui.wizard.N4JSNewClassWizard">
@@ -1237,12 +1287,44 @@ Contributors:
       </wizard>
    </extension>
    <extension
+         point="eu.numberfour.n4js.ui.workingSetManager">
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager">
+      </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager">
+      </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.GitRepositoryAwareWorkingSetManager">
+      </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectLocationAwareWorkingSetManager">
+      </manager>
+      <manager
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.workingsets.ProjectTypeAwareWorkingSetManager">
+      </manager>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="eu.numberfour.n4js.ui.workingsets.WorkingSet"
+            class="eu.numberfour.n4js.ui.workingsets.WorkingSetAdapterFactory">
+         <adapter
+               type="eu.numberfour.n4js.ui.workingsets.WorkingSet">
+         </adapter>
+         <adapter
+               type="org.eclipse.ui.IWorkingSet">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.mapping.ResourceMapping">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
          point="org.eclipse.ui.console.consoleFactories">
       <consoleFactory
             class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.building.BuilderStateLogger$Factory"
             label="Builder State">
       </consoleFactory>
    </extension>
-
-
 </plugin>

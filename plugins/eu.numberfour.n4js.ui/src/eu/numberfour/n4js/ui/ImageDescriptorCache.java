@@ -93,7 +93,40 @@ public enum ImageDescriptorCache {
 		NEW_ENUM_WIZBAN("newenum_wiz.png"),
 
 		/** Smart light bulb icon */
-		SMART_LIGHTBULB("smartmode_co.png");
+		SMART_LIGHTBULB("smartmode_co.png"),
+
+		/** Image reference for working sets. */
+		WORKING_SET("workset.gif"),
+
+		/** Image reference for working set wizard. */
+		WORKING_SET_WIZBAN("workset_wiz.png"),
+
+		/** Image reference for left/backward arrow. */
+		LEFT_ARROW("nav_backward.gif"),
+
+		/** Image reference for right/forward arrow. */
+		RIGHT_ARROW("nav_forward.gif"),
+
+		/** Clear image reference. */
+		CLEAR("clear.gif"),
+
+		/** Image reference for repository. */
+		REPOSITORY("remote_history_mode.gif"),
+
+		/** Reference for URL location. */
+		URL_LOCATION("url.gif"),
+
+		/** Variable tab image reference. */
+		VARIABLE_TAB("variable_tab.gif"),
+
+		/** Types image reference. */
+		TYPES("javaassist_co.gif"),
+
+		/** Project mode image reference. */
+		PROJECT_MODE("prj_mode.gif"),
+
+		/** Reference to the image 'Showing hidden working sets'. */
+		SHOW_HIDDEN_WORKING_SETS("show_hidden.gif");
 
 		private static final Logger LOGGER = Logger.getLogger(ImageRef.class);
 
@@ -118,6 +151,7 @@ public enum ImageDescriptorCache {
 		 * {@link Optional#absent() absent}, if the image descriptor cannot be created due to missing resource, or the
 		 * image cannot be created from the image descriptor instance.
 		 *
+		 * <p>
 		 * Do not dispose the returned image instance, as the resource is managed by the {@link ImageDescriptorCache}.
 		 *
 		 * @return the new image instance wrapped into an {@link Optional}. Can be {@link Optional#absent() missing} if

@@ -70,3 +70,17 @@ function_inv_ovr.gif						- inverted function_ovr.gif
 new_source_folder.png						- /org.eclipse.jdt.ui/icons/full/elcl16/add_as_source_folder.png
 # ui
 smartmode_co.png							- /org.eclipse.jdt.ui/icons/full/elcl16/smartmode_co.png
+
+# working sets
+workset_wiz.png 							- /org.eclipse.ui/icons/full/wizban/workset_wiz.png
+
+workset.gif                                 - http://eclipse-icons.i24.cc/index.html
+nav_backward.gif                            - http://eclipse-icons.i24.cc/index.html
+nav_forward.gif                             - http://eclipse-icons.i24.cc/index.html
+clear.gif                                   - http://eclipse-icons.i24.cc/index.html
+remote_history_mode.gif                     - http://eclipse-icons.i24.cc/index.html
+url.gif                                     - http://eclipse-icons.i24.cc/index.html
+variable_tab.gif                            - http://eclipse-icons.i24.cc/index.html
+javaassist_co.gif                           - http://eclipse-icons.i24.cc/index.html
+prj_mode.gif                                - http://eclipse-icons.i24.cc/index.html
+show_hidden.gif                             - http://eclipse-icons.i24.cc/index.html

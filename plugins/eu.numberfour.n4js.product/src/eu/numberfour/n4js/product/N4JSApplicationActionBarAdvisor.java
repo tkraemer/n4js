@@ -10,11 +10,21 @@
  */
 package eu.numberfour.n4js.product;
 
+import static com.google.common.collect.FluentIterable.from;
+import static java.util.Arrays.asList;
+import static org.eclipse.ui.IWorkbenchActionConstants.M_PROJECT;
+import static org.eclipse.ui.internal.ide.IDEWorkbenchMessages.Workbench_buildSet;
+
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.internal.ide.WorkbenchActionBuilder;
+
+import com.google.common.base.Predicate;
 
 /**
  * Class for configuring the action and menu bar for the N4JS IDE application.
@@ -22,7 +32,12 @@ import org.eclipse.ui.internal.ide.WorkbenchActionBuilder;
 @SuppressWarnings("restriction")
 public class N4JSApplicationActionBarAdvisor extends ActionBarAdvisor {
 
+	private static final Predicate<MenuManager> PROJECT_MENU_PREDICATE = i -> M_PROJECT.equals(i.getId());
+	private static final Predicate<MenuManager> WORKING_SET_MENU_PREDICATE = i -> Workbench_buildSet
+			.equals(i.getMenuText());
+
 	private final WorkbenchActionBuilder delegate;
+	private final IActionBarConfigurer configurer;
 
 	/**
 	 * Constructor for creating a new action bar advisor for the application.
@@ -33,6 +48,7 @@ public class N4JSApplicationActionBarAdvisor extends ActionBarAdvisor {
 	public N4JSApplicationActionBarAdvisor(final IActionBarConfigurer configurer) {
 		super(configurer);
 		delegate = new WorkbenchActionBuilder(configurer);
+		this.configurer = configurer;
 	}
 
 	@Override
@@ -43,6 +59,15 @@ public class N4JSApplicationActionBarAdvisor extends ActionBarAdvisor {
 	@Override
 	public void fillActionBars(final int flags) {
 		delegate.fillActionBars(flags);
+
+		// To remove 'Build Working Set' contribution item from the main menu.
+		final IMenuManager menuManager = configurer.getMenuManager();
+		final MenuManager projectManager = getMenuManager(PROJECT_MENU_PREDICATE, menuManager);
+		if (null != projectManager) {
+			final MenuManager workingSetManager = getMenuManager(WORKING_SET_MENU_PREDICATE, projectManager);
+			projectManager.remove(workingSetManager);
+			projectManager.update(true);
+		}
 	}
 
 	@Override
@@ -58,6 +83,10 @@ public class N4JSApplicationActionBarAdvisor extends ActionBarAdvisor {
 	@Override
 	public boolean isApplicationMenu(final String menuId) {
 		return delegate.isApplicationMenu(menuId);
+	}
+
+	private MenuManager getMenuManager(Predicate<MenuManager> predicate, IContributionManager manager) {
+		return from(asList(manager.getItems())).filter(MenuManager.class).firstMatch(predicate).orNull();
 	}
 
 }
