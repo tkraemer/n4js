@@ -1104,6 +1104,7 @@ Contributors:
 	           		  <or>           
 			            <instanceof value="org.eclipse.core.resources.IResource"/> 
 			            <instanceof value="eu.numberfour.n4js.ui.navigator.internal.Node"/>
+			            <instanceof value="eu.numberfour.n4js.ui.workingsets.WorkingSet"/>
 			         </or>
 			   </parentExpression>
 	        </commonSorter>
