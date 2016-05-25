@@ -23,7 +23,6 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_MISSING_IMPLEMENTATIO
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_NON_VISIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_ANNOTATION;
-import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_CONST;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
@@ -43,7 +42,6 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_MISSING_
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_NON_VISIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_ANNOTATION;
-import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_CONST;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
@@ -473,10 +471,11 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		if (s instanceof TField) { // const only defined on TField & TStructuralField
 			TField sF = (TField) s;
 			if (sF.isConst()) { // 2. const
-				if (!consumptionConflict) { // avoid consequential errors
-					messageOverrideConst(redefinitionType, m, sF);
-				}
-				return OverrideCompatibilityResult.ERROR;
+				// By GH-186 const redefinition is allowed.
+				// if (!consumptionConflict) { // avoid consequential errors
+				// messageOverrideConst(redefinitionType, m, sF);
+				// }
+				// return OverrideCompatibilityResult.ERROR;
 			}
 		}
 
@@ -732,14 +731,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				CLF_OVERRIDE_FINAL,
 				IssueUserDataKeys.CLF_OVERRIDE_FINAL.OVERRIDDEN_MEMBER_URI,
 				EcoreUtil.getURI(overridden).toString());
-	}
-
-	private void messageOverrideConst(RedefinitionType redefinitionType, TMember overriding, TField overridden) {
-		String message = getMessageForCLF_OVERRIDE_CONST(
-				validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
-				validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
-		addIssueToMemberOrInterfaceReference(redefinitionType, overriding, overridden, message,
-				CLF_OVERRIDE_CONST);
 	}
 
 	/**

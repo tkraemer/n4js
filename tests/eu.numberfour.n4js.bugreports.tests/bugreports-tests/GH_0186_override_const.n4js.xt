@@ -10,7 +10,7 @@ class A {
 class B extends A {
 
 	// noerror --> "The static field B.X cannot override const static field A.X." at "X"
-    // XPECT errors --> "The const field B.X overriding const field A.Y must be annotated with @Override." at "X"
+    // XPECT errors --> "The const field B.X overriding const field A.X must be annotated with @Override." at "X"
     const X = "x2";
 
     @Override
