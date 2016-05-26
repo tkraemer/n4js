@@ -24,6 +24,6 @@
 
 
 
-// XPECT contentAssistList at 'new <|>ClassA()' display 'ClassA' --> "ClassA - proposal.contentassist.A"
+// XPECT contentAssistList at 'new <|>ClassA()' display 'ClassA' --> "ClassA - proposal/contentassist/A"
 new ClassA();
 

@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import { IInstrumentedTest } from "n4/mangel/mangeltypes/IInstrumentedTest"
+import {ITestReporter} from "n4/mangel/mangeltypes/ITestReporter"
+import {ResultGroups} from "n4/mangel/mangeltypes/ResultGroups"
+import { TestMethodDescriptor } from "n4/mangel/mangeltypes/TestMethodDescriptor"
+import {TestResult} from "n4/mangel/mangeltypes/TestResult"
+import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
+import { TestStatus } from "n4/mangel/mangeltypes/TestStatus"
+import * as lib_fs from "fs"
+import * as os from "os"
+//import * as xmlbuilder from "xmlbuilder" jakub TODO
+const xmlBuilder: any+ = System._nodeRequire("xmlbuilder");
+
+function isOK(testResult: TestResult): boolean {
+    var status = testResult.testStatus;
+    return status === TestStatus.passed || status.startsWith(TestStatus.skipped);
+}
+
+export public class ~XUnitReportSpec {
+    /**
+     * Output jUnit/xUnit report file.
+     */
+    public xunitReportFile: string;
+    
+    /**
+     * jUnit/xUnit report name.
+     */
+    public xunitReportName: string?;
+    
+    /**
+     * jUnit/xUnit report package name.
+     */
+    public xunitReportPackage: string?;
+}
+
+export public class XUnitReporter implements ITestReporter {
+    @Inject
+    @Override public spy: TestSpy;
+
+    public spec = {} as XUnitReportSpec;
+
+    private startTime: Date;
+    private resultsMap = new Map<string, TestResult>();
+
+    private testingStarted(numAllGroups: number, sid: string, numAllTests: number): void {
+        this.startTime = new Date();
+    }
+
+    private testFinished(group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult) {
+        this.resultsMap.set(group.name + "#" + test.name, testResult);
+    }
+
+    private async testingFinished(resultGroups: ResultGroups): void {
+        let spec = this.spec,
+            endTime = Date.now(),
+            xml = xmlBuilder.create("testsuites"),
+            suite = xml.ele("testsuite", {
+                name: spec.xunitReportName,
+                package: spec.xunitReportPackage,
+                timestamp: this.startTime.toISOString().substring(0, 19),
+                id: 0,
+                hostname: os.hostname()
+            }),
+            suiteProps = suite.ele("properties");
+
+        suiteProps.ele("property", { name: "os.platform", value: os.platform() });
+        suiteProps.ele("property", { name: "node.version", value: process.version });
+
+        let skipped = 0,
+            errors = 0,
+            failures = 0;
+
+        Array.from(this.resultsMap.keys()).sort().forEach(k => {
+            let result = this.resultsMap.get(k);
+
+            var hashIndex = k.lastIndexOf("#"),
+                spec = suite.ele("testcase", {
+                    name: k.substring(hashIndex + 1),
+                    time: result.elapsedTime / 1000,
+                    classname: k.substring(0, hashIndex)
+                });
+            if (isOK(result)) {
+                if (result.testStatus.startsWith(TestStatus.skipped)) {
+                    spec.ele("skipped", {});
+                    ++skipped;
+                }
+            } else {
+                ++failures;
+                if (result.testStatus === TestStatus.error) {
+                    ++errors;
+                }
+                spec.ele(result.testStatus === TestStatus.failed ? "failure" : "error", {
+                    type: "",
+                    message: result.message
+                }).text((result.trace || []).join("\n"));
+            }
+        });
+
+        suite.att("tests", this.resultsMap.size);
+        suite.att("errors", errors);
+        suite.att("skipped", skipped);
+        suite.att("failures", failures);
+        suite.att("time", (endTime - this.startTime.getTime()) / 1000);
+
+        if (spec.xunitReportFile) {
+            await lib_fs.writeFile(this.spec.xunitReportFile, xml.end({ pretty: true }), { encoding: "UTF-8" });
+        }
+    }
+    
+
+    @Override public async register() {
+        this.spy.testingStarted.add(this.testingStarted.bind(this));
+        this.spy.testFinished.add(this.testFinished.bind(this));
+        this.spy.testingFinished.add(this.testingFinished.bind(this));
+        return this;
+    }
+}
+
+/* -*- mode: typescript;-*- */

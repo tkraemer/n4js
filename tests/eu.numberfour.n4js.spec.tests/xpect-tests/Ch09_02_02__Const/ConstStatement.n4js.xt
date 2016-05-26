@@ -15,3 +15,18 @@ const c1 : number = 5;
 
 // XPECT noerrors --> 
 const c2 : number = 5;
+
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+++c2;
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+c2++;
+
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+(c2)++;
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+++(c2);
+
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+(c2) *= 5;
+// XPECT errors --> "Const variable c2 is read-only." at "c2"
+c2 *= 5;

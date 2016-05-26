@@ -25,6 +25,7 @@ import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 
 import com.google.common.base.Predicate;
 
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
 import eu.numberfour.n4js.ts.types.TModule;
 
@@ -64,7 +65,8 @@ public class N4JSImportedNamespaceAwareLocalScopeProvider extends ImportedNamesp
 		TModule module = (TModule) res.getContents().get(1);
 		if (module.isStaticPolyfillModule()) { // limit to situations of resources, that contain at least
 			// one @StaticPolyfill
-			normalizers.add(createImportedNamespaceResolver(module.getQualifiedName() + ".*", false));
+			normalizers.add(createImportedNamespaceResolver(
+					module.getQualifiedName() + N4JSQualifiedNameConverter.DELIMITER + "*", false));
 		}
 
 		if (!normalizers.isEmpty()) {
@@ -79,7 +81,8 @@ public class N4JSImportedNamespaceAwareLocalScopeProvider extends ImportedNamesp
 	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
 		// "#global#
 		List<ImportNormalizer> result = newArrayList();
-		result.add(createImportedNamespaceResolver(N4TSQualifiedNameProvider.GLOBAL_NAMESPACE_SEGMENT + ".*",
+		result.add(createImportedNamespaceResolver(
+				N4TSQualifiedNameProvider.GLOBAL_NAMESPACE_SEGMENT + N4JSQualifiedNameConverter.DELIMITER + "*",
 				ignoreCase));
 		return result;
 	}

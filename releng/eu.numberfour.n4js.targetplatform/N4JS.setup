@@ -303,7 +303,7 @@
     <requirement
         name="PathToolsFeature.feature.group"/>
     <repository
-        url="http://pathtools.googlecode.com/svn/trunk/PathToolsUpdateSite"/>
+        url="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -353,9 +353,6 @@
     <targlet
         name="N4JS-N4Target Platform"
         activeRepositoryList="${n4js.target.platform}">
-      <requirement
-          name="PathToolsFeature.feature.group"
-          versionRange="[1.0.67,1.0.68)"/>
       <requirement
           name="com.google.guava"
           versionRange="[15.0.0,15.0.1)"/>
@@ -660,6 +657,12 @@
       <requirement
           name="org.xpect.sdk.feature.group"
           versionRange="[0.1.0,0.1.1)"/>
+      <requirement
+          name="PathToolsFeature.feature.group"
+          versionRange="[1.0.67,1.0.68)"/>    
+      <requirement
+          name="org.eclipse.rse.feature.group"
+          versionRange="[3.7.0,3.7.1)"/>
       <repositoryList
           name="N4JS_Mars">
         <repository
@@ -689,7 +692,7 @@
         <repository
             url="http://meysholdt.github.io/xtext_stateful_lexer/updatesite"/>
         <repository
-            url="http://pathtools.googlecode.com/svn/trunk/PathToolsUpdateSite"/>
+            url="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
         <repository
             url="http://sourceforge.net/projects/eclipsejsonedit/files/update"/>
         <repository

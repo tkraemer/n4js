@@ -1,6 +1,12 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
 
 
+// deactivated the entire file because as of GH-43 all these cases are disallowed
+// TODO IDE-2226 reenable these test cases if support for definition-site variance is added / otherwise remove this file
+
+
+/*
+
 class A {}
 class B {}
 class C {}
@@ -26,9 +32,9 @@ interface I_test1 extends I2a<A>, I2b<B> {}
 
 var i_test1 : I_test1;
 
-// XPECT errors --> "X is not a subtype of union{A,B}." at "x"
+// X---PECT errors --> "X is not a subtype of union{A,B}." at "x"
 i_test1.m(x);
-// XPECT errors --> "intersection{A,B} is not a subtype of X." at "i_test1.n()"
+// X---PECT errors --> "intersection{A,B} is not a subtype of X." at "i_test1.n()"
 x = i_test1.n();
 
 
@@ -44,9 +50,9 @@ interface I_test2 extends I3ab, I3cd {}
 
 var i_test2 : I_test2;
 
-// XPECT errors --> "X is not a subtype of union{A,B,C,D}." at "x"
+// X---PECT errors --> "X is not a subtype of union{A,B,C,D}." at "x"
 i_test2.m(x);
-// XPECT errors --> "intersection{A,B,C,D} is not a subtype of X." at "i_test2.n()"
+// X---PECT errors --> "intersection{A,B,C,D} is not a subtype of X." at "i_test2.n()"
 x = i_test2.n();
 
 
@@ -62,15 +68,15 @@ interface I_test3<S,T,U,V> extends I4a<S,T>, I4b<U,V> {}
 
 var i_test3 : I_test3<A,B,C,D>;
 
-// XPECT errors --> "X is not a subtype of union{A,B,C,D}." at "x"
+// X---PECT errors --> "X is not a subtype of union{A,B,C,D}." at "x"
 i_test3.m(x);
-// XPECT errors --> "intersection{A,B,C,D} is not a subtype of X." at "i_test3.n()"
+// X---PECT errors --> "intersection{A,B,C,D} is not a subtype of X." at "i_test3.n()"
 x = i_test3.n();
 
 
 
 
-
+*/
 
 
 

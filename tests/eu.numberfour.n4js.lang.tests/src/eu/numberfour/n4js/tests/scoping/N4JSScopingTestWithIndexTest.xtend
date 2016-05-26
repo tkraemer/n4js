@@ -60,34 +60,19 @@ class N4JSScopingTestWithIndexTest {
 	def void testImportExportMemberDeserialize() {
 		doTestImportExportMemberDeserialize("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js", "Supplier",
 			"src/eu/numberfour/n4js/tests/scoping/Client.n4js",
-//		// If there are any problems here, switch to string-based comparison (eu.numberfour.n4js.resource.UserdataMapper.BINARY = false) 
-//      // with this equivalent value:			
-//			'''
-//				<?xml version="1.0" encoding="ASCII"?>
-//				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu.numberfour.n4js.tests.scoping.Supplier" vendorID="eu.numberfour" projectName="eu_numberfour_n4js_lang_tests" moduleLoader="N4JS">
-//				  <astElement href="#/0"/>
-//				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
-//				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
-//				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
-//				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
-//				    </ownedMembers>
-//				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
-//				  </topLevelTypes>
-//				</types:TModule>
-//			'''
-			"iWVtZgoNGgoAAgEBJmh0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvdHMvVHlwZXMBJmh0dHA6Ly93d3cubnVtYmVyZm91"+
-			"ci5ldS9pZGUvdHMvVHlwZXMCLwEIVE1vZHVsZQILYXN0RWxlbWVudAICJ2h0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUv"+
-			"bjRqcy9ONEpTAidodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL240anMvTjRKUwIvAQdTY3JpcHQAAwYjbnVsbAMvMAQO"+
-			"cXVhbGlmaWVkTmFtZSpldS5udW1iZXJmb3VyLm40anMudGVzdHMuc2NvcGluZy5TdXBwbGllcgUJdmVuZG9ySUQOZXUubnVt"+
-			"YmVyZm91cgYMcHJvamVjdE5hbWUeZXVfbnVtYmVyZm91cl9uNGpzX2xhbmdfdGVzdHMHDW1vZHVsZUxvYWRlcgVONEpTDA50"+
-			"b3BMZXZlbFR5cGVzAgMBAgdUQ2xhc3MCBW5hbWUJU3VwcGxpZXIDDWV4cG9ydGVkTmFtZQlTdXBwbGllcgYNb3duZWRNZW1i"+
-			"ZXJzAgQBAwhUTWV0aG9kAgVuYW1lBGZvbwcLYXN0RWxlbWVudAUCAhRONE1ldGhvZERlY2xhcmF0aW9uAAM5LzAvQHNjcmlw"+
-			"dEVsZW1lbnRzLjAvQGV4cG9ydGVkRWxlbWVudC9Ab3duZWRNZW1iZXJzUmF3LjAKDnJldHVyblR5cGVSZWYGAylodHRwOi8v"+
-			"d3d3Lm51bWJlcmZvdXIuZXUvaWRlL3RzL1R5cGVSZWZzBClodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL3RzL1R5cGVS"+
-			"ZWZzAi8BFVBhcmFtZXRlcml6ZWRUeXBlUmVmBQ1kZWNsYXJlZFR5cGUDARIKaGFzTm9Cb2R5ARMdZGVjbGFyZWRNZW1iZXJB"+
-			"Y2Nlc3NNb2RpZmllcgdwdWJsaWMBCQthc3RFbGVtZW50BwIDE040Q2xhc3NEZWNsYXJhdGlvbgADJi8wL0BzY3JpcHRFbGVt"+
-			"ZW50cy4wL0BleHBvcnRlZEVsZW1lbnQBAQE="
-			);
+			'''
+				<?xml version="1.0" encoding="ASCII"?>
+				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/Supplier" vendorID="eu.numberfour" projectName="eu.numberfour.n4js.lang.tests" moduleLoader="N4JS">
+				  <astElement href="#/0"/>
+				  <topLevelTypes xsi:type="types:TClass" name="Supplier" exportedName="Supplier">
+				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
+				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
+				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
+				    </ownedMembers>
+				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
+				  </topLevelTypes>
+				</types:TModule>
+			''');
 	}
 
 	/*
@@ -98,29 +83,25 @@ class N4JSScopingTestWithIndexTest {
 	def void testImportExportMemberDeserializeWithBuiltIn() {
 		doTestImportExportMemberDeserialize("src/eu/numberfour/n4js/tests/scoping/SupplierWithBuiltIn.n4js",
 			"SupplierWithBuiltIn", "src/eu/numberfour/n4js/tests/scoping/ClientWithBuiltIn.n4js",
-//		// If there are any problems here, switch to string-based comparison (eu.numberfour.n4js.resource.UserdataMapper.BINARY = false) 
-//      // with this equivalent value:			
-//			'''
-//				<?xml version="1.0" encoding="ASCII"?>
-//				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu.numberfour.n4js.tests.scoping.SupplierWithBuiltIn" vendorID="eu.numberfour" projectName="eu_numberfour_n4js_lang_tests" moduleLoader="N4JS">
-//				  <astElement href="#/0"/>
-//				  <topLevelTypes xsi:type="types:TClass" name="SupplierWithBuiltIn" exportedName="SupplierWithBuiltIn">
-//				    <ownedMembers xsi:type="types:TField" name="s" declaredMemberAccessModifier="public">
-//				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
-//				      <typeRef xsi:type="typeRefs:ParameterizedTypeRef">
-//				        <declaredType href="n4scheme:/builtin_js.n4ts#//@types.3"/>
-//				      </typeRef>
-//				    </ownedMembers>
-//				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
-//				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.1"/>
-//				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
-//				    </ownedMembers>
-//				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
-//				  </topLevelTypes>
-//				</types:TModule>
-//			'''
-			"iWVtZgoNGgoAAgEBJmh0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvdHMvVHlwZXMBJmh0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvdHMvVHlwZXMCLwEIVE1vZHVsZQILYXN0RWxlbWVudAICJ2h0dHA6Ly93d3cubnVtYmVyZm91ci5ldS9pZGUvbjRqcy9ONEpTAidodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL240anMvTjRKUwIvAQdTY3JpcHQAAwYjbnVsbAMvMAQOcXVhbGlmaWVkTmFtZTVldS5udW1iZXJmb3VyLm40anMudGVzdHMuc2NvcGluZy5TdXBwbGllcldpdGhCdWlsdEluBQl2ZW5kb3JJRA5ldS5udW1iZXJmb3VyBgxwcm9qZWN0TmFtZR5ldV9udW1iZXJmb3VyX240anNfbGFuZ190ZXN0cwcNbW9kdWxlTG9hZGVyBU40SlMMDnRvcExldmVsVHlwZXMCAwECB1RDbGFzcwIFbmFtZRRTdXBwbGllcldpdGhCdWlsdEluAw1leHBvcnRlZE5hbWUUU3VwcGxpZXJXaXRoQnVpbHRJbgYNb3duZWRNZW1iZXJzAwQBAwdURmllbGQCBW5hbWUCcwQLYXN0RWxlbWVudAUCAhNONEZpZWxkRGVjbGFyYXRpb24AAzkvMC9Ac2NyaXB0RWxlbWVudHMuMC9AZXhwb3J0ZWRFbGVtZW50L0Bvd25lZE1lbWJlcnNSYXcuMAkdZGVjbGFyZWRNZW1iZXJBY2Nlc3NNb2RpZmllcgdwdWJsaWMMCHR5cGVSZWYGAylodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL3RzL1R5cGVSZWZzBClodHRwOi8vd3d3Lm51bWJlcmZvdXIuZXUvaWRlL3RzL1R5cGVSZWZzAi8BFVBhcmFtZXRlcml6ZWRUeXBlUmVmBQ1kZWNsYXJlZFR5cGUHAQQRVE9iamVjdFByb3RvdHlwZQAFGm40c2NoZW1lOi9idWlsdGluX2pzLm40dHMLLy9AdHlwZXMuMwEBCAEFCFRNZXRob2QCBW5hbWUEZm9vBwthc3RFbGVtZW50CQIDFE40TWV0aG9kRGVjbGFyYXRpb24AAzkvMC9Ac2NyaXB0RWxlbWVudHMuMC9AZXhwb3J0ZWRFbGVtZW50L0Bvd25lZE1lbWJlcnNSYXcuMQoOcmV0dXJuVHlwZVJlZgoDAQUDARIKaGFzTm9Cb2R5ARMdZGVjbGFyZWRNZW1iZXJBY2Nlc3NNb2RpZmllcgdwdWJsaWMBCQthc3RFbGVtZW50CwIEE040Q2xhc3NEZWNsYXJhdGlvbgADJi8wL0BzY3JpcHRFbGVtZW50cy4wL0BleHBvcnRlZEVsZW1lbnQBAQE="
-			);
+			'''
+				<?xml version="1.0" encoding="ASCII"?>
+				<types:TModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:typeRefs="http://www.numberfour.eu/ide/ts/TypeRefs" xmlns:types="http://www.numberfour.eu/ide/ts/Types" qualifiedName="eu/numberfour/n4js/tests/scoping/SupplierWithBuiltIn" vendorID="eu.numberfour" projectName="eu.numberfour.n4js.lang.tests" moduleLoader="N4JS">
+				  <astElement href="#/0"/>
+				  <topLevelTypes xsi:type="types:TClass" name="SupplierWithBuiltIn" exportedName="SupplierWithBuiltIn">
+				    <ownedMembers xsi:type="types:TField" name="s" declaredMemberAccessModifier="public">
+				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
+				      <typeRef xsi:type="typeRefs:ParameterizedTypeRef">
+				        <declaredType href="#m2m!n4scheme:/builtin_js.n4ts%23//@types.3"/>
+				      </typeRef>
+				    </ownedMembers>
+				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
+				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.1"/>
+				      <returnTypeRef xsi:type="typeRefs:ParameterizedTypeRef" declaredType="//@topLevelTypes.0"/>
+				    </ownedMembers>
+				    <astElement href="#/0/@scriptElements.0/@exportedElement"/>
+				  </topLevelTypes>
+				</types:TModule>
+			''');
 	}
 
 	def void doTestImportExportMemberDeserialize(String supplierFileName, String supplierClassName,
@@ -143,9 +124,10 @@ class N4JSScopingTestWithIndexTest {
 
 		val eoDescs = resourceDescriptions.getResourceDescription(supplierJS).exportedObjects
 		assertEquals("Wrong number, found: " + eoDescs.map[it.name], 2, eoDescs.size)
-		assertEquals("Stored user data", supplierUserData,
-			eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName].getUserData(
-				UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))
+		assertEquals("Stored user data", supplierUserData, UserdataMapper.getDeserializedModuleFromDescriptionAsString(
+				eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName], supplierJS))
+//			eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName].getUserData(
+//				UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))
 
 		rs.resources.forEach[it.unload];
 
@@ -249,7 +231,7 @@ class N4JSScopingTestWithIndexTest {
 		clientResource.load(
 			new StringInputStream(
 				'''
-					import { Supplier } from "eu.numberfour.n4js/tests/scoping/Supplier"
+					import { Supplier } from "eu/numberfour/n4js/tests/scoping/Supplier"
 					var a: Supplier;
 					var b: Supplier;
 					a.foo();
@@ -257,7 +239,7 @@ class N4JSScopingTestWithIndexTest {
 				'''), emptyMap)
 
 		EcoreUtil.resolveAll(clientResource)
-		assertTrue(clientResource.errors.isEmpty)
+		assertTrue(clientResource.errors.toString, clientResource.errors.isEmpty)
 		supplierResource = rs.getResource(supplierJS, false)
 		assertNotNull(supplierResource)
 		assertFalse("Resource was loaded transparently due to index access in scope provider", supplierResource.loaded)

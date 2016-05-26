@@ -21,6 +21,7 @@ import org.eclipse.xtext.findReferences.TargetURICollector;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.linking.impl.ImportedNamesAdapter;
+import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.parser.IAstFactory;
 import org.eclipse.xtext.parser.IParser;
@@ -56,6 +57,7 @@ import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
 import eu.numberfour.n4js.internal.N4JSRuntimeCore;
 import eu.numberfour.n4js.naming.N4JSImportedNamesAdapter;
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameProvider;
 import eu.numberfour.n4js.parser.BadEscapementAwareMessageProvider;
 import eu.numberfour.n4js.parser.N4JSHiddenTokenHelper;
@@ -105,6 +107,7 @@ import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
+@SuppressWarnings("restriction")
 public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeModule {
 
 	/**
@@ -271,6 +274,13 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	@Override
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return N4JSScopeProvider.class;
+	}
+
+	/**
+	 * Binds a custom qualified name converter changing the delimiter to "/".
+	 */
+	public Class<? extends IQualifiedNameConverter> bindIQualifiedNameConverter() {
+		return N4JSQualifiedNameConverter.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment

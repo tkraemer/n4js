@@ -52,18 +52,20 @@ var [a4,b4] = v4;
 
 // multiple implementation of IterableN<>
 
+// TODO IDE-2226 revisit test case
+/*
 interface Intermediate<I1,I2> extends Iterable2<I1,I2> {}
 abstract class X8 implements Iterable2<C,D> {}
 abstract class Y8 extends X8 implements Intermediate<A,B> {}
 abstract class Z8 extends Y8 implements Iterable3<E,F,G> {}
 
 var v8 : Z8;
-// XPECT type of 'a8' --> intersection{A,C,E}
-// XPECT type of 'b8' --> intersection{B,D,F}
-// XPECT type of 'c8' --> intersection{B,D,G}
-// XPECT type of 'd8' --> intersection{B,D,G}
+// X---PECT type of 'a8' --> intersection{A,C,E}
+// X---PECT type of 'b8' --> intersection{B,D,F}
+// X---PECT type of 'c8' --> intersection{B,D,G}
+// X---PECT type of 'd8' --> intersection{B,D,G}
 var [a8,b8,c8,d8] = v8;
-
+*/
 
 // combination of IterableN<> and nominal implementation of Iterable<>
 // TODO cannot test this yet, because of another, unrelated bug

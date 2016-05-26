@@ -96,7 +96,7 @@ public class NodeEngineCommandBuilder {
 		 *
 		 * keep it in sync
 		 */
-		return "GLOBAL.$executionData = " + data + ";";
+		return "global.$executionData = " + data + ";";
 	}
 
 	private String generateNativeLoad(String moduleName) {

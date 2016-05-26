@@ -133,7 +133,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import * as N from 'a/X';
 			import * as N from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_DECLARATION, IssueCodes.IMP_STMT_DUPLICATE_NAMESPACE, "Duplicate namespace import statement with name N and imported module a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_DECLARATION, IssueCodes.IMP_STMT_DUPLICATE_NAMESPACE, "Duplicate namespace import statement with name N and imported module a/X.")
 	}
 
 	@Test
@@ -142,7 +142,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { X } from 'a/X';
 			import { X } from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_DECLARATION, IssueCodes.IMP_STMT_DUPLICATE_NAMED, "Duplicate named import statement with local name X and imported module a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_DECLARATION, IssueCodes.IMP_STMT_DUPLICATE_NAMED, "Duplicate named import statement with local name X and imported module a/X.")
 	}
 
 	@Test
@@ -152,7 +152,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import * as N2 from 'a/X';
 			var x: N1.X;
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE_NAMESPACE, "Elements of a.X are already imported in namespace N1.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE_NAMESPACE, "Elements of a/X are already imported in namespace N1.")
 	}
 
 	@Test
@@ -161,7 +161,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { Z } from 'a/X';
 			import { Z as Z1 } from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a.X is already imported as Z.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a/X is already imported as Z.")
 	}
 
 	@Test
@@ -170,7 +170,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { Z as Z1 } from 'a/X';
 			import { Z } from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a.X is already imported as Z1.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a/X is already imported as Z1.")
 	}
 
 	@Test
@@ -179,7 +179,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { Z as Z1 } from 'a/X';
 			import { Z as Z2 } from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a.X is already imported as Z1.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a/X is already imported as Z1.")
 	}
 
 	@Test
@@ -188,7 +188,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import * as NX from 'a/X';
 			import { Z } from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a.X is already imported as NX.Z.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a/X is already imported as NX.Z.")
 	}
 
 	@Test
@@ -197,7 +197,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { Z } from 'a/X';
 			import * as NX from 'a/X';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a.X is already imported as Z.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_DUPLICATE, "Z from a/X is already imported as Z.")
 	}
 
 	@Test
@@ -206,7 +206,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import * as NX from 'a/X';
 			import * as NX from 'b/Y';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name NX is already used as namespace name for a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name NX is already used as namespace name for a/X.")
 	}
 
 	@Test
@@ -215,7 +215,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { X } from 'a/X';
 			import { Y as X } from 'b/Y';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name X is already used as name for named import X from a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name X is already used as name for named import X from a/X.")
 	}
 
 	@Test
@@ -224,7 +224,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import { X as N } from 'a/X';
 			import * as N from 'b/Y';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name N is already used as alias name for named import X from a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name N is already used as alias name for named import X from a/X.")
 	}
 
 	@Test
@@ -233,7 +233,7 @@ class AT_225_ValidateConflictingImportOnlyOnFirstUsageOfConcreteTypeTest {
 			import * as N from 'a/X';
 			import { Y as N } from 'b/Y';
 		'''.parse(rs)
-		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name N is already used as namespace name for a.X.")
+		script.assertError(N4JSPackage.Literals.IMPORT_SPECIFIER, IssueCodes.IMP_LOCAL_NAME_CONFLICT, "Name N is already used as namespace name for a/X.")
 	}
 
 	@Test

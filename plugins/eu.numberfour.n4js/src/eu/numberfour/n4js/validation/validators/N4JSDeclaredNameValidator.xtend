@@ -73,6 +73,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
 
 /**
  */
@@ -145,7 +146,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkExportableNameConflictsWithBuiltIn(ExportableElement exportableElement) {
 		if (exportableElement instanceof AnnotableElement) {
 			if (AnnotationDefinition.GLOBAL.hasAnnotation(exportableElement)) {
-				if (AnnotationDefinition.POLYFILL.hasAnnotation(exportableElement)) {
+				if (exportableElement.isPolyfill) {
 					return; // of course it is possible to fill predefined types
 				}
 				val name = exportableElement.declaredName;
@@ -316,7 +317,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 								} else {
 									if (!( // do not create issues for polyfills conflicting with imports, as they might fill them
 										dupeEO instanceof N4ClassDeclaration && baseEO instanceof ImportSpecifier &&
-										AnnotationDefinition.POLYFILL.hasAnnotation(dupeEO as N4ClassDeclaration)
+										(dupeEO as N4ClassDeclaration).isPolyfill
 										// TODO IDE-1735 does this check need to be activated for static polyfills?
 									)) {
 										addIssue(

@@ -67,7 +67,7 @@ class ApiImplComparePluginUITest extends AbstractApiImplCompareTest {
 
 		val doc = projectCompareTreeHelper.readDocumentation(comparison, #[0]);
 
-		val clazz = comparison.findEntryForType("x.y.M.Clazz")
+		val clazz = comparison.findEntryForType("x/y/M/Clazz")
 		assertNotNull(clazz)
 		assertEquals("Clazz",clazz.elementNameForEntry)
 		assertEquals(

@@ -1,0 +1,145 @@
+/*
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+import NodeTestOptions from "n4/mangel/runner/node/NodeTestOptions"
+import NodeTestAPI from "n4/mangel/runner/node/NodeTestAPI"
+import * as lib_nomnom+ from "nomnom-patched/nomnom"
+import * as lib_path from "path"
+
+export default public class NodeTestCLI {
+    public static toCommandLine(options: NodeTestOptions): Array<string> {
+        let optionsObj: Object = options,
+            res: Array<string> = [];
+    
+        Object.keys(optionsObj).forEach(k => {
+            const info: Object+ = nomnomOptions[k] as Object,
+                  v = optionsObj[k];
+
+            if (info && typeof v !== "undefined") {
+                k = "--" + k;
+                if (Array.isArray(v)) {
+                    const positionedArg = typeof info.position !== "undefined";
+                    (v as Array<string>).forEach(vv => positionedArg ? res.push(vv) : res.push(k, vv));
+                } else {
+                    if (typeof v !== "boolean") {
+                        res.push(k, v as string);
+                    } else if (v) {
+                        res.push(k);
+                    }
+                }
+            }
+        });
+    
+        return res;
+    }
+
+    public static parseCommandLine(): NodeTestOptions {
+        return lib_nomnom.script("n4js-mangelhaft")
+                         .help(nomnomHelp)
+                         .options(nomnomOptions)
+                         .parse() as NodeTestOptions;
+    }
+    
+    @Final public static async run(): void {
+        let options = this.parseCommandLine();
+        if (options) {
+            await NodeTestAPI.exec(options);
+        }
+    }
+}
+
+const cwd = process.cwd();
+function resolvePath(p: string): string {
+    if (p.startsWith("http://")) {
+        return p;
+    }
+    return lib_path.resolve(cwd, p);
+}
+
+const nomnomOptions: Object = {
+    scan: {
+        abbr: "s",
+        list: true,
+        metavar: "PATH",
+        transform: resolvePath,
+        help: "Scan for all projects in directory."
+    },
+    projects: {
+        position: 0,
+        list: true,
+        metavar: "PATH",
+        transform: resolvePath,
+        help: "Project directories."
+    },
+    filter: {
+        abbr: "f",
+        list: true,
+        help: "Filter for matching test cases."
+    },
+    define: {
+        abbr: "D",
+        list: true,
+        help: "Definition of N4JS runtime options per key=value."
+    },
+    compile: {
+        abbr: "c",
+        flag: true,
+        help: "Compiles the given targets, generating a test catalog."
+    },
+    testCatalog: {
+        default: "http://localhost:8080/n4.ide/testing/sessions/testcatalog",
+        metavar: "URL|PATH",
+        transform: resolvePath,
+        help: "Test catalog (JSON) to be used. Option --compile will write the file, switches to temp file in case of URL."
+    },
+    targetPlatformFile: {
+        abbr: "tp",
+        metavar: "PATH",
+        transform: resolvePath,
+        help: "NPM dependency definitions."
+    },
+    targetPlatformInstallLocation: {
+        abbr: "tl",
+        metavar: "PATH",
+        transform: resolvePath,
+        help: "NPM dependencies install location."
+    },
+    targetPlatformSkipInstall: {
+        flag: true,
+        help: "Skips NPM dependency installation, assuming already existing."
+    },
+    xunitReportFile: {
+        metavar: "PATH",
+        transform: resolvePath,
+        help: "jUnit/xUnit report output file."
+    },
+    xunitReportName: {
+        default: "N4JS Mangelhaft test",
+        help: "jUnit/xUnit report name."
+    },
+    xunitReportPackage: {
+        help: "jUnit/xUnit report package name."
+    },
+    debug: {
+        flag: true,
+        abbr: "d",
+        help: "Debug output."
+    }
+};
+
+const nomnomHelp = `Runs N4JS mangelhaft testing.
+
+By default n4js-mangelhaft will retrieve the test catalog from a running IDE and just runs the tests.
+On CI systems, you may want to compile and run the tests in one go:
+
+$ n4js-mangelhaft --compile --xunitReportFile ./jenkins/reports.xml --scan ./projects
+`;
+
+/* -*- mode: typescript;-*- */

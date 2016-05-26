@@ -60,6 +60,9 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
+import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.n4JS.AnnotableElement
+import eu.numberfour.n4js.ts.types.TAnnotableElement
 
 /**
  * Intended for small, static utility methods that
@@ -78,6 +81,7 @@ class N4JSLanguageUtils {
 	 * See {@link ComputedPropertyNameValueConverter#SYMBOL_IDENTIFIER_PREFIX}.
 	 */
 	public static final String SYMBOL_IDENTIFIER_PREFIX = ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX;
+
 
 	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
@@ -355,4 +359,39 @@ class N4JSLanguageUtils {
 		}
 		return false;
 	}
+	
+	/** Checks presence of {@link AnnotationDefinition#POLYFILL} annotation. See also {@link N4JSLanguageUtils#isStaticPolyfill(AnnotableElement) }*/	
+	def static boolean isPolyfill(AnnotableElement astElement) {
+		return AnnotationDefinition.POLYFILL.hasAnnotation( astElement );
+	}
+
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL} annotation. See also {@link N4JSLanguageUtils#isPolyfill(AnnotableElement) }*/	
+	def static boolean isStaticPolyfill(AnnotableElement astElement) {
+		return AnnotationDefinition.STATIC_POLYFILL.hasAnnotation( astElement );
+	}
+	
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module. 
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(AnnotableElement) }*/	
+	def static boolean isContainedInStaticPolyfillModule(AnnotableElement astElement) {
+		return AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation( astElement ); // transitively inherited
+	}
+
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module. 
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(TAnnotableElement) }*/	
+	def static boolean isContainedInStaticPolyfillModule(TAnnotableElement tsElement) {
+		return AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation( tsElement ); // transitively inherited
+	}
+
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module. 
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(AnnotableElement) }*/	
+	def static boolean isContainedInStaticPolyfillAware(AnnotableElement astElement) {
+		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( astElement ); // transitively inherited
+	}
+
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module. 
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(TAnnotableElement) }*/	
+	def static boolean isContainedInStaticPolyfillAware(TAnnotableElement tsElement) {
+		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( tsElement ); // transitively inherited
+	}
+	
 }

@@ -10,7 +10,7 @@
 
 // XPECT noerrors --> "duplicate error is reported on next (duplicating) error"
 import { Class2 as X } from "validation/imports/MultipleClasses"
-// XPECT errors --> "Class2 from validation.imports.MultipleClasses is already imported as X." at "Class2"
+// XPECT errors --> "Class2 from validation/imports/MultipleClasses is already imported as X." at "Class2"
 import { Class2 } from "validation/imports/MultipleClasses"
 // XPECT errors --> "Import of Class2 cannot be resolved." at "Class2"
 var c : Class2;

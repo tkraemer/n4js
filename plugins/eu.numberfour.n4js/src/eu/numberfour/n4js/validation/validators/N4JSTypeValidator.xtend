@@ -274,15 +274,10 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		val tClassifier = classifierDecl.definedType as TClassifier;
 		if(tClassifier===null)
 			return; // broken AST
-		val typeVarsOfInterfaces =
-			tClassifier.implementedOrExtendedInterfaceRefs.map[it?.declaredType].filter(TInterface)
-			.map[typeVars].flatten.toList;
-		if(typeVarsOfInterfaces.empty)
-			return; // nothing to check
 		val G = newRuleEnvironment(classifierDecl);
 		G.recordInconsistentSubstitutions;
 		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
-		for(tv : typeVarsOfInterfaces) {
+		for(tv : G.getTypeMappingKeys()) {
 			if(!tv.declaredCovariant && !tv.declaredContravariant) {
 				val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
 				if(subst instanceof UnknownTypeRef) {

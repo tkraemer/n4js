@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.RandomAccess;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * Utility class for arrays.
@@ -49,6 +51,30 @@ public class Arrays2 {
 			result[i] = f.apply(array[i]);
 		}
 		return asList(result);
+	}
+
+	/**
+	 * Filters the elements from the array given as the argument. Always returns with a new array instance containing
+	 * all those elements from the original list whose class is assignable form the {@code predicate} class argument.
+	 *
+	 * @param array
+	 *            the input array to filter.
+	 * @param predicate
+	 *            the predicate class to filter.
+	 * @return a new type safe filtered array instance.
+	 */
+	public static <F, T extends F> T[] filter(final F[] array, final Class<T> predicate) {
+		checkNotNull(array, "array");
+		checkNotNull(predicate, "clazz");
+		final int size = array.length;
+		final List<T> result = Lists.newArrayListWithExpectedSize(size);
+		for (int i = 0; i < size; i++) {
+			final F actual = array[i];
+			if (null != actual && predicate.isAssignableFrom(actual.getClass())) {
+				result.add(predicate.cast(actual));
+			}
+		}
+		return Iterables.toArray(result, predicate);
 	}
 
 	/**

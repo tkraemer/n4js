@@ -55,6 +55,7 @@ import java.util.Collection
 import java.util.Collections
 import java.util.List
 import java.util.Map
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -660,6 +661,18 @@ class RuleEnvironmentExtensions {
 		return TypeUtils.wrapTypeInTypeRef(G.predefinedTypes.builtInTypeScope, type, typeArgs);
 	}
 
+	/**
+	 * Returns all type variables for which a type mapping is defined in the given rule environment.
+	 */
+	public static def Set<TypeVariable> getTypeMappingKeys(RuleEnvironment G) {
+		val result = newLinkedHashSet;
+		var env = G;
+		while(env!==null) {
+			result += env.getEnvironment().keySet().filter(TypeVariable);
+			env = env.getNext();
+		}
+		return result;
+	}
 	/**
 	 * Convenience method. Same as {@link #addTypeMapping(RuleEnvironment,TypeVariable,TypeArgument)},
 	 * but for adding several mappings.

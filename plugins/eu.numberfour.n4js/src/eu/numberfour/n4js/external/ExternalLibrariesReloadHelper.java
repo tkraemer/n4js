@@ -80,7 +80,11 @@ public class ExternalLibrariesReloadHelper {
 			return;
 		}
 
-		// Refresh the type definitions for the NPM packages if required.
+		if (monitor.isCanceled()) {
+			return;
+		}
+
+		// Refresh the type definitions for the npm packages if required.
 		if (refreshNpmDefinitions) {
 			final IStatus refreshStatus = npmManager.refreshInstalledNpmPackages(subMonitor.newChild(1));
 			if (!refreshStatus.isOK()) {

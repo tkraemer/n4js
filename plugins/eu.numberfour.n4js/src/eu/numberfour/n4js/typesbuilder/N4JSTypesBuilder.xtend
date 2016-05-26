@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.typesbuilder
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.ExportableElement
 import eu.numberfour.n4js.n4JS.ExportedVariableStatement
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
@@ -42,6 +41,8 @@ import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypesFactory
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.DerivedStateAwareResource
+
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
 
 /**
  * This class with its {@link N4JSTypesBuilder#createTModuleFromSource(DerivedStateAwareResource,boolean) createTModuleFromSource()}
@@ -95,51 +96,51 @@ public class N4JSTypesBuilder {
 
 //			UtilN4.takeSnapshotInGraphView("TB start (preLinking=="+preLinkingPhase+")",resource);
 
-			val script = parseResult.rootASTElement as Script
+			val script = parseResult.rootASTElement as Script;
 
-			val result = typesFactory.createTModule
-			var qualifiedModuleName = resource.qualifiedModuleName
+			val TModule result = typesFactory.createTModule;
+			var qualifiedModuleName = resource.qualifiedModuleName;
 			result.qualifiedName = qualifiedNameConverter.toString(qualifiedModuleName);
 			result.preLinkingPhase = preLinkingPhase;
 
-			val optionalProject = n4jscore.findProject(resource.URI)
+			val optionalProject = n4jscore.findProject(resource.URI);
 			if (optionalProject.present) {
-				val project = optionalProject.get
-				result.projectName = project.projectName.replace(".", "_")
-				result.vendorID = project.vendorID
-				result.moduleLoader = project.moduleLoader?.literal
+				val project = optionalProject.get;
+				result.projectName = project.projectName;
+				result.vendorID = project.vendorID;
+				result.moduleLoader = project.moduleLoader?.literal;
 
 				//main module
-				val mainModuleSpec = project.mainModule
+				val mainModuleSpec = project.mainModule;
 				if (mainModuleSpec !== null) {
-					result.mainModule = resource.qualifiedModuleName == specifierConverter.toQualifiedName(mainModuleSpec)
+					result.mainModule = resource.qualifiedModuleName == specifierConverter.toQualifiedName(mainModuleSpec);
 				}
 			}
 
-			result.copyAnnotations(script, preLinkingPhase)
+			result.copyAnnotations(script, preLinkingPhase);
 
-			script.buildNamespacesTypesFromModuleImports(result,preLinkingPhase)
+			script.buildNamespacesTypesFromModuleImports(result,preLinkingPhase);
 
 			// Setting Polyfill property.
-			result.staticPolyfillModule = AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(result)
-			result.staticPolyfillAware = AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation(result)
+			result.staticPolyfillModule = result.isContainedInStaticPolyfillModule;
+			result.staticPolyfillAware = result.isContainedInStaticPolyfillAware;
 
 			// create types for those TypeRefs that define a type if they play the role of an AST node
 			// (has to be done up-front, because in the rest of the types builder code we do not know
 			// where such a TypeRef shows up; to avoid having to check for them at every occurrence of
 			// a TypeRef, we do this here)
-			script.buildTypesFromTypeRefs(result,preLinkingPhase)
+			script.buildTypesFromTypeRefs(result,preLinkingPhase);
 
-			script.buildTypes(result,preLinkingPhase)
+			script.buildTypes(result,preLinkingPhase);
 
 			result.astElement = script;
 			script.module = result;
-			(resource as N4JSResource).sneakyAddToContent(result)
+			(resource as N4JSResource).sneakyAddToContent(result);
 
 //			UtilN4.takeSnapshotInGraphView("TB end (preLinking=="+preLinkingPhase+")",resource);
 
 		} else {
-			throw new IllegalStateException(resource.URI + " has no parse result.")
+			throw new IllegalStateException(resource.URI + " has no parse result.");
 		}
 	}
 

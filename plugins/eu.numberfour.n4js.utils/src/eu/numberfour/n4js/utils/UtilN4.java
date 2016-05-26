@@ -20,6 +20,7 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -39,6 +40,8 @@ import com.google.common.collect.ImmutableList;
  * Basic utility methods that do not require any N4JS-specific code.
  */
 public class UtilN4 {
+
+	private static Logger logger = Logger.getLogger(UtilN4.class);
 
 	private static final Iterable<Pair<String, String>> CHARS_TO_ESCAPED_CHARS = ImmutableList
 			.<Pair<String, String>> builder()
@@ -216,7 +219,7 @@ public class UtilN4 {
 	 * console, even if some code higher up in the call hierarchy catches and ignores the exception (e.g. Xsemantics).
 	 */
 	public static <T extends Throwable> T reportError(T exception) {
-		exception.printStackTrace(); // make sure we see this on the console (some clients eat up all exceptions!)
+		logger.error(exception.getMessage(), exception); // make sure we see this (some clients eat up all exceptions!)
 		return exception;
 	}
 

@@ -23,5 +23,5 @@ import * as Ndc from "validation/imports/DifferentClasses"
 var c : Ndc.Class2;
 var /*nasty*/x : X;
 
-b = 12;
-Ndc.a = b;
+var x3 = b;
+var x2 = Ndc.a;

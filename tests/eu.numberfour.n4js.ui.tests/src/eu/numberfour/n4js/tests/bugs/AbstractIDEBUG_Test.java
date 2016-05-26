@@ -18,7 +18,6 @@ import static eu.numberfour.n4js.tests.util.ProjectUtils.importProject;
 import static org.apache.log4j.Logger.getLogger;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
-import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanBuild;
 import static org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil.cleanWorkspace;
 
 import java.io.File;
@@ -28,11 +27,13 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil;
 import org.junit.Before;
 
 import com.google.common.base.Supplier;
 
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
+import eu.numberfour.n4js.utils.io.FileUtils;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -67,16 +68,31 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 	/**
 	 * Returns with the project importer for the {@link WorkspaceInitializer workspace initializer}.
 	 *
+	 * <p>
+	 * By default returns with the {@link ProjectImporter#NOOP NOOP} importer. Clients may override this method if
+	 * importing projects is required as the part of the test setup.
+	 *
 	 * @return the new project importer instance.
 	 */
-	protected abstract ProjectImporter getProjectImporter();
+	protected ProjectImporter getProjectImporter() {
+		return ProjectImporter.NOOP;
+	}
 
 	/**
 	 * Simple project importer implementation.
 	 */
 	protected static class ProjectImporter {
 
+		/**
+		 * The NOOP importer. Does not import anything into the workspace.
+		 */
+		public static ProjectImporter NOOP = new ProjectImporter();
+
 		private final File rootFolder;
+
+		private ProjectImporter() {
+			this(FileUtils.createTempDirectory().toFile());
+		}
 
 		/**
 		 * Creates a project importer with the root folder of all projects that has to be imported for the test.
@@ -93,7 +109,7 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 			this.rootFolder = rootFolder;
 		}
 
-		/* default */ void importProjects() throws Exception {
+		void importProjects() throws Exception {
 			for (final File file : rootFolder.listFiles()) {
 				if (file.exists() && file.isDirectory() && null != file.listFiles() && 0 < file.listFiles().length) {
 
@@ -120,7 +136,7 @@ public abstract class AbstractIDEBUG_Test extends AbstractBuilderParticipantTest
 				}
 			}
 			LOGGER.info("Waiting for full-build to complete...");
-			cleanBuild(); // using full build after imports.
+			IResourcesSetupUtil.cleanBuild(); // using full build after imports.
 			LOGGER.info("Auto-build successfully completed.");
 		}
 

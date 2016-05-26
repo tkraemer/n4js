@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,7 @@
 (function() {
     "use strict";
 
-    exports.runWith = function(options, safeExit) {
+    exports.runWith = function(options, exitOnError) {
         if (options.ideExecData) { // additionally mixin all command line args as options
             process.argv.slice(2).forEach(function(v) {
                 var i = v.indexOf("=");
@@ -35,11 +35,10 @@
             }));
         }).catch(function(err) {
             console.error(err.stack || err);
-            if (safeExit) {
-                process.exit(1);
-            } else {
-                throw err;
+            if (exitOnError) {
+                process.stdout.write("", process.exit.bind(process, 1));
             }
+            throw err;
         });
     };
 })();

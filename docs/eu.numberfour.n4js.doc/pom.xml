@@ -1,27 +1,305 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright (c) 2016 NumberFour AG.
-All rights reserved. This program and the accompanying materials
-are made available under the terms of the Eclipse Public License v1.0
-which accompanies this distribution, and is available at
-http://www.eclipse.org/legal/epl-v10.html
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>eu.numberfour.n4js.doc</artifactId>
+    <packaging>eclipse-plugin</packaging>
+    <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>1.5.4</asciidoctorj.version>
+        <jruby.version>1.7.21</jruby.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
+        <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        
+        <eclipse.html>eclipse-html</eclipse.html>
+        <website.html>website-html</website.html>
+        <epub.dir>epub</epub.dir>
+        <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
+        <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
+        <help.pages.list>help-pages.txt</help.pages.list>
+        
+    </properties>
+    
+    <parent>
+        <groupId>eu.numberfour.n4js</groupId>
+        <artifactId>eu.numberfour.n4js.docs</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>bintray.jmini.maven</id>
+            <url>http://dl.bintray.com/jmini/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
-Contributors:
-  NumberFour AG - Initial API and implementation
+    <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesets combine.children="append">
+                        <fileset>
+                            <directory>./</directory>
+                            <includes>
+                                <include>${eclipse.html}/**</include>
+                                <include>${help.pages.list}</include>
+                            </includes>
+                            <excludes>
+                                <exclude>${eclipse.html}</exclude>
+                                <exclude>**/.placeholder.txt</exclude>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>              
+                <dependencies>
+                    <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj.pdf.version}</version>
+                    </dependency>
+                        <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-epub3</artifactId>
+                        <version>${asciidoctor-epub3.version}</version>
+                    </dependency>
+                </dependencies>
+                
+                <executions> 
+                    <!-- Generate Eclipse HTML without TOC-->
+                    <execution>
+                        <id>asciidoc-to-eclipse-html</id> 
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <imagesdir>../images</imagesdir>
+                            <preserveDirectories>true</preserveDirectories> 
+                            <outputDirectory>${eclipseHelpDir}</outputDirectory>
+                            <backend>html5</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes> <!-- Individual attributes per conversion execution -->
+                                <toc>false</toc> <!-- No embedded TOC -->
+                                <stylesdir>styles</stylesdir>
+                                <stylesheet>default.min.css</stylesheet>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    
+                    <!-- Convert ADOC to HTML (website) -->
+                    <execution>
+                        <id>asciidoc-to-website-html</id> 
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                          <sourceDirectory>${basedir}/src</sourceDirectory>
+                            <imagesdir>images</imagesdir>
+                            <preserveDirectories>true</preserveDirectories> 
+                            <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
+                            <backend>html5</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes> <!-- Individual attributes per conversion execution -->
+                                <toc>left</toc> <!-- Left-aligned embedded TOC in each page -->
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                            <fileset>
+                                <excludes>
+                                    <exclude>userguides.adoc</exclude>
+                                </excludes>
+                            </fileset>
+                        </configuration>
+                    </execution>
+<!--                     Begin EPUB Generation of User Guides 
+                    <execution>
+                        <id>asciidoc-to-epub</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <sourceDocumentName>userguides.adoc</sourceDocumentName>
+                            <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
+                            <preserveDirectories>false</preserveDirectories> 
+                            <backend>epub3</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes>
+                                <includesdir>docs/documentation</includesdir>
+                                <imagesdir>images</imagesdir>
+                                <doctype>book</doctype>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
 -->
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+                    <!-- Begin PDF Generation of User Guides -->
+                    <execution> 
+                        <id>asciidoc-to-pdf</id> 
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/docs/documentation</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/pdf</outputDirectory>
+                            <backend>pdf</backend>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes> 
+                                <toc>left</toc> 
+                                <imagesdir>../../images</imagesdir>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                                <docinfo1>false</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution> 
+                </executions>
+            </plugin> 
+            
+            <!-- eclipse-help file list generation -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo>Running directory listing dir=${eclipseHelpDir}</echo>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html"/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
+                                    <map from="${eclipseHelpBaseDir}/" to="" />
+                                </pathconvert> 
+                                <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${help.pages.list}">${prop.dist.contents}</echo>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>           
+            </plugin>
 
-	<artifactId>eu.numberfour.n4js.doc</artifactId>
-	<packaging>eclipse-plugin</packaging>
-
-	<parent>
-		<groupId>eu.numberfour.n4js</groupId>
-		<artifactId>eu.numberfour.n4js.docs</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
-
+            <!-- HTML to Eclipse TOC.XML -->
+            <plugin>
+                <groupId>com.bsiag.geneclipsetoc</groupId>
+                <artifactId>geneclipsetoc-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>geneclipsetoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFolder>${basedir}</sourceFolder>
+                            <pagesListFile>${help.pages.list}</pagesListFile>
+                            <outputTocFile>toc.xml</outputTocFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> 
+        </plugins>
+    </build>
+    
+    
+    <profiles>
+        <!-- disable tycho functionality in case of "-Dtycho.mode=maven" on command line -->
+        <profile>
+          <id>tycho.mode.maven</id>
+          <activation>
+            <property>
+                <name>tycho.mode</name>
+                <value>maven</value>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-packaging-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-build-qualifier</id> <phase /> </execution>
+                        <execution> <id>default-validate-version</id> <phase /> </execution>
+                        <execution> <id>default-validate-id</id> <phase /> </execution>
+                        <execution> <id>default-package-plugin</id> <phase /> </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-compiler-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-compile</id> <phase /> </execution>
+                    </executions>
+                </plugin> 
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-p2-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <executions>
+                        <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
+                        <execution> <id>attach-p2-metadata</id> <phase /> </execution>
+                    </executions>
+                </plugin>
+                
+            </plugins>
+          </build>
+        </profile>
+    </profiles>
+    
 </project>

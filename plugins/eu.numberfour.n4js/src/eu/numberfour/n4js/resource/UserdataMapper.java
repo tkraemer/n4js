@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
@@ -35,11 +33,11 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
  * The user data for exported modules contains a serialized representation of the module's content. This allows to
@@ -49,6 +47,7 @@ import eu.numberfour.n4js.utils.EcoreUtilN4;
  * types} from that.
  */
 public final class UserdataMapper {
+
 	/**
 	 * Logger for this class
 	 */
@@ -58,10 +57,16 @@ public final class UserdataMapper {
 	 * The key in the user data map of the module's description.
 	 */
 	public final static String USERDATA_KEY_SERIALIZED_SCRIPT = "serializedScript";
+
 	/**
 	 * The key in the user data map of static-polyfill contents-hash
 	 */
 	public final static String USERDATA_KEY_STATIC_POLYFILL_CONTENTHASH = "staticPolyfillContentHash";
+
+	/**
+	 * The key in the user data map of time stamp data. Value is a String representations of long (milliseconds).
+	 */
+	public static final String USERDATA_KEY_TIMESTAMP = "timestamp";
 
 	/**
 	 * Flag indicating whether the string representation contains binary or human readable data.
@@ -104,22 +109,25 @@ public final class UserdataMapper {
 		if (exportedModule.isPreLinkingPhase()) {
 			throw new AssertionError("Module may not be from the preLinkingPhase");
 		}
-		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule)) {
-			return createTimestampUserData(exportedModule);
+		final Resource originalResourceUncasted = exportedModule.eResource();
+		if (!(originalResourceUncasted instanceof N4JSResource)) {
+			throw new IllegalArgumentException("module must be contained in an N4JSResource");
 		}
-		final Resource originalResource = exportedModule.eResource();
+		final N4JSResource originalResource = (N4JSResource) originalResourceUncasted;
 
-		// resolve resource (i.e. resolve lazy cross-references, resolve ComputedTypeRefs, etc.)
-		if (originalResource instanceof N4JSResource)
-			((N4JSResource) originalResource).performPostProcessing();
-		if (!exportedModule.isPreLinkingPhase()) {
-			// TODO consider moving the following check into #performPostProcessing() or some similar place
-			TypeUtils.assertNoDeferredTypeRefs(exportedModule);
+		// resolve resource (i.e. resolve lazy cross-references, resolve DeferredTypeRefs, etc.)
+		originalResource.performPostProcessing();
+		if (EcoreUtilN4.hasUnresolvedProxies(exportedModule) || TypeUtils.containsDeferredTypeRefs(exportedModule)) {
+			// don't write invalid TModule to index
+			// TODO GH-193 reconsider handling of this error case
+			// 2016-05-11: keeping fail-safe behavior for now (in place at least since end of 2014).
+			// Fail-fast behavior not possible, because common case (e.g. typo in an identifier in the source code, that
+			// leads to an unresolvable proxy in the TModule)
+			return createTimestampUserData(exportedModule);
 		}
 
 		// add copy -- EObjects can only be contained in a single resource, and
-		// we do not want to
-		// mess up the original resource
+		// we do not want to mess up the original resource
 		URI resourceURI = originalResource.getURI();
 		XMIResource resourceForUserData = new XMIResourceImpl(resourceURI);
 
@@ -139,9 +147,8 @@ public final class UserdataMapper {
 
 		// in case of filling file store fingerprint to keep filled type updated by the incremental builder.
 		// required to trigger rebuilds even if only minor changes happened to the content.
-		if (exportedModule.isStaticPolyfillModule() && originalResource instanceof N4JSResource) {
-			N4JSResource n4jsres = (N4JSResource) originalResource;
-			String contentHash = Integer.toHexString(n4jsres.getParseResult().getRootNode().hashCode());
+		if (exportedModule.isStaticPolyfillModule()) {
+			final String contentHash = Integer.toHexString(originalResource.getParseResult().getRootNode().hashCode());
 			ret.put(USERDATA_KEY_STATIC_POLYFILL_CONTENTHASH, contentHash);
 		}
 		return ret;
@@ -160,7 +167,7 @@ public final class UserdataMapper {
 		} else {
 			timestamp = System.currentTimeMillis();
 		}
-		return Collections.singletonMap("timestamp", String.valueOf(timestamp));
+		return Collections.singletonMap(USERDATA_KEY_TIMESTAMP, String.valueOf(timestamp));
 	}
 
 	private static Map<Object, Object> getOptions(URI resourceURI, Boolean binary) {
@@ -169,40 +176,53 @@ public final class UserdataMapper {
 	}
 
 	/**
-	 * Creates exported scripts (or other {@link EObject}s found (serialized) in the user data of given
-	 * {@link IEObjectDescription}.
-	 *
-	 * @return deserialized types as EObject
+	 * <b>ONLY INTENDED FOR TESTS OR DEBUGGING. DON'T USE IN PRODUCTION CODE.</b>
+	 * <p>
+	 * Same as {@link #getDeserializedModuleFromDescription(IEObjectDescription, URI)}, but always returns the module as
+	 * an XMI-serialized string.
 	 */
-	public static List<EObject> getDeserializedModulesFromDescription(IEObjectDescription eObjectDescription, URI uri) {
-		String serializedData = eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT);
+	public static String getDeserializedModuleFromDescriptionAsString(IEObjectDescription eObjectDescription,
+			URI uri) throws IOException {
+		final TModule module = getDeserializedModuleFromDescription(eObjectDescription, uri);
+		final XMIResource resourceForUserData = new XMIResourceImpl(uri);
+		resourceForUserData.getContents().add(module);
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		resourceForUserData.save(baos, getOptions(uri, false));
+		return baos.toString(TRANSFORMATION_CHARSET_NAME);
+	}
+
+	/**
+	 * Reads the TModule stored in the given IEObjectDescription.
+	 */
+	public static TModule getDeserializedModuleFromDescription(IEObjectDescription eObjectDescription, URI uri) {
+		final String serializedData = eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT);
 		if (Strings.isNullOrEmpty(serializedData)) {
-			return new ArrayList<>();
+			return null;
 		}
-		XMIResource xres = new XMIResourceImpl(uri);
+		final XMIResource xres = new XMIResourceImpl(uri);
 		try {
-			boolean binary = !serializedData.startsWith("<");
-			ByteArrayInputStream bais = new ByteArrayInputStream(
+			final boolean binary = !serializedData.startsWith("<");
+			final ByteArrayInputStream bais = new ByteArrayInputStream(
 					binary ? XMLTypeFactory.eINSTANCE.createBase64Binary(serializedData)
 							: serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
-			Map<Object, Object> options = getOptions(uri, binary);
-			xres.load(bais, options);
+			xres.load(bais, getOptions(uri, binary));
 		} catch (Exception e) {
-			LOGGER.error("Error deserializing type", e); //$NON-NLS-1$
-			throw new WrappedException(e); // TODO reconsider this
+			LOGGER.error("error deserializing module from IEObjectDescription: " + uri, e); //$NON-NLS-1$
+			// fail safe, because not uncommon (serialized data might have been created with an old version of the N4JS
+			// IDE, so the format could be out of date (after an update of the IDE))
+			return null;
 		}
-		List<EObject> result = Lists.newArrayList(xres.getContents());
+		final List<EObject> contents = xres.getContents();
+		if (contents.isEmpty() || !(contents.get(0) instanceof TModule)) {
+			return null;
+		}
+		final TModule module = (TModule) contents.get(0);
 		xres.getContents().clear();
-		// TModules are flattened before serialization (i.e. all DeferredTypeRefs resolved & removed),
-		// but we double-check that at this point
-		for (EObject currObj : result) {
-			if (currObj instanceof TModule) {
-				TModule currTModule = (TModule) currObj;
-				if (!currTModule.isPreLinkingPhase()) {
-					TypeUtils.assertNoDeferredTypeRefs(currTModule);
-				}
-			}
-		}
-		return result;
+		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
+		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
+		// we need the entire, absolute original URI, including its fragment)
+		// TODO IDE-2250 discuss with Ed Merks if there is a better solution
+		M2MUriUtil.convertAllProxiesToM2M(module, uri, null, false);
+		return module;
 	}
 }
