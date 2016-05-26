@@ -33,7 +33,7 @@ public interface TargetPlatformInstallLocationProvider {
 	Logger LOGGER = Logger.getLogger(TargetPlatformInstallLocationProvider.class);
 
 	/**
-	 * Unique name of the {@code node_modules} folder that will be used to download NPM packages.
+	 * Unique name of the {@code node_modules} folder that will be used to download npm packages.
 	 */
 	String NODE_MODULES_FOLDER = ExternalLibrariesActivator.N4_NPM_CATEGORY;
 
@@ -62,7 +62,7 @@ public interface TargetPlatformInstallLocationProvider {
 	/**
 	 * Returns with an URI pointing to the {@code node_modules} folder inside the target platform install location.
 	 *
-	 * @return the URI pointing the {@code node_modules} folder which is used for installing NPM packages.
+	 * @return the URI pointing the {@code node_modules} folder which is used for installing npm packages.
 	 */
 	default URI getTargetPlatformNodeModulesLocation() {
 		if (null == getTargetPlatformInstallLocation()) {
@@ -88,7 +88,7 @@ public interface TargetPlatformInstallLocationProvider {
 
 	/**
 	 * Returns with the URI pointing to the local git repository root location for storing and retrieving N4JS
-	 * definition files for the NPM installation process.
+	 * definition files for the npm installation process.
 	 *
 	 * @return the URI pointing to the local git repository location for the N4JSD files in the file system.
 	 */

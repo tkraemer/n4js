@@ -1,0 +1,7 @@
+export public class A {
+
+	public foo(): void {
+		
+	}
+
+}

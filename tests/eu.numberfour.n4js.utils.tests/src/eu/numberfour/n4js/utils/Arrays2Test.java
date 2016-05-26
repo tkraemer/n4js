@@ -20,6 +20,7 @@ import static java.lang.String.valueOf;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -136,6 +137,36 @@ public class Arrays2Test {
 				source,
 				actuals);
 		assertTrue("Expected same reference for return value as argument", source == actuals);
+	}
+
+	/***/
+	@Test(expected = NullPointerException.class)
+	public void testFilterNullClassExpectNPE() {
+		Arrays2.filter(new Object[0], null);
+	}
+
+	/***/
+	@Test(expected = NullPointerException.class)
+	public void testFilterNullArrayExpectNPE() {
+		Arrays2.filter(null, Object.class);
+	}
+
+	/***/
+	@Test
+	public void testFilterAlwaysCreatesNewArray() {
+		final Object[] input = new Object[0];
+		final Object[] result = Arrays2.filter(input, Object.class);
+		assertNotSame("Expected non identical argument and result but was the same.", input, result);
+	}
+
+	/***/
+	@Test
+	public void testFilter() {
+		final Object[] input = { "A", 1, false };
+		final Object[] expected = { "A" };
+		final String[] actual = Arrays2.filter(input, String.class);
+		assertArrayEquals("Actual arrays differs from expected one. Actual: " + Arrays.toString(actual) + " Expected: "
+				+ Arrays.toString(expected), expected, actual);
 	}
 
 }

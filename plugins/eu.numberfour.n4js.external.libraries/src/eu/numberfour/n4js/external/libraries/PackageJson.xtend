@@ -81,7 +81,7 @@ class PackageJson {
 		return packageJson;
 	}
 
-	/** The file name with the extension of the {@code package.json} file for NPM. */
+	/** The file name with the extension of the {@code package.json} file for npm. */
 	public static val String PACKAGE_JSON = 'package.json';
 
 	var Collection<Collection<String>> _args;

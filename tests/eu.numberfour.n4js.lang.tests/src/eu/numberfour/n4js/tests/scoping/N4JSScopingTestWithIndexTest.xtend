@@ -91,7 +91,7 @@ class N4JSScopingTestWithIndexTest {
 				    <ownedMembers xsi:type="types:TField" name="s" declaredMemberAccessModifier="public">
 				      <astElement href="#/0/@scriptElements.0/@exportedElement/@ownedMembersRaw.0"/>
 				      <typeRef xsi:type="typeRefs:ParameterizedTypeRef">
-				        <declaredType href="n4scheme:/builtin_js.n4ts#//@types.3"/>
+				        <declaredType href="#m2m!n4scheme:/builtin_js.n4ts%23//@types.3"/>
 				      </typeRef>
 				    </ownedMembers>
 				    <ownedMembers xsi:type="types:TMethod" name="foo" hasNoBody="true" declaredMemberAccessModifier="public">
@@ -124,7 +124,7 @@ class N4JSScopingTestWithIndexTest {
 
 		val eoDescs = resourceDescriptions.getResourceDescription(supplierJS).exportedObjects
 		assertEquals("Wrong number, found: " + eoDescs.map[it.name], 2, eoDescs.size)
-		assertEquals("Stored user data", supplierUserData, UserdataMapper.getDeserializedModulesFromDescriptionAsString(
+		assertEquals("Stored user data", supplierUserData, UserdataMapper.getDeserializedModuleFromDescriptionAsString(
 				eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName], supplierJS))
 //			eoDescs.iterator.toList.findFirst[name.lastSegment == supplierClassName].getUserData(
 //				UserdataMapper::USERDATA_KEY_SERIALIZED_SCRIPT))

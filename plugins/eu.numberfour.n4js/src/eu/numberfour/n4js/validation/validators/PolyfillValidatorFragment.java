@@ -12,10 +12,11 @@ package eu.numberfour.n4js.validation.validators;
 
 import static eu.numberfour.n4js.AnnotationDefinition.FINAL;
 import static eu.numberfour.n4js.AnnotationDefinition.GLOBAL;
-import static eu.numberfour.n4js.AnnotationDefinition.POLYFILL;
-import static eu.numberfour.n4js.AnnotationDefinition.STATIC_POLYFILL;
-import static eu.numberfour.n4js.AnnotationDefinition.STATIC_POLYFILL_AWARE;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isContainedInStaticPolyfillAware;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isContainedInStaticPolyfillModule;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isPolyfill;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isStaticPolyfill;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_DIFFERENT_GLOBALS;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_DIFFERENT_MODIFIER;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_DIFFERENT_MODULE_SPECIFIER;
@@ -60,11 +61,8 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
-import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
@@ -75,6 +73,8 @@ import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.validation.IssueCodes;
+import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 
 /**
  * Validates polyfill declaration, used by {@link N4JSClassValidator}. Some modifications related to polyfills and
@@ -116,8 +116,8 @@ public class PolyfillValidatorFragment {
 	 * Class) 156: Polyfill
 	 */
 	public boolean holdsPolyfill(N4JSClassValidator validator, N4ClassDeclaration n4Class) {
-		boolean isStaticPolyFill = STATIC_POLYFILL.hasAnnotation(n4Class);
-		if (isStaticPolyFill || POLYFILL.hasAnnotation(n4Class)) {
+		boolean isStaticPolyFill = isStaticPolyfill(n4Class);
+		if (isStaticPolyFill || isPolyfill(n4Class)) {
 			PolyfillValidationState state = new PolyfillValidationState();
 			state.host = validator;
 			state.n4Class = n4Class;
@@ -169,7 +169,7 @@ public class PolyfillValidatorFragment {
 		}
 
 		// § 140.1 only polyfills are allowed in StaticPolyfillModule.
-		if (!isStaticPolyFill && AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation(n4Class)) {
+		if (!isStaticPolyFill && isContainedInStaticPolyfillModule(n4Class)) {
 			// n4Class is toplevel by default
 			validator.addIssue(getMessageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES(), n4Class,
 					N4_TYPE_DECLARATION__NAME, POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
@@ -184,7 +184,7 @@ public class PolyfillValidatorFragment {
 	 */
 	private boolean holdsFilledClassIsStaticPolyfillAware(PolyfillValidationState state) {
 
-		if (!(STATIC_POLYFILL_AWARE.hasAnnotation(state.filledType))) { // (Static Polyfill) 139.5
+		if (!(isContainedInStaticPolyfillAware(state.filledType))) { // (Static Polyfill) 139.5
 			final String msg = getMessageForCLF_POLYFILL_STATIC_FILLED_TYPE_NOT_AWARE(state.name);
 			addIssue(state, msg, CLF_POLYFILL_STATIC_FILLED_TYPE_NOT_AWARE);
 			return false;
