@@ -42,7 +42,7 @@ public interface SuperLiteral extends PrimaryExpression {
 	 * This is a call to a super's member, e.g., via "super.foo()".
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\n<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif ((_eContainer instanceof <%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%>))\n{\n\t_or = true;\n} else\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_1 = this.eContainer();\n\t_or = (_eContainer_1 instanceof <%eu.numberfour.n4js.n4JS.IndexedAccessExpression%>);\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.eContainer() instanceof <%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%>) || (this.eContainer() instanceof <%eu.numberfour.n4js.n4JS.IndexedAccessExpression%>));'"
 	 * @generated
 	 */
 	boolean isSuperMemberAccess();

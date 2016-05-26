@@ -87,7 +87,7 @@ public interface FullMemberReference extends FullTypeReference {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%java.lang.String%> _memberName = this.getMemberName();\nboolean _tripleNotEquals = (_memberName != null);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%java.lang.String%> _memberName_1 = this.getMemberName();\n\tboolean _isEmpty = _memberName_1.isEmpty();\n\tboolean _not = (!_isEmpty);\n\t_and = _not;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getMemberName() != null) && (!this.getMemberName().isEmpty()));'"
 	 * @generated
 	 */
 	boolean memberNameSet();

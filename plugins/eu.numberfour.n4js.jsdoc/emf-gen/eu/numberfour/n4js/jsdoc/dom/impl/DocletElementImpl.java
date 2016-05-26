@@ -153,17 +153,7 @@ public abstract class DocletElementImpl extends MinimalEObjectImpl.Container imp
 	 * @generated
 	 */
 	public boolean covers(final int offset) {
-		boolean _and = false;
-		int _begin = this.getBegin();
-		boolean _lessEqualsThan = (_begin <= offset);
-		if (!_lessEqualsThan) {
-			_and = false;
-		} else {
-			int _end = this.getEnd();
-			boolean _greaterThan = (_end > offset);
-			_and = _greaterThan;
-		}
-		return _and;
+		return ((this.getBegin() <= offset) && (this.getEnd() > offset));
 	}
 
 	/**

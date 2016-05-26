@@ -12,7 +12,6 @@ import com.google.common.base.Objects;
 import eu.numberfour.n4js.n4JS.AnnotableElement;
 import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.Annotation;
-import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.FieldAccessor;
 import eu.numberfour.n4js.n4JS.ModifiableElement;
@@ -40,7 +39,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -284,39 +282,14 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 	 * @generated
 	 */
 	public boolean isAbstract() {
-		boolean _or = false;
-		boolean _and = false;
-		boolean _and_1 = false;
-		EObject _eContainer = this.eContainer();
-		if (!(_eContainer instanceof N4InterfaceDeclaration)) {
-			_and_1 = false;
-		} else {
-			Block _body = this.getBody();
-			boolean _tripleEquals = (_body == null);
-			_and_1 = _tripleEquals;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			EList<Annotation> _annotations = this.getAnnotations();
-			final Function1<Annotation, Boolean> _function = new Function1<Annotation, Boolean>() {
+		return ((((this.eContainer() instanceof N4InterfaceDeclaration) && (this.getBody() == null)) && 
+			(!IterableExtensions.<Annotation>exists(this.getAnnotations(), new Function1<Annotation, Boolean>() {
 				public Boolean apply(final Annotation it) {
 					String _name = it.getName();
 					return Boolean.valueOf(Objects.equal(_name, "ProvidesDefaultImplementation"));
 				}
-			};
-			boolean _exists = IterableExtensions.<Annotation>exists(_annotations, _function);
-			boolean _not = (!_exists);
-			_and = _not;
-		}
-		if (_and) {
-			_or = true;
-		} else {
-			EList<N4Modifier> _declaredModifiers = this.getDeclaredModifiers();
-			boolean _contains = _declaredModifiers.contains(N4Modifier.ABSTRACT);
-			_or = _contains;
-		}
-		return _or;
+			}))) || 
+			this.getDeclaredModifiers().contains(N4Modifier.ABSTRACT));
 	}
 
 	/**
@@ -330,17 +303,7 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		if (_equals) {
 			return false;
 		}
-		boolean _and = false;
-		String _name_1 = this.getName();
-		boolean _equals_1 = Objects.equal("constructor", _name_1);
-		if (!_equals_1) {
-			_and = false;
-		} else {
-			PropertyNameKind _kind = this.getKind();
-			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			_and = _tripleNotEquals;
-		}
-		if (_and) {
+		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
 			return false;
 		}
 		return true;

@@ -334,15 +334,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * @generated
 	 */
 	public boolean isStatic() {
-		boolean _or = false;
-		boolean _isDeclaredStatic = this.isDeclaredStatic();
-		if (_isDeclaredStatic) {
-			_or = true;
-		} else {
-			boolean _isConst = this.isConst();
-			_or = _isConst;
-		}
-		return _or;
+		return (this.isDeclaredStatic() || this.isConst());
 	}
 
 	/**

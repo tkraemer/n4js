@@ -105,7 +105,7 @@ public interface N4FieldDeclaration extends AnnotableN4MemberDeclaration, TypedE
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _isDeclaredStatic = this.isDeclaredStatic();\nif (_isDeclaredStatic)\n{\n\t_or = true;\n} else\n{\n\tboolean _isConst = this.isConst();\n\t_or = _isConst;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isDeclaredStatic() || this.isConst());'"
 	 * @generated
 	 */
 	boolean isStatic();
