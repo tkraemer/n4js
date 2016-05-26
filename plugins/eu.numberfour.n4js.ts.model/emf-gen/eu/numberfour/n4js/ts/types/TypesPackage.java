@@ -835,13 +835,22 @@ public interface TypesPackage extends EPackage {
 	int TYPE___GET_TYPE_VARS = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 10;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE___GET_RAW_TYPE_AS_STRING = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 10;
+	int TYPE___GET_RAW_TYPE_AS_STRING = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Get Type As String</em>' operation.
@@ -850,7 +859,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE___GET_TYPE_AS_STRING = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 11;
+	int TYPE___GET_TYPE_AS_STRING = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The number of operations of the '<em>Type</em>' class.
@@ -859,7 +868,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_OPERATION_COUNT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 12;
+	int TYPE_OPERATION_COUNT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 13;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TypeVariableImpl <em>Type Variable</em>}' class.
@@ -1032,6 +1041,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPE_VARIABLE___IS_GENERIC = TYPE___IS_GENERIC;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_VARIABLE___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -1231,6 +1249,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_TYPE_VARS = TYPE___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -1493,6 +1520,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TFUNCTION___GET_TYPE_VARS = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFUNCTION___GET_VARIANCE_OF_TYPE_VAR__INT = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -1848,6 +1884,15 @@ public interface TypesPackage extends EPackage {
 	int CONTAINER_TYPE___GET_TYPE_VARS = TYPE___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2101,6 +2146,15 @@ public interface TypesPackage extends EPackage {
 	int VIRTUAL_BASE_TYPE___GET_TYPE_VARS = CONTAINER_TYPE___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = CONTAINER_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2325,6 +2379,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE_NAMESPACE_VIRTUAL_TYPE___GET_TYPE_VARS = TYPE___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE_NAMESPACE_VIRTUAL_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -2571,6 +2634,15 @@ public interface TypesPackage extends EPackage {
 	int PRIMITIVE_TYPE___GET_TYPE_VARS = CONTAINER_TYPE___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = CONTAINER_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2779,6 +2851,15 @@ public interface TypesPackage extends EPackage {
 	int BUILT_IN_TYPE___IS_GENERIC = TYPE___IS_GENERIC;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUILT_IN_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2949,6 +3030,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int ANY_TYPE___IS_GENERIC = BUILT_IN_TYPE___IS_GENERIC;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANY_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = BUILT_IN_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -3141,6 +3231,15 @@ public interface TypesPackage extends EPackage {
 	int UNDEFINED_TYPE___IS_GENERIC = BUILT_IN_TYPE___IS_GENERIC;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNDEFINED_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = BUILT_IN_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3322,6 +3421,15 @@ public interface TypesPackage extends EPackage {
 	int NULL_TYPE___IS_GENERIC = BUILT_IN_TYPE___IS_GENERIC;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = BUILT_IN_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3501,6 +3609,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VOID_TYPE___IS_GENERIC = BUILT_IN_TYPE___IS_GENERIC;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOID_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = BUILT_IN_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -3727,6 +3844,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCTURAL_TYPE___GET_TYPE_VARS = CONTAINER_TYPE___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCTURAL_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = CONTAINER_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -3980,6 +4106,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASSIFIER___GET_TYPE_VARS = CONTAINER_TYPE___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT = CONTAINER_TYPE___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -4269,6 +4404,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE___GET_TYPE_VARS = TCLASSIFIER___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE___GET_VARIANCE_OF_TYPE_VAR__INT = TCLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -4651,6 +4795,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER___GET_TYPE_VARS = TCLASSIFIER___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT = TCLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5030,6 +5183,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_TYPE_VARS = TN4_CLASSIFIER___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_VARIANCE_OF_TYPE_VAR__INT = TN4_CLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5389,6 +5551,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE___GET_TYPE_VARS = TN4_CLASSIFIER___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_VARIANCE_OF_TYPE_VAR__INT = TN4_CLASSIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -6520,6 +6691,15 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD___GET_TYPE_VARS = TFUNCTION___GET_TYPE_VARS;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD___GET_VARIANCE_OF_TYPE_VAR__INT = TFUNCTION___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7023,6 +7203,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD___GET_TYPE_VARS = TMETHOD___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD___GET_VARIANCE_OF_TYPE_VAR__INT = TMETHOD___GET_VARIANCE_OF_TYPE_VAR__INT;
 
 	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
@@ -9663,6 +9852,15 @@ public interface TypesPackage extends EPackage {
 	int TENUM___IS_GENERIC = DECLARED_TYPE_WITH_ACCESS_MODIFIER___IS_GENERIC;
 
 	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TENUM___GET_VARIANCE_OF_TYPE_VAR__INT = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
 	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10774,6 +10972,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getType__GetTypeVars();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.Type#getVarianceOfTypeVar(int) <em>Get Variance Of Type Var</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Variance Of Type Var</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.Type#getVarianceOfTypeVar(int)
+	 * @generated
+	 */
+	EOperation getType__GetVarianceOfTypeVar__int();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.Type#getRawTypeAsString() <em>Get Raw Type As String</em>}' operation.
@@ -13160,6 +13368,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TYPE___GET_TYPE_VARS = eINSTANCE.getType__GetTypeVars();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Variance Of Type Var</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE___GET_VARIANCE_OF_TYPE_VAR__INT = eINSTANCE.getType__GetVarianceOfTypeVar__int();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Raw Type As String</b></em>' operation.

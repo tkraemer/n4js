@@ -181,6 +181,7 @@ import java.util.List
 import org.eclipse.emf.common.util.ECollections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import eu.numberfour.n4js.ts.types.util.Variance
 
 import static eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.PRIORITY_ERROR
 import static eu.numberfour.n4js.validation.JavaScriptVariant.*
@@ -1313,11 +1314,11 @@ from {
 				}
 			} else if (leftDeclType == rightDeclType) {
 				if (left.typeArgs.size>0 && left.typeArgs.size <= right.typeArgs.size) { // ignore raw types
-					val leftIter = left.typeArgs.iterator
-					val rightIter = right.typeArgs.iterator
-					while (leftIter.hasNext) {
-						val leftArg = leftIter.next
-						val rightArg = rightIter.next
+					val len = Math.min(Math.min(left.typeArgs.size, right.typeArgs.size), rightDeclType.typeVars.size);
+					for(var i=0;i<len;i++) {
+						val leftArg = left.typeArgs.get(i)
+						val rightArg = right.typeArgs.get(i)
+						val variance = rightDeclType.getVarianceOfTypeVar(i)
 
 						var TypeRef leftArgUpper; G |~ leftArg /\ leftArgUpper
 						var TypeRef leftArgLower; G |~ leftArg \/ leftArgLower
@@ -1329,10 +1330,13 @@ from {
 // why not just require type equality, i.e. L<:R && R<:L (without taking upper/lower bounds) and let the
 // subtype rules for WildCards / ExistentialTypeRefs do the heavy lifting?
 						{
-							G |- leftArgUpper <: rightArgUpper
-							G |- rightArgLower <: leftArgLower
+							// require leftArg <: rightArg, except we have contravariance
+							variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper}
+							// require rightArg <: leftArg, except we have covariance
+							variance==Variance.CO     || {G |- rightArgLower <: leftArgLower}
 						}
-						or {
+						or
+						{
 							if(previousFailure.isOrCausedByPriorityError) {
 								fail
 									error stringRep(left) + " is not a subtype of " + stringRep(right)

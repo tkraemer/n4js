@@ -128,6 +128,7 @@ import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector;
+import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeExtensions;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -4523,12 +4524,19 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                   if (_and_13) {
                                     EList<TypeArgument> _typeArgs_3 = left.getTypeArgs();
-                                    final Iterator<TypeArgument> leftIter = _typeArgs_3.iterator();
+                                    int _size_3 = _typeArgs_3.size();
                                     EList<TypeArgument> _typeArgs_4 = right.getTypeArgs();
-                                    final Iterator<TypeArgument> rightIter = _typeArgs_4.iterator();
-                                    while (leftIter.hasNext()) {
-                                      final TypeArgument leftArg = leftIter.next();
-                                      final TypeArgument rightArg = rightIter.next();
+                                    int _size_4 = _typeArgs_4.size();
+                                    int _min = Math.min(_size_3, _size_4);
+                                    EList<TypeVariable> _typeVars = rightDeclType.getTypeVars();
+                                    int _size_5 = _typeVars.size();
+                                    final int len = Math.min(_min, _size_5);
+                                    for (int i = 0; (i < len); i++) {
+                                      EList<TypeArgument> _typeArgs_5 = left.getTypeArgs();
+                                      final TypeArgument leftArg = _typeArgs_5.get(i);
+                                      EList<TypeArgument> _typeArgs_6 = right.getTypeArgs();
+                                      final TypeArgument rightArg = _typeArgs_6.get(i);
+                                      final Variance variance = rightDeclType.getVarianceOfTypeVar(i);
                                       TypeRef leftArgUpper = null;
                                       /* G |~ leftArg /\ leftArgUpper */
                                       Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, leftArg);
@@ -4553,14 +4561,36 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
-                                      /* { G |- leftArgUpper <: rightArgUpper G |- rightArgLower <: leftArgLower } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                      /* { variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper} variance==Variance.CO || {G |- rightArgLower <: leftArgLower} } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
                                         try {
-                                          /* G |- leftArgUpper <: rightArgUpper */
-                                          subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
-                                          /* G |- rightArgLower <: leftArgLower */
-                                          subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                          boolean _or_12 = false;
+                                          boolean _equals_4 = Objects.equal(variance, Variance.CONTRA);
+                                          if (_equals_4) {
+                                            _or_12 = true;
+                                          } else {
+                                            /* G |- leftArgUpper <: rightArgUpper */
+                                            boolean _ruleinvocation_2 = subtypeSucceeded(G, _trace_, leftArgUpper, rightArgUpper);
+                                            _or_12 = _ruleinvocation_2;
+                                          }
+                                          /* variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper} */
+                                          if (!_or_12) {
+                                            sneakyThrowRuleFailedException("variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper}");
+                                          }
+                                          boolean _or_13 = false;
+                                          boolean _equals_5 = Objects.equal(variance, Variance.CO);
+                                          if (_equals_5) {
+                                            _or_13 = true;
+                                          } else {
+                                            /* G |- rightArgLower <: leftArgLower */
+                                            boolean _ruleinvocation_3 = subtypeSucceeded(G, _trace_, rightArgLower, leftArgLower);
+                                            _or_13 = _ruleinvocation_3;
+                                          }
+                                          /* variance==Variance.CO || {G |- rightArgLower <: leftArgLower} */
+                                          if (!_or_13) {
+                                            sneakyThrowRuleFailedException("variance==Variance.CO || {G |- rightArgLower <: leftArgLower}");
+                                          }
                                         } catch (Exception e) {
                                           previousFailure = extractRuleFailedException(e);
                                           RuleFailedException _previousFailure = previousFailure;

@@ -234,11 +234,15 @@ class N4JSLanguageUtils {
 	 * Either returns the variance of the position where <code>typeRef</code> is located in a classifier declaration or
 	 * <code>null</code> if it is located at a position where type variables of all variances may be located, i.e.
 	 * a position that need not be checked (e.g. type of local variable, type of a private field).
+	 * <p>
+	 * Also returns <code>null</code> in case of error, e.g. invalid AST.
 	 */
 	def public static Variance getVarianceOfPosition(ParameterizedTypeRef typeRef) {
 		
 		// FIXME only partial implementation for testing, not all cases supported (esp. nesting in wildcards, etc.)
 		
+		if(typeRef===null)
+			return null;
 		val tv = typeRef.declaredType as TypeVariable;
 		val tClassifier = tv.eContainer as TClassifier; // safety of this cast not checked above, but should be safe bet
 		val parent = typeRef.eContainer;

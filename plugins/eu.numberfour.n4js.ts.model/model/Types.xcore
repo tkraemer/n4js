@@ -331,6 +331,10 @@ class TypeVariable extends Type {
 	boolean declaredContravariant
 	contains ParameterizedTypeRef[] declaredUpperBounds
 
+	/*
+	 * Returns this type variable's {@link eu.numberfour.n4js.ts.types.util.Variance variance}. Always returns
+	 * invariant, unless the type variable was explicitly declared on definition site to be co- or contravariant.
+	 */
 	op Variance getVariance() {
 		val co = declaredCovariant;
 		val contra = declaredContravariant;
@@ -552,6 +556,13 @@ class Type extends TExportableElement, TAnnotableElement {
 	 */
 	op TypeVariable[] getTypeVars() {
 		return emptyEList
+	}
+	/*
+	 * Convenience method for obtaining the variance of this type's type variable with the given index.
+	 * For details see {@link TypeVariable#getVariance()}.
+	 */
+	op Variance getVarianceOfTypeVar(int idx) {
+		return if(idx>=0 && idx<typeVars.size) typeVars.get(idx).variance else null;
 	}
 	/*
 	 * Returns the raw type as string, i.e. the type without any type variables.

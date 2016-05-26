@@ -1209,7 +1209,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getType__GetRawTypeAsString() {
+	public EOperation getType__GetVarianceOfTypeVar__int() {
 		return typeEClass.getEOperations().get(10);
 	}
 
@@ -1218,8 +1218,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getType__GetTypeAsString() {
+	public EOperation getType__GetRawTypeAsString() {
 		return typeEClass.getEOperations().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getType__GetTypeAsString() {
+		return typeEClass.getEOperations().get(12);
 	}
 
 	/**
@@ -2870,6 +2879,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(typeEClass, TYPE___GET_TYPE_ACCESS_MODIFIER);
 		createEOperation(typeEClass, TYPE___IS_GENERIC);
 		createEOperation(typeEClass, TYPE___GET_TYPE_VARS);
+		createEOperation(typeEClass, TYPE___GET_VARIANCE_OF_TYPE_VAR__INT);
 		createEOperation(typeEClass, TYPE___GET_RAW_TYPE_AS_STRING);
 		createEOperation(typeEClass, TYPE___GET_TYPE_AS_STRING);
 
@@ -3314,6 +3324,9 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getType__IsGeneric(), theEcorePackage.getEBoolean(), "isGeneric", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getType__GetTypeVars(), this.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getType__GetVarianceOfTypeVar__int(), this.getVariance(), "getVarianceOfTypeVar", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "idx", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getType__GetRawTypeAsString(), theEcorePackage.getEString(), "getRawTypeAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
