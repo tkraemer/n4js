@@ -92,7 +92,7 @@ public interface DocletElement extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false" offsetUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\nint _begin = this.getBegin();\nboolean _lessEqualsThan = (_begin <= offset);\nif (!_lessEqualsThan)\n{\n\t_and = false;\n} else\n{\n\tint _end = this.getEnd();\n\tboolean _greaterThan = (_end > offset);\n\t_and = _greaterThan;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getBegin() <= offset) && (this.getEnd() > offset));'"
 	 * @generated
 	 */
 	boolean covers(int offset);

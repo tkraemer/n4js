@@ -116,43 +116,9 @@ public class ArrowFunctionImpl extends FunctionExpressionImpl implements ArrowFu
 	 * @generated
 	 */
 	public boolean isSingleExprImplicitReturn() {
-		boolean _and = false;
-		boolean _and_1 = false;
-		boolean _and_2 = false;
-		boolean _and_3 = false;
-		boolean _isArrowFunction = this.isArrowFunction();
-		if (!_isArrowFunction) {
-			_and_3 = false;
-		} else {
-			boolean _isHasBracesAroundBody = this.isHasBracesAroundBody();
-			boolean _not = (!_isHasBracesAroundBody);
-			_and_3 = _not;
-		}
-		if (!_and_3) {
-			_and_2 = false;
-		} else {
-			Block _body = this.getBody();
-			boolean _notEquals = (!Objects.equal(_body, null));
-			_and_2 = _notEquals;
-		}
-		if (!_and_2) {
-			_and_1 = false;
-		} else {
-			Block _body_1 = this.getBody();
-			EList<Statement> _statements = _body_1.getStatements();
-			boolean _isEmpty = _statements.isEmpty();
-			boolean _not_1 = (!_isEmpty);
-			_and_1 = _not_1;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			Block _body_2 = this.getBody();
-			EList<Statement> _statements_1 = _body_2.getStatements();
-			Statement _get = _statements_1.get(0);
-			_and = (_get instanceof ExpressionStatement);
-		}
-		return _and;
+		return ((((this.isArrowFunction() && 
+			(!this.isHasBracesAroundBody())) && (!Objects.equal(this.getBody(), null))) && 
+			(!this.getBody().getStatements().isEmpty())) && (this.getBody().getStatements().get(0) instanceof ExpressionStatement));
 	}
 
 	/**

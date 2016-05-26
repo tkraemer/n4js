@@ -223,17 +223,7 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 		if (_equals) {
 			return false;
 		}
-		boolean _and = false;
-		String _name_1 = this.getName();
-		boolean _equals_1 = Objects.equal("constructor", _name_1);
-		if (!_equals_1) {
-			_and = false;
-		} else {
-			PropertyNameKind _kind = this.getKind();
-			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			_and = _tripleNotEquals;
-		}
-		if (_and) {
+		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
 			return false;
 		}
 		return true;

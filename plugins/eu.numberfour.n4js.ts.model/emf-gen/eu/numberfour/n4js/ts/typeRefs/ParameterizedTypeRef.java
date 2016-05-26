@@ -131,7 +131,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 *  @see TypeArgument#containsWildcard()
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _and = false;\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\nboolean _isEmpty = _typeArgs.isEmpty();\nif (!_isEmpty)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\n\tboolean _isGeneric = _declaredType.isGeneric();\n\tboolean _not = (!_isGeneric);\n\t_and = _not;\n}\nif (_and)\n{\n\t_or = true;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs_1 = this.getTypeArgs();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n\t{\n\t\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t\t{\n\t\t\treturn <%java.lang.Boolean%>.valueOf(it.containsWildcards());\n\t\t}\n\t};\n\tboolean _exists = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(_typeArgs_1, _function);\n\t_or = _exists;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeArgs().isEmpty() && (!this.getDeclaredType().isGeneric())) || <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(this.getTypeArgs(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.containsWildcards());\n\t}\n}));'"
 	 * @generated
 	 */
 	boolean containsWildcards();
@@ -167,7 +167,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Delegates to {@link Type.isGeneric()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nboolean _tripleNotEquals = (_declaredType != null);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType_1 = this.getDeclaredType();\n\tboolean _isGeneric = _declaredType_1.isGeneric();\n\t_and = _isGeneric;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDeclaredType() != null) && this.getDeclaredType().isGeneric());'"
 	 * @generated
 	 */
 	boolean isGeneric();
@@ -179,7 +179,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#isRaw()}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\nboolean _isGeneric = this.isGeneric();\nif (!_isGeneric)\n{\n\t_and = false;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\n\tint _size = _typeArgs.size();\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = _declaredType.getTypeVars();\n\tint _size_1 = _typeVars.size();\n\tboolean _lessThan = (_size < _size_1);\n\t_and = _lessThan;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isGeneric() && (this.getTypeArgs().size() < this.getDeclaredType().getTypeVars().size()));'"
 	 * @generated
 	 */
 	boolean isRaw();
@@ -191,7 +191,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * @see TypeArgument#containsUnboundTypeVariables()
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _or_1 = false;\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nif ((_declaredType instanceof <%eu.numberfour.n4js.ts.types.TypeVariable%>))\n{\n\t_or_1 = true;\n} else\n{\n\tboolean _and = false;\n\tboolean _isParameterized = this.isParameterized();\n\tboolean _not = (!_isParameterized);\n\tif (!_not)\n\t{\n\t\t_and = false;\n\t} else\n\t{\n\t\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType_1 = this.getDeclaredType();\n\t\tboolean _isGeneric = _declaredType_1.isGeneric();\n\t\t_and = _isGeneric;\n\t}\n\t_or_1 = _and;\n}\nif (_or_1)\n{\n\t_or = true;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n\t{\n\t\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t\t{\n\t\t\treturn <%java.lang.Boolean%>.valueOf(it.containsUnboundTypeVariables());\n\t\t}\n\t};\n\tboolean _exists = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(_typeArgs, _function);\n\t_or = _exists;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDeclaredType() instanceof <%eu.numberfour.n4js.ts.types.TypeVariable%>) || ((!this.isParameterized()) && this.getDeclaredType().isGeneric())) || <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(this.getTypeArgs(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.containsUnboundTypeVariables());\n\t}\n}));'"
 	 * @generated
 	 */
 	boolean containsUnboundTypeVariables();
@@ -204,7 +204,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * definition site.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.types.TypingStrategy%> _definedTypingStrategy = this.getDefinedTypingStrategy();\nboolean _tripleNotEquals = (_definedTypingStrategy != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.TypingStrategy%> _definedTypingStrategy_1 = this.getDefinedTypingStrategy();\n\tboolean _tripleNotEquals_1 = (_definedTypingStrategy_1 != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT);\n\t_and = _tripleNotEquals_1;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL) && \n\t(this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT));'"
 	 * @generated
 	 */
 	boolean isUseSiteStructuralTyping();

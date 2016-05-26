@@ -136,7 +136,7 @@ public interface ForStatement extends VariableDeclarationContainer, IterationSta
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\nboolean _isForIn = this.isForIn();\nboolean _not = (!_isForIn);\nif (!_not)\n{\n\t_and = false;\n} else\n{\n\tboolean _isForOf = this.isForOf();\n\tboolean _not_1 = (!_isForOf);\n\t_and = _not_1;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((!this.isForIn()) && (!this.isForOf()));'"
 	 * @generated
 	 */
 	boolean isForPlain();
