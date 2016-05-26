@@ -263,17 +263,7 @@ public class ThisTypeRefStructuralImpl extends ThisTypeRefImpl implements ThisTy
 	 * @generated
 	 */
 	public boolean isUseSiteStructuralTyping() {
-		boolean _and = false;
-		TypingStrategy _typingStrategy = this.getTypingStrategy();
-		boolean _tripleNotEquals = (_typingStrategy != TypingStrategy.NOMINAL);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			TypingStrategy _typingStrategy_1 = this.getTypingStrategy();
-			boolean _tripleNotEquals_1 = (_typingStrategy_1 != TypingStrategy.DEFAULT);
-			_and = _tripleNotEquals_1;
-		}
-		return _and;
+		return ((this.getTypingStrategy() != TypingStrategy.NOMINAL) && (this.getTypingStrategy() != TypingStrategy.DEFAULT));
 	}
 
 	/**

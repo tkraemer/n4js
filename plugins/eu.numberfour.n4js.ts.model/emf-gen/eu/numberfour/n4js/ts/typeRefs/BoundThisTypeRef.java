@@ -154,7 +154,7 @@ public interface BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 	 * Returns true if defined typing strategy neither DEFAULT nor NOMINAL.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.types.TypingStrategy%> _definedTypingStrategy = this.getDefinedTypingStrategy();\nboolean _tripleNotEquals = (_definedTypingStrategy != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.TypingStrategy%> _definedTypingStrategy_1 = this.getDefinedTypingStrategy();\n\tboolean _tripleNotEquals_1 = (_definedTypingStrategy_1 != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL);\n\t_and = _tripleNotEquals_1;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT) && \n\t(this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL));'"
 	 * @generated
 	 */
 	boolean isUseSiteStructuralTyping();

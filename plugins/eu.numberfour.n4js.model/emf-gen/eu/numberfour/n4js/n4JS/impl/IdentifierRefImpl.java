@@ -200,25 +200,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	public boolean isValidSimpleAssignmentTarget() {
 		boolean _isStrictMode = this.isStrictMode();
 		if (_isStrictMode) {
-			boolean _and = false;
-			boolean _and_1 = false;
-			String _idAsText = this.getIdAsText();
-			boolean _tripleNotEquals = (_idAsText != null);
-			if (!_tripleNotEquals) {
-				_and_1 = false;
-			} else {
-				String _idAsText_1 = this.getIdAsText();
-				boolean _notEquals = (!Objects.equal("arguments", _idAsText_1));
-				_and_1 = _notEquals;
-			}
-			if (!_and_1) {
-				_and = false;
-			} else {
-				String _idAsText_2 = this.getIdAsText();
-				boolean _notEquals_1 = (!Objects.equal("eval", _idAsText_2));
-				_and = _notEquals_1;
-			}
-			return _and;
+			return (((this.getIdAsText() != null) && (!Objects.equal("arguments", this.getIdAsText()))) && (!Objects.equal("eval", this.getIdAsText())));
 		}
 		return true;
 	}

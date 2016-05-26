@@ -341,17 +341,7 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 	 * @generated
 	 */
 	public boolean isAccessor() {
-		boolean _or = false;
-		MemberType _memberType = this.getMemberType();
-		boolean _equals = Objects.equal(_memberType, MemberType.SETTER);
-		if (_equals) {
-			_or = true;
-		} else {
-			MemberType _memberType_1 = this.getMemberType();
-			boolean _equals_1 = Objects.equal(_memberType_1, MemberType.GETTER);
-			_or = _equals_1;
-		}
-		return _or;
+		return (Objects.equal(this.getMemberType(), MemberType.SETTER) || Objects.equal(this.getMemberType(), MemberType.GETTER));
 	}
 
 	/**
@@ -437,15 +427,7 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 		if ((containingType == null)) {
 			return false;
 		}
-		boolean _or = false;
-		boolean _isPolyfill = containingType.isPolyfill();
-		if (_isPolyfill) {
-			_or = true;
-		} else {
-			boolean _isStaticPolyfill = containingType.isStaticPolyfill();
-			_or = _isStaticPolyfill;
-		}
-		return _or;
+		return (containingType.isPolyfill() || containingType.isStaticPolyfill());
 	}
 
 	/**
