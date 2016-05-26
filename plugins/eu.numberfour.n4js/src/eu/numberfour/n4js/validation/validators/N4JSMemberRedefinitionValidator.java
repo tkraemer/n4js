@@ -23,6 +23,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_MISSING_IMPLEMENTATIO
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_NON_VISIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_ANNOTATION;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_CONST;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
@@ -42,6 +43,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_MISSING_
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_NON_VISIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_ANNOTATION;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_CONST;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
@@ -471,11 +473,24 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		if (s instanceof TField) { // const only defined on TField & TStructuralField
 			TField sF = (TField) s;
 			if (sF.isConst()) { // 2. const
-				// By GH-186 const redefinition is allowed.
-				// if (!consumptionConflict) { // avoid consequential errors
-				// messageOverrideConst(redefinitionType, m, sF);
-				// }
-				// return OverrideCompatibilityResult.ERROR;
+				// By GH-186 const redefinition is allowed for const fields
+				if (!((m instanceof TField)
+						&& ((TField) m).isConst())) {
+					if (!consumptionConflict) { // avoid consequential errors
+						messageOverrideConst(redefinitionType, m, sF);
+					}
+					return OverrideCompatibilityResult.ERROR;
+				}
+			} else {
+				if (m instanceof TField) {
+					TField fM = (TField) m;
+					if (fM.isConst()) {
+						if (!consumptionConflict) { // avoid consequential errors
+							messageOverrideConst(redefinitionType, m, sF);
+						}
+						return OverrideCompatibilityResult.ERROR;
+					}
+				}
 			}
 		}
 
@@ -498,7 +513,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 		}
 
-		if ((m.isSetter() || m.isField()) && !s.isGetter()) {
+		if ((m.isSetter() || m.isField()) && !s.isGetter() && !((TField) s).isConst()) {
 			Result<Boolean> result = isSubTypeResult(s, m);
 			if (result.failed()) { // 4. subtype
 				if (!consumptionConflict) { // avoid consequential errors
@@ -673,7 +688,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		String extraMessage = cfOtherImplementedMembers(mm, overriding, overridden);
 
-		if (overriding.isField() && overridden.isField()) {
+		if (overriding.isField() && overridden.isField() && !((TField) overridden).isConst()) {
 			code = CLF_REDEFINED_TYPE_NOT_SAME_TYPE;
 			message = getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE(
 					overridingSource + validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
@@ -731,6 +746,14 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				CLF_OVERRIDE_FINAL,
 				IssueUserDataKeys.CLF_OVERRIDE_FINAL.OVERRIDDEN_MEMBER_URI,
 				EcoreUtil.getURI(overridden).toString());
+	}
+
+	private void messageOverrideConst(RedefinitionType redefinitionType, TMember overriding, TField overridden) {
+		String message = getMessageForCLF_OVERRIDE_CONST(
+				validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
+				validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
+		addIssueToMemberOrInterfaceReference(redefinitionType, overriding, overridden, message,
+				CLF_OVERRIDE_CONST);
 	}
 
 	/**
