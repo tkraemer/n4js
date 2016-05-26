@@ -14,6 +14,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.CatchBlock
+import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
@@ -32,18 +33,17 @@ import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.utils.UtilN4
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.emf.ecore.EReference
-import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -380,12 +380,17 @@ class ASTProcessor extends AbstractProcessor {
 	}
 	
 	def private processResolvedReference(EReference reference, EObject sourceNode, EObject targetNode) {
-		// Skip non-local references
+		// If targetNode still is a proxy its resolvement failed, 
+		// therefore it should be skipped.
+		if (targetNode.eIsProxy) {
+			return;
+		}
+		// Skip non-local references		
 		if (sourceNode.eResource.URI != targetNode.eResource.URI) {
 			return;
 		}
 		if (targetNode instanceof VariableDeclaration) {
-			// Don't save references for exported variable declarations
+			// Don't save references to exported variable declarations
 			if (targetNode instanceof ExportedVariableDeclaration) {
 				return;
 			}
