@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.ui.IMemento;
@@ -34,6 +35,7 @@ import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.IPipelinedTreeContentProvider2;
 import org.eclipse.ui.navigator.PipelinedShapeModification;
 import org.eclipse.ui.navigator.PipelinedViewerUpdate;
+import org.eclipse.xtext.util.Arrays;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -126,6 +128,25 @@ public class N4JSProjectExplorerContentProvider extends WorkbenchContentProvider
 		}
 
 		return children;
+	}
+
+	@Override
+	public Object getParent(Object element) {
+
+		// Required by editor - navigator linking to locate parent item in tree.
+		if (element instanceof IProject && workingSetManagerBroker.isWorkingSetTopLevel()) {
+			final WorkingSetManager activeManager = workingSetManagerBroker.getActiveManager();
+			if (activeManager != null) {
+				for (final WorkingSet workingSet : activeManager.getWorkingSets()) {
+					final IAdaptable[] elements = workingSet.getElements();
+					if (!Arrays2.isEmpty(elements) && Arrays.contains(elements, element)) {
+						return workingSet;
+					}
+				}
+			}
+		}
+
+		return super.getParent(element);
 	}
 
 	@Override
