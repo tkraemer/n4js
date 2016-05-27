@@ -1352,17 +1352,24 @@ from {
 				}
 			} else {
 				val allSuperTypeRefs = if(leftDeclType instanceof ContainerType<?>) AllSuperTypeRefsCollector.collect(leftDeclType) else newArrayList;
-				val superTypes = allSuperTypeRefs + G.collectAllImplicitSuperTypes(left);
-				val matchingSuperTypeRef = superTypes.findFirst[it.declaredType===rightDeclType];
-				if(matchingSuperTypeRef!==null) {
+				val superTypeRefs = allSuperTypeRefs + G.collectAllImplicitSuperTypes(left);
+				// Note: rightDeclType might appear in superTypes several times in case of multiple implementation
+				// of the same interface, which is allowed in case of definition-site co-/contravariance.
+				// To support such cases without duplicating any logic, we will use judgment 'substTypeVariables' below.
+				if(superTypeRefs.exists[it.declaredType===rightDeclType]) {
+					// at this point we have 1..* type references in superTypeRefs with a declared type of rightDeclType
+					// (more than one possible in case of multiple implementation of the same interface, which is legal
+					// in case of definition-site co-/contravariance)
+					// (a) these type references may contain unbound type variables from lower level of the inheritance
+					// hierarchy and (b) in case of more than 1 type reference we have to combine them into a single
+					// type reference
+					// --> use type variable substitution on a synthetic type reference with a declared type of
+					// rightDeclType to solve all those cases without duplicating any logic:
 					val localG_left = G.wrap;
-					typeSystemHelper.addSubstitutions(localG_left,left)
-					try {
-						localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst // substitute type variables
-						G |- matchingSuperTypeRefSubst <: right
-					} catch(Exception e) {
-						false
-					}
+					typeSystemHelper.addSubstitutions(localG_left,left);
+					val syntheticTypeRef = rightDeclType.ref(rightDeclType.typeVars.map[it.ref]);
+					localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef // substitute type variables
+					G |- effectiveSuperTypeRef <: right
 				} else {
 					false
 				}

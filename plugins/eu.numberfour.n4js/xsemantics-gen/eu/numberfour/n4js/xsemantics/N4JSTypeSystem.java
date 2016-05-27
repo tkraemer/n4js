@@ -164,7 +164,6 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
@@ -4625,35 +4624,29 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                   final List<ParameterizedTypeRef> allSuperTypeRefs = _xifexpression;
                                   List<ParameterizedTypeRef> _collectAllImplicitSuperTypes = RuleEnvironmentExtensions.collectAllImplicitSuperTypes(G, left);
-                                  final Iterable<ParameterizedTypeRef> superTypes = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
+                                  final Iterable<ParameterizedTypeRef> superTypeRefs = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
                                   final Function1<ParameterizedTypeRef, Boolean> _function = (ParameterizedTypeRef it) -> {
                                     Type _declaredType = it.getDeclaredType();
                                     return Boolean.valueOf((_declaredType == rightDeclType));
                                   };
-                                  final ParameterizedTypeRef matchingSuperTypeRef = IterableExtensions.<ParameterizedTypeRef>findFirst(superTypes, _function);
-                                  if ((matchingSuperTypeRef != null)) {
+                                  boolean _exists = IterableExtensions.<ParameterizedTypeRef>exists(superTypeRefs, _function);
+                                  if (_exists) {
                                     final RuleEnvironment localG_left = RuleEnvironmentExtensions.wrap(G);
                                     this.typeSystemHelper.addSubstitutions(localG_left, left);
-                                    try {
-                                      /* localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst */
-                                      TypeRef matchingSuperTypeRefSubst = null;
-                                      Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, matchingSuperTypeRef);
-                                      checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                                      matchingSuperTypeRefSubst = (TypeRef) result_2.getFirst();
-                                      
-                                      /* G |- matchingSuperTypeRefSubst <: right */
-                                      subtypeInternal(G, _trace_, matchingSuperTypeRefSubst, right);
-                                    } catch (final Throwable _t) {
-                                      if (_t instanceof Exception) {
-                                        final Exception e = (Exception)_t;
-                                        /* false */
-                                        if (!false) {
-                                          sneakyThrowRuleFailedException("false");
-                                        }
-                                      } else {
-                                        throw Exceptions.sneakyThrow(_t);
-                                      }
-                                    }
+                                    EList<TypeVariable> _typeVars_1 = rightDeclType.getTypeVars();
+                                    final Function1<TypeVariable, TypeRef> _function_1 = (TypeVariable it) -> {
+                                      return TypeExtensions.ref(it);
+                                    };
+                                    List<TypeRef> _map = ListExtensions.<TypeVariable, TypeRef>map(_typeVars_1, _function_1);
+                                    final TypeRef syntheticTypeRef = TypeExtensions.ref(rightDeclType, ((TypeArgument[])Conversions.unwrapArray(_map, TypeArgument.class)));
+                                    /* localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef */
+                                    TypeRef effectiveSuperTypeRef = null;
+                                    Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, syntheticTypeRef);
+                                    checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                                    effectiveSuperTypeRef = (TypeRef) result_2.getFirst();
+                                    
+                                    /* G |- effectiveSuperTypeRef <: right */
+                                    subtypeInternal(G, _trace_, effectiveSuperTypeRef, right);
                                   } else {
                                     /* false */
                                     if (!false) {
