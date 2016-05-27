@@ -29,4 +29,19 @@ public enum AccessModifier {
 	 * For private visibility
 	 */
 	PRIVATE;
+
+	/**
+	 * Returns the representation of the modifier as it is used in N4JS code.
+	 *
+	 */
+	public String toCodeRepresentation() {
+		switch (this) {
+		case PROJECT:
+			return "project";
+		case PUBLIC:
+			return "public";
+		default: // PRIVATE:
+			return "";
+		}
+	}
 }

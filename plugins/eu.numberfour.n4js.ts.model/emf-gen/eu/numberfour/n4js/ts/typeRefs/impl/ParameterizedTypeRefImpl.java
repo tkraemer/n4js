@@ -213,31 +213,11 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	public boolean containsWildcards() {
-		boolean _or = false;
-		boolean _and = false;
-		EList<TypeArgument> _typeArgs = this.getTypeArgs();
-		boolean _isEmpty = _typeArgs.isEmpty();
-		if (!_isEmpty) {
-			_and = false;
-		} else {
-			Type _declaredType = this.getDeclaredType();
-			boolean _isGeneric = _declaredType.isGeneric();
-			boolean _not = (!_isGeneric);
-			_and = _not;
-		}
-		if (_and) {
-			_or = true;
-		} else {
-			EList<TypeArgument> _typeArgs_1 = this.getTypeArgs();
-			final Function1<TypeArgument, Boolean> _function = new Function1<TypeArgument, Boolean>() {
-				public Boolean apply(final TypeArgument it) {
-					return Boolean.valueOf(it.containsWildcards());
-				}
-			};
-			boolean _exists = IterableExtensions.<TypeArgument>exists(_typeArgs_1, _function);
-			_or = _exists;
-		}
-		return _or;
+		return ((this.getTypeArgs().isEmpty() && (!this.getDeclaredType().isGeneric())) || IterableExtensions.<TypeArgument>exists(this.getTypeArgs(), new Function1<TypeArgument, Boolean>() {
+			public Boolean apply(final TypeArgument it) {
+				return Boolean.valueOf(it.containsWildcards());
+			}
+		}));
 	}
 
 	/**
@@ -291,17 +271,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	public boolean isGeneric() {
-		boolean _and = false;
-		Type _declaredType = this.getDeclaredType();
-		boolean _tripleNotEquals = (_declaredType != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			Type _declaredType_1 = this.getDeclaredType();
-			boolean _isGeneric = _declaredType_1.isGeneric();
-			_and = _isGeneric;
-		}
-		return _and;
+		return ((this.getDeclaredType() != null) && this.getDeclaredType().isGeneric());
 	}
 
 	/**
@@ -310,20 +280,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	public boolean isRaw() {
-		boolean _and = false;
-		boolean _isGeneric = this.isGeneric();
-		if (!_isGeneric) {
-			_and = false;
-		} else {
-			EList<TypeArgument> _typeArgs = this.getTypeArgs();
-			int _size = _typeArgs.size();
-			Type _declaredType = this.getDeclaredType();
-			EList<TypeVariable> _typeVars = _declaredType.getTypeVars();
-			int _size_1 = _typeVars.size();
-			boolean _lessThan = (_size < _size_1);
-			_and = _lessThan;
-		}
-		return _and;
+		return (this.isGeneric() && (this.getTypeArgs().size() < this.getDeclaredType().getTypeVars().size()));
 	}
 
 	/**
@@ -332,37 +289,11 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	public boolean containsUnboundTypeVariables() {
-		boolean _or = false;
-		boolean _or_1 = false;
-		Type _declaredType = this.getDeclaredType();
-		if ((_declaredType instanceof TypeVariable)) {
-			_or_1 = true;
-		} else {
-			boolean _and = false;
-			boolean _isParameterized = this.isParameterized();
-			boolean _not = (!_isParameterized);
-			if (!_not) {
-				_and = false;
-			} else {
-				Type _declaredType_1 = this.getDeclaredType();
-				boolean _isGeneric = _declaredType_1.isGeneric();
-				_and = _isGeneric;
+		return (((this.getDeclaredType() instanceof TypeVariable) || ((!this.isParameterized()) && this.getDeclaredType().isGeneric())) || IterableExtensions.<TypeArgument>exists(this.getTypeArgs(), new Function1<TypeArgument, Boolean>() {
+			public Boolean apply(final TypeArgument it) {
+				return Boolean.valueOf(it.containsUnboundTypeVariables());
 			}
-			_or_1 = _and;
-		}
-		if (_or_1) {
-			_or = true;
-		} else {
-			EList<TypeArgument> _typeArgs = this.getTypeArgs();
-			final Function1<TypeArgument, Boolean> _function = new Function1<TypeArgument, Boolean>() {
-				public Boolean apply(final TypeArgument it) {
-					return Boolean.valueOf(it.containsUnboundTypeVariables());
-				}
-			};
-			boolean _exists = IterableExtensions.<TypeArgument>exists(_typeArgs, _function);
-			_or = _exists;
-		}
-		return _or;
+		}));
 	}
 
 	/**
@@ -371,17 +302,8 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	public boolean isUseSiteStructuralTyping() {
-		boolean _and = false;
-		TypingStrategy _definedTypingStrategy = this.getDefinedTypingStrategy();
-		boolean _tripleNotEquals = (_definedTypingStrategy != TypingStrategy.NOMINAL);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			TypingStrategy _definedTypingStrategy_1 = this.getDefinedTypingStrategy();
-			boolean _tripleNotEquals_1 = (_definedTypingStrategy_1 != TypingStrategy.DEFAULT);
-			_and = _tripleNotEquals_1;
-		}
-		return _and;
+		return ((this.getDefinedTypingStrategy() != TypingStrategy.NOMINAL) && 
+			(this.getDefinedTypingStrategy() != TypingStrategy.DEFAULT));
 	}
 
 	/**

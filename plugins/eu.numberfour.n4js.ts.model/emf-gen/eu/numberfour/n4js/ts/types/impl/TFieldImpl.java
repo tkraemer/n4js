@@ -203,18 +203,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @generated
 	 */
 	public boolean isOptional() {
-		boolean _and = false;
-		TypeRef _typeRef = this.getTypeRef();
-		boolean _tripleNotEquals = (_typeRef != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			TypeRef _typeRef_1 = this.getTypeRef();
-			UndefModifier _undefModifier = _typeRef_1.getUndefModifier();
-			boolean _tripleEquals = (_undefModifier == UndefModifier.OPTIONAL);
-			_and = _tripleEquals;
-		}
-		return _and;
+		return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == UndefModifier.OPTIONAL));
 	}
 
 	/**
@@ -223,15 +212,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @generated
 	 */
 	public boolean isStatic() {
-		boolean _or = false;
-		boolean _isDeclaredStatic = this.isDeclaredStatic();
-		if (_isDeclaredStatic) {
-			_or = true;
-		} else {
-			boolean _isConst = this.isConst();
-			_or = _isConst;
-		}
-		return _or;
+		return (this.isDeclaredStatic() || this.isConst());
 	}
 
 	/**
@@ -249,15 +230,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @generated
 	 */
 	public boolean isWriteable() {
-		boolean _or = false;
-		boolean _isConst = this.isConst();
-		if (_isConst) {
-			_or = true;
-		} else {
-			boolean _isFinal = this.isFinal();
-			_or = _isFinal;
-		}
-		return (!_or);
+		return (!(this.isConst() || this.isFinal()));
 	}
 
 	/**

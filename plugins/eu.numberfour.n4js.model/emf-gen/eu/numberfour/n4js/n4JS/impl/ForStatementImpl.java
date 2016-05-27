@@ -365,17 +365,7 @@ public class ForStatementImpl extends VariableDeclarationContainerImpl implement
 	 * @generated
 	 */
 	public boolean isForPlain() {
-		boolean _and = false;
-		boolean _isForIn = this.isForIn();
-		boolean _not = (!_isForIn);
-		if (!_not) {
-			_and = false;
-		} else {
-			boolean _isForOf = this.isForOf();
-			boolean _not_1 = (!_isForOf);
-			_and = _not_1;
-		}
-		return _and;
+		return ((!this.isForIn()) && (!this.isForOf()));
 	}
 
 	/**

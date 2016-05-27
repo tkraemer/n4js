@@ -22,12 +22,16 @@ import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
+import eu.numberfour.n4js.ui.wizard.model.AccessModifier
+import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
+import java.io.IOException
+import java.io.UnsupportedEncodingException
 import java.util.ArrayList
 import java.util.Collection
 import java.util.HashSet
 import java.util.List
-import java.util.Scanner
+import java.util.Map
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
@@ -41,6 +45,7 @@ import org.eclipse.ui.part.FileEditorInput
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
+import org.eclipse.xtext.util.Files
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 
 /**
@@ -63,23 +68,63 @@ class WizardGeneratorHelper {
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
 	
+	public static val LINEBREAK = "\n";
 	
 	/**
 	 * Return the last character of a given file.
 	 */
 	public def String lastCharacterInFile(IFile file) {
 		try {
-			val scanner = new Scanner(file.contents)
-			scanner.useDelimiter("");
-			var line = "";
-			while (scanner.hasNext) {
-				line = scanner.next;
-			}
-			scanner.close();
-			return line;
-		} catch (CoreException exc) {
+			val contents = readFileAsString(file)
+			return contents.charAt(contents.length-1).toString;
+		} catch (Exception exc) {
 			return "";
-		};
+		}
+	}
+	
+	/**
+	 * Returns the given string with a trailing line break.
+	 * 
+	 * If the string is empty no line break is added.
+	 */
+	public def String addLineBreak(String str) {
+		if (str.empty) {
+			str
+		} else {
+			str + WizardGeneratorHelper.LINEBREAK;
+		}
+	}
+	
+	/** 
+	 * Returns the given string with a trailing space.
+	 * 
+	 * If the string is empty an empty string is returned.
+	 * */
+	public def String addSpace(String str) {
+		if (str.empty) {
+			str
+		} else {
+			str + " ";
+		}
+	}
+	
+	/**
+	 * Returns the export statement if the modifier 
+	 * requires it or an empty string if not.
+	 */
+	public def String exportStatement(AccessModifier modifier) {
+		if (modifier == AccessModifier.PROJECT || modifier == AccessModifier.PUBLIC) {
+			"export"
+		} else {
+			""
+		}
+	}
+	
+	/**
+	 * Returns the content of the file as a string.
+	 */
+	public def String readFileAsString(IFile file) throws IOException, CoreException, UnsupportedEncodingException {
+		Files.readFileIntoString(file.location.toString);
 	}
 	
 	/**
@@ -88,12 +133,27 @@ class WizardGeneratorHelper {
 	 * <p>The method tries to find the files import region and append the import statements to it</p> 
 	 */
 	public def void insertImportStatements(XtextResource moduleResource, List<ImportRequirement> importRequirements ) {
-		
 		val importReplacement = requirementResolver.getImportStatementChanges(moduleResource, importRequirements);
 		moduleResource.applyChanges(#[importReplacement]);
 	}
 	
 	
+	
+	/**
+	 * Returns true if the given path exists in the workspace.
+	 * 
+	 * Note that the path must contain a project segment and at least one additional segment.
+	 */
+	public def boolean exists(IPath path) {
+		if (null === path) {
+			return false;
+		}
+		val member = ResourcesPlugin.workspace.root.findMember(path)
+		if (null === member) {
+			return false;
+		}
+		member.exists
+	}
 	
 	/**
 	 * Load and return the {@link XtextResource} at the given URI
@@ -116,7 +176,7 @@ class WizardGeneratorHelper {
 	public def boolean applyChanges(XtextResource resource,Collection<? extends IAtomicChange> changes){
 		val IPath resourcePath = new Path(resource.getURI.toString).makeRelativeTo(new Path("platform:/resource/"));
 		val IFile resourceFile = ResourcesPlugin.workspace.root.getFile(resourcePath);
-		if ( resourceFile.exists ) {
+		if (resourceFile.exists) {
 			try {
 				val FileEditorInput fileInput = new FileEditorInput(resourceFile);
 				docProvider.connect(fileInput);
@@ -139,7 +199,7 @@ class WizardGeneratorHelper {
 				docProvider.changed(fileInput);
 				docProvider.disconnect(fileInput);
 				
-			} catch ( Exception all ) {
+			} catch (Exception all) {
 				return false;
 			}
 		} else {
@@ -180,6 +240,21 @@ class WizardGeneratorHelper {
 			return projectOptional.get();
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the real or bound name of the classifier reference.
+	 *
+	 * Always prioritizes alias name over real name.
+	 *
+	 * @param reference The classifier reference
+	 * @param aliasBindings The alias bindings, may be null
+	 */
+	public def String realOrAliasName(ClassifierReference reference, Map<URI,String> aliasBindings) {
+		if (aliasBindings !== null && aliasBindings.containsKey(reference.uri)) {
+			return aliasBindings.get(reference.uri);
+		}
+		return reference.classifierName;
 	}
 	
 	/**

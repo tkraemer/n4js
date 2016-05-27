@@ -226,13 +226,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 		if ((dtype == null)) {
 			return false;
 		}
-		boolean _or = false;
-		if ((((dtype instanceof TClass) || (dtype instanceof PrimitiveType)) || (dtype instanceof TObjectPrototype))) {
-			_or = true;
-		} else {
-			_or = (dtype instanceof TEnum);
-		}
-		return _or;
+		return ((((dtype instanceof TClass) || (dtype instanceof PrimitiveType)) || (dtype instanceof TObjectPrototype)) || 
+			(dtype instanceof TEnum));
 	}
 
 	/**
@@ -313,17 +308,7 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * @generated
 	 */
 	public boolean undefinedOrNull() {
-		boolean _or = false;
-		NullModifier _nullModifier = this.getNullModifier();
-		boolean _equals = Objects.equal(_nullModifier, NullModifier.ISNULL);
-		if (_equals) {
-			_or = true;
-		} else {
-			UndefModifier _undefModifier = this.getUndefModifier();
-			boolean _equals_1 = Objects.equal(_undefModifier, UndefModifier.ISUNDEFINED);
-			_or = _equals_1;
-		}
-		return _or;
+		return (Objects.equal(this.getNullModifier(), NullModifier.ISNULL) || Objects.equal(this.getUndefModifier(), UndefModifier.ISUNDEFINED));
 	}
 
 	/**

@@ -140,12 +140,10 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 		Type _switchResult = null;
 		StaticBaseTypeRef _staticTypeRef = this.getStaticTypeRef();
 		boolean _matched = false;
-		if (!_matched) {
-			if (_staticTypeRef instanceof ParameterizedTypeRef) {
-				_matched=true;
-				StaticBaseTypeRef _staticTypeRef_1 = this.getStaticTypeRef();
-				_switchResult = _staticTypeRef_1.getDeclaredType();
-			}
+		if (_staticTypeRef instanceof ParameterizedTypeRef) {
+			_matched=true;
+			StaticBaseTypeRef _staticTypeRef_1 = this.getStaticTypeRef();
+			_switchResult = _staticTypeRef_1.getDeclaredType();
 		}
 		if (!_matched) {
 			if (_staticTypeRef instanceof BoundThisTypeRef) {
