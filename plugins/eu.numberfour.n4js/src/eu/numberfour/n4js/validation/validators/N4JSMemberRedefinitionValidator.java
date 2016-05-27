@@ -513,7 +513,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 		}
 
-		if ((m.isSetter() || m.isField()) && !s.isGetter() && !((TField) s).isConst()) {
+		boolean sIsConst = false;
+		if (s instanceof TField) {
+			sIsConst = ((TField) s).isConst();
+		}
+
+		if ((m.isSetter() || m.isField()) && !s.isGetter() && !sIsConst) {
 			Result<Boolean> result = isSubTypeResult(s, m);
 			if (result.failed()) { // 4. subtype
 				if (!consumptionConflict) { // avoid consequential errors
