@@ -15711,7 +15711,9 @@ ruleTypeArgument
 ((((
 	QuestionMark 	))=>	WildcardParserRuleCall_0=ruleWildcard		{ announce($WildcardParserRuleCall_0.start, $WildcardParserRuleCall_0.stop, grammarAccess.getTypeArgumentAccess().getWildcardParserRuleCall_0()); }
 )
-    |	TypeRefParserRuleCall_1=ruleTypeRef		{ announce($TypeRefParserRuleCall_1.start, $TypeRefParserRuleCall_1.stop, grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_1()); }
+    |	WildcardNewNotationParserRuleCall_1=ruleWildcardNewNotation		{ announce($WildcardNewNotationParserRuleCall_1.start, $WildcardNewNotationParserRuleCall_1.stop, grammarAccess.getTypeArgumentAccess().getWildcardNewNotationParserRuleCall_1()); }
+
+    |	TypeRefParserRuleCall_2=ruleTypeRef		{ announce($TypeRefParserRuleCall_2.start, $TypeRefParserRuleCall_2.stop, grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_2()); }
 )
 ;
 
@@ -15744,6 +15746,35 @@ ruleWildcard
 	DeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0=ruleTypeRef { announce($DeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0.start, $DeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0.stop, grammarAccess.getWildcardAccess().getDeclaredLowerBoundAssignment_1_1_1()); }
 )
 )))?)
+;
+
+
+
+
+
+// Entry rule entryRuleWildcardNewNotation
+entryRuleWildcardNewNotation
+	:
+	ruleWildcardNewNotation 
+	EOF 
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation 
+    @init {
+    }:
+((
+	OutKeyword_0_0=Out 	 { announce($OutKeyword_0_0, grammarAccess.getWildcardNewNotationAccess().getOutKeyword_0_0()); }(
+(
+	DeclaredUpperBoundTypeRefParserRuleCall_0_1_0=ruleTypeRef { announce($DeclaredUpperBoundTypeRefParserRuleCall_0_1_0.start, $DeclaredUpperBoundTypeRefParserRuleCall_0_1_0.stop, grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundAssignment_0_1()); }
+)
+))
+    |(
+	InKeyword_1_0=In 	 { announce($InKeyword_1_0, grammarAccess.getWildcardNewNotationAccess().getInKeyword_1_0()); }(
+(
+	DeclaredLowerBoundTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($DeclaredLowerBoundTypeRefParserRuleCall_1_1_0.start, $DeclaredLowerBoundTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1()); }
+)
+)))
 ;
 
 

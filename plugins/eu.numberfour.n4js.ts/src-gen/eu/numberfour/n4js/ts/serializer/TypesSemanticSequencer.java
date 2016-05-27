@@ -209,8 +209,19 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				}
 				else break;
 			case TypeRefsPackage.WILDCARD:
-				sequence_Wildcard(context, (Wildcard) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getWildcardNewNotationRule()) {
+					sequence_WildcardNewNotation(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWildcardRule()) {
+					sequence_Wildcard(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_Wildcard_WildcardNewNotation(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -1150,13 +1161,36 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
-	 *     TypeArgument returns Wildcard
+	 *     WildcardNewNotation returns Wildcard
+	 *
+	 * Constraint:
+	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)
+	 */
+	protected void sequence_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Wildcard returns Wildcard
 	 *
 	 * Constraint:
 	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)?
 	 */
 	protected void sequence_Wildcard(ISerializationContext context, Wildcard semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeArgument returns Wildcard
+	 *
+	 * Constraint:
+	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef | declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)?
+	 */
+	protected void sequence_Wildcard_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

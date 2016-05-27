@@ -6428,6 +6428,7 @@ ruleTypeArgument :
 	( (
 	'?'
 	) => ruleWildcard ) |
+	ruleWildcardNewNotation |
 	ruleTypeRef
 ;
 
@@ -6439,6 +6440,12 @@ ruleWildcard :
 		'extends' ruleTypeRef |
 		'super' ruleTypeRef
 	)?
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation :
+	'out' ruleTypeRef |
+	'in' ruleTypeRef
 ;
 
 // Rule UndefModifierToken

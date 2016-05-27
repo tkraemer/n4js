@@ -14098,7 +14098,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeArgument:
-	//	Wildcard | TypeRef;
+	//	Wildcard | WildcardNewNotation | TypeRef;
 	public TypeExpressionsGrammarAccess.TypeArgumentElements getTypeArgumentAccess() {
 		return gaTypeExpressions.getTypeArgumentAccess();
 	}
@@ -14116,6 +14116,16 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardRule() {
 		return getWildcardAccess().getRule();
+	}
+
+	//WildcardNewNotation Wildcard:
+	//	'out' declaredUpperBound=TypeRef | 'in' declaredLowerBound=TypeRef
+	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
+		return gaTypeExpressions.getWildcardNewNotationAccess();
+	}
+	
+	public ParserRule getWildcardNewNotationRule() {
+		return getWildcardNewNotationAccess().getRule();
 	}
 
 	//UndefModifierToken UndefModifier:
