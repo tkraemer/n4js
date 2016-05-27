@@ -179,7 +179,7 @@ public interface Type extends TExportableElement, TAnnotableElement {
 	 * For details see {@link TypeVariable#getVariance()}.
 	 * <!-- end-model-doc -->
 	 * @model dataType="eu.numberfour.n4js.ts.types.Variance" unique="false" idxUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.util.Variance%> _xifexpression = null;\nboolean _and = false;\nif (!(idx >= 0))\n{\n\t_and = false;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = this.getTypeVars();\n\tint _size = _typeVars.size();\n\tboolean _lessThan = (idx < _size);\n\t_and = _lessThan;\n}\nif (_and)\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars_1 = this.getTypeVars();\n\t<%eu.numberfour.n4js.ts.types.TypeVariable%> _get = _typeVars_1.get(idx);\n\t_xifexpression = _get.getVariance();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.util.Variance%> _xifexpression = null;\nif (((idx >= 0) && (idx < this.getTypeVars().size())))\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = this.getTypeVars();\n\t<%eu.numberfour.n4js.ts.types.TypeVariable%> _get = _typeVars.get(idx);\n\t_xifexpression = _get.getVariance();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
 	Variance getVarianceOfTypeVar(int idx);

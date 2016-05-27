@@ -196,18 +196,9 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 	 */
 	public Variance getVarianceOfTypeVar(final int idx) {
 		Variance _xifexpression = null;
-		boolean _and = false;
-		if (!(idx >= 0)) {
-			_and = false;
-		} else {
+		if (((idx >= 0) && (idx < this.getTypeVars().size()))) {
 			EList<TypeVariable> _typeVars = this.getTypeVars();
-			int _size = _typeVars.size();
-			boolean _lessThan = (idx < _size);
-			_and = _lessThan;
-		}
-		if (_and) {
-			EList<TypeVariable> _typeVars_1 = this.getTypeVars();
-			TypeVariable _get = _typeVars_1.get(idx);
+			TypeVariable _get = _typeVars.get(idx);
 			_xifexpression = _get.getVariance();
 		}
 		else {

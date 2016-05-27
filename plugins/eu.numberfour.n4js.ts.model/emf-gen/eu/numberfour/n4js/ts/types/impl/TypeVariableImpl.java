@@ -188,23 +188,11 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	public Variance getVariance() {
 		final boolean co = this.isDeclaredCovariant();
 		final boolean contra = this.isDeclaredContravariant();
-		boolean _and = false;
-		if (!co) {
-			_and = false;
-		} else {
-			_and = (!contra);
-		}
-		if (_and) {
+		if ((co && (!contra))) {
 			return Variance.CO;
 		}
 		else {
-			boolean _and_1 = false;
-			if (!contra) {
-				_and_1 = false;
-			} else {
-				_and_1 = (!co);
-			}
-			if (_and_1) {
+			if ((contra && (!co))) {
 				return Variance.CONTRA;
 			}
 			else {
