@@ -67,11 +67,11 @@ class N4JSLanguageUtils_getVarianceOfPositionTest {
 			class C<T> extends G<string,T,number> {}
 		'''.assertVarianceOfPosition(INV)
 		'''
-			class G<S1,+S2,S3> {}
+			class G<S1,out S2,S3> {}
 			class C<T> extends G<string,T,number> {}
 		'''.assertVarianceOfPosition(CO)
 		'''
-			class G<S1,-S2,S3> {}
+			class G<S1,in S2,S3> {}
 			class C<T> extends G<string,T,number> {}
 		'''.assertVarianceOfPosition(CONTRA)
 	}

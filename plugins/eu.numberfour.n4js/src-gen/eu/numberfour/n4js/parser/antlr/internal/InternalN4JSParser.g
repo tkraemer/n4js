@@ -5769,16 +5769,16 @@ ruleTypeVariable returns [EObject current=null]
 (((
 (
 		lv_declaredCovariant_0_0=
-	PlusSign
+	Out
     {
-        newLeafNode(lv_declaredCovariant_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0());
+        newLeafNode(lv_declaredCovariant_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0());
     }
 
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTypeVariableRule());
 	        }
-       		setWithLastConsumed($current, "declaredCovariant", true, "+");
+       		setWithLastConsumed($current, "declaredCovariant", true, "out");
 	    }
 
 )
@@ -5786,16 +5786,16 @@ ruleTypeVariable returns [EObject current=null]
     |(
 (
 		lv_declaredContravariant_1_0=
-	HyphenMinus
+	In
     {
-        newLeafNode(lv_declaredContravariant_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0());
+        newLeafNode(lv_declaredContravariant_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0());
     }
 
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTypeVariableRule());
 	        }
-       		setWithLastConsumed($current, "declaredContravariant", true, "-");
+       		setWithLastConsumed($current, "declaredContravariant", true, "in");
 	    }
 
 )

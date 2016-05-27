@@ -23112,7 +23112,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         (declaredCovariant?='+' | declaredContravariant?='-')? 
+	 *         (declaredCovariant?='out' | declaredContravariant?='in')? 
 	 *         name=IdentifierOrThis 
 	 *         (declaredUpperBounds+=ParameterizedTypeRefNominal declaredUpperBounds+=ParameterizedTypeRefNominal*)?
 	 *     )

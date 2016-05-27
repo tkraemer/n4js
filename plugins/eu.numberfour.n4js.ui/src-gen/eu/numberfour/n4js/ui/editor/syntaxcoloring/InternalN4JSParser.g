@@ -2114,14 +2114,14 @@ ruleTypeVariable
 (((
 (
 
-	DeclaredCovariantPlusSignKeyword_0_0_0=PlusSign 	 { announce($DeclaredCovariantPlusSignKeyword_0_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+	DeclaredCovariantOutKeyword_0_0_0=Out 	 { announce($DeclaredCovariantOutKeyword_0_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0()); }
 
 )
 )
     |(
 (
 
-	DeclaredContravariantHyphenMinusKeyword_0_1_0=HyphenMinus 	 { announce($DeclaredContravariantHyphenMinusKeyword_0_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+	DeclaredContravariantInKeyword_0_1_0=In 	 { announce($DeclaredContravariantInKeyword_0_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0()); }
 
 )
 ))?(

@@ -348,7 +348,7 @@ AnnotatedExpression <Yield> returns Expression:
 ;
 
 TypeVariable returns types::TypeVariable:
-	(declaredCovariant?='+' | declaredContravariant?='-')?
+	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 ;
 

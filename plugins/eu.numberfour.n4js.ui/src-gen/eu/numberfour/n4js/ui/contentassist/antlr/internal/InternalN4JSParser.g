@@ -94,6 +94,7 @@ import eu.numberfour.n4js.services.N4JSGrammarAccess;
 		tokenNameToValue.put("Get", "'get'");
 		tokenNameToValue.put("Let", "'let'");
 		tokenNameToValue.put("New", "'new'");
+		tokenNameToValue.put("Out", "'out'");
 		tokenNameToValue.put("Set", "'set'");
 		tokenNameToValue.put("Try", "'try'");
 		tokenNameToValue.put("Var", "'var'");
@@ -86120,16 +86121,16 @@ rule__TypeVariable__DeclaredCovariantAssignment_0_0
     }
 :
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0()); }
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0()); }
 
-	PlusSign 
+	Out 
 
-{ after(grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+{ after(grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0()); }
 )
 
-{ after(grammarAccess.getTypeVariableAccess().getDeclaredCovariantPlusSignKeyword_0_0_0()); }
+{ after(grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0()); }
 )
 
 ;
@@ -86143,16 +86144,16 @@ rule__TypeVariable__DeclaredContravariantAssignment_0_1
     }
 :
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0()); }
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0()); }
 
-	HyphenMinus 
+	In 
 
-{ after(grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+{ after(grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0()); }
 )
 
-{ after(grammarAccess.getTypeVariableAccess().getDeclaredContravariantHyphenMinusKeyword_0_1_0()); }
+{ after(grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0()); }
 )
 
 ;
