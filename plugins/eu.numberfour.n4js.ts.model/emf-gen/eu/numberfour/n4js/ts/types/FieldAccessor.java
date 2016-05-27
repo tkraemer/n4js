@@ -73,7 +73,7 @@ public interface FieldAccessor extends TMemberWithAccessModifier {
 	 * Returns true if the method is either declared abstract or it is implicitly abstract, i.e. it is declared in a role and has no body.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _isDeclaredAbstract = this.isDeclaredAbstract();\nif (_isDeclaredAbstract)\n{\n\t_or = true;\n} else\n{\n\tboolean _and = false;\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\n\tif (!(_eContainer instanceof <%eu.numberfour.n4js.ts.types.TInterface%>))\n\t{\n\t\t_and = false;\n\t} else\n\t{\n\t\tboolean _isHasNoBody = this.isHasNoBody();\n\t\t_and = _isHasNoBody;\n\t}\n\t_or = _and;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isDeclaredAbstract() || ((this.eContainer() instanceof <%eu.numberfour.n4js.ts.types.TInterface%>) && this.isHasNoBody()));'"
 	 * @generated
 	 */
 	boolean isAbstract();

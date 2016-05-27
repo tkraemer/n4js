@@ -117,7 +117,7 @@ public interface FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 * Overrides {@link TypeRef#isRaw()}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\nboolean _isGeneric = this.isGeneric();\nif (!_isGeneric)\n{\n\t_and = false;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\n\tint _size = _typeArgs.size();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = this.getTypeVars();\n\tint _size_1 = _typeVars.size();\n\tboolean _lessThan = (_size < _size_1);\n\t_and = _lessThan;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isGeneric() && (this.getTypeArgs().size() < this.getTypeVars().size()));'"
 	 * @generated
 	 */
 	boolean isRaw();
@@ -131,7 +131,7 @@ public interface FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 * or 'null' if 'argIndex' is invalid. This method takes into account optional and variadic parameters.
 	 * <!-- end-model-doc -->
 	 * @model unique="false" argIndexUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = this.getFpars();\nfinal int fparsSize = _fpars.size();\nif (((argIndex >= 0) && (argIndex < fparsSize)))\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_1 = this.getFpars();\n\treturn _fpars_1.get(argIndex);\n}\nelse\n{\n\tboolean _and = false;\n\tif (!((argIndex >= fparsSize) && (fparsSize > 0)))\n\t{\n\t\t_and = false;\n\t} else\n\t{\n\t\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_2 = this.getFpars();\n\t\t<%eu.numberfour.n4js.ts.types.TFormalParameter%> _get = _fpars_2.get((fparsSize - 1));\n\t\tboolean _isVariadic = _get.isVariadic();\n\t\t_and = _isVariadic;\n\t}\n\tif (_and)\n\t{\n\t\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_3 = this.getFpars();\n\t\treturn _fpars_3.get((fparsSize - 1));\n\t}\n}\nreturn null;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = this.getFpars();\nfinal int fparsSize = _fpars.size();\nif (((argIndex >= 0) && (argIndex < fparsSize)))\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_1 = this.getFpars();\n\treturn _fpars_1.get(argIndex);\n}\nelse\n{\n\tif ((((argIndex >= fparsSize) && (fparsSize > 0)) && this.getFpars().get((fparsSize - 1)).isVariadic()))\n\t{\n\t\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_2 = this.getFpars();\n\t\treturn _fpars_2.get((fparsSize - 1));\n\t}\n}\nreturn null;'"
 	 * @generated
 	 */
 	TFormalParameter getFparForArgIdx(int argIndex);

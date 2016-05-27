@@ -88,7 +88,7 @@ public interface ThisTypeRefStructural extends ThisTypeRef, StructuralTypeRef {
 	 * Convenience method, returns true if typingStrategy is neither NOMINAL nor DEFAULT
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.types.TypingStrategy%> _typingStrategy = this.getTypingStrategy();\nboolean _tripleNotEquals = (_typingStrategy != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.TypingStrategy%> _typingStrategy_1 = this.getTypingStrategy();\n\tboolean _tripleNotEquals_1 = (_typingStrategy_1 != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT);\n\t_and = _tripleNotEquals_1;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL) && (this.getTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT));'"
 	 * @generated
 	 */
 	boolean isUseSiteStructuralTyping();

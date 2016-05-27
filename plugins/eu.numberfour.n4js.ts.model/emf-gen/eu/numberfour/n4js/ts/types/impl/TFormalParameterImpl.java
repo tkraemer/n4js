@@ -240,18 +240,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @generated
 	 */
 	public boolean isOptional() {
-		boolean _and = false;
-		TypeRef _typeRef = this.getTypeRef();
-		boolean _tripleNotEquals = (_typeRef != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			TypeRef _typeRef_1 = this.getTypeRef();
-			UndefModifier _undefModifier = _typeRef_1.getUndefModifier();
-			boolean _tripleEquals = (_undefModifier == UndefModifier.OPTIONAL);
-			_and = _tripleEquals;
-		}
-		return _and;
+		return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == UndefModifier.OPTIONAL));
 	}
 
 	/**
@@ -260,15 +249,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @generated
 	 */
 	public boolean isVariadicOrOptional() {
-		boolean _or = false;
-		boolean _isVariadic = this.isVariadic();
-		if (_isVariadic) {
-			_or = true;
-		} else {
-			boolean _isOptional = this.isOptional();
-			_or = _isOptional;
-		}
-		return _or;
+		return (this.isVariadic() || this.isOptional());
 	}
 
 	/**

@@ -145,18 +145,7 @@ public class FullMemberReferenceImpl extends FullTypeReferenceImpl implements Fu
 	 * @generated
 	 */
 	public boolean memberNameSet() {
-		boolean _and = false;
-		String _memberName = this.getMemberName();
-		boolean _tripleNotEquals = (_memberName != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			String _memberName_1 = this.getMemberName();
-			boolean _isEmpty = _memberName_1.isEmpty();
-			boolean _not = (!_isEmpty);
-			_and = _not;
-		}
-		return _and;
+		return ((this.getMemberName() != null) && (!this.getMemberName().isEmpty()));
 	}
 
 	/**

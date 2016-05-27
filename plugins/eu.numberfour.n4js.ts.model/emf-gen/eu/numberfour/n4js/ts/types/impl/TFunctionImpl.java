@@ -434,18 +434,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			return _fpars_1.get(argIndex);
 		}
 		else {
-			boolean _and = false;
-			if (!((argIndex >= fparsSize) && (fparsSize > 0))) {
-				_and = false;
-			} else {
+			if ((((argIndex >= fparsSize) && (fparsSize > 0)) && this.getFpars().get((fparsSize - 1)).isVariadic())) {
 				EList<TFormalParameter> _fpars_2 = this.getFpars();
-				TFormalParameter _get = _fpars_2.get((fparsSize - 1));
-				boolean _isVariadic = _get.isVariadic();
-				_and = _isVariadic;
-			}
-			if (_and) {
-				EList<TFormalParameter> _fpars_3 = this.getFpars();
-				return _fpars_3.get((fparsSize - 1));
+				return _fpars_2.get((fparsSize - 1));
 			}
 		}
 		return null;
