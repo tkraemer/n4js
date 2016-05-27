@@ -21,6 +21,7 @@ import eu.numberfour.n4js.ui.wizard.components.NameComponent;
 import eu.numberfour.n4js.ui.wizard.components.OtherClassifierModifiersComponent;
 import eu.numberfour.n4js.ui.wizard.components.SuperClassComponentProvider;
 import eu.numberfour.n4js.ui.wizard.components.WizardComponentContainer;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 
 /**
@@ -42,6 +43,9 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@Inject
 	private SuperClassComponentProvider superClassComponentProvider;
 
+	@Inject
+	private N4JSNewClassWizardGenerator generator;
+
 	/**
 	 * Instantiates a New N4JS Class wizard main page
 	 */
@@ -54,7 +58,6 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@SuppressWarnings("unused")
 	@Override
 	public void createComponents(WizardComponentContainer container) {
-
 		nameComponent = new NameComponent(getModel(), container);
 
 		new EmptyComponent(container);
@@ -75,6 +78,11 @@ public class N4JSNewClassWizardPage extends N4JSNewClassifierWizardPage<N4JSClas
 	@Override
 	public WorkspaceWizardModelValidator<N4JSClassWizardModel> getValidator() {
 		return validator;
+	}
+
+	@Override
+	public WorkspaceWizardGenerator<N4JSClassWizardModel> getGenerator() {
+		return generator;
 	}
 
 }

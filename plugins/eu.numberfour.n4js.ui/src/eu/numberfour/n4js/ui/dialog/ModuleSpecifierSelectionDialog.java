@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -55,6 +56,8 @@ import eu.numberfour.n4js.utils.OSInfo;
  * specified file may not exist, but it is ensured that all folders in the path exist.
  */
 public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog {
+
+	private static Logger LOGGER = Logger.getLogger(ModuleSpecifierSelectionDialog.class);
 
 	private final static String MODULE_ELEMENT_NAME = "Module:";
 	private final static String CREATE_FOLDER_LABEL = "Create Folder";
@@ -442,11 +445,12 @@ public class ModuleSpecifierSelectionDialog extends CustomElementSelectionDialog
 				}
 				activeContainer = folderToCreate;
 			} catch (CoreException e) {
-				e.printStackTrace();
+				LOGGER.error("Failed to create module folders.", e);
 				MessageDialog.open(MessageDialog.ERROR, getShell(),
 						FAILED_TO_CREATE_FOLDER_TITLE, String.format(FAILED_TO_CREATE_FOLDER_MESSAGE,
 								folderToCreate.getFullPath().toString(), e.getMessage()),
 						SWT.NONE);
+				break;
 			}
 		}
 		return activeContainer;

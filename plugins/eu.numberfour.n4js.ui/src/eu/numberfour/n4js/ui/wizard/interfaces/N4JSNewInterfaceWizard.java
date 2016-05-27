@@ -10,13 +10,16 @@
  */
 package eu.numberfour.n4js.ui.wizard.interfaces;
 
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
+import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizard;
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator;
 
 /**
  * Wizard for creating new N4JS interfaces.
@@ -39,14 +42,18 @@ public class N4JSNewInterfaceWizard extends N4JSNewClassifierWizard<N4JSInterfac
 	}
 
 	@Override
+	public IDialogSettings getDialogSettings() {
+		return N4JSActivator.getInstance().getDialogSettings();
+	}
+
+	@Override
 	protected N4JSInterfaceWizardModel getModel() {
 		return model;
 	}
 
 	@Override
-	protected void doGenerateClassifier() {
-		generator.performManifestChanges(model);
-		generator.writeToFile(model);
+	protected WorkspaceWizardGenerator<N4JSInterfaceWizardModel> getGenerator() {
+		return generator;
 	}
 
 	@Override

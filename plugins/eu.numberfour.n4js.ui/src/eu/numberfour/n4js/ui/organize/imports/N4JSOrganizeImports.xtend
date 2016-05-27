@@ -280,6 +280,10 @@ public class N4JSOrganizeImports {
 		return insertionPoint;
 	}
 	
+	public def int getImportOffset(XtextResource resource) {
+		getImportRegion(resource).offset;
+	}
+	
 	/** Goes from the beginning of the RootNode up to the passed in node. Looks only at hidden leafs and at ASI-LeafNodes. 
 	 * @return {@code false} if any comment is encountered on the way.
 	 */
