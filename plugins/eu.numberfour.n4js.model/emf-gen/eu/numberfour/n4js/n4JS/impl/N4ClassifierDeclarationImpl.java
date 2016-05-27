@@ -233,17 +233,7 @@ public abstract class N4ClassifierDeclarationImpl extends N4TypeDeclarationImpl 
 		Iterable<N4MethodDeclaration> _filter = Iterables.<N4MethodDeclaration>filter(_ownedMembersRaw, N4MethodDeclaration.class);
 		final Function1<N4MethodDeclaration, Boolean> _function = new Function1<N4MethodDeclaration, Boolean>() {
 			public Boolean apply(final N4MethodDeclaration it) {
-				boolean _and = false;
-				boolean _isConstructor = it.isConstructor();
-				boolean _not = (!_isConstructor);
-				if (!_not) {
-					_and = false;
-				} else {
-					boolean _isCallableConstructor = it.isCallableConstructor();
-					boolean _not_1 = (!_isCallableConstructor);
-					_and = _not_1;
-				}
-				return Boolean.valueOf(_and);
+				return Boolean.valueOf(((!it.isConstructor()) && (!it.isCallableConstructor())));
 			}
 		};
 		final Iterable<N4MethodDeclaration> methods = IterableExtensions.<N4MethodDeclaration>filter(_filter, _function);

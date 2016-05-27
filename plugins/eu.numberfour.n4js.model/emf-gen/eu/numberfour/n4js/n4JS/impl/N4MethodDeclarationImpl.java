@@ -57,7 +57,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -643,39 +642,13 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isAbstract() {
-		boolean _or = false;
-		boolean _and = false;
-		boolean _and_1 = false;
-		EObject _eContainer = this.eContainer();
-		if (!(_eContainer instanceof N4InterfaceDeclaration)) {
-			_and_1 = false;
-		} else {
-			Block _body = this.getBody();
-			boolean _tripleEquals = (_body == null);
-			_and_1 = _tripleEquals;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			EList<Annotation> _annotations = this.getAnnotations();
-			final Function1<Annotation, Boolean> _function = new Function1<Annotation, Boolean>() {
+		return ((((this.eContainer() instanceof N4InterfaceDeclaration) && (this.getBody() == null)) && 
+			(!IterableExtensions.<Annotation>exists(this.getAnnotations(), new Function1<Annotation, Boolean>() {
 				public Boolean apply(final Annotation it) {
 					String _name = it.getName();
 					return Boolean.valueOf(Objects.equal(_name, "ProvidesDefaultImplementation"));
 				}
-			};
-			boolean _exists = IterableExtensions.<Annotation>exists(_annotations, _function);
-			boolean _not = (!_exists);
-			_and = _not;
-		}
-		if (_and) {
-			_or = true;
-		} else {
-			EList<N4Modifier> _declaredModifiers = this.getDeclaredModifiers();
-			boolean _contains = _declaredModifiers.contains(N4Modifier.ABSTRACT);
-			_or = _contains;
-		}
-		return _or;
+			}))) || this.getDeclaredModifiers().contains(N4Modifier.ABSTRACT));
 	}
 
 	/**
@@ -684,17 +657,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isConstructor() {
-		boolean _and = false;
-		String _name = this.getName();
-		boolean _equals = Objects.equal("constructor", _name);
-		if (!_equals) {
-			_and = false;
-		} else {
-			boolean _isStatic = this.isStatic();
-			boolean _not = (!_isStatic);
-			_and = _not;
-		}
-		return _and;
+		return (Objects.equal("constructor", this.getName()) && (!this.isStatic()));
 	}
 
 	/**
@@ -703,17 +666,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isCallableConstructor() {
-		boolean _and = false;
-		String _name = this.getName();
-		boolean _tripleEquals = (null == _name);
-		if (!_tripleEquals) {
-			_and = false;
-		} else {
-			Expression _computeNameFrom = this.getComputeNameFrom();
-			boolean _tripleEquals_1 = (null == _computeNameFrom);
-			_and = _tripleEquals_1;
-		}
-		return _and;
+		return ((null == this.getName()) && (null == this.getComputeNameFrom()));
 	}
 
 	/**
@@ -737,24 +690,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (_equals) {
 			return false;
 		}
-		boolean _and = false;
-		boolean _and_1 = false;
-		String _name_1 = this.getName();
-		boolean _equals_1 = Objects.equal("constructor", _name_1);
-		if (!_equals_1) {
-			_and_1 = false;
-		} else {
-			boolean _isGenerator = this.isGenerator();
-			_and_1 = _isGenerator;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			PropertyNameKind _kind = this.getKind();
-			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			_and = _tripleNotEquals;
-		}
-		if (_and) {
+		if (((Objects.equal("constructor", this.getName()) && this.isGenerator()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
 			return false;
 		}
 		return true;

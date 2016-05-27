@@ -117,7 +117,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 *  Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%eu.numberfour.n4js.ts.types.UndefModifier%> _undefModifier = _typeRef_1.getUndefModifier();\n\tboolean _tripleEquals = (_undefModifier == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL);\n\t_and = _tripleEquals;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL));'"
 	 * @generated
 	 */
 	boolean isOptional();
@@ -126,7 +126,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _isDeclaredStatic = this.isDeclaredStatic();\nif (_isDeclaredStatic)\n{\n\t_or = true;\n} else\n{\n\tboolean _isConst = this.isConst();\n\t_or = _isConst;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isDeclaredStatic() || this.isConst());'"
 	 * @generated
 	 */
 	boolean isStatic();
@@ -144,7 +144,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _isConst = this.isConst();\nif (_isConst)\n{\n\t_or = true;\n} else\n{\n\tboolean _isFinal = this.isFinal();\n\t_or = _isFinal;\n}\nreturn (!_or);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (!(this.isConst() || this.isFinal()));'"
 	 * @generated
 	 */
 	boolean isWriteable();

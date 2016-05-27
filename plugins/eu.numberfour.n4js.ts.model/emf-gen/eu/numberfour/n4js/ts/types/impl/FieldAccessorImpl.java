@@ -21,7 +21,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -114,22 +113,7 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	 * @generated
 	 */
 	public boolean isAbstract() {
-		boolean _or = false;
-		boolean _isDeclaredAbstract = this.isDeclaredAbstract();
-		if (_isDeclaredAbstract) {
-			_or = true;
-		} else {
-			boolean _and = false;
-			EObject _eContainer = this.eContainer();
-			if (!(_eContainer instanceof TInterface)) {
-				_and = false;
-			} else {
-				boolean _isHasNoBody = this.isHasNoBody();
-				_and = _isHasNoBody;
-			}
-			_or = _and;
-		}
-		return _or;
+		return (this.isDeclaredAbstract() || ((this.eContainer() instanceof TInterface) && this.isHasNoBody()));
 	}
 
 	/**
