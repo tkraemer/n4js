@@ -9859,6 +9859,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 New
 
     |
@@ -10041,6 +10044,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 New
  | 
@@ -10695,6 +10700,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 Yield
 
     |
@@ -10878,6 +10886,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 Yield
  | 
@@ -14629,6 +14639,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -14922,6 +14935,9 @@ Protected
 
     |
 Public
+
+    |
+Out
 
     |
 LeftSquareBracket
@@ -15306,6 +15322,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -15449,6 +15468,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -16026,6 +16047,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -16169,6 +16193,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -17357,6 +17383,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -17500,6 +17529,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -17766,6 +17797,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -17909,6 +17943,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -20366,6 +20402,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -20520,6 +20559,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -20695,6 +20736,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -20849,6 +20893,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -21021,6 +21067,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -21173,6 +21222,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -21345,6 +21396,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -21497,6 +21551,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -24650,6 +24706,8 @@ Protected
  | 
 Public
  | 
+Out
+ | 
 Yield
  | 
 New
@@ -24814,6 +24872,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 Yield
  | 
@@ -27556,6 +27616,13 @@ ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); 
     }
+
+    |
+	kw=Out 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); 
+    }
 )
     ;
 
@@ -29691,6 +29758,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -29985,6 +30055,9 @@ Protected
 
     |
 Public
+
+    |
+Out
 
     |
 LeftSquareBracket
@@ -30343,6 +30416,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -30504,6 +30580,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -31015,6 +31093,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -31176,6 +31257,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -33127,6 +33210,8 @@ Protected
  | 
 Public
  | 
+Out
+ | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
     { 
@@ -33304,6 +33389,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -33555,6 +33642,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -33716,6 +33806,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -33991,6 +34083,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -34152,6 +34247,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>

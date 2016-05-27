@@ -7785,6 +7785,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPrivateKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
 		private final Keyword cProtectedKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
 		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
+		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
 		
 		//N4Keyword:
 		//	'get' | 'set'
@@ -7801,14 +7802,17 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//	| 'implements' | 'interface'
 		//	| 'private' | 'protected' | 'public' // package not used in N4JS
-		//;
+		//	// definition-site variance
+		//	| 'out';
 		@Override public ParserRule getRule() { return rule; }
 
 		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
 		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
 		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name
 		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-		//| 'implements' | 'interface' | 'private' | 'protected' | 'public'
+		//| 'implements' | 'interface' | 'private' | 'protected' | 'public' // package not used in N4JS
+		//// definition-site variance
+		//| 'out'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'get'
@@ -7885,6 +7889,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'public'
 		public Keyword getPublicKeyword_24() { return cPublicKeyword_24; }
+
+		//'out'
+		public Keyword getOutKeyword_25() { return cOutKeyword_25; }
 	}
 
 	public class SymbolLiteralComputedNameElements extends AbstractParserRuleElementFinder {
@@ -12968,7 +12975,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	//	| 'implements' | 'interface'
 	//	| 'private' | 'protected' | 'public' // package not used in N4JS
-	//;
+	//	// definition-site variance
+	//	| 'out';
 	public N4KeywordElements getN4KeywordAccess() {
 		return pN4Keyword;
 	}

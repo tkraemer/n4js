@@ -3764,6 +3764,8 @@ ruleForStatement
     |
 	Public 	
     |
+	Out 	
+    |
 	New 	
     |
 	This_1 	
@@ -3863,6 +3865,7 @@ ruleForStatement
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	New 	 | 
 	This_1 	 | 
 	Super 	 | 
@@ -4107,6 +4110,8 @@ norm1_ForStatement
     |
 	Public 	
     |
+	Out 	
+    |
 	Yield 	
     |
 	New 	
@@ -4207,6 +4212,7 @@ norm1_ForStatement
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	Yield 	 | 
 	New 	 | 
 	This_1 	 | 
@@ -5704,6 +5710,8 @@ rulePropertyAssignment
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -5877,6 +5885,8 @@ norm1_PropertyAssignment
 	Protected 	
     |
 	Public 	
+    |
+	Out 	
     |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
@@ -6071,6 +6081,8 @@ ruleAnnotatedPropertyAssignment
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -6142,6 +6154,7 @@ ruleAnnotatedPropertyAssignment
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2()); }
 )))
 	LeftParenthesisKeyword_1_2_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1_2_1, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_1()); }(
@@ -6363,6 +6376,8 @@ norm1_AnnotatedPropertyAssignment
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -6434,6 +6449,7 @@ norm1_AnnotatedPropertyAssignment
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2()); }
 )))
 	LeftParenthesisKeyword_1_2_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1_2_1, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_1()); }(
@@ -6889,6 +6905,8 @@ rulePropertySetterDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -6960,6 +6978,7 @@ rulePropertySetterDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_0_0_2=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_2.stop, grammarAccess.getPropertySetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); }
 )))
 	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_1()); }(
@@ -7110,6 +7129,8 @@ norm1_PropertySetterDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -7181,6 +7202,7 @@ norm1_PropertySetterDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_0_0_2=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_2.stop, grammarAccess.getPropertySetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); }
 )))
 	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_1()); }(
@@ -8073,6 +8095,8 @@ ruleRelationalExpression
     |
 	Public 	
     |
+	Out 	
+    |
 	LessThanSign 	
     |
 	True 	
@@ -8158,6 +8182,7 @@ ruleRelationalExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LessThanSign 	 | 
 	True 	 | 
 	False 	 | 
@@ -8258,6 +8283,8 @@ norm1_RelationalExpression
     |
 	Public 	
     |
+	Out 	
+    |
 	LessThanSign 	
     |
 	True 	
@@ -8343,6 +8370,7 @@ norm1_RelationalExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LessThanSign 	 | 
 	True 	 | 
 	False 	 | 
@@ -8441,6 +8469,8 @@ norm2_RelationalExpression
     |
 	Public 	
     |
+	Out 	
+    |
 	LessThanSign 	
     |
 	True 	
@@ -8525,6 +8555,7 @@ norm2_RelationalExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LessThanSign 	 | 
 	True 	 | 
 	False 	 | 
@@ -8623,6 +8654,8 @@ norm3_RelationalExpression
     |
 	Public 	
     |
+	Out 	
+    |
 	LessThanSign 	
     |
 	True 	
@@ -8707,6 +8740,7 @@ norm3_RelationalExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LessThanSign 	 | 
 	True 	 | 
 	False 	 | 
@@ -10059,6 +10093,7 @@ ruleYieldExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	Yield 	 | 
 	New 	 | 
 	This_1 	 | 
@@ -10138,6 +10173,7 @@ norm1_YieldExpression
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	Yield 	 | 
 	New 	 | 
 	This_1 	 | 
@@ -11414,6 +11450,10 @@ ruleN4Keyword
     |
 	PublicKeyword_24=Public { announce($PublicKeyword_24, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
  
+
+    |
+	OutKeyword_25=Out { announce($OutKeyword_25, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+ 
 )
     ;
 
@@ -12382,6 +12422,8 @@ ruleN4MemberDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -12558,6 +12600,8 @@ norm1_N4MemberDeclaration
 	Protected 	
     |
 	Public 	
+    |
+	Out 	
     |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
@@ -12751,6 +12795,8 @@ ruleAnnotatedN4MemberDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -12826,6 +12872,7 @@ ruleAnnotatedN4MemberDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3.start, $LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3()); }
 )))
 	LeftParenthesisKeyword_1_1_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1_1_1, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_1()); }(
@@ -13034,6 +13081,8 @@ norm1_AnnotatedN4MemberDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -13109,6 +13158,7 @@ norm1_AnnotatedN4MemberDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3.start, $LiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3()); }
 )))
 	LeftParenthesisKeyword_1_1_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1_1_1, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_1()); }(
@@ -13792,6 +13842,7 @@ ruleGetterHeader
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1.start, $LiteralOrComputedPropertyNameParserRuleCall_1.stop, grammarAccess.getGetterHeaderAccess().getLiteralOrComputedPropertyNameParserRuleCall_1()); }
 )
 	LeftParenthesisKeyword_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_2, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_2()); }
@@ -13872,6 +13923,7 @@ norm1_GetterHeader
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_1=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1.start, $LiteralOrComputedPropertyNameParserRuleCall_1.stop, grammarAccess.getGetterHeaderAccess().getLiteralOrComputedPropertyNameParserRuleCall_1()); }
 )
 	LeftParenthesisKeyword_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_2, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_2()); }
@@ -14024,6 +14076,8 @@ ruleN4SetterDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -14099,6 +14153,7 @@ ruleN4SetterDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_0_0_3=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_3.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_3.stop, grammarAccess.getN4SetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3()); }
 )))
 	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_1()); }(
@@ -14254,6 +14309,8 @@ norm1_N4SetterDeclaration
     |
 	Public 	
     |
+	Out 	
+    |
 	LeftSquareBracket 	
     |	RULE_IDENTIFIER
     |	RULE_STRING
@@ -14329,6 +14386,7 @@ norm1_N4SetterDeclaration
 	Private 	 | 
 	Protected 	 | 
 	Public 	 | 
+	Out 	 | 
 	LeftSquareBracket 	 | 	RULE_IDENTIFIER | 	RULE_STRING | 	RULE_DOUBLE | 	RULE_INT | 	RULE_OCTAL_INT | 	RULE_HEX_INT | 	RULE_SCIENTIFIC_INT)=>	LiteralOrComputedPropertyNameParserRuleCall_0_0_3=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_3.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_3.stop, grammarAccess.getN4SetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3()); }
 )))
 	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_1()); }(

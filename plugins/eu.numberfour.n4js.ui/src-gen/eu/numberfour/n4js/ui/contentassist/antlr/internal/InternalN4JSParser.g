@@ -13521,6 +13521,14 @@ rule__N4Keyword__Alternatives
 { after(grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
 )
 
+    |(
+{ before(grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+
+	Out 
+
+{ after(grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

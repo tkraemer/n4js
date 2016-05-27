@@ -121,6 +121,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 				"constructor");
 		/** Public for testing */
 		public static final ImmutableSet<String> hardcodedAnnotationAndSemanticKeywords = ImmutableSet.of(
+				"out",
 				"This",
 				"Await",
 				"await", // future reserved keyword in ECMAScript 2015, but only in modules
