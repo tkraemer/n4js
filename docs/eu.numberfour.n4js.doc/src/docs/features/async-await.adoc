@@ -5,6 +5,7 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:imagesdir: ../../images
 
 .Async/Await
 = Async/Await

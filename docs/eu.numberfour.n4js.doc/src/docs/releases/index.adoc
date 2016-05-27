@@ -4,6 +4,7 @@
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
+:imagesdir: ../../images
 :doctype: book
 
 .Release Notes

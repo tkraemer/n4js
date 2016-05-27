@@ -4,6 +4,7 @@
 :revdate: {localdate}
 :references: drop
 :data-uri:
+:imagesdir: ../../images
 
 ////
 :data-uri:

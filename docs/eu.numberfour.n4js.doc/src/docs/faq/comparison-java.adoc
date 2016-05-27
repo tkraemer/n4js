@@ -5,6 +5,7 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:imagesdir: ../../images
 
 .N4JS and Java
 = N4JS and Java
