@@ -12,16 +12,18 @@ package eu.numberfour.n4js.ui.typesearch;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.expressions.IEvaluationContext;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.ui.ISources;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IEditorPart;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.ui.N4JSEditor;
 import eu.numberfour.n4js.ui.utils.HandlerServiceUtils;
 
 /**
@@ -30,6 +32,8 @@ import eu.numberfour.n4js.ui.utils.HandlerServiceUtils;
 public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 
 	private static final AtomicBoolean TYPE_SEARCH_IN_USE = new AtomicBoolean();
+
+	private static final Logger LOGGER = Logger.getLogger(OpenTypeSelectionDialogHandler.class);
 
 	@Inject
 	private Provider<OpenTypeSelectionDialog> provider;
@@ -55,17 +59,17 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 	 * If no initial pattern can be computed, an empty string is returned.
 	 */
 	private String computeInitialPattern() {
-		IEvaluationContext currentWorkbenchState = HandlerServiceUtils.getCurrentWorkbenchState().orNull();
+		IEditorPart activeEditor = HandlerServiceUtils.getActiveEditor().orNull();
 
-		if (null != currentWorkbenchState) {
-			Object activeCurrentSelection = currentWorkbenchState.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-
-			if (activeCurrentSelection instanceof TextSelection) {
-				String text = ((TextSelection) activeCurrentSelection).getText();
-				if (null != text && text.length() > 0) {
-					return text;
-				}
+		if (activeEditor instanceof N4JSEditor) {
+			Point range = ((N4JSEditor) activeEditor).getSourceViewer2().getSelectedRange();
+			try {
+				String text = ((N4JSEditor) activeEditor).getDocument().get(range.x, range.y);
+				return text;
+			} catch (BadLocationException e) {
+				LOGGER.error("Failed to infer type search pattern from editor selection", e);
 			}
+
 		}
 		return "";
 	}
