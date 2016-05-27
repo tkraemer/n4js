@@ -10,7 +10,9 @@
  */
 package eu.numberfour.n4js.utils
 
+import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
+import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
@@ -34,12 +36,19 @@ import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
+import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
+import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
@@ -50,7 +59,6 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
-import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
@@ -60,9 +68,6 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
-import eu.numberfour.n4js.AnnotationDefinition
-import eu.numberfour.n4js.n4JS.AnnotableElement
-import eu.numberfour.n4js.ts.types.TAnnotableElement
 
 /**
  * Intended for small, static utility methods that
@@ -229,32 +234,51 @@ class N4JSLanguageUtils {
 		}
 	}
 
-
 	/**
-	 * Either returns the variance of the position where <code>typeRef</code> is located in a classifier declaration or
-	 * <code>null</code> if it is located at a position where type variables of all variances may be located, i.e.
-	 * a position that need not be checked (e.g. type of local variable, type of a private field).
-	 * <p>
-	 * Also returns <code>null</code> in case of error, e.g. invalid AST.
+	 * Returns the variance of the given type reference's position within its containing classifier declaration or
+	 * <code>null</code> if
+	 * <ol>
+	 * <li>it is located at a position where type variables of any variance may be located, i.e. a position that need
+	 *     not be checked (e.g. type of a local variable in a method, type of a private field),
+	 * <li>it is not contained in a classifier declaration,
+	 * <li>it is <code>null</code>, or
+	 * <li>some error occurred, e.g. invalid TModule, broken AST.
+	 * </ol>
 	 */
-	def public static Variance getVarianceOfPosition(ParameterizedTypeRef typeRef) {
-		
-		// FIXME only partial implementation for testing, not all cases supported (esp. nesting in wildcards, etc.)
-		
+	def public static Variance getVarianceOfPosition(TypeRef typeRef) {
+		// note: we have commutativity, so normally order would not matter below; however, due to the quick exit on INV
+		// together with the special cases of private members and final fields (handled via a return type of null)
+		// we must check position in classifier first!
+		val v1 = getVarianceOfPositionInClassifier(typeRef);
+		if(v1===null || v1===Variance.INV) {
+			return v1;
+		}
+		val v2 = getVarianceOfPositionRelativeToItsRoot(typeRef);
+		return v1.mult(v2);
+	}
+	/**
+	 * Most client code should use {@link #getVarianceOfPosition(ParameterizedTypeRef)}!
+	 * <p>
+	 * Same as {@link #getVarianceOfPosition(TypeRef)}, but <b>does not take into account nesting of type references
+	 * within other type references.</b> This is covered by method {@link #getVarianceOfPositionRelativeToItsRoot(TypeRef)}.
+	 */
+	def public static Variance getVarianceOfPositionInClassifier(TypeRef typeRef) {
 		if(typeRef===null)
 			return null;
-		val tv = typeRef.declaredType as TypeVariable;
-		val tClassifier = tv.eContainer as TClassifier; // safety of this cast not checked above, but should be safe bet
-		val parent = typeRef.eContainer;
+		val rootTypeRef = TypeUtils.getRootTypeRef(typeRef);
+		val tClassifier = EcoreUtil2.getContainerOfType(rootTypeRef, N4ClassifierDeclaration)?.definedType as TClassifier;
+		if(tClassifier===null)
+			return null; // not contained in a class/interface declaration with a properly defined type in TModule
+		val parent = rootTypeRef.eContainer;
 		val grandParent = parent?.eContainer;
 		return switch(parent) {
-			FormalParameter case parent.declaredTypeRef===typeRef && grandParent.isNonPrivateMemberOf(tClassifier):
+			FormalParameter case parent.declaredTypeRef===rootTypeRef && grandParent.isNonPrivateMemberOf(tClassifier):
 				Variance.CONTRA
-			N4MethodDeclaration case parent.returnTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier):
+			N4MethodDeclaration case parent.returnTypeRef===rootTypeRef && parent.isNonPrivateMemberOf(tClassifier):
 				Variance.CO
-			N4GetterDeclaration case parent.declaredTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier):
+			N4GetterDeclaration case parent.declaredTypeRef===rootTypeRef && parent.isNonPrivateMemberOf(tClassifier):
 				Variance.CO
-			N4FieldDeclaration case parent.declaredTypeRef===typeRef && parent.isNonPrivateMemberOf(tClassifier): {
+			N4FieldDeclaration case parent.declaredTypeRef===rootTypeRef && parent.isNonPrivateMemberOf(tClassifier): {
 				val tField = parent.definedField;
 				if(tField.final) {
 					Variance.CO // final field is like a getter
@@ -262,27 +286,85 @@ class N4JSLanguageUtils {
 					Variance.INV
 				}
 			}
-			ParameterizedTypeRef case
-				parent.declaredType instanceof ContainerType<?>
-				&& parent.typeArgs.contains(typeRef)
-				&& grandParent instanceof N4ClassifierDeclaration
-				&& (grandParent as N4ClassifierDeclaration).superClassifierRefs.exists[it===parent]: {
-				
+			N4ClassifierDeclaration case parent.superClassifierRefs.exists[it===rootTypeRef]: {
 				// typeRef is used in the "extends" or "implements" clause of the declaration of tClassifier
-				
-				// class C<T> extends G<T> {}
-				val parentDeclType = parent.declaredType as ContainerType<?>;
-				val idx = parent.typeArgs.indexOf(typeRef);
-				val matchingTypeVar = if(idx>=0 && idx<parentDeclType.typeVars.size) parentDeclType.typeVars.get(idx) else null;
-				if(matchingTypeVar===null) {
-					null // error that will be covered by another validation
-				} else {
-					matchingTypeVar.variance
-				}
+				// -> this mainly depends on the variance of the classifier being extended
+				Variance.CO
 			}
 			default:
 				null
+		};
+	}
+	/**
+	 * Most client code should use {@link #getVarianceOfPosition(ParameterizedTypeRef)}!
+	 * <p>
+	 * Returns variance of the given type reference's position relative to its root type reference as defined by
+	 * {@link TypeUtils#getRootTypeRef(TypeRef)}. In case of error, a best effort is made. Never returns
+	 * <code>null</code>.
+	 */
+	def public static Variance getVarianceOfPositionRelativeToItsRoot(TypeRef typeRef) {
+		var v = Variance.CO;
+		var curr = typeRef;
+		while(curr!==null) {
+			val parent = EcoreUtil2.getContainerOfType(curr.eContainer, TypeRef);
+			if(parent!==null) {
+				var Variance vFactor = null;
+				// case #1: curr is nested in parent's type arguments
+				val parentDeclType = parent.declaredType as ContainerType<?>;
+				val parentTypeArgs = parent.typeArgs;
+				val parentTypeArgsSize = parentTypeArgs.size;
+				for(var idx=0;vFactor===null && idx<parentTypeArgsSize;idx++) {
+					val arg = parentTypeArgs.get(idx);
+					vFactor = if(arg===curr) {
+						val correspondingTypeVar = if(idx>=0 && idx<parentDeclType.typeVars.size) parentDeclType.typeVars.get(idx) else null;
+						val incomingVariance = correspondingTypeVar?.variance ?: Variance.CO; // if null then ignore, i.e. use CO (that error will be covered elsewhere)
+						incomingVariance
+					} else if(arg instanceof Wildcard) {
+						// TODO IDE-2261 combination of wildcards with definition-site variance
+						if(arg.declaredUpperBound===curr) {
+							Variance.CONTRA
+						} else if(arg.declaredLowerBound===curr) {
+							Variance.CO
+						}
+					};
+					// note: will break as soon as vFactor!=null
+				}
+				// other cases:
+				if(vFactor===null) {
+					val currFixed = curr; // only required to allow using 'curr' in closures
+					vFactor = switch(parent) {
+					ComposedTypeRef case parent.typeRefs.contains(curr): 
+						Variance.CO
+					ConstructorTypeRef case parent.staticTypeRef===curr:
+						Variance.INV
+					ClassifierTypeRef case parent.staticTypeRef===curr:
+						Variance.CO
+					BoundThisTypeRef case parent.actualThisTypeRef===curr:
+						Variance.CO // note: this should never happen in the typical use cases of this method,
+						// because BoundThisTypeRefs do not appear in AST but are created programmatically
+					FunctionTypeExpression /*X*/ case parent.returnTypeRef===curr:
+						Variance.CO
+					FunctionTypeExpression /*X*/ case parent.fpars.exists[it.typeRef===currFixed]:
+						Variance.CONTRA
+					};
+					// *X* this is one of the rare cases where we have to use FunctionTypeExpression and not its
+					// super class FunctionTypeExprOrRef!
+				}
+				if(vFactor===null) {
+					// note: there should not be any other cases of containment of one type reference in another
+					// (many type references cannot contain other type references at all, e.g. FunctionTypeRef,
+					// ParameterizedTypeRefStructural, EnumTypeRef)
+					throw new IllegalStateException("internal error: unsupported case of containment of one typeRef in another (maybe types model has changed?)")
+				}
+				// apply vFactor to v
+				v = v.mult(vFactor);
+				if(v===Variance.INV) {
+					return v; // won't change anymore
+				}
+			}
+			curr = parent;
 		}
+		return v;
 	}
 
 	def private static boolean isNonPrivateMemberOf(EObject member, TClassifier tClassifier) {
