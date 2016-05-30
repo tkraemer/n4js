@@ -18,6 +18,8 @@ import static eu.numberfour.n4js.tester.domain.TestStatus.ERROR;
 import static eu.numberfour.n4js.tester.domain.TestStatus.FAILED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.PASSED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED;
+import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_FIXME;
+import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_IGNORE;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_NOT_IMPLEMENTED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED_PRECONDITION;
 import static eu.numberfour.n4js.ui.utils.UIUtils.getShell;
@@ -722,17 +724,25 @@ public class TestResultsView extends ViewPart {
 					final TestCase testCase = (TestCase) testElement;
 					final TestResult result = testCase.getResult();
 
-					if (null != result && null != result.getTrace() && !result.getTrace().isEmpty()) {
-						final List<String> trace = newArrayList(result.getTrace());
-						final String firstLine = trace.get(0);
-						if ("Error".equals(firstLine) && !isNullOrEmpty(result.getMessage())) {
-							trace.set(0, result.getMessage());
+					if (result != null) {
+						if (result.getTrace() != null && !result.getTrace().isEmpty()) {
+							final List<String> trace = newArrayList(result.getTrace());
+							final String firstLine = trace.get(0);
+							if ("Error".equals(firstLine) && !isNullOrEmpty(result.getMessage())) {
+								trace.set(0, result.getMessage());
+							}
+							final StringBuilder sb = new StringBuilder();
+							trace.forEach(line -> sb.append(line).append(lineSeparator()));
+							stackTrace.setText(sb.toString());
+							stackTrace.setSelection(0);
+						} else if ((SKIPPED_IGNORE.equals(result.getTestStatus())
+								|| SKIPPED_FIXME.equals(result.getTestStatus()))
+								&& !isNullOrEmpty(result.getMessage())) {
+							stackTrace.setText(result.getMessage());
+							stackTrace.setSelection(0);
 						}
-						final StringBuilder sb = new StringBuilder();
-						trace.forEach(line -> sb.append(line).append(lineSeparator()));
-						stackTrace.setText(sb.toString());
-						stackTrace.setSelection(0);
 					}
+
 				}
 			}
 		}
