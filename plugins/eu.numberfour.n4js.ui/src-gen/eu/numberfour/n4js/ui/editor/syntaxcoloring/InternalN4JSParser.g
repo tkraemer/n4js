@@ -15763,14 +15763,24 @@ entryRuleWildcardNewNotation
 ruleWildcardNewNotation 
     @init {
     }:
-((
-	OutKeyword_0_0=Out 	 { announce($OutKeyword_0_0, grammarAccess.getWildcardNewNotationAccess().getOutKeyword_0_0()); }(
+(((
+(
+
+	UsingInOutNotationOutKeyword_0_0_0=Out 	 { announce($UsingInOutNotationOutKeyword_0_0_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); }
+
+)
+)(
 (
 	DeclaredUpperBoundTypeRefParserRuleCall_0_1_0=ruleTypeRef { announce($DeclaredUpperBoundTypeRefParserRuleCall_0_1_0.start, $DeclaredUpperBoundTypeRefParserRuleCall_0_1_0.stop, grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundAssignment_0_1()); }
 )
 ))
-    |(
-	InKeyword_1_0=In 	 { announce($InKeyword_1_0, grammarAccess.getWildcardNewNotationAccess().getInKeyword_1_0()); }(
+    |((
+(
+
+	UsingInOutNotationInKeyword_1_0_0=In 	 { announce($UsingInOutNotationInKeyword_1_0_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); }
+
+)
+)(
 (
 	DeclaredLowerBoundTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($DeclaredLowerBoundTypeRefParserRuleCall_1_1_0.start, $DeclaredLowerBoundTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1()); }
 )

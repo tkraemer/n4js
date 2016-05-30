@@ -5767,12 +5767,23 @@ ruleWildcardNewNotation returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
-	otherlv_0=Out
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getWildcardNewNotationAccess().getOutKeyword_0_0());
-    }
+(((
 (
+		lv_usingInOutNotation_0_0=
+	Out
+    {
+        newLeafNode(lv_usingInOutNotation_0_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "out");
+	    }
+
+)
+)(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); 
@@ -5791,12 +5802,23 @@ ruleWildcardNewNotation returns [EObject current=null]
 
 )
 ))
-    |(
-	otherlv_2=In
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getWildcardNewNotationAccess().getInKeyword_1_0());
-    }
+    |((
 (
+		lv_usingInOutNotation_2_0=
+	In
+    {
+        newLeafNode(lv_usingInOutNotation_2_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "in");
+	    }
+
+)
+)(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0()); 

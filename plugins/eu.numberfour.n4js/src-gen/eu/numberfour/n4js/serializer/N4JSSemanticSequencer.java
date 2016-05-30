@@ -23605,7 +23605,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     WildcardNewNotation returns Wildcard
 	 *
 	 * Constraint:
-	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)
+	 *     ((usingInOutNotation?='out' declaredUpperBound=TypeRef) | (usingInOutNotation?='in' declaredLowerBound=TypeRef))
 	 */
 	protected void sequence_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -23629,7 +23629,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeArgument returns Wildcard
 	 *
 	 * Constraint:
-	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef | declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)?
+	 *     (
+	 *         declaredUpperBound=TypeRef | 
+	 *         declaredLowerBound=TypeRef | 
+	 *         (usingInOutNotation?='out' declaredUpperBound=TypeRef) | 
+	 *         (usingInOutNotation?='in' declaredLowerBound=TypeRef)
+	 *     )?
 	 */
 	protected void sequence_Wildcard_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

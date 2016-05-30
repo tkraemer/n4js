@@ -14119,7 +14119,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//WildcardNewNotation Wildcard:
-	//	'out' declaredUpperBound=TypeRef | 'in' declaredLowerBound=TypeRef
+	//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
 	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
 		return gaTypeExpressions.getWildcardNewNotationAccess();
 	}

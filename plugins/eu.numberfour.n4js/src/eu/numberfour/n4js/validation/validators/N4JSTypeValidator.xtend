@@ -139,9 +139,10 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkParameterizedTypeRef(ParameterizedTypeRef paramTypeRef) {
 		val declaredType = paramTypeRef.declaredType;
-		if (declaredType === null || declaredType.eIsProxy)
+		if (declaredType === null || declaredType.eIsProxy) {
 			return;
-		if( paramTypeRef.eContainer instanceof ClassifierTypeRef) {
+		}
+		if (paramTypeRef.eContainer instanceof ClassifierTypeRef) {
 			internalCheckValidTypeInClassifierTypeRef(paramTypeRef);
 			return;
 		}

@@ -83931,11 +83931,9 @@ rule__WildcardNewNotation__Group_0__0__Impl
     }
 :
 (
-{ before(grammarAccess.getWildcardNewNotationAccess().getOutKeyword_0_0()); }
-
-	Out 
-
-{ after(grammarAccess.getWildcardNewNotationAccess().getOutKeyword_0_0()); }
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0()); }
+(rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0)
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0()); }
 )
 
 ;
@@ -83994,11 +83992,9 @@ rule__WildcardNewNotation__Group_1__0__Impl
     }
 :
 (
-{ before(grammarAccess.getWildcardNewNotationAccess().getInKeyword_1_0()); }
-
-	In 
-
-{ after(grammarAccess.getWildcardNewNotationAccess().getInKeyword_1_0()); }
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0()); }
+(rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0)
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0()); }
 )
 
 ;
@@ -95642,6 +95638,29 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); }
+(
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); }
+
+	Out 
+
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); }
+)
+
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1
     @init {
 		int stackSize = keepStackSize();
@@ -95650,6 +95669,29 @@ rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1
 (
 { before(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); }
 	ruleTypeRef{ after(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); }
+(
+{ before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); }
+
+	In 
+
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); }
+)
+
+{ after(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); }
 )
 
 ;

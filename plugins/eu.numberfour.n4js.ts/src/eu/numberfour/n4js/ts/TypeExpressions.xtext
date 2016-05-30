@@ -196,8 +196,8 @@ Wildcard returns Wildcard:
 	declaredLowerBound=TypeRef))?;
 
 WildcardNewNotation returns Wildcard:
-	('out' declaredUpperBound=TypeRef)
-|	('in' declaredLowerBound=TypeRef);
+	(usingInOutNotation?='out' declaredUpperBound=TypeRef)
+|	(usingInOutNotation?='in' declaredLowerBound=TypeRef);
 
 UndefModifierToken returns UndefModifier:
 	'?';

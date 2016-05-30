@@ -242,8 +242,8 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 			if(variance!==Variance.INV) {
 				val varianceOfPos = N4JSLanguageUtils.getVarianceOfPosition(typeRefInAST);
 				if(varianceOfPos!==null && variance!==varianceOfPos) {
-					val msg = getMessageForCLF_TYPE_VARIABLE_AT_INVALID_POSITION(variance.descriptiveString,
-						varianceOfPos.descriptiveString);
+					val msg = getMessageForCLF_TYPE_VARIABLE_AT_INVALID_POSITION(variance.getDescriptiveString(true),
+						varianceOfPos.getDescriptiveString(false));
 					addIssue(msg, typeRefInAST, CLF_TYPE_VARIABLE_AT_INVALID_POSITION);
 				}
 			}

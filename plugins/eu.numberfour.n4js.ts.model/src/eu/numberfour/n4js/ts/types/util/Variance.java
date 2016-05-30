@@ -55,14 +55,30 @@ public enum Variance {
 	/**
 	 * Return human-readable string representation for this variance.
 	 */
-	public String getDescriptiveString() {
+	public String getDescriptiveString(boolean inOutHint) {
 		switch (this) {
 		case CO:
-			return "covariant";
+			return inOutHint ? "covariant (out)" : "covariant";
 		case CONTRA:
-			return "contravariant";
+			return inOutHint ? "contravariant (in)" : "contravariant";
 		case INV:
 			return "invariant";
+		default:
+			throw new UnsupportedOperationException("unsupported literal: " + this);
+		}
+	}
+
+	/**
+	 * Return human-readable string representation for this variance as a noun.
+	 */
+	public String getDescriptiveStringNoun(boolean inOutHint) {
+		switch (this) {
+		case CO:
+			return inOutHint ? "covariance (out)" : "covariance";
+		case CONTRA:
+			return inOutHint ? "contravariance (in)" : "contravariance";
+		case INV:
+			return "invariance";
 		default:
 			throw new UnsupportedOperationException("unsupported literal: " + this);
 		}

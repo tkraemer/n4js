@@ -1396,26 +1396,31 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.WildcardNewNotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cOutKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cUsingInOutNotationAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cUsingInOutNotationOutKeyword_0_0_0 = (Keyword)cUsingInOutNotationAssignment_0_0.eContents().get(0);
 		private final Assignment cDeclaredUpperBoundAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cDeclaredUpperBoundTypeRefParserRuleCall_0_1_0 = (RuleCall)cDeclaredUpperBoundAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cInKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cUsingInOutNotationAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final Keyword cUsingInOutNotationInKeyword_1_0_0 = (Keyword)cUsingInOutNotationAssignment_1_0.eContents().get(0);
 		private final Assignment cDeclaredLowerBoundAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cDeclaredLowerBoundTypeRefParserRuleCall_1_1_0 = (RuleCall)cDeclaredLowerBoundAssignment_1_1.eContents().get(0);
 		
 		//WildcardNewNotation Wildcard:
-		//	'out' declaredUpperBound=TypeRef | 'in' declaredLowerBound=TypeRef
+		//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
 		@Override public ParserRule getRule() { return rule; }
 
-		//'out' declaredUpperBound=TypeRef | 'in' declaredLowerBound=TypeRef
+		//usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//'out' declaredUpperBound=TypeRef
+		//usingInOutNotation?='out' declaredUpperBound=TypeRef
 		public Group getGroup_0() { return cGroup_0; }
 
+		//usingInOutNotation?='out'
+		public Assignment getUsingInOutNotationAssignment_0_0() { return cUsingInOutNotationAssignment_0_0; }
+
 		//'out'
-		public Keyword getOutKeyword_0_0() { return cOutKeyword_0_0; }
+		public Keyword getUsingInOutNotationOutKeyword_0_0_0() { return cUsingInOutNotationOutKeyword_0_0_0; }
 
 		//declaredUpperBound=TypeRef
 		public Assignment getDeclaredUpperBoundAssignment_0_1() { return cDeclaredUpperBoundAssignment_0_1; }
@@ -1423,11 +1428,14 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeRef
 		public RuleCall getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0() { return cDeclaredUpperBoundTypeRefParserRuleCall_0_1_0; }
 
-		//'in' declaredLowerBound=TypeRef
+		//usingInOutNotation?='in' declaredLowerBound=TypeRef
 		public Group getGroup_1() { return cGroup_1; }
 
+		//usingInOutNotation?='in'
+		public Assignment getUsingInOutNotationAssignment_1_0() { return cUsingInOutNotationAssignment_1_0; }
+
 		//'in'
-		public Keyword getInKeyword_1_0() { return cInKeyword_1_0; }
+		public Keyword getUsingInOutNotationInKeyword_1_0_0() { return cUsingInOutNotationInKeyword_1_0_0; }
 
 		//declaredLowerBound=TypeRef
 		public Assignment getDeclaredLowerBoundAssignment_1_1() { return cDeclaredLowerBoundAssignment_1_1; }
@@ -2135,7 +2143,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//WildcardNewNotation Wildcard:
-	//	'out' declaredUpperBound=TypeRef | 'in' declaredLowerBound=TypeRef
+	//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
 	public WildcardNewNotationElements getWildcardNewNotationAccess() {
 		return pWildcardNewNotation;
 	}

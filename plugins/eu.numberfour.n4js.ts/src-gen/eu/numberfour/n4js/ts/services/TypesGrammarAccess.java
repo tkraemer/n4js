@@ -3162,7 +3162,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//WildcardNewNotation Wildcard:
-	//	'out' declaredUpperBound=super::TypeRef | 'in' declaredLowerBound=super::TypeRef
+	//	usingInOutNotation?='out' declaredUpperBound=super::TypeRef | usingInOutNotation?='in'
+	//	declaredLowerBound=super::TypeRef
 	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
 		return gaTypeExpressions.getWildcardNewNotationAccess();
 	}

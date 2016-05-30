@@ -320,11 +320,10 @@ class N4JSLanguageUtils {
 						val incomingVariance = correspondingTypeVar?.variance ?: Variance.CO; // if null then ignore, i.e. use CO (that error will be covered elsewhere)
 						incomingVariance
 					} else if(arg instanceof Wildcard) {
-						// TODO IDE-2261 combination of wildcards with definition-site variance
 						if(arg.declaredUpperBound===curr) {
-							Variance.CONTRA
-						} else if(arg.declaredLowerBound===curr) {
 							Variance.CO
+						} else if(arg.declaredLowerBound===curr) {
+							Variance.CONTRA
 						}
 					};
 					// note: will break as soon as vFactor!=null

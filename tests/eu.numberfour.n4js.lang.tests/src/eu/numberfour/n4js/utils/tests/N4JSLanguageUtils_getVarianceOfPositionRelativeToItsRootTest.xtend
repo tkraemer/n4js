@@ -44,8 +44,8 @@ class N4JSLanguageUtils_getVarianceOfPositionRelativeToItsRootTest extends Abstr
 	@Test
 	def public void testNestedAsTypeArgument() {
 		"G<T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.INV);
-		"G<? extends T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CONTRA);
-		"G<? super T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CO);
+		"G<? extends T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CO);
+		"G<? super T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CONTRA);
 		"G_CO<T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CO);
 		"G_CONTRA<T>".wrap.assertVarianceOfPositionRelativeToItsRoot(Variance.CONTRA);
 	}
