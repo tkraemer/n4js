@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A {
+    const X = "x";
+    static Y = "y";
+    static foo() {}
+}
+
+class B extends A {
+
+	// noerror --> "The static field B.X cannot override const static field A.X." at "X"
+    // XPECT errors --> "The const field B.X overriding const field A.X must be annotated with @Override." at "X"
+    const X = "x2";
+
+    @Override
+    static Y = "y";
+
+    @Override
+    static foo() {}
+}
+
+/* XPECT output --- 
+<==
+stdout:
+A.X x
+B.X x2
+stderr:
+==>
+--- */
+
+console.log("A.X",A.X);
+console.log("B.X",B.X);
+
+
