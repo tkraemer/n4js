@@ -21,3 +21,4 @@ Require-Bundle: eu.numberfour.n4js.ui,
 Bundle-Activator: eu.numberfour.n4js.tester.nodejs.ui.NodejsTesterUiActivator
 Bundle-ActivationPolicy: lazy
 Import-Package: eu.numberfour.n4js.utils
+Export-Package: eu.numberfour.n4js.tester.nodejs.ui

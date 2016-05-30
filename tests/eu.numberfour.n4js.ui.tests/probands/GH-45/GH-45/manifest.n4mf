@@ -1,0 +1,16 @@
+ArtifactId: GH-45
+VendorId: eu.numberfour
+ProjectName: "GH-45"
+VendorName: "NumberFour AG"
+ProjectType: test
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+    test {
+        "test"
+    }
+}
+ProjectDependencies {
+    eu.numberfour.mangelhaft,
+    eu.numberfour.mangelhaft.assert
+}
