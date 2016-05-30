@@ -74,7 +74,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	private DataBindingContext databindingContext;
 
 	/** Available after invocation of #createControl */
-	protected WorkspaceWizardPageForm workspaceWizardForm;
+	protected WorkspaceWizardPageForm workspaceWizardControl;
 
 	private Image contentProposalDecorationImage;
 
@@ -105,24 +105,23 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 	@Override
 	public void createControl(Composite parent) {
-
-		workspaceWizardForm = new WorkspaceWizardPageForm(parent, SWT.FILL);
+		workspaceWizardControl = new WorkspaceWizardPageForm(parent, SWT.FILL);
 
 		if (null == contentProposalDecorationImage || contentProposalDecorationImage.isDisposed()) {
 			contentProposalDecorationImage = CONTENT_PROPOSAL_DECORATION_IMAGE;
 		}
 
-		setupBindings(workspaceWizardForm);
-		setupBrowseDialogs(workspaceWizardForm);
-		setupContentProposal(workspaceWizardForm);
+		setupBindings(workspaceWizardControl);
+		setupBrowseDialogs(workspaceWizardControl);
+		setupContentProposal(workspaceWizardControl);
 
 		createComponents(this);
 
 		// Synchronize background color to work around a dark theme issue where the wizard content background appears
 		// white
-		workspaceWizardForm.setBackground(parent.getBackground());
+		workspaceWizardControl.setBackground(parent.getBackground());
 
-		setControl(workspaceWizardForm);
+		setControl(workspaceWizardControl);
 	}
 
 	/**
@@ -455,9 +454,9 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 	protected boolean setInitialFocus() {
 		// Set the focus to the first empty field beginning with project
 		if (model.getProject().toString().isEmpty()) {
-			workspaceWizardForm.getProjectText().setFocus();
+			workspaceWizardControl.getProjectText().setFocus();
 		} else if (model.getSourceFolder().toString().isEmpty()) {
-			workspaceWizardForm.getSourceFolderText().setFocus();
+			workspaceWizardControl.getSourceFolderText().setFocus();
 		} else {
 			return false;
 		}
@@ -479,7 +478,7 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 
 	@Override
 	public Composite getComposite() {
-		return workspaceWizardForm;
+		return workspaceWizardControl;
 	}
 
 	/**
