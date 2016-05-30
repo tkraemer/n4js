@@ -1420,7 +1420,7 @@ StringLiteralAsName:
 
 fragment FieldDeclarationImpl <Yield>*:
 	(declaredModifiers+=N4Modifier)*
-	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi
 ;
 
 N4FieldDeclaration <Yield>:
