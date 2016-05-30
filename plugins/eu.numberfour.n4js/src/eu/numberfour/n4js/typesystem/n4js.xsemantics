@@ -1331,9 +1331,13 @@ from {
 // subtype rules for WildCards / ExistentialTypeRefs do the heavy lifting?
 						{
 							// require leftArg <: rightArg, except we have contravariance
-							variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper}
+							if(variance!=Variance.CONTRA) {
+								G |- leftArgUpper <: rightArgUpper
+							}
 							// require rightArg <: leftArg, except we have covariance
-							variance==Variance.CO     || {G |- rightArgLower <: leftArgLower}
+							if(variance!=Variance.CO) {
+								G |- rightArgLower <: leftArgLower
+							}
 						}
 						or
 						{

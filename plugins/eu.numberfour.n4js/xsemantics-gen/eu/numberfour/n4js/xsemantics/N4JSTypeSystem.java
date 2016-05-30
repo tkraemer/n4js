@@ -3969,35 +3969,19 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
-                                      /* { variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper} variance==Variance.CO || {G |- rightArgLower <: leftArgLower} } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                      /* { if(variance!=Variance.CONTRA) { G |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
                                         try {
-                                          boolean _or = false;
-                                          boolean _equals_2 = Objects.equal(variance, Variance.CONTRA);
-                                          if (_equals_2) {
-                                            _or = true;
-                                          } else {
+                                          boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
+                                          if (_notEquals) {
                                             /* G |- leftArgUpper <: rightArgUpper */
-                                            boolean _ruleinvocation_2 = subtypeSucceeded(G, _trace_, leftArgUpper, rightArgUpper);
-                                            _or = _ruleinvocation_2;
+                                            subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
                                           }
-                                          /* variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper} */
-                                          if (!_or) {
-                                            sneakyThrowRuleFailedException("variance==Variance.CONTRA || {G |- leftArgUpper <: rightArgUpper}");
-                                          }
-                                          boolean _or_1 = false;
-                                          boolean _equals_3 = Objects.equal(variance, Variance.CO);
-                                          if (_equals_3) {
-                                            _or_1 = true;
-                                          } else {
+                                          boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
+                                          if (_notEquals_1) {
                                             /* G |- rightArgLower <: leftArgLower */
-                                            boolean _ruleinvocation_3 = subtypeSucceeded(G, _trace_, rightArgLower, leftArgLower);
-                                            _or_1 = _ruleinvocation_3;
-                                          }
-                                          /* variance==Variance.CO || {G |- rightArgLower <: leftArgLower} */
-                                          if (!_or_1) {
-                                            sneakyThrowRuleFailedException("variance==Variance.CO || {G |- rightArgLower <: leftArgLower}");
+                                            subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
                                           }
                                         } catch (Exception e) {
                                           previousFailure = extractRuleFailedException(e);
