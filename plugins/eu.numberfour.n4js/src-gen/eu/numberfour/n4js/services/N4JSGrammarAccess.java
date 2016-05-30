@@ -9344,15 +9344,15 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cExpressionAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cExpressionExpressionParserRuleCall_3_1_0 = (RuleCall)cExpressionAssignment_3_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final RuleCall cSemiParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//fragment FieldDeclarationImpl <Yield> *:
 		//	declaredModifiers+=N4Modifier*
-		//	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';';
+		//	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi;
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredModifiers+=N4Modifier* LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)?
-		//';'
+		//Semi
 		public Group getGroup() { return cGroup; }
 
 		//declaredModifiers+=N4Modifier*
@@ -9379,8 +9379,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression<In=true,Yield>
 		public RuleCall getExpressionExpressionParserRuleCall_3_1_0() { return cExpressionExpressionParserRuleCall_3_1_0; }
 
-		//';'
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		//Semi
+		public RuleCall getSemiParserRuleCall_4() { return cSemiParserRuleCall_4; }
 	}
 
 	public class N4FieldDeclarationElements extends AbstractParserRuleElementFinder {
@@ -13537,7 +13537,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//fragment FieldDeclarationImpl <Yield> *:
 	//	declaredModifiers+=N4Modifier*
-	//	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';';
+	//	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi;
 	public FieldDeclarationImplElements getFieldDeclarationImplAccess() {
 		return pFieldDeclarationImpl;
 	}

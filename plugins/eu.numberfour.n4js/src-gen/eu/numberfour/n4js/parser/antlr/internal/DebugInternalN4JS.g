@@ -5416,14 +5416,14 @@ ruleStringLiteralAsName :
 ruleFieldDeclarationImpl :
 	ruleN4Modifier* ruleLiteralPropertyName ruleColonSepTypeRef? (
 		'=' norm1_Expression
-	)? ';'
+	)? ruleSemi
 ;
 
 // Rule FieldDeclarationImpl
 norm1_FieldDeclarationImpl :
 	ruleN4Modifier* norm1_LiteralPropertyName ruleColonSepTypeRef? (
 		'=' norm3_Expression
-	)? ';'
+	)? ruleSemi
 ;
 
 // Rule N4FieldDeclaration

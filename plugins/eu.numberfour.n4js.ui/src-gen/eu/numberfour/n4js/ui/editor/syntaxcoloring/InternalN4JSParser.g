@@ -13374,8 +13374,8 @@ ruleFieldDeclarationImpl
 (
 	ExpressionExpressionParserRuleCall_3_1_0=norm1_Expression { announce($ExpressionExpressionParserRuleCall_3_1_0.start, $ExpressionExpressionParserRuleCall_3_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_3_1()); }
 )
-))?
-	SemicolonKeyword_4=Semicolon 	 { announce($SemicolonKeyword_4, grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); })
+))?	SemiParserRuleCall_4=ruleSemi		{ announce($SemiParserRuleCall_4.start, $SemiParserRuleCall_4.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
+)
 ;
 
 
@@ -13398,8 +13398,8 @@ norm1_FieldDeclarationImpl
 (
 	ExpressionExpressionParserRuleCall_3_1_0=norm3_Expression { announce($ExpressionExpressionParserRuleCall_3_1_0.start, $ExpressionExpressionParserRuleCall_3_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_3_1()); }
 )
-))?
-	SemicolonKeyword_4=Semicolon 	 { announce($SemicolonKeyword_4, grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); })
+))?	SemiParserRuleCall_4=ruleSemi		{ announce($SemiParserRuleCall_4.start, $SemiParserRuleCall_4.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
+)
 ;
 
 

@@ -74037,11 +74037,9 @@ rule__FieldDeclarationImpl__Group__4__Impl
     }
 :
 (
-{ before(grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); }
-
-	Semicolon 
-
-{ after(grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); }
+{ before(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
+	ruleSemi
+{ after(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
 )
 
 ;
@@ -74256,11 +74254,9 @@ norm1_FieldDeclarationImpl__Group__4__Impl
     }
 :
 (
-{ before(grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); }
-
-	Semicolon 
-
-{ after(grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4()); }
+{ before(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
+	ruleSemi
+{ after(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); }
 )
 
 ;

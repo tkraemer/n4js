@@ -32016,9 +32016,12 @@ ruleFieldDeclarationImpl [EObject in_current] returns [EObject current=in_curren
 
 )
 ))?
-	otherlv_5=Semicolon
+    { 
+        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); 
+    }
+ruleSemi
     {
-    	newLeafNode(otherlv_5, grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4());
+        afterParserOrEnumRuleCall();
     }
 )
 ;
@@ -32099,9 +32102,12 @@ norm1_FieldDeclarationImpl [EObject in_current] returns [EObject current=in_curr
 
 )
 ))?
-	otherlv_5=Semicolon
+    { 
+        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_4()); 
+    }
+ruleSemi
     {
-    	newLeafNode(otherlv_5, grammarAccess.getFieldDeclarationImplAccess().getSemicolonKeyword_4());
+        afterParserOrEnumRuleCall();
     }
 )
 ;
