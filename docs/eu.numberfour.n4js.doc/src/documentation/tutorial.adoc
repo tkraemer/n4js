@@ -881,9 +881,9 @@ TaskManager class, we would need to change the TaskManager depending on the stor
 inconvenient and error prone. It would be much better if we could configure which storage class to use from
 outside the TaskManager at some central location. This is possible with dependency injection.
 
-To learn more about how dependency injection works, we have written an <a href="../features/dependency-
-injection.html">extended feature description</a> that describes the benefits of this technique. In short,
-N4JS provides built-in support for dependency injection using the same annotations as known from JSR-330/
+To learn more about how dependency injection works, we have written an
+<<../features/dependency-injection#dependency-injection, extended feature description>> that describes the benefits of this technique.
+In short, N4JS provides built-in support for dependency injection using the same annotations as known from JSR-330/
 Google Guice. Instead of using initializers calling the constructor for certain fields, we just mark them
 with `@Inject`. We will do that with the storage field in the TaskManager class:
 
