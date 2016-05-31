@@ -18,7 +18,7 @@ class A {
 	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
 	g(p : this) : void {}
 
-	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "~"
+	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "~this"
 	h(p : ~this) : void {}
 	  
 	

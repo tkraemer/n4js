@@ -367,11 +367,13 @@ class N4JSLanguageUtils {
 	}
 
 	def private static boolean isNonPrivateMemberOf(EObject member, TClassifier tClassifier) {
-		if(member instanceof N4MemberDeclaration)
-			member?.definedTypeElement?.memberAccessModifier!==MemberAccessModifier.PRIVATE
-			&& member.definedTypeElement.containingType === tClassifier
-		else
-			false
+		if(member instanceof N4MemberDeclaration) {
+			val tMember = member.definedTypeElement;
+			return tMember!==null
+				&& tMember.memberAccessModifier!==MemberAccessModifier.PRIVATE
+				&& tMember.containingType === tClassifier;
+		}
+		return false;
 	}
 
 
