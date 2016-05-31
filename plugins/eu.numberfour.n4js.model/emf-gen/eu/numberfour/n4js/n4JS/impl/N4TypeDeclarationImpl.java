@@ -220,16 +220,7 @@ public abstract class N4TypeDeclarationImpl extends N4TypeDefinitionImpl impleme
 	 * @generated
 	 */
 	public boolean isExportedAsDefault() {
-		boolean _and = false;
-		boolean _isExported = this.isExported();
-		if (!_isExported) {
-			_and = false;
-		} else {
-			EObject _eContainer = this.eContainer();
-			boolean _isDefaultExport = ((ExportDeclaration) _eContainer).isDefaultExport();
-			_and = _isDefaultExport;
-		}
-		return _and;
+		return (this.isExported() && ((ExportDeclaration) this.eContainer()).isDefaultExport());
 	}
 
 	/**
@@ -249,11 +240,9 @@ public abstract class N4TypeDeclarationImpl extends N4TypeDefinitionImpl impleme
 			final ExportableElement me = this;
 			String _switchResult = null;
 			boolean _matched = false;
-			if (!_matched) {
-				if (me instanceof NamedElement) {
-					_matched=true;
-					_switchResult = ((NamedElement)me).getName();
-				}
+			if (me instanceof NamedElement) {
+				_matched=true;
+				_switchResult = ((NamedElement)me).getName();
 			}
 			if (!_matched) {
 				if (me instanceof IdentifiableElement) {

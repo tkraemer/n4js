@@ -63,15 +63,7 @@ public class SuperLiteralImpl extends PrimaryExpressionImpl implements SuperLite
 	 * @generated
 	 */
 	public boolean isSuperMemberAccess() {
-		boolean _or = false;
-		EObject _eContainer = this.eContainer();
-		if ((_eContainer instanceof ParameterizedPropertyAccessExpression)) {
-			_or = true;
-		} else {
-			EObject _eContainer_1 = this.eContainer();
-			_or = (_eContainer_1 instanceof IndexedAccessExpression);
-		}
-		return _or;
+		return ((this.eContainer() instanceof ParameterizedPropertyAccessExpression) || (this.eContainer() instanceof IndexedAccessExpression));
 	}
 
 	/**

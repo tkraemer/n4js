@@ -55,7 +55,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _and = false;\nboolean _and_1 = false;\n<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif (!(_eContainer instanceof <%eu.numberfour.n4js.n4JS.N4InterfaceDeclaration%>))\n{\n\t_and_1 = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.Block%> _body = this.getBody();\n\tboolean _tripleEquals = (_body == null);\n\t_and_1 = _tripleEquals;\n}\nif (!_and_1)\n{\n\t_and = false;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.n4JS.Annotation%>> _annotations = this.getAnnotations();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.Annotation%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.Annotation%>, <%java.lang.Boolean%>>()\n\t{\n\t\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.n4JS.Annotation%> it)\n\t\t{\n\t\t\t<%java.lang.String%> _name = it.getName();\n\t\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_name, \"ProvidesDefaultImplementation\"));\n\t\t}\n\t};\n\tboolean _exists = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.n4JS.Annotation%>>exists(_annotations, _function);\n\tboolean _not = (!_exists);\n\t_and = _not;\n}\nif (_and)\n{\n\t_or = true;\n} else\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.n4JS.N4Modifier%>> _declaredModifiers = this.getDeclaredModifiers();\n\tboolean _contains = _declaredModifiers.contains(<%eu.numberfour.n4js.n4JS.N4Modifier%>.ABSTRACT);\n\t_or = _contains;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.eContainer() instanceof <%eu.numberfour.n4js.n4JS.N4InterfaceDeclaration%>) && (this.getBody() == null)) && \n\t(!<%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.n4JS.Annotation%>>exists(this.getAnnotations(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.Annotation%>, <%java.lang.Boolean%>>()\n\t{\n\t\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.n4JS.Annotation%> it)\n\t\t{\n\t\t\t<%java.lang.String%> _name = it.getName();\n\t\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_name, \"ProvidesDefaultImplementation\"));\n\t\t}\n\t}))) || this.getDeclaredModifiers().contains(<%eu.numberfour.n4js.n4JS.N4Modifier%>.ABSTRACT));'"
 	 * @generated
 	 */
 	boolean isAbstract();
@@ -64,7 +64,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"constructor\", _name);\nif (!_equals)\n{\n\t_and = false;\n} else\n{\n\tboolean _isStatic = this.isStatic();\n\tboolean _not = (!_isStatic);\n\t_and = _not;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && (!this.isStatic()));'"
 	 * @generated
 	 */
 	boolean isConstructor();
@@ -73,7 +73,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%java.lang.String%> _name = this.getName();\nboolean _tripleEquals = (null == _name);\nif (!_tripleEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.Expression%> _computeNameFrom = this.getComputeNameFrom();\n\tboolean _tripleEquals_1 = (null == _computeNameFrom);\n\t_and = _tripleEquals_1;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((null == this.getName()) && (null == this.getComputeNameFrom()));'"
 	 * @generated
 	 */
 	boolean isCallableConstructor();
@@ -96,7 +96,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * Generators may not be called 'constructor' either (except for computed names).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nboolean _and = false;\nboolean _and_1 = false;\n<%java.lang.String%> _name_1 = this.getName();\nboolean _equals_1 = <%com.google.common.base.Objects%>.equal(\"constructor\", _name_1);\nif (!_equals_1)\n{\n\t_and_1 = false;\n} else\n{\n\tboolean _isGenerator = this.isGenerator();\n\t_and_1 = _isGenerator;\n}\nif (!_and_1)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.PropertyNameKind%> _kind = this.getKind();\n\tboolean _tripleNotEquals = (_kind != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED_FROM_STRING_LITERAL);\n\t_and = _tripleNotEquals;\n}\nif (_and)\n{\n\treturn false;\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nif (((<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && this.isGenerator()) && (this.getKind() != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED_FROM_STRING_LITERAL)))\n{\n\treturn false;\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isValidName();

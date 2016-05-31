@@ -145,17 +145,7 @@ public abstract class JSDocNodeImpl extends DocletElementImpl implements JSDocNo
 		EList<Marker> _markers = this.getMarkers();
 		final Function1<Marker, Boolean> _function = new Function1<Marker, Boolean>() {
 			public Boolean apply(final Marker it) {
-				boolean _and = false;
-				String _key = it.getKey();
-				boolean _equals = Objects.equal(_key, theKey);
-				if (!_equals) {
-					_and = false;
-				} else {
-					String _value = it.getValue();
-					boolean _equals_1 = Objects.equal(_value, theValue);
-					_and = _equals_1;
-				}
-				return Boolean.valueOf(_and);
+				return Boolean.valueOf((Objects.equal(it.getKey(), theKey) && Objects.equal(it.getValue(), theValue)));
 			}
 		};
 		Marker _findFirst = IterableExtensions.<Marker>findFirst(_markers, _function);

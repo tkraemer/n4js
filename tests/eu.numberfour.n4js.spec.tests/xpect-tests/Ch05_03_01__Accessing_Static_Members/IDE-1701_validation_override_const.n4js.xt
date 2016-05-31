@@ -5,6 +5,11 @@ class A {
 }
 
 class C extends A {
-	// XPECT errors --> "The static field C.s cannot override const static field A.s." at "s"
+	// XPECT errors --> "The static field C.s cannot override const field A.s." at "s"
 	@Override static s : string = "C";
+}
+
+class D extends A {
+	// XPECT errors --> "The field s must override or implement a field from a super class or interface." at "s"
+	@Override s : string = "D";
 }

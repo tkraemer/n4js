@@ -1,0 +1,10 @@
+import { B } from "B"
+
+export public class C extends B {
+
+    @Test
+    public cTest(): void {
+        console.log('C#cTest');
+    }
+
+}

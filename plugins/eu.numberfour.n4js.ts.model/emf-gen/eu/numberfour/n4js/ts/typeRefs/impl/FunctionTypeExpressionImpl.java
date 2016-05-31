@@ -397,18 +397,9 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 		}
 		EList<TypeVariable> _unboundTypeVars = this.getUnboundTypeVars();
 		final int idx = _unboundTypeVars.indexOf(typeVar);
-		boolean _and = false;
-		if (!(idx >= 0)) {
-			_and = false;
-		} else {
+		if (((idx >= 0) && (idx < this.getUnboundTypeVarsUpperBounds().size()))) {
 			EList<TypeRef> _unboundTypeVarsUpperBounds = this.getUnboundTypeVarsUpperBounds();
-			int _size = _unboundTypeVarsUpperBounds.size();
-			boolean _lessThan = (idx < _size);
-			_and = _lessThan;
-		}
-		if (_and) {
-			EList<TypeRef> _unboundTypeVarsUpperBounds_1 = this.getUnboundTypeVarsUpperBounds();
-			final TypeRef modifiedUpperBound = _unboundTypeVarsUpperBounds_1.get(idx);
+			final TypeRef modifiedUpperBound = _unboundTypeVarsUpperBounds.get(idx);
 			if ((modifiedUpperBound != null)) {
 				return XcoreCollectionLiterals.<TypeRef>newImmutableEList(modifiedUpperBound);
 			}

@@ -102,18 +102,7 @@ public class FullTypeReferenceImpl extends SimpleTypeReferenceImpl implements Fu
 	 * @generated
 	 */
 	public boolean moduleNameSet() {
-		boolean _and = false;
-		String _moduleName = this.getModuleName();
-		boolean _tripleNotEquals = (_moduleName != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			String _moduleName_1 = this.getModuleName();
-			boolean _isEmpty = _moduleName_1.isEmpty();
-			boolean _not = (!_isEmpty);
-			_and = _not;
-		}
-		return _and;
+		return ((this.getModuleName() != null) && (!this.getModuleName().isEmpty()));
 	}
 
 	/**

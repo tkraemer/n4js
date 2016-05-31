@@ -473,10 +473,24 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		if (s instanceof TField) { // const only defined on TField & TStructuralField
 			TField sF = (TField) s;
 			if (sF.isConst()) { // 2. const
-				if (!consumptionConflict) { // avoid consequential errors
-					messageOverrideConst(redefinitionType, m, sF);
+				// By GH-186 const redefinition is allowed for const fields
+				if (!((m instanceof TField)
+						&& ((TField) m).isConst())) {
+					if (!consumptionConflict) { // avoid consequential errors
+						messageOverrideConst(redefinitionType, m, sF);
+					}
+					return OverrideCompatibilityResult.ERROR;
 				}
-				return OverrideCompatibilityResult.ERROR;
+			} else {
+				if (m instanceof TField) {
+					TField fM = (TField) m;
+					if (fM.isConst()) {
+						if (!consumptionConflict) { // avoid consequential errors
+							messageOverrideConst(redefinitionType, m, sF);
+						}
+						return OverrideCompatibilityResult.ERROR;
+					}
+				}
 			}
 		}
 
@@ -499,7 +513,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 		}
 
-		if ((m.isSetter() || m.isField()) && !s.isGetter()) {
+		boolean sIsConst = false;
+		if (s instanceof TField) {
+			sIsConst = ((TField) s).isConst();
+		}
+
+		if ((m.isSetter() || m.isField()) && !s.isGetter() && !sIsConst) {
 			Result<Boolean> result = isSubTypeResult(s, m);
 			if (result.failed()) { // 4. subtype
 				if (!consumptionConflict) { // avoid consequential errors
@@ -674,7 +693,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		String extraMessage = cfOtherImplementedMembers(mm, overriding, overridden);
 
-		if (overriding.isField() && overridden.isField()) {
+		if (overriding.isField() && overridden.isField() && !((TField) overridden).isConst()) {
 			code = CLF_REDEFINED_TYPE_NOT_SAME_TYPE;
 			message = getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE(
 					overridingSource + validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),

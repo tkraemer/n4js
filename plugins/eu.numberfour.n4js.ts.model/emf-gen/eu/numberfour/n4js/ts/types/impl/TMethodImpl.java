@@ -376,22 +376,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 	 * @generated
 	 */
 	public boolean isAbstract() {
-		boolean _or = false;
-		boolean _isDeclaredAbstract = this.isDeclaredAbstract();
-		if (_isDeclaredAbstract) {
-			_or = true;
-		} else {
-			boolean _and = false;
-			EObject _eContainer = this.eContainer();
-			if (!(_eContainer instanceof TInterface)) {
-				_and = false;
-			} else {
-				boolean _isHasNoBody = this.isHasNoBody();
-				_and = _isHasNoBody;
-			}
-			_or = _and;
-		}
-		return _or;
+		return (this.isDeclaredAbstract() || ((this.eContainer() instanceof TInterface) && this.isHasNoBody()));
 	}
 
 	/**
@@ -536,17 +521,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 	 * @generated
 	 */
 	public boolean isAccessor() {
-		boolean _or = false;
-		MemberType _memberType = this.getMemberType();
-		boolean _equals = Objects.equal(_memberType, MemberType.SETTER);
-		if (_equals) {
-			_or = true;
-		} else {
-			MemberType _memberType_1 = this.getMemberType();
-			boolean _equals_1 = Objects.equal(_memberType_1, MemberType.GETTER);
-			_or = _equals_1;
-		}
-		return _or;
+		return (Objects.equal(this.getMemberType(), MemberType.SETTER) || Objects.equal(this.getMemberType(), MemberType.GETTER));
 	}
 
 	/**
@@ -614,15 +589,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 		if ((containingType == null)) {
 			return false;
 		}
-		boolean _or = false;
-		boolean _isPolyfill = containingType.isPolyfill();
-		if (_isPolyfill) {
-			_or = true;
-		} else {
-			boolean _isStaticPolyfill = containingType.isStaticPolyfill();
-			_or = _isStaticPolyfill;
-		}
-		return _or;
+		return (containingType.isPolyfill() || containingType.isStaticPolyfill());
 	}
 
 	/**

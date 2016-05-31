@@ -55,7 +55,7 @@ public interface FullTypeReference extends SimpleTypeReference {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%java.lang.String%> _moduleName = this.getModuleName();\nboolean _tripleNotEquals = (_moduleName != null);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%java.lang.String%> _moduleName_1 = this.getModuleName();\n\tboolean _isEmpty = _moduleName_1.isEmpty();\n\tboolean _not = (!_isEmpty);\n\t_and = _not;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getModuleName() != null) && (!this.getModuleName().isEmpty()));'"
 	 * @generated
 	 */
 	boolean moduleNameSet();
