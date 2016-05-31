@@ -117,7 +117,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
                                 <stylesdir>styles</stylesdir>
-                                <stylesheet>default.min.css</stylesheet>
+                                <stylesheet>foundation.css</stylesheet>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
