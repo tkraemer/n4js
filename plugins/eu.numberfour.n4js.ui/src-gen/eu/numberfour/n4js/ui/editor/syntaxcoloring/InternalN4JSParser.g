@@ -15755,6 +15755,10 @@ ruleTypesIdentifier
     |
 	NullKeyword_11=Null { announce($NullKeyword_11, grammarAccess.getTypesIdentifierAccess().getNullKeyword_11()); }
  
+
+    |
+	EnumKeyword_12=Enum { announce($EnumKeyword_12, grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); }
+ 
 )
     ;
 

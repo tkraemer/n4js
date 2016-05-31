@@ -218,7 +218,8 @@ TypesIdentifier:
 	| 'from'
 	| 'type'
 	| 'void'
-	| 'null';
+	| 'null'
+	| 'enum'; // GH-203
 
 TIdentifier:
 	TypesIdentifier
