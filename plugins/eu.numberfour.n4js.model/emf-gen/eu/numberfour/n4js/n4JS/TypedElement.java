@@ -28,6 +28,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.TypedElement#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.TypedElement#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.n4JS.N4JSPackage#getTypedElement()
@@ -60,5 +61,31 @@ public interface TypedElement extends TypeProvidingElement {
 	 * @generated
 	 */
 	void setDeclaredTypeRef(TypeRef value);
+
+	/**
+	 * Returns the value of the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Bogus Type Ref</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Bogus Type Ref</em>' containment reference.
+	 * @see #setBogusTypeRef(TypeRef)
+	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getTypedElement_BogusTypeRef()
+	 * @model containment="true"
+	 * @generated
+	 */
+	TypeRef getBogusTypeRef();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.TypedElement#getBogusTypeRef <em>Bogus Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Bogus Type Ref</em>' containment reference.
+	 * @see #getBogusTypeRef()
+	 * @generated
+	 */
+	void setBogusTypeRef(TypeRef value);
 
 } // TypedElement

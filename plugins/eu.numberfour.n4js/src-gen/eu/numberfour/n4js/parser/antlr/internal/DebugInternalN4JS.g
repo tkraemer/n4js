@@ -727,9 +727,8 @@ ruleBindingElementFragment :
 		( (
 		ruleBindingPattern
 		) => ruleBindingPattern ) |
-		ruleAnnotation* (
-			'...'? ruleBindingIdentifier ruleColonSepTypeRef?
-		)
+		ruleAnnotation* ruleBogusTypeRef? '...'? ruleBindingIdentifier
+		ruleColonSepTypeRef?
 	) (
 		'=' norm1_AssignmentExpression
 	)?
@@ -741,9 +740,8 @@ norm1_BindingElementFragment :
 		( (
 		norm1_BindingPattern
 		) => norm1_BindingPattern ) |
-		ruleAnnotation* (
-			'...'? norm1_BindingIdentifier ruleColonSepTypeRef?
-		)
+		ruleAnnotation* ruleBogusTypeRef? '...'? norm1_BindingIdentifier
+		ruleColonSepTypeRef?
 	) (
 		'=' norm3_AssignmentExpression
 	)?
@@ -752,6 +750,11 @@ norm1_BindingElementFragment :
 // Rule ColonSepTypeRef
 ruleColonSepTypeRef :
 	':' ruleTypeRef
+;
+
+// Rule BogusTypeRef
+ruleBogusTypeRef :
+	ruleTypeRef
 ;
 
 // Rule Block
@@ -1733,7 +1736,7 @@ ruleCatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	ruleBindingIdentifier
+	ruleBogusTypeRef? ruleBindingIdentifier
 ;
 
 // Rule CatchVariable
@@ -1748,7 +1751,7 @@ norm1_CatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	norm1_BindingIdentifier
+	ruleBogusTypeRef? norm1_BindingIdentifier
 ;
 
 // Rule FinallyBlock
@@ -4888,7 +4891,7 @@ ruleN4MemberDeclaration :
 	)
 	) => ruleN4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
@@ -4978,7 +4981,7 @@ norm1_N4MemberDeclaration :
 	)
 	) => norm1_N4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
@@ -5147,12 +5150,12 @@ ruleAnnotatedN4MemberDeclaration :
 		'{'
 		) => ruleBlock )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' ruleLiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 				'*' ruleLiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5325,12 +5328,12 @@ norm1_AnnotatedN4MemberDeclaration :
 		'{'
 		) => norm1_Block )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' norm1_LiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 				'*' norm1_LiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5414,14 +5417,16 @@ ruleStringLiteralAsName :
 
 // Rule FieldDeclarationImpl
 ruleFieldDeclarationImpl :
-	ruleN4Modifier* ruleLiteralPropertyName ruleColonSepTypeRef? (
+	ruleN4Modifier* ruleBogusTypeRef? ruleLiteralPropertyName ruleColonSepTypeRef?
+	(
 		'=' norm1_Expression
 	)? ruleSemi
 ;
 
 // Rule FieldDeclarationImpl
 norm1_FieldDeclarationImpl :
-	ruleN4Modifier* norm1_LiteralPropertyName ruleColonSepTypeRef? (
+	ruleN4Modifier* ruleBogusTypeRef? norm1_LiteralPropertyName
+	ruleColonSepTypeRef? (
 		'=' norm3_Expression
 	)? ruleSemi
 ;
@@ -5439,12 +5444,12 @@ norm1_N4FieldDeclaration :
 // Rule N4MethodDeclaration
 ruleN4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' ruleLiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5458,12 +5463,12 @@ ruleN4MethodDeclaration :
 // Rule N4MethodDeclaration
 norm1_N4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' norm1_LiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5540,7 +5545,7 @@ norm1_N4GetterDeclaration :
 
 // Rule GetterHeader
 ruleGetterHeader :
-	'get' ( (
+	ruleBogusTypeRef? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
@@ -5616,7 +5621,7 @@ ruleGetterHeader :
 
 // Rule GetterHeader
 norm1_GetterHeader :
-	'get' ( (
+	ruleBogusTypeRef? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
