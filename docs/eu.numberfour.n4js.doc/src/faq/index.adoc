@@ -5,7 +5,7 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
-:imagesdir: ../../images
+:imagesdir: ../images
 
 .FAQ
 = FAQ

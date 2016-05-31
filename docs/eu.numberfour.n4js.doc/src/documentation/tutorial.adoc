@@ -6,7 +6,8 @@
 :doctype: book
 :icons: font
 :data-uri:
-:imagesdir: ../../images
+:imagesdir: ../images
+:toc: left
 
 .N4JS Tutorial
 = N4JS Tutorial
@@ -29,6 +30,7 @@ features from ECMAScript 2015 are supported, such as *modules* with import and e
 and objects. Developers who have experience using Java will be familiar with features from Java 8
 such as *nominal typing*, *interfaces* and *generic classes
 and methods*; even dependency injection and testing look similar.
+
 
 
 *Development Environment*
@@ -1314,7 +1316,7 @@ which has more support to resolve cyclic dependencies across modules, you could 
 executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environmentnpm (a default
 dependency of any exported npm) and is therefore already installed:
 
-[source,java]
+[source]
 ----
 $ export NODE_PATH=`pwd`
 $ cd n4js.example.tasks; npm install

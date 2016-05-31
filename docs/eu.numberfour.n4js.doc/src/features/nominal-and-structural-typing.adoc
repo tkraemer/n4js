@@ -4,7 +4,7 @@
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
-:imagesdir: ../../images
+:imagesdir: ../images
 :doctype: book
 
 .Nominal And Structural Typing

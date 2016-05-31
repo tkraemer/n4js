@@ -5,7 +5,7 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
-:imagesdir: ../../images
+:imagesdir: ../images
 
 .Dependency Injection in N4JS
 = Dependency Injection in N4JS
