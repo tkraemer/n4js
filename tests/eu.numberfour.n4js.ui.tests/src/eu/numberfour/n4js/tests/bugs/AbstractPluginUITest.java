@@ -14,6 +14,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 import static org.eclipse.ui.PlatformUI.isWorkbenchRunning;
 
+import java.util.List;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
@@ -23,6 +28,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.junit.BeforeClass;
+
+import com.google.common.collect.Lists;
 
 /**
  * Base test class for plug-in UI tests. Does not contain any test cases rather convenient methods and assertions for
@@ -127,6 +134,57 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 			waitForUiThread();
 		}
 		waitForUiThread();
+	}
+
+	/**
+	 * Returns with the {@link IProject project} from the {@link IWorkspace workspace} with the given project name.
+	 * Makes no assertions whether the project can be accessed or not.
+	 *
+	 * @param projectName
+	 *            the name of the desired project.
+	 * @return the project we are looking for. Could be non-{@link IProject#isAccessible() accessible} project.
+	 */
+	protected IProject getProjectByName(final String projectName) {
+		return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+	}
+
+	/**
+	 * Returns with an array or project form the workspace. for the given subset of unique project names. Sugar for
+	 *
+	 * @param projectName
+	 *            the name of the project.
+	 * @param otherName
+	 *            the name of another project.
+	 * @param rest
+	 *            additional names of desired projects.
+	 * @return an array of projects, could contain non-accessible project.
+	 */
+	protected IProject[] getProjectsByName(final String projectName, final String otherName, final String... rest) {
+		final List<String> projectNames = Lists.asList(projectName, otherName, rest);
+		final IProject[] projects = new IProject[projectNames.size()];
+		for (int i = 0; i < projects.length; i++) {
+			projects[i] = getProjectByName(projectNames.get(i));
+		}
+		return projects;
+	}
+
+	/**
+	 * Asserts that {@code expected} argument is {@link Class#isAssignableFrom(Class) assignable} from the
+	 * {@code actual} argument. If {@code true}, then returns with the casted type safe instance, otherwise throws an
+	 * exception.
+	 * 
+	 * @param actual
+	 *            the actual object to check. Must not be {@code null}.
+	 * @param expected
+	 *            the expected class. Must not {@code null}.
+	 * @return the {@code actual} argument casted to the {@code expected} type.
+	 */
+	protected <T> T assertInstanceOf(Object actual, Class<T> expected) {
+		checkNotNull(expected, "expected");
+		assertNotNull(actual);
+		assertTrue("Expected an instance of " + expected.getName() + " was: " + actual,
+				expected.isAssignableFrom(actual.getClass()));
+		return expected.cast(actual);
 	}
 
 }

@@ -1,0 +1,14 @@
+export public class X1 {
+
+    @Ignore('Method x11Test is ignored.')
+    @Test
+    public x11Test(): void {
+        console.log('X1#x11Test');
+    }
+    
+    @Test
+    public x12Test(): void {
+        console.log('X1#x12Test');
+    }
+
+}
