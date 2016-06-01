@@ -9897,13 +9897,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASSIFIER_DECLARATION___GET_OWNED_SETTERS = N4_TYPE_DECLARATION_OPERATION_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASSIFIER_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 7;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 7;
+	int N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>N4 Classifier Declaration</em>' class.
@@ -9912,7 +9921,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DECLARATION_OPERATION_COUNT = N4_TYPE_DECLARATION_OPERATION_COUNT + 8;
+	int N4_CLASSIFIER_DECLARATION_OPERATION_COUNT = N4_TYPE_DECLARATION_OPERATION_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassifierDefinitionImpl <em>N4 Classifier Definition</em>}' class.
@@ -10033,13 +10042,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS = N4_TYPE_DEFINITION_OPERATION_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 7;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 7;
+	int N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>N4 Classifier Definition</em>' class.
@@ -10048,7 +10066,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DEFINITION_OPERATION_COUNT = N4_TYPE_DEFINITION_OPERATION_COUNT + 8;
+	int N4_CLASSIFIER_DEFINITION_OPERATION_COUNT = N4_TYPE_DEFINITION_OPERATION_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassDefinitionImpl <em>N4 Class Definition</em>}' class.
@@ -10205,13 +10223,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 1;
+	int N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>N4 Class Definition</em>' class.
@@ -10220,7 +10247,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASS_DEFINITION_OPERATION_COUNT = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 2;
+	int N4_CLASS_DEFINITION_OPERATION_COUNT = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassDeclarationImpl <em>N4 Class Declaration</em>}' class.
@@ -10402,6 +10429,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_CLASS_DECLARATION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -10655,6 +10691,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_CLASS_EXPRESSION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_EXPRESSION___GET_SUPER_CLASSIFIER_REFS = N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -10928,13 +10973,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 1;
+	int N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>N4 Interface Declaration</em>' class.
@@ -10943,7 +10997,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_INTERFACE_DECLARATION_OPERATION_COUNT = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 2;
+	int N4_INTERFACE_DECLARATION_OPERATION_COUNT = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4EnumDeclarationImpl <em>N4 Enum Declaration</em>}' class.
@@ -17788,6 +17842,16 @@ public interface N4JSPackage extends EPackage {
 	EOperation getN4ClassifierDefinition__GetOwnedSetters();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4ClassifierDefinition__GetSuperClassifierRefs();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17849,6 +17913,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getN4ClassDefinition__GetDefinedTypeAsClass();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassDefinition#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4ClassDefinition#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4ClassDefinition__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassDefinition#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -17931,6 +18005,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getN4InterfaceDeclaration__GetDefinedTypeAsInterface();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4InterfaceDeclaration__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -22274,6 +22358,14 @@ public interface N4JSPackage extends EPackage {
 		EOperation N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS = eINSTANCE.getN4ClassifierDefinition__GetOwnedSetters();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4ClassifierDefinition__GetSuperClassifierRefs();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -22322,6 +22414,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS = eINSTANCE.getN4ClassDefinition__GetDefinedTypeAsClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4ClassDefinition__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -22392,6 +22492,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE = eINSTANCE.getN4InterfaceDeclaration__GetDefinedTypeAsInterface();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4InterfaceDeclaration__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.

@@ -207,6 +207,15 @@ public abstract class N4ClassifierDefinitionImpl extends N4TypeDefinitionImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
+		return Collections.<ParameterizedTypeRef>emptyList();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs() {
 		return Collections.<ParameterizedTypeRef>emptyList();
 	}
@@ -322,6 +331,8 @@ public abstract class N4ClassifierDefinitionImpl extends N4TypeDefinitionImpl im
 				return getOwnedGetters();
 			case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS:
 				return getOwnedSetters();
+			case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 		}

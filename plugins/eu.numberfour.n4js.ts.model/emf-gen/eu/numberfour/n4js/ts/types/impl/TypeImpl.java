@@ -17,6 +17,8 @@ import eu.numberfour.n4js.ts.types.TypeAccessModifier;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
@@ -192,6 +194,24 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Variance getVarianceOfTypeVar(final int idx) {
+		Variance _xifexpression = null;
+		if (((idx >= 0) && (idx < this.getTypeVars().size()))) {
+			EList<TypeVariable> _typeVars = this.getTypeVars();
+			TypeVariable _get = _typeVars.get(idx);
+			_xifexpression = _get.getVariance();
+		}
+		else {
+			_xifexpression = null;
+		}
+		return _xifexpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getRawTypeAsString() {
 		return this.getName();
 	}
@@ -358,6 +378,8 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				return isGeneric();
 			case TypesPackage.TYPE___GET_TYPE_VARS:
 				return getTypeVars();
+			case TypesPackage.TYPE___GET_VARIANCE_OF_TYPE_VAR__INT:
+				return getVarianceOfTypeVar((Integer)arguments.get(0));
 			case TypesPackage.TYPE___GET_RAW_TYPE_AS_STRING:
 				return getRawTypeAsString();
 			case TypesPackage.TYPE___GET_TYPE_AS_STRING:

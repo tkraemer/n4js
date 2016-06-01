@@ -3141,7 +3141,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeArgument:
-	//	Wildcard | super::TypeRef;
+	//	Wildcard | WildcardNewNotation | super::TypeRef;
 	public TypeExpressionsGrammarAccess.TypeArgumentElements getTypeArgumentAccess() {
 		return gaTypeExpressions.getTypeArgumentAccess();
 	}
@@ -3161,6 +3161,17 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getWildcardAccess().getRule();
 	}
 
+	//WildcardNewNotation Wildcard:
+	//	usingInOutNotation?='out' declaredUpperBound=super::TypeRef | usingInOutNotation?='in'
+	//	declaredLowerBound=super::TypeRef
+	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
+		return gaTypeExpressions.getWildcardNewNotationAccess();
+	}
+	
+	public ParserRule getWildcardNewNotationRule() {
+		return getWildcardNewNotationAccess().getRule();
+	}
+
 	//TypeVariable:
 	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
 	//	declaredUpperBounds+=ParameterizedTypeRef)*)?;
@@ -3172,6 +3183,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeVariableAccess().getRule();
 	}
 
+	//// GH-203
 	//TIdentifier:
 	//	super::TypesIdentifier
 	//	// 7.6.1.2: future reserved words, may not be used only in strict mode:

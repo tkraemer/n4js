@@ -13,6 +13,7 @@ package eu.numberfour.n4js.typesystem.constraints;
 import eu.numberfour.n4js.typesystem.TypeVarUtils;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeCompareUtils;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 

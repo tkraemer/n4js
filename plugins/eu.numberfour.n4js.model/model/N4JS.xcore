@@ -1674,7 +1674,13 @@ abstract class N4ClassifierDefinition extends N4TypeDefinition {
 		return new BasicEList(setters.toList)
 	}
 	/**
-	 * Derived, returns implemented or extended interface.
+	 * Derived, returns extended class (if any) and implemented or extended interfaces.
+	 */
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
+		return Collections.emptyList;
+	}
+	/**
+	 * Derived, returns implemented or extended interfaces.
 	 */
 	op ParameterizedTypeRefIterable getImplementedOrExtendedInterfaceRefs() {
 		return Collections.emptyList;
@@ -1693,6 +1699,9 @@ abstract class N4ClassDefinition extends N4ClassifierDefinition, ThisTarget {
 	 */
 	op TClass getDefinedTypeAsClass() {
 		return definedType as TClass;
+	}
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
+		return #[superClassRef] + implementedInterfaceRefs;
 	}
 	op ParameterizedTypeRefIterable getImplementedOrExtendedInterfaceRefs() {
 		return implementedInterfaceRefs;
@@ -1722,6 +1731,9 @@ class N4InterfaceDeclaration extends N4ClassifierDeclaration {
 	 */
 	op TInterface getDefinedTypeAsInterface() {
 		return definedType as TInterface;
+	}
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
+		return superInterfaceRefs;
 	}
 	op ParameterizedTypeRefIterable getImplementedOrExtendedInterfaceRefs() {
 		return superInterfaceRefs;

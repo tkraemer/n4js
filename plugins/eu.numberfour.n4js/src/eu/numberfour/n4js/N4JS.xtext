@@ -348,6 +348,7 @@ AnnotatedExpression <Yield> returns Expression:
 ;
 
 TypeVariable returns types::TypeVariable:
+	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 ;
 
@@ -1050,6 +1051,8 @@ N4Keyword:
 	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	| 'implements' | 'interface'
 	| 'private' | 'protected' | 'public' // package not used in N4JS
+	// definition-site variance
+	| 'out'
 ;
 
 SymbolLiteralComputedName <Yield>:

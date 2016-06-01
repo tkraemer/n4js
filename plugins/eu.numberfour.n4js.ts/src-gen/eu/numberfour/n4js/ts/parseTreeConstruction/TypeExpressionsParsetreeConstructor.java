@@ -55,7 +55,8 @@ protected class ThisRootNode extends RootToken {
 			case 22: return new ClassifierTypeRef_Group(this, this, 22, inst);
 			case 23: return new TypeArgument_Alternatives(this, this, 23, inst);
 			case 24: return new Wildcard_Group(this, this, 24, inst);
-			case 25: return new TypeVariable_Group(this, this, 25, inst);
+			case 25: return new WildcardNewNotation_Alternatives(this, this, 25, inst);
+			case 26: return new TypeVariable_Group(this, this, 26, inst);
 			default: return null;
 		}	
 	}	
@@ -6212,11 +6213,11 @@ protected class ClassifierTypeRef_RightCurlyBracketKeyword_4 extends KeywordToke
 /************ begin Rule TypeArgument ****************
  *
  * TypeArgument:
- * 	Wildcard | TypeRef;
+ * 	Wildcard | WildcardNewNotation | TypeRef;
  *
  **/
 
-// Wildcard | TypeRef
+// Wildcard | WildcardNewNotation | TypeRef
 protected class TypeArgument_Alternatives extends AlternativesToken {
 
 	public TypeArgument_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6232,7 +6233,8 @@ protected class TypeArgument_Alternatives extends AlternativesToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new TypeArgument_WildcardParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypeArgument_TypeRefParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 1: return new TypeArgument_WildcardNewNotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new TypeArgument_TypeRefParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	
 	}
@@ -6248,7 +6250,7 @@ protected class TypeArgument_Alternatives extends AlternativesToken {
 		   getEObject().eClass() != grammarAccess.getThisTypeRefNominalAccess().getThisTypeRefNominalAction_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getThisTypeRefStructuralRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionAction_0().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getWildcardAccess().getWildcardAction_0_0_0().getType().getClassifier())
+		   getEObject().eClass() != grammarAccess.getWildcardNewNotationRule().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -6291,16 +6293,52 @@ protected class TypeArgument_WildcardParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// TypeRef
-protected class TypeArgument_TypeRefParserRuleCall_1 extends RuleCallToken {
+// WildcardNewNotation
+protected class TypeArgument_WildcardNewNotationParserRuleCall_1 extends RuleCallToken {
 	
-	public TypeArgument_TypeRefParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public TypeArgument_WildcardNewNotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_1();
+		return grammarAccess.getTypeArgumentAccess().getWildcardNewNotationParserRuleCall_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new WildcardNewNotation_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getWildcardNewNotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(WildcardNewNotation_Alternatives.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// TypeRef
+protected class TypeArgument_TypeRefParserRuleCall_2 extends RuleCallToken {
+	
+	public TypeArgument_TypeRefParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_2();
 	}
 
     @Override
@@ -6679,6 +6717,251 @@ protected class Wildcard_DeclaredLowerBoundAssignment_1_1_1 extends AssignmentTo
 
 
 /************ end Rule Wildcard ****************/
+
+
+/************ begin Rule WildcardNewNotation ****************
+ *
+ * WildcardNewNotation Wildcard:
+ * 	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+ *
+ **/
+
+// usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+protected class WildcardNewNotation_Alternatives extends AlternativesToken {
+
+	public WildcardNewNotation_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getAlternatives();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new WildcardNewNotation_Group_0(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new WildcardNewNotation_Group_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getWildcardNewNotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// usingInOutNotation?='out' declaredUpperBound=TypeRef
+protected class WildcardNewNotation_Group_0 extends GroupToken {
+	
+	public WildcardNewNotation_Group_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getGroup_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new WildcardNewNotation_DeclaredUpperBoundAssignment_0_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// usingInOutNotation?='out'
+protected class WildcardNewNotation_UsingInOutNotationAssignment_0_0 extends AssignmentToken  {
+	
+	public WildcardNewNotation_UsingInOutNotationAssignment_0_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("usingInOutNotation",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("usingInOutNotation");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KEYWORD;
+			element = grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// declaredUpperBound=TypeRef
+protected class WildcardNewNotation_DeclaredUpperBoundAssignment_0_1 extends AssignmentToken  {
+	
+	public WildcardNewNotation_DeclaredUpperBoundAssignment_0_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundAssignment_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredUpperBound",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBound");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getTypeRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new WildcardNewNotation_UsingInOutNotationAssignment_0_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+// usingInOutNotation?='in' declaredLowerBound=TypeRef
+protected class WildcardNewNotation_Group_1 extends GroupToken {
+	
+	public WildcardNewNotation_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getGroup_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new WildcardNewNotation_DeclaredLowerBoundAssignment_1_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// usingInOutNotation?='in'
+protected class WildcardNewNotation_UsingInOutNotationAssignment_1_0 extends AssignmentToken  {
+	
+	public WildcardNewNotation_UsingInOutNotationAssignment_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("usingInOutNotation",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("usingInOutNotation");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KEYWORD;
+			element = grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// declaredLowerBound=TypeRef
+protected class WildcardNewNotation_DeclaredLowerBoundAssignment_1_1 extends AssignmentToken  {
+	
+	public WildcardNewNotation_DeclaredLowerBoundAssignment_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredLowerBound",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredLowerBound");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getTypeRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new WildcardNewNotation_UsingInOutNotationAssignment_1_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+/************ end Rule WildcardNewNotation ****************/
 
 
 

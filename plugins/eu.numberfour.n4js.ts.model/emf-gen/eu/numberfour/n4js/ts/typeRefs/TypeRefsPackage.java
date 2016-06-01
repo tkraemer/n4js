@@ -5036,13 +5036,22 @@ public interface TypeRefsPackage extends EPackage {
 	int WILDCARD__DECLARED_LOWER_BOUND = TYPE_ARGUMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Using In Out Notation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WILDCARD__USING_IN_OUT_NOTATION = TYPE_ARGUMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Wildcard</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WILDCARD_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 2;
+	int WILDCARD_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -7608,6 +7617,17 @@ public interface TypeRefsPackage extends EPackage {
 	EReference getWildcard_DeclaredLowerBound();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation <em>Using In Out Notation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Using In Out Notation</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation()
+	 * @see #getWildcard()
+	 * @generated
+	 */
+	EAttribute getWildcard_UsingInOutNotation();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBounds() <em>Get Declared Or Implicit Upper Bounds</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8944,6 +8964,14 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WILDCARD__DECLARED_LOWER_BOUND = eINSTANCE.getWildcard_DeclaredLowerBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Using In Out Notation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WILDCARD__USING_IN_OUT_NOTATION = eINSTANCE.getWildcard_UsingInOutNotation();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Declared Or Implicit Upper Bounds</b></em>' operation.

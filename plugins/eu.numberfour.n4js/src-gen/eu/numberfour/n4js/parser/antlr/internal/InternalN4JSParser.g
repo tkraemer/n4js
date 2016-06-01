@@ -5766,56 +5766,66 @@ ruleTypeVariable returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(((
+(
+		lv_declaredCovariant_0_0=
+	Out
+    {
+        newLeafNode(lv_declaredCovariant_0_0, grammarAccess.getTypeVariableAccess().getDeclaredCovariantOutKeyword_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeVariableRule());
+	        }
+       		setWithLastConsumed($current, "declaredCovariant", true, "out");
+	    }
+
+)
+)
+    |(
+(
+		lv_declaredContravariant_1_0=
+	In
+    {
+        newLeafNode(lv_declaredContravariant_1_0, grammarAccess.getTypeVariableAccess().getDeclaredContravariantInKeyword_0_1_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeVariableRule());
+	        }
+       		setWithLastConsumed($current, "declaredContravariant", true, "in");
+	    }
+
+)
+))?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getNameIdentifierOrThisParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getNameIdentifierOrThisParserRuleCall_1_0()); 
 	    }
-		lv_name_0_0=ruleIdentifierOrThis		{
+		lv_name_2_0=ruleIdentifierOrThis		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
 	        }
        		set(
        			$current, 
        			"name",
-        		lv_name_0_0, 
+        		lv_name_2_0, 
         		"eu.numberfour.n4js.N4JS.IdentifierOrThis");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )(
-	otherlv_1=Extends
+	otherlv_3=Extends
     {
-    	newLeafNode(otherlv_1, grammarAccess.getTypeVariableAccess().getExtendsKeyword_1_0());
+    	newLeafNode(otherlv_3, grammarAccess.getTypeVariableAccess().getExtendsKeyword_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0()); 
-	    }
-		lv_declaredUpperBounds_2_0=ruleParameterizedTypeRefNominal		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
-	        }
-       		add(
-       			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-	otherlv_3=Ampersand
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0()); 
 	    }
 		lv_declaredUpperBounds_4_0=ruleParameterizedTypeRefNominal		{
 	        if ($current==null) {
@@ -5825,6 +5835,29 @@ ruleTypeVariable returns [EObject current=null]
        			$current, 
        			"declaredUpperBounds",
         		lv_declaredUpperBounds_4_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_5=Ampersand
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_2_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0()); 
+	    }
+		lv_declaredUpperBounds_6_0=ruleParameterizedTypeRefNominal		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
+	        }
+       		add(
+       			$current, 
+       			"declaredUpperBounds",
+        		lv_declaredUpperBounds_6_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -9881,6 +9914,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 New
 
     |
@@ -10063,6 +10099,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 New
  | 
@@ -10717,6 +10755,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 Yield
 
     |
@@ -10900,6 +10941,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 Yield
  | 
@@ -14675,6 +14718,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -14968,6 +15014,9 @@ Protected
 
     |
 Public
+
+    |
+Out
 
     |
 LeftSquareBracket
@@ -15352,6 +15401,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -15495,6 +15547,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -16072,6 +16126,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -16215,6 +16272,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -17403,6 +17462,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -17546,6 +17608,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -17812,6 +17876,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -17955,6 +18022,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -20412,6 +20481,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -20566,6 +20638,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -20741,6 +20815,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -20895,6 +20972,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -21067,6 +21146,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -21219,6 +21301,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -21391,6 +21475,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LessThanSign
 
     |
@@ -21543,6 +21630,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LessThanSign
  | 
@@ -24696,6 +24785,8 @@ Protected
  | 
 Public
  | 
+Out
+ | 
 Yield
  | 
 New
@@ -24860,6 +24951,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 Yield
  | 
@@ -27602,6 +27695,13 @@ ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); 
     }
+
+    |
+	kw=Out 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); 
+    }
 )
     ;
 
@@ -29737,6 +29837,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -30031,6 +30134,9 @@ Protected
 
     |
 Public
+
+    |
+Out
 
     |
 LeftSquareBracket
@@ -30389,6 +30495,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -30550,6 +30659,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -31073,6 +31184,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -31234,6 +31348,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -33263,6 +33379,8 @@ Protected
  | 
 Public
  | 
+Out
+ | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
     { 
@@ -33452,6 +33570,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -33703,6 +33823,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -33864,6 +33987,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -34139,6 +34264,9 @@ Protected
 Public
 
     |
+Out
+
+    |
 LeftSquareBracket
 
     |RULE_IDENTIFIER
@@ -34300,6 +34428,8 @@ Private
 Protected
  | 
 Public
+ | 
+Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
@@ -37592,11 +37722,21 @@ QuestionMark
 )
     |
     { 
-        newCompositeNode(grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getTypeArgumentAccess().getWildcardNewNotationParserRuleCall_1()); 
     }
-    this_TypeRef_1=ruleTypeRef
+    this_WildcardNewNotation_1=ruleWildcardNewNotation
     {
-        $current = $this_TypeRef_1.current;
+        $current = $this_WildcardNewNotation_1.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_2()); 
+    }
+    this_TypeRef_2=ruleTypeRef
+    {
+        $current = $this_TypeRef_2.current;
         afterParserOrEnumRuleCall();
     }
 )
@@ -37682,6 +37822,96 @@ QuestionMark
 
 )
 )))?)
+;
+
+
+
+
+
+// Entry rule entryRuleWildcardNewNotation
+entryRuleWildcardNewNotation returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getWildcardNewNotationRule()); }
+	 iv_ruleWildcardNewNotation=ruleWildcardNewNotation 
+	 { $current=$iv_ruleWildcardNewNotation.current; } 
+	 EOF 
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((
+(
+		lv_usingInOutNotation_0_0=
+	Out
+    {
+        newLeafNode(lv_usingInOutNotation_0_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "out");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); 
+	    }
+		lv_declaredUpperBound_1_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredUpperBound",
+        		lv_declaredUpperBound_1_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |((
+(
+		lv_usingInOutNotation_2_0=
+	In
+    {
+        newLeafNode(lv_usingInOutNotation_2_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "in");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0()); 
+	    }
+		lv_declaredLowerBound_3_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredLowerBound",
+        		lv_declaredLowerBound_3_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
 ;
 
 
@@ -37814,6 +38044,13 @@ ruleTypesIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
     {
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getNullKeyword_11()); 
+    }
+
+    |
+	kw=Enum 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); 
     }
 )
     ;

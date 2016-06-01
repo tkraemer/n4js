@@ -67,6 +67,15 @@ public interface N4InterfaceDeclaration extends N4ClassifierDeclaration {
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getSuperInterfaceRefs();'"
 	 * @generated
 	 */
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getSuperInterfaceRefs();'"
+	 * @generated
+	 */
 	Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs();
 
 } // N4InterfaceDeclaration
