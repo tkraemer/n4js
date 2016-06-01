@@ -17,6 +17,7 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
 import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
+import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
@@ -27,6 +28,7 @@ import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
+import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -68,7 +70,6 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 
 /**
  * Class for validating the N4JS types.
@@ -173,6 +174,12 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkThisTypeRef(ThisTypeRef thisTypeRef) {
+		if (thisTypeRef instanceof BoundThisTypeRef) {
+			// normally, BoundThisTypeRefs never appear in the AST; however, in certain special cases they might appear
+			// as the type of a TMember contained in the 'cachedComposedMembers' property of a ComposedTypeRef
+			// -> back off!
+			return;
+		}
 		if (!(thisTypeRef.isUsedStructurallyAsFormalParametersInTheConstructor
 			|| thisTypeRef.isUsedAtCovariantPositionInClassifierDeclaration
 			|| thisTypeRef.isUsedInVariableWithSyntaxError)) {
