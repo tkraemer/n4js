@@ -50,15 +50,15 @@ TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	| ConstructorTypeRef
 	| ClassifierTypeRef
 	| N4FunctionTypeExpression
-	| UnionTypeExpression
-	| IntersectionTypeExpression;
+	| N4UnionTypeExpression
+	| N4IntersectionTypeExpression;
 	
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| UnionTypeExpression
-	| IntersectionTypeExpression
+	| N4UnionTypeExpression
+	| N4IntersectionTypeExpression
 	;
 
 TypeRefForCast returns StaticBaseTypeRef:
@@ -118,11 +118,11 @@ TFormalParameter:
 
 
 
-UnionTypeExpression returns UnionTypeExpression:
+N4UnionTypeExpression returns UnionTypeExpression:
 	{UnionTypeExpression}
 	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
-IntersectionTypeExpression returns IntersectionTypeExpression:
+N4IntersectionTypeExpression returns IntersectionTypeExpression:
 	{IntersectionTypeExpression}
 	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
