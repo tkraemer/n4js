@@ -96,9 +96,13 @@ Any : 'any';
 
 Get : 'get';
 
+Out : 'out';
+
 Set : 'set';
 
 As : 'as';
+
+In : 'in';
 
 ExclamationMark : '!';
 

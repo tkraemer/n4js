@@ -3141,7 +3141,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeArgument:
-	//	Wildcard | super::TypeRef;
+	//	Wildcard | WildcardNewNotation | super::TypeRef;
 	public TypeExpressionsGrammarAccess.TypeArgumentElements getTypeArgumentAccess() {
 		return gaTypeExpressions.getTypeArgumentAccess();
 	}
@@ -3159,6 +3159,17 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardRule() {
 		return getWildcardAccess().getRule();
+	}
+
+	//WildcardNewNotation Wildcard:
+	//	usingInOutNotation?='out' declaredUpperBound=super::TypeRef | usingInOutNotation?='in'
+	//	declaredLowerBound=super::TypeRef
+	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
+		return gaTypeExpressions.getWildcardNewNotationAccess();
+	}
+	
+	public ParserRule getWildcardNewNotationRule() {
+		return getWildcardNewNotationAccess().getRule();
 	}
 
 	//TypeVariable:

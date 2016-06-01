@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.typesystem.constraints;
+package eu.numberfour.n4js.ts.types.util;
 
 /**
  * Type variance.
@@ -50,6 +50,38 @@ public enum Variance {
 		if (this == CO && other == CO)
 			return CO;
 		throw new UnsupportedOperationException("unsupported literals: " + this + ", " + other);
+	}
+
+	/**
+	 * Return human-readable string representation for this variance.
+	 */
+	public String getDescriptiveString(boolean inOutHint) {
+		switch (this) {
+		case CO:
+			return inOutHint ? "covariant (out)" : "covariant";
+		case CONTRA:
+			return inOutHint ? "contravariant (in)" : "contravariant";
+		case INV:
+			return "invariant";
+		default:
+			throw new UnsupportedOperationException("unsupported literal: " + this);
+		}
+	}
+
+	/**
+	 * Return human-readable string representation for this variance as a noun.
+	 */
+	public String getDescriptiveStringNoun(boolean inOutHint) {
+		switch (this) {
+		case CO:
+			return inOutHint ? "covariance (out)" : "covariance";
+		case CONTRA:
+			return inOutHint ? "contravariance (in)" : "contravariance";
+		case INV:
+			return "invariance";
+		default:
+			throw new UnsupportedOperationException("unsupported literal: " + this);
+		}
 	}
 
 	/**

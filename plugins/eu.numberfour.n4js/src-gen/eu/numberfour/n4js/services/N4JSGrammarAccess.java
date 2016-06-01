@@ -2279,55 +2279,76 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypeVariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TypeVariable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIdentifierOrThisParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cExtendsKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_1_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
-		private final Keyword cAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_1_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cDeclaredCovariantAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cDeclaredCovariantOutKeyword_0_0_0 = (Keyword)cDeclaredCovariantAssignment_0_0.eContents().get(0);
+		private final Assignment cDeclaredContravariantAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cDeclaredContravariantInKeyword_0_1_0 = (Keyword)cDeclaredContravariantAssignment_0_1.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIdentifierOrThisParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cExtendsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cDeclaredUpperBoundsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cAmpersandKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cDeclaredUpperBoundsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_2_1.eContents().get(0);
 		
 		//TypeVariable types::TypeVariable:
+		//	(declaredCovariant?='out' | declaredContravariant?='in')?
 		//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
 		//	declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
-		//declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+		//(declaredCovariant?='out' | declaredContravariant?='in')? name=IdentifierOrThis ('extends'
+		//declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 		public Group getGroup() { return cGroup; }
 
+		//(declaredCovariant?='out' | declaredContravariant?='in')?
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//declaredCovariant?='out'
+		public Assignment getDeclaredCovariantAssignment_0_0() { return cDeclaredCovariantAssignment_0_0; }
+
+		//'out'
+		public Keyword getDeclaredCovariantOutKeyword_0_0_0() { return cDeclaredCovariantOutKeyword_0_0_0; }
+
+		//declaredContravariant?='in'
+		public Assignment getDeclaredContravariantAssignment_0_1() { return cDeclaredContravariantAssignment_0_1; }
+
+		//'in'
+		public Keyword getDeclaredContravariantInKeyword_0_1_0() { return cDeclaredContravariantInKeyword_0_1_0; }
+
 		//name=IdentifierOrThis
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//IdentifierOrThis
-		public RuleCall getNameIdentifierOrThisParserRuleCall_0_0() { return cNameIdentifierOrThisParserRuleCall_0_0; }
+		public RuleCall getNameIdentifierOrThisParserRuleCall_1_0() { return cNameIdentifierOrThisParserRuleCall_1_0; }
 
 		//('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//'extends'
-		public Keyword getExtendsKeyword_1_0() { return cExtendsKeyword_1_0; }
+		public Keyword getExtendsKeyword_2_0() { return cExtendsKeyword_2_0; }
 
 		//declaredUpperBounds+=ParameterizedTypeRefNominal
-		public Assignment getDeclaredUpperBoundsAssignment_1_1() { return cDeclaredUpperBoundsAssignment_1_1; }
+		public Assignment getDeclaredUpperBoundsAssignment_2_1() { return cDeclaredUpperBoundsAssignment_2_1; }
 
 		//ParameterizedTypeRefNominal
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_1_0; }
+		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0; }
 
 		//('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*
-		public Group getGroup_1_2() { return cGroup_1_2; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//'&'
-		public Keyword getAmpersandKeyword_1_2_0() { return cAmpersandKeyword_1_2_0; }
+		public Keyword getAmpersandKeyword_2_2_0() { return cAmpersandKeyword_2_2_0; }
 
 		//declaredUpperBounds+=ParameterizedTypeRefNominal
-		public Assignment getDeclaredUpperBoundsAssignment_1_2_1() { return cDeclaredUpperBoundsAssignment_1_2_1; }
+		public Assignment getDeclaredUpperBoundsAssignment_2_2_1() { return cDeclaredUpperBoundsAssignment_2_2_1; }
 
 		//ParameterizedTypeRefNominal
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_1_2_1_0; }
+		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0; }
 	}
 
 	public class FormalParameterElements extends AbstractParserRuleElementFinder {
@@ -7764,6 +7785,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPrivateKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
 		private final Keyword cProtectedKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
 		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
+		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
 		
 		//N4Keyword:
 		//	'get' | 'set'
@@ -7780,14 +7802,17 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//	| 'implements' | 'interface'
 		//	| 'private' | 'protected' | 'public' // package not used in N4JS
-		//;
+		//	// definition-site variance
+		//	| 'out';
 		@Override public ParserRule getRule() { return rule; }
 
 		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
 		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
 		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name
 		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-		//| 'implements' | 'interface' | 'private' | 'protected' | 'public'
+		//| 'implements' | 'interface' | 'private' | 'protected' | 'public' // package not used in N4JS
+		//// definition-site variance
+		//| 'out'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'get'
@@ -7864,6 +7889,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'public'
 		public Keyword getPublicKeyword_24() { return cPublicKeyword_24; }
+
+		//'out'
+		public Keyword getOutKeyword_25() { return cOutKeyword_25; }
 	}
 
 	public class SymbolLiteralComputedNameElements extends AbstractParserRuleElementFinder {
@@ -11503,6 +11531,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeVariable types::TypeVariable:
+	//	(declaredCovariant?='out' | declaredContravariant?='in')?
 	//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
 	//	declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 	public TypeVariableElements getTypeVariableAccess() {
@@ -12946,7 +12975,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	//	| 'implements' | 'interface'
 	//	| 'private' | 'protected' | 'public' // package not used in N4JS
-	//;
+	//	// definition-site variance
+	//	| 'out';
 	public N4KeywordElements getN4KeywordAccess() {
 		return pN4Keyword;
 	}
@@ -14068,7 +14098,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeArgument:
-	//	Wildcard | TypeRef;
+	//	Wildcard | WildcardNewNotation | TypeRef;
 	public TypeExpressionsGrammarAccess.TypeArgumentElements getTypeArgumentAccess() {
 		return gaTypeExpressions.getTypeArgumentAccess();
 	}
@@ -14086,6 +14116,16 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardRule() {
 		return getWildcardAccess().getRule();
+	}
+
+	//WildcardNewNotation Wildcard:
+	//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+	public TypeExpressionsGrammarAccess.WildcardNewNotationElements getWildcardNewNotationAccess() {
+		return gaTypeExpressions.getWildcardNewNotationAccess();
+	}
+	
+	public ParserRule getWildcardNewNotationRule() {
+		return getWildcardNewNotationAccess().getRule();
 	}
 
 	//UndefModifierToken UndefModifier:

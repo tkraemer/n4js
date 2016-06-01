@@ -1405,8 +1405,19 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				}
 				else break;
 			case TypeRefsPackage.WILDCARD:
-				sequence_Wildcard(context, (Wildcard) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getWildcardNewNotationRule()) {
+					sequence_WildcardNewNotation(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWildcardRule()) {
+					sequence_Wildcard(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_Wildcard_WildcardNewNotation(context, (Wildcard) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -23111,7 +23122,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeVariable returns TypeVariable
 	 *
 	 * Constraint:
-	 *     (name=IdentifierOrThis (declaredUpperBounds+=ParameterizedTypeRefNominal declaredUpperBounds+=ParameterizedTypeRefNominal*)?)
+	 *     (
+	 *         (declaredCovariant?='out' | declaredContravariant?='in')? 
+	 *         name=IdentifierOrThis 
+	 *         (declaredUpperBounds+=ParameterizedTypeRefNominal declaredUpperBounds+=ParameterizedTypeRefNominal*)?
+	 *     )
 	 */
 	protected void sequence_TypeVariable(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -23587,13 +23602,41 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TypeArgument returns Wildcard
+	 *     WildcardNewNotation returns Wildcard
+	 *
+	 * Constraint:
+	 *     ((usingInOutNotation?='out' declaredUpperBound=TypeRef) | (usingInOutNotation?='in' declaredLowerBound=TypeRef))
+	 */
+	protected void sequence_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Wildcard returns Wildcard
 	 *
 	 * Constraint:
 	 *     (declaredUpperBound=TypeRef | declaredLowerBound=TypeRef)?
 	 */
 	protected void sequence_Wildcard(ISerializationContext context, Wildcard semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeArgument returns Wildcard
+	 *
+	 * Constraint:
+	 *     (
+	 *         declaredUpperBound=TypeRef | 
+	 *         declaredLowerBound=TypeRef | 
+	 *         (usingInOutNotation?='out' declaredUpperBound=TypeRef) | 
+	 *         (usingInOutNotation?='in' declaredLowerBound=TypeRef)
+	 *     )?
+	 */
+	protected void sequence_Wildcard_WildcardNewNotation(ISerializationContext context, Wildcard semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
