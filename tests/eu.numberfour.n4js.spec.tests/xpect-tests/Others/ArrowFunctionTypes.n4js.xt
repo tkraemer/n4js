@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+var a : ()=>void
+var b : (String)=>void
+var c : (p:String)=>void
+
+function f(): ()=>void { return null }
+
+class C {
+	a : ()=>void        
+	b : (String)=>void  
+	c : (p:String)=>void
+	
+	f(): ()=>void { return null }
+}

@@ -35,16 +35,24 @@ import "http://www.numberfour.eu/ide/ts/TypeRefs"
  * AttributeTypeRef: no Void
  */
 TypeRef:
+	( ArrowFunctionTypeExpression
+	| TypeRefWithModifiers
+	);
+	
+BogusTypeRef returns TypeRef:
+	TypeRefWithModifiers;
+	
+TypeRefWithModifiers returns StaticBaseTypeRef:
 	TypeRefWithoutModifiers =>undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken;
 
 TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| FunctionTypeExpression
+	| N4FunctionTypeExpression
 	| UnionTypeExpression
 	| IntersectionTypeExpression;
-
+	
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
 	| ConstructorTypeRef
@@ -58,7 +66,8 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| ThisTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| FunctionTypeExpression;
+	| N4FunctionTypeExpression
+	| ArrowFunctionTypeExpression;
 
 TypeRefInClassifierType returns StaticBaseTypeRef:
 	  ParameterizedTypeRefNominal
@@ -76,7 +85,7 @@ ThisTypeRefStructural returns ThisTypeRefStructural:
 	'this'
 	('with' TStructMemberList)?;
 
-FunctionTypeExpression returns FunctionTypeExpression:
+N4FunctionTypeExpression returns FunctionTypeExpression:
 	{FunctionTypeExpression}
 	'{'
 	('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
@@ -85,6 +94,10 @@ FunctionTypeExpression returns FunctionTypeExpression:
 	'(' TAnonymousFormalParameterList ')'
 	(':' returnTypeRef=TypeRef)?
 	'}';
+	
+ArrowFunctionTypeExpression returns FunctionTypeExpression:
+	{FunctionTypeExpression}
+	'(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=TypeRef;
 
 fragment TAnonymousFormalParameterList*:
 	(fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?
