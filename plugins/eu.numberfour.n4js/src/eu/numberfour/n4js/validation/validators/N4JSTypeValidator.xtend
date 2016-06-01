@@ -70,6 +70,7 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.TypedElement
 
 /**
  * Class for validating the N4JS types.
@@ -414,6 +415,14 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
+	
+	@Check
+	def checkBogusTypeReference(TypedElement te) {
+		if(te.bogusTypeRef !== null) {
+			addIssue(IssueCodes.getMessageForTYS_INVALID_TYPE_SYNTAX, te.bogusTypeRef, TYS_INVALID_TYPE_SYNTAX);
+		}
+	}
+	
 //  TODO IDE-1010 Code-snippet with partial solution
 //	@Check
 //	def checkApplyParameters(ParameterizedCallExpression callExpression) {

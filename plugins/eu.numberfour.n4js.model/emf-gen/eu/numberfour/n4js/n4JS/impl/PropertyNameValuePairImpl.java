@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getDefinedField <em>Defined Field</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getExpression <em>Expression</em>}</li>
  * </ul>
@@ -59,6 +60,16 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 	 * @ordered
 	 */
 	protected TypeRef declaredTypeRef;
+
+	/**
+	 * The cached value of the '{@link #getBogusTypeRef() <em>Bogus Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBogusTypeRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected TypeRef bogusTypeRef;
 
 	/**
 	 * The cached value of the '{@link #getDefinedField() <em>Defined Field</em>}' reference.
@@ -140,6 +151,49 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF, newDeclaredTypeRef, newDeclaredTypeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TypeRef getBogusTypeRef() {
+		return bogusTypeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBogusTypeRef(TypeRef newBogusTypeRef, NotificationChain msgs) {
+		TypeRef oldBogusTypeRef = bogusTypeRef;
+		bogusTypeRef = newBogusTypeRef;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF, oldBogusTypeRef, newBogusTypeRef);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBogusTypeRef(TypeRef newBogusTypeRef) {
+		if (newBogusTypeRef != bogusTypeRef) {
+			NotificationChain msgs = null;
+			if (bogusTypeRef != null)
+				msgs = ((InternalEObject)bogusTypeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF, null, msgs);
+			if (newBogusTypeRef != null)
+				msgs = ((InternalEObject)newBogusTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF, null, msgs);
+			msgs = basicSetBogusTypeRef(newBogusTypeRef, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF, newBogusTypeRef, newBogusTypeRef));
 	}
 
 	/**
@@ -256,6 +310,8 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF:
 				return basicSetDeclaredTypeRef(null, msgs);
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF:
+				return basicSetBogusTypeRef(null, msgs);
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
@@ -272,6 +328,8 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF:
 				return getDeclaredTypeRef();
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF:
+				return getBogusTypeRef();
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				if (resolve) return getDefinedField();
 				return basicGetDefinedField();
@@ -291,6 +349,9 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)newValue);
+				return;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)newValue);
 				return;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				setDefinedField((TStructField)newValue);
@@ -313,6 +374,9 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)null);
 				return;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)null);
+				return;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				setDefinedField((TStructField)null);
 				return;
@@ -333,6 +397,8 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF:
 				return declaredTypeRef != null;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF:
+				return bogusTypeRef != null;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				return definedField != null;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
@@ -356,6 +422,7 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		if (baseClass == TypedElement.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF;
+				case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -382,6 +449,7 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 		if (baseClass == TypedElement.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF;
+				case N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}
