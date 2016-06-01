@@ -7,7 +7,7 @@
 class Beer {
     private iHas : number;
     // e.g., often return this or an error (instead of throwing an exception), so it would make sense
-    // XPECT FIXME noerrors -->
+    // XPECT noerrors -->
     public available(has : number) : union{this, number}{
         if (has === undefined) {
             return this.iHas;
