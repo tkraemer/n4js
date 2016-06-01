@@ -353,7 +353,9 @@ class TypeVariable extends Type {
 		return getTypeVariableAsString(declaredUpperBounds);
 	}
 	op String getTypeVariableAsString(CollectionOfTypeRef upperBounds) {
-		return name + (if (!upperBounds.empty) " extends " + (upperBounds.map[typeRefAsString].join(" & ")) else "");
+		return (if(declaredCovariant) "out " else if(declaredContravariant) "in " else "")
+			+ name
+			+ (if (!upperBounds.empty) " extends " + (upperBounds.map[typeRefAsString].join(" & ")) else "");
 	}
 }
 

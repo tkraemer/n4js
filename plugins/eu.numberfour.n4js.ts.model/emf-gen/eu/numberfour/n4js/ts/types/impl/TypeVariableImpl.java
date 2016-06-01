@@ -226,8 +226,25 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * @generated
 	 */
 	public String getTypeVariableAsString(final Collection<? extends TypeRef> upperBounds) {
-		String _name = this.getName();
 		String _xifexpression = null;
+		boolean _isDeclaredCovariant = this.isDeclaredCovariant();
+		if (_isDeclaredCovariant) {
+			_xifexpression = "out ";
+		}
+		else {
+			String _xifexpression_1 = null;
+			boolean _isDeclaredContravariant = this.isDeclaredContravariant();
+			if (_isDeclaredContravariant) {
+				_xifexpression_1 = "in ";
+			}
+			else {
+				_xifexpression_1 = "";
+			}
+			_xifexpression = _xifexpression_1;
+		}
+		String _name = this.getName();
+		String _plus = (_xifexpression + _name);
+		String _xifexpression_2 = null;
 		boolean _isEmpty = upperBounds.isEmpty();
 		boolean _not = (!_isEmpty);
 		if (_not) {
@@ -238,12 +255,12 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 			};
 			Iterable<String> _map = IterableExtensions.map(upperBounds, _function);
 			String _join = IterableExtensions.join(_map, " & ");
-			_xifexpression = (" extends " + _join);
+			_xifexpression_2 = (" extends " + _join);
 		}
 		else {
-			_xifexpression = "";
+			_xifexpression_2 = "";
 		}
-		return (_name + _xifexpression);
+		return (_plus + _xifexpression_2);
 	}
 
 	/**

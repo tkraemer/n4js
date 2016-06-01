@@ -7,13 +7,13 @@
             
         try {
             {
-            int alt417=2;
-            int LA417_0 = input.LA(1);
+            int **alt1**=2;
+            int **LA1**_0 = input.LA(1);
 
-            if ( (LA417_0==RULE_NO_LINE_TERMINATOR) ) {
-                alt417=1;
+            if ( (**LA1**_0==RULE_NO_LINE_TERMINATOR) ) {
+                **alt1**=1;
             }
-            switch (alt417) {
+            switch (**alt1**) {
                 case 1 :
                     {
                     this_NO_LINE_TERMINATOR_0=(Token)match(input,RULE_NO_LINE_TERMINATOR,FOLLOW_2); if (state.failed) return current;

@@ -45,6 +45,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
+import eu.numberfour.n4js.ts.types.TypesPackage
 
 /**
  * Validation of rules that apply to all classifiers w/o examining members of the classifiers.<p>
@@ -226,6 +228,21 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 						CLF_DUP_MEMBER)
 				}
 			}
+		}
+	}
+
+	@Check
+	def void checkUseOfDefinitionSiteVariance(TypeVariable typeVar) {
+		if((typeVar.declaredCovariant || typeVar.declaredContravariant) &&
+			!(typeVar.eContainer instanceof N4ClassifierDeclaration
+				&& typeVar.eContainmentFeature===N4JSPackage.eINSTANCE.genericDeclaration_TypeVars)) {
+			val message = messageForCLF_DEF_SITE_VARIANCE_ONLY_IN_CLASSIFIER;
+			val feature = if(typeVar.declaredCovariant) {
+				TypesPackage.eINSTANCE.typeVariable_DeclaredCovariant
+			} else {
+				TypesPackage.eINSTANCE.typeVariable_DeclaredContravariant
+			};
+			addIssue(message, typeVar, feature, CLF_DEF_SITE_VARIANCE_ONLY_IN_CLASSIFIER);
 		}
 	}
 
