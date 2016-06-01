@@ -852,6 +852,12 @@ class Wildcard extends TypeArgument {
 	contains TypeRef declaredUpperBound
 	contains TypeRef declaredLowerBound
 	/*
+	 * For wildcards contained in the AST, this tells if the wildcard was written in the source code using in/out
+	 * notation, i.e. returns <code>true</code> for <code>G&lt;out C></code> and <code>false</code> for
+	 * <code>G&lt;? extends C></code>.
+	 */
+	boolean usingInOutNotation
+	/*
 	 * An unbounded wildcard given as type argument to a bounded type parameter is implicitly bounded.
 	 * For example:
 	 * <pre>

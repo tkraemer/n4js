@@ -704,7 +704,10 @@ norm1_AnnotatedExpression :
 
 // Rule TypeVariable
 ruleTypeVariable :
-	ruleIdentifierOrThis (
+	(
+		'out' |
+		'in'
+	)? ruleIdentifierOrThis (
 		'extends' ruleParameterizedTypeRefNominal (
 			'&' ruleParameterizedTypeRefNominal
 		)*
@@ -1278,6 +1281,7 @@ ruleForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'new' |
 					'this' |
 					'super' |
@@ -1345,6 +1349,7 @@ ruleForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'new' |
 					'this' |
 					'super' |
@@ -1444,6 +1449,7 @@ norm1_ForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'yield' |
 					'new' |
 					'this' |
@@ -1511,6 +1517,7 @@ norm1_ForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'yield' |
 					'new' |
 					'this' |
@@ -1966,6 +1973,7 @@ rulePropertyAssignment :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2058,6 +2066,7 @@ norm1_PropertyAssignment :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2154,6 +2163,7 @@ ruleAnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2227,6 +2237,7 @@ ruleAnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2337,6 +2348,7 @@ norm1_AnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2410,6 +2422,7 @@ norm1_AnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2597,6 +2610,7 @@ rulePropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2670,6 +2684,7 @@ rulePropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2750,6 +2765,7 @@ norm1_PropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2823,6 +2839,7 @@ norm1_PropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -3129,6 +3146,7 @@ ruleRelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3193,6 +3211,7 @@ ruleRelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3262,6 +3281,7 @@ norm1_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3326,6 +3346,7 @@ norm1_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3394,6 +3415,7 @@ norm2_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3457,6 +3479,7 @@ norm2_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3525,6 +3548,7 @@ norm3_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3588,6 +3612,7 @@ norm3_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -4106,6 +4131,7 @@ ruleYieldExpression :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'yield' |
 	'new' |
 	'this' |
@@ -4175,6 +4201,7 @@ norm1_YieldExpression :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'yield' |
 	'new' |
 	'this' |
@@ -4555,7 +4582,8 @@ ruleN4Keyword :
 	'interface' |
 	'private' |
 	'protected' |
-	'public'
+	'public' |
+	'out'
 ;
 
 // Rule SymbolLiteralComputedName
@@ -4877,6 +4905,7 @@ ruleN4MemberDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -4967,6 +4996,7 @@ norm1_N4MemberDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5061,6 +5091,7 @@ ruleAnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5134,6 +5165,7 @@ ruleAnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5239,6 +5271,7 @@ norm1_AnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5312,6 +5345,7 @@ norm1_AnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5603,6 +5637,7 @@ ruleGetterHeader :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'[' |
 	RULE_IDENTIFIER |
 	RULE_STRING |
@@ -5679,6 +5714,7 @@ norm1_GetterHeader :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'[' |
 	RULE_IDENTIFIER |
 	RULE_STRING |
@@ -5756,6 +5792,7 @@ ruleN4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5829,6 +5866,7 @@ ruleN4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5909,6 +5947,7 @@ norm1_N4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5982,6 +6021,7 @@ norm1_N4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -6388,6 +6428,7 @@ ruleTypeArgument :
 	( (
 	'?'
 	) => ruleWildcard ) |
+	ruleWildcardNewNotation |
 	ruleTypeRef
 ;
 
@@ -6399,6 +6440,12 @@ ruleWildcard :
 		'extends' ruleTypeRef |
 		'super' ruleTypeRef
 	)?
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation :
+	'out' ruleTypeRef |
+	'in' ruleTypeRef
 ;
 
 // Rule UndefModifierToken

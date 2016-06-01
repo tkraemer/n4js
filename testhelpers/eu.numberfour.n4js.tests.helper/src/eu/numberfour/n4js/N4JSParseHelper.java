@@ -13,7 +13,9 @@ package eu.numberfour.n4js;
 import org.eclipse.xtext.junit4.util.ParseHelper;
 import org.eclipse.xtext.junit4.util.ResourceHelper;
 import org.eclipse.xtext.resource.FileExtensionProvider;
+import org.junit.Assert;
 
+import com.google.common.base.Joiner;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.Script;
@@ -86,6 +88,15 @@ public class N4JSParseHelper extends ParseHelper<Script> {
 		} finally {
 			resourceHelper.setFileExtensionProvider(fileExtensionProvider);
 		}
+	}
+
+	/**
+	 * Asserts that the given script does not have any parse errors. Checks only for parse errors, does not perform a
+	 * validation of the given script.
+	 */
+	public void assertNoParseErrors(Script script) {
+		Assert.assertTrue(Joiner.on('\n').join(script.eResource().getErrors()),
+				script.eResource().getErrors().isEmpty());
 	}
 
 	private void setFileExtension(String ext) {

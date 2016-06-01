@@ -1307,20 +1307,24 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeArgument");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cWildcardParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cWildcardNewNotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//TypeArgument:
-		//	Wildcard | TypeRef;
+		//	Wildcard | WildcardNewNotation | TypeRef;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Wildcard | TypeRef
+		//Wildcard | WildcardNewNotation | TypeRef
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Wildcard
 		public RuleCall getWildcardParserRuleCall_0() { return cWildcardParserRuleCall_0; }
 
+		//WildcardNewNotation
+		public RuleCall getWildcardNewNotationParserRuleCall_1() { return cWildcardNewNotationParserRuleCall_1; }
+
 		//TypeRef
-		public RuleCall getTypeRefParserRuleCall_1() { return cTypeRefParserRuleCall_1; }
+		public RuleCall getTypeRefParserRuleCall_2() { return cTypeRefParserRuleCall_2; }
 	}
 
 	public class WildcardElements extends AbstractParserRuleElementFinder {
@@ -1386,6 +1390,58 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TypeRef
 		public RuleCall getDeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0() { return cDeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0; }
+	}
+
+	public class WildcardNewNotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.WildcardNewNotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Assignment cUsingInOutNotationAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cUsingInOutNotationOutKeyword_0_0_0 = (Keyword)cUsingInOutNotationAssignment_0_0.eContents().get(0);
+		private final Assignment cDeclaredUpperBoundAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cDeclaredUpperBoundTypeRefParserRuleCall_0_1_0 = (RuleCall)cDeclaredUpperBoundAssignment_0_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Assignment cUsingInOutNotationAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final Keyword cUsingInOutNotationInKeyword_1_0_0 = (Keyword)cUsingInOutNotationAssignment_1_0.eContents().get(0);
+		private final Assignment cDeclaredLowerBoundAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cDeclaredLowerBoundTypeRefParserRuleCall_1_1_0 = (RuleCall)cDeclaredLowerBoundAssignment_1_1.eContents().get(0);
+		
+		//WildcardNewNotation Wildcard:
+		//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+		@Override public ParserRule getRule() { return rule; }
+
+		//usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//usingInOutNotation?='out' declaredUpperBound=TypeRef
+		public Group getGroup_0() { return cGroup_0; }
+
+		//usingInOutNotation?='out'
+		public Assignment getUsingInOutNotationAssignment_0_0() { return cUsingInOutNotationAssignment_0_0; }
+
+		//'out'
+		public Keyword getUsingInOutNotationOutKeyword_0_0_0() { return cUsingInOutNotationOutKeyword_0_0_0; }
+
+		//declaredUpperBound=TypeRef
+		public Assignment getDeclaredUpperBoundAssignment_0_1() { return cDeclaredUpperBoundAssignment_0_1; }
+
+		//TypeRef
+		public RuleCall getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0() { return cDeclaredUpperBoundTypeRefParserRuleCall_0_1_0; }
+
+		//usingInOutNotation?='in' declaredLowerBound=TypeRef
+		public Group getGroup_1() { return cGroup_1; }
+
+		//usingInOutNotation?='in'
+		public Assignment getUsingInOutNotationAssignment_1_0() { return cUsingInOutNotationAssignment_1_0; }
+
+		//'in'
+		public Keyword getUsingInOutNotationInKeyword_1_0_0() { return cUsingInOutNotationInKeyword_1_0_0; }
+
+		//declaredLowerBound=TypeRef
+		public Assignment getDeclaredLowerBoundAssignment_1_1() { return cDeclaredLowerBoundAssignment_1_1; }
+
+		//TypeRef
+		public RuleCall getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0() { return cDeclaredLowerBoundTypeRefParserRuleCall_1_1_0; }
 	}
 
 	public class UndefModifierTokenElements extends AbstractParserRuleElementFinder {
@@ -1626,6 +1682,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TypeReferenceNameElements pTypeReferenceName;
 	private final TypeArgumentElements pTypeArgument;
 	private final WildcardElements pWildcard;
+	private final WildcardNewNotationElements pWildcardNewNotation;
 	private final UndefModifierTokenElements pUndefModifierToken;
 	private final TypeVariableElements pTypeVariable;
 	private final TypesIdentifierElements pTypesIdentifier;
@@ -1681,6 +1738,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTypeReferenceName = new TypeReferenceNameElements();
 		this.pTypeArgument = new TypeArgumentElements();
 		this.pWildcard = new WildcardElements();
+		this.pWildcardNewNotation = new WildcardNewNotationElements();
 		this.pUndefModifierToken = new UndefModifierTokenElements();
 		this.pTypeVariable = new TypeVariableElements();
 		this.pTypesIdentifier = new TypesIdentifierElements();
@@ -2070,7 +2128,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeArgument:
-	//	Wildcard | TypeRef;
+	//	Wildcard | WildcardNewNotation | TypeRef;
 	public TypeArgumentElements getTypeArgumentAccess() {
 		return pTypeArgument;
 	}
@@ -2088,6 +2146,16 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardRule() {
 		return getWildcardAccess().getRule();
+	}
+
+	//WildcardNewNotation Wildcard:
+	//	usingInOutNotation?='out' declaredUpperBound=TypeRef | usingInOutNotation?='in' declaredLowerBound=TypeRef
+	public WildcardNewNotationElements getWildcardNewNotationAccess() {
+		return pWildcardNewNotation;
+	}
+	
+	public ParserRule getWildcardNewNotationRule() {
+		return getWildcardNewNotationAccess().getRule();
 	}
 
 	//UndefModifierToken UndefModifier:

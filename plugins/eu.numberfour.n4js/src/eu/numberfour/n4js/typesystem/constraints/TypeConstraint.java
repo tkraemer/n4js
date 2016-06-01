@@ -19,6 +19,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.ts.types.util.Variance;
 
 /**
  */

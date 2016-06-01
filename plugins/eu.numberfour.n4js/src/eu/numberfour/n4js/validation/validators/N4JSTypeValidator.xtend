@@ -17,17 +17,22 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
 import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
+import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
+import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
+import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
@@ -42,10 +47,12 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
@@ -53,6 +60,7 @@ import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
@@ -139,9 +147,10 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkParameterizedTypeRef(ParameterizedTypeRef paramTypeRef) {
 		val declaredType = paramTypeRef.declaredType;
-		if (declaredType === null || declaredType.eIsProxy)
+		if (declaredType === null || declaredType.eIsProxy) {
 			return;
-		if( paramTypeRef.eContainer instanceof ClassifierTypeRef) {
+		}
+		if (paramTypeRef.eContainer instanceof ClassifierTypeRef) {
 			internalCheckValidTypeInClassifierTypeRef(paramTypeRef);
 			return;
 		}
@@ -152,17 +161,70 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def internalCheckValidTypeInClassifierTypeRef(ParameterizedTypeRef paramTypeRef) {
-		  // IDE-785 uses ParamterizedTypeRefs in ClassifierTypeRefs. Currently Type Arguments are not supported in ClassifierTypeRefs, so
-		  // we actively forbid them here. Will be loosened for IDE-1310
-			if( ! paramTypeRef.typeArgs.isEmpty ) {
-				addIssue(IssueCodes.getMessageForAST_NO_TYPE_ARGS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_TYPE_ARGS_IN_CLASSIFIERTYPEREF)
-			} else if ( paramTypeRef instanceof FunctionTypeRef ) {
-				addIssue(IssueCodes.getMessageForAST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF)
-			} else if ( paramTypeRef.declaredType instanceof TFunction ) {
-				addIssue(IssueCodes.getMessageForAST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF)
-			}
+		// IDE-785 uses ParamterizedTypeRefs in ClassifierTypeRefs. Currently Type Arguments are not supported in ClassifierTypeRefs, so
+		// we actively forbid them here. Will be loosened for IDE-1310
+		if( ! paramTypeRef.typeArgs.isEmpty ) {
+			addIssue(IssueCodes.getMessageForAST_NO_TYPE_ARGS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_TYPE_ARGS_IN_CLASSIFIERTYPEREF)
+		} else if ( paramTypeRef instanceof FunctionTypeRef ) {
+			addIssue(IssueCodes.getMessageForAST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF)
+		} else if ( paramTypeRef.declaredType instanceof TFunction ) {
+			addIssue(IssueCodes.getMessageForAST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF, paramTypeRef, AST_NO_FUNCTIONTYPEREFS_IN_CLASSIFIERTYPEREF)
+		}
 	}
 
+	@Check
+	def checkThisTypeRef(ThisTypeRef thisTypeRef) {
+		if (thisTypeRef instanceof BoundThisTypeRef) {
+			// normally, BoundThisTypeRefs never appear in the AST; however, in certain special cases they might appear
+			// as the type of a TMember contained in the 'cachedComposedMembers' property of a ComposedTypeRef
+			// -> back off!
+			return;
+		}
+		if (!(thisTypeRef.isUsedStructurallyAsFormalParametersInTheConstructor
+			|| thisTypeRef.isUsedAtCovariantPositionInClassifierDeclaration
+			|| thisTypeRef.isUsedInVariableWithSyntaxError)) {
+
+			addIssue(IssueCodes.getMessageForAST_THIS_WRONG_PLACE, thisTypeRef, IssueCodes.AST_THIS_WRONG_PLACE);
+		}
+	}
+
+	def private boolean isUsedStructurallyAsFormalParametersInTheConstructor(ThisTypeRef thisTypeRef) {
+		if (thisTypeRef.useSiteStructuralTyping) {
+			val methodOrConstructor = thisTypeRef?.eContainer?.eContainer;
+			if (methodOrConstructor instanceof N4MethodDeclaration) {
+				if (methodOrConstructor !== null && methodOrConstructor.isConstructor) {
+					return true
+				}
+			}
+		}
+		return false
+	}
+
+	def private boolean isUsedAtCovariantPositionInClassifierDeclaration(ThisTypeRef thisTypeRef) {
+		val classifierDecl = EcoreUtil2.getContainerOfType(thisTypeRef, N4ClassifierDeclaration);
+		if(classifierDecl!==null) {
+			// exception: disallow for static members of interfaces
+			if(classifierDecl instanceof N4InterfaceDeclaration) {
+				val memberDecl = EcoreUtil2.getContainerOfType(thisTypeRef, N4MemberDeclaration);
+				if(memberDecl!==null && memberDecl.static) {
+					return false;
+				}
+			}
+			val varianceOfPos = N4JSLanguageUtils.getVarianceOfPosition(thisTypeRef);
+			if(varianceOfPos!==null) {
+				return varianceOfPos===Variance.CO;
+			}
+		}
+		return false;
+	}
+
+	private def boolean isUsedInVariableWithSyntaxError(ThisTypeRef ref) {
+		val container = ref.eContainer
+		if (container instanceof VariableDeclaration) {
+			return container.name === null
+		}
+		return false
+	}
 
 	@Check
 	def checkSymbolReference(TypeRef typeRef) {
@@ -278,18 +340,20 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		G.recordInconsistentSubstitutions;
 		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
 		for(tv : G.getTypeMappingKeys()) {
-			val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
-			if(subst instanceof UnknownTypeRef) {
-				val badSubst = G.getInconsistentSubstitutions(tv);
-				if(!badSubst.empty) {
-					if(!tsh.allEqualType(G, badSubst)) {
-						val mode = if(tClassifier instanceof TClass) "implement" else "extend";
-						val ifcName = (tv.eContainer as TInterface).name;
-						val tvName = tv.name;
-						val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
-						val message = getMessageForCLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY(mode, ifcName, tvName, typeRefsStr);
-						addIssue(message, classifierDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
-							CLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY);
+			if(!tv.declaredCovariant && !tv.declaredContravariant) {
+				val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
+				if(subst instanceof UnknownTypeRef) {
+					val badSubst = G.getInconsistentSubstitutions(tv);
+					if(!badSubst.empty) {
+						if(!tsh.allEqualType(G, badSubst)) {
+							val mode = if(tClassifier instanceof TClass) "implement" else "extend";
+							val ifcName = (tv.eContainer as TInterface).name;
+							val tvName = "invariant " + tv.name;
+							val typeRefsStr = badSubst.map[typeRefAsString].join(", ");
+							val message = getMessageForCLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY(mode, ifcName, tvName, typeRefsStr);
+							addIssue(message, classifierDecl, N4JSPackage.eINSTANCE.n4TypeDeclaration_Name,
+								CLF_IMPLEMENT_EXTEND_SAME_INTERFACE_INCONSISTENTLY);
+						}
 					}
 				}
 			}

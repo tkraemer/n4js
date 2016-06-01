@@ -13,12 +13,6 @@ package eu.numberfour.n4js.typesystem
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.AnnotationDefinition
-import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
-import eu.numberfour.n4js.typesystem.constraints.Variance
-import eu.numberfour.n4js.utils.StructuralMembersTriple
-import eu.numberfour.n4js.utils.StructuralTypesHelper
-import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -29,7 +23,13 @@ import eu.numberfour.n4js.ts.types.TN4Classifier
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeCompareUtils
+import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
+import eu.numberfour.n4js.utils.StructuralMembersTriple
+import eu.numberfour.n4js.utils.StructuralTypesHelper
+import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
@@ -38,9 +38,9 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.EcoreUtil2
 
 import static eu.numberfour.n4js.AnnotationDefinition.*
+import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 import static eu.numberfour.n4js.typesystem.StructuralTypingResult.*
 import static eu.numberfour.n4js.utils.StructuralMembersPredicates.*
-import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*

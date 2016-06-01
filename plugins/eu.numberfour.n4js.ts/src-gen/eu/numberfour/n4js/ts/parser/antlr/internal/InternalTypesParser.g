@@ -5647,11 +5647,21 @@ QuestionMark
 )
     |
     { 
-        newCompositeNode(grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getTypeArgumentAccess().getWildcardNewNotationParserRuleCall_1()); 
     }
-    this_TypeRef_1=ruleTypeRef
+    this_WildcardNewNotation_1=ruleWildcardNewNotation
     {
-        $current = $this_TypeRef_1.current;
+        $current = $this_WildcardNewNotation_1.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeArgumentAccess().getTypeRefParserRuleCall_2()); 
+    }
+    this_TypeRef_2=ruleTypeRef
+    {
+        $current = $this_TypeRef_2.current;
         afterParserOrEnumRuleCall();
     }
 )
@@ -5737,6 +5747,96 @@ QuestionMark
 
 )
 )))?)
+;
+
+
+
+
+
+// Entry rule entryRuleWildcardNewNotation
+entryRuleWildcardNewNotation returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getWildcardNewNotationRule()); }
+	 iv_ruleWildcardNewNotation=ruleWildcardNewNotation 
+	 { $current=$iv_ruleWildcardNewNotation.current; } 
+	 EOF 
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((
+(
+		lv_usingInOutNotation_0_0=
+	Out
+    {
+        newLeafNode(lv_usingInOutNotation_0_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "out");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); 
+	    }
+		lv_declaredUpperBound_1_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredUpperBound",
+        		lv_declaredUpperBound_1_0, 
+        		"eu.numberfour.n4js.ts.Types.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |((
+(
+		lv_usingInOutNotation_2_0=
+	In
+    {
+        newLeafNode(lv_usingInOutNotation_2_0, grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		setWithLastConsumed($current, "usingInOutNotation", true, "in");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0()); 
+	    }
+		lv_declaredLowerBound_3_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWildcardNewNotationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredLowerBound",
+        		lv_declaredLowerBound_3_0, 
+        		"eu.numberfour.n4js.ts.Types.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
 ;
 
 

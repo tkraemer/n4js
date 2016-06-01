@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredUpperBound <em>Declared Upper Bound</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredLowerBound <em>Declared Lower Bound</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation <em>Using In Out Notation</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getWildcard()
@@ -84,6 +85,33 @@ public interface Wildcard extends TypeArgument {
 	 * @generated
 	 */
 	void setDeclaredLowerBound(TypeRef value);
+
+	/**
+	 * Returns the value of the '<em><b>Using In Out Notation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * For wildcards contained in the AST, this tells if the wildcard was written in the source code using in/out
+	 * notation, i.e. returns <code>true</code> for <code>G&lt;out C></code> and <code>false</code> for
+	 * <code>G&lt;? extends C></code>.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Using In Out Notation</em>' attribute.
+	 * @see #setUsingInOutNotation(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getWildcard_UsingInOutNotation()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isUsingInOutNotation();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation <em>Using In Out Notation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Using In Out Notation</em>' attribute.
+	 * @see #isUsingInOutNotation()
+	 * @generated
+	 */
+	void setUsingInOutNotation(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
