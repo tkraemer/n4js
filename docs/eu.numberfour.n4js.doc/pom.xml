@@ -145,7 +145,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <stylesdir>../styles</stylesdir>
                                 <imagesdir>${imagesDir}</imagesdir>
                                 <toc>left</toc>
-                                <stylesheet>foundation.css</stylesheet>
+                                <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
