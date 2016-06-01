@@ -64,6 +64,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <excludes>
                                 <exclude>${eclipse.html}</exclude>
                                 <exclude>**/.placeholder.txt</exclude>
+                                <exclude>**/.docinfo.html</exclude>
                             </excludes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
@@ -119,6 +120,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <toc>false</toc> <!-- No embedded TOC -->
                                 <stylesdir>styles</stylesdir>
                                 <stylesheet>foundation.css</stylesheet>
+                                <docinfodir>../</docinfodir>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -141,7 +143,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes> <!-- Individual attributes per conversion execution -->
+                            <attributes> 
+                                <!-- Individual attributes per conversion execution -->
                                 <stylesdir>../styles</stylesdir>
                                 <imagesdir>${imagesDir}</imagesdir>
                                 <toc>left</toc>
@@ -152,12 +155,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idseparator>-</idseparator>
                                 <docinfo1>true</docinfo1>
                             </attributes>
-                            <fileset>
-                                <excludes>
-                                    <exclude>userguides.adoc</exclude>
-                                    <exclude>*.graffle</exclude>
-                                </excludes>
-                            </fileset>
                         </configuration>
                     </execution>
 <!--                     Begin EPUB Generation of User Guides 
