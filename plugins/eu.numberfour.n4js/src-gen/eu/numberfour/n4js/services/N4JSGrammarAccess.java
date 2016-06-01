@@ -14154,7 +14154,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'from'
 	//	| 'type'
 	//	| 'void'
-	//	| 'null';
+	//	| 'null'
+	//	| 'enum';
 	public TypeExpressionsGrammarAccess.TypesIdentifierElements getTypesIdentifierAccess() {
 		return gaTypeExpressions.getTypesIdentifierAccess();
 	}
@@ -14163,6 +14164,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypesIdentifierAccess().getRule();
 	}
 
+	//// GH-203
 	//TIdentifier:
 	//	TypesIdentifier
 	//	// 7.6.1.2: future reserved words, may not be used only in strict mode:

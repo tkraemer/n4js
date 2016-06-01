@@ -37864,6 +37864,13 @@ ruleTypesIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getNullKeyword_11()); 
     }
+
+    |
+	kw=Enum 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); 
+    }
 )
     ;
 

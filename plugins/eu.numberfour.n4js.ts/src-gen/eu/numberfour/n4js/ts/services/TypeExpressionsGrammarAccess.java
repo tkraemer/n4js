@@ -1524,6 +1524,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTypeKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
 		private final Keyword cVoidKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
 		private final Keyword cNullKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cEnumKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
 		
 		//TypesIdentifier:
 		//	IDENTIFIER
@@ -1541,14 +1542,15 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| 'from'
 		//	| 'type'
 		//	| 'void'
-		//	| 'null';
+		//	| 'null'
+		//	| 'enum';
 		@Override public ParserRule getRule() { return rule; }
 
 		//IDENTIFIER // no ECMAScript keywords, only in certain contexts
 		//| 'get' | 'set' // Types keywords
 		//| 'abstract' //	| 'any'
 		//| 'project' | 'union' | 'intersection' // no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-		//| 'as' | 'from' | 'type' | 'void' | 'null'
+		//| 'as' | 'from' | 'type' | 'void' | 'null' | 'enum'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IDENTIFIER
@@ -1586,6 +1588,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'null'
 		public Keyword getNullKeyword_11() { return cNullKeyword_11; }
+
+		//'enum'
+		public Keyword getEnumKeyword_12() { return cEnumKeyword_12; }
 	}
 
 	public class TIdentifierElements extends AbstractParserRuleElementFinder {
@@ -1599,6 +1604,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPublicKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
 		private final Keyword cStaticKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
 		
+		//// GH-203
 		//TIdentifier:
 		//	TypesIdentifier
 		//	// 7.6.1.2: future reserved words, may not be used only in strict mode:
@@ -2189,7 +2195,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'from'
 	//	| 'type'
 	//	| 'void'
-	//	| 'null';
+	//	| 'null'
+	//	| 'enum';
 	public TypesIdentifierElements getTypesIdentifierAccess() {
 		return pTypesIdentifier;
 	}
@@ -2198,6 +2205,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypesIdentifierAccess().getRule();
 	}
 
+	//// GH-203
 	//TIdentifier:
 	//	TypesIdentifier
 	//	// 7.6.1.2: future reserved words, may not be used only in strict mode:

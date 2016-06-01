@@ -15197,6 +15197,14 @@ rule__TypesIdentifier__Alternatives
 { after(grammarAccess.getTypesIdentifierAccess().getNullKeyword_11()); }
 )
 
+    |(
+{ before(grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); }
+
+	Enum 
+
+{ after(grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

@@ -6466,7 +6466,8 @@ ruleTypesIdentifier :
 	'from' |
 	'type' |
 	'void' |
-	'null'
+	'null' |
+	'enum'
 ;
 
 // Rule TIdentifier
