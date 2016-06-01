@@ -6189,8 +6189,36 @@ ruleElision :
 
 // Rule TypeRef
 ruleTypeRef :
-	ruleArrowFunctionTypeExpression |
-	ruleTypeRefWithModifiers
+	ruleUnionTypeExpression
+;
+
+// Rule UnionTypeExpression
+ruleUnionTypeExpression :
+	ruleIntersectionTypeExpression (
+		(
+			'|' ruleIntersectionTypeExpression
+		)+
+	)?
+;
+
+// Rule IntersectionTypeExpression
+ruleIntersectionTypeExpression :
+	rulePrimaryTypeExpression (
+		(
+			'&' rulePrimaryTypeExpression
+		)+
+	)?
+;
+
+// Rule PrimaryTypeExpression
+rulePrimaryTypeExpression :
+	( (
+	'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) => (
+		'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) ) rulePrimaryTypeExpression |
+	ruleTypeRefWithModifiers |
+	'(' ruleTypeRef ')'
 ;
 
 // Rule BogusTypeRef
@@ -6217,8 +6245,8 @@ ruleTypeRefWithoutModifiers :
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleN4FunctionTypeExpression |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleN4UnionTypeExpression |
+	ruleN4IntersectionTypeExpression
 ;
 
 // Rule TypeRefFunctionTypeExpression
@@ -6226,8 +6254,8 @@ ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleN4UnionTypeExpression |
+	ruleN4IntersectionTypeExpression
 ;
 
 // Rule TypeRefForCast
@@ -6279,7 +6307,7 @@ ruleN4FunctionTypeExpression :
 
 // Rule ArrowFunctionTypeExpression
 ruleArrowFunctionTypeExpression :
-	'(' ruleTAnonymousFormalParameterList ')' '=>' ruleTypeRef
+	'(' ruleTAnonymousFormalParameterList ')' '=>' rulePrimaryTypeExpression
 ;
 
 // Rule TAnonymousFormalParameterList
@@ -6300,15 +6328,15 @@ ruleTAnonymousFormalParameter :
 	)? ruleTypeRef
 ;
 
-// Rule UnionTypeExpression
-ruleUnionTypeExpression :
+// Rule N4UnionTypeExpression
+ruleN4UnionTypeExpression :
 	'union' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'
 ;
 
-// Rule IntersectionTypeExpression
-ruleIntersectionTypeExpression :
+// Rule N4IntersectionTypeExpression
+ruleN4IntersectionTypeExpression :
 	'intersection' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'

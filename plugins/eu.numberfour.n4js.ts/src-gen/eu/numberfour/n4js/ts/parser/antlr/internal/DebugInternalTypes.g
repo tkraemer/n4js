@@ -380,6 +380,26 @@ ruleTEnumLiteral :
 	RULE_IDENTIFIER
 ;
 
+// Rule IntersectionTypeExpression
+ruleIntersectionTypeExpression :
+	rulePrimaryTypeExpression (
+		(
+			'&' rulePrimaryTypeExpression
+		)+
+	)?
+;
+
+// Rule PrimaryTypeExpression
+rulePrimaryTypeExpression :
+	( (
+	'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) => (
+		'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) ) rulePrimaryTypeExpression |
+	ruleTypeRefWithModifiers |
+	'(' ruleTypeRef ')'
+;
+
 // Rule TypeRefWithModifiers
 ruleTypeRefWithModifiers :
 	ruleTypeRefWithoutModifiers ( (
@@ -399,8 +419,8 @@ ruleTypeRefWithoutModifiers :
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleN4FunctionTypeExpression |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleN4UnionTypeExpression |
+	ruleN4IntersectionTypeExpression
 ;
 
 // Rule TypeRefFunctionTypeExpression
@@ -408,8 +428,8 @@ ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleN4UnionTypeExpression |
+	ruleN4IntersectionTypeExpression
 ;
 
 // Rule TypeRefInClassifierType
@@ -451,7 +471,7 @@ ruleN4FunctionTypeExpression :
 
 // Rule ArrowFunctionTypeExpression
 ruleArrowFunctionTypeExpression :
-	'(' ruleTAnonymousFormalParameterList ')' '=>' ruleTypeRef
+	'(' ruleTAnonymousFormalParameterList ')' '=>' rulePrimaryTypeExpression
 ;
 
 // Rule TAnonymousFormalParameterList
@@ -477,15 +497,15 @@ ruleTFormalParameter :
 	'...'? ruleTIdentifier ':' ruleTypeRef
 ;
 
-// Rule UnionTypeExpression
-ruleUnionTypeExpression :
+// Rule N4UnionTypeExpression
+ruleN4UnionTypeExpression :
 	'union' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'
 ;
 
-// Rule IntersectionTypeExpression
-ruleIntersectionTypeExpression :
+// Rule N4IntersectionTypeExpression
+ruleN4IntersectionTypeExpression :
 	'intersection' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'

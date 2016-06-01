@@ -140,6 +140,8 @@ RightSquareBracket : ']';
 
 LeftCurlyBracket : '{';
 
+VerticalLine : '|';
+
 RightCurlyBracket : '}';
 
 Tilde : '~';

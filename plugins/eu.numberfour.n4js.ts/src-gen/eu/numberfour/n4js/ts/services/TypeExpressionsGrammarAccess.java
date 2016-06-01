@@ -20,9 +20,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class TypeRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cArrowFunctionTypeExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cTypeRefWithModifiersParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cUnionTypeExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// ****************************************************************************************************
 		//// N4JS versions of type references and expressions, also used by Types.xtext
@@ -42,18 +40,166 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		// * VarTypeRef: no Void, i.e.
 		// * AttributeTypeRef: no Void
 		// * / TypeRef:
-		//	ArrowFunctionTypeExpression
-		//	| TypeRefWithModifiers;
+		//	UnionTypeExpression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ArrowFunctionTypeExpression | TypeRefWithModifiers
+		//UnionTypeExpression
+		public RuleCall getUnionTypeExpressionParserRuleCall() { return cUnionTypeExpressionParserRuleCall; }
+	}
+
+	public class UnionTypeExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIntersectionTypeExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cUnionTypeExpressionTypeRefsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Keyword cVerticalLineKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cTypeRefsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cTypeRefsIntersectionTypeExpressionParserRuleCall_1_1_1_0 = (RuleCall)cTypeRefsAssignment_1_1_1.eContents().get(0);
+		
+		//UnionTypeExpression TypeRef:
+		//	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?
+		public Group getGroup() { return cGroup; }
+
+		//IntersectionTypeExpression
+		public RuleCall getIntersectionTypeExpressionParserRuleCall_0() { return cIntersectionTypeExpressionParserRuleCall_0; }
+
+		//({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{UnionTypeExpression.typeRefs+=current}
+		public Action getUnionTypeExpressionTypeRefsAction_1_0() { return cUnionTypeExpressionTypeRefsAction_1_0; }
+
+		//("|" typeRefs+=IntersectionTypeExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//"|"
+		public Keyword getVerticalLineKeyword_1_1_0() { return cVerticalLineKeyword_1_1_0; }
+
+		//typeRefs+=IntersectionTypeExpression
+		public Assignment getTypeRefsAssignment_1_1_1() { return cTypeRefsAssignment_1_1_1; }
+
+		//IntersectionTypeExpression
+		public RuleCall getTypeRefsIntersectionTypeExpressionParserRuleCall_1_1_1_0() { return cTypeRefsIntersectionTypeExpressionParserRuleCall_1_1_1_0; }
+	}
+
+	public class IntersectionTypeExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.IntersectionTypeExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPrimaryTypeExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cIntersectionTypeExpressionTypeRefsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Keyword cAmpersandKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cTypeRefsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cTypeRefsPrimaryTypeExpressionParserRuleCall_1_1_1_0 = (RuleCall)cTypeRefsAssignment_1_1_1.eContents().get(0);
+		
+		//IntersectionTypeExpression TypeRef:
+		//	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?
+		public Group getGroup() { return cGroup; }
+
+		//PrimaryTypeExpression
+		public RuleCall getPrimaryTypeExpressionParserRuleCall_0() { return cPrimaryTypeExpressionParserRuleCall_0; }
+
+		//({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{IntersectionTypeExpression.typeRefs+=current}
+		public Action getIntersectionTypeExpressionTypeRefsAction_1_0() { return cIntersectionTypeExpressionTypeRefsAction_1_0; }
+
+		//("&" typeRefs+=PrimaryTypeExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//"&"
+		public Keyword getAmpersandKeyword_1_1_0() { return cAmpersandKeyword_1_1_0; }
+
+		//typeRefs+=PrimaryTypeExpression
+		public Assignment getTypeRefsAssignment_1_1_1() { return cTypeRefsAssignment_1_1_1; }
+
+		//PrimaryTypeExpression
+		public RuleCall getTypeRefsPrimaryTypeExpressionParserRuleCall_1_1_1_0() { return cTypeRefsPrimaryTypeExpressionParserRuleCall_1_1_1_0; }
+	}
+
+	public class PrimaryTypeExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.PrimaryTypeExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final Group cGroup_0_0_0 = (Group)cGroup_0_0.eContents().get(0);
+		private final Action cFunctionTypeExpressionAction_0_0_0_0 = (Action)cGroup_0_0_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_0_0_1 = (Keyword)cGroup_0_0_0.eContents().get(1);
+		private final RuleCall cTAnonymousFormalParameterListParserRuleCall_0_0_0_2 = (RuleCall)cGroup_0_0_0.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_0_0_0_3 = (Keyword)cGroup_0_0_0.eContents().get(3);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_0_0_0_4 = (Keyword)cGroup_0_0_0.eContents().get(4);
+		private final Assignment cReturnTypeRefAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0 = (RuleCall)cReturnTypeRefAssignment_0_1.eContents().get(0);
+		private final RuleCall cTypeRefWithModifiersParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cTypeRefParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		
+		//PrimaryTypeExpression TypeRef:
+		//	=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+		//	| TypeRefWithModifiers
+		//	| "(" TypeRef ")"
+		@Override public ParserRule getRule() { return rule; }
+
+		//=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression |
+		//TypeRefWithModifiers | "(" TypeRef ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ArrowFunctionTypeExpression
-		public RuleCall getArrowFunctionTypeExpressionParserRuleCall_0() { return cArrowFunctionTypeExpressionParserRuleCall_0; }
+		//=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>')
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>')
+		public Group getGroup_0_0_0() { return cGroup_0_0_0; }
+
+		//{FunctionTypeExpression}
+		public Action getFunctionTypeExpressionAction_0_0_0_0() { return cFunctionTypeExpressionAction_0_0_0_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_0_0_0_1() { return cLeftParenthesisKeyword_0_0_0_1; }
+
+		//TAnonymousFormalParameterList
+		public RuleCall getTAnonymousFormalParameterListParserRuleCall_0_0_0_2() { return cTAnonymousFormalParameterListParserRuleCall_0_0_0_2; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_0_0_0_3() { return cRightParenthesisKeyword_0_0_0_3; }
+
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_0_0_0_4() { return cEqualsSignGreaterThanSignKeyword_0_0_0_4; }
+
+		//returnTypeRef=PrimaryTypeExpression
+		public Assignment getReturnTypeRefAssignment_0_1() { return cReturnTypeRefAssignment_0_1; }
+
+		//PrimaryTypeExpression
+		public RuleCall getReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0() { return cReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0; }
 
 		//TypeRefWithModifiers
 		public RuleCall getTypeRefWithModifiersParserRuleCall_1() { return cTypeRefWithModifiersParserRuleCall_1; }
+
+		//"(" TypeRef ")"
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//TypeRef
+		public RuleCall getTypeRefParserRuleCall_2_1() { return cTypeRefParserRuleCall_2_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class BogusTypeRefElements extends AbstractParserRuleElementFinder {
@@ -124,19 +270,19 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConstructorTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cClassifierTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cN4FunctionTypeExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cUnionTypeExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cIntersectionTypeExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cN4UnionTypeExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cN4IntersectionTypeExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//TypeRefWithoutModifiers StaticBaseTypeRef:
 		//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
 		//	| ClassifierTypeRef
 		//	| N4FunctionTypeExpression
-		//	| UnionTypeExpression
-		//	| IntersectionTypeExpression
+		//	| N4UnionTypeExpression
+		//	| N4IntersectionTypeExpression
 		@Override public ParserRule getRule() { return rule; }
 
 		//(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef | ClassifierTypeRef |
-		//N4FunctionTypeExpression | UnionTypeExpression | IntersectionTypeExpression
+		//N4FunctionTypeExpression | N4UnionTypeExpression | N4IntersectionTypeExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?
@@ -166,11 +312,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//N4FunctionTypeExpression
 		public RuleCall getN4FunctionTypeExpressionParserRuleCall_3() { return cN4FunctionTypeExpressionParserRuleCall_3; }
 
-		//UnionTypeExpression
-		public RuleCall getUnionTypeExpressionParserRuleCall_4() { return cUnionTypeExpressionParserRuleCall_4; }
+		//N4UnionTypeExpression
+		public RuleCall getN4UnionTypeExpressionParserRuleCall_4() { return cN4UnionTypeExpressionParserRuleCall_4; }
 
-		//IntersectionTypeExpression
-		public RuleCall getIntersectionTypeExpressionParserRuleCall_5() { return cIntersectionTypeExpressionParserRuleCall_5; }
+		//N4IntersectionTypeExpression
+		public RuleCall getN4IntersectionTypeExpressionParserRuleCall_5() { return cN4IntersectionTypeExpressionParserRuleCall_5; }
 	}
 
 	public class TypeRefFunctionTypeExpressionElements extends AbstractParserRuleElementFinder {
@@ -179,18 +325,18 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParameterizedTypeRefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cConstructorTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cClassifierTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cUnionTypeExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cIntersectionTypeExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cN4UnionTypeExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cN4IntersectionTypeExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 		//	ParameterizedTypeRef
 		//	| ConstructorTypeRef
 		//	| ClassifierTypeRef
-		//	| UnionTypeExpression
-		//	| IntersectionTypeExpression
+		//	| N4UnionTypeExpression
+		//	| N4IntersectionTypeExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//ParameterizedTypeRef | ConstructorTypeRef | ClassifierTypeRef | UnionTypeExpression | IntersectionTypeExpression
+		//ParameterizedTypeRef | ConstructorTypeRef | ClassifierTypeRef | N4UnionTypeExpression | N4IntersectionTypeExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ParameterizedTypeRef
@@ -202,11 +348,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ClassifierTypeRef
 		public RuleCall getClassifierTypeRefParserRuleCall_2() { return cClassifierTypeRefParserRuleCall_2; }
 
-		//UnionTypeExpression
-		public RuleCall getUnionTypeExpressionParserRuleCall_3() { return cUnionTypeExpressionParserRuleCall_3; }
+		//N4UnionTypeExpression
+		public RuleCall getN4UnionTypeExpressionParserRuleCall_3() { return cN4UnionTypeExpressionParserRuleCall_3; }
 
-		//IntersectionTypeExpression
-		public RuleCall getIntersectionTypeExpressionParserRuleCall_4() { return cIntersectionTypeExpressionParserRuleCall_4; }
+		//N4IntersectionTypeExpression
+		public RuleCall getN4IntersectionTypeExpressionParserRuleCall_4() { return cN4IntersectionTypeExpressionParserRuleCall_4; }
 	}
 
 	public class TypeRefForCastElements extends AbstractParserRuleElementFinder {
@@ -484,14 +630,13 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cEqualsSignGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cReturnTypeRefAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cReturnTypeRefTypeRefParserRuleCall_5_0 = (RuleCall)cReturnTypeRefAssignment_5.eContents().get(0);
+		private final RuleCall cReturnTypeRefPrimaryTypeExpressionParserRuleCall_5_0 = (RuleCall)cReturnTypeRefAssignment_5.eContents().get(0);
 		
 		//ArrowFunctionTypeExpression FunctionTypeExpression:
-		//	{FunctionTypeExpression}
-		//	'(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=TypeRef
+		//	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=TypeRef
+		//{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression
 		public Group getGroup() { return cGroup; }
 
 		//{FunctionTypeExpression}
@@ -509,11 +654,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_4() { return cEqualsSignGreaterThanSignKeyword_4; }
 
-		//returnTypeRef=TypeRef
+		//returnTypeRef=PrimaryTypeExpression
 		public Assignment getReturnTypeRefAssignment_5() { return cReturnTypeRefAssignment_5; }
 
-		//TypeRef
-		public RuleCall getReturnTypeRefTypeRefParserRuleCall_5_0() { return cReturnTypeRefTypeRefParserRuleCall_5_0; }
+		//PrimaryTypeExpression
+		public RuleCall getReturnTypeRefPrimaryTypeExpressionParserRuleCall_5_0() { return cReturnTypeRefPrimaryTypeExpressionParserRuleCall_5_0; }
 	}
 
 	public class TAnonymousFormalParameterListElements extends AbstractParserRuleElementFinder {
@@ -640,8 +785,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTypeRefTypeRefParserRuleCall_3_0() { return cTypeRefTypeRefParserRuleCall_3_0; }
 	}
 
-	public class UnionTypeExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpression");
+	public class N4UnionTypeExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.N4UnionTypeExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cUnionTypeExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cUnionKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -654,9 +799,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0 = (RuleCall)cTypeRefsAssignment_4_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//UnionTypeExpression:
+		//N4UnionTypeExpression UnionTypeExpression:
 		//	{UnionTypeExpression}
-		//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
+		//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
 		@Override public ParserRule getRule() { return rule; }
 
 		//{UnionTypeExpression} 'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
@@ -693,8 +838,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 
-	public class IntersectionTypeExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.IntersectionTypeExpression");
+	public class N4IntersectionTypeExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.N4IntersectionTypeExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cIntersectionTypeExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cIntersectionKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -707,9 +852,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0 = (RuleCall)cTypeRefsAssignment_4_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//IntersectionTypeExpression:
+		//N4IntersectionTypeExpression IntersectionTypeExpression:
 		//	{IntersectionTypeExpression}
-		//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
+		//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
 		@Override public ParserRule getRule() { return rule; }
 
 		//{IntersectionTypeExpression} 'intersection' '{' typeRefs+=TypeRefWithoutModifiers (','
@@ -1731,6 +1876,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final TypeRefElements pTypeRef;
+	private final UnionTypeExpressionElements pUnionTypeExpression;
+	private final IntersectionTypeExpressionElements pIntersectionTypeExpression;
+	private final PrimaryTypeExpressionElements pPrimaryTypeExpression;
 	private final BogusTypeRefElements pBogusTypeRef;
 	private final TypeRefWithModifiersElements pTypeRefWithModifiers;
 	private final TypeRefWithoutModifiersElements pTypeRefWithoutModifiers;
@@ -1745,8 +1893,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TAnonymousFormalParameterListElements pTAnonymousFormalParameterList;
 	private final TAnonymousFormalParameterElements pTAnonymousFormalParameter;
 	private final TFormalParameterElements pTFormalParameter;
-	private final UnionTypeExpressionElements pUnionTypeExpression;
-	private final IntersectionTypeExpressionElements pIntersectionTypeExpression;
+	private final N4UnionTypeExpressionElements pN4UnionTypeExpression;
+	private final N4IntersectionTypeExpressionElements pN4IntersectionTypeExpression;
 	private final ParameterizedTypeRefElements pParameterizedTypeRef;
 	private final ParameterizedTypeRefStructuralElements pParameterizedTypeRefStructural;
 	private final TStructMemberListElements pTStructMemberList;
@@ -1790,6 +1938,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaUnicode = gaUnicode;
 		this.pTypeRef = new TypeRefElements();
+		this.pUnionTypeExpression = new UnionTypeExpressionElements();
+		this.pIntersectionTypeExpression = new IntersectionTypeExpressionElements();
+		this.pPrimaryTypeExpression = new PrimaryTypeExpressionElements();
 		this.pBogusTypeRef = new BogusTypeRefElements();
 		this.pTypeRefWithModifiers = new TypeRefWithModifiersElements();
 		this.pTypeRefWithoutModifiers = new TypeRefWithoutModifiersElements();
@@ -1804,8 +1955,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTAnonymousFormalParameterList = new TAnonymousFormalParameterListElements();
 		this.pTAnonymousFormalParameter = new TAnonymousFormalParameterElements();
 		this.pTFormalParameter = new TFormalParameterElements();
-		this.pUnionTypeExpression = new UnionTypeExpressionElements();
-		this.pIntersectionTypeExpression = new IntersectionTypeExpressionElements();
+		this.pN4UnionTypeExpression = new N4UnionTypeExpressionElements();
+		this.pN4IntersectionTypeExpression = new N4IntersectionTypeExpressionElements();
 		this.pParameterizedTypeRef = new ParameterizedTypeRefElements();
 		this.pParameterizedTypeRefStructural = new ParameterizedTypeRefStructuralElements();
 		this.pTStructMemberList = new TStructMemberListElements();
@@ -1885,14 +2036,45 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	// * VarTypeRef: no Void, i.e.
 	// * AttributeTypeRef: no Void
 	// * / TypeRef:
-	//	ArrowFunctionTypeExpression
-	//	| TypeRefWithModifiers;
+	//	UnionTypeExpression;
 	public TypeRefElements getTypeRefAccess() {
 		return pTypeRef;
 	}
 	
 	public ParserRule getTypeRefRule() {
 		return getTypeRefAccess().getRule();
+	}
+
+	//UnionTypeExpression TypeRef:
+	//	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?
+	public UnionTypeExpressionElements getUnionTypeExpressionAccess() {
+		return pUnionTypeExpression;
+	}
+	
+	public ParserRule getUnionTypeExpressionRule() {
+		return getUnionTypeExpressionAccess().getRule();
+	}
+
+	//IntersectionTypeExpression TypeRef:
+	//	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?
+	public IntersectionTypeExpressionElements getIntersectionTypeExpressionAccess() {
+		return pIntersectionTypeExpression;
+	}
+	
+	public ParserRule getIntersectionTypeExpressionRule() {
+		return getIntersectionTypeExpressionAccess().getRule();
+	}
+
+	//PrimaryTypeExpression TypeRef:
+	//	=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+	//	| TypeRefWithModifiers
+	//	| "(" TypeRef ")"
+	public PrimaryTypeExpressionElements getPrimaryTypeExpressionAccess() {
+		return pPrimaryTypeExpression;
+	}
+	
+	public ParserRule getPrimaryTypeExpressionRule() {
+		return getPrimaryTypeExpressionAccess().getRule();
 	}
 
 	//BogusTypeRef TypeRef:
@@ -1919,8 +2101,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
 	//	| ClassifierTypeRef
 	//	| N4FunctionTypeExpression
-	//	| UnionTypeExpression
-	//	| IntersectionTypeExpression
+	//	| N4UnionTypeExpression
+	//	| N4IntersectionTypeExpression
 	public TypeRefWithoutModifiersElements getTypeRefWithoutModifiersAccess() {
 		return pTypeRefWithoutModifiers;
 	}
@@ -1933,8 +2115,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	ParameterizedTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| UnionTypeExpression
-	//	| IntersectionTypeExpression
+	//	| N4UnionTypeExpression
+	//	| N4IntersectionTypeExpression
 	public TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
 		return pTypeRefFunctionTypeExpression;
 	}
@@ -2015,8 +2197,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ArrowFunctionTypeExpression FunctionTypeExpression:
-	//	{FunctionTypeExpression}
-	//	'(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=TypeRef
+	//	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression
 	public ArrowFunctionTypeExpressionElements getArrowFunctionTypeExpressionAccess() {
 		return pArrowFunctionTypeExpression;
 	}
@@ -2059,26 +2240,26 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTFormalParameterAccess().getRule();
 	}
 
-	//UnionTypeExpression:
+	//N4UnionTypeExpression UnionTypeExpression:
 	//	{UnionTypeExpression}
-	//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
-	public UnionTypeExpressionElements getUnionTypeExpressionAccess() {
-		return pUnionTypeExpression;
+	//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
+	public N4UnionTypeExpressionElements getN4UnionTypeExpressionAccess() {
+		return pN4UnionTypeExpression;
 	}
 	
-	public ParserRule getUnionTypeExpressionRule() {
-		return getUnionTypeExpressionAccess().getRule();
+	public ParserRule getN4UnionTypeExpressionRule() {
+		return getN4UnionTypeExpressionAccess().getRule();
 	}
 
-	//IntersectionTypeExpression:
+	//N4IntersectionTypeExpression IntersectionTypeExpression:
 	//	{IntersectionTypeExpression}
-	//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
-	public IntersectionTypeExpressionElements getIntersectionTypeExpressionAccess() {
-		return pIntersectionTypeExpression;
+	//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
+	public N4IntersectionTypeExpressionElements getN4IntersectionTypeExpressionAccess() {
+		return pN4IntersectionTypeExpression;
 	}
 	
-	public ParserRule getIntersectionTypeExpressionRule() {
-		return getIntersectionTypeExpressionAccess().getRule();
+	public ParserRule getN4IntersectionTypeExpressionRule() {
+		return getN4IntersectionTypeExpressionAccess().getRule();
 	}
 
 	//ParameterizedTypeRef:
