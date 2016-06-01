@@ -35,8 +35,18 @@ import "http://www.numberfour.eu/ide/ts/TypeRefs"
  * AttributeTypeRef: no Void
  */
 TypeRef:
-	( ArrowFunctionTypeExpression
+	UnionTypeExpression;
+	
+UnionTypeExpression returns TypeRef:
+	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?;
+
+IntersectionTypeExpression returns TypeRef:
+	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?;
+	
+PrimaryTypeExpression returns TypeRef:
+	( =>({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
 	| TypeRefWithModifiers
+	| "(" TypeRef ")"
 	);
 	
 BogusTypeRef returns TypeRef:
@@ -96,8 +106,7 @@ N4FunctionTypeExpression returns FunctionTypeExpression:
 	'}';
 	
 ArrowFunctionTypeExpression returns FunctionTypeExpression:
-	{FunctionTypeExpression}
-	'(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=TypeRef;
+	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression;
 
 fragment TAnonymousFormalParameterList*:
 	(fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?

@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+class X {}
+class Y {}
+class Z {}
+
+var a : X | Y
+var b : X & Y 
+var c : X | Y & Z
+var d : X & Y | Z
+var e : X | Y | Z
+var f : X & Y & Z
+var g : X | (Y & Z)
+var h : X & (Y | Z)
+var i : X | (Y | Z)
+var j : X & (Y & Z)
+var k : (X | Y) & Z
+var l : (X & Y) | Z
+var m : (X | Y) | Z
+var n : (X & Y) & Z
+
+function o():  X & Y | Z { return null }
+
+class C {
+	a : X | Y        
+	b : X & Y  
+	c : X & Y | Z
+	d : ()=> (X | Y)        
+	e : (X | Y)=>(X & Y)  
+	f : (p:X | Y)=>void
+	
+	g(): X & Y | Z { return null }
+}
