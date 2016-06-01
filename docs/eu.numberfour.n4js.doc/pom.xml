@@ -24,6 +24,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <imagesDir>${basedir}/src/images</imagesDir>
         
     </properties>
+
+
     
     <parent>
         <groupId>eu.numberfour.n4js</groupId>
@@ -31,7 +33,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    
+
+
     <pluginRepositories>
         <pluginRepository>
             <id>bintray.jmini.maven</id>
@@ -64,7 +67,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <excludes>
                                 <exclude>${eclipse.html}</exclude>
                                 <exclude>**/.placeholder.txt</exclude>
-                                <exclude>**/.docinfo.html</exclude>
                             </excludes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
@@ -114,13 +116,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <imagesdir>${imagesDir}</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${eclipseHelpDir}</outputDirectory>
+                            <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
                                 <stylesdir>styles</stylesdir>
                                 <stylesheet>foundation.css</stylesheet>
-                                <docinfodir>../</docinfodir>
+                                <eclipse>true</eclipse>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -150,6 +153,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <toc>left</toc>
                                 <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
+                                <docinfodir>../../</docinfodir>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
@@ -157,7 +161,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
-<!--                     Begin EPUB Generation of User Guides 
+                   <!--  Begin EPUB Generation of User Guides -->
                     <execution>
                         <id>asciidoc-to-epub</id>
                         <phase>generate-resources</phase>
@@ -165,6 +169,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <skip>true</skip>  <!-- Execution skipped! -->
                             <sourceDirectory>src/</sourceDirectory>
                             <sourceDocumentName>userguides.adoc</sourceDocumentName>
                             <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
@@ -172,7 +177,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
-                                <includesdir>docs/documentation</includesdir>
                                 <imagesdir>images</imagesdir>
                                 <doctype>book</doctype>
                                 <icons>font</icons>
@@ -183,9 +187,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
--->
- <!--                   
-                    PDF Generation of User Guides 
+
+                   
+                    <!-- PDF Generation of User Guides -->
                     <execution> 
                         <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
@@ -193,6 +197,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <skip>true</skip> <!-- Execution skipped! -->
                             <sourceDirectory>src/documentation</sourceDirectory>
                             <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
@@ -207,12 +212,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
- 
                     </execution> 
- -->
                 </executions>
-             </plugin> 
-           
+             </plugin>          
             <!-- eclipse-help file list generation -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
