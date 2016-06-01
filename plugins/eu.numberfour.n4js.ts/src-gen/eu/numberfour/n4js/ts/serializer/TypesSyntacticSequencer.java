@@ -22,6 +22,7 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected TypesGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_CallableCtor_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_TField_SemicolonKeyword_5_q;
@@ -31,6 +32,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (TypesGrammarAccess) access;
+		match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
 		match_CallableCtor_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getCallableCtorAccess().getSemicolonKeyword_5());
 		match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTAnnotationAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTAnnotationAccess().getRightParenthesisKeyword_1_2()));
 		match_TField_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getTFieldAccess().getSemicolonKeyword_5());
@@ -50,7 +52,9 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_CallableCtor_SemicolonKeyword_5_q.equals(syntax))
+			if (match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
+				emit_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_CallableCtor_SemicolonKeyword_5_q.equals(syntax))
 				emit_CallableCtor_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -64,6 +68,17 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     '(' | ('{' 'function' '(')
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) fpars+=TAnonymousFormalParameter
+	 */
+	protected void emit_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     ';'?

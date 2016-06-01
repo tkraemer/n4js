@@ -13,8 +13,8 @@ public class AbstractN4JSValidator extends org.eclipse.xtext.validation.Abstract
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/n4js/N4JS"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/ts/TypeRefs"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/ts/Types"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/ts/TypeRefs"));
 		return result;
 	}
 }

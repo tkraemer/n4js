@@ -100,6 +100,8 @@ Out : 'out';
 
 Set : 'set';
 
+EqualsSignGreaterThanSign : '=>';
+
 As : 'as';
 
 In : 'in';

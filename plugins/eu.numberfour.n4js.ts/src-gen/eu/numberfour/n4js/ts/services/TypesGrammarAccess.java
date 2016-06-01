@@ -2833,10 +2833,31 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTEnumLiteralAccess().getRule();
 	}
 
+	//BogusTypeRef TypeRef:
+	//	TypeRefWithModifiers
+	public TypeExpressionsGrammarAccess.BogusTypeRefElements getBogusTypeRefAccess() {
+		return gaTypeExpressions.getBogusTypeRefAccess();
+	}
+	
+	public ParserRule getBogusTypeRefRule() {
+		return getBogusTypeRefAccess().getRule();
+	}
+
+	//TypeRefWithModifiers StaticBaseTypeRef:
+	//	TypeRefWithoutModifiers => undefModifier=super::UndefModifierToken? | {ParameterizedTypeRef}
+	//	undefModifier=super::UndefModifierToken
+	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
+		return gaTypeExpressions.getTypeRefWithModifiersAccess();
+	}
+	
+	public ParserRule getTypeRefWithModifiersRule() {
+		return getTypeRefWithModifiersAccess().getRule();
+	}
+
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
 	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| FunctionTypeExpression
+	//	| N4FunctionTypeExpression
 	//	| UnionTypeExpression
 	//	| IntersectionTypeExpression
 	public TypeExpressionsGrammarAccess.TypeRefWithoutModifiersElements getTypeRefWithoutModifiersAccess() {
@@ -2866,7 +2887,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ThisTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| FunctionTypeExpression
+	//	| N4FunctionTypeExpression
+	//	| ArrowFunctionTypeExpression
 	public TypeExpressionsGrammarAccess.TypeRefForCastElements getTypeRefForCastAccess() {
 		return gaTypeExpressions.getTypeRefForCastAccess();
 	}
@@ -2917,18 +2939,29 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getThisTypeRefStructuralAccess().getRule();
 	}
 
-	//FunctionTypeExpression:
+	//N4FunctionTypeExpression FunctionTypeExpression:
 	//	{FunctionTypeExpression}
 	//	'{' ('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
 	//	'function' ('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
 	//	'(' TAnonymousFormalParameterList ')' (':' returnTypeRef=super::TypeRef)?
-	//	'}';
-	public TypeExpressionsGrammarAccess.FunctionTypeExpressionElements getFunctionTypeExpressionAccess() {
-		return gaTypeExpressions.getFunctionTypeExpressionAccess();
+	//	'}'
+	public TypeExpressionsGrammarAccess.N4FunctionTypeExpressionElements getN4FunctionTypeExpressionAccess() {
+		return gaTypeExpressions.getN4FunctionTypeExpressionAccess();
 	}
 	
-	public ParserRule getFunctionTypeExpressionRule() {
-		return getFunctionTypeExpressionAccess().getRule();
+	public ParserRule getN4FunctionTypeExpressionRule() {
+		return getN4FunctionTypeExpressionAccess().getRule();
+	}
+
+	//ArrowFunctionTypeExpression FunctionTypeExpression:
+	//	{FunctionTypeExpression}
+	//	'(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=super::TypeRef
+	public TypeExpressionsGrammarAccess.ArrowFunctionTypeExpressionElements getArrowFunctionTypeExpressionAccess() {
+		return gaTypeExpressions.getArrowFunctionTypeExpressionAccess();
+	}
+	
+	public ParserRule getArrowFunctionTypeExpressionRule() {
+		return getArrowFunctionTypeExpressionAccess().getRule();
 	}
 
 	//fragment TAnonymousFormalParameterList *:
