@@ -26,6 +26,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import java.util.Collection
 import java.util.Collections
@@ -34,9 +35,9 @@ import java.util.List
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
-import eu.numberfour.n4js.ts.types.ArrayLikes
 
 type CollectionOfTypeRef wraps Collection<? extends TypeRef>
+type Variance wraps Variance
 
 /*
  * Container used when explicitly defining types, e.g., for defining built in types or for tests.
@@ -326,7 +327,25 @@ enum TypingStrategy {
 }
 
 class TypeVariable extends Type {
+	boolean declaredCovariant
+	boolean declaredContravariant
 	contains ParameterizedTypeRef[] declaredUpperBounds
+
+	/*
+	 * Returns this type variable's {@link eu.numberfour.n4js.ts.types.util.Variance variance}. Always returns
+	 * invariant, unless the type variable was explicitly declared on definition site to be co- or contravariant.
+	 */
+	op Variance getVariance() {
+		val co = declaredCovariant;
+		val contra = declaredContravariant;
+		if(co && !contra) {
+			return Variance.CO;
+		} else if(contra && !co) {
+			return Variance.CONTRA;
+		} else {
+			return Variance.INV;
+		}
+	}
 	op TypeVariable[] getTypeVars() {
 		return emptyEList();
 	}
@@ -334,7 +353,9 @@ class TypeVariable extends Type {
 		return getTypeVariableAsString(declaredUpperBounds);
 	}
 	op String getTypeVariableAsString(CollectionOfTypeRef upperBounds) {
-		return name + (if (!upperBounds.empty) " extends " + (upperBounds.map[typeRefAsString].join(" & ")) else "");
+		return (if(declaredCovariant) "out " else if(declaredContravariant) "in " else "")
+			+ name
+			+ (if (!upperBounds.empty) " extends " + (upperBounds.map[typeRefAsString].join(" & ")) else "");
 	}
 }
 
@@ -537,6 +558,13 @@ class Type extends TExportableElement, TAnnotableElement {
 	 */
 	op TypeVariable[] getTypeVars() {
 		return emptyEList
+	}
+	/*
+	 * Convenience method for obtaining the variance of this type's type variable with the given index.
+	 * For details see {@link TypeVariable#getVariance()}.
+	 */
+	op Variance getVarianceOfTypeVar(int idx) {
+		return if(idx>=0 && idx<typeVars.size) typeVars.get(idx).variance else null;
 	}
 	/*
 	 * Returns the raw type as string, i.e. the type without any type variables.

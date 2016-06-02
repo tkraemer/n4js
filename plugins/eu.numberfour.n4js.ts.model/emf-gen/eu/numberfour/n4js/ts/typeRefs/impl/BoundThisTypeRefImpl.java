@@ -366,17 +366,8 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 	 * @generated
 	 */
 	public boolean isUseSiteStructuralTyping() {
-		boolean _and = false;
-		TypingStrategy _definedTypingStrategy = this.getDefinedTypingStrategy();
-		boolean _tripleNotEquals = (_definedTypingStrategy != TypingStrategy.DEFAULT);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			TypingStrategy _definedTypingStrategy_1 = this.getDefinedTypingStrategy();
-			boolean _tripleNotEquals_1 = (_definedTypingStrategy_1 != TypingStrategy.NOMINAL);
-			_and = _tripleNotEquals_1;
-		}
-		return _and;
+		return ((this.getDefinedTypingStrategy() != TypingStrategy.DEFAULT) && 
+			(this.getDefinedTypingStrategy() != TypingStrategy.NOMINAL));
 	}
 
 	/**

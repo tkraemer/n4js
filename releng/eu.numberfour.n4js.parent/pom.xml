@@ -695,31 +695,33 @@ Contributors:
 			</properties>
 		</profile>
 		<profile>
-						<id>staging</id>
-						<activation>
-							<!-- As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
-								TODO IDE-2231 remove activation when switching back to stable release. 	
-							 -->
-							<property>
-								<name>!noStaging</name>
-							</property>
-						</activation>
-						<properties>
-							<xtext.version>2.10.0-SNAPSHOT</xtext.version>
-						</properties>
-						<repositories>
-								<repository>
-										<id>sonatype-staging</id>
-										<url>https://oss.sonatype.org/content/repositories/staging/</url>
-								</repository>
-						</repositories>
-						<pluginRepositories>
-								<pluginRepository>
-										<id>sonatype-staging</id>
-										<url>https://oss.sonatype.org/content/repositories/staging/</url>
-								</pluginRepository>
-						</pluginRepositories>
-				</profile>
+			<id>staging</id>
+			<activation>
+				<!--
+					ENABLE this if pre-releases are desired: 
+					As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
+				<property>
+					<name>!noStaging</name>
+				</property>
+				 -->
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<xtext.version>2.11.0-SNAPSHOT</xtext.version>
+			</properties>
+			<repositories>
+					<repository>
+							<id>sonatype-staging</id>
+							<url>https://oss.sonatype.org/content/repositories/staging/</url>
+					</repository>
+			</repositories>
+			<pluginRepositories>
+					<pluginRepository>
+							<id>sonatype-staging</id>
+							<url>https://oss.sonatype.org/content/repositories/staging/</url>
+					</pluginRepository>
+			</pluginRepositories>
+		</profile>
 
 		<!-- Check correct enabling of noTests profile via property. -->
 		<profile>

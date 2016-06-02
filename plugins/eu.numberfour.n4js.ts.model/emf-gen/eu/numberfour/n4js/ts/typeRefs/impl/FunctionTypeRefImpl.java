@@ -136,19 +136,7 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 	 * @generated
 	 */
 	public boolean isRaw() {
-		boolean _and = false;
-		boolean _isGeneric = this.isGeneric();
-		if (!_isGeneric) {
-			_and = false;
-		} else {
-			EList<TypeArgument> _typeArgs = this.getTypeArgs();
-			int _size = _typeArgs.size();
-			EList<TypeVariable> _typeVars = this.getTypeVars();
-			int _size_1 = _typeVars.size();
-			boolean _lessThan = (_size < _size_1);
-			_and = _lessThan;
-		}
-		return _and;
+		return (this.isGeneric() && (this.getTypeArgs().size() < this.getTypeVars().size()));
 	}
 
 	/**
@@ -164,18 +152,9 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 			return _fpars_1.get(argIndex);
 		}
 		else {
-			boolean _and = false;
-			if (!((argIndex >= fparsSize) && (fparsSize > 0))) {
-				_and = false;
-			} else {
+			if ((((argIndex >= fparsSize) && (fparsSize > 0)) && this.getFpars().get((fparsSize - 1)).isVariadic())) {
 				EList<TFormalParameter> _fpars_2 = this.getFpars();
-				TFormalParameter _get = _fpars_2.get((fparsSize - 1));
-				boolean _isVariadic = _get.isVariadic();
-				_and = _isVariadic;
-			}
-			if (_and) {
-				EList<TFormalParameter> _fpars_3 = this.getFpars();
-				return _fpars_3.get((fparsSize - 1));
+				return _fpars_2.get((fparsSize - 1));
 			}
 		}
 		return null;

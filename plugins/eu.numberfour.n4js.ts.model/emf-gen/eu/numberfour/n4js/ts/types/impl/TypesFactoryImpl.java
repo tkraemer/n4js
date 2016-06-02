@@ -11,6 +11,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.*;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.lang.Iterable;
 
 import java.util.Collection;
@@ -134,6 +136,8 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return createMemberTypeFromString(eDataType, initialValue);
 			case TypesPackage.COLLECTION_OF_TYPE_REF:
 				return createCollectionOfTypeRefFromString(eDataType, initialValue);
+			case TypesPackage.VARIANCE:
+				return createVarianceFromString(eDataType, initialValue);
 			case TypesPackage.NAME_AND_ACCESS:
 				return createNameAndAccessFromString(eDataType, initialValue);
 			case TypesPackage.MEMBER_LIST:
@@ -167,6 +171,8 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return convertMemberTypeToString(eDataType, instanceValue);
 			case TypesPackage.COLLECTION_OF_TYPE_REF:
 				return convertCollectionOfTypeRefToString(eDataType, instanceValue);
+			case TypesPackage.VARIANCE:
+				return convertVarianceToString(eDataType, instanceValue);
 			case TypesPackage.NAME_AND_ACCESS:
 				return convertNameAndAccessToString(eDataType, instanceValue);
 			case TypesPackage.MEMBER_LIST:
@@ -695,6 +701,24 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	 */
 	public String convertCollectionOfTypeRefToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Variance createVarianceFromString(EDataType eDataType, String initialValue) {
+		return (Variance)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertVarianceToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

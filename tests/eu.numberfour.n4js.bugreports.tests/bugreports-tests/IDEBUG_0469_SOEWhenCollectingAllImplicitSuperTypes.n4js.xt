@@ -50,14 +50,14 @@ interface I1 extends I<string> {}
 interface I2 extends I<number> {}
 
 // XPECT errors ---
-// "Cannot implement interface I multiple times with different type arguments for T: string, number." at "IC"
+// "Cannot implement interface I multiple times with different type arguments for invariant T: string, number." at "IC"
 // "Inheritance cycle detected: IC, IC." at "IC"
 // ---
 abstract class IC extends IC implements I1, I2 {}
 
 // XPECT errors ---
 // "Cannot consume IDEBUG_0469_SOEWhenCollectingAllImplicitSuperTypes/I multiple times." at "I<string>"
-// "Cannot implement interface I multiple times with different type arguments for T: string, number." at "IC2"
+// "Cannot implement interface I multiple times with different type arguments for invariant T: string, number." at "IC2"
 // ---
 abstract class IC2 implements I<string>, I<number> {}
 

@@ -193,7 +193,7 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	 * Convenience method, returns true if member type is MemberType.SETTER or MemberType.GETTER
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\n<%eu.numberfour.n4js.ts.types.MemberType%> _memberType = this.getMemberType();\nboolean _equals = <%com.google.common.base.Objects%>.equal(_memberType, <%eu.numberfour.n4js.ts.types.MemberType%>.SETTER);\nif (_equals)\n{\n\t_or = true;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.MemberType%> _memberType_1 = this.getMemberType();\n\tboolean _equals_1 = <%com.google.common.base.Objects%>.equal(_memberType_1, <%eu.numberfour.n4js.ts.types.MemberType%>.GETTER);\n\t_or = _equals_1;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getMemberType(), <%eu.numberfour.n4js.ts.types.MemberType%>.SETTER) || <%com.google.common.base.Objects%>.equal(this.getMemberType(), <%eu.numberfour.n4js.ts.types.MemberType%>.GETTER));'"
 	 * @generated
 	 */
 	boolean isAccessor();
@@ -296,7 +296,7 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	 * this member has been poly-filled.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.ContainerType%><?> containingType = this.getContainingType();\nif ((containingType == null))\n{\n\treturn false;\n}\nboolean _or = false;\nboolean _isPolyfill = containingType.isPolyfill();\nif (_isPolyfill)\n{\n\t_or = true;\n} else\n{\n\tboolean _isStaticPolyfill = containingType.isStaticPolyfill();\n\t_or = _isStaticPolyfill;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.ContainerType%><?> containingType = this.getContainingType();\nif ((containingType == null))\n{\n\treturn false;\n}\nreturn (containingType.isPolyfill() || containingType.isStaticPolyfill());'"
 	 * @generated
 	 */
 	boolean isPolyfilled();

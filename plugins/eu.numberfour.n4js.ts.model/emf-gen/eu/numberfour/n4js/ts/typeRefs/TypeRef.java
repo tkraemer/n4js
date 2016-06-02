@@ -144,7 +144,7 @@ public interface TypeRef extends TypeArgument {
 	 * The method is robust, if typeRef is null or the declared type is null, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nboolean _or = false;\nif ((((dtype instanceof <%eu.numberfour.n4js.ts.types.TClass%>) || (dtype instanceof <%eu.numberfour.n4js.ts.types.PrimitiveType%>)) || (dtype instanceof <%eu.numberfour.n4js.ts.types.TObjectPrototype%>)))\n{\n\t_or = true;\n} else\n{\n\t_or = (dtype instanceof <%eu.numberfour.n4js.ts.types.TEnum%>);\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn ((((dtype instanceof <%eu.numberfour.n4js.ts.types.TClass%>) || (dtype instanceof <%eu.numberfour.n4js.ts.types.PrimitiveType%>)) || (dtype instanceof <%eu.numberfour.n4js.ts.types.TObjectPrototype%>)) || \n\t(dtype instanceof <%eu.numberfour.n4js.ts.types.TEnum%>));'"
 	 * @generated
 	 */
 	boolean isTreeHierarchyType();
@@ -258,7 +258,7 @@ public interface TypeRef extends TypeArgument {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\n<%eu.numberfour.n4js.ts.types.NullModifier%> _nullModifier = this.getNullModifier();\nboolean _equals = <%com.google.common.base.Objects%>.equal(_nullModifier, <%eu.numberfour.n4js.ts.types.NullModifier%>.ISNULL);\nif (_equals)\n{\n\t_or = true;\n} else\n{\n\t<%eu.numberfour.n4js.ts.types.UndefModifier%> _undefModifier = this.getUndefModifier();\n\tboolean _equals_1 = <%com.google.common.base.Objects%>.equal(_undefModifier, <%eu.numberfour.n4js.ts.types.UndefModifier%>.ISUNDEFINED);\n\t_or = _equals_1;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getNullModifier(), <%eu.numberfour.n4js.ts.types.NullModifier%>.ISNULL) || <%com.google.common.base.Objects%>.equal(this.getUndefModifier(), <%eu.numberfour.n4js.ts.types.UndefModifier%>.ISUNDEFINED));'"
 	 * @generated
 	 */
 	boolean undefinedOrNull();

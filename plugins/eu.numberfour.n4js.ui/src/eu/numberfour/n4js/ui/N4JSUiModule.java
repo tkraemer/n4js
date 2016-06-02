@@ -110,6 +110,8 @@ import eu.numberfour.n4js.ui.resource.OutputFolderAwareResourceServiceProvider;
 import eu.numberfour.n4js.ui.search.N4JSReferenceQueryExecutor;
 import eu.numberfour.n4js.ui.utils.CancelIndicatorUiExtractor;
 import eu.numberfour.n4js.ui.validation.ManifestAwareResourceValidator;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 
 /**
@@ -213,6 +215,20 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	 */
 	public Provider<ExternalLibraryPreferenceStore> provideExternalLibraryPreferenceStore() {
 		return Access.contributedProvider(ExternalLibraryPreferenceStore.class);
+	}
+
+	/**
+	 * Binds the broker for the working set managers in a singleton scope.
+	 */
+	public Provider<WorkingSetManagerBroker> provideWorkingSetManagerBroker() {
+		return Access.contributedProvider(WorkingSetManagerBroker.class);
+	}
+
+	/**
+	 * Binds the broker implementation for the working set managers in a singleton scope.
+	 */
+	public Provider<WorkingSetManagerBrokerImpl> provideWorkingSetManagerBrokerImpl() {
+		return Access.contributedProvider(WorkingSetManagerBrokerImpl.class);
 	}
 
 	/**

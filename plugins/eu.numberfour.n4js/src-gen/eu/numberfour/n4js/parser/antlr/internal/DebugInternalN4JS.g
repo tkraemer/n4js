@@ -704,7 +704,10 @@ norm1_AnnotatedExpression :
 
 // Rule TypeVariable
 ruleTypeVariable :
-	ruleIdentifierOrThis (
+	(
+		'out' |
+		'in'
+	)? ruleIdentifierOrThis (
 		'extends' ruleParameterizedTypeRefNominal (
 			'&' ruleParameterizedTypeRefNominal
 		)*
@@ -727,9 +730,8 @@ ruleBindingElementFragment :
 		( (
 		ruleBindingPattern
 		) => ruleBindingPattern ) |
-		ruleAnnotation* (
-			'...'? ruleBindingIdentifier ruleColonSepTypeRef?
-		)
+		ruleAnnotation* ruleBogusTypeRef? '...'? ruleBindingIdentifier
+		ruleColonSepTypeRef?
 	) (
 		'=' norm1_AssignmentExpression
 	)?
@@ -741,9 +743,8 @@ norm1_BindingElementFragment :
 		( (
 		norm1_BindingPattern
 		) => norm1_BindingPattern ) |
-		ruleAnnotation* (
-			'...'? norm1_BindingIdentifier ruleColonSepTypeRef?
-		)
+		ruleAnnotation* ruleBogusTypeRef? '...'? norm1_BindingIdentifier
+		ruleColonSepTypeRef?
 	) (
 		'=' norm3_AssignmentExpression
 	)?
@@ -752,6 +753,11 @@ norm1_BindingElementFragment :
 // Rule ColonSepTypeRef
 ruleColonSepTypeRef :
 	':' ruleTypeRef
+;
+
+// Rule BogusTypeRef
+ruleBogusTypeRef :
+	ruleTypeRef
 ;
 
 // Rule Block
@@ -1278,6 +1284,7 @@ ruleForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'new' |
 					'this' |
 					'super' |
@@ -1345,6 +1352,7 @@ ruleForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'new' |
 					'this' |
 					'super' |
@@ -1444,6 +1452,7 @@ norm1_ForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'yield' |
 					'new' |
 					'this' |
@@ -1511,6 +1520,7 @@ norm1_ForStatement :
 					'private' |
 					'protected' |
 					'public' |
+					'out' |
 					'yield' |
 					'new' |
 					'this' |
@@ -1733,7 +1743,7 @@ ruleCatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	ruleBindingIdentifier
+	ruleBogusTypeRef? ruleBindingIdentifier
 ;
 
 // Rule CatchVariable
@@ -1748,7 +1758,7 @@ norm1_CatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	norm1_BindingIdentifier
+	ruleBogusTypeRef? norm1_BindingIdentifier
 ;
 
 // Rule FinallyBlock
@@ -1966,6 +1976,7 @@ rulePropertyAssignment :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2058,6 +2069,7 @@ norm1_PropertyAssignment :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2154,6 +2166,7 @@ ruleAnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2227,6 +2240,7 @@ ruleAnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2337,6 +2351,7 @@ norm1_AnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2410,6 +2425,7 @@ norm1_AnnotatedPropertyAssignment :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -2597,6 +2613,7 @@ rulePropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2670,6 +2687,7 @@ rulePropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2750,6 +2768,7 @@ norm1_PropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -2823,6 +2842,7 @@ norm1_PropertySetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -3129,6 +3149,7 @@ ruleRelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3193,6 +3214,7 @@ ruleRelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3262,6 +3284,7 @@ norm1_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3326,6 +3349,7 @@ norm1_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3394,6 +3418,7 @@ norm2_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3457,6 +3482,7 @@ norm2_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3525,6 +3551,7 @@ norm3_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -3588,6 +3615,7 @@ norm3_RelationalExpression :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'<' |
 		'true' |
 		'false' |
@@ -4106,6 +4134,7 @@ ruleYieldExpression :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'yield' |
 	'new' |
 	'this' |
@@ -4175,6 +4204,7 @@ norm1_YieldExpression :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'yield' |
 	'new' |
 	'this' |
@@ -4555,7 +4585,8 @@ ruleN4Keyword :
 	'interface' |
 	'private' |
 	'protected' |
-	'public'
+	'public' |
+	'out'
 ;
 
 // Rule SymbolLiteralComputedName
@@ -4877,6 +4908,7 @@ ruleN4MemberDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -4888,7 +4920,7 @@ ruleN4MemberDeclaration :
 	)
 	) => ruleN4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
@@ -4967,6 +4999,7 @@ norm1_N4MemberDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -4978,7 +5011,7 @@ norm1_N4MemberDeclaration :
 	)
 	) => norm1_N4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
@@ -5061,6 +5094,7 @@ ruleAnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5134,6 +5168,7 @@ ruleAnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5147,12 +5182,12 @@ ruleAnnotatedN4MemberDeclaration :
 		'{'
 		) => ruleBlock )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' ruleLiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 				'*' ruleLiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5239,6 +5274,7 @@ norm1_AnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5312,6 +5348,7 @@ norm1_AnnotatedN4MemberDeclaration :
 			'private' |
 			'protected' |
 			'public' |
+			'out' |
 			'[' |
 			RULE_IDENTIFIER |
 			RULE_STRING |
@@ -5325,12 +5362,12 @@ norm1_AnnotatedN4MemberDeclaration :
 		'{'
 		) => norm1_Block )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' norm1_LiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 				'*' norm1_LiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5414,16 +5451,18 @@ ruleStringLiteralAsName :
 
 // Rule FieldDeclarationImpl
 ruleFieldDeclarationImpl :
-	ruleN4Modifier* ruleLiteralPropertyName ruleColonSepTypeRef? (
+	ruleN4Modifier* ruleBogusTypeRef? ruleLiteralPropertyName ruleColonSepTypeRef?
+	(
 		'=' norm1_Expression
-	)? ';'
+	)? ruleSemi
 ;
 
 // Rule FieldDeclarationImpl
 norm1_FieldDeclarationImpl :
-	ruleN4Modifier* norm1_LiteralPropertyName ruleColonSepTypeRef? (
+	ruleN4Modifier* ruleBogusTypeRef? norm1_LiteralPropertyName
+	ruleColonSepTypeRef? (
 		'=' norm3_Expression
-	)? ';'
+	)? ruleSemi
 ;
 
 // Rule N4FieldDeclaration
@@ -5439,12 +5478,12 @@ norm1_N4FieldDeclaration :
 // Rule N4MethodDeclaration
 ruleN4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' ruleLiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5458,12 +5497,12 @@ ruleN4MethodDeclaration :
 // Rule N4MethodDeclaration
 norm1_N4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
 			'*' norm1_LiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5540,7 +5579,7 @@ norm1_N4GetterDeclaration :
 
 // Rule GetterHeader
 ruleGetterHeader :
-	'get' ( (
+	ruleBogusTypeRef? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
@@ -5603,6 +5642,7 @@ ruleGetterHeader :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'[' |
 	RULE_IDENTIFIER |
 	RULE_STRING |
@@ -5616,7 +5656,7 @@ ruleGetterHeader :
 
 // Rule GetterHeader
 norm1_GetterHeader :
-	'get' ( (
+	ruleBogusTypeRef? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
@@ -5679,6 +5719,7 @@ norm1_GetterHeader :
 	'private' |
 	'protected' |
 	'public' |
+	'out' |
 	'[' |
 	RULE_IDENTIFIER |
 	RULE_STRING |
@@ -5756,6 +5797,7 @@ ruleN4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5829,6 +5871,7 @@ ruleN4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5909,6 +5952,7 @@ norm1_N4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -5982,6 +6026,7 @@ norm1_N4SetterDeclaration :
 		'private' |
 		'protected' |
 		'public' |
+		'out' |
 		'[' |
 		RULE_IDENTIFIER |
 		RULE_STRING |
@@ -6388,6 +6433,7 @@ ruleTypeArgument :
 	( (
 	'?'
 	) => ruleWildcard ) |
+	ruleWildcardNewNotation |
 	ruleTypeRef
 ;
 
@@ -6399,6 +6445,12 @@ ruleWildcard :
 		'extends' ruleTypeRef |
 		'super' ruleTypeRef
 	)?
+;
+
+// Rule WildcardNewNotation
+ruleWildcardNewNotation :
+	'out' ruleTypeRef |
+	'in' ruleTypeRef
 ;
 
 // Rule UndefModifierToken
@@ -6419,7 +6471,8 @@ ruleTypesIdentifier :
 	'from' |
 	'type' |
 	'void' |
-	'null'
+	'null' |
+	'enum'
 ;
 
 // Rule TIdentifier

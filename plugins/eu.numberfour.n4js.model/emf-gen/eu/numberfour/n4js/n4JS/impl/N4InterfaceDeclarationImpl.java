@@ -103,6 +103,15 @@ public class N4InterfaceDeclarationImpl extends N4ClassifierDeclarationImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
+		return this.getSuperInterfaceRefs();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs() {
 		return this.getSuperInterfaceRefs();
 	}
@@ -190,12 +199,14 @@ public class N4InterfaceDeclarationImpl extends N4ClassifierDeclarationImpl impl
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == N4ClassifierDefinition.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS: return N4JSPackage.N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS;
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return N4JSPackage.N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
 		if (baseClass == N4ClassifierDeclaration.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_SUPER_CLASSIFIER_REFS: return N4JSPackage.N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS;
 				case N4JSPackage.N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return N4JSPackage.N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -213,6 +224,8 @@ public class N4InterfaceDeclarationImpl extends N4ClassifierDeclarationImpl impl
 		switch (operationID) {
 			case N4JSPackage.N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE:
 				return getDefinedTypeAsInterface();
+			case N4JSPackage.N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case N4JSPackage.N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 		}

@@ -31,6 +31,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.ResourceSetWithBuiltInScheme;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
+@SuppressWarnings("restriction")
 public class TypesRuntimeModule extends eu.numberfour.n4js.ts.AbstractTypesRuntimeModule {
 
 	/**

@@ -47,6 +47,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.WildcardImpl#getDeclaredUpperBound <em>Declared Upper Bound</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.WildcardImpl#getDeclaredLowerBound <em>Declared Lower Bound</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.WildcardImpl#isUsingInOutNotation <em>Using In Out Notation</em>}</li>
  * </ul>
  *
  * @generated
@@ -71,6 +72,26 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	 * @ordered
 	 */
 	protected TypeRef declaredLowerBound;
+
+	/**
+	 * The default value of the '{@link #isUsingInOutNotation() <em>Using In Out Notation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUsingInOutNotation()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean USING_IN_OUT_NOTATION_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isUsingInOutNotation() <em>Using In Out Notation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUsingInOutNotation()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean usingInOutNotation = USING_IN_OUT_NOTATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -175,6 +196,27 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.WILDCARD__DECLARED_LOWER_BOUND, newDeclaredLowerBound, newDeclaredLowerBound));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isUsingInOutNotation() {
+		return usingInOutNotation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUsingInOutNotation(boolean newUsingInOutNotation) {
+		boolean oldUsingInOutNotation = usingInOutNotation;
+		usingInOutNotation = newUsingInOutNotation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.WILDCARD__USING_IN_OUT_NOTATION, oldUsingInOutNotation, usingInOutNotation));
 	}
 
 	/**
@@ -290,6 +332,8 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 				return getDeclaredUpperBound();
 			case TypeRefsPackage.WILDCARD__DECLARED_LOWER_BOUND:
 				return getDeclaredLowerBound();
+			case TypeRefsPackage.WILDCARD__USING_IN_OUT_NOTATION:
+				return isUsingInOutNotation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -307,6 +351,9 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 				return;
 			case TypeRefsPackage.WILDCARD__DECLARED_LOWER_BOUND:
 				setDeclaredLowerBound((TypeRef)newValue);
+				return;
+			case TypeRefsPackage.WILDCARD__USING_IN_OUT_NOTATION:
+				setUsingInOutNotation((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -326,6 +373,9 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 			case TypeRefsPackage.WILDCARD__DECLARED_LOWER_BOUND:
 				setDeclaredLowerBound((TypeRef)null);
 				return;
+			case TypeRefsPackage.WILDCARD__USING_IN_OUT_NOTATION:
+				setUsingInOutNotation(USING_IN_OUT_NOTATION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -342,6 +392,8 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 				return declaredUpperBound != null;
 			case TypeRefsPackage.WILDCARD__DECLARED_LOWER_BOUND:
 				return declaredLowerBound != null;
+			case TypeRefsPackage.WILDCARD__USING_IN_OUT_NOTATION:
+				return usingInOutNotation != USING_IN_OUT_NOTATION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -360,6 +412,22 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 				return getTypeRefAsString();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (usingInOutNotation: ");
+		result.append(usingInOutNotation);
+		result.append(')');
+		return result.toString();
 	}
 
 } //WildcardImpl

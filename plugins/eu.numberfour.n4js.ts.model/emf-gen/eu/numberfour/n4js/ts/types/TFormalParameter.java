@@ -86,7 +86,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 *  Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _and = false;\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (!_tripleNotEquals)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%eu.numberfour.n4js.ts.types.UndefModifier%> _undefModifier = _typeRef_1.getUndefModifier();\n\tboolean _tripleEquals = (_undefModifier == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL);\n\t_and = _tripleEquals;\n}\nreturn _and;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL));'"
 	 * @generated
 	 */
 	boolean isOptional();
@@ -98,7 +98,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 *  Convenience method, returns true if typeRef undef modifier is optional or variadic.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _or = false;\nboolean _isVariadic = this.isVariadic();\nif (_isVariadic)\n{\n\t_or = true;\n} else\n{\n\tboolean _isOptional = this.isOptional();\n\t_or = _isOptional;\n}\nreturn _or;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isVariadic() || this.isOptional());'"
 	 * @generated
 	 */
 	boolean isVariadicOrOptional();
