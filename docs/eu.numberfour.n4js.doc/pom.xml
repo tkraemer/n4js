@@ -124,6 +124,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <stylesdir>styles</stylesdir>
                                 <stylesheet>foundation.css</stylesheet>
                                 <eclipse>true</eclipse>
+                                <website>false</website>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -154,6 +155,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
                                 <docinfodir>../../</docinfodir>
+                                <eclipse>false</eclipse>
+                                <website>true</website>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
@@ -227,7 +230,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html"/>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="documentation/index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
                                     <map from="${eclipseHelpBaseDir}/" to="" />
                                 </pathconvert> 
