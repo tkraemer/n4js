@@ -59,16 +59,6 @@ newArrayList
 //				#[] // no or invalid type expectation
 		};
 
-// TODO IDE-1726: temporary fall-back to bogus old behavior to avoid too many breaking changes in task IDE-1702
-// update as of IDE-2137: raw type no longer used; the following special handling should be removed
-val isEmptyOrAllPadding = numOfElems===0 || !arrLit.elements.exists[expression!==null];
-val isCaseOfBogusArrayRawType = isEmptyOrAllPadding && expectedElemTypeRefs.empty;
-if(isCaseOfBogusArrayRawType) {
-	val result = G.arrayTypeRef(G.anyTypeRef); // RAW TYPE!!! (update as of IDE-2137: no longer using raw type here!)
-	storeInCache(arrLit, TypeUtils.copy(result));
-	return result;
-}
-
 // hack: faking an expectation of IterableN<...> here
 // TODO instead we should get such an expectation in these cases from expectedType judgment!
 val isValueToBeDestructured = N4JSASTUtils.isArrayOrObjectLiteralBeingDestructured(arrLit);
@@ -92,7 +82,8 @@ if(!haveUsableExpectedType) {
 		].toList;
 		storeInCache(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
 	]
-	return G.arrayTypeRef(tsh.createUnionType(G, elemTypeRefs));
+	val unionOfElemTypes = if(!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
+	return G.arrayTypeRef(unionOfElemTypes);
 }
 
 		// choose correct number of type arguments in our to-be-created resultTypeRef
@@ -214,7 +205,7 @@ if(!haveUsableExpectedType) {
 			}
 			return G.iterableNTypeRef(resultLen, typeArgs);
 		} else {
-			val unionOfElemTypes = tsh.createUnionType(G, elemTypeRefs);
+			val unionOfElemTypes = if(!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
 			return G.arrayTypeRef(unionOfElemTypes);
 		}
 	}
