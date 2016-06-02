@@ -5,6 +5,9 @@
 :source-highlighter: prettify
 :doctype: book
 :data-uri:
+ifdef::website[{set:relative:}]
+ifdef::eclipse[{set:relative:documentation/}]
+
 
 .N4JS Documentation
 = N4JS Documentation
@@ -18,13 +21,7 @@ This short introduction covers the basics of getting up and running with the
 N4JS IDE. From installation to running HelloWorld!, quickly learn about new features
 of the N4JS IDE, how to create a new project, manage workspaces and begin development!
 
-ifdef::eclipse[]
-* <<documentation/ide-setup#_ide_setup,N4JS IDE Setup Guide>>: Basic installation and setup instructions.
-endif::[]
-
-ifdef::website[]
-* <<ide-setup#_ide_setup,N4JS IDE Setup Guide>>: Basic installation and setup instructions.
-endif::[]
+* <<{relative}ide-setup#_ide_setup,N4JS IDE Setup Guide>>: Basic installation and setup instructions.
 
 == npm Export Guide
 
@@ -33,13 +30,7 @@ code example is written and exported from the N4JS IDE as an npm package, run fr
 the command line and published to the npm registry. Quickly learn how to streamline Node.js development
 using the N4JS IDE.
 
-ifdef::eclipse[]
-* <<documentation/npm-export-guide#_npm_export_guide,npm Export Guide>>: Basic npm export and publishing instructions.
-endif::[]
-
-ifdef::website[]
-* <<npm-export-guide#_npm_export_guide,npm Export Guide>>: Basic npm export and publishing instructions.
-endif::[]
+* <<{relative}npm-export-guide#_npm_export_guide,npm Export Guide>>: Basic npm export and publishing instructions.
 
 == In-Depth Tutorial
 
@@ -48,13 +39,7 @@ of the N4JS IDE. The example project is explained as a domain model and built st
 New features of the N4JS IDE are introduced along the way such as *modules* , *type annotations* ,
 *dependency injection* , *testing*  with an example test project and more.
 
-ifdef::eclipse[]
-* <<documentation/tutorial#_tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
-endif::[]
-
-ifdef::website[]
-* <<tutorial#_tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
-endif::[]
+* <<{relative}tutorial#_tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
 
 == N4JS Specification
 
