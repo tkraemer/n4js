@@ -45,6 +45,7 @@ IntersectionTypeExpression returns TypeRef:
 	
 PrimaryTypeExpression returns TypeRef:
 	( =>({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+	| ArrayTypeRef
 	| TypeRefWithModifiers
 	| "(" TypeRef ")"
 	);
@@ -65,6 +66,7 @@ TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
+	| ArrayTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
 	| N4UnionTypeExpression
@@ -73,6 +75,7 @@ TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 
 TypeRefForCast returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
+	| ArrayTypeRef
 	| ThisTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
@@ -137,6 +140,12 @@ N4IntersectionTypeExpression returns IntersectionTypeExpression:
 
 ParameterizedTypeRef returns ParameterizedTypeRef:
 	ParameterizedTypeRefNominal | ParameterizedTypeRefStructural;
+	
+ParameterizedTypeRefNominal returns ParameterizedTypeRef:
+	declaredType=[Type|TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
+	
+ArrayTypeRef returns ParameterizedTypeRef:
+	arrayTypeLiteral?="[" typeArgs+=TypeArgument "]";
 
 ParameterizedTypeRefStructural returns ParameterizedTypeRefStructural:
 	definedTypingStrategy=TypingStrategyUseSiteOperator
@@ -184,12 +193,6 @@ TStructSetter:
 	name=TypesIdentifier)
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
-
-
-
-ParameterizedTypeRefNominal returns ParameterizedTypeRef:
-	declaredType=[Type|TypeReferenceName]
-	(=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
 
 TypingStrategyUseSiteOperator returns TypingStrategy:
 	'~' ('~' | STRUCTMODSUFFIX)?;

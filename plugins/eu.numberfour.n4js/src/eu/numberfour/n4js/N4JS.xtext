@@ -662,7 +662,7 @@ PropertyAssignment <Yield>:
 AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 	PropertyAssignmentAnnotationList (
 	// TODO extract property header into an own instance to defer the object instantiation
-	=>(	{PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRef?
+	=>(	{PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRefWithModifiers?
 			LiteralOrComputedPropertyName<Yield> ':'
 		) expression=AssignmentExpression<In=true,Yield>
 	| =>({PropertyGetterDeclaration.annotationList=current}
@@ -672,7 +672,7 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 			'set' ->LiteralOrComputedPropertyName <Yield>
 		) '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
 	| =>({PropertyMethodDeclaration.annotationList=current}
-			TypeVariables? returnTypeRef=TypeRef?
+			TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(generator?='*' LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
 				| LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody <Generator=false>
 			)
@@ -683,7 +683,7 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 
 PropertyMethodDeclaration <Yield>:
 	=> ({PropertyMethodDeclaration}
-		TypeVariables? returnTypeRef=TypeRef?
+		TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(
 				generator?='*'	LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody<Generator=true>
 				| LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
@@ -694,7 +694,7 @@ PropertyMethodDeclaration <Yield>:
 
 PropertyNameValuePair <Yield>:
 	=> (
-		{PropertyNameValuePair} declaredTypeRef=TypeRef? LiteralOrComputedPropertyName<Yield> ':'
+		{PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? LiteralOrComputedPropertyName<Yield> ':'
 	)
 	expression=AssignmentExpression<In=true,Yield>
 ;
