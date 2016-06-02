@@ -32,9 +32,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.Range;
 
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.typesystem.TypeSystemHelper;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
@@ -42,7 +39,10 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.CharDiscreteDomain;
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -71,12 +71,12 @@ public class InferenceContext {
 	 * A non-null (by construction) array of non-null type variables. New type variables may be added over time via
 	 * {@link #addInferenceVariables(TypeVariable...)}.
 	 */
-	private TypeVariable[] inferenceVariables;
+	private final Set<TypeVariable> inferenceVariables = new LinkedHashSet<>();
 
 	/**
 	 * An append-only list of constraints that may also be cleared.
 	 */
-	private final ConstraintBuffer constraints;
+	private final ConstraintBuffer constraints = new ConstraintBuffer();
 
 	/**
 	 * Lowers higher-level constraints into bounds.
@@ -111,12 +111,7 @@ public class InferenceContext {
 		this.tsh = tsh;
 		this.cancelIndicator = cancelIndicator;
 		this.G = G;
-		if (null == inferenceVariables) {
-			this.inferenceVariables = new TypeVariable[0];
-		} else {
-			this.inferenceVariables = Arrays.copyOf(inferenceVariables, inferenceVariables.length);
-		}
-		this.constraints = new ConstraintBuffer();
+		addInferenceVariables(inferenceVariables);
 		this.redu = new Reducer(this, ts, tsh, G);
 		this.currentBounds = new BoundSet(this, G, ts, this.redu);
 	}
@@ -144,7 +139,7 @@ public class InferenceContext {
 	/**
 	 * Returns the inference variables of the receiving context.
 	 */
-	public TypeVariable[] getInferenceVariables() {
+	public Set<TypeVariable> getInferenceVariables() {
 		return inferenceVariables;
 	}
 
@@ -152,9 +147,7 @@ public class InferenceContext {
 	private void addInferenceVariables(TypeVariable... inferenceVariables) {
 		if (inferenceVariables == null || inferenceVariables.length == 0)
 			return;
-		// TODO use a list instead of array for this.inferenceVariables (sticking to array to keep changes minimal)
-		this.inferenceVariables = Stream.concat(Stream.of(this.inferenceVariables), Stream.of(inferenceVariables))
-				.toArray(len -> new TypeVariable[len]);
+		this.inferenceVariables.addAll(Arrays.asList(inferenceVariables));
 	}
 
 	/**
@@ -267,7 +260,7 @@ public class InferenceContext {
 	 * Is the argument an inference variable?
 	 */
 	public boolean isInferenceVariable(TypeVariable typeVar) {
-		return (typeVar != null) && org.eclipse.xtext.util.Arrays.contains(inferenceVariables, typeVar);
+		return typeVar != null && inferenceVariables.contains(typeVar);
 	}
 
 	/**
@@ -325,7 +318,7 @@ public class InferenceContext {
 			log("solving the following constraint set:");
 			constraints.log(this);
 			log("inference variables: "
-					+ Stream.of(inferenceVariables).map(iv -> str(iv)).collect(Collectors.joining(", ")));
+					+ inferenceVariables.stream().map(iv -> str(iv)).collect(Collectors.joining(", ")));
 		}
 
 		// ---------------------------------------------------------------------------
@@ -389,14 +382,11 @@ public class InferenceContext {
 	 * @return null if no solution was found for the <i>bounded</i> subset of the argument, {@link #currentBounds}
 	 *         otherwise (containing instantiations for that bounded subset).
 	 */
-	private BoundSet resolve(TypeVariable[] toResolveRaw) {
-
-		final TypeVariable[] toResolve = toResolveRaw;// boundedSubsetOf(toResolveRaw);
-
+	private BoundSet resolve(Set<TypeVariable> toResolve) {
 		Set<TypeVariable> variableSet;
 		while ((variableSet = getSmallestVariableSet(currentBounds, toResolve)) != null) {
 			final int oldNumUninstantiated = numUninstantiatedVariables(inferenceVariables);
-			assert(oldNumUninstantiated <= inferenceVariables.length);
+			assert (oldNumUninstantiated <= inferenceVariables.size());
 			for (TypeVariable variable : variableSet) {
 				if (DEBUG) {
 					log("======");
@@ -423,7 +413,7 @@ public class InferenceContext {
 				return null;
 			}
 			for (TypeVariable variable : variableSet) {
-				assert(currentBounds.hasConsistentBounds(variable));
+				assert (currentBounds.hasConsistentBounds(variable));
 			}
 		}
 
@@ -438,21 +428,19 @@ public class InferenceContext {
 	 */
 	private void instantiate(TypeVariable variable, TypeRef proper) {
 		assert isInferenceVariable(variable) : "Attempt to instantiate non-inference var " + str(variable);
-		assert!(currentBounds.isInstantiated(variable)) : "Attempt to re-instantiate var " + str(variable);
+		assert !(currentBounds.isInstantiated(variable)) : "Attempt to re-instantiate var " + str(variable);
 		assert isProper(proper);
 		// add bound `variable = proper`
 		redu.reduce(typeRef(variable), proper, INV);
 	}
 
-	/**
-	 * @return those type variables of the argument for which no instantiation is tracked by {@link #currentBounds}
-	 */
-	private Stream<TypeVariable> uninstantiatedSubsetOf(TypeVariable[] vs) {
-		return Arrays.stream(vs).filter(v -> !(currentBounds.isInstantiated(v)));
-	}
-
-	private int numUninstantiatedVariables(TypeVariable[] infVars) {
-		return (int) uninstantiatedSubsetOf(infVars).count();
+	private int numUninstantiatedVariables(Set<TypeVariable> infVars) {
+		int count = 0;
+		for (TypeVariable iv : infVars) {
+			if (!currentBounds.isInstantiated(iv))
+				count++;
+		}
+		return count;
 	}
 
 	/**
@@ -472,8 +460,7 @@ public class InferenceContext {
 	 *
 	 * @return a proper (LUB or GLB) for the argument.
 	 */
-	// package visibility: called by BoundSet during compaction phase
-	/* package */ TypeRef chooseInstantiation(TypeVariable typeVar) {
+	private TypeRef chooseInstantiation(TypeVariable typeVar) {
 		if (!isInferenceVariable(typeVar)) {
 			throw new IllegalArgumentException("not an inference variable: " + typeVar);
 		}
@@ -516,12 +503,11 @@ public class InferenceContext {
 	 * <p>
 	 * The resulting set, if non-null, is guaranteed to be non-empty.
 	 */
-	private Set<TypeVariable> getSmallestVariableSet(BoundSet bounds, TypeVariable[] subSet) {
+	private Set<TypeVariable> getSmallestVariableSet(BoundSet bounds, Set<TypeVariable> subSet) {
 		Set<TypeVariable> deferred = null;
 		Set<TypeVariable> result = null;
 		int min = Integer.MAX_VALUE;
-		for (int i = 0; i < subSet.length; ++i) {
-			final TypeVariable currentVariable = subSet[i];
+		for (TypeVariable currentVariable : subSet) {
 			if (!bounds.isInstantiated(currentVariable)) {
 
 				// Defer an unbounded currentVariable IFF all other iv that depend on currentVariable have
@@ -533,10 +519,10 @@ public class InferenceContext {
 				// Because α depends on β, we would first instantiate β (to any) and then choose α=intersection{A,any}.
 				// With the following code, we defer processing of β until α has been instantiated to A.
 				if (bounds.isUnbounded(currentVariable)) {
-					final boolean gotAtLeastOneDependantIV = Stream.of(subSet)
+					final boolean gotAtLeastOneDependantIV = subSet.stream()
 							.anyMatch(iv -> currentBounds.dependsOnResolutionOf(iv, currentVariable));
 					if (gotAtLeastOneDependantIV) {
-						final boolean defer = Stream.of(subSet)
+						final boolean defer = subSet.stream()
 								.filter(iv -> currentBounds.dependsOnResolutionOf(iv, currentVariable))
 								.allMatch(iv -> {
 									final List<TypeBound> bs = currentBounds.getBounds(iv).stream()
@@ -589,7 +575,7 @@ public class InferenceContext {
 	 * This method returns not one but two values:
 	 * <ul>
 	 * <li>set-of-variables containing uninstantiated variables and those it depends on, as described in
-	 * {@link #getSmallestVariableSet(BoundSet, TypeVariable[])}</li>
+	 * {@link #getSmallestVariableSet(BoundSet, Set)}</li>
 	 * <li>return value: true iff the returned set-of-variables improves on the best-yet answer (as measured by number
 	 * of elements, less is better)</li>
 	 * </ul>
