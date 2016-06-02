@@ -1,0 +1,10 @@
+﻿:experimental:
+:commandkey: &#8984;
+:revdate: {localdate}
+:toc: false
+:source-highlighter: prettify
+:doctype: book
+:data-uri:
+:includedir: documentation
+
+include::{includedir}/index.adoc[]
