@@ -2855,6 +2855,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//PrimaryTypeExpression TypeRef:
 	//	=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+	//	| ArrayTypeRef
 	//	| TypeRefWithModifiers
 	//	| "(" super::TypeRef ")"
 	public TypeExpressionsGrammarAccess.PrimaryTypeExpressionElements getPrimaryTypeExpressionAccess() {
@@ -2902,6 +2903,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 	//	ParameterizedTypeRef
+	//	| ArrayTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
 	//	| N4UnionTypeExpression
@@ -2916,6 +2918,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeRefForCast StaticBaseTypeRef:
 	//	ParameterizedTypeRef
+	//	| ArrayTypeRef
 	//	| ThisTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
@@ -3061,6 +3064,26 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getParameterizedTypeRefAccess().getRule();
 	}
 
+	//ParameterizedTypeRefNominal ParameterizedTypeRef:
+	//	declaredType=[Type|super::TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
+	public TypeExpressionsGrammarAccess.ParameterizedTypeRefNominalElements getParameterizedTypeRefNominalAccess() {
+		return gaTypeExpressions.getParameterizedTypeRefNominalAccess();
+	}
+	
+	public ParserRule getParameterizedTypeRefNominalRule() {
+		return getParameterizedTypeRefNominalAccess().getRule();
+	}
+
+	//ArrayTypeRef ParameterizedTypeRef:
+	//	arrayTypeLiteral?="[" typeArgs+=TypeArgument "]"
+	public TypeExpressionsGrammarAccess.ArrayTypeRefElements getArrayTypeRefAccess() {
+		return gaTypeExpressions.getArrayTypeRefAccess();
+	}
+	
+	public ParserRule getArrayTypeRefRule() {
+		return getArrayTypeRefAccess().getRule();
+	}
+
 	//ParameterizedTypeRefStructural:
 	//	definedTypingStrategy=TypingStrategyUseSiteOperator
 	//	declaredType=[Type|super::TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
@@ -3146,16 +3169,6 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTStructSetterRule() {
 		return getTStructSetterAccess().getRule();
-	}
-
-	//ParameterizedTypeRefNominal ParameterizedTypeRef:
-	//	declaredType=[Type|super::TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
-	public TypeExpressionsGrammarAccess.ParameterizedTypeRefNominalElements getParameterizedTypeRefNominalAccess() {
-		return gaTypeExpressions.getParameterizedTypeRefNominalAccess();
-	}
-	
-	public ParserRule getParameterizedTypeRefNominalRule() {
-		return getParameterizedTypeRefNominalAccess().getRule();
 	}
 
 	//TypingStrategyUseSiteOperator TypingStrategy:

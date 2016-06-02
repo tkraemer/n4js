@@ -1890,7 +1890,7 @@ norm1_ObjectLiteral :
 rulePropertyAssignment :
 	ruleAnnotatedPropertyAssignment |
 	( (
-	ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) => rulePropertyNameValuePair ) |
 	( (
 	ruleGetterHeader
@@ -1971,7 +1971,7 @@ rulePropertyAssignment :
 	)
 	) => rulePropertySetterDeclaration ) |
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleLiteralOrComputedPropertyName '('
 	)
@@ -1983,7 +1983,7 @@ rulePropertyAssignment :
 norm1_PropertyAssignment :
 	norm1_AnnotatedPropertyAssignment |
 	( (
-	ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) => norm1_PropertyNameValuePair ) |
 	( (
 	norm1_GetterHeader
@@ -2064,7 +2064,7 @@ norm1_PropertyAssignment :
 	)
 	) => norm1_PropertySetterDeclaration ) |
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		norm1_LiteralOrComputedPropertyName '('
 	)
@@ -2076,9 +2076,9 @@ norm1_PropertyAssignment :
 ruleAnnotatedPropertyAssignment :
 	rulePropertyAssignmentAnnotationList (
 		( (
-		ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 		) => (
-			ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+			ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 		) ) norm1_AssignmentExpression |
 		( (
 		ruleGetterHeader
@@ -2237,12 +2237,12 @@ ruleAnnotatedPropertyAssignment :
 		'{'
 		) => ruleBlock ) |
 		( (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' ruleLiteralOrComputedPropertyName '(' |
 			ruleLiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleTypeVariables? ruleTypeRef? (
+			ruleTypeVariables? ruleTypeRefWithModifiers? (
 				'*' ruleLiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsAndBody ) |
@@ -2261,9 +2261,9 @@ ruleAnnotatedPropertyAssignment :
 norm1_AnnotatedPropertyAssignment :
 	rulePropertyAssignmentAnnotationList (
 		( (
-		ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 		) => (
-			ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+			ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 		) ) norm3_AssignmentExpression |
 		( (
 		norm1_GetterHeader
@@ -2422,12 +2422,12 @@ norm1_AnnotatedPropertyAssignment :
 		'{'
 		) => ruleBlock ) |
 		( (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' norm1_LiteralOrComputedPropertyName '(' |
 			norm1_LiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleTypeVariables? ruleTypeRef? (
+			ruleTypeVariables? ruleTypeRefWithModifiers? (
 				'*' norm1_LiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsAndBody ) |
@@ -2445,12 +2445,12 @@ norm1_AnnotatedPropertyAssignment :
 // Rule PropertyMethodDeclaration
 rulePropertyMethodDeclaration :
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleLiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' ruleLiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsAndBody ) |
@@ -2464,12 +2464,12 @@ rulePropertyMethodDeclaration :
 // Rule PropertyMethodDeclaration
 norm1_PropertyMethodDeclaration :
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		norm1_LiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' norm1_LiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsAndBody ) |
@@ -2483,18 +2483,18 @@ norm1_PropertyMethodDeclaration :
 // Rule PropertyNameValuePair
 rulePropertyNameValuePair :
 	( (
-	ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) => (
-		ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) ) norm1_AssignmentExpression
 ;
 
 // Rule PropertyNameValuePair
 norm1_PropertyNameValuePair :
 	( (
-	ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) => (
-		ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) ) norm3_AssignmentExpression
 ;
 
@@ -6217,6 +6217,7 @@ rulePrimaryTypeExpression :
 	) => (
 		'(' ruleTAnonymousFormalParameterList ')' '=>'
 	) ) rulePrimaryTypeExpression |
+	ruleArrayTypeRef |
 	ruleTypeRefWithModifiers |
 	'(' ruleTypeRef ')'
 ;
@@ -6252,6 +6253,7 @@ ruleTypeRefWithoutModifiers :
 // Rule TypeRefFunctionTypeExpression
 ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
+	ruleArrayTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleN4UnionTypeExpression |
@@ -6261,6 +6263,7 @@ ruleTypeRefFunctionTypeExpression :
 // Rule TypeRefForCast
 ruleTypeRefForCast :
 	ruleParameterizedTypeRef |
+	ruleArrayTypeRef |
 	ruleThisTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
@@ -6348,6 +6351,22 @@ ruleParameterizedTypeRef :
 	ruleParameterizedTypeRefStructural
 ;
 
+// Rule ParameterizedTypeRefNominal
+ruleParameterizedTypeRefNominal :
+	ruleTypeReferenceName (
+		( (
+		'<'
+		) => '<' ) ruleTypeArgument (
+			',' ruleTypeArgument
+		)* '>'
+	)?
+;
+
+// Rule ArrayTypeRef
+ruleArrayTypeRef :
+	'[' ruleTypeArgument ']'
+;
+
 // Rule ParameterizedTypeRefStructural
 ruleParameterizedTypeRefStructural :
 	ruleTypingStrategyUseSiteOperator ruleTypeReferenceName (
@@ -6433,17 +6452,6 @@ ruleTStructSetter :
 	) => (
 		'set' ruleTypesIdentifier
 	) ) '(' ruleTAnonymousFormalParameter ')'
-;
-
-// Rule ParameterizedTypeRefNominal
-ruleParameterizedTypeRefNominal :
-	ruleTypeReferenceName (
-		( (
-		'<'
-		) => '<' ) ruleTypeArgument (
-			',' ruleTypeArgument
-		)* '>'
-	)?
 ;
 
 // Rule TypingStrategyUseSiteOperator

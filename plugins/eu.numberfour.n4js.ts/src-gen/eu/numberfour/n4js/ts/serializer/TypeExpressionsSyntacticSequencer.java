@@ -24,8 +24,8 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	protected TypeExpressionsGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
-	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_a;
-	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_p;
+	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a;
+	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_p;
 	protected AbstractElementAlias match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q;
 	
 	@Inject
@@ -33,8 +33,8 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 		grammarAccess = (TypeExpressionsGrammarAccess) access;
 		match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
 		match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_0_0_0_1()));
-		match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_2_0());
+		match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0());
+		match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0());
 		match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getTStructMemberListAccess().getCommaKeyword_1_1_1()), new TokenAlias(false, false, grammarAccess.getTStructMemberListAccess().getSemicolonKeyword_1_1_0()));
 	}
 	
@@ -54,10 +54,10 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 				emit_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
 				emit_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
-				emit_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
-				emit_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a.equals(syntax))
+				emit_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_p.equals(syntax))
+				emit_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q.equals(syntax))
 				emit_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -105,13 +105,14 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' undefModifier=UndefModifierToken
 	 *     (rule start) (ambiguity) '{' 'function' '<' ownedTypeVars+=TypeVariable
 	 *     (rule start) (ambiguity) (('{' 'function' '(') | '(') fpars+=TAnonymousFormalParameter
+	 *     (rule start) (ambiguity) arrayTypeLiteral?='['
 	 *     (rule start) (ambiguity) declaredType=[Type|TypeReferenceName]
 	 *     (rule start) (ambiguity) definedTypingStrategy=TypingStrategyUseSiteOperator
 	 *     (rule start) (ambiguity) undefModifier=UndefModifierToken
 	 *     (rule start) (ambiguity) {IntersectionTypeExpression.typeRefs+=}
 	 *     (rule start) (ambiguity) {UnionTypeExpression.typeRefs+=}
 	 */
-	protected void emit_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -123,7 +124,7 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) {IntersectionTypeExpression.typeRefs+=}
 	 *     (rule start) (ambiguity) {UnionTypeExpression.typeRefs+=}
 	 */
-	protected void emit_PrimaryTypeExpression_LeftParenthesisKeyword_2_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

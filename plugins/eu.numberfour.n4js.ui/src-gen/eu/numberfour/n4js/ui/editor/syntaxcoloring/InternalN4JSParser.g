@@ -5541,7 +5541,7 @@ rulePropertyAssignment
 
     |((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	ruleLiteralOrComputedPropertyName
 	Colon 	))=>	PropertyNameValuePairParserRuleCall_1=rulePropertyNameValuePair		{ announce($PropertyNameValuePairParserRuleCall_1.start, $PropertyNameValuePairParserRuleCall_1.stop, grammarAccess.getPropertyAssignmentAccess().getPropertyNameValuePairParserRuleCall_1()); }
@@ -5687,7 +5687,7 @@ rulePropertyAssignment
 )
     |((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -5717,7 +5717,7 @@ norm1_PropertyAssignment
 
     |((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	norm1_LiteralOrComputedPropertyName
 	Colon 	))=>	PropertyNameValuePairParserRuleCall_1=norm1_PropertyNameValuePair		{ announce($PropertyNameValuePairParserRuleCall_1.start, $PropertyNameValuePairParserRuleCall_1.stop, grammarAccess.getPropertyAssignmentAccess().getPropertyNameValuePairParserRuleCall_1()); }
@@ -5863,7 +5863,7 @@ norm1_PropertyAssignment
 )
     |((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -5898,12 +5898,12 @@ ruleAnnotatedPropertyAssignment
 (	PropertyAssignmentAnnotationListParserRuleCall_0=rulePropertyAssignmentAnnotationList		{ announce($PropertyAssignmentAnnotationListParserRuleCall_0.start, $PropertyAssignmentAnnotationListParserRuleCall_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getPropertyAssignmentAnnotationListParserRuleCall_0()); }
 ((((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	ruleLiteralOrComputedPropertyName
 	Colon 	))=>((
 (
-	DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredTypeRefAssignment_1_0_0_0_1()); }
+	DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0=ruleTypeRefWithModifiers { announce($DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0.start, $DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredTypeRefAssignment_1_0_0_0_1()); }
 )
 )?	LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2()); }
 
@@ -6134,7 +6134,7 @@ ruleAnnotatedPropertyAssignment
 ))
     |(((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -6148,7 +6148,7 @@ ruleAnnotatedPropertyAssignment
 	LeftParenthesis 	))))=>((	TypeVariablesParserRuleCall_1_3_0_0_1=ruleTypeVariables		{ announce($TypeVariablesParserRuleCall_1_3_0_0_1.start, $TypeVariablesParserRuleCall_1_3_0_0_1.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getTypeVariablesParserRuleCall_1_3_0_0_1()); }
 )?(
 (
-	ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0.start, $ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getReturnTypeRefAssignment_1_3_0_0_2()); }
+	ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0=ruleTypeRefWithModifiers { announce($ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0.start, $ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getReturnTypeRefAssignment_1_3_0_0_2()); }
 )
 )?(((
 (
@@ -6193,12 +6193,12 @@ norm1_AnnotatedPropertyAssignment
 (	PropertyAssignmentAnnotationListParserRuleCall_0=rulePropertyAssignmentAnnotationList		{ announce($PropertyAssignmentAnnotationListParserRuleCall_0.start, $PropertyAssignmentAnnotationListParserRuleCall_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getPropertyAssignmentAnnotationListParserRuleCall_0()); }
 ((((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	norm1_LiteralOrComputedPropertyName
 	Colon 	))=>((
 (
-	DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_1_0_0_0_1_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredTypeRefAssignment_1_0_0_0_1()); }
+	DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0=ruleTypeRefWithModifiers { announce($DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0.start, $DeclaredTypeRefTypeRefWithModifiersParserRuleCall_1_0_0_0_1_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredTypeRefAssignment_1_0_0_0_1()); }
 )
 )?	LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2()); }
 
@@ -6429,7 +6429,7 @@ norm1_AnnotatedPropertyAssignment
 ))
     |(((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -6443,7 +6443,7 @@ norm1_AnnotatedPropertyAssignment
 	LeftParenthesis 	))))=>((	TypeVariablesParserRuleCall_1_3_0_0_1=ruleTypeVariables		{ announce($TypeVariablesParserRuleCall_1_3_0_0_1.start, $TypeVariablesParserRuleCall_1_3_0_0_1.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getTypeVariablesParserRuleCall_1_3_0_0_1()); }
 )?(
 (
-	ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0.start, $ReturnTypeRefTypeRefParserRuleCall_1_3_0_0_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getReturnTypeRefAssignment_1_3_0_0_2()); }
+	ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0=ruleTypeRefWithModifiers { announce($ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0.start, $ReturnTypeRefTypeRefWithModifiersParserRuleCall_1_3_0_0_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getReturnTypeRefAssignment_1_3_0_0_2()); }
 )
 )?(((
 (
@@ -6493,7 +6493,7 @@ rulePropertyMethodDeclaration
     }:
 (((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -6507,7 +6507,7 @@ rulePropertyMethodDeclaration
 	LeftParenthesis 	))))=>((	TypeVariablesParserRuleCall_0_0_1=ruleTypeVariables		{ announce($TypeVariablesParserRuleCall_0_0_1.start, $TypeVariablesParserRuleCall_0_0_1.stop, grammarAccess.getPropertyMethodDeclarationAccess().getTypeVariablesParserRuleCall_0_0_1()); }
 )?(
 (
-	ReturnTypeRefTypeRefParserRuleCall_0_0_2_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_2_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_2_0.stop, grammarAccess.getPropertyMethodDeclarationAccess().getReturnTypeRefAssignment_0_0_2()); }
+	ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0=ruleTypeRefWithModifiers { announce($ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0.start, $ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0.stop, grammarAccess.getPropertyMethodDeclarationAccess().getReturnTypeRefAssignment_0_0_2()); }
 )
 )?(((
 (
@@ -6537,7 +6537,7 @@ norm1_PropertyMethodDeclaration
     }:
 (((((	ruleTypeVariables)?(
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?(((
 (
@@ -6551,7 +6551,7 @@ norm1_PropertyMethodDeclaration
 	LeftParenthesis 	))))=>((	TypeVariablesParserRuleCall_0_0_1=ruleTypeVariables		{ announce($TypeVariablesParserRuleCall_0_0_1.start, $TypeVariablesParserRuleCall_0_0_1.stop, grammarAccess.getPropertyMethodDeclarationAccess().getTypeVariablesParserRuleCall_0_0_1()); }
 )?(
 (
-	ReturnTypeRefTypeRefParserRuleCall_0_0_2_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_2_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_2_0.stop, grammarAccess.getPropertyMethodDeclarationAccess().getReturnTypeRefAssignment_0_0_2()); }
+	ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0=ruleTypeRefWithModifiers { announce($ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0.start, $ReturnTypeRefTypeRefWithModifiersParserRuleCall_0_0_2_0.stop, grammarAccess.getPropertyMethodDeclarationAccess().getReturnTypeRefAssignment_0_0_2()); }
 )
 )?(((
 (
@@ -6587,12 +6587,12 @@ rulePropertyNameValuePair
     }:
 (((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	ruleLiteralOrComputedPropertyName
 	Colon 	))=>((
 (
-	DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0.stop, grammarAccess.getPropertyNameValuePairAccess().getDeclaredTypeRefAssignment_0_0_1()); }
+	DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0=ruleTypeRefWithModifiers { announce($DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0.start, $DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0.stop, grammarAccess.getPropertyNameValuePairAccess().getDeclaredTypeRefAssignment_0_0_1()); }
 )
 )?	LiteralOrComputedPropertyNameParserRuleCall_0_0_2=ruleLiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_2.stop, grammarAccess.getPropertyNameValuePairAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); }
 
@@ -6614,12 +6614,12 @@ norm1_PropertyNameValuePair
     }:
 (((((
 (
-	ruleTypeRef
+	ruleTypeRefWithModifiers
 )
 )?	norm1_LiteralOrComputedPropertyName
 	Colon 	))=>((
 (
-	DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_0_0_1_0.stop, grammarAccess.getPropertyNameValuePairAccess().getDeclaredTypeRefAssignment_0_0_1()); }
+	DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0=ruleTypeRefWithModifiers { announce($DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0.start, $DeclaredTypeRefTypeRefWithModifiersParserRuleCall_0_0_1_0.stop, grammarAccess.getPropertyNameValuePairAccess().getDeclaredTypeRefAssignment_0_0_1()); }
 )
 )?	LiteralOrComputedPropertyNameParserRuleCall_0_0_2=norm1_LiteralOrComputedPropertyName		{ announce($LiteralOrComputedPropertyNameParserRuleCall_0_0_2.start, $LiteralOrComputedPropertyNameParserRuleCall_0_0_2.stop, grammarAccess.getPropertyNameValuePairAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); }
 
@@ -15006,12 +15006,14 @@ rulePrimaryTypeExpression
 	ReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0=rulePrimaryTypeExpression { announce($ReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0.start, $ReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0.stop, grammarAccess.getPrimaryTypeExpressionAccess().getReturnTypeRefAssignment_0_1()); }
 )
 ))
-    |	TypeRefWithModifiersParserRuleCall_1=ruleTypeRefWithModifiers		{ announce($TypeRefWithModifiersParserRuleCall_1.start, $TypeRefWithModifiersParserRuleCall_1.stop, grammarAccess.getPrimaryTypeExpressionAccess().getTypeRefWithModifiersParserRuleCall_1()); }
+    |	ArrayTypeRefParserRuleCall_1=ruleArrayTypeRef		{ announce($ArrayTypeRefParserRuleCall_1.start, $ArrayTypeRefParserRuleCall_1.stop, grammarAccess.getPrimaryTypeExpressionAccess().getArrayTypeRefParserRuleCall_1()); }
+
+    |	TypeRefWithModifiersParserRuleCall_2=ruleTypeRefWithModifiers		{ announce($TypeRefWithModifiersParserRuleCall_2.start, $TypeRefWithModifiersParserRuleCall_2.stop, grammarAccess.getPrimaryTypeExpressionAccess().getTypeRefWithModifiersParserRuleCall_2()); }
 
     |(
-	LeftParenthesisKeyword_2_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_2_0, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_2_0()); }	TypeRefParserRuleCall_2_1=ruleTypeRef		{ announce($TypeRefParserRuleCall_2_1.start, $TypeRefParserRuleCall_2_1.stop, grammarAccess.getPrimaryTypeExpressionAccess().getTypeRefParserRuleCall_2_1()); }
+	LeftParenthesisKeyword_3_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_3_0, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0()); }	TypeRefParserRuleCall_3_1=ruleTypeRef		{ announce($TypeRefParserRuleCall_3_1.start, $TypeRefParserRuleCall_3_1.stop, grammarAccess.getPrimaryTypeExpressionAccess().getTypeRefParserRuleCall_3_1()); }
 
-	RightParenthesisKeyword_2_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2_2, grammarAccess.getPrimaryTypeExpressionAccess().getRightParenthesisKeyword_2_2()); }))
+	RightParenthesisKeyword_3_2=RightParenthesis 	 { announce($RightParenthesisKeyword_3_2, grammarAccess.getPrimaryTypeExpressionAccess().getRightParenthesisKeyword_3_2()); }))
 ;
 
 
@@ -15125,13 +15127,15 @@ ruleTypeRefFunctionTypeExpression
     }:
 (	ParameterizedTypeRefParserRuleCall_0=ruleParameterizedTypeRef		{ announce($ParameterizedTypeRefParserRuleCall_0.start, $ParameterizedTypeRefParserRuleCall_0.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getParameterizedTypeRefParserRuleCall_0()); }
 
-    |	ConstructorTypeRefParserRuleCall_1=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_1.start, $ConstructorTypeRefParserRuleCall_1.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getConstructorTypeRefParserRuleCall_1()); }
+    |	ArrayTypeRefParserRuleCall_1=ruleArrayTypeRef		{ announce($ArrayTypeRefParserRuleCall_1.start, $ArrayTypeRefParserRuleCall_1.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getArrayTypeRefParserRuleCall_1()); }
 
-    |	ClassifierTypeRefParserRuleCall_2=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_2.start, $ClassifierTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getClassifierTypeRefParserRuleCall_2()); }
+    |	ConstructorTypeRefParserRuleCall_2=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_2.start, $ConstructorTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getConstructorTypeRefParserRuleCall_2()); }
 
-    |	N4UnionTypeExpressionParserRuleCall_3=ruleN4UnionTypeExpression		{ announce($N4UnionTypeExpressionParserRuleCall_3.start, $N4UnionTypeExpressionParserRuleCall_3.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_3()); }
+    |	ClassifierTypeRefParserRuleCall_3=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_3.start, $ClassifierTypeRefParserRuleCall_3.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getClassifierTypeRefParserRuleCall_3()); }
 
-    |	N4IntersectionTypeExpressionParserRuleCall_4=ruleN4IntersectionTypeExpression		{ announce($N4IntersectionTypeExpressionParserRuleCall_4.start, $N4IntersectionTypeExpressionParserRuleCall_4.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_4()); }
+    |	N4UnionTypeExpressionParserRuleCall_4=ruleN4UnionTypeExpression		{ announce($N4UnionTypeExpressionParserRuleCall_4.start, $N4UnionTypeExpressionParserRuleCall_4.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_4()); }
+
+    |	N4IntersectionTypeExpressionParserRuleCall_5=ruleN4IntersectionTypeExpression		{ announce($N4IntersectionTypeExpressionParserRuleCall_5.start, $N4IntersectionTypeExpressionParserRuleCall_5.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); }
 )
 ;
 
@@ -15152,15 +15156,17 @@ ruleTypeRefForCast
     }:
 (	ParameterizedTypeRefParserRuleCall_0=ruleParameterizedTypeRef		{ announce($ParameterizedTypeRefParserRuleCall_0.start, $ParameterizedTypeRefParserRuleCall_0.stop, grammarAccess.getTypeRefForCastAccess().getParameterizedTypeRefParserRuleCall_0()); }
 
-    |	ThisTypeRefParserRuleCall_1=ruleThisTypeRef		{ announce($ThisTypeRefParserRuleCall_1.start, $ThisTypeRefParserRuleCall_1.stop, grammarAccess.getTypeRefForCastAccess().getThisTypeRefParserRuleCall_1()); }
+    |	ArrayTypeRefParserRuleCall_1=ruleArrayTypeRef		{ announce($ArrayTypeRefParserRuleCall_1.start, $ArrayTypeRefParserRuleCall_1.stop, grammarAccess.getTypeRefForCastAccess().getArrayTypeRefParserRuleCall_1()); }
 
-    |	ConstructorTypeRefParserRuleCall_2=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_2.start, $ConstructorTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefForCastAccess().getConstructorTypeRefParserRuleCall_2()); }
+    |	ThisTypeRefParserRuleCall_2=ruleThisTypeRef		{ announce($ThisTypeRefParserRuleCall_2.start, $ThisTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefForCastAccess().getThisTypeRefParserRuleCall_2()); }
 
-    |	ClassifierTypeRefParserRuleCall_3=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_3.start, $ClassifierTypeRefParserRuleCall_3.stop, grammarAccess.getTypeRefForCastAccess().getClassifierTypeRefParserRuleCall_3()); }
+    |	ConstructorTypeRefParserRuleCall_3=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_3.start, $ConstructorTypeRefParserRuleCall_3.stop, grammarAccess.getTypeRefForCastAccess().getConstructorTypeRefParserRuleCall_3()); }
 
-    |	N4FunctionTypeExpressionParserRuleCall_4=ruleN4FunctionTypeExpression		{ announce($N4FunctionTypeExpressionParserRuleCall_4.start, $N4FunctionTypeExpressionParserRuleCall_4.stop, grammarAccess.getTypeRefForCastAccess().getN4FunctionTypeExpressionParserRuleCall_4()); }
+    |	ClassifierTypeRefParserRuleCall_4=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_4.start, $ClassifierTypeRefParserRuleCall_4.stop, grammarAccess.getTypeRefForCastAccess().getClassifierTypeRefParserRuleCall_4()); }
 
-    |	ArrowFunctionTypeExpressionParserRuleCall_5=ruleArrowFunctionTypeExpression		{ announce($ArrowFunctionTypeExpressionParserRuleCall_5.start, $ArrowFunctionTypeExpressionParserRuleCall_5.stop, grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_5()); }
+    |	N4FunctionTypeExpressionParserRuleCall_5=ruleN4FunctionTypeExpression		{ announce($N4FunctionTypeExpressionParserRuleCall_5.start, $N4FunctionTypeExpressionParserRuleCall_5.stop, grammarAccess.getTypeRefForCastAccess().getN4FunctionTypeExpressionParserRuleCall_5()); }
+
+    |	ArrowFunctionTypeExpressionParserRuleCall_6=ruleArrowFunctionTypeExpression		{ announce($ArrowFunctionTypeExpressionParserRuleCall_6.start, $ArrowFunctionTypeExpressionParserRuleCall_6.stop, grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_6()); }
 )
 ;
 
@@ -15469,6 +15475,70 @@ ruleParameterizedTypeRef
 
 
 
+// Entry rule entryRuleParameterizedTypeRefNominal
+entryRuleParameterizedTypeRefNominal
+	:
+	ruleParameterizedTypeRefNominal 
+	EOF 
+;
+
+// Rule ParameterizedTypeRefNominal
+ruleParameterizedTypeRefNominal 
+    @init {
+    }:
+((
+(
+	DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1=ruleTypeReferenceName { announce($DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1.start, $DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeAssignment_0()); }
+
+)
+)(((
+	LessThanSign 	)=>
+	LessThanSignKeyword_1_0=LessThanSign 	 { announce($LessThanSignKeyword_1_0, grammarAccess.getParameterizedTypeRefNominalAccess().getLessThanSignKeyword_1_0()); })(
+(
+	TypeArgsTypeArgumentParserRuleCall_1_1_0=ruleTypeArgument { announce($TypeArgsTypeArgumentParserRuleCall_1_1_0.start, $TypeArgsTypeArgumentParserRuleCall_1_1_0.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_1()); }
+)
+)(
+	CommaKeyword_1_2_0=Comma 	 { announce($CommaKeyword_1_2_0, grammarAccess.getParameterizedTypeRefNominalAccess().getCommaKeyword_1_2_0()); }(
+(
+	TypeArgsTypeArgumentParserRuleCall_1_2_1_0=ruleTypeArgument { announce($TypeArgsTypeArgumentParserRuleCall_1_2_1_0.start, $TypeArgsTypeArgumentParserRuleCall_1_2_1_0.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_2_1()); }
+)
+))*
+	GreaterThanSignKeyword_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_1_3, grammarAccess.getParameterizedTypeRefNominalAccess().getGreaterThanSignKeyword_1_3()); })?)
+;
+
+
+
+
+
+// Entry rule entryRuleArrayTypeRef
+entryRuleArrayTypeRef
+	:
+	ruleArrayTypeRef 
+	EOF 
+;
+
+// Rule ArrayTypeRef
+ruleArrayTypeRef 
+    @init {
+    }:
+((
+(
+
+	ArrayTypeLiteralLeftSquareBracketKeyword_0_0=LeftSquareBracket 	 { announce($ArrayTypeLiteralLeftSquareBracketKeyword_0_0, grammarAccess.getArrayTypeRefAccess().getArrayTypeLiteralLeftSquareBracketKeyword_0_0()); }
+
+)
+)(
+(
+	TypeArgsTypeArgumentParserRuleCall_1_0=ruleTypeArgument { announce($TypeArgsTypeArgumentParserRuleCall_1_0.start, $TypeArgsTypeArgumentParserRuleCall_1_0.stop, grammarAccess.getArrayTypeRefAccess().getTypeArgsAssignment_1()); }
+)
+)
+	RightSquareBracketKeyword_2=RightSquareBracket 	 { announce($RightSquareBracketKeyword_2, grammarAccess.getArrayTypeRefAccess().getRightSquareBracketKeyword_2()); })
+;
+
+
+
+
+
 // Entry rule entryRuleParameterizedTypeRefStructural
 entryRuleParameterizedTypeRefStructural
 	:
@@ -15729,41 +15799,6 @@ ruleTStructSetter
 )
 )
 	RightParenthesisKeyword_3=RightParenthesis 	 { announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3()); })
-;
-
-
-
-
-
-// Entry rule entryRuleParameterizedTypeRefNominal
-entryRuleParameterizedTypeRefNominal
-	:
-	ruleParameterizedTypeRefNominal 
-	EOF 
-;
-
-// Rule ParameterizedTypeRefNominal
-ruleParameterizedTypeRefNominal 
-    @init {
-    }:
-((
-(
-	DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1=ruleTypeReferenceName { announce($DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1.start, $DeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeAssignment_0()); }
-
-)
-)(((
-	LessThanSign 	)=>
-	LessThanSignKeyword_1_0=LessThanSign 	 { announce($LessThanSignKeyword_1_0, grammarAccess.getParameterizedTypeRefNominalAccess().getLessThanSignKeyword_1_0()); })(
-(
-	TypeArgsTypeArgumentParserRuleCall_1_1_0=ruleTypeArgument { announce($TypeArgsTypeArgumentParserRuleCall_1_1_0.start, $TypeArgsTypeArgumentParserRuleCall_1_1_0.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_1()); }
-)
-)(
-	CommaKeyword_1_2_0=Comma 	 { announce($CommaKeyword_1_2_0, grammarAccess.getParameterizedTypeRefNominalAccess().getCommaKeyword_1_2_0()); }(
-(
-	TypeArgsTypeArgumentParserRuleCall_1_2_1_0=ruleTypeArgument { announce($TypeArgsTypeArgumentParserRuleCall_1_2_1_0.start, $TypeArgsTypeArgumentParserRuleCall_1_2_1_0.stop, grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_2_1()); }
-)
-))*
-	GreaterThanSignKeyword_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_1_3, grammarAccess.getParameterizedTypeRefNominalAccess().getGreaterThanSignKeyword_1_3()); })?)
 ;
 
 

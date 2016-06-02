@@ -559,7 +559,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_0(), "rule__PrimaryTypeExpression__Group_0__0");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_0_0(), "rule__PrimaryTypeExpression__Group_0_0__0");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_0_0_0(), "rule__PrimaryTypeExpression__Group_0_0_0__0");
-					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_2(), "rule__PrimaryTypeExpression__Group_2__0");
+					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_3(), "rule__PrimaryTypeExpression__Group_3__0");
 					put(grammarAccess.getTypeRefWithModifiersAccess().getGroup_0(), "rule__TypeRefWithModifiers__Group_0__0");
 					put(grammarAccess.getTypeRefWithModifiersAccess().getGroup_1(), "rule__TypeRefWithModifiers__Group_1__0");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getGroup_0(), "rule__TypeRefWithoutModifiers__Group_0__0");
@@ -581,6 +581,10 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getN4UnionTypeExpressionAccess().getGroup_4(), "rule__N4UnionTypeExpression__Group_4__0");
 					put(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup(), "rule__N4IntersectionTypeExpression__Group__0");
 					put(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup_4(), "rule__N4IntersectionTypeExpression__Group_4__0");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup(), "rule__ParameterizedTypeRefNominal__Group__0");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup_1(), "rule__ParameterizedTypeRefNominal__Group_1__0");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup_1_2(), "rule__ParameterizedTypeRefNominal__Group_1_2__0");
+					put(grammarAccess.getArrayTypeRefAccess().getGroup(), "rule__ArrayTypeRef__Group__0");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getGroup(), "rule__ParameterizedTypeRefStructural__Group__0");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getGroup_2(), "rule__ParameterizedTypeRefStructural__Group_2__0");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getGroup_2_2(), "rule__ParameterizedTypeRefStructural__Group_2_2__0");
@@ -602,9 +606,6 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTStructSetterAccess().getGroup(), "rule__TStructSetter__Group__0");
 					put(grammarAccess.getTStructSetterAccess().getGroup_0(), "rule__TStructSetter__Group_0__0");
 					put(grammarAccess.getTStructSetterAccess().getGroup_0_0(), "rule__TStructSetter__Group_0_0__0");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup(), "rule__ParameterizedTypeRefNominal__Group__0");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup_1(), "rule__ParameterizedTypeRefNominal__Group_1__0");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getGroup_1_2(), "rule__ParameterizedTypeRefNominal__Group_1_2__0");
 					put(grammarAccess.getTypingStrategyUseSiteOperatorAccess().getGroup(), "rule__TypingStrategyUseSiteOperator__Group__0");
 					put(grammarAccess.getConstructorTypeRefAccess().getGroup(), "rule__ConstructorTypeRef__Group__0");
 					put(grammarAccess.getClassifierTypeRefAccess().getGroup(), "rule__ClassifierTypeRef__Group__0");
@@ -992,6 +993,11 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsAssignment_4_1(), "rule__N4UnionTypeExpression__TypeRefsAssignment_4_1");
 					put(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_3(), "rule__N4IntersectionTypeExpression__TypeRefsAssignment_3");
 					put(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_4_1(), "rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeAssignment_0(), "rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_1(), "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1");
+					put(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_2_1(), "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1");
+					put(grammarAccess.getArrayTypeRefAccess().getArrayTypeLiteralAssignment_0(), "rule__ArrayTypeRef__ArrayTypeLiteralAssignment_0");
+					put(grammarAccess.getArrayTypeRefAccess().getTypeArgsAssignment_1(), "rule__ArrayTypeRef__TypeArgsAssignment_1");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getDefinedTypingStrategyAssignment_0(), "rule__ParameterizedTypeRefStructural__DefinedTypingStrategyAssignment_0");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getDeclaredTypeAssignment_1(), "rule__ParameterizedTypeRefStructural__DeclaredTypeAssignment_1");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getTypeArgsAssignment_2_1(), "rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1");
@@ -1007,9 +1013,6 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1(), "rule__TStructGetter__DeclaredTypeRefAssignment_3_1");
 					put(grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2(), "rule__TStructSetter__NameAssignment_0_0_2");
 					put(grammarAccess.getTStructSetterAccess().getFparAssignment_2(), "rule__TStructSetter__FparAssignment_2");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeAssignment_0(), "rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_1(), "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1");
-					put(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsAssignment_1_2_1(), "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1");
 					put(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3(), "rule__ConstructorTypeRef__StaticTypeRefAssignment_3");
 					put(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3(), "rule__ClassifierTypeRef__StaticTypeRefAssignment_3");
 					put(grammarAccess.getWildcardAccess().getDeclaredUpperBoundAssignment_1_0_1(), "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1");

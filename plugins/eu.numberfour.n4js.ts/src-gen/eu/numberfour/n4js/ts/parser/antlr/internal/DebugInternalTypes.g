@@ -396,6 +396,7 @@ rulePrimaryTypeExpression :
 	) => (
 		'(' ruleTAnonymousFormalParameterList ')' '=>'
 	) ) rulePrimaryTypeExpression |
+	ruleArrayTypeRef |
 	ruleTypeRefWithModifiers |
 	'(' ruleTypeRef ')'
 ;
@@ -426,6 +427,7 @@ ruleTypeRefWithoutModifiers :
 // Rule TypeRefFunctionTypeExpression
 ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
+	ruleArrayTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleN4UnionTypeExpression |
@@ -517,6 +519,22 @@ ruleParameterizedTypeRef :
 	ruleParameterizedTypeRefStructural
 ;
 
+// Rule ParameterizedTypeRefNominal
+ruleParameterizedTypeRefNominal :
+	ruleTypeReferenceName (
+		( (
+		'<'
+		) => '<' ) ruleTypeArgument (
+			',' ruleTypeArgument
+		)* '>'
+	)?
+;
+
+// Rule ArrayTypeRef
+ruleArrayTypeRef :
+	'[' ruleTypeArgument ']'
+;
+
 // Rule ParameterizedTypeRefStructural
 ruleParameterizedTypeRefStructural :
 	ruleTypingStrategyUseSiteOperator ruleTypeReferenceName (
@@ -602,17 +620,6 @@ ruleTStructSetter :
 	) => (
 		'set' ruleTypesIdentifier
 	) ) '(' ruleTAnonymousFormalParameter ')'
-;
-
-// Rule ParameterizedTypeRefNominal
-ruleParameterizedTypeRefNominal :
-	ruleTypeReferenceName (
-		( (
-		'<'
-		) => '<' ) ruleTypeArgument (
-			',' ruleTypeArgument
-		)* '>'
-	)?
 ;
 
 // Rule TypingStrategyUseSiteOperator
