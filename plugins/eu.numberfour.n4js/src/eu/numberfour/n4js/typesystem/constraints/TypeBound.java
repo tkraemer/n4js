@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.typesystem.constraints;
 
-import eu.numberfour.n4js.typesystem.TypeVarUtils;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.util.Variance;
@@ -19,8 +18,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
  */
-@SuppressWarnings("javadoc")
-public class TypeBound {
+/* package */ final class TypeBound {
 	public final TypeVariable left; // TypeVariableImpl inherits hashCode() from j.l.Object
 	public final TypeRef right;
 	public final Variance variance;
@@ -71,7 +69,7 @@ public class TypeBound {
 	 * Is this bound of the form `alpha op alpha`?
 	 */
 	public boolean isTrivial() {
-		return TypeVarUtils.denotesVar(right, left);
+		return right.getDeclaredType() == left;
 	}
 
 	/**

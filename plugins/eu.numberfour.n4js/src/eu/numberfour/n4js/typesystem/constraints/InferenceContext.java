@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.typesystem.constraints;
 
 import static eu.numberfour.n4js.ts.types.util.Variance.INV;
-import static eu.numberfour.n4js.typesystem.TypeVarUtils.typeRef;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +94,7 @@ import it.xsemantics.runtime.RuleEnvironment;
  *
  * In order to get detailed debugging information, turn on logging by setting field {@link #DEBUG} to <code>true</code>.
  */
-public class InferenceContext {
+public final class InferenceContext {
 
 	static final boolean DEBUG = false;
 
@@ -110,8 +109,8 @@ public class InferenceContext {
 	 */
 	private final Set<TypeVariable> inferenceVariables = new LinkedHashSet<>();
 
-	/** An append-only list of constraints that may also be cleared. */
-	private final ConstraintBuffer constraints = new ConstraintBuffer();
+	/** List of constraints supplied by client. */
+	private final List<TypeConstraint> constraints = new ArrayList<>();
 
 	/** Collaborator reducing higher-level constraints into simpler bounds. */
 	private final Reducer redu;
@@ -323,7 +322,7 @@ public class InferenceContext {
 	 * Add a type constraint to this inference context. When done adding constraints, call {@link #solve()}.
 	 */
 	public void addConstraint(TypeConstraint constraint) {
-		constraints.addConstraint(constraint);
+		constraints.add(constraint);
 	}
 
 	/**
@@ -341,7 +340,7 @@ public class InferenceContext {
 		if (DEBUG) {
 			log("====== ====== ====== ====== ====== ====== ====== ====== ====== ====== ====== ======");
 			log("solving the following constraint set:");
-			constraints.log(this);
+			constraints.stream().forEachOrdered(c -> log(c.toString()));
 			log("inference variables: "
 					+ inferenceVariables.stream().map(iv -> str(iv)).collect(Collectors.joining(", ")));
 		}
@@ -354,7 +353,7 @@ public class InferenceContext {
 		if (DEBUG) {
 			log("****** Reduction");
 		}
-		for (final TypeConstraint constraint : constraints.asReadOnlyList()) {
+		for (final TypeConstraint constraint : constraints) {
 			redu.reduce(constraint);
 			if (isDoomed()) {
 				break;
@@ -454,7 +453,7 @@ public class InferenceContext {
 		assert !(currentBounds.isInstantiated(infVar)) : "attempt to re-instantiate var " + str(infVar);
 		assert isProper(proper);
 		// add bound `infVar = proper`
-		redu.reduce(typeRef(infVar), proper, INV);
+		redu.reduce(TypeUtils.createTypeRef(infVar), proper, INV);
 	}
 
 	/**
@@ -624,8 +623,7 @@ public class InferenceContext {
 		return targ.getTypeRefAsString();
 	}
 
-	@SuppressWarnings("javadoc")
-	protected void log(final String message) {
+	void log(final String message) {
 		System.out.println("[" + Integer.toHexString(System.identityHashCode(this)) + "] " + message);
 	}
 
