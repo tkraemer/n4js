@@ -21,8 +21,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
         <help.pages.list>help-pages.txt</help.pages.list>
-        <imagesDir>${basedir}/src/images</imagesDir>
-        
     </properties>
 
 
@@ -113,12 +111,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
-                            <imagesdir>${imagesDir}</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${eclipseHelpDir}</outputDirectory>
                             <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
                                 <stylesdir>styles</stylesdir>
@@ -146,11 +143,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <preserveDirectories>false</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> 
                                 <!-- Individual attributes per conversion execution -->
                                 <stylesdir>../styles</stylesdir>
-                                <imagesdir>${imagesDir}</imagesdir>
                                 <toc>left</toc>
                                 <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
@@ -178,7 +174,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
                             <preserveDirectories>false</preserveDirectories> 
                             <backend>epub3</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes>
                                 <imagesdir>images</imagesdir>
                                 <doctype>book</doctype>
@@ -204,7 +200,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <sourceDirectory>src/documentation</sourceDirectory>
                             <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> 
                                 <toc>left</toc> 
                                 <imagesdir>../images</imagesdir>

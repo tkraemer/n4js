@@ -5,8 +5,7 @@
 :source-highlighter: prettify
 :doctype: book
 :icons: font
-:data-uri:
-:imagesdir: ../images
+:imagesdir: images
 :toc: left
 
 .N4JS Tutorial
@@ -125,7 +124,7 @@ manually enhance this class as follows:
 
 [source,javascript]
 ----
-export abstract class Task {  //  <1>
+export abstract class Task {  // <1>
   public id: string?;
   public label: string?;
 }
@@ -160,15 +159,15 @@ We now manually add two classes to the same file:
 [source,javascript]
 .model.n4js
 ----
-/** An appointment. */ //  <1>
-export class Appointment extends Task {   //  <2>
-  public time: Date?;     //  <3>
-  public place: string;   //  <3>
+/** An appointment. */ // <1>
+export class Appointment extends Task {   // <2>
+  public time: Date?;     // <3>
+  public place: string;   // <3>
 }
 
 export class Todo extends Task {  
   public dueDate: Date?;   
-  public done = false;   //  <4>
+  public done = false;   // <4>
 }  
 ----
 
@@ -298,11 +297,11 @@ it is expected and we will deal with them shortly.
 import { Storage } from "Storage"
 import { Task } from "model"
 
-export class StorageInMemory implements Storage { //  <2>
+export class StorageInMemory implements Storage { // <2>
 
   private lowestUnusedId = 1;
   @Final
-  private tasks = new Map<string,Task>();  //  <1>
+  private tasks = new Map<string,Task>();  // <1>
 
   @Override
   public size(): int {
@@ -547,7 +546,7 @@ import { Task } from "model"
 
 export public interface Storage {
 
-  async size(): int  //  <1>
+  async size(): int  // <1>
   async clear()
 
   async getTasks(): Array<Task>
@@ -559,7 +558,7 @@ export public interface Storage {
 }
 ------
 
-Adding "async" to the size method and without adding the "await" keyword, you will get a
+<1> Adding "async" to the size method and without adding the "await" keyword, you will get a
 warning in method `isEmpty` similar to the following:
 
 image::awaitwarning.png[]
@@ -804,7 +803,7 @@ export class StorageMongoDB implements Storage {
   public async getTasks(): Array<Task> {
     let coll = await this.getTasksCollection();
     let resultRaw = await coll.find({}).toArray();
-    let result = resultRaw.map((data): Task => fromData(data));  //  <1>
+    let result = resultRaw.map((data): Task => fromData(data));  // <1>
     return result;
   }
 
