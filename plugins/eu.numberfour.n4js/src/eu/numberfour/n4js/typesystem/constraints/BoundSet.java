@@ -10,9 +10,9 @@
  */
 package eu.numberfour.n4js.typesystem.constraints;
 
-import static eu.numberfour.n4js.typesystem.constraints.Variance.CO;
-import static eu.numberfour.n4js.typesystem.constraints.Variance.CONTRA;
-import static eu.numberfour.n4js.typesystem.constraints.Variance.INV;
+import static eu.numberfour.n4js.ts.types.util.Variance.CO;
+import static eu.numberfour.n4js.ts.types.util.Variance.CONTRA;
+import static eu.numberfour.n4js.ts.types.util.Variance.INV;
 
 import java.util.ArrayList;
 import java.util.Arrays;

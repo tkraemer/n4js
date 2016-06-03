@@ -1870,6 +1870,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTypedElement_BogusTypeRef() {
+		return (EReference)typedElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getVariableEnvironmentElement() {
 		return variableEnvironmentElementEClass;
 	}
@@ -5047,8 +5056,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getN4ClassifierDefinition__GetImplementedOrExtendedInterfaceRefs() {
+	public EOperation getN4ClassifierDefinition__GetSuperClassifierRefs() {
 		return n4ClassifierDefinitionEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getN4ClassifierDefinition__GetImplementedOrExtendedInterfaceRefs() {
+		return n4ClassifierDefinitionEClass.getEOperations().get(8);
 	}
 
 	/**
@@ -5101,8 +5119,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getN4ClassDefinition__GetImplementedOrExtendedInterfaceRefs() {
+	public EOperation getN4ClassDefinition__GetSuperClassifierRefs() {
 		return n4ClassDefinitionEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getN4ClassDefinition__GetImplementedOrExtendedInterfaceRefs() {
+		return n4ClassDefinitionEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -5173,8 +5200,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getN4InterfaceDeclaration__GetImplementedOrExtendedInterfaceRefs() {
+	public EOperation getN4InterfaceDeclaration__GetSuperClassifierRefs() {
 		return n4InterfaceDeclarationEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getN4InterfaceDeclaration__GetImplementedOrExtendedInterfaceRefs() {
+		return n4InterfaceDeclarationEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -6008,6 +6044,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		typedElementEClass = createEClass(TYPED_ELEMENT);
 		createEReference(typedElementEClass, TYPED_ELEMENT__DECLARED_TYPE_REF);
+		createEReference(typedElementEClass, TYPED_ELEMENT__BOGUS_TYPE_REF);
 
 		variableEnvironmentElementEClass = createEClass(VARIABLE_ENVIRONMENT_ELEMENT);
 		createEOperation(variableEnvironmentElementEClass, VARIABLE_ENVIRONMENT_ELEMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
@@ -6484,6 +6521,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(n4ClassifierDefinitionEClass, N4_CLASSIFIER_DEFINITION___GET_OWNED_FIELDS);
 		createEOperation(n4ClassifierDefinitionEClass, N4_CLASSIFIER_DEFINITION___GET_OWNED_GETTERS);
 		createEOperation(n4ClassifierDefinitionEClass, N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS);
+		createEOperation(n4ClassifierDefinitionEClass, N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(n4ClassifierDefinitionEClass, N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 
 		n4ClassDefinitionEClass = createEClass(N4_CLASS_DEFINITION);
@@ -6491,6 +6529,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(n4ClassDefinitionEClass, N4_CLASS_DEFINITION__SUPER_CLASS_EXPRESSION);
 		createEReference(n4ClassDefinitionEClass, N4_CLASS_DEFINITION__IMPLEMENTED_INTERFACE_REFS);
 		createEOperation(n4ClassDefinitionEClass, N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS);
+		createEOperation(n4ClassDefinitionEClass, N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(n4ClassDefinitionEClass, N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 
 		n4ClassDeclarationEClass = createEClass(N4_CLASS_DECLARATION);
@@ -6502,6 +6541,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		n4InterfaceDeclarationEClass = createEClass(N4_INTERFACE_DECLARATION);
 		createEReference(n4InterfaceDeclarationEClass, N4_INTERFACE_DECLARATION__SUPER_INTERFACE_REFS);
 		createEOperation(n4InterfaceDeclarationEClass, N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE);
+		createEOperation(n4InterfaceDeclarationEClass, N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(n4InterfaceDeclarationEClass, N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 
 		n4EnumDeclarationEClass = createEClass(N4_ENUM_DECLARATION);
@@ -6930,6 +6970,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(typedElementEClass, TypedElement.class, "TypedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTypedElement_DeclaredTypeRef(), theTypeRefsPackage.getTypeRef(), null, "declaredTypeRef", null, 0, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypedElement_BogusTypeRef(), theTypeRefsPackage.getTypeRef(), null, "bogusTypeRef", null, 0, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(variableEnvironmentElementEClass, VariableEnvironmentElement.class, "VariableEnvironmentElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -7495,6 +7536,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getN4ClassifierDefinition__GetOwnedSetters(), this.getN4SetterDeclaration(), "getOwnedSetters", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getN4ClassifierDefinition__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		initEOperation(getN4ClassifierDefinition__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(n4ClassDefinitionEClass, N4ClassDefinition.class, "N4ClassDefinition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -7503,6 +7546,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getN4ClassDefinition_ImplementedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRef(), null, "implementedInterfaceRefs", null, 0, -1, N4ClassDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getN4ClassDefinition__GetDefinedTypeAsClass(), theTypesPackage.getTClass(), "getDefinedTypeAsClass", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getN4ClassDefinition__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getN4ClassDefinition__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7517,6 +7562,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getN4InterfaceDeclaration_SuperInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRef(), null, "superInterfaceRefs", null, 0, -1, N4InterfaceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getN4InterfaceDeclaration__GetDefinedTypeAsInterface(), theTypesPackage.getTInterface(), "getDefinedTypeAsInterface", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getN4InterfaceDeclaration__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getN4InterfaceDeclaration__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

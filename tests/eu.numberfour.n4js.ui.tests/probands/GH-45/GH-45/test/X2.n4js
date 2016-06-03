@@ -1,0 +1,14 @@
+@Ignore('Whole class X2 is ignored.')
+export public class X2 {
+
+    @Test
+    public x21Test(): void {
+        console.log('X2#x21Test');
+    }
+    
+    @Test
+    public x22Test(): void {
+        console.log('X2#x22Test');
+    }
+
+}

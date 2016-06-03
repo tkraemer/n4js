@@ -10,10 +10,10 @@
  */
 package eu.numberfour.n4js.typesystem.constraints;
 
+import static eu.numberfour.n4js.ts.types.util.Variance.CO;
+import static eu.numberfour.n4js.ts.types.util.Variance.CONTRA;
+import static eu.numberfour.n4js.ts.types.util.Variance.INV;
 import static eu.numberfour.n4js.typesystem.TypeVarUtils.typeRef;
-import static eu.numberfour.n4js.typesystem.constraints.Variance.CO;
-import static eu.numberfour.n4js.typesystem.constraints.Variance.CONTRA;
-import static eu.numberfour.n4js.typesystem.constraints.Variance.INV;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,6 +51,7 @@ import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector;
+import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import it.xsemantics.runtime.RuleEnvironment;
 

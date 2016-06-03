@@ -36,11 +36,9 @@ import eu.numberfour.n4js.n4JS.WhileStatement
 import eu.numberfour.n4js.n4JS.WithStatement
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator.MethodWrapperCancelable
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberType
 import eu.numberfour.n4js.ts.types.TClass
@@ -52,7 +50,11 @@ import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.UtilN4
+import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator.MethodWrapperCancelable
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import java.lang.reflect.Method
 import java.util.List
@@ -142,7 +144,8 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	 * Internal Validations:
 	 */
 	/**
-	 * Checks for (1) correct number of type arguments and (2) correct type of each type argument.
+	 * Checks for (1) correct number of type arguments, (2) correct type of each type argument, and (3) consistency of
+	 * use-site and definition-site variance (in case of wildcards).
 	 * <p>
 	 * Usually 'parameterizedElement' will be a TClass, TInterface, TMethod or TFunction.
 	 * However, it might also be a TField, TGetter or TSetter to also support the corner cases
@@ -162,7 +165,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	 * @param feature  the feature in 'source' where the parameterized access occurs;
 	 *                 used to derive the region of the error.
 	 */
-	def protected internalCheckTypeArguments(List<? extends TypeVariable> typeVars,
+	def protected void internalCheckTypeArguments(List<? extends TypeVariable> typeVars,
 		List<? extends TypeArgument> typeArgs, boolean allowAutoInference, IdentifiableElement parameterizedElement,
 		EObject source, EStructuralFeature feature) {
 		val typeParameterCount = typeVars.size
@@ -189,7 +192,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			return;
 		}
 
-		// check if type arguments adhere to type variables' bounds (if any)
+		// check if type arguments adhere to type variables' bounds and variance (if any)
 		val minTypeVariables = Math.min(typeParameterCount, typeArgumentCount);
 		if (minTypeVariables !== 0) {
 			// preparation: create rule environment for type variable substitution in upper bounds
@@ -207,6 +210,32 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 				val TypeVariable typeParameter = typeVars.get(i)
 				val TypeArgument typeArgument = typeArgs.get(i);
 
+				// check consistency of use-site and definition-site variance
+				if(typeArgument instanceof Wildcard) {
+					val defSiteVariance = typeParameter.variance;
+					val useSiteVariance = if(typeArgument.declaredUpperBound!==null) {
+						Variance.CO
+					} else if(typeArgument.declaredLowerBound!==null) {
+						Variance.CONTRA
+					};
+					if(defSiteVariance!==Variance.INV && useSiteVariance!==null
+						&& useSiteVariance!==defSiteVariance) {
+						// we've got an inconsistency!
+						if(typeArgument.usingInOutNotation) {
+							val message = IssueCodes.getMessageForEXP_INCONSISTENT_VARIANCE_OF_TYPE_ARG_IN_OUT(
+								useSiteVariance.getDescriptiveStringNoun(true),
+								defSiteVariance.getDescriptiveStringNoun(true));
+							addIssue(message, typeArgument, IssueCodes.EXP_INCONSISTENT_VARIANCE_OF_TYPE_ARG_IN_OUT);
+						} else {
+							val message = IssueCodes.getMessageForEXP_INCONSISTENT_VARIANCE_OF_TYPE_ARG(
+								if(useSiteVariance===Variance.CO) "upper" else "lower",
+								defSiteVariance.getDescriptiveString(true));
+							addIssue(message, typeArgument, IssueCodes.EXP_INCONSISTENT_VARIANCE_OF_TYPE_ARG);
+						}
+					}
+				}
+
+				// check bounds
 				for (TypeRef upperBound : typeParameter.declaredUpperBounds) {
 					val substituted = typeInferencer.substituteTypeVariables(G_subst, upperBound)
 					val result = typeInferencer.subtypeTypeRef(typeArgument, substituted);

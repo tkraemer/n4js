@@ -181,6 +181,7 @@ import java.util.List
 import org.eclipse.emf.common.util.ECollections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import eu.numberfour.n4js.ts.types.util.Variance
 
 import static eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.PRIORITY_ERROR
 import static eu.numberfour.n4js.validation.JavaScriptVariant.*
@@ -1313,11 +1314,11 @@ from {
 				}
 			} else if (leftDeclType == rightDeclType) {
 				if (left.typeArgs.size>0 && left.typeArgs.size <= right.typeArgs.size) { // ignore raw types
-					val leftIter = left.typeArgs.iterator
-					val rightIter = right.typeArgs.iterator
-					while (leftIter.hasNext) {
-						val leftArg = leftIter.next
-						val rightArg = rightIter.next
+					val len = Math.min(Math.min(left.typeArgs.size, right.typeArgs.size), rightDeclType.typeVars.size);
+					for(var i=0;i<len;i++) {
+						val leftArg = left.typeArgs.get(i)
+						val rightArg = right.typeArgs.get(i)
+						val variance = rightDeclType.getVarianceOfTypeVar(i)
 
 						var TypeRef leftArgUpper; G |~ leftArg /\ leftArgUpper
 						var TypeRef leftArgLower; G |~ leftArg \/ leftArgLower
@@ -1329,10 +1330,17 @@ from {
 // why not just require type equality, i.e. L<:R && R<:L (without taking upper/lower bounds) and let the
 // subtype rules for WildCards / ExistentialTypeRefs do the heavy lifting?
 						{
-							G |- leftArgUpper <: rightArgUpper
-							G |- rightArgLower <: leftArgLower
+							// require leftArg <: rightArg, except we have contravariance
+							if(variance!=Variance.CONTRA) {
+								G |- leftArgUpper <: rightArgUpper
+							}
+							// require rightArg <: leftArg, except we have covariance
+							if(variance!=Variance.CO) {
+								G |- rightArgLower <: leftArgLower
+							}
 						}
-						or {
+						or
+						{
 							if(previousFailure.isOrCausedByPriorityError) {
 								fail
 									error stringRep(left) + " is not a subtype of " + stringRep(right)
@@ -1348,17 +1356,24 @@ from {
 				}
 			} else {
 				val allSuperTypeRefs = if(leftDeclType instanceof ContainerType<?>) AllSuperTypeRefsCollector.collect(leftDeclType) else newArrayList;
-				val superTypes = allSuperTypeRefs + G.collectAllImplicitSuperTypes(left);
-				val matchingSuperTypeRef = superTypes.findFirst[it.declaredType===rightDeclType];
-				if(matchingSuperTypeRef!==null) {
+				val superTypeRefs = allSuperTypeRefs + G.collectAllImplicitSuperTypes(left);
+				// Note: rightDeclType might appear in superTypes several times in case of multiple implementation
+				// of the same interface, which is allowed in case of definition-site co-/contravariance.
+				// To support such cases without duplicating any logic, we will use judgment 'substTypeVariables' below.
+				if(superTypeRefs.exists[it.declaredType===rightDeclType]) {
+					// at this point we have 1..* type references in superTypeRefs with a declared type of rightDeclType
+					// (more than one possible in case of multiple implementation of the same interface, which is legal
+					// in case of definition-site co-/contravariance)
+					// (a) these type references may contain unbound type variables from lower level of the inheritance
+					// hierarchy and (b) in case of more than 1 type reference we have to combine them into a single
+					// type reference
+					// --> use type variable substitution on a synthetic type reference with a declared type of
+					// rightDeclType to solve all those cases without duplicating any logic:
 					val localG_left = G.wrap;
-					typeSystemHelper.addSubstitutions(localG_left,left)
-					try {
-						localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst // substitute type variables
-						G |- matchingSuperTypeRefSubst <: right
-					} catch(Exception e) {
-						false
-					}
+					typeSystemHelper.addSubstitutions(localG_left,left);
+					val syntheticTypeRef = rightDeclType.ref(rightDeclType.typeVars.map[it.ref]);
+					localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef // substitute type variables
+					G |- effectiveSuperTypeRef <: right
 				} else {
 					false
 				}
@@ -2512,15 +2527,16 @@ from {
 					l += TypeUtils.copy(temp); // always copy! (methods #createUnion/IntersectionType() below will do a #cloneIfContained() which fails here, see above)
 				}
 			}
-			result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
-//			val needUnionInsteadIntersection = TODO
-//			result = if(needUnionInsteadIntersection)
-//					typeSystemHelper.createUnionType(G,l)
-//				else
-//					typeSystemHelper.createIntersectionType(G,l);
-			TypeUtils.copyTypeModifiers(result, typeRef);
-			G.addInconsistentSubstitutions(typeVar, l); // will have no effect unless recording was turned on
-			// by a validation (see method RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment))
+			result = if(typeVar.declaredCovariant) {
+				typeSystemHelper.createIntersectionType(G,l)
+			} else if(typeVar.declaredContravariant) {
+				typeSystemHelper.createUnionType(G,l)
+			} else {
+				G.addInconsistentSubstitutions(typeVar, l); // will have no effect unless recording was turned on
+				// by a validation (see method RuleEnvironmentExtensions#recordInconsistentSubstitutions(RuleEnvironment))
+				TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+			};
+			TypeUtils.copyTypeModifiers(result, typeRef)
 		}
 		or
 		{

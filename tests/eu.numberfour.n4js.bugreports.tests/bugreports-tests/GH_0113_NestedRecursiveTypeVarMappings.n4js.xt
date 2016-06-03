@@ -20,7 +20,7 @@ abstract class AbstractGen<T_ag> implements I<INested<T_ag>> {
 class StringGen extends AbstractGen<string> implements I<INested<string>> {
 }
 
-// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for T_i: INested<string>, INested<number>." at "InconsistentGen"
+// XPECT errors --> "Cannot implement interface I multiple times with different type arguments for invariant T_i: INested<string>, INested<number>." at "InconsistentGen"
 class InconsistentGen extends AbstractGen<string> implements I<INested<number>> {
 }
 
