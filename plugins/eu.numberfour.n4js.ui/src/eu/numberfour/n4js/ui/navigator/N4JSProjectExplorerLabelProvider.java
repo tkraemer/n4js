@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.ui.navigator;
 
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator.ProblemsLabelChangedEvent;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -40,10 +39,12 @@ import eu.numberfour.n4js.utils.Arrays2;
  */
 public class N4JSProjectExplorerLabelProvider extends LabelProvider implements IStyledLabelProvider {
 
+	@SuppressWarnings("unused")
 	private static final Image SRC_FOLDER_IMG = ImageRef.SRC_FOLDER.asImage().orNull();
 	private static final Image WORKING_SET_IMG = ImageRef.WORKING_SET.asImage().orNull();
 
 	@Inject
+	@SuppressWarnings("unused")
 	private N4JSProjectExplorerHelper helper;
 
 	@Inject
@@ -91,12 +92,16 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider implements I
 			return decorator.decorateImage(WORKING_SET_IMG, element);
 		}
 
-		if (element instanceof IFolder) {
-			final IFolder folder = (IFolder) element;
-			if (helper.isSourceFolder(folder) || helper.isOutputFolder(folder)) {
-				return decorator.decorateImage(SRC_FOLDER_IMG, element);
-			}
-		}
+		// (temporarily) disabled because #isSourceFolder() and #isOutputFolder() obtain a lock on the workspace
+		// (e.g. they call IResource#exists() on IFolder 'element') and this seems to cause performance issues with
+		// locks that egit is obtaining for doing cyclic updates (see IDE-2269):
+
+		// if (element instanceof IFolder) {
+		// final IFolder folder = (IFolder) element;
+		// if (helper.isSourceFolder(folder) || helper.isOutputFolder(folder)) {
+		// return decorator.decorateImage(SRC_FOLDER_IMG, element);
+		// }
+		// }
 
 		return delegate.getImage(element);
 	}

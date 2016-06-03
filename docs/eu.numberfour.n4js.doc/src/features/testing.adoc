@@ -5,6 +5,7 @@
 :source-highlighter: prettify
 :doctype: book
 :data-uri:
+:imagesdir: ../images
 
 .Testing
 = Testing

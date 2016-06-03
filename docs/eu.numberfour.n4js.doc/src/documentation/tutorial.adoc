@@ -4,7 +4,10 @@
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:icons: font
 :data-uri:
+:imagesdir: ../images
+:toc: left
 
 .N4JS Tutorial
 = N4JS Tutorial
@@ -27,6 +30,7 @@ features from ECMAScript 2015 are supported, such as *modules* with import and e
 and objects. Developers who have experience using Java will be familiar with features from Java 8
 such as *nominal typing*, *interfaces* and *generic classes
 and methods*; even dependency injection and testing look similar.
+
 
 
 *Development Environment*
@@ -121,7 +125,7 @@ manually enhance this class as follows:
 
 [source,javascript]
 ----
-export abstract class Task { <1>
+export abstract class Task {  //  <1>
   public id: string?;
   public label: string?;
 }
@@ -156,15 +160,15 @@ We now manually add two classes to the same file:
 [source,javascript]
 .model.n4js
 ----
-/** An appointment. */    <1>
-export class Appointment extends Task {  <2>
-  public time: Date?;    <3>
-  public place: string;  <3>
+/** An appointment. */ //  <1>
+export class Appointment extends Task {   //  <2>
+  public time: Date?;     //  <3>
+  public place: string;   //  <3>
 }
 
 export class Todo extends Task {  
   public dueDate: Date?;   
-  public done = false;  <4>
+  public done = false;   //  <4>
 }  
 ----
 
@@ -294,11 +298,11 @@ it is expected and we will deal with them shortly.
 import { Storage } from "Storage"
 import { Task } from "model"
 
-export class StorageInMemory implements Storage { <2>
+export class StorageInMemory implements Storage { //  <2>
 
   private lowestUnusedId = 1;
   @Final
-  private tasks = new Map<string,Task>(); // <1>
+  private tasks = new Map<string,Task>();  //  <1>
 
   @Override
   public size(): int {
@@ -543,7 +547,7 @@ import { Task } from "model"
 
 export public interface Storage {
 
-  async size(): int <1>
+  async size(): int  //  <1>
   async clear()
 
   async getTasks(): Array<Task>
@@ -800,7 +804,7 @@ export class StorageMongoDB implements Storage {
   public async getTasks(): Array<Task> {
     let coll = await this.getTasksCollection();
     let resultRaw = await coll.find({}).toArray();
-    let result = resultRaw.map((data): Task => fromData(data)); <1>
+    let result = resultRaw.map((data): Task => fromData(data));  //  <1>
     return result;
   }
 
@@ -877,9 +881,9 @@ TaskManager class, we would need to change the TaskManager depending on the stor
 inconvenient and error prone. It would be much better if we could configure which storage class to use from
 outside the TaskManager at some central location. This is possible with dependency injection.
 
-To learn more about how dependency injection works, we have written an <a href="../features/dependency-
-injection.html">extended feature description</a> that describes the benefits of this technique. In short,
-N4JS provides built-in support for dependency injection using the same annotations as known from JSR-330/
+To learn more about how dependency injection works, we have written an
+<<../features/dependency-injection#dependency-injection, extended feature description>> that describes the benefits of this technique.
+In short, N4JS provides built-in support for dependency injection using the same annotations as known from JSR-330/
 Google Guice. Instead of using initializers calling the constructor for certain fields, we just mark them
 with `@Inject`. We will do that with the storage field in the TaskManager class:
 
@@ -1312,7 +1316,7 @@ which has more support to resolve cyclic dependencies across modules, you could 
 executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environmentnpm (a default
 dependency of any exported npm) and is therefore already installed:
 
-[source,java]
+[source]
 ----
 $ export NODE_PATH=`pwd`
 $ cd n4js.example.tasks; npm install

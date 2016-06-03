@@ -16,13 +16,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
         
         <eclipse.html>eclipse-html</eclipse.html>
-        <website.html>website-html</website.html>
+        <website.html>documentation</website.html>
         <epub.dir>epub</epub.dir>
         <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
         <help.pages.list>help-pages.txt</help.pages.list>
+        <imagesDir>${basedir}/src/images</imagesDir>
         
     </properties>
+
+
     
     <parent>
         <groupId>eu.numberfour.n4js</groupId>
@@ -30,7 +33,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    
+
+
     <pluginRepositories>
         <pluginRepository>
             <id>bintray.jmini.maven</id>
@@ -109,15 +113,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
-                            <imagesdir>../images</imagesdir>
+                            <imagesdir>${imagesDir}</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${eclipseHelpDir}</outputDirectory>
+                            <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
                                 <stylesdir>styles</stylesdir>
-                                <stylesheet>default.min.css</stylesheet>
+                                <stylesheet>foundation.css</stylesheet>
+                                <eclipse>true</eclipse>
+                                <website>false</website>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -135,28 +142,29 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                          <sourceDirectory>${basedir}/src</sourceDirectory>
-                            <imagesdir>images</imagesdir>
-                            <preserveDirectories>true</preserveDirectories> 
+                            <sourceDirectory>${basedir}/src/documentation</sourceDirectory>
+                            <preserveDirectories>false</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
-                            <attributes> <!-- Individual attributes per conversion execution -->
-                                <toc>left</toc> <!-- Left-aligned embedded TOC in each page -->
+                            <attributes> 
+                                <!-- Individual attributes per conversion execution -->
+                                <stylesdir>../styles</stylesdir>
+                                <imagesdir>${imagesDir}</imagesdir>
+                                <toc>left</toc>
+                                <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
+                                <docinfodir>../../</docinfodir>
+                                <eclipse>false</eclipse>
+                                <website>true</website>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
+                                <docinfo1>true</docinfo1>
                             </attributes>
-                            <fileset>
-                                <excludes>
-                                    <exclude>userguides.adoc</exclude>
-                                </excludes>
-                            </fileset>
                         </configuration>
                     </execution>
-<!--                     Begin EPUB Generation of User Guides 
+                   <!--  Begin EPUB Generation of User Guides -->
                     <execution>
                         <id>asciidoc-to-epub</id>
                         <phase>generate-resources</phase>
@@ -164,6 +172,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <skip>true</skip>  <!-- Execution skipped! -->
                             <sourceDirectory>src/</sourceDirectory>
                             <sourceDocumentName>userguides.adoc</sourceDocumentName>
                             <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
@@ -171,7 +180,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <backend>epub3</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
-                                <includesdir>docs/documentation</includesdir>
                                 <imagesdir>images</imagesdir>
                                 <doctype>book</doctype>
                                 <icons>font</icons>
@@ -182,8 +190,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             </attributes>
                         </configuration>
                     </execution>
--->
-                    <!-- Begin PDF Generation of User Guides -->
+
+                   
+                    <!-- PDF Generation of User Guides -->
                     <execution> 
                         <id>asciidoc-to-pdf</id> 
                         <phase>generate-resources</phase>
@@ -191,13 +200,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>src/docs/documentation</sourceDirectory>
+                            <skip>true</skip> <!-- Execution skipped! -->
+                            <sourceDirectory>src/documentation</sourceDirectory>
                             <outputDirectory>${project.build.directory}/pdf</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes> 
                                 <toc>left</toc> 
-                                <imagesdir>../../images</imagesdir>
+                                <imagesdir>../images</imagesdir>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -207,8 +217,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution> 
                 </executions>
-            </plugin> 
-            
+             </plugin>          
             <!-- eclipse-help file list generation -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -221,7 +230,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html"/>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="documentation/index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
                                     <map from="${eclipseHelpBaseDir}/" to="" />
                                 </pathconvert> 
