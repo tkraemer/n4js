@@ -97,10 +97,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return haveBoundFALSE;
 	}
 
-	protected void log() {
-		getAllBounds().forEachOrdered(b -> b.log(ic));
-	}
-
 	/**
 	 * Returns the number of type bounds in this bound set.
 	 */
@@ -142,8 +138,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return getAllBounds().toArray(TypeBound[]::new);
 	}
 
-	private Stream<TypeBound> getAllBounds() {
-		return boundsPerInfVar.values().stream().flatMap(bounds -> bounds.stream());
+	public Stream<TypeBound> getAllBounds() {
+		return boundsPerInfVar.values().stream().flatMap(bounds -> bounds.stream()); // TODO reconsider
 	}
 
 	public BoundSet copy() {
