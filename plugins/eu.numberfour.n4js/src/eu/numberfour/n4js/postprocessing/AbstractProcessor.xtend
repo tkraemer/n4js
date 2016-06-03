@@ -34,7 +34,7 @@ import com.google.common.base.Throwables
  */
 class AbstractProcessor {
 
-	val private static DEBUG_LOG = true;
+	val private static DEBUG_LOG = false;
 	val private static DEBUG_LOG_RESULT = false;
 	val private static DEBUG_RIGID = true; // if true, more consistency checks are performed and exceptions thrown if wrong
 
