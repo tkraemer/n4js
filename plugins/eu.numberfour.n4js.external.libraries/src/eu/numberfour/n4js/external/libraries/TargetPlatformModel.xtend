@@ -112,7 +112,7 @@ class TargetPlatformModel {
 	}
 
 	/**
-	 * Adds a project with the given project ID as a new NPM dependency without version specifier.
+	 * Adds a project with the given project ID as a new npm dependency without version specifier.
 	 * Initializes the model if not initialized yet.
 	 */
 	@JsonIgnore
@@ -122,7 +122,7 @@ class TargetPlatformModel {
 	}
 
 	/**
-	 * Adds a project with the given project ID as a new NPM dependency with the given version specifier.
+	 * Adds a project with the given project ID as a new npm dependency with the given version specifier.
 	 * If the version is {@code null}, then no version specifier will be used. Initializes the model if
 	 * not initialized yet.
 	 */
@@ -135,7 +135,7 @@ class TargetPlatformModel {
 	}
 
 	/**
-	 * Adds a project with the given project ID as a new NPM dependency with the given project properties.
+	 * Adds a project with the given project ID as a new npm dependency with the given project properties.
 	 * If the version is not available in the project properties, or the properties argument is{@code null},
 	 * then no version specifier will be used. Initializes the model if not initialized yet.
 	 */

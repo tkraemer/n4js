@@ -399,4 +399,32 @@ class ES_07_09_AutomaticSemicolonInsertionASTTest {
 			y
 		''')
 	}
+	
+	@Test
+	def void testSemiBetweenFields() {
+		'''
+			public class C {
+				a: int = 1
+				b: int = 2;
+			}
+		'''.isParsedAs('''
+			public class C {
+				a: int = 1;
+				b: int = 2;
+			}
+		''')
+	}
+	
+	@Test
+	def void testSemiAfterField() {
+		'''
+			public class C {
+				a: int = 1
+			}
+		'''.isParsedAs('''
+			public class C {
+				a: int = 1;
+			}
+		''')
+	}
 }

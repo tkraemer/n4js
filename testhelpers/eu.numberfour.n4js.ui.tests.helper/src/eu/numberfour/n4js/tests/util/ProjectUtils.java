@@ -167,6 +167,24 @@ public class ProjectUtils {
 	}
 
 	/**
+	 * Creates a new N4JS project with the given name and project type. The source and output folders will be named as
+	 * {@code src} and {@code src-gen}. The Xtext project nature will be already configured on the N4JS project.
+	 * 
+	 * @param projectName
+	 *            the name of the project.
+	 * @param type
+	 *            the desired project type of the new project.
+	 * @return the new N4JS project with the desired type.
+	 * @throws CoreException
+	 *             if the project creation failed.
+	 */
+	public static IProject createN4JSProject(String projectName, ProjectType type) throws CoreException {
+		final IProject project = createJSProject(projectName, "src", "src-gen", t -> t.setProjectType(type));
+		configureProjectWithXtext(project);
+		return project;
+	}
+
+	/**
 	 * @param manifestAdjustments
 	 *            for details see method {@link #createManifestN4MFFile(IProject, String, String, Consumer)}.
 	 */
@@ -202,7 +220,7 @@ public class ProjectUtils {
 		projectDesc.setVendorName("NumberFour AG");
 		projectDesc.setArtifactId(project.getName());
 		projectDesc.setProjectName(project.getName());
-		projectDesc.setProjectType(ProjectType.SYSTEM);
+		projectDesc.setProjectType(ProjectType.LIBRARY);
 		DeclaredVersion projectVersion = N4mfFactory.eINSTANCE.createDeclaredVersion();
 		projectVersion.setMajor(0);
 		projectVersion.setMinor(0);
@@ -218,6 +236,12 @@ public class ProjectUtils {
 		ResourceSet rs = createResourceSet(project);
 		Resource res = rs.createResource(uri);
 		res.getContents().add(projectDesc);
+
+		// Workaround to avoid any unnecessary warnings due to empty project dependency block
+		if (projectDesc.getAllProjectDependencies().isEmpty()) {
+			projectDesc.setProjectDependencies(null);
+		}
+
 		try {
 			res.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {

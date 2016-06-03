@@ -128,6 +128,7 @@ import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector;
+import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeExtensions;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -149,21 +150,17 @@ import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
@@ -1263,16 +1260,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           /* { superLiteral.eContainer instanceof ParameterizedPropertyAccessExpression || superLiteral.eContainer instanceof IndexedAccessExpression if(containingMemberDecl.static) T = effectiveSuperClass?.createClassifierTypeRef else T = effectiveSuperClass?.createTypeRef if (T !== null) T = TypeUtils.enforceNominalTyping(T) } or { superLiteral.eContainer instanceof ParameterizedCallExpression if(containingMemberDecl instanceof N4MethodDeclaration && containingMemberDecl.name == 'constructor') { val ctor = containerTypesHelper.fromContext(superLiteral.eResource).findConstructor(effectiveSuperClass); T = ctor?.createTypeRef } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } or { superLiteral.eContainer instanceof NewExpression } */
           {
             try {
-              boolean _or = false;
-              EObject _eContainer_2 = superLiteral.eContainer();
-              if ((_eContainer_2 instanceof ParameterizedPropertyAccessExpression)) {
-                _or = true;
-              } else {
-                EObject _eContainer_3 = superLiteral.eContainer();
-                _or = (_eContainer_3 instanceof IndexedAccessExpression);
-              }
               /* superLiteral.eContainer instanceof ParameterizedPropertyAccessExpression || superLiteral.eContainer instanceof IndexedAccessExpression */
-              if (!_or) {
+              if (!((superLiteral.eContainer() instanceof ParameterizedPropertyAccessExpression) || (superLiteral.eContainer() instanceof IndexedAccessExpression))) {
                 sneakyThrowRuleFailedException("superLiteral.eContainer instanceof ParameterizedPropertyAccessExpression || superLiteral.eContainer instanceof IndexedAccessExpression");
               }
               boolean _isStatic = containingMemberDecl.isStatic();
@@ -1298,20 +1287,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
               /* { superLiteral.eContainer instanceof ParameterizedCallExpression if(containingMemberDecl instanceof N4MethodDeclaration && containingMemberDecl.name == 'constructor') { val ctor = containerTypesHelper.fromContext(superLiteral.eResource).findConstructor(effectiveSuperClass); T = ctor?.createTypeRef } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } or { superLiteral.eContainer instanceof NewExpression } */
               {
                 try {
-                  EObject _eContainer_4 = superLiteral.eContainer();
+                  EObject _eContainer_2 = superLiteral.eContainer();
                   /* superLiteral.eContainer instanceof ParameterizedCallExpression */
-                  if (!(_eContainer_4 instanceof ParameterizedCallExpression)) {
+                  if (!(_eContainer_2 instanceof ParameterizedCallExpression)) {
                     sneakyThrowRuleFailedException("superLiteral.eContainer instanceof ParameterizedCallExpression");
                   }
-                  boolean _and = false;
-                  if (!(containingMemberDecl instanceof N4MethodDeclaration)) {
-                    _and = false;
-                  } else {
-                    String _name = containingMemberDecl.getName();
-                    boolean _equals = Objects.equal(_name, "constructor");
-                    _and = _equals;
-                  }
-                  if (_and) {
+                  if (((containingMemberDecl instanceof N4MethodDeclaration) && Objects.equal(containingMemberDecl.getName(), "constructor"))) {
                     Resource _eResource = superLiteral.eResource();
                     ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(_eResource);
                     final TMethod ctor = _fromContext.findConstructor(effectiveSuperClass);
@@ -1326,9 +1307,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                   }
                 } catch (Exception e_1) {
                   previousFailure = extractRuleFailedException(e_1);
-                  EObject _eContainer_5 = superLiteral.eContainer();
+                  EObject _eContainer_3 = superLiteral.eContainer();
                   /* superLiteral.eContainer instanceof NewExpression */
-                  if (!(_eContainer_5 instanceof NewExpression)) {
+                  if (!(_eContainer_3 instanceof NewExpression)) {
                     sneakyThrowRuleFailedException("superLiteral.eContainer instanceof NewExpression");
                   }
                 }
@@ -1372,17 +1353,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     T = (TypeRef) result.getFirst();
     
-    boolean _and = false;
-    EObject _eContainer = idref.eContainer();
-    if (!(_eContainer instanceof ParameterizedCallExpression)) {
-      _and = false;
-    } else {
-      EReference _eContainmentFeature = idref.eContainmentFeature();
-      EReference _parameterizedCallExpression_Target = N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target();
-      boolean _tripleEquals = (_eContainmentFeature == _parameterizedCallExpression_Target);
-      _and = _tripleEquals;
-    }
-    if (_and) {
+    if (((idref.eContainer() instanceof ParameterizedCallExpression) && (idref.eContainmentFeature() == N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()))) {
       final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(T);
       if ((callableCtorFunction != null)) {
         FunctionTypeRef _ref = TypeExtensions.ref(callableCtorFunction);
@@ -1786,28 +1757,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_1.getFirst(), TypeRef.class);
         E = (TypeRef) result_1.getFirst();
         
-        boolean _or = false;
-        boolean _or_1 = false;
-        Type _declaredType = E.getDeclaredType();
-        UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-        boolean _tripleEquals = (_declaredType == _undefinedType);
-        if (_tripleEquals) {
-          _or_1 = true;
-        } else {
-          Type _declaredType_1 = E.getDeclaredType();
-          NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-          boolean _tripleEquals_1 = (_declaredType_1 == _nullType);
-          _or_1 = _tripleEquals_1;
-        }
-        if (_or_1) {
-          _or = true;
-        } else {
-          Type _declaredType_2 = E.getDeclaredType();
-          VoidType _voidType = RuleEnvironmentExtensions.voidType(G);
-          boolean _tripleEquals_2 = (_declaredType_2 == _voidType);
-          _or = _tripleEquals_2;
-        }
-        if (_or) {
+        if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
           ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
           T = _anyTypeRef;
         } else {
@@ -1863,28 +1813,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_1.getFirst(), TypeRef.class);
         E = (TypeRef) result_1.getFirst();
         
-        boolean _or = false;
-        boolean _or_1 = false;
-        Type _declaredType = E.getDeclaredType();
-        UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-        boolean _tripleEquals = (_declaredType == _undefinedType);
-        if (_tripleEquals) {
-          _or_1 = true;
-        } else {
-          Type _declaredType_1 = E.getDeclaredType();
-          NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-          boolean _tripleEquals_1 = (_declaredType_1 == _nullType);
-          _or_1 = _tripleEquals_1;
-        }
-        if (_or_1) {
-          _or = true;
-        } else {
-          Type _declaredType_2 = E.getDeclaredType();
-          VoidType _voidType = RuleEnvironmentExtensions.voidType(G);
-          boolean _tripleEquals_2 = (_declaredType_2 == _voidType);
-          _or = _tripleEquals_2;
-        }
-        if (_or) {
+        if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
           ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
           T = _anyTypeRef;
         } else {
@@ -2210,16 +2139,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         } else {
           if ((elementType != null)) {
             final Type declaredType = targetTypeRef.getDeclaredType();
-            boolean _and = false;
-            boolean _isGeneric = declaredType.isGeneric();
-            if (!_isGeneric) {
-              _and = false;
-            } else {
-              EList<TypeArgument> _typeArgs = targetTypeRef.getTypeArgs();
-              boolean _isEmpty = _typeArgs.isEmpty();
-              _and = _isEmpty;
-            }
-            if (_and) {
+            if ((declaredType.isGeneric() && targetTypeRef.getTypeArgs().isEmpty())) {
               ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
               T = _anyTypeRef_1;
             } else {
@@ -2325,22 +2245,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         
         this.typeSystemHelper.addSubstitutions(G2, receiverTypeRef);
         RuleEnvironmentExtensions.addThisType(G2, receiverTypeRef);
-        boolean _and = false;
-        boolean _not = (!(receiverTypeRef instanceof UnknownTypeRef));
-        if (!_not) {
-          _and = false;
-        } else {
-          boolean _or = false;
-          Expression _target_1 = expr.getTarget();
-          if ((_target_1 instanceof SuperLiteral)) {
-            _or = true;
-          } else {
-            Expression _target_2 = expr.getTarget();
-            _or = (_target_2 instanceof ThisLiteral);
-          }
-          _and = _or;
-        }
-        if (_and) {
+        if (((!(receiverTypeRef instanceof UnknownTypeRef)) && ((expr.getTarget() instanceof SuperLiteral) || (expr.getTarget() instanceof ThisLiteral)))) {
           N4ClassDeclaration _containerOfType = EcoreUtil2.<N4ClassDeclaration>getContainerOfType(expr, N4ClassDeclaration.class);
           Type _definedType = null;
           if (_containerOfType!=null) {
@@ -2371,30 +2276,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           }
         }
         TypeRef propTypeRef = null;
-        boolean _and_1 = false;
-        boolean _and_2 = false;
-        if (!(((receiverTypeRef instanceof ClassifierTypeRef) || (receiverTypeRef instanceof BoundThisTypeRef)) || (receiverTypeRef instanceof ParameterizedTypeRef))) {
-          _and_2 = false;
-        } else {
-          IdentifiableElement _property = expr.getProperty();
-          _and_2 = (_property instanceof TMethod);
-        }
-        if (!_and_2) {
-          _and_1 = false;
-        } else {
-          IdentifiableElement _property_1 = expr.getProperty();
-          String _name = _property_1.getName();
-          boolean _equals = Objects.equal(_name, "constructor");
-          _and_1 = _equals;
-        }
-        if (_and_1) {
+        if ((((((receiverTypeRef instanceof ClassifierTypeRef) || (receiverTypeRef instanceof BoundThisTypeRef)) || (receiverTypeRef instanceof ParameterizedTypeRef)) && (expr.getProperty() instanceof TMethod)) && Objects.equal(expr.getProperty().getName(), "constructor"))) {
           Type _switchResult = null;
           boolean _matched = false;
-          if (!_matched) {
-            if (receiverTypeRef instanceof ClassifierTypeRef) {
-              _matched=true;
-              _switchResult = ((ClassifierTypeRef)receiverTypeRef).staticType();
-            }
+          if (receiverTypeRef instanceof ClassifierTypeRef) {
+            _matched=true;
+            _switchResult = ((ClassifierTypeRef)receiverTypeRef).staticType();
           }
           if (!_matched) {
             if (receiverTypeRef instanceof BoundThisTypeRef) {
@@ -2419,31 +2306,14 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           }
           propTypeRef = _xifexpression;
         } else {
-          boolean _and_3 = false;
-          boolean _and_4 = false;
-          boolean _isDynamic = receiverTypeRef.isDynamic();
-          if (!_isDynamic) {
-            _and_4 = false;
-          } else {
-            IdentifiableElement _property_2 = expr.getProperty();
-            boolean _tripleNotEquals_1 = (_property_2 != null);
-            _and_4 = _tripleNotEquals_1;
-          }
-          if (!_and_4) {
-            _and_3 = false;
-          } else {
-            IdentifiableElement _property_3 = expr.getProperty();
-            boolean _eIsProxy = _property_3.eIsProxy();
-            _and_3 = _eIsProxy;
-          }
-          if (_and_3) {
+          if (((receiverTypeRef.isDynamic() && (expr.getProperty() != null)) && expr.getProperty().eIsProxy())) {
             ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
             propTypeRef = _anyTypeRefDynamic;
           } else {
             /* G2.wrap |- expr.property : propTypeRef */
-            IdentifiableElement _property_4 = expr.getProperty();
+            IdentifiableElement _property = expr.getProperty();
             RuleEnvironment _wrap = RuleEnvironmentExtensions.wrap(G2);
-            Result<TypeRef> result_1 = typeInternal(_wrap, _trace_, _property_4);
+            Result<TypeRef> result_1 = typeInternal(_wrap, _trace_, _property);
             checkAssignableTo(result_1.getFirst(), TypeRef.class);
             propTypeRef = (TypeRef) result_1.getFirst();
             
@@ -2596,16 +2466,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                 checkAssignableTo(result_2.getFirst(), TypeRef.class);
                 T = (TypeRef) result_2.getFirst();
                 
-                boolean _and = false;
-                Type _declaredType = F.getDeclaredType();
-                if (!(_declaredType instanceof TMethod)) {
-                  _and = false;
-                } else {
-                  Type _declaredType_1 = F.getDeclaredType();
-                  boolean _isStatic = ((TMethod) _declaredType_1).isStatic();
-                  _and = _isStatic;
-                }
-                if (_and) {
+                if (((F.getDeclaredType() instanceof TMethod) && ((TMethod) F.getDeclaredType()).isStatic())) {
                   if ((T instanceof ConstructorTypeRef)) {
                     EList<TypeArgument> _typeArgs = ((FunctionTypeExprOrRef)targetTypeRef).getTypeArgs();
                     TypeRef _createTypeRefFromStaticType = RuleEnvironmentExtensions.createTypeRefFromStaticType(((ClassifierTypeRef)T), ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
@@ -2633,12 +2494,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     } else {
-      Type _declaredType_2 = null;
+      Type _declaredType = null;
       if (targetTypeRef!=null) {
-        _declaredType_2=targetTypeRef.getDeclaredType();
+        _declaredType=targetTypeRef.getDeclaredType();
       }
       TObjectPrototype _functionType = RuleEnvironmentExtensions.functionType(G);
-      boolean _tripleEquals_1 = (_declaredType_2 == _functionType);
+      boolean _tripleEquals_1 = (_declaredType == _functionType);
       if (_tripleEquals_1) {
         ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
         T = _anyTypeRef_1;
@@ -2773,34 +2634,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeUnaryExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnaryExpression e) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _and = false;
-    boolean _or = false;
-    UnaryOperator _op = e.getOp();
-    boolean _tripleEquals = (_op == UnaryOperator.NEG);
-    if (_tripleEquals) {
-      _or = true;
-    } else {
-      UnaryOperator _op_1 = e.getOp();
-      boolean _tripleEquals_1 = (_op_1 == UnaryOperator.POS);
-      _or = _tripleEquals_1;
-    }
-    if (!_or) {
-      _and = false;
-    } else {
-      Expression _expression = e.getExpression();
-      _and = (_expression instanceof IntLiteral);
-    }
-    if (_and) {
+    if ((((e.getOp() == UnaryOperator.NEG) || (e.getOp() == UnaryOperator.POS)) && (e.getExpression() instanceof IntLiteral))) {
       /* G |- e.expression : T */
-      Expression _expression_1 = e.getExpression();
-      Result<TypeRef> result = typeInternal(G, _trace_, _expression_1);
+      Expression _expression = e.getExpression();
+      Result<TypeRef> result = typeInternal(G, _trace_, _expression);
       checkAssignableTo(result.getFirst(), TypeRef.class);
       T = (TypeRef) result.getFirst();
       
     } else {
-      UnaryOperator _op_2 = e.getOp();
-      if (_op_2 != null) {
-        switch (_op_2) {
+      UnaryOperator _op = e.getOp();
+      if (_op != null) {
+        switch (_op) {
           case DELETE:
             ParameterizedTypeRef _booleanTypeRef = RuleEnvironmentExtensions.booleanTypeRef(G);
             T = _booleanTypeRef;
@@ -2899,70 +2743,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       
       final boolean lunknown = (l instanceof UnknownTypeRef);
       final boolean runknown = (r instanceof UnknownTypeRef);
-      boolean _and = false;
-      if (!lunknown) {
-        _and = false;
-      } else {
-        _and = runknown;
-      }
-      if (_and) {
+      if ((lunknown && runknown)) {
         T = r;
       } else {
-        boolean _or = false;
-        Type _declaredType = l.getDeclaredType();
-        PrimitiveType _booleanType = RuleEnvironmentExtensions.booleanType(G);
-        boolean _equals_1 = Objects.equal(_declaredType, _booleanType);
-        if (_equals_1) {
-          _or = true;
-        } else {
-          Type _declaredType_1 = l.getDeclaredType();
-          boolean _isNumeric = RuleEnvironmentExtensions.isNumeric(G, _declaredType_1);
-          _or = _isNumeric;
-        }
-        final boolean lnum = _or;
-        boolean _or_1 = false;
-        Type _declaredType_2 = r.getDeclaredType();
-        PrimitiveType _booleanType_1 = RuleEnvironmentExtensions.booleanType(G);
-        boolean _equals_2 = Objects.equal(_declaredType_2, _booleanType_1);
-        if (_equals_2) {
-          _or_1 = true;
-        } else {
-          Type _declaredType_3 = r.getDeclaredType();
-          boolean _isNumeric_1 = RuleEnvironmentExtensions.isNumeric(G, _declaredType_3);
-          _or_1 = _isNumeric_1;
-        }
-        final boolean rnum = _or_1;
-        boolean _or_2 = false;
-        boolean _or_3 = false;
-        boolean _or_4 = false;
-        Type _declaredType_4 = l.getDeclaredType();
-        UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-        boolean _equals_3 = Objects.equal(_declaredType_4, _undefinedType);
-        if (_equals_3) {
-          _or_4 = true;
-        } else {
-          Type _declaredType_5 = l.getDeclaredType();
-          NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-          boolean _equals_4 = Objects.equal(_declaredType_5, _nullType);
-          _or_4 = _equals_4;
-        }
-        if (_or_4) {
-          _or_3 = true;
-        } else {
-          Type _declaredType_6 = r.getDeclaredType();
-          UndefinedType _undefinedType_1 = RuleEnvironmentExtensions.undefinedType(G);
-          boolean _equals_5 = Objects.equal(_declaredType_6, _undefinedType_1);
-          _or_3 = _equals_5;
-        }
-        if (_or_3) {
-          _or_2 = true;
-        } else {
-          Type _declaredType_7 = r.getDeclaredType();
-          NullType _nullType_1 = RuleEnvironmentExtensions.nullType(G);
-          boolean _equals_6 = Objects.equal(_declaredType_7, _nullType_1);
-          _or_2 = _equals_6;
-        }
-        final boolean undef = _or_2;
+        final boolean lnum = (Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.booleanType(G)) || RuleEnvironmentExtensions.isNumeric(G, l.getDeclaredType()));
+        final boolean rnum = (Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.booleanType(G)) || RuleEnvironmentExtensions.isNumeric(G, r.getDeclaredType()));
+        final boolean undef = (((Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.undefinedType(G)) || Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.nullType(G))) || Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.undefinedType(G))) || Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.nullType(G)));
         if (((lnum && rnum) || (undef && (lnum || rnum)))) {
           ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
           T = _numberTypeRef;
@@ -3294,61 +3080,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             checkAssignableTo(result_2.getFirst(), ParameterizedTypeRef.class);
             r = (ParameterizedTypeRef) result_2.getFirst();
             
-            boolean _or = false;
-            Type _declaredType = l.getDeclaredType();
-            PrimitiveType _booleanType = RuleEnvironmentExtensions.booleanType(G);
-            boolean _equals = Objects.equal(_declaredType, _booleanType);
-            if (_equals) {
-              _or = true;
-            } else {
-              Type _declaredType_1 = l.getDeclaredType();
-              boolean _isNumeric = RuleEnvironmentExtensions.isNumeric(G, _declaredType_1);
-              _or = _isNumeric;
-            }
-            final boolean lnum = _or;
-            boolean _or_1 = false;
-            Type _declaredType_2 = r.getDeclaredType();
-            PrimitiveType _booleanType_1 = RuleEnvironmentExtensions.booleanType(G);
-            boolean _equals_1 = Objects.equal(_declaredType_2, _booleanType_1);
-            if (_equals_1) {
-              _or_1 = true;
-            } else {
-              Type _declaredType_3 = r.getDeclaredType();
-              boolean _isNumeric_1 = RuleEnvironmentExtensions.isNumeric(G, _declaredType_3);
-              _or_1 = _isNumeric_1;
-            }
-            final boolean rnum = _or_1;
-            boolean _or_2 = false;
-            boolean _or_3 = false;
-            boolean _or_4 = false;
-            Type _declaredType_4 = l.getDeclaredType();
-            UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-            boolean _equals_2 = Objects.equal(_declaredType_4, _undefinedType);
-            if (_equals_2) {
-              _or_4 = true;
-            } else {
-              Type _declaredType_5 = l.getDeclaredType();
-              NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-              boolean _equals_3 = Objects.equal(_declaredType_5, _nullType);
-              _or_4 = _equals_3;
-            }
-            if (_or_4) {
-              _or_3 = true;
-            } else {
-              Type _declaredType_6 = r.getDeclaredType();
-              UndefinedType _undefinedType_1 = RuleEnvironmentExtensions.undefinedType(G);
-              boolean _equals_4 = Objects.equal(_declaredType_6, _undefinedType_1);
-              _or_3 = _equals_4;
-            }
-            if (_or_3) {
-              _or_2 = true;
-            } else {
-              Type _declaredType_7 = r.getDeclaredType();
-              NullType _nullType_1 = RuleEnvironmentExtensions.nullType(G);
-              boolean _equals_5 = Objects.equal(_declaredType_7, _nullType_1);
-              _or_2 = _equals_5;
-            }
-            final boolean undef = _or_2;
+            final boolean lnum = (Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.booleanType(G)) || RuleEnvironmentExtensions.isNumeric(G, l.getDeclaredType()));
+            final boolean rnum = (Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.booleanType(G)) || RuleEnvironmentExtensions.isNumeric(G, r.getDeclaredType()));
+            final boolean undef = (((Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.undefinedType(G)) || Objects.equal(l.getDeclaredType(), RuleEnvironmentExtensions.nullType(G))) || Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.undefinedType(G))) || Objects.equal(r.getDeclaredType(), RuleEnvironmentExtensions.nullType(G)));
             /* !(lnum && rnum) */
             if (!(!(lnum && rnum))) {
               sneakyThrowRuleFailedException("!(lnum && rnum)");
@@ -3488,26 +3222,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             T = _anyTypeRef_1;
           }
         } else {
-          boolean _and = false;
-          EObject _eContainer_1 = vdecl.eContainer();
-          if (!(_eContainer_1 instanceof ForStatement)) {
-            _and = false;
-          } else {
+          if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForOf())) {
+            EObject _eContainer_1 = vdecl.eContainer();
+            final ForStatement forOfStmnt = ((ForStatement) _eContainer_1);
             EObject _eContainer_2 = vdecl.eContainer();
-            boolean _isForOf = ((ForStatement) _eContainer_2).isForOf();
-            _and = _isForOf;
-          }
-          if (_and) {
-            EObject _eContainer_3 = vdecl.eContainer();
-            final ForStatement forOfStmnt = ((ForStatement) _eContainer_3);
-            EObject _eContainer_4 = vdecl.eContainer();
-            Pair<String, EObject> _mappedTo_2 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_4);
+            Pair<String, EObject> _mappedTo_2 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_2);
             Object _get_1 = G.get(_mappedTo_2);
             boolean _tripleEquals_1 = (_get_1 == null);
             if (_tripleEquals_1) {
               final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
-              EObject _eContainer_5 = vdecl.eContainer();
-              Pair<String, EObject> _mappedTo_3 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_5);
+              EObject _eContainer_3 = vdecl.eContainer();
+              Pair<String, EObject> _mappedTo_3 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_3);
               boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
               /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.eContainer,Boolean.TRUE) */
               if (!_add_1) {
@@ -3545,16 +3270,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
               T = _anyTypeRef_2;
             }
           } else {
-            boolean _and_1 = false;
-            EObject _eContainer_6 = vdecl.eContainer();
-            if (!(_eContainer_6 instanceof ForStatement)) {
-              _and_1 = false;
-            } else {
-              EObject _eContainer_7 = vdecl.eContainer();
-              boolean _isForIn = ((ForStatement) _eContainer_7).isForIn();
-              _and_1 = _isForIn;
-            }
-            if (_and_1) {
+            if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForIn())) {
               ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
               T = _stringTypeRef;
             } else {
@@ -3581,20 +3297,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                   checkAssignableTo(result_2.getFirst(), TypeRef.class);
                   E = (TypeRef) result_2.getFirst();
                   
-                  boolean _or = false;
-                  if ((E instanceof BoundThisTypeRef)) {
-                    _or = true;
-                  } else {
-                    boolean _and_2 = false;
-                    if (!(E instanceof ClassifierTypeRef)) {
-                      _and_2 = false;
-                    } else {
-                      StaticBaseTypeRef _staticTypeRef = ((ClassifierTypeRef) E).getStaticTypeRef();
-                      _and_2 = (_staticTypeRef instanceof BoundThisTypeRef);
-                    }
-                    _or = _and_2;
-                  }
-                  if (_or) {
+                  if (((E instanceof BoundThisTypeRef) || ((E instanceof ClassifierTypeRef) && (((ClassifierTypeRef) E).getStaticTypeRef() instanceof BoundThisTypeRef)))) {
                   } else {
                     /* G2 |~ E /\ E */
                     Result<TypeRef> result_3 = upperBoundInternal(G2_2, _trace_, E);
@@ -3602,28 +3305,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                     E = (TypeRef) result_3.getFirst();
                     
                   }
-                  boolean _or_1 = false;
-                  boolean _or_2 = false;
-                  Type _declaredType = E.getDeclaredType();
-                  UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-                  boolean _tripleEquals_3 = (_declaredType == _undefinedType);
-                  if (_tripleEquals_3) {
-                    _or_2 = true;
-                  } else {
-                    Type _declaredType_1 = E.getDeclaredType();
-                    NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-                    boolean _tripleEquals_4 = (_declaredType_1 == _nullType);
-                    _or_2 = _tripleEquals_4;
-                  }
-                  if (_or_2) {
-                    _or_1 = true;
-                  } else {
-                    Type _declaredType_2 = E.getDeclaredType();
-                    VoidType _voidType = RuleEnvironmentExtensions.voidType(G);
-                    boolean _tripleEquals_5 = (_declaredType_2 == _voidType);
-                    _or_1 = _tripleEquals_5;
-                  }
-                  if (_or_1) {
+                  if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
                     ParameterizedTypeRef _anyTypeRef_3 = RuleEnvironmentExtensions.anyTypeRef(G);
                     T = _anyTypeRef_3;
                   } else {
@@ -3674,26 +3356,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     TypeRef T = null; // output parameter
     final TypeRef fparTypeRef = fpar.getDeclaredTypeRef();
     if ((fparTypeRef != null)) {
-      boolean _or = false;
-      if ((fparTypeRef instanceof ThisTypeRefStructural)) {
-        _or = true;
-      } else {
-        boolean _and = false;
-        if (!(fparTypeRef instanceof FunctionTypeExpression)) {
-          _and = false;
-        } else {
-          TreeIterator<EObject> _eAllContents = ((FunctionTypeExpression) fparTypeRef).eAllContents();
-          Iterator<TFormalParameter> _filter = Iterators.<TFormalParameter>filter(_eAllContents, TFormalParameter.class);
-          final Function1<TFormalParameter, Boolean> _function = (TFormalParameter currFpar) -> {
-            TypeRef _typeRef = currFpar.getTypeRef();
-            return Boolean.valueOf((_typeRef instanceof ThisTypeRef));
-          };
-          boolean _exists = IteratorExtensions.<TFormalParameter>exists(_filter, _function);
-          _and = _exists;
-        }
-        _or = _and;
-      }
-      if (_or) {
+      if (((fparTypeRef instanceof ThisTypeRefStructural) || ((fparTypeRef instanceof FunctionTypeExpression) && IteratorExtensions.<TFormalParameter>exists(Iterators.<TFormalParameter>filter(((FunctionTypeExpression) fparTypeRef).eAllContents(), TFormalParameter.class), ((Function1<TFormalParameter, Boolean>) (TFormalParameter currFpar) -> {
+        TypeRef _typeRef = currFpar.getTypeRef();
+        return Boolean.valueOf((_typeRef instanceof ThisTypeRef));
+      }))))) {
         TypeRef _bindAndSubstituteThisTypeRef = this.typeSystemHelper.bindAndSubstituteThisTypeRef(G, fparTypeRef, fparTypeRef);
         T = _bindAndSubstituteThisTypeRef;
       } else {
@@ -3928,23 +3594,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeRef left, final TypeRef right) throws RuleFailedException {
-    boolean _or = false;
-    boolean _or_1 = false;
-    Type _declaredType = right.getDeclaredType();
-    if ((_declaredType instanceof AnyType)) {
-      _or_1 = true;
-    } else {
-      Type _declaredType_1 = left.getDeclaredType();
-      _or_1 = (_declaredType_1 instanceof NullType);
-    }
-    if (_or_1) {
-      _or = true;
-    } else {
-      Type _declaredType_2 = left.getDeclaredType();
-      _or = (_declaredType_2 instanceof UndefinedType);
-    }
     /* right.declaredType instanceof AnyType || left.declaredType instanceof NullType || left.declaredType instanceof UndefinedType */
-    if (!_or) {
+    if (!(((right.getDeclaredType() instanceof AnyType) || (left.getDeclaredType() instanceof NullType)) || (left.getDeclaredType() instanceof UndefinedType))) {
       sneakyThrowRuleFailedException("right.declaredType instanceof AnyType || left.declaredType instanceof NullType || left.declaredType instanceof UndefinedType");
     }
     return new Result<Boolean>(true);
@@ -4026,63 +3677,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   protected Result<Boolean> applyRuleSubtypeEnumTypeRefN4Enum(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final ClassifierTypeRef ctr) throws RuleFailedException {
     final StaticBaseTypeRef staticTypeRef = ctr.getStaticTypeRef();
     if ((staticTypeRef instanceof ParameterizedTypeRef)) {
-      boolean _or = false;
-      boolean _or_1 = false;
-      boolean _or_2 = false;
-      boolean _and = false;
-      Type _declaredType = ((ParameterizedTypeRef)staticTypeRef).getDeclaredType();
-      TObjectPrototype _n4EnumType = RuleEnvironmentExtensions.n4EnumType(G);
-      boolean _tripleEquals = (_declaredType == _n4EnumType);
-      if (!_tripleEquals) {
-        _and = false;
-      } else {
-        TEnum _enumType = etr.getEnumType();
-        boolean _isStringBasedEnumeration = TypeSystemHelper.isStringBasedEnumeration(_enumType);
-        boolean _not = (!_isStringBasedEnumeration);
-        _and = _not;
-      }
-      if (_and) {
-        _or_2 = true;
-      } else {
-        boolean _and_1 = false;
-        Type _declaredType_1 = ((ParameterizedTypeRef)staticTypeRef).getDeclaredType();
-        TObjectPrototype _n4StringBasedEnumType = RuleEnvironmentExtensions.n4StringBasedEnumType(G);
-        boolean _tripleEquals_1 = (_declaredType_1 == _n4StringBasedEnumType);
-        if (!_tripleEquals_1) {
-          _and_1 = false;
-        } else {
-          TEnum _enumType_1 = etr.getEnumType();
-          boolean _isStringBasedEnumeration_1 = TypeSystemHelper.isStringBasedEnumeration(_enumType_1);
-          _and_1 = _isStringBasedEnumeration_1;
-        }
-        _or_2 = _and_1;
-      }
-      if (_or_2) {
-        _or_1 = true;
-      } else {
-        boolean _and_2 = false;
-        Type _declaredType_2 = ((ParameterizedTypeRef)staticTypeRef).getDeclaredType();
-        PrimitiveType _stringType = RuleEnvironmentExtensions.stringType(G);
-        boolean _tripleEquals_2 = (_declaredType_2 == _stringType);
-        if (!_tripleEquals_2) {
-          _and_2 = false;
-        } else {
-          TEnum _enumType_2 = etr.getEnumType();
-          boolean _isStringBasedEnumeration_2 = TypeSystemHelper.isStringBasedEnumeration(_enumType_2);
-          _and_2 = _isStringBasedEnumeration_2;
-        }
-        _or_1 = _and_2;
-      }
-      if (_or_1) {
-        _or = true;
-      } else {
-        Type _declaredType_3 = ((ParameterizedTypeRef)staticTypeRef).getDeclaredType();
-        TEnum _enumType_3 = etr.getEnumType();
-        boolean _tripleEquals_3 = (_declaredType_3 == _enumType_3);
-        _or = _tripleEquals_3;
-      }
       /* staticTypeRef.declaredType === G.n4EnumType && ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === etr.enumType */
-      if (!_or) {
+      if (!(((((((ParameterizedTypeRef)staticTypeRef).getDeclaredType() == RuleEnvironmentExtensions.n4EnumType(G)) && (!TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
+        ((((ParameterizedTypeRef)staticTypeRef).getDeclaredType() == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
+        ((((ParameterizedTypeRef)staticTypeRef).getDeclaredType() == RuleEnvironmentExtensions.stringType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
+        (((ParameterizedTypeRef)staticTypeRef).getDeclaredType() == etr.getEnumType()))) {
         sneakyThrowRuleFailedException("staticTypeRef.declaredType === G.n4EnumType && ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticTypeRef.declaredType === etr.enumType");
       }
     } else {
@@ -4149,231 +3748,74 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     final TypeRef right = RuleEnvironmentExtensions.getReplacement(G, rightOriginal);
     final Type leftDeclType = left.getDeclaredType();
     final Type rightDeclType = right.getDeclaredType();
-    boolean _or = false;
-    boolean _equals = Objects.equal(leftDeclType, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      boolean _equals_1 = Objects.equal(rightDeclType, null);
-      _or = _equals_1;
-    }
-    if (_or) {
+    if ((Objects.equal(leftDeclType, null) || Objects.equal(rightDeclType, null))) {
       /* true */
       if (!true) {
         sneakyThrowRuleFailedException("true");
       }
     } else {
-      boolean _or_1 = false;
-      boolean _eIsProxy = leftDeclType.eIsProxy();
-      if (_eIsProxy) {
-        _or_1 = true;
-      } else {
-        boolean _eIsProxy_1 = rightDeclType.eIsProxy();
-        _or_1 = _eIsProxy_1;
-      }
-      if (_or_1) {
+      if ((leftDeclType.eIsProxy() || rightDeclType.eIsProxy())) {
         /* true */
         if (!true) {
           sneakyThrowRuleFailedException("true");
         }
       } else {
-        boolean _and = false;
-        if (!(leftDeclType instanceof VoidType)) {
-          _and = false;
-        } else {
-          _and = (rightDeclType instanceof VoidType);
-        }
-        if (_and) {
+        if (((leftDeclType instanceof VoidType) && (rightDeclType instanceof VoidType))) {
           /* true */
           if (!true) {
             sneakyThrowRuleFailedException("true");
           }
         } else {
-          boolean _or_2 = false;
-          if ((leftDeclType instanceof VoidType)) {
-            _or_2 = true;
-          } else {
-            _or_2 = (rightDeclType instanceof VoidType);
-          }
-          if (_or_2) {
+          if (((leftDeclType instanceof VoidType) || (rightDeclType instanceof VoidType))) {
             /* false */
             if (!false) {
               sneakyThrowRuleFailedException("false");
             }
           } else {
-            boolean _or_3 = false;
-            if (((leftDeclType instanceof NullType) || (leftDeclType instanceof UndefinedType))) {
-              _or_3 = true;
-            } else {
-              _or_3 = (rightDeclType instanceof AnyType);
-            }
-            if (_or_3) {
+            if ((((leftDeclType instanceof NullType) || (leftDeclType instanceof UndefinedType)) || (rightDeclType instanceof AnyType))) {
               /* true */
               if (!true) {
                 sneakyThrowRuleFailedException("true");
               }
             } else {
-              boolean _or_4 = false;
-              boolean _and_1 = false;
-              PrimitiveType _intType = RuleEnvironmentExtensions.intType(G);
-              boolean _tripleEquals = (leftDeclType == _intType);
-              if (!_tripleEquals) {
-                _and_1 = false;
-              } else {
-                PrimitiveType _numberType = RuleEnvironmentExtensions.numberType(G);
-                boolean _tripleEquals_1 = (rightDeclType == _numberType);
-                _and_1 = _tripleEquals_1;
-              }
-              if (_and_1) {
-                _or_4 = true;
-              } else {
-                boolean _and_2 = false;
-                PrimitiveType _numberType_1 = RuleEnvironmentExtensions.numberType(G);
-                boolean _tripleEquals_2 = (leftDeclType == _numberType_1);
-                if (!_tripleEquals_2) {
-                  _and_2 = false;
-                } else {
-                  PrimitiveType _intType_1 = RuleEnvironmentExtensions.intType(G);
-                  boolean _tripleEquals_3 = (rightDeclType == _intType_1);
-                  _and_2 = _tripleEquals_3;
-                }
-                _or_4 = _and_2;
-              }
-              if (_or_4) {
+              if ((((leftDeclType == RuleEnvironmentExtensions.intType(G)) && (rightDeclType == RuleEnvironmentExtensions.numberType(G))) || ((leftDeclType == RuleEnvironmentExtensions.numberType(G)) && (rightDeclType == RuleEnvironmentExtensions.intType(G))))) {
                 /* true */
                 if (!true) {
                   sneakyThrowRuleFailedException("true");
                 }
               } else {
-                boolean _and_3 = false;
-                if (!(leftDeclType instanceof TEnum)) {
-                  _and_3 = false;
-                } else {
-                  TObjectPrototype _n4EnumType = RuleEnvironmentExtensions.n4EnumType(G);
-                  boolean _tripleEquals_4 = (rightDeclType == _n4EnumType);
-                  _and_3 = _tripleEquals_4;
-                }
-                if (_and_3) {
+                if (((leftDeclType instanceof TEnum) && (rightDeclType == RuleEnvironmentExtensions.n4EnumType(G)))) {
                   boolean _hasAnnotation = AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType);
                   /* !AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
                   if (!(!_hasAnnotation)) {
                     sneakyThrowRuleFailedException("!AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
                   }
                 } else {
-                  boolean _and_4 = false;
-                  if (!(leftDeclType instanceof TEnum)) {
-                    _and_4 = false;
-                  } else {
-                    boolean _or_5 = false;
-                    boolean _or_6 = false;
-                    TObjectPrototype _n4StringBasedEnumType = RuleEnvironmentExtensions.n4StringBasedEnumType(G);
-                    boolean _tripleEquals_5 = (rightDeclType == _n4StringBasedEnumType);
-                    if (_tripleEquals_5) {
-                      _or_6 = true;
-                    } else {
-                      PrimitiveType _stringType = RuleEnvironmentExtensions.stringType(G);
-                      boolean _tripleEquals_6 = (rightDeclType == _stringType);
-                      _or_6 = _tripleEquals_6;
-                    }
-                    if (_or_6) {
-                      _or_5 = true;
-                    } else {
-                      TObjectPrototype _stringObjectType = RuleEnvironmentExtensions.stringObjectType(G);
-                      boolean _tripleEquals_7 = (rightDeclType == _stringObjectType);
-                      _or_5 = _tripleEquals_7;
-                    }
-                    _and_4 = _or_5;
-                  }
-                  if (_and_4) {
+                  if (((leftDeclType instanceof TEnum) && (((rightDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringType(G))) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
                     /* AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
                     if (!AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType)) {
                       sneakyThrowRuleFailedException("AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
                     }
                   } else {
-                    boolean _and_5 = false;
-                    TObjectPrototype _n4StringBasedEnumType_1 = RuleEnvironmentExtensions.n4StringBasedEnumType(G);
-                    boolean _tripleEquals_8 = (leftDeclType == _n4StringBasedEnumType_1);
-                    if (!_tripleEquals_8) {
-                      _and_5 = false;
-                    } else {
-                      boolean _or_7 = false;
-                      PrimitiveType _stringType_1 = RuleEnvironmentExtensions.stringType(G);
-                      boolean _tripleEquals_9 = (rightDeclType == _stringType_1);
-                      if (_tripleEquals_9) {
-                        _or_7 = true;
-                      } else {
-                        TObjectPrototype _stringObjectType_1 = RuleEnvironmentExtensions.stringObjectType(G);
-                        boolean _tripleEquals_10 = (rightDeclType == _stringObjectType_1);
-                        _or_7 = _tripleEquals_10;
-                      }
-                      _and_5 = _or_7;
-                    }
-                    if (_and_5) {
+                    if (((leftDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && ((rightDeclType == RuleEnvironmentExtensions.stringType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
                       /* true */
                       if (!true) {
                         sneakyThrowRuleFailedException("true");
                       }
                     } else {
-                      boolean _and_6 = false;
-                      if (!(leftDeclType instanceof PrimitiveType)) {
-                        _and_6 = false;
-                      } else {
-                        PrimitiveType _assignmentCompatible = ((PrimitiveType) leftDeclType).getAssignmentCompatible();
-                        boolean _tripleEquals_11 = (_assignmentCompatible == rightDeclType);
-                        _and_6 = _tripleEquals_11;
-                      }
-                      if (_and_6) {
+                      if (((leftDeclType instanceof PrimitiveType) && (((PrimitiveType) leftDeclType).getAssignmentCompatible() == rightDeclType))) {
                         /* true */
                         if (!true) {
                           sneakyThrowRuleFailedException("true");
                         }
                       } else {
-                        boolean _and_7 = false;
-                        if (!(rightDeclType instanceof PrimitiveType)) {
-                          _and_7 = false;
-                        } else {
-                          PrimitiveType _assignmentCompatible_1 = ((PrimitiveType) rightDeclType).getAssignmentCompatible();
-                          boolean _tripleEquals_12 = (leftDeclType == _assignmentCompatible_1);
-                          _and_7 = _tripleEquals_12;
-                        }
-                        if (_and_7) {
+                        if (((rightDeclType instanceof PrimitiveType) && (leftDeclType == ((PrimitiveType) rightDeclType).getAssignmentCompatible()))) {
                           /* true */
                           if (!true) {
                             sneakyThrowRuleFailedException("true");
                           }
                         } else {
-                          boolean _and_8 = false;
-                          boolean _and_9 = false;
-                          if (!(leftDeclType instanceof TInterface)) {
-                            _and_9 = false;
-                          } else {
-                            _and_9 = (!(rightDeclType instanceof TInterface));
-                          }
-                          if (!_and_9) {
-                            _and_8 = false;
-                          } else {
-                            boolean _or_8 = false;
-                            boolean _or_9 = false;
-                            TClass _n4ObjectType = RuleEnvironmentExtensions.n4ObjectType(G);
-                            boolean _tripleEquals_13 = (rightDeclType == _n4ObjectType);
-                            if (_tripleEquals_13) {
-                              _or_9 = true;
-                            } else {
-                              TClassifier _objectType = RuleEnvironmentExtensions.objectType(G);
-                              boolean _tripleEquals_14 = (rightDeclType == _objectType);
-                              _or_9 = _tripleEquals_14;
-                            }
-                            if (_or_9) {
-                              _or_8 = true;
-                            } else {
-                              AnyType _anyType = RuleEnvironmentExtensions.anyType(G);
-                              boolean _tripleEquals_15 = (rightDeclType == _anyType);
-                              _or_8 = _tripleEquals_15;
-                            }
-                            boolean _not = (!_or_8);
-                            _and_8 = _not;
-                          }
-                          if (_and_8) {
+                          if ((((leftDeclType instanceof TInterface) && (!(rightDeclType instanceof TInterface))) && (!(((rightDeclType == RuleEnvironmentExtensions.n4ObjectType(G)) || (rightDeclType == RuleEnvironmentExtensions.objectType(G))) || (rightDeclType == RuleEnvironmentExtensions.anyType(G)))))) {
                             /* false */
                             if (!false) {
                               sneakyThrowRuleFailedException("false");
@@ -4384,8 +3826,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                             if (_isUseSiteStructuralTyping) {
                               final StructuralTypingResult result = this.typeSystemHelper.isStructuralSubtype(G, left, right);
                               boolean _isValue = result.isValue();
-                              boolean _not_1 = (!_isValue);
-                              if (_not_1) {
+                              boolean _not = (!_isValue);
+                              if (_not) {
                                 /* fail error result.message data PRIORITY_ERROR */
                                 String _message = result.getMessage();
                                 String error = _message;
@@ -4403,12 +3845,12 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                 if (((guard == null) || (!(guard).booleanValue()))) {
                                   final StructuralTypingResult result_1 = this.typeSystemHelper.isStructuralSubtype(G, left, right);
                                   boolean _isValue_1 = result_1.isValue();
-                                  boolean _not_2 = (!_isValue_1);
-                                  if (_not_2) {
-                                    boolean _and_10 = false;
+                                  boolean _not_1 = (!_isValue_1);
+                                  if (_not_1) {
+                                    boolean _and = false;
                                     boolean _isN4ObjectOnLeftWithDefSite = result_1.isN4ObjectOnLeftWithDefSite();
                                     if (!_isN4ObjectOnLeftWithDefSite) {
-                                      _and_10 = false;
+                                      _and = false;
                                     } else {
                                       /* G.wrap, (GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT->(left->right))<-true |- left <: right */
                                       RuleEnvironment _wrap = RuleEnvironmentExtensions.wrap(G);
@@ -4417,9 +3859,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       boolean _ruleinvocation = subtypeSucceeded(environmentComposition(
                                         _wrap, environmentEntry(_mappedTo_3, true)
                                       ), _trace_, left, right);
-                                      _and_10 = _ruleinvocation;
+                                      _and = _ruleinvocation;
                                     }
-                                    if (_and_10) {
+                                    if (_and) {
                                       structuralTyping = true;
                                     } else {
                                       /* fail error result.message data PRIORITY_ERROR */
@@ -4435,30 +3877,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                               }
                             }
                             if ((!structuralTyping)) {
-                              boolean _and_11 = false;
-                              boolean _and_12 = false;
-                              boolean _or_10 = false;
-                              boolean _isUseSiteStructuralTyping_1 = left.isUseSiteStructuralTyping();
-                              if (_isUseSiteStructuralTyping_1) {
-                                _or_10 = true;
-                              } else {
-                                boolean _isDefSiteStructuralTyping_1 = left.isDefSiteStructuralTyping();
-                                _or_10 = _isDefSiteStructuralTyping_1;
-                              }
-                              if (!_or_10) {
-                                _and_12 = false;
-                              } else {
-                                _and_12 = (!((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable)));
-                              }
-                              if (!_and_12) {
-                                _and_11 = false;
+                              boolean _and_1 = false;
+                              if (!((left.isUseSiteStructuralTyping() || left.isDefSiteStructuralTyping()) && 
+                                (!((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))))) {
+                                _and_1 = false;
                               } else {
                                 /* G |- right <: G.n4ObjectTypeRef */
                                 ParameterizedTypeRef _n4ObjectTypeRef = RuleEnvironmentExtensions.n4ObjectTypeRef(G);
                                 boolean _ruleinvocation_1 = subtypeSucceeded(G, _trace_, right, _n4ObjectTypeRef);
-                                _and_11 = _ruleinvocation_1;
+                                _and_1 = _ruleinvocation_1;
                               }
-                              if (_and_11) {
+                              if (_and_1) {
                                 /* fail error "Structural type " + left.typeRefAsString + " is not a subtype of non-structural type " + right.typeRefAsString data PRIORITY_ERROR */
                                 String _typeRefAsString = left.getTypeRefAsString();
                                 String _plus = ("Structural type " + _typeRefAsString);
@@ -4469,15 +3898,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                 Object data_2 = TypeSystemErrorExtensions.PRIORITY_ERROR;
                                 throwForExplicitFail(error_2, new ErrorInformation(null, null, data_2));
                               }
-                              boolean _or_11 = false;
-                              if ((leftDeclType instanceof TypeVariable)) {
-                                _or_11 = true;
-                              } else {
-                                _or_11 = (rightDeclType instanceof TypeVariable);
-                              }
-                              if (_or_11) {
-                                boolean _equals_2 = Objects.equal(leftDeclType, rightDeclType);
-                                if (_equals_2) {
+                              if (((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))) {
+                                boolean _equals = Objects.equal(leftDeclType, rightDeclType);
+                                if (_equals) {
                                   /* true */
                                   if (!true) {
                                     sneakyThrowRuleFailedException("true");
@@ -4505,30 +3928,23 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                 }
                               } else {
-                                boolean _equals_3 = Objects.equal(leftDeclType, rightDeclType);
-                                if (_equals_3) {
-                                  boolean _and_13 = false;
-                                  EList<TypeArgument> _typeArgs = left.getTypeArgs();
-                                  int _size = _typeArgs.size();
-                                  boolean _greaterThan = (_size > 0);
-                                  if (!_greaterThan) {
-                                    _and_13 = false;
-                                  } else {
-                                    EList<TypeArgument> _typeArgs_1 = left.getTypeArgs();
+                                boolean _equals_1 = Objects.equal(leftDeclType, rightDeclType);
+                                if (_equals_1) {
+                                  if (((left.getTypeArgs().size() > 0) && (left.getTypeArgs().size() <= right.getTypeArgs().size()))) {
+                                    EList<TypeArgument> _typeArgs = left.getTypeArgs();
+                                    int _size = _typeArgs.size();
+                                    EList<TypeArgument> _typeArgs_1 = right.getTypeArgs();
                                     int _size_1 = _typeArgs_1.size();
-                                    EList<TypeArgument> _typeArgs_2 = right.getTypeArgs();
-                                    int _size_2 = _typeArgs_2.size();
-                                    boolean _lessEqualsThan = (_size_1 <= _size_2);
-                                    _and_13 = _lessEqualsThan;
-                                  }
-                                  if (_and_13) {
-                                    EList<TypeArgument> _typeArgs_3 = left.getTypeArgs();
-                                    final Iterator<TypeArgument> leftIter = _typeArgs_3.iterator();
-                                    EList<TypeArgument> _typeArgs_4 = right.getTypeArgs();
-                                    final Iterator<TypeArgument> rightIter = _typeArgs_4.iterator();
-                                    while (leftIter.hasNext()) {
-                                      final TypeArgument leftArg = leftIter.next();
-                                      final TypeArgument rightArg = rightIter.next();
+                                    int _min = Math.min(_size, _size_1);
+                                    EList<TypeVariable> _typeVars = rightDeclType.getTypeVars();
+                                    int _size_2 = _typeVars.size();
+                                    final int len = Math.min(_min, _size_2);
+                                    for (int i = 0; (i < len); i++) {
+                                      EList<TypeArgument> _typeArgs_2 = left.getTypeArgs();
+                                      final TypeArgument leftArg = _typeArgs_2.get(i);
+                                      EList<TypeArgument> _typeArgs_3 = right.getTypeArgs();
+                                      final TypeArgument rightArg = _typeArgs_3.get(i);
+                                      final Variance variance = rightDeclType.getVarianceOfTypeVar(i);
                                       TypeRef leftArgUpper = null;
                                       /* G |~ leftArg /\ leftArgUpper */
                                       Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, leftArg);
@@ -4553,14 +3969,20 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
-                                      /* { G |- leftArgUpper <: rightArgUpper G |- rightArgLower <: leftArgLower } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                      /* { if(variance!=Variance.CONTRA) { G |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
                                         try {
-                                          /* G |- leftArgUpper <: rightArgUpper */
-                                          subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
-                                          /* G |- rightArgLower <: leftArgLower */
-                                          subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                          boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
+                                          if (_notEquals) {
+                                            /* G |- leftArgUpper <: rightArgUpper */
+                                            subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
+                                          }
+                                          boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
+                                          if (_notEquals_1) {
+                                            /* G |- rightArgLower <: leftArgLower */
+                                            subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                          }
                                         } catch (Exception e) {
                                           previousFailure = extractRuleFailedException(e);
                                           RuleFailedException _previousFailure = previousFailure;
@@ -4595,35 +4017,29 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                   final List<ParameterizedTypeRef> allSuperTypeRefs = _xifexpression;
                                   List<ParameterizedTypeRef> _collectAllImplicitSuperTypes = RuleEnvironmentExtensions.collectAllImplicitSuperTypes(G, left);
-                                  final Iterable<ParameterizedTypeRef> superTypes = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
+                                  final Iterable<ParameterizedTypeRef> superTypeRefs = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
                                   final Function1<ParameterizedTypeRef, Boolean> _function = (ParameterizedTypeRef it) -> {
                                     Type _declaredType = it.getDeclaredType();
                                     return Boolean.valueOf((_declaredType == rightDeclType));
                                   };
-                                  final ParameterizedTypeRef matchingSuperTypeRef = IterableExtensions.<ParameterizedTypeRef>findFirst(superTypes, _function);
-                                  if ((matchingSuperTypeRef != null)) {
+                                  boolean _exists = IterableExtensions.<ParameterizedTypeRef>exists(superTypeRefs, _function);
+                                  if (_exists) {
                                     final RuleEnvironment localG_left = RuleEnvironmentExtensions.wrap(G);
                                     this.typeSystemHelper.addSubstitutions(localG_left, left);
-                                    try {
-                                      /* localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst */
-                                      TypeRef matchingSuperTypeRefSubst = null;
-                                      Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, matchingSuperTypeRef);
-                                      checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                                      matchingSuperTypeRefSubst = (TypeRef) result_2.getFirst();
-                                      
-                                      /* G |- matchingSuperTypeRefSubst <: right */
-                                      subtypeInternal(G, _trace_, matchingSuperTypeRefSubst, right);
-                                    } catch (final Throwable _t) {
-                                      if (_t instanceof Exception) {
-                                        final Exception e = (Exception)_t;
-                                        /* false */
-                                        if (!false) {
-                                          sneakyThrowRuleFailedException("false");
-                                        }
-                                      } else {
-                                        throw Exceptions.sneakyThrow(_t);
-                                      }
-                                    }
+                                    EList<TypeVariable> _typeVars_1 = rightDeclType.getTypeVars();
+                                    final Function1<TypeVariable, TypeRef> _function_1 = (TypeVariable it) -> {
+                                      return TypeExtensions.ref(it);
+                                    };
+                                    List<TypeRef> _map = ListExtensions.<TypeVariable, TypeRef>map(_typeVars_1, _function_1);
+                                    final TypeRef syntheticTypeRef = TypeExtensions.ref(rightDeclType, ((TypeArgument[])Conversions.unwrapArray(_map, TypeArgument.class)));
+                                    /* localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef */
+                                    TypeRef effectiveSuperTypeRef = null;
+                                    Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, syntheticTypeRef);
+                                    checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                                    effectiveSuperTypeRef = (TypeRef) result_2.getFirst();
+                                    
+                                    /* G |- effectiveSuperTypeRef <: right */
+                                    subtypeInternal(G, _trace_, effectiveSuperTypeRef, right);
                                   } else {
                                     /* false */
                                     if (!false) {
@@ -4938,50 +4354,13 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         {
           try {
             final Type leftType = left.getDeclaredType();
-            boolean _or = false;
-            UndefinedType _undefinedType = RuleEnvironmentExtensions.undefinedType(G);
-            boolean _tripleEquals = (leftType == _undefinedType);
-            if (_tripleEquals) {
-              _or = true;
-            } else {
-              NullType _nullType = RuleEnvironmentExtensions.nullType(G);
-              boolean _tripleEquals_1 = (leftType == _nullType);
-              _or = _tripleEquals_1;
-            }
             /* leftType===G.undefinedType || leftType===G.nullType */
-            if (!_or) {
+            if (!((leftType == RuleEnvironmentExtensions.undefinedType(G)) || (leftType == RuleEnvironmentExtensions.nullType(G)))) {
               sneakyThrowRuleFailedException("leftType===G.undefinedType || leftType===G.nullType");
             }
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            boolean _or_1 = false;
-            boolean _isUseSiteStructuralTyping = boundThisTypeRef.isUseSiteStructuralTyping();
-            if (_isUseSiteStructuralTyping) {
-              _or_1 = true;
-            } else {
-              boolean _and = false;
-              boolean _and_1 = false;
-              ParameterizedTypeRef _actualThisTypeRef = boundThisTypeRef.getActualThisTypeRef();
-              boolean _tripleNotEquals = (null != _actualThisTypeRef);
-              if (!_tripleNotEquals) {
-                _and_1 = false;
-              } else {
-                ParameterizedTypeRef _actualThisTypeRef_1 = boundThisTypeRef.getActualThisTypeRef();
-                Type _declaredType = _actualThisTypeRef_1.getDeclaredType();
-                boolean _tripleNotEquals_1 = (null != _declaredType);
-                _and_1 = _tripleNotEquals_1;
-              }
-              if (!_and_1) {
-                _and = false;
-              } else {
-                ParameterizedTypeRef _actualThisTypeRef_2 = boundThisTypeRef.getActualThisTypeRef();
-                Type _declaredType_1 = _actualThisTypeRef_2.getDeclaredType();
-                boolean _isFinal = _declaredType_1.isFinal();
-                _and = _isFinal;
-              }
-              _or_1 = _and;
-            }
-            if (_or_1) {
+            if ((boundThisTypeRef.isUseSiteStructuralTyping() || (((null != boundThisTypeRef.getActualThisTypeRef()) && (null != boundThisTypeRef.getActualThisTypeRef().getDeclaredType())) && boundThisTypeRef.getActualThisTypeRef().getDeclaredType().isFinal()))) {
               final ParameterizedTypeRef resolvedTypeRef = TypeUtils.createResolvedThisTypeRef(boundThisTypeRef);
               /* G |- left <: resolvedTypeRef */
               subtypeInternal(G, _trace_, left, resolvedTypeRef);
@@ -5049,15 +4428,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           /* { left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType } or { G |~ existentialTypeRef \/ var TypeRef lowerExt G |- left <: lowerExt } */
           {
             try {
-              boolean _and = false;
-              if (!(left instanceof ParameterizedTypeRef)) {
-                _and = false;
-              } else {
-                Type _declaredType = ((ParameterizedTypeRef) left).getDeclaredType();
-                _and = (_declaredType instanceof NullType);
-              }
               /* left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType */
-              if (!_and) {
+              if (!((left instanceof ParameterizedTypeRef) && 
+                (((ParameterizedTypeRef) left).getDeclaredType() instanceof NullType))) {
                 sneakyThrowRuleFailedException("left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType");
               }
             } catch (Exception e_1) {
@@ -5162,18 +4535,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeConstructorTypeRef__Function(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
-    boolean _or = false;
-    Type _declaredType = right.getDeclaredType();
-    if ((_declaredType instanceof AnyType)) {
-      _or = true;
-    } else {
-      Type _declaredType_1 = right.getDeclaredType();
-      TObjectPrototype _functionType = RuleEnvironmentExtensions.functionType(G);
-      boolean _tripleEquals = (_declaredType_1 == _functionType);
-      _or = _tripleEquals;
-    }
     /* right.declaredType instanceof AnyType || right.declaredType === G.functionType */
-    if (!_or) {
+    if (!((right.getDeclaredType() instanceof AnyType) || 
+      (right.getDeclaredType() == RuleEnvironmentExtensions.functionType(G)))) {
       sneakyThrowRuleFailedException("right.declaredType instanceof AnyType || right.declaredType === G.functionType");
     }
     return new Result<Boolean>(true);
@@ -5205,13 +4569,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     subtypeInternal(G, _trace_, _staticTypeRef, _staticTypeRef_1);
     final Type left_staticType = left.staticType();
     final Type right_staticType = right.staticType();
-    boolean _or = false;
-    if ((left_staticType instanceof TypeVariable)) {
-      _or = true;
-    } else {
-      _or = (right_staticType instanceof TypeVariable);
-    }
-    if (_or) {
+    if (((left_staticType instanceof TypeVariable) || (right_staticType instanceof TypeVariable))) {
       /* left_staticType === right_staticType */
       if (!(left_staticType == right_staticType)) {
         sneakyThrowRuleFailedException("left_staticType === right_staticType");
@@ -5223,16 +4581,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       Resource _contextResource_1 = RuleEnvironmentExtensions.getContextResource(G);
       ContainerTypesHelper.MemberCollector _fromContext_1 = this.containerTypesHelper.fromContext(_contextResource_1);
       final TMethod rightCtor = _fromContext_1.findConstructor(((ContainerType<?>) right_staticType));
-      boolean _and = false;
-      boolean _notEquals = (!Objects.equal(leftCtor, null));
-      if (!_notEquals) {
-        _and = false;
-      } else {
-        boolean _notEquals_1 = (!Objects.equal(rightCtor, null));
-        _and = _notEquals_1;
-      }
       /* leftCtor!=null && rightCtor!=null */
-      if (!_and) {
+      if (!((!Objects.equal(leftCtor, null)) && (!Objects.equal(rightCtor, null)))) {
         sneakyThrowRuleFailedException("leftCtor!=null && rightCtor!=null");
       }
       final RuleEnvironment G_left = RuleEnvironmentExtensions.wrap(G);
@@ -5376,18 +4726,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         sneakyThrowRuleFailedException("typeSystemHelper.isSubtypeFunction(G,left,right)");
       }
     } else {
-      boolean _or = false;
-      Type _declaredType = right.getDeclaredType();
-      if ((_declaredType instanceof AnyType)) {
-        _or = true;
-      } else {
-        Type _declaredType_1 = right.getDeclaredType();
-        TObjectPrototype _functionType = RuleEnvironmentExtensions.functionType(G);
-        boolean _tripleEquals = (_declaredType_1 == _functionType);
-        _or = _tripleEquals;
-      }
       /* right.declaredType instanceof AnyType || right.declaredType === G.functionType */
-      if (!_or) {
+      if (!((right.getDeclaredType() instanceof AnyType) || 
+        (right.getDeclaredType() == RuleEnvironmentExtensions.functionType(G)))) {
         sneakyThrowRuleFailedException("right.declaredType instanceof AnyType || right.declaredType === G.functionType");
       }
     }
@@ -5804,16 +5145,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInAdditiveExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AdditiveExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _and = false;
-    AdditiveOperator _op = e.getOp();
-    boolean _notEquals = (!Objects.equal(_op, AdditiveOperator.ADD));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-      _and = _isActive;
-    }
-    if (_and) {
+    if (((!Objects.equal(e.getOp(), AdditiveOperator.ADD)) && JavaScriptVariant.n4js.isActive(e))) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -6486,16 +5818,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInForStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ForStatement forStmnt, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _and = false;
-    boolean _isForOf = forStmnt.isForOf();
-    if (!_isForOf) {
-      _and = false;
-    } else {
-      Expression _expression = forStmnt.getExpression();
-      boolean _tripleEquals = (expression == _expression);
-      _and = _tripleEquals;
-    }
-    if (_and) {
+    if ((forStmnt.isForOf() && (expression == forStmnt.getExpression()))) {
       final Wildcard wildThing = TypeRefsFactory.eINSTANCE.createWildcard();
       boolean _isDestructuringForStatement = N4JSASTUtils.isDestructuringForStatement(forStmnt);
       if (_isDestructuringForStatement) {
@@ -6510,19 +5833,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         }
         final VariableDeclaration varDeclInFor = _xifexpression;
         VariableDeclaration _xifexpression_1 = null;
-        boolean _and_1 = false;
-        Expression _initExpr = forStmnt.getInitExpr();
-        if (!(_initExpr instanceof IdentifierRef)) {
-          _and_1 = false;
-        } else {
-          Expression _initExpr_1 = forStmnt.getInitExpr();
-          IdentifiableElement _id = ((IdentifierRef) _initExpr_1).getId();
-          _and_1 = (_id instanceof VariableDeclaration);
-        }
-        if (_and_1) {
-          Expression _initExpr_2 = forStmnt.getInitExpr();
-          IdentifiableElement _id_1 = ((IdentifierRef) _initExpr_2).getId();
-          _xifexpression_1 = ((VariableDeclaration) _id_1);
+        if (((forStmnt.getInitExpr() instanceof IdentifierRef) && (((IdentifierRef) forStmnt.getInitExpr()).getId() instanceof VariableDeclaration))) {
+          Expression _initExpr = forStmnt.getInitExpr();
+          IdentifiableElement _id = ((IdentifierRef) _initExpr).getId();
+          _xifexpression_1 = ((VariableDeclaration) _id);
         }
         final VariableDeclaration varDeclOutside = _xifexpression_1;
         boolean _or = false;
@@ -6557,16 +5871,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       ParameterizedTypeRef _iterableTypeRef = RuleEnvironmentExtensions.iterableTypeRef(G, wildThing);
       T = _iterableTypeRef;
     } else {
-      boolean _and_2 = false;
-      boolean _isForIn = forStmnt.isForIn();
-      if (!_isForIn) {
-        _and_2 = false;
-      } else {
-        Expression _expression_1 = forStmnt.getExpression();
-        boolean _tripleEquals_1 = (expression == _expression_1);
-        _and_2 = _tripleEquals_1;
-      }
-      if (_and_2) {
+      if ((forStmnt.isForIn() && (expression == forStmnt.getExpression()))) {
         ParameterizedTypeRef _objectTypeRef = RuleEnvironmentExtensions.objectTypeRef(G);
         ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
         ParameterizedTypeRef _argumentsTypeRef = RuleEnvironmentExtensions.argumentsTypeRef(G);
@@ -6925,20 +6230,16 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     TypeRef result = null; // output parameter
     result = ct;
     boolean _matched = false;
-    if (!_matched) {
-      if (ct instanceof ConstructorTypeRef) {
-        _matched=true;
-      }
+    if (ct instanceof ConstructorTypeRef) {
+      _matched=true;
     }
     if (!_matched) {
       final StaticBaseTypeRef staticTypeRef = ct.getStaticTypeRef();
       boolean _matched_1 = false;
-      if (!_matched_1) {
-        if (staticTypeRef instanceof BoundThisTypeRef) {
-          _matched_1=true;
-          ClassifierTypeRef _createResolvedClassifierTypeRef = TypeUtils.createResolvedClassifierTypeRef(ct);
-          result = _createResolvedClassifierTypeRef;
-        }
+      if (staticTypeRef instanceof BoundThisTypeRef) {
+        _matched_1=true;
+        ClassifierTypeRef _createResolvedClassifierTypeRef = TypeUtils.createResolvedClassifierTypeRef(ct);
+        result = _createResolvedClassifierTypeRef;
       }
     }
     return new Result<TypeRef>(result);
@@ -7297,17 +6598,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       lb = (TypeRef) result_1.getFirst();
       
     }
-    boolean _or = false;
-    TypeRef _declaredUpperBound = wildcard.getDeclaredUpperBound();
-    boolean _tripleNotEquals = (ub != _declaredUpperBound);
-    if (_tripleNotEquals) {
-      _or = true;
-    } else {
-      TypeRef _declaredLowerBound = wildcard.getDeclaredLowerBound();
-      boolean _tripleNotEquals_1 = (lb != _declaredLowerBound);
-      _or = _tripleNotEquals_1;
-    }
-    if (_or) {
+    if (((ub != wildcard.getDeclaredUpperBound()) || (lb != wildcard.getDeclaredLowerBound()))) {
       Wildcard _copy = TypeUtils.<Wildcard>copy(wildcard);
       T = _copy;
       TypeRef _copyIfContained = TypeUtils.<TypeRef>copyIfContained(ub);
@@ -7579,47 +6870,16 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
           TypeRef temp = this.<TypeRef>env(G, typeVar, TypeRef.class);
           final Type tempDeclaredType = temp.getDeclaredType();
-          boolean _and = false;
-          boolean _and_1 = false;
-          boolean _tripleNotEquals = (typeVar != tempDeclaredType);
-          if (!_tripleNotEquals) {
-            _and_1 = false;
-          } else {
-            boolean _or = false;
-            boolean _isOrContainsRefToTypeVar = TypeUtils.isOrContainsRefToTypeVar(temp);
-            if (_isOrContainsRefToTypeVar) {
-              _or = true;
-            } else {
-              boolean _and_2 = false;
-              boolean _tripleNotEquals_1 = (tempDeclaredType != null);
-              if (!_tripleNotEquals_1) {
-                _and_2 = false;
-              } else {
-                boolean _isGeneric = tempDeclaredType.isGeneric();
-                _and_2 = _isGeneric;
-              }
-              _or = _and_2;
-            }
-            _and_1 = _or;
-          }
-          if (!_and_1) {
-            _and = false;
-          } else {
-            Pair<String, TypeRef> _mappedTo = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp);
-            Object _get = G.get(_mappedTo);
-            boolean _tripleEquals = (_get == null);
-            _and = _tripleEquals;
-          }
-          if (_and) {
+          if ((((typeVar != tempDeclaredType) && (TypeUtils.isOrContainsRefToTypeVar(temp) || ((tempDeclaredType != null) && tempDeclaredType.isGeneric()))) && (G.get(Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp)) == null))) {
             final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-            Pair<String, TypeRef> _mappedTo_1 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp);
-            boolean _add = G2.add(_mappedTo_1, Boolean.TRUE);
+            Pair<String, TypeRef> _mappedTo = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp);
+            boolean _add = G2.add(_mappedTo, Boolean.TRUE);
             /* G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) */
             if (!_add) {
               sneakyThrowRuleFailedException("G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)");
@@ -7638,7 +6898,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
@@ -7646,41 +6906,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
               for (int i = 0; (i < l_raw.size()); i++) {
                 final TypeRef temp_1 = l_raw.get(i);
                 final Type tempDeclaredType_1 = temp_1.getDeclaredType();
-                boolean _and_3 = false;
-                boolean _and_4 = false;
-                boolean _tripleNotEquals_2 = (typeVar != tempDeclaredType_1);
-                if (!_tripleNotEquals_2) {
-                  _and_4 = false;
-                } else {
-                  boolean _or_1 = false;
-                  boolean _isOrContainsRefToTypeVar_1 = TypeUtils.isOrContainsRefToTypeVar(temp_1);
-                  if (_isOrContainsRefToTypeVar_1) {
-                    _or_1 = true;
-                  } else {
-                    boolean _and_5 = false;
-                    boolean _tripleNotEquals_3 = (tempDeclaredType_1 != null);
-                    if (!_tripleNotEquals_3) {
-                      _and_5 = false;
-                    } else {
-                      boolean _isGeneric_1 = tempDeclaredType_1.isGeneric();
-                      _and_5 = _isGeneric_1;
-                    }
-                    _or_1 = _and_5;
-                  }
-                  _and_4 = _or_1;
-                }
-                if (!_and_4) {
-                  _and_3 = false;
-                } else {
-                  Pair<String, TypeRef> _mappedTo_2 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
-                  Object _get_1 = G.get(_mappedTo_2);
-                  boolean _tripleEquals_1 = (_get_1 == null);
-                  _and_3 = _tripleEquals_1;
-                }
-                if (_and_3) {
+                if ((((typeVar != tempDeclaredType_1) && (TypeUtils.isOrContainsRefToTypeVar(temp_1) || ((tempDeclaredType_1 != null) && tempDeclaredType_1.isGeneric()))) && (G.get(Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1)) == null))) {
                   final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
-                  Pair<String, TypeRef> _mappedTo_3 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
-                  boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
+                  Pair<String, TypeRef> _mappedTo_1 = Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp_1);
+                  boolean _add_1 = G2_1.add(_mappedTo_1, Boolean.TRUE);
                   /* G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) */
                   if (!_add_1) {
                     sneakyThrowRuleFailedException("G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE)");
@@ -7705,10 +6934,27 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                   }
                 }
               }
-              UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-              result = _createUnknownTypeRef;
+              TypeRef _xifexpression = null;
+              boolean _isDeclaredCovariant = typeVar.isDeclaredCovariant();
+              if (_isDeclaredCovariant) {
+                _xifexpression = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
+              } else {
+                TypeRef _xifexpression_1 = null;
+                boolean _isDeclaredContravariant = typeVar.isDeclaredContravariant();
+                if (_isDeclaredContravariant) {
+                  _xifexpression_1 = this.typeSystemHelper.createUnionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
+                } else {
+                  UnknownTypeRef _xblockexpression = null;
+                  {
+                    RuleEnvironmentExtensions.addInconsistentSubstitutions(G, typeVar, l);
+                    _xblockexpression = (TypeRefsFactory.eINSTANCE.createUnknownTypeRef());
+                  }
+                  _xifexpression_1 = _xblockexpression;
+                }
+                _xifexpression = _xifexpression_1;
+              }
+              result = _xifexpression;
               TypeUtils.copyTypeModifiers(result, typeRef);
-              RuleEnvironmentExtensions.addInconsistentSubstitutions(G, typeVar, l);
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
             }
@@ -7716,20 +6962,20 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     }
-    boolean _and_3 = false;
+    boolean _and = false;
     Type _declaredType_2 = null;
     if (typeRef!=null) {
       _declaredType_2=typeRef.getDeclaredType();
     }
-    boolean _tripleNotEquals_2 = (_declaredType_2 != null);
-    if (!_tripleNotEquals_2) {
-      _and_3 = false;
+    boolean _tripleNotEquals = (_declaredType_2 != null);
+    if (!_tripleNotEquals) {
+      _and = false;
     } else {
       Type _declaredType_3 = typeRef.getDeclaredType();
-      boolean _isGeneric_1 = _declaredType_3.isGeneric();
-      _and_3 = _isGeneric_1;
+      boolean _isGeneric = _declaredType_3.isGeneric();
+      _and = _isGeneric;
     }
-    if (_and_3) {
+    if (_and) {
       EList<TypeArgument> _typeArgs = typeRef.getTypeArgs();
       final int len = _typeArgs.size();
       boolean haveSubstitution = false;
@@ -7821,15 +7067,13 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     TypeRef T = null; // output parameter
     final FunctionOrFieldAccessor containingFunctionOrAccessor = N4JSASTUtils.getContainingFunctionOrAccessor(location);
     boolean _matched = false;
-    if (!_matched) {
-      if (containingFunctionOrAccessor instanceof ArrowFunction) {
-        _matched=true;
-        /* G |~ containingFunctionOrAccessor ~> T */
-        Result<TypeRef> result = thisTypeRefInternal(G, _trace_, ((ArrowFunction)containingFunctionOrAccessor));
-        checkAssignableTo(result.getFirst(), TypeRef.class);
-        T = (TypeRef) result.getFirst();
-        
-      }
+    if (containingFunctionOrAccessor instanceof ArrowFunction) {
+      _matched=true;
+      /* G |~ containingFunctionOrAccessor ~> T */
+      Result<TypeRef> result = thisTypeRefInternal(G, _trace_, ((ArrowFunction)containingFunctionOrAccessor));
+      checkAssignableTo(result.getFirst(), TypeRef.class);
+      T = (TypeRef) result.getFirst();
+      
     }
     if (!_matched) {
       Type x = null;
@@ -7851,15 +7095,13 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       } else {
         final ThisTarget thisTarget = N4JSASTUtils.getProbableThisTarget(location);
         boolean _matched_1 = false;
-        if (!_matched_1) {
-          if (thisTarget instanceof ObjectLiteral) {
-            _matched_1=true;
-            /* G |- thisTarget: T */
-            Result<TypeRef> result_1 = typeInternal(G, _trace_, ((ObjectLiteral)thisTarget));
-            checkAssignableTo(result_1.getFirst(), TypeRef.class);
-            T = (TypeRef) result_1.getFirst();
-            
-          }
+        if (thisTarget instanceof ObjectLiteral) {
+          _matched_1=true;
+          /* G |- thisTarget: T */
+          Result<TypeRef> result_1 = typeInternal(G, _trace_, ((ObjectLiteral)thisTarget));
+          checkAssignableTo(result_1.getFirst(), TypeRef.class);
+          T = (TypeRef) result_1.getFirst();
+          
         }
         if (!_matched_1) {
           if (thisTarget instanceof N4ClassifierDefinition) {
@@ -7867,15 +7109,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             Type thisTargetDEFTYPE = ((N4ClassifierDefinition)thisTarget).getDefinedType();
             if ((thisTarget instanceof N4ClassDeclaration)) {
               final TClass clazz = ((N4ClassDeclaration)thisTarget).getDefinedTypeAsClass();
-              boolean _and = false;
-              boolean _tripleNotEquals = (clazz != null);
-              if (!_tripleNotEquals) {
-                _and = false;
-              } else {
-                boolean _isStaticPolyfill = clazz.isStaticPolyfill();
-                _and = _isStaticPolyfill;
-              }
-              if (_and) {
+              if (((clazz != null) && clazz.isStaticPolyfill())) {
                 ParameterizedTypeRef _superClassRef = clazz.getSuperClassRef();
                 final Type actualClazz = _superClassRef.getDeclaredType();
                 if ((actualClazz != null)) {
@@ -7885,14 +7119,8 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
             }
             if ((thisTargetDEFTYPE != null)) {
               final FunctionDefinition containingFunction = N4JSASTUtils.getContainingFunction(location);
-              boolean _and_1 = false;
-              if (!(containingFunction instanceof N4MethodDeclaration)) {
-                _and_1 = false;
-              } else {
-                boolean _isStatic = ((N4MemberDeclaration) containingFunction).isStatic();
-                _and_1 = _isStatic;
-              }
-              if (_and_1) {
+              if (((containingFunction instanceof N4MethodDeclaration) && 
+                ((N4MemberDeclaration) containingFunction).isStatic())) {
                 boolean _isInReturnDeclaration_Of_StaticMethod = RuleEnvironmentExtensions.isInReturnDeclaration_Of_StaticMethod(location, ((N4MethodDeclaration) containingFunction));
                 if (_isInReturnDeclaration_Of_StaticMethod) {
                   /* G |~ thisTargetDEFTYPE.ref ~> T */
@@ -7914,41 +7142,17 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                 }
               } else {
                 final N4FieldDeclaration n4Field = EcoreUtil2.<N4FieldDeclaration>getContainerOfType(location, N4FieldDeclaration.class);
-                boolean _and_2 = false;
-                boolean _tripleNotEquals_1 = (n4Field != null);
-                if (!_tripleNotEquals_1) {
-                  _and_2 = false;
-                } else {
-                  boolean _isStatic_1 = n4Field.isStatic();
-                  _and_2 = _isStatic_1;
-                }
-                if (_and_2) {
+                if (((n4Field != null) && n4Field.isStatic())) {
                   TypeRef _createClassifierTypeRef_2 = TypeUtils.createClassifierTypeRef(thisTargetDEFTYPE);
                   T = _createClassifierTypeRef_2;
                 } else {
                   final N4GetterDeclaration n4Getter = EcoreUtil2.<N4GetterDeclaration>getContainerOfType(location, N4GetterDeclaration.class);
-                  boolean _and_3 = false;
-                  boolean _tripleNotEquals_2 = (n4Getter != null);
-                  if (!_tripleNotEquals_2) {
-                    _and_3 = false;
-                  } else {
-                    boolean _isStatic_2 = n4Getter.isStatic();
-                    _and_3 = _isStatic_2;
-                  }
-                  if (_and_3) {
+                  if (((n4Getter != null) && n4Getter.isStatic())) {
                     TypeRef _createClassifierTypeRef_3 = TypeUtils.createClassifierTypeRef(thisTargetDEFTYPE);
                     T = _createClassifierTypeRef_3;
                   } else {
                     final N4SetterDeclaration n4Setter = EcoreUtil2.<N4SetterDeclaration>getContainerOfType(location, N4SetterDeclaration.class);
-                    boolean _and_4 = false;
-                    boolean _tripleNotEquals_3 = (n4Setter != null);
-                    if (!_tripleNotEquals_3) {
-                      _and_4 = false;
-                    } else {
-                      boolean _isStatic_3 = n4Setter.isStatic();
-                      _and_4 = _isStatic_3;
-                    }
-                    if (_and_4) {
+                    if (((n4Setter != null) && n4Setter.isStatic())) {
                       TypeRef _createClassifierTypeRef_4 = TypeUtils.createClassifierTypeRef(thisTargetDEFTYPE);
                       T = _createClassifierTypeRef_4;
                     } else {

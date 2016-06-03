@@ -522,15 +522,25 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Checks if the given objects contains a {@link DeferredTypeRef} and, if so, throws an exception.
+	 * Tells if the given object contains a {@link DeferredTypeRef}.
 	 */
-	public static void assertNoDeferredTypeRefs(EObject object) {
+	public static boolean containsDeferredTypeRefs(EObject object) {
 		final Iterator<EObject> i = object.eAllContents();
 		while (i.hasNext()) {
 			Object local = i.next();
 			if (local instanceof DeferredTypeRef) {
-				throw new IllegalStateException("found a DeferredTypeRef in " + object.eResource().getURI());
+				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the given object contains a {@link DeferredTypeRef} and, if so, throws an exception.
+	 */
+	public static void assertNoDeferredTypeRefs(EObject object) {
+		if (containsDeferredTypeRefs(object)) {
+			throw new IllegalStateException("found a DeferredTypeRef in " + object.eResource().getURI());
 		}
 	}
 
@@ -583,6 +593,25 @@ public class TypeUtils {
 		result.setTypeVar(typeVar);
 		result.setTypeArg(TypeUtils.copyIfContained(typeArg));
 		return result;
+	}
+
+	/**
+	 * Type references may be nested within other type references, e.g. the members of a union type. This method will
+	 * return the outermost type reference that contains the given type reference but is not itself contained in another
+	 * type reference, or the given type reference if it is not contained in another type reference.
+	 * <p>
+	 * Returns <code>null</code> if given <code>null</code>.
+	 */
+	public static TypeRef getRootTypeRef(TypeRef typeRef) {
+		if (typeRef != null) {
+			while (true) {
+				final TypeRef nextOuter = EcoreUtil2.getContainerOfType(typeRef.eContainer(), TypeRef.class);
+				if (nextOuter == null)
+					break;
+				typeRef = nextOuter;
+			}
+		}
+		return typeRef;
 	}
 
 	/**

@@ -29,6 +29,7 @@ import it.xsemantics.runtime.Result
 import javax.inject.Singleton
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import eu.numberfour.n4js.ts.types.TField
 
 /**
  */
@@ -48,22 +49,34 @@ class ValidatorMessageHelper {
 				val node = NodeModelUtils::getNode(ast);
 				if (node !== null) {
 					val memberLine = node.startLine
-					return '''«member.staticKeyword»«member.keyword» «member.shortQualifiedName» (line «memberLine»)'''
+					return '''«member.prefixedKeyword» «member.shortQualifiedName» (line «memberLine»)'''
 				}
 			}
 		}
-		return '''«member.staticKeyword»«member.keyword» «member.shortQualifiedName»'''
+		return '''«member.prefixedKeyword» «member.shortQualifiedName»''';
 	}
 
 	/**
-	 * Returns "static " if member is static, used in description methods
+	 * Returns "static " if member is static, "const " for const fields and an empty strign otherwise;
+	 * used in description methods.
 	 */
-	private def String staticKeyword(TMember member) {
+	private def String staticOrConstKeyword(TMember member) {
 		if (member !== null && member.static) {
-			return "static "
+			// exception for 'const' which is tagged static but meaning is implied by 'const' keyword 
+			if(member instanceof TField) {
+				if( member.isConst ) return "const ";
+			}
+			return "static ";
 		} else {
 			return ""
 		}
+	}
+
+	/**
+	 * Returns "static " or "const "-prefixed keyword if member is static, used in description methods.
+	 */
+	private def String prefixedKeyword(TMember member) {
+		return '''«member.staticOrConstKeyword»«member.keyword»''';
 	}
 
 	/**
@@ -94,14 +107,14 @@ class ValidatorMessageHelper {
 	 * Returns type of member and short qualified name.
 	 */
 	public def String description(TMember member) {
-		'''«member.staticKeyword»«member.keyword» «member.shortQualifiedName»'''
+		'''«member.prefixedKeyword» «member.shortQualifiedName»'''
 	}
 
 	/**
 	 * Returns type of member and simple name.
 	 */
 	public def String shortDescription(TMember member) {
-		'''«member.staticKeyword»«member.keyword» «member.name»'''
+		'''«member.prefixedKeyword» «member.name»'''
 	}
 
 	/**
@@ -164,7 +177,7 @@ class ValidatorMessageHelper {
 	 */
 	public def String descriptionWithLine(TMember member) {
 		val memberLine = member.astElement.getMemberLine
-		'''«member.staticKeyword»«member.keyword» «member.name»«memberLine»'''
+		'''«member.prefixedKeyword» «member.name»«memberLine»'''
 	}
 
 	private def String getMemberLine(EObject element) {

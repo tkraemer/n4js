@@ -57,7 +57,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -89,6 +88,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#isDeclaredAsync <em>Declared Async</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getName <em>Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getComputeNameFrom <em>Compute Name From</em>}</li>
@@ -206,6 +206,16 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @ordered
 	 */
 	protected TypeRef declaredTypeRef;
+
+	/**
+	 * The cached value of the '{@link #getBogusTypeRef() <em>Bogus Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBogusTypeRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected TypeRef bogusTypeRef;
 
 	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
@@ -557,6 +567,49 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TypeRef getBogusTypeRef() {
+		return bogusTypeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBogusTypeRef(TypeRef newBogusTypeRef, NotificationChain msgs) {
+		TypeRef oldBogusTypeRef = bogusTypeRef;
+		bogusTypeRef = newBogusTypeRef;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF, oldBogusTypeRef, newBogusTypeRef);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBogusTypeRef(TypeRef newBogusTypeRef) {
+		if (newBogusTypeRef != bogusTypeRef) {
+			NotificationChain msgs = null;
+			if (bogusTypeRef != null)
+				msgs = ((InternalEObject)bogusTypeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF, null, msgs);
+			if (newBogusTypeRef != null)
+				msgs = ((InternalEObject)newBogusTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF, null, msgs);
+			msgs = basicSetBogusTypeRef(newBogusTypeRef, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF, newBogusTypeRef, newBogusTypeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public PropertyNameKind getKind() {
 		return kind;
 	}
@@ -643,39 +696,13 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isAbstract() {
-		boolean _or = false;
-		boolean _and = false;
-		boolean _and_1 = false;
-		EObject _eContainer = this.eContainer();
-		if (!(_eContainer instanceof N4InterfaceDeclaration)) {
-			_and_1 = false;
-		} else {
-			Block _body = this.getBody();
-			boolean _tripleEquals = (_body == null);
-			_and_1 = _tripleEquals;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			EList<Annotation> _annotations = this.getAnnotations();
-			final Function1<Annotation, Boolean> _function = new Function1<Annotation, Boolean>() {
+		return ((((this.eContainer() instanceof N4InterfaceDeclaration) && (this.getBody() == null)) && 
+			(!IterableExtensions.<Annotation>exists(this.getAnnotations(), new Function1<Annotation, Boolean>() {
 				public Boolean apply(final Annotation it) {
 					String _name = it.getName();
 					return Boolean.valueOf(Objects.equal(_name, "ProvidesDefaultImplementation"));
 				}
-			};
-			boolean _exists = IterableExtensions.<Annotation>exists(_annotations, _function);
-			boolean _not = (!_exists);
-			_and = _not;
-		}
-		if (_and) {
-			_or = true;
-		} else {
-			EList<N4Modifier> _declaredModifiers = this.getDeclaredModifiers();
-			boolean _contains = _declaredModifiers.contains(N4Modifier.ABSTRACT);
-			_or = _contains;
-		}
-		return _or;
+			}))) || this.getDeclaredModifiers().contains(N4Modifier.ABSTRACT));
 	}
 
 	/**
@@ -684,17 +711,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isConstructor() {
-		boolean _and = false;
-		String _name = this.getName();
-		boolean _equals = Objects.equal("constructor", _name);
-		if (!_equals) {
-			_and = false;
-		} else {
-			boolean _isStatic = this.isStatic();
-			boolean _not = (!_isStatic);
-			_and = _not;
-		}
-		return _and;
+		return (Objects.equal("constructor", this.getName()) && (!this.isStatic()));
 	}
 
 	/**
@@ -703,17 +720,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isCallableConstructor() {
-		boolean _and = false;
-		String _name = this.getName();
-		boolean _tripleEquals = (null == _name);
-		if (!_tripleEquals) {
-			_and = false;
-		} else {
-			Expression _computeNameFrom = this.getComputeNameFrom();
-			boolean _tripleEquals_1 = (null == _computeNameFrom);
-			_and = _tripleEquals_1;
-		}
-		return _and;
+		return ((null == this.getName()) && (null == this.getComputeNameFrom()));
 	}
 
 	/**
@@ -737,24 +744,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (_equals) {
 			return false;
 		}
-		boolean _and = false;
-		boolean _and_1 = false;
-		String _name_1 = this.getName();
-		boolean _equals_1 = Objects.equal("constructor", _name_1);
-		if (!_equals_1) {
-			_and_1 = false;
-		} else {
-			boolean _isGenerator = this.isGenerator();
-			_and_1 = _isGenerator;
-		}
-		if (!_and_1) {
-			_and = false;
-		} else {
-			PropertyNameKind _kind = this.getKind();
-			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			_and = _tripleNotEquals;
-		}
-		if (_and) {
+		if (((Objects.equal("constructor", this.getName()) && this.isGenerator()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
 			return false;
 		}
 		return true;
@@ -873,6 +863,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return ((InternalEList<?>)getTypeVars()).basicRemove(otherEnd, msgs);
 			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF:
 				return basicSetDeclaredTypeRef(null, msgs);
+			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
+				return basicSetBogusTypeRef(null, msgs);
 			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
 				return basicSetComputeNameFrom(null, msgs);
 		}
@@ -906,6 +898,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return getTypeVars();
 			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF:
 				return getDeclaredTypeRef();
+			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
+				return getBogusTypeRef();
 			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
 				return getKind();
 			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
@@ -953,6 +947,9 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return;
 			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)newValue);
+				return;
+			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)newValue);
 				return;
 			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
 				setKind((PropertyNameKind)newValue);
@@ -1002,6 +999,9 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)null);
 				return;
+			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)null);
+				return;
 			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
@@ -1041,6 +1041,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return typeVars != null && !typeVars.isEmpty();
 			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF:
 				return declaredTypeRef != null;
+			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
+				return bogusTypeRef != null;
 			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
 				return kind != KIND_EDEFAULT;
 			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
@@ -1099,6 +1101,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (baseClass == TypedElement.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF;
+				case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -1165,6 +1168,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (baseClass == TypedElement.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF: return N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF;
+				case N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF: return N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}

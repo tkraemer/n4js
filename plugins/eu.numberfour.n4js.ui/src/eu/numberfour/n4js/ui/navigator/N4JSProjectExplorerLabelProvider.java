@@ -10,18 +10,17 @@
  */
 package eu.numberfour.n4js.ui.navigator;
 
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.jdt.internal.ui.packageview.PackageExplorerProblemsDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator;
 import org.eclipse.jdt.ui.ProblemsLabelDecorator.ProblemsLabelChangedEvent;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.IWorkingSetManager;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import com.google.inject.Inject;
@@ -29,34 +28,40 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.utils.UIUtils;
+import eu.numberfour.n4js.ui.workingsets.WorkingSet;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetLabelProvider;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
+import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.utils.Arrays2;
 
 /**
  * Label provider extension for the N4JS specific Project Explorer view.
  */
-@SuppressWarnings("restriction")
-public class N4JSProjectExplorerLabelProvider extends LabelProvider {
+public class N4JSProjectExplorerLabelProvider extends LabelProvider implements IStyledLabelProvider {
 
+	@SuppressWarnings("unused")
 	private static final Image SRC_FOLDER_IMG = ImageRef.SRC_FOLDER.asImage().orNull();
+	private static final Image WORKING_SET_IMG = ImageRef.WORKING_SET.asImage().orNull();
 
 	@Inject
+	@SuppressWarnings("unused")
 	private N4JSProjectExplorerHelper helper;
 
 	@Inject
-	private N4JSProjectExplorerContentProvider contentProvider;
+	private WorkingSetManagerBroker workingSetManagerBroker;
 
-	private final LabelProvider delegate;
-	private final IWorkingSetManager workingSetManager;
+	private final ILabelProvider delegate;
 	private final ProblemsLabelDecorator decorator;
 	private final ILabelProviderListener workingSetLabelProviderListener;
+	private final WorkbenchLabelProvider workbenchLabelProvider;
 
 	/**
 	 * Sole constructor.
 	 */
 	public N4JSProjectExplorerLabelProvider() {
-		decorator = new PackageExplorerProblemsDecorator();
-		delegate = new DecoratingLabelProvider(new WorkbenchLabelProvider(), decorator);
-		workingSetManager = PlatformUI.getWorkbench().getWorkingSetManager();
+		decorator = new N4JSProjectExplorerProblemsDecorator();
+		workbenchLabelProvider = new WorkbenchLabelProvider();
+		delegate = new DecoratingLabelProvider(workbenchLabelProvider, decorator);
 		workingSetLabelProviderListener = new ILabelProviderListener() {
 
 			@Override
@@ -73,18 +78,30 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 
 	@Override
 	public String getText(final Object element) {
-		return delegate.getText(element);
+		if (element instanceof WorkingSet) {
+			return WorkingSetLabelProvider.INSTANCE.getText(element);
+		} else {
+			return delegate.getText(element);
+		}
 	}
 
 	@Override
 	public Image getImage(final Object element) {
 
-		if (element instanceof IFolder) {
-			final IFolder folder = (IFolder) element;
-			if (helper.isSourceFolder(folder) || helper.isOutputFolder(folder)) {
-				return decorator.decorateImage(SRC_FOLDER_IMG, element);
-			}
+		if (element instanceof WorkingSet) {
+			return decorator.decorateImage(WORKING_SET_IMG, element);
 		}
+
+		// (temporarily) disabled because #isSourceFolder() and #isOutputFolder() obtain a lock on the workspace
+		// (e.g. they call IResource#exists() on IFolder 'element') and this seems to cause performance issues with
+		// locks that egit is obtaining for doing cyclic updates (see IDE-2269):
+
+		// if (element instanceof IFolder) {
+		// final IFolder folder = (IFolder) element;
+		// if (helper.isSourceFolder(folder) || helper.isOutputFolder(folder)) {
+		// return decorator.decorateImage(SRC_FOLDER_IMG, element);
+		// }
+		// }
 
 		return delegate.getImage(element);
 	}
@@ -93,6 +110,14 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	public void dispose() {
 		super.dispose();
 		delegate.removeListener(workingSetLabelProviderListener);
+	}
+
+	@Override
+	public StyledString getStyledText(final Object element) {
+		if (element instanceof WorkingSet) {
+			return WorkingSetLabelProvider.INSTANCE.getStyledText(element);
+		}
+		return workbenchLabelProvider.getStyledText(element);
 	}
 
 	/**
@@ -105,10 +130,13 @@ public class N4JSProjectExplorerLabelProvider extends LabelProvider {
 	 *         viewer refresh is needed.
 	 */
 	private LabelProviderChangedEvent createWorkingSetWrapperEvent(final LabelProviderChangedEvent event) {
-		if (event instanceof ProblemsLabelChangedEvent && contentProvider.isWorkingSetsEnabled()) {
-			final IWorkingSet[] workingSets = workingSetManager.getWorkingSets();
-			if (!Arrays2.isEmpty(workingSets)) {
-				return new LabelProviderChangedEvent(delegate, workingSets);
+		if (event instanceof ProblemsLabelChangedEvent && workingSetManagerBroker.isWorkingSetTopLevel()) {
+			final WorkingSetManager manager = workingSetManagerBroker.getActiveManager();
+			if (null != manager) {
+				final WorkingSet[] workingSets = manager.getWorkingSets();
+				if (!Arrays2.isEmpty(workingSets)) {
+					return new LabelProviderChangedEvent(delegate, workingSets);
+				}
 			}
 		}
 		return null;

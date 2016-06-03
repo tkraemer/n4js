@@ -33,7 +33,6 @@ import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.ArrayList
@@ -122,15 +121,7 @@ class ASTProcessor extends AbstractProcessor {
 				// note: we need to allow adding more postponed subtrees inside this loop!
 				processSubtree(G, block, cache, 0);
 			}
-		}
-		catch(RuntimeException re) {
-			throw UtilN4.reportError(re); // make sure we see this on the console (some clients eat up all exceptions!)
-		}
-		catch(Error err) {
-			// wrapping error before re-throwing it to avoid Xtend warning
-			throw UtilN4.reportError(new IllegalStateException("", err))
-		}
-		finally {
+		} finally {
 			if(cache.canceled) {
 				log(0, "CANCELED by cancelIndicator");
 			}

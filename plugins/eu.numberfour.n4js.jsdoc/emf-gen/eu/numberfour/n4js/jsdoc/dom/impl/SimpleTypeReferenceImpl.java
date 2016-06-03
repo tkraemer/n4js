@@ -159,18 +159,7 @@ public class SimpleTypeReferenceImpl extends JSDocNodeImpl implements SimpleType
 	 * @generated
 	 */
 	public boolean typeNameSet() {
-		boolean _and = false;
-		String _typeName = this.getTypeName();
-		boolean _tripleNotEquals = (_typeName != null);
-		if (!_tripleNotEquals) {
-			_and = false;
-		} else {
-			String _typeName_1 = this.getTypeName();
-			boolean _isEmpty = _typeName_1.isEmpty();
-			boolean _not = (!_isEmpty);
-			_and = _not;
-		}
-		return _and;
+		return ((this.getTypeName() != null) && (!this.getTypeName().isEmpty()));
 	}
 
 	/**

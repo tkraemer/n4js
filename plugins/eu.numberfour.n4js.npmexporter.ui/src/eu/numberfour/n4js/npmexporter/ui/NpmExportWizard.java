@@ -107,7 +107,7 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 		setDialogSettings(section);
 	}
 
-	/** Check if the tool - runner feature is acitve. */
+	/** Check if the tool - runner feature is active. */
 	private boolean runTools() {
 		return enableToolRunner;
 	}

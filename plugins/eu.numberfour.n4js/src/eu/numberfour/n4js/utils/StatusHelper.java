@@ -39,8 +39,17 @@ public class StatusHelper {
 	}
 
 	/**
+	 * Returns with the {@link Status#CANCEL_STATUS CANCEL status} instance.
+	 *
+	 * @return the shared singleton CANCEL status.
+	 */
+	public IStatus cancel() {
+		return Status.CANCEL_STATUS;
+	}
+
+	/**
 	 * Creates a new {@link IStatus#INFO info} status with the given message.
-	 * 
+	 *
 	 * @param message
 	 *            the message of the new status.
 	 * @return a new info status with the given message.

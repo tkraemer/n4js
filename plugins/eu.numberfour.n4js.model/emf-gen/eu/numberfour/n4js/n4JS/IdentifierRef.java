@@ -91,7 +91,7 @@ public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 	 * 1. Return true.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isStrictMode = this.isStrictMode();\nif (_isStrictMode)\n{\n\tboolean _and = false;\n\tboolean _and_1 = false;\n\t<%java.lang.String%> _idAsText = this.getIdAsText();\n\tboolean _tripleNotEquals = (_idAsText != null);\n\tif (!_tripleNotEquals)\n\t{\n\t\t_and_1 = false;\n\t} else\n\t{\n\t\t<%java.lang.String%> _idAsText_1 = this.getIdAsText();\n\t\tboolean _notEquals = (!<%com.google.common.base.Objects%>.equal(\"arguments\", _idAsText_1));\n\t\t_and_1 = _notEquals;\n\t}\n\tif (!_and_1)\n\t{\n\t\t_and = false;\n\t} else\n\t{\n\t\t<%java.lang.String%> _idAsText_2 = this.getIdAsText();\n\t\tboolean _notEquals_1 = (!<%com.google.common.base.Objects%>.equal(\"eval\", _idAsText_2));\n\t\t_and = _notEquals_1;\n\t}\n\treturn _and;\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isStrictMode = this.isStrictMode();\nif (_isStrictMode)\n{\n\treturn (((this.getIdAsText() != null) && (!<%com.google.common.base.Objects%>.equal(\"arguments\", this.getIdAsText()))) && (!<%com.google.common.base.Objects%>.equal(\"eval\", this.getIdAsText())));\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isValidSimpleAssignmentTarget();

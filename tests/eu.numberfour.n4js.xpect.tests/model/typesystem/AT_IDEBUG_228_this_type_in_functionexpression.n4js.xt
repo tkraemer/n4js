@@ -14,8 +14,8 @@ class A {
 	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
 	m3( ) : {function(this)} { return null; }  // disallow
 
-	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
-	m4( ) : {function():this} { return null; }  // disabled due to inability to create a corresponding function.
+	// XPECT noerrors -->
+	m4( ) : {function():this} { return null; }  // ok
 	
 	
 	/* FTE in formal parameters of method declaration */
@@ -28,11 +28,8 @@ class A {
 	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
 	get b () : {function(this)} { return null; } // disallow
 
-	// XPECT errors --> "The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
-	get a () : {function():this} { return null; } // disabled due to inability to create a corresponding function.
+	// XPECT noerrors -->
+	get a () : {function():this} { return null; } // ok
 	
 } 
-
-
-
 

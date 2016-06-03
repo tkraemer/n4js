@@ -65,6 +65,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypingStrategyUseSiteOperatorAccess().getAlternatives_1(), "rule__TypingStrategyUseSiteOperator__Alternatives_1");
 					put(grammarAccess.getTypeArgumentAccess().getAlternatives(), "rule__TypeArgument__Alternatives");
 					put(grammarAccess.getWildcardAccess().getAlternatives_1(), "rule__Wildcard__Alternatives_1");
+					put(grammarAccess.getWildcardNewNotationAccess().getAlternatives(), "rule__WildcardNewNotation__Alternatives");
 					put(grammarAccess.getTIdentifierAccess().getAlternatives(), "rule__TIdentifier__Alternatives");
 					put(grammarAccess.getTypeAccessModifierAccess().getAlternatives(), "rule__TypeAccessModifier__Alternatives");
 					put(grammarAccess.getMemberAccessModifierAccess().getAlternatives(), "rule__MemberAccessModifier__Alternatives");
@@ -182,6 +183,8 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWildcardAccess().getGroup_0_0(), "rule__Wildcard__Group_0_0__0");
 					put(grammarAccess.getWildcardAccess().getGroup_1_0(), "rule__Wildcard__Group_1_0__0");
 					put(grammarAccess.getWildcardAccess().getGroup_1_1(), "rule__Wildcard__Group_1_1__0");
+					put(grammarAccess.getWildcardNewNotationAccess().getGroup_0(), "rule__WildcardNewNotation__Group_0__0");
+					put(grammarAccess.getWildcardNewNotationAccess().getGroup_1(), "rule__WildcardNewNotation__Group_1__0");
 					put(grammarAccess.getTypeVariableAccess().getGroup(), "rule__TypeVariable__Group__0");
 					put(grammarAccess.getTypeVariableAccess().getGroup_1(), "rule__TypeVariable__Group_1__0");
 					put(grammarAccess.getTypeVariableAccess().getGroup_1_2(), "rule__TypeVariable__Group_1_2__0");
@@ -327,6 +330,10 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3(), "rule__ClassifierTypeRef__StaticTypeRefAssignment_3");
 					put(grammarAccess.getWildcardAccess().getDeclaredUpperBoundAssignment_1_0_1(), "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1");
 					put(grammarAccess.getWildcardAccess().getDeclaredLowerBoundAssignment_1_1_1(), "rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1");
+					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0");
+					put(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundAssignment_0_1(), "rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1");
+					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0");
+					put(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1(), "rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1");
 					put(grammarAccess.getTypeVariableAccess().getNameAssignment_0(), "rule__TypeVariable__NameAssignment_0");
 					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1(), "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1");
 					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_2_1(), "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1");

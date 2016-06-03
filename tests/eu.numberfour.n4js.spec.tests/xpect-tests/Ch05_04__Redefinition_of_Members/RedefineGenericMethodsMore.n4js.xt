@@ -20,9 +20,9 @@ interface I2 extends I1<I2> {
 }
 interface I3 extends I1<I3> {
 }
-// XPECT errors --> "Cannot extend interface I1 multiple times with different type arguments for T: I2, I3." at "I4"
+// XPECT errors --> "Cannot extend interface I1 multiple times with different type arguments for invariant T: I2, I3." at "I4"
 interface I4 extends I2, I3 {}
-// XPECT errors --> "Cannot implement interface I1 multiple times with different type arguments for T: I2, I3." at "C3"
+// XPECT errors --> "Cannot implement interface I1 multiple times with different type arguments for invariant T: I2, I3." at "C3"
 class C3 implements I2, I3 {
 	@Override
 	/* 

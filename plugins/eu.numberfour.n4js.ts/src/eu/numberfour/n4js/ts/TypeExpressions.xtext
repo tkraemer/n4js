@@ -189,11 +189,15 @@ TypeReferenceName:
 	IDENTIFIER ('.' IDENTIFIER)*;
 
 TypeArgument returns TypeArgument:
-	Wildcard | TypeRef;
+	Wildcard | WildcardNewNotation | TypeRef;
 
 Wildcard returns Wildcard:
 	=> ({Wildcard} '?') (('extends' declaredUpperBound=TypeRef) | ('super'
 	declaredLowerBound=TypeRef))?;
+
+WildcardNewNotation returns Wildcard:
+	(usingInOutNotation?='out' declaredUpperBound=TypeRef)
+|	(usingInOutNotation?='in' declaredLowerBound=TypeRef);
 
 UndefModifierToken returns UndefModifier:
 	'?';
@@ -218,7 +222,8 @@ TypesIdentifier:
 	| 'from'
 	| 'type'
 	| 'void'
-	| 'null';
+	| 'null'
+	| 'enum'; // GH-203
 
 TIdentifier:
 	TypesIdentifier

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: N4JS to NPM Exporter
+Bundle-Name: N4JS to npm Exporter
 Bundle-Vendor: NumberFour AG
 Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .
