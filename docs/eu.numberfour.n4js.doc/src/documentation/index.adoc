@@ -4,7 +4,6 @@
 :toc: false
 :source-highlighter: prettify
 :doctype: book
-:data-uri:
 ifdef::website[{set:relative:}]
 ifdef::eclipse[{set:relative:documentation/}]
 

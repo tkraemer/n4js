@@ -5,8 +5,7 @@
 :source-highlighter: prettify
 :doctype: book
 :icons: font
-:data-uri:
-:imagesdir: ../images
+:imagesdir: images
 :toc: left
 
 .N4JS Tutorial

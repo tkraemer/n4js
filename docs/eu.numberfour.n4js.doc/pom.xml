@@ -21,8 +21,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
         <help.pages.list>help-pages.txt</help.pages.list>
-        <imagesDir>${basedir}/src/images</imagesDir>
-        
     </properties>
 
 
@@ -113,7 +111,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
-                            <imagesdir>${imagesDir}</imagesdir>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${eclipseHelpDir}</outputDirectory>
                             <includedir>${basedir}/documentation</includedir>
@@ -126,6 +123,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <eclipse>true</eclipse>
                                 <website>false</website>
                                 <icons>font</icons>
+ <!--                               <data-uri>true</data-uri> -->
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
@@ -150,7 +148,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <attributes> 
                                 <!-- Individual attributes per conversion execution -->
                                 <stylesdir>../styles</stylesdir>
-                                <imagesdir>${imagesDir}</imagesdir>
+<!--                                <imagesdir>${imagesDir}</imagesdir>    -->
                                 <toc>left</toc>
                                 <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>

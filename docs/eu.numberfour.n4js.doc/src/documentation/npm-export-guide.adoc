@@ -1,11 +1,10 @@
 :experimental:
 :commandkey: &#8984;
-:data-uri:
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
+:imagesdir: images
 :toc: left
 
 .N4JS npm Export Guide

@@ -3,8 +3,7 @@
 :commandkey: &#8984;
 :revdate: {localdate}
 :references: drop
-:data-uri:
-:imagesdir: ../images
+:imagesdir: images
 :toc: left
 
 
