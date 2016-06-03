@@ -940,13 +940,22 @@ public interface N4JSPackage extends EPackage {
 	int TYPED_ELEMENT__DECLARED_TYPE_REF = TYPE_PROVIDING_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPED_ELEMENT__BOGUS_TYPE_REF = TYPE_PROVIDING_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Typed Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPED_ELEMENT_FEATURE_COUNT = TYPE_PROVIDING_ELEMENT_FEATURE_COUNT + 1;
+	int TYPED_ELEMENT_FEATURE_COUNT = TYPE_PROVIDING_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -1040,6 +1049,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE__DECLARED_TYPE_REF = TYPED_ELEMENT__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE__BOGUS_TYPE_REF = TYPED_ELEMENT__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2533,6 +2551,15 @@ public interface N4JSPackage extends EPackage {
 	int LOCAL_ARGUMENTS_VARIABLE__DECLARED_TYPE_REF = VARIABLE__DECLARED_TYPE_REF;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCAL_ARGUMENTS_VARIABLE__BOGUS_TYPE_REF = VARIABLE__BOGUS_TYPE_REF;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2615,13 +2642,22 @@ public interface N4JSPackage extends EPackage {
 	int FORMAL_PARAMETER__DECLARED_TYPE_REF = ANNOTABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PARAMETER__BOGUS_TYPE_REF = ANNOTABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__NAME = ANNOTABLE_ELEMENT_FEATURE_COUNT + 1;
+	int FORMAL_PARAMETER__NAME = ANNOTABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2630,7 +2666,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__ANNOTATIONS = ANNOTABLE_ELEMENT_FEATURE_COUNT + 2;
+	int FORMAL_PARAMETER__ANNOTATIONS = ANNOTABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Variadic</b></em>' attribute.
@@ -2639,7 +2675,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__VARIADIC = ANNOTABLE_ELEMENT_FEATURE_COUNT + 3;
+	int FORMAL_PARAMETER__VARIADIC = ANNOTABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Defined Type Element</b></em>' reference.
@@ -2648,7 +2684,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 4;
+	int FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Initializer</b></em>' containment reference.
@@ -2657,7 +2693,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__INITIALIZER = ANNOTABLE_ELEMENT_FEATURE_COUNT + 5;
+	int FORMAL_PARAMETER__INITIALIZER = ANNOTABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Binding Pattern</b></em>' containment reference.
@@ -2666,7 +2702,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__BINDING_PATTERN = ANNOTABLE_ELEMENT_FEATURE_COUNT + 6;
+	int FORMAL_PARAMETER__BINDING_PATTERN = ANNOTABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Formal Parameter</em>' class.
@@ -2675,7 +2711,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 7;
+	int FORMAL_PARAMETER_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -3290,13 +3326,22 @@ public interface N4JSPackage extends EPackage {
 	int VARIABLE_DECLARATION__DECLARED_TYPE_REF = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_DECLARATION__BOGUS_TYPE_REF = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION__NAME = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 1;
+	int VARIABLE_DECLARATION__NAME = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3305,7 +3350,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION__ANNOTATIONS = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 2;
+	int VARIABLE_DECLARATION__ANNOTATIONS = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -3314,7 +3359,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION__EXPRESSION = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 3;
+	int VARIABLE_DECLARATION__EXPRESSION = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Variable Declaration</em>' class.
@@ -3323,7 +3368,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 4;
+	int VARIABLE_DECLARATION_FEATURE_COUNT = VARIABLE_DECLARATION_OR_BINDING_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Variable Declarations</em>' operation.
@@ -3406,6 +3451,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPORTED_VARIABLE_DECLARATION__DECLARED_TYPE_REF = VARIABLE_DECLARATION__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPORTED_VARIABLE_DECLARATION__BOGUS_TYPE_REF = VARIABLE_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4527,6 +4581,15 @@ public interface N4JSPackage extends EPackage {
 	int CATCH_VARIABLE__DECLARED_TYPE_REF = VARIABLE__DECLARED_TYPE_REF;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_VARIABLE__BOGUS_TYPE_REF = VARIABLE__BOGUS_TYPE_REF;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5634,13 +5697,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Defined Field</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 1;
+	int PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -5649,7 +5721,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_VALUE_PAIR__EXPRESSION = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 2;
+	int PROPERTY_NAME_VALUE_PAIR__EXPRESSION = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Property Name Value Pair</em>' class.
@@ -5658,7 +5730,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_VALUE_PAIR_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 3;
+	int PROPERTY_NAME_VALUE_PAIR_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
@@ -5777,6 +5849,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME__DECLARED_TYPE_REF = PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME__BOGUS_TYPE_REF = PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Defined Field</b></em>' reference.
@@ -6005,13 +6086,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_METHOD_DECLARATION__DECLARED_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_METHOD_DECLARATION__BOGUS_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The feature id for the '<em><b>Defined Method</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION__DEFINED_METHOD = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 9;
+	int PROPERTY_METHOD_DECLARATION__DEFINED_METHOD = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>Property Method Declaration</em>' class.
@@ -6020,7 +6110,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 10;
+	int PROPERTY_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Applies Only To Block Scoped Elements</em>' operation.
@@ -6186,13 +6276,22 @@ public interface N4JSPackage extends EPackage {
 	int GETTER_DECLARATION__DECLARED_TYPE_REF = FIELD_ACCESSOR_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETTER_DECLARATION__BOGUS_TYPE_REF = FIELD_ACCESSOR_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Defined Getter</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GETTER_DECLARATION__DEFINED_GETTER = FIELD_ACCESSOR_FEATURE_COUNT + 1;
+	int GETTER_DECLARATION__DEFINED_GETTER = FIELD_ACCESSOR_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Getter Declaration</em>' class.
@@ -6201,7 +6300,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GETTER_DECLARATION_FEATURE_COUNT = FIELD_ACCESSOR_FEATURE_COUNT + 2;
+	int GETTER_DECLARATION_FEATURE_COUNT = FIELD_ACCESSOR_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -6510,6 +6609,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_GETTER_DECLARATION__DECLARED_TYPE_REF = GETTER_DECLARATION__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_GETTER_DECLARATION__BOGUS_TYPE_REF = GETTER_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Defined Getter</b></em>' reference.
@@ -9789,13 +9897,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASSIFIER_DECLARATION___GET_OWNED_SETTERS = N4_TYPE_DECLARATION_OPERATION_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASSIFIER_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 7;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 7;
+	int N4_CLASSIFIER_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>N4 Classifier Declaration</em>' class.
@@ -9804,7 +9921,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DECLARATION_OPERATION_COUNT = N4_TYPE_DECLARATION_OPERATION_COUNT + 8;
+	int N4_CLASSIFIER_DECLARATION_OPERATION_COUNT = N4_TYPE_DECLARATION_OPERATION_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassifierDefinitionImpl <em>N4 Classifier Definition</em>}' class.
@@ -9925,13 +10042,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS = N4_TYPE_DEFINITION_OPERATION_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 7;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 7;
+	int N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_TYPE_DEFINITION_OPERATION_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>N4 Classifier Definition</em>' class.
@@ -9940,7 +10066,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASSIFIER_DEFINITION_OPERATION_COUNT = N4_TYPE_DEFINITION_OPERATION_COUNT + 8;
+	int N4_CLASSIFIER_DEFINITION_OPERATION_COUNT = N4_TYPE_DEFINITION_OPERATION_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassDefinitionImpl <em>N4 Class Definition</em>}' class.
@@ -10097,13 +10223,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 1;
+	int N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>N4 Class Definition</em>' class.
@@ -10112,7 +10247,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_CLASS_DEFINITION_OPERATION_COUNT = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 2;
+	int N4_CLASS_DEFINITION_OPERATION_COUNT = N4_CLASSIFIER_DEFINITION_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4ClassDeclarationImpl <em>N4 Class Declaration</em>}' class.
@@ -10294,6 +10429,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_CLASS_DECLARATION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -10547,6 +10691,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_CLASS_EXPRESSION___GET_DEFINED_TYPE_AS_CLASS = N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_CLASS_EXPRESSION___GET_SUPER_CLASSIFIER_REFS = N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -10820,13 +10973,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 1;
+	int N4_INTERFACE_DECLARATION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>N4 Interface Declaration</em>' class.
@@ -10835,7 +10997,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_INTERFACE_DECLARATION_OPERATION_COUNT = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 2;
+	int N4_INTERFACE_DECLARATION_OPERATION_COUNT = N4_CLASSIFIER_DECLARATION_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4EnumDeclarationImpl <em>N4 Enum Declaration</em>}' class.
@@ -11565,13 +11727,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_DECLARATION__DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_FIELD_DECLARATION__BOGUS_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 1;
+	int N4_FIELD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11580,7 +11751,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
+	int N4_FIELD_DECLARATION__NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Defined Field</b></em>' reference.
@@ -11589,7 +11760,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__DEFINED_FIELD = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
+	int N4_FIELD_DECLARATION__DEFINED_FIELD = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -11598,7 +11769,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__EXPRESSION = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 4;
+	int N4_FIELD_DECLARATION__EXPRESSION = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>N4 Field Declaration</em>' class.
@@ -11607,7 +11778,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 5;
+	int N4_FIELD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -11836,13 +12007,22 @@ public interface N4JSPackage extends EPackage {
 	int METHOD_DECLARATION__DECLARED_TYPE_REF = FUNCTION_DEFINITION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECLARATION__BOGUS_TYPE_REF = FUNCTION_DEFINITION_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION__KIND = FUNCTION_DEFINITION_FEATURE_COUNT + 2;
+	int METHOD_DECLARATION__KIND = FUNCTION_DEFINITION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11851,7 +12031,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION__NAME = FUNCTION_DEFINITION_FEATURE_COUNT + 3;
+	int METHOD_DECLARATION__NAME = FUNCTION_DEFINITION_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Method Declaration</em>' class.
@@ -11860,7 +12040,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION_FEATURE_COUNT = FUNCTION_DEFINITION_FEATURE_COUNT + 4;
+	int METHOD_DECLARATION_FEATURE_COUNT = FUNCTION_DEFINITION_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -12089,13 +12269,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_METHOD_DECLARATION__DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_METHOD_DECLARATION__BOGUS_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 9;
+
+	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 9;
+	int N4_METHOD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12104,7 +12293,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION__NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 10;
+	int N4_METHOD_DECLARATION__NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Compute Name From</b></em>' containment reference.
@@ -12113,7 +12302,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION__COMPUTE_NAME_FROM = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 11;
+	int N4_METHOD_DECLARATION__COMPUTE_NAME_FROM = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 12;
 
 	/**
 	 * The number of structural features of the '<em>N4 Method Declaration</em>' class.
@@ -12122,7 +12311,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 12;
+	int N4_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -12593,6 +12782,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_GETTER_DECLARATION__DECLARED_TYPE_REF = GETTER_DECLARATION__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_GETTER_DECLARATION__BOGUS_TYPE_REF = GETTER_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Defined Getter</b></em>' reference.
@@ -13959,6 +14157,17 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTypedElement_DeclaredTypeRef();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.n4JS.TypedElement#getBogusTypeRef <em>Bogus Type Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Bogus Type Ref</em>'.
+	 * @see eu.numberfour.n4js.n4JS.TypedElement#getBogusTypeRef()
+	 * @see #getTypedElement()
+	 * @generated
+	 */
+	EReference getTypedElement_BogusTypeRef();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.VariableEnvironmentElement <em>Variable Environment Element</em>}'.
@@ -17633,6 +17842,16 @@ public interface N4JSPackage extends EPackage {
 	EOperation getN4ClassifierDefinition__GetOwnedSetters();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4ClassifierDefinition__GetSuperClassifierRefs();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassifierDefinition#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17694,6 +17913,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getN4ClassDefinition__GetDefinedTypeAsClass();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassDefinition#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4ClassDefinition#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4ClassDefinition__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4ClassDefinition#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -17776,6 +18005,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getN4InterfaceDeclaration__GetDefinedTypeAsInterface();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getN4InterfaceDeclaration__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.N4InterfaceDeclaration#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -19039,6 +19278,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TYPED_ELEMENT__DECLARED_TYPE_REF = eINSTANCE.getTypedElement_DeclaredTypeRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Bogus Type Ref</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPED_ELEMENT__BOGUS_TYPE_REF = eINSTANCE.getTypedElement_BogusTypeRef();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.VariableEnvironmentElementImpl <em>Variable Environment Element</em>}' class.
@@ -22111,6 +22358,14 @@ public interface N4JSPackage extends EPackage {
 		EOperation N4_CLASSIFIER_DEFINITION___GET_OWNED_SETTERS = eINSTANCE.getN4ClassifierDefinition__GetOwnedSetters();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4ClassifierDefinition__GetSuperClassifierRefs();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -22159,6 +22414,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS = eINSTANCE.getN4ClassDefinition__GetDefinedTypeAsClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4ClassDefinition__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -22229,6 +22492,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation N4_INTERFACE_DECLARATION___GET_DEFINED_TYPE_AS_INTERFACE = eINSTANCE.getN4InterfaceDeclaration__GetDefinedTypeAsInterface();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation N4_INTERFACE_DECLARATION___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getN4InterfaceDeclaration__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.

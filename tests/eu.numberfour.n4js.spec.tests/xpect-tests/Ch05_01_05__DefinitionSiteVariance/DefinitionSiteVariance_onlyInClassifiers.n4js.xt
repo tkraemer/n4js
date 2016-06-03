@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+// XPECT noerrors -->
+class C<out T> {}
+
+// XPECT noerrors -->
+interface I<out T> {}
+
+
+class D {
+	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+	<out T> m1() {}
+	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+	<in T> m2() {}
+}
+
+interface J {
+	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+	<out T> m1()
+	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+	<in T> m2()
+}
+
+
+// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+function <out T> foo1() {}
+// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+function <in T> foo2() {}
+

@@ -17,10 +17,10 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.typesystem.constraints.Variance
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
@@ -59,16 +59,6 @@ newArrayList
 //				#[] // no or invalid type expectation
 		};
 
-// TODO IDE-1726: temporary fall-back to bogus old behavior to avoid too many breaking changes in task IDE-1702
-// update as of IDE-2137: raw type no longer used; the following special handling should be removed
-val isEmptyOrAllPadding = numOfElems===0 || !arrLit.elements.exists[expression!==null];
-val isCaseOfBogusArrayRawType = isEmptyOrAllPadding && expectedElemTypeRefs.empty;
-if(isCaseOfBogusArrayRawType) {
-	val result = G.arrayTypeRef(G.anyTypeRef); // RAW TYPE!!! (update as of IDE-2137: no longer using raw type here!)
-	storeInCache(arrLit, TypeUtils.copy(result));
-	return result;
-}
-
 // hack: faking an expectation of IterableN<...> here
 // TODO instead we should get such an expectation in these cases from expectedType judgment!
 val isValueToBeDestructured = N4JSASTUtils.isArrayOrObjectLiteralBeingDestructured(arrLit);
@@ -92,7 +82,8 @@ if(!haveUsableExpectedType) {
 		].toList;
 		storeInCache(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
 	]
-	return G.arrayTypeRef(tsh.createUnionType(G, elemTypeRefs));
+	val unionOfElemTypes = if(!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
+	return G.arrayTypeRef(unionOfElemTypes);
 }
 
 		// choose correct number of type arguments in our to-be-created resultTypeRef
@@ -214,7 +205,7 @@ if(!haveUsableExpectedType) {
 			}
 			return G.iterableNTypeRef(resultLen, typeArgs);
 		} else {
-			val unionOfElemTypes = tsh.createUnionType(G, elemTypeRefs);
+			val unionOfElemTypes = if(!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
 			return G.arrayTypeRef(unionOfElemTypes);
 		}
 	}

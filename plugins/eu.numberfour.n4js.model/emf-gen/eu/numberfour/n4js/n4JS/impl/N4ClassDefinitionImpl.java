@@ -7,6 +7,8 @@
  */
 package eu.numberfour.n4js.n4JS.impl;
 
+import com.google.common.collect.Iterables;
+
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.N4ClassDefinition;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
@@ -215,6 +217,17 @@ public abstract class N4ClassDefinitionImpl extends N4ClassifierDefinitionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
+		ParameterizedTypeRef _superClassRef = this.getSuperClassRef();
+		EList<ParameterizedTypeRef> _implementedInterfaceRefs = this.getImplementedInterfaceRefs();
+		return Iterables.<ParameterizedTypeRef>concat(java.util.Collections.<ParameterizedTypeRef>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<ParameterizedTypeRef>newArrayList(_superClassRef)), _implementedInterfaceRefs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs() {
 		return this.getImplementedInterfaceRefs();
 	}
@@ -326,6 +339,7 @@ public abstract class N4ClassDefinitionImpl extends N4ClassifierDefinitionImpl i
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == N4ClassifierDefinition.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_SUPER_CLASSIFIER_REFS: return N4JSPackage.N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS;
 				case N4JSPackage.N4_CLASSIFIER_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return N4JSPackage.N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -348,6 +362,8 @@ public abstract class N4ClassDefinitionImpl extends N4ClassifierDefinitionImpl i
 		switch (operationID) {
 			case N4JSPackage.N4_CLASS_DEFINITION___GET_DEFINED_TYPE_AS_CLASS:
 				return getDefinedTypeAsClass();
+			case N4JSPackage.N4_CLASS_DEFINITION___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case N4JSPackage.N4_CLASS_DEFINITION___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 		}
