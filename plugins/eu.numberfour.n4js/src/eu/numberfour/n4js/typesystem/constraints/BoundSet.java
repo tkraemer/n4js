@@ -28,15 +28,15 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.typesystem.TypeVarUtils;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.typesystem.TypeVarUtils;
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -575,13 +575,6 @@ class BoundSet {
 	private boolean canSubstituteAlphaWithReplacementInAnother(TypeVariable alpha, TypeRef replacement,
 			TypeRef another) {
 		return ic.isProper(replacement) && TypeVarUtils.occursIn(alpha, another);
-	}
-
-	/**
-	 * Of the type variables in the argument, return those that are inference variables.
-	 */
-	public Stream<TypeVariable> collectedInferenceVars(TypeArgument t) {
-		return TypeVarUtils.collectedTypeVars(t).filter(v -> ic.isInferenceVariable(v));
 	}
 
 	/**
