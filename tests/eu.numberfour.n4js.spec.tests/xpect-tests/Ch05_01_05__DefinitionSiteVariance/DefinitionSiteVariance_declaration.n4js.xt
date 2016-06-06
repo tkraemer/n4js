@@ -96,36 +96,53 @@ class C13<in T> {
 
 
 // ------------------------------------------------
+// constructor
+
+class C21<T> {
+	// XPECT noerrors -->
+	constructor(p1: T, p2:{function(T)}) {}
+}
+class C22<out T> {
+	// XPECT noerrors -->
+	constructor(p1: T, p2:{function(T)}) {}
+}
+class C23<in T> {
+	// XPECT noerrors -->
+	constructor(p1: T, p2:{function(T)}) {}
+}
+
+
+// ------------------------------------------------
 // passing on a type variable as a type argument
 
-class G2a<S1,    S2,S3> {}
-class G2b<S1,out S2,S3> {}
-class G2c<S1,in  S2,S3> {}
+class G3a<S1,    S2,S3> {}
+class G3b<S1,out S2,S3> {}
+class G3c<S1,in  S2,S3> {}
 
 // XPECT noerrors -->
-class C21a<T> extends G2a<string,T,number> {}
+class C31a<T> extends G3a<string,T,number> {}
 // XPECT noerrors -->
-class C21b<T> extends G2b<string,T,number> {}
+class C31b<T> extends G3b<string,T,number> {}
 // XPECT noerrors -->
-class C21c<T> extends G2c<string,T,number> {}
+class C31c<T> extends G3c<string,T,number> {}
 
-class C22a<out T>
+class C32a<out T>
 	// XPECT errors --> "Cannot use covariant (out) type variable at invariant position." at "T"
-	extends G2a<string,T,number> {}
-class C22b<out T>
+	extends G3a<string,T,number> {}
+class C32b<out T>
 	// XPECT noerrors -->
-	extends G2b<string,T,number> {}
-class C22c<out T>
+	extends G3b<string,T,number> {}
+class C32c<out T>
 	// XPECT errors --> "Cannot use covariant (out) type variable at contravariant position." at "T"
-	extends G2c<string,T,number> {}
+	extends G3c<string,T,number> {}
 
-class C23a<in T>
+class C33a<in T>
 	// XPECT errors --> "Cannot use contravariant (in) type variable at invariant position." at "T"
-	extends G2a<string,T,number> {}
-class C23b<in T>
+	extends G3a<string,T,number> {}
+class C33b<in T>
 	// XPECT errors --> "Cannot use contravariant (in) type variable at covariant position." at "T"
-	extends G2b<string,T,number> {}
-class C23c<in T>
+	extends G3b<string,T,number> {}
+class C33c<in T>
 	// XPECT noerrors -->
-	extends G2c<string,T,number> {}
+	extends G3c<string,T,number> {}
 

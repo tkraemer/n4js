@@ -1870,7 +1870,7 @@ public providedByRuntime interface ~Iterable<out T> {
  * encapsulates. A rejected promise indicates erroneous or abnormal completion
  * of the process.
  */
-public providedByRuntime class Promise<S, F> extends Object @Global {
+public providedByRuntime class Promise<out S, out F> extends Object @Global {
 
     public constructor(executor:
             {function(
