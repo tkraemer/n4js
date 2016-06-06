@@ -452,7 +452,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		// both bounds have different inference variables, i.e. α != β
 		if (alpha == T.getDeclaredType()) {
 			// (2) `α = S` and `β Φ α` implies `β Φ S`
-			return new TypeConstraint(T, S, Phi); // FIXME doing something else than comment is saying!!!!
+			return new TypeConstraint(typeRef(beta), S, Phi);
 		}
 		if (ic.isInferenceVariable(S)) {
 			// first bound is of the form `α = γ` (with γ being another inference variable)
