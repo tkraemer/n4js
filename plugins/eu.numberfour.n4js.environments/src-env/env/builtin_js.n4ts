@@ -1807,7 +1807,7 @@ virtualBase ArgumentsType {
  * Note that in ECMAScript 6 this is not a built-in type, but a protocol. This protocol can be implemented
  * by any object respecting some conventions.
  */
-public providedByRuntime interface ~Iterator<T> {
+public providedByRuntime interface ~Iterator<out T> {
 	/**
 	 * A zero arguments function that returns an object with two properties:
 	 * <ul>
@@ -1826,18 +1826,18 @@ public providedByRuntime interface ~Iterator<T> {
 /**
  * The value returned by an Iterator's method next().
  */
-public providedByRuntime interface ~IteratorEntry<T> {
+public providedByRuntime interface ~IteratorEntry<out T> {
 	/**
 	 * Has the value true if the iterator is past the end of the iterated sequence. In this case value
 	 * optionally specifies the return value of the iterator. The return values are explained here.
 	 * Has the value false if the iterator was able to produce the next value in the sequence. This is
 	 * equivalent of not specifying the done property altogether.
 	 */
-	public done: boolean;
+	public get done(): boolean
 	/**
 	 * Any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 */
-	public value: T?;
+	public get value(): T?
 }
 
 /**
@@ -1848,7 +1848,7 @@ public providedByRuntime interface ~IteratorEntry<T> {
  * Note that in ECMAScript 6 this is not a built-in type, but a protocol. This protocol can be implemented
  * by any object respecting some conventions.
  */
-public providedByRuntime interface ~Iterable<T> {
+public providedByRuntime interface ~Iterable<out T> {
 	/**
 	 * A zero arguments function that returns an object, conforming to the iterator protocol.
 	 */

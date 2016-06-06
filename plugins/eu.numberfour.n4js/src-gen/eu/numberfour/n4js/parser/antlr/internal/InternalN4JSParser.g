@@ -37946,6 +37946,8 @@ ruleUndefModifierToken returns [AntlrDatatypeRuleToken current=new AntlrDatatype
 
 
 
+
+
 // Entry rule entryRuleTypesIdentifier
 entryRuleTypesIdentifier returns [String current=null] 
 :

@@ -9813,6 +9813,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleTypesIdentifier
 entryRuleTypesIdentifier 
 :
@@ -15117,6 +15119,7 @@ rule__WildcardNewNotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__TypesIdentifier__Alternatives
     @init {
@@ -84432,6 +84435,9 @@ finally {
 
 
 
+
+
+
 rule__Script__AnnotationsAssignment_1
     @init {
 		int stackSize = keepStackSize();
@@ -96124,5 +96130,10 @@ rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
+
 
 
