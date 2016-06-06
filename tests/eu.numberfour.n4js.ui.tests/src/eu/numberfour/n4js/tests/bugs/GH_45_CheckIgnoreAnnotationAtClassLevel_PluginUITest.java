@@ -140,6 +140,7 @@ public class GH_45_CheckIgnoreAnnotationAtClassLevel_PluginUITest extends Abstra
 	/**
 	 * Runs a test module with one single class that has neither super class nor {@code @Ignore} annotation.
 	 */
+	@Ignore("IDE-2270")
 	@Test
 	public void testModuleWithoutSuperClass() {
 		final IProject project = getProjectByName(PROJECT_NAME);
