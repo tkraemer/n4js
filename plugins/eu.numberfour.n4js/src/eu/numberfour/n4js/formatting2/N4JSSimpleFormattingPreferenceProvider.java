@@ -33,6 +33,9 @@ public class N4JSSimpleFormattingPreferenceProvider extends FormatterPreferenceV
 				if (key == N4JSFormatterPreferenceKeys.FORMAT_PARENTHESIS) {
 					return Boolean.TRUE.toString(); // TODO make this configurable, see super-class
 				}
+				if (key == N4JSFormatterPreferenceKeys.FORMAT_SURROUND_PAREN_CONTENT_WITH_SPACE) {
+					return Boolean.FALSE.toString(); // TODO make this configurable, see super-class
+				}
 
 				return preferenceValues.getPreference(key);
 			}

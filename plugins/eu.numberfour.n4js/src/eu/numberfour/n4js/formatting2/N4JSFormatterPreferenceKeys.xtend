@@ -17,5 +17,6 @@ import org.eclipse.xtext.preferences.BooleanKey
  * 
  */
 class N4JSFormatterPreferenceKeys extends FormatterPreferenceKeys {
-	public static val BooleanKey FORMAT_PARENTHESIS = new BooleanKey("format.parenthesis", false)
+	public static val BooleanKey FORMAT_PARENTHESIS = new BooleanKey("format.parenthesis", false);
+	public static val BooleanKey FORMAT_SURROUND_PAREN_CONTENT_WITH_SPACE = new BooleanKey("format.surround_paren_content_with_space", false);
 }

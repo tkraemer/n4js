@@ -4,15 +4,68 @@
 package eu.numberfour.n4js.formatting2;
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.AbstractCaseClause
+import eu.numberfour.n4js.n4JS.AdditiveExpression
+import eu.numberfour.n4js.n4JS.ArrayLiteral
+import eu.numberfour.n4js.n4JS.ArrowFunction
+import eu.numberfour.n4js.n4JS.AssignmentExpression
+import eu.numberfour.n4js.n4JS.AwaitExpression
+import eu.numberfour.n4js.n4JS.BinaryBitwiseExpression
+import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
+import eu.numberfour.n4js.n4JS.Block
+import eu.numberfour.n4js.n4JS.CastExpression
+import eu.numberfour.n4js.n4JS.CatchBlock
+import eu.numberfour.n4js.n4JS.CommaExpression
+import eu.numberfour.n4js.n4JS.ConditionalExpression
+import eu.numberfour.n4js.n4JS.EqualityExpression
+import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.FinallyBlock
+import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.n4JS.IfStatement
 import eu.numberfour.n4js.n4JS.ImportDeclaration
+import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.IntLiteral
+import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4EnumDeclaration
+import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
+import eu.numberfour.n4js.n4JS.N4JSPackage
+import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.NewExpression
+import eu.numberfour.n4js.n4JS.NullLiteral
+import eu.numberfour.n4js.n4JS.ObjectLiteral
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.ParenExpression
+import eu.numberfour.n4js.n4JS.PostfixExpression
+import eu.numberfour.n4js.n4JS.PromisifyExpression
+import eu.numberfour.n4js.n4JS.RelationalExpression
+import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.ShiftExpression
+import eu.numberfour.n4js.n4JS.StringLiteral
+import eu.numberfour.n4js.n4JS.SwitchStatement
+import eu.numberfour.n4js.n4JS.TaggedTemplateString
+import eu.numberfour.n4js.n4JS.ThisLiteral
+import eu.numberfour.n4js.n4JS.UnaryExpression
+import eu.numberfour.n4js.n4JS.VariableBinding
+import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.VariableStatement
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.services.N4JSGrammarAccess
 import eu.numberfour.n4js.ts.formatting2.TypeExpressionsFormatter
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.AbstractRule
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import org.eclipse.xtext.formatting2.ITextReplacer
+import org.eclipse.xtext.formatting2.internal.SinglelineCodeCommentReplacer
+import org.eclipse.xtext.formatting2.internal.SinglelineDocCommentReplacer
+import org.eclipse.xtext.formatting2.regionaccess.IComment
+import org.eclipse.xtext.xtext.generator.parser.antlr.splitting.simpleExpressions.NumberLiteral
 
 import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
 
@@ -21,6 +74,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	@Inject extension N4JSGrammarAccess
 
 	def dispatch void format(Script script, extension IFormattableDocument document) {
+
 		val extension generic = new N4JSGenericFormatter(_n4JSGrammarAccess, textRegionExtensions)
 		if (getPreference(FORMAT_PARENTHESIS)) {
 			script.formatParenthesisBracketsAndBraces(document)
@@ -32,9 +86,14 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			element.append[setNewLines(1, 1, 2); autowrap]
 			element.format
 		}
+
+		// format last import, overrides default newLines:
+		script.scriptElements.filter(ImportDeclaration).last?.append[setNewLines(2, 2, 3); highPriority];
+
 	}
 
 	def dispatch format(N4ClassDeclaration clazz, extension IFormattableDocument document) {
+		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
 		for (member : clazz.ownedMembersRaw) {
 			member.append[setNewLines(1, 1, 2)]
 			member.format
@@ -42,21 +101,78 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch format(N4InterfaceDeclaration clazz, extension IFormattableDocument document) {
+		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
+		val allRegs = clazz.allRegionsFor.keywordPairs("{", "}");
+		val blockCurlies = allRegs.head;
+		val openB = blockCurlies.key;
+		val closeB = blockCurlies.value;
+
+		if (openB.lineRegions.head.endOffset >= ( closeB.offset )) {
+			blockCurlies.interior[indent;];
+		}
+		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, 2)]
 		for (member : clazz.ownedMembersRaw) {
 			member.append[setNewLines(1, 1, 2)]
 			member.format
 		}
 	}
 
+	def dispatch void format(N4MemberDeclaration member, extension IFormattableDocument document) {
+		member.insertSpaceInfrontOfPropertyNames(document);
+		for (c : member.eContents) {
+			c.format;
+		}
+	}
+
+	def dispatch void format(N4FieldDeclaration field, extension IFormattableDocument document) {
+
+		field.insertSpaceInfrontOfPropertyNames(document);
+
+		field.regionFor.keyword("=").prepend[oneSpace].append[oneSpace];
+		field.expression.format;
+	}
+
 	def dispatch format(N4MethodDeclaration method, extension IFormattableDocument document) {
+		method.insertSpaceInfrontOfPropertyNames(document);
+
 		method.body.regionFor.keyword("{").prepend[oneSpace; newLines = 0]
 		for (child : method.eContents) {
 			child.format;
 		}
 	}
+	def dispatch void format(FunctionExpression funE, extension IFormattableDocument document) {
+		// same as Function Def
+	}
+	
+//	def dispatch format(FunctionOrFieldAccessor fofAccessor, extension IFormattableDocument document) {
+//		val begin = fofAccessor.body.semanticRegions.head
+//		val end = fofAccessor.body.semanticRegions.last
+//		if (begin?.lineRegions?.head?.contains(end?.endOffset)) {
+//			// same line
+//		} else {
+//			// body spans multiple lines
+//			begin.append[newLine;];
+//			end.prepend[newLine;];
+//			// fofAccessor.body.interior[indent]; // already by parenthesis? 
+//		}
+//		
+//		fofAccessor.body?.format;
+//
+//	}
+
+	def dispatch void format(N4EnumDeclaration enumDecl, extension IFormattableDocument document) {
+		enumDecl.insertSpaceInFrontOfCurlyBlockOpener(document);
+		enumDecl.literals.forEach[format];
+	}
 
 	def dispatch void format(ParameterizedPropertyAccessExpression exp, extension IFormattableDocument document) {
 		exp.regionFor.keyword(".").prepend[noSpace].append[noSpace; autowrap]
+		exp.target.format
+	}
+
+	def dispatch void format(ParameterizedCallExpression exp, extension IFormattableDocument document) {
+		exp.regionFor.keyword(".").prepend[noSpace].append[noSpace; autowrap]
+		exp.arguments.forEach[format]
 		exp.target.format
 	}
 
@@ -65,4 +181,367 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		decl.regionFor.keyword("}").prepend[noSpace].append[oneSpace; newLines = 0]
 	}
 
+	def dispatch void format(IfStatement stmt, extension IFormattableDocument document) {
+		stmt.regionFor.keyword("(").prepend[oneSpace];
+		stmt.regionFor.keyword(")").append[oneSpace];
+		stmt.regionFor.keyword("else").prepend[autowrap;oneSpace].append[oneSpace];
+
+		stmt.elseStmt.prepend[oneSpace; newLines = 0];
+		
+		stmt.ifStmt.interior[indent];
+		stmt.elseStmt.interior[indent];
+		
+		stmt.expression.format;
+		stmt.ifStmt.format;
+		stmt.elseStmt.format;
+	}
+
+	def dispatch void format(SwitchStatement swStmt, extension IFormattableDocument document) {
+		swStmt.insertSpaceInFrontOfCurlyBlockOpener(document);
+		// OFF: swStmt.interior[indent]; // not usefull --> already indented by braces.
+		swStmt.expression.format;
+		swStmt.cases.forEach[format];
+	}
+
+	/** Fromats DefaultCaseClause + CaseClause */
+	def dispatch void format(AbstractCaseClause caseClause, extension IFormattableDocument document) {
+		caseClause.insertNewlineAfterColon(document);
+		caseClause.interior[indent];
+		caseClause.statements.last.append[setNewLines(1, 1, 2);]
+	}
+
+	def dispatch void format(CastExpression expr, extension IFormattableDocument document) {
+		expr.regionFor.keyword("as").prepend[newLines = 0; oneSpace].append[newLines = 0; oneSpace];
+		expr.expression.format;
+		expr.targetTypeRef.format;
+	}
+
+	def dispatch void format(Block block, extension IFormattableDocument document) {
+		println("Formatting block "+containmentStructure(block))
+		
+		// Block not nested in other blocks usually are bodies. We want them separated by a space:
+		if (! (block.eContainer instanceof Block)) {
+			block.regionFor.keyword("{").prepend[oneSpace];
+		}
+
+		val begin = block.semanticRegions.head; // '{' 
+		val end = block.semanticRegions.last; // '}'
+		if (begin !== null) {
+			// begin.interior(end)[indent];
+			if (begin.lineRegions.head.contains(end)) {
+				// same line
+				if (block.statements.size != 1 || !( block.statements.get(0) instanceof Block )) {
+					// insert spaces 
+					begin.append[oneSpace]
+					end.prepend[oneSpace]
+				}
+			} else {
+				if (block.statements.size >	1 
+				 ||	( block.statements.size==1 && !( block.statements.get(0) instanceof Block ) )  ) {
+					begin.append[newLine];
+					end.prepend[newLine];
+					block.statements.head.prepend[newLine];
+					block.statements.forEach[append[newLine]];
+				}
+			}
+		}
+
+		block.statements.forEach[format];
+
+	// indent outer block
+	// block.regionFor.keywordPairs("{","}").head.interior[indent]; // not feasable as it gives double-indentations.
+	}
+	
+	
+	def String containmentStructure(EObject eo) {
+		val name = eo.class.simpleName;
+		if( eo.eContainer !== null )
+		return '''«eo.eContainer.containmentStructure».«eo.eContainingFeature.name»-> «name»'''
+		return name
+	}
+
+	def dispatch void format(ReturnStatement ret, extension IFormattableDocument document) {
+//		val begin = ret.regionFor.keyword( returnStatementAccess.returnKeyword_1);
+//		val end = ret.regionFor.ruleCall( returnStatementAccess.semiParserRuleCall_3 );
+//		new Pair(begin,end).interior[ indent; ];
+// --- oder --- 
+		ret.interior[indent;]
+		ret.expression.prepend[oneSpace; newLines = 0];
+		ret.expression.format;
+	}
+
+	def dispatch void format(AdditiveExpression add, extension IFormattableDocument document) {
+		add.regionFor.feature(N4JSPackage.Literals.ADDITIVE_EXPRESSION__OP).surround[oneSpace];
+		add.lhs.format
+		add.rhs.format
+	}
+	def dispatch void format(MultiplicativeExpression mul, extension IFormattableDocument document) {
+		mul.regionFor.feature(N4JSPackage.Literals.MULTIPLICATIVE_EXPRESSION__OP).surround[oneSpace];
+		mul.lhs.format
+		mul.rhs.format
+	}
+	def dispatch void format(BinaryBitwiseExpression binbit, extension IFormattableDocument document) {
+		binbit.regionFor.feature(N4JSPackage.Literals.BINARY_BITWISE_EXPRESSION__OP).surround[oneSpace];
+		binbit.lhs.format
+		binbit.rhs.format
+	}
+	def dispatch void format(BinaryLogicalExpression binLog, extension IFormattableDocument document) {
+		binLog.regionFor.feature(N4JSPackage.Literals.BINARY_LOGICAL_EXPRESSION__OP).surround[oneSpace];
+		binLog.lhs.format
+		binLog.rhs.format
+	}
+	def dispatch void format(EqualityExpression eqExpr, extension IFormattableDocument document) {
+		eqExpr.regionFor.feature(N4JSPackage.Literals.EQUALITY_EXPRESSION__OP).surround[oneSpace];
+		eqExpr.lhs.format
+		eqExpr.rhs.format
+	}
+	def dispatch void format(RelationalExpression relExpr, extension IFormattableDocument document) {
+		relExpr.regionFor.feature(N4JSPackage.Literals.RELATIONAL_EXPRESSION__OP).surround[oneSpace];
+		relExpr.lhs.format
+		relExpr.rhs.format
+	}
+	def dispatch void format(ShiftExpression shiftExpr, extension IFormattableDocument document) {
+		shiftExpr.regionFor.feature(N4JSPackage.Literals.SHIFT_EXPRESSION__OP).surround[oneSpace];
+		shiftExpr.lhs.format
+		shiftExpr.rhs.format
+	}
+	def dispatch void format(CommaExpression comma, extension IFormattableDocument document) {
+		// TODO
+		comma.genericTODOformat(document)
+	}
+	def dispatch void format(ConditionalExpression cond, extension IFormattableDocument document) {
+		// TODO
+		cond.genericTODOformat(document)
+	}
+	def dispatch void format(AwaitExpression await, extension IFormattableDocument document) {
+		await.regionFor.keyword("await").prepend[oneSpace].append[oneSpace; newLines = 0];
+		await.format
+	}
+	def dispatch void format(PromisifyExpression promify, extension IFormattableDocument document) {
+		promify.noSpaceAfterAT(document);
+		promify.regionFor.keyword("Promisify").append[oneSpace];
+		promify.expression.format
+	}
+	def dispatch void format(IndexedAccessExpression idxAcc, extension IFormattableDocument document) {
+		val indexRegion = idxAcc.index.regionForEObject();
+		indexRegion.previousSemanticRegion.prepend[noSpace;newLines=0].append[noSpace;newLines = 0];
+		indexRegion.nextSemanticRegion.prepend[noSpace];
+		
+		idxAcc.index.format;
+		idxAcc.target.format;
+	}
+	def dispatch void format(NewExpression newExp, extension IFormattableDocument document) {
+		newExp.regionFor.keyword("new").prepend[oneSpace].append[oneSpace;newLines=0];
+		newExp.callee.format;
+		// val typeArgsAngle = newExp.regionFor.keywordPairs("<",">").head;
+		// Watch out, commas are used in Type-args and in argument list ! If necessary distinguish by offset.
+		val commas = newExp.regionFor.keyword(",");
+		commas.prepend[noSpace].append[oneSpace];
+		
+		newExp.typeArgs.forEach[format];
+		
+		if( newExp.isWithArgs ) {
+			val argParen = newExp.regionFor.keywordPairs("(",")").head;
+			argParen.key.prepend[newLines=0;noSpace].append[noSpace];
+			argParen.value.prepend[noSpace];
+			newExp.arguments.forEach[format];	
+		}
+	}
+	
+	def dispatch void format(PostfixExpression postFix, extension IFormattableDocument document) {
+		// TODO
+		postFix.genericTODOformat(document);
+	}
+	def dispatch void format(TaggedTemplateString taggedTemplate, extension IFormattableDocument document) {
+		// TODO
+		taggedTemplate.genericTODOformat(document);
+	}
+	def dispatch void format(UnaryExpression unaryExpr, extension IFormattableDocument document) {
+		unaryExpr.regionFor.feature(N4JSPackage.Literals.UNARY_EXPRESSION__OP).append[noSpace; newLines = 0;];
+		unaryExpr.expression.format;
+	}
+	def dispatch void format(YieldExpression yieldExpr, extension IFormattableDocument document) {
+		// " yield " or " yield* "
+		yieldExpr.regionFor.keyword("yield")
+		.prepend[oneSpace;]
+		.append[if( yieldExpr.isMany ) noSpace else oneSpace];
+		if( yieldExpr.isMany ){
+			yieldExpr.regionFor.keyword("*").prepend[noSpace;newLines=0].append[oneSpace]
+		}
+		yieldExpr.expression.format;
+	}
+	
+	def dispatch void format(ParenExpression parenE, extension IFormattableDocument document) {
+		parenE.expression.format;
+	}
+	def dispatch void format(ArrowFunction arrowF, extension IFormattableDocument document) {
+		arrowF.regionFor.keyword("=>").surround[oneSpace];
+		arrowF.body.format
+		// TODO formatting of arrow function.
+	}
+
+	
+	
+	def dispatch void format(Expression exp, extension IFormattableDocument document) {
+		switch(exp) {
+			// Things not to format:
+			ArrayLiteral, // TODO format !
+			ObjectLiteral, // TOOD format !
+			IdentifierRef,
+			IntLiteral,
+			NullLiteral,
+			NumberLiteral,
+			StringLiteral,
+			ThisLiteral
+			: return
+		}
+		throw new UnsupportedOperationException("expression "+exp.class.simpleName+" not yet implemented.");
+	}
+	def void genericTODOformat(Expression exp, extension IFormattableDocument document) {
+		throw new UnsupportedOperationException("expression "+exp.class.simpleName+" not yet implemented.");
+	}
+
+	/** simply formats all content */
+	def void genericFormat(Expression exp, extension IFormattableDocument document) {
+		exp.eContents.forEach[format];
+	}
+	
+	
+	
+	def dispatch void format(AssignmentExpression ass, extension IFormattableDocument document) {
+		// ass.regionFor.feature( eu.numberfour.n4js.n4JS.N4JSPackage.Literals.ASSIGNMENT_EXPRESSION__OP) .prepend[oneSpace].append[oneSpace];		
+//		for (reg : ass.allRegionsFor.features(eu.numberfour.n4js.n4JS.N4JSPackage.Literals.ASSIGNMENT_EXPRESSION__OP)) {
+//			reg.prepend[oneSpace].append[oneSpace];
+//		}
+//		for (e : ass.regionFor.ruleCallsTo(assignmentOperatorRule)) {
+//			e.prepend[oneSpace].append[oneSpace];
+//		}
+		ass.lhs.append[oneSpace]
+		ass.rhs.prepend[oneSpace]
+		ass.lhs.format;
+		ass.rhs.format;
+	}
+	
+	def dispatch void format( ExpressionStatement eStmt, extension IFormattableDocument docuemt){
+		println( " fmt "+eStmt.expression.class.simpleName );
+		eStmt.expression.format;
+	}
+
+	/** var,let,const  */
+	def dispatch void format(VariableStatement vStmt, extension IFormattableDocument document) {
+		vStmt.regionFor.feature(
+			N4JSPackage.Literals.VARIABLE_DECLARATION_CONTAINER__VAR_STMT_KEYWORD).append [
+			oneSpace;
+		];
+
+		vStmt.regionFor.keywords(",").forEach [
+			prepend[noSpace];
+			append[oneSpace];
+		];
+		vStmt.interior[indent];
+		val lastIdx = vStmt.varDeclsOrBindings.size - 1;
+
+		vStmt.varDeclsOrBindings.forEach [ e, int i |
+			e.format;
+			if (i > 0) { // assignments start in separate lines. 
+				if (e instanceof VariableDeclaration) {
+					if (e.expression !== null) e.prepend[newLine];
+				} else if (e instanceof VariableBinding) {
+					if (e.expression !== null) e.prepend[newLine];
+				}
+			}
+			if (i < lastIdx) { // assignments start let following continue in separate lines. 
+				if (e instanceof VariableDeclaration) {
+					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine];
+				} else if (e instanceof VariableBinding) {
+					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine];
+				}
+
+			}
+		];
+	}
+
+	def dispatch void format(VariableDeclaration vDecl, extension IFormattableDocument document) {
+		vDecl.previousHiddenRegion.set[oneSpace];
+		vDecl.regionFor.keyword("=").surround[oneSpace];
+		vDecl.expression.format;
+	}
+
+	// TODO format VariableBinding
+	/** */
+	def dispatch void format(CatchBlock ctch, extension IFormattableDocument document) {
+		ctch.prepend[setNewLines(0, 0, 0); oneSpace];
+		ctch.catchVariable.format;
+		ctch.block.format;
+	}
+
+	def dispatch void format(FinallyBlock finlly, extension IFormattableDocument document) {
+		finlly.previousHiddenRegion.set[newLines = 0; oneSpace];
+		finlly.block.format;
+	}
+
+	/** Elements implementing PropertyNameOwner may have symbols or computed names given in brackets. 
+	 * Inserts a spcace in front of the opening bracket.*/
+	private def void insertSpaceInfrontOfPropertyNames(EObject field, extension IFormattableDocument document) {
+		// Space in front of name, esp. for names like "[@sdfljks]"
+		val nameRegion = field.regionFor.feature(
+			N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME);
+		if (nameRegion === null) return;
+
+		val precBracket = nameRegion.immediatelyPreceding.keyword("[");
+		precBracket.prepend[oneSpace];
+	}
+
+	/** Insert one space in front of first '{' in the direct content of the element. 
+	 * semEObject is a semanticObject, e.g. N4EnumDecl, N4Classifier ...*/
+	private def void insertSpaceInFrontOfCurlyBlockOpener(EObject semEObject, extension IFormattableDocument document) {
+		semEObject.regionFor.keyword("{").prepend[oneSpace];
+	}
+	
+	/** force: " @" and no newLine after '@' */
+	private def void noSpaceAfterAT(EObject semEObject, extension IFormattableDocument document) {
+		semEObject.regionFor.keyword("@").append[noSpace;newLines=0].prepend[oneSpace];
+	}
+
+	/** Insert 'new line'+'no space' after first colon (':') directly contained in the semantic object*/
+	private def void insertNewlineAfterColon(EObject semEObject, extension IFormattableDocument document) {
+		semEObject.regionFor.keyword(":").append[newLine; noSpace;].prepend[oneSpace];
+	}
+
+	public override ITextReplacer createCommentReplacer(IComment comment) {
+		// Overridden to distinguish between JSDOC-style, standard ML, formatter-off ML-comment.
+		val EObject grammarElement = comment.getGrammarElement();
+		if (grammarElement instanceof AbstractRule) {
+			val String ruleName = (/*(AbstractRule)*/ grammarElement).getName();
+			if (ruleName.startsWith("ML")) {
+				val cText = comment.text;
+				if (cText.startsWith("/**") && !cText.startsWith("/***")) { // JSDOC
+					return new N4MultilineCommentReplacer(comment, '*');
+				} else if (cText.startsWith("/*-")) { // Turn-off formatting. 
+					return new OffMultilineCommentReplacer(comment, !comment.isNotFirstInLine);
+				} else { // All other
+					return new FixedMultilineCommentReplacer(comment);
+				}	
+			}
+			if (ruleName.startsWith("SL")) {
+				if (comment.isNotFirstInLine) {
+					return new SinglelineDocCommentReplacer(comment, "//");
+				} else {
+					return new SinglelineCodeCommentReplacer(comment, "//");
+				}
+			}
+		}
+
+		// fall back to super-impl.
+		super.createCommentReplacer(comment);
+	}
+
+	private static def boolean isNotFirstInLine(IComment comment) {
+		return comment.getLineRegions().get(0).getIndentation().getLength() > 0;
+	}
+
+	public override createTextReplacerMerger(){
+		return new IndentHandlingTextReplaceMerger(this);
+	}
+	
 }
