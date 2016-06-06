@@ -15,7 +15,7 @@ import static eu.numberfour.n4js.ts.types.util.Variance.CONTRA;
 import static eu.numberfour.n4js.ts.types.util.Variance.INV;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -27,6 +27,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.SetMultimap;
 
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
@@ -60,14 +62,12 @@ import it.xsemantics.runtime.RuleEnvironment;
 	private final RuleEnvironment G;
 	private final N4JSTypeSystem ts;
 
-	/**
-	 * Because the step of adding a "mirroring bound" mustn't be skipped, the only method entitled to manipulate this
-	 * map is {@link #addBound(TypeBound)}.
-	 */
-	private final Map<TypeVariable, Set<TypeBound>> boundsPerInfVar = new LinkedHashMap<>();
-
-	private final List<TypeBound> incorporatedBounds = new ArrayList<>();
+	/** Bounds within this bound set, stored per inference variable. */
+	private final SetMultimap<TypeVariable, TypeBound> boundsPerInfVar = LinkedHashMultimap.create();
+	/** Instantiations among the bounds of this set, i.e. bounds of the form `α=P` with P being a proper type. */
 	private final Map<TypeVariable, TypeRef> instantiations = new LinkedHashMap<>();
+
+	private final Set<TypeBound> incorporatedBounds = new HashSet<>();
 
 	/**
 	 * Flag to escalate a contradiction (once set, it stays set). Checked frequently via {@link #hasBoundFALSE()} to
@@ -102,47 +102,36 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Returns the number of type bounds in this bound set.
 	 */
 	public int size() {
-		int result = 0;
-		for (Set<TypeBound> s : boundsPerInfVar.values()) {
-			result += s.size();
-		}
-		return result;
+		return boundsPerInfVar.size();
 	}
 
 	/**
-	 * @return the non-null, possibly empty, set of all bounds constraining the argument.
+	 * Returns all bounds in this bound set.
+	 */
+	public TypeBound[] getAllBounds() {
+		final Collection<TypeBound> allBounds = boundsPerInfVar.values();
+		return allBounds.toArray(new TypeBound[allBounds.size()]);
+	}
+
+	/**
+	 * Returns all type bounds from this bounds set having the given inference variable on their LHS.
 	 */
 	public Set<TypeBound> getBounds(TypeVariable infVar) {
-		final Set<TypeBound> result = boundsPerInfVar.get(infVar);
-		return result != null ? result : Collections.emptySet();
+		return boundsPerInfVar.get(infVar); // note: returns empty set, not null if no bounds for infVar found
 	}
 
 	/**
 	 * Does the argument appear on the left-hand side of one ore more bounds?
 	 */
 	public boolean isBounded(TypeVariable infVar) {
-		return !(getBounds(infVar).isEmpty());
+		return boundsPerInfVar.containsKey(infVar);
 	}
 
 	/**
 	 * Same as {@link #isBounded(TypeVariable)}, but inverted. Provided for readability reasons.
 	 */
 	public boolean isUnbounded(TypeVariable infVar) {
-		return getBounds(infVar).isEmpty();
-	}
-
-	/**
-	 * Returns all bounds in this bound set as an array.
-	 */
-	public TypeBound[] getAllBoundsArr() {
-		return getAllBounds().toArray(TypeBound[]::new);
-	}
-
-	/**
-	 * Returns all bounds in this bound set.
-	 */
-	public Stream<TypeBound> getAllBounds() {
-		return boundsPerInfVar.values().stream().flatMap(bounds -> bounds.stream()); // TODO reconsider
+		return !boundsPerInfVar.containsKey(infVar);
 	}
 
 	/**
@@ -182,12 +171,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 	private boolean internal_addBound(TypeBound bound) {
 		assert ic.isInferenceVariable(bound.left);
-		Set<TypeBound> bounds = boundsPerInfVar.get(bound.left);
-		if (bounds == null) {
-			bounds = new LinkedHashSet<>();
-			boundsPerInfVar.put(bound.left, bounds);
-		}
-		final boolean wasAdded = bounds.add(bound);
+		final boolean wasAdded = boundsPerInfVar.put(bound.left, bound);
 		if (wasAdded) {
 			if (TypeUtils.isRawTypeRef(bound.right)) {
 				haveRawTypeRef = true;
@@ -208,11 +192,15 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * performance reasons to allow removal of type bounds that do no longer have any effect. Use with care.
 	 */
 	private void removeBound(TypeBound bound) {
-		final Set<TypeBound> bounds = boundsPerInfVar.get(bound.left);
-		if (bounds != null) {
-			bounds.removeIf(b -> b == bound);
-		}
+		boundsPerInfVar.remove(bound.left, bound);
 		incorporatedBounds.remove(bound);
+	}
+
+	/**
+	 * Returns all instantiations of inference variables among the type bounds of the receiving bound set.
+	 */
+	public Map<TypeVariable, TypeRef> getInstantiations() {
+		return ImmutableMap.copyOf(instantiations);
 	}
 
 	/**
@@ -243,13 +231,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 			result = result.filter(t -> ic.isProper(t));
 		}
 		return result.toArray(TypeRef[]::new);
-	}
-
-	/**
-	 * Returns all instantiations of inference variables among the type bounds of the receiving bound set.
-	 */
-	public Map<TypeVariable, TypeRef> getInstantiations() {
-		return ImmutableMap.copyOf(instantiations);
 	}
 
 	/**
@@ -339,7 +320,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		boolean updated;
 		do {
 			updated = false;
-			final TypeBound[] bounds = getAllBoundsArr();
+			final TypeBound[] bounds = getAllBounds();
 			final int len = bounds.length;
 			if (len < 2) {
 				return true;

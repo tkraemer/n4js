@@ -421,7 +421,7 @@ public final class InferenceContext {
 					log("======");
 					log("trying to resolve inference variable: " + str(currVariable));
 					log("based on this bound set:");
-					currentBounds.getAllBounds().forEachOrdered(b -> log("    " + b.toString()));
+					Arrays.stream(currentBounds.getAllBounds()).forEachOrdered(b -> log("    " + b.toString()));
 				}
 				final TypeRef instantiation = chooseInstantiation(currVariable);
 				if (instantiation == null) {
