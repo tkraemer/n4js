@@ -3,7 +3,9 @@
 :commandkey: &#8984;
 :revdate: {localdate}
 :references: drop
-:data-uri:
+:imagesdir: images
+:toc: left
+
 
 ////
 :data-uri:
@@ -84,7 +86,7 @@ kbd:[Alt-Shift-N] on Windows)
 
 image::newproject.png[]
 
-In this case, we name the project "hello.world" and select btn:[Finish] to create a project in the
+In this case, we name the project "hello.world" and select kbd:[Finish] to create a project in the
 default location (our current workspace).
 The New N4JS Project wizard will also ask to specify a working set to include the project in.
 Working sets are for grouping together elements to be displayed and will allow the user to

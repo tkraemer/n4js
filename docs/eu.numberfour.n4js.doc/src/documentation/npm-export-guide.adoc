@@ -1,10 +1,11 @@
 :experimental:
 :commandkey: &#8984;
-:data-uri:
 :revdate: {localdate}
 :toc:
 :source-highlighter: prettify
 :doctype: book
+:imagesdir: images
+:toc: left
 
 .N4JS npm Export Guide
 = N4JS npm Export Guide
@@ -19,7 +20,6 @@ line and will organise and install
 dependencies for an application. npm can also be used to install Node.js applications available on the npm
 registry. This npm export guide demonstrates how N4JS can be used to develop and publish Node
 applications with a simple example module.
-
 
 
 == Project Example

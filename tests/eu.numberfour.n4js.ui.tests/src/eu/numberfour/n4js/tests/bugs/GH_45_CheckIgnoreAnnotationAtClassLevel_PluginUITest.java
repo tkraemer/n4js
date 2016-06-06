@@ -32,6 +32,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.internal.console.ConsoleView;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.BiMap;
@@ -102,6 +103,7 @@ public class GH_45_CheckIgnoreAnnotationAtClassLevel_PluginUITest extends Abstra
 	/**
 	 * Runs a test module with one single class that has method with {@code Ignore} annotation.
 	 */
+	@Ignore("IDE-2270")
 	@Test
 	public void testModuleWithIgnoredMethod() {
 		final IProject project = getProjectByName(PROJECT_NAME);
@@ -138,6 +140,7 @@ public class GH_45_CheckIgnoreAnnotationAtClassLevel_PluginUITest extends Abstra
 	/**
 	 * Runs a test module with one single class that has neither super class nor {@code @Ignore} annotation.
 	 */
+	@Ignore("IDE-2270")
 	@Test
 	public void testModuleWithoutSuperClass() {
 		final IProject project = getProjectByName(PROJECT_NAME);
