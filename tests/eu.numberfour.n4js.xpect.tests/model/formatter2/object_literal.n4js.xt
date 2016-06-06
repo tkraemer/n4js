@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+ 
+
+// format single line
+/* XPECT formattedLines 1 ---
+let u = { a: 5, b: 6, "z": 7 };
+--- */
+let 													u ={ a: 5, b: 6, "z": 7 };
+
+
+// format single line with trainling comma
+/* XPECT formattedLines 1 ---
+let u = { a: 5, b: 6, "z": 7, };
+--- */
+let u ={ a: 5, b: 6, "z": 7, };

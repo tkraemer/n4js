@@ -81,7 +81,7 @@ public class FormatterXpectMethod {
 	@ParameterParser(syntax = "arg1=INT")
 	public void formattedLines(
 			@StringExpectation(whitespaceSensitive = true) IStringExpectation exp,
-			int lines,
+			int lines, // arg1
 			@ThisOffset int o,
 			ITextRegionAccess reg,
 			ISetupInitializer<Preferences> prefInit) {

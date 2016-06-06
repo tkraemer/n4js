@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+
+/* XPECT formattedLines 19 ---
+export public enum RoundingMode {
+	/\*
+	 * Round away from zero. Never decreases the magnitude of the calculated value.
+	 * Maps to BigNumber.ROUND_UP
+	 *\/
+	UP,
+
+	/\*
+	 * Round toward zero. Never increases the magnitude of the calculated value.
+	 * Maps to BigNumber.ROUND_DOWN
+	 *\/
+	DOWN,
+
+	/\*
+	 * Round toward negative infinity.
+	 * Maps to BigNumber.ROUND_FLOOR
+	 *\/
+	FLOOR
+}
+--- */
+export public enum RoundingMode {
+    /*
+     * Round away from zero. Never decreases the magnitude of the calculated value.
+     * Maps to BigNumber.ROUND_UP
+     */
+    UP,
+
+    /*
+     * Round toward zero. Never increases the magnitude of the calculated value.
+     * Maps to BigNumber.ROUND_DOWN
+     */
+    DOWN,
+
+    /*
+     * Round toward negative infinity.
+     * Maps to BigNumber.ROUND_FLOOR
+     */
+    FLOOR
+    
+}
+

@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+/* XPECT formattedLines 5 ---
+function f(): any {
+	return function(): void {
+			;
+		} as Object;
+}
+--- */
+function f() :any {
+    return function(): void {
+            ;
+        } as Object
+}
+
+
+/* XPECT formattedLines 2 ---
+function f(): any {
+	return function(): void { ; } as Object ;
+};
+--- */
+function f() :any { return function(): void {;} as Object 
+}
+
+

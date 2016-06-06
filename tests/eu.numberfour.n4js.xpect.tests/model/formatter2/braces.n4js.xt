@@ -10,7 +10,7 @@ import  {  Class1  }  from  "formatter2/MultipleClasses"
 
 /* keep single-line formatting */
 /* XPECT formattedLines 1 ---
-	{ var x = 1 }
+{ var x = 1 }
 --- */
 {  var x = 1  }
 
@@ -28,9 +28,9 @@ var y = 1;
 
 /* keep multi-line formatting with multiple braces */
 /* XPECT formattedLines 5 ---
-{{var y =[
-	7
-];}}
+{{var y = [
+		7
+	];}}
 --- */
 { { var y = [ 
 7
@@ -41,14 +41,14 @@ var y = 1;
 
 /* keep single-line formatting with multiple braces */
 /* XPECT formattedLines 1 ---
-{{var y =[ 7 ];}}
+{{ var y = [ 7 ]; }}
 --- */
 { { var y = [ 7 ]; } }
 
 
 /* keep single-line formatting with comma */
 /* XPECT formattedLines 1 ---
-	{var x1 =[ 1, 2, 3 ]}
+{ var x1 = [1, 2, 3] }
 --- */
 {  var x1 = [1,2,3]  }
 
@@ -56,11 +56,11 @@ var y = 1;
 /* keep multi-line formatting */
 /* XPECT formattedLines 4 ---
 {
-	var y1 =[
-		1,
-		2,
-		3
-	];
+	var y1 = [
+			1,
+			2,
+			3
+		];
 }
 --- */
 {  

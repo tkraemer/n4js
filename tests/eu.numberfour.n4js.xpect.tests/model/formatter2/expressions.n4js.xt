@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+var exc = null;
+
+// Nested String-concat.
+/* XPECT formattedLines 1 ---
+throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as Error);
+--- */
+throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as Error);
+
+
+
+
+

@@ -1,0 +1,44 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+// TODO: checking comments only (without any other language-feature) fails to compute correct lines in the test. 
+
+/* do not change comments */
+/* XPECT formattedLines 2 ---
+;
+// var b = [ 7 ] // kk
+--- */
+;
+// var b = [ 7 ] // kk
+
+/* indent comments (decrease level) */
+/* XPECT formattedLines 3 ---
+{
+	// var b = [ 7 ] // kk
+}
+--- */
+{
+					// var b = [ 7 ] // kk
+}
+
+/* indent comments (increase level) */
+/* XPECT formattedLines 7 ---
+{
+	{
+		{
+			// var b = [ 7 ] // kk
+		}
+	}
+}
+--- */
+{
+	{
+		{
+ // var b = [ 7 ] // kk
+		}
+	}
+}
+
+
+ 
+ 
+ 

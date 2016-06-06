@@ -8,7 +8,7 @@ class Class1 {
 // Additional Linebreak after last statement required! 
 // If missing, then automatic semicolon insertion / replacement behaves differently.
 /* XPECT formattedLines 1 ---
-   var x = new Class1().someField.someField.someField.someField.someField.someField.someField.someField.someField.
-   someField.someField.someField.someField;
+var x = new Class1().someField.someField.someField.someField.someField.someField.someField.someField.someField.
+	someField.someField.someField.someField;
 --- */
 var x = new Class1().someField . someField . someField.someField.someField.someField.someField.someField.someField.someField.someField.someField.someField

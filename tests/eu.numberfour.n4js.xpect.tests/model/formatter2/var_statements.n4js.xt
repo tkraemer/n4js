@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+/* XPECT formattedLines 1 ---
+var a, b, c, d, e;
+--- */
+var a,b,c,d,e;
+
+/* XPECT formattedLines 1 ---
+var a, b, c, d, e;
+--- */
+var 	  		a,		  		b,c,d		  	,e;
+
+
+/* XPECT formattedLines 1 ---
+var a = 1,
+	b, c,
+	d = 3,
+	e;
+--- */
+var a=1,b,c,d  =   3  ,e;
+
