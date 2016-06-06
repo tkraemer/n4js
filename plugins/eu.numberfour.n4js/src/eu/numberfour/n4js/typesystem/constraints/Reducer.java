@@ -55,18 +55,9 @@ import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * A Reducer owns no state. Instead, it's a collaborator of its {@link InferenceContext inference context}, operating on
- * the {@link BoundSet bound set} of that inference context, by lowering constraints (as summarized below) into simpler
- * bounds.
- * <p>
- * The entry points to the functionality provided by this class are:
- * <ul>
- * <li>{@link #reduce(TypeConstraint) reducing a subtyping constraint}</li>
- * <li>reducing a compatibility constraint (involving an expression)</li>
- * </ul>
- * <p>
- * Why have a dedicated class that owns no state? So as to have a clean interface (along the lines of separation of
- * concerns) for the inference context to interact with.
+ * Contains all logic for reduction, i.e. for reducing a {@link TypeConstraint} into simpler {@link TypeBound}s. A
+ * {@code Reducer} owns no state. Instead, it's a collaborator of its {@link InferenceContext inference context},
+ * operating on the {@link BoundSet bound set} of that inference context.
  */
 /* package */ final class Reducer {
 
@@ -74,18 +65,18 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 	private final InferenceContext ic;
 
+	private final RuleEnvironment G;
 	private final N4JSTypeSystem ts;
 	private final TypeSystemHelper tsh;
-	private final RuleEnvironment G;
 
 	/**
-	 * @see Reducer
+	 * Creates an instance.
 	 */
-	public Reducer(InferenceContext ic, N4JSTypeSystem ts, TypeSystemHelper tsh, RuleEnvironment G) {
+	public Reducer(InferenceContext ic, RuleEnvironment G, N4JSTypeSystem ts, TypeSystemHelper tsh) {
 		this.ic = ic;
+		this.G = G;
 		this.ts = ts;
 		this.tsh = tsh;
-		this.G = G;
 	}
 
 	/**
@@ -129,17 +120,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	/**
-	 * Reduction (in all its variants) takes place (1) at the very start of solving; and (2) for new constraints
-	 * discovered during a round of incorporation.
+	 * Reduces the the type constraint defined by the given left-hand and right-hand side and the given variance.
 	 * <p>
 	 * Always invoke this method instead of the more specific overloads, both for readability and to ensure completeness
 	 * of log messages.
-	 *
-	 * TODO Implementation restrictions:
-	 * <ul>
-	 * <li>this method is a no-op in case of null argument.</li>
-	 * <li>this method aborts inference unless both arguments are TypeRef-s or both are Wildcard-s.</li>
-	 * </ul>
 	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */

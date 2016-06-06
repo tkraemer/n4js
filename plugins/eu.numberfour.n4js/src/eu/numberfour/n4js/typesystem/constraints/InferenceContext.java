@@ -144,8 +144,8 @@ public final class InferenceContext {
 		this.cancelIndicator = cancelIndicator;
 		this.G = G;
 		addInferenceVariables(inferenceVariables);
-		this.redu = new Reducer(this, ts, tsh, G);
-		this.currentBounds = new BoundSet(this, G, ts, this.redu);
+		this.redu = new Reducer(this, G, ts, tsh);
+		this.currentBounds = new BoundSet(this, this.redu, G, ts);
 	}
 
 	/**
@@ -440,7 +440,6 @@ public final class InferenceContext {
 			if (isDoomed()) {
 				return false;
 			}
-			assert currVariableSet.stream().allMatch(iv -> currentBounds.hasConsistentBounds(iv));
 		}
 		return true;
 	}
