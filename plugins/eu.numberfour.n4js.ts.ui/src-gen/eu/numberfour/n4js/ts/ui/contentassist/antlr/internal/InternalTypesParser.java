@@ -3726,23 +3726,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleThisTypeRefStructural"
 
 
-    // $ANTLR start "entryRuleN4FunctionTypeExpression"
-    // InternalTypesParser.g:1282:1: entryRuleN4FunctionTypeExpression : ruleN4FunctionTypeExpression EOF ;
-    public final void entryRuleN4FunctionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleFunctionTypeExpressionOLD"
+    // InternalTypesParser.g:1282:1: entryRuleFunctionTypeExpressionOLD : ruleFunctionTypeExpressionOLD EOF ;
+    public final void entryRuleFunctionTypeExpressionOLD() throws RecognitionException {
         try {
-            // InternalTypesParser.g:1283:1: ( ruleN4FunctionTypeExpression EOF )
-            // InternalTypesParser.g:1284:1: ruleN4FunctionTypeExpression EOF
+            // InternalTypesParser.g:1283:1: ( ruleFunctionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:1284:1: ruleFunctionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionRule()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            ruleN4FunctionTypeExpression();
+            ruleFunctionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionRule()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDRule()); 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return ;
 
@@ -3757,30 +3757,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleN4FunctionTypeExpression"
+    // $ANTLR end "entryRuleFunctionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4FunctionTypeExpression"
-    // InternalTypesParser.g:1291:1: ruleN4FunctionTypeExpression : ( ( rule__N4FunctionTypeExpression__Group__0 ) ) ;
-    public final void ruleN4FunctionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleFunctionTypeExpressionOLD"
+    // InternalTypesParser.g:1291:1: ruleFunctionTypeExpressionOLD : ( ( rule__FunctionTypeExpressionOLD__Group__0 ) ) ;
+    public final void ruleFunctionTypeExpressionOLD() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:1295:5: ( ( ( rule__N4FunctionTypeExpression__Group__0 ) ) )
-            // InternalTypesParser.g:1296:1: ( ( rule__N4FunctionTypeExpression__Group__0 ) )
+            // InternalTypesParser.g:1295:5: ( ( ( rule__FunctionTypeExpressionOLD__Group__0 ) ) )
+            // InternalTypesParser.g:1296:1: ( ( rule__FunctionTypeExpressionOLD__Group__0 ) )
             {
-            // InternalTypesParser.g:1296:1: ( ( rule__N4FunctionTypeExpression__Group__0 ) )
-            // InternalTypesParser.g:1297:1: ( rule__N4FunctionTypeExpression__Group__0 )
+            // InternalTypesParser.g:1296:1: ( ( rule__FunctionTypeExpressionOLD__Group__0 ) )
+            // InternalTypesParser.g:1297:1: ( rule__FunctionTypeExpressionOLD__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup()); 
             }
-            // InternalTypesParser.g:1298:1: ( rule__N4FunctionTypeExpression__Group__0 )
-            // InternalTypesParser.g:1298:2: rule__N4FunctionTypeExpression__Group__0
+            // InternalTypesParser.g:1298:1: ( rule__FunctionTypeExpressionOLD__Group__0 )
+            // InternalTypesParser.g:1298:2: rule__FunctionTypeExpressionOLD__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__0();
+            rule__FunctionTypeExpressionOLD__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -3788,7 +3788,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup()); 
             }
 
             }
@@ -3808,7 +3808,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleN4FunctionTypeExpression"
+    // $ANTLR end "ruleFunctionTypeExpressionOLD"
 
 
     // $ANTLR start "entryRuleArrowFunctionTypeExpression"
@@ -4128,23 +4128,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleTFormalParameter"
 
 
-    // $ANTLR start "entryRuleN4UnionTypeExpression"
-    // InternalTypesParser.g:1414:1: entryRuleN4UnionTypeExpression : ruleN4UnionTypeExpression EOF ;
-    public final void entryRuleN4UnionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleUnionTypeExpressionOLD"
+    // InternalTypesParser.g:1414:1: entryRuleUnionTypeExpressionOLD : ruleUnionTypeExpressionOLD EOF ;
+    public final void entryRuleUnionTypeExpressionOLD() throws RecognitionException {
         try {
-            // InternalTypesParser.g:1415:1: ( ruleN4UnionTypeExpression EOF )
-            // InternalTypesParser.g:1416:1: ruleN4UnionTypeExpression EOF
+            // InternalTypesParser.g:1415:1: ( ruleUnionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:1416:1: ruleUnionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionRule()); 
+               before(grammarAccess.getUnionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            ruleN4UnionTypeExpression();
+            ruleUnionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionRule()); 
+               after(grammarAccess.getUnionTypeExpressionOLDRule()); 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return ;
 
@@ -4159,30 +4159,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleN4UnionTypeExpression"
+    // $ANTLR end "entryRuleUnionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4UnionTypeExpression"
-    // InternalTypesParser.g:1423:1: ruleN4UnionTypeExpression : ( ( rule__N4UnionTypeExpression__Group__0 ) ) ;
-    public final void ruleN4UnionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleUnionTypeExpressionOLD"
+    // InternalTypesParser.g:1423:1: ruleUnionTypeExpressionOLD : ( ( rule__UnionTypeExpressionOLD__Group__0 ) ) ;
+    public final void ruleUnionTypeExpressionOLD() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:1427:5: ( ( ( rule__N4UnionTypeExpression__Group__0 ) ) )
-            // InternalTypesParser.g:1428:1: ( ( rule__N4UnionTypeExpression__Group__0 ) )
+            // InternalTypesParser.g:1427:5: ( ( ( rule__UnionTypeExpressionOLD__Group__0 ) ) )
+            // InternalTypesParser.g:1428:1: ( ( rule__UnionTypeExpressionOLD__Group__0 ) )
             {
-            // InternalTypesParser.g:1428:1: ( ( rule__N4UnionTypeExpression__Group__0 ) )
-            // InternalTypesParser.g:1429:1: ( rule__N4UnionTypeExpression__Group__0 )
+            // InternalTypesParser.g:1428:1: ( ( rule__UnionTypeExpressionOLD__Group__0 ) )
+            // InternalTypesParser.g:1429:1: ( rule__UnionTypeExpressionOLD__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getGroup()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup()); 
             }
-            // InternalTypesParser.g:1430:1: ( rule__N4UnionTypeExpression__Group__0 )
-            // InternalTypesParser.g:1430:2: rule__N4UnionTypeExpression__Group__0
+            // InternalTypesParser.g:1430:1: ( rule__UnionTypeExpressionOLD__Group__0 )
+            // InternalTypesParser.g:1430:2: rule__UnionTypeExpressionOLD__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__0();
+            rule__UnionTypeExpressionOLD__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -4190,7 +4190,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getGroup()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup()); 
             }
 
             }
@@ -4210,26 +4210,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleN4UnionTypeExpression"
+    // $ANTLR end "ruleUnionTypeExpressionOLD"
 
 
-    // $ANTLR start "entryRuleN4IntersectionTypeExpression"
-    // InternalTypesParser.g:1442:1: entryRuleN4IntersectionTypeExpression : ruleN4IntersectionTypeExpression EOF ;
-    public final void entryRuleN4IntersectionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleIntersectionTypeExpressionOLD"
+    // InternalTypesParser.g:1442:1: entryRuleIntersectionTypeExpressionOLD : ruleIntersectionTypeExpressionOLD EOF ;
+    public final void entryRuleIntersectionTypeExpressionOLD() throws RecognitionException {
         try {
-            // InternalTypesParser.g:1443:1: ( ruleN4IntersectionTypeExpression EOF )
-            // InternalTypesParser.g:1444:1: ruleN4IntersectionTypeExpression EOF
+            // InternalTypesParser.g:1443:1: ( ruleIntersectionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:1444:1: ruleIntersectionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionRule()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            ruleN4IntersectionTypeExpression();
+            ruleIntersectionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionRule()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDRule()); 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return ;
 
@@ -4244,30 +4244,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleN4IntersectionTypeExpression"
+    // $ANTLR end "entryRuleIntersectionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4IntersectionTypeExpression"
-    // InternalTypesParser.g:1451:1: ruleN4IntersectionTypeExpression : ( ( rule__N4IntersectionTypeExpression__Group__0 ) ) ;
-    public final void ruleN4IntersectionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleIntersectionTypeExpressionOLD"
+    // InternalTypesParser.g:1451:1: ruleIntersectionTypeExpressionOLD : ( ( rule__IntersectionTypeExpressionOLD__Group__0 ) ) ;
+    public final void ruleIntersectionTypeExpressionOLD() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:1455:5: ( ( ( rule__N4IntersectionTypeExpression__Group__0 ) ) )
-            // InternalTypesParser.g:1456:1: ( ( rule__N4IntersectionTypeExpression__Group__0 ) )
+            // InternalTypesParser.g:1455:5: ( ( ( rule__IntersectionTypeExpressionOLD__Group__0 ) ) )
+            // InternalTypesParser.g:1456:1: ( ( rule__IntersectionTypeExpressionOLD__Group__0 ) )
             {
-            // InternalTypesParser.g:1456:1: ( ( rule__N4IntersectionTypeExpression__Group__0 ) )
-            // InternalTypesParser.g:1457:1: ( rule__N4IntersectionTypeExpression__Group__0 )
+            // InternalTypesParser.g:1456:1: ( ( rule__IntersectionTypeExpressionOLD__Group__0 ) )
+            // InternalTypesParser.g:1457:1: ( rule__IntersectionTypeExpressionOLD__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup()); 
             }
-            // InternalTypesParser.g:1458:1: ( rule__N4IntersectionTypeExpression__Group__0 )
-            // InternalTypesParser.g:1458:2: rule__N4IntersectionTypeExpression__Group__0
+            // InternalTypesParser.g:1458:1: ( rule__IntersectionTypeExpressionOLD__Group__0 )
+            // InternalTypesParser.g:1458:2: rule__IntersectionTypeExpressionOLD__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__0();
+            rule__IntersectionTypeExpressionOLD__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -4275,7 +4275,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup()); 
             }
 
             }
@@ -4295,7 +4295,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleN4IntersectionTypeExpression"
+    // $ANTLR end "ruleIntersectionTypeExpressionOLD"
 
 
     // $ANTLR start "entryRuleParameterizedTypeRef"
@@ -8526,13 +8526,13 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithoutModifiers__Alternatives"
-    // InternalTypesParser.g:2708:1: rule__TypeRefWithoutModifiers__Alternatives : ( ( ( rule__TypeRefWithoutModifiers__Group_0__0 ) ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleN4FunctionTypeExpression ) | ( ruleN4UnionTypeExpression ) | ( ruleN4IntersectionTypeExpression ) );
+    // InternalTypesParser.g:2708:1: rule__TypeRefWithoutModifiers__Alternatives : ( ( ( rule__TypeRefWithoutModifiers__Group_0__0 ) ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleFunctionTypeExpressionOLD ) | ( ruleUnionTypeExpressionOLD ) | ( ruleIntersectionTypeExpressionOLD ) );
     public final void rule__TypeRefWithoutModifiers__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:2712:1: ( ( ( rule__TypeRefWithoutModifiers__Group_0__0 ) ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleN4FunctionTypeExpression ) | ( ruleN4UnionTypeExpression ) | ( ruleN4IntersectionTypeExpression ) )
+            // InternalTypesParser.g:2712:1: ( ( ( rule__TypeRefWithoutModifiers__Group_0__0 ) ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleFunctionTypeExpressionOLD ) | ( ruleUnionTypeExpressionOLD ) | ( ruleIntersectionTypeExpressionOLD ) )
             int alt21=6;
             switch ( input.LA(1) ) {
             case Undefined:
@@ -8657,21 +8657,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalTypesParser.g:2731:6: ( ruleN4FunctionTypeExpression )
+                    // InternalTypesParser.g:2731:6: ( ruleFunctionTypeExpressionOLD )
                     {
-                    // InternalTypesParser.g:2731:6: ( ruleN4FunctionTypeExpression )
-                    // InternalTypesParser.g:2732:1: ruleN4FunctionTypeExpression
+                    // InternalTypesParser.g:2731:6: ( ruleFunctionTypeExpressionOLD )
+                    // InternalTypesParser.g:2732:1: ruleFunctionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getN4FunctionTypeExpressionParserRuleCall_3()); 
+                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_3()); 
                     }
                     pushFollow(FOLLOW_2);
-                    ruleN4FunctionTypeExpression();
+                    ruleFunctionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getN4FunctionTypeExpressionParserRuleCall_3()); 
+                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_3()); 
                     }
 
                     }
@@ -8680,21 +8680,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalTypesParser.g:2737:6: ( ruleN4UnionTypeExpression )
+                    // InternalTypesParser.g:2737:6: ( ruleUnionTypeExpressionOLD )
                     {
-                    // InternalTypesParser.g:2737:6: ( ruleN4UnionTypeExpression )
-                    // InternalTypesParser.g:2738:1: ruleN4UnionTypeExpression
+                    // InternalTypesParser.g:2737:6: ( ruleUnionTypeExpressionOLD )
+                    // InternalTypesParser.g:2738:1: ruleUnionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                     }
                     pushFollow(FOLLOW_2);
-                    ruleN4UnionTypeExpression();
+                    ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                     }
 
                     }
@@ -8703,21 +8703,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalTypesParser.g:2743:6: ( ruleN4IntersectionTypeExpression )
+                    // InternalTypesParser.g:2743:6: ( ruleIntersectionTypeExpressionOLD )
                     {
-                    // InternalTypesParser.g:2743:6: ( ruleN4IntersectionTypeExpression )
-                    // InternalTypesParser.g:2744:1: ruleN4IntersectionTypeExpression
+                    // InternalTypesParser.g:2743:6: ( ruleIntersectionTypeExpressionOLD )
+                    // InternalTypesParser.g:2744:1: ruleIntersectionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                       before(grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                     }
                     pushFollow(FOLLOW_2);
-                    ruleN4IntersectionTypeExpression();
+                    ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                       after(grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                     }
 
                     }
@@ -8906,13 +8906,13 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefFunctionTypeExpression__Alternatives"
-    // InternalTypesParser.g:2776:1: rule__TypeRefFunctionTypeExpression__Alternatives : ( ( ruleParameterizedTypeRef ) | ( ruleArrayTypeRef ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleN4UnionTypeExpression ) | ( ruleN4IntersectionTypeExpression ) );
+    // InternalTypesParser.g:2776:1: rule__TypeRefFunctionTypeExpression__Alternatives : ( ( ruleParameterizedTypeRef ) | ( ruleArrayTypeRef ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleUnionTypeExpressionOLD ) | ( ruleIntersectionTypeExpressionOLD ) );
     public final void rule__TypeRefFunctionTypeExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:2780:1: ( ( ruleParameterizedTypeRef ) | ( ruleArrayTypeRef ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleN4UnionTypeExpression ) | ( ruleN4IntersectionTypeExpression ) )
+            // InternalTypesParser.g:2780:1: ( ( ruleParameterizedTypeRef ) | ( ruleArrayTypeRef ) | ( ruleConstructorTypeRef ) | ( ruleClassifierTypeRef ) | ( ruleUnionTypeExpressionOLD ) | ( ruleIntersectionTypeExpressionOLD ) )
             int alt23=6;
             switch ( input.LA(1) ) {
             case Undefined:
@@ -9053,21 +9053,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalTypesParser.g:2805:6: ( ruleN4UnionTypeExpression )
+                    // InternalTypesParser.g:2805:6: ( ruleUnionTypeExpressionOLD )
                     {
-                    // InternalTypesParser.g:2805:6: ( ruleN4UnionTypeExpression )
-                    // InternalTypesParser.g:2806:1: ruleN4UnionTypeExpression
+                    // InternalTypesParser.g:2805:6: ( ruleUnionTypeExpressionOLD )
+                    // InternalTypesParser.g:2806:1: ruleUnionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                       before(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                     }
                     pushFollow(FOLLOW_2);
-                    ruleN4UnionTypeExpression();
+                    ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                       after(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                     }
 
                     }
@@ -9076,21 +9076,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalTypesParser.g:2811:6: ( ruleN4IntersectionTypeExpression )
+                    // InternalTypesParser.g:2811:6: ( ruleIntersectionTypeExpressionOLD )
                     {
-                    // InternalTypesParser.g:2811:6: ( ruleN4IntersectionTypeExpression )
-                    // InternalTypesParser.g:2812:1: ruleN4IntersectionTypeExpression
+                    // InternalTypesParser.g:2811:6: ( ruleIntersectionTypeExpressionOLD )
+                    // InternalTypesParser.g:2812:1: ruleIntersectionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                       before(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                     }
                     pushFollow(FOLLOW_2);
-                    ruleN4IntersectionTypeExpression();
+                    ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                       after(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                     }
 
                     }
@@ -33349,23 +33349,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ThisTypeRefStructural__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__0"
-    // InternalTypesParser.g:11463:1: rule__N4FunctionTypeExpression__Group__0 : rule__N4FunctionTypeExpression__Group__0__Impl rule__N4FunctionTypeExpression__Group__1 ;
-    public final void rule__N4FunctionTypeExpression__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__0"
+    // InternalTypesParser.g:11463:1: rule__FunctionTypeExpressionOLD__Group__0 : rule__FunctionTypeExpressionOLD__Group__0__Impl rule__FunctionTypeExpressionOLD__Group__1 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11467:1: ( rule__N4FunctionTypeExpression__Group__0__Impl rule__N4FunctionTypeExpression__Group__1 )
-            // InternalTypesParser.g:11468:2: rule__N4FunctionTypeExpression__Group__0__Impl rule__N4FunctionTypeExpression__Group__1
+            // InternalTypesParser.g:11467:1: ( rule__FunctionTypeExpressionOLD__Group__0__Impl rule__FunctionTypeExpressionOLD__Group__1 )
+            // InternalTypesParser.g:11468:2: rule__FunctionTypeExpressionOLD__Group__0__Impl rule__FunctionTypeExpressionOLD__Group__1
             {
             pushFollow(FOLLOW_19);
-            rule__N4FunctionTypeExpression__Group__0__Impl();
+            rule__FunctionTypeExpressionOLD__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__1();
+            rule__FunctionTypeExpressionOLD__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33384,12 +33384,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__0"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__0__Impl"
-    // InternalTypesParser.g:11475:1: rule__N4FunctionTypeExpression__Group__0__Impl : ( () ) ;
-    public final void rule__N4FunctionTypeExpression__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__0__Impl"
+    // InternalTypesParser.g:11475:1: rule__FunctionTypeExpressionOLD__Group__0__Impl : ( () ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -33401,7 +33401,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11481:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionTypeExpressionAction_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionTypeExpressionAction_0()); 
             }
             // InternalTypesParser.g:11482:1: ()
             // InternalTypesParser.g:11484:1: 
@@ -33409,7 +33409,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionTypeExpressionAction_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionTypeExpressionAction_0()); 
             }
 
             }
@@ -33425,26 +33425,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__0__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__0__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__1"
-    // InternalTypesParser.g:11494:1: rule__N4FunctionTypeExpression__Group__1 : rule__N4FunctionTypeExpression__Group__1__Impl rule__N4FunctionTypeExpression__Group__2 ;
-    public final void rule__N4FunctionTypeExpression__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__1"
+    // InternalTypesParser.g:11494:1: rule__FunctionTypeExpressionOLD__Group__1 : rule__FunctionTypeExpressionOLD__Group__1__Impl rule__FunctionTypeExpressionOLD__Group__2 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11498:1: ( rule__N4FunctionTypeExpression__Group__1__Impl rule__N4FunctionTypeExpression__Group__2 )
-            // InternalTypesParser.g:11499:2: rule__N4FunctionTypeExpression__Group__1__Impl rule__N4FunctionTypeExpression__Group__2
+            // InternalTypesParser.g:11498:1: ( rule__FunctionTypeExpressionOLD__Group__1__Impl rule__FunctionTypeExpressionOLD__Group__2 )
+            // InternalTypesParser.g:11499:2: rule__FunctionTypeExpressionOLD__Group__1__Impl rule__FunctionTypeExpressionOLD__Group__2
             {
             pushFollow(FOLLOW_65);
-            rule__N4FunctionTypeExpression__Group__1__Impl();
+            rule__FunctionTypeExpressionOLD__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__2();
+            rule__FunctionTypeExpressionOLD__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33463,12 +33463,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__1__Impl"
-    // InternalTypesParser.g:11506:1: rule__N4FunctionTypeExpression__Group__1__Impl : ( LeftCurlyBracket ) ;
-    public final void rule__N4FunctionTypeExpression__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__1__Impl"
+    // InternalTypesParser.g:11506:1: rule__FunctionTypeExpressionOLD__Group__1__Impl : ( LeftCurlyBracket ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -33480,11 +33480,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11512:1: LeftCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()); 
             }
             match(input,LeftCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()); 
             }
 
             }
@@ -33504,26 +33504,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__1__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__1__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__2"
-    // InternalTypesParser.g:11525:1: rule__N4FunctionTypeExpression__Group__2 : rule__N4FunctionTypeExpression__Group__2__Impl rule__N4FunctionTypeExpression__Group__3 ;
-    public final void rule__N4FunctionTypeExpression__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__2"
+    // InternalTypesParser.g:11525:1: rule__FunctionTypeExpressionOLD__Group__2 : rule__FunctionTypeExpressionOLD__Group__2__Impl rule__FunctionTypeExpressionOLD__Group__3 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11529:1: ( rule__N4FunctionTypeExpression__Group__2__Impl rule__N4FunctionTypeExpression__Group__3 )
-            // InternalTypesParser.g:11530:2: rule__N4FunctionTypeExpression__Group__2__Impl rule__N4FunctionTypeExpression__Group__3
+            // InternalTypesParser.g:11529:1: ( rule__FunctionTypeExpressionOLD__Group__2__Impl rule__FunctionTypeExpressionOLD__Group__3 )
+            // InternalTypesParser.g:11530:2: rule__FunctionTypeExpressionOLD__Group__2__Impl rule__FunctionTypeExpressionOLD__Group__3
             {
             pushFollow(FOLLOW_65);
-            rule__N4FunctionTypeExpression__Group__2__Impl();
+            rule__FunctionTypeExpressionOLD__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__3();
+            rule__FunctionTypeExpressionOLD__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33542,26 +33542,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__2"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__2"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__2__Impl"
-    // InternalTypesParser.g:11537:1: rule__N4FunctionTypeExpression__Group__2__Impl : ( ( rule__N4FunctionTypeExpression__Group_2__0 )? ) ;
-    public final void rule__N4FunctionTypeExpression__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__2__Impl"
+    // InternalTypesParser.g:11537:1: rule__FunctionTypeExpressionOLD__Group__2__Impl : ( ( rule__FunctionTypeExpressionOLD__Group_2__0 )? ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11541:1: ( ( ( rule__N4FunctionTypeExpression__Group_2__0 )? ) )
-            // InternalTypesParser.g:11542:1: ( ( rule__N4FunctionTypeExpression__Group_2__0 )? )
+            // InternalTypesParser.g:11541:1: ( ( ( rule__FunctionTypeExpressionOLD__Group_2__0 )? ) )
+            // InternalTypesParser.g:11542:1: ( ( rule__FunctionTypeExpressionOLD__Group_2__0 )? )
             {
-            // InternalTypesParser.g:11542:1: ( ( rule__N4FunctionTypeExpression__Group_2__0 )? )
-            // InternalTypesParser.g:11543:1: ( rule__N4FunctionTypeExpression__Group_2__0 )?
+            // InternalTypesParser.g:11542:1: ( ( rule__FunctionTypeExpressionOLD__Group_2__0 )? )
+            // InternalTypesParser.g:11543:1: ( rule__FunctionTypeExpressionOLD__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_2()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_2()); 
             }
-            // InternalTypesParser.g:11544:1: ( rule__N4FunctionTypeExpression__Group_2__0 )?
+            // InternalTypesParser.g:11544:1: ( rule__FunctionTypeExpressionOLD__Group_2__0 )?
             int alt104=2;
             int LA104_0 = input.LA(1);
 
@@ -33570,10 +33570,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
             switch (alt104) {
                 case 1 :
-                    // InternalTypesParser.g:11544:2: rule__N4FunctionTypeExpression__Group_2__0
+                    // InternalTypesParser.g:11544:2: rule__FunctionTypeExpressionOLD__Group_2__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__N4FunctionTypeExpression__Group_2__0();
+                    rule__FunctionTypeExpressionOLD__Group_2__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -33584,7 +33584,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_2()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_2()); 
             }
 
             }
@@ -33604,26 +33604,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__2__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__2__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__3"
-    // InternalTypesParser.g:11554:1: rule__N4FunctionTypeExpression__Group__3 : rule__N4FunctionTypeExpression__Group__3__Impl rule__N4FunctionTypeExpression__Group__4 ;
-    public final void rule__N4FunctionTypeExpression__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__3"
+    // InternalTypesParser.g:11554:1: rule__FunctionTypeExpressionOLD__Group__3 : rule__FunctionTypeExpressionOLD__Group__3__Impl rule__FunctionTypeExpressionOLD__Group__4 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11558:1: ( rule__N4FunctionTypeExpression__Group__3__Impl rule__N4FunctionTypeExpression__Group__4 )
-            // InternalTypesParser.g:11559:2: rule__N4FunctionTypeExpression__Group__3__Impl rule__N4FunctionTypeExpression__Group__4
+            // InternalTypesParser.g:11558:1: ( rule__FunctionTypeExpressionOLD__Group__3__Impl rule__FunctionTypeExpressionOLD__Group__4 )
+            // InternalTypesParser.g:11559:2: rule__FunctionTypeExpressionOLD__Group__3__Impl rule__FunctionTypeExpressionOLD__Group__4
             {
             pushFollow(FOLLOW_66);
-            rule__N4FunctionTypeExpression__Group__3__Impl();
+            rule__FunctionTypeExpressionOLD__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__4();
+            rule__FunctionTypeExpressionOLD__Group__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33642,12 +33642,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__3"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__3"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__3__Impl"
-    // InternalTypesParser.g:11566:1: rule__N4FunctionTypeExpression__Group__3__Impl : ( Function ) ;
-    public final void rule__N4FunctionTypeExpression__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__3__Impl"
+    // InternalTypesParser.g:11566:1: rule__FunctionTypeExpressionOLD__Group__3__Impl : ( Function ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -33659,11 +33659,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11572:1: Function
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()); 
             }
             match(input,Function,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()); 
             }
 
             }
@@ -33683,26 +33683,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__3__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__3__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__4"
-    // InternalTypesParser.g:11585:1: rule__N4FunctionTypeExpression__Group__4 : rule__N4FunctionTypeExpression__Group__4__Impl rule__N4FunctionTypeExpression__Group__5 ;
-    public final void rule__N4FunctionTypeExpression__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__4"
+    // InternalTypesParser.g:11585:1: rule__FunctionTypeExpressionOLD__Group__4 : rule__FunctionTypeExpressionOLD__Group__4__Impl rule__FunctionTypeExpressionOLD__Group__5 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11589:1: ( rule__N4FunctionTypeExpression__Group__4__Impl rule__N4FunctionTypeExpression__Group__5 )
-            // InternalTypesParser.g:11590:2: rule__N4FunctionTypeExpression__Group__4__Impl rule__N4FunctionTypeExpression__Group__5
+            // InternalTypesParser.g:11589:1: ( rule__FunctionTypeExpressionOLD__Group__4__Impl rule__FunctionTypeExpressionOLD__Group__5 )
+            // InternalTypesParser.g:11590:2: rule__FunctionTypeExpressionOLD__Group__4__Impl rule__FunctionTypeExpressionOLD__Group__5
             {
             pushFollow(FOLLOW_66);
-            rule__N4FunctionTypeExpression__Group__4__Impl();
+            rule__FunctionTypeExpressionOLD__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__5();
+            rule__FunctionTypeExpressionOLD__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33721,26 +33721,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__4"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__4"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__4__Impl"
-    // InternalTypesParser.g:11597:1: rule__N4FunctionTypeExpression__Group__4__Impl : ( ( rule__N4FunctionTypeExpression__Group_4__0 )? ) ;
-    public final void rule__N4FunctionTypeExpression__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__4__Impl"
+    // InternalTypesParser.g:11597:1: rule__FunctionTypeExpressionOLD__Group__4__Impl : ( ( rule__FunctionTypeExpressionOLD__Group_4__0 )? ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11601:1: ( ( ( rule__N4FunctionTypeExpression__Group_4__0 )? ) )
-            // InternalTypesParser.g:11602:1: ( ( rule__N4FunctionTypeExpression__Group_4__0 )? )
+            // InternalTypesParser.g:11601:1: ( ( ( rule__FunctionTypeExpressionOLD__Group_4__0 )? ) )
+            // InternalTypesParser.g:11602:1: ( ( rule__FunctionTypeExpressionOLD__Group_4__0 )? )
             {
-            // InternalTypesParser.g:11602:1: ( ( rule__N4FunctionTypeExpression__Group_4__0 )? )
-            // InternalTypesParser.g:11603:1: ( rule__N4FunctionTypeExpression__Group_4__0 )?
+            // InternalTypesParser.g:11602:1: ( ( rule__FunctionTypeExpressionOLD__Group_4__0 )? )
+            // InternalTypesParser.g:11603:1: ( rule__FunctionTypeExpressionOLD__Group_4__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_4()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_4()); 
             }
-            // InternalTypesParser.g:11604:1: ( rule__N4FunctionTypeExpression__Group_4__0 )?
+            // InternalTypesParser.g:11604:1: ( rule__FunctionTypeExpressionOLD__Group_4__0 )?
             int alt105=2;
             int LA105_0 = input.LA(1);
 
@@ -33749,10 +33749,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
             switch (alt105) {
                 case 1 :
-                    // InternalTypesParser.g:11604:2: rule__N4FunctionTypeExpression__Group_4__0
+                    // InternalTypesParser.g:11604:2: rule__FunctionTypeExpressionOLD__Group_4__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__N4FunctionTypeExpression__Group_4__0();
+                    rule__FunctionTypeExpressionOLD__Group_4__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -33763,7 +33763,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_4()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_4()); 
             }
 
             }
@@ -33783,26 +33783,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__4__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__4__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__5"
-    // InternalTypesParser.g:11614:1: rule__N4FunctionTypeExpression__Group__5 : rule__N4FunctionTypeExpression__Group__5__Impl rule__N4FunctionTypeExpression__Group__6 ;
-    public final void rule__N4FunctionTypeExpression__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__5"
+    // InternalTypesParser.g:11614:1: rule__FunctionTypeExpressionOLD__Group__5 : rule__FunctionTypeExpressionOLD__Group__5__Impl rule__FunctionTypeExpressionOLD__Group__6 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11618:1: ( rule__N4FunctionTypeExpression__Group__5__Impl rule__N4FunctionTypeExpression__Group__6 )
-            // InternalTypesParser.g:11619:2: rule__N4FunctionTypeExpression__Group__5__Impl rule__N4FunctionTypeExpression__Group__6
+            // InternalTypesParser.g:11618:1: ( rule__FunctionTypeExpressionOLD__Group__5__Impl rule__FunctionTypeExpressionOLD__Group__6 )
+            // InternalTypesParser.g:11619:2: rule__FunctionTypeExpressionOLD__Group__5__Impl rule__FunctionTypeExpressionOLD__Group__6
             {
             pushFollow(FOLLOW_58);
-            rule__N4FunctionTypeExpression__Group__5__Impl();
+            rule__FunctionTypeExpressionOLD__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__6();
+            rule__FunctionTypeExpressionOLD__Group__6();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33821,12 +33821,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__5"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__5"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__5__Impl"
-    // InternalTypesParser.g:11626:1: rule__N4FunctionTypeExpression__Group__5__Impl : ( LeftParenthesis ) ;
-    public final void rule__N4FunctionTypeExpression__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__5__Impl"
+    // InternalTypesParser.g:11626:1: rule__FunctionTypeExpressionOLD__Group__5__Impl : ( LeftParenthesis ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -33838,11 +33838,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11632:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5()); 
             }
             match(input,LeftParenthesis,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5()); 
             }
 
             }
@@ -33862,26 +33862,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__5__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__5__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__6"
-    // InternalTypesParser.g:11645:1: rule__N4FunctionTypeExpression__Group__6 : rule__N4FunctionTypeExpression__Group__6__Impl rule__N4FunctionTypeExpression__Group__7 ;
-    public final void rule__N4FunctionTypeExpression__Group__6() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__6"
+    // InternalTypesParser.g:11645:1: rule__FunctionTypeExpressionOLD__Group__6 : rule__FunctionTypeExpressionOLD__Group__6__Impl rule__FunctionTypeExpressionOLD__Group__7 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11649:1: ( rule__N4FunctionTypeExpression__Group__6__Impl rule__N4FunctionTypeExpression__Group__7 )
-            // InternalTypesParser.g:11650:2: rule__N4FunctionTypeExpression__Group__6__Impl rule__N4FunctionTypeExpression__Group__7
+            // InternalTypesParser.g:11649:1: ( rule__FunctionTypeExpressionOLD__Group__6__Impl rule__FunctionTypeExpressionOLD__Group__7 )
+            // InternalTypesParser.g:11650:2: rule__FunctionTypeExpressionOLD__Group__6__Impl rule__FunctionTypeExpressionOLD__Group__7
             {
             pushFollow(FOLLOW_48);
-            rule__N4FunctionTypeExpression__Group__6__Impl();
+            rule__FunctionTypeExpressionOLD__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__7();
+            rule__FunctionTypeExpressionOLD__Group__7();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33900,12 +33900,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__6"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__6"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__6__Impl"
-    // InternalTypesParser.g:11657:1: rule__N4FunctionTypeExpression__Group__6__Impl : ( ruleTAnonymousFormalParameterList ) ;
-    public final void rule__N4FunctionTypeExpression__Group__6__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__6__Impl"
+    // InternalTypesParser.g:11657:1: rule__FunctionTypeExpressionOLD__Group__6__Impl : ( ruleTAnonymousFormalParameterList ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -33917,7 +33917,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11663:1: ruleTAnonymousFormalParameterList
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
             }
             pushFollow(FOLLOW_2);
             ruleTAnonymousFormalParameterList();
@@ -33925,7 +33925,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
             }
 
             }
@@ -33945,26 +33945,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__6__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__6__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__7"
-    // InternalTypesParser.g:11674:1: rule__N4FunctionTypeExpression__Group__7 : rule__N4FunctionTypeExpression__Group__7__Impl rule__N4FunctionTypeExpression__Group__8 ;
-    public final void rule__N4FunctionTypeExpression__Group__7() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__7"
+    // InternalTypesParser.g:11674:1: rule__FunctionTypeExpressionOLD__Group__7 : rule__FunctionTypeExpressionOLD__Group__7__Impl rule__FunctionTypeExpressionOLD__Group__8 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11678:1: ( rule__N4FunctionTypeExpression__Group__7__Impl rule__N4FunctionTypeExpression__Group__8 )
-            // InternalTypesParser.g:11679:2: rule__N4FunctionTypeExpression__Group__7__Impl rule__N4FunctionTypeExpression__Group__8
+            // InternalTypesParser.g:11678:1: ( rule__FunctionTypeExpressionOLD__Group__7__Impl rule__FunctionTypeExpressionOLD__Group__8 )
+            // InternalTypesParser.g:11679:2: rule__FunctionTypeExpressionOLD__Group__7__Impl rule__FunctionTypeExpressionOLD__Group__8
             {
             pushFollow(FOLLOW_67);
-            rule__N4FunctionTypeExpression__Group__7__Impl();
+            rule__FunctionTypeExpressionOLD__Group__7__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__8();
+            rule__FunctionTypeExpressionOLD__Group__8();
 
             state._fsp--;
             if (state.failed) return ;
@@ -33983,12 +33983,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__7"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__7"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__7__Impl"
-    // InternalTypesParser.g:11686:1: rule__N4FunctionTypeExpression__Group__7__Impl : ( RightParenthesis ) ;
-    public final void rule__N4FunctionTypeExpression__Group__7__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__7__Impl"
+    // InternalTypesParser.g:11686:1: rule__FunctionTypeExpressionOLD__Group__7__Impl : ( RightParenthesis ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34000,11 +34000,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11692:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_7()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_7()); 
             }
             match(input,RightParenthesis,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_7()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_7()); 
             }
 
             }
@@ -34024,26 +34024,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__7__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__7__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__8"
-    // InternalTypesParser.g:11705:1: rule__N4FunctionTypeExpression__Group__8 : rule__N4FunctionTypeExpression__Group__8__Impl rule__N4FunctionTypeExpression__Group__9 ;
-    public final void rule__N4FunctionTypeExpression__Group__8() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__8"
+    // InternalTypesParser.g:11705:1: rule__FunctionTypeExpressionOLD__Group__8 : rule__FunctionTypeExpressionOLD__Group__8__Impl rule__FunctionTypeExpressionOLD__Group__9 ;
+    public final void rule__FunctionTypeExpressionOLD__Group__8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11709:1: ( rule__N4FunctionTypeExpression__Group__8__Impl rule__N4FunctionTypeExpression__Group__9 )
-            // InternalTypesParser.g:11710:2: rule__N4FunctionTypeExpression__Group__8__Impl rule__N4FunctionTypeExpression__Group__9
+            // InternalTypesParser.g:11709:1: ( rule__FunctionTypeExpressionOLD__Group__8__Impl rule__FunctionTypeExpressionOLD__Group__9 )
+            // InternalTypesParser.g:11710:2: rule__FunctionTypeExpressionOLD__Group__8__Impl rule__FunctionTypeExpressionOLD__Group__9
             {
             pushFollow(FOLLOW_67);
-            rule__N4FunctionTypeExpression__Group__8__Impl();
+            rule__FunctionTypeExpressionOLD__Group__8__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__9();
+            rule__FunctionTypeExpressionOLD__Group__9();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34062,26 +34062,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__8"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__8"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__8__Impl"
-    // InternalTypesParser.g:11717:1: rule__N4FunctionTypeExpression__Group__8__Impl : ( ( rule__N4FunctionTypeExpression__Group_8__0 )? ) ;
-    public final void rule__N4FunctionTypeExpression__Group__8__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__8__Impl"
+    // InternalTypesParser.g:11717:1: rule__FunctionTypeExpressionOLD__Group__8__Impl : ( ( rule__FunctionTypeExpressionOLD__Group_8__0 )? ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__8__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11721:1: ( ( ( rule__N4FunctionTypeExpression__Group_8__0 )? ) )
-            // InternalTypesParser.g:11722:1: ( ( rule__N4FunctionTypeExpression__Group_8__0 )? )
+            // InternalTypesParser.g:11721:1: ( ( ( rule__FunctionTypeExpressionOLD__Group_8__0 )? ) )
+            // InternalTypesParser.g:11722:1: ( ( rule__FunctionTypeExpressionOLD__Group_8__0 )? )
             {
-            // InternalTypesParser.g:11722:1: ( ( rule__N4FunctionTypeExpression__Group_8__0 )? )
-            // InternalTypesParser.g:11723:1: ( rule__N4FunctionTypeExpression__Group_8__0 )?
+            // InternalTypesParser.g:11722:1: ( ( rule__FunctionTypeExpressionOLD__Group_8__0 )? )
+            // InternalTypesParser.g:11723:1: ( rule__FunctionTypeExpressionOLD__Group_8__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_8()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_8()); 
             }
-            // InternalTypesParser.g:11724:1: ( rule__N4FunctionTypeExpression__Group_8__0 )?
+            // InternalTypesParser.g:11724:1: ( rule__FunctionTypeExpressionOLD__Group_8__0 )?
             int alt106=2;
             int LA106_0 = input.LA(1);
 
@@ -34090,10 +34090,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
             switch (alt106) {
                 case 1 :
-                    // InternalTypesParser.g:11724:2: rule__N4FunctionTypeExpression__Group_8__0
+                    // InternalTypesParser.g:11724:2: rule__FunctionTypeExpressionOLD__Group_8__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__N4FunctionTypeExpression__Group_8__0();
+                    rule__FunctionTypeExpressionOLD__Group_8__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -34104,7 +34104,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_8()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_8()); 
             }
 
             }
@@ -34124,21 +34124,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__8__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__8__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__9"
-    // InternalTypesParser.g:11734:1: rule__N4FunctionTypeExpression__Group__9 : rule__N4FunctionTypeExpression__Group__9__Impl ;
-    public final void rule__N4FunctionTypeExpression__Group__9() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__9"
+    // InternalTypesParser.g:11734:1: rule__FunctionTypeExpressionOLD__Group__9 : rule__FunctionTypeExpressionOLD__Group__9__Impl ;
+    public final void rule__FunctionTypeExpressionOLD__Group__9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11738:1: ( rule__N4FunctionTypeExpression__Group__9__Impl )
-            // InternalTypesParser.g:11739:2: rule__N4FunctionTypeExpression__Group__9__Impl
+            // InternalTypesParser.g:11738:1: ( rule__FunctionTypeExpressionOLD__Group__9__Impl )
+            // InternalTypesParser.g:11739:2: rule__FunctionTypeExpressionOLD__Group__9__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group__9__Impl();
+            rule__FunctionTypeExpressionOLD__Group__9__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34157,12 +34157,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__9"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__9"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group__9__Impl"
-    // InternalTypesParser.g:11745:1: rule__N4FunctionTypeExpression__Group__9__Impl : ( RightCurlyBracket ) ;
-    public final void rule__N4FunctionTypeExpression__Group__9__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group__9__Impl"
+    // InternalTypesParser.g:11745:1: rule__FunctionTypeExpressionOLD__Group__9__Impl : ( RightCurlyBracket ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group__9__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34174,11 +34174,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11751:1: RightCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getRightCurlyBracketKeyword_9()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_9()); 
             }
             match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getRightCurlyBracketKeyword_9()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_9()); 
             }
 
             }
@@ -34198,26 +34198,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group__9__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group__9__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__0"
-    // InternalTypesParser.g:11784:1: rule__N4FunctionTypeExpression__Group_2__0 : rule__N4FunctionTypeExpression__Group_2__0__Impl rule__N4FunctionTypeExpression__Group_2__1 ;
-    public final void rule__N4FunctionTypeExpression__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__0"
+    // InternalTypesParser.g:11784:1: rule__FunctionTypeExpressionOLD__Group_2__0 : rule__FunctionTypeExpressionOLD__Group_2__0__Impl rule__FunctionTypeExpressionOLD__Group_2__1 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11788:1: ( rule__N4FunctionTypeExpression__Group_2__0__Impl rule__N4FunctionTypeExpression__Group_2__1 )
-            // InternalTypesParser.g:11789:2: rule__N4FunctionTypeExpression__Group_2__0__Impl rule__N4FunctionTypeExpression__Group_2__1
+            // InternalTypesParser.g:11788:1: ( rule__FunctionTypeExpressionOLD__Group_2__0__Impl rule__FunctionTypeExpressionOLD__Group_2__1 )
+            // InternalTypesParser.g:11789:2: rule__FunctionTypeExpressionOLD__Group_2__0__Impl rule__FunctionTypeExpressionOLD__Group_2__1
             {
             pushFollow(FOLLOW_68);
-            rule__N4FunctionTypeExpression__Group_2__0__Impl();
+            rule__FunctionTypeExpressionOLD__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_2__1();
+            rule__FunctionTypeExpressionOLD__Group_2__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34236,12 +34236,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__0"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__0__Impl"
-    // InternalTypesParser.g:11796:1: rule__N4FunctionTypeExpression__Group_2__0__Impl : ( CommercialAt ) ;
-    public final void rule__N4FunctionTypeExpression__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__0__Impl"
+    // InternalTypesParser.g:11796:1: rule__FunctionTypeExpressionOLD__Group_2__0__Impl : ( CommercialAt ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34253,11 +34253,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11802:1: CommercialAt
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getCommercialAtKeyword_2_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getCommercialAtKeyword_2_0()); 
             }
             match(input,CommercialAt,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getCommercialAtKeyword_2_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getCommercialAtKeyword_2_0()); 
             }
 
             }
@@ -34277,26 +34277,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__0__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__0__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__1"
-    // InternalTypesParser.g:11815:1: rule__N4FunctionTypeExpression__Group_2__1 : rule__N4FunctionTypeExpression__Group_2__1__Impl rule__N4FunctionTypeExpression__Group_2__2 ;
-    public final void rule__N4FunctionTypeExpression__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__1"
+    // InternalTypesParser.g:11815:1: rule__FunctionTypeExpressionOLD__Group_2__1 : rule__FunctionTypeExpressionOLD__Group_2__1__Impl rule__FunctionTypeExpressionOLD__Group_2__2 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11819:1: ( rule__N4FunctionTypeExpression__Group_2__1__Impl rule__N4FunctionTypeExpression__Group_2__2 )
-            // InternalTypesParser.g:11820:2: rule__N4FunctionTypeExpression__Group_2__1__Impl rule__N4FunctionTypeExpression__Group_2__2
+            // InternalTypesParser.g:11819:1: ( rule__FunctionTypeExpressionOLD__Group_2__1__Impl rule__FunctionTypeExpressionOLD__Group_2__2 )
+            // InternalTypesParser.g:11820:2: rule__FunctionTypeExpressionOLD__Group_2__1__Impl rule__FunctionTypeExpressionOLD__Group_2__2
             {
             pushFollow(FOLLOW_4);
-            rule__N4FunctionTypeExpression__Group_2__1__Impl();
+            rule__FunctionTypeExpressionOLD__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_2__2();
+            rule__FunctionTypeExpressionOLD__Group_2__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34315,12 +34315,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__1__Impl"
-    // InternalTypesParser.g:11827:1: rule__N4FunctionTypeExpression__Group_2__1__Impl : ( This ) ;
-    public final void rule__N4FunctionTypeExpression__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__1__Impl"
+    // InternalTypesParser.g:11827:1: rule__FunctionTypeExpressionOLD__Group_2__1__Impl : ( This ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34332,11 +34332,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11833:1: This
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getThisKeyword_2_1()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1()); 
             }
             match(input,This,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getThisKeyword_2_1()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1()); 
             }
 
             }
@@ -34356,26 +34356,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__1__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__2"
-    // InternalTypesParser.g:11846:1: rule__N4FunctionTypeExpression__Group_2__2 : rule__N4FunctionTypeExpression__Group_2__2__Impl rule__N4FunctionTypeExpression__Group_2__3 ;
-    public final void rule__N4FunctionTypeExpression__Group_2__2() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__2"
+    // InternalTypesParser.g:11846:1: rule__FunctionTypeExpressionOLD__Group_2__2 : rule__FunctionTypeExpressionOLD__Group_2__2__Impl rule__FunctionTypeExpressionOLD__Group_2__3 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11850:1: ( rule__N4FunctionTypeExpression__Group_2__2__Impl rule__N4FunctionTypeExpression__Group_2__3 )
-            // InternalTypesParser.g:11851:2: rule__N4FunctionTypeExpression__Group_2__2__Impl rule__N4FunctionTypeExpression__Group_2__3
+            // InternalTypesParser.g:11850:1: ( rule__FunctionTypeExpressionOLD__Group_2__2__Impl rule__FunctionTypeExpressionOLD__Group_2__3 )
+            // InternalTypesParser.g:11851:2: rule__FunctionTypeExpressionOLD__Group_2__2__Impl rule__FunctionTypeExpressionOLD__Group_2__3
             {
             pushFollow(FOLLOW_69);
-            rule__N4FunctionTypeExpression__Group_2__2__Impl();
+            rule__FunctionTypeExpressionOLD__Group_2__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_2__3();
+            rule__FunctionTypeExpressionOLD__Group_2__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34394,12 +34394,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__2"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__2"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__2__Impl"
-    // InternalTypesParser.g:11858:1: rule__N4FunctionTypeExpression__Group_2__2__Impl : ( LeftParenthesis ) ;
-    public final void rule__N4FunctionTypeExpression__Group_2__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__2__Impl"
+    // InternalTypesParser.g:11858:1: rule__FunctionTypeExpressionOLD__Group_2__2__Impl : ( LeftParenthesis ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34411,11 +34411,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11864:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_2_2()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_2_2()); 
             }
             match(input,LeftParenthesis,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_2_2()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_2_2()); 
             }
 
             }
@@ -34435,26 +34435,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__2__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__2__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__3"
-    // InternalTypesParser.g:11877:1: rule__N4FunctionTypeExpression__Group_2__3 : rule__N4FunctionTypeExpression__Group_2__3__Impl rule__N4FunctionTypeExpression__Group_2__4 ;
-    public final void rule__N4FunctionTypeExpression__Group_2__3() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__3"
+    // InternalTypesParser.g:11877:1: rule__FunctionTypeExpressionOLD__Group_2__3 : rule__FunctionTypeExpressionOLD__Group_2__3__Impl rule__FunctionTypeExpressionOLD__Group_2__4 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11881:1: ( rule__N4FunctionTypeExpression__Group_2__3__Impl rule__N4FunctionTypeExpression__Group_2__4 )
-            // InternalTypesParser.g:11882:2: rule__N4FunctionTypeExpression__Group_2__3__Impl rule__N4FunctionTypeExpression__Group_2__4
+            // InternalTypesParser.g:11881:1: ( rule__FunctionTypeExpressionOLD__Group_2__3__Impl rule__FunctionTypeExpressionOLD__Group_2__4 )
+            // InternalTypesParser.g:11882:2: rule__FunctionTypeExpressionOLD__Group_2__3__Impl rule__FunctionTypeExpressionOLD__Group_2__4
             {
             pushFollow(FOLLOW_48);
-            rule__N4FunctionTypeExpression__Group_2__3__Impl();
+            rule__FunctionTypeExpressionOLD__Group_2__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_2__4();
+            rule__FunctionTypeExpressionOLD__Group_2__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34473,30 +34473,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__3"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__3"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__3__Impl"
-    // InternalTypesParser.g:11889:1: rule__N4FunctionTypeExpression__Group_2__3__Impl : ( ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 ) ) ;
-    public final void rule__N4FunctionTypeExpression__Group_2__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__3__Impl"
+    // InternalTypesParser.g:11889:1: rule__FunctionTypeExpressionOLD__Group_2__3__Impl : ( ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 ) ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11893:1: ( ( ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 ) ) )
-            // InternalTypesParser.g:11894:1: ( ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 ) )
+            // InternalTypesParser.g:11893:1: ( ( ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 ) ) )
+            // InternalTypesParser.g:11894:1: ( ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 ) )
             {
-            // InternalTypesParser.g:11894:1: ( ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 ) )
-            // InternalTypesParser.g:11895:1: ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 )
+            // InternalTypesParser.g:11894:1: ( ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 ) )
+            // InternalTypesParser.g:11895:1: ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeAssignment_2_3()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeAssignment_2_3()); 
             }
-            // InternalTypesParser.g:11896:1: ( rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 )
-            // InternalTypesParser.g:11896:2: rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3
+            // InternalTypesParser.g:11896:1: ( rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 )
+            // InternalTypesParser.g:11896:2: rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3();
+            rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34504,7 +34504,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeAssignment_2_3()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeAssignment_2_3()); 
             }
 
             }
@@ -34524,21 +34524,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__3__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__3__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__4"
-    // InternalTypesParser.g:11906:1: rule__N4FunctionTypeExpression__Group_2__4 : rule__N4FunctionTypeExpression__Group_2__4__Impl ;
-    public final void rule__N4FunctionTypeExpression__Group_2__4() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__4"
+    // InternalTypesParser.g:11906:1: rule__FunctionTypeExpressionOLD__Group_2__4 : rule__FunctionTypeExpressionOLD__Group_2__4__Impl ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11910:1: ( rule__N4FunctionTypeExpression__Group_2__4__Impl )
-            // InternalTypesParser.g:11911:2: rule__N4FunctionTypeExpression__Group_2__4__Impl
+            // InternalTypesParser.g:11910:1: ( rule__FunctionTypeExpressionOLD__Group_2__4__Impl )
+            // InternalTypesParser.g:11911:2: rule__FunctionTypeExpressionOLD__Group_2__4__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_2__4__Impl();
+            rule__FunctionTypeExpressionOLD__Group_2__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34557,12 +34557,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__4"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__4"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_2__4__Impl"
-    // InternalTypesParser.g:11917:1: rule__N4FunctionTypeExpression__Group_2__4__Impl : ( RightParenthesis ) ;
-    public final void rule__N4FunctionTypeExpression__Group_2__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_2__4__Impl"
+    // InternalTypesParser.g:11917:1: rule__FunctionTypeExpressionOLD__Group_2__4__Impl : ( RightParenthesis ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_2__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34574,11 +34574,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11923:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_2_4()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_2_4()); 
             }
             match(input,RightParenthesis,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_2_4()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_2_4()); 
             }
 
             }
@@ -34598,26 +34598,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_2__4__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_2__4__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__0"
-    // InternalTypesParser.g:11946:1: rule__N4FunctionTypeExpression__Group_4__0 : rule__N4FunctionTypeExpression__Group_4__0__Impl rule__N4FunctionTypeExpression__Group_4__1 ;
-    public final void rule__N4FunctionTypeExpression__Group_4__0() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__0"
+    // InternalTypesParser.g:11946:1: rule__FunctionTypeExpressionOLD__Group_4__0 : rule__FunctionTypeExpressionOLD__Group_4__0__Impl rule__FunctionTypeExpressionOLD__Group_4__1 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11950:1: ( rule__N4FunctionTypeExpression__Group_4__0__Impl rule__N4FunctionTypeExpression__Group_4__1 )
-            // InternalTypesParser.g:11951:2: rule__N4FunctionTypeExpression__Group_4__0__Impl rule__N4FunctionTypeExpression__Group_4__1
+            // InternalTypesParser.g:11950:1: ( rule__FunctionTypeExpressionOLD__Group_4__0__Impl rule__FunctionTypeExpressionOLD__Group_4__1 )
+            // InternalTypesParser.g:11951:2: rule__FunctionTypeExpressionOLD__Group_4__0__Impl rule__FunctionTypeExpressionOLD__Group_4__1
             {
             pushFollow(FOLLOW_5);
-            rule__N4FunctionTypeExpression__Group_4__0__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4__1();
+            rule__FunctionTypeExpressionOLD__Group_4__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34636,12 +34636,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__0"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__0__Impl"
-    // InternalTypesParser.g:11958:1: rule__N4FunctionTypeExpression__Group_4__0__Impl : ( LessThanSign ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__0__Impl"
+    // InternalTypesParser.g:11958:1: rule__FunctionTypeExpressionOLD__Group_4__0__Impl : ( LessThanSign ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34653,11 +34653,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11964:1: LessThanSign
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getLessThanSignKeyword_4_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getLessThanSignKeyword_4_0()); 
             }
             match(input,LessThanSign,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getLessThanSignKeyword_4_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getLessThanSignKeyword_4_0()); 
             }
 
             }
@@ -34677,26 +34677,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__0__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__0__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__1"
-    // InternalTypesParser.g:11977:1: rule__N4FunctionTypeExpression__Group_4__1 : rule__N4FunctionTypeExpression__Group_4__1__Impl rule__N4FunctionTypeExpression__Group_4__2 ;
-    public final void rule__N4FunctionTypeExpression__Group_4__1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__1"
+    // InternalTypesParser.g:11977:1: rule__FunctionTypeExpressionOLD__Group_4__1 : rule__FunctionTypeExpressionOLD__Group_4__1__Impl rule__FunctionTypeExpressionOLD__Group_4__2 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11981:1: ( rule__N4FunctionTypeExpression__Group_4__1__Impl rule__N4FunctionTypeExpression__Group_4__2 )
-            // InternalTypesParser.g:11982:2: rule__N4FunctionTypeExpression__Group_4__1__Impl rule__N4FunctionTypeExpression__Group_4__2
+            // InternalTypesParser.g:11981:1: ( rule__FunctionTypeExpressionOLD__Group_4__1__Impl rule__FunctionTypeExpressionOLD__Group_4__2 )
+            // InternalTypesParser.g:11982:2: rule__FunctionTypeExpressionOLD__Group_4__1__Impl rule__FunctionTypeExpressionOLD__Group_4__2
             {
             pushFollow(FOLLOW_32);
-            rule__N4FunctionTypeExpression__Group_4__1__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4__2();
+            rule__FunctionTypeExpressionOLD__Group_4__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34715,30 +34715,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__1__Impl"
-    // InternalTypesParser.g:11989:1: rule__N4FunctionTypeExpression__Group_4__1__Impl : ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 ) ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__1__Impl"
+    // InternalTypesParser.g:11989:1: rule__FunctionTypeExpressionOLD__Group_4__1__Impl : ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 ) ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:11993:1: ( ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 ) ) )
-            // InternalTypesParser.g:11994:1: ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 ) )
+            // InternalTypesParser.g:11993:1: ( ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 ) ) )
+            // InternalTypesParser.g:11994:1: ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 ) )
             {
-            // InternalTypesParser.g:11994:1: ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 ) )
-            // InternalTypesParser.g:11995:1: ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 )
+            // InternalTypesParser.g:11994:1: ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 ) )
+            // InternalTypesParser.g:11995:1: ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsAssignment_4_1()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsAssignment_4_1()); 
             }
-            // InternalTypesParser.g:11996:1: ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 )
-            // InternalTypesParser.g:11996:2: rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1
+            // InternalTypesParser.g:11996:1: ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 )
+            // InternalTypesParser.g:11996:2: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1();
+            rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34746,7 +34746,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsAssignment_4_1()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsAssignment_4_1()); 
             }
 
             }
@@ -34766,26 +34766,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__1__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__1__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__2"
-    // InternalTypesParser.g:12006:1: rule__N4FunctionTypeExpression__Group_4__2 : rule__N4FunctionTypeExpression__Group_4__2__Impl rule__N4FunctionTypeExpression__Group_4__3 ;
-    public final void rule__N4FunctionTypeExpression__Group_4__2() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__2"
+    // InternalTypesParser.g:12006:1: rule__FunctionTypeExpressionOLD__Group_4__2 : rule__FunctionTypeExpressionOLD__Group_4__2__Impl rule__FunctionTypeExpressionOLD__Group_4__3 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12010:1: ( rule__N4FunctionTypeExpression__Group_4__2__Impl rule__N4FunctionTypeExpression__Group_4__3 )
-            // InternalTypesParser.g:12011:2: rule__N4FunctionTypeExpression__Group_4__2__Impl rule__N4FunctionTypeExpression__Group_4__3
+            // InternalTypesParser.g:12010:1: ( rule__FunctionTypeExpressionOLD__Group_4__2__Impl rule__FunctionTypeExpressionOLD__Group_4__3 )
+            // InternalTypesParser.g:12011:2: rule__FunctionTypeExpressionOLD__Group_4__2__Impl rule__FunctionTypeExpressionOLD__Group_4__3
             {
             pushFollow(FOLLOW_32);
-            rule__N4FunctionTypeExpression__Group_4__2__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4__3();
+            rule__FunctionTypeExpressionOLD__Group_4__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34804,26 +34804,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__2"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__2"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__2__Impl"
-    // InternalTypesParser.g:12018:1: rule__N4FunctionTypeExpression__Group_4__2__Impl : ( ( rule__N4FunctionTypeExpression__Group_4_2__0 )* ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__2__Impl"
+    // InternalTypesParser.g:12018:1: rule__FunctionTypeExpressionOLD__Group_4__2__Impl : ( ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )* ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12022:1: ( ( ( rule__N4FunctionTypeExpression__Group_4_2__0 )* ) )
-            // InternalTypesParser.g:12023:1: ( ( rule__N4FunctionTypeExpression__Group_4_2__0 )* )
+            // InternalTypesParser.g:12022:1: ( ( ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )* ) )
+            // InternalTypesParser.g:12023:1: ( ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )* )
             {
-            // InternalTypesParser.g:12023:1: ( ( rule__N4FunctionTypeExpression__Group_4_2__0 )* )
-            // InternalTypesParser.g:12024:1: ( rule__N4FunctionTypeExpression__Group_4_2__0 )*
+            // InternalTypesParser.g:12023:1: ( ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )* )
+            // InternalTypesParser.g:12024:1: ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_4_2()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_4_2()); 
             }
-            // InternalTypesParser.g:12025:1: ( rule__N4FunctionTypeExpression__Group_4_2__0 )*
+            // InternalTypesParser.g:12025:1: ( rule__FunctionTypeExpressionOLD__Group_4_2__0 )*
             loop107:
             do {
                 int alt107=2;
@@ -34836,10 +34836,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
                 switch (alt107) {
             	case 1 :
-            	    // InternalTypesParser.g:12025:2: rule__N4FunctionTypeExpression__Group_4_2__0
+            	    // InternalTypesParser.g:12025:2: rule__FunctionTypeExpressionOLD__Group_4_2__0
             	    {
             	    pushFollow(FOLLOW_8);
-            	    rule__N4FunctionTypeExpression__Group_4_2__0();
+            	    rule__FunctionTypeExpressionOLD__Group_4_2__0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -34853,7 +34853,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGroup_4_2()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGroup_4_2()); 
             }
 
             }
@@ -34873,21 +34873,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__2__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__2__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__3"
-    // InternalTypesParser.g:12035:1: rule__N4FunctionTypeExpression__Group_4__3 : rule__N4FunctionTypeExpression__Group_4__3__Impl ;
-    public final void rule__N4FunctionTypeExpression__Group_4__3() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__3"
+    // InternalTypesParser.g:12035:1: rule__FunctionTypeExpressionOLD__Group_4__3 : rule__FunctionTypeExpressionOLD__Group_4__3__Impl ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12039:1: ( rule__N4FunctionTypeExpression__Group_4__3__Impl )
-            // InternalTypesParser.g:12040:2: rule__N4FunctionTypeExpression__Group_4__3__Impl
+            // InternalTypesParser.g:12039:1: ( rule__FunctionTypeExpressionOLD__Group_4__3__Impl )
+            // InternalTypesParser.g:12040:2: rule__FunctionTypeExpressionOLD__Group_4__3__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4__3__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34906,12 +34906,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__3"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__3"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4__3__Impl"
-    // InternalTypesParser.g:12046:1: rule__N4FunctionTypeExpression__Group_4__3__Impl : ( GreaterThanSign ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4__3__Impl"
+    // InternalTypesParser.g:12046:1: rule__FunctionTypeExpressionOLD__Group_4__3__Impl : ( GreaterThanSign ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34923,11 +34923,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12052:1: GreaterThanSign
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getGreaterThanSignKeyword_4_3()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getGreaterThanSignKeyword_4_3()); 
             }
             match(input,GreaterThanSign,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getGreaterThanSignKeyword_4_3()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getGreaterThanSignKeyword_4_3()); 
             }
 
             }
@@ -34947,26 +34947,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4__3__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4__3__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4_2__0"
-    // InternalTypesParser.g:12073:1: rule__N4FunctionTypeExpression__Group_4_2__0 : rule__N4FunctionTypeExpression__Group_4_2__0__Impl rule__N4FunctionTypeExpression__Group_4_2__1 ;
-    public final void rule__N4FunctionTypeExpression__Group_4_2__0() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4_2__0"
+    // InternalTypesParser.g:12073:1: rule__FunctionTypeExpressionOLD__Group_4_2__0 : rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl rule__FunctionTypeExpressionOLD__Group_4_2__1 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12077:1: ( rule__N4FunctionTypeExpression__Group_4_2__0__Impl rule__N4FunctionTypeExpression__Group_4_2__1 )
-            // InternalTypesParser.g:12078:2: rule__N4FunctionTypeExpression__Group_4_2__0__Impl rule__N4FunctionTypeExpression__Group_4_2__1
+            // InternalTypesParser.g:12077:1: ( rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl rule__FunctionTypeExpressionOLD__Group_4_2__1 )
+            // InternalTypesParser.g:12078:2: rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl rule__FunctionTypeExpressionOLD__Group_4_2__1
             {
             pushFollow(FOLLOW_5);
-            rule__N4FunctionTypeExpression__Group_4_2__0__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4_2__1();
+            rule__FunctionTypeExpressionOLD__Group_4_2__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -34985,12 +34985,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4_2__0"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4_2__0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4_2__0__Impl"
-    // InternalTypesParser.g:12085:1: rule__N4FunctionTypeExpression__Group_4_2__0__Impl : ( Comma ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl"
+    // InternalTypesParser.g:12085:1: rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl : ( Comma ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -35002,11 +35002,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12091:1: Comma
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getCommaKeyword_4_2_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getCommaKeyword_4_2_0()); 
             }
             match(input,Comma,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getCommaKeyword_4_2_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getCommaKeyword_4_2_0()); 
             }
 
             }
@@ -35026,21 +35026,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4_2__0__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4_2__0__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4_2__1"
-    // InternalTypesParser.g:12104:1: rule__N4FunctionTypeExpression__Group_4_2__1 : rule__N4FunctionTypeExpression__Group_4_2__1__Impl ;
-    public final void rule__N4FunctionTypeExpression__Group_4_2__1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4_2__1"
+    // InternalTypesParser.g:12104:1: rule__FunctionTypeExpressionOLD__Group_4_2__1 : rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12108:1: ( rule__N4FunctionTypeExpression__Group_4_2__1__Impl )
-            // InternalTypesParser.g:12109:2: rule__N4FunctionTypeExpression__Group_4_2__1__Impl
+            // InternalTypesParser.g:12108:1: ( rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl )
+            // InternalTypesParser.g:12109:2: rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_4_2__1__Impl();
+            rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35059,30 +35059,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4_2__1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4_2__1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_4_2__1__Impl"
-    // InternalTypesParser.g:12115:1: rule__N4FunctionTypeExpression__Group_4_2__1__Impl : ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 ) ) ;
-    public final void rule__N4FunctionTypeExpression__Group_4_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl"
+    // InternalTypesParser.g:12115:1: rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl : ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 ) ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12119:1: ( ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 ) ) )
-            // InternalTypesParser.g:12120:1: ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 ) )
+            // InternalTypesParser.g:12119:1: ( ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 ) ) )
+            // InternalTypesParser.g:12120:1: ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 ) )
             {
-            // InternalTypesParser.g:12120:1: ( ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 ) )
-            // InternalTypesParser.g:12121:1: ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 )
+            // InternalTypesParser.g:12120:1: ( ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 ) )
+            // InternalTypesParser.g:12121:1: ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsAssignment_4_2_1()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsAssignment_4_2_1()); 
             }
-            // InternalTypesParser.g:12122:1: ( rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 )
-            // InternalTypesParser.g:12122:2: rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1
+            // InternalTypesParser.g:12122:1: ( rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 )
+            // InternalTypesParser.g:12122:2: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1();
+            rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35090,7 +35090,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsAssignment_4_2_1()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsAssignment_4_2_1()); 
             }
 
             }
@@ -35110,26 +35110,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_4_2__1__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_4_2__1__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_8__0"
-    // InternalTypesParser.g:12136:1: rule__N4FunctionTypeExpression__Group_8__0 : rule__N4FunctionTypeExpression__Group_8__0__Impl rule__N4FunctionTypeExpression__Group_8__1 ;
-    public final void rule__N4FunctionTypeExpression__Group_8__0() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_8__0"
+    // InternalTypesParser.g:12136:1: rule__FunctionTypeExpressionOLD__Group_8__0 : rule__FunctionTypeExpressionOLD__Group_8__0__Impl rule__FunctionTypeExpressionOLD__Group_8__1 ;
+    public final void rule__FunctionTypeExpressionOLD__Group_8__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12140:1: ( rule__N4FunctionTypeExpression__Group_8__0__Impl rule__N4FunctionTypeExpression__Group_8__1 )
-            // InternalTypesParser.g:12141:2: rule__N4FunctionTypeExpression__Group_8__0__Impl rule__N4FunctionTypeExpression__Group_8__1
+            // InternalTypesParser.g:12140:1: ( rule__FunctionTypeExpressionOLD__Group_8__0__Impl rule__FunctionTypeExpressionOLD__Group_8__1 )
+            // InternalTypesParser.g:12141:2: rule__FunctionTypeExpressionOLD__Group_8__0__Impl rule__FunctionTypeExpressionOLD__Group_8__1
             {
             pushFollow(FOLLOW_9);
-            rule__N4FunctionTypeExpression__Group_8__0__Impl();
+            rule__FunctionTypeExpressionOLD__Group_8__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_8__1();
+            rule__FunctionTypeExpressionOLD__Group_8__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35148,12 +35148,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_8__0"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_8__0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_8__0__Impl"
-    // InternalTypesParser.g:12148:1: rule__N4FunctionTypeExpression__Group_8__0__Impl : ( Colon ) ;
-    public final void rule__N4FunctionTypeExpression__Group_8__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_8__0__Impl"
+    // InternalTypesParser.g:12148:1: rule__FunctionTypeExpressionOLD__Group_8__0__Impl : ( Colon ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_8__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -35165,11 +35165,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12154:1: Colon
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getColonKeyword_8_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getColonKeyword_8_0()); 
             }
             match(input,Colon,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getColonKeyword_8_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getColonKeyword_8_0()); 
             }
 
             }
@@ -35189,21 +35189,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_8__0__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_8__0__Impl"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_8__1"
-    // InternalTypesParser.g:12167:1: rule__N4FunctionTypeExpression__Group_8__1 : rule__N4FunctionTypeExpression__Group_8__1__Impl ;
-    public final void rule__N4FunctionTypeExpression__Group_8__1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_8__1"
+    // InternalTypesParser.g:12167:1: rule__FunctionTypeExpressionOLD__Group_8__1 : rule__FunctionTypeExpressionOLD__Group_8__1__Impl ;
+    public final void rule__FunctionTypeExpressionOLD__Group_8__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12171:1: ( rule__N4FunctionTypeExpression__Group_8__1__Impl )
-            // InternalTypesParser.g:12172:2: rule__N4FunctionTypeExpression__Group_8__1__Impl
+            // InternalTypesParser.g:12171:1: ( rule__FunctionTypeExpressionOLD__Group_8__1__Impl )
+            // InternalTypesParser.g:12172:2: rule__FunctionTypeExpressionOLD__Group_8__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__Group_8__1__Impl();
+            rule__FunctionTypeExpressionOLD__Group_8__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35222,30 +35222,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_8__1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_8__1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__Group_8__1__Impl"
-    // InternalTypesParser.g:12178:1: rule__N4FunctionTypeExpression__Group_8__1__Impl : ( ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 ) ) ;
-    public final void rule__N4FunctionTypeExpression__Group_8__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__Group_8__1__Impl"
+    // InternalTypesParser.g:12178:1: rule__FunctionTypeExpressionOLD__Group_8__1__Impl : ( ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 ) ) ;
+    public final void rule__FunctionTypeExpressionOLD__Group_8__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12182:1: ( ( ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 ) ) )
-            // InternalTypesParser.g:12183:1: ( ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 ) )
+            // InternalTypesParser.g:12182:1: ( ( ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 ) ) )
+            // InternalTypesParser.g:12183:1: ( ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 ) )
             {
-            // InternalTypesParser.g:12183:1: ( ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 ) )
-            // InternalTypesParser.g:12184:1: ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 )
+            // InternalTypesParser.g:12183:1: ( ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 ) )
+            // InternalTypesParser.g:12184:1: ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefAssignment_8_1()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefAssignment_8_1()); 
             }
-            // InternalTypesParser.g:12185:1: ( rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 )
-            // InternalTypesParser.g:12185:2: rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1
+            // InternalTypesParser.g:12185:1: ( rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 )
+            // InternalTypesParser.g:12185:2: rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1
             {
             pushFollow(FOLLOW_2);
-            rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1();
+            rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35253,7 +35253,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefAssignment_8_1()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefAssignment_8_1()); 
             }
 
             }
@@ -35273,7 +35273,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__Group_8__1__Impl"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__Group_8__1__Impl"
 
 
     // $ANTLR start "rule__ArrowFunctionTypeExpression__Group__0"
@@ -36908,23 +36908,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TFormalParameter__Group__3__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__0"
-    // InternalTypesParser.g:12796:1: rule__N4UnionTypeExpression__Group__0 : rule__N4UnionTypeExpression__Group__0__Impl rule__N4UnionTypeExpression__Group__1 ;
-    public final void rule__N4UnionTypeExpression__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__0"
+    // InternalTypesParser.g:12796:1: rule__UnionTypeExpressionOLD__Group__0 : rule__UnionTypeExpressionOLD__Group__0__Impl rule__UnionTypeExpressionOLD__Group__1 ;
+    public final void rule__UnionTypeExpressionOLD__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12800:1: ( rule__N4UnionTypeExpression__Group__0__Impl rule__N4UnionTypeExpression__Group__1 )
-            // InternalTypesParser.g:12801:2: rule__N4UnionTypeExpression__Group__0__Impl rule__N4UnionTypeExpression__Group__1
+            // InternalTypesParser.g:12800:1: ( rule__UnionTypeExpressionOLD__Group__0__Impl rule__UnionTypeExpressionOLD__Group__1 )
+            // InternalTypesParser.g:12801:2: rule__UnionTypeExpressionOLD__Group__0__Impl rule__UnionTypeExpressionOLD__Group__1
             {
             pushFollow(FOLLOW_70);
-            rule__N4UnionTypeExpression__Group__0__Impl();
+            rule__UnionTypeExpressionOLD__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__1();
+            rule__UnionTypeExpressionOLD__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -36943,12 +36943,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__0"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__0"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__0__Impl"
-    // InternalTypesParser.g:12808:1: rule__N4UnionTypeExpression__Group__0__Impl : ( () ) ;
-    public final void rule__N4UnionTypeExpression__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__0__Impl"
+    // InternalTypesParser.g:12808:1: rule__UnionTypeExpressionOLD__Group__0__Impl : ( () ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -36960,7 +36960,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12814:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getUnionTypeExpressionAction_0()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0()); 
             }
             // InternalTypesParser.g:12815:1: ()
             // InternalTypesParser.g:12817:1: 
@@ -36968,7 +36968,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getUnionTypeExpressionAction_0()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0()); 
             }
 
             }
@@ -36984,26 +36984,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__0__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__0__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__1"
-    // InternalTypesParser.g:12827:1: rule__N4UnionTypeExpression__Group__1 : rule__N4UnionTypeExpression__Group__1__Impl rule__N4UnionTypeExpression__Group__2 ;
-    public final void rule__N4UnionTypeExpression__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__1"
+    // InternalTypesParser.g:12827:1: rule__UnionTypeExpressionOLD__Group__1 : rule__UnionTypeExpressionOLD__Group__1__Impl rule__UnionTypeExpressionOLD__Group__2 ;
+    public final void rule__UnionTypeExpressionOLD__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12831:1: ( rule__N4UnionTypeExpression__Group__1__Impl rule__N4UnionTypeExpression__Group__2 )
-            // InternalTypesParser.g:12832:2: rule__N4UnionTypeExpression__Group__1__Impl rule__N4UnionTypeExpression__Group__2
+            // InternalTypesParser.g:12831:1: ( rule__UnionTypeExpressionOLD__Group__1__Impl rule__UnionTypeExpressionOLD__Group__2 )
+            // InternalTypesParser.g:12832:2: rule__UnionTypeExpressionOLD__Group__1__Impl rule__UnionTypeExpressionOLD__Group__2
             {
             pushFollow(FOLLOW_19);
-            rule__N4UnionTypeExpression__Group__1__Impl();
+            rule__UnionTypeExpressionOLD__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__2();
+            rule__UnionTypeExpressionOLD__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37022,12 +37022,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__1"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__1"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__1__Impl"
-    // InternalTypesParser.g:12839:1: rule__N4UnionTypeExpression__Group__1__Impl : ( Union ) ;
-    public final void rule__N4UnionTypeExpression__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__1__Impl"
+    // InternalTypesParser.g:12839:1: rule__UnionTypeExpressionOLD__Group__1__Impl : ( Union ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37039,11 +37039,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12845:1: Union
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getUnionKeyword_1()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getUnionKeyword_1()); 
             }
             match(input,Union,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getUnionKeyword_1()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getUnionKeyword_1()); 
             }
 
             }
@@ -37063,26 +37063,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__1__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__1__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__2"
-    // InternalTypesParser.g:12858:1: rule__N4UnionTypeExpression__Group__2 : rule__N4UnionTypeExpression__Group__2__Impl rule__N4UnionTypeExpression__Group__3 ;
-    public final void rule__N4UnionTypeExpression__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__2"
+    // InternalTypesParser.g:12858:1: rule__UnionTypeExpressionOLD__Group__2 : rule__UnionTypeExpressionOLD__Group__2__Impl rule__UnionTypeExpressionOLD__Group__3 ;
+    public final void rule__UnionTypeExpressionOLD__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12862:1: ( rule__N4UnionTypeExpression__Group__2__Impl rule__N4UnionTypeExpression__Group__3 )
-            // InternalTypesParser.g:12863:2: rule__N4UnionTypeExpression__Group__2__Impl rule__N4UnionTypeExpression__Group__3
+            // InternalTypesParser.g:12862:1: ( rule__UnionTypeExpressionOLD__Group__2__Impl rule__UnionTypeExpressionOLD__Group__3 )
+            // InternalTypesParser.g:12863:2: rule__UnionTypeExpressionOLD__Group__2__Impl rule__UnionTypeExpressionOLD__Group__3
             {
             pushFollow(FOLLOW_9);
-            rule__N4UnionTypeExpression__Group__2__Impl();
+            rule__UnionTypeExpressionOLD__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__3();
+            rule__UnionTypeExpressionOLD__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37101,12 +37101,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__2"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__2"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__2__Impl"
-    // InternalTypesParser.g:12870:1: rule__N4UnionTypeExpression__Group__2__Impl : ( LeftCurlyBracket ) ;
-    public final void rule__N4UnionTypeExpression__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__2__Impl"
+    // InternalTypesParser.g:12870:1: rule__UnionTypeExpressionOLD__Group__2__Impl : ( LeftCurlyBracket ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37118,11 +37118,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12876:1: LeftCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getLeftCurlyBracketKeyword_2()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2()); 
             }
             match(input,LeftCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getLeftCurlyBracketKeyword_2()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2()); 
             }
 
             }
@@ -37142,26 +37142,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__2__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__2__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__3"
-    // InternalTypesParser.g:12889:1: rule__N4UnionTypeExpression__Group__3 : rule__N4UnionTypeExpression__Group__3__Impl rule__N4UnionTypeExpression__Group__4 ;
-    public final void rule__N4UnionTypeExpression__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__3"
+    // InternalTypesParser.g:12889:1: rule__UnionTypeExpressionOLD__Group__3 : rule__UnionTypeExpressionOLD__Group__3__Impl rule__UnionTypeExpressionOLD__Group__4 ;
+    public final void rule__UnionTypeExpressionOLD__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12893:1: ( rule__N4UnionTypeExpression__Group__3__Impl rule__N4UnionTypeExpression__Group__4 )
-            // InternalTypesParser.g:12894:2: rule__N4UnionTypeExpression__Group__3__Impl rule__N4UnionTypeExpression__Group__4
+            // InternalTypesParser.g:12893:1: ( rule__UnionTypeExpressionOLD__Group__3__Impl rule__UnionTypeExpressionOLD__Group__4 )
+            // InternalTypesParser.g:12894:2: rule__UnionTypeExpressionOLD__Group__3__Impl rule__UnionTypeExpressionOLD__Group__4
             {
             pushFollow(FOLLOW_54);
-            rule__N4UnionTypeExpression__Group__3__Impl();
+            rule__UnionTypeExpressionOLD__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__4();
+            rule__UnionTypeExpressionOLD__Group__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37180,30 +37180,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__3"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__3"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__3__Impl"
-    // InternalTypesParser.g:12901:1: rule__N4UnionTypeExpression__Group__3__Impl : ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 ) ) ;
-    public final void rule__N4UnionTypeExpression__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__3__Impl"
+    // InternalTypesParser.g:12901:1: rule__UnionTypeExpressionOLD__Group__3__Impl : ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 ) ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12905:1: ( ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 ) ) )
-            // InternalTypesParser.g:12906:1: ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 ) )
+            // InternalTypesParser.g:12905:1: ( ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 ) ) )
+            // InternalTypesParser.g:12906:1: ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 ) )
             {
-            // InternalTypesParser.g:12906:1: ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 ) )
-            // InternalTypesParser.g:12907:1: ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 )
+            // InternalTypesParser.g:12906:1: ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 ) )
+            // InternalTypesParser.g:12907:1: ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsAssignment_3()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_3()); 
             }
-            // InternalTypesParser.g:12908:1: ( rule__N4UnionTypeExpression__TypeRefsAssignment_3 )
-            // InternalTypesParser.g:12908:2: rule__N4UnionTypeExpression__TypeRefsAssignment_3
+            // InternalTypesParser.g:12908:1: ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 )
+            // InternalTypesParser.g:12908:2: rule__UnionTypeExpressionOLD__TypeRefsAssignment_3
             {
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__TypeRefsAssignment_3();
+            rule__UnionTypeExpressionOLD__TypeRefsAssignment_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37211,7 +37211,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsAssignment_3()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_3()); 
             }
 
             }
@@ -37231,26 +37231,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__3__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__3__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__4"
-    // InternalTypesParser.g:12918:1: rule__N4UnionTypeExpression__Group__4 : rule__N4UnionTypeExpression__Group__4__Impl rule__N4UnionTypeExpression__Group__5 ;
-    public final void rule__N4UnionTypeExpression__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__4"
+    // InternalTypesParser.g:12918:1: rule__UnionTypeExpressionOLD__Group__4 : rule__UnionTypeExpressionOLD__Group__4__Impl rule__UnionTypeExpressionOLD__Group__5 ;
+    public final void rule__UnionTypeExpressionOLD__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12922:1: ( rule__N4UnionTypeExpression__Group__4__Impl rule__N4UnionTypeExpression__Group__5 )
-            // InternalTypesParser.g:12923:2: rule__N4UnionTypeExpression__Group__4__Impl rule__N4UnionTypeExpression__Group__5
+            // InternalTypesParser.g:12922:1: ( rule__UnionTypeExpressionOLD__Group__4__Impl rule__UnionTypeExpressionOLD__Group__5 )
+            // InternalTypesParser.g:12923:2: rule__UnionTypeExpressionOLD__Group__4__Impl rule__UnionTypeExpressionOLD__Group__5
             {
             pushFollow(FOLLOW_54);
-            rule__N4UnionTypeExpression__Group__4__Impl();
+            rule__UnionTypeExpressionOLD__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__5();
+            rule__UnionTypeExpressionOLD__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37269,26 +37269,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__4"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__4"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__4__Impl"
-    // InternalTypesParser.g:12930:1: rule__N4UnionTypeExpression__Group__4__Impl : ( ( rule__N4UnionTypeExpression__Group_4__0 )* ) ;
-    public final void rule__N4UnionTypeExpression__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__4__Impl"
+    // InternalTypesParser.g:12930:1: rule__UnionTypeExpressionOLD__Group__4__Impl : ( ( rule__UnionTypeExpressionOLD__Group_4__0 )* ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12934:1: ( ( ( rule__N4UnionTypeExpression__Group_4__0 )* ) )
-            // InternalTypesParser.g:12935:1: ( ( rule__N4UnionTypeExpression__Group_4__0 )* )
+            // InternalTypesParser.g:12934:1: ( ( ( rule__UnionTypeExpressionOLD__Group_4__0 )* ) )
+            // InternalTypesParser.g:12935:1: ( ( rule__UnionTypeExpressionOLD__Group_4__0 )* )
             {
-            // InternalTypesParser.g:12935:1: ( ( rule__N4UnionTypeExpression__Group_4__0 )* )
-            // InternalTypesParser.g:12936:1: ( rule__N4UnionTypeExpression__Group_4__0 )*
+            // InternalTypesParser.g:12935:1: ( ( rule__UnionTypeExpressionOLD__Group_4__0 )* )
+            // InternalTypesParser.g:12936:1: ( rule__UnionTypeExpressionOLD__Group_4__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getGroup_4()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup_4()); 
             }
-            // InternalTypesParser.g:12937:1: ( rule__N4UnionTypeExpression__Group_4__0 )*
+            // InternalTypesParser.g:12937:1: ( rule__UnionTypeExpressionOLD__Group_4__0 )*
             loop112:
             do {
                 int alt112=2;
@@ -37301,10 +37301,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
                 switch (alt112) {
             	case 1 :
-            	    // InternalTypesParser.g:12937:2: rule__N4UnionTypeExpression__Group_4__0
+            	    // InternalTypesParser.g:12937:2: rule__UnionTypeExpressionOLD__Group_4__0
             	    {
             	    pushFollow(FOLLOW_8);
-            	    rule__N4UnionTypeExpression__Group_4__0();
+            	    rule__UnionTypeExpressionOLD__Group_4__0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -37318,7 +37318,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getGroup_4()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup_4()); 
             }
 
             }
@@ -37338,21 +37338,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__4__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__4__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__5"
-    // InternalTypesParser.g:12947:1: rule__N4UnionTypeExpression__Group__5 : rule__N4UnionTypeExpression__Group__5__Impl ;
-    public final void rule__N4UnionTypeExpression__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__5"
+    // InternalTypesParser.g:12947:1: rule__UnionTypeExpressionOLD__Group__5 : rule__UnionTypeExpressionOLD__Group__5__Impl ;
+    public final void rule__UnionTypeExpressionOLD__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12951:1: ( rule__N4UnionTypeExpression__Group__5__Impl )
-            // InternalTypesParser.g:12952:2: rule__N4UnionTypeExpression__Group__5__Impl
+            // InternalTypesParser.g:12951:1: ( rule__UnionTypeExpressionOLD__Group__5__Impl )
+            // InternalTypesParser.g:12952:2: rule__UnionTypeExpressionOLD__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group__5__Impl();
+            rule__UnionTypeExpressionOLD__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37371,12 +37371,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__5"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__5"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group__5__Impl"
-    // InternalTypesParser.g:12958:1: rule__N4UnionTypeExpression__Group__5__Impl : ( RightCurlyBracket ) ;
-    public final void rule__N4UnionTypeExpression__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group__5__Impl"
+    // InternalTypesParser.g:12958:1: rule__UnionTypeExpressionOLD__Group__5__Impl : ( RightCurlyBracket ) ;
+    public final void rule__UnionTypeExpressionOLD__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37388,11 +37388,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:12964:1: RightCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getRightCurlyBracketKeyword_5()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5()); 
             }
             match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getRightCurlyBracketKeyword_5()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5()); 
             }
 
             }
@@ -37412,26 +37412,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group__5__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group__5__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group_4__0"
-    // InternalTypesParser.g:12989:1: rule__N4UnionTypeExpression__Group_4__0 : rule__N4UnionTypeExpression__Group_4__0__Impl rule__N4UnionTypeExpression__Group_4__1 ;
-    public final void rule__N4UnionTypeExpression__Group_4__0() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group_4__0"
+    // InternalTypesParser.g:12989:1: rule__UnionTypeExpressionOLD__Group_4__0 : rule__UnionTypeExpressionOLD__Group_4__0__Impl rule__UnionTypeExpressionOLD__Group_4__1 ;
+    public final void rule__UnionTypeExpressionOLD__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:12993:1: ( rule__N4UnionTypeExpression__Group_4__0__Impl rule__N4UnionTypeExpression__Group_4__1 )
-            // InternalTypesParser.g:12994:2: rule__N4UnionTypeExpression__Group_4__0__Impl rule__N4UnionTypeExpression__Group_4__1
+            // InternalTypesParser.g:12993:1: ( rule__UnionTypeExpressionOLD__Group_4__0__Impl rule__UnionTypeExpressionOLD__Group_4__1 )
+            // InternalTypesParser.g:12994:2: rule__UnionTypeExpressionOLD__Group_4__0__Impl rule__UnionTypeExpressionOLD__Group_4__1
             {
             pushFollow(FOLLOW_9);
-            rule__N4UnionTypeExpression__Group_4__0__Impl();
+            rule__UnionTypeExpressionOLD__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group_4__1();
+            rule__UnionTypeExpressionOLD__Group_4__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37450,12 +37450,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group_4__0"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group_4__0"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group_4__0__Impl"
-    // InternalTypesParser.g:13001:1: rule__N4UnionTypeExpression__Group_4__0__Impl : ( Comma ) ;
-    public final void rule__N4UnionTypeExpression__Group_4__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group_4__0__Impl"
+    // InternalTypesParser.g:13001:1: rule__UnionTypeExpressionOLD__Group_4__0__Impl : ( Comma ) ;
+    public final void rule__UnionTypeExpressionOLD__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37467,11 +37467,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13007:1: Comma
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getCommaKeyword_4_0()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getCommaKeyword_4_0()); 
             }
             match(input,Comma,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getCommaKeyword_4_0()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getCommaKeyword_4_0()); 
             }
 
             }
@@ -37491,21 +37491,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group_4__0__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group_4__0__Impl"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group_4__1"
-    // InternalTypesParser.g:13020:1: rule__N4UnionTypeExpression__Group_4__1 : rule__N4UnionTypeExpression__Group_4__1__Impl ;
-    public final void rule__N4UnionTypeExpression__Group_4__1() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group_4__1"
+    // InternalTypesParser.g:13020:1: rule__UnionTypeExpressionOLD__Group_4__1 : rule__UnionTypeExpressionOLD__Group_4__1__Impl ;
+    public final void rule__UnionTypeExpressionOLD__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13024:1: ( rule__N4UnionTypeExpression__Group_4__1__Impl )
-            // InternalTypesParser.g:13025:2: rule__N4UnionTypeExpression__Group_4__1__Impl
+            // InternalTypesParser.g:13024:1: ( rule__UnionTypeExpressionOLD__Group_4__1__Impl )
+            // InternalTypesParser.g:13025:2: rule__UnionTypeExpressionOLD__Group_4__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__Group_4__1__Impl();
+            rule__UnionTypeExpressionOLD__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37524,30 +37524,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group_4__1"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group_4__1"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__Group_4__1__Impl"
-    // InternalTypesParser.g:13031:1: rule__N4UnionTypeExpression__Group_4__1__Impl : ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 ) ) ;
-    public final void rule__N4UnionTypeExpression__Group_4__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__Group_4__1__Impl"
+    // InternalTypesParser.g:13031:1: rule__UnionTypeExpressionOLD__Group_4__1__Impl : ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 ) ) ;
+    public final void rule__UnionTypeExpressionOLD__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13035:1: ( ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 ) ) )
-            // InternalTypesParser.g:13036:1: ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 ) )
+            // InternalTypesParser.g:13035:1: ( ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 ) ) )
+            // InternalTypesParser.g:13036:1: ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 ) )
             {
-            // InternalTypesParser.g:13036:1: ( ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 ) )
-            // InternalTypesParser.g:13037:1: ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 )
+            // InternalTypesParser.g:13036:1: ( ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 ) )
+            // InternalTypesParser.g:13037:1: ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsAssignment_4_1()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1()); 
             }
-            // InternalTypesParser.g:13038:1: ( rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 )
-            // InternalTypesParser.g:13038:2: rule__N4UnionTypeExpression__TypeRefsAssignment_4_1
+            // InternalTypesParser.g:13038:1: ( rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 )
+            // InternalTypesParser.g:13038:2: rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1
             {
             pushFollow(FOLLOW_2);
-            rule__N4UnionTypeExpression__TypeRefsAssignment_4_1();
+            rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37555,7 +37555,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsAssignment_4_1()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1()); 
             }
 
             }
@@ -37575,26 +37575,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__Group_4__1__Impl"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__Group_4__1__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__0"
-    // InternalTypesParser.g:13052:1: rule__N4IntersectionTypeExpression__Group__0 : rule__N4IntersectionTypeExpression__Group__0__Impl rule__N4IntersectionTypeExpression__Group__1 ;
-    public final void rule__N4IntersectionTypeExpression__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__0"
+    // InternalTypesParser.g:13052:1: rule__IntersectionTypeExpressionOLD__Group__0 : rule__IntersectionTypeExpressionOLD__Group__0__Impl rule__IntersectionTypeExpressionOLD__Group__1 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13056:1: ( rule__N4IntersectionTypeExpression__Group__0__Impl rule__N4IntersectionTypeExpression__Group__1 )
-            // InternalTypesParser.g:13057:2: rule__N4IntersectionTypeExpression__Group__0__Impl rule__N4IntersectionTypeExpression__Group__1
+            // InternalTypesParser.g:13056:1: ( rule__IntersectionTypeExpressionOLD__Group__0__Impl rule__IntersectionTypeExpressionOLD__Group__1 )
+            // InternalTypesParser.g:13057:2: rule__IntersectionTypeExpressionOLD__Group__0__Impl rule__IntersectionTypeExpressionOLD__Group__1
             {
             pushFollow(FOLLOW_9);
-            rule__N4IntersectionTypeExpression__Group__0__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__1();
+            rule__IntersectionTypeExpressionOLD__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37613,12 +37613,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__0"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__0"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__0__Impl"
-    // InternalTypesParser.g:13064:1: rule__N4IntersectionTypeExpression__Group__0__Impl : ( () ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__0__Impl"
+    // InternalTypesParser.g:13064:1: rule__IntersectionTypeExpressionOLD__Group__0__Impl : ( () ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37630,7 +37630,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13070:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionTypeExpressionAction_0()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0()); 
             }
             // InternalTypesParser.g:13071:1: ()
             // InternalTypesParser.g:13073:1: 
@@ -37638,7 +37638,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionTypeExpressionAction_0()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0()); 
             }
 
             }
@@ -37654,26 +37654,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__0__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__0__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__1"
-    // InternalTypesParser.g:13083:1: rule__N4IntersectionTypeExpression__Group__1 : rule__N4IntersectionTypeExpression__Group__1__Impl rule__N4IntersectionTypeExpression__Group__2 ;
-    public final void rule__N4IntersectionTypeExpression__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__1"
+    // InternalTypesParser.g:13083:1: rule__IntersectionTypeExpressionOLD__Group__1 : rule__IntersectionTypeExpressionOLD__Group__1__Impl rule__IntersectionTypeExpressionOLD__Group__2 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13087:1: ( rule__N4IntersectionTypeExpression__Group__1__Impl rule__N4IntersectionTypeExpression__Group__2 )
-            // InternalTypesParser.g:13088:2: rule__N4IntersectionTypeExpression__Group__1__Impl rule__N4IntersectionTypeExpression__Group__2
+            // InternalTypesParser.g:13087:1: ( rule__IntersectionTypeExpressionOLD__Group__1__Impl rule__IntersectionTypeExpressionOLD__Group__2 )
+            // InternalTypesParser.g:13088:2: rule__IntersectionTypeExpressionOLD__Group__1__Impl rule__IntersectionTypeExpressionOLD__Group__2
             {
             pushFollow(FOLLOW_19);
-            rule__N4IntersectionTypeExpression__Group__1__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__2();
+            rule__IntersectionTypeExpressionOLD__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37692,12 +37692,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__1"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__1"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__1__Impl"
-    // InternalTypesParser.g:13095:1: rule__N4IntersectionTypeExpression__Group__1__Impl : ( Intersection ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__1__Impl"
+    // InternalTypesParser.g:13095:1: rule__IntersectionTypeExpressionOLD__Group__1__Impl : ( Intersection ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37709,11 +37709,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13101:1: Intersection
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionKeyword_1()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionKeyword_1()); 
             }
             match(input,Intersection,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionKeyword_1()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionKeyword_1()); 
             }
 
             }
@@ -37733,26 +37733,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__1__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__1__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__2"
-    // InternalTypesParser.g:13114:1: rule__N4IntersectionTypeExpression__Group__2 : rule__N4IntersectionTypeExpression__Group__2__Impl rule__N4IntersectionTypeExpression__Group__3 ;
-    public final void rule__N4IntersectionTypeExpression__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__2"
+    // InternalTypesParser.g:13114:1: rule__IntersectionTypeExpressionOLD__Group__2 : rule__IntersectionTypeExpressionOLD__Group__2__Impl rule__IntersectionTypeExpressionOLD__Group__3 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13118:1: ( rule__N4IntersectionTypeExpression__Group__2__Impl rule__N4IntersectionTypeExpression__Group__3 )
-            // InternalTypesParser.g:13119:2: rule__N4IntersectionTypeExpression__Group__2__Impl rule__N4IntersectionTypeExpression__Group__3
+            // InternalTypesParser.g:13118:1: ( rule__IntersectionTypeExpressionOLD__Group__2__Impl rule__IntersectionTypeExpressionOLD__Group__3 )
+            // InternalTypesParser.g:13119:2: rule__IntersectionTypeExpressionOLD__Group__2__Impl rule__IntersectionTypeExpressionOLD__Group__3
             {
             pushFollow(FOLLOW_9);
-            rule__N4IntersectionTypeExpression__Group__2__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__3();
+            rule__IntersectionTypeExpressionOLD__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37771,12 +37771,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__2"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__2"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__2__Impl"
-    // InternalTypesParser.g:13126:1: rule__N4IntersectionTypeExpression__Group__2__Impl : ( LeftCurlyBracket ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__2__Impl"
+    // InternalTypesParser.g:13126:1: rule__IntersectionTypeExpressionOLD__Group__2__Impl : ( LeftCurlyBracket ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -37788,11 +37788,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13132:1: LeftCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getLeftCurlyBracketKeyword_2()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2()); 
             }
             match(input,LeftCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getLeftCurlyBracketKeyword_2()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2()); 
             }
 
             }
@@ -37812,26 +37812,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__2__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__2__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__3"
-    // InternalTypesParser.g:13145:1: rule__N4IntersectionTypeExpression__Group__3 : rule__N4IntersectionTypeExpression__Group__3__Impl rule__N4IntersectionTypeExpression__Group__4 ;
-    public final void rule__N4IntersectionTypeExpression__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__3"
+    // InternalTypesParser.g:13145:1: rule__IntersectionTypeExpressionOLD__Group__3 : rule__IntersectionTypeExpressionOLD__Group__3__Impl rule__IntersectionTypeExpressionOLD__Group__4 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13149:1: ( rule__N4IntersectionTypeExpression__Group__3__Impl rule__N4IntersectionTypeExpression__Group__4 )
-            // InternalTypesParser.g:13150:2: rule__N4IntersectionTypeExpression__Group__3__Impl rule__N4IntersectionTypeExpression__Group__4
+            // InternalTypesParser.g:13149:1: ( rule__IntersectionTypeExpressionOLD__Group__3__Impl rule__IntersectionTypeExpressionOLD__Group__4 )
+            // InternalTypesParser.g:13150:2: rule__IntersectionTypeExpressionOLD__Group__3__Impl rule__IntersectionTypeExpressionOLD__Group__4
             {
             pushFollow(FOLLOW_54);
-            rule__N4IntersectionTypeExpression__Group__3__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__4();
+            rule__IntersectionTypeExpressionOLD__Group__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37850,30 +37850,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__3"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__3"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__3__Impl"
-    // InternalTypesParser.g:13157:1: rule__N4IntersectionTypeExpression__Group__3__Impl : ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 ) ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__3__Impl"
+    // InternalTypesParser.g:13157:1: rule__IntersectionTypeExpressionOLD__Group__3__Impl : ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 ) ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13161:1: ( ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 ) ) )
-            // InternalTypesParser.g:13162:1: ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 ) )
+            // InternalTypesParser.g:13161:1: ( ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 ) ) )
+            // InternalTypesParser.g:13162:1: ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 ) )
             {
-            // InternalTypesParser.g:13162:1: ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 ) )
-            // InternalTypesParser.g:13163:1: ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 )
+            // InternalTypesParser.g:13162:1: ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 ) )
+            // InternalTypesParser.g:13163:1: ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_3()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_3()); 
             }
-            // InternalTypesParser.g:13164:1: ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 )
-            // InternalTypesParser.g:13164:2: rule__N4IntersectionTypeExpression__TypeRefsAssignment_3
+            // InternalTypesParser.g:13164:1: ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 )
+            // InternalTypesParser.g:13164:2: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3
             {
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__TypeRefsAssignment_3();
+            rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37881,7 +37881,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_3()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_3()); 
             }
 
             }
@@ -37901,26 +37901,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__3__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__3__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__4"
-    // InternalTypesParser.g:13174:1: rule__N4IntersectionTypeExpression__Group__4 : rule__N4IntersectionTypeExpression__Group__4__Impl rule__N4IntersectionTypeExpression__Group__5 ;
-    public final void rule__N4IntersectionTypeExpression__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__4"
+    // InternalTypesParser.g:13174:1: rule__IntersectionTypeExpressionOLD__Group__4 : rule__IntersectionTypeExpressionOLD__Group__4__Impl rule__IntersectionTypeExpressionOLD__Group__5 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13178:1: ( rule__N4IntersectionTypeExpression__Group__4__Impl rule__N4IntersectionTypeExpression__Group__5 )
-            // InternalTypesParser.g:13179:2: rule__N4IntersectionTypeExpression__Group__4__Impl rule__N4IntersectionTypeExpression__Group__5
+            // InternalTypesParser.g:13178:1: ( rule__IntersectionTypeExpressionOLD__Group__4__Impl rule__IntersectionTypeExpressionOLD__Group__5 )
+            // InternalTypesParser.g:13179:2: rule__IntersectionTypeExpressionOLD__Group__4__Impl rule__IntersectionTypeExpressionOLD__Group__5
             {
             pushFollow(FOLLOW_54);
-            rule__N4IntersectionTypeExpression__Group__4__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__5();
+            rule__IntersectionTypeExpressionOLD__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -37939,26 +37939,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__4"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__4"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__4__Impl"
-    // InternalTypesParser.g:13186:1: rule__N4IntersectionTypeExpression__Group__4__Impl : ( ( rule__N4IntersectionTypeExpression__Group_4__0 )* ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__4__Impl"
+    // InternalTypesParser.g:13186:1: rule__IntersectionTypeExpressionOLD__Group__4__Impl : ( ( rule__IntersectionTypeExpressionOLD__Group_4__0 )* ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13190:1: ( ( ( rule__N4IntersectionTypeExpression__Group_4__0 )* ) )
-            // InternalTypesParser.g:13191:1: ( ( rule__N4IntersectionTypeExpression__Group_4__0 )* )
+            // InternalTypesParser.g:13190:1: ( ( ( rule__IntersectionTypeExpressionOLD__Group_4__0 )* ) )
+            // InternalTypesParser.g:13191:1: ( ( rule__IntersectionTypeExpressionOLD__Group_4__0 )* )
             {
-            // InternalTypesParser.g:13191:1: ( ( rule__N4IntersectionTypeExpression__Group_4__0 )* )
-            // InternalTypesParser.g:13192:1: ( rule__N4IntersectionTypeExpression__Group_4__0 )*
+            // InternalTypesParser.g:13191:1: ( ( rule__IntersectionTypeExpressionOLD__Group_4__0 )* )
+            // InternalTypesParser.g:13192:1: ( rule__IntersectionTypeExpressionOLD__Group_4__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup_4()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup_4()); 
             }
-            // InternalTypesParser.g:13193:1: ( rule__N4IntersectionTypeExpression__Group_4__0 )*
+            // InternalTypesParser.g:13193:1: ( rule__IntersectionTypeExpressionOLD__Group_4__0 )*
             loop113:
             do {
                 int alt113=2;
@@ -37971,10 +37971,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
                 switch (alt113) {
             	case 1 :
-            	    // InternalTypesParser.g:13193:2: rule__N4IntersectionTypeExpression__Group_4__0
+            	    // InternalTypesParser.g:13193:2: rule__IntersectionTypeExpressionOLD__Group_4__0
             	    {
             	    pushFollow(FOLLOW_8);
-            	    rule__N4IntersectionTypeExpression__Group_4__0();
+            	    rule__IntersectionTypeExpressionOLD__Group_4__0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -37988,7 +37988,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getGroup_4()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup_4()); 
             }
 
             }
@@ -38008,21 +38008,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__4__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__4__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__5"
-    // InternalTypesParser.g:13203:1: rule__N4IntersectionTypeExpression__Group__5 : rule__N4IntersectionTypeExpression__Group__5__Impl ;
-    public final void rule__N4IntersectionTypeExpression__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__5"
+    // InternalTypesParser.g:13203:1: rule__IntersectionTypeExpressionOLD__Group__5 : rule__IntersectionTypeExpressionOLD__Group__5__Impl ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13207:1: ( rule__N4IntersectionTypeExpression__Group__5__Impl )
-            // InternalTypesParser.g:13208:2: rule__N4IntersectionTypeExpression__Group__5__Impl
+            // InternalTypesParser.g:13207:1: ( rule__IntersectionTypeExpressionOLD__Group__5__Impl )
+            // InternalTypesParser.g:13208:2: rule__IntersectionTypeExpressionOLD__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group__5__Impl();
+            rule__IntersectionTypeExpressionOLD__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -38041,12 +38041,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__5"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__5"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group__5__Impl"
-    // InternalTypesParser.g:13214:1: rule__N4IntersectionTypeExpression__Group__5__Impl : ( RightCurlyBracket ) ;
-    public final void rule__N4IntersectionTypeExpression__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group__5__Impl"
+    // InternalTypesParser.g:13214:1: rule__IntersectionTypeExpressionOLD__Group__5__Impl : ( RightCurlyBracket ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -38058,11 +38058,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13220:1: RightCurlyBracket
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getRightCurlyBracketKeyword_5()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5()); 
             }
             match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getRightCurlyBracketKeyword_5()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5()); 
             }
 
             }
@@ -38082,26 +38082,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group__5__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group__5__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group_4__0"
-    // InternalTypesParser.g:13245:1: rule__N4IntersectionTypeExpression__Group_4__0 : rule__N4IntersectionTypeExpression__Group_4__0__Impl rule__N4IntersectionTypeExpression__Group_4__1 ;
-    public final void rule__N4IntersectionTypeExpression__Group_4__0() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group_4__0"
+    // InternalTypesParser.g:13245:1: rule__IntersectionTypeExpressionOLD__Group_4__0 : rule__IntersectionTypeExpressionOLD__Group_4__0__Impl rule__IntersectionTypeExpressionOLD__Group_4__1 ;
+    public final void rule__IntersectionTypeExpressionOLD__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13249:1: ( rule__N4IntersectionTypeExpression__Group_4__0__Impl rule__N4IntersectionTypeExpression__Group_4__1 )
-            // InternalTypesParser.g:13250:2: rule__N4IntersectionTypeExpression__Group_4__0__Impl rule__N4IntersectionTypeExpression__Group_4__1
+            // InternalTypesParser.g:13249:1: ( rule__IntersectionTypeExpressionOLD__Group_4__0__Impl rule__IntersectionTypeExpressionOLD__Group_4__1 )
+            // InternalTypesParser.g:13250:2: rule__IntersectionTypeExpressionOLD__Group_4__0__Impl rule__IntersectionTypeExpressionOLD__Group_4__1
             {
             pushFollow(FOLLOW_9);
-            rule__N4IntersectionTypeExpression__Group_4__0__Impl();
+            rule__IntersectionTypeExpressionOLD__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group_4__1();
+            rule__IntersectionTypeExpressionOLD__Group_4__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -38120,12 +38120,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group_4__0"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group_4__0"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group_4__0__Impl"
-    // InternalTypesParser.g:13257:1: rule__N4IntersectionTypeExpression__Group_4__0__Impl : ( Comma ) ;
-    public final void rule__N4IntersectionTypeExpression__Group_4__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group_4__0__Impl"
+    // InternalTypesParser.g:13257:1: rule__IntersectionTypeExpressionOLD__Group_4__0__Impl : ( Comma ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -38137,11 +38137,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:13263:1: Comma
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getCommaKeyword_4_0()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getCommaKeyword_4_0()); 
             }
             match(input,Comma,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getCommaKeyword_4_0()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getCommaKeyword_4_0()); 
             }
 
             }
@@ -38161,21 +38161,21 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group_4__0__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group_4__0__Impl"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group_4__1"
-    // InternalTypesParser.g:13276:1: rule__N4IntersectionTypeExpression__Group_4__1 : rule__N4IntersectionTypeExpression__Group_4__1__Impl ;
-    public final void rule__N4IntersectionTypeExpression__Group_4__1() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group_4__1"
+    // InternalTypesParser.g:13276:1: rule__IntersectionTypeExpressionOLD__Group_4__1 : rule__IntersectionTypeExpressionOLD__Group_4__1__Impl ;
+    public final void rule__IntersectionTypeExpressionOLD__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13280:1: ( rule__N4IntersectionTypeExpression__Group_4__1__Impl )
-            // InternalTypesParser.g:13281:2: rule__N4IntersectionTypeExpression__Group_4__1__Impl
+            // InternalTypesParser.g:13280:1: ( rule__IntersectionTypeExpressionOLD__Group_4__1__Impl )
+            // InternalTypesParser.g:13281:2: rule__IntersectionTypeExpressionOLD__Group_4__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__Group_4__1__Impl();
+            rule__IntersectionTypeExpressionOLD__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -38194,30 +38194,30 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group_4__1"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group_4__1"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__Group_4__1__Impl"
-    // InternalTypesParser.g:13287:1: rule__N4IntersectionTypeExpression__Group_4__1__Impl : ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 ) ) ;
-    public final void rule__N4IntersectionTypeExpression__Group_4__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__Group_4__1__Impl"
+    // InternalTypesParser.g:13287:1: rule__IntersectionTypeExpressionOLD__Group_4__1__Impl : ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 ) ) ;
+    public final void rule__IntersectionTypeExpressionOLD__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:13291:1: ( ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 ) ) )
-            // InternalTypesParser.g:13292:1: ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 ) )
+            // InternalTypesParser.g:13291:1: ( ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 ) ) )
+            // InternalTypesParser.g:13292:1: ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 ) )
             {
-            // InternalTypesParser.g:13292:1: ( ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 ) )
-            // InternalTypesParser.g:13293:1: ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 )
+            // InternalTypesParser.g:13292:1: ( ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 ) )
+            // InternalTypesParser.g:13293:1: ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_4_1()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1()); 
             }
-            // InternalTypesParser.g:13294:1: ( rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 )
-            // InternalTypesParser.g:13294:2: rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1
+            // InternalTypesParser.g:13294:1: ( rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 )
+            // InternalTypesParser.g:13294:2: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1
             {
             pushFollow(FOLLOW_2);
-            rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1();
+            rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -38225,7 +38225,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsAssignment_4_1()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1()); 
             }
 
             }
@@ -38245,7 +38245,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__Group_4__1__Impl"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__Group_4__1__Impl"
 
 
     // $ANTLR start "rule__ParameterizedTypeRefNominal__Group__0"
@@ -51700,9 +51700,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3"
-    // InternalTypesParser.g:18229:1: rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3 : ( ruleTypeRefFunctionTypeExpression ) ;
-    public final void rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3"
+    // InternalTypesParser.g:18229:1: rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 : ( ruleTypeRefFunctionTypeExpression ) ;
+    public final void rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -51714,7 +51714,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18235:1: ruleTypeRefFunctionTypeExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefFunctionTypeExpression();
@@ -51722,7 +51722,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
             }
 
             }
@@ -51742,12 +51742,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__DeclaredThisTypeAssignment_2_3"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1"
-    // InternalTypesParser.g:18244:1: rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1 : ( ruleTypeVariable ) ;
-    public final void rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1"
+    // InternalTypesParser.g:18244:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 : ( ruleTypeVariable ) ;
+    public final void rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -51759,7 +51759,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18250:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeVariable();
@@ -51767,7 +51767,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
             }
 
             }
@@ -51787,12 +51787,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1"
-    // InternalTypesParser.g:18259:1: rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1 : ( ruleTypeVariable ) ;
-    public final void rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1"
+    // InternalTypesParser.g:18259:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 : ( ruleTypeVariable ) ;
+    public final void rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -51804,7 +51804,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18265:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeVariable();
@@ -51812,7 +51812,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
             }
 
             }
@@ -51832,12 +51832,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__OwnedTypeVarsAssignment_4_2_1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1"
 
 
-    // $ANTLR start "rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1"
-    // InternalTypesParser.g:18274:1: rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1 : ( ruleTypeRef ) ;
-    public final void rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1() throws RecognitionException {
+    // $ANTLR start "rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1"
+    // InternalTypesParser.g:18274:1: rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 : ( ruleTypeRef ) ;
+    public final void rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -51849,7 +51849,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18280:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
+               before(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRef();
@@ -51857,7 +51857,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
+               after(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
             }
 
             }
@@ -51877,7 +51877,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4FunctionTypeExpression__ReturnTypeRefAssignment_8_1"
+    // $ANTLR end "rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1"
 
 
     // $ANTLR start "rule__ArrowFunctionTypeExpression__ReturnTypeRefAssignment_5"
@@ -52301,9 +52301,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TFormalParameter__TypeRefAssignment_3"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__TypeRefsAssignment_3"
-    // InternalTypesParser.g:18440:1: rule__N4UnionTypeExpression__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
-    public final void rule__N4UnionTypeExpression__TypeRefsAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3"
+    // InternalTypesParser.g:18440:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
+    public final void rule__UnionTypeExpressionOLD__TypeRefsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -52315,7 +52315,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18446:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefWithoutModifiers();
@@ -52323,7 +52323,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
             }
 
             }
@@ -52343,12 +52343,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__TypeRefsAssignment_3"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3"
 
 
-    // $ANTLR start "rule__N4UnionTypeExpression__TypeRefsAssignment_4_1"
-    // InternalTypesParser.g:18455:1: rule__N4UnionTypeExpression__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
-    public final void rule__N4UnionTypeExpression__TypeRefsAssignment_4_1() throws RecognitionException {
+    // $ANTLR start "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1"
+    // InternalTypesParser.g:18455:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
+    public final void rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -52360,7 +52360,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18461:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+               before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefWithoutModifiers();
@@ -52368,7 +52368,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+               after(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             }
 
             }
@@ -52388,12 +52388,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4UnionTypeExpression__TypeRefsAssignment_4_1"
+    // $ANTLR end "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__TypeRefsAssignment_3"
-    // InternalTypesParser.g:18470:1: rule__N4IntersectionTypeExpression__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
-    public final void rule__N4IntersectionTypeExpression__TypeRefsAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3"
+    // InternalTypesParser.g:18470:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
+    public final void rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -52405,7 +52405,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18476:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefWithoutModifiers();
@@ -52413,7 +52413,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
             }
 
             }
@@ -52433,12 +52433,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__TypeRefsAssignment_3"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3"
 
 
-    // $ANTLR start "rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1"
-    // InternalTypesParser.g:18485:1: rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
-    public final void rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1() throws RecognitionException {
+    // $ANTLR start "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1"
+    // InternalTypesParser.g:18485:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
+    public final void rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -52450,7 +52450,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:18491:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+               before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefWithoutModifiers();
@@ -52458,7 +52458,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+               after(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             }
 
             }
@@ -52478,7 +52478,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4IntersectionTypeExpression__TypeRefsAssignment_4_1"
+    // $ANTLR end "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1"
 
 
     // $ANTLR start "rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0"

@@ -52,7 +52,7 @@ class ContentAssistTokenTypeMapperTest {
 
 	@Test
 	def void testKeyword_02() {
-		val kw = grammarAccess.n4IntersectionTypeExpressionAccess.intersectionKeyword_1
+		val kw = grammarAccess.intersectionTypeExpressionOLDAccess.intersectionKeyword_1
 		val i = testMe.getInternalTokenType(kw)
 		Assert.assertEquals(4, i)
 	}

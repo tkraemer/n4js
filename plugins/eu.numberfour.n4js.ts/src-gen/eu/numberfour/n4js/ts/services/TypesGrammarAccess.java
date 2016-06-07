@@ -2890,9 +2890,9 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
 	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| N4FunctionTypeExpression
-	//	| N4UnionTypeExpression
-	//	| N4IntersectionTypeExpression
+	//	| FunctionTypeExpressionOLD
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefWithoutModifiersElements getTypeRefWithoutModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithoutModifiersAccess();
 	}
@@ -2906,8 +2906,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ArrayTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| N4UnionTypeExpression
-	//	| N4IntersectionTypeExpression
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
 		return gaTypeExpressions.getTypeRefFunctionTypeExpressionAccess();
 	}
@@ -2922,7 +2922,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ThisTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| N4FunctionTypeExpression
+	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
 	public TypeExpressionsGrammarAccess.TypeRefForCastElements getTypeRefForCastAccess() {
 		return gaTypeExpressions.getTypeRefForCastAccess();
@@ -2974,18 +2974,18 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getThisTypeRefStructuralAccess().getRule();
 	}
 
-	//N4FunctionTypeExpression FunctionTypeExpression:
+	//FunctionTypeExpressionOLD FunctionTypeExpression:
 	//	{FunctionTypeExpression}
 	//	'{' ('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
 	//	'function' ('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
 	//	'(' TAnonymousFormalParameterList ')' (':' returnTypeRef=super::TypeRef)?
 	//	'}'
-	public TypeExpressionsGrammarAccess.N4FunctionTypeExpressionElements getN4FunctionTypeExpressionAccess() {
-		return gaTypeExpressions.getN4FunctionTypeExpressionAccess();
+	public TypeExpressionsGrammarAccess.FunctionTypeExpressionOLDElements getFunctionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getFunctionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getN4FunctionTypeExpressionRule() {
-		return getN4FunctionTypeExpressionAccess().getRule();
+	public ParserRule getFunctionTypeExpressionOLDRule() {
+		return getFunctionTypeExpressionOLDAccess().getRule();
 	}
 
 	//ArrowFunctionTypeExpression FunctionTypeExpression:
@@ -3032,26 +3032,26 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTFormalParameterAccess().getRule();
 	}
 
-	//N4UnionTypeExpression UnionTypeExpression:
+	//UnionTypeExpressionOLD UnionTypeExpression:
 	//	{UnionTypeExpression}
 	//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
-	public TypeExpressionsGrammarAccess.N4UnionTypeExpressionElements getN4UnionTypeExpressionAccess() {
-		return gaTypeExpressions.getN4UnionTypeExpressionAccess();
+	public TypeExpressionsGrammarAccess.UnionTypeExpressionOLDElements getUnionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getUnionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getN4UnionTypeExpressionRule() {
-		return getN4UnionTypeExpressionAccess().getRule();
+	public ParserRule getUnionTypeExpressionOLDRule() {
+		return getUnionTypeExpressionOLDAccess().getRule();
 	}
 
-	//N4IntersectionTypeExpression IntersectionTypeExpression:
+	//IntersectionTypeExpressionOLD IntersectionTypeExpression:
 	//	{IntersectionTypeExpression}
 	//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
-	public TypeExpressionsGrammarAccess.N4IntersectionTypeExpressionElements getN4IntersectionTypeExpressionAccess() {
-		return gaTypeExpressions.getN4IntersectionTypeExpressionAccess();
+	public TypeExpressionsGrammarAccess.IntersectionTypeExpressionOLDElements getIntersectionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getIntersectionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getN4IntersectionTypeExpressionRule() {
-		return getN4IntersectionTypeExpressionAccess().getRule();
+	public ParserRule getIntersectionTypeExpressionOLDRule() {
+		return getIntersectionTypeExpressionOLDAccess().getRule();
 	}
 
 	//ParameterizedTypeRef:

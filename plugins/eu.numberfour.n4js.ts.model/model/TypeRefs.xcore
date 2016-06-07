@@ -634,7 +634,6 @@ abstract class StructuralTypeRef {
  * It is mainly used for the type of formal parameters.
  */
 class ParameterizedTypeRefStructural extends ParameterizedTypeRef, StructuralTypeRef {
-	
 	/**
 	 * Returns the actual typing strategy.
 	 */

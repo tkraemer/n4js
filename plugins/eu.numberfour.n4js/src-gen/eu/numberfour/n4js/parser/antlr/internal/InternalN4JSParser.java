@@ -69339,11 +69339,11 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
 
         EObject this_ClassifierTypeRef_4 = null;
 
-        EObject this_N4FunctionTypeExpression_5 = null;
+        EObject this_FunctionTypeExpressionOLD_5 = null;
 
-        EObject this_N4UnionTypeExpression_6 = null;
+        EObject this_UnionTypeExpressionOLD_6 = null;
 
-        EObject this_N4IntersectionTypeExpression_7 = null;
+        EObject this_IntersectionTypeExpressionOLD_7 = null;
 
 
          enterRule(); 
@@ -69618,17 +69618,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4FunctionTypeExpressionParserRuleCall_3()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_3()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4FunctionTypeExpression_5=ruleN4FunctionTypeExpression();
+                    this_FunctionTypeExpressionOLD_5=ruleFunctionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4FunctionTypeExpression_5;
+                              current = this_FunctionTypeExpressionOLD_5;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -69639,17 +69639,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4UnionTypeExpression_6=ruleN4UnionTypeExpression();
+                    this_UnionTypeExpressionOLD_6=ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4UnionTypeExpression_6;
+                              current = this_UnionTypeExpressionOLD_6;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -69660,17 +69660,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4IntersectionTypeExpression_7=ruleN4IntersectionTypeExpression();
+                    this_IntersectionTypeExpressionOLD_7=ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4IntersectionTypeExpression_7;
+                              current = this_IntersectionTypeExpressionOLD_7;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -69740,9 +69740,9 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
 
         EObject this_ClassifierTypeRef_3 = null;
 
-        EObject this_N4UnionTypeExpression_4 = null;
+        EObject this_UnionTypeExpressionOLD_4 = null;
 
-        EObject this_N4IntersectionTypeExpression_5 = null;
+        EObject this_IntersectionTypeExpressionOLD_5 = null;
 
 
          enterRule(); 
@@ -69884,17 +69884,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4UnionTypeExpression_4=ruleN4UnionTypeExpression();
+                    this_UnionTypeExpressionOLD_4=ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4UnionTypeExpression_4;
+                              current = this_UnionTypeExpressionOLD_4;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -69905,17 +69905,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4IntersectionTypeExpression_5=ruleN4IntersectionTypeExpression();
+                    this_IntersectionTypeExpressionOLD_5=ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4IntersectionTypeExpression_5;
+                              current = this_IntersectionTypeExpressionOLD_5;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -69987,7 +69987,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
 
         EObject this_ClassifierTypeRef_4 = null;
 
-        EObject this_N4FunctionTypeExpression_5 = null;
+        EObject this_FunctionTypeExpressionOLD_5 = null;
 
         EObject this_ArrowFunctionTypeExpression_6 = null;
 
@@ -70108,17 +70108,17 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefForCastAccess().getN4FunctionTypeExpressionParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getTypeRefForCastAccess().getFunctionTypeExpressionOLDParserRuleCall_5()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4FunctionTypeExpression_5=ruleN4FunctionTypeExpression();
+                    this_FunctionTypeExpressionOLD_5=ruleFunctionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4FunctionTypeExpression_5;
+                              current = this_FunctionTypeExpressionOLD_5;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -70638,24 +70638,24 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject entryRuleN4FunctionTypeExpression() throws RecognitionException {
+    public final EObject entryRuleFunctionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4FunctionTypeExpression = null;
+        EObject iv_ruleFunctionTypeExpressionOLD = null;
 
 
         try {
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4FunctionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4FunctionTypeExpression=ruleN4FunctionTypeExpression();
+            iv_ruleFunctionTypeExpressionOLD=ruleFunctionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4FunctionTypeExpression; 
+               current =iv_ruleFunctionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -70671,7 +70671,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject ruleN4FunctionTypeExpression() throws RecognitionException {
+    public final EObject ruleFunctionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -70707,7 +70707,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionTypeExpressionAction_0(),
+                          grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -70717,7 +70717,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,LeftCurlyBracket,FOLLOW_162); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1());
                   
             }
             int alt587=2;
@@ -70732,26 +70732,26 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     otherlv_2=(Token)match(input,CommercialAt,FOLLOW_163); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getN4FunctionTypeExpressionAccess().getCommercialAtKeyword_2_0());
+                          	newLeafNode(otherlv_2, grammarAccess.getFunctionTypeExpressionOLDAccess().getCommercialAtKeyword_2_0());
                           
                     }
                     otherlv_3=(Token)match(input,This,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_3, grammarAccess.getN4FunctionTypeExpressionAccess().getThisKeyword_2_1());
+                          	newLeafNode(otherlv_3, grammarAccess.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1());
                           
                     }
                     otherlv_4=(Token)match(input,LeftParenthesis,FOLLOW_164); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_4, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_2_2());
+                          	newLeafNode(otherlv_4, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_2_2());
                           
                     }
                     {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_68);
@@ -70762,7 +70762,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		set(
                              			current, 
@@ -70781,7 +70781,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     otherlv_6=(Token)match(input,RightParenthesis,FOLLOW_46); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_6, grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_2_4());
+                          	newLeafNode(otherlv_6, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_2_4());
                           
                     }
 
@@ -70793,7 +70793,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_7=(Token)match(input,Function,FOLLOW_165); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_7, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3());
+                  	newLeafNode(otherlv_7, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3());
                   
             }
             int alt589=2;
@@ -70808,14 +70808,14 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     otherlv_8=(Token)match(input,LessThanSign,FOLLOW_16); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_8, grammarAccess.getN4FunctionTypeExpressionAccess().getLessThanSignKeyword_4_0());
+                          	newLeafNode(otherlv_8, grammarAccess.getFunctionTypeExpressionOLDAccess().getLessThanSignKeyword_4_0());
                           
                     }
                     {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_17);
@@ -70826,7 +70826,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		add(
                              			current, 
@@ -70857,14 +70857,14 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     	    otherlv_10=(Token)match(input,Comma,FOLLOW_16); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
-                    	          	newLeafNode(otherlv_10, grammarAccess.getN4FunctionTypeExpressionAccess().getCommaKeyword_4_2_0());
+                    	          	newLeafNode(otherlv_10, grammarAccess.getFunctionTypeExpressionOLDAccess().getCommaKeyword_4_2_0());
                     	          
                     	    }
                     	    {
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_17);
@@ -70875,7 +70875,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                    	      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                     	      	        }
                     	             		add(
                     	             			current, 
@@ -70903,7 +70903,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     otherlv_12=(Token)match(input,GreaterThanSign,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_12, grammarAccess.getN4FunctionTypeExpressionAccess().getGreaterThanSignKeyword_4_3());
+                          	newLeafNode(otherlv_12, grammarAccess.getFunctionTypeExpressionOLDAccess().getGreaterThanSignKeyword_4_3());
                           
                     }
 
@@ -70915,15 +70915,15 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_13=(Token)match(input,LeftParenthesis,FOLLOW_158); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_13, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5());
+                  	newLeafNode(otherlv_13, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5());
                   
             }
             if ( state.backtracking==0 ) {
                
               		if (current==null) {
-              			current = createModelElement(grammarAccess.getN4FunctionTypeExpressionRule());
+              			current = createModelElement(grammarAccess.getFunctionTypeExpressionOLDRule());
               		}
-                      newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
+                      newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
                   
             }
             pushFollow(FOLLOW_68);
@@ -70940,7 +70940,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_15=(Token)match(input,RightParenthesis,FOLLOW_166); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_15, grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_7());
+                  	newLeafNode(otherlv_15, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_7());
                   
             }
             int alt590=2;
@@ -70955,14 +70955,14 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     otherlv_16=(Token)match(input,Colon,FOLLOW_44); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_16, grammarAccess.getN4FunctionTypeExpressionAccess().getColonKeyword_8_0());
+                          	newLeafNode(otherlv_16, grammarAccess.getFunctionTypeExpressionOLDAccess().getColonKeyword_8_0());
                           
                     }
                     {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_25);
@@ -70973,7 +70973,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		set(
                              			current, 
@@ -70998,7 +70998,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_18=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_18, grammarAccess.getN4FunctionTypeExpressionAccess().getRightCurlyBracketKeyword_9());
+                  	newLeafNode(otherlv_18, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_9());
                   
             }
 
@@ -71477,24 +71477,24 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject entryRuleN4UnionTypeExpression() throws RecognitionException {
+    public final EObject entryRuleUnionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4UnionTypeExpression = null;
+        EObject iv_ruleUnionTypeExpressionOLD = null;
 
 
         try {
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4UnionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getUnionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4UnionTypeExpression=ruleN4UnionTypeExpression();
+            iv_ruleUnionTypeExpressionOLD=ruleUnionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4UnionTypeExpression; 
+               current =iv_ruleUnionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -71510,7 +71510,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject ruleN4UnionTypeExpression() throws RecognitionException {
+    public final EObject ruleUnionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -71531,7 +71531,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4UnionTypeExpressionAccess().getUnionTypeExpressionAction_0(),
+                          grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -71541,20 +71541,20 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,Union,FOLLOW_13); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4UnionTypeExpressionAccess().getUnionKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getUnionTypeExpressionOLDAccess().getUnionKeyword_1());
                   
             }
             otherlv_2=(Token)match(input,LeftCurlyBracket,FOLLOW_169); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getN4UnionTypeExpressionAccess().getLeftCurlyBracketKeyword_2());
+                  	newLeafNode(otherlv_2, grammarAccess.getUnionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2());
                   
             }
             {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_15);
@@ -71565,7 +71565,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getN4UnionTypeExpressionRule());
+              	            current = createModelElementForParent(grammarAccess.getUnionTypeExpressionOLDRule());
               	        }
                      		add(
                      			current, 
@@ -71596,14 +71596,14 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             	    otherlv_4=(Token)match(input,Comma,FOLLOW_169); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_4, grammarAccess.getN4UnionTypeExpressionAccess().getCommaKeyword_4_0());
+            	          	newLeafNode(otherlv_4, grammarAccess.getUnionTypeExpressionOLDAccess().getCommaKeyword_4_0());
             	          
             	    }
             	    {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             	      	    
             	    }
             	    pushFollow(FOLLOW_15);
@@ -71614,7 +71614,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getN4UnionTypeExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getUnionTypeExpressionOLDRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -71642,7 +71642,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getN4UnionTypeExpressionAccess().getRightCurlyBracketKeyword_5());
+                  	newLeafNode(otherlv_6, grammarAccess.getUnionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5());
                   
             }
 
@@ -71664,24 +71664,24 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject entryRuleN4IntersectionTypeExpression() throws RecognitionException {
+    public final EObject entryRuleIntersectionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4IntersectionTypeExpression = null;
+        EObject iv_ruleIntersectionTypeExpressionOLD = null;
 
 
         try {
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4IntersectionTypeExpression=ruleN4IntersectionTypeExpression();
+            iv_ruleIntersectionTypeExpressionOLD=ruleIntersectionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4IntersectionTypeExpression; 
+               current =iv_ruleIntersectionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -71697,7 +71697,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    public final EObject ruleN4IntersectionTypeExpression() throws RecognitionException {
+    public final EObject ruleIntersectionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -71718,7 +71718,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionTypeExpressionAction_0(),
+                          grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -71728,20 +71728,20 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,Intersection,FOLLOW_13); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionKeyword_1());
                   
             }
             otherlv_2=(Token)match(input,LeftCurlyBracket,FOLLOW_169); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getN4IntersectionTypeExpressionAccess().getLeftCurlyBracketKeyword_2());
+                  	newLeafNode(otherlv_2, grammarAccess.getIntersectionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2());
                   
             }
             {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_15);
@@ -71752,7 +71752,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getN4IntersectionTypeExpressionRule());
+              	            current = createModelElementForParent(grammarAccess.getIntersectionTypeExpressionOLDRule());
               	        }
                      		add(
                      			current, 
@@ -71783,14 +71783,14 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             	    otherlv_4=(Token)match(input,Comma,FOLLOW_169); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_4, grammarAccess.getN4IntersectionTypeExpressionAccess().getCommaKeyword_4_0());
+            	          	newLeafNode(otherlv_4, grammarAccess.getIntersectionTypeExpressionOLDAccess().getCommaKeyword_4_0());
             	          
             	    }
             	    {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             	      	    
             	    }
             	    pushFollow(FOLLOW_15);
@@ -71801,7 +71801,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getN4IntersectionTypeExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getIntersectionTypeExpressionOLDRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -71829,7 +71829,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getN4IntersectionTypeExpressionAccess().getRightCurlyBracketKeyword_5());
+                  	newLeafNode(otherlv_6, grammarAccess.getIntersectionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5());
                   
             }
 
@@ -111175,7 +111175,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             this.transition = dfa_361;
         }
         public String getDescription() {
-            return "36274:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ThisTypeRef_2= ruleThisTypeRef | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression | this_ArrowFunctionTypeExpression_6= ruleArrowFunctionTypeExpression )";
+            return "36274:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ThisTypeRef_2= ruleThisTypeRef | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD | this_ArrowFunctionTypeExpression_6= ruleArrowFunctionTypeExpression )";
         }
     }
     static final String dfa_362s = "\1\uffff\1\24\11\uffff\1\24\12\uffff";

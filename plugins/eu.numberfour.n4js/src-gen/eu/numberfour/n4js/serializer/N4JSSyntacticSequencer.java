@@ -28,17 +28,17 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_AnnotatedPropertyAssignment_SemicolonKeyword_1_3_1_q;
 	protected AbstractElementAlias match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_ArrayBindingPattern_CommaKeyword_3_2_0_q;
-	protected AbstractElementAlias match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
+	protected AbstractElementAlias match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0;
 	protected AbstractElementAlias match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1;
 	protected AbstractElementAlias match_DoStatement_SemiParserRuleCall_6_q;
 	protected AbstractElementAlias match_ExportClause_CommaKeyword_1_2_q;
 	protected AbstractElementAlias match_FunctionDeclaration_SemiParserRuleCall_1_q;
+	protected AbstractElementAlias match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q;
 	protected AbstractElementAlias match_InterfaceImplementsList_CommaKeyword_2_0_0_or_ExtendsKeyword_2_0_2_or_ImplementsKeyword_2_0_1;
 	protected AbstractElementAlias match_InterfaceImplementsList_ExtendsKeyword_0_0_or_ImplementsKeyword_0_1;
 	protected AbstractElementAlias match_N4CallableConstructorDeclaration_SemicolonKeyword_1_q;
-	protected AbstractElementAlias match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_N4GetterDeclaration_SemicolonKeyword_2_q;
 	protected AbstractElementAlias match_N4MethodDeclaration_SemicolonKeyword_1_q;
 	protected AbstractElementAlias match_N4SetterDeclaration_SemicolonKeyword_5_q;
@@ -58,17 +58,17 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_AnnotatedPropertyAssignment_SemicolonKeyword_1_3_1_q = new TokenAlias(false, true, grammarAccess.getAnnotatedPropertyAssignmentAccess().getSemicolonKeyword_1_3_1());
 		match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getRightParenthesisKeyword_1_2()));
 		match_ArrayBindingPattern_CommaKeyword_3_2_0_q = new TokenAlias(false, true, grammarAccess.getArrayBindingPatternAccess().getCommaKeyword_3_2_0());
-		match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
+		match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
 		match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getExtendsKeyword_0_1_0_1_0_1()), new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getImplementsKeyword_0_1_0_1_0_0()));
 		match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getCommaKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getExtendsKeyword_1_0_2()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getImplementsKeyword_1_0_1()));
 		match_DoStatement_SemiParserRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getDoStatementAccess().getSemiParserRuleCall_6());
 		match_ExportClause_CommaKeyword_1_2_q = new TokenAlias(false, true, grammarAccess.getExportClauseAccess().getCommaKeyword_1_2());
 		match_FunctionDeclaration_SemiParserRuleCall_1_q = new TokenAlias(false, true, grammarAccess.getFunctionDeclarationAccess().getSemiParserRuleCall_1());
+		match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_0_0_0_1()));
 		match_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q = new TokenAlias(false, true, grammarAccess.getImportSpecifiersExceptDefaultAccess().getCommaKeyword_1_1_2());
 		match_InterfaceImplementsList_CommaKeyword_2_0_0_or_ExtendsKeyword_2_0_2_or_ImplementsKeyword_2_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getInterfaceImplementsListAccess().getCommaKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getInterfaceImplementsListAccess().getExtendsKeyword_2_0_2()), new TokenAlias(false, false, grammarAccess.getInterfaceImplementsListAccess().getImplementsKeyword_2_0_1()));
 		match_InterfaceImplementsList_ExtendsKeyword_0_0_or_ImplementsKeyword_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getInterfaceImplementsListAccess().getExtendsKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getInterfaceImplementsListAccess().getImplementsKeyword_0_1()));
 		match_N4CallableConstructorDeclaration_SemicolonKeyword_1_q = new TokenAlias(false, true, grammarAccess.getN4CallableConstructorDeclarationAccess().getSemicolonKeyword_1());
-		match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_0_0_0_1()));
 		match_N4GetterDeclaration_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getN4GetterDeclarationAccess().getSemicolonKeyword_2());
 		match_N4MethodDeclaration_SemicolonKeyword_1_q = new TokenAlias(false, true, grammarAccess.getN4MethodDeclarationAccess().getSemicolonKeyword_1());
 		match_N4SetterDeclaration_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_5());
@@ -139,8 +139,8 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ArrayBindingPattern_CommaKeyword_3_2_0_q.equals(syntax))
 				emit_ArrayBindingPattern_CommaKeyword_3_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
-				emit_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
+				emit_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0.equals(syntax))
 				emit_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1.equals(syntax))
@@ -151,6 +151,8 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_ExportClause_CommaKeyword_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_FunctionDeclaration_SemiParserRuleCall_1_q.equals(syntax))
 				emit_FunctionDeclaration_SemiParserRuleCall_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
+				emit_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q.equals(syntax))
 				emit_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_InterfaceImplementsList_CommaKeyword_2_0_0_or_ExtendsKeyword_2_0_2_or_ImplementsKeyword_2_0_1.equals(syntax))
@@ -159,8 +161,6 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_InterfaceImplementsList_ExtendsKeyword_0_0_or_ImplementsKeyword_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_N4CallableConstructorDeclaration_SemicolonKeyword_1_q.equals(syntax))
 				emit_N4CallableConstructorDeclaration_SemicolonKeyword_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
-				emit_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_N4GetterDeclaration_SemicolonKeyword_2_q.equals(syntax))
 				emit_N4GetterDeclaration_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_N4MethodDeclaration_SemicolonKeyword_1_q.equals(syntax))
@@ -279,7 +279,7 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) fpars+=TAnonymousFormalParameter
 	 */
-	protected void emit_ArrowFunctionTypeExpression_N4FunctionTypeExpression_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -349,6 +349,17 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
+	 *     ('{' 'function' '(') | '('
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) '('* (ambiguity) fpars+=TAnonymousFormalParameter
+	 */
+	protected void emit_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     ','?
 	 *
 	 * This ambiguous syntax occurs at:
@@ -401,17 +412,6 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     returnTypeRef=TypeRef (ambiguity) (rule end)
 	 */
 	protected void emit_N4CallableConstructorDeclaration_SemicolonKeyword_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('{' 'function' '(') | '('
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) '('* (ambiguity) fpars+=TAnonymousFormalParameter
-	 */
-	protected void emit_N4FunctionTypeExpression_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

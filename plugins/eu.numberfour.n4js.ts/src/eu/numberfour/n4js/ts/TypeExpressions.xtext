@@ -60,17 +60,17 @@ TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| N4FunctionTypeExpression
-	| N4UnionTypeExpression
-	| N4IntersectionTypeExpression;
+	| FunctionTypeExpressionOLD
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD;
 	
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
 	| ArrayTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| N4UnionTypeExpression
-	| N4IntersectionTypeExpression
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD
 	;
 
 TypeRefForCast returns StaticBaseTypeRef:
@@ -79,7 +79,7 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| ThisTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| N4FunctionTypeExpression
+	| FunctionTypeExpressionOLD
 	| ArrowFunctionTypeExpression;
 
 TypeRefInClassifierType returns StaticBaseTypeRef:
@@ -98,7 +98,7 @@ ThisTypeRefStructural returns ThisTypeRefStructural:
 	'this'
 	('with' TStructMemberList)?;
 
-N4FunctionTypeExpression returns FunctionTypeExpression:
+FunctionTypeExpressionOLD returns FunctionTypeExpression:
 	{FunctionTypeExpression}
 	'{'
 	('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
@@ -130,11 +130,11 @@ TFormalParameter:
 
 
 
-N4UnionTypeExpression returns UnionTypeExpression:
+UnionTypeExpressionOLD returns UnionTypeExpression:
 	{UnionTypeExpression}
 	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
-N4IntersectionTypeExpression returns IntersectionTypeExpression:
+IntersectionTypeExpressionOLD returns IntersectionTypeExpression:
 	{IntersectionTypeExpression}
 	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 

@@ -419,9 +419,9 @@ ruleTypeRefWithoutModifiers :
 	) => '+' )? |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleN4FunctionTypeExpression |
-	ruleN4UnionTypeExpression |
-	ruleN4IntersectionTypeExpression
+	ruleFunctionTypeExpressionOLD |
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefFunctionTypeExpression
@@ -430,8 +430,8 @@ ruleTypeRefFunctionTypeExpression :
 	ruleArrayTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleN4UnionTypeExpression |
-	ruleN4IntersectionTypeExpression
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefInClassifierType
@@ -458,8 +458,8 @@ ruleThisTypeRefStructural :
 	)?
 ;
 
-// Rule N4FunctionTypeExpression
-ruleN4FunctionTypeExpression :
+// Rule FunctionTypeExpressionOLD
+ruleFunctionTypeExpressionOLD :
 	'{' (
 		'@' 'This' '(' ruleTypeRefFunctionTypeExpression ')'
 	)? 'function' (
@@ -499,15 +499,15 @@ ruleTFormalParameter :
 	'...'? ruleTIdentifier ':' ruleTypeRef
 ;
 
-// Rule N4UnionTypeExpression
-ruleN4UnionTypeExpression :
+// Rule UnionTypeExpressionOLD
+ruleUnionTypeExpressionOLD :
 	'union' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'
 ;
 
-// Rule N4IntersectionTypeExpression
-ruleN4IntersectionTypeExpression :
+// Rule IntersectionTypeExpressionOLD
+ruleIntersectionTypeExpressionOLD :
 	'intersection' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'

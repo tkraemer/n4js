@@ -287,7 +287,7 @@ class NodeModelTokenSourceTest implements Procedures.Procedure1<Integer> {
 
 		Assert.assertTrue(curlies.remove(grammarAccess.importSpecifiersExceptDefaultAccess.rightCurlyBracketKeyword_1_2))
 
-		Assert.assertTrue(curlies.remove(grammarAccess.n4FunctionTypeExpressionAccess.rightCurlyBracketKeyword_9))
+		Assert.assertTrue(curlies.remove(grammarAccess.functionTypeExpressionOLDAccess.rightCurlyBracketKeyword_9))
 
 		Assert.assertTrue(curlies.remove(grammarAccess.arrowExpressionAccess.rightCurlyBracketKeyword_1_0_2))
 
@@ -307,8 +307,8 @@ class NodeModelTokenSourceTest implements Procedures.Procedure1<Integer> {
 
 		Assert.assertTrue(curlies.remove(grammarAccess.TStructMemberListAccess.rightCurlyBracketKeyword_2))
 
-		Assert.assertTrue(curlies.remove(grammarAccess.n4UnionTypeExpressionAccess.rightCurlyBracketKeyword_5))
-		Assert.assertTrue(curlies.remove(grammarAccess.n4IntersectionTypeExpressionAccess.rightCurlyBracketKeyword_5))
+		Assert.assertTrue(curlies.remove(grammarAccess.unionTypeExpressionOLDAccess.rightCurlyBracketKeyword_5))
+		Assert.assertTrue(curlies.remove(grammarAccess.intersectionTypeExpressionOLDAccess.rightCurlyBracketKeyword_5))
 		Assert.assertTrue(curlies.remove(grammarAccess.constructorTypeRefAccess.rightCurlyBracketKeyword_4))
 		Assert.assertTrue(curlies.remove(grammarAccess.classifierTypeRefAccess.rightCurlyBracketKeyword_4))
 		

@@ -10188,7 +10188,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeRefWithoutModifiers"
-    // InternalTypesParser.g:3985:1: ruleTypeRefWithoutModifiers returns [EObject current=null] : ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression | this_N4UnionTypeExpression_6= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_7= ruleN4IntersectionTypeExpression ) ;
+    // InternalTypesParser.g:3985:1: ruleTypeRefWithoutModifiers returns [EObject current=null] : ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD ) ;
     public final EObject ruleTypeRefWithoutModifiers() throws RecognitionException {
         EObject current = null;
 
@@ -10201,20 +10201,20 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
         EObject this_ClassifierTypeRef_4 = null;
 
-        EObject this_N4FunctionTypeExpression_5 = null;
+        EObject this_FunctionTypeExpressionOLD_5 = null;
 
-        EObject this_N4UnionTypeExpression_6 = null;
+        EObject this_UnionTypeExpressionOLD_6 = null;
 
-        EObject this_N4IntersectionTypeExpression_7 = null;
+        EObject this_IntersectionTypeExpressionOLD_7 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:3988:28: ( ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression | this_N4UnionTypeExpression_6= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_7= ruleN4IntersectionTypeExpression ) )
-            // InternalTypesParser.g:3989:1: ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression | this_N4UnionTypeExpression_6= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_7= ruleN4IntersectionTypeExpression )
+            // InternalTypesParser.g:3988:28: ( ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD ) )
+            // InternalTypesParser.g:3989:1: ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD )
             {
-            // InternalTypesParser.g:3989:1: ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression | this_N4UnionTypeExpression_6= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_7= ruleN4IntersectionTypeExpression )
+            // InternalTypesParser.g:3989:1: ( ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ThisTypeRef_1= ruleThisTypeRef ) ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )? ) | this_ConstructorTypeRef_3= ruleConstructorTypeRef | this_ClassifierTypeRef_4= ruleClassifierTypeRef | this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD )
             int alt84=6;
             switch ( input.LA(1) ) {
             case Undefined:
@@ -10497,21 +10497,21 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalTypesParser.g:4053:5: this_N4FunctionTypeExpression_5= ruleN4FunctionTypeExpression
+                    // InternalTypesParser.g:4053:5: this_FunctionTypeExpressionOLD_5= ruleFunctionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4FunctionTypeExpressionParserRuleCall_3()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_3()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4FunctionTypeExpression_5=ruleN4FunctionTypeExpression();
+                    this_FunctionTypeExpressionOLD_5=ruleFunctionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4FunctionTypeExpression_5;
+                              current = this_FunctionTypeExpressionOLD_5;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -10519,21 +10519,21 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalTypesParser.g:4063:5: this_N4UnionTypeExpression_6= ruleN4UnionTypeExpression
+                    // InternalTypesParser.g:4063:5: this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4UnionTypeExpression_6=ruleN4UnionTypeExpression();
+                    this_UnionTypeExpressionOLD_6=ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4UnionTypeExpression_6;
+                              current = this_UnionTypeExpressionOLD_6;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -10541,21 +10541,21 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalTypesParser.g:4073:5: this_N4IntersectionTypeExpression_7= ruleN4IntersectionTypeExpression
+                    // InternalTypesParser.g:4073:5: this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4IntersectionTypeExpression_7=ruleN4IntersectionTypeExpression();
+                    this_IntersectionTypeExpressionOLD_7=ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4IntersectionTypeExpression_7;
+                              current = this_IntersectionTypeExpressionOLD_7;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -10625,7 +10625,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeRefFunctionTypeExpression"
-    // InternalTypesParser.g:4098:1: ruleTypeRefFunctionTypeExpression returns [EObject current=null] : (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_N4UnionTypeExpression_4= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_5= ruleN4IntersectionTypeExpression ) ;
+    // InternalTypesParser.g:4098:1: ruleTypeRefFunctionTypeExpression returns [EObject current=null] : (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_UnionTypeExpressionOLD_4= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_5= ruleIntersectionTypeExpressionOLD ) ;
     public final EObject ruleTypeRefFunctionTypeExpression() throws RecognitionException {
         EObject current = null;
 
@@ -10637,18 +10637,18 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
         EObject this_ClassifierTypeRef_3 = null;
 
-        EObject this_N4UnionTypeExpression_4 = null;
+        EObject this_UnionTypeExpressionOLD_4 = null;
 
-        EObject this_N4IntersectionTypeExpression_5 = null;
+        EObject this_IntersectionTypeExpressionOLD_5 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:4101:28: ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_N4UnionTypeExpression_4= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_5= ruleN4IntersectionTypeExpression ) )
-            // InternalTypesParser.g:4102:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_N4UnionTypeExpression_4= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_5= ruleN4IntersectionTypeExpression )
+            // InternalTypesParser.g:4101:28: ( (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_UnionTypeExpressionOLD_4= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_5= ruleIntersectionTypeExpressionOLD ) )
+            // InternalTypesParser.g:4102:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_UnionTypeExpressionOLD_4= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_5= ruleIntersectionTypeExpressionOLD )
             {
-            // InternalTypesParser.g:4102:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_N4UnionTypeExpression_4= ruleN4UnionTypeExpression | this_N4IntersectionTypeExpression_5= ruleN4IntersectionTypeExpression )
+            // InternalTypesParser.g:4102:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ConstructorTypeRef_2= ruleConstructorTypeRef | this_ClassifierTypeRef_3= ruleClassifierTypeRef | this_UnionTypeExpressionOLD_4= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_5= ruleIntersectionTypeExpressionOLD )
             int alt85=6;
             switch ( input.LA(1) ) {
             case Undefined:
@@ -10785,21 +10785,21 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalTypesParser.g:4143:5: this_N4UnionTypeExpression_4= ruleN4UnionTypeExpression
+                    // InternalTypesParser.g:4143:5: this_UnionTypeExpressionOLD_4= ruleUnionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4UnionTypeExpressionParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_4()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4UnionTypeExpression_4=ruleN4UnionTypeExpression();
+                    this_UnionTypeExpressionOLD_4=ruleUnionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4UnionTypeExpression_4;
+                              current = this_UnionTypeExpressionOLD_4;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -10807,21 +10807,21 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalTypesParser.g:4153:5: this_N4IntersectionTypeExpression_5= ruleN4IntersectionTypeExpression
+                    // InternalTypesParser.g:4153:5: this_IntersectionTypeExpressionOLD_5= ruleIntersectionTypeExpressionOLD
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getN4IntersectionTypeExpressionParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); 
                           
                     }
                     pushFollow(FOLLOW_2);
-                    this_N4IntersectionTypeExpression_5=ruleN4IntersectionTypeExpression();
+                    this_IntersectionTypeExpressionOLD_5=ruleIntersectionTypeExpressionOLD();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_N4IntersectionTypeExpression_5;
+                              current = this_IntersectionTypeExpressionOLD_5;
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -11393,28 +11393,28 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleThisTypeRefStructural"
 
 
-    // $ANTLR start "entryRuleN4FunctionTypeExpression"
-    // InternalTypesParser.g:4344:1: entryRuleN4FunctionTypeExpression returns [EObject current=null] : iv_ruleN4FunctionTypeExpression= ruleN4FunctionTypeExpression EOF ;
-    public final EObject entryRuleN4FunctionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleFunctionTypeExpressionOLD"
+    // InternalTypesParser.g:4344:1: entryRuleFunctionTypeExpressionOLD returns [EObject current=null] : iv_ruleFunctionTypeExpressionOLD= ruleFunctionTypeExpressionOLD EOF ;
+    public final EObject entryRuleFunctionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4FunctionTypeExpression = null;
+        EObject iv_ruleFunctionTypeExpressionOLD = null;
 
 
         try {
-            // InternalTypesParser.g:4345:2: (iv_ruleN4FunctionTypeExpression= ruleN4FunctionTypeExpression EOF )
-            // InternalTypesParser.g:4346:2: iv_ruleN4FunctionTypeExpression= ruleN4FunctionTypeExpression EOF
+            // InternalTypesParser.g:4345:2: (iv_ruleFunctionTypeExpressionOLD= ruleFunctionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:4346:2: iv_ruleFunctionTypeExpressionOLD= ruleFunctionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4FunctionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4FunctionTypeExpression=ruleN4FunctionTypeExpression();
+            iv_ruleFunctionTypeExpressionOLD=ruleFunctionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4FunctionTypeExpression; 
+               current =iv_ruleFunctionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -11430,12 +11430,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleN4FunctionTypeExpression"
+    // $ANTLR end "entryRuleFunctionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4FunctionTypeExpression"
-    // InternalTypesParser.g:4353:1: ruleN4FunctionTypeExpression returns [EObject current=null] : ( () otherlv_1= LeftCurlyBracket (otherlv_2= CommercialAt otherlv_3= This otherlv_4= LeftParenthesis ( (lv_declaredThisType_5_0= ruleTypeRefFunctionTypeExpression ) ) otherlv_6= RightParenthesis )? otherlv_7= Function (otherlv_8= LessThanSign ( (lv_ownedTypeVars_9_0= ruleTypeVariable ) ) (otherlv_10= Comma ( (lv_ownedTypeVars_11_0= ruleTypeVariable ) ) )* otherlv_12= GreaterThanSign )? otherlv_13= LeftParenthesis this_TAnonymousFormalParameterList_14= ruleTAnonymousFormalParameterList[$current] otherlv_15= RightParenthesis (otherlv_16= Colon ( (lv_returnTypeRef_17_0= ruleTypeRef ) ) )? otherlv_18= RightCurlyBracket ) ;
-    public final EObject ruleN4FunctionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleFunctionTypeExpressionOLD"
+    // InternalTypesParser.g:4353:1: ruleFunctionTypeExpressionOLD returns [EObject current=null] : ( () otherlv_1= LeftCurlyBracket (otherlv_2= CommercialAt otherlv_3= This otherlv_4= LeftParenthesis ( (lv_declaredThisType_5_0= ruleTypeRefFunctionTypeExpression ) ) otherlv_6= RightParenthesis )? otherlv_7= Function (otherlv_8= LessThanSign ( (lv_ownedTypeVars_9_0= ruleTypeVariable ) ) (otherlv_10= Comma ( (lv_ownedTypeVars_11_0= ruleTypeVariable ) ) )* otherlv_12= GreaterThanSign )? otherlv_13= LeftParenthesis this_TAnonymousFormalParameterList_14= ruleTAnonymousFormalParameterList[$current] otherlv_15= RightParenthesis (otherlv_16= Colon ( (lv_returnTypeRef_17_0= ruleTypeRef ) ) )? otherlv_18= RightCurlyBracket ) ;
+    public final EObject ruleFunctionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -11477,7 +11477,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionTypeExpressionAction_0(),
+                          grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -11487,7 +11487,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,LeftCurlyBracket,FOLLOW_74); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftCurlyBracketKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1());
                   
             }
             // InternalTypesParser.g:4368:1: (otherlv_2= CommercialAt otherlv_3= This otherlv_4= LeftParenthesis ( (lv_declaredThisType_5_0= ruleTypeRefFunctionTypeExpression ) ) otherlv_6= RightParenthesis )?
@@ -11504,19 +11504,19 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     otherlv_2=(Token)match(input,CommercialAt,FOLLOW_75); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getN4FunctionTypeExpressionAccess().getCommercialAtKeyword_2_0());
+                          	newLeafNode(otherlv_2, grammarAccess.getFunctionTypeExpressionOLDAccess().getCommercialAtKeyword_2_0());
                           
                     }
                     otherlv_3=(Token)match(input,This,FOLLOW_52); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_3, grammarAccess.getN4FunctionTypeExpressionAccess().getThisKeyword_2_1());
+                          	newLeafNode(otherlv_3, grammarAccess.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1());
                           
                     }
                     otherlv_4=(Token)match(input,LeftParenthesis,FOLLOW_76); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_4, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_2_2());
+                          	newLeafNode(otherlv_4, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_2_2());
                           
                     }
                     // InternalTypesParser.g:4383:1: ( (lv_declaredThisType_5_0= ruleTypeRefFunctionTypeExpression ) )
@@ -11527,7 +11527,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_57);
@@ -11538,7 +11538,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		set(
                              			current, 
@@ -11557,7 +11557,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     otherlv_6=(Token)match(input,RightParenthesis,FOLLOW_61); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_6, grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_2_4());
+                          	newLeafNode(otherlv_6, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_2_4());
                           
                     }
 
@@ -11569,7 +11569,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_7=(Token)match(input,Function,FOLLOW_77); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_7, grammarAccess.getN4FunctionTypeExpressionAccess().getFunctionKeyword_3());
+                  	newLeafNode(otherlv_7, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3());
                   
             }
             // InternalTypesParser.g:4411:1: (otherlv_8= LessThanSign ( (lv_ownedTypeVars_9_0= ruleTypeVariable ) ) (otherlv_10= Comma ( (lv_ownedTypeVars_11_0= ruleTypeVariable ) ) )* otherlv_12= GreaterThanSign )?
@@ -11586,7 +11586,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     otherlv_8=(Token)match(input,LessThanSign,FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_8, grammarAccess.getN4FunctionTypeExpressionAccess().getLessThanSignKeyword_4_0());
+                          	newLeafNode(otherlv_8, grammarAccess.getFunctionTypeExpressionOLDAccess().getLessThanSignKeyword_4_0());
                           
                     }
                     // InternalTypesParser.g:4416:1: ( (lv_ownedTypeVars_9_0= ruleTypeVariable ) )
@@ -11597,7 +11597,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_28);
@@ -11608,7 +11608,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		add(
                              			current, 
@@ -11642,7 +11642,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     	    otherlv_10=(Token)match(input,Comma,FOLLOW_4); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
-                    	          	newLeafNode(otherlv_10, grammarAccess.getN4FunctionTypeExpressionAccess().getCommaKeyword_4_2_0());
+                    	          	newLeafNode(otherlv_10, grammarAccess.getFunctionTypeExpressionOLDAccess().getCommaKeyword_4_2_0());
                     	          
                     	    }
                     	    // InternalTypesParser.g:4439:1: ( (lv_ownedTypeVars_11_0= ruleTypeVariable ) )
@@ -11653,7 +11653,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_28);
@@ -11664,7 +11664,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                    	      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                     	      	        }
                     	             		add(
                     	             			current, 
@@ -11692,7 +11692,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     otherlv_12=(Token)match(input,GreaterThanSign,FOLLOW_52); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_12, grammarAccess.getN4FunctionTypeExpressionAccess().getGreaterThanSignKeyword_4_3());
+                          	newLeafNode(otherlv_12, grammarAccess.getFunctionTypeExpressionOLDAccess().getGreaterThanSignKeyword_4_3());
                           
                     }
 
@@ -11704,15 +11704,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_13=(Token)match(input,LeftParenthesis,FOLLOW_68); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_13, grammarAccess.getN4FunctionTypeExpressionAccess().getLeftParenthesisKeyword_5());
+                  	newLeafNode(otherlv_13, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5());
                   
             }
             if ( state.backtracking==0 ) {
                
               		if (current==null) {
-              			current = createModelElement(grammarAccess.getN4FunctionTypeExpressionRule());
+              			current = createModelElement(grammarAccess.getFunctionTypeExpressionOLDRule());
               		}
-                      newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
+                      newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getTAnonymousFormalParameterListParserRuleCall_6()); 
                   
             }
             pushFollow(FOLLOW_57);
@@ -11729,7 +11729,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_15=(Token)match(input,RightParenthesis,FOLLOW_78); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_15, grammarAccess.getN4FunctionTypeExpressionAccess().getRightParenthesisKeyword_7());
+                  	newLeafNode(otherlv_15, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightParenthesisKeyword_7());
                   
             }
             // InternalTypesParser.g:4484:1: (otherlv_16= Colon ( (lv_returnTypeRef_17_0= ruleTypeRef ) ) )?
@@ -11746,7 +11746,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     otherlv_16=(Token)match(input,Colon,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_16, grammarAccess.getN4FunctionTypeExpressionAccess().getColonKeyword_8_0());
+                          	newLeafNode(otherlv_16, grammarAccess.getFunctionTypeExpressionOLDAccess().getColonKeyword_8_0());
                           
                     }
                     // InternalTypesParser.g:4489:1: ( (lv_returnTypeRef_17_0= ruleTypeRef ) )
@@ -11757,7 +11757,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getN4FunctionTypeExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
+                      	        newCompositeNode(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_19);
@@ -11768,7 +11768,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getN4FunctionTypeExpressionRule());
+                      	            current = createModelElementForParent(grammarAccess.getFunctionTypeExpressionOLDRule());
                       	        }
                              		set(
                              			current, 
@@ -11793,7 +11793,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_18=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_18, grammarAccess.getN4FunctionTypeExpressionAccess().getRightCurlyBracketKeyword_9());
+                  	newLeafNode(otherlv_18, grammarAccess.getFunctionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_9());
                   
             }
 
@@ -11815,7 +11815,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleN4FunctionTypeExpression"
+    // $ANTLR end "ruleFunctionTypeExpressionOLD"
 
 
     // $ANTLR start "entryRuleArrowFunctionTypeExpression"
@@ -12545,28 +12545,28 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleTFormalParameter"
 
 
-    // $ANTLR start "entryRuleN4UnionTypeExpression"
-    // InternalTypesParser.g:4806:1: entryRuleN4UnionTypeExpression returns [EObject current=null] : iv_ruleN4UnionTypeExpression= ruleN4UnionTypeExpression EOF ;
-    public final EObject entryRuleN4UnionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleUnionTypeExpressionOLD"
+    // InternalTypesParser.g:4806:1: entryRuleUnionTypeExpressionOLD returns [EObject current=null] : iv_ruleUnionTypeExpressionOLD= ruleUnionTypeExpressionOLD EOF ;
+    public final EObject entryRuleUnionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4UnionTypeExpression = null;
+        EObject iv_ruleUnionTypeExpressionOLD = null;
 
 
         try {
-            // InternalTypesParser.g:4807:2: (iv_ruleN4UnionTypeExpression= ruleN4UnionTypeExpression EOF )
-            // InternalTypesParser.g:4808:2: iv_ruleN4UnionTypeExpression= ruleN4UnionTypeExpression EOF
+            // InternalTypesParser.g:4807:2: (iv_ruleUnionTypeExpressionOLD= ruleUnionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:4808:2: iv_ruleUnionTypeExpressionOLD= ruleUnionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4UnionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getUnionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4UnionTypeExpression=ruleN4UnionTypeExpression();
+            iv_ruleUnionTypeExpressionOLD=ruleUnionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4UnionTypeExpression; 
+               current =iv_ruleUnionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -12582,12 +12582,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleN4UnionTypeExpression"
+    // $ANTLR end "entryRuleUnionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4UnionTypeExpression"
-    // InternalTypesParser.g:4815:1: ruleN4UnionTypeExpression returns [EObject current=null] : ( () otherlv_1= Union otherlv_2= LeftCurlyBracket ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) ) (otherlv_4= Comma ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) ) )* otherlv_6= RightCurlyBracket ) ;
-    public final EObject ruleN4UnionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleUnionTypeExpressionOLD"
+    // InternalTypesParser.g:4815:1: ruleUnionTypeExpressionOLD returns [EObject current=null] : ( () otherlv_1= Union otherlv_2= LeftCurlyBracket ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) ) (otherlv_4= Comma ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) ) )* otherlv_6= RightCurlyBracket ) ;
+    public final EObject ruleUnionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -12614,7 +12614,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4UnionTypeExpressionAccess().getUnionTypeExpressionAction_0(),
+                          grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -12624,13 +12624,13 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,Union,FOLLOW_16); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4UnionTypeExpressionAccess().getUnionKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getUnionTypeExpressionOLDAccess().getUnionKeyword_1());
                   
             }
             otherlv_2=(Token)match(input,LeftCurlyBracket,FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getN4UnionTypeExpressionAccess().getLeftCurlyBracketKeyword_2());
+                  	newLeafNode(otherlv_2, grammarAccess.getUnionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2());
                   
             }
             // InternalTypesParser.g:4835:1: ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) )
@@ -12641,7 +12641,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_65);
@@ -12652,7 +12652,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getN4UnionTypeExpressionRule());
+              	            current = createModelElementForParent(grammarAccess.getUnionTypeExpressionOLDRule());
               	        }
                      		add(
                      			current, 
@@ -12686,7 +12686,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    otherlv_4=(Token)match(input,Comma,FOLLOW_8); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_4, grammarAccess.getN4UnionTypeExpressionAccess().getCommaKeyword_4_0());
+            	          	newLeafNode(otherlv_4, grammarAccess.getUnionTypeExpressionOLDAccess().getCommaKeyword_4_0());
             	          
             	    }
             	    // InternalTypesParser.g:4858:1: ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) )
@@ -12697,7 +12697,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getN4UnionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             	      	    
             	    }
             	    pushFollow(FOLLOW_65);
@@ -12708,7 +12708,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getN4UnionTypeExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getUnionTypeExpressionOLDRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -12736,7 +12736,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getN4UnionTypeExpressionAccess().getRightCurlyBracketKeyword_5());
+                  	newLeafNode(otherlv_6, grammarAccess.getUnionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5());
                   
             }
 
@@ -12758,31 +12758,31 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleN4UnionTypeExpression"
+    // $ANTLR end "ruleUnionTypeExpressionOLD"
 
 
-    // $ANTLR start "entryRuleN4IntersectionTypeExpression"
-    // InternalTypesParser.g:4889:1: entryRuleN4IntersectionTypeExpression returns [EObject current=null] : iv_ruleN4IntersectionTypeExpression= ruleN4IntersectionTypeExpression EOF ;
-    public final EObject entryRuleN4IntersectionTypeExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleIntersectionTypeExpressionOLD"
+    // InternalTypesParser.g:4889:1: entryRuleIntersectionTypeExpressionOLD returns [EObject current=null] : iv_ruleIntersectionTypeExpressionOLD= ruleIntersectionTypeExpressionOLD EOF ;
+    public final EObject entryRuleIntersectionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleN4IntersectionTypeExpression = null;
+        EObject iv_ruleIntersectionTypeExpressionOLD = null;
 
 
         try {
-            // InternalTypesParser.g:4890:2: (iv_ruleN4IntersectionTypeExpression= ruleN4IntersectionTypeExpression EOF )
-            // InternalTypesParser.g:4891:2: iv_ruleN4IntersectionTypeExpression= ruleN4IntersectionTypeExpression EOF
+            // InternalTypesParser.g:4890:2: (iv_ruleIntersectionTypeExpressionOLD= ruleIntersectionTypeExpressionOLD EOF )
+            // InternalTypesParser.g:4891:2: iv_ruleIntersectionTypeExpressionOLD= ruleIntersectionTypeExpressionOLD EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionRule()); 
+               newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDRule()); 
             }
             pushFollow(FOLLOW_1);
-            iv_ruleN4IntersectionTypeExpression=ruleN4IntersectionTypeExpression();
+            iv_ruleIntersectionTypeExpressionOLD=ruleIntersectionTypeExpressionOLD();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleN4IntersectionTypeExpression; 
+               current =iv_ruleIntersectionTypeExpressionOLD; 
             }
             match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
@@ -12798,12 +12798,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleN4IntersectionTypeExpression"
+    // $ANTLR end "entryRuleIntersectionTypeExpressionOLD"
 
 
-    // $ANTLR start "ruleN4IntersectionTypeExpression"
-    // InternalTypesParser.g:4898:1: ruleN4IntersectionTypeExpression returns [EObject current=null] : ( () otherlv_1= Intersection otherlv_2= LeftCurlyBracket ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) ) (otherlv_4= Comma ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) ) )* otherlv_6= RightCurlyBracket ) ;
-    public final EObject ruleN4IntersectionTypeExpression() throws RecognitionException {
+    // $ANTLR start "ruleIntersectionTypeExpressionOLD"
+    // InternalTypesParser.g:4898:1: ruleIntersectionTypeExpressionOLD returns [EObject current=null] : ( () otherlv_1= Intersection otherlv_2= LeftCurlyBracket ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) ) (otherlv_4= Comma ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) ) )* otherlv_6= RightCurlyBracket ) ;
+    public final EObject ruleIntersectionTypeExpressionOLD() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -12830,7 +12830,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionTypeExpressionAction_0(),
+                          grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0(),
                           current);
                   
             }
@@ -12840,13 +12840,13 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,Intersection,FOLLOW_16); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getN4IntersectionTypeExpressionAccess().getIntersectionKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionKeyword_1());
                   
             }
             otherlv_2=(Token)match(input,LeftCurlyBracket,FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getN4IntersectionTypeExpressionAccess().getLeftCurlyBracketKeyword_2());
+                  	newLeafNode(otherlv_2, grammarAccess.getIntersectionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_2());
                   
             }
             // InternalTypesParser.g:4918:1: ( (lv_typeRefs_3_0= ruleTypeRefWithoutModifiers ) )
@@ -12857,7 +12857,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_65);
@@ -12868,7 +12868,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getN4IntersectionTypeExpressionRule());
+              	            current = createModelElementForParent(grammarAccess.getIntersectionTypeExpressionOLDRule());
               	        }
                      		add(
                      			current, 
@@ -12902,7 +12902,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    otherlv_4=(Token)match(input,Comma,FOLLOW_8); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_4, grammarAccess.getN4IntersectionTypeExpressionAccess().getCommaKeyword_4_0());
+            	          	newLeafNode(otherlv_4, grammarAccess.getIntersectionTypeExpressionOLDAccess().getCommaKeyword_4_0());
             	          
             	    }
             	    // InternalTypesParser.g:4941:1: ( (lv_typeRefs_5_0= ruleTypeRefWithoutModifiers ) )
@@ -12913,7 +12913,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getN4IntersectionTypeExpressionAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
             	      	    
             	    }
             	    pushFollow(FOLLOW_65);
@@ -12924,7 +12924,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getN4IntersectionTypeExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getIntersectionTypeExpressionOLDRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -12952,7 +12952,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getN4IntersectionTypeExpressionAccess().getRightCurlyBracketKeyword_5());
+                  	newLeafNode(otherlv_6, grammarAccess.getIntersectionTypeExpressionOLDAccess().getRightCurlyBracketKeyword_5());
                   
             }
 
@@ -12974,7 +12974,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleN4IntersectionTypeExpression"
+    // $ANTLR end "ruleIntersectionTypeExpressionOLD"
 
 
     // $ANTLR start "entryRuleParameterizedTypeRef"
