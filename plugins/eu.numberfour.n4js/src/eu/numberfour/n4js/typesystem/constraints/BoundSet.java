@@ -64,9 +64,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 	/** Bounds within this bound set, stored per inference variable. */
 	private final SetMultimap<TypeVariable, TypeBound> boundsPerInfVar = LinkedHashMultimap.create();
-	/** Instantiations among the bounds of this set, i.e. bounds of the form `α=P` with P being a proper type. */
+	/** Instantiations among the bounds of this set, i.e. bounds of the form `α = P` with P being a proper type. */
 	private final Map<TypeVariable, TypeRef> instantiations = new LinkedHashMap<>();
 
+	// used to keep track of what bounds have already been incorporated
 	private final Set<TypeBound> incorporatedBounds = new HashSet<>();
 
 	/**

@@ -13,6 +13,8 @@ package eu.numberfour.n4js.typesystem.constraints;
 import static eu.numberfour.n4js.ts.types.util.Variance.CO;
 import static eu.numberfour.n4js.ts.types.util.Variance.CONTRA;
 import static eu.numberfour.n4js.ts.types.util.Variance.INV;
+import static eu.numberfour.n4js.typesystem.constraints.Reducer.BooleanOp.CONJUNCTION;
+import static eu.numberfour.n4js.typesystem.constraints.Reducer.BooleanOp.DISJUNCTION;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +38,7 @@ import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.PrimitiveType;
+import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.Type;
@@ -56,8 +59,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * Contains all logic for reduction, i.e. for reducing a {@link TypeConstraint} into simpler {@link TypeBound}s. A
- * {@code Reducer} owns no state. Instead, it's a collaborator of its {@link InferenceContext inference context},
- * operating on the {@link BoundSet bound set} of that inference context.
+ * {@code Reducer} does not own any state. Instead, it's a collaborator of its {@link InferenceContext inference
+ * context}, operating on the {@link BoundSet bound set} of that inference context.
  */
 /* package */ final class Reducer {
 
@@ -68,6 +71,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 	private final RuleEnvironment G;
 	private final N4JSTypeSystem ts;
 	private final TypeSystemHelper tsh;
+
+	enum BooleanOp {
+		CONJUNCTION, DISJUNCTION
+	}
 
 	/**
 	 * Creates an instance.
@@ -92,13 +99,21 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Convenience method, creates a new {@link TypeBound} and forwards to {@link BoundSet#addBound(TypeBound)}.
 	 *
-	 * TODO(mg) clarify what happens if both args are TypeVariable. When does that occur?
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean addBound(TypeVariable infVar, TypeRef bound, Variance variance) {
 		assert ic.isInferenceVariable(infVar);
 		return ic.currentBounds.addBound(new TypeBound(infVar, bound, variance));
+	}
+
+	/**
+	 * Add bound <code>FALSE</code>, thus making the inference context {@link InferenceContext#isDoomed() doomed}.
+	 */
+	private boolean giveUp(EObject left, EObject right, Variance variance) {
+		if (DEBUG) {
+			log("GIVING UP ON: " + TypeConstraint.toString(left, right, variance));
+		}
+		return addBound(false);
 	}
 
 	// ###############################################################################################################
@@ -122,8 +137,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Reduces the the type constraint defined by the given left-hand and right-hand side and the given variance.
 	 * <p>
-	 * Always invoke this method instead of the more specific overloads, both for readability and to ensure completeness
-	 * of log messages.
+	 * Always invoke this method instead of the more specific <code>#reduce*()</code> methods, both for readability and
+	 * to ensure completeness of log messages.
 	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
@@ -131,7 +146,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 		if (DEBUG) {
 			log("reducing: " + TypeConstraint.toString(left, right, variance));
 		}
-		if (someNull(left, right)) {
+		if (left == null || right == null) {
+			if (DEBUG) {
+				log("ignoring constraint due to null values");
+			}
 			return false;
 		}
 		if ((left instanceof TypeRef) && (right instanceof TypeRef)) {
@@ -140,83 +158,194 @@ import it.xsemantics.runtime.RuleEnvironment;
 		}
 		// at least one wildcard
 		if ((left instanceof Wildcard) && (right instanceof Wildcard)) {
-			// both Wildcards
+			// both wildcards
 			return reduceWildcard((Wildcard) left, (Wildcard) right, variance);
 		}
-		// a Wildcard and a TypeRef, in any order
-		return abort(left, right, variance); // TODO probably wrong like this? cf. IDE-1653
+		// a wildcard and a TypeRef, in any order
+		return giveUp(left, right, variance); // TODO probably wrong like this? cf. IDE-1653
 	}
 
 	/**
-	 * Calling this method amounts to adding FALSE to the {@link BoundSet} with the side-effect of logging.
+	 * Reduces a set of type constraints with the same left-hand side and variance.
+	 * <p>
+	 * If <code>operator</code> is {@link BooleanOp#CONJUNCTION CONJUNCTION}, then this is merely a convenience method
+	 * for invoking method {@link #reduce(TypeArgument, TypeArgument, Variance)} several times. If <code>operator</code>
+	 * is {@link BooleanOp#DISJUNCTION DISJUNCTION}, then this is more tricky.
+	 * <p>
+	 * We could easily implement disjunctions of type constraints and bounds using backtracking (start with adding the
+	 * first disjoint constraint/bound and continue; if constraint system unsolvable, go back to previous state and add
+	 * second disjoint constraint/bound and continue; and so on until a solution is found). However, we do not want to
+	 * do this, for performance reasons.
+	 * <p>
+	 * Therefore, this method applies heuristics to choose the "most promising" of the disjoint constraints and
+	 * continues only with that single constraint; all other possible paths are ignored. This is an over-approximation
+	 * (we might overlook valid solutions, but a solution we find is never invalid).
 	 */
-	private boolean abort(EObject left, EObject right, Variance variance) {
-		if (DEBUG) {
-			log("GIVING UP ON: " + TypeConstraint.toString(left, right, variance));
-		}
-		return addBound(false);
-	}
-
-	/**
-	 * Is any of the arguments null? If so, log.
-	 */
-	private boolean someNull(TypeArgument a, TypeArgument b) {
-		boolean result = (a == null || b == null);
-		if (result) {
-			if (DEBUG) {
-				log("ignoring constraint due to null values");
+	private boolean reduce(TypeRef left, List<TypeRef> rights, Variance variance, BooleanOp operator) {
+		if (operator == CONJUNCTION) {
+			// simple case: simply call #reduce() several times
+			boolean wasAdded = false;
+			for (TypeRef currRight : rights) {
+				wasAdded |= reduce(left, currRight, variance);
+			}
+			return wasAdded;
+		} else /* operator == DISJUNCTION */ {
+			// tricky case (because we want to avoid backtracking)
+			final int rightsSize = rights.size();
+			if (rightsSize == 0) {
+				return false;
+			} else if (rightsSize == 1) {
+				return reduce(left, rights.get(0), variance);
+			} else {
+				// choose the "most promising" of the disjoint constraints and continue with that (and simply ignore the
+				// other possible paths)
+				int idx = -1;
+				if (idx == -1 && left instanceof FunctionTypeExprOrRef) {
+					// choose first function type (except those for which it is obvious they cannot match)
+					for (int i = 0; i < rightsSize; i++) {
+						final TypeRef currElem = rights.get(i);
+						if (currElem instanceof FunctionTypeExprOrRef) {
+							final FunctionTypeExprOrRef leftCasted = (FunctionTypeExprOrRef) left;
+							final FunctionTypeExprOrRef currElemCasted = (FunctionTypeExprOrRef) currElem;
+							final boolean mightMatch = (variance == CO && mightBeSubtypeOf(leftCasted, currElemCasted))
+									|| (variance == CONTRA && mightBeSubtypeOf(currElemCasted, leftCasted))
+									|| (variance == INV && mightBeSubtypeOf(leftCasted, currElemCasted)
+											&& mightBeSubtypeOf(currElemCasted, leftCasted));
+							if (mightMatch) {
+								idx = i;
+								break;
+							}
+						}
+					}
+				}
+				if (idx == -1 && left instanceof ParameterizedTypeRef && !ic.isInferenceVariable(left)) {
+					final Type leftDecl = left.getDeclaredType();
+					if (idx == -1 && leftDecl != null) {
+						// choose first matching declared type
+						for (int i = 0; i < rightsSize; i++) {
+							final TypeRef currElem = rights.get(i);
+							if (leftDecl == currElem.getDeclaredType()) {
+								idx = i;
+								break;
+							}
+						}
+					}
+					if (idx == -1 && leftDecl instanceof PrimitiveType) {
+						// choose first naked inference variable (if any)
+						// (note: same as below, but has higher priority for primitive types than next heuristic)
+						idx = chooseFirstInferenceVariable(rights);
+					}
+					if (idx == -1 && variance == CO && leftDecl instanceof ContainerType<?>) {
+						// choose first supertype of left
+						final List<TClassifier> superTypesOfLeft = AllSuperTypesCollector
+								.collect((ContainerType<?>) leftDecl);
+						for (int i = 0; i < rightsSize; i++) {
+							final TypeRef currElem = rights.get(i);
+							final Type currElemDecl = currElem.getDeclaredType();
+							if (currElemDecl != null && superTypesOfLeft.contains(currElemDecl)) {
+								idx = i;
+								break;
+							}
+						}
+					}
+					if (idx == -1 && variance == CONTRA && leftDecl != null) {
+						// choose first subtype of left
+						for (int i = 0; i < rightsSize; i++) {
+							final TypeRef currElem = rights.get(i);
+							final Type currElemDecl = currElem.getDeclaredType();
+							if (currElemDecl instanceof ContainerType<?>) {
+								// TODO improve performance by using a super class iterator or super interfaces iterator
+								// depending on type of leftDecl
+								final List<TClassifier> superTypesOfCurrElem = AllSuperTypesCollector
+										.collect((ContainerType<?>) currElemDecl);
+								if (superTypesOfCurrElem.contains(leftDecl)) {
+									idx = i;
+									break;
+								}
+							}
+						}
+					}
+				}
+				if (idx == -1) {
+					// choose first naked inference variable (if present)
+					idx = chooseFirstInferenceVariable(rights);
+				}
+				if (idx == -1 && variance == CO) {
+					// choose the top type 'any' or one of the pseudo-top types: Object, N4Object
+					if (idx == -1)
+						idx = chooseFirstWithDeclTypeOf(rights, RuleEnvironmentExtensions.topType(G));
+					if (idx == -1)
+						idx = chooseFirstWithDeclTypeOf(rights, RuleEnvironmentExtensions.objectType(G));
+					if (idx == -1)
+						idx = chooseFirstWithDeclTypeOf(rights, RuleEnvironmentExtensions.n4ObjectType(G));
+				}
+				if (idx == -1 && variance == CONTRA) {
+					// choose the bottom type 'undefined' or one of the pseudo-bottom types: null
+					if (idx == -1)
+						idx = chooseFirstWithDeclTypeOf(rights, RuleEnvironmentExtensions.bottomType(G));
+					if (idx == -1)
+						idx = chooseFirstWithDeclTypeOf(rights, RuleEnvironmentExtensions.nullType(G));
+				}
+				if (idx == -1) {
+					// simply choose the first member type (yes, we're pretty desperate at this point)
+					idx = 0;
+				}
+				return reduce(left, rights.get(idx), variance);
 			}
 		}
-		return result;
+	}
+
+	private final int chooseFirstInferenceVariable(List<TypeRef> typeRefs) {
+		final int typeRefsSize = typeRefs.size();
+		for (int i = 0; i < typeRefsSize; i++) {
+			final TypeRef currTypeRef = typeRefs.get(i);
+			if (ic.isInferenceVariable(currTypeRef)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private final int chooseFirstWithDeclTypeOf(List<TypeRef> typeRefs, Type declType) {
+		final int typeRefsSize = typeRefs.size();
+		for (int i = 0; i < typeRefsSize; i++) {
+			final TypeRef currElem = typeRefs.get(i);
+			if (currElem != null && currElem.getDeclaredType() == declType) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	/**
-	 * TODO Implementation restrictions:
-	 * <ul>
-	 * <li>this method is a no-op in case of null argument.</li>
-	 * <li>this method is a no-op in case of ComputedTypeRef argument.</li>
-	 * </ul>
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean reduceTypeRef(TypeRef left, TypeRef right, Variance variance) {
-		if (someNull(left, right)) {
-			return true;
-		}
-
 		final boolean isLeftProper = ic.isProper(left);
 		final boolean isRightProper = ic.isProper(right);
 		if (isLeftProper && isRightProper) {
 			return reduceProper(left, right, variance);
 		}
 
-		final boolean leftInfVar = ic.isInferenceVariable(left);
-		final boolean rightInfVar = ic.isInferenceVariable(right);
-		if (leftInfVar || rightInfVar) {
-			if (leftInfVar) {
+		final boolean isLeftInfVar = ic.isInferenceVariable(left);
+		final boolean isRightInfVar = ic.isInferenceVariable(right);
+		if (isLeftInfVar || isRightInfVar) {
+			if (isLeftInfVar) {
 				return addBound((TypeVariable) left.getDeclaredType(), right, variance);
 			} else {
 				return addBound((TypeVariable) right.getDeclaredType(), left, variance.inverse());
 			}
 		}
 
-		if (((variance == Variance.CO || variance == Variance.INV)
-				&& (right.isUseSiteStructuralTyping() || right.isDefSiteStructuralTyping()))
-				||
-				((variance == Variance.CONTRA || variance == Variance.INV)
-						&& (left.isUseSiteStructuralTyping() || left.isDefSiteStructuralTyping()))) {
+		final boolean isLeftStructural = left.isUseSiteStructuralTyping() || left.isDefSiteStructuralTyping();
+		final boolean isRightStructural = right.isUseSiteStructuralTyping() || right.isDefSiteStructuralTyping();
+		if ((isLeftStructural && (variance == CONTRA || variance == INV))
+				|| (isRightStructural && (variance == CO || variance == INV))) {
 			return reduceStructuralTypeRef(left, right, variance);
 		}
+		// note: one side might still be structural, but we can ignore this
+		// (e.g. given ⟨ S <: N ⟩ with S being structural, N nominal, we have a plain nominal subtype relation)
 
-		/*
-		 * FIXME Does the user of the constraint-solver lower Wildcards into ExistentialTypeRefs, or not? Depending on
-		 * that, reduction should take place in reduceWildcard() or in this method. The bounds (upper and lower) of an
-		 * existential-type have to be formulated as CO and CONTRA TypeBounds. The encoding can't transform an
-		 * ExistentialTypeRef as TypeVariable (or InferenceVariable) because the constraint solver isn't free to choose
-		 * an instantiation for an existential type.
-		 */
-
-		// none of the args is a TypeVariable
 		if (left instanceof ComposedTypeRef) {
 			return reduceComposedTypeRef(right, (ComposedTypeRef) left, variance.inverse());
 		}
@@ -224,7 +353,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduceComposedTypeRef(left, (ComposedTypeRef) right, variance);
 		}
 
-		// none of the args is a TypeVariable or a ComposedTypeRef
 		if (left instanceof ClassifierTypeRef && right instanceof ClassifierTypeRef) {
 			return reduceClassifierTypeRef((ClassifierTypeRef) left, (ClassifierTypeRef) right, variance);
 		} else if (left instanceof FunctionTypeExprOrRef && right instanceof FunctionTypeExprOrRef) {
@@ -233,44 +361,26 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduceParameterizedTypeRef((ParameterizedTypeRef) left, (ParameterizedTypeRef) right, variance);
 		} else {
 			// different subtypes of TypeRef on left and right side
-			if (right instanceof ParameterizedTypeRef
-					&& right.getDeclaredType() == RuleEnvironmentExtensions.anyType(G)) {
+			if (left instanceof ParameterizedTypeRef
+					&& left.getDeclaredType() == RuleEnvironmentExtensions.bottomType(G)) {
+				// a constraint like ⟨ undefined <: {function(number):α} ⟩
+				return addBound(true);
+			} else if (right instanceof ParameterizedTypeRef
+					&& right.getDeclaredType() == RuleEnvironmentExtensions.topType(G)) {
 				// a constraint like ⟨ {function(number):α} <: any ⟩
 				return addBound(true);
 			} else {
 				// in all other cases
-				return abort(left, right, variance);
+				return giveUp(left, right, variance);
 			}
 		}
 	}
 
 	/**
-	 * Leaving aside the trivial case of a wildcard compared to itself, this method divides the input into the following
-	 * cases based on whether it's lower or upper bounds:
-	 * <ul>
-	 * <li>{@code (? super TL) op (? super TR)} are reduced as {@code TL == TR}
-	 * <li>{@code (? super TL) op wildcard-right} are reduced as {@code TL == bottom}
-	 * <li>{@code wildcard-left op (? super TR)} are reduced as {@code bottom == TR}
-	 * </ul>
-	 * Otherwise, declared upper bounds are considered:
-	 * <ul>
-	 * <li>{@code (? extends TL) op (? extends TR)} are reduced as {@code TL == TR}
-	 * <li>{@code (? extends TL) op wildcard-right} are reduced as {@code TL == top}
-	 * <li>{@code wildcard-left op (? extends TR)} are reduced as {@code top == TR}
-	 * </ul>
-	 * Otherwise, (ie, unbound wildcard):
-	 * <ul>
-	 * <li>{@code (?) op (?)} are reduced as {@code TRUE}
-	 * </ul>
-	 * TODO: note the relation to ExistentialTypeRef!
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
-	private boolean reduceWildcard(Wildcard left, Wildcard right,
-			/* TODO IDE-1653 */ @SuppressWarnings("unused") Variance variance) {
-		// TODO don't ignore the `variance` argument
-		// each occurrence of '?' can be seen as a fresh variable,
-		// ie occurrences in different wildcards denote in general different values.
+	// TODO IDE-1653 reconsider handling of wildcards in Reducer#reduceWildcard()
+	private boolean reduceWildcard(Wildcard left, Wildcard right, @SuppressWarnings("unused") Variance variance) {
 		if (left == right) {
 			// trivial ==, <:, and :> of a wildcard to itself.
 			return false;
@@ -279,37 +389,34 @@ import it.xsemantics.runtime.RuleEnvironment;
 		final TypeRef lbLeft = left.getDeclaredLowerBound();
 		final TypeRef lbRight = right.getDeclaredLowerBound();
 		if (lbLeft != null || lbRight != null) {
-			TypeRef lbLeftOrBottom = (lbLeft != null) ? lbLeft : bottom();
-			TypeRef lbRightOrBottom = (lbRight != null) ? lbRight : bottom();
+			// ⟨ ? super L Φ ? ⟩ implies `L = bottom`
+			// ⟨ ? super L Φ ? extends R ⟩ implies `L = bottom`
+			// ⟨ ? super L Φ ? super R ⟩ implies `L = R`
+			final TypeRef lbLeftOrBottom = (lbLeft != null) ? lbLeft : bottom();
+			final TypeRef lbRightOrBottom = (lbRight != null) ? lbRight : bottom();
 			wasAdded |= reduce(lbLeftOrBottom, lbRightOrBottom, INV);
 		}
 		final TypeRef ubLeft = left.getDeclaredUpperBound();
 		final TypeRef ubRight = right.getDeclaredUpperBound();
 		if (ubLeft != null || ubRight != null) {
-			TypeRef ubLeftOrTop = (ubLeft != null) ? ubLeft : top();
-			TypeRef ubRightOrTop = (ubRight != null) ? ubRight : top();
+			// ⟨ ? extends L Φ ? ⟩ implies `L = top`
+			// ⟨ ? extends L Φ ? super R ⟩ implies `L = top`
+			// ⟨ ? extends L Φ ? extends R ⟩ implies `L = R`
+			final TypeRef ubLeftOrTop = (ubLeft != null) ? ubLeft : top();
+			final TypeRef ubRightOrTop = (ubRight != null) ? ubRight : top();
 			wasAdded |= reduce(ubLeftOrTop, ubRightOrTop, INV);
 		}
 		return wasAdded;
 	}
 
-	private TypeRef bottom() {
-		return RuleEnvironmentExtensions.bottomTypeRef(G);
-	}
-
-	private TypeRef top() {
-		return RuleEnvironmentExtensions.topTypeRef(G);
-	}
-
 	/**
-	 * This method adds either TRUE or FALSE to the bound set after asking the type system.
-	 *
 	 * @return true iff FALSE was added (adding TRUE requires no new round of incorporation to follow)
 	 */
 	private boolean reduceProper(TypeRef left, TypeRef right, Variance variance) {
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		// FIXME very hacky recursion guard!!!
-		final Pair<String, Pair<TypeRef, TypeRef>> key = Pair.of("xxxGuard", Pair.of(left, right));
+		// recursion guard
+		final Pair<String, Pair<TypeRef, TypeRef>> key = Pair.of(RuleEnvironmentExtensions.GUARD_REDUCER_REDUCE_PROPER,
+				Pair.of(left, right));
 		if (G.get(key) != null) {
 			return true;
 		}
@@ -318,225 +425,72 @@ import it.xsemantics.runtime.RuleEnvironment;
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		switch (variance) {
-		case CO: {
+		case CO:
 			return addBound(ts.subtypeSucceeded(G2, left, right));
-		}
-		case CONTRA: {
+		case CONTRA:
 			return addBound(ts.subtypeSucceeded(G2, right, left));
-		}
-		case INV: {
+		case INV:
 			return addBound(ts.equaltypeSucceeded(G2, left, right));
 		}
-		}
-		// actually unreachable, each case above returns something
-		throw new IllegalStateException("unreachable");
+		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns
 	}
 
 	/**
-	 * Cases to handle:
-	 * <ul>
-	 * <li>if {@code left == right} , then recurse: {@code left} is equivalent to the composed type given by
-	 * {@code right} if it's both a subtype and a supertype of that composed type.</li>
-	 * <li>if {@code right} is union, {@link #reduceUnionTypeExpression(TypeRef, UnionTypeExpression, Variance)}</li>
-	 * <li>if {@code right} is intersection,
-	 * {@link #reduceIntersectionTypeExpression(TypeRef, IntersectionTypeExpression, Variance)}</li>
-	 * </ul>
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean reduceComposedTypeRef(TypeRef left, ComposedTypeRef right, Variance variance) {
-		boolean wasAdded = false;
 		if (variance == INV) {
-			wasAdded |= reduceComposedTypeRef(left, right, Variance.CO); // n.b.: not invoking #reduce() here!
-			wasAdded |= reduceComposedTypeRef(left, right, Variance.CONTRA); // n.b.: not invoking #reduce() here!
+			boolean wasAdded = false;
+			wasAdded |= reduceComposedTypeRef(left, right, CO); // n.b.: not invoking #reduce() here!
+			wasAdded |= reduceComposedTypeRef(left, right, CONTRA); // n.b.: not invoking #reduce() here!
 			return wasAdded;
 		}
 		if (right instanceof UnionTypeExpression) {
-			return reduceUnionTypeExpression(left, (UnionTypeExpression) right, variance);
+			return reduceUnion(left, (UnionTypeExpression) right, variance);
 		}
 		if (right instanceof IntersectionTypeExpression) {
-			return reduceIntersectionTypeExpression(left, (IntersectionTypeExpression) right, variance);
+			return reduceIntersection(left, (IntersectionTypeExpression) right, variance);
 		}
 		throw new IllegalStateException("shouldn't get here");
 	}
 
 	/**
-	 * Cases, argument "right" is union:
-	 * <ul>
-	 * <li>A type is a subtype of a union if it is a subtype of one or more elements of the union (as a special case,
-	 * the elements of a union are subtypes of that union)</li>
-	 * <li>A type is a supertype of a union if it is a supertype of each element of the union</li>
-	 * </ul>
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
-	private boolean reduceUnionTypeExpression(TypeRef left, UnionTypeExpression right, Variance variance) {
-		boolean wasAdded = false;
+	private boolean reduceUnion(TypeRef left, UnionTypeExpression right, Variance variance) {
 		switch (variance) {
-		case CO: {
-			return reduceSubtypeOfUnion(left, right);
+		case CO:
+			// ⟨ L <: union{R1,R2} ⟩ implies `L <: R1` or(!) `L <: R2`
+			// we've got a disjunction of several type bounds -> tricky case!
+			return reduce(left, right.getTypeRefs(), CO, DISJUNCTION);
+		case CONTRA:
+			// ⟨ L :> union{R1,R2} ⟩ implies `L :> R1` and `L :> R2`
+			// we've got a conjunction of several type bounds -> standard case
+			return reduce(left, right.getTypeRefs(), CONTRA, CONJUNCTION);
+		case INV:
+			throw new IllegalStateException("shouldn't get here"); // should have been handled by invoker
 		}
-		case CONTRA: {
-			// L :> union{R1,R2} --> L:>R1 && L:>R2
-			for (TypeRef currRight : right.getTypeRefs()) {
-				wasAdded |= reduce(left, currRight, CONTRA);
-			}
-			return wasAdded;
-		}
-		case INV: {
-			// should have been handled by invoker
-			throw new IllegalStateException("shouldn't get here");
-		}
-		}
-		// unreachable code, each branch above returned something
-		throw new IllegalStateException("shouldn't get here");
+		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
 	/**
-	 * (L <: union{R1,R2}) iff (L<:R1 || L<:R2)
-	 *
-	 * That requires backtracking. Easier when the union type has been canonicalized (ie, its direct elements are
-	 * disjoint) ie fan-out is "only" n. Otherwise fan-out is 2^n.
-	 *
-	 * IMPORTANT: Why dedicate a method to this reduction? So as to bring to the forefront (and document) the
-	 * heuristics, special-case handling, and approximations chosen in this implementation.
-	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
-	private boolean reduceSubtypeOfUnion(TypeRef left, UnionTypeExpression right) {
-		EList<TypeRef> unionElems = right.getTypeRefs();
-		if (unionElems.isEmpty()) {
-			// union{} (ie, of the empty list of elements) stands for BOTTOM
-			return reduce(left, bottom(), CO);
-		}
-		// --------------------------------------------------
-		// try approximations (ie, safe but not complete)
-		// --------------------------------------------------
-		// FIXME improve readability of following code and document the reasoning behind each heuristic
-		int idx = -1;
-		if (idx == -1 && left instanceof FunctionTypeExprOrRef) {
-			// choose first function type except those of which we already know they cannot match!
-			for (int i = 0; i < unionElems.size(); i++) {
-				final TypeRef currElem = unionElems.get(i);
-				if (currElem instanceof FunctionTypeExprOrRef) {
-					final boolean mightMatch = mightBeSubtypeOf((FunctionTypeExprOrRef) left,
-							(FunctionTypeExprOrRef) currElem);
-					if (mightMatch) {
-						idx = i;
-						break;
-					}
-				}
-			}
-		}
-		if (left instanceof ParameterizedTypeRef && !ic.isInferenceVariable(left)) {
-			final Type leftDecl = left.getDeclaredType();
-			if (idx == -1 && leftDecl != null) {
-				for (int i = 0; i < unionElems.size(); i++) {
-					final TypeRef currElem = unionElems.get(i);
-					if (leftDecl == currElem.getDeclaredType()) {
-						idx = i;
-						break;
-					}
-				}
-			}
-			if (idx == -1 && leftDecl instanceof PrimitiveType) {
-				// choose first naked inference variable (if any)
-				// (note: same as below, but has higher priority for primitive types than next heuristic)
-				for (int i = 0; i < unionElems.size(); i++) {
-					final TypeRef currElem = unionElems.get(i);
-					if (ic.isInferenceVariable(currElem)) {
-						idx = i;
-						break;
-					}
-				}
-			}
-			if (idx == -1 && leftDecl instanceof ContainerType<?>) {
-				for (int i = 0; i < unionElems.size(); i++) {
-					final TypeRef currElem = unionElems.get(i);
-					if (AllSuperTypesCollector.collect((ContainerType<?>) leftDecl) // FIXME PERFORMANCE!
-							.contains(currElem.getDeclaredType())) {
-						idx = i;
-						break;
-					}
-				}
-			}
-		}
-		if (idx == -1) {
-			// choose first naked inference variable (if any)
-			for (int i = 0; i < unionElems.size(); i++) {
-				final TypeRef currElem = unionElems.get(i);
-				if (ic.isInferenceVariable(currElem)) {
-					idx = i;
-					break;
-				}
-			}
-		}
-		if (idx == -1) {
-			// choose 'any' (if present)
-			for (int i = 0; i < unionElems.size(); i++) {
-				final TypeRef currElem = unionElems.get(i);
-				if (currElem.getDeclaredType() == RuleEnvironmentExtensions.anyType(G)) {
-					idx = i;
-					break;
-				}
-			}
-		}
-		if (idx == -1) {
-			// choose 'Object' (if present)
-			for (int i = 0; i < unionElems.size(); i++) {
-				final TypeRef currElem = unionElems.get(i);
-				if (currElem.getDeclaredType() == RuleEnvironmentExtensions.objectType(G)) {
-					idx = i;
-					break;
-				}
-			}
-		}
-		if (idx == -1) {
-			// choose 'N4Object' (if present)
-			for (int i = 0; i < unionElems.size(); i++) {
-				final TypeRef currElem = unionElems.get(i);
-				if (currElem.getDeclaredType() == RuleEnvironmentExtensions.n4ObjectType(G)) {
-					idx = i;
-					break;
-				}
-			}
-		}
-		if (idx == -1)
-			idx = 0;
-		return reduce(left, unionElems.get(idx), CO);
-	}
-
-	/**
-	 * Cases, argument "right" is intersection:
-	 * <ul>
-	 * <li>A type is a subtype of an intersection if it is a subtype of each element of the intersection</li>
-	 * <li>A type is a supertype of an intersection if it is a supertype of one or more elements of the intersection (as
-	 * a special case, the elements of the intersection are supertypes of that intersection)</li>
-	 * </ul>
-	 *
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
-	private boolean reduceIntersectionTypeExpression(TypeRef left, IntersectionTypeExpression right,
-			Variance variance) {
-		boolean wasAdded = false;
+	private boolean reduceIntersection(TypeRef left, IntersectionTypeExpression right, Variance variance) {
 		switch (variance) {
-		case CO: {
-			// L <: intersection{R1,R2} --> L<:R1 && L<:R2
-			for (TypeRef currRight : right.getTypeRefs()) {
-				wasAdded |= reduce(left, currRight, CO);
-			}
-			return wasAdded;
-		}
-		case CONTRA: {
+		case CO:
+			// ⟨ L <: intersection{R1,R2} ⟩ implies `L <: R1` and `L <: R2`
+			// we've got a conjunction of several type bounds -> standard case
+			return reduce(left, right.getTypeRefs(), CO, CONJUNCTION);
+		case CONTRA:
+			// ⟨ L :> intersection{R1,R2} ⟩ implies `L :> R1` or(!) `L :> R2`
+			// we've got a disjunction of several type bounds -> tricky case!
+			// return reduce(left, right.getTypeRefs(), CONTRA, DISJUNCTION);
 			return reduceSupertypeOfIntersection(left, right);
+		case INV:
+			throw new IllegalStateException("shouldn't get here"); // should have been handled by invoker
 		}
-		case INV: {
-			// should have been handled by invoker
-			throw new IllegalStateException("shouldn't get here");
-		}
-		}
-		// unreachable code, each branch above returned something
-		throw new IllegalStateException("shouldn't get here");
+		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
 	// FIXME change method #reduceSupertypeOfIntersection() to be in line with above method #reduceSubtypeOfUnion()
@@ -610,7 +564,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		}
 		if (nonProperElems.isEmpty()) {
 			// all elems of the intersection were tested, none is a subtype of L
-			return abort(leftProper, rightProper, CONTRA);
+			return giveUp(leftProper, rightProper, CONTRA);
 		}
 		if (nonProperElems.size() == 1) {
 			return reduce(nonProperElems.get(0), left, CO);
@@ -632,7 +586,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduce(leftStatic, rightStatic, variance);
 		} else {
 			// at least one side is ConstructorTypeRef
-			return reduce(leftStatic, rightStatic, Variance.INV); // FIXME reconsider
+			return reduce(leftStatic, rightStatic, INV); // FIXME reconsider
 		}
 	}
 
@@ -664,7 +618,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		for (TFormalParameter keyPar : left.getFpars()) {
 			if (valueParsIt.hasNext()) {
 				wasAdded |= reduce(keyPar.getTypeRef(), valueParsIt.next().getTypeRef(),
-						variance.mult(Variance.CONTRA));
+						variance.mult(CONTRA));
 			}
 		}
 		// derive constraints for return types
@@ -673,7 +627,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		if (isVoidLeft && isVoidRight) {
 			// void on both sides:
 			wasAdded |= addBound(true);
-		} else if ((variance == Variance.CO && isVoidRight) || (variance == Variance.CONTRA && isVoidLeft)) {
+		} else if ((variance == CO && isVoidRight) || (variance == CONTRA && isVoidLeft)) {
 			// we have a constraint like:
 			// ⟨ {function():α} <: {function():void} ⟩
 			// --> α is not constrained in any way --> just add bound TRUE
@@ -685,7 +639,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 			final TypeRef nonVoidReturnType = isVoidLeft ? right.getReturnTypeRef() : left.getReturnTypeRef();
 			wasAdded |= addBound(TypeUtils.isOptional(nonVoidReturnType)); // n.b.: #isOptional() is null-safe
 		} else {
-			wasAdded |= reduce(left.getReturnTypeRef(), right.getReturnTypeRef(), variance.mult(Variance.CO));
+			wasAdded |= reduce(left.getReturnTypeRef(), right.getReturnTypeRef(), variance.mult(CO));
 		}
 		// derive constraints for declared this types
 		final TypeRef leftThis = left.getDeclaredThisType();
@@ -695,16 +649,16 @@ import it.xsemantics.runtime.RuleEnvironment;
 				if (variance == CO) {
 					wasAdded |= addBound(true);
 				} else {
-					wasAdded |= abort(left, right, variance);
+					wasAdded |= giveUp(left, right, variance);
 				}
 			} else if (leftThis != null && rightThis == null) {
 				if (variance == CONTRA) {
 					wasAdded |= addBound(true);
 				} else {
-					wasAdded |= abort(left, right, variance);
+					wasAdded |= giveUp(left, right, variance);
 				}
 			} else if (leftThis != null && rightThis != null) {
-				wasAdded |= reduce(leftThis, rightThis, variance.mult(Variance.CONTRA));
+				wasAdded |= reduce(leftThis, rightThis, variance.mult(CONTRA));
 			}
 		}
 		return wasAdded;
@@ -733,7 +687,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		if ((variance == CO && !ts.subtypeSucceeded(G, leftRaw, rightRaw))
 				|| (variance == CONTRA && !ts.subtypeSucceeded(G, rightRaw, leftRaw))
 				|| (variance == INV && !ts.equaltypeSucceeded(G, leftRaw, rightRaw))) {
-			return abort(left, right, variance);
+			return giveUp(left, right, variance);
 		}
 		//
 		// here we have a situation like G<IV> <-> G<string> which may result from
@@ -818,8 +772,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean reduceStructuralTypeRef(TypeRef left, TypeRef right, Variance variance) {
-		if (variance == Variance.CONTRA) {
-			return reduceStructuralTypeRef(right, left, Variance.CO);
+		if (variance == CONTRA) {
+			return reduceStructuralTypeRef(right, left, CO);
 		}
 		// now, variance is either CO or INV
 
@@ -867,13 +821,21 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return ts.subtypeSucceeded(G, leftSubst, rightSubst);
 	}
 
-	private void log(final String message) {
-		ic.log(message);
-	}
-
 	private static final boolean containsReopenedExistentialType(RuleEnvironment someG, TypeConstraint constraint) {
 		return constraint != null
 				&& (RuleEnvironmentExtensions.isExistentialTypeToBeReopened(someG, constraint.left, true)
 						|| RuleEnvironmentExtensions.isExistentialTypeToBeReopened(someG, constraint.right, true));
+	}
+
+	private TypeRef bottom() {
+		return RuleEnvironmentExtensions.bottomTypeRef(G);
+	}
+
+	private TypeRef top() {
+		return RuleEnvironmentExtensions.topTypeRef(G);
+	}
+
+	private void log(final String message) {
+		ic.log(message);
 	}
 }
