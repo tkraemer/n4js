@@ -2833,12 +2833,66 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTEnumLiteralAccess().getRule();
 	}
 
+	//UnionTypeExpression TypeRef:
+	//	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?
+	public TypeExpressionsGrammarAccess.UnionTypeExpressionElements getUnionTypeExpressionAccess() {
+		return gaTypeExpressions.getUnionTypeExpressionAccess();
+	}
+	
+	public ParserRule getUnionTypeExpressionRule() {
+		return getUnionTypeExpressionAccess().getRule();
+	}
+
+	//IntersectionTypeExpression TypeRef:
+	//	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?
+	public TypeExpressionsGrammarAccess.IntersectionTypeExpressionElements getIntersectionTypeExpressionAccess() {
+		return gaTypeExpressions.getIntersectionTypeExpressionAccess();
+	}
+	
+	public ParserRule getIntersectionTypeExpressionRule() {
+		return getIntersectionTypeExpressionAccess().getRule();
+	}
+
+	//PrimaryTypeExpression TypeRef:
+	//	=> ({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+	//	| ArrayTypeRef
+	//	| TypeRefWithModifiers
+	//	| "(" super::TypeRef ")"
+	public TypeExpressionsGrammarAccess.PrimaryTypeExpressionElements getPrimaryTypeExpressionAccess() {
+		return gaTypeExpressions.getPrimaryTypeExpressionAccess();
+	}
+	
+	public ParserRule getPrimaryTypeExpressionRule() {
+		return getPrimaryTypeExpressionAccess().getRule();
+	}
+
+	//BogusTypeRef TypeRef:
+	//	TypeRefWithModifiers
+	public TypeExpressionsGrammarAccess.BogusTypeRefElements getBogusTypeRefAccess() {
+		return gaTypeExpressions.getBogusTypeRefAccess();
+	}
+	
+	public ParserRule getBogusTypeRefRule() {
+		return getBogusTypeRefAccess().getRule();
+	}
+
+	//TypeRefWithModifiers StaticBaseTypeRef:
+	//	TypeRefWithoutModifiers => undefModifier=super::UndefModifierToken? | {ParameterizedTypeRef}
+	//	undefModifier=super::UndefModifierToken
+	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
+		return gaTypeExpressions.getTypeRefWithModifiersAccess();
+	}
+	
+	public ParserRule getTypeRefWithModifiersRule() {
+		return getTypeRefWithModifiersAccess().getRule();
+	}
+
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
 	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| FunctionTypeExpression
-	//	| UnionTypeExpression
-	//	| IntersectionTypeExpression
+	//	| FunctionTypeExpressionOLD
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefWithoutModifiersElements getTypeRefWithoutModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithoutModifiersAccess();
 	}
@@ -2849,10 +2903,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 	//	ParameterizedTypeRef
+	//	| ArrayTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| UnionTypeExpression
-	//	| IntersectionTypeExpression
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
 		return gaTypeExpressions.getTypeRefFunctionTypeExpressionAccess();
 	}
@@ -2863,10 +2918,12 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeRefForCast StaticBaseTypeRef:
 	//	ParameterizedTypeRef
+	//	| ArrayTypeRef
 	//	| ThisTypeRef
 	//	| ConstructorTypeRef
 	//	| ClassifierTypeRef
-	//	| FunctionTypeExpression
+	//	| FunctionTypeExpressionOLD
+	//	| ArrowFunctionTypeExpression
 	public TypeExpressionsGrammarAccess.TypeRefForCastElements getTypeRefForCastAccess() {
 		return gaTypeExpressions.getTypeRefForCastAccess();
 	}
@@ -2917,18 +2974,28 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getThisTypeRefStructuralAccess().getRule();
 	}
 
-	//FunctionTypeExpression:
+	//FunctionTypeExpressionOLD FunctionTypeExpression:
 	//	{FunctionTypeExpression}
 	//	'{' ('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
 	//	'function' ('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
 	//	'(' TAnonymousFormalParameterList ')' (':' returnTypeRef=super::TypeRef)?
-	//	'}';
-	public TypeExpressionsGrammarAccess.FunctionTypeExpressionElements getFunctionTypeExpressionAccess() {
-		return gaTypeExpressions.getFunctionTypeExpressionAccess();
+	//	'}'
+	public TypeExpressionsGrammarAccess.FunctionTypeExpressionOLDElements getFunctionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getFunctionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getFunctionTypeExpressionRule() {
-		return getFunctionTypeExpressionAccess().getRule();
+	public ParserRule getFunctionTypeExpressionOLDRule() {
+		return getFunctionTypeExpressionOLDAccess().getRule();
+	}
+
+	//ArrowFunctionTypeExpression FunctionTypeExpression:
+	//	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression
+	public TypeExpressionsGrammarAccess.ArrowFunctionTypeExpressionElements getArrowFunctionTypeExpressionAccess() {
+		return gaTypeExpressions.getArrowFunctionTypeExpressionAccess();
+	}
+	
+	public ParserRule getArrowFunctionTypeExpressionRule() {
+		return getArrowFunctionTypeExpressionAccess().getRule();
 	}
 
 	//fragment TAnonymousFormalParameterList *:
@@ -2965,26 +3032,26 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTFormalParameterAccess().getRule();
 	}
 
-	//UnionTypeExpression:
+	//UnionTypeExpressionOLD UnionTypeExpression:
 	//	{UnionTypeExpression}
-	//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
-	public TypeExpressionsGrammarAccess.UnionTypeExpressionElements getUnionTypeExpressionAccess() {
-		return gaTypeExpressions.getUnionTypeExpressionAccess();
+	//	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
+	public TypeExpressionsGrammarAccess.UnionTypeExpressionOLDElements getUnionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getUnionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getUnionTypeExpressionRule() {
-		return getUnionTypeExpressionAccess().getRule();
+	public ParserRule getUnionTypeExpressionOLDRule() {
+		return getUnionTypeExpressionOLDAccess().getRule();
 	}
 
-	//IntersectionTypeExpression:
+	//IntersectionTypeExpressionOLD IntersectionTypeExpression:
 	//	{IntersectionTypeExpression}
-	//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
-	public TypeExpressionsGrammarAccess.IntersectionTypeExpressionElements getIntersectionTypeExpressionAccess() {
-		return gaTypeExpressions.getIntersectionTypeExpressionAccess();
+	//	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}'
+	public TypeExpressionsGrammarAccess.IntersectionTypeExpressionOLDElements getIntersectionTypeExpressionOLDAccess() {
+		return gaTypeExpressions.getIntersectionTypeExpressionOLDAccess();
 	}
 	
-	public ParserRule getIntersectionTypeExpressionRule() {
-		return getIntersectionTypeExpressionAccess().getRule();
+	public ParserRule getIntersectionTypeExpressionOLDRule() {
+		return getIntersectionTypeExpressionOLDAccess().getRule();
 	}
 
 	//ParameterizedTypeRef:
@@ -2995,6 +3062,26 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getParameterizedTypeRefRule() {
 		return getParameterizedTypeRefAccess().getRule();
+	}
+
+	//ParameterizedTypeRefNominal ParameterizedTypeRef:
+	//	declaredType=[Type|super::TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
+	public TypeExpressionsGrammarAccess.ParameterizedTypeRefNominalElements getParameterizedTypeRefNominalAccess() {
+		return gaTypeExpressions.getParameterizedTypeRefNominalAccess();
+	}
+	
+	public ParserRule getParameterizedTypeRefNominalRule() {
+		return getParameterizedTypeRefNominalAccess().getRule();
+	}
+
+	//ArrayTypeRef ParameterizedTypeRef:
+	//	arrayTypeLiteral?="[" typeArgs+=TypeArgument "]"
+	public TypeExpressionsGrammarAccess.ArrayTypeRefElements getArrayTypeRefAccess() {
+		return gaTypeExpressions.getArrayTypeRefAccess();
+	}
+	
+	public ParserRule getArrayTypeRefRule() {
+		return getArrayTypeRefAccess().getRule();
 	}
 
 	//ParameterizedTypeRefStructural:
@@ -3082,16 +3169,6 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTStructSetterRule() {
 		return getTStructSetterAccess().getRule();
-	}
-
-	//ParameterizedTypeRefNominal ParameterizedTypeRef:
-	//	declaredType=[Type|super::TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
-	public TypeExpressionsGrammarAccess.ParameterizedTypeRefNominalElements getParameterizedTypeRefNominalAccess() {
-		return gaTypeExpressions.getParameterizedTypeRefNominalAccess();
-	}
-	
-	public ParserRule getParameterizedTypeRefNominalRule() {
-		return getParameterizedTypeRefNominalAccess().getRule();
 	}
 
 	//TypingStrategyUseSiteOperator TypingStrategy:
