@@ -16,11 +16,9 @@ import static eu.numberfour.n4js.ts.types.util.Variance.INV;
 import static eu.numberfour.n4js.typesystem.constraints.Reducer.BooleanOp.CONJUNCTION;
 import static eu.numberfour.n4js.typesystem.constraints.Reducer.BooleanOp.DISJUNCTION;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -89,8 +87,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Convenience method, forwards to {@link BoundSet#addBound(boolean)}.
 	 *
-	 * @return true iff FALSE was added for the first time (adding TRUE never requires a new round of incorporation to
-	 *         follow)
+	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean addBound(boolean b) {
 		return ic.currentBounds.addBound(b);
@@ -180,6 +177,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Therefore, this method applies heuristics to choose the "most promising" of the disjoint constraints and
 	 * continues only with that single constraint; all other possible paths are ignored. This is an over-approximation
 	 * (we might overlook valid solutions, but a solution we find is never invalid).
+	 *
+	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean reduce(TypeRef left, List<TypeRef> rights, Variance variance, BooleanOp operator) {
 		if (operator == CONJUNCTION) {
@@ -317,9 +316,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return -1;
 	}
 
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceTypeRef(TypeRef left, TypeRef right, Variance variance) {
 		final boolean isLeftProper = ic.isProper(left);
 		final boolean isRightProper = ic.isProper(right);
@@ -376,9 +372,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		}
 	}
 
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	// TODO IDE-1653 reconsider handling of wildcards in Reducer#reduceWildcard()
 	private boolean reduceWildcard(Wildcard left, Wildcard right, @SuppressWarnings("unused") Variance variance) {
 		if (left == right) {
@@ -409,9 +402,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return wasAdded;
 	}
 
-	/**
-	 * @return true iff FALSE was added (adding TRUE requires no new round of incorporation to follow)
-	 */
 	private boolean reduceProper(TypeRef left, TypeRef right, Variance variance) {
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// recursion guard
@@ -435,9 +425,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns
 	}
 
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceComposedTypeRef(TypeRef left, ComposedTypeRef right, Variance variance) {
 		if (variance == INV) {
 			boolean wasAdded = false;
@@ -454,9 +441,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		throw new IllegalStateException("shouldn't get here");
 	}
 
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceUnion(TypeRef left, UnionTypeExpression right, Variance variance) {
 		switch (variance) {
 		case CO:
@@ -473,9 +457,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceIntersection(TypeRef left, IntersectionTypeExpression right, Variance variance) {
 		switch (variance) {
 		case CO:
@@ -485,99 +466,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 		case CONTRA:
 			// ⟨ L :> intersection{R1,R2} ⟩ implies `L :> R1` or(!) `L :> R2`
 			// we've got a disjunction of several type bounds -> tricky case!
-			// return reduce(left, right.getTypeRefs(), CONTRA, DISJUNCTION);
-			return reduceSupertypeOfIntersection(left, right);
+			return reduce(left, right.getTypeRefs(), CONTRA, DISJUNCTION);
 		case INV:
 			throw new IllegalStateException("shouldn't get here"); // should have been handled by invoker
 		}
 		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
-	// FIXME change method #reduceSupertypeOfIntersection() to be in line with above method #reduceSubtypeOfUnion()
-	// (ideally without code duplication)
-
-	/**
-	 * L :> intersection{R1,R2} --> L:>R1 || L:>R2
-	 *
-	 * That requires backtracking. Easier when the intersection type has been canonicalized (ie, its direct elements are
-	 * non-redundant) ie fan-out is "only" n. Otherwise fan-out is 2^n.
-	 *
-	 * IMPORTANT: Why dedicate a method to this reduction? So as to bring to the forefront (and document) the
-	 * heuristics, special-case handling, and approximations chosen in this implementation.
-	 *
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
-	private boolean reduceSupertypeOfIntersection(TypeRef left, IntersectionTypeExpression right) {
-		EList<TypeRef> intersectElems = right.getTypeRefs();
-		if (intersectElems.isEmpty()) {
-			// intersection{} (ie, of the empty list of elements) stands for TOP
-			return reduce(top(), left, CO);
-		}
-		// (1) try finding an R_i component such that L :> R_i
-		TypeRef leftProper = ic.isProper(left) ? left : null;
-		if (null == leftProper) {
-			// --------------------------------------------------
-			// (1) try approximations (ie, safe but not complete)
-			// --------------------------------------------------
-			// over-constrain by picking arbitrarily the first elem (which isn't guaranteed to succeed)
-			return reduce(intersectElems.get(0), left, CO);
-			// an alternative is to under-constrain, namely adopt L :> tsh.meet(G, {R1, R2})
-		}
-		TypeRef rightProper = ic.isProper(right) ? right : null;
-		if (null != rightProper) {
-			if (rightProper.isBottomType()) {
-				// the intersection is uninhabited, ie it's bottom
-				// ------------------------------------------
-				// (5) any type is trivially super of bottom. Instead of canonicalizing the intersection (and lose
-				// information) we tighten instead the constraint as follows: `left :> union(original-elems)`
-				// which in turn reduces to `left :> R1 && left :> R2`
-				// That's the bound reduced in place of the original one.
-				// ------------------------------------------
-				boolean wasReduced = false;
-				for (TypeRef elem : right.getTypeRefs()) {
-					wasReduced = reduce(left, elem, CONTRA);
-				}
-				return wasReduced;
-			}
-			// ------------------------------------------
-			// (2) an intersection is a subtype of itself
-			// ------------------------------------------
-			return addBound(ts.subtypeSucceeded(G, leftProper, rightProper));
-		}
-		// intersectElems will be partitioned into proper and non-proper.
-		List<TypeRef> nonProperElems = new ArrayList<>();
-		for (TypeRef interElem : intersectElems) {
-			// ---------------------------------------------------
-			// (3) try finding an R_i component such that L :> R_i
-			// ---------------------------------------------------
-			TypeRef interElemProper = ic.isProper(interElem) ? interElem : null;
-			if (null == interElemProper) {
-				nonProperElems.add(interElem);
-			} else {
-				// subtype check possible
-				if (ts.subtypeSucceeded(G, interElemProper, leftProper)) {
-					// positive result, reduction is complete (TRUE added)
-					return false; // no bounds added during this invocation
-				}
-				// negative result, element can be ignored for the purpose of reducing L :> intersection
-			}
-		}
-		if (nonProperElems.isEmpty()) {
-			// all elems of the intersection were tested, none is a subtype of L
-			return giveUp(leftProper, rightProper, CONTRA);
-		}
-		if (nonProperElems.size() == 1) {
-			return reduce(nonProperElems.get(0), left, CO);
-		}
-		// --------------------------------------------------
-		// (4) try approximations (ie, safe but not complete)
-		// --------------------------------------------------
-		return reduce(nonProperElems.get(0), left, CO);
-	}
-
-	/**
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
 		final TypeRef leftStatic = TypeUtils.copy(left.getStaticTypeRef());
 		final TypeRef rightStatic = TypeUtils.copy(right.getStaticTypeRef());
@@ -586,24 +481,16 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduce(leftStatic, rightStatic, variance);
 		} else {
 			// at least one side is ConstructorTypeRef
-			return reduce(leftStatic, rightStatic, INV); // FIXME reconsider
+			return reduce(leftStatic, rightStatic, INV); // TODO this is wrong
+			// instead:
+			// ⟨ constructor{D} <: constructor{C} ⟩ implies ⟨ D <: C ⟩ (as above) and ⟨ D#constructor <: C#constructor ⟩
 		}
 	}
 
 	/**
-	 * The typing constraint {@code fun-type-left op fun-type-right} is reduced by:
-	 * <ul>
-	 * <li>reducing each pair of corresponding formals; as well as</li>
-	 * <li>reducing the pair of return types.</li>
-	 * </ul>
-	 * Regarding variance, a function A can be used in place of E (an expected function) if A's formals are as general
-	 * as those of E and the return type of E is as general as that of A.
-	 * <p>
 	 * IMPORTANT: the implementation of this method has to be kept consistent with
 	 * {@link SubtypeComputer#isSubtypeFunction(RuleEnvironment, FunctionTypeExprOrRef, FunctionTypeExprOrRef)} and esp.
 	 * <code>#primIsSubtypeFunction()</code>.
-	 *
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean reduceFunctionTypeExprOrRef(FunctionTypeExprOrRef left, FunctionTypeExprOrRef right,
 			Variance variance) {
@@ -664,24 +551,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return wasAdded;
 	}
 
-	/**
-	 * For {@code C<S1...Sn> <: D<T1...Tn>} to hold it must be the case that {@code C <: D} and moreover for each
-	 * {@code 1 <= i <= n} according to the shape of Si and Ti some of the following conditions must hold:
-	 * <ul>
-	 * <li>{@code T <: T}
-	 * <li>{@code T <: ? extends T}
-	 * <li>{@code T <: ? super T}
-	 * <li>{@code if T<:S then (? extends T) <: (? extends S)}
-	 * <li>{@code if S<:T then (? super T) <: (? super S)}
-	 * <li>{@code ? extends T <: T}
-	 * <li>{@code if X<:Y then (? extends X) <: (? super Y)}
-	 * </ul>
-	 *
-	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
-	 */
 	private boolean reduceParameterizedTypeRef(ParameterizedTypeRef left, ParameterizedTypeRef right,
 			Variance variance) {
-		// FIXME support for structural typing (i.e. if right is structural!)
 		final TypeRef leftRaw = TypeUtils.createTypeRef(left.getDeclaredType());
 		final TypeRef rightRaw = TypeUtils.createTypeRef(right.getDeclaredType()); // note: enforcing nominal here!
 		if ((variance == CO && !ts.subtypeSucceeded(G, leftRaw, rightRaw))
@@ -690,13 +561,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return giveUp(left, right, variance);
 		}
 		//
-		// here we have a situation like G<IV> <-> G<string> which may result from
-		// code like:
+		// here we have a situation like ⟨ G<IV> Φ G<string> ⟩ (with IV being an inference variable) which may result
+		// from code such as:
 		//
 		// class G<T> {}
 		// function <IV> f(G<IV> p) : void {}
 		// var G<string> gstr;
-		// f(gstr); // "expected type <-> actual type" will lead to "G<IV> <-> G<string>"
+		// f(gstr); // "expected type :> actual type" will lead to "G<IV> :> G<string>"
 		//
 		// resulting in the constraint "IV = string".
 		//
@@ -709,7 +580,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		// function <IV> f(G<IV> p) : void {}
 		// class C extends G<string> {}
 		// var C c;
-		// f(c); // will lead to "G<IV> <-> C"
+		// f(c); // will lead to "G<IV> :> C"
 		//
 		// Of course, the inheritance hierarchy might be arbitrarily complex and it is the
 		// job of method #addSubstitutions(RuleEnv,TypeRef) in GenericsComputer to deal with
@@ -717,11 +588,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 		//
 		// Solution:
 		// We derive a constraint for the above situations in several steps
-		// G<IV> <-> C
-		// (map each type argument of 'left' to corresponding type parameter of 'left')
+		// (start with:)
+		// G<IV> :> C
+		// (now, map each type argument of 'left' to corresponding type parameter of 'left':)
 		// IV <-> T
-		// (perform type variable substitution on the right side based on the substitutions
-		// defined by the right side, i.e. substitutions obtained by calling #addSubstitutions(RuleEnv,'right'))
+		// (then, perform type variable substitution on the current right-hand side ("T" in our example) based on the
+		// substitutions defined by the original right-hand side ("C" in our example), i.e. substitutions obtained by
+		// calling #addSubstitutions(RuleEnv,right):)
 		// IV <-> string
 		boolean wasAdded = false;
 		final RuleEnvironment Gx = RuleEnvironmentExtensions.newRuleEnvironment(G);
@@ -748,7 +621,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 				} else if (leftParamSubst instanceof ExistentialTypeRef) {
 					// TODO IDE-1653 reconsider this entire case
 					// re-open the existential type, because we assume it was closed only while adding substitutions
-					// TODO this is wrong if right.typeArgs already contained an ExistentialTypeRef! (but might be
+					// UPDATE: this is wrong if right.typeArgs already contained an ExistentialTypeRef! (but might be
 					// an non-harmful over approximation)
 					final Wildcard w = ((ExistentialTypeRef) leftParamSubst).getWildcard();
 					final TypeRef ub = w.getDeclaredUpperBound();
@@ -779,8 +652,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 		final StructuralTypingComputer stc = tsh.getStructuralTypingComputer();
 		final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-		final StructTypingInfo infoFaked = new StructTypingInfo(G2, left, right,
-				left.getTypingStrategy(), right.getTypingStrategy()); // <- G2 will be changed!
+		final StructTypingInfo infoFaked = new StructTypingInfo(G2, left, right, // <- G2 will be changed!
+				left.getTypingStrategy(), right.getTypingStrategy());
 
 		boolean wasAdded = false;
 		final StructuralTypesHelper structTypesHelper = tsh.getStructuralTypesHelper();
@@ -818,6 +691,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		}
 		final TypeArgument leftSubst = ts.substTypeVariables(G_temp, left).getValue();
 		final TypeArgument rightSubst = ts.substTypeVariables(G_temp, right).getValue();
+		// step 2: now, perform subtype check reusing existing logic
 		return ts.subtypeSucceeded(G, leftSubst, rightSubst);
 	}
 

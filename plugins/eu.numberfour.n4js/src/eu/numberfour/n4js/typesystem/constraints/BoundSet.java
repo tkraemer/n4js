@@ -139,6 +139,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Adds special type bounds TRUE or FALSE. A bound TRUE will be ignored and a bound FALSE will immediately render
 	 * the containing constraint system unsolvable, short-circuiting all further reduction, incorporation or resolution
 	 * work.
+	 *
+	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	public boolean addBound(boolean b) {
 		if (DEBUG) {
@@ -148,14 +150,14 @@ import it.xsemantics.runtime.RuleEnvironment;
 			haveBoundFALSE = true;
 			return true;
 		}
-		return false; // when adding TRUE always return false here (restarting new round of incorporation not required)
+		return false; // when adding bound TRUE always return false here (new round of incorporation not required)
 	}
 
 	/**
 	 * Adds a type bound to this set. Does not itself trigger incorporation; this must be done by caller if(!) this
 	 * method returns true.
 	 *
-	 * @return true iff a new bound was added (this signals a round of incorporation should follow).
+	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	public boolean addBound(TypeBound bound) {
 		if (bound.isTrivial()) {
@@ -242,7 +244,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * type exists: if we have A and A&lt;string> as upper bounds, we can remove A because it does not add any
 	 * information.
 	 * <p>
-	 * TODO revise handling of raw types (inefficient implementation, does not handle all cases (eg. nested raw types))
+	 * TODO revise handling of raw types (inefficient implementation, does not handle all cases (e.g. nested raw types))
 	 */
 	private Set<TypeBound> resolveRawTypes(Set<TypeBound> typeBounds) {
 		if (!haveRawTypeRef) // this is the 98% case, so we optimize for that
@@ -314,17 +316,15 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * This method inspects bounds pairwise, recording that so as to avoid inspecting the same pair in follow-up rounds
 	 * of incorporation. This "inspection" may result in a new constraint, computed by
 	 * {@link #combine(TypeBound, TypeBound)}, which is then reduced.
-	 *
-	 * @return false as soon as a contradiction is detected, true otherwise.
 	 */
-	public boolean incorporate() {
+	public void incorporate() {
 		boolean updated;
 		do {
 			updated = false;
 			final TypeBound[] bounds = getAllBounds();
 			final int len = bounds.length;
 			if (len < 2) {
-				return true;
+				return;
 			}
 			for (int i = 0; i < len; ++i) {
 				final TypeBound boundI = bounds[i];
@@ -344,7 +344,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 							updated |= redu.reduce(newConstraint);
 						}
 						if (ic.isDoomed()) {
-							return false;
+							return;
 						}
 					}
 				}
@@ -353,7 +353,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 				}
 			}
 		} while (updated);
-		return true;
 	}
 
 	/**
