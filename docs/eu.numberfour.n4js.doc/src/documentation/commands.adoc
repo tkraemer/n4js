@@ -1,0 +1,22 @@
+:experimental:
+:commandkey: &#8984;
+:revdate: {localdate}
+:toc:
+:source-highlighter: prettify
+:doctype: book
+:data-uri:
+:includesdir: _includes/
+
+.Active Help Command Links
+= Active Help Command Links
+
+We can include some command links by inserting javascript into the HTML. The following URL
+ifdef::eclipse[+++<a href='javascript:executeCommand("org.eclipse.ui.help.aboutAction")'> opens the About dialog</a>+++]
+in eclipse. I can write it more or less inline in Asciidoc.
+
+== Formtatting
+
+This section tests the formatting with two ifdefs side-by-side to reduce clutter in the source. The following URL
+ifdef::eclipse[+++<a href='javascript:executeCommand("org.eclipse.ui.help.aboutAction")'> opens the About dialog</a>+++ in eclipse]
+ifdef::website[is where our project page is hosted: http://numberfour.github.io/n4js/.]
+I can write it more or less inline in Asciidoc.
