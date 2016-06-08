@@ -32,6 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDeclaredType <em>Declared Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getTypeArgs <em>Type Args</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}</li>
  * </ul>
  *
@@ -81,6 +82,33 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * @generated
 	 */
 	EList<TypeArgument> getTypeArgs();
+
+	/**
+	 * Returns the value of the '<em><b>Array Type Literal</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Array Type Literal</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Array Type Literal</em>' attribute.
+	 * @see #setArrayTypeLiteral(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getParameterizedTypeRef_ArrayTypeLiteral()
+	 * @model default="false" unique="false"
+	 * @generated
+	 */
+	boolean isArrayTypeLiteral();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral <em>Array Type Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Array Type Literal</em>' attribute.
+	 * @see #isArrayTypeLiteral()
+	 * @generated
+	 */
+	void setArrayTypeLiteral(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Defined Typing Strategy</b></em>' attribute.

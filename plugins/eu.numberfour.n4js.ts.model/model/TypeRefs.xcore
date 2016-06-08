@@ -457,6 +457,7 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 class ParameterizedTypeRef extends BaseTypeRef {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
+	boolean arrayTypeLiteral = "false"
 	/*
 	 * The defined (declared or inferred) typing strategy on use site, nominal typing by default. Could be changed to structural or structural
 	 * field (via tilde or tilde-tilde operators).

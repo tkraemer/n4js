@@ -58,8 +58,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					return; 
 				}
 				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()
 						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_ClassifierTypeRef_TypeRef(context, (ClassifierTypeRef) semanticObject); 
+					sequence_ClassifierTypeRef_TypeRefWithModifiers(context, (ClassifierTypeRef) semanticObject); 
 					return; 
 				}
 				else break;
@@ -72,53 +79,104 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					return; 
 				}
 				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()
 						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_ConstructorTypeRef_TypeRef(context, (ConstructorTypeRef) semanticObject); 
+					sequence_ConstructorTypeRef_TypeRefWithModifiers(context, (ConstructorTypeRef) semanticObject); 
 					return; 
 				}
 				else break;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION:
-				if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
-						|| rule == grammarAccess.getTypeRefForCastRule()
-						|| rule == grammarAccess.getFunctionTypeExpressionRule()) {
-					sequence_FunctionTypeExpression_TAnonymousFormalParameterList(context, (FunctionTypeExpression) semanticObject); 
+				if (rule == grammarAccess.getTypeRefForCastRule()) {
+					sequence_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_TAnonymousFormalParameterList(context, (FunctionTypeExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getArrowFunctionTypeExpressionRule()) {
+					sequence_ArrowFunctionTypeExpression_TAnonymousFormalParameterList(context, (FunctionTypeExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
 						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_FunctionTypeExpression_TAnonymousFormalParameterList_TypeRef(context, (FunctionTypeExpression) semanticObject); 
+					sequence_FunctionTypeExpressionOLD_PrimaryTypeExpression_TAnonymousFormalParameterList_TypeRefWithModifiers(context, (FunctionTypeExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
+						|| rule == grammarAccess.getFunctionTypeExpressionOLDRule()) {
+					sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList(context, (FunctionTypeExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()) {
+					sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList_TypeRefWithModifiers(context, (FunctionTypeExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case TypeRefsPackage.INTERSECTION_TYPE_EXPRESSION:
 				if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
-						|| rule == grammarAccess.getIntersectionTypeExpressionRule()) {
-					sequence_IntersectionTypeExpression(context, (IntersectionTypeExpression) semanticObject); 
+						|| rule == grammarAccess.getIntersectionTypeExpressionOLDRule()) {
+					sequence_IntersectionTypeExpressionOLD(context, (IntersectionTypeExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()) {
+					sequence_IntersectionTypeExpressionOLD_TypeRefWithModifiers(context, (IntersectionTypeExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
 						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_IntersectionTypeExpression_TypeRef(context, (IntersectionTypeExpression) semanticObject); 
+					sequence_IntersectionTypeExpression_IntersectionTypeExpressionOLD_TypeRefWithModifiers(context, (IntersectionTypeExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF:
-				if (rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
-						|| rule == grammarAccess.getTypeRefForCastRule()
-						|| rule == grammarAccess.getTypeRefInClassifierTypeRule()
+				if (rule == grammarAccess.getArrayTypeRefRule()) {
+					sequence_ArrayTypeRef(context, (ParameterizedTypeRef) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()) {
+					sequence_ArrayTypeRef_ParameterizedTypeRefNominal(context, (ParameterizedTypeRef) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_ArrayTypeRef_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(context, (ParameterizedTypeRef) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRefInClassifierTypeRule()
 						|| rule == grammarAccess.getParameterizedTypeRefRule()
 						|| rule == grammarAccess.getParameterizedTypeRefNominalRule()) {
 					sequence_ParameterizedTypeRefNominal(context, (ParameterizedTypeRef) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
-					sequence_ParameterizedTypeRefNominal_TypeRefWithoutModifiers(context, (ParameterizedTypeRef) semanticObject); 
+				else if (rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()) {
+					sequence_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(context, (ParameterizedTypeRef) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefRule()
-						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_ParameterizedTypeRefNominal_TypeRef_TypeRefWithoutModifiers(context, (ParameterizedTypeRef) semanticObject); 
+				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
+					sequence_ParameterizedTypeRefNominal_TypeRefWithoutModifiers(context, (ParameterizedTypeRef) semanticObject); 
 					return; 
 				}
 				else break;
@@ -130,13 +188,20 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					sequence_ParameterizedTypeRefStructural_TStructMemberList(context, (ParameterizedTypeRefStructural) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
-					sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithoutModifiers(context, (ParameterizedTypeRefStructural) semanticObject); 
+				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()
+						|| rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithModifiers_TypeRefWithoutModifiers(context, (ParameterizedTypeRefStructural) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefRule()
-						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRef_TypeRefWithoutModifiers(context, (ParameterizedTypeRefStructural) semanticObject); 
+				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
+					sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithoutModifiers(context, (ParameterizedTypeRefStructural) semanticObject); 
 					return; 
 				}
 				else break;
@@ -148,13 +213,20 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					sequence_ThisTypeRefNominal(context, (ThisTypeRefNominal) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
-					sequence_ThisTypeRefNominal_TypeRefWithoutModifiers(context, (ThisTypeRefNominal) semanticObject); 
+				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()
+						|| rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_ThisTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(context, (ThisTypeRefNominal) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefRule()
-						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_ThisTypeRefNominal_TypeRef_TypeRefWithoutModifiers(context, (ThisTypeRefNominal) semanticObject); 
+				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
+					sequence_ThisTypeRefNominal_TypeRefWithoutModifiers(context, (ThisTypeRefNominal) semanticObject); 
 					return; 
 				}
 				else break;
@@ -165,26 +237,43 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					sequence_TStructMemberList_ThisTypeRefStructural(context, (ThisTypeRefStructural) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
+						|| rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()
+						|| rule == grammarAccess.getTypeArgumentRule()) {
+					sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithModifiers_TypeRefWithoutModifiers(context, (ThisTypeRefStructural) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()) {
 					sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithoutModifiers(context, (ThisTypeRefStructural) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTypeRefRule()
-						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_TStructMemberList_ThisTypeRefStructural_TypeRef_TypeRefWithoutModifiers(context, (ThisTypeRefStructural) semanticObject); 
-					return; 
-				}
 				else break;
 			case TypeRefsPackage.UNION_TYPE_EXPRESSION:
-				if (rule == grammarAccess.getTypeRefRule()
+				if (rule == grammarAccess.getBogusTypeRefRule()
+						|| rule == grammarAccess.getTypeRefWithModifiersRule()) {
+					sequence_TypeRefWithModifiers_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRefRule()
+						|| rule == grammarAccess.getUnionTypeExpressionRule()
+						|| action == grammarAccess.getUnionTypeExpressionAccess().getUnionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getIntersectionTypeExpressionRule()
+						|| action == grammarAccess.getIntersectionTypeExpressionAccess().getIntersectionTypeExpressionTypeRefsAction_1_0()
+						|| rule == grammarAccess.getPrimaryTypeExpressionRule()
 						|| rule == grammarAccess.getTypeArgumentRule()) {
-					sequence_TypeRef_UnionTypeExpression(context, (UnionTypeExpression) semanticObject); 
+					sequence_TypeRefWithModifiers_UnionTypeExpression_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
-						|| rule == grammarAccess.getUnionTypeExpressionRule()) {
-					sequence_UnionTypeExpression(context, (UnionTypeExpression) semanticObject); 
+						|| rule == grammarAccess.getUnionTypeExpressionOLDRule()) {
+					sequence_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -240,6 +329,87 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     ArrayTypeRef returns ParameterizedTypeRef
+	 *
+	 * Constraint:
+	 *     (arrayTypeLiteral?='[' typeArgs+=TypeArgument)
+	 */
+	protected void sequence_ArrayTypeRef(ISerializationContext context, ParameterizedTypeRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRefFunctionTypeExpression returns ParameterizedTypeRef
+	 *     TypeRefForCast returns ParameterizedTypeRef
+	 *
+	 * Constraint:
+	 *     ((declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)?) | (arrayTypeLiteral?='[' typeArgs+=TypeArgument))
+	 */
+	protected void sequence_ArrayTypeRef_ParameterizedTypeRefNominal(ISerializationContext context, ParameterizedTypeRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRef returns ParameterizedTypeRef
+	 *     UnionTypeExpression returns ParameterizedTypeRef
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ParameterizedTypeRef
+	 *     IntersectionTypeExpression returns ParameterizedTypeRef
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ParameterizedTypeRef
+	 *     PrimaryTypeExpression returns ParameterizedTypeRef
+	 *     TypeArgument returns ParameterizedTypeRef
+	 *
+	 * Constraint:
+	 *     (
+	 *         undefModifier=UndefModifierToken | 
+	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? undefModifier=UndefModifierToken?) | 
+	 *         (arrayTypeLiteral?='[' typeArgs+=TypeArgument)
+	 *     )
+	 */
+	protected void sequence_ArrayTypeRef_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRefForCast returns FunctionTypeExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             declaredThisType=TypeRefFunctionTypeExpression? 
+	 *             (ownedTypeVars+=TypeVariable ownedTypeVars+=TypeVariable*)? 
+	 *             (
+	 *                 returnTypeRef=TypeRef | 
+	 *                 (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter* (returnTypeRef=TypeRef | returnTypeRef=PrimaryTypeExpression))
+	 *             )?
+	 *         ) | 
+	 *         returnTypeRef=PrimaryTypeExpression
+	 *     )?
+	 */
+	protected void sequence_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ArrowFunctionTypeExpression returns FunctionTypeExpression
+	 *
+	 * Constraint:
+	 *     ((fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? returnTypeRef=PrimaryTypeExpression)
+	 */
+	protected void sequence_ArrowFunctionTypeExpression_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     TypeRefWithoutModifiers returns ClassifierTypeRef
 	 *     TypeRefFunctionTypeExpression returns ClassifierTypeRef
 	 *     TypeRefForCast returns ClassifierTypeRef
@@ -262,12 +432,19 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     TypeRef returns ClassifierTypeRef
+	 *     UnionTypeExpression returns ClassifierTypeRef
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ClassifierTypeRef
+	 *     IntersectionTypeExpression returns ClassifierTypeRef
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ClassifierTypeRef
+	 *     PrimaryTypeExpression returns ClassifierTypeRef
+	 *     BogusTypeRef returns ClassifierTypeRef
+	 *     TypeRefWithModifiers returns ClassifierTypeRef
 	 *     TypeArgument returns ClassifierTypeRef
 	 *
 	 * Constraint:
 	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
-	protected void sequence_ClassifierTypeRef_TypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
+	protected void sequence_ClassifierTypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -296,12 +473,51 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     TypeRef returns ConstructorTypeRef
+	 *     UnionTypeExpression returns ConstructorTypeRef
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ConstructorTypeRef
+	 *     IntersectionTypeExpression returns ConstructorTypeRef
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ConstructorTypeRef
+	 *     PrimaryTypeExpression returns ConstructorTypeRef
+	 *     BogusTypeRef returns ConstructorTypeRef
+	 *     TypeRefWithModifiers returns ConstructorTypeRef
 	 *     TypeArgument returns ConstructorTypeRef
 	 *
 	 * Constraint:
 	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
-	protected void sequence_ConstructorTypeRef_TypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
+	protected void sequence_ConstructorTypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRef returns FunctionTypeExpression
+	 *     UnionTypeExpression returns FunctionTypeExpression
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns FunctionTypeExpression
+	 *     IntersectionTypeExpression returns FunctionTypeExpression
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns FunctionTypeExpression
+	 *     PrimaryTypeExpression returns FunctionTypeExpression
+	 *     TypeArgument returns FunctionTypeExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         returnTypeRef=PrimaryTypeExpression | 
+	 *         (
+	 *             declaredThisType=TypeRefFunctionTypeExpression? 
+	 *             (ownedTypeVars+=TypeVariable ownedTypeVars+=TypeVariable*)? 
+	 *             (
+	 *                 (returnTypeRef=TypeRef? undefModifier=UndefModifierToken?) | 
+	 *                 (
+	 *                     fpars+=TAnonymousFormalParameter 
+	 *                     fpars+=TAnonymousFormalParameter* 
+	 *                     (returnTypeRef=PrimaryTypeExpression | (returnTypeRef=TypeRef? undefModifier=UndefModifierToken?))
+	 *                 )
+	 *             )
+	 *         )
+	 *     )?
+	 */
+	protected void sequence_FunctionTypeExpressionOLD_PrimaryTypeExpression_TAnonymousFormalParameterList_TypeRefWithModifiers(ISerializationContext context, FunctionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -309,8 +525,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns FunctionTypeExpression
-	 *     TypeRefForCast returns FunctionTypeExpression
-	 *     FunctionTypeExpression returns FunctionTypeExpression
+	 *     FunctionTypeExpressionOLD returns FunctionTypeExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -320,15 +535,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         returnTypeRef=TypeRef?
 	 *     )
 	 */
-	protected void sequence_FunctionTypeExpression_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
+	protected void sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     TypeRef returns FunctionTypeExpression
-	 *     TypeArgument returns FunctionTypeExpression
+	 *     BogusTypeRef returns FunctionTypeExpression
+	 *     TypeRefWithModifiers returns FunctionTypeExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -339,7 +554,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         undefModifier=UndefModifierToken?
 	 *     )
 	 */
-	protected void sequence_FunctionTypeExpression_TAnonymousFormalParameterList_TypeRef(ISerializationContext context, FunctionTypeExpression semanticObject) {
+	protected void sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList_TypeRefWithModifiers(ISerializationContext context, FunctionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -348,12 +563,25 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns IntersectionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns IntersectionTypeExpression
-	 *     IntersectionTypeExpression returns IntersectionTypeExpression
+	 *     IntersectionTypeExpressionOLD returns IntersectionTypeExpression
 	 *
 	 * Constraint:
 	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers*)
 	 */
-	protected void sequence_IntersectionTypeExpression(ISerializationContext context, IntersectionTypeExpression semanticObject) {
+	protected void sequence_IntersectionTypeExpressionOLD(ISerializationContext context, IntersectionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BogusTypeRef returns IntersectionTypeExpression
+	 *     TypeRefWithModifiers returns IntersectionTypeExpression
+	 *
+	 * Constraint:
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 */
+	protected void sequence_IntersectionTypeExpressionOLD_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -361,20 +589,26 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     TypeRef returns IntersectionTypeExpression
+	 *     UnionTypeExpression returns IntersectionTypeExpression
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns IntersectionTypeExpression
+	 *     IntersectionTypeExpression returns IntersectionTypeExpression
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns IntersectionTypeExpression
+	 *     PrimaryTypeExpression returns IntersectionTypeExpression
 	 *     TypeArgument returns IntersectionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     (
+	 *         (typeRefs+=IntersectionTypeExpression_IntersectionTypeExpression_1_0 typeRefs+=PrimaryTypeExpression+) | 
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     )
 	 */
-	protected void sequence_IntersectionTypeExpression_TypeRef(ISerializationContext context, IntersectionTypeExpression semanticObject) {
+	protected void sequence_IntersectionTypeExpression_IntersectionTypeExpressionOLD_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     TypeRefFunctionTypeExpression returns ParameterizedTypeRef
-	 *     TypeRefForCast returns ParameterizedTypeRef
 	 *     TypeRefInClassifierType returns ParameterizedTypeRef
 	 *     ParameterizedTypeRef returns ParameterizedTypeRef
 	 *     ParameterizedTypeRefNominal returns ParameterizedTypeRef
@@ -389,20 +623,8 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     TypeRefWithoutModifiers returns ParameterizedTypeRef
-	 *
-	 * Constraint:
-	 *     (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'?)
-	 */
-	protected void sequence_ParameterizedTypeRefNominal_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TypeRef returns ParameterizedTypeRef
-	 *     TypeArgument returns ParameterizedTypeRef
+	 *     BogusTypeRef returns ParameterizedTypeRef
+	 *     TypeRefWithModifiers returns ParameterizedTypeRef
 	 *
 	 * Constraint:
 	 *     (
@@ -410,7 +632,19 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? undefModifier=UndefModifierToken?)
 	 *     )
 	 */
-	protected void sequence_ParameterizedTypeRefNominal_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
+	protected void sequence_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRefWithoutModifiers returns ParameterizedTypeRef
+	 *
+	 * Constraint:
+	 *     (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'?)
+	 */
+	protected void sequence_ParameterizedTypeRefNominal_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -437,25 +671,14 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     TypeRefWithoutModifiers returns ParameterizedTypeRefStructural
-	 *
-	 * Constraint:
-	 *     (
-	 *         definedTypingStrategy=TypingStrategyUseSiteOperator 
-	 *         declaredType=[Type|TypeReferenceName] 
-	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
-	 *         astStructuralMembers+=TStructMember* 
-	 *         dynamic?='+'?
-	 *     )
-	 */
-	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     TypeRef returns ParameterizedTypeRefStructural
+	 *     UnionTypeExpression returns ParameterizedTypeRefStructural
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ParameterizedTypeRefStructural
+	 *     IntersectionTypeExpression returns ParameterizedTypeRefStructural
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ParameterizedTypeRefStructural
+	 *     PrimaryTypeExpression returns ParameterizedTypeRefStructural
+	 *     BogusTypeRef returns ParameterizedTypeRefStructural
+	 *     TypeRefWithModifiers returns ParameterizedTypeRefStructural
 	 *     TypeArgument returns ParameterizedTypeRefStructural
 	 *
 	 * Constraint:
@@ -468,7 +691,25 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         undefModifier=UndefModifierToken?
 	 *     )
 	 */
-	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
+	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeRefWithoutModifiers returns ParameterizedTypeRefStructural
+	 *
+	 * Constraint:
+	 *     (
+	 *         definedTypingStrategy=TypingStrategyUseSiteOperator 
+	 *         declaredType=[Type|TypeReferenceName] 
+	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
+	 *         astStructuralMembers+=TStructMember* 
+	 *         dynamic?='+'?
+	 *     )
+	 */
+	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -557,25 +798,32 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     TypeRefWithoutModifiers returns ThisTypeRefStructural
+	 *     TypeRef returns ThisTypeRefStructural
+	 *     UnionTypeExpression returns ThisTypeRefStructural
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ThisTypeRefStructural
+	 *     IntersectionTypeExpression returns ThisTypeRefStructural
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ThisTypeRefStructural
+	 *     PrimaryTypeExpression returns ThisTypeRefStructural
+	 *     BogusTypeRef returns ThisTypeRefStructural
+	 *     TypeRefWithModifiers returns ThisTypeRefStructural
+	 *     TypeArgument returns ThisTypeRefStructural
 	 *
 	 * Constraint:
-	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'?)
+	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'? undefModifier=UndefModifierToken?)
 	 */
-	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
+	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     TypeRef returns ThisTypeRefStructural
-	 *     TypeArgument returns ThisTypeRefStructural
+	 *     TypeRefWithoutModifiers returns ThisTypeRefStructural
 	 *
 	 * Constraint:
-	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'? undefModifier=UndefModifierToken?)
+	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'?)
 	 */
-	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
+	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -619,6 +867,26 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     TypeRef returns ThisTypeRefNominal
+	 *     UnionTypeExpression returns ThisTypeRefNominal
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns ThisTypeRefNominal
+	 *     IntersectionTypeExpression returns ThisTypeRefNominal
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns ThisTypeRefNominal
+	 *     PrimaryTypeExpression returns ThisTypeRefNominal
+	 *     BogusTypeRef returns ThisTypeRefNominal
+	 *     TypeRefWithModifiers returns ThisTypeRefNominal
+	 *     TypeArgument returns ThisTypeRefNominal
+	 *
+	 * Constraint:
+	 *     (dynamic?='+'? undefModifier=UndefModifierToken?)
+	 */
+	protected void sequence_ThisTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefNominal semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     TypeRefWithoutModifiers returns ThisTypeRefNominal
 	 *
 	 * Constraint:
@@ -631,13 +899,13 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     TypeRef returns ThisTypeRefNominal
-	 *     TypeArgument returns ThisTypeRefNominal
+	 *     BogusTypeRef returns UnionTypeExpression
+	 *     TypeRefWithModifiers returns UnionTypeExpression
 	 *
 	 * Constraint:
-	 *     (dynamic?='+'? undefModifier=UndefModifierToken?)
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
 	 */
-	protected void sequence_ThisTypeRefNominal_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefNominal semanticObject) {
+	protected void sequence_TypeRefWithModifiers_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -645,12 +913,20 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     TypeRef returns UnionTypeExpression
+	 *     UnionTypeExpression returns UnionTypeExpression
+	 *     UnionTypeExpression.UnionTypeExpression_1_0 returns UnionTypeExpression
+	 *     IntersectionTypeExpression returns UnionTypeExpression
+	 *     IntersectionTypeExpression.IntersectionTypeExpression_1_0 returns UnionTypeExpression
+	 *     PrimaryTypeExpression returns UnionTypeExpression
 	 *     TypeArgument returns UnionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     (
+	 *         (typeRefs+=UnionTypeExpression_UnionTypeExpression_1_0 typeRefs+=IntersectionTypeExpression+) | 
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     )
 	 */
-	protected void sequence_TypeRef_UnionTypeExpression(ISerializationContext context, UnionTypeExpression semanticObject) {
+	protected void sequence_TypeRefWithModifiers_UnionTypeExpression_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -687,12 +963,12 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns UnionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns UnionTypeExpression
-	 *     UnionTypeExpression returns UnionTypeExpression
+	 *     UnionTypeExpressionOLD returns UnionTypeExpression
 	 *
 	 * Constraint:
 	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers*)
 	 */
-	protected void sequence_UnionTypeExpression(ISerializationContext context, UnionTypeExpression semanticObject) {
+	protected void sequence_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

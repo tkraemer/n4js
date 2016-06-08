@@ -881,6 +881,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM__TYPE_ARGS = TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS;
 
 	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1213,6 +1222,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__TYPE_ARGS = PARAMETERIZED_TYPE_REF_IM__TYPE_ARGS;
+
+	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
