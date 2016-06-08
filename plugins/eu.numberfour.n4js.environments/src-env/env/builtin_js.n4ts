@@ -1833,11 +1833,14 @@ public providedByRuntime interface ~IteratorEntry<out T> {
 	 * Has the value false if the iterator was able to produce the next value in the sequence. This is
 	 * equivalent of not specifying the done property altogether.
 	 */
-	public get done(): boolean
+	public done: boolean;
+//	public get done(): boolean
 	/**
 	 * Any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 */
-	public get value(): T?
+	// TODO dirty: we use covariant T at invariant position (type of field) - only works because no validation in n4ts!
+	public value: T?;
+//	public get value(): T
 }
 
 /**
