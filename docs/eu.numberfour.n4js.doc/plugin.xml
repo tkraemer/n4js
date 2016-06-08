@@ -20,4 +20,17 @@ Contributors:
       </toc>
    </extension>
 
+   <extension
+         point="org.eclipse.help">
+      <launchConfigurationType
+            delegate="java.ActiveHelpOpenDialogAction"
+            delegateDescription="Testing Active Help"
+            delegateName="Active Help Launcher"
+            id="ActiveHelpOpenDialogAction"
+            modes="run"
+            name="Active Help">
+      </launchConfigurationType>
+   </extension>
+
+
 </plugin>

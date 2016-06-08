@@ -4,3 +4,4 @@ Bundle-Name: N4JS Documentation
 Bundle-SymbolicName: eu.numberfour.n4js.doc;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: NumberFour AG
+Require-Bundle: org.eclipse.help
