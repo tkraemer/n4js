@@ -231,6 +231,11 @@ TypeVariable:
 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
 	declaredUpperBounds+=ParameterizedTypeRef)*)?;
 
+TypeVariableWithDefSiteVariance returns TypeVariable:
+	(declaredCovariant?='out' | declaredContravariant?='in')?
+	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+
 TypesIdentifier:
 	IDENTIFIER
 	// no ECMAScript keywords, only in certain contexts

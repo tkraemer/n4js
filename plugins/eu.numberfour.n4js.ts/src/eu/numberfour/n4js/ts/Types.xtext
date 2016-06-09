@@ -192,7 +192,7 @@ TClass:
 	(declaredAbstract?='abstract')?
 	(declaredFinal?='final')?
 	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier
-	( '<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>' )?
+	( '<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>' )?
 	('extends'  superClassRef=ParameterizedTypeRefNominal)?
 	('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	annotations+=TAnnotation*
@@ -209,7 +209,7 @@ TInterface:
 	declaredTypeAccessModifier=TypeAccessModifier
 	(declaredProvidedByRuntime?='providedByRuntime')?
 	'interface'  typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier
-	( '<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>' )?
+	( '<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>' )?
 	('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	annotations+=TAnnotation*
 	'{' (ownedMembers+=TMember)* '}'

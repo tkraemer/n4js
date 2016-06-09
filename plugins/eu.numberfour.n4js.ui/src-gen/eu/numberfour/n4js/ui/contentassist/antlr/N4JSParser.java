@@ -134,6 +134,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeArgumentAccess().getAlternatives(), "rule__TypeArgument__Alternatives");
 					put(grammarAccess.getWildcardAccess().getAlternatives_1(), "rule__Wildcard__Alternatives_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getAlternatives(), "rule__WildcardNewNotation__Alternatives");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAlternatives_0(), "rule__TypeVariableWithDefSiteVariance__Alternatives_0");
 					put(grammarAccess.getTypesIdentifierAccess().getAlternatives(), "rule__TypesIdentifier__Alternatives");
 					put(grammarAccess.getTIdentifierAccess().getAlternatives(), "rule__TIdentifier__Alternatives");
 					put(grammarAccess.getVariableStatementKeywordAccess().getAlternatives(), "rule__VariableStatementKeyword__Alternatives");
@@ -616,6 +617,9 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWildcardAccess().getGroup_1_1(), "rule__Wildcard__Group_1_1__0");
 					put(grammarAccess.getWildcardNewNotationAccess().getGroup_0(), "rule__WildcardNewNotation__Group_0__0");
 					put(grammarAccess.getWildcardNewNotationAccess().getGroup_1(), "rule__WildcardNewNotation__Group_1__0");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup(), "rule__TypeVariableWithDefSiteVariance__Group__0");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2(), "rule__TypeVariableWithDefSiteVariance__Group_2__0");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2(), "rule__TypeVariableWithDefSiteVariance__Group_2_2__0");
 					put(grammarAccess.getScriptAccess().getAnnotationsAssignment_1(), "rule__Script__AnnotationsAssignment_1");
 					put(grammarAccess.getScriptAccess().getScriptElementsAssignment_2(), "rule__Script__ScriptElementsAssignment_2");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getDeclaredModifiersAssignment_1_2_1_0_0(), "rule__AnnotatedScriptElement__DeclaredModifiersAssignment_1_2_1_0_0");
@@ -1021,6 +1025,11 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundAssignment_0_1(), "rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0");
 					put(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1(), "rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantAssignment_0_0(), "rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantAssignment_0_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameAssignment_1(), "rule__TypeVariableWithDefSiteVariance__NameAssignment_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1");
 				}
 			};
 		}

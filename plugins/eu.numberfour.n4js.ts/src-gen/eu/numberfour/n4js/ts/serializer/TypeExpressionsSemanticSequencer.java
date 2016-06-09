@@ -313,8 +313,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 				sequence_TStructSetter(context, (TStructSetter) semanticObject); 
 				return; 
 			case TypesPackage.TYPE_VARIABLE:
-				sequence_TypeVariable(context, (TypeVariable) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getTypeVariableWithDefSiteVarianceRule()) {
+					sequence_TypeVariableWithDefSiteVariance(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeVariableRule()) {
+					sequence_TypeVariable(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -920,6 +927,22 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     )
 	 */
 	protected void sequence_TypeRefWithModifiers_UnionTypeExpression_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeVariableWithDefSiteVariance returns TypeVariable
+	 *
+	 * Constraint:
+	 *     (
+	 *         (declaredCovariant?='out' | declaredContravariant?='in')? 
+	 *         name=IDENTIFIER 
+	 *         (declaredUpperBounds+=ParameterizedTypeRef declaredUpperBounds+=ParameterizedTypeRef*)?
+	 *     )
+	 */
+	protected void sequence_TypeVariableWithDefSiteVariance(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

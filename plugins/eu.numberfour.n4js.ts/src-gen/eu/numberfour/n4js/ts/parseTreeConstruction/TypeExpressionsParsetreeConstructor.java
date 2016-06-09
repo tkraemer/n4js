@@ -64,6 +64,7 @@ protected class ThisRootNode extends RootToken {
 			case 31: return new Wildcard_Group(this, this, 31, inst);
 			case 32: return new WildcardNewNotation_Alternatives(this, this, 32, inst);
 			case 33: return new TypeVariable_Group(this, this, 33, inst);
+			case 34: return new TypeVariableWithDefSiteVariance_Group(this, this, 34, inst);
 			default: return null;
 		}	
 	}	
@@ -8749,6 +8750,358 @@ protected class TypeVariable_DeclaredUpperBoundsAssignment_1_2_1 extends Assignm
 
 
 /************ end Rule TypeVariable ****************/
+
+
+/************ begin Rule TypeVariableWithDefSiteVariance ****************
+ *
+ * TypeVariableWithDefSiteVariance TypeVariable:
+ * 	(declaredCovariant?='out' | declaredContravariant?='in')?
+ * 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+ * 	declaredUpperBounds+=ParameterizedTypeRef)*)?
+ *
+ **/
+
+// (declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER ('extends'
+// declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+protected class TypeVariableWithDefSiteVariance_Group extends GroupToken {
+	
+	public TypeVariableWithDefSiteVariance_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_Group_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypeVariableWithDefSiteVariance_NameAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getTypeVariableWithDefSiteVarianceRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// (declaredCovariant?='out' | declaredContravariant?='in')?
+protected class TypeVariableWithDefSiteVariance_Alternatives_0 extends AlternativesToken {
+
+	public TypeVariableWithDefSiteVariance_Alternatives_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAlternatives_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_DeclaredCovariantAssignment_0_0(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypeVariableWithDefSiteVariance_DeclaredContravariantAssignment_0_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// declaredCovariant?='out'
+protected class TypeVariableWithDefSiteVariance_DeclaredCovariantAssignment_0_0 extends AssignmentToken  {
+	
+	public TypeVariableWithDefSiteVariance_DeclaredCovariantAssignment_0_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantAssignment_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredCovariant",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredCovariant");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KEYWORD;
+			element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantOutKeyword_0_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// declaredContravariant?='in'
+protected class TypeVariableWithDefSiteVariance_DeclaredContravariantAssignment_0_1 extends AssignmentToken  {
+	
+	public TypeVariableWithDefSiteVariance_DeclaredContravariantAssignment_0_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantAssignment_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredContravariant",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredContravariant");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KEYWORD;
+			element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantInKeyword_0_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// name=IDENTIFIER
+protected class TypeVariableWithDefSiteVariance_NameAssignment_1 extends AssignmentToken  {
+	
+	public TypeVariableWithDefSiteVariance_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_Alternatives_0(lastRuleCallOrigin, this, 0, inst);
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index - 1, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameIDENTIFIERTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameIDENTIFIERTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+protected class TypeVariableWithDefSiteVariance_Group_2 extends GroupToken {
+	
+	public TypeVariableWithDefSiteVariance_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_Group_2_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// 'extends'
+protected class TypeVariableWithDefSiteVariance_ExtendsKeyword_2_0 extends KeywordToken  {
+	
+	public TypeVariableWithDefSiteVariance_ExtendsKeyword_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getExtendsKeyword_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// declaredUpperBounds+=ParameterizedTypeRef
+protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1 extends AssignmentToken  {
+	
+	public TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_ExtendsKeyword_2_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ('&' declaredUpperBounds+=ParameterizedTypeRef)*
+protected class TypeVariableWithDefSiteVariance_Group_2_2 extends GroupToken {
+	
+	public TypeVariableWithDefSiteVariance_Group_2_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// '&'
+protected class TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0 extends KeywordToken  {
+	
+	public TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAmpersandKeyword_2_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_Group_2_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// declaredUpperBounds+=ParameterizedTypeRef
+protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1 extends AssignmentToken  {
+	
+	public TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+
+/************ end Rule TypeVariableWithDefSiteVariance ****************/
 
 
 

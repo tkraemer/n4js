@@ -440,8 +440,16 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				sequence_TypeDefs(context, (TypeDefs) semanticObject); 
 				return; 
 			case TypesPackage.TYPE_VARIABLE:
-				sequence_TypeVariable(context, (TypeVariable) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getTypeVariableWithDefSiteVarianceRule()) {
+					sequence_TypeVariableWithDefSiteVariance(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeRule()
+						|| rule == grammarAccess.getTypeVariableRule()) {
+					sequence_TypeVariable(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else break;
 			case TypesPackage.UNDEFINED_TYPE:
 				sequence_UndefinedType(context, (UndefinedType) semanticObject); 
 				return; 
@@ -1162,7 +1170,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredFinal?='final'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
 	 *         name=TypesIdentifier 
-	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
+	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         superClassRef=ParameterizedTypeRefNominal? 
 	 *         (implementedInterfaceRefs+=ParameterizedTypeRefNominal implementedInterfaceRefs+=ParameterizedTypeRefNominal*)? 
 	 *         annotations+=TAnnotation* 
@@ -1291,7 +1299,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
 	 *         name=TypesIdentifier 
-	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
+	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         (superInterfaceRefs+=ParameterizedTypeRefNominal superInterfaceRefs+=ParameterizedTypeRefNominal*)? 
 	 *         annotations+=TAnnotation* 
 	 *         ownedMembers+=TMember*
@@ -1632,6 +1640,22 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
 	 */
 	protected void sequence_TypeRef_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeVariableWithDefSiteVariance returns TypeVariable
+	 *
+	 * Constraint:
+	 *     (
+	 *         (declaredCovariant?='out' | declaredContravariant?='in')? 
+	 *         name=IDENTIFIER 
+	 *         (declaredUpperBounds+=ParameterizedTypeRef declaredUpperBounds+=ParameterizedTypeRef*)?
+	 *     )
+	 */
+	protected void sequence_TypeVariableWithDefSiteVariance(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
