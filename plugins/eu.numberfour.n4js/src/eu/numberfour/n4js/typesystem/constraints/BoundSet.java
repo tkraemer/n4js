@@ -57,7 +57,6 @@ import it.xsemantics.runtime.RuleEnvironment;
 	private static final boolean DEBUG = InferenceContext.DEBUG;
 
 	private final InferenceContext ic;
-	private final Reducer redu;
 
 	private final RuleEnvironment G;
 	private final N4JSTypeSystem ts;
@@ -85,9 +84,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Creates an instance.
 	 */
-	public BoundSet(InferenceContext ic, Reducer redu, RuleEnvironment G, N4JSTypeSystem ts) {
+	public BoundSet(InferenceContext ic, RuleEnvironment G, N4JSTypeSystem ts) {
 		this.ic = ic;
-		this.redu = redu;
 		this.G = G;
 		this.ts = ts;
 	}
@@ -341,7 +339,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 						if (newConstraint != null) {
 							// this is where incorporation triggers reduction (of the new constraint)
 							// reduction may in turn trigger incorporation (provided it adds bounds)
-							updated |= redu.reduce(newConstraint);
+							updated |= ic.reducer.reduce(newConstraint);
 						}
 						if (ic.isDoomed()) {
 							return;
