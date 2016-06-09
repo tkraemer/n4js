@@ -35,6 +35,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.PrimitiveType;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
@@ -98,8 +99,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 *
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
-	private boolean addBound(TypeVariable infVar, TypeRef bound, Variance variance) {
-		assert ic.isInferenceVariable(infVar);
+	private boolean addBound(InferenceVariable infVar, TypeRef bound, Variance variance) {
 		return ic.currentBounds.addBound(new TypeBound(infVar, bound, variance));
 	}
 
@@ -217,7 +217,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 						}
 					}
 				}
-				if (idx == -1 && left instanceof ParameterizedTypeRef && !ic.isInferenceVariable(left)) {
+				if (idx == -1 && left instanceof ParameterizedTypeRef && !TypeUtils.isInferenceVariable(left)) {
 					final Type leftDecl = left.getDeclaredType();
 					if (idx == -1 && leftDecl != null) {
 						// choose first matching declared type
@@ -298,7 +298,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		final int typeRefsSize = typeRefs.size();
 		for (int i = 0; i < typeRefsSize; i++) {
 			final TypeRef currTypeRef = typeRefs.get(i);
-			if (ic.isInferenceVariable(currTypeRef)) {
+			if (TypeUtils.isInferenceVariable(currTypeRef)) {
 				return i;
 			}
 		}
@@ -317,19 +317,19 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean reduceTypeRef(TypeRef left, TypeRef right, Variance variance) {
-		final boolean isLeftProper = ic.isProper(left);
-		final boolean isRightProper = ic.isProper(right);
+		final boolean isLeftProper = TypeUtils.isProper(left);
+		final boolean isRightProper = TypeUtils.isProper(right);
 		if (isLeftProper && isRightProper) {
 			return reduceProper(left, right, variance);
 		}
 
-		final boolean isLeftInfVar = ic.isInferenceVariable(left);
-		final boolean isRightInfVar = ic.isInferenceVariable(right);
+		final boolean isLeftInfVar = TypeUtils.isInferenceVariable(left);
+		final boolean isRightInfVar = TypeUtils.isInferenceVariable(right);
 		if (isLeftInfVar || isRightInfVar) {
 			if (isLeftInfVar) {
-				return addBound((TypeVariable) left.getDeclaredType(), right, variance);
+				return addBound((InferenceVariable) left.getDeclaredType(), right, variance);
 			} else {
-				return addBound((TypeVariable) right.getDeclaredType(), left, variance.inverse());
+				return addBound((InferenceVariable) right.getDeclaredType(), left, variance.inverse());
 			}
 		}
 
@@ -686,7 +686,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		// step 1: replace all inference variables by UnknownTypeRef
 		final TypeRef unknown = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
 		final RuleEnvironment G_temp = RuleEnvironmentExtensions.newRuleEnvironment(G);
-		for (TypeVariable iv : ic.getInferenceVariables()) {
+		for (InferenceVariable iv : ic.getInferenceVariables()) {
 			RuleEnvironmentExtensions.addTypeMapping(G_temp, iv, unknown);
 		}
 		final TypeArgument leftSubst = ts.substTypeVariables(G_temp, left).getValue();

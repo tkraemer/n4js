@@ -33,6 +33,7 @@ import com.google.common.collect.SetMultimap;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.util.Variance;
@@ -62,9 +63,9 @@ import it.xsemantics.runtime.RuleEnvironment;
 	private final N4JSTypeSystem ts;
 
 	/** Bounds within this bound set, stored per inference variable. */
-	private final SetMultimap<TypeVariable, TypeBound> boundsPerInfVar = LinkedHashMultimap.create();
+	private final SetMultimap<InferenceVariable, TypeBound> boundsPerInfVar = LinkedHashMultimap.create();
 	/** Instantiations among the bounds of this set, i.e. bounds of the form `α = P` with P being a proper type. */
-	private final Map<TypeVariable, TypeRef> instantiations = new LinkedHashMap<>();
+	private final Map<InferenceVariable, TypeRef> instantiations = new LinkedHashMap<>();
 
 	// used to keep track of what bounds have already been incorporated
 	private final Set<TypeBound> incorporatedBounds = new HashSet<>();
@@ -115,21 +116,21 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Returns all type bounds from this bounds set having the given inference variable on their LHS.
 	 */
-	public Set<TypeBound> getBounds(TypeVariable infVar) {
+	public Set<TypeBound> getBounds(InferenceVariable infVar) {
 		return boundsPerInfVar.get(infVar); // note: returns empty set, not null if no bounds for infVar found
 	}
 
 	/**
 	 * Does the argument appear on the left-hand side of one ore more bounds?
 	 */
-	public boolean isBounded(TypeVariable infVar) {
+	public boolean isBounded(InferenceVariable infVar) {
 		return boundsPerInfVar.containsKey(infVar);
 	}
 
 	/**
-	 * Same as {@link #isBounded(TypeVariable)}, but inverted. Provided for readability reasons.
+	 * Same as {@link #isBounded(InferenceVariable)}, but inverted. Provided for readability reasons.
 	 */
-	public boolean isUnbounded(TypeVariable infVar) {
+	public boolean isUnbounded(InferenceVariable infVar) {
 		return !boundsPerInfVar.containsKey(infVar);
 	}
 
@@ -171,14 +172,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean internal_addBound(TypeBound bound) {
-		assert ic.isInferenceVariable(bound.left);
 		final boolean wasAdded = boundsPerInfVar.put(bound.left, bound);
 		if (wasAdded) {
 			if (TypeUtils.isRawTypeRef(bound.right)) {
 				haveRawTypeRef = true;
 			}
 			if (bound.variance == INV) {
-				if (ic.isProper(bound.right) && !TypeUtils.isRawTypeRef(bound.right)) {
+				if (TypeUtils.isProper(bound.right) && !TypeUtils.isRawTypeRef(bound.right)) {
 					instantiations.put(bound.left, bound.right);
 				}
 			}
@@ -200,7 +200,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Returns all instantiations of inference variables among the type bounds of the receiving bound set.
 	 */
-	public Map<TypeVariable, TypeRef> getInstantiations() {
+	public Map<InferenceVariable, TypeRef> getInstantiations() {
 		return ImmutableMap.copyOf(instantiations);
 	}
 
@@ -208,7 +208,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Return all lower bounds of the given inference variable, i.e. all type references TR appearing as RHS of bounds
 	 * of the form `infVar :> TR` or `infVar = TR`.
 	 */
-	public TypeRef[] collectLowerBounds(TypeVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
+	public TypeRef[] collectLowerBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
 		return collectBounds(infVar, onlyProper, resolveRawTypes,
 				b -> (b.variance == CONTRA || b.variance == INV) && !(b.variance == CONTRA && b.right.isBottomType()));
 	}
@@ -217,19 +217,19 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Return all upper bounds of the given inference variable, i.e. all type references TR appearing as RHS of bounds
 	 * of the form `infVar <: TR` or `infVar = TR`.
 	 */
-	public TypeRef[] collectUpperBounds(TypeVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
+	public TypeRef[] collectUpperBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
 		return collectBounds(infVar, onlyProper, resolveRawTypes,
 				b -> (b.variance == CO || b.variance == INV) && !(b.variance == CO && b.right.isTopType()));
 	}
 
-	private TypeRef[] collectBounds(TypeVariable infVar, boolean onlyProper, boolean resolveRawTypes,
+	private TypeRef[] collectBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes,
 			Predicate<? super TypeBound> predicate) {
 		final Set<TypeBound> bounds = resolveRawTypes ? resolveRawTypes(getBounds(infVar)) : getBounds(infVar);
 		Stream<TypeRef> result = bounds.stream()
 				.filter(predicate)
 				.map(b -> b.right);
 		if (onlyProper) {
-			result = result.filter(t -> ic.isProper(t));
+			result = result.filter(t -> TypeUtils.isProper(t));
 		}
 		return result.toArray(TypeRef[]::new);
 	}
@@ -284,7 +284,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	/**
 	 * Tells if an instantiation was recorded via method {@link #addBound(TypeBound)} for the given inference variable.
 	 */
-	public boolean isInstantiated(TypeVariable infVar) {
+	public boolean isInstantiated(InferenceVariable infVar) {
 		return infVar != null && instantiations.containsKey(infVar);
 	}
 
@@ -292,7 +292,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Tells if the first argument is constrained by the second (irrespective of whether that second argument is
 	 * instantiated).
 	 */
-	public boolean dependsOnResolutionOf(TypeVariable infVar, TypeVariable candidate) {
+	public boolean dependsOnResolutionOf(InferenceVariable infVar, InferenceVariable candidate) {
 		for (TypeBound currBound : getBounds(infVar)) {
 			if (TypeUtils.isOrContainsRefToTypeVar(currBound.right, candidate)) {
 				return true;
@@ -302,7 +302,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	public void dumpInstantiations() {
-		for (Entry<TypeVariable, TypeRef> e : instantiations.entrySet()) {
+		for (Entry<InferenceVariable, TypeRef> e : instantiations.entrySet()) {
 			log(String.valueOf(e.getKey().getTypeAsString()) + " -> " + e.getValue().getTypeRefAsString());
 		}
 	}
@@ -421,11 +421,11 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Otherwise, <code>null</code> is returned.
 	 */
 	private TypeConstraint combineInvInvWithProperType(TypeBound boundWithProperRHS, TypeBound boundOther) {
-		final TypeVariable alpha = boundWithProperRHS.left;
+		final InferenceVariable alpha = boundWithProperRHS.left;
 		final TypeRef U = boundWithProperRHS.right;
 		final TypeRef T = boundOther.right;
-		if (ic.isProper(U) && TypeUtils.getReferencedTypeVars(T).contains(alpha)) {
-			final TypeVariable beta = boundOther.left;
+		if (TypeUtils.isProper(U) && TypeUtils.getReferencedTypeVars(T).contains(alpha)) {
+			final InferenceVariable beta = boundOther.left;
 			final TypeRef T_subst = substituteInferenceVariable(T, alpha, U); // returns T[α:=U]
 			removeBound(boundOther); // performance tweak: avoid unnecessary growth of bounds
 			return new TypeConstraint(typeRef(beta), T_subst, INV);
@@ -438,8 +438,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * {@code :>}.
 	 */
 	private TypeConstraint combineInvVar(TypeBound boundS, TypeBound boundT) {
-		final TypeVariable alpha = boundS.left;
-		final TypeVariable beta = boundT.left;
+		final InferenceVariable alpha = boundS.left;
+		final InferenceVariable beta = boundT.left;
 		final TypeRef S = boundS.right;
 		final TypeRef T = boundT.right;
 		final Variance Phi = boundT.variance;
@@ -452,9 +452,9 @@ import it.xsemantics.runtime.RuleEnvironment;
 			// (2) `α = S` and `β Φ α` implies `β Φ S`
 			return new TypeConstraint(typeRef(beta), S, Phi);
 		}
-		if (ic.isInferenceVariable(S)) {
+		if (TypeUtils.isInferenceVariable(S)) {
 			// first bound is of the form `α = γ` (with γ being another inference variable)
-			final TypeVariable gamma = (TypeVariable) S.getDeclaredType();
+			final InferenceVariable gamma = (InferenceVariable) S.getDeclaredType();
 			if (gamma == beta) {
 				// (3) `α = β` and `β Φ T` implies `α Φ T`
 				return new TypeConstraint(typeRef(alpha), T, Phi);
@@ -465,7 +465,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 			}
 		}
 		// so, S is not an inference variable
-		if (ic.isProper(S) && TypeUtils.getReferencedTypeVars(T).contains(alpha)) {
+		if (TypeUtils.isProper(S) && TypeUtils.getReferencedTypeVars(T).contains(alpha)) {
 			// (5) `α = S` (where S is proper) and `β Φ T` implies `β Φ T[α:=U]`
 			final TypeRef T_subst = substituteInferenceVariable(T, alpha, S); // returns T[α:=U]
 			removeBound(boundT); // performance tweak: avoid unnecessary growth of bounds
@@ -478,8 +478,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * Case: `α :> S` and `β <: T`.
 	 */
 	private TypeConstraint combineContraCo(TypeBound boundS, TypeBound boundT) {
-		final TypeVariable alpha = boundS.left;
-		final TypeVariable beta = boundT.left;
+		final InferenceVariable alpha = boundS.left;
+		final InferenceVariable beta = boundT.left;
 		final TypeRef S = boundS.right;
 		final TypeRef T = boundT.right;
 		if (alpha == beta) {
@@ -488,8 +488,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return new TypeConstraint(S, T, CO);
 		}
 		// so, α and β are different
-		if (ic.isInferenceVariable(S)) {
-			final TypeVariable gamma = (TypeVariable) S.getDeclaredType();
+		if (TypeUtils.isInferenceVariable(S)) {
+			final InferenceVariable gamma = (InferenceVariable) S.getDeclaredType();
 			if (gamma == T.getDeclaredType()) {
 				// transitivity, using RHS as bridge:
 				// α :> γ and β <: γ implies α :> β
@@ -507,8 +507,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 * </ul>
 	 */
 	private TypeConstraint combineBothCoOrBothContra(TypeBound boundS, TypeBound boundT) {
-		final TypeVariable alpha = boundS.left;
-		final TypeVariable beta = boundT.left;
+		final InferenceVariable alpha = boundS.left;
+		final InferenceVariable beta = boundT.left;
 		final TypeRef S = boundS.right;
 		final TypeRef T = boundT.right;
 		if (alpha == T.getDeclaredType()) {
@@ -524,7 +524,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 		return null;
 	}
 
-	private static TypeRef typeRef(TypeVariable infVar) {
+	private static TypeRef typeRef(InferenceVariable infVar) {
 		return TypeUtils.createTypeRef(infVar, new TypeArgument[0]);
 	}
 
@@ -534,7 +534,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 *
 	 * @return typeRef[infVar:=typeArg]
 	 */
-	private TypeRef substituteInferenceVariable(TypeRef typeRef, TypeVariable infVar, TypeArgument typeArg) {
+	private TypeRef substituteInferenceVariable(TypeRef typeRef, InferenceVariable infVar, TypeArgument typeArg) {
 		final RuleEnvironment Gtemp = RuleEnvironmentExtensions.wrap(this.G);
 		RuleEnvironmentExtensions.addTypeMapping(Gtemp, infVar, typeArg);
 		final TypeRef result = (TypeRef) this.ts.substTypeVariables(Gtemp, typeRef).getValue();

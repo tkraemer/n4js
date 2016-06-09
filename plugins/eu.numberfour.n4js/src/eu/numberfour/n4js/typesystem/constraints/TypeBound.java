@@ -12,21 +12,18 @@ package eu.numberfour.n4js.typesystem.constraints;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeCompareUtils;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
  * Type bounds are similar to {@link TypeConstraint}s, but are required to be of a simpler, more unified form: the LHS
- * must always be an inference variable. The RHS, however, may be a {@link InferenceContext#isProper(TypeArgument)
- * proper} or improper type.
- * <p>
- * Note that this class only enforces the LHS to be a type variable; whether it is actually an inference variable or not
- * is not checked by this class.
+ * must always be an inference variable. The RHS, however, may be a {@link TypeUtils#isProper(TypeArgument) proper} or
+ * improper type.
  */
 /* package */ final class TypeBound {
-	public final TypeVariable left;
+	public final InferenceVariable left;
 	public final TypeRef right;
 	public final Variance variance;
 
@@ -35,7 +32,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 	/**
 	 * Creates an instance.
 	 */
-	public TypeBound(TypeVariable left, TypeRef right, Variance variance) {
+	public TypeBound(InferenceVariable left, TypeRef right, Variance variance) {
 		this.left = left;
 		this.right = right;
 		this.variance = variance;

@@ -34,6 +34,7 @@ import com.google.common.collect.Range;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.util.Variance;
@@ -46,19 +47,19 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * An inference context maintains a set of inference variables together with a set of {@link TypeConstraint constraints}
- * on these inference variables (both provided by the client), and provides functionality to compute a solution for this
- * constraint system, i.e. an instantiation for each inference variable to a {@link #isProper(TypeArgument) proper} type
- * that satisfies all given constraints.
+ * on these inference variables, and provides functionality to compute a solution for this constraint system, i.e. an
+ * instantiation for each inference variable to a {@link TypeUtils#isProper(TypeArgument) proper} type that satisfies
+ * all given constraints.
  *
  * <h1>Terminology</h1>
  *
- * Some helpful terminology:
+ * Some terms and definitions:
  * <ul>
  * <li><b>inference variables</b> are meta-variables for types, i.e. they represent the unknown types searched for while
- * solving the constraint system. Inference variables may appear in type constraints in order to define relations
- * between the inference variables. See {@link #isInferenceVariable(TypeVariable)} for details.
+ * solving a constraint system. Inference variables may appear in type constraints in order to define relations between
+ * those inference variables.
  * <li><b>proper types</b> are types that are not inference variables and do not mention any inference variables (see
- * {@link #isProper(TypeArgument)} for details).
+ * {@link TypeUtils#isProper(TypeArgument)} for details).
  * </ul>
  *
  * <h1>Usage</h1>
@@ -118,7 +119,7 @@ public final class InferenceContext {
 	 * An order-preserving set of inference variables. A type variable is treated as an inference variable if it is
 	 * contained in this set, and otherwise as an ordinary type.
 	 */
-	private final Set<TypeVariable> inferenceVariables = new LinkedHashSet<>();
+	private final Set<InferenceVariable> inferenceVariables = new LinkedHashSet<>();
 
 	/** List of constraints supplied by client. */
 	private final List<TypeConstraint> constraints = new ArrayList<>();
@@ -130,13 +131,13 @@ public final class InferenceContext {
 	/* package */ final BoundSet currentBounds;
 
 	/** Actions registered by client code that will be executed after this constraint system has been solved. */
-	private final List<Consumer<Optional<Map<TypeVariable, TypeRef>>>> onSolvedActions = new ArrayList<>();
+	private final List<Consumer<Optional<Map<InferenceVariable, TypeRef>>>> onSolvedActions = new ArrayList<>();
 
 	/** Tells if {@link #solve()} was invoked. */
 	private boolean isSolved = false;
 
 	/** The solution as returned by {@link #solve()}, or <code>null</code> if unsolvable. */
-	private Map<TypeVariable, TypeRef> solution = null;
+	private Map<InferenceVariable, TypeRef> solution = null;
 
 	/**
 	 * Creates a new, empty inference context for the given inference variables.
@@ -149,7 +150,7 @@ public final class InferenceContext {
 	 *            the meta variables to be inferred.
 	 */
 	public InferenceContext(N4JSTypeSystem ts, TypeSystemHelper tsh, CancelIndicator cancelIndicator,
-			RuleEnvironment G, TypeVariable... inferenceVariables) {
+			RuleEnvironment G, InferenceVariable... inferenceVariables) {
 		Objects.requireNonNull(ts);
 		Objects.requireNonNull(tsh);
 		Objects.requireNonNull(cancelIndicator);
@@ -168,7 +169,7 @@ public final class InferenceContext {
 	 * solution is passed to the given action; in the failure case the argument will be {@link Optional#absent()}. The
 	 * InferenceContext will guarantee that each such action is executed only once.
 	 */
-	public void onSolved(Consumer<Optional<Map<TypeVariable, TypeRef>>> action) {
+	public void onSolved(Consumer<Optional<Map<InferenceVariable, TypeRef>>> action) {
 		onSolvedActions.add(action);
 	}
 
@@ -186,12 +187,12 @@ public final class InferenceContext {
 	/**
 	 * Returns the inference variables of the receiving context.
 	 */
-	public Set<TypeVariable> getInferenceVariables() {
+	public Set<InferenceVariable> getInferenceVariables() {
 		return inferenceVariables;
 	}
 
 	@SuppressWarnings("hiding")
-	private void addInferenceVariables(boolean internal, TypeVariable... inferenceVariables) {
+	private void addInferenceVariables(boolean internal, InferenceVariable... inferenceVariables) {
 		if (inferenceVariables == null || inferenceVariables.length == 0)
 			return;
 		if (isSolved && !internal) {
@@ -204,12 +205,12 @@ public final class InferenceContext {
 	/**
 	 * Introduce a newly generated inference variable to the constraint system of the receiving inference context.
 	 */
-	public TypeVariable newInferenceVariable() {
+	public InferenceVariable newInferenceVariable() {
 		return newInferenceVariable(false);
 	}
 
-	private TypeVariable newInferenceVariable(boolean internal) {
-		final TypeVariable iv = TypesFactory.eINSTANCE.createTypeVariable();
+	private InferenceVariable newInferenceVariable(boolean internal) {
+		final InferenceVariable iv = TypesFactory.eINSTANCE.createInferenceVariable();
 		final String name = internal ? "_" + unusedNameGeneratorInternal.next() : unusedNameGenerator.next();
 		iv.setName(name);
 		addInferenceVariables(internal, iv);
@@ -219,12 +220,12 @@ public final class InferenceContext {
 	/**
 	 * Same as {@link #newInferenceVariable()}, but creates <code>n</code> inference variables in one step.
 	 */
-	public TypeVariable[] newInferenceVariables(int n) {
+	public InferenceVariable[] newInferenceVariables(int n) {
 		return newInferenceVariables(n, false);
 	}
 
-	private TypeVariable[] newInferenceVariables(int n, boolean internal) {
-		final TypeVariable[] result = new TypeVariable[n];
+	private InferenceVariable[] newInferenceVariables(int n, boolean internal) {
+		final InferenceVariable[] result = new InferenceVariable[n];
 		for (int i = 0; i < n; i++)
 			result[i] = newInferenceVariable(internal);
 		return result;
@@ -255,7 +256,7 @@ public final class InferenceContext {
 		if (!funTypeRef.isGeneric())
 			return funTypeRef;
 		final List<TypeVariable> typeParams = funTypeRef.getTypeVars(); // NOTE: typeParam may contain null entries!
-		final TypeVariable[] newInfVars = newInferenceVariables(typeParams.size(), true);
+		final InferenceVariable[] newInfVars = newInferenceVariables(typeParams.size(), true);
 		final List<? extends TypeRef> newInfVarsRefs = Stream.of(newInfVars).map(TypeUtils::createTypeRef)
 				.collect(Collectors.toList());
 		final RuleEnvironment G_params2infVars = RuleEnvironmentExtensions.newRuleEnvironment(G); // new, empty RE
@@ -300,53 +301,6 @@ public final class InferenceContext {
 	}
 
 	/**
-	 * Convenience method. Same as {@link #isInferenceVariable(TypeVariable)}, but taking a type reference.
-	 */
-	public boolean isInferenceVariable(TypeRef typeRef) {
-		return typeRef != null && typeRef.getDeclaredType() instanceof TypeVariable
-				&& isInferenceVariable((TypeVariable) typeRef.getDeclaredType());
-	}
-
-	/**
-	 * Tells if the given type variable is an inference variable, i.e. whether it is contained in the
-	 * {@link #getInferenceVariables() set of inference variables} of the receiving inference context.
-	 * <p>
-	 * In an {@link InferenceContext} and its type {@link TypeConstraint constraints} and {@link TypeBound bounds},
-	 * inference variables are represented as ordinary type variables; however, not every type variable represents an
-	 * inference variable. Often, constraint systems are dealing with unbound type variables from classes and
-	 * interfaces; those are treated as ordinary, proper types, just as if they referred to an ordinary class or
-	 * interface.
-	 */
-	public boolean isInferenceVariable(TypeVariable typeVar) {
-		return typeVar != null && inferenceVariables.contains(typeVar);
-	}
-
-	/**
-	 * Tells if the given type reference represents a <em>proper</em> type. A type reference is proper iff it does not
-	 * mention any inference variables. Mentioning an inference variable makes it improper, even if an instantiation
-	 * exists for the inference variable.
-	 * <p>
-	 * For example, all of the following are improper type references:
-	 * <ul>
-	 * <li>α
-	 * <li>G&lt;α>
-	 * <li>union{C,α}
-	 * <li>{function():α}
-	 * <li>constructor{α}
-	 * </ul>
-	 */
-	public boolean isProper(TypeArgument typeRef) {
-		if (typeRef == null) {
-			return false;
-		}
-		for (TypeVariable tv : TypeUtils.getReferencedTypeVars(typeRef)) {
-			if (isInferenceVariable(tv))
-				return false; // typeRef mentions an inference variable, so it is improper
-		}
-		return true;
-	}
-
-	/**
 	 * Add a type constraint to this inference context. When done adding constraints, call {@link #solve()}.
 	 */
 	public void addConstraint(TypeArgument left, TypeArgument right, Variance variance) {
@@ -374,7 +328,7 @@ public final class InferenceContext {
 	 * </ul>
 	 * At this time, no partial solutions are returned in case of unsolvable constraint systems.
 	 */
-	public Map<TypeVariable, TypeRef> solve() {
+	public Map<InferenceVariable, TypeRef> solve() {
 		if (isSolved) {
 			return solution;
 		}
@@ -434,7 +388,7 @@ public final class InferenceContext {
 		}
 
 		// perform onSolvedActions
-		for (Consumer<Optional<Map<TypeVariable, TypeRef>>> action : onSolvedActions) {
+		for (Consumer<Optional<Map<InferenceVariable, TypeRef>>> action : onSolvedActions) {
 			action.accept(Optional.fromNullable(solution));
 		}
 
@@ -453,9 +407,9 @@ public final class InferenceContext {
 	 * undefined state.
 	 */
 	private boolean resolve() {
-		Set<TypeVariable> currVariableSet;
+		Set<InferenceVariable> currVariableSet;
 		while ((currVariableSet = getSmallestVariableSet(inferenceVariables)) != null) {
-			for (TypeVariable currVariable : currVariableSet) {
+			for (InferenceVariable currVariable : currVariableSet) {
 				if (DEBUG) {
 					log("======");
 					log("trying to resolve inference variable: " + str(currVariable));
@@ -486,10 +440,9 @@ public final class InferenceContext {
 	/**
 	 * Add bound {@code variable = proper} and perform reduction (which might trigger incorporation).
 	 */
-	private void instantiate(TypeVariable infVar, TypeRef proper) {
-		assert isInferenceVariable(infVar) : "attempt to instantiate non-inference var " + str(infVar);
+	private void instantiate(InferenceVariable infVar, TypeRef proper) {
 		assert !(currentBounds.isInstantiated(infVar)) : "attempt to re-instantiate var " + str(infVar);
-		assert isProper(proper);
+		assert TypeUtils.isProper(proper);
 		// add bound `infVar = proper`
 		reducer.reduce(TypeUtils.createTypeRef(infVar), proper, INV);
 	}
@@ -504,8 +457,7 @@ public final class InferenceContext {
 	 * because during reduction/incorporation a type bound α &lt;: P or α >: P or α = P (with P being a proper type)
 	 * will have been created that reflects the impact of the instantiation of β on α (without mentioning β).
 	 */
-	private TypeRef chooseInstantiation(TypeVariable infVar) {
-		assert isInferenceVariable(infVar) : "not an inference variable: " + infVar;
+	private TypeRef chooseInstantiation(InferenceVariable infVar) {
 		final TypeRef[] lowerBounds = currentBounds.collectLowerBounds(infVar, true, true);
 		if (lowerBounds.length > 0) {
 			// TODO IDE-1653 reconsider:
@@ -515,14 +467,14 @@ public final class InferenceContext {
 				lowerBounds[i] = ts.upperBound(G, lowerBounds[i]).getValue();
 			}
 			final TypeRef result = tsh.createUnionType(G, lowerBounds);
-			assert isProper(result) : "not a proper LUB: " + str(result);
+			assert TypeUtils.isProper(result) : "not a proper LUB: " + str(result);
 			return result;
 		} else {
 			final TypeRef[] upperBounds = currentBounds.collectUpperBounds(infVar, true, true);
 			if (upperBounds.length > 0) {
 				// TODO IDE-1653 should we here take lower bound of all upperBounds? (for consistency with above)
 				final TypeRef result = tsh.createIntersectionType(G, upperBounds);
-				assert isProper(result) : "not a proper GLB: " + str(result);
+				assert TypeUtils.isProper(result) : "not a proper GLB: " + str(result);
 				return result;
 			} else {
 				// neither lower nor upper bounds found -> typeVar is unconstrained
@@ -546,11 +498,11 @@ public final class InferenceContext {
 	 * <p>
 	 * The returned set, if non-null, is guaranteed to be non-empty.
 	 */
-	private Set<TypeVariable> getSmallestVariableSet(Set<TypeVariable> infVars) {
-		Set<TypeVariable> result = null;
-		Set<TypeVariable> deferred = null;
+	private Set<InferenceVariable> getSmallestVariableSet(Set<InferenceVariable> infVars) {
+		Set<InferenceVariable> result = null;
+		Set<InferenceVariable> deferred = null;
 		int min = Integer.MAX_VALUE;
-		for (TypeVariable currentVariable : infVars) {
+		for (InferenceVariable currentVariable : infVars) {
 			if (!currentBounds.isInstantiated(currentVariable)) {
 
 				// Defer an unbounded currentVariable IFF all other iv that depend on currentVariable have
@@ -573,8 +525,7 @@ public final class InferenceContext {
 													&& b.right.getDeclaredType() == currentVariable))
 											.collect(Collectors.toList());
 									return !bs.isEmpty()
-											&& bs.stream().allMatch(
-													b -> InferenceContext.this.isProper(b.right));
+											&& bs.stream().allMatch(b -> TypeUtils.isProper(b.right));
 								});
 						if (defer) {
 							if (deferred == null) {
@@ -586,7 +537,7 @@ public final class InferenceContext {
 					}
 				}
 
-				final Set<TypeVariable> set = new LinkedHashSet<>();
+				final Set<InferenceVariable> set = new LinkedHashSet<>();
 				if (addDependencies(currentVariable, min, set)) {
 					final int curr = set.size();
 					if (curr == 1) {
@@ -626,7 +577,7 @@ public final class InferenceContext {
 	 * reaching the <code>limit</code>. In the latter case, the answer-set will be in an invalid state (contains a
 	 * random subset of the transitive closure of dependencies) and should be discarded.
 	 */
-	private boolean addDependencies(TypeVariable infVar, int limit, Set<TypeVariable> addHere) {
+	private boolean addDependencies(InferenceVariable infVar, int limit, Set<InferenceVariable> addHere) {
 		if (addHere.size() >= limit) {
 			// the candidate answer-set is already not better than best-yet answer-set (i.e. larger or same size)
 			return false;
@@ -638,7 +589,7 @@ public final class InferenceContext {
 			return true;
 		}
 		// for all (uninstantiated) variables on which the current one depends, recurse
-		for (TypeVariable candidate : inferenceVariables) {
+		for (InferenceVariable candidate : inferenceVariables) {
 			if (candidate != infVar) {
 				if (!(currentBounds.isInstantiated(candidate))) {
 					if (currentBounds.dependsOnResolutionOf(infVar, candidate)
