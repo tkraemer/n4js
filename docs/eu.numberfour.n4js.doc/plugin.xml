@@ -20,6 +20,7 @@ Contributors:
       </toc>
    </extension>
 
+<!--
    <extension
          point="org.eclipse.help">
       <launchConfigurationType
@@ -31,6 +32,6 @@ Contributors:
             name="Active Help">
       </launchConfigurationType>
    </extension>
-
+-->
 
 </plugin>

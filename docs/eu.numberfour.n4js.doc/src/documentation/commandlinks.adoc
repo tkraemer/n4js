@@ -18,7 +18,7 @@ ifdef::eclipse[+++<a href='javascript:executeCommand("org.eclipse.ui.help.aboutA
 in eclipse. This is written more-or-less inline in Asciidoc.
 
 Here's another test to see if we can generate some Live Help stuff:
-ifdef::eclipse[+++<a href='javascript:liveAction("org.eclipse.platform.doc.isv","org.eclipse.platform.doc.isv.activeHelp.ActiveHelpOpenDialogAction","")'>Click here for a Message.</a>+++]
+ifdef::eclipse[+++<a href='javascript:liveAction("eu.numberfour.n4js.doc","eu.numberfour.n4js.doc.ActiveHelpOpenDialogAction","")'>Click here for a Message.</a>+++]
 !!!
 
 == Formatting
