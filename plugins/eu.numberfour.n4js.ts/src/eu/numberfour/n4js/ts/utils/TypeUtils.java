@@ -888,7 +888,7 @@ public class TypeUtils {
 		// special case: for StructuralTypeRef we have to consider the TStructuralType as well
 		if (obj instanceof StructuralTypeRef
 				// FIXME should better use #getStructuralMembers() in next line???
-				&& isOrContainsRefToTypeVar(((StructuralTypeRef) obj).getStructuralType(), typeVars))
+				&& isOrContainsRefToTypeVar(((StructuralTypeRef) obj).getStructuralType(), checkForInfVars, typeVars))
 			return true;
 		final Class<?> expectedType = checkForInfVars ? InferenceVariable.class : TypeVariable.class;
 		return obj instanceof TypeRef
