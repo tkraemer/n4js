@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 class D {}
 
@@ -24,10 +24,27 @@ var dar = new D();
 // Double variable declaration XPECT warnings --> "The value of the local variable h is not used" at "h"
 var g,h = 2;
 
+// Single const variable XPECT warnings --> "The value of the local variable j is not used" at "j"
+const j = 3;
+
+function constObjectDesctructering() {
+	// Object destructuring assignment using const XPECT warnings --> "The value of the local variable b is not used" at "b"
+	const {a, b, c} = obj;
+	
+	console.log(a, c);
+}
+
+// Double variable let declaration XPECT warnings --> "The value of the local variable l is not used" at "l"
+let k, l = 4;
+
+// Array destructuring with const XPECT warnings --> "The value of the local variable o is not used" at "o"
+const [m,,,n,,o] = array;
+
 //// Uses
 
 // Use as function parameter
 console.log(a, c, d, f, dar,g);
+console.log(k, m, n)
 
 // Use on the right hand side of a variable declaration
 var z = anotherVariable;

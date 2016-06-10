@@ -74,7 +74,6 @@ class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private TypeDeferredProcessor typeDeferredProcessor;
 
-
 	/**
 	 * Called from N4JSPostProcessor.
 	 * Will throw IllegalStateException if called more than once per N4JSResource.
@@ -204,7 +203,9 @@ class ASTProcessor extends AbstractProcessor {
 			// N4JSResource#resolveLazyCrossReferences(CancelIndicator), so we have to guarantee that all lazy
 			// cross-references are actually resolved; (2) the type system may not resolve all proxies and some
 			// nodes are not typed at all (i.e. isTypableNode() returns false), so we have to enforce this here.
-			resolveProxiesInNode(node);
+			 
+			// We also perform all processing, related to outgoing references from the current node at this point. 	
+			resolveAndProcessReferencesInNode(node);
 
 		} finally {
 			cache.astNodesCurrentlyBeingTyped.remove(node);
@@ -358,7 +359,7 @@ class ASTProcessor extends AbstractProcessor {
 		return false;
 	}
 
-	def private void resolveProxiesInNode(EObject astNode) {
+	def private void resolveAndProcessReferencesInNode(EObject astNode) {
 		for(eRef : astNode.eClass.EReferences) {
 			if(!eRef.isContainment) { // only cross-references have proxies (in our case)
 				val node = astNode.eGet(eRef, true);
@@ -371,17 +372,17 @@ class ASTProcessor extends AbstractProcessor {
 	}
 	
 	def private processResolvedReference(EReference reference, EObject sourceNode, EObject targetNode) {
-		// If targetNode still is a proxy its resolvement failed, 
+		// If targetNode is still a proxy its resolution failed, 
 		// therefore it should be skipped.
 		if (targetNode.eIsProxy) {
 			return;
 		}
-		// Skip non-local references		
-		if (sourceNode.eResource.URI != targetNode.eResource.URI) {
+		// skip non-local references		
+		if (sourceNode.eResource !== targetNode.eResource) {
 			return;
 		}
 		if (targetNode instanceof VariableDeclaration) {
-			// Don't save references to exported variable declarations
+			// don't save references to exported variable declarations
 			if (targetNode instanceof ExportedVariableDeclaration) {
 				return;
 			}
