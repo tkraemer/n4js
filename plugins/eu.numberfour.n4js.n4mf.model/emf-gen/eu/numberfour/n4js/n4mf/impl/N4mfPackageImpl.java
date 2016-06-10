@@ -1422,7 +1422,6 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 		addEEnumLiteral(projectTypeEEnum, ProjectType.APPLICATION);
 		addEEnumLiteral(projectTypeEEnum, ProjectType.PROCESSOR);
 		addEEnumLiteral(projectTypeEEnum, ProjectType.LIBRARY);
-		addEEnumLiteral(projectTypeEEnum, ProjectType.SYSTEM);
 		addEEnumLiteral(projectTypeEEnum, ProjectType.API);
 		addEEnumLiteral(projectTypeEEnum, ProjectType.RUNTIME_ENVIRONMENT);
 		addEEnumLiteral(projectTypeEEnum, ProjectType.RUNTIME_LIBRARY);

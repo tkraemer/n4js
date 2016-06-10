@@ -398,14 +398,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkProjectType(ProjectDescription it) {
-		if (SYSTEM == projectType) {
-			addIssue(
-				getMessageForDEPRECATED_PROJECT_TYPE('System', '''Use either 'API' or 'Library' instead.'''),
-				it,
-				PROJECT_DESCRIPTION__PROJECT_TYPE,
-				DEPRECATED_PROJECT_TYPE
-			);
-		} else if (LIBRARY == projectType) {
+		if (LIBRARY == projectType) {
 			val projectTypeNodes = NodeModelUtils.findNodesForFeature(it, PROJECT_DESCRIPTION__PROJECT_TYPE);
 			if (projectTypeNodes.nullOrEmpty || projectTypeNodes.exists[!text.nullToEmpty.toLowerCase.contains(LIBRARY.literal.toLowerCase)]) {
 				addIssue(
