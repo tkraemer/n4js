@@ -204,7 +204,7 @@ class ASTProcessor extends AbstractProcessor {
 			// cross-references are actually resolved; (2) the type system may not resolve all proxies and some
 			// nodes are not typed at all (i.e. isTypableNode() returns false), so we have to enforce this here.
 			 
-			// We also perform all processing, related to outgoing references from the current node at this point. 	
+			// We also perform all processing, related to outgoing references from the current node at this point.	
 			resolveAndProcessReferencesInNode(node);
 
 		} finally {
@@ -365,13 +365,13 @@ class ASTProcessor extends AbstractProcessor {
 				val node = astNode.eGet(eRef, true);
 				
 				if (node instanceof EObject) {
-					processResolvedReference(eRef, astNode, node);
+					recordReferencesToLocalVariables(eRef, astNode, node);
 				}
 			}
 		}
 	}
 	
-	def private processResolvedReference(EReference reference, EObject sourceNode, EObject targetNode) {
+	def private recordReferencesToLocalVariables(EReference reference, EObject sourceNode, EObject targetNode) {
 		// If targetNode is still a proxy its resolution failed, 
 		// therefore it should be skipped.
 		if (targetNode.eIsProxy) {
