@@ -25,6 +25,7 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.ui.N4JSEditor;
 import eu.numberfour.n4js.ui.utils.HandlerServiceUtils;
+import eu.numberfour.n4js.ui.validation.N4JSLexerBasedIdentifierValidator;
 
 /**
  * Handler for opening the N4JS type selection dialog.
@@ -37,6 +38,8 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 
 	@Inject
 	private Provider<OpenTypeSelectionDialog> provider;
+	@Inject
+	private N4JSLexerBasedIdentifierValidator identifierValidator;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -65,7 +68,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 			Point range = ((N4JSEditor) activeEditor).getSourceViewer2().getSelectedRange();
 			try {
 				String text = ((N4JSEditor) activeEditor).getDocument().get(range.x, range.y);
-				return text;
+				return identifierValidator.isValidIdentifier(text) ? text : "";
 			} catch (BadLocationException e) {
 				LOGGER.error("Failed to infer type search pattern from editor selection", e);
 			}

@@ -30,18 +30,17 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.N4JSGlobals;
-import eu.numberfour.n4js.conversion.IdentifierValueConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.ui.validation.N4JSLexerBasedIdentifierValidator;
 import eu.numberfour.n4js.ui.wizard.classes.N4JSClassWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
@@ -57,6 +56,8 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	private IN4JSCore n4jsCore;
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
+	@Inject
+	private N4JSLexerBasedIdentifierValidator identifierValidator;
 
 	private IResourceDescriptions descriptions;
 
@@ -93,21 +94,9 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 		String className = getModel().getName();
 
-		for (int i = 0; i < className.length(); i++) {
-			char c = className.charAt(i);
-
-			if (0 == i) {
-				if (CharMatcher.WHITESPACE.matches(c) || !IdentifierValueConverter.isValidIdentifierStart(c)) {
-					throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
-				}
-			} else {
-				if (CharMatcher.WHITESPACE.matches(c) || !IdentifierValueConverter.isValidIdentifierPart(c)) {
-					throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
-				}
-			}
-
+		if (!identifierValidator.isValidIdentifier(className)) {
+			throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
 		}
-
 	}
 
 	/**

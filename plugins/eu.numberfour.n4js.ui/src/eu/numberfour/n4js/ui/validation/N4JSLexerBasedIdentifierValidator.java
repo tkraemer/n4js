@@ -1,0 +1,60 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+package eu.numberfour.n4js.ui.validation;
+
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.Token;
+import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.eclipse.xtext.parser.antlr.Lexer;
+import org.eclipse.xtext.parser.antlr.TokenTool;
+
+import com.google.inject.Inject;
+
+import eu.numberfour.n4js.services.N4JSGrammarAccess;
+
+/**
+ * An N4JS identifier validator which is based on the lexer.
+ *
+ * That means changes in the grammar will automatically be transfered to this validator.
+ */
+public final class N4JSLexerBasedIdentifierValidator {
+	@Inject
+	private Lexer n4jsLexer;
+	@Inject
+	private N4JSGrammarAccess grammerAccess;
+	@Inject
+	private ITokenDefProvider tokenDefProvider;
+
+	/**
+	 * Instantiates a new N4JSLexerBasedIdentifierValidator
+	 */
+	public N4JSLexerBasedIdentifierValidator() {
+	}
+
+	/**
+	 * Returns true if the given string is a valid N4JS identifier.
+	 *
+	 */
+	public boolean isValidIdentifier(String identifier) {
+		n4jsLexer.setCharStream(new ANTLRStringStream(identifier));
+
+		// Retrieve IDENTIFIER rule name
+		String identifierRuleName = grammerAccess.getIDENTIFIERRule().getName();
+
+		// Get lexer rule name of the first token
+		Token firstToken = n4jsLexer.nextToken();
+		String tokenDef = TokenTool
+				.getLexerRuleName(tokenDefProvider.getTokenDefMap().get(firstToken.getType()));
+
+		return tokenDef.equals(identifierRuleName.toUpperCase())
+				&& firstToken.getText().equals(identifier);
+	}
+}
