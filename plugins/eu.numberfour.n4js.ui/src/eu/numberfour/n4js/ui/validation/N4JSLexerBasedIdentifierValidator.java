@@ -51,10 +51,15 @@ public final class N4JSLexerBasedIdentifierValidator {
 
 		// Get lexer rule name of the first token
 		Token firstToken = n4jsLexer.nextToken();
-		String tokenDef = TokenTool
-				.getLexerRuleName(tokenDefProvider.getTokenDefMap().get(firstToken.getType()));
+		String lexerTokenName = tokenDefProvider.getTokenDefMap().get(firstToken.getType());
 
-		return tokenDef.equals(identifierRuleName.toUpperCase())
+		if (lexerTokenName == null) {
+			return false;
+		}
+
+		String lexerRuleName = TokenTool.getLexerRuleName(lexerTokenName);
+
+		return lexerRuleName.equals(identifierRuleName.toUpperCase())
 				&& firstToken.getText().equals(identifier);
 	}
 }
