@@ -68,6 +68,8 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
+import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.conversion.IdentifierValueConverter
 
 /**
  * Intended for small, static utility methods that
@@ -86,7 +88,6 @@ class N4JSLanguageUtils {
 	 * See {@link ComputedPropertyNameValueConverter#SYMBOL_IDENTIFIER_PREFIX}.
 	 */
 	public static final String SYMBOL_IDENTIFIER_PREFIX = ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX;
-
 
 	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
@@ -480,6 +481,25 @@ class N4JSLanguageUtils {
 	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(TAnnotableElement) }*/	
 	def static boolean isContainedInStaticPolyfillAware(TAnnotableElement tsElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( tsElement ); // transitively inherited
+	}
+	
+	/**
+	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier start.
+	 * 
+	 * Moved from {@link IdentifierValueConverter}.
+	 */
+	public def static boolean isValidIdentifierStart(char c) {
+		return CharTypes.isLetter(c) || c == '_' || c == '$';
+	}
+	
+	/**
+	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier part.
+	 * 
+	 * Moved from {@link IdentifierValueConverter}.
+	 */
+	public def static boolean isValidIdentifierPart(char c) {
+		return N4JSLanguageUtils.isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
+				|| CharTypes.isCombiningMark(c) || '\u200C' == c || '\u200D' == c;
 	}
 	
 }
