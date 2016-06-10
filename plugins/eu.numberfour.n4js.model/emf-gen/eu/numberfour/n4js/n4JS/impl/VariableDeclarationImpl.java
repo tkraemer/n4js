@@ -55,6 +55,7 @@ import org.eclipse.xtext.EcoreUtil2;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationImpl#getName <em>Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationImpl#getExpression <em>Expression</em>}</li>
@@ -72,6 +73,16 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 	 * @ordered
 	 */
 	protected TypeRef declaredTypeRef;
+
+	/**
+	 * The cached value of the '{@link #getBogusTypeRef() <em>Bogus Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBogusTypeRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected TypeRef bogusTypeRef;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -173,6 +184,49 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF, newDeclaredTypeRef, newDeclaredTypeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TypeRef getBogusTypeRef() {
+		return bogusTypeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBogusTypeRef(TypeRef newBogusTypeRef, NotificationChain msgs) {
+		TypeRef oldBogusTypeRef = bogusTypeRef;
+		bogusTypeRef = newBogusTypeRef;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF, oldBogusTypeRef, newBogusTypeRef);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBogusTypeRef(TypeRef newBogusTypeRef) {
+		if (newBogusTypeRef != bogusTypeRef) {
+			NotificationChain msgs = null;
+			if (bogusTypeRef != null)
+				msgs = ((InternalEObject)bogusTypeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF, null, msgs);
+			if (newBogusTypeRef != null)
+				msgs = ((InternalEObject)newBogusTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF, null, msgs);
+			msgs = basicSetBogusTypeRef(newBogusTypeRef, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF, newBogusTypeRef, newBogusTypeRef));
 	}
 
 	/**
@@ -285,6 +339,8 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		switch (featureID) {
 			case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF:
 				return basicSetDeclaredTypeRef(null, msgs);
+			case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF:
+				return basicSetBogusTypeRef(null, msgs);
 			case N4JSPackage.VARIABLE_DECLARATION__ANNOTATIONS:
 				return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
 			case N4JSPackage.VARIABLE_DECLARATION__EXPRESSION:
@@ -303,6 +359,8 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		switch (featureID) {
 			case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF:
 				return getDeclaredTypeRef();
+			case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF:
+				return getBogusTypeRef();
 			case N4JSPackage.VARIABLE_DECLARATION__NAME:
 				return getName();
 			case N4JSPackage.VARIABLE_DECLARATION__ANNOTATIONS:
@@ -324,6 +382,9 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		switch (featureID) {
 			case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)newValue);
+				return;
+			case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)newValue);
 				return;
 			case N4JSPackage.VARIABLE_DECLARATION__NAME:
 				setName((String)newValue);
@@ -350,6 +411,9 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 			case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF:
 				setDeclaredTypeRef((TypeRef)null);
 				return;
+			case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF:
+				setBogusTypeRef((TypeRef)null);
+				return;
 			case N4JSPackage.VARIABLE_DECLARATION__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -373,6 +437,8 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		switch (featureID) {
 			case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF:
 				return declaredTypeRef != null;
+			case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF:
+				return bogusTypeRef != null;
 			case N4JSPackage.VARIABLE_DECLARATION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case N4JSPackage.VARIABLE_DECLARATION__ANNOTATIONS:
@@ -403,6 +469,7 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		if (baseClass == TypedElement.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF;
+				case N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF: return N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -450,6 +517,7 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 		if (baseClass == TypedElement.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF: return N4JSPackage.VARIABLE_DECLARATION__DECLARED_TYPE_REF;
+				case N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF: return N4JSPackage.VARIABLE_DECLARATION__BOGUS_TYPE_REF;
 				default: return -1;
 			}
 		}

@@ -263,18 +263,6 @@ ExportedFunctionDeclaration<Yield> returns FunctionDeclaration:
 	FunctionDeclaration<Yield>
 ;
 
-FunctionTypeExpression returns types::FunctionTypeExpression:
-	{types::FunctionTypeExpression}
-	'{'
-	('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
-	'function'
-	('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
-	'('
-	(fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?
-	')'
-	(':' returnTypeRef=TypeRef)?
-	'}';
-
 /*
  * Used only within statement blocks, the annotated functions on the root level
  * are handled by the rule AnnotatedScriptElement and its inlined content of FunctionDeclaration
@@ -347,7 +335,10 @@ AnnotatedExpression <Yield> returns Expression:
 	)
 ;
 
+// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
+// (can't clean this up right now due to GH-206)
 TypeVariable returns types::TypeVariable:
+	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 ;
 
@@ -356,17 +347,18 @@ FormalParameter <Yield>:
 ;
 
 fragment BindingElementFragment <Yield>*:
-	(=> bindingPattern=BindingPattern<Yield>
-	| annotations+=Annotation*
-		(
-			variadic?='...'? name=BindingIdentifier<Yield> ColonSepTypeRef?
-		)
+	( => bindingPattern=BindingPattern<Yield>
+	| annotations+=Annotation* BogusTypeRefFragment? variadic?='...'? name=BindingIdentifier<Yield> ColonSepTypeRef?
 	)
 	('=' initializer=AssignmentExpression<In=true, Yield>)?
 ;
 
 fragment ColonSepTypeRef*:
 	':' declaredTypeRef=TypeRef
+;
+
+fragment BogusTypeRefFragment*:
+	bogusTypeRef=BogusTypeRef
 ;
 
 Block <Yield>: => ({Block} '{') statements+=Statement<Yield>* '}';
@@ -573,7 +565,7 @@ CatchBlock <Yield>:	{CatchBlock} 'catch' '(' catchVariable=CatchVariable<Yield> 
 CatchVariable <Yield>:
 		=>bindingPattern=BindingPattern<Yield>
 	|	=>(name=BindingIdentifier<Yield> -> ColonSepTypeRef)
-	|	name=BindingIdentifier<Yield>
+	|	BogusTypeRefFragment? name=BindingIdentifier<Yield>
 ;
 
 FinallyBlock <Yield>: {FinallyBlock} 'finally' block=Block<Yield>;
@@ -672,7 +664,7 @@ PropertyAssignment <Yield>:
 AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 	PropertyAssignmentAnnotationList (
 	// TODO extract property header into an own instance to defer the object instantiation
-	=>(	{PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRef?
+	=>(	{PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRefWithModifiers?
 			LiteralOrComputedPropertyName<Yield> ':'
 		) expression=AssignmentExpression<In=true,Yield>
 	| =>({PropertyGetterDeclaration.annotationList=current}
@@ -682,7 +674,7 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 			'set' ->LiteralOrComputedPropertyName <Yield>
 		) '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
 	| =>({PropertyMethodDeclaration.annotationList=current}
-			TypeVariables? returnTypeRef=TypeRef?
+			TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(generator?='*' LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
 				| LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody <Generator=false>
 			)
@@ -693,7 +685,7 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 
 PropertyMethodDeclaration <Yield>:
 	=> ({PropertyMethodDeclaration}
-		TypeVariables? returnTypeRef=TypeRef?
+		TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(
 				generator?='*'	LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody<Generator=true>
 				| LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
@@ -704,7 +696,7 @@ PropertyMethodDeclaration <Yield>:
 
 PropertyNameValuePair <Yield>:
 	=> (
-		{PropertyNameValuePair} declaredTypeRef=TypeRef? LiteralOrComputedPropertyName<Yield> ':'
+		{PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? LiteralOrComputedPropertyName<Yield> ':'
 	)
 	expression=AssignmentExpression<In=true,Yield>
 ;
@@ -1049,6 +1041,8 @@ N4Keyword:
 	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	| 'implements' | 'interface'
 	| 'private' | 'protected' | 'public' // package not used in N4JS
+	// definition-site variance
+	| 'out'
 ;
 
 SymbolLiteralComputedName <Yield>:
@@ -1392,7 +1386,7 @@ AnnotatedN4MemberDeclaration <Yield> returns N4MemberDeclaration:
 		| 	=> ({N4SetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* 'set' -> LiteralOrComputedPropertyName <Yield>)
 				'(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 		| 	=> (
-				{N4MethodDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* TypeVariables?
+				{N4MethodDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* TypeVariables? BogusTypeRefFragment?
 				(
 						generator?='*' LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
 					| 	AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
@@ -1419,8 +1413,8 @@ StringLiteralAsName:
 ;
 
 fragment FieldDeclarationImpl <Yield>*:
-	(declaredModifiers+=N4Modifier)*
-	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+	(declaredModifiers+=N4Modifier)* BogusTypeRefFragment?
+	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi
 ;
 
 N4FieldDeclaration <Yield>:
@@ -1429,7 +1423,7 @@ N4FieldDeclaration <Yield>:
 ;
 
 N4MethodDeclaration <Yield>:
-	=> ({N4MethodDeclaration} (declaredModifiers+=N4Modifier)* TypeVariables?
+	=> ({N4MethodDeclaration} (declaredModifiers+=N4Modifier)* TypeVariables? BogusTypeRefFragment?
 		(
 				generator?='*' LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
 			|	AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
@@ -1463,7 +1457,7 @@ N4GetterDeclaration <Yield>:
 ;
 
 fragment GetterHeader <Yield>*:
-	('get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?)
+	BogusTypeRefFragment? 'get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?
 ;
 
 N4SetterDeclaration <Yield>:

@@ -11,12 +11,8 @@
 package eu.numberfour.n4js.antlr.replacements;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 
 /**
  * Replacement methods used by injectors to replace snippets in the generated grammar and lexer, and by fragments to
@@ -93,20 +89,9 @@ public class Replacements {
 	 */
 	public static String applyReplacement(String in, String replacementName) {
 		try {
-			String replacementBase = Replacements.class.getPackage().getName().replace(".", "/");
-			String replacementResourceName = replacementBase + "/" + replacementName;
-			URL url = Replacements.class.getClassLoader().getResource(replacementResourceName);
-			if (url == null) {
-				throw new NullPointerException(
-						"cannot replacement :: " + replacementResourceName);
-			}
-			// normalize string to run on Windows and Mac/Unix
-			String replacement = Resources.toString(url, Charsets.UTF_8).replace("\r\n", "\n");
-
-			String[] findReplace = replacement
-					.split("\n_________________________________REPLACE_WITH_________________________________\n");
-
-			return replace(in, findReplace[0], findReplace[1]);
+			PlaceholderReplacer replacer = new PlaceholderReplacer(replacementName);
+			String result = replacer.replaceExactlyOnce(in);
+			return result;
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}

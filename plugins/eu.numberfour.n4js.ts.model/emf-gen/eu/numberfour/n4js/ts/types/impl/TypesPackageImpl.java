@@ -70,6 +70,8 @@ import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VirtualBaseType;
 import eu.numberfour.n4js.ts.types.VoidType;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.lang.Iterable;
 
 import java.util.Collection;
@@ -486,6 +488,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	private EDataType collectionOfTypeRefEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType varianceEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -930,8 +939,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTypeVariable_DeclaredUpperBounds() {
-		return (EReference)typeVariableEClass.getEStructuralFeatures().get(0);
+	public EAttribute getTypeVariable_DeclaredCovariant() {
+		return (EAttribute)typeVariableEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -939,7 +948,25 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeVariable__GetTypeVars() {
+	public EAttribute getTypeVariable_DeclaredContravariant() {
+		return (EAttribute)typeVariableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTypeVariable_DeclaredUpperBounds() {
+		return (EReference)typeVariableEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTypeVariable__GetVariance() {
 		return typeVariableEClass.getEOperations().get(0);
 	}
 
@@ -948,7 +975,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeVariable__GetTypeAsString() {
+	public EOperation getTypeVariable__GetTypeVars() {
 		return typeVariableEClass.getEOperations().get(1);
 	}
 
@@ -957,8 +984,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeVariable__GetTypeVariableAsString__Collection() {
+	public EOperation getTypeVariable__GetTypeAsString() {
 		return typeVariableEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTypeVariable__GetTypeVariableAsString__Collection() {
+		return typeVariableEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -1173,7 +1209,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getType__GetRawTypeAsString() {
+	public EOperation getType__GetVarianceOfTypeVar__int() {
 		return typeEClass.getEOperations().get(10);
 	}
 
@@ -1182,8 +1218,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getType__GetTypeAsString() {
+	public EOperation getType__GetRawTypeAsString() {
 		return typeEClass.getEOperations().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getType__GetTypeAsString() {
+		return typeEClass.getEOperations().get(12);
 	}
 
 	/**
@@ -2694,6 +2739,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getVariance() {
+		return varianceEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getNameAndAccess() {
 		return nameAndAccessEDataType;
 	}
@@ -2793,7 +2847,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEReference(tAnnotableElementEClass, TANNOTABLE_ELEMENT__ANNOTATIONS);
 
 		typeVariableEClass = createEClass(TYPE_VARIABLE);
+		createEAttribute(typeVariableEClass, TYPE_VARIABLE__DECLARED_COVARIANT);
+		createEAttribute(typeVariableEClass, TYPE_VARIABLE__DECLARED_CONTRAVARIANT);
 		createEReference(typeVariableEClass, TYPE_VARIABLE__DECLARED_UPPER_BOUNDS);
+		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_VARIANCE);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_VARS);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_AS_STRING);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION);
@@ -2822,6 +2879,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(typeEClass, TYPE___GET_TYPE_ACCESS_MODIFIER);
 		createEOperation(typeEClass, TYPE___IS_GENERIC);
 		createEOperation(typeEClass, TYPE___GET_TYPE_VARS);
+		createEOperation(typeEClass, TYPE___GET_VARIANCE_OF_TYPE_VAR__INT);
 		createEOperation(typeEClass, TYPE___GET_RAW_TYPE_AS_STRING);
 		createEOperation(typeEClass, TYPE___GET_TYPE_AS_STRING);
 
@@ -3031,6 +3089,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		// Create data types
 		collectionOfTypeRefEDataType = createEDataType(COLLECTION_OF_TYPE_REF);
+		varianceEDataType = createEDataType(VARIANCE);
 		nameAndAccessEDataType = createEDataType(NAME_AND_ACCESS);
 		memberListEDataType = createEDataType(MEMBER_LIST);
 		tClassifierIterableEDataType = createEDataType(TCLASSIFIER_ITERABLE);
@@ -3213,7 +3272,11 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getTAnnotableElement_Annotations(), this.getTAnnotation(), null, "annotations", null, 0, -1, TAnnotableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typeVariableEClass, TypeVariable.class, "TypeVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTypeVariable_DeclaredCovariant(), theEcorePackage.getEBoolean(), "declaredCovariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeVariable_DeclaredContravariant(), theEcorePackage.getEBoolean(), "declaredContravariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTypeVariable_DeclaredUpperBounds(), theTypeRefsPackage.getParameterizedTypeRef(), null, "declaredUpperBounds", null, 0, -1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getTypeVariable__GetVariance(), this.getVariance(), "getVariance", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTypeVariable__GetTypeVars(), this.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3261,6 +3324,9 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getType__IsGeneric(), theEcorePackage.getEBoolean(), "isGeneric", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getType__GetTypeVars(), this.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getType__GetVarianceOfTypeVar__int(), this.getVariance(), "getVarianceOfTypeVar", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "idx", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getType__GetRawTypeAsString(), theEcorePackage.getEString(), "getRawTypeAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3606,6 +3672,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		// Initialize data types
 		initEDataType(collectionOfTypeRefEDataType, Collection.class, "CollectionOfTypeRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Collection<? extends eu.numberfour.n4js.ts.typeRefs.TypeRef>");
+		initEDataType(varianceEDataType, Variance.class, "Variance", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(nameAndAccessEDataType, NameAndAccess.class, "NameAndAccess", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(memberListEDataType, List.class, "MemberList", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.List<? extends eu.numberfour.n4js.ts.types.TMember>");
 		initEDataType(tClassifierIterableEDataType, Iterable.class, "TClassifierIterable", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.lang.Iterable<eu.numberfour.n4js.ts.types.TClassifier>");

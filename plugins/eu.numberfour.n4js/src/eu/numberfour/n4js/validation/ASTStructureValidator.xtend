@@ -49,7 +49,6 @@ import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import eu.numberfour.n4js.n4JS.NewTarget
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
@@ -79,12 +78,7 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.Set
@@ -1490,19 +1484,7 @@ class ASTStructureValidator {
 		Set<LabelledStatement> validLabels,
 		Constraints constraints
 	) {
-		if (!(thisTypeRef.isUsedStructurallyAsFormalParametersInTheConstructor ||
-			thisTypeRef.isUsedAsReturnTypeInMethod ||
-			thisTypeRef.isUsedAsExistentialTypeArgInReturnTypeInMethod ||
-			thisTypeRef.isUsedAsFormalParameterInFunctionExpression ||
-			thisTypeRef.isUsedInVariableWithSyntaxError
-			 )) {
-			val node = NodeModelUtils.findActualNodeFor(thisTypeRef)
-			val target = node.leafNodes.filter[!hidden].head
-			producer.node = target
-			producer.addDiagnostic(
-				new DiagnosticMessage(IssueCodes.getMessageForAST_THIS_WRONG_PLACE,
-					IssueCodes.getDefaultSeverity(IssueCodes.AST_THIS_WRONG_PLACE), IssueCodes.AST_THIS_WRONG_PLACE))
-		}
+		// note: validity of location of ThisTypeRef was checked here; now moved to N4JSTypeValidator#checkThisTypeRef()
 
 		recursiveValidateASTStructure(
 			thisTypeRef,
@@ -1510,14 +1492,6 @@ class ASTStructureValidator {
 			validLabels,
 			constraints
 		)
-	}
-
-	private def boolean isUsedInVariableWithSyntaxError(ThisTypeRef ref) {
-		val container = ref.eContainer
-		if (container instanceof VariableDeclaration) {
-			return container.name === null
-		}
-		return false
 	}
 
 	def dispatch void validateASTStructure(
@@ -1580,105 +1554,5 @@ class ASTStructureValidator {
 						IssueCodes.getDefaultSeverity(IssueCodes.AST_REST_WITH_INITIALIZER), IssueCodes.AST_REST_WITH_INITIALIZER))
 			}
 		}
-	}
-
-	/**
-	 * - use as return type in instance methods
-	 * IDE-785: - use as return type in static methods, but not in constructor-expression
-	 */
-	def private isUsedAsReturnTypeInMethod(EObject eObject) {
-		var parent = eObject.eContainer
-		var boolean isReturnFeature = false
-		var valid = true;
-		if( parent instanceof ClassifierTypeRef ){ // if X - part of "type{ X }"
-		  if (parent.eContainer instanceof N4MethodDeclaration) {
-			 isReturnFeature = parent.eContainingFeature == N4JSPackage.Literals.FUNCTION_DEFINITION__RETURN_TYPE_REF
-			 if( isReturnFeature ) {
-			 	// not allowed: constructor{this}.
-			 	if( parent instanceof ConstructorTypeRef) {
-			 		valid = false;
-			 	}
-			 }
-		  }
-		} else if (parent instanceof N4MethodDeclaration) { // normal return-type decl.
-		  isReturnFeature = eObject.eContainingFeature == N4JSPackage.Literals.FUNCTION_DEFINITION__RETURN_TYPE_REF
-		  // not alllowed in static methods of interfaces:
-		  if( parent.isStatic && parent.eContainer instanceof N4InterfaceDeclaration ) {
-		  	valid = false
-		  }
-		}
-		return /* !parent.isStatic && */  isReturnFeature && valid
-	}
-
-	/**
-	 * IDE-785: - use as existential type-arg in return type in static methods, but not in constructor-expression
-	 * Super-special allowance for N4Enums:   "Array<? extends this> getLiterals()" in n4jsd files.
-	 */
-	def private isUsedAsExistentialTypeArgInReturnTypeInMethod(EObject eObject) {
-		val parentWC = eObject.eContainer
-		// In WildCard
-		if( parentWC instanceof Wildcard) {
-			// declared upper bound: "? extends eObject"
-			if( parentWC.declaredUpperBound == eObject) {
-				val parentPTR = parentWC.eContainer
-				// In WildCard of ParamterizedTypeRef
-				if(parentPTR instanceof ParameterizedTypeRef){
-					// In WildCard of ParamterizedTypeRef of return-type
-				 	if (parentPTR.eContainer instanceof N4MethodDeclaration) {
-					  if( parentPTR.eContainingFeature == N4JSPackage.Literals.FUNCTION_DEFINITION__RETURN_TYPE_REF )
-						{
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	def private isUsedStructurallyAsFormalParametersInTheConstructor(ThisTypeRef thisTypeRef) {
-		if (thisTypeRef.useSiteStructuralTyping) {
-			val methodOrConstructor = thisTypeRef?.eContainer?.eContainer;
-			if (methodOrConstructor instanceof N4MethodDeclaration) {
-				if (methodOrConstructor !== null && methodOrConstructor.isConstructor) {
-					return true
-				}
-			}
-		}
-		return false
-	}
-	/* IDEBUG-228 use thisTypeRef inside a MethodSignature:
-	 * - in FPars of FunctionTypeExpressions or
-	 * - as return type of FTE - depending of usage
-	 */
-	def private boolean isUsedAsFormalParameterInFunctionExpression(ThisTypeRef thisTypeRef) {
-		val fte = thisTypeRef?.eContainer?.eContainer;
-		if (fte instanceof FunctionTypeExpression) {
-			// thisTypeRef as formal parameter in FTE
-			val fteContainer = fte.eContainer;
-			if(
-				(fteContainer instanceof FormalParameter && fteContainer.eContainer instanceof N4MethodDeclaration)
-				||
-				(fteContainer instanceof FormalParameter && fteContainer.eContainer instanceof N4SetterDeclaration)
-			) {
-				return true;
-			}
-		}
-
-// not possible yet, since we cannot construct a function(expression) with a corresponding return type.
-//		val retFTE = thisTypeRef?.eContainer;
-//		if( retFTE instanceof FunctionTypeExpression && thisTypeRef ===(retFTE as FunctionTypeExpression).returnTypeRef) {
-//			// THISTYPEREF as return
-//			val fteContainer = retFTE.eContainer;
-//
-//			if(
-//				(fteContainer instanceof N4MethodDeclaration && retFTE===(fteContainer as N4MethodDeclaration).returnTypeRef)
-//				||
-//				(fteContainer instanceof N4GetterDeclaration && retFTE===(fteContainer as N4GetterDeclaration).declaredTypeRef)
-//			) {
-//				return true;
-//			}
-//		}
-		return false;
 	}
 }

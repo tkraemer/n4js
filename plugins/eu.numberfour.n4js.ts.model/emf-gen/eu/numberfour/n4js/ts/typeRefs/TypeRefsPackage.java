@@ -2976,13 +2976,22 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF__TYPE_ARGS = BASE_TYPE_REF_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL = BASE_TYPE_REF_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY = BASE_TYPE_REF_FEATURE_COUNT + 2;
+	int PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY = BASE_TYPE_REF_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Parameterized Type Ref</em>' class.
@@ -2991,7 +3000,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 3;
+	int PARAMETERIZED_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Final By Type</em>' operation.
@@ -3363,6 +3372,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL__TYPE_ARGS = PARAMETERIZED_TYPE_REF__TYPE_ARGS;
+
+	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -5036,13 +5054,22 @@ public interface TypeRefsPackage extends EPackage {
 	int WILDCARD__DECLARED_LOWER_BOUND = TYPE_ARGUMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Using In Out Notation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WILDCARD__USING_IN_OUT_NOTATION = TYPE_ARGUMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Wildcard</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WILDCARD_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 2;
+	int WILDCARD_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -5459,6 +5486,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_TYPE_REF__TYPE_ARGS = PARAMETERIZED_TYPE_REF__TYPE_ARGS;
+
+	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -7107,6 +7143,17 @@ public interface TypeRefsPackage extends EPackage {
 	EReference getParameterizedTypeRef_TypeArgs();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral <em>Array Type Literal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Array Type Literal</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral()
+	 * @see #getParameterizedTypeRef()
+	 * @generated
+	 */
+	EAttribute getParameterizedTypeRef_ArrayTypeLiteral();
+
+	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7606,6 +7653,17 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWildcard_DeclaredLowerBound();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation <em>Using In Out Notation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Using In Out Notation</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Wildcard#isUsingInOutNotation()
+	 * @see #getWildcard()
+	 * @generated
+	 */
+	EAttribute getWildcard_UsingInOutNotation();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBounds() <em>Get Declared Or Implicit Upper Bounds</em>}' operation.
@@ -8536,6 +8594,14 @@ public interface TypeRefsPackage extends EPackage {
 		EReference PARAMETERIZED_TYPE_REF__TYPE_ARGS = eINSTANCE.getParameterizedTypeRef_TypeArgs();
 
 		/**
+		 * The meta object literal for the '<em><b>Array Type Literal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL = eINSTANCE.getParameterizedTypeRef_ArrayTypeLiteral();
+
+		/**
 		 * The meta object literal for the '<em><b>Defined Typing Strategy</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8944,6 +9010,14 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WILDCARD__DECLARED_LOWER_BOUND = eINSTANCE.getWildcard_DeclaredLowerBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Using In Out Notation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WILDCARD__USING_IN_OUT_NOTATION = eINSTANCE.getWildcard_UsingInOutNotation();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Declared Or Implicit Upper Bounds</b></em>' operation.

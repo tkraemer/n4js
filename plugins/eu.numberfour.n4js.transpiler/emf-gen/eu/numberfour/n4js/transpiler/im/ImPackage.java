@@ -881,6 +881,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM__TYPE_ARGS = TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS;
 
 	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1213,6 +1222,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__TYPE_ARGS = PARAMETERIZED_TYPE_REF_IM__TYPE_ARGS;
+
+	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -1819,6 +1837,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_GETTER_DECLARATION__DECLARED_TYPE_REF = N4JSPackage.N4_GETTER_DECLARATION__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION__BOGUS_TYPE_REF = N4JSPackage.N4_GETTER_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Defined Getter</b></em>' reference.
@@ -2496,6 +2523,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION__DECLARED_TYPE_REF = N4JSPackage.N4_METHOD_DECLARATION__DECLARED_TYPE_REF;
+
+	/**
+	 * The feature id for the '<em><b>Bogus Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION__BOGUS_TYPE_REF = N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.

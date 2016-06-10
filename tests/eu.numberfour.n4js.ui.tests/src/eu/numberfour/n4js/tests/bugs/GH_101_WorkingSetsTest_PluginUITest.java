@@ -62,7 +62,6 @@ import org.junit.Test;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
@@ -696,19 +695,6 @@ public class GH_101_WorkingSetsTest_PluginUITest extends AbstractPluginUITest {
 			}
 		}
 
-	}
-
-	private IProject getProjectByName(final String projectName) {
-		return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-	}
-
-	private IProject[] getProjectsByName(final String projectName, final String otherName, final String... rest) {
-		final List<String> projectNames = Lists.asList(projectName, otherName, rest);
-		final IProject[] projects = new IProject[projectNames.size()];
-		for (int i = 0; i < projects.length; i++) {
-			projects[i] = getProjectByName(projectNames.get(i));
-		}
-		return projects;
 	}
 
 	private void activateWorkingSetManager(final Class<? extends WorkingSetManager> clazz) {

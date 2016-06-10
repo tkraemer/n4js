@@ -128,6 +128,7 @@ import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector;
+import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeExtensions;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -149,7 +150,6 @@ import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -161,7 +161,6 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
@@ -3933,12 +3932,19 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                 if (_equals_1) {
                                   if (((left.getTypeArgs().size() > 0) && (left.getTypeArgs().size() <= right.getTypeArgs().size()))) {
                                     EList<TypeArgument> _typeArgs = left.getTypeArgs();
-                                    final Iterator<TypeArgument> leftIter = _typeArgs.iterator();
+                                    int _size = _typeArgs.size();
                                     EList<TypeArgument> _typeArgs_1 = right.getTypeArgs();
-                                    final Iterator<TypeArgument> rightIter = _typeArgs_1.iterator();
-                                    while (leftIter.hasNext()) {
-                                      final TypeArgument leftArg = leftIter.next();
-                                      final TypeArgument rightArg = rightIter.next();
+                                    int _size_1 = _typeArgs_1.size();
+                                    int _min = Math.min(_size, _size_1);
+                                    EList<TypeVariable> _typeVars = rightDeclType.getTypeVars();
+                                    int _size_2 = _typeVars.size();
+                                    final int len = Math.min(_min, _size_2);
+                                    for (int i = 0; (i < len); i++) {
+                                      EList<TypeArgument> _typeArgs_2 = left.getTypeArgs();
+                                      final TypeArgument leftArg = _typeArgs_2.get(i);
+                                      EList<TypeArgument> _typeArgs_3 = right.getTypeArgs();
+                                      final TypeArgument rightArg = _typeArgs_3.get(i);
+                                      final Variance variance = rightDeclType.getVarianceOfTypeVar(i);
                                       TypeRef leftArgUpper = null;
                                       /* G |~ leftArg /\ leftArgUpper */
                                       Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, leftArg);
@@ -3963,14 +3969,20 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
-                                      /* { G |- leftArgUpper <: rightArgUpper G |- rightArgLower <: leftArgLower } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                      /* { if(variance!=Variance.CONTRA) { G |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
                                         try {
-                                          /* G |- leftArgUpper <: rightArgUpper */
-                                          subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
-                                          /* G |- rightArgLower <: leftArgLower */
-                                          subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                          boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
+                                          if (_notEquals) {
+                                            /* G |- leftArgUpper <: rightArgUpper */
+                                            subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
+                                          }
+                                          boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
+                                          if (_notEquals_1) {
+                                            /* G |- rightArgLower <: leftArgLower */
+                                            subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                          }
                                         } catch (Exception e) {
                                           previousFailure = extractRuleFailedException(e);
                                           RuleFailedException _previousFailure = previousFailure;
@@ -4005,35 +4017,29 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                   final List<ParameterizedTypeRef> allSuperTypeRefs = _xifexpression;
                                   List<ParameterizedTypeRef> _collectAllImplicitSuperTypes = RuleEnvironmentExtensions.collectAllImplicitSuperTypes(G, left);
-                                  final Iterable<ParameterizedTypeRef> superTypes = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
+                                  final Iterable<ParameterizedTypeRef> superTypeRefs = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
                                   final Function1<ParameterizedTypeRef, Boolean> _function = (ParameterizedTypeRef it) -> {
                                     Type _declaredType = it.getDeclaredType();
                                     return Boolean.valueOf((_declaredType == rightDeclType));
                                   };
-                                  final ParameterizedTypeRef matchingSuperTypeRef = IterableExtensions.<ParameterizedTypeRef>findFirst(superTypes, _function);
-                                  if ((matchingSuperTypeRef != null)) {
+                                  boolean _exists = IterableExtensions.<ParameterizedTypeRef>exists(superTypeRefs, _function);
+                                  if (_exists) {
                                     final RuleEnvironment localG_left = RuleEnvironmentExtensions.wrap(G);
                                     this.typeSystemHelper.addSubstitutions(localG_left, left);
-                                    try {
-                                      /* localG_left |- matchingSuperTypeRef ~> var TypeRef matchingSuperTypeRefSubst */
-                                      TypeRef matchingSuperTypeRefSubst = null;
-                                      Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, matchingSuperTypeRef);
-                                      checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                                      matchingSuperTypeRefSubst = (TypeRef) result_2.getFirst();
-                                      
-                                      /* G |- matchingSuperTypeRefSubst <: right */
-                                      subtypeInternal(G, _trace_, matchingSuperTypeRefSubst, right);
-                                    } catch (final Throwable _t) {
-                                      if (_t instanceof Exception) {
-                                        final Exception e = (Exception)_t;
-                                        /* false */
-                                        if (!false) {
-                                          sneakyThrowRuleFailedException("false");
-                                        }
-                                      } else {
-                                        throw Exceptions.sneakyThrow(_t);
-                                      }
-                                    }
+                                    EList<TypeVariable> _typeVars_1 = rightDeclType.getTypeVars();
+                                    final Function1<TypeVariable, TypeRef> _function_1 = (TypeVariable it) -> {
+                                      return TypeExtensions.ref(it);
+                                    };
+                                    List<TypeRef> _map = ListExtensions.<TypeVariable, TypeRef>map(_typeVars_1, _function_1);
+                                    final TypeRef syntheticTypeRef = TypeExtensions.ref(rightDeclType, ((TypeArgument[])Conversions.unwrapArray(_map, TypeArgument.class)));
+                                    /* localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef */
+                                    TypeRef effectiveSuperTypeRef = null;
+                                    Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, syntheticTypeRef);
+                                    checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                                    effectiveSuperTypeRef = (TypeRef) result_2.getFirst();
+                                    
+                                    /* G |- effectiveSuperTypeRef <: right */
+                                    subtypeInternal(G, _trace_, effectiveSuperTypeRef, right);
                                   } else {
                                     /* false */
                                     if (!false) {
@@ -6864,7 +6870,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -6892,7 +6898,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           TypeUtils.copyTypeModifiers(result, typeRef);
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = TypeRefsFactory.eINSTANCE.createUnknownTypeRef; TypeUtils.copyTypeModifiers(result, typeRef); G.addInconsistentSubstitutions(typeVar, l); } or { } */
+          /* { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
           {
             try {
               final List<TypeRef> l_raw = this.<List>env(G, typeVar, List.class);
@@ -6928,10 +6934,27 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                   }
                 }
               }
-              UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-              result = _createUnknownTypeRef;
+              TypeRef _xifexpression = null;
+              boolean _isDeclaredCovariant = typeVar.isDeclaredCovariant();
+              if (_isDeclaredCovariant) {
+                _xifexpression = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
+              } else {
+                TypeRef _xifexpression_1 = null;
+                boolean _isDeclaredContravariant = typeVar.isDeclaredContravariant();
+                if (_isDeclaredContravariant) {
+                  _xifexpression_1 = this.typeSystemHelper.createUnionType(G, ((TypeRef[])Conversions.unwrapArray(l, TypeRef.class)));
+                } else {
+                  UnknownTypeRef _xblockexpression = null;
+                  {
+                    RuleEnvironmentExtensions.addInconsistentSubstitutions(G, typeVar, l);
+                    _xblockexpression = (TypeRefsFactory.eINSTANCE.createUnknownTypeRef());
+                  }
+                  _xifexpression_1 = _xblockexpression;
+                }
+                _xifexpression = _xifexpression_1;
+              }
+              result = _xifexpression;
               TypeUtils.copyTypeModifiers(result, typeRef);
-              RuleEnvironmentExtensions.addInconsistentSubstitutions(G, typeVar, l);
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
             }

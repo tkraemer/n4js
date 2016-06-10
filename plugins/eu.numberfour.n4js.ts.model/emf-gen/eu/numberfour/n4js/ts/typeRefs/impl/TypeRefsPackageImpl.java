@@ -887,8 +887,17 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterizedTypeRef_DefinedTypingStrategy() {
+	public EAttribute getParameterizedTypeRef_ArrayTypeLiteral() {
 		return (EAttribute)parameterizedTypeRefEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterizedTypeRef_DefinedTypingStrategy() {
+		return (EAttribute)parameterizedTypeRefEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1328,6 +1337,15 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getWildcard_UsingInOutNotation() {
+		return (EAttribute)wildcardEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getWildcard__GetDeclaredOrImplicitUpperBounds() {
 		return wildcardEClass.getEOperations().get(0);
 	}
@@ -1749,6 +1767,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		parameterizedTypeRefEClass = createEClass(PARAMETERIZED_TYPE_REF);
 		createEReference(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF__DECLARED_TYPE);
 		createEReference(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF__TYPE_ARGS);
+		createEAttribute(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL);
 		createEAttribute(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY);
 		createEOperation(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF___GET_TYPING_STRATEGY);
 		createEOperation(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF___CONTAINS_WILDCARDS);
@@ -1807,6 +1826,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		wildcardEClass = createEClass(WILDCARD);
 		createEReference(wildcardEClass, WILDCARD__DECLARED_UPPER_BOUND);
 		createEReference(wildcardEClass, WILDCARD__DECLARED_LOWER_BOUND);
+		createEAttribute(wildcardEClass, WILDCARD__USING_IN_OUT_NOTATION);
 		createEOperation(wildcardEClass, WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS);
 		createEOperation(wildcardEClass, WILDCARD___GET_TYPE_REF_AS_STRING);
 
@@ -2030,6 +2050,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEClass(parameterizedTypeRefEClass, ParameterizedTypeRef.class, "ParameterizedTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParameterizedTypeRef_DeclaredType(), theTypesPackage.getType(), null, "declaredType", null, 0, 1, ParameterizedTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameterizedTypeRef_TypeArgs(), this.getTypeArgument(), null, "typeArgs", null, 0, -1, ParameterizedTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterizedTypeRef_ArrayTypeLiteral(), theEcorePackage.getEBoolean(), "arrayTypeLiteral", "false", 0, 1, ParameterizedTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterizedTypeRef_DefinedTypingStrategy(), theTypesPackage.getTypingStrategy(), "definedTypingStrategy", null, 0, 1, ParameterizedTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getParameterizedTypeRef__GetTypingStrategy(), theTypesPackage.getTypingStrategy(), "getTypingStrategy", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -2120,6 +2141,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEClass(wildcardEClass, Wildcard.class, "Wildcard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWildcard_DeclaredUpperBound(), this.getTypeRef(), null, "declaredUpperBound", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWildcard_DeclaredLowerBound(), this.getTypeRef(), null, "declaredLowerBound", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWildcard_UsingInOutNotation(), theEcorePackage.getEBoolean(), "usingInOutNotation", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getWildcard__GetDeclaredOrImplicitUpperBounds(), this.getTypeRef(), "getDeclaredOrImplicitUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
 

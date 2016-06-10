@@ -97,6 +97,10 @@ Workflow {
 				antlrParam = "-Xconversiontimeout"
 				antlrParam = "10000"
 			}
+			
+			fragment = eu.numberfour.n4js.antlr.delimiters.DebugAntlrGeneratorFragment auto-inject {
+				options = auto-inject {}
+			}
 
 			// Xtend-based API for validation
 			fragment = validation.ValidatorFragment auto-inject {

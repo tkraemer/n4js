@@ -96,9 +96,15 @@ Any : 'any';
 
 Get : 'get';
 
+Out : 'out';
+
 Set : 'set';
 
+EqualsSignGreaterThanSign : '=>';
+
 As : 'as';
+
+In : 'in';
 
 ExclamationMark : '!';
 
@@ -133,6 +139,8 @@ LeftSquareBracket : '[';
 RightSquareBracket : ']';
 
 LeftCurlyBracket : '{';
+
+VerticalLine : '|';
 
 RightCurlyBracket : '}';
 

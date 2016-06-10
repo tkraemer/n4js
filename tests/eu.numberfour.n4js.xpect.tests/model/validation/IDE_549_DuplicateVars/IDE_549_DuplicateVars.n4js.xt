@@ -285,9 +285,8 @@ var this = 42;
 // case #3d
 /* 
 XPECT errors ---
-"Functions have to have a body." at "fdtd"
-"no viable alternative at input ')'" at ")"
-"mismatched input 'this' expecting ')'" at "this"
+"The this type isn't allowed on this place. (Please refer to Spec for valid use cases.)" at "this"
+"Wrong type syntax: Use foo:Type rather than Type foo. " at "this"
 "no viable alternative at input ':'" at ":"
 ---
 */

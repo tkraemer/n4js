@@ -14,18 +14,23 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.ts.types.util.Variance;
+
 import java.lang.Iterable;
 
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -44,12 +49,54 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TypeVariableImpl#isDeclaredCovariant <em>Declared Covariant</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TypeVariableImpl#isDeclaredContravariant <em>Declared Contravariant</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TypeVariableImpl#getDeclaredUpperBounds <em>Declared Upper Bounds</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TypeVariableImpl extends TypeImpl implements TypeVariable {
+	/**
+	 * The default value of the '{@link #isDeclaredCovariant() <em>Declared Covariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredCovariant()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_COVARIANT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredCovariant() <em>Declared Covariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredCovariant()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredCovariant = DECLARED_COVARIANT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDeclaredContravariant() <em>Declared Contravariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredContravariant()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_CONTRAVARIANT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredContravariant() <em>Declared Contravariant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredContravariant()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredContravariant = DECLARED_CONTRAVARIANT_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getDeclaredUpperBounds() <em>Declared Upper Bounds</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -84,11 +131,74 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredCovariant() {
+		return declaredCovariant;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredCovariant(boolean newDeclaredCovariant) {
+		boolean oldDeclaredCovariant = declaredCovariant;
+		declaredCovariant = newDeclaredCovariant;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TYPE_VARIABLE__DECLARED_COVARIANT, oldDeclaredCovariant, declaredCovariant));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isDeclaredContravariant() {
+		return declaredContravariant;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredContravariant(boolean newDeclaredContravariant) {
+		boolean oldDeclaredContravariant = declaredContravariant;
+		declaredContravariant = newDeclaredContravariant;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TYPE_VARIABLE__DECLARED_CONTRAVARIANT, oldDeclaredContravariant, declaredContravariant));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<ParameterizedTypeRef> getDeclaredUpperBounds() {
 		if (declaredUpperBounds == null) {
 			declaredUpperBounds = new EObjectContainmentEList<ParameterizedTypeRef>(ParameterizedTypeRef.class, this, TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS);
 		}
 		return declaredUpperBounds;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Variance getVariance() {
+		final boolean co = this.isDeclaredCovariant();
+		final boolean contra = this.isDeclaredContravariant();
+		if ((co && (!contra))) {
+			return Variance.CO;
+		}
+		else {
+			if ((contra && (!co))) {
+				return Variance.CONTRA;
+			}
+			else {
+				return Variance.INV;
+			}
+		}
 	}
 
 	/**
@@ -116,8 +226,25 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * @generated
 	 */
 	public String getTypeVariableAsString(final Collection<? extends TypeRef> upperBounds) {
-		String _name = this.getName();
 		String _xifexpression = null;
+		boolean _isDeclaredCovariant = this.isDeclaredCovariant();
+		if (_isDeclaredCovariant) {
+			_xifexpression = "out ";
+		}
+		else {
+			String _xifexpression_1 = null;
+			boolean _isDeclaredContravariant = this.isDeclaredContravariant();
+			if (_isDeclaredContravariant) {
+				_xifexpression_1 = "in ";
+			}
+			else {
+				_xifexpression_1 = "";
+			}
+			_xifexpression = _xifexpression_1;
+		}
+		String _name = this.getName();
+		String _plus = (_xifexpression + _name);
+		String _xifexpression_2 = null;
 		boolean _isEmpty = upperBounds.isEmpty();
 		boolean _not = (!_isEmpty);
 		if (_not) {
@@ -128,12 +255,12 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 			};
 			Iterable<String> _map = IterableExtensions.map(upperBounds, _function);
 			String _join = IterableExtensions.join(_map, " & ");
-			_xifexpression = (" extends " + _join);
+			_xifexpression_2 = (" extends " + _join);
 		}
 		else {
-			_xifexpression = "";
+			_xifexpression_2 = "";
 		}
-		return (_name + _xifexpression);
+		return (_plus + _xifexpression_2);
 	}
 
 	/**
@@ -158,6 +285,10 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TypesPackage.TYPE_VARIABLE__DECLARED_COVARIANT:
+				return isDeclaredCovariant();
+			case TypesPackage.TYPE_VARIABLE__DECLARED_CONTRAVARIANT:
+				return isDeclaredContravariant();
 			case TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS:
 				return getDeclaredUpperBounds();
 		}
@@ -173,6 +304,12 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TypesPackage.TYPE_VARIABLE__DECLARED_COVARIANT:
+				setDeclaredCovariant((Boolean)newValue);
+				return;
+			case TypesPackage.TYPE_VARIABLE__DECLARED_CONTRAVARIANT:
+				setDeclaredContravariant((Boolean)newValue);
+				return;
 			case TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS:
 				getDeclaredUpperBounds().clear();
 				getDeclaredUpperBounds().addAll((Collection<? extends ParameterizedTypeRef>)newValue);
@@ -189,6 +326,12 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TYPE_VARIABLE__DECLARED_COVARIANT:
+				setDeclaredCovariant(DECLARED_COVARIANT_EDEFAULT);
+				return;
+			case TypesPackage.TYPE_VARIABLE__DECLARED_CONTRAVARIANT:
+				setDeclaredContravariant(DECLARED_CONTRAVARIANT_EDEFAULT);
+				return;
 			case TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS:
 				getDeclaredUpperBounds().clear();
 				return;
@@ -204,6 +347,10 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TYPE_VARIABLE__DECLARED_COVARIANT:
+				return declaredCovariant != DECLARED_COVARIANT_EDEFAULT;
+			case TypesPackage.TYPE_VARIABLE__DECLARED_CONTRAVARIANT:
+				return declaredContravariant != DECLARED_CONTRAVARIANT_EDEFAULT;
 			case TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS:
 				return declaredUpperBounds != null && !declaredUpperBounds.isEmpty();
 		}
@@ -236,6 +383,8 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.TYPE_VARIABLE___GET_VARIANCE:
+				return getVariance();
 			case TypesPackage.TYPE_VARIABLE___GET_TYPE_VARS:
 				return getTypeVars();
 			case TypesPackage.TYPE_VARIABLE___GET_TYPE_AS_STRING:
@@ -244,6 +393,24 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 				return getTypeVariableAsString((Collection<? extends TypeRef>)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredCovariant: ");
+		result.append(declaredCovariant);
+		result.append(", declaredContravariant: ");
+		result.append(declaredContravariant);
+		result.append(')');
+		return result.toString();
 	}
 
 } //TypeVariableImpl

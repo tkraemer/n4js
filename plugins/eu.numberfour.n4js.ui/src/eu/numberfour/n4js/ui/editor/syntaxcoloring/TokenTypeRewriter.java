@@ -112,7 +112,8 @@ public class TokenTypeRewriter implements PseudoTokens {
 				"protected",
 				"public",
 				"target",
-				"async");
+				"async",
+				"out");
 		/** Public for testing */
 		public static final ImmutableSet<String> keywordFromTypeRef = ImmutableSet.of(
 				"type",
@@ -217,7 +218,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 
 	private static void rewriteTypeVariables(N4JSGrammarAccess ga,
 			ImmutableMap.Builder<AbstractElement, Integer> builder) {
-		builder.put(ga.getTypeVariableAccess().getNameAssignment_0(), TYPE_VARIABLE_TOKEN);
+		builder.put(ga.getTypeVariableAccess().getNameAssignment_1(), TYPE_VARIABLE_TOKEN);
 	}
 
 	private static void rewriteRegExLiterals(N4JSGrammarAccess ga,
@@ -230,7 +231,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 			ImmutableMap.Builder<AbstractElement, Integer> builder) {
 		builder.put(ga.getAnnotationNoAtSignAccess().getNameAssignment_0(),
 				InternalN4JSParser.CommercialAtCommercialAt);
-		builder.put(ga.getFunctionTypeExpressionAccess().getThisKeyword_2_1(),
+		builder.put(ga.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1(),
 				InternalN4JSParser.CommercialAtCommercialAt);
 		builder.put(ga.getPromisifyExpressionAccess().getPromisifyKeyword_0_0_2(),
 				InternalN4JSParser.CommercialAtCommercialAt);

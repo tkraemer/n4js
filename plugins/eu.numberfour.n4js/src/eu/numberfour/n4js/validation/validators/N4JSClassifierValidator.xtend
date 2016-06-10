@@ -16,6 +16,7 @@ import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClass
@@ -24,7 +25,10 @@ import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import java.util.Collection
@@ -41,6 +45,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
+import eu.numberfour.n4js.ts.types.TypesPackage
 
 /**
  * Validation of rules that apply to all classifiers w/o examining members of the classifiers.<p>
@@ -220,6 +226,42 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 						firstDup.descriptionWithLine());
 					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
 						CLF_DUP_MEMBER)
+				}
+			}
+		}
+	}
+
+	@Check
+	def void checkUseOfDefinitionSiteVariance(TypeVariable typeVar) {
+		if((typeVar.declaredCovariant || typeVar.declaredContravariant) &&
+			!(typeVar.eContainer instanceof N4ClassifierDeclaration
+				&& typeVar.eContainmentFeature===N4JSPackage.eINSTANCE.genericDeclaration_TypeVars)) {
+			val message = messageForCLF_DEF_SITE_VARIANCE_ONLY_IN_CLASSIFIER;
+			val feature = if(typeVar.declaredCovariant) {
+				TypesPackage.eINSTANCE.typeVariable_DeclaredCovariant
+			} else {
+				TypesPackage.eINSTANCE.typeVariable_DeclaredContravariant
+			};
+			addIssue(message, typeVar, feature, CLF_DEF_SITE_VARIANCE_ONLY_IN_CLASSIFIER);
+		}
+	}
+
+	/**
+	 * Ensures that type variables declared as covariant only appear in covariant positions and type variables declared
+	 * as contravariant only appear in contravariant positions. Type variables declared to be invariant do not require
+	 * such a check.
+	 */
+	@Check
+	def void checkTypeVariableVariance(ParameterizedTypeRef typeRefInAST) {
+		val tv = typeRefInAST.declaredType;
+		if(tv instanceof TypeVariable) {
+			val variance = tv.variance;
+			if(variance!==Variance.INV) {
+				val varianceOfPos = N4JSLanguageUtils.getVarianceOfPosition(typeRefInAST);
+				if(varianceOfPos!==null && variance!==varianceOfPos) {
+					val msg = getMessageForCLF_TYPE_VARIABLE_AT_INVALID_POSITION(variance.getDescriptiveString(true),
+						varianceOfPos.getDescriptiveString(false));
+					addIssue(msg, typeRefInAST, CLF_TYPE_VARIABLE_AT_INVALID_POSITION);
 				}
 			}
 		}

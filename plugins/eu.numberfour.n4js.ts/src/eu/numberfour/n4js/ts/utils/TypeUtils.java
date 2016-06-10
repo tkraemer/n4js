@@ -596,6 +596,25 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Type references may be nested within other type references, e.g. the members of a union type. This method will
+	 * return the outermost type reference that contains the given type reference but is not itself contained in another
+	 * type reference, or the given type reference if it is not contained in another type reference.
+	 * <p>
+	 * Returns <code>null</code> if given <code>null</code>.
+	 */
+	public static TypeRef getRootTypeRef(TypeRef typeRef) {
+		if (typeRef != null) {
+			while (true) {
+				final TypeRef nextOuter = EcoreUtil2.getContainerOfType(typeRef.eContainer(), TypeRef.class);
+				if (nextOuter == null)
+					break;
+				typeRef = nextOuter;
+			}
+		}
+		return typeRef;
+	}
+
+	/**
 	 * Convenience method, returns directly declared super types (class, role, interface) of a classifier. May return an
 	 * empty list but never null. Order is always super class, super roles, super interfaces. For all non-classifiers
 	 * this method returns an empty list.

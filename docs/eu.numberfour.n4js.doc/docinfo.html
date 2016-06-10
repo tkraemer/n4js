@@ -1,0 +1,163 @@
+  <!-- ************* Meta ************* -->
+ 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../../imgs/favicon-16x16.png" sizes="16x16" />  
+  <!-- ************* Styles ************* -->
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+    <script type="text/javascript" src="../scripts/scripts.js"></script>
+
+<style>
+
+#menubar ul { margin: 0; padding: 0; white-space:nowrap;}
+#menubar li { margin: 0; padding: 0;}
+#menubar a { margin: 0; padding: 0;}
+#menubar ul {list-style: none;}
+#menubar a {text-decoration: none;}
+#menubar {height: 70px; background-color: rgb(15,26,54); box-shadow: 0px 2px 3px rgba(0,0,0,.4); text-align: left;}
+
+
+#menubar > ul > li {
+
+    display:inline-block;
+    margin-left: 30px;
+    position: relative;
+    z-index: 10000;
+
+}
+
+#menubar > ul > li > a {
+    color: #FFFFFF;
+    font-family: "ITC Officina Serif W01", Verdana, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    line-height: 70px;
+    padding: 15px 20px;
+-webkit-transition: color .15s;
+   -moz-transition: color .15s;
+     -o-transition: color .15s;
+        transition: color .15s;
+
+}
+
+#menubar > ul > li > a:hover {color: #F7D425; }
+body.home li.home, body.tech li.tech {font-weight:bold; }
+
+#menubar > ul > li > ul {
+    opacity: 0;
+    visibility: hidden;
+    padding: 18px 0 20px 0;
+    background-color: #FFFFFF;
+    text-align: left;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    margin-left: -90px;
+    width: 180px;
+-webkit-transition: all .3s .1s;
+   -moz-transition: all .3s .1s;
+     -o-transition: all .3s .1s;
+        transition: all .3s .1s;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+}
+
+#menubar > ul > li:hover > ul {
+    opacity: 1;
+    top: 65px;
+    visibility: visible;
+}
+
+#menubar > ul > li > ul:before{
+    content: '';
+    display: block;
+    border-color: transparent transparent rgb(250,250,250) transparent;
+    border-style: solid;
+    border-width: 10px;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+#menubar > ul ul > li { position: relative;}
+
+#menubar ul ul a{
+    color: rgb(50,50,50);
+    font-family: "ITC Officina Serif W01", Verdana, 'Lucida Grande';
+    font-size: 13px;
+    background-color: rgb(250,250,250);
+    padding: 5px 8px 7px 16px;
+    display: block;
+-webkit-transition: background-color .1s;
+   -moz-transition: background-color .1s;
+     -o-transition: background-color .1s;
+        transition: background-color .1s;
+}
+
+#menubar ul ul a:hover {background-color: rgb(250,250,250);}
+
+#menubar ul ul ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: -16px;
+    left: 206px;
+    padding: 16px 0 20px 0;
+    background-color: rgb(250,250,250);
+    text-align: left;
+    width: 160px;
+-webkit-transition: all .3s;
+   -moz-transition: all .3s;
+     -o-transition: all .3s;
+        transition: all .3s;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+}
+
+
+#menubar ul ul > li:hover > ul { opacity: 1; left: 196px; visibility: visible;}
+
+
+#menubar ul ul a:hover{
+    background-color: rgb(15,26,54);
+    color: rgb(250,250,250);
+}
+
+</style>
+<div id="menubar">
+<ul>
+  <li><a href="index.html">N4JS Documentation</a>
+    <ul>
+        <li><a href="ide-setup.html">IDE Setup & HelloWorld!</a></li>
+        <li><a href="npm-export-guide.html">Export as npm</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../index.html#getting-started">Download N4JS</a></li>
+  <li><a href="../index.html">Project Home</a></li>
+</ul>
+</div>
