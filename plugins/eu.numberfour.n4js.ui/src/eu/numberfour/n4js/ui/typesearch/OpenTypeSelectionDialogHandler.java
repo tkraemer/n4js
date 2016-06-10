@@ -70,7 +70,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 				String text = ((N4JSEditor) activeEditor).getDocument().get(range.x, range.y);
 				return identifierValidator.isValidIdentifier(text) ? text : "";
 			} catch (BadLocationException e) {
-				LOGGER.error("Failed to infer type search pattern from editor selection", e);
+				LOGGER.error("Failed to infer type search pattern from editor selection.", e);
 			}
 
 		}

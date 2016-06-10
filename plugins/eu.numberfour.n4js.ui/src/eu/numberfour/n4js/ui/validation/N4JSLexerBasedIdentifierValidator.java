@@ -21,9 +21,7 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
 
 /**
- * An N4JS identifier validator which is based on the lexer.
- *
- * That means changes in the grammar will automatically be transfered to this validator.
+ * A N4JS identifier validator which is based on the generated lexer.
  */
 public final class N4JSLexerBasedIdentifierValidator {
 	@Inject
@@ -34,7 +32,7 @@ public final class N4JSLexerBasedIdentifierValidator {
 	private ITokenDefProvider tokenDefProvider;
 
 	/**
-	 * Instantiates a new N4JSLexerBasedIdentifierValidator
+	 * Instantiates a new N4JSLexerBasedIdentifierValidator.
 	 */
 	public N4JSLexerBasedIdentifierValidator() {
 	}
