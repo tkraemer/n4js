@@ -34,17 +34,28 @@ function constObjectDesctructering() {
 	console.log(a, c);
 }
 
+function letObjectDesctructering() {
+	// Object destructuring assignment using let XPECT warnings --> "The value of the local variable c is not used" at "c"
+	let {a, b, c} = obj;
+	
+	console.log(a, b);
+}
+
+
 // Double variable let declaration XPECT warnings --> "The value of the local variable l is not used" at "l"
 let k, l = 4;
 
-// Array destructuring with const XPECT warnings --> "The value of the local variable o is not used" at "o"
+// Array destructuring assignment using const XPECT warnings --> "The value of the local variable o is not used" at "o"
 const [m,,,n,,o] = array;
+
+// Array destructuring assignment using let XPECT warnings --> "The value of the local variable s is not used" at "s" 
+let [p,,,r,,s] = array;
 
 //// Uses
 
 // Use as function parameter
 console.log(a, c, d, f, dar,g);
-console.log(k, m, n)
+console.log(k, m, n, p, r)
 
 // Use on the right hand side of a variable declaration
 var z = anotherVariable;
