@@ -1,5 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
    
+   Preference "format.switch_cases_have_space_in_front_of_colon" "true" {}
+   
    END_SETUP
  */
  

@@ -4,8 +4,9 @@
  */
 
 
-/* XPECT formattedLines 19 ---
+/* XPECT formattedLines 18 ---
 export public enum RoundingMode {
+
 	/\*
 	 * Round away from zero. Never decreases the magnitude of the calculated value.
 	 * Maps to BigNumber.ROUND_UP
@@ -18,7 +19,7 @@ export public enum RoundingMode {
 	 *\/
 	DOWN,
 
-	/\*
+	/\**
 	 * Round toward negative infinity.
 	 * Maps to BigNumber.ROUND_FLOOR
 	 *\/
@@ -38,11 +39,19 @@ export public enum RoundingMode {
      */
     DOWN,
 
-    /*
+    /**
      * Round toward negative infinity.
      * Maps to BigNumber.ROUND_FLOOR
      */
     FLOOR
     
 }
+
+
+
+/* XPECT formattedLines 1 ---
+enum EXnum {a,b,c}
+--- */
+enum EXnum{a,b,c}
+
 

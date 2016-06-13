@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 
-/* indent single-line comment not on first column */
+/* [BLOCK] indent single-line comment not on first column */
 /* XPECT formattedLines 3 ---
 {
 	// x
@@ -27,7 +27,7 @@
 { // a
 }
 --- */
-{ // a
+{      // a
 }
 
 /* Collapse space between single-line comment and brace */
@@ -56,17 +56,19 @@
 
 /* normalize ml-comment in single-line braces */
 /* XPECT formattedLines 1 ---
-{ /\* h *\/ }
+{ /\* h *\/
+}
 --- */
 {/* h */}
 
 /* normalize ml-comment in single-line braces */
 /* XPECT formattedLines 1 ---
-{ /\* h *\/ }
+{ /\* h *\/
+}
 --- */
 {           /* h */               }
 
-/* normalize ml-comment in single-line braces */
+/* normalize ml-comment in single-line braces OL */
 /* XPECT formattedLines 2 ---
 { /\* h *\/
 }
@@ -92,7 +94,9 @@
 
 /* Multiple ML-comments in single line with statement: don't touch */
 /* XPECT formattedLines 1 ---
-{ /\* a *\/ /\*b*\/ /\*     c     *\/ let x = 3; /\*d*\/ }
+{ /\* a *\/ /\*b*\/ /\*     c     *\/
+	let x = 3; /\*d*\/
+}
 --- */
 { /* a */ /*b*/ /*     c     */ let x=3; /*d*/ }
    

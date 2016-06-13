@@ -16,5 +16,13 @@ throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as E
 
 
 
+/* XPECT formattedLines 2 ---
+let bool = true;
+let z = bool ? 5 : 10;
+--- */
+let bool = true;
+let z = bool?5:10;
+
+
 
 

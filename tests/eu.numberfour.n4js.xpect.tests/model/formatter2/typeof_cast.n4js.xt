@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+ 
+
+// format 'typeof' and 'as' operator, make sure there is no space.
+/* XPECT formattedLines 3 ---
+if (typeof value === "number" && !isFinite(value as number)) {
+	console.log("abc");
+}
+--- */
+if (typeof value === "number" && !isFinite(value as number)) {
+console.log("abc");
+}

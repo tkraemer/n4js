@@ -13,6 +13,6 @@ let 													u ={ a: 5, b: 6, "z": 7 };
 
 // format single line with trainling comma
 /* XPECT formattedLines 1 ---
-let u = { a: 5, b: 6, "z": 7, };
+let u2 = { a: 5, b: 6, "z": 7, };
 --- */
-let u ={ a: 5, b: 6, "z": 7, };
+let u2 ={ a: 5, b: 6, "z": 7, };

@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+/* XPECT formattedLines 7 ---
+function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, hoo6: int,
+	hoo7: int, hoo8: int, hoo9: int, hoo10: int) {
+
+	++hoo;
+};
+--- */
+function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, hoo6: int,
+    hoo7: int, hoo8: int, hoo9: int, hoo10: int) {  
+     
+    ++hoo;    
+}
+
+

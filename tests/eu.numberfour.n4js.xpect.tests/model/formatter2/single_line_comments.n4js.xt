@@ -3,29 +3,34 @@
 // TODO: checking comments only (without any other language-feature) fails to compute correct lines in the test. 
 
 /* do not change comments */
-/* XPECT formattedLines 2 ---
+/* XPECT formattedLines 3 ---
 ;
 // var b = [ 7 ] // kk
+let z = 10;
 --- */
 ;
 // var b = [ 7 ] // kk
+let z = 10;
 
 /* indent comments (decrease level) */
-/* XPECT formattedLines 3 ---
+/* XPECT formattedLines 4 ---
 {
 	// var b = [ 7 ] // kk
+	let z = 10;
 }
 --- */
 {
 					// var b = [ 7 ] // kk
+	let z = 10;
 }
 
 /* indent comments (increase level) */
-/* XPECT formattedLines 7 ---
+/* XPECT formattedLines 8 ---
 {
 	{
 		{
 			// var b = [ 7 ] // kk
+			let z = 10;
 		}
 	}
 }
@@ -34,11 +39,30 @@
 	{
 		{
  // var b = [ 7 ] // kk
+			let z = 10;
 		}
 	}
 }
 
 
- 
+/* don't indent comments on first character. */
+/* XPECT formattedLines 8 ---
+{
+	{
+		{
+// var b = [ 7 ] // kk
+			let z = 10;
+		}
+	}
+}
+--- */
+{
+	{
+		{
+// var b = [ 7 ] // kk
+			let z = 10;
+		}
+	}
+}
  
  

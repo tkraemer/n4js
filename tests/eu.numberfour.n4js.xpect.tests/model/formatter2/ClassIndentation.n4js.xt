@@ -40,28 +40,28 @@ interface ContentDataSetEvent {}
 interface DataEvent {}
 --- */
 export public class EmailSetAdapter implements DataAdapter {
-	private events: Array<ContentDataSetEvent> = [];
+  private events: Array<ContentDataSetEvent> = [];
 
-	public getLatestEvent(): ContentDataSetEvent {
-		if (this.events.length < 1) {
-			throw new Error("No ContentDataSetEvent captured! Please investigate the test setup.");
-		}
-		return this.events[this.events.length - 1];
-	}
+  public getLatestEvent(): ContentDataSetEvent {
+    if (this.events.length < 1) {
+      throw new Error("No ContentDataSetEvent captured! Please investigate the test setup.");
+    }
+    return this.events[this.events.length - 1];
+  }
 
-	public reset(): void {
-		this.events = [];
-	}
+  public reset(): void {
+    this.events = [];
+  }
 
-	@Override
-	public notifyChanged(evs: Array<DataEvent>): void {
-		evs.forEach(e => this.events.push(e as ContentDataSetEvent));
-	}
+  @Override
+  public notifyChanged(evs: Array<DataEvent>): void {
+    evs.forEach(e => this.events.push(e as ContentDataSetEvent));
+  }
 }
 
 
 interface DataAdapter {
-	public notifyChanged(evs: Array<DataEvent>): void;
+  public notifyChanged(evs: Array<DataEvent>): void;
 }
 interface ContentDataSetEvent{}
 interface DataEvent {}

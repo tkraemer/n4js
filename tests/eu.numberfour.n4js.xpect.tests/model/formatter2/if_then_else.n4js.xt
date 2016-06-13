@@ -1,6 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
    
 //   Preference "indentation" "    " {}
+   Preference "format.max_consecutive_newlines" "1" {}
    
    
    END_SETUP
@@ -8,9 +9,22 @@
 
 //
 /* XPECT formattedLines 1 ---
-if (4 > 5) { console.log("yes" + "or ?") } else { console.log("oh", "no") }
+if (4 > 5) {
+	console.log("yes" + "or ?")
+} else {
+	console.log("oh", "no")
+}
 --- */
-if( 4 > 5 ) { console.log ("yes"+"or ?") } else { console.log("oh","no") }
+if( 4 > 5 ) {console.log ("yes"+"or ?") } else { console.log("oh","no") }
+
+/* XPECT formattedLines 1 ---
+if (4 > 5) {
+	console.log("yes" + "or ?");
+} else {
+	console.log("oh", "no");
+}
+--- */
+if( 4>5 ) { console.log ("yes"+"or ?") ; } else { console.log("oh","no") ; }
 
 
 
@@ -20,7 +34,7 @@ if( 4 > 5 ) { console.log ("yes"+"or ?") } else { console.log("oh","no") }
 /* XPECT formattedLines 9 ---
 {
 	if (4 > 5) {
-		console.log ("yes" + "or ?");
+		console.log("yes" + "or ?");
 	} else {
 		console.log("oh", "no");
 	}
