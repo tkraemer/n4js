@@ -562,6 +562,9 @@ TryStatement <Yield>:
 
 CatchBlock <Yield>:	{CatchBlock} 'catch' '(' catchVariable=CatchVariable<Yield> ')' block=Block<Yield>;
 
+/**
+ * CatchVariable must not have a type reference, this is tested during validation (to enable better error messages).
+ */
 CatchVariable <Yield>:
 		=>bindingPattern=BindingPattern<Yield>
 	|	=>(name=BindingIdentifier<Yield> -> ColonSepTypeRef)
