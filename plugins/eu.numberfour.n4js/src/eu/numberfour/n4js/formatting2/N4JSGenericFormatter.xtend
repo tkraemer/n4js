@@ -36,9 +36,9 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 	val extension N4JSGrammarAccess
 	val extension ITextRegionExtensions
 
-	static val PRIO_1 = -10
-	static val PRIO_2 = -9
-	static val PRIO_3 = -8
+	public static val PRIO_1 = -10
+	public static val PRIO_2 = -9
+	public static val PRIO_3 = -8
 
 	def void formatColon(EObject semanticElement, extension IFormattableDocument document) {
 		for (colon : semanticElement.allRegionsFor.keywords(":")) {
@@ -125,14 +125,18 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 				open.append[noSpace; priority = PRIO_1];
 			} // otherwise, if there is a newline before the innermost closing bracket, we want to format the surrounded tokens multiline style. 
 			else if (close.previousHiddenRegion.isMultiline) {
-				close.prepend[newLine; priority = PRIO_1].appendNewLine(document)
-				open.append[newLine; priority = PRIO_1]
-				innermost.interior[indent]
+				close.prepend[newLine; priority = PRIO_1].appendNewLine(document);
+				open.append[newLine; priority = PRIO_1];
+				innermost.interior[indent];
 				for (comma : open.semanticElement.regionFor.keywords(",")) {
+					// FIXME: bug in toString: println(comma.toString);
 					comma.prepend[noSpace; priority = PRIO_1]
-					.append[setNewLines(1,1,2);	/* TODO maybe only more then one newline if the following hidden region contains a comment */
-						priority = PRIO_1
-					]
+					.append[
+						// If dangling comma, then a conflict arises with new line of close.
+						// Avoid here by using Prio_2 
+						setNewLines(1,1,2);	
+						priority = PRIO_2
+					];
 				}
 			} // otherwise, format the tokens into a single line.
 			else {
@@ -203,9 +207,10 @@ class IndentHandlingTextReplaceMerger extends TextReplacerMerger {
 		
 		
 		if( semiReplacements.size !== 1  || otherReplacements.size !== 1  ) {
-			logger.warn( '''Unhandled merge-case: "
-			 "Semis replacer («semiReplacements.size») :«semiReplacements» 
-			 "Non-Semi replacer ( «otherReplacements.size»  «otherReplacements»
+			logger.warn( '''
+			Unhandled merge-case: "
+				"Semis replacer («semiReplacements.size») :«semiReplacements» 
+				"Non-Semi replacer ( «otherReplacements.size»  «otherReplacements»
 			 ''')
 				
 			return null; // null creates merge Exception 
