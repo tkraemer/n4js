@@ -1045,15 +1045,26 @@ public class TypeUtils {
 
 		@Override
 		protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject) {
-			if (eReference == eRef_StructuralTypeRef_astStructuralMembers)
-				return; // do not copy 'astStructuralMembers' of StructuralTypeRefs
-			if (eReference == eRef_Wildcard_declaredUpperBound) {
-				((Wildcard) copyEObject).setDeclaredUpperBound(
-						TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound((Wildcard) eObject)));
-				return;
+			if (org.eclipse.xtext.util.Arrays.contains(eRefsToIgnore, eReference)) {
+				return; // abort, do not copy ignored references
+			} else if (eReference == eRef_StructuralTypeRef_astStructuralMembers) {
+				return; // abort, do not copy 'astStructuralMembers' of StructuralTypeRefs
+			} else if (eReference == eRef_Wildcard_declaredUpperBound) {
+				final Wildcard wOrig = (Wildcard) eObject;
+				final Wildcard wCopy = (Wildcard) copyEObject;
+				if (wOrig.isImplicitUpperBoundInEffect()) {
+					final EObject parent = wOrig.eContainer();
+					final boolean parentIsBeingCopiedAsWell = parent != null && containsKey(parent);
+					final boolean needToMakeImplicitUpperBoundExplicit = !parentIsBeingCopiedAsWell;
+					if (needToMakeImplicitUpperBoundExplicit) {
+						wCopy.setDeclaredUpperBound(
+								TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound(wOrig)));
+						return;
+					}
+				}
+				// continue with default behavior ... (do not return!)
 			}
-			if (org.eclipse.xtext.util.Arrays.contains(eRefsToIgnore, eReference))
-				return; // do not copy ignored references
+			// default behavior:
 			super.copyContainment(eReference, eObject, copyEObject);
 		}
 

@@ -12,13 +12,17 @@ package eu.numberfour.n4js.ts.utils
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.ts.TypesInjectorProvider
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.TypeDefs
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.*
+import org.eclipse.xtext.linking.lazy.LazyLinkingResource
+import org.eclipse.xtext.util.CancelIndicator
 
 /**
  */
@@ -61,7 +65,6 @@ class TypeUtilsTest {
 		assertEquals("B,R,I", TypeUtils.declaredSuperTypes(D).map[typeRefAsString].join(","));
 		assertEquals("B,R,S,I,J", TypeUtils.declaredSuperTypes(E).map[typeRefAsString].join(","));
 		assertEquals("R,S,I,J", TypeUtils.declaredSuperTypes(F).map[typeRefAsString].join(","));
-
 	}
 
 	@Test
@@ -83,7 +86,6 @@ class TypeUtilsTest {
 		assertEquals("", TypeUtils.declaredSuperTypes(I).map[typeRefAsString].join(","));
 		assertEquals("I", TypeUtils.declaredSuperTypes(J).map[typeRefAsString].join(","));
 		assertEquals("I,K", TypeUtils.declaredSuperTypes(L).map[typeRefAsString].join(","));
-
 	}
 
 	@Test
@@ -111,9 +113,42 @@ class TypeUtilsTest {
 		assertEquals("", TypeUtils.declaredSuperTypes(booleanType).map[typeRefAsString].join(","));
 		assertEquals("", TypeUtils.declaredSuperTypes(anyType).map[typeRefAsString].join(","));
 		assertEquals("", TypeUtils.declaredSuperTypes(voidType).map[typeRefAsString].join(","));
-
 	}
 
+	@Test
+	def void testCopy_recursiveUpperBounds_direct() {
+		testCopy_recursiveUpperBounds(
+			'''
+				public class A<T extends A<?>> {}
+			''',
+			"A<? extends A<?>>");
+	}
 
+	@Test
+	def void testCopy_recursiveUpperBounds_indirect() {
+		testCopy_recursiveUpperBounds(
+			'''
+				public class X<T extends B<?>> {}
+				public class Y<T extends X<?>> {}
+				public class B<T extends Y<?>> {}
+			''',
+			"X<? extends B<?>>");
+	}
 
+	def private void testCopy_recursiveUpperBounds(CharSequence code, String expectedImplicitUpperBoundOfLastWildcard) {
+		val typeDefs = code.parse();
+		(typeDefs.eResource as LazyLinkingResource).resolveLazyCrossReferences(CancelIndicator.NullImpl); // important!
+
+		val wildcard = typeDefs.eAllContents.filter(Wildcard).last // take *last* wildcard in code
+		assertNotNull(wildcard);
+
+		// make sure we can copy the wildcard without a StackOverflowException
+		val cpy = TypeUtils.copy(wildcard);
+
+		// make sure we can obtain the implicit upper bound from cpy,
+		// even though it does not have a parent ParameterizedTypeRef
+		assertEquals(
+			expectedImplicitUpperBoundOfLastWildcard,
+			cpy.declaredOrImplicitUpperBounds.map[typeRefAsString].join(","));
+	}
 }

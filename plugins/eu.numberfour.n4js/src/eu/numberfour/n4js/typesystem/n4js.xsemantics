@@ -1325,6 +1325,11 @@ from {
 						var TypeRef rightArgUpper; G |~ rightArg /\ rightArgUpper
 						var TypeRef rightArgLower; G |~ rightArg \/ rightArgLower
 
+						// ignore implicit upper bounds on right-hand side
+						if(rightArg instanceof Wildcard && (rightArg as Wildcard).isImplicitUpperBoundInEffect) {
+							rightArgUpper = G.anyTypeRef;
+						}
+
 // TODO IDE-1653 reconsider this logic
 // seems bogus because it allows G<?> <: G<E> (with E being a closed existential, i.e. ExistentialTypeRef)
 // why not just require type equality, i.e. L<:R && R<:L (without taking upper/lower bounds) and let the

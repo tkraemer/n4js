@@ -3969,6 +3969,10 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
+                                      if (((rightArg instanceof Wildcard) && ((Wildcard) rightArg).isImplicitUpperBoundInEffect())) {
+                                        ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+                                        rightArgUpper = _anyTypeRef;
+                                      }
                                       /* { if(variance!=Variance.CONTRA) { G |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
