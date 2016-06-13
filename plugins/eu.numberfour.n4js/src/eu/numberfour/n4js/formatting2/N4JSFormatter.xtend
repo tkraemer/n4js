@@ -556,8 +556,13 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		arrowF.configureCommas(document);
 		arrowF.regionFor.keyword("=>").surround[oneSpace];
 		if( arrowF.isHasBracesAroundBody ) {
-			// format body as block.
+			// format body as block. NOTE: this block differs from other blocks, since the curly braces are defined in the ArrowExpression.
 			arrowF.body.format;
+			// special handling of indentation in inside the braces. 
+			if( arrowF.hasBracesAroundBody ) {
+				val bracesPair = arrowF.regionFor.keywordPairs("{","}").head;
+				bracesPair.interior[indent];				
+			}
 		} else {
 			// no braces Around the implicit return statement.
 			arrowF.body?.statements.head.format;
