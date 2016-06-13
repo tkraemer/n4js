@@ -36340,6 +36340,26 @@ ruleTypeRefForCast returns [EObject current=null]
         $current = $this_ArrowFunctionTypeExpression_6.current;
         afterParserOrEnumRuleCall();
     }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); 
+    }
+    this_UnionTypeExpressionOLD_7=ruleUnionTypeExpressionOLD
+    {
+        $current = $this_UnionTypeExpressionOLD_7.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); 
+    }
+    this_IntersectionTypeExpressionOLD_8=ruleIntersectionTypeExpressionOLD
+    {
+        $current = $this_IntersectionTypeExpressionOLD_8.current;
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 

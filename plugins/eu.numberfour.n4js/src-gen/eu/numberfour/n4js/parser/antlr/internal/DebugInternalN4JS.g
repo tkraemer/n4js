@@ -6268,7 +6268,9 @@ ruleTypeRefForCast :
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleFunctionTypeExpressionOLD |
-	ruleArrowFunctionTypeExpression
+	ruleArrowFunctionTypeExpression |
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefInClassifierType

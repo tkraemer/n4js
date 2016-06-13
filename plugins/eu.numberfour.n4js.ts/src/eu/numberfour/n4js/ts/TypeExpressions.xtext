@@ -80,7 +80,9 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| ConstructorTypeRef
 	| ClassifierTypeRef
 	| FunctionTypeExpressionOLD
-	| ArrowFunctionTypeExpression;
+	| ArrowFunctionTypeExpression
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD;
 
 TypeRefInClassifierType returns StaticBaseTypeRef:
 	  ParameterizedTypeRefNominal

@@ -15167,6 +15167,10 @@ ruleTypeRefForCast
     |	FunctionTypeExpressionOLDParserRuleCall_5=ruleFunctionTypeExpressionOLD		{ announce($FunctionTypeExpressionOLDParserRuleCall_5.start, $FunctionTypeExpressionOLDParserRuleCall_5.stop, grammarAccess.getTypeRefForCastAccess().getFunctionTypeExpressionOLDParserRuleCall_5()); }
 
     |	ArrowFunctionTypeExpressionParserRuleCall_6=ruleArrowFunctionTypeExpression		{ announce($ArrowFunctionTypeExpressionParserRuleCall_6.start, $ArrowFunctionTypeExpressionParserRuleCall_6.stop, grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_6()); }
+
+    |	UnionTypeExpressionOLDParserRuleCall_7=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_7.start, $UnionTypeExpressionOLDParserRuleCall_7.stop, grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
+
+    |	IntersectionTypeExpressionOLDParserRuleCall_8=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_8.start, $IntersectionTypeExpressionOLDParserRuleCall_8.stop, grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
 )
 ;
 

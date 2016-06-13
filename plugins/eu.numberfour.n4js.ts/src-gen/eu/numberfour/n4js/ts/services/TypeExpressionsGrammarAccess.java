@@ -376,6 +376,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cClassifierTypeRefParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cFunctionTypeExpressionOLDParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cArrowFunctionTypeExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cUnionTypeExpressionOLDParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cIntersectionTypeExpressionOLDParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//TypeRefForCast StaticBaseTypeRef:
 		//	ParameterizedTypeRef
@@ -385,10 +387,12 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| ClassifierTypeRef
 		//	| FunctionTypeExpressionOLD
 		//	| ArrowFunctionTypeExpression
+		//	| UnionTypeExpressionOLD
+		//	| IntersectionTypeExpressionOLD
 		@Override public ParserRule getRule() { return rule; }
 
 		//ParameterizedTypeRef | ArrayTypeRef | ThisTypeRef | ConstructorTypeRef | ClassifierTypeRef | FunctionTypeExpressionOLD |
-		//ArrowFunctionTypeExpression
+		//ArrowFunctionTypeExpression | UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ParameterizedTypeRef
@@ -411,6 +415,12 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ArrowFunctionTypeExpression
 		public RuleCall getArrowFunctionTypeExpressionParserRuleCall_6() { return cArrowFunctionTypeExpressionParserRuleCall_6; }
+
+		//UnionTypeExpressionOLD
+		public RuleCall getUnionTypeExpressionOLDParserRuleCall_7() { return cUnionTypeExpressionOLDParserRuleCall_7; }
+
+		//IntersectionTypeExpressionOLD
+		public RuleCall getIntersectionTypeExpressionOLDParserRuleCall_8() { return cIntersectionTypeExpressionOLDParserRuleCall_8; }
 	}
 
 	public class TypeRefInClassifierTypeElements extends AbstractParserRuleElementFinder {
@@ -2262,6 +2272,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ClassifierTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeRefForCastElements getTypeRefForCastAccess() {
 		return pTypeRefForCast;
 	}

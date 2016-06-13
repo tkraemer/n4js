@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C {};
+enum E {L};
+
+var e = E.L;
+
+// XPECT errors --> "Cannot cast from E to string" at "e as string"
+e as string;
+// XPECT warnings --> "Unnecessary cast from E to any" at "e as any"
+e as any;
+// XPECT errors --> "Cannot cast from E to Object" at "e as Object"
+e as Object;
+// XPECT warnings --> "Unnecessary cast from E to E" at "e as E"
+e as E;
+// XPECT errors --> "Cannot cast from E to type{C}" at "e as type{C}"
+e as type{C};
+// XPECT errors --> "Cannot cast from E to constructor{C}" at "e as constructor{C}"
+e as constructor{C};

@@ -659,7 +659,7 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Check if superTypeCandidate is raw super type of Type
+	 * Check if superTypeCandidate is raw super type of Type. Structural typing is ignored here.
 	 */
 	public static boolean isRawSuperType(Type type, Type superTypeCandidate) {
 		return isRawSuperType(type, superTypeCandidate, new RecursionGuard<Type>());

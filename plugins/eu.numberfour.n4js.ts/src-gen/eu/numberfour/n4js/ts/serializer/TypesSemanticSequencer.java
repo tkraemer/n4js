@@ -159,6 +159,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case TypeRefsPackage.INTERSECTION_TYPE_EXPRESSION:
 				if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getIntersectionTypeExpressionOLDRule()) {
 					sequence_IntersectionTypeExpressionOLD(context, (IntersectionTypeExpression) semanticObject); 
 					return; 
@@ -340,6 +341,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				}
 				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getUnionTypeExpressionOLDRule()) {
 					sequence_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
 					return; 
@@ -802,6 +804,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns IntersectionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns IntersectionTypeExpression
+	 *     TypeRefForCast returns IntersectionTypeExpression
 	 *     IntersectionTypeExpressionOLD returns IntersectionTypeExpression
 	 *
 	 * Constraint:
@@ -1696,6 +1699,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns UnionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns UnionTypeExpression
+	 *     TypeRefForCast returns UnionTypeExpression
 	 *     UnionTypeExpressionOLD returns UnionTypeExpression
 	 *
 	 * Constraint:

@@ -24,14 +24,11 @@ package eu.numberfour.n4js.ts.typeRefs
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.NullModifier
-import eu.numberfour.n4js.ts.types.PrimitiveType
-import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TN4Classifier
-import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TStructuralType
 import eu.numberfour.n4js.ts.types.Type
@@ -82,30 +79,6 @@ abstract class TypeRef extends TypeArgument {
 		return dtype.final
 	}
 
-	/**
-	 * Returns true if the referenced type referenced is a type which,
-	 * ignoring other (meta types) defined which may be involved, defines a type hierarchy which is a tree.
-	 *
-	 * Concrete these are either classes, object prototypes, primitives, or enums. That is, a class can be inherited only from a single other class, and primitives or enums can not be inherited at all. On the other hand, interfaces or roles support multi-inheritance.
-	 * So, this method will return true if the declared type is either
-	 * <ul>
-	 * <li>a class</li>
-	 * <li>an object prototype</li>
-	 * <li>an enum</li>
-	 * <li>a primitive</li>
-	 * </ul>
-	 *
-	 * <p>
-	 * The method is robust, if typeRef is null or the declared type is null, false is returned.
-	 */
-	op boolean isTreeHierarchyType() {
-		val dtype = declaredType;
-		if (dtype === null) {
-			return false;
-		}
-		return dtype instanceof TClass || dtype instanceof PrimitiveType || dtype instanceof TObjectPrototype ||
-			dtype instanceof TEnum;
-	}
 	/*
 	 * Convenience method, flag indicating whether user can add properties to the instance not defined in the type.
 	 */

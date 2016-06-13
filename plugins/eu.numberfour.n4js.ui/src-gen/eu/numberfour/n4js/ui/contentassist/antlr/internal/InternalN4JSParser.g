@@ -15141,6 +15141,18 @@ rule__TypeRefForCast__Alternatives
 { after(grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_6()); }
 )
 
+    |(
+{ before(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
+	ruleUnionTypeExpressionOLD
+{ after(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
+)
+
+    |(
+{ before(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
+	ruleIntersectionTypeExpressionOLD
+{ after(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

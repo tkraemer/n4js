@@ -1579,7 +1579,7 @@ rule subtypeConstructorTypeRef__Function
 from {
 	right.declaredType instanceof AnyType
 	||
-	right.declaredType === G.functionType
+	right.declaredType === G.objectType
 }
 
 rule subtypeConstructorTypeRef
@@ -1629,6 +1629,14 @@ from {
 
 	// check static types
 	G |- left.staticTypeRef <: right.staticTypeRef
+}
+
+rule subtypeClassifierTypeRefObject
+	G |- ClassifierTypeRef left <: ParameterizedTypeRef right
+from {
+	right.declaredType instanceof AnyType
+	||
+	right.declaredType == G.objectType
 }
 
 /* @see [N4JS] 4.7.2. Functions and FunctionType */

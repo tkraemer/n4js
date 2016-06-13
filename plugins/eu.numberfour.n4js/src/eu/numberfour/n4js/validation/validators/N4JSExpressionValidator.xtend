@@ -124,6 +124,10 @@ import static eu.numberfour.n4js.validation.IssueCodes.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import eu.numberfour.n4js.ts.types.TExportableElement
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.types.TObjectPrototype
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 
 /**
  */
@@ -1077,20 +1081,21 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val Type typeContext = EcoreUtil2.getContainerOfType(castExpression, TypeDefiningElement)?.definedType;
 		val context = if (typeContext === null) null else createTypeRef(typeContext);
 		val S = typeInferencer.tau(castExpression.expression, context);
-
 		val T = castExpression.targetTypeRef
 
 		// avoid consequential errors
 		if (S === null || T === null || T instanceof UnknownTypeRef || S instanceof UnknownTypeRef) return;
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(castExpression)
 
-		if (ts.subtypeSucceeded(G, S, T)) { // Constraint 78 (Cast Validation At Compile-Time): 1
+		if (ts.subtypeSucceeded(G, S, T)) { // Constraint 81.2 (Cast Validation At Compile-Time): 1
 			addIssue(IssueCodes.getMessageForEXP_CAST_UNNECESSARY(S.typeRefAsString, T.typeRefAsString),
 				castExpression, IssueCodes.EXP_CAST_UNNECESSARY);
 		} else {
 			if (!(T.declaredType instanceof ContainerType<?>) && !(T.declaredType instanceof TEnum) &&
 				!(T.declaredType instanceof TypeVariable) && !(T instanceof FunctionTypeExpression) &&
-				!(T instanceof ClassifierTypeRef)) { // Constraint 78 (Cast Validation At Compile-Time): 2
+				!(T instanceof ClassifierTypeRef) &&
+				!(T instanceof UnionTypeExpression) && !(T instanceof IntersectionTypeExpression)
+				) { // Constraint 78 (Cast Validation At Compile-Time): 2
 				addIssue(IssueCodes.getMessageForEXP_CAST_INVALID_TARGET(), castExpression,
 					IssueCodes.EXP_CAST_INVALID_TARGET);
 			} else {
@@ -1104,6 +1109,26 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def boolean internalCheckCastExpression(RuleEnvironment G, TypeRef S, TypeRef T, CastExpression castExpression,
 		boolean addIssues) {
+		if (T instanceof UnionTypeExpression) {
+			if (! T.typeRefs.exists[internalCheckCastExpression(G, S, it, castExpression, false)]) {
+				if (addIssues) {
+					addIssue(IssueCodes.getMessageForEXP_CAST_FAILED(S.typeRefAsString, T.typeRefAsString),
+						castExpression, IssueCodes.EXP_CAST_FAILED);
+				}
+				return false;
+			}
+		}	
+		if (T instanceof IntersectionTypeExpression) {
+			if (! T.typeRefs.forall[internalCheckCastExpression(G, S, it, castExpression, false)]) {
+				if (addIssues) {
+					addIssue(IssueCodes.getMessageForEXP_CAST_FAILED(S.typeRefAsString, T.typeRefAsString),
+						castExpression, IssueCodes.EXP_CAST_FAILED);
+				}
+				return false;
+			}
+		}	
+			
+			
 		if (S instanceof ComposedTypeRef) { // Constraint 78 (Cast Validation At Compile-Time): 5
 			if (! S.typeRefs.exists[internalCheckCastExpression(G, it, T, castExpression, false)]) {
 				if (addIssues) {
@@ -1112,8 +1137,32 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				}
 				return false;
 			}
-		} else if (canCheck(S, T)) { // Constraint 78 (Cast Validation At Compile-Time):
-			if (!ts.subtypeSucceeded(G, T, S)) {
+		} else if (canCheck(S, T)) { // Constraint 81.3 (Cast Validation At Compile-Time):
+			var castOK = ts.subtypeSucceeded(G, T, S);
+			if (! castOK && (T instanceof ParameterizedTypeRef && S instanceof ParameterizedTypeRef)) {
+				val ptrT = T as ParameterizedTypeRef;
+				val ptrS = S as ParameterizedTypeRef;
+				if (ptrS.declaredType == ptrT.declaredType) {
+					val to = ptrS.typeArgs.size;
+					if (to === ptrT.typeArgs.size) {
+						var int i=0;
+						while (i<to && ts.subtypeSucceeded(G, ptrT.typeArgs.get(i), ptrS.typeArgs.get(i))) {
+							i++;
+						}
+						if (i==to) {
+							castOK = true;
+						} else {
+							i=0;
+							while (i<to && ts.subtypeSucceeded(G, ptrS.typeArgs.get(i), ptrT.typeArgs.get(i))) {
+								i++;
+							}
+							castOK = i==to;
+						}
+						
+					}
+				}
+			} 
+			if (!castOK) {
 				if (addIssues) {
 					addIssue(IssueCodes.getMessageForEXP_CAST_FAILED(S.typeRefAsString, T.typeRefAsString),
 						castExpression, IssueCodes.EXP_CAST_FAILED);
@@ -1134,8 +1183,19 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	private def boolean canCheck(TypeRef S, TypeRef T) {
-		return (S.treeHierarchyType && T.treeHierarchyType) || ((S.declaredType instanceof TInterface) && T.actuallyFinal) ||
-			(S.actuallyFinal && (T.declaredType instanceof TInterface)) || T instanceof FunctionTypeExpression
+		return (isCPOE(S) && isCPOE(T))
+			|| ( (S.declaredType instanceof TInterface) && T.actuallyFinal) 
+			|| (S.actuallyFinal && (T.declaredType instanceof TInterface))
+			|| (TypeUtils.isRawSuperType(T.declaredType, S.declaredType))
+			|| T instanceof FunctionTypeExpression;
+	}
+	
+	private def boolean isCPOE(TypeRef T) {
+		if (T instanceof ParameterizedTypeRef) {
+			val d = T.declaredType;
+			return d instanceof TClass || d instanceof TEnum || d instanceof PrimitiveType || d instanceof TObjectPrototype; 
+		};
+		return T instanceof ClassifierTypeRef || T instanceof ConstructorTypeRef;
 	}
 
 	private def boolean isActuallyFinal(TypeRef typeRef) {
