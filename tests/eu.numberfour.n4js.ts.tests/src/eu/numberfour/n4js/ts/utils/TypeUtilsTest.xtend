@@ -23,6 +23,7 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.util.CancelIndicator
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 
 /**
  */
@@ -135,6 +136,21 @@ class TypeUtilsTest {
 			"X<? extends B<?>>");
 	}
 
+	@Test
+	def void testCopy_recursiveUpperBounds_usage() {
+		testCopy_recursiveUpperBounds(
+			'''
+				public class X<T extends B<?>> {}
+				public class Y<T extends X<?>> {}
+				public class B<T extends Y<?>> {}
+
+				public class Other {
+					public field: B<?>; // <-- this time using a wildcard outside the recursion cycle
+				}
+			''',
+			"Y<? extends X<?>>");
+	}
+
 	def private void testCopy_recursiveUpperBounds(CharSequence code, String expectedImplicitUpperBoundOfLastWildcard) {
 		val typeDefs = code.parse();
 		(typeDefs.eResource as LazyLinkingResource).resolveLazyCrossReferences(CancelIndicator.NullImpl); // important!
@@ -150,5 +166,15 @@ class TypeUtilsTest {
 		assertEquals(
 			expectedImplicitUpperBoundOfLastWildcard,
 			cpy.declaredOrImplicitUpperBounds.map[typeRefAsString].join(","));
+
+		// make sure we can copy the wildcard's parent ParameterizedTypeRef without a StackOverflowException
+		val paramTypeRef = wildcard.eContainer as ParameterizedTypeRef;
+		val cpy2 = TypeUtils.copy(paramTypeRef);
+
+		// make sure we can obtain the implicit upper bound from the parent's child wildcard
+		val copiedWildcardInCpy2 = cpy2.typeArgs.get(0) as Wildcard;
+		assertEquals(
+			expectedImplicitUpperBoundOfLastWildcard,
+			copiedWildcardInCpy2.declaredOrImplicitUpperBounds.map[typeRefAsString].join(","));
 	}
 }
