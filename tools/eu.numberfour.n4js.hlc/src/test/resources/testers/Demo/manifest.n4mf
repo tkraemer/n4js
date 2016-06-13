@@ -2,7 +2,7 @@ ArtifactId: Demo
 VendorId: eu.numberfour
 ProjectName: "Demo"
 VendorName: "NumberFour AG"
-ProjectType: app
+ProjectType: application
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
 Sources {
