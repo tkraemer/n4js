@@ -70,10 +70,10 @@ var v24 : Array<? extends B> = [];
 // XPECT type of '[ b, c ]' --> Array<union{B,C}>
 var v31 = [ b, c ];
 
-// XPECT type of '[ b, c ]' --> Array<B>
+// XPECT type of '[ b, c ]' --> Array<union{B,C}>
 var v32 : Iterable<B> = [ b, c ];
 
-// XPECT type of '[ b, c ]' --> Array<A>
+// XPECT type of '[ b, c ]' --> Array<union{B,C}>
 var v33 : Iterable<A> = [ b, c ];
 
 // XPECT type of '[ b, c ]' --> Array<union{B,C}>

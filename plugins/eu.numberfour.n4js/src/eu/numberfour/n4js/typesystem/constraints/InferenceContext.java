@@ -35,6 +35,7 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.InferenceVariable;
+import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.util.Variance;
@@ -459,7 +460,12 @@ public final class InferenceContext {
 	 */
 	private TypeRef chooseInstantiation(InferenceVariable infVar) {
 		final TypeRef[] lowerBounds = currentBounds.collectLowerBounds(infVar, true, true);
-		if (lowerBounds.length > 0) {
+		final boolean lowerAreUninteresting = lowerBounds.length > 0 && !containsInterestingLowerBound(lowerBounds);
+		final TypeRef[] upperBoundsPreview = lowerAreUninteresting
+				? currentBounds.collectUpperBounds(infVar, true, true) : null;
+		final boolean preferUpperOverLower = lowerAreUninteresting && upperBoundsPreview != null
+				&& upperBoundsPreview.length > 0;
+		if (lowerBounds.length > 0 && !preferUpperOverLower) {
 			// TODO IDE-1653 reconsider:
 			// take upper bound of all lower bounds
 			// (if we have a type bound `α :> ? extends A` this will give us A as a lower bound for α)
@@ -481,6 +487,19 @@ public final class InferenceContext {
 				return RuleEnvironmentExtensions.anyTypeRef(G);
 			}
 		}
+	}
+
+	private boolean containsInterestingLowerBound(TypeRef[] typeRefs) {
+		final Type undefinedType = RuleEnvironmentExtensions.undefinedType(G);
+		final Type nullType = RuleEnvironmentExtensions.nullType(G);
+		for (int i = 0; i < typeRefs.length; i++) {
+			final TypeRef curr = typeRefs[i];
+			final Type currDeclType = curr != null ? curr.getDeclaredType() : null;
+			if (currDeclType != null && currDeclType != undefinedType && currDeclType != nullType) {
+				return true; // wow, that bound is interesting!
+			}
+		}
+		return false; // no interesting bounds encountered
 	}
 
 	/**

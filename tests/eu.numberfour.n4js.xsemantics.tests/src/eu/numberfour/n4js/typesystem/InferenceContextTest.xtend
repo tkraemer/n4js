@@ -220,6 +220,28 @@ class InferenceContextTest extends AbstractInferenceContextTest {
 	}
 
 	@Test
+	def void test_preferUpperBoundsIfLowerBoundsAreUninteresting01() {
+		script.assertSolution(
+			#[
+				constraint(_G.undefinedType,'<:',alpha), // null <: α
+				constraint(alpha,'<:',A) // α <: A
+			],
+			alpha -> A.ref
+		)
+	}
+
+	@Test
+	def void test_preferUpperBoundsIfLowerBoundsAreUninteresting02() {
+		script.assertSolution(
+			#[
+				constraint(_G.nullType,'<:',alpha), // null <: α
+				constraint(alpha,'<:',A) // α <: A
+			],
+			alpha -> A.ref
+		)
+	}
+
+	@Test
 	def void testTEMP() {
 		script.assertSolution(
 			#[
