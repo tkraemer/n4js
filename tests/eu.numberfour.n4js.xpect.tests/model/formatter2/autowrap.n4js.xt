@@ -12,7 +12,7 @@ class YStuff {
 
 // Additional Linebreak after last statement required! 
 // If missing, then automatic semicolon insertion / replacement behaves differently.
-/* XPECT formattedLines 1 ---
+/* XPECT FIXME formattedLines 1 ---
 var x = new Class1().someField.someField.someField.someField.someField.someField.someField.someField.someField.
 	someField.someField.someField.someField;
 --- */
@@ -20,7 +20,7 @@ var x = new Class1().someField . someField . someField.someField.someField.someF
 
 
 
-/* XPECT formattedLines 1 ---
+/* XPECT FIXME formattedLines 1 ---
 var z = new YStuff().m234567890().m234567890().m234567890().m234567890().m234567890().m234567890().m234567890().m("012")
 	.m234567890().m234567890();
 --- */

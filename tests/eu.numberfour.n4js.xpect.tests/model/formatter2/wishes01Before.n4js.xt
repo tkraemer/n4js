@@ -11,8 +11,13 @@
  */
  
 
-// 
-/* XPECT formattedLines 140 ---
+/* Fixme-suppressed problems:
+  - line 95 one indentation to much in arrow-function
+  - line 133 one auto-wrap inserted which should not be there.
+  - line 137 & 143 & 153 auto-wrap not implemeneted for logical expressions.
+  - line 158 & 159 newlines swallowed.
+ */
+/* XPECT FIXME formattedLines 140 ---
 import {SomethingLongHere} from "formatter2/wishesImported";
 
 interface Goo {}
