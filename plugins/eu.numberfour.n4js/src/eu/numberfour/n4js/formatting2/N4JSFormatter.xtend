@@ -322,17 +322,35 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(ParameterizedPropertyAccessExpression exp, extension IFormattableDocument document) {
-		exp.regionFor.keyword(".").prepend[noSpace; autowrap;].append[noSpace;]
-		exp.target.format
+		val dotKW = exp.regionFor.keyword(".");
+		dotKW.prepend[noSpace; autowrap; setNewLines(0,0,1)].append[noSpace;];
+		if( exp.eContainer instanceof ExpressionStatement) {
+			// top-level PPA, indent one level.
+			exp.interior[
+				indent
+			];
+		}
+		exp.target.format;
 	}
 
 	def dispatch void format(ParameterizedCallExpression exp, extension IFormattableDocument document) {
-		exp.regionFor.keyword(".").prepend[noSpace; autowrap;].append[noSpace;]
-		exp.regionFor.keyword("(").prepend[noSpace];
-		exp.regionFor.keyword(")").append[noSpace];
+		val dotKW = exp.regionFor.keyword(".");
+		dotKW.prepend[noSpace; autowrap;].append[noSpace;]
+		exp.regionFor.keyword("(").prepend[noSpace].append[noSpace];
+		exp.regionFor.keyword(")").prepend[noSpace].append[noSpace];
 		
 		exp.arguments.tail.forEach[prepend[oneSpace]];
 		exp.arguments.forEach[format];
+		
+		if( exp.eContainer instanceof ExpressionStatement) {
+			// top-level PPA, indent one level.
+			exp.interior[
+				indent
+			];
+		}
+		exp.target.format;
+		
+		
 		exp.target.format;
 	}
 
@@ -342,8 +360,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(IfStatement stmt, extension IFormattableDocument document) {
-		stmt.regionFor.keyword("(").prepend[oneSpace].append[noSpace];
-		stmt.regionFor.keyword(")").append[oneSpace].prepend[noSpace];
+		val parenPair = stmt.regionFor.keywordPairs("(",")").head;
+		parenPair.interior[noSpace;indent];
+		parenPair.key.prepend[oneSpace];
+		parenPair.value.append[oneSpace];
+		
 		stmt.regionFor.keyword("else").prepend[autowrap;oneSpace].append[oneSpace];
 
 		stmt.elseStmt.prepend[oneSpace; newLines = 0];
@@ -555,6 +576,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(ArrowFunction arrowF, extension IFormattableDocument document) {
 		arrowF.configureCommas(document);
 		arrowF.regionFor.keyword("=>").surround[oneSpace];
+		arrowF.regionFor.keywordPairs("(",")").head?.interior[noSpace];
 		if( arrowF.isHasBracesAroundBody ) {
 			// format body as block. NOTE: this block differs from other blocks, since the curly braces are defined in the ArrowExpression.
 			arrowF.body.format;
@@ -644,10 +666,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	/** var,let,const  */
 	def dispatch void format(VariableStatement vStmt, extension IFormattableDocument document) {
+		
 		vStmt.regionFor.feature(
 			N4JSPackage.Literals.VARIABLE_DECLARATION_CONTAINER__VAR_STMT_KEYWORD).append [
 			oneSpace;
-		];
+		]; // "let", "var" or "const"
 
 		vStmt.configureCommas(document);
 		
@@ -658,16 +681,20 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			e.format;
 			if (i > 0) { // assignments start in separate lines. 
 				if (e instanceof VariableDeclaration) {
-					if (e.expression !== null) e.prepend[newLine];
+					if (e.expression !== null) e.prepend[newLine]
+					else e.prepend[setNewLines(0,1,1); lowPriority];
 				} else if (e instanceof VariableBinding) {
-					if (e.expression !== null) e.prepend[newLine];
+					if (e.expression !== null) e.prepend[newLine]
+					else e.prepend[setNewLines(0,1,1); lowPriority];
 				}
 			}
 			if (i < lastIdx) { // assignments start let following continue in separate lines. 
 				if (e instanceof VariableDeclaration) {
-					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine];
+					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine]
+					else e.prepend[setNewLines(0,1,1); lowPriority];
 				} else if (e instanceof VariableBinding) {
-					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine];
+					if (e.expression !== null) e.immediatelyFollowing.keyword(",").append[newLine]
+					else e.prepend[setNewLines(0,1,1); lowPriority];
 				}
 
 			}
