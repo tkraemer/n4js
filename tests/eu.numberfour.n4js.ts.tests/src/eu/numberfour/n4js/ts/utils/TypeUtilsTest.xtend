@@ -126,7 +126,7 @@ class TypeUtilsTest {
 	}
 
 	@Test
-	def void testCopy_recursiveUpperBounds_indirect() {
+	def void testCopy_recursiveUpperBounds_indirect1() {
 		testCopy_recursiveUpperBounds(
 			'''
 				public class X<T extends B<?>> {}
@@ -137,7 +137,7 @@ class TypeUtilsTest {
 	}
 
 	@Test
-	def void testCopy_recursiveUpperBounds_usage() {
+	def void testCopy_recursiveUpperBounds_indirect1_outside() {
 		testCopy_recursiveUpperBounds(
 			'''
 				public class X<T extends B<?>> {}
@@ -149,6 +149,20 @@ class TypeUtilsTest {
 				}
 			''',
 			"Y<? extends X<?>>");
+	}
+
+	@Test
+	def void testCopy_recursiveUpperBounds_indirect2_outside() {
+		testCopy_recursiveUpperBounds(
+			'''
+				public class G<T> {}
+				public class A<T extends G<? extends A<?>>> {}
+
+				public class Other {
+					public field: A<?>; // <-- this time using a wildcard outside the recursion cycle
+				}
+			''',
+			"G<? extends A<? extends G<? extends A<?>>>>");
 	}
 
 	def private void testCopy_recursiveUpperBounds(CharSequence code, String expectedImplicitUpperBoundOfLastWildcard) {

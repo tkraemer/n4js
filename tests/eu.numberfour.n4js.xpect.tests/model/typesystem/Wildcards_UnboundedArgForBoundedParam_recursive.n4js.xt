@@ -24,7 +24,10 @@ class B<T extends Y<?>> {}
 
 // XPECT noerrors -->
 var a1: A<A<?>>;
-// XPECT errors --> "Other is not a subtype of A<? extends A<?>>." at "Other"
+// XPECT errors ---
+// "A<Other> is not a subtype of A<? extends A<?>>." at "A<Other>"
+// "Other is not a subtype of A<? extends A<?>>." at "Other"
+// ---
 var a2: A<A<Other>>;
 // XPECT noerrors -->
 class ASub<T extends ASub<?>> extends A<T> {}
