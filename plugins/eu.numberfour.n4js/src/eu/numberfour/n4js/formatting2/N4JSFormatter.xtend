@@ -559,8 +559,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(TaggedTemplateString taggedTemplate, extension IFormattableDocument document) {
-		// TODO TaggedTemplateString
-		taggedTemplate.genericTODOformat(document);
+		taggedTemplate.regionFor.feature(N4JSPackage.Literals.TAGGED_TEMPLATE_STRING__TARGET).append[ newLines = 0; oneSpace ];
+		taggedTemplate.target.format;
+		taggedTemplate.template.format;
 	}
 	
 	def dispatch void format(UnaryExpression unaryExpr, extension IFormattableDocument document) {
