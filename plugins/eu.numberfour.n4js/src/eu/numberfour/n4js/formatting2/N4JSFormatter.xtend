@@ -506,8 +506,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		shiftExpr.rhs.format
 	}
 	def dispatch void format(CommaExpression comma, extension IFormattableDocument document) {
-		// TODO CommaExpression
-		comma.genericTODOformat(document)
+		comma.configureCommas(document);
+		comma.eContents.forEach[format];
 	}
 	def dispatch void format(ConditionalExpression cond, extension IFormattableDocument document) {
 		cond.regionFor.keyword("?").surround[oneSpace].append[autowrap; lowPriority; setNewLines(0,0,1);];
