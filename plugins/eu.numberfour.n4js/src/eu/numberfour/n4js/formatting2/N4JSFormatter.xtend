@@ -93,6 +93,7 @@ import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import org.eclipse.xtext.formatting2.internal.WhitespaceReplacer
 import eu.numberfour.n4js.n4JS.TemplateLiteral
 import eu.numberfour.n4js.n4JS.TemplateSegment
+import eu.numberfour.n4js.n4JS.SuperLiteral
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 
@@ -513,7 +514,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	def dispatch void format(AwaitExpression await, extension IFormattableDocument document) {
 		await.regionFor.keyword("await").prepend[oneSpace].append[oneSpace; newLines = 0];
-		await.format
+		await.expression.format
 	}
 	def dispatch void format(PromisifyExpression promify, extension IFormattableDocument document) {
 		promify.noSpaceAfterAT(document);
@@ -663,7 +664,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			NumberLiteral,
 			RegularExpressionLiteral,
 			StringLiteral,
-			ThisLiteral
+			ThisLiteral,
+			SuperLiteral
 			: return
 		}
 		throw new UnsupportedOperationException("expression "+exp.class.simpleName+" not yet implemented.");
