@@ -239,7 +239,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 	def dispatch format(FunctionOrFieldAccessor fDecl, extension IFormattableDocument document) {
 		fDecl.configureAnnotations(document);
-		val maxEmptyLines = getPreference(FORMAT_MAX_CONSECUTIVE_NEWLINES); 
 		
 		val state = new StateTrack; // use state to only trigger one change, even if called multiple times.
 		val (ITextSegment , IHiddenRegionFormatting , IFormattableDocument )=>void cbInsertEmptyLineInBody  = [
@@ -439,8 +438,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 //			}
 //		}
 
-		val maxEmptyLines = getPreference(FORMAT_MAX_CONSECUTIVE_NEWLINES); // TODO make configurable.
-		
 		block.interior[indent];
 		
 		block.statements.head.prepend[setNewLines(1,1,maxEmptyLines)];
@@ -555,8 +552,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(PostfixExpression postFix, extension IFormattableDocument document) {
-		// TODO PostfixExpression
-		postFix.genericTODOformat(document);
+		// no line break allowed between Expression and operator ! 
+		postFix.regionFor.feature(N4JSPackage.Literals.POSTFIX_EXPRESSION__OP)
+			.prepend[newLines=0;noSpace;].append[oneSpace;];
+		postFix.expression.format;
 	}
 	
 	def dispatch void format(TaggedTemplateString taggedTemplate, extension IFormattableDocument document) {
