@@ -6,6 +6,7 @@
    END_SETUP
  */
 
+class A { a:A; }
 var exc = null;
 
 // Nested String-concat.
@@ -22,6 +23,73 @@ let z = bool ? 5 : 10;
 --- */
 let bool = true;
 let z = bool?5:10;
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines 6 ---
+{
+	let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+	values.map(val => 2 * val).reduce((memo, val) => {
+			return memo;
+		}, 56);
+}
+--- */
+{
+        let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+        values.map(val => 2 * val).reduce((memo, val) => {
+            return memo;
+        }, 56);
+}
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines 8 ---
+{
+	let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+	values
+		.map(val => 2 * val)
+		.reduce((memo, val) => {
+			return memo;
+		}, 56);
+}
+--- */
+{
+        let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+        values   
+          .map(  val    =>2*val   )  
+      .reduce(   (   memo   ,    val    )    =>    {   
+                   return memo;   
+   },   56   );
+}
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines  16 ---
+{
+	let a: A;
+	a.a.a.a.a.a;
+	a.a
+		.a
+		.a;
+	a
+		.a
+		.a
+		.a;
+}
+--- */
+{
+        let a:A;
+         a.a.a.a.a.a
+         a.
+         a
+         .
+         a
+         .a
+         a
+         .
+         a
+         .
+         a
+         .
+         a
+}
 
 
 

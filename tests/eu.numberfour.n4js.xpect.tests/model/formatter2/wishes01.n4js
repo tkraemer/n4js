@@ -3,7 +3,7 @@
  * preconfigure print margin to 100
  */
 
-import {SomethingLongHere} from "torsten2";
+import {SomethingLongHere} from "wishesImported";
 
 interface Goo {}
 interface GooSupperLongWordWithSomeSuperHeros {}

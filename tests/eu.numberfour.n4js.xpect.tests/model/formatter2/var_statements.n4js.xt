@@ -27,3 +27,38 @@ var a = 1,
 --- */
 var a=1,b,c,d  =   3  ,e;
 
+/* XPECT formattedLines 7 ---
+{
+	let a: int,
+		abc: int,
+		x: int, y: int,
+		c: int,
+		f = 3;
+}
+--- */
+{
+    let a: int,
+        abc: int,
+        x: int, y: int,
+        c: int,
+        f = 3;
+}
+/* XPECT formattedLines 8 ---
+function goo(bar: int, hoo: int) {
+	// leave the lines as they are, but fix base indentation 
+	let a: int,
+		abc: int,
+		x: int, y: int,
+		c: int,
+		f = 3;
+};
+--- */
+function goo(bar: int, hoo: int) {
+    // leave the lines as they are, but fix base indentation 
+    let a: int,
+        abc: int,
+        x: int, y: int,
+        c: int,
+        f = 3;
+}
+

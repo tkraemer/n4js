@@ -2,7 +2,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
 	ResourceSet {
 		ThisFile {}
-		File "torsten2.n4js" {  }
+		File "wishesImported.n4js" {  }
 	}
 	Preference "indentation" "    " {}
 	Preference "line.width.max" "100" {}
@@ -13,7 +13,7 @@
 
 // 
 /* XPECT formattedLines 140 ---
-import {SomethingLongHere} from "formatter2/torsten2";
+import {SomethingLongHere} from "formatter2/wishesImported";
 
 interface Goo {}
 interface GooSupperLongWordWithSomeSuperHeros {}
@@ -92,11 +92,11 @@ export public abstract class GenericLongName<ValueT extends SomethingLongHere>
 
         let p: Promise<ValueT, any>;
         p.then(val => {
-            return val;
-        }).catch(err => console.error(err));
+                return val;
+            }).catch(err => console.error(err));
 
         let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-            23, 23, 23, 23, 23, 23, 23, 23 ,23, 23, 34];
+                23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 34];
         values
             .map(val => 2 * val)
             .reduce((memo, val) => {
@@ -164,14 +164,14 @@ function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, ho
 
 function foo(bar: int): ~Object with {bar: int?;} {
     return {};
-}
+};
 --- */
 /*
  * Copyright...
  * preconfigure print margin to 100
  */
 
-import {SomethingLongHere} from "formatter2/torsten2";
+import {SomethingLongHere} from "formatter2/wishesImported";
 
 interface Goo {}
 interface GooSupperLongWordWithSomeSuperHeros {}
