@@ -90,6 +90,9 @@ import org.eclipse.emf.common.util.EList
 import eu.numberfour.n4js.n4JS.FormalParameter
 import org.codehaus.jackson.map.deser.FromStringDeserializer
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
+import org.eclipse.xtext.formatting2.internal.WhitespaceReplacer
+import eu.numberfour.n4js.n4JS.TemplateLiteral
+import eu.numberfour.n4js.n4JS.TemplateSegment
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 
@@ -151,15 +154,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// Allow for lineBreaks in front of keywords:
 		clazz.regionFor.keyword("extends").prepend[
 			setNewLines(0,0,1); // allow line break in front.
-			autowrap; // required if the following debug-code will be 
-			onAutowrap = [region,wrapped,doc| 
-				// FIXME remove this debug-Callback.
-				println("Formatting extends here:")
-				println(region)
-				println("Wrapped: ")
-				println(wrapped)
-			]; // Adding the callback implicitly turns on autoWrap !
-//			it.autowrap(-1); // TODO autowrap turned off.
+			autowrap;
 		];
 		clazz.regionFor.keyword("implements").prepend[
 			setNewLines(0,0,1);
@@ -640,6 +635,23 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 		
 	}
+	
+	def dispatch void format(TemplateLiteral tl, extension IFormattableDocument document) {
+		tl.interior[indent;];
+		tl.segments.forEach[
+			switch(it) {
+				TemplateSegment: noOp	
+				default: it.surround[oneSpace; autowrap;]  
+			};
+			it.format;
+		];
+	}
+	private def noOp (){}
+	
+	def dispatch void format(TemplateSegment tl, extension IFormattableDocument document) {
+		// just leave as is. 
+	}	
+	
 	
 	def dispatch void format(Expression exp, extension IFormattableDocument document) {
 		switch(exp) {
