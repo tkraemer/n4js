@@ -370,6 +370,7 @@ class N4JSLanguageUtils {
 		if(member instanceof N4MemberDeclaration) {
 			val tMember = member.definedTypeElement;
 			return tMember!==null
+				&& !tMember.isConstructor
 				&& tMember.memberAccessModifier!==MemberAccessModifier.PRIVATE
 				&& tMember.containingType === tClassifier;
 		}

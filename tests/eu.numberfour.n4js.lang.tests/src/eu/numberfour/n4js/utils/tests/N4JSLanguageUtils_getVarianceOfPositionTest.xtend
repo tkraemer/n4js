@@ -39,6 +39,11 @@ class N4JSLanguageUtils_getVarianceOfPositionTest extends AbstractN4JSLanguageUt
 	}
 
 	@Test
+	def public void testConstructor() {
+		"class C<T> { constructor(p: T) {} }".assertVarianceOfPosition(null);
+	}
+
+	@Test
 	def public void testFinalField() {
 		"class C<T> { @Final public field: T = null; }".assertVarianceOfPosition(CO);
 	}

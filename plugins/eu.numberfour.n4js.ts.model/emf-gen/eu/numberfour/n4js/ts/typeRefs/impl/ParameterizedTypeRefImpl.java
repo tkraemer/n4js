@@ -51,6 +51,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getDeclaredType <em>Declared Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getTypeArgs <em>Type Args</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}</li>
  * </ul>
  *
@@ -76,6 +77,26 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @ordered
 	 */
 	protected EList<TypeArgument> typeArgs;
+
+	/**
+	 * The default value of the '{@link #isArrayTypeLiteral() <em>Array Type Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isArrayTypeLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ARRAY_TYPE_LITERAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isArrayTypeLiteral() <em>Array Type Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isArrayTypeLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean arrayTypeLiteral = ARRAY_TYPE_LITERAL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDefinedTypingStrategy() <em>Defined Typing Strategy</em>}' attribute.
@@ -164,6 +185,27 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 			typeArgs = new EObjectContainmentEList<TypeArgument>(TypeArgument.class, this, TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS);
 		}
 		return typeArgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isArrayTypeLiteral() {
+		return arrayTypeLiteral;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setArrayTypeLiteral(boolean newArrayTypeLiteral) {
+		boolean oldArrayTypeLiteral = arrayTypeLiteral;
+		arrayTypeLiteral = newArrayTypeLiteral;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL, oldArrayTypeLiteral, arrayTypeLiteral));
 	}
 
 	/**
@@ -352,6 +394,8 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return basicGetDeclaredType();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS:
 				return getTypeArgs();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
+				return isArrayTypeLiteral();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				return getDefinedTypingStrategy();
 		}
@@ -374,6 +418,9 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				getTypeArgs().clear();
 				getTypeArgs().addAll((Collection<? extends TypeArgument>)newValue);
 				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
+				setArrayTypeLiteral((Boolean)newValue);
+				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				setDefinedTypingStrategy((TypingStrategy)newValue);
 				return;
@@ -395,6 +442,9 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS:
 				getTypeArgs().clear();
 				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
+				setArrayTypeLiteral(ARRAY_TYPE_LITERAL_EDEFAULT);
+				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				setDefinedTypingStrategy(DEFINED_TYPING_STRATEGY_EDEFAULT);
 				return;
@@ -414,6 +464,8 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return declaredType != null;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS:
 				return typeArgs != null && !typeArgs.isEmpty();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
+				return arrayTypeLiteral != ARRAY_TYPE_LITERAL_EDEFAULT;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				return definedTypingStrategy != DEFINED_TYPING_STRATEGY_EDEFAULT;
 		}
@@ -490,7 +542,9 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (definedTypingStrategy: ");
+		result.append(" (arrayTypeLiteral: ");
+		result.append(arrayTypeLiteral);
+		result.append(", definedTypingStrategy: ");
 		result.append(definedTypingStrategy);
 		result.append(')');
 		return result.toString();

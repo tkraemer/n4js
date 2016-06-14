@@ -231,7 +231,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 			ImmutableMap.Builder<AbstractElement, Integer> builder) {
 		builder.put(ga.getAnnotationNoAtSignAccess().getNameAssignment_0(),
 				InternalN4JSParser.CommercialAtCommercialAt);
-		builder.put(ga.getFunctionTypeExpressionAccess().getThisKeyword_2_1(),
+		builder.put(ga.getFunctionTypeExpressionOLDAccess().getThisKeyword_2_1(),
 				InternalN4JSParser.CommercialAtCommercialAt);
 		builder.put(ga.getPromisifyExpressionAccess().getPromisifyKeyword_0_0_2(),
 				InternalN4JSParser.CommercialAtCommercialAt);
