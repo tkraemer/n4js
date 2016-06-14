@@ -2,6 +2,7 @@
    
    	 Preference "format.parenthesis" "true" {}
    	 Preference "format.surround_paren_content_with_space" "false" {}
+   	 Preference "format.max_consecutive_newlines" "2" {}
    
    END_SETUP
  */

@@ -100,6 +100,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	static val PRIO_3 = N4JSGenericFormatter.PRIO_3;
 	static val PRIO_4 = PRIO_3+1;
 
+	
+	private def maxEmptyLines() { 
+		getPreference(FORMAT_MAX_CONSECUTIVE_NEWLINES); 
+	}
+
+
 	def dispatch void format(Script script, extension IFormattableDocument document) {
 
 		val extension generic = new N4JSGenericFormatter(_n4JSGrammarAccess, textRegionExtensions)
@@ -110,7 +116,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		script.formatColon(document)
 
 		for (element : script.scriptElements) {
-			element.append[setNewLines(1, 1, 2); autowrap]
+			element.append[setNewLines(1, 1, maxEmptyLines); autowrap]
 			element.format
 		}
 
@@ -173,10 +179,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		if( ! kwClass.lineRegions.head.contains( kwBrace ) ) { 
 			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter::NORMAL_PRIORITY);	
 		} else {
-			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,2);autowrap;];
+			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,maxEmptyLines);autowrap;];
 		}
 		for (member : clazz.ownedMembersRaw) {
-			member.append[setNewLines(1, 1, 2)]
+			member.append[setNewLines(1, 1, maxEmptyLines)]
 			member.format
 		}
 	}
@@ -185,9 +191,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
 		clazz.interior[indent];
 
-		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, 2)]
+		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxEmptyLines)]
 		for (member : clazz.ownedMembersRaw) {
-			member.append[setNewLines(1, 1, 2)]
+			member.append[setNewLines(1, 1, maxEmptyLines)]
 			member.format
 		}
 	}
@@ -475,9 +481,17 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		binbit.rhs.format
 	}
 	def dispatch void format(BinaryLogicalExpression binLog, extension IFormattableDocument document) {
-		binLog.regionFor.feature(N4JSPackage.Literals.BINARY_LOGICAL_EXPRESSION__OP).surround[oneSpace];
+		val opReg = binLog.regionFor.feature(N4JSPackage.Literals.BINARY_LOGICAL_EXPRESSION__OP);
+		opReg.surround[oneSpace];
 		binLog.lhs.format
 		binLog.rhs.format
+		// auto-wrap:
+		val autoWrapInFront = getPreference(FORMAT_AUTO_WRAP_IN_FRONT_OF_LOGICAL_OPERATOR);
+		if( autoWrapInFront ) {
+			opReg.prepend[autowrap; lowPriority; setNewLines(0,0,1);]
+		} else {
+			opReg.append[autowrap; lowPriority; setNewLines(0,0,1);]
+		};
 	}
 	def dispatch void format(EqualityExpression eqExpr, extension IFormattableDocument document) {
 		eqExpr.regionFor.feature(N4JSPackage.Literals.EQUALITY_EXPRESSION__OP).surround[oneSpace];
@@ -499,8 +513,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		comma.genericTODOformat(document)
 	}
 	def dispatch void format(ConditionalExpression cond, extension IFormattableDocument document) {
-		cond.regionFor.keyword("?").surround[oneSpace];
-		cond.regionFor.keyword(":").surround[oneSpace];
+		cond.regionFor.keyword("?").surround[oneSpace].append[autowrap; lowPriority; setNewLines(0,0,1);];
+		cond.regionFor.keyword(":").surround[oneSpace].append[autowrap; lowPriority; setNewLines(0,0,1);];
 		cond.expression.format;
 		cond.trueExpression.format;
 		cond.falseExpression.format;		
@@ -570,6 +584,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(ParenExpression parenE, extension IFormattableDocument document) {
+		parenE.interior[indent];
 		parenE.expression.format;
 	}
 	

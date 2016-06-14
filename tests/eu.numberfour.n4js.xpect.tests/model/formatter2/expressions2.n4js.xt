@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   Preference "format.auto_wrap_in_front_of_logical_operator" "false" {}
+   
+   
+   END_SETUP
+ */
+
+interface GooSupperLongWordWithSomeSuperHeros {}
+let abc:int, bar, hoo;
+
+/** wrappign of logical expressions */
+/* XPECT formattedLines 1 ---
+(1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) &&
+		(hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423,
+	23423, 23423, 23423];
+--- */
+(1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) && (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
+
+
+/** wrappign of logical expressions */
+/* XPECT formattedLines 1 ---
+let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) &&
+			(hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423,
+		23423, 23423, 23423, 23423];
+--- */
+let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) && (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
+
+
