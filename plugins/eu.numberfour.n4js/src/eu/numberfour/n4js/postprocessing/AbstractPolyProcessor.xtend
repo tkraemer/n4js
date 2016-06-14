@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.ArrowFunction
@@ -25,11 +26,9 @@ import eu.numberfour.n4js.n4JS.PropertyGetterDeclaration
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.InferenceVariable
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMember
@@ -38,6 +37,9 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.constraints.InferenceContext
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
@@ -45,7 +47,6 @@ import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.Argument
 
 /**
  */
@@ -165,10 +166,10 @@ class AbstractPolyProcessor extends AbstractProcessor {
 		typingCacheHelper.storeInferredTypeArgs(callExpr, typeArgs);
 	}
 
-	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,TypeVariable> substitutions) {
+	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,? extends TypeVariable> substitutions) {
 		subst(typeRef, G, substitutions, false)
 	}
-	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,TypeVariable> substitutions, boolean reverse) {
+	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,? extends TypeVariable> substitutions, boolean reverse) {
 		val Gx = G.wrap;
 		substitutions.entrySet.forEach[e|
 			if(reverse)
@@ -181,7 +182,7 @@ class AbstractPolyProcessor extends AbstractProcessor {
 			throw new IllegalArgumentException("substitution failed", result.ruleFailedException);
 		return result.value as TypeRef; // FIXME what about wildcards here??
 	}
-	def protected TypeRef applySolution(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,TypeRef> solution) {
+	def protected TypeRef applySolution(TypeRef typeRef, RuleEnvironment G, Map<InferenceVariable,TypeRef> solution) {
 		if(typeRef===null || solution===null || solution.empty) {
 			return typeRef; // note: returning 'null' if typeRef==null (broken AST, etc.)
 		}
@@ -215,7 +216,7 @@ class AbstractPolyProcessor extends AbstractProcessor {
 		return result.value as TypeRef; // FIXME what about wildcards here??
 	}
 
-	def protected Map<TypeVariable,TypeRef> createPseudoSolution(InferenceContext infCtx, TypeRef defaultTypeRef) {
+	def protected Map<InferenceVariable,TypeRef> createPseudoSolution(InferenceContext infCtx, TypeRef defaultTypeRef) {
 		val pseudoSolution = newHashMap;
 		for(iv : infCtx.getInferenceVariables) {
 			pseudoSolution.put(iv,defaultTypeRef); // map all inference variables to the default
