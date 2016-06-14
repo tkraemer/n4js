@@ -100,6 +100,8 @@ Out : 'out';
 
 Set : 'set';
 
+EqualsSignGreaterThanSign : '=>';
+
 As : 'as';
 
 In : 'in';
@@ -137,6 +139,8 @@ LeftSquareBracket : '[';
 RightSquareBracket : ']';
 
 LeftCurlyBracket : '{';
+
+VerticalLine : '|';
 
 RightCurlyBracket : '}';
 

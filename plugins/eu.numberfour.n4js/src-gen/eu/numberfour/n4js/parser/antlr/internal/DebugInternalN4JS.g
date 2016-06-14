@@ -357,23 +357,6 @@ ruleExportedFunctionDeclaration :
 	) => ruleFunctionDeclaration )
 ;
 
-// Rule FunctionTypeExpression
-ruleFunctionTypeExpression :
-	'{' (
-		'@' 'This' '(' ruleTypeRefFunctionTypeExpression ')'
-	)? 'function' (
-		'<' ruleTypeVariable (
-			',' ruleTypeVariable
-		)* '>'
-	)? '(' (
-		ruleTAnonymousFormalParameter (
-			',' ruleTAnonymousFormalParameter
-		)*
-	)? ')' (
-		':' ruleTypeRef
-	)? '}'
-;
-
 // Rule AnnotatedFunctionDeclaration
 ruleAnnotatedFunctionDeclaration :
 	( (
@@ -730,7 +713,7 @@ ruleBindingElementFragment :
 		( (
 		ruleBindingPattern
 		) => ruleBindingPattern ) |
-		ruleAnnotation* ruleBogusTypeRef? '...'? ruleBindingIdentifier
+		ruleAnnotation* ruleBogusTypeRefFragment? '...'? ruleBindingIdentifier
 		ruleColonSepTypeRef?
 	) (
 		'=' norm1_AssignmentExpression
@@ -743,7 +726,7 @@ norm1_BindingElementFragment :
 		( (
 		norm1_BindingPattern
 		) => norm1_BindingPattern ) |
-		ruleAnnotation* ruleBogusTypeRef? '...'? norm1_BindingIdentifier
+		ruleAnnotation* ruleBogusTypeRefFragment? '...'? norm1_BindingIdentifier
 		ruleColonSepTypeRef?
 	) (
 		'=' norm3_AssignmentExpression
@@ -755,9 +738,9 @@ ruleColonSepTypeRef :
 	':' ruleTypeRef
 ;
 
-// Rule BogusTypeRef
-ruleBogusTypeRef :
-	ruleTypeRef
+// Rule BogusTypeRefFragment
+ruleBogusTypeRefFragment :
+	ruleBogusTypeRef
 ;
 
 // Rule Block
@@ -1743,7 +1726,7 @@ ruleCatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	ruleBogusTypeRef? ruleBindingIdentifier
+	ruleBogusTypeRefFragment? ruleBindingIdentifier
 ;
 
 // Rule CatchVariable
@@ -1758,7 +1741,7 @@ norm1_CatchVariable :
 		':'
 		) => ruleColonSepTypeRef )
 	) ) |
-	ruleBogusTypeRef? norm1_BindingIdentifier
+	ruleBogusTypeRefFragment? norm1_BindingIdentifier
 ;
 
 // Rule FinallyBlock
@@ -1907,7 +1890,7 @@ norm1_ObjectLiteral :
 rulePropertyAssignment :
 	ruleAnnotatedPropertyAssignment |
 	( (
-	ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) => rulePropertyNameValuePair ) |
 	( (
 	ruleGetterHeader
@@ -1988,7 +1971,7 @@ rulePropertyAssignment :
 	)
 	) => rulePropertySetterDeclaration ) |
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleLiteralOrComputedPropertyName '('
 	)
@@ -2000,7 +1983,7 @@ rulePropertyAssignment :
 norm1_PropertyAssignment :
 	norm1_AnnotatedPropertyAssignment |
 	( (
-	ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) => norm1_PropertyNameValuePair ) |
 	( (
 	norm1_GetterHeader
@@ -2081,7 +2064,7 @@ norm1_PropertyAssignment :
 	)
 	) => norm1_PropertySetterDeclaration ) |
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		norm1_LiteralOrComputedPropertyName '('
 	)
@@ -2093,9 +2076,9 @@ norm1_PropertyAssignment :
 ruleAnnotatedPropertyAssignment :
 	rulePropertyAssignmentAnnotationList (
 		( (
-		ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 		) => (
-			ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+			ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 		) ) norm1_AssignmentExpression |
 		( (
 		ruleGetterHeader
@@ -2254,12 +2237,12 @@ ruleAnnotatedPropertyAssignment :
 		'{'
 		) => ruleBlock ) |
 		( (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' ruleLiteralOrComputedPropertyName '(' |
 			ruleLiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleTypeVariables? ruleTypeRef? (
+			ruleTypeVariables? ruleTypeRefWithModifiers? (
 				'*' ruleLiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsAndBody ) |
@@ -2278,9 +2261,9 @@ ruleAnnotatedPropertyAssignment :
 norm1_AnnotatedPropertyAssignment :
 	rulePropertyAssignmentAnnotationList (
 		( (
-		ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 		) => (
-			ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+			ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 		) ) norm3_AssignmentExpression |
 		( (
 		norm1_GetterHeader
@@ -2439,12 +2422,12 @@ norm1_AnnotatedPropertyAssignment :
 		'{'
 		) => ruleBlock ) |
 		( (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' norm1_LiteralOrComputedPropertyName '(' |
 			norm1_LiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleTypeVariables? ruleTypeRef? (
+			ruleTypeVariables? ruleTypeRefWithModifiers? (
 				'*' norm1_LiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsAndBody ) |
@@ -2462,12 +2445,12 @@ norm1_AnnotatedPropertyAssignment :
 // Rule PropertyMethodDeclaration
 rulePropertyMethodDeclaration :
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleLiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' ruleLiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsAndBody ) |
@@ -2481,12 +2464,12 @@ rulePropertyMethodDeclaration :
 // Rule PropertyMethodDeclaration
 norm1_PropertyMethodDeclaration :
 	( (
-	ruleTypeVariables? ruleTypeRef? (
+	ruleTypeVariables? ruleTypeRefWithModifiers? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		norm1_LiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleTypeVariables? ruleTypeRef? (
+		ruleTypeVariables? ruleTypeRefWithModifiers? (
 			'*' norm1_LiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsAndBody ) |
@@ -2500,18 +2483,18 @@ norm1_PropertyMethodDeclaration :
 // Rule PropertyNameValuePair
 rulePropertyNameValuePair :
 	( (
-	ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) => (
-		ruleTypeRef? ruleLiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? ruleLiteralOrComputedPropertyName ':'
 	) ) norm1_AssignmentExpression
 ;
 
 // Rule PropertyNameValuePair
 norm1_PropertyNameValuePair :
 	( (
-	ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+	ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) => (
-		ruleTypeRef? norm1_LiteralOrComputedPropertyName ':'
+		ruleTypeRefWithModifiers? norm1_LiteralOrComputedPropertyName ':'
 	) ) norm3_AssignmentExpression
 ;
 
@@ -4920,7 +4903,7 @@ ruleN4MemberDeclaration :
 	)
 	) => ruleN4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
@@ -5011,7 +4994,7 @@ norm1_N4MemberDeclaration :
 	)
 	) => norm1_N4SetterDeclaration ) |
 	( (
-	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
@@ -5182,12 +5165,12 @@ ruleAnnotatedN4MemberDeclaration :
 		'{'
 		) => ruleBlock )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 			'*' ruleLiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 				'*' ruleLiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5362,12 +5345,12 @@ norm1_AnnotatedN4MemberDeclaration :
 		'{'
 		) => norm1_Block )? ';'? |
 		( (
-		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 			'*' norm1_LiteralOrComputedPropertyName '(' |
 			ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 		)
 		) => (
-			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+			ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 				'*' norm1_LiteralOrComputedPropertyName ( (
 				'('
 				) => norm1_MethodParamsReturnAndBody ) |
@@ -5451,15 +5434,15 @@ ruleStringLiteralAsName :
 
 // Rule FieldDeclarationImpl
 ruleFieldDeclarationImpl :
-	ruleN4Modifier* ruleBogusTypeRef? ruleLiteralPropertyName ruleColonSepTypeRef?
-	(
+	ruleN4Modifier* ruleBogusTypeRefFragment? ruleLiteralPropertyName
+	ruleColonSepTypeRef? (
 		'=' norm1_Expression
 	)? ruleSemi
 ;
 
 // Rule FieldDeclarationImpl
 norm1_FieldDeclarationImpl :
-	ruleN4Modifier* ruleBogusTypeRef? norm1_LiteralPropertyName
+	ruleN4Modifier* ruleBogusTypeRefFragment? norm1_LiteralPropertyName
 	ruleColonSepTypeRef? (
 		'=' norm3_Expression
 	)? ruleSemi
@@ -5478,12 +5461,12 @@ norm1_N4FieldDeclaration :
 // Rule N4MethodDeclaration
 ruleN4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 		'*' ruleLiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak ruleLiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 			'*' ruleLiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5497,12 +5480,12 @@ ruleN4MethodDeclaration :
 // Rule N4MethodDeclaration
 norm1_N4MethodDeclaration :
 	( (
-	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+	ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 		'*' norm1_LiteralOrComputedPropertyName '(' |
 		ruleAsyncNoTrailingLineBreak norm1_LiteralOrComputedPropertyName '('
 	)
 	) => (
-		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRef? (
+		ruleN4Modifier* ruleTypeVariables? ruleBogusTypeRefFragment? (
 			'*' norm1_LiteralOrComputedPropertyName ( (
 			'('
 			) => norm1_MethodParamsReturnAndBody ) |
@@ -5579,7 +5562,7 @@ norm1_N4GetterDeclaration :
 
 // Rule GetterHeader
 ruleGetterHeader :
-	ruleBogusTypeRef? 'get' ( (
+	ruleBogusTypeRefFragment? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
@@ -5656,7 +5639,7 @@ ruleGetterHeader :
 
 // Rule GetterHeader
 norm1_GetterHeader :
-	ruleBogusTypeRef? 'get' ( (
+	ruleBogusTypeRefFragment? 'get' ( (
 	'break' |
 	'case' |
 	'catch' |
@@ -6206,6 +6189,46 @@ ruleElision :
 
 // Rule TypeRef
 ruleTypeRef :
+	ruleUnionTypeExpression
+;
+
+// Rule UnionTypeExpression
+ruleUnionTypeExpression :
+	ruleIntersectionTypeExpression (
+		(
+			'|' ruleIntersectionTypeExpression
+		)+
+	)?
+;
+
+// Rule IntersectionTypeExpression
+ruleIntersectionTypeExpression :
+	rulePrimaryTypeExpression (
+		(
+			'&' rulePrimaryTypeExpression
+		)+
+	)?
+;
+
+// Rule PrimaryTypeExpression
+rulePrimaryTypeExpression :
+	( (
+	'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) => (
+		'(' ruleTAnonymousFormalParameterList ')' '=>'
+	) ) rulePrimaryTypeExpression |
+	ruleArrayTypeRef |
+	ruleTypeRefWithModifiers |
+	'(' ruleTypeRef ')'
+;
+
+// Rule BogusTypeRef
+ruleBogusTypeRef :
+	ruleTypeRefWithModifiers
+;
+
+// Rule TypeRefWithModifiers
+ruleTypeRefWithModifiers :
 	ruleTypeRefWithoutModifiers ( (
 	ruleUndefModifierToken
 	) => ruleUndefModifierToken )? |
@@ -6222,27 +6245,30 @@ ruleTypeRefWithoutModifiers :
 	) => '+' )? |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleFunctionTypeExpression |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleFunctionTypeExpressionOLD |
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefFunctionTypeExpression
 ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
+	ruleArrayTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleUnionTypeExpression |
-	ruleIntersectionTypeExpression
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefForCast
 ruleTypeRefForCast :
 	ruleParameterizedTypeRef |
+	ruleArrayTypeRef |
 	ruleThisTypeRef |
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
-	ruleFunctionTypeExpression
+	ruleFunctionTypeExpressionOLD |
+	ruleArrowFunctionTypeExpression
 ;
 
 // Rule TypeRefInClassifierType
@@ -6269,6 +6295,24 @@ ruleThisTypeRefStructural :
 	)?
 ;
 
+// Rule FunctionTypeExpressionOLD
+ruleFunctionTypeExpressionOLD :
+	'{' (
+		'@' 'This' '(' ruleTypeRefFunctionTypeExpression ')'
+	)? 'function' (
+		'<' ruleTypeVariable (
+			',' ruleTypeVariable
+		)* '>'
+	)? '(' ruleTAnonymousFormalParameterList ')' (
+		':' ruleTypeRef
+	)? '}'
+;
+
+// Rule ArrowFunctionTypeExpression
+ruleArrowFunctionTypeExpression :
+	'(' ruleTAnonymousFormalParameterList ')' '=>' rulePrimaryTypeExpression
+;
+
 // Rule TAnonymousFormalParameterList
 ruleTAnonymousFormalParameterList :
 	(
@@ -6287,15 +6331,15 @@ ruleTAnonymousFormalParameter :
 	)? ruleTypeRef
 ;
 
-// Rule UnionTypeExpression
-ruleUnionTypeExpression :
+// Rule UnionTypeExpressionOLD
+ruleUnionTypeExpressionOLD :
 	'union' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'
 ;
 
-// Rule IntersectionTypeExpression
-ruleIntersectionTypeExpression :
+// Rule IntersectionTypeExpressionOLD
+ruleIntersectionTypeExpressionOLD :
 	'intersection' '{' ruleTypeRefWithoutModifiers (
 		',' ruleTypeRefWithoutModifiers
 	)* '}'
@@ -6305,6 +6349,22 @@ ruleIntersectionTypeExpression :
 ruleParameterizedTypeRef :
 	ruleParameterizedTypeRefNominal |
 	ruleParameterizedTypeRefStructural
+;
+
+// Rule ParameterizedTypeRefNominal
+ruleParameterizedTypeRefNominal :
+	ruleTypeReferenceName (
+		( (
+		'<'
+		) => '<' ) ruleTypeArgument (
+			',' ruleTypeArgument
+		)* '>'
+	)?
+;
+
+// Rule ArrayTypeRef
+ruleArrayTypeRef :
+	'[' ruleTypeArgument ']'
 ;
 
 // Rule ParameterizedTypeRefStructural
@@ -6392,17 +6452,6 @@ ruleTStructSetter :
 	) => (
 		'set' ruleTypesIdentifier
 	) ) '(' ruleTAnonymousFormalParameter ')'
-;
-
-// Rule ParameterizedTypeRefNominal
-ruleParameterizedTypeRefNominal :
-	ruleTypeReferenceName (
-		( (
-		'<'
-		) => '<' ) ruleTypeArgument (
-			',' ruleTypeArgument
-		)* '>'
-	)?
 ;
 
 // Rule TypingStrategyUseSiteOperator
