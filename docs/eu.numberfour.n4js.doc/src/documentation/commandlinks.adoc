@@ -21,6 +21,12 @@ Here's another test to see if we can generate some Live Help stuff:
 ifdef::eclipse[+++<a href='javascript:liveAction("eu.numberfour.n4js.doc","eu.numberfour.n4js.doc.ActiveHelpOpenDialogAction","")'>Click here for a Message.</a>+++]
 !!!
 
+
+ifdef::eclipse[+++<a href='javascript:executeCommand("eu.numberfour.n4js.ui.wizard.CreateNewN4JSElementInModule.wizardId")'>opens NEW N4JS wizard</a>+++]
+
+
+
+
 == Formatting
 
 This section tests the formatting with two ifdefs side-by-side to reduce clutter in the source. The following URL

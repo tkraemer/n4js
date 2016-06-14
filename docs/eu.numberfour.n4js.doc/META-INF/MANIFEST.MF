@@ -7,4 +7,5 @@ Bundle-Vendor: NumberFour AG
 Require-Bundle: org.eclipse.help,
  org.eclipse.swt,
  org.eclipse.jface,
- org.eclipse.ui
+ org.eclipse.ui,
+ eu.numberfour.n4js.ui;bundle-version="0.0.1"
