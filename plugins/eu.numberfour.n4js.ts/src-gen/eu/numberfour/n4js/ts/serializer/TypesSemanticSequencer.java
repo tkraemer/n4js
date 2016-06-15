@@ -589,15 +589,15 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ClassifierTypeRef returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeRef=TypeRefInClassifierType
 	 */
 	protected void sequence_ClassifierTypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeRef());
 		feeder.finish();
 	}
 	
@@ -608,7 +608,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeRefWithModifiers returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -621,7 +621,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeArgument returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -637,10 +637,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     PrimaryTypeExpression returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         staticTypeRef=TypeRefInClassifierType 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *     )
+	 *     (typeRef=TypeRefInClassifierType ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -655,15 +652,15 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ConstructorTypeRef returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeRef=TypeRefInClassifierType
 	 */
 	protected void sequence_ConstructorTypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeRef());
 		feeder.finish();
 	}
 	
@@ -674,7 +671,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeRefWithModifiers returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -687,7 +684,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeArgument returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -703,10 +700,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     PrimaryTypeExpression returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         staticTypeRef=TypeRefInClassifierType 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *     )
+	 *     (typeRef=TypeRefInClassifierType ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

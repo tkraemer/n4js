@@ -15870,7 +15870,7 @@ ruleConstructorTypeRef
 	ConstructorKeyword_1=Constructor 	 { announce($ConstructorKeyword_1, grammarAccess.getConstructorTypeRefAccess().getConstructorKeyword_1()); }
 	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getConstructorTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
 (
-	StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); }
+	TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
 )
 )
 	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getConstructorTypeRefAccess().getRightCurlyBracketKeyword_4()); })
@@ -15895,7 +15895,7 @@ ruleClassifierTypeRef
 	TypeKeyword_1=Type 	 { announce($TypeKeyword_1, grammarAccess.getClassifierTypeRefAccess().getTypeKeyword_1()); }
 	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getClassifierTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
 (
-	StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); }
+	TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
 )
 )
 	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getClassifierTypeRefAccess().getRightCurlyBracketKeyword_4()); })

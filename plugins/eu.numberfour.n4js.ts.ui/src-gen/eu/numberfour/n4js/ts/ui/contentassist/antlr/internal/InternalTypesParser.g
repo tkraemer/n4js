@@ -15635,9 +15635,9 @@ rule__ConstructorTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); }
-(rule__ConstructorTypeRef__StaticTypeRefAssignment_3)
-{ after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
+(rule__ConstructorTypeRef__TypeRefAssignment_3)
+{ after(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
 )
 
 ;
@@ -15797,9 +15797,9 @@ rule__ClassifierTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); }
-(rule__ClassifierTypeRef__StaticTypeRefAssignment_3)
-{ after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
+(rule__ClassifierTypeRef__TypeRefAssignment_3)
+{ after(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
 )
 
 ;
@@ -19112,14 +19112,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstructorTypeRef__StaticTypeRefAssignment_3
+rule__ConstructorTypeRef__TypeRefAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;
@@ -19127,14 +19127,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ClassifierTypeRef__StaticTypeRefAssignment_3
+rule__ClassifierTypeRef__TypeRefAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;

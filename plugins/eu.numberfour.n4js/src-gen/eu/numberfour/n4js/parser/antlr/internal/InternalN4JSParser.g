@@ -38056,16 +38056,16 @@ ruleConstructorTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeRef_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstructorTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeRef",
+        		lv_typeRef_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -38116,16 +38116,16 @@ ruleClassifierTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeRef_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getClassifierTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeRef",
+        		lv_typeRef_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }

@@ -9,7 +9,6 @@ package eu.numberfour.n4js.ts.typeRefs.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
@@ -54,14 +53,14 @@ public class ConstructorTypeRefImpl extends ClassifierTypeRefImpl implements Con
 	 */
 	public String getTypeRefAsString() {
 		String _xifexpression = null;
-		StaticBaseTypeRef _staticTypeRef = this.getStaticTypeRef();
-		boolean _tripleEquals = (null == _staticTypeRef);
+		TypeRef _typeRef = this.getTypeRef();
+		boolean _tripleEquals = (null == _typeRef);
 		if (_tripleEquals) {
 			_xifexpression = "";
 		}
 		else {
-			StaticBaseTypeRef _staticTypeRef_1 = this.getStaticTypeRef();
-			_xifexpression = _staticTypeRef_1.getTypeRefAsString();
+			TypeRef _typeRef_1 = this.getTypeRef();
+			_xifexpression = _typeRef_1.getTypeRefAsString();
 		}
 		final String refName = _xifexpression;
 		String _modifiersAsString = this.getModifiersAsString();

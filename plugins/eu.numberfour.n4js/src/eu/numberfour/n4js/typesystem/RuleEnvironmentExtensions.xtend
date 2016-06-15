@@ -198,7 +198,7 @@ class RuleEnvironmentExtensions {
 	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
 		switch (actualThisTypeRef) {
 			ClassifierTypeRef: // IDE-785 decompose
-			  addThisType(G,actualThisTypeRef.staticTypeRef)
+			  addThisType(G,actualThisTypeRef.typeRef)
 			ParameterizedTypeRef:
 				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 			BoundThisTypeRef:

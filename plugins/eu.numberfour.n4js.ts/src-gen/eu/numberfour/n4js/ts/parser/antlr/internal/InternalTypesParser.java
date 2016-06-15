@@ -15405,24 +15405,24 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConstructorTypeRef"
-    // InternalTypesParser.g:5912:1: ruleConstructorTypeRef returns [EObject current=null] : ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) ;
+    // InternalTypesParser.g:5912:1: ruleConstructorTypeRef returns [EObject current=null] : ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) ;
     public final EObject ruleConstructorTypeRef() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        EObject lv_staticTypeRef_3_0 = null;
+        EObject lv_typeRef_3_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:5915:28: ( ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) )
-            // InternalTypesParser.g:5916:1: ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
+            // InternalTypesParser.g:5915:28: ( ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) )
+            // InternalTypesParser.g:5916:1: ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
             {
-            // InternalTypesParser.g:5916:1: ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
-            // InternalTypesParser.g:5916:2: () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket
+            // InternalTypesParser.g:5916:1: ( () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
+            // InternalTypesParser.g:5916:2: () otherlv_1= Constructor otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket
             {
             // InternalTypesParser.g:5916:2: ()
             // InternalTypesParser.g:5917:5: 
@@ -15449,19 +15449,19 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getConstructorTypeRefAccess().getLeftCurlyBracketKeyword_2());
                   
             }
-            // InternalTypesParser.g:5932:1: ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) )
-            // InternalTypesParser.g:5933:1: (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType )
+            // InternalTypesParser.g:5932:1: ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) )
+            // InternalTypesParser.g:5933:1: (lv_typeRef_3_0= ruleTypeRefInClassifierType )
             {
-            // InternalTypesParser.g:5933:1: (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType )
-            // InternalTypesParser.g:5934:3: lv_staticTypeRef_3_0= ruleTypeRefInClassifierType
+            // InternalTypesParser.g:5933:1: (lv_typeRef_3_0= ruleTypeRefInClassifierType )
+            // InternalTypesParser.g:5934:3: lv_typeRef_3_0= ruleTypeRefInClassifierType
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_19);
-            lv_staticTypeRef_3_0=ruleTypeRefInClassifierType();
+            lv_typeRef_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -15472,8 +15472,8 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"staticTypeRef",
-                      		lv_staticTypeRef_3_0, 
+                     			"typeRef",
+                      		lv_typeRef_3_0, 
                       		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -15553,24 +15553,24 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassifierTypeRef"
-    // InternalTypesParser.g:5972:1: ruleClassifierTypeRef returns [EObject current=null] : ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) ;
+    // InternalTypesParser.g:5972:1: ruleClassifierTypeRef returns [EObject current=null] : ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) ;
     public final EObject ruleClassifierTypeRef() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        EObject lv_staticTypeRef_3_0 = null;
+        EObject lv_typeRef_3_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:5975:28: ( ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) )
-            // InternalTypesParser.g:5976:1: ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
+            // InternalTypesParser.g:5975:28: ( ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket ) )
+            // InternalTypesParser.g:5976:1: ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
             {
-            // InternalTypesParser.g:5976:1: ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
-            // InternalTypesParser.g:5976:2: () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket
+            // InternalTypesParser.g:5976:1: ( () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket )
+            // InternalTypesParser.g:5976:2: () otherlv_1= Type otherlv_2= LeftCurlyBracket ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) ) otherlv_4= RightCurlyBracket
             {
             // InternalTypesParser.g:5976:2: ()
             // InternalTypesParser.g:5977:5: 
@@ -15597,19 +15597,19 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getClassifierTypeRefAccess().getLeftCurlyBracketKeyword_2());
                   
             }
-            // InternalTypesParser.g:5992:1: ( (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType ) )
-            // InternalTypesParser.g:5993:1: (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType )
+            // InternalTypesParser.g:5992:1: ( (lv_typeRef_3_0= ruleTypeRefInClassifierType ) )
+            // InternalTypesParser.g:5993:1: (lv_typeRef_3_0= ruleTypeRefInClassifierType )
             {
-            // InternalTypesParser.g:5993:1: (lv_staticTypeRef_3_0= ruleTypeRefInClassifierType )
-            // InternalTypesParser.g:5994:3: lv_staticTypeRef_3_0= ruleTypeRefInClassifierType
+            // InternalTypesParser.g:5993:1: (lv_typeRef_3_0= ruleTypeRefInClassifierType )
+            // InternalTypesParser.g:5994:3: lv_typeRef_3_0= ruleTypeRefInClassifierType
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_19);
-            lv_staticTypeRef_3_0=ruleTypeRefInClassifierType();
+            lv_typeRef_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -15620,8 +15620,8 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"staticTypeRef",
-                      		lv_staticTypeRef_3_0, 
+                     			"typeRef",
+                      		lv_typeRef_3_0, 
                       		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
               	        afterParserOrEnumRuleCall();
               	    

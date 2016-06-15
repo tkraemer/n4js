@@ -44603,26 +44603,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConstructorTypeRef__Group__3__Impl"
-    // InternalTypesParser.g:15632:1: rule__ConstructorTypeRef__Group__3__Impl : ( ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 ) ) ;
+    // InternalTypesParser.g:15632:1: rule__ConstructorTypeRef__Group__3__Impl : ( ( rule__ConstructorTypeRef__TypeRefAssignment_3 ) ) ;
     public final void rule__ConstructorTypeRef__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:15636:1: ( ( ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 ) ) )
-            // InternalTypesParser.g:15637:1: ( ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 ) )
+            // InternalTypesParser.g:15636:1: ( ( ( rule__ConstructorTypeRef__TypeRefAssignment_3 ) ) )
+            // InternalTypesParser.g:15637:1: ( ( rule__ConstructorTypeRef__TypeRefAssignment_3 ) )
             {
-            // InternalTypesParser.g:15637:1: ( ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 ) )
-            // InternalTypesParser.g:15638:1: ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 )
+            // InternalTypesParser.g:15637:1: ( ( rule__ConstructorTypeRef__TypeRefAssignment_3 ) )
+            // InternalTypesParser.g:15638:1: ( rule__ConstructorTypeRef__TypeRefAssignment_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               before(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); 
             }
-            // InternalTypesParser.g:15639:1: ( rule__ConstructorTypeRef__StaticTypeRefAssignment_3 )
-            // InternalTypesParser.g:15639:2: rule__ConstructorTypeRef__StaticTypeRefAssignment_3
+            // InternalTypesParser.g:15639:1: ( rule__ConstructorTypeRef__TypeRefAssignment_3 )
+            // InternalTypesParser.g:15639:2: rule__ConstructorTypeRef__TypeRefAssignment_3
             {
             pushFollow(FOLLOW_2);
-            rule__ConstructorTypeRef__StaticTypeRefAssignment_3();
+            rule__ConstructorTypeRef__TypeRefAssignment_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -44630,7 +44630,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               after(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); 
             }
 
             }
@@ -45003,26 +45003,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClassifierTypeRef__Group__3__Impl"
-    // InternalTypesParser.g:15794:1: rule__ClassifierTypeRef__Group__3__Impl : ( ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 ) ) ;
+    // InternalTypesParser.g:15794:1: rule__ClassifierTypeRef__Group__3__Impl : ( ( rule__ClassifierTypeRef__TypeRefAssignment_3 ) ) ;
     public final void rule__ClassifierTypeRef__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:15798:1: ( ( ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 ) ) )
-            // InternalTypesParser.g:15799:1: ( ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 ) )
+            // InternalTypesParser.g:15798:1: ( ( ( rule__ClassifierTypeRef__TypeRefAssignment_3 ) ) )
+            // InternalTypesParser.g:15799:1: ( ( rule__ClassifierTypeRef__TypeRefAssignment_3 ) )
             {
-            // InternalTypesParser.g:15799:1: ( ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 ) )
-            // InternalTypesParser.g:15800:1: ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 )
+            // InternalTypesParser.g:15799:1: ( ( rule__ClassifierTypeRef__TypeRefAssignment_3 ) )
+            // InternalTypesParser.g:15800:1: ( rule__ClassifierTypeRef__TypeRefAssignment_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               before(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); 
             }
-            // InternalTypesParser.g:15801:1: ( rule__ClassifierTypeRef__StaticTypeRefAssignment_3 )
-            // InternalTypesParser.g:15801:2: rule__ClassifierTypeRef__StaticTypeRefAssignment_3
+            // InternalTypesParser.g:15801:1: ( rule__ClassifierTypeRef__TypeRefAssignment_3 )
+            // InternalTypesParser.g:15801:2: rule__ClassifierTypeRef__TypeRefAssignment_3
             {
             pushFollow(FOLLOW_2);
-            rule__ClassifierTypeRef__StaticTypeRefAssignment_3();
+            rule__ClassifierTypeRef__TypeRefAssignment_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -45030,7 +45030,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               after(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); 
             }
 
             }
@@ -54315,9 +54315,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TStructSetter__FparAssignment_2"
 
 
-    // $ANTLR start "rule__ConstructorTypeRef__StaticTypeRefAssignment_3"
-    // InternalTypesParser.g:19115:1: rule__ConstructorTypeRef__StaticTypeRefAssignment_3 : ( ruleTypeRefInClassifierType ) ;
-    public final void rule__ConstructorTypeRef__StaticTypeRefAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__ConstructorTypeRef__TypeRefAssignment_3"
+    // InternalTypesParser.g:19115:1: rule__ConstructorTypeRef__TypeRefAssignment_3 : ( ruleTypeRefInClassifierType ) ;
+    public final void rule__ConstructorTypeRef__TypeRefAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -54329,7 +54329,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:19121:1: ruleTypeRefInClassifierType
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+               before(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefInClassifierType();
@@ -54337,7 +54337,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+               after(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
             }
 
             }
@@ -54357,12 +54357,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ConstructorTypeRef__StaticTypeRefAssignment_3"
+    // $ANTLR end "rule__ConstructorTypeRef__TypeRefAssignment_3"
 
 
-    // $ANTLR start "rule__ClassifierTypeRef__StaticTypeRefAssignment_3"
-    // InternalTypesParser.g:19130:1: rule__ClassifierTypeRef__StaticTypeRefAssignment_3 : ( ruleTypeRefInClassifierType ) ;
-    public final void rule__ClassifierTypeRef__StaticTypeRefAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__ClassifierTypeRef__TypeRefAssignment_3"
+    // InternalTypesParser.g:19130:1: rule__ClassifierTypeRef__TypeRefAssignment_3 : ( ruleTypeRefInClassifierType ) ;
+    public final void rule__ClassifierTypeRef__TypeRefAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -54374,7 +54374,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:19136:1: ruleTypeRefInClassifierType
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+               before(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRefInClassifierType();
@@ -54382,7 +54382,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+               after(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
             }
 
             }
@@ -54402,7 +54402,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ClassifierTypeRef__StaticTypeRefAssignment_3"
+    // $ANTLR end "rule__ClassifierTypeRef__TypeRefAssignment_3"
 
 
     // $ANTLR start "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1"

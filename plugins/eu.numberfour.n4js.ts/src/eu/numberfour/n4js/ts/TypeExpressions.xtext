@@ -207,10 +207,10 @@ terminal STRUCTMODSUFFIX:
 ;
 
 ConstructorTypeRef returns ConstructorTypeRef:
-	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
 
 ClassifierTypeRef returns ClassifierTypeRef:
-	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
 
 TypeReferenceName:
 	IDENTIFIER ('.' IDENTIFIER)*;

@@ -73990,7 +73990,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         Token otherlv_1=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        EObject lv_staticTypeRef_3_0 = null;
+        EObject lv_typeRef_3_0 = null;
 
 
          enterRule(); 
@@ -74025,11 +74025,11 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_25);
-            lv_staticTypeRef_3_0=ruleTypeRefInClassifierType();
+            lv_typeRef_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -74040,8 +74040,8 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"staticTypeRef",
-                      		lv_staticTypeRef_3_0, 
+                     			"typeRef",
+                      		lv_typeRef_3_0, 
                       		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
               	        afterParserOrEnumRuleCall();
               	    
@@ -74116,7 +74116,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         Token otherlv_1=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        EObject lv_staticTypeRef_3_0 = null;
+        EObject lv_typeRef_3_0 = null;
 
 
          enterRule(); 
@@ -74151,11 +74151,11 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
               	    
             }
             pushFollow(FOLLOW_25);
-            lv_staticTypeRef_3_0=ruleTypeRefInClassifierType();
+            lv_typeRef_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return current;
@@ -74166,8 +74166,8 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"staticTypeRef",
-                      		lv_staticTypeRef_3_0, 
+                     			"typeRef",
+                      		lv_typeRef_3_0, 
                       		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
               	        afterParserOrEnumRuleCall();
               	    

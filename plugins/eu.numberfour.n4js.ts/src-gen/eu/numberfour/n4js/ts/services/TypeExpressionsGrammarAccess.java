@@ -1491,15 +1491,15 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cConstructorTypeRefAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cConstructorKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cStaticTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = (RuleCall)cStaticTypeRefAssignment_3.eContents().get(0);
+		private final Assignment cTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = (RuleCall)cTypeRefAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ConstructorTypeRef:
-		//	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+		//	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}'
+		//{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}'
 		public Group getGroup() { return cGroup; }
 
 		//{ConstructorTypeRef}
@@ -1511,11 +1511,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//staticTypeRef=TypeRefInClassifierType
-		public Assignment getStaticTypeRefAssignment_3() { return cStaticTypeRefAssignment_3; }
+		//typeRef=TypeRefInClassifierType
+		public Assignment getTypeRefAssignment_3() { return cTypeRefAssignment_3; }
 
 		//TypeRefInClassifierType
-		public RuleCall getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0() { return cStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0; }
+		public RuleCall getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0() { return cTypeRefTypeRefInClassifierTypeParserRuleCall_3_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -1527,15 +1527,15 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cClassifierTypeRefAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cTypeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cStaticTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = (RuleCall)cStaticTypeRefAssignment_3.eContents().get(0);
+		private final Assignment cTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = (RuleCall)cTypeRefAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ClassifierTypeRef:
-		//	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+		//	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}'
+		//{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}'
 		public Group getGroup() { return cGroup; }
 
 		//{ClassifierTypeRef}
@@ -1547,11 +1547,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//staticTypeRef=TypeRefInClassifierType
-		public Assignment getStaticTypeRefAssignment_3() { return cStaticTypeRefAssignment_3; }
+		//typeRef=TypeRefInClassifierType
+		public Assignment getTypeRefAssignment_3() { return cTypeRefAssignment_3; }
 
 		//TypeRefInClassifierType
-		public RuleCall getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0() { return cStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0; }
+		public RuleCall getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0() { return cTypeRefTypeRefInClassifierTypeParserRuleCall_3_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -2548,7 +2548,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
 	public ConstructorTypeRefElements getConstructorTypeRefAccess() {
 		return pConstructorTypeRef;
 	}
@@ -2558,7 +2558,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ClassifierTypeRef:
-	//	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
 	public ClassifierTypeRefElements getClassifierTypeRefAccess() {
 		return pClassifierTypeRef;
 	}

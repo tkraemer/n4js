@@ -741,7 +741,7 @@ class ConstructorTypeRef extends ClassifierTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		val refName = if (null === staticTypeRef) '' else staticTypeRef.typeRefAsString
+		val refName = if (null === typeRef) '' else typeRef.typeRefAsString
 		return "constructor{" + refName + "}" + getModifiersAsString();
 	}
 }
@@ -752,25 +752,25 @@ class ConstructorTypeRef extends ClassifierTypeRef {
  * It can either be a ParameterizedTypeRefNominal or a ThisTypeNominal
  */
 class ClassifierTypeRef extends BaseTypeRef {
-	contains StaticBaseTypeRef staticTypeRef
+	contains TypeRef typeRef
 	/*
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		val refName = staticTypeRef?.typeRefAsString
+		val refName = typeRef?.typeRefAsString
 		return "type{" + refName + "}" + getModifiersAsString();
 	}
 
 
-	/** Helper operationto extract the static type 'C' of 'type{C}' or 'type{this[C]}'
+	/** Helper operation to extract the static type 'C' of 'type{C}' or 'type{this[C]}'
 	 * in cases of ParemterizedTypeRefs the declared type will be returned,
 	 * for bound this-type-refs the actualThisTyperef.declaredtype and
 	 * in all other cases null will be returned
 	 */
 	op Type staticType() {
-		switch(staticTypeRef) {
-			ParameterizedTypeRef: staticTypeRef.declaredType
-			BoundThisTypeRef: (staticTypeRef as BoundThisTypeRef).actualThisTypeRef?.declaredType
+		switch(typeRef) {
+			ParameterizedTypeRef: typeRef.declaredType
+			BoundThisTypeRef: (typeRef as BoundThisTypeRef).actualThisTypeRef?.declaredType
 			default: null
 		}
 	}

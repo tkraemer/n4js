@@ -354,8 +354,8 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1(), "rule__TStructGetter__DeclaredTypeRefAssignment_3_1");
 					put(grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2(), "rule__TStructSetter__NameAssignment_0_0_2");
 					put(grammarAccess.getTStructSetterAccess().getFparAssignment_2(), "rule__TStructSetter__FparAssignment_2");
-					put(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3(), "rule__ConstructorTypeRef__StaticTypeRefAssignment_3");
-					put(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3(), "rule__ClassifierTypeRef__StaticTypeRefAssignment_3");
+					put(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3(), "rule__ConstructorTypeRef__TypeRefAssignment_3");
+					put(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3(), "rule__ClassifierTypeRef__TypeRefAssignment_3");
 					put(grammarAccess.getWildcardAccess().getDeclaredUpperBoundAssignment_1_0_1(), "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1");
 					put(grammarAccess.getWildcardAccess().getDeclaredLowerBoundAssignment_1_1_1(), "rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0");

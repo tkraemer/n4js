@@ -428,7 +428,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				if (!tresult.failed) {
 					val tr = tresult.value
 					if (tr instanceof ConstructorTypeRef) {
-						val str = tr.staticTypeRef
+						val str = tr.typeRef
 						val isReceiverPromise = TypeUtils.isPromise(str, tscope)
 						return isReceiverPromise
 					}

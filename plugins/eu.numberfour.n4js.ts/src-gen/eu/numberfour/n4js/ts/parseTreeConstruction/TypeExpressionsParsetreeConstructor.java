@@ -7462,11 +7462,11 @@ protected class TStructSetter_RightParenthesisKeyword_3 extends KeywordToken  {
 /************ begin Rule ConstructorTypeRef ****************
  *
  * ConstructorTypeRef:
- * 	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+ * 	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
  *
  **/
 
-// {ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}'
+// {ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}'
 protected class ConstructorTypeRef_Group extends GroupToken {
 	
 	public ConstructorTypeRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7565,16 +7565,16 @@ protected class ConstructorTypeRef_LeftCurlyBracketKeyword_2 extends KeywordToke
 
 }
 
-// staticTypeRef=TypeRefInClassifierType
-protected class ConstructorTypeRef_StaticTypeRefAssignment_3 extends AssignmentToken  {
+// typeRef=TypeRefInClassifierType
+protected class ConstructorTypeRef_TypeRefAssignment_3 extends AssignmentToken  {
 	
-	public ConstructorTypeRef_StaticTypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ConstructorTypeRef_TypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3();
+		return grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3();
 	}
 
     @Override
@@ -7587,13 +7587,13 @@ protected class ConstructorTypeRef_StaticTypeRefAssignment_3 extends AssignmentT
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("staticTypeRef",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("staticTypeRef");
+		if((value = eObjectConsumer.getConsumable("typeRef",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("typeRef");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTypeRefInClassifierTypeRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
+				element = grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -7626,7 +7626,7 @@ protected class ConstructorTypeRef_RightCurlyBracketKeyword_4 extends KeywordTok
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ConstructorTypeRef_StaticTypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ConstructorTypeRef_TypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -7640,11 +7640,11 @@ protected class ConstructorTypeRef_RightCurlyBracketKeyword_4 extends KeywordTok
 /************ begin Rule ClassifierTypeRef ****************
  *
  * ClassifierTypeRef:
- * 	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+ * 	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
  *
  **/
 
-// {ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}'
+// {ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}'
 protected class ClassifierTypeRef_Group extends GroupToken {
 	
 	public ClassifierTypeRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7743,16 +7743,16 @@ protected class ClassifierTypeRef_LeftCurlyBracketKeyword_2 extends KeywordToken
 
 }
 
-// staticTypeRef=TypeRefInClassifierType
-protected class ClassifierTypeRef_StaticTypeRefAssignment_3 extends AssignmentToken  {
+// typeRef=TypeRefInClassifierType
+protected class ClassifierTypeRef_TypeRefAssignment_3 extends AssignmentToken  {
 	
-	public ClassifierTypeRef_StaticTypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ClassifierTypeRef_TypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3();
+		return grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3();
 	}
 
     @Override
@@ -7765,13 +7765,13 @@ protected class ClassifierTypeRef_StaticTypeRefAssignment_3 extends AssignmentTo
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("staticTypeRef",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("staticTypeRef");
+		if((value = eObjectConsumer.getConsumable("typeRef",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("typeRef");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTypeRefInClassifierTypeRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
+				element = grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -7804,7 +7804,7 @@ protected class ClassifierTypeRef_RightCurlyBracketKeyword_4 extends KeywordToke
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ClassifierTypeRef_StaticTypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ClassifierTypeRef_TypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}

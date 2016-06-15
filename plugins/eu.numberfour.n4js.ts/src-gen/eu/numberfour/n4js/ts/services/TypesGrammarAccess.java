@@ -3202,7 +3202,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ConstructorTypeRefElements getConstructorTypeRefAccess() {
 		return gaTypeExpressions.getConstructorTypeRefAccess();
 	}
@@ -3212,7 +3212,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ClassifierTypeRef:
-	//	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ClassifierTypeRefElements getClassifierTypeRefAccess() {
 		return gaTypeExpressions.getClassifierTypeRefAccess();
 	}

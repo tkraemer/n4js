@@ -33,7 +33,7 @@ public interface ConstructorTypeRef extends ClassifierTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _xifexpression = null;\n<%eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef%> _staticTypeRef = this.getStaticTypeRef();\nboolean _tripleEquals = (null == _staticTypeRef);\nif (_tripleEquals)\n{\n\t_xifexpression = \"\";\n}\nelse\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef%> _staticTypeRef_1 = this.getStaticTypeRef();\n\t_xifexpression = _staticTypeRef_1.getTypeRefAsString();\n}\nfinal <%java.lang.String%> refName = _xifexpression;\n<%java.lang.String%> _modifiersAsString = this.getModifiersAsString();\nreturn (((\"constructor{\" + refName) + \"}\") + _modifiersAsString);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _xifexpression = null;\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleEquals = (null == _typeRef);\nif (_tripleEquals)\n{\n\t_xifexpression = \"\";\n}\nelse\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t_xifexpression = _typeRef_1.getTypeRefAsString();\n}\nfinal <%java.lang.String%> refName = _xifexpression;\n<%java.lang.String%> _modifiersAsString = this.getModifiersAsString();\nreturn (((\"constructor{\" + refName) + \"}\") + _modifiersAsString);'"
 	 * @generated
 	 */
 	String getTypeRefAsString();

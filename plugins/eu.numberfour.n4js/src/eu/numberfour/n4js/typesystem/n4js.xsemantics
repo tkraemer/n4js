@@ -1050,7 +1050,7 @@ from {
 			if( (E instanceof BoundThisTypeRef)
 				||
 				  ( (E instanceof ClassifierTypeRef)
-				    && ((E as ClassifierTypeRef).staticTypeRef instanceof BoundThisTypeRef)
+				    && ((E as ClassifierTypeRef).typeRef instanceof BoundThisTypeRef)
 				  )
 			) {
 				// N.T.D. on purpose:
@@ -1183,16 +1183,16 @@ from {
  */
 rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: ClassifierTypeRef ctr
 from {
-	val staticTypeRef = ctr.staticTypeRef
+	val typeRef = ctr.typeRef
 	// staticTypeRef is either ThisTypeRefNominal OR ParemterizedTypeRef:
-	if(  staticTypeRef instanceof ParameterizedTypeRef ) {
-		staticTypeRef.declaredType === G.n4EnumType &&  ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+	if(  typeRef instanceof ParameterizedTypeRef ) {
+		typeRef.declaredType === G.n4EnumType &&  ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === G.n4StringBasedEnumType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+		typeRef.declaredType === G.n4StringBasedEnumType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === G.stringType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+		typeRef.declaredType === G.stringType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === etr.enumType
+		typeRef.declaredType === etr.enumType
 	} else {
 		// cases of ThisTypeRefNominal are never a supertype of EnumTypeRef
 		false
@@ -1586,7 +1586,7 @@ rule subtypeConstructorTypeRef
 	G |- ConstructorTypeRef left <: ConstructorTypeRef right
 from {
 	// check static types
-	G |- left.staticTypeRef <: right.staticTypeRef
+	G |- left.typeRef <: right.typeRef
 
 	// check constructors
 	val left_staticType = left.staticType
@@ -1628,7 +1628,7 @@ from {
 	!(right instanceof ConstructorTypeRef)
 
 	// check static types
-	G |- left.staticTypeRef <: right.staticTypeRef
+	G |- left.typeRef <: right.typeRef
 }
 
 rule subtypeClassifierTypeRefObject
@@ -2280,8 +2280,8 @@ from {
 		ConstructorTypeRef: {
 		}
 		default: { /* case ClassifierTypeRef */
-			val staticTypeRef = ct.staticTypeRef
-			switch(staticTypeRef) {
+			val typeRef = ct.typeRef
+			switch(typeRef) {
 				 BoundThisTypeRef: {
 						result = TypeUtils.createResolvedClassifierTypeRef(ct)
 				 }
@@ -2471,16 +2471,19 @@ from {
 	}
 }
 
+/**
+ * Substitute in ClassifierTypeRef and ConstructorTypeRef.
+ */
 rule substTypeVariablesInClassifierTypeRef
 	G |- ClassifierTypeRef typeRef ~> ClassifierTypeRef result
 from {
-	// Substitue in Parameterized Typeref.
-	G |- typeRef.staticTypeRef ~> var TypeRef tResult
-	if( typeRef.staticTypeRef !== tResult ) {
+	// Substitute in Parameterized Typeref.
+	G |- typeRef.typeRef ~> var TypeRef tResult
+	if( typeRef.typeRef !== tResult ) {
 		// changes.
 		tResult = TypeUtils.copy( tResult )
 			result = TypeUtils.copy( typeRef )
-			result.staticTypeRef = ( tResult as StaticBaseTypeRef )
+			result.typeRef = tResult
 	} else {
 		// nothing changed.
 		result = typeRef

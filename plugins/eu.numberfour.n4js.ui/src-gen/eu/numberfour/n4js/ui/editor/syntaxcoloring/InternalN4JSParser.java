@@ -52640,7 +52640,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         Token ConstructorKeyword_1=null;
         Token LeftCurlyBracketKeyword_2=null;
         Token RightCurlyBracketKeyword_4=null;
-        InternalN4JSParser.ruleTypeRefInClassifierType_return StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = null;
+        InternalN4JSParser.ruleTypeRefInClassifierType_return TypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = null;
 
 
 
@@ -52659,12 +52659,12 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
             {
             {
             pushFollow(FOLLOW_25);
-            StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType();
+            TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return retval;
             if ( state.backtracking==0 ) {
-               announce((StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start):null), (StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop):null), grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               announce((TypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start):null), (TypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop):null), grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); 
             }
 
             }
@@ -52724,7 +52724,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         Token TypeKeyword_1=null;
         Token LeftCurlyBracketKeyword_2=null;
         Token RightCurlyBracketKeyword_4=null;
-        InternalN4JSParser.ruleTypeRefInClassifierType_return StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = null;
+        InternalN4JSParser.ruleTypeRefInClassifierType_return TypeRefTypeRefInClassifierTypeParserRuleCall_3_0 = null;
 
 
 
@@ -52743,12 +52743,12 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
             {
             {
             pushFollow(FOLLOW_25);
-            StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType();
+            TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType();
 
             state._fsp--;
             if (state.failed) return retval;
             if ( state.backtracking==0 ) {
-               announce((StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start):null), (StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)StaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop):null), grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); 
+               announce((TypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start):null), (TypeRefTypeRefInClassifierTypeParserRuleCall_3_0!=null?((Token)TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop):null), grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); 
             }
 
             }
