@@ -102,7 +102,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	 * <li>high priority = +1; == PRIO_12
 	 * </ul>
 	 */
-	@SuppressWarnings("unused")
 	static val PRIO_4 = PRIO_3 + 1;
 
 	
@@ -150,9 +149,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			};		
 		
 		// 2nd version of implementing the callback:
-		val IAutowrapFormatter callBackOnAutoWrap2 = [a,b,c|
-			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.HIGH_PRIORITY)
-		]
+		val StateTrack state2 = new StateTrack;
+		val IAutowrapFormatter callBackOnAutoWrap2 = [region, hrFormatting, document2 |
+			if( state2.shouldDoThenDone ) twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.HIGH_PRIORITY);
+		];
+		suppressUnusedWarnings( callBackOnAutoWrap2 );
 		
 		// Allow for lineBreaks in front of keywords:
 		clazz.regionFor.keyword("extends").prepend[
@@ -866,6 +867,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		if( eo.eContainer !== null )
 		return '''«eo.eContainer.containmentStructure».«eo.eContainingFeature.name»-> «name»'''
 		return name
+	}
+	
+	/** HELPER to avoid Warnings in code, since @SuppressWarnings("unused") is not active in xtend code.*/
+	def suppressUnusedWarnings(Object ... e)
+	{
+		PRIO_4;
 	}
 	
 	/** 
