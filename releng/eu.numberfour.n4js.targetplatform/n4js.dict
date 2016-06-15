@@ -105,11 +105,17 @@ downloaded
 proband
 git
 fabelhaft
-<<<<<<< HEAD
 tycho
-=======
 xtext
 proxified
 proxify
 unresolvable
->>>>>>> master
+multiline
+autowrap
+def
+val
+instanceof
+autowrap
+var
+typeof
+args

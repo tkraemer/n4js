@@ -32,8 +32,6 @@ import eu.numberfour.n4js.n4JS.N4EnumDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.n4JS.N4MemberDeclaration
-import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.ObjectLiteral
@@ -70,39 +68,42 @@ import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
 import eu.numberfour.n4js.n4JS.BooleanLiteral
 import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.UnaryOperator
-import eu.numberfour.n4js.services.N4JSGrammarAccess.ArrowExpressionElements
 import org.eclipse.xtext.formatting2.IAutowrapFormatter
 import org.eclipse.xtext.formatting2.regionaccess.ITextSegment
 import org.eclipse.xtext.formatting2.IHiddenRegionFormatting
-import org.eclipse.xtext.formatting2.internal.HiddenRegionFormatting
 import org.eclipse.xtext.formatting2.IHiddenRegionFormatter
 import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
-import eu.numberfour.n4js.n4JS.AnnotationList
-import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableScriptElement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.AnnotableExpression
 import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
 import org.eclipse.emf.common.util.EList
 import eu.numberfour.n4js.n4JS.FormalParameter
-import org.codehaus.jackson.map.deser.FromStringDeserializer
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import org.eclipse.xtext.formatting2.internal.WhitespaceReplacer
 import eu.numberfour.n4js.n4JS.TemplateLiteral
 import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.SuperLiteral
+import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
 
 class N4JSFormatter extends TypeExpressionsFormatter {
+	
+	/** Debug switch */
+	private static var debug = false;
 
 	@Inject extension N4JSGrammarAccess
 	
-	static val PRIO_1 = N4JSGenericFormatter.PRIO_1;
-	static val PRIO_2 = N4JSGenericFormatter.PRIO_2;
-	static val PRIO_3 = N4JSGenericFormatter.PRIO_3;
-	static val PRIO_4 = PRIO_3+1;
+	/** PRIO_4 = -7 - still very low.
+	 * Standard priorities in the formatter are:
+	 * <ul> 
+	 * <li>lowPriority = -1;  == PRIO_10 
+	 * <li>normal priority = 0; == PRIO_11
+	 * <li>high priority = +1; == PRIO_12
+	 * </ul>
+	 */
+	@SuppressWarnings("unused")
+	static val PRIO_4 = PRIO_3 + 1;
 
 	
 	private def maxEmptyLines() { 
@@ -132,22 +133,23 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch format(N4ClassDeclaration clazz, extension IFormattableDocument document) {
 		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
 		clazz.interior[indent];
+		
 		// TODO revise the following pattern of call-back implementations.
 		// Define lambda for callback & normal use:
 		val twolinesBeforeFirstMember = [int prio | clazz.ownedMembersRaw.head.prepend[newLines=2;priority = prio]];
+		
 		// Defines CallBack for autoWrap:
-		val callBackOnAutoWrap = new IAutowrapFormatter{ // callback for Autowrapping with implements
+		val callBackOnAutoWrap = new IAutowrapFormatter{ // callback for auto-wrapping with implements
 				var didReconfigure = false; // track to only execute once.
 				override format(ITextSegment region, IHiddenRegionFormatting wrapped, IFormattableDocument document) {
 					if( !didReconfigure ) { 
-						println("wrapped here:");
-						println( region );
 						twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.HIGH_PRIORITY); // reformat with higher priority
 						didReconfigure=true; // keep state.
 					}
 				}
 			};		
-		// 2nd version of implementing it:
+		
+		// 2nd version of implementing the callback:
 		val IAutowrapFormatter callBackOnAutoWrap2 = [a,b,c|
 			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.HIGH_PRIORITY)
 		]
@@ -169,9 +171,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			onAutowrap=callBackOnAutoWrap;
 		]];
 		
-		// special case if the header of the class spans multiple lines, then insert extra linebreak.
+		// special case if the header of the class spans multiple lines, then insert extra line break.
 		val kwClass = clazz.regionFor.keyword("class");
-		val kwBrace = clazz.regionFor.keyword("{"); // Autowrap-listener ?
+		val kwBrace = clazz.regionFor.keyword("{"); // autowrap-listener ?
 		if( ! kwClass.lineRegions.head.contains( kwBrace ) ) { 
 			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter::NORMAL_PRIORITY);	
 		} else {
@@ -236,9 +238,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch format(FunctionOrFieldAccessor fDecl, extension IFormattableDocument document) {
 		fDecl.configureAnnotations(document);
 		
+		// State-keeper to avoid clashing reconfigurations if multiple auto-wraps get triggered.
 		val state = new StateTrack; // use state to only trigger one change, even if called multiple times.
+		
+		// Callback to introduce an additional line in body-block.
 		val (ITextSegment , IHiddenRegionFormatting , IFormattableDocument )=>void cbInsertEmptyLineInBody  = [
-			if(state.doThenDone){
+			if(state.shouldDoThenDone){
 				fDecl.body?.statements?.head.prepend[ setNewLines(2,2,maxEmptyLines); highPriority];
 			}
 		];
@@ -338,7 +343,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		val dotKW = exp.regionFor.keyword(".");
 		dotKW.prepend[noSpace; autowrap;].append[noSpace;]
 		exp.regionFor.keyword("(").prepend[noSpace].append[noSpace];
-		exp.regionFor.keyword(")").prepend[noSpace].append[noSpace];
+		exp.regionFor.keyword(")").prepend[noSpace];
 		
 		exp.arguments.tail.forEach[prepend[oneSpace]];
 		exp.arguments.forEach[format];
@@ -370,9 +375,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 		stmt.elseStmt.prepend[oneSpace; newLines = 0];
 		
-//		stmt.ifStmt.interior[indent];
-//		stmt.elseStmt.interior[indent];
-		
 		stmt.expression.format;
 		stmt.ifStmt.format;
 		stmt.elseStmt.format;
@@ -386,7 +388,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		swStmt.cases.forEach[format];
 	}
 
-	/** Fromats DefaultCaseClause + CaseClause */
+	/** Formats DefaultCaseClause + CaseClause */
 	def dispatch void format(AbstractCaseClause caseClause, extension IFormattableDocument document) {
 		caseClause.insertNewlineAfterColon(document,getPreference(FORMAT_SWITCH_CASES_HAVE_SPACE_IN_FRONT_OF_COLON));
 		caseClause.interior[indent];
@@ -400,39 +402,14 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(Block block, extension IFormattableDocument document) {
-		println("Formatting block "+containmentStructure(block))
+		if( debug ) println("Formatting block "+containmentStructure(block));
 		
-		// Beware there are blocks in the grammer, that are not surrounded by curly braces. (e.g. FunctionExpression)
+		// Beware there are blocks in the grammar, that are not surrounded by curly braces. (e.g. FunctionExpression)
 		
 		// Block not nested in other blocks usually are bodies. We want them separated by a space:
 		if (! (block.eContainer instanceof Block)) {
 			block.regionFor.keyword("{").prepend[oneSpace];
 		}
-
-//		val begin = block.semanticRegions.head; // '{' 
-//		val end = block.semanticRegions.last; // '}'
-//		if (begin !== null) {
-//			// begin.interior(end)[indent];
-//			if (begin.lineRegions.head.contains(end)) {
-//				// same line
-//				if (block.statements.size == 0 // no statement
-//					|| block.statements.size > 1 
-//					|| !( block.statements.get(0) instanceof Block )
-//				) {
-//					// insert spaces 
-//					begin.append[oneSpace]
-//					end.prepend[oneSpace]
-//				}
-//			} else { // not in same line.
-//				if (block.statements.size >	1 
-//				 ||	( block.statements.size==1 && !( block.statements.get(0) instanceof Block ) )  ) {
-//					begin.append[newLine; autowrap];
-//					end.prepend[newLine; autowrap];
-//					block.statements.head.prepend[newLine];
-//					block.statements.forEach[append[newLine;autowrap]];
-//				}
-//			}
-//		}
 
 		block.interior[indent];
 		
@@ -463,16 +440,19 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		add.lhs.format
 		add.rhs.format
 	}
+	
 	def dispatch void format(MultiplicativeExpression mul, extension IFormattableDocument document) {
 		mul.regionFor.feature(N4JSPackage.Literals.MULTIPLICATIVE_EXPRESSION__OP).surround[oneSpace];
 		mul.lhs.format
 		mul.rhs.format
 	}
+	
 	def dispatch void format(BinaryBitwiseExpression binbit, extension IFormattableDocument document) {
 		binbit.regionFor.feature(N4JSPackage.Literals.BINARY_BITWISE_EXPRESSION__OP).surround[oneSpace];
 		binbit.lhs.format
 		binbit.rhs.format
 	}
+	
 	def dispatch void format(BinaryLogicalExpression binLog, extension IFormattableDocument document) {
 		val opReg = binLog.regionFor.feature(N4JSPackage.Literals.BINARY_LOGICAL_EXPRESSION__OP);
 		opReg.surround[oneSpace];
@@ -486,25 +466,30 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			opReg.append[autowrap; lowPriority; setNewLines(0,0,1);]
 		};
 	}
+	
 	def dispatch void format(EqualityExpression eqExpr, extension IFormattableDocument document) {
 		eqExpr.regionFor.feature(N4JSPackage.Literals.EQUALITY_EXPRESSION__OP).surround[oneSpace];
 		eqExpr.lhs.format
 		eqExpr.rhs.format
 	}
+	
 	def dispatch void format(RelationalExpression relExpr, extension IFormattableDocument document) {
 		relExpr.regionFor.feature(N4JSPackage.Literals.RELATIONAL_EXPRESSION__OP).surround[oneSpace];
 		relExpr.lhs.format
 		relExpr.rhs.format
 	}
+	
 	def dispatch void format(ShiftExpression shiftExpr, extension IFormattableDocument document) {
 		shiftExpr.regionFor.feature(N4JSPackage.Literals.SHIFT_EXPRESSION__OP).surround[oneSpace];
 		shiftExpr.lhs.format
 		shiftExpr.rhs.format
 	}
+	
 	def dispatch void format(CommaExpression comma, extension IFormattableDocument document) {
 		comma.configureCommas(document);
 		comma.eContents.forEach[format];
 	}
+	
 	def dispatch void format(ConditionalExpression cond, extension IFormattableDocument document) {
 		cond.regionFor.keyword("?").surround[oneSpace].append[autowrap; lowPriority; setNewLines(0,0,1);];
 		cond.regionFor.keyword(":").surround[oneSpace].append[autowrap; lowPriority; setNewLines(0,0,1);];
@@ -512,15 +497,18 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		cond.trueExpression.format;
 		cond.falseExpression.format;		
 	}
+	
 	def dispatch void format(AwaitExpression await, extension IFormattableDocument document) {
 		await.regionFor.keyword("await").prepend[oneSpace].append[oneSpace; newLines = 0];
 		await.expression.format
 	}
+	
 	def dispatch void format(PromisifyExpression promify, extension IFormattableDocument document) {
 		promify.noSpaceAfterAT(document);
 		promify.regionFor.keyword("Promisify").append[oneSpace];
 		promify.expression.format
 	}
+	
 	def dispatch void format(IndexedAccessExpression idxAcc, extension IFormattableDocument document) {
 		val indexRegion = idxAcc.index.regionForEObject();
 		indexRegion.previousSemanticRegion.prepend[noSpace;newLines=0].append[noSpace;newLines = 0];
@@ -529,6 +517,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		idxAcc.index.format;
 		idxAcc.target.format;
 	}
+	
 	def dispatch void format(NewExpression newExp, extension IFormattableDocument document) {
 		newExp.regionFor.keyword("new").prepend[oneSpace].append[oneSpace;newLines=0];
 		newExp.callee.format;
@@ -561,7 +550,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(UnaryExpression unaryExpr, extension IFormattableDocument document) {
-		// The operators 'void' 'delete' and 'typeof' must be separetd from operand.
+		// The operators 'void' 'delete' and 'typeof' must be separated from operand.
 		val boolean requireSpace=(unaryExpr.op.ordinal <= UnaryOperator.TYPEOF_VALUE);
 		unaryExpr.regionFor.feature(N4JSPackage.Literals.UNARY_EXPRESSION__OP)
 			.append[if(requireSpace) oneSpace else noSpace; newLines = 0;];
@@ -571,8 +560,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(YieldExpression yieldExpr, extension IFormattableDocument document) {
 		// " yield " or " yield* "
 		yieldExpr.regionFor.keyword("yield")
-		.prepend[oneSpace;]
-		.append[if( yieldExpr.isMany ) noSpace else oneSpace];
+			.prepend[oneSpace;]
+			.append[if( yieldExpr.isMany ) noSpace else oneSpace];
 		if( yieldExpr.isMany ){
 			yieldExpr.regionFor.keyword("*").prepend[noSpace;newLines=0].append[oneSpace]
 		}
@@ -670,16 +659,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 		throw new UnsupportedOperationException("expression "+exp.class.simpleName+" not yet implemented.");
 	}
-	def void genericTODOformat(Expression exp, extension IFormattableDocument document) {
-		throw new UnsupportedOperationException("expression "+exp.class.simpleName+" not yet implemented.");
-	}
-
-	/** simply formats all content */
+	
+		/** simply formats all content */
 	def void genericFormat(Expression exp, extension IFormattableDocument document) {
 		exp.eContents.forEach[format];
 	}
-	
-	
+		
 	
 	def dispatch void format(AssignmentExpression ass, extension IFormattableDocument document) {
 		ass.lhs.append[oneSpace]
@@ -689,7 +674,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format( ExpressionStatement eStmt, extension IFormattableDocument docuemt){
-		println( " fmt "+eStmt.expression.class.simpleName );
 		eStmt.expression.format;
 	}
 
@@ -756,9 +740,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	/** Elements implementing PropertyNameOwner may have symbols or computed names given in brackets. 
-	 * Inserts a spcace in front of the opening bracket.*/
+	 * Inserts a space in front of the opening bracket.*/
 	private def void insertSpaceInfrontOfPropertyNames(EObject field, extension IFormattableDocument document) {
-		// Space in front of name, esp. for names like "[@sdfljks]"
+		// Space in front of name, esp. for names like "[@name]"
 		val nameRegion = field.regionFor.feature(
 			N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME);
 		if (nameRegion === null) return;
@@ -798,7 +782,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	private def dispatch void configureAnnotations(AnnotableScriptElement semEObject, extension IFormattableDocument document) {
 		configureAnnotations( semEObject.annotationList, document );
-	}
+	} 
+	
 	private def dispatch void configureAnnotations(AnnotableExpression semEObject, extension IFormattableDocument document) {
 		configureAnnotations( semEObject.annotationList, document );
 	}
@@ -829,11 +814,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	private def dispatch void configureAnnotations(Object semEObject, extension IFormattableDocument document) {
-		// no annotaitons to be configured.
+		// no annotations to be configured.
 	}
 
 	private def dispatch void configureAnnotations(Void x, extension IFormattableDocument document) {
-		// no annotaitons to be configured.
+		// no annotations to be configured.
 	}
 
 	public override ITextReplacer createCommentReplacer(IComment comment) {
@@ -875,7 +860,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		return new IndentHandlingTextReplaceMerger(this);
 	}
 	
-	
 	/** DEBUG-helper */
 	private def static String containmentStructure(EObject eo) {
 		val name = eo.class.simpleName;
@@ -884,11 +868,20 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		return name
 	}
 	
-	
+	/** 
+	 * Simple tracker that only gives exactly one time the value {@code true} 
+	 * when calling {@link StateTrack#shouldDoThenDone()}
+	 */
 	private final static class StateTrack {
 		private boolean done=false;
-		/** returns true if not done, switches done to true; returns false if already done. */
-		def boolean doThenDone(){
+		
+		/**
+		 * This method returns {@code true} exactly on it's first invocation. Proceeding calls always return {@code false}. 
+		 * 
+		 * @return Returns {@code true} if not done, immediately switches {@link #done} to {@code true}; 
+		 * returns {@code false} if already done.
+		 */
+		def boolean shouldDoThenDone(){
 			val ret = !done;
 			done = true;
 			return ret;
