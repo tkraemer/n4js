@@ -119,3 +119,4 @@ autowrap
 var
 typeof
 args
+supertype

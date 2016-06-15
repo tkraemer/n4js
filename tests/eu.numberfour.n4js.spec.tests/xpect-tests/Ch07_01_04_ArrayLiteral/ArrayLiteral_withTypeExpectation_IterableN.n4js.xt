@@ -18,7 +18,7 @@ var x : X;
 // make sure that array literal gets inferred to Array<T>
 // if we do *not* have an IterableN as type expectation
 
-// XPECT type of '[b,c,b]' --> Array<B>
+// XPECT type of '[b,c,b]' --> Array<union{B,C}>
 var v01 : Iterable<B> = [b,c,b];
 // XPECT type of '[b,c,b]' --> Array<B>
 var v02 : Array<B> = [b,c,b];

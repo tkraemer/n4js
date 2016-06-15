@@ -108,7 +108,7 @@ class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				if(tOtherInPair!==null) {
 					val typeGetter = tMember.typeOfMember;
 					val typeSetter = tOtherInPair.typeOfMember;
-					if(infCtx.isInferenceVariable(typeGetter) || infCtx.isInferenceVariable(typeSetter)) {
+					if(TypeUtils.isInferenceVariable(typeGetter) || TypeUtils.isInferenceVariable(typeSetter)) {
 						infCtx.addConstraint(typeGetter, typeSetter, Variance.CO);
 					} else {
 						// do not add a constraint if both types were explicitly declared
