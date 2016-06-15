@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// also see GH-179
+
+try { console.log(""); }
+// XPECT noerrors --> 
+catch (ex) {}
+
+try { console.log(""); }
+// XPECT errors --> "Catch variable must not be typed." at "Error"
+catch (ex: Error) {}
