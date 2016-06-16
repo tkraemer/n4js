@@ -8,18 +8,6 @@
 
 
 
-/* XPECT formattedLines 5 ---
-function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, hoo6: int,
-	hoo7: int, hoo8: int, hoo9: int, hoo10: int) {
-
-	++hoo;
-}
---- */
-function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, hoo6: int,
-    hoo7: int, hoo8: int, hoo9: int, hoo10: int) {  
-     
-    ++hoo;    
-}
 
 
 /* Special requirement: keep additional empty lines */
@@ -32,8 +20,6 @@ function goo(bar: int, hoo: int) {
 
 
 
-	let a: int,
-		f = 3;
 
 
 
@@ -51,8 +37,6 @@ function goo(bar: int, hoo: int) {
 
 
 
-    let a: int,
-        f = 3;
 
 
 

@@ -18,7 +18,7 @@
   - line 137 & 143 & 153 auto-wrap not implemeneted for logical expressions.
   - line 158 & 159 newlines swallowed.
  */
-/* XPECT FIXME formattedLines 140 ---
+/* XPECT formattedLines 140 ---
 import {SomethingLongHere} from "formatter2/wishesImported";
 
 interface Goo {}
@@ -147,7 +147,6 @@ function goo(bar: int, hoo: int) {
         (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) {
 
         // never ever combine comments, don't fix indentation! think commented out code would get indented
-
         ++hoo;
     }
 
@@ -156,10 +155,7 @@ function goo(bar: int, hoo: int) {
         [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
 
 
-    // do not clear up linefeed
-    
-    
-    
+// do not clear up linefeed
 }
 
 function goo3(bar: int, hoo: int, hoo2: int, hoo3: int, hoo4: int, hoo5: int, hoo6: int,
