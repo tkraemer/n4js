@@ -1,11 +1,4 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: images
-:toc: left
 
 .N4JS npm Export Guide
 = N4JS npm Export Guide

@@ -1,10 +1,4 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
 
 .Async/Await
 = Async/Await

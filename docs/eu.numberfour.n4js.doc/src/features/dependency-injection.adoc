@@ -1,10 +1,4 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
 
 .Dependency Injection in N4JS
 = Dependency Injection in N4JS

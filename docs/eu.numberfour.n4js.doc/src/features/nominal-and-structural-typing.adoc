@@ -1,9 +1,3 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
-:imagesdir: ../images
 :doctype: book
 
 .Nominal And Structural Typing

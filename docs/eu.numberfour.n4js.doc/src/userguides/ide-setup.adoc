@@ -1,15 +1,4 @@
 :doctype: book
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:references: drop
-:imagesdir: images
-:toc: left
-
-
-////
-:data-uri:
-////
 
 .N4JS IDE Setup
 = N4JS IDE Setup

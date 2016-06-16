@@ -16,9 +16,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
         
         <eclipse.html>eclipse-html</eclipse.html>
-        <website.html>documentation</website.html>
+        <website.html>website-html</website.html>
         <epub.dir>epub</epub.dir>
-        <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
+        <eclipseHelpBaseDir>${basedir}/target</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
         <help.pages.list>help-pages.txt</help.pages.list>
     </properties>
@@ -112,7 +112,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
                             <preserveDirectories>true</preserveDirectories> 
-                            <outputDirectory>${eclipseHelpDir}</outputDirectory>
+                            <outputDirectory>target/eclipse-html</outputDirectory>
                             <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
@@ -126,7 +126,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
                     </execution>
@@ -139,23 +138,28 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${basedir}/src/documentation</sourceDirectory>
-                            <preserveDirectories>false</preserveDirectories> 
+                            <sourceDirectory>${basedir}/src</sourceDirectory>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
+                            <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
-                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> 
                                 <!-- Individual attributes per conversion execution -->
-                                <stylesdir>../styles</stylesdir>
-                                <toc>left</toc>
-                                <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
-                                <docinfodir>../../</docinfodir>
+                                <linkcss>true</linkcss>
+                                <stylesdir>${basedir}/src/styles</stylesdir>
+                                <stylesheet>n4js-adoc-90%.css</stylesheet>
+                                <highlightjsdir>${basedir}/src/sourcehighlight</highlightjsdir>
+                                <highlightjs-theme>n4js</highlightjs-theme>
+                                <doctype>book</doctype>
+                                <experimental>true</experimental>
+                                <commandkey>&#8984;</commandkey>
                                 <eclipse>false</eclipse>
                                 <website>true</website>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
+                                <docinfodir>${basedir}/includes</docinfodir>
                                 <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>
@@ -226,7 +230,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="documentation/index.html"/>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,documentation/index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
                                     <map from="${eclipseHelpBaseDir}/" to="" />
                                 </pathconvert> 
@@ -250,7 +254,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>geneclipsetoc</goal>
                         </goals>
                         <configuration>
-                            <sourceFolder>${basedir}</sourceFolder>
+                            <sourceFolder>${basedir}/target</sourceFolder>
                             <pagesListFile>${help.pages.list}</pagesListFile>
                             <outputTocFile>toc.xml</outputTocFile>
                         </configuration>

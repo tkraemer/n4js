@@ -1,11 +1,4 @@
-:experimental:
-:commandkey: &#8984;
-:data-uri:
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
 
 .N4JS and TypeScript
 = N4JS and TypeScript
@@ -293,4 +286,4 @@ function copy(readOnlyList: List<? extends A>, writeOnlyList: List<? super A>) {
 In practice, reading (from a list) is much more often used then writing. And in this case TypeScript's covariant
 assumption causes no problems. When writing, however, it can cause the above problems.
 
-For more information on generics please see <</features/generics#generics,generics feature page>>.
+For more information on generics please see <<../features/generics#generics,generics feature page>>.
