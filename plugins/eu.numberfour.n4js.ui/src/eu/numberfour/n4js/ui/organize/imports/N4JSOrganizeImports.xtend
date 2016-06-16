@@ -180,7 +180,7 @@ public class N4JSOrganizeImports {
 				val docuNodes = documentationProvider.getDocumentationNodes(realScriptElement);
 				
 				if( !docuNodes.isEmpty ) {
-					// docu found
+					// documentation found
 					begin = docuNodes.get(0).totalOffset;
 					insertionPoint.isBeforeJsdocDocumentation = true;
 					
@@ -375,7 +375,7 @@ public class N4JSOrganizeImports {
 			sb.append(text).append(lineEnding);
 		]
 
-		// remove last linefeed:
+		// remove last line feed:
 		val length = sb.length
 		if (length > lineEnding.length) {
 
@@ -395,7 +395,7 @@ public class N4JSOrganizeImports {
 		val scopeIdRef = scopeProvider.getScope(script, N4JSPackage.Literals.IDENTIFIER_REF__ID)
 
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
-		// cannot be solved here. Candidate for quickfix.
+		// cannot be solved here. Candidate for quick fix.
 		// val unresolved = state.unresolved
 		val unres = EcoreUtil.UnresolvedProxyCrossReferencer.find(script)
 
@@ -420,7 +420,7 @@ public class N4JSOrganizeImports {
 				}
 				// int situations like "new A()" at the position of A an IdentifierRef is unresolved.
 				// The solution is provided as a TypeRef. So TypeRef-solutions can be used in places where an IDref is desired.
-				// --> obj Idref :  scopeIdRef & scopeTypeRef
+				// --> obj IdRef :  scopeIdRef & scopeTypeRef
 				// --> obj TypeRef : only TypeRef
 				if (obj instanceof IdentifierRef) {
 					if (alreadyProcessedIdRef.add(usedName)) {
@@ -449,7 +449,7 @@ public class N4JSOrganizeImports {
 		//ignore broken names, for which imports will be added due to unresolved refs
 		namesThatWeBroke.removeAll(solutions.keySet)
 
-		// Ask user for disambigous things:
+		// Ask user for disambiguating things:
 		val ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1]
 		val forDisambigue = LinkedHashMultimap.create
 		ambiguousSolution.forEach[p1, p2|forDisambigue.putAll(p1, p2)]
@@ -469,7 +469,7 @@ public class N4JSOrganizeImports {
 			}
 		]
 
-		val chosenSolutions = disambigue(forDisambigue, interaction);
+		val chosenSolutions = disambiguate(forDisambigue, interaction);
 
 		chosenSolutions.forEach[ret.add(createNamedImport(name.lastSegment, it.qualifiedName.skipLast(1)))]
 
@@ -523,7 +523,7 @@ public class N4JSOrganizeImports {
 					}
 					NamedImportSpecifier: {
 						if (o2.importSpecifiers.get(0) instanceof NamespaceImportSpecifier) {
-							-1; // neg, wildcard last.
+							-1; // negative, wildcard last.
 						} else {
 							var cmp = compModules(o1, o2)
 							if (cmp === 0) {
@@ -567,7 +567,7 @@ public class N4JSOrganizeImports {
 		return l1.size - l2.size
 	}
 
-	/** Compares two NamedImport specifier: eg. "Z as A" <--> "X as B" */
+	/** Compares two NamedImport specifier: e.g. "Z as A" <--> "X as B" */
 	final static private def int compNamedImport(NamedImportSpecifier o1, NamedImportSpecifier o2) {
 
 		// o1.findActualNodeFor().tokenText. compareTo( o2.findActualNodeFor.tokenText )
@@ -594,15 +594,15 @@ public class N4JSOrganizeImports {
 				// create own string. from single Named Adapter:
 				val namedSpec = impSpec.get(0) as NamedImportSpecifier
 
-				'''import { «namedSpec.importedElement.name»«
-					IF (namedSpec.alias !== null)» as «namedSpec.alias»«ENDIF» } from "«module»"'''
+				'''import {«namedSpec.importedElement.name»«
+					IF (namedSpec.alias !== null)» as «namedSpec.alias»«ENDIF»} from "«module»"'''
 			} else {
 				// more then one, sort them:
 				impSpec.
 					sortByName()
 
-				'''import { «FOR a : impSpec SEPARATOR ', '»«(a as NamedImportSpecifier).importedElement.name»«
-					IF ((a as NamedImportSpecifier).alias !== null)» as « (a as NamedImportSpecifier).alias »«ENDIF»«ENDFOR» } from "«module»"'''
+				'''import {«FOR a : impSpec SEPARATOR ', '»«(a as NamedImportSpecifier).importedElement.name»«
+					IF ((a as NamedImportSpecifier).alias !== null)» as « (a as NamedImportSpecifier).alias »«ENDIF»«ENDFOR»} from "«module»"'''
 			}
 		} else {
 			val importNode = findActualNodeFor(declaration);
@@ -694,7 +694,7 @@ public class N4JSOrganizeImports {
 		for (name : multimap.keySet) {
 
 			// TODO the first must be actually determined from the error-state-list given by the scoping, see {@link ImportProvidedElement#ambiguityList}
-			// The first Identifiable in there is bound to the first thing the scoping encountered. For the time beeing, lets take any:
+			// The first Identifiable in there is bound to the first thing the scoping encountered. For the time being, lets take any:
 			result += multimap.get(name).get(0)
 		}
 
@@ -706,9 +706,9 @@ public class N4JSOrganizeImports {
 	 * Present a user dialog and let him choose a distinct import for each unresolved problem.
 	 *
 	 */
-	private def <T> List<T> disambigue(Multimap<String, T> multimap, Interaction interaction) throws BreakException {
+	private def <T> List<T> disambiguate(Multimap<String, T> multimap, Interaction interaction) throws BreakException {
 
-		// def List<ImportProvidedElement> disambigue(Multimap<String, ImportProvidedElement> multimap, Interaction interaction) throws BreakException {
+		// def List<ImportProvidedElement> disambiguate(Multimap<String, ImportProvidedElement> multimap, Interaction interaction) throws BreakException {
 		// for each name exactly one solution must be picked:
 		val result = <T>newArrayList();
 		if (multimap.empty) return result;
