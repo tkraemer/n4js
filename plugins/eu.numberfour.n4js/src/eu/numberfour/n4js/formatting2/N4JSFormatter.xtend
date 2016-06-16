@@ -86,6 +86,8 @@ import eu.numberfour.n4js.n4JS.TemplateLiteral
 import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.SuperLiteral
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
+import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
+import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -367,8 +369,22 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(ImportDeclaration decl, extension IFormattableDocument document) {
-		decl.regionFor.keyword("{").prepend[oneSpace].append[noSpace]
-		decl.regionFor.keyword("}").prepend[noSpace].append[oneSpace; newLines = 0]
+		decl.regionFor.keyword("{").prepend[oneSpace].append[noSpace];
+		decl.regionFor.keyword("}").prepend[noSpace].append[oneSpace; newLines = 0];
+		decl.regionFor.keyword("from").surround[oneSpace];
+		decl.configureCommas(document);
+		decl.eContents.forEach[format];
+	}
+	
+	def dispatch void format(NamedImportSpecifier namedImp, extension IFormattableDocument document){
+		namedImp.regionFor.keyword("as").prepend[oneSpace].append[oneSpace];
+		namedImp.regionFor.feature(N4JSPackage.Literals.NAMESPACE_IMPORT_SPECIFIER__DECLARED_DYNAMIC).prepend[noSpace].append[oneSpace]; // "+"-KW after alias-name
+	}
+	
+	def dispatch void format(NamespaceImportSpecifier nsImp, extension IFormattableDocument document){
+		nsImp.regionFor.keyword("*").append[oneSpace];
+		nsImp.regionFor.keyword("as").append[oneSpace];
+		nsImp.regionFor.feature(N4JSPackage.Literals.NAMESPACE_IMPORT_SPECIFIER__DECLARED_DYNAMIC).prepend[noSpace].append[oneSpace]; // "+"-KW after alias-name
 	}
 
 	def dispatch void format(IfStatement stmt, extension IFormattableDocument document) {
