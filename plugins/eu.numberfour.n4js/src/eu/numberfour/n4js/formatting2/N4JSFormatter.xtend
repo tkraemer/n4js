@@ -116,6 +116,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		if (getPreference(FORMAT_PARENTHESIS)) {
 //			script.formatParenthesisBracketsAndBraces(document)
 		}
+		
+		// TODO the following line requires more conflict handling with semicolons:
+		// script.interior[noIndentation;];
+		
 		script.formatSemicolons(document)
 		script.formatColon(document)
 
@@ -408,7 +412,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// Beware there are blocks in the grammar, that are not surrounded by curly braces. (e.g. FunctionExpression)
 		
 		// Block not nested in other blocks usually are bodies. We want them separated by a space:
-		if (! (block.eContainer instanceof Block)) {
+		if (! (block.eContainer instanceof Block || block.eContainer instanceof Script)) { // TODO maybe invert the control here, since the block is formatting the outside.
 			block.regionFor.keyword("{").prepend[oneSpace];
 		}
 
