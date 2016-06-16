@@ -19,3 +19,8 @@ c as constructor{B};
 c as constructor{C};
 // XPECT noerrors --> 
 c as constructor{D};
+
+function <T extends C> f() {
+	C as constructor{T};
+	C as type{T};
+}
