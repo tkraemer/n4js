@@ -149,7 +149,7 @@ function  _deepEqual(actual: any, expected: any, ignorePrototype: boolean?):bool
 
 
 
-function expectedException(actual: any, expected: union{ErrorPrimitiveType, type{Object}}) {
+function expectedException(actual: any, expected: union{ErrorPrimitiveType, Object}) {
     if (typeof expected === "string") {
         return ((typeof actual) === expected as string);
     }
@@ -557,8 +557,9 @@ export public class Assert {
         });
     }
 
-    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Object}}?, message: string?, operator: string?, stackStartFunction: Function?): any {
+    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, Object}?, message: string?, operator: string?, stackStartFunction: Function?): any {
         this.rethrowIfSpecialError(actual, expected);
+        // TODO seems odd: type of expected should be error in the first place
         message = (expected && (expected as Error).name ? ' (' + (expected as Error).name + ').': '.') +
         (message ? ' ' + message: '.');
 
