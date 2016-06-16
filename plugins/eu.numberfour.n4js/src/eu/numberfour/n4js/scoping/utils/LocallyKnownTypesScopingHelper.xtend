@@ -53,17 +53,16 @@ class LocallyKnownTypesScopingHelper {
 
 			// add the type variables
 			if (type.generic) {
-//				if (type instanceof TClassifier && staticAccess) {
-//
-//					// error case: type variables of a classifier cannot be accessed from static members
-//					// --> return same scope as in success case, but wrap descriptions with a WrongStaticAccessorDescription
-//					result = ScopeUtils.scopeFor(type.typeVars, [new WrongStaticAccessDescription(it, staticAccess)],
-//						result);
-//				} else {
-
+				if (type instanceof TClassifier && staticAccess) {
+					// error case: type variables of a classifier cannot be accessed from static members
+					// e.g. class C<T> { static x: T; }
+					// --> return same scope as in success case, but wrap descriptions with a WrongStaticAccessorDescription
+					result = ScopeUtils.scopeFor(type.typeVars, [new WrongStaticAccessDescription(it, staticAccess)],
+						result);
+				} else {
 					// success case: simply add type variables to scope
 					result = Scopes.scopeFor(type.typeVars, result);
-//				}
+				}
 			}
 		}
 
