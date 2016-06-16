@@ -154,7 +154,6 @@ function goo(bar: int, hoo: int) {
                 (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ?
         [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
 
-
 // do not clear up linefeed
 }
 

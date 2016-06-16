@@ -105,7 +105,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	static val PRIO_4 = PRIO_3 + 1;
 
 	
-	private def maxEmptyLines() { 
+	private def maxConsecutiveNewLines() {
+		// let's stick to 2  
 		getPreference(FORMAT_MAX_CONSECUTIVE_NEWLINES); 
 	}
 
@@ -124,7 +125,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		script.formatColon(document)
 
 		for (element : script.scriptElements) {
-			element.append[setNewLines(1, 1, maxEmptyLines); autowrap]
+			element.append[setNewLines(1, 1, maxConsecutiveNewLines); autowrap]
 			element.format
 		}
 
@@ -182,10 +183,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		if( ! kwClass.lineRegions.head.contains( kwBrace ) ) { 
 			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.NORMAL_PRIORITY);	
 		} else {
-			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,maxEmptyLines);autowrap;];
+			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,maxConsecutiveNewLines);autowrap;];
 		}
 		for (member : clazz.ownedMembersRaw) {
-			member.append[setNewLines(1, 1, maxEmptyLines)]
+			member.append[setNewLines(1, 1, maxConsecutiveNewLines)]
 			member.format
 		}
 	}
@@ -194,9 +195,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
 		clazz.interior[indent];
 
-		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxEmptyLines)]
+		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxConsecutiveNewLines)]
 		for (member : clazz.ownedMembersRaw) {
-			member.append[setNewLines(1, 1, maxEmptyLines)]
+			member.append[setNewLines(1, 1, maxConsecutiveNewLines)]
 			member.format
 		}
 	}
@@ -249,7 +250,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// Callback to introduce an additional line in body-block.
 		val (ITextSegment , IHiddenRegionFormatting , IFormattableDocument )=>void cbInsertEmptyLineInBody  = [
 			if(state.shouldDoThenDone){
-				fDecl.body?.statements?.head.prepend[ setNewLines(2,2,maxEmptyLines); highPriority];
+				fDecl.body?.statements?.head.prepend[ setNewLines(2,2,maxConsecutiveNewLines); highPriority];
 			}
 		];
 		
@@ -418,8 +419,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 		block.interior[indent];
 		
-		block.statements.head.prepend[setNewLines(1,1,maxEmptyLines)];
-		block.statements.forEach[append[setNewLines(1,1,maxEmptyLines)]];
+		block.statements.head.prepend[setNewLines(1,1,maxConsecutiveNewLines)];
+		block.statements.forEach[append[setNewLines(1,1,maxConsecutiveNewLines)]];
 		
 		block.statements.forEach[format];
 
@@ -429,7 +430,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			&& braces.key.nextSemanticRegion == braces.value
 		) {
 			// empty block:
-			braces.key.append[setNewLines(1,1,maxEmptyLines)];
+			braces.key.append[setNewLines(1,1,maxConsecutiveNewLines)];
 		}
 	}
 	
