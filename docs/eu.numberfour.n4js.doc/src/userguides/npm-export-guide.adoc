@@ -21,7 +21,7 @@ In order to demonstrate exporting as npm, we can begin by creating a new N4JS
 Project using the keyboard shortcut kbd:[{commandkey} + N] and naming
 it "fibonacci". We then create a class "Fibonacci" and define it as follows:
 
-[source,javascript]
+[source,n4js]
 .Fibonacci.n4js
 ----
  export public class Fibonacci {
@@ -147,7 +147,7 @@ information about the package. The minimum information required for a package.js
 Let's say we wanted to change the version of our npm package, we can edit this in the manifest.n4mf file
 in the root of our fibonacci project:
 
-[source,javascript]
+[source,n4js]
 .manifest.n4mf
 ----
 ArtifactId: fibonacci

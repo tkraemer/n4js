@@ -17,7 +17,7 @@ generic methods will be discussed after that.
 The standard case, of course, is a non-generic class. Ttake the following class, for example, that
 bundles a pair of two strings:
 
-[source,javascript]
+[source,n4js]
 ----
 export public class PairOfString {
     first: string;
@@ -29,7 +29,7 @@ This implementation is fine as long as all we ever want to store are strings. As
 someone is soon to come up with the idea of storing two values of another type, such as... numbers!
 Let's add another class:
 
-[source,javascript]
+[source,n4js]
 ----
 export public class PairOfNumber {
     first: number;
@@ -44,7 +44,7 @@ code duplication, terrible maintainability and many other problems.
 One solution could be having a class that stores two values of type `any` (in N4JS,
 `any` is the so-called 'top type', the common supertype of all other types).
 
-[source,javascript]
+[source,n4js]
 ----
 export public class PairOfWhatEver {
     first: any;
@@ -65,7 +65,7 @@ We will then call such a class a **generic class**.
 A type variable can then be used within the class declaration just as any other ordinary type.
 
 
-[source,javascript]
+[source,n4js]
 ----
 export public class Pair<T> {
     first: T;
@@ -80,7 +80,7 @@ Now, whenever we refer to the class `Pair`, we will provide a **type argument**,
 type that will be used wherever the type variable `T` is being used inside the class
 declaration.
 
-[source,javascript]
+[source,n4js]
 ----
 import { Pair } from 'Pair';
 
@@ -93,7 +93,7 @@ By using a type variable, we have not just allowed any given type to be used as 
 we have also stated that both values, first and second, must always be of the same type. We
 have also given the type system a chance to track the types of values stored in a `Pair`:
 
-[source,javascript]
+[source,n4js]
 ----
 import { Pair } from 'Pair';
 
@@ -119,7 +119,7 @@ same purpose. It is still not possible, however, to write code that manipulates 
 its values may have. For example, a function for swapping the two values of a pair and
 then return the new first value would look like this:
 
-[source,javascript]
+[source,n4js]
 ----
 import { PairOfString } from 'PairOfString';
 
@@ -134,7 +134,7 @@ function swapStrings1(pair: PairOfString): string {
 The above function would have to be copied for every value type to be supported. Using the generic class
 `Pair<T>` does not help much:
 
-[source,javascript]
+[source,n4js]
 ----
 import { Pair } from 'Pair';
 
@@ -151,7 +151,7 @@ The solution is not only to make generic the type being manipulated generic (as 
 `Pair<T>` above) but to make the code performing the manipulation generic:
 
 
-[source,javascript]
+[source,n4js]
 ----
 import { Pair } from 'Pair';
 
@@ -179,7 +179,7 @@ Only if a method introduces its own, new type variables is it called a generic m
 merely using the type variables of its containing class or interface, it's an ordinary method.
 The following example illustrates the difference:
 
-[source,javascript]
+[source,n4js]
 ----
 export public class Pair<T> {
     …
@@ -192,7 +192,7 @@ The first method `foo` is a non generic method, while the second one `bar` is.
 
 A very interesting application of static methods is when using in combination with function type arguments:
 
-[source,javascript]
+[source,n4js]
 ----
 class Pair<T> {
 	…

@@ -696,7 +696,7 @@ Instead of "storing" the entities in memory, we want to use a real database. In 
 to use https://www.mongodb.com/[MongoDB]. To follow along this section on your own computer,
 you must have MongoDB installed and start a data base server instance via the command line as follows:
 
-[source]
+[source,bash]
 mongod --dbpath /db
 
 
@@ -841,7 +841,7 @@ function toData(task: Task): ~~Task {
 Conversely, `@Spec` constructors are special constructors that allow to create a new instance of a class and
 initialize it with values provided by a plain data object in properties that correspond to the type's fields.
 
-[source,javscript]
+[source,n4js]
 .StorageMongoDB.n4js (cntd.)
 ----
 function fromData(data: any+): Task {
@@ -879,7 +879,7 @@ In short, N4JS provides built-in support for dependency injection using the same
 Google Guice. Instead of using initializers calling the constructor for certain fields, we just mark them
 with `@Inject`. We will do that with the storage field in the TaskManager class:
 
-[source,javscript]
+[source,n4js]
 .TaskManger.n4js (cntd.)
 ----
 export public class TaskManager {
@@ -903,7 +903,7 @@ instance of StorageInMemory or StorageMongoDB. We are going to adjust the test a
 
 For that, we first add a binder to the test module "TaskManagerTest.n4js":
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 @Binder
@@ -923,7 +923,7 @@ associated with an injector; this is done by using the annotation `@GenerateInje
 to tell the framework which configuration it should use for the injector, this is done via the annotation
  `@UseBinder`, which expects the type name of a binder class.
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 @GenerateInjector @UseBinder(InMemoryBinder)
@@ -939,7 +939,7 @@ image::injectionwarning.png[]
 
 This is hard to find but easy to fix: We just have to replace the initalizer with an `@Inject` annotation.
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 …
@@ -965,7 +965,7 @@ N4JS is as simple as adding any project dependency, as already shown for MongoDB
 manifest editor (of the tasks project) and add the following project dependency (along with the existing
 dependencies):
 
-[source,javscript]
+[source,n4js]
 .manifest.n4mf (cntd.)
 ----
 ProjectDependencies {
@@ -978,7 +978,7 @@ The quickfix will automatically download all required npm packages, that is, exp
 dependencies. We can now use express in our N4JS code (for more details, esp. N4JS definition files, see
 above description on MongoDB).
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 //Creating a simple Web User Interface in HTML
@@ -1011,7 +1011,7 @@ Express is a web framework that provides (among other things) HTTP helpers for w
 example, we are importing the classes `Application` and `Response` from express and creating a home page
 that we can render some HTML to. Next we will add a method for creating new tasks:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 public start() {
@@ -1030,7 +1030,7 @@ public start() {
 
 Have express listen on port 4000 at localhost:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 public start() {
@@ -1045,7 +1045,7 @@ public start() {
 
 Finally, we add a helper method for rendering a simple HTML page so we can view our Todos and edit them:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 export class WebUI {
@@ -1091,7 +1091,7 @@ At this point, we have to launch our web server. For this purpose, we create a s
 configures the dependency injection (as shown in the section on dependency injection, above), creates an
 intance of class `WebUI`, and invokes method `start()`:
 
-[source,javscript]
+[source,n4js]
 .launch.n4js
 ----
 import { Storage } from "Storage";
@@ -1280,7 +1280,7 @@ Once you've exported your project, you can either publish it to
 https://www.npmjs.com/[npmjs.com] or install directly from your hard disk and call the launch
 module, for example
 
-[source,text]
+[source,bash]
 ----
 $ npm install -g n4js.example.tasks
 $ node -r n4js.example.tasks/launch
@@ -1291,7 +1291,7 @@ In case you want to install dependencies and run it right away in the exported n
 manually set up the `NODE_PATH` to the folder hosting the exported npms, otherwise node cannot resolve the
 project/npm IDs.
 
-[source]
+[source,bash]
 ----
 $ export NODE_PATH=`pwd`
 $ pushd n4js.example.tasks; npm install; popd
@@ -1308,7 +1308,7 @@ which has more support to resolve cyclic dependencies across modules, you could 
 executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environmentnpm (a default
 dependency of any exported npm) and is therefore already installed:
 
-[source]
+[source,bash]
 ----
 $ export NODE_PATH=`pwd`
 $ cd n4js.example.tasks; npm install

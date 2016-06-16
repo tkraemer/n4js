@@ -46,7 +46,7 @@ module WeatherEngine which returns the temperature for a given city. For this ex
 emulate a real request to a weather server:
 
 
-[source,javascript]
+[source,n4js]
 ----
 export public class WeatherEngine {
     data = [ {city: 'Berlin', temp: 5}, {city: 'Hamburg', temp: 15}, {city: 'Palo Alto', temp: 10} ];
@@ -65,7 +65,7 @@ is used. The components are instead set up by initializing the fields directly.
 
 **Without Dependency-Injection**
 
-[source,javascript]
+[source,n4js]
 ----
 import { WeatherEngine } from 'WeatherEngine';
 
@@ -89,7 +89,7 @@ export class Server {
 }
 ----
 
-[source,javascript]
+[source,n4js]
 ----
 import { Server } from 'WeatherApp'
 
@@ -100,7 +100,7 @@ server.run();
 
 **With Dependency-Injection**
 
-[source,javascript]
+[source,n4js]
 ----
 import { WeatherEngine } from 'WeatherEngine';
 
@@ -124,7 +124,7 @@ export class Server {
 }
 ----
 
-[source,javascript]
+[source,n4js]
 ----
 import { Server } from 'WeatherAppDI';
 import { N4Injector } from 'n4js/lang/N4Injector';
@@ -152,7 +152,7 @@ seconds to receive the results of our test, we want to use a special version of 
 which immediately returns a value. Let's have a look at the test module:
 
 
-[source,javascript,numbered]
+[source,n4js,numbered]
 ----
 import { WeatherApp } from 'WeatherAppDI';
 import { WeatherEngine } from 'WeatherEngine';

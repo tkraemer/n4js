@@ -73,7 +73,7 @@ on the expectation type.
 If a single code line contains
 several issues, multi-line comments are to be used:
 
-[source,javascript]
+[source,n4js]
 /* «remark» XPECT «type» ---
 "expectation1" at "location1"
 "expectation2" at "location2"

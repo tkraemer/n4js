@@ -22,7 +22,7 @@ developer would have less code to write. A function or method can essentially be
 Inside the function, the developer can call other functions and wait for their
 results using the keyword `async`:
 
-[source,javascript]
+[source,n4js]
 ----
 async function foo(): int {
     let res = await anotherAsyncFunction();
@@ -38,7 +38,7 @@ or function as a **Promise<T, any>**.
 On the other hand, async code can simply await on functions that return a Promise
 object:
 
-[source,javascript]
+[source,n4js]
 ----
 function fetch(url: string): Promise<Response, any> {
     // WHATWG fetch
@@ -56,7 +56,7 @@ async function foo() {
 Since there's a one-to-one mapping to Promises, exceptions being thrown within
 an async function call are rejecting the corresponding Promise:
 
-[source,javascript]
+[source,n4js]
 ----
 function throwr() { return Promise.reject(new Error('bah!')); }
 
@@ -74,7 +74,7 @@ A rejected Promise will be reflected as an exception being thrown in the
 async function:
 
 
-[source,javascript]
+[source,n4js]
 ----
 async function throwr() { throw new Error('bah!'); }
 let promise: Promise<void, ?> = throwr();
@@ -88,7 +88,7 @@ There's quite a lot of callback-driven code alive that is not returning Promises
 especially with reference to Node.js core modules:
 
 
-[source,javascript]
+[source,n4js]
 ----
 import * as fs from 'fs';
 
@@ -107,7 +107,7 @@ Since N4JS encourages you to use and define types where possible, we can do
 better here, too. N4JS allows to use the **@Promisifiable** annotation in this
 case (and actually the Node.js runtime definitions provided by N4JS already make use of it):
 
-[source,javascript]
+[source,n4js]
 ----
 @Promisifiable
 export external public function readFile(
@@ -120,7 +120,7 @@ export external public function readFile(
 This allows to call the function without implementing any callback, and let the
 transpiler wire up a Promise for you using the **@Promisify** annotation:
 
-[source,javascript]
+[source,n4js]
 ----
 import { readFile } from 'fs';
 
@@ -133,7 +133,7 @@ function foo(): Promise<string, any> {
 Since promises integrate with async functions, we could even further
 condense this down:
 
-[source,javascript]
+[source,n4js]
 ----
 import { readFile } from 'fs';
 
@@ -148,7 +148,7 @@ Finally, it's noteworthy to mention that arrow functions can work asynchronously
 which is particularly helpful. The following example demonstrates how we can easily test async
 code to throw an error using an async arrow expression in the context of the N4JS test framework "mangelhaft".
 
-[source,javascript]
+[source,n4js]
 ----
 import { Assert } from 'n4/mangel/assert/Assert';
 

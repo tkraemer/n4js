@@ -4,7 +4,7 @@ ifdef::eclipse[{set:relative:documentation/}]
 
 
 .N4JS Documentation
-= N4JS Documentation
+= N4JS Userguides
 
 
 .All the resources you need to begin type safe development with the N4JS IDE

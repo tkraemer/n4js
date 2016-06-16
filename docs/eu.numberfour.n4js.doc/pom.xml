@@ -159,8 +159,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
-                                <docinfodir>${basedir}/includes</docinfodir>
-                                <docinfo1>true</docinfo1>
+                                <docinfodir>${basedir}/headers</docinfodir>
+                                <docinfo2>true</docinfo2>
                             </attributes>
                         </configuration>
                     </execution>

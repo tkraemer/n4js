@@ -16,6 +16,185 @@ try to be compatible to ECMAScript at all cost. One way of looking at it is begi
 and rigorous type system then making this amalgamation as flexible as possible, fulfilling the expectations
 of JavaScript programmers while keeping the type system sound.
 
+
+
+
+== Differences
+
+In many cases TypeScript's design prioritizes transition from ECMAScript to TypeScript
+over type safety. N4JS was designed with ease of transition in mind, but type safety has higher
+priority than ease of transition.
+
+
+=== Any
+
+Both languages introduce a type called `any`. Whenever an explicit type declaration is missing, and no type can be
+inferred by the system, the type `any` is used. However, the precise meaning of `any` is probably the most important
+difference between N4JS and TypeScript. Simply put:
+
+**In N4JS you can do *nothing* with `any`, in TypeScript you can do anything.**
+
+The following example illustrates the difference:
+
+[source,n4js]
+function f(p: any) {
+    p.foo(); // error in N4JS, no error in TypeScript
+}
+
+
+N4JS will issue an error: `Couldn't resolve reference to IdentifiableElement 'foo'`, because in N4JS, the type `any`
+has no properties.
+
+
+Furthermore, in N4JS `any` is the top type: every type is a subtype of `any`. In TypeScript it is treated as a bottom
+type similar to `undefined` (or `null`): `any` is a subtype of every other type. The effect of these different semantics
+is shown in the following example:
+
+[source,n4js]
+----
+function bar(p: string) {
+    p.charAt(0);
+}
+
+var s: string = "Hello";
+var x: any = 42;
+
+bar(s);
+bar(x); // error in N4JS, no error in TypeScript
+----
+
+
+Of course, you would get an error at runtime: `TypeError: p.charAt is not a function`
+
+
+The different interpretation of `any` reflects the different approaches visualized in the figure at the beginning.
+`any` in TypeScript is JavaScript in pure form: access anything, assign to everything. `any` in N4JS is even more rigorous
+than type `Object` in Java: access nothing, assign to nothing (except `any` itself).
+
+////////
+It also illustrates how both languages are moving closer to each other: The better the type inferencer is and the more
+alternative concepts are provided, the less often any is to be used. With the introduction of union types for instance,
+ the usage of any has been reduced in TypeScript and N4JS. Another example is "this" type, introduced with TypeScript
+1.8 and also available in N4JS; it also makes some usages of any expandable.
+////////
+
+=== Dynamic Type Modifiers
+
+N4JS allows developers to use types in dynamic way, by using the `+` type modifier. This so-called ** dynamic
+type modifier**  allows for accessing arbitrary properties even when they are not known to the type system. The following
+example shows the effect:
+
+[source,n4js]
+function f(p: any, d: any+) {
+    p.foo(); // error in N4JS
+    d.foo(); // no error in N4JS, as d is "dynamic"
+}
+
+
+
+While `any+` resembles TypeScript's behavior of `any`, it is still more restrictive: `any+` will never be used as a default,
+it has to be declared explicitly; and a value of type `any+` still cannot be assigned to variables of other types except `any`.
+
+
+|===========================
+2+| | **access anything**| **assign to everything** | **used as default**
+.2+| **N4JS** |  **any** | ✕ |  ✕  | •
+| **any+** | ✓ | ✕ |
+| **TypeScript**  | **any** | ✓  | ✓ |  •
+|===========================
+
+=== Type Errors Are Show Stoppers in N4JS
+
+N4JS has two general levels of issues reported by the compiler: ** warning**  and ** error** .
+Serious issues like type errors are treated as errors in N4JS and all errors will prevent
+the transpiler to emit any JavaScript code in order to avoid producing
+code that might break at runtime.
+For TypeScript, on the other hand, it is a main concern to never impede of the developer,
+and its transpiler will thus produce JavaScript output code even in the case of compile errors.
+Given the example from the beginning
+
+[source,n4js]
+var str = 'Hello';
+str = 42;  // both N4JS and TypeScript show an error here
+str.charAt(2);
+
+The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
+that breaks at runtime in the last line.
+
+=== Use-Site Variance vs. Assumed Co-Variance
+One of the tricky subtleties of generics is co- and contra-variance. What's that? Let's have a look at the hello-world
+example for generics: a simplified list that can hold only a single element:
+
+[source,n4js]
+class List<T> {
+    read(): T;
+    write(T);
+}
+
+Further, we assume two types `A` and `B` with
+
+[source,n4js]
+class A {}
+class B extends A { foo() {} }
+let a: A = new A(), b: B = new B();
+let la: List<A>(), lb: List<B>;
+
+
+That is, `B` is a subtype of `A` (it doesn't matter whether we use nominal or structural subtyping!). Now the interesting
+question is: When `B` is a subtype of `A`, is `List<B>` a subtype of `List<A>`? That is, is it possible to
+use an instance of `List<B>` wherever an instance of `List<A>` is expected? If that were true, `List<T>`
+would be co-variant. If the opposite were true, that is, `List<A>` a subtype of `List<B>`, then we would say
+`List<T>` is contra-variant. If both conclusions are wrong, then `List<T>` is invariant.
+
+Now, let's look at the following assignments:
+
+[source,n4js]
+la = lb; // works in TypeScript, N4JS issues an error
+lb = la; // both TypeScript and N4JS issue an error
+
+Do these assignments work? Actually, N4JS and TypeScript will give you different answers:
+In N4JS, both assignments are rejected. TypeScript, on the other hand, allows the first
+assignment but rejects the second one. It assumes that when `B` is a subtype of `A`, then
+`List<B>` is a subtype of `List<B>`. TypeScript makes the assumption that generics
+are always co-variant.
+
+
+Since it is not obvious why both assignments are rejected by N4JS, let's have a look what happens here:
+
+[source,n4js]
+la = new List<A>(); la.write(a); lb = la; lb.read().foo();
+lb = new List<B>(); la = lb; la.write(a); lb.read().foo();
+
+In the first line, we create a new list of `A` and add an a. After assigning `lb` to `la`, we have a list of
+`B`, but it actually contains an `A`. When we try to call `foo()` on the object returned (from which we
+think it is a `B`), we get a problem!
+In the second line, the problem is similar. This time we create a list of `B`. Instead of adding a `B`, we
+first assign `lb` to `la`. Now we add an `A` to the list that says that it accepts `A` s . And it does! But
+since the list actually is a list of `B`, we get a problem when we access the (very same) list via `lb` --
+we assume it contains `B` s, and again we get a problem when calling `foo()`.
+
+
+That means that `List<T>` is invariant! In practice this is very inconvenient. Assume that we only want
+to read from the list. In that case, it would be ok to use `lb` instead of `la`. On the other hand, if we only
+want to write to the list, then we could use `la` instead of `lb` (since adding ``B``'s to a list expecting `A`
+does not do any harm).
+
+
+There are different solutions to that problem. N4JS follows Java and uses **use-site variance**. This means,
+when the list is used, we can define whether we want to read or write from it. This can be done by using so-called
+"wildcards" and constraints when parameterizing the list, for example:
+
+[source,n4js]
+function copy(readOnlyList: List<? extends A>, writeOnlyList: List<? super A>) {
+    writeOnlyList.write( readOnlyList.read );
+}
+
+
+In practice, reading (from a list) is much more often used then writing. And in this case TypeScript's covariant
+assumption causes no problems. When writing, however, it can cause the above problems.
+
+For more information on generics please see <<../features/generics#generics,generics feature page>>.
+
 == Similarities
 
 === Explicit and Implicit typing
@@ -24,13 +203,13 @@ In both languages, types can either be defined explicitly (via a type annotation
 In the latter case, the type is to be inferred by the type system. A simple example is the assignment
 of a value to a newly declared variable, such as
 
-[source,javascript]
+[source,n4js]
 let foo = "Hello";
 
 Both languages would infer the type of `foo` to `string`. So, in both languages the following
 assignment would lead to an error:
 
-[source,javascript]
+[source,n4js]
 foo = 42; // error
 
 * N4JS would issue `int is not a subtype of string.`,
@@ -50,7 +229,7 @@ annotated as being structural, using the +~+ or +~~+ type constructors.
 //~
 
 
-[source,javascript]
+[source,n4js]
 ----
 export public interface ~Point {
       x : number;
@@ -108,182 +287,5 @@ N4JS, a similar https://github.com/NumberFour/n4jsd[GitHub project] exists, but 
 very few definitions at the moment. Contributions are welcome for both projects.
 
 It is also possible to use existing code in both languages without type definitions, Common.js modules in particular.
-The N4JS IDE <<features/nodejs#nodejs,integrates support for NPM>>, so that these modules, even without a
+The N4JS IDE <<../features/nodejs-support#nodejs-support,integrates support for NPM>>, so that these modules, even without a
 type definition, can seamlessly be used in N4JS.
-
-
-== Differences
-
-In many cases TypeScript's design prioritizes transition from ECMAScript to TypeScript
-over type safety. N4JS was designed with ease of transition in mind, but type safety has higher
-priority than ease of transition.
-
-
-=== Any
-
-Both languages introduce a type called `any`. Whenever an explicit type declaration is missing, and no type can be
-inferred by the system, the type `any` is used. However, the precise meaning of `any` is probably the most important
-difference between N4JS and TypeScript. Simply put:
-
-**In N4JS you can do *nothing* with `any`, in TypeScript you can do anything.**
-
-The following example illustrates the difference:
-
-[source,javascript]
-function f(p: any) {
-    p.foo(); // error in N4JS, no error in TypeScript
-}
-
-
-N4JS will issue an error: `Couldn't resolve reference to IdentifiableElement 'foo'`, because in N4JS, the type `any`
-has no properties.
-
-
-Furthermore, in N4JS `any` is the top type: every type is a subtype of `any`. In TypeScript it is treated as a bottom
-type similar to `undefined` (or `null`): `any` is a subtype of every other type. The effect of these different semantics
-is shown in the following example:
-
-[source,javscript]
-----
-function bar(p: string) {
-    p.charAt(0);
-}
-
-var s: string = "Hello";
-var x: any = 42;
-
-bar(s);
-bar(x); // error in N4JS, no error in TypeScript
-----
-
-
-Of course, you would get an error at runtime: `TypeError: p.charAt is not a function`
-
-
-The different interpretation of `any` reflects the different approaches visualized in the figure at the beginning.
-`any` in TypeScript is JavaScript in pure form: access anything, assign to everything. `any` in N4JS is even more rigorous
-than type `Object` in Java: access nothing, assign to nothing (except `any` itself).
-
-////////
-It also illustrates how both languages are moving closer to each other: The better the type inferencer is and the more
-alternative concepts are provided, the less often any is to be used. With the introduction of union types for instance,
- the usage of any has been reduced in TypeScript and N4JS. Another example is "this" type, introduced with TypeScript
-1.8 and also available in N4JS; it also makes some usages of any expandable.
-////////
-
-=== Dynamic Type Modifiers
-
-N4JS allows developers to use types in dynamic way, by using the `+` type modifier. This so-called ** dynamic
-type modifier**  allows for accessing arbitrary properties even when they are not known to the type system. The following
-example shows the effect:
-
-[source]
-function f(p: any, d: any+) {
-    p.foo(); // error in N4JS
-    d.foo(); // no error in N4JS, as d is "dynamic"
-}
-
-
-
-While `any+` resembles TypeScript's behavior of `any`, it is still more restrictive: `any+` will never be used as a default,
-it has to be declared explicitly; and a value of type `any+` still cannot be assigned to variables of other types except `any`.
-
-
-|===========================
-2+| | **access anything**| **assign to everything** | **used as default**
-.2+| **N4JS** |  **any** | ✕ |  ✕  | •
-| **any+** | ✓ | ✕ |
-| **TypeScript**  | **any** | ✓  | ✓ |  •
-|===========================
-
-=== Type Errors Are Show Stoppers in N4JS
-
-N4JS has two general levels of issues reported by the compiler: ** warning**  and ** error** .
-Serious issues like type errors are treated as errors in N4JS and all errors will prevent
-the transpiler to emit any JavaScript code in order to avoid producing
-code that might break at runtime.
-For TypeScript, on the other hand, it is a main concern to never impede of the developer,
-and its transpiler will thus produce JavaScript output code even in the case of compile errors.
-Given the example from the beginning
-
-[source,javascript]
-var str = 'Hello';
-str = 42;  // both N4JS and TypeScript show an error here
-str.charAt(2);
-
-The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
-that breaks at runtime in the last line.
-
-=== Use-Site Variance vs. Assumed Co-Variance
-One of the tricky subtleties of generics is co- and contra-variance. What's that? Let's have a look at the hello-world
-example for generics: a simplified list that can hold only a single element:
-
-[source,javascript]
-class List<T> {
-    read(): T;
-    write(T);
-}
-
-Further, we assume two types `A` and `B` with
-
-[source]
-class A {}
-class B extends A { foo() {} }
-let a: A = new A(), b: B = new B();
-let la: List<A>(), lb: List<B>;
-
-
-That is, `B` is a subtype of `A` (it doesn't matter whether we use nominal or structural subtyping!). Now the interesting
-question is: When `B` is a subtype of `A`, is `List<B>` a subtype of `List<A>`? That is, is it possible to
-use an instance of `List<B>` wherever an instance of `List<A>` is expected? If that were true, `List<T>`
-would be co-variant. If the opposite were true, that is, `List<A>` a subtype of `List<B>`, then we would say
-`List<T>` is contra-variant. If both conclusions are wrong, then `List<T>` is invariant.
-
-Now, let's look at the following assignments:
-
-[source]
-la = lb; // works in TypeScript, N4JS issues an error
-lb = la; // both TypeScript and N4JS issue an error
-
-Do these assignments work? Actually, N4JS and TypeScript will give you different answers:
-In N4JS, both assignments are rejected. TypeScript, on the other hand, allows the first
-assignment but rejects the second one. It assumes that when `B` is a subtype of `A`, then
-`List<B>` is a subtype of `List<B>`. TypeScript makes the assumption that generics
-are always co-variant.
-
-
-Since it is not obvious why both assignments are rejected by N4JS, let's have a look what happens here:
-
-[source,javascript]
-la = new List<A>(); la.write(a); lb = la; lb.read().foo();
-lb = new List<B>(); la = lb; la.write(a); lb.read().foo();
-
-In the first line, we create a new list of `A` and add an a. After assigning `lb` to `la`, we have a list of
-`B`, but it actually contains an `A`. So when we try to call `foo()` on the object returned (from which we
-think it is a `B`), we get a problem!
-In the second line, the problem is similar. This time we create a list of `B`. Instead of adding a `B`, we
-first assign `lb` to `la`. Now we add an `A` to the list that says that it accepts `A` s . And it does! But
-since the list actually is a list of `B`, we get a problem when we access the (very same) list via `lb` --
-we assume it contains `B` s, and again we get a problem when calling `foo()`.
-
-
-That means that `List<T>` is invariant! In practice this is very inconvenient. Assume that we only want
-to read from the list. In that case, it would be ok to use `lb` instead of `la`. On the other hand, if we only
-want to write to the list, then we could use `la` instead of `lb` (since adding ``B``'s to a list expecting `A`
-does not do any harm).
-
-
-There are different solutions to that problem. N4JS follows Java and uses **use-site variance**. This means,
-when the list is used, we can define whether we want to read or write from it. This can be done by using so-called
-"wildcards" and constraints when parameterizing the list, for example:
-
-[source,javascript]
-function copy(readOnlyList: List<? extends A>, writeOnlyList: List<? super A>) {
-    writeOnlyList.write( readOnlyList.read );
-}
-
-
-In practice, reading (from a list) is much more often used then writing. And in this case TypeScript's covariant
-assumption causes no problems. When writing, however, it can cause the above problems.
-
-For more information on generics please see <<../features/generics#generics,generics feature page>>.

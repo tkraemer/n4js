@@ -15,7 +15,7 @@ correspond or are related.
 ECMAScript 2015 allows for this with the module syntax it defines. The good news is
 that N4JS already supports most of it:
 
-[source,javascript]
+[source,n4js]
 ----
 export public function inc(): void { ++count; }
 export public var count = 5;
@@ -26,7 +26,7 @@ export default public class Foo {
 
 Importing an ECMAScript 2015 module and consuming exports is as easy as the following:
 
-[source,javascript]
+[source,n4js]
 ----
 import { inc, count } from 'Counter';// Named imports
 import Foo from 'Counter'; // Default import
@@ -37,7 +37,7 @@ import * as plainJsModule+ from 'plainJsModule'; // Dynamic import
 
 The module could also be imported as a whole:
 
-[source,javascript]
+[source,n4js]
 import * as foo from 'Counter'; // Namespace import
 
 NOTE: Anonymous default exports and relative module paths are not yet supported. The module specifier is the relative path of the
@@ -66,7 +66,7 @@ adds any missing imports. This is also used to clean up any unused imports.
 When developing in N4JS, you may notice that you sometimes need to import types to cast
 a variable or use it for a constraint in a generic.
 
-[source,javascript]
+[source,n4js]
 ----
 import Foo from 'Counter';
 
@@ -86,7 +86,7 @@ ES2015 modules have the concept of read-only views. Although you cannot modify a
 a module, your binding is live. In the case that the exporting party has modified
 the export, you will read the current value. For example:
 
-[source,javascript]
+[source,n4js]
 ----
 import {inc, count} from 'Counter';
 

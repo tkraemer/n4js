@@ -24,7 +24,7 @@ of modules without any N4JS (`.n4js`) or N4JS type definition (`.n4jsd`) files, 
 module import. This is done by declaring the imported module with "`+`" appended to the end of the named import.
 This so called "dynamic module import" will be treated as a type of `any+`.
 
-[source,javascript,numbered]
+[source,n4js,numbered]
 ----
 import * as mongodb+ from 'mongodb';
 
@@ -83,4 +83,4 @@ desired N4JS projects will be transformed and exported.
 The `package.json` content can be customized by creating a `package.json` template file in the root of
 the N4JS project
 With this template, additional attributes can be defined.
-This feature is further explained in the <</documentation/npm-export-guide.html#npm_export_guide,npm export guide>>.
+This feature is further explained in the <<../userguides/npm-export-guide.html#npm_export_guide,npm export guide>>.
