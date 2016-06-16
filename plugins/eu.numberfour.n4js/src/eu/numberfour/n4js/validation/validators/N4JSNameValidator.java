@@ -35,13 +35,14 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRU
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.DISCOURAGED_CHARACTERS;
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.FUTURE_RESERVED_WORDS;
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.GETTER_SETTER;
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.KEYWORDS;
 
 import java.util.Collection;
 
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.EValidatorRegistrar;
+
+import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration;
@@ -51,15 +52,19 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4TypeDeclaration;
 import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.Variable;
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
+import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants;
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
  */
 public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
+
+	@Inject
+	private GrammarBasedLanguageConstants grammarBasedLanguageConstants;
 
 	/**
 	 * NEEEDED
@@ -86,11 +91,12 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		}
 
-		if (holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword", KEYWORDS) //
-				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "getter/setter", GETTER_SETTER) //
+		if (holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "getter/setter", GETTER_SETTER) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "access modifier", ACCESS_MODIFIERS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "boolean literal", BOOLEAN_LITERALS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "base type", BASE_TYPES) //
+				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword",
+						grammarBasedLanguageConstants.getECMAKeywords())
 				&& holdsDoesNotStartWithLowerCaseLetter(n4TypeDeclaration)) {
 			// error messages are created with in constraint validation
 		}
@@ -157,7 +163,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 						&& holdsNoTypeNameOrNameEqualsType(n4Member) //
 						&& holdsDoesNotContainDiscouragedCharacter(n4Member) //
 						&& holdsNameMayNotBeConfusedWith(n4Member, "access modifier", ACCESS_MODIFIERS) //
-		)) {
+				)) {
 			// error messages are created with in constraint validation
 		}
 

@@ -502,4 +502,22 @@ class N4JSLanguageUtils {
 				|| CharTypes.isCombiningMark(c) || '\u200C' == c || '\u200D' == c;
 	}
 	
+	/** 
+	 * Returns <code>true</code> if the given identifier is a valid N4JS identifier.  
+	 */
+	public def static boolean isValidIdentifier(String identifier) {
+		val characters = identifier.chars.toArray;
+		for (i : 0..<characters.length) {
+			val c = characters.get(i) as char;
+			if (i==0) {
+				if (!isValidIdentifierStart(c))
+					return false;
+			} else {
+				if (!isValidIdentifierPart(c))
+					return false;
+			}	
+		}
+		return true;
+	}
+	
 }

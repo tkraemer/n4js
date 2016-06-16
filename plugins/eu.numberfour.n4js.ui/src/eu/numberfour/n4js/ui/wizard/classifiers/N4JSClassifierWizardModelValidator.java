@@ -40,11 +40,12 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.ui.validation.N4JSLexerBasedIdentifierValidator;
 import eu.numberfour.n4js.ui.wizard.classes.N4JSClassWizardModel;
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
+import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants;
 
 /**
  * Base validator implementation for N4JS classifiers.
@@ -56,8 +57,9 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	private IN4JSCore n4jsCore;
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
+
 	@Inject
-	private N4JSLexerBasedIdentifierValidator identifierValidator;
+	GrammarBasedLanguageConstants languageConstants;
 
 	private IResourceDescriptions descriptions;
 
@@ -69,6 +71,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 		// Class name errors
 		private static final String CLASSIFIER_NAME_MUST_NOT_BE_EMPTY = "The %s name field must not be empty.";
 		private static final String INVALID_CLASSIFIER_NAME = "Invalid %s name.";
+		private static final String RESERVED_CLASSIFIER_NAME = "The %s name '%s' is a reserved N4JS identifier.";
 
 		// Interfaces errors
 		private static final String THE_INTERFACE_CANNOT_BE_FOUND = "The interface %s cannot be found.";
@@ -94,8 +97,13 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 
 		String className = getModel().getName();
 
-		if (!identifierValidator.isValidIdentifier(className)) {
+		if (!N4JSLanguageUtils.isValidIdentifier(className)) {
 			throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
+		}
+
+		if (languageConstants.isReservedIdentifier(className)) {
+			throw new ValidationException(
+					format(ErrorMessages.RESERVED_CLASSIFIER_NAME, getClassifierName(), className));
 		}
 	}
 

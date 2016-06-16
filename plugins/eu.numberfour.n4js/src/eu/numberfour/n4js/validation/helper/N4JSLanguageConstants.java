@@ -29,6 +29,8 @@ import eu.numberfour.n4js.n4mf.ModuleLoader;
  */
 public abstract class N4JSLanguageConstants {
 
+	/** Use {@link GrammarBasedLanguageConstants} for a full list of keywords. */
+
 	//@formatter:off
 
 	/** The reserved {@value} keyword. */
@@ -38,21 +40,6 @@ public abstract class N4JSLanguageConstants {
 	public static final String EXPORT_KEYWORD = "export";
 	/** Direct access to the external keyword */
 	public static final String EXTERNAL_KEYWORD = "external";
-
-
-
-	/** <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-keywords">ECMAScript ver. [6 11.6.2.1] Keywords</a>.*/
-	public static final Collection<String> KEYWORDS = unmodifiableCollection(newHashSet(
-			"break",	"do",			"in",			"typeof",
-			"case",		"else",			"instanceof",	"var",
-			"catch",	EXPORT_KEYWORD,	"new",			"void",
-			"class",	"extends",		"return",		"while",
-			"const",	"finally",		"super",		"with",
-			"continue",	"for",			"switch",		"yield",
-			"debugger",	"function",		"this",
-			"default",	"if",			"throw",
-			"delete",	"import",		"try"
-			));
 
 	//@formatter:on
 
