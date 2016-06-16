@@ -98,7 +98,7 @@ export public abstract class GenericLongName<ValueT extends SomethingLongHere>
 
         let p: Promise<ValueT, any>;
         p.then(val => {
-                return val;
+                    return val;
             }).catch(err => console.error(err));
 
         let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
@@ -144,14 +144,14 @@ function goo(bar: int, hoo: int) {
     }
 
     if (abc % 2 === 1 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) &&
-        (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) {
+            (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) {
 
         // never ever combine comments, don't fix indentation! think commented out code would get indented
         ++hoo;
     }
 
     let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) &&
-        (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ?
+                (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ?
         [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
 
 
