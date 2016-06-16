@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 6 ---
+var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
+
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, 
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, 
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);
+	
+function foo(...param) {};
+--- */
+var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
+
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe)
+
+function foo(...param) {}
+
+
+

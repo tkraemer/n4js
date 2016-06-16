@@ -1,0 +1,83 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* Remove spaces, fix indentation */
+/* XPECT formattedLines 2 ---
+class C {
+}
+--- */
+class C {
+    }
+
+
+/* remove empty lines */
+/* XPECT formattedLines 2 ---
+class C2 {
+}
+--- */
+  class C2 {
+
+
+
+
+}
+
+/* remove empty lines */
+/* XPECT formattedLines 2 ---
+class C3 {
+}
+--- */
+  class C3 {
+
+	
+
+	
+}
+
+/* remove leading WS */
+/* XPECT formattedLines 2 ---
+ class C4 {
+}
+--- */
+  class C4 {
+
+	
+
+	
+}
+
+
+
+
+/* strange */
+/* XPECT formattedLines 3 ---
+{
+	() => 0;
+}
+--- */
+
+
+
+
+{
+     () => 0;
+}
+
+
+
+/* XPECT formattedLines 3 ---
+function foo() {
+
+};
+--- */
+    function foo() {
+	
+}
+
+
+
+
+
+
