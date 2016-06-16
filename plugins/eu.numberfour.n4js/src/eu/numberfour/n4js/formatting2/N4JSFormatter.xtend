@@ -167,12 +167,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		clazz.regionFor.keyword("implements").prepend[
 			setNewLines(0,0,1);
 			autowrap;
-			priority = IHiddenRegionFormatter::LOW_PRIORITY;
+			priority = IHiddenRegionFormatter.LOW_PRIORITY;
 			onAutowrap=callBackOnAutoWrap;
 		];
 		clazz.implementedInterfaceRefs.tail.forEach[prepend[
 			autowrap;
-			priority = IHiddenRegionFormatter::LOW_PRIORITY;
+			priority = IHiddenRegionFormatter.LOW_PRIORITY;
 			onAutowrap=callBackOnAutoWrap;
 		]];
 		
@@ -180,7 +180,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		val kwClass = clazz.regionFor.keyword("class");
 		val kwBrace = clazz.regionFor.keyword("{"); // autowrap-listener ?
 		if( ! kwClass.lineRegions.head.contains( kwBrace ) ) { 
-			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter::NORMAL_PRIORITY);	
+			twolinesBeforeFirstMember.apply(IHiddenRegionFormatter.NORMAL_PRIORITY);	
 		} else {
 			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,maxEmptyLines);autowrap;];
 		}
