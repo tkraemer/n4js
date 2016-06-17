@@ -1,6 +1,6 @@
 ﻿:doctype: book
 ifdef::website[{set:relative:}]
-ifdef::eclipse[{set:relative:documentation/}]
+ifdef::eclipse[{set:relative:userguides/}]
 
 
 .N4JS Documentation

@@ -130,6 +130,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idprefix/>
                                 <idseparator>-</idseparator>
                                 <linkcss>true</linkcss>
+                                <docinfodir>${basedir}/headers</docinfodir>
+                                <docinfo>true</docinfo>
                             </attributes>
                         </configuration>
                     </execution>
@@ -234,7 +236,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,documentation/index.html"/>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
                                     <map from="${basedir}/" to="" />
                                 </pathconvert> 
