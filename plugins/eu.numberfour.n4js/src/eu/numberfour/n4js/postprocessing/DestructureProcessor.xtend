@@ -22,10 +22,10 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.VariableBinding
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
@@ -88,7 +88,7 @@ class DestructureProcessor extends AbstractProcessor {
 	/**
 	 * Temporary handling of forward references within destructuring patterns.
 	 */
-	def Result<TypeRef> handleForwardReferenceWhileTypeingDestructuringPattern(RuleEnvironment G, EObject node, TypingCache cache) {
+	def Result<TypeRef> handleForwardReferenceWhileTypingDestructuringPattern(RuleEnvironment G, EObject node, TypingCache cache) {
 		log(0, "===START of other identifiable sub-tree");
 		val G_fresh = RuleEnvironmentExtensions.wrap(G); // don't use a new, empty environment here (required for recursion guards)
 		astProcessor.processSubtree(G_fresh, node, cache, 0); // note how we reset the indent level

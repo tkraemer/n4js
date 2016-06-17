@@ -10,15 +10,16 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Throwables
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
-import eu.numberfour.n4js.typesystem.CustomTypeSystem
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.typesystem.CustomTypeSystem
+import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import com.google.common.base.Throwables
 
 /**
  * Provides some common base functionality used across all (post) processors, e.g. {@link ASTProcessor}.

@@ -16,6 +16,7 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FieldAccessor
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
@@ -27,16 +28,17 @@ import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.typesystem.CustomTypeSystem.RuleFailedExceptionWithoutStacktrace
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
+import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.CustomTypeSystem.RuleFailedExceptionWithoutStacktrace
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -47,8 +49,6 @@ import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.ts.types.TFormalParameter
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -94,7 +94,7 @@ class TypeProcessor extends AbstractProcessor {
 				if(polyProcessor.isEntryPoint(node)) {
 					log(indentLevel, "asking PolyComputer ...");
 					polyProcessor.inferType(G, node as Expression, cache.cancelIndicator);
-					// in this case, the polyComputer will store the type in the cache
+					// in this case, the polyComputer will store the type in the cache;
 					// also, the poly computer is responsible for replacing all DeferredTypeRefs
 					assertTrueIfRigid("poly computer did not replace DeferredTypeRef", [
 						val typeModelElem = node.definedTypeModelElement;
@@ -102,16 +102,20 @@ class TypeProcessor extends AbstractProcessor {
 								|| typeModelElem.eAllContents.filter(DeferredTypeRef).empty
 					]);
 				} else {
-					log(indentLevel, "deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
 					// we have a poly expression, but one that is nested in another poly expression
 					// -> ignore here, because polyComputer will deal with it when computing the parent poly expression
+					log(indentLevel, "deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
 
 					return; // return only required to avoid confusing logging of cache.getFailSafe(node) below
 				}
 			}
 			else {
+				// ordinary typing of typable AST nodes
+				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
 				val result = inferType(G, node);
+				// in this case, we are responsible for storing the type in the cache
+				// (Xsemantics does not know of the cache)
 				cache.put(node, result);
 			}
 		}
@@ -293,7 +297,7 @@ class TypeProcessor extends AbstractProcessor {
 		// TODO improve handling of destructuring patterns in ASTProcessor/TypeProcessor
 		// (this is a temporary hack to avoid many illegal forward references within destructuring patterns)
 		if(destructureProcessor.isForwardReferenceWhileTypingDestructuringPattern(node)) {
-			return destructureProcessor.handleForwardReferenceWhileTypeingDestructuringPattern(G, node, cache);
+			return destructureProcessor.handleForwardReferenceWhileTypingDestructuringPattern(G, node, cache);
 		}
 
 		val isLegal = astProcessor.processSubtree_forwardReference(G, node, cache);

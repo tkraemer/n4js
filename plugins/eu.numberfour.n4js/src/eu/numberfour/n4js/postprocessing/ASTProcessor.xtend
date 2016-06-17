@@ -55,6 +55,7 @@ import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
  *         <li>{@link PolyProcessor_FunctionExpression}
  *         <li>{@link PolyProcessor_CallExpression}
  *         </ul>
+ *     <li>{@link DestructureProcessor}
  *     </ul>
  * <li>{@code TypeExpectedProcessor} (coming soon!)
  * <li>{@link TypeDeferredProcessor}
