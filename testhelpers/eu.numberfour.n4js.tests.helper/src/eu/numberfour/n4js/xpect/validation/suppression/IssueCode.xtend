@@ -19,7 +19,8 @@ import eu.numberfour.n4js.xpect.validation.suppression.IssueConfiguration
  * An xpect setup element which allows to 
  * configure issue to be skipped during validation.
  * 
- * May only be used inside of a {@link IssueConfiguration} element.
+ * The IssueCode element only be used inside of a {@link IssueConfiguration} element.
+ * Only valid IssueCodes to be found in {@link IssueCodes} are allowed.
  * 
  * Example:
  * <p>

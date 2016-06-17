@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.spec.examples.xpect.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -19,6 +20,7 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
 
 /**
  */
@@ -29,7 +31,7 @@ import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 })
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata", fileExtensions = { "xt" })
 @RunWith(XpectRunner.class)
-// @XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressUnusedVariableWarningSetup.class)
 public class SpecExamplesTest {
 	// nop
 }
