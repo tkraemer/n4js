@@ -118,12 +118,6 @@
 		<topic href="target/eclipse-html/userguides/ide-setup.html#running-as-node-js" label="Running as node.js"></topic>
 		<topic href="target/eclipse-html/userguides/ide-setup.html#what-s-next" label="What’s Next?"></topic>
 	</topic>
-	<topic href="target/eclipse-html/userguides/index.html" label="N4JS Userguides">
-		<topic href="target/eclipse-html/userguides/index.html#ide-setup-helloworld" label="IDE Setup &amp; HelloWorld!"></topic>
-		<topic href="target/eclipse-html/userguides/index.html#npm-export-guide" label="npm Export Guide"></topic>
-		<topic href="target/eclipse-html/userguides/index.html#in-depth-tutorial" label="In-Depth Tutorial"></topic>
-		<topic href="target/eclipse-html/userguides/index.html#n4js-specification" label="N4JS Specification"></topic>
-	</topic>
 	<topic href="target/eclipse-html/userguides/npm-export-guide.html" label="N4JS npm Export Guide">
 		<topic href="target/eclipse-html/userguides/npm-export-guide.html#project-example" label="Project Example"></topic>
 		<topic href="target/eclipse-html/userguides/npm-export-guide.html#exporting-as-npm" label="Exporting as npm"></topic>

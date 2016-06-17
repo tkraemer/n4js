@@ -114,7 +114,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <preserveDirectories>true</preserveDirectories> 
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <outputDirectory>target/eclipse-html</outputDirectory>
-                            <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
@@ -125,6 +124,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <eclipse>true</eclipse>
                                 <website>false</website>
+                                <experimental>true</experimental>
+                                <commandkey>&#8984;</commandkey>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -236,7 +237,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html"/>
+                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
                                     <map from="${basedir}/" to="" />
                                 </pathconvert> 

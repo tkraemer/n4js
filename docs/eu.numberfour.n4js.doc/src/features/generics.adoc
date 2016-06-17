@@ -14,7 +14,7 @@ shall describe below.
 Several language elements may be declared in a generic form; we'll start with focusing on classes,
 generic methods will be discussed after that.
 
-The standard case, of course, is a non-generic class. Ttake the following class, for example, that
+The standard case, of course, is a non-generic class. Take the following class, for example, that
 bundles a pair of two strings:
 
 [source,n4js]
