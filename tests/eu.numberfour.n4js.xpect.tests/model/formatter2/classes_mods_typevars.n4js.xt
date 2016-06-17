@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest  
+
+
+   END_SETUP
+*/
+
+/* XPECT formattedLines 14 ---
+let e = 1;
+/\**
+ * Error to notify a cancelation.
+ *\/
+export public abstract class ~CanceledError {
+}
+
+let f = 2;
+--- */
+
+let e=1;
+/**
+ * Error to notify a cancelation.
+ */
+ 
+export 
+
+public 
+
+abstract 
+
+class 
+
+~ 
+
+CanceledError {
+}
+
+
+let f=2;

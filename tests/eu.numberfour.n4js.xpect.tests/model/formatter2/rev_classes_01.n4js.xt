@@ -25,7 +25,7 @@ class C2 {
 }
 
 /* remove empty lines */
-/* XPECT formattedLines 2 ---
+/* XPECT formattedLines 4 ---
 class C3 {
 }
 --- */
@@ -37,7 +37,7 @@ class C3 {
 }
 
 /* remove leading WS */
-/* XPECT formattedLines 2 ---
+/* XPECT formattedLines 4 ---
  class C4 {
 }
 --- */

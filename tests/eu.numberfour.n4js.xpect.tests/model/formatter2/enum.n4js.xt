@@ -50,7 +50,7 @@ export public enum RoundingMode {
 
 
 /* XPECT formattedLines 1 ---
-enum EXnum {a,b,c}
+enum EXnum {a, b, c}
 --- */
 enum EXnum{a,b,c}
 

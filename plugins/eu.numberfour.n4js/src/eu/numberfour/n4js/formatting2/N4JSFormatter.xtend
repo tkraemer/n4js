@@ -88,6 +88,12 @@ import eu.numberfour.n4js.n4JS.SuperLiteral
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
+import eu.numberfour.n4js.n4JS.ExportDeclaration
+import eu.numberfour.n4js.n4JS.GenericDeclaration
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.n4JS.ModifiableElement
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -135,11 +141,54 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		script.scriptElements.filter(ImportDeclaration).last?.append[setNewLines(2, 2, 3); highPriority];
 
 	}
+	
+	/** put modifiers into a single line separated by one space, last modifier has one space to following element. */
+	def void configureModifiers(EObject semObject, extension IFormattableDocument document){
+		semObject.regionFor.ruleCallsTo( n4ModifierRule ).forEach[
+			append[oneSpace];
+		];
+	}
+
+	def void configureTypingStrategy(EObject semObject, extension IFormattableDocument document) {
+		semObject.regionFor.ruleCallsTo( typingStrategyDefSiteOperatorRule, typingStrategyUseSiteOperatorRule).forEach[
+			append[noSpace];
+		]
+	}
+	
+	def void formatTypeVariables(GenericDeclaration semObject, extension IFormattableDocument document) {
+		if( semObject.typeVars.isEmpty ) return;
+		// to "<":
+		semObject.regionFor.keyword("<").append[noSpace];
+		semObject.regionFor.keyword(">").prepend[noSpace];
+		for( typeVar: semObject.typeVars ){
+			typeVar.append[noSpace].immediatelyFollowing.keyword(",").append[oneSpace];
+			typeVar.format(document);
+		}
+		
+	}
 
 	def dispatch format(N4ClassDeclaration clazz, extension IFormattableDocument document) {
 		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
 		clazz.interior[indent];
 		
+		clazz.configureTypingStrategy(document);
+		clazz.configureModifiers(document);
+		
+		clazz.formatTypeVariables(document);
+		
+//		val semRegModifier = clazz.regionFor.feature( N4JSPackage.Literals.MODIFIABLE_ELEMENT__DECLARED_MODIFIERS);
+//		if( semRegModifier !== null ) { // only if exists.
+//			val beginModifierHR = semRegModifier.previousHiddenRegion;
+//			val endModifierHR = semRegModifier.nextHiddenRegion;
+//			// go over all semantic regions in the modifier location.
+//			var currHR = beginModifierHR.nextHiddenRegion;
+//			while( currHR != endModifierHR ){
+//				currHR.set[oneSpace];
+//				currHR = currHR.nextHiddenRegion;
+//			} 
+//			endModifierHR.set[oneSpace];
+//		} // end modifier formatting TODO extract into method.
+				
 		// TODO revise the following pattern of call-back implementations.
 		// Define lambda for callback & normal use:
 		val twolinesBeforeFirstMember = [int prio | clazz.ownedMembersRaw.head.prepend[newLines=2;priority = prio]];
@@ -187,18 +236,23 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		} else {
 			clazz.ownedMembersRaw.head.prepend[setNewLines(1,1,maxConsecutiveNewLines);autowrap;];
 		}
+		
+		kwClass.append[oneSpace];
+		
 		for (member : clazz.ownedMembersRaw) {
 			member.append[setNewLines(1, 1, maxConsecutiveNewLines)]
 			member.format
 		}
 	}
 
-	def dispatch format(N4InterfaceDeclaration clazz, extension IFormattableDocument document) {
-		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
-		clazz.interior[indent];
+	def dispatch format(N4InterfaceDeclaration interf, extension IFormattableDocument document) {
+		interf.configureAnnotations(document);
+		interf.configureModifiers(document);
+		interf.insertSpaceInFrontOfCurlyBlockOpener(document);
+		interf.interior[indent];
 
-		clazz.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxConsecutiveNewLines)]
-		for (member : clazz.ownedMembersRaw) {
+		interf.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxConsecutiveNewLines)]
+		for (member : interf.ownedMembersRaw) {
 			member.append[setNewLines(1, 1, maxConsecutiveNewLines)]
 			member.format
 		}
@@ -215,6 +269,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	def dispatch void format(N4FieldDeclaration field, extension IFormattableDocument document) {
 		field.configureAnnotations(document);
+		field.configureModifiers(document);
 		field.insertSpaceInfrontOfPropertyNames(document);
 
 		field.regionFor.keyword("=").prepend[oneSpace].append[oneSpace];
@@ -235,6 +290,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 //	
 	def dispatch void format(FunctionExpression funE, extension IFormattableDocument document) {
 		funE.configureAnnotations(document);
+		funE.configureModifiers(document);
 		funE.insertSpaceInfrontOfPropertyNames(document);
 		if (funE.isArrowFunction) {
 			throw new IllegalStateException("Arrow functions should be formated differently.")
@@ -245,6 +301,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 	def dispatch format(FunctionOrFieldAccessor fDecl, extension IFormattableDocument document) {
 		fDecl.configureAnnotations(document);
+		fDecl.configureModifiers(document);
 		
 		// State-keeper to avoid clashing reconfigurations if multiple auto-wraps get triggered.
 		val state = new StateTrack; // use state to only trigger one change, even if called multiple times.
@@ -312,8 +369,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	def dispatch void format(N4EnumDeclaration enumDecl, extension IFormattableDocument document) {
 		enumDecl.configureAnnotations(document);
+		enumDecl.configureModifiers(document);
 		enumDecl.insertSpaceInFrontOfCurlyBlockOpener(document);
 		enumDecl.interior[indent];
+		enumDecl.configureCommas(document);
 		
 		val braces = enumDecl.regionFor.keywordPairs("{","}").head;
 		
@@ -368,6 +427,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		exp.target.format;
 	}
 
+
+	
 	def dispatch void format(ImportDeclaration decl, extension IFormattableDocument document) {
 		decl.regionFor.keyword("{").prepend[oneSpace].append[noSpace];
 		decl.regionFor.keyword("}").prepend[noSpace].append[oneSpace; newLines = 0];
@@ -385,6 +446,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		nsImp.regionFor.keyword("*").append[oneSpace];
 		nsImp.regionFor.keyword("as").append[oneSpace];
 		nsImp.regionFor.feature(N4JSPackage.Literals.NAMESPACE_IMPORT_SPECIFIER__DECLARED_DYNAMIC).prepend[noSpace].append[oneSpace]; // "+"-KW after alias-name
+	}
+	
+	def dispatch void format(ExportDeclaration export, extension IFormattableDocument document){
+		export.regionFor.keyword("export").append[oneSpace];
+		export.eContents.forEach[format];
 	}
 
 	def dispatch void format(IfStatement stmt, extension IFormattableDocument document) {
@@ -664,7 +730,34 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// just leave as is. 
 	}	
 	
+	def dispatch void format(TypeVariable tv, extension IFormattableDocument document) {
+		// "out"
+		if( tv.declaredCovariant ) { tv.regionFor.feature(TypesPackage.Literals.TYPE_VARIABLE__DECLARED_COVARIANT).append[oneSpace]; }
+		// "in"
+		if( tv.declaredContravariant ) {tv.regionFor.feature(TypesPackage.Literals.TYPE_VARIABLE__DECLARED_CONTRAVARIANT).append[oneSpace];}
+		
+		if(! tv.declaredUpperBounds.isEmpty ) {
+			// "extends"
+			tv.regionFor.keyword("extends").surround[oneSpace];
+			for ( upperBound: tv.declaredUpperBounds){
+				upperBound.immediatelyFollowing.keyword("&").surround[oneSpace];
+				upperBound.format(document);
+			}
+		}
+
+	}
 	
+	def dispatch void format( ParameterizedTypeRef ptr, extension IFormattableDocument document) {
+		// Union / Intersection
+		ptr.regionFor.keywords("&","|").forEach[ surround[oneSpace]];
+		// Array
+		ptr.regionFor.keyword("[").append[noSpace];
+		ptr.regionFor.keyword("]").append[noSpace];
+		
+		ptr.eContents.forEach[format]
+		
+	}
+		
 	def dispatch void format(Expression exp, extension IFormattableDocument document) {
 		switch(exp) {
 			// Things not to format:
@@ -702,6 +795,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	/** var,let,const  */
 	def dispatch void format(VariableStatement vStmt, extension IFormattableDocument document) {
 		
+		 // ExportedVariableStatements:
+		if( vStmt instanceof ModifiableElement) vStmt.configureModifiers(document);
+		
+		 
 		vStmt.regionFor.feature(
 			N4JSPackage.Literals.VARIABLE_DECLARATION_CONTAINER__VAR_STMT_KEYWORD).append [
 			oneSpace;
