@@ -102,7 +102,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 </dependencies>
                 
                 <executions> 
-                    <!-- Generate Eclipse HTML without TOC-->
+                    <!-- Generate Eclipse HTML-->
                     <execution>
                         <id>asciidoc-to-eclipse-html</id> 
                         <phase>generate-resources</phase>
@@ -112,20 +112,24 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
                             <preserveDirectories>true</preserveDirectories> 
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <outputDirectory>target/eclipse-html</outputDirectory>
                             <includedir>${basedir}/documentation</includedir>
                             <backend>html5</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
-                                <stylesdir>styles</stylesdir>
+                                <stylesdir>../styles</stylesdir>
                                 <stylesheet>foundation.css</stylesheet>
+                                <highlightjsdir>../scripts</highlightjsdir>
+                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <eclipse>true</eclipse>
                                 <website>false</website>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
+                                <linkcss>true</linkcss>
                             </attributes>
                         </configuration>
                     </execution>
@@ -148,7 +152,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <icons>font</icons>
                                 <linkcss>true</linkcss>
                                 <stylesdir>${basedir}/src/styles</stylesdir>
-                                <stylesheet>n4js-adoc-1.css</stylesheet>
+                                <stylesheet>n4js-adoc.css</stylesheet>
                                 <highlightjsdir>/scripts</highlightjsdir>
                                 <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <doctype>book</doctype>
@@ -232,7 +236,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
                                 <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,documentation/index.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
-                                    <map from="${eclipseHelpBaseDir}/" to="" />
+                                    <map from="${basedir}/" to="" />
                                 </pathconvert> 
                                 <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
                                 <echo encoding="${file.encoding}" output="${help.pages.list}">${prop.dist.contents}</echo>
@@ -254,7 +258,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>geneclipsetoc</goal>
                         </goals>
                         <configuration>
-                            <sourceFolder>${basedir}/target</sourceFolder>
+                            <sourceFolder>${basedir}</sourceFolder>
                             <pagesListFile>${help.pages.list}</pagesListFile>
                             <outputTocFile>toc.xml</outputTocFile>
                         </configuration>
