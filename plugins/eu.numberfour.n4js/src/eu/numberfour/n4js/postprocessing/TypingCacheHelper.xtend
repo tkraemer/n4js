@@ -30,8 +30,11 @@ import org.eclipse.xtext.util.IResourceScopeCache
 
 import static eu.numberfour.n4js.utils.UtilN4.reportError
 
+/**
+ * FIXME
+ */
 @Singleton
-class TypingCacheHelper {
+public class TypingCacheHelper {
 
 	@Inject
 	private IResourceScopeCache mainCacheHelper;

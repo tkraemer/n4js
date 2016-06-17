@@ -57,7 +57,7 @@ import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
  * Invoked from {@link ASTProcessor} and delegates to {@link PolyProcessor}s.
  */
 @Singleton
-class TypeProcessor extends AbstractProcessor {
+public class TypeProcessor extends AbstractProcessor {
 
 	@Inject
 	private TypingCacheHelper typingCacheHelper;

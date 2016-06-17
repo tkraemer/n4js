@@ -15,6 +15,7 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
+import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -30,9 +31,10 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
- * Provides some common base functionality used across all (post) processors, e.g. {@link ASTProcessor}.
+ * Provides some common base functionality used across all processors. See {@link ASTProcessor} for more details on
+ * processors and post-processing of {@link N4JSResource}s.
  */
-class AbstractProcessor {
+package abstract class AbstractProcessor {
 
 	val private static DEBUG_LOG = false;
 	val private static DEBUG_LOG_RESULT = false;

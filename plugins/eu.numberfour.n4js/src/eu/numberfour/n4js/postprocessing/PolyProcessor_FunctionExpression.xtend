@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -29,7 +30,8 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  */
-class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
+@Singleton
+package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;

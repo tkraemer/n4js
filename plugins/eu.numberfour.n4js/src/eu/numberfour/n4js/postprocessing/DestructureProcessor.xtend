@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.BindingElement
@@ -38,7 +39,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil
  * <p>
  * TODO clean up handling of destructuring patterns during AST traversal, IDE-1714
  */
-class DestructureProcessor extends AbstractProcessor {
+@Singleton
+package class DestructureProcessor extends AbstractProcessor {
 
 	@Inject
 	private ASTProcessor astProcessor;

@@ -62,7 +62,7 @@ import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
  * </ul>
  */
 @Singleton
-class ASTProcessor extends AbstractProcessor {
+public class ASTProcessor extends AbstractProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;

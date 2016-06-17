@@ -34,10 +34,10 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * Processor for handling {@link DeferredTypeRef}s, <b>except</b> those related to poly expressions, which are handled
- * by the {@link PolyProcessor}.
+ * by the {@link PolyProcessor}s.
  */
- @Singleton
-public class TypeDeferredProcessor extends AbstractProcessor {
+@Singleton
+package class TypeDeferredProcessor extends AbstractProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;

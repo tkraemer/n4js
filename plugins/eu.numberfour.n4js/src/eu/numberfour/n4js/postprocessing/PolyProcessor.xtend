@@ -38,7 +38,7 @@ import org.eclipse.xtext.util.CancelIndicator
 /**
  */
 @Singleton
-class PolyProcessor extends AbstractPolyProcessor {
+package class PolyProcessor extends AbstractPolyProcessor {
 
 	@Inject
 	private PolyProcessor_ArrayLiteral arrayLiteralProcessor;

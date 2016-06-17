@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.PropertyGetterDeclaration
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
@@ -38,7 +39,8 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  */
-class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
+@Singleton
+package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 
 	@Inject
 	private PolyProcessor polyProcessor;

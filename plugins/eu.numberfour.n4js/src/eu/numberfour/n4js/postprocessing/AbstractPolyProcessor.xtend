@@ -50,7 +50,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  */
-class AbstractPolyProcessor extends AbstractProcessor {
+package abstract class AbstractPolyProcessor extends AbstractProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;

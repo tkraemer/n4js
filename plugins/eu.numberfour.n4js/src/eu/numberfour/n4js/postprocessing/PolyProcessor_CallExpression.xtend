@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -28,7 +29,8 @@ import java.util.Map
 
 /**
  */
-class PolyProcessor_CallExpression extends AbstractPolyProcessor {
+@Singleton
+package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 
 	@Inject
 	private PolyProcessor polyProcessor;
