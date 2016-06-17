@@ -234,11 +234,8 @@ ruleN4mfIdentifier :
 // Rule ProjectType
 ruleProjectType :
 	'application' |
-	'app' |
 	'processor' |
 	'library' |
-	'lib' |
-	'system' |
 	'API' |
 	'runtimeEnvironment' |
 	'runtimeLibrary' |

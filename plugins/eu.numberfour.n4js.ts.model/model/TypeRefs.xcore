@@ -39,6 +39,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils
 
 // due to some bad linking / scoping behavior in Xcore for clean builds,
 // we need to define this data type here even though it's only usages are
@@ -457,6 +458,7 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 class ParameterizedTypeRef extends BaseTypeRef {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
+	boolean arrayTypeLiteral = "false"
 	/*
 	 * The defined (declared or inferred) typing strategy on use site, nominal typing by default. Could be changed to structural or structural
 	 * field (via tilde or tilde-tilde operators).
@@ -870,6 +872,16 @@ class Wildcard extends TypeArgument {
 	 * This method returns the declared upper bound of the receiving wildcard or, if the wildcard is unbounded,
 	 * tries to obtain the implicit upper bound from the corresponding type parameter of the containing
 	 * ParameterizedTypeRef's declared type (if any).
+	 * <p>
+	 * <b>IMPORTANT:</b> Use of such implicit bounds is prone to infinite recursion and must therefore be guarded
+	 * appropriately. Take these two examples:
+	 * <pre>
+	 * class A&lt;T extends A&lt;?>> {} // directly
+	 * </pre><pre>
+	 * class X&lt;T extends B&lt;?>> {}
+	 * class Y&lt;T extends X&lt;?>> {}
+	 * class B&lt;T extends Y&lt;?>> {} // indirectly
+	 * </pre>
 	 */
 	op TypeRef[] getDeclaredOrImplicitUpperBounds() {
 		val declUB = declaredUpperBound; // containment -> won't trigger resolution
@@ -898,18 +910,20 @@ class Wildcard extends TypeArgument {
 		return emptyEList(); // no implicit upper bound
 	}
 	/*
+	 * Tells if an implicit upper bound is in effect for the given wildcard, i.e. the wildcards does not have declared
+	 * bounds (upper or lower) and obtains an implicit bound from the corresponding type parameter.
+	 * 
+	 * @see #getDeclaredOrImplicitUpperBounds()
+	 */
+	op boolean isImplicitUpperBoundInEffect() {
+		return declaredUpperBound === null && declaredLowerBound === null && !declaredOrImplicitUpperBounds.isEmpty();
+	}
+	/*
 	 * Convenience method, returns the type expression, usually the type name, as a string. Basically used for testing.
 	 * See {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		val upperBounds = declaredOrImplicitUpperBounds;
-		return "?" + if (!upperBounds.empty) {
-			" extends " + upperBounds.map[typeRefAsString].join(' & ')
-		} else if (declaredLowerBound !== null) {
-			" super " + declaredLowerBound.typeRefAsString
-		} else {
-			""
-		}
+		return WildcardAsStringUtils.getTypeRefAsString(this);
 	}
 }
 

@@ -120,7 +120,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getSyntaxRelatedTElement()
 	 * @generated
 	 */
-	int SYNTAX_RELATED_TELEMENT = 47;
+	int SYNTAX_RELATED_TELEMENT = 48;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -688,7 +688,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 12;
+	int TYPE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1106,6 +1106,241 @@ public interface TypesPackage extends EPackage {
 	int TYPE_VARIABLE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.InferenceVariableImpl <em>Inference Variable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.types.impl.InferenceVariableImpl
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getInferenceVariable()
+	 * @generated
+	 */
+	int INFERENCE_VARIABLE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__NAME = TYPE_VARIABLE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Exported Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__EXPORTED_NAME = TYPE_VARIABLE__EXPORTED_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__ANNOTATIONS = TYPE_VARIABLE__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__DECLARED_COVARIANT = TYPE_VARIABLE__DECLARED_COVARIANT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Contravariant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__DECLARED_CONTRAVARIANT = TYPE_VARIABLE__DECLARED_CONTRAVARIANT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE__DECLARED_UPPER_BOUNDS = TYPE_VARIABLE__DECLARED_UPPER_BOUNDS;
+
+	/**
+	 * The number of structural features of the '<em>Inference Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE_FEATURE_COUNT = TYPE_VARIABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Containing Module</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_CONTAINING_MODULE = TYPE_VARIABLE___GET_CONTAINING_MODULE;
+
+	/**
+	 * The operation id for the '<em>Is Exported</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_EXPORTED = TYPE_VARIABLE___IS_EXPORTED;
+
+	/**
+	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_PROVIDED_BY_RUNTIME = TYPE_VARIABLE___IS_PROVIDED_BY_RUNTIME;
+
+	/**
+	 * The operation id for the '<em>Is Polyfill</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_POLYFILL = TYPE_VARIABLE___IS_POLYFILL;
+
+	/**
+	 * The operation id for the '<em>Is Static Polyfill</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_STATIC_POLYFILL = TYPE_VARIABLE___IS_STATIC_POLYFILL;
+
+	/**
+	 * The operation id for the '<em>Is Final</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_FINAL = TYPE_VARIABLE___IS_FINAL;
+
+	/**
+	 * The operation id for the '<em>Is Dynamizable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_DYNAMIZABLE = TYPE_VARIABLE___IS_DYNAMIZABLE;
+
+	/**
+	 * The operation id for the '<em>Is Array Like</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_ARRAY_LIKE = TYPE_VARIABLE___IS_ARRAY_LIKE;
+
+	/**
+	 * The operation id for the '<em>Get Element Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_ELEMENT_TYPE = TYPE_VARIABLE___GET_ELEMENT_TYPE;
+
+	/**
+	 * The operation id for the '<em>Get Type Access Modifier</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_TYPE_ACCESS_MODIFIER = TYPE_VARIABLE___GET_TYPE_ACCESS_MODIFIER;
+
+	/**
+	 * The operation id for the '<em>Is Generic</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___IS_GENERIC = TYPE_VARIABLE___IS_GENERIC;
+
+	/**
+	 * The operation id for the '<em>Get Variance Of Type Var</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_VARIANCE_OF_TYPE_VAR__INT = TYPE_VARIABLE___GET_VARIANCE_OF_TYPE_VAR__INT;
+
+	/**
+	 * The operation id for the '<em>Get Raw Type As String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_RAW_TYPE_AS_STRING = TYPE_VARIABLE___GET_RAW_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Variance</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_VARIANCE = TYPE_VARIABLE___GET_VARIANCE;
+
+	/**
+	 * The operation id for the '<em>Get Type Vars</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_TYPE_VARS = TYPE_VARIABLE___GET_TYPE_VARS;
+
+	/**
+	 * The operation id for the '<em>Get Type As String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_TYPE_AS_STRING = TYPE_VARIABLE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Type Variable As String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION;
+
+	/**
+	 * The number of operations of the '<em>Inference Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE_OPERATION_COUNT = TYPE_VARIABLE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.DeclaredTypeWithAccessModifierImpl <em>Declared Type With Access Modifier</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1113,7 +1348,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getDeclaredTypeWithAccessModifier()
 	 * @generated
 	 */
-	int DECLARED_TYPE_WITH_ACCESS_MODIFIER = 14;
+	int DECLARED_TYPE_WITH_ACCESS_MODIFIER = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1321,7 +1556,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTFunction()
 	 * @generated
 	 */
-	int TFUNCTION = 11;
+	int TFUNCTION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1628,7 +1863,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getAccessibleTypeElement()
 	 * @generated
 	 */
-	int ACCESSIBLE_TYPE_ELEMENT = 13;
+	int ACCESSIBLE_TYPE_ELEMENT = 14;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -1701,7 +1936,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getContainerType()
 	 * @generated
 	 */
-	int CONTAINER_TYPE = 15;
+	int CONTAINER_TYPE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1954,7 +2189,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVirtualBaseType()
 	 * @generated
 	 */
-	int VIRTUAL_BASE_TYPE = 16;
+	int VIRTUAL_BASE_TYPE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2216,7 +2451,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getModuleNamespaceVirtualType()
 	 * @generated
 	 */
-	int MODULE_NAMESPACE_VIRTUAL_TYPE = 17;
+	int MODULE_NAMESPACE_VIRTUAL_TYPE = 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2433,7 +2668,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getPrimitiveType()
 	 * @generated
 	 */
-	int PRIMITIVE_TYPE = 18;
+	int PRIMITIVE_TYPE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2713,7 +2948,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getBuiltInType()
 	 * @generated
 	 */
-	int BUILT_IN_TYPE = 19;
+	int BUILT_IN_TYPE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2903,7 +3138,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getAnyType()
 	 * @generated
 	 */
-	int ANY_TYPE = 20;
+	int ANY_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3093,7 +3328,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefinedType()
 	 * @generated
 	 */
-	int UNDEFINED_TYPE = 21;
+	int UNDEFINED_TYPE = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3283,7 +3518,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullType()
 	 * @generated
 	 */
-	int NULL_TYPE = 22;
+	int NULL_TYPE = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3473,7 +3708,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVoidType()
 	 * @generated
 	 */
-	int VOID_TYPE = 23;
+	int VOID_TYPE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3663,7 +3898,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructuralType()
 	 * @generated
 	 */
-	int TSTRUCTURAL_TYPE = 24;
+	int TSTRUCTURAL_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3925,7 +4160,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifier()
 	 * @generated
 	 */
-	int TCLASSIFIER = 25;
+	int TCLASSIFIER = 26;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4214,7 +4449,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTObjectPrototype()
 	 * @generated
 	 */
-	int TOBJECT_PROTOTYPE = 26;
+	int TOBJECT_PROTOTYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4557,7 +4792,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getArrayLike()
 	 * @generated
 	 */
-	int ARRAY_LIKE = 27;
+	int ARRAY_LIKE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Declared Element Type</b></em>' containment reference.
@@ -4603,7 +4838,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTN4Classifier()
 	 * @generated
 	 */
-	int TN4_CLASSIFIER = 28;
+	int TN4_CLASSIFIER = 29;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4928,7 +5163,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClass()
 	 * @generated
 	 */
-	int TCLASS = 29;
+	int TCLASS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5343,7 +5578,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTInterface()
 	 * @generated
 	 */
-	int TINTERFACE = 30;
+	int TINTERFACE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5686,7 +5921,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMember()
 	 * @generated
 	 */
-	int TMEMBER = 31;
+	int TMEMBER = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5921,7 +6156,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMemberWithAccessModifier()
 	 * @generated
 	 */
-	int TMEMBER_WITH_ACCESS_MODIFIER = 32;
+	int TMEMBER_WITH_ACCESS_MODIFIER = 33;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6174,7 +6409,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructMember()
 	 * @generated
 	 */
-	int TSTRUCT_MEMBER = 33;
+	int TSTRUCT_MEMBER = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6427,7 +6662,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMethod()
 	 * @generated
 	 */
-	int TMETHOD = 34;
+	int TMETHOD = 35;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6932,7 +7167,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructMethod()
 	 * @generated
 	 */
-	int TSTRUCT_METHOD = 35;
+	int TSTRUCT_METHOD = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7455,7 +7690,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTFormalParameter()
 	 * @generated
 	 */
-	int TFORMAL_PARAMETER = 36;
+	int TFORMAL_PARAMETER = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7564,7 +7799,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTAnonymousFormalParameter()
 	 * @generated
 	 */
-	int TANONYMOUS_FORMAL_PARAMETER = 37;
+	int TANONYMOUS_FORMAL_PARAMETER = 38;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7691,7 +7926,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTField()
 	 * @generated
 	 */
-	int TFIELD = 38;
+	int TFIELD = 39;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7971,7 +8206,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructField()
 	 * @generated
 	 */
-	int TSTRUCT_FIELD = 39;
+	int TSTRUCT_FIELD = 40;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8269,7 +8504,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getFieldAccessor()
 	 * @generated
 	 */
-	int FIELD_ACCESSOR = 40;
+	int FIELD_ACCESSOR = 41;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8540,7 +8775,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTGetter()
 	 * @generated
 	 */
-	int TGETTER = 41;
+	int TGETTER = 42;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8820,7 +9055,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructGetter()
 	 * @generated
 	 */
-	int TSTRUCT_GETTER = 42;
+	int TSTRUCT_GETTER = 43;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9118,7 +9353,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTSetter()
 	 * @generated
 	 */
-	int TSETTER = 43;
+	int TSETTER = 44;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9398,7 +9633,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructSetter()
 	 * @generated
 	 */
-	int TSTRUCT_SETTER = 44;
+	int TSTRUCT_SETTER = 45;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9696,7 +9931,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTEnum()
 	 * @generated
 	 */
-	int TENUM = 45;
+	int TENUM = 46;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9931,7 +10166,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTEnumLiteral()
 	 * @generated
 	 */
-	int TENUM_LITERAL = 46;
+	int TENUM_LITERAL = 47;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -9995,7 +10230,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTVariable()
 	 * @generated
 	 */
-	int TVARIABLE = 48;
+	int TVARIABLE = 49;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10149,7 +10384,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
 	 * @generated
 	 */
-	int NULL_MODIFIER = 49;
+	int NULL_MODIFIER = 50;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
@@ -10159,7 +10394,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
 	 * @generated
 	 */
-	int UNDEF_MODIFIER = 50;
+	int UNDEF_MODIFIER = 51;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.
@@ -10169,7 +10404,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypingStrategy()
 	 * @generated
 	 */
-	int TYPING_STRATEGY = 51;
+	int TYPING_STRATEGY = 52;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeAccessModifier <em>Type Access Modifier</em>}' enum.
@@ -10179,7 +10414,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeAccessModifier()
 	 * @generated
 	 */
-	int TYPE_ACCESS_MODIFIER = 52;
+	int TYPE_ACCESS_MODIFIER = 53;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberAccessModifier <em>Member Access Modifier</em>}' enum.
@@ -10189,7 +10424,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberAccessModifier()
 	 * @generated
 	 */
-	int MEMBER_ACCESS_MODIFIER = 53;
+	int MEMBER_ACCESS_MODIFIER = 54;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberType <em>Member Type</em>}' enum.
@@ -10199,7 +10434,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberType()
 	 * @generated
 	 */
-	int MEMBER_TYPE = 54;
+	int MEMBER_TYPE = 55;
 
 	/**
 	 * The meta object id for the '<em>Collection Of Type Ref</em>' data type.
@@ -10209,7 +10444,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getCollectionOfTypeRef()
 	 * @generated
 	 */
-	int COLLECTION_OF_TYPE_REF = 55;
+	int COLLECTION_OF_TYPE_REF = 56;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -10219,7 +10454,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 56;
+	int VARIANCE = 57;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -10229,7 +10464,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 57;
+	int NAME_AND_ACCESS = 58;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -10239,7 +10474,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 58;
+	int MEMBER_LIST = 59;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -10249,7 +10484,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 59;
+	int TCLASSIFIER_ITERABLE = 60;
 
 
 	/**
@@ -10735,6 +10970,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTypeVariable__GetTypeVariableAsString__Collection();
+
+	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.InferenceVariable <em>Inference Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Inference Variable</em>'.
+	 * @see eu.numberfour.n4js.ts.types.InferenceVariable
+	 * @generated
+	 */
+	EClass getInferenceVariable();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TFunction <em>TFunction</em>}'.
@@ -13180,6 +13425,16 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = eINSTANCE.getTypeVariable__GetTypeVariableAsString__Collection();
+
+		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.InferenceVariableImpl <em>Inference Variable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.types.impl.InferenceVariableImpl
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getInferenceVariable()
+		 * @generated
+		 */
+		EClass INFERENCE_VARIABLE = eINSTANCE.getInferenceVariable();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl <em>TFunction</em>}' class.

@@ -35,30 +35,52 @@ import "http://www.numberfour.eu/ide/ts/TypeRefs"
  * AttributeTypeRef: no Void
  */
 TypeRef:
+	UnionTypeExpression;
+	
+UnionTypeExpression returns TypeRef:
+	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?;
+
+IntersectionTypeExpression returns TypeRef:
+	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?;
+	
+PrimaryTypeExpression returns TypeRef:
+	( =>({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
+	| ArrayTypeRef
+	| TypeRefWithModifiers
+	| "(" TypeRef ")"
+	);
+	
+BogusTypeRef returns TypeRef:
+	TypeRefWithModifiers;
+	
+TypeRefWithModifiers returns StaticBaseTypeRef:
 	TypeRefWithoutModifiers =>undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken;
 
 TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| FunctionTypeExpression
-	| UnionTypeExpression
-	| IntersectionTypeExpression;
-
+	| FunctionTypeExpressionOLD
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD;
+	
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
+	| ArrayTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| UnionTypeExpression
-	| IntersectionTypeExpression
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD
 	;
 
 TypeRefForCast returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
+	| ArrayTypeRef
 	| ThisTypeRef
 	| ConstructorTypeRef
 	| ClassifierTypeRef
-	| FunctionTypeExpression;
+	| FunctionTypeExpressionOLD
+	| ArrowFunctionTypeExpression;
 
 TypeRefInClassifierType returns StaticBaseTypeRef:
 	  ParameterizedTypeRefNominal
@@ -76,7 +98,7 @@ ThisTypeRefStructural returns ThisTypeRefStructural:
 	'this'
 	('with' TStructMemberList)?;
 
-FunctionTypeExpression returns FunctionTypeExpression:
+FunctionTypeExpressionOLD returns FunctionTypeExpression:
 	{FunctionTypeExpression}
 	'{'
 	('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
@@ -85,6 +107,9 @@ FunctionTypeExpression returns FunctionTypeExpression:
 	'(' TAnonymousFormalParameterList ')'
 	(':' returnTypeRef=TypeRef)?
 	'}';
+	
+ArrowFunctionTypeExpression returns FunctionTypeExpression:
+	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression;
 
 fragment TAnonymousFormalParameterList*:
 	(fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?
@@ -105,16 +130,22 @@ TFormalParameter:
 
 
 
-UnionTypeExpression returns UnionTypeExpression:
+UnionTypeExpressionOLD returns UnionTypeExpression:
 	{UnionTypeExpression}
 	'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
-IntersectionTypeExpression returns IntersectionTypeExpression:
+IntersectionTypeExpressionOLD returns IntersectionTypeExpression:
 	{IntersectionTypeExpression}
 	'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
 ParameterizedTypeRef returns ParameterizedTypeRef:
 	ParameterizedTypeRefNominal | ParameterizedTypeRefStructural;
+	
+ParameterizedTypeRefNominal returns ParameterizedTypeRef:
+	declaredType=[Type|TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
+	
+ArrayTypeRef returns ParameterizedTypeRef:
+	arrayTypeLiteral?="[" typeArgs+=TypeArgument "]";
 
 ParameterizedTypeRefStructural returns ParameterizedTypeRefStructural:
 	definedTypingStrategy=TypingStrategyUseSiteOperator
@@ -163,12 +194,6 @@ TStructSetter:
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
 
-
-
-ParameterizedTypeRefNominal returns ParameterizedTypeRef:
-	declaredType=[Type|TypeReferenceName]
-	(=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
-
 TypingStrategyUseSiteOperator returns TypingStrategy:
 	'~' ('~' | STRUCTMODSUFFIX)?;
 
@@ -203,6 +228,11 @@ UndefModifierToken returns UndefModifier:
 	'?';
 
 TypeVariable:
+	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+
+TypeVariableWithDefSiteVariance returns TypeVariable:
+	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
 	declaredUpperBounds+=ParameterizedTypeRef)*)?;
 

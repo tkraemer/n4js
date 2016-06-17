@@ -149,6 +149,18 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case TypesPackage.INFERENCE_VARIABLE: {
+				InferenceVariable inferenceVariable = (InferenceVariable)theEObject;
+				T result = caseInferenceVariable(inferenceVariable);
+				if (result == null) result = caseTypeVariable(inferenceVariable);
+				if (result == null) result = caseType(inferenceVariable);
+				if (result == null) result = caseTExportableElement(inferenceVariable);
+				if (result == null) result = caseTAnnotableElement(inferenceVariable);
+				if (result == null) result = caseIdentifiableElement(inferenceVariable);
+				if (result == null) result = caseTypableElement(inferenceVariable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case TypesPackage.TFUNCTION: {
 				TFunction tFunction = (TFunction)theEObject;
 				T result = caseTFunction(tFunction);
@@ -787,6 +799,21 @@ public class TypesSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTypeVariable(TypeVariable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Inference Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Inference Variable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInferenceVariable(InferenceVariable object) {
 		return null;
 	}
 

@@ -19,7 +19,6 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
-import static eu.numberfour.n4js.n4mf.ProjectType.SYSTEM;
 import static eu.numberfour.n4js.n4mf.ProjectType.TEST;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectId;
 import static eu.numberfour.n4js.n4mf.resource.N4MFResourceDescriptionStrategy.getProjectType;
@@ -270,10 +269,6 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 				}
 			}
 
-			if (SYSTEM.equals(projectInfo.getProjectType())) {
-				errorMsg = "Project type 'System' is deprecated and will be removed soon. Use either 'API' or 'Library' instead.";
-			}
-
 			if (isNullOrEmpty(projectName)) {
 				errorMsg = "Project name should be specified.";
 			}
@@ -376,9 +371,6 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		public String getText(final Object element) {
 			if (API.equals(element)) {
 				return API.getLiteral();
-			}
-			if (SYSTEM.equals(element)) {
-				return new StringBuilder(getDefaultText(element)).append(" [Deprecated]").toString();
 			}
 			return getDefaultText(element);
 		}

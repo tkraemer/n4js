@@ -108,6 +108,15 @@ public interface TypesFactory extends EFactory {
 	TypeVariable createTypeVariable();
 
 	/**
+	 * Returns a new object of class '<em>Inference Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Inference Variable</em>'.
+	 * @generated
+	 */
+	InferenceVariable createInferenceVariable();
+
+	/**
 	 * Returns a new object of class '<em>TFunction</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

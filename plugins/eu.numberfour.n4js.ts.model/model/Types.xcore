@@ -360,6 +360,12 @@ class TypeVariable extends Type {
 }
 
 /*
+ * Inference variables are meta-variables for types, i.e. they represent the unknown types searched for while solving a
+ * constraint system. See class {@code InferenceContext} for more details.
+ */
+class InferenceVariable extends TypeVariable {}
+
+/*
  * Represents a function declaration. In JavaScript, functions are first-class objects, hence
  * a function declaration also is a type declaration.
  */
