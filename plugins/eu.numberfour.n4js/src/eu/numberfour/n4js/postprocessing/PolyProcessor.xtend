@@ -55,7 +55,7 @@ package class PolyProcessor extends AbstractPolyProcessor {
 	private TypeSystemHelper tsh;
 
 
-	// ------------------------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 
 
 	def package boolean isResponsibleFor(TypableElement astNode) {
@@ -73,7 +73,7 @@ package class PolyProcessor extends AbstractPolyProcessor {
 	}
 
 
-	// ------------------------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 
 
 	def public void inferType(RuleEnvironment G, Expression rootPoly, CancelIndicator cancelIndicator) {
@@ -85,7 +85,7 @@ package class PolyProcessor extends AbstractPolyProcessor {
 // with extremely large array/object literals) but to avoid having to deal with this case with additional code,
 // we still build a constraint system as usual (TEMPORARAY HACK)
 // TODO find proper way to deal with extremely large array/object literals (also see compaction phase in InferenceContext)
-if(JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
+if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 	infCtx.addConstraint(TypeConstraint.FALSE);
 }
 
@@ -93,26 +93,25 @@ if(JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 		// (until the expectedType judgment is integrated into AST traversal, we have to invoke this judgment here;
 		// in case of not-well-behaving expectedType rules, we use 'null' as expected type, i.e. no expectation)
 		// TODO integrate expectedType judgment into AST traversal and remove #isProblematicCaseOfExpectedType()
-		val expectedTypeRef = if(!rootPoly.isProblematicCaseOfExpectedType) {
-			ts.expectedTypeIn(G, rootPoly.eContainer(), rootPoly).getValue();
-		};
+		val expectedTypeRef = if (!rootPoly.isProblematicCaseOfExpectedType) {
+				ts.expectedTypeIn(G, rootPoly.eContainer(), rootPoly).getValue();
+			};
 
 		// call #getType() (this will recursively call #getType() on nested expressions)
 		val typeRef = processExpr(G, infCtx, rootPoly, expectedTypeRef);
 
 		// add constraint to ensure that type of 'rootPoly' is subtype of the expected type
-		if(!TypeUtils.isVoid(typeRef)) {
-			if(expectedTypeRef!==null) {
+		if (!TypeUtils.isVoid(typeRef)) {
+			if (expectedTypeRef !== null) {
 				infCtx.addConstraint(typeRef, expectedTypeRef, Variance.CO);
 			}
 		}
 
 		// compute solution
+		// (note: we're not actually interested in the solution, here; we just want to make sure to trigger the
+		// onSuccess/onFailure handlers registered by the #getType() methods)
 		infCtx.solve;
-		// note: we're not actually interested in the solution, here; we just want to make sure to trigger the
-		// onSuccess/onFailure handlers registered by the #getType() methods
 	}
-
 
 	/**
 	 * Key method for handling poly expressions. It has the following responsibilities:
@@ -129,29 +128,38 @@ if(JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 	 * </ul>
 	 * IMPORTANT: the type returned by this method may contain inference variables!
 	 */
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, Expression expr, TypeRef expectedTypeRef) {
-		if(isPoly(expr)) {
-			throw new IllegalArgumentException("missing dispatch method #getType() for poly expression: " + expr);
+	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, Expression expr,
+		TypeRef expectedTypeRef) {
+
+		if (isPoly(expr)) {
+			throw new IllegalArgumentException("missing dispatch method #getType() for poly expression: " +
+				expr);
 		}
 		// never poly -> directly infer type via type system
 		val result = ts.type(G, expr).getValue();
 		// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
-
 		return result;
 	}
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, ArrayLiteral arrLit, TypeRef expectedTypeRef) {
+
+	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
+		ArrayLiteral arrLit, TypeRef expectedTypeRef) {
 		return arrayLiteralProcessor.processArrayLiteral(G, infCtx, arrLit, expectedTypeRef);
 	}
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, ObjectLiteral objLit, TypeRef expectedTypeRef) {
+
+	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
+		ObjectLiteral objLit, TypeRef expectedTypeRef) {
 		return objectLiteralProcessor.processObjectLiteral(G, infCtx, objLit, expectedTypeRef);
 	}
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, FunctionExpression funExpr, TypeRef expectedTypeRef) {
+
+	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
+		FunctionExpression funExpr, TypeRef expectedTypeRef) {
 		return functionExpressionProcessor.processFunctionExpression(G, infCtx, funExpr, expectedTypeRef);
 	}
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, ParameterizedCallExpression callExpr, TypeRef expectedTypeRef) {
+
+	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
+		ParameterizedCallExpression callExpr, TypeRef expectedTypeRef) {
 		return callExpressionProcessor.processCallExpression(G, infCtx, callExpr, expectedTypeRef);
 	}
-
 
 	/**
 	 * Returns true if we are not allowed to ask for the expected type of 'node', because this would lead to illegal

@@ -56,32 +56,32 @@ package class DestructureProcessor extends AbstractProcessor {
 		// to deal with this special case whenever asking for type of an expression
 		cache.put(node, new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef))
 		// for object literals, some additional hacks are required ...
-		if(node instanceof ObjectLiteral) {
+		if (node instanceof ObjectLiteral) {
 			// poly expressions in property name/value pairs expect to be processed as part of the outer poly expression
 			// -> invoke poly processor for them
-			node.propertyAssignments
-			.filter(PropertyNameValuePair)
-			.map[expression]
-			.filterNull
-			.filter[polyProcessor.isResponsibleFor(it) && !polyProcessor.isEntryPoint(it)]
-			.forEach[
-				polyProcessor.inferType(G,it,cache.cancelIndicator);
+			node.propertyAssignments //
+			.filter(PropertyNameValuePair) //
+			.map[expression] //
+			.filterNull //
+			.filter[polyProcessor.isResponsibleFor(it) && !polyProcessor.isEntryPoint(it)] //
+			.forEach [
+				polyProcessor.inferType(G, it, cache.cancelIndicator);
 			];
 			// the defined type of the object literal may still have some DeferredTypeRefs -> remove them
-			node.definedType.eAllContents.filter(DeferredTypeRef).forEach[dtr|
-				EcoreUtilN4.doWithDeliver(false,[
-					EcoreUtil.replace(dtr,TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
-				],dtr.eContainer);
+			node.definedType.eAllContents.filter(DeferredTypeRef).forEach [ dtr |
+				EcoreUtilN4.doWithDeliver(false, [
+					EcoreUtil.replace(dtr, TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
+				], dtr.eContainer);
 			]
 			// add types for property assignments
-			node.propertyAssignments.forEach[
+			node.propertyAssignments.forEach [
 				cache.put(it, new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef));
 			]
 		}
 		// here we basically turn off the fail-fast approach within the destructuring pattern
-		node.eAllContents
-		.filter[it instanceof ObjectLiteral || it instanceof ArrayLiteral]
-		.filter[cache.getFailSafe(it)===null]
+		node.eAllContents //
+		.filter[it instanceof ObjectLiteral || it instanceof ArrayLiteral] //
+		.filter[cache.getFailSafe(it)===null] //
 		.forEach[
 			cache.put(it, new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef));
 		]
@@ -90,7 +90,9 @@ package class DestructureProcessor extends AbstractProcessor {
 	/**
 	 * Temporary handling of forward references within destructuring patterns.
 	 */
-	def Result<TypeRef> handleForwardReferenceWhileTypingDestructuringPattern(RuleEnvironment G, EObject node, TypingCache cache) {
+	def Result<TypeRef> handleForwardReferenceWhileTypingDestructuringPattern(RuleEnvironment G, EObject node,
+		TypingCache cache) {
+
 		log(0, "===START of other identifiable sub-tree");
 		val G_fresh = RuleEnvironmentExtensions.wrap(G); // don't use a new, empty environment here (required for recursion guards)
 		astProcessor.processSubtree(G_fresh, node, cache, 0); // note how we reset the indent level
@@ -100,17 +102,17 @@ package class DestructureProcessor extends AbstractProcessor {
 	}
 
 	def boolean isForwardReferenceWhileTypingDestructuringPattern(EObject obj) {
-		if(obj instanceof Expression) {
+		if (obj instanceof Expression) {
 			val parent = obj.eContainer;
-			if(parent instanceof ForStatement) {
+			if (parent instanceof ForStatement) {
 				return N4JSASTUtils.isDestructuringForStatement(parent);
 			}
-			if(parent instanceof AssignmentExpression) {
+			if (parent instanceof AssignmentExpression) {
 				return N4JSASTUtils.isDestructuringAssignment(parent)
 			}
 			return parent instanceof VariableBinding
-					|| parent instanceof BindingElement
-					|| (parent instanceof VariableDeclaration && parent.eContainer instanceof BindingElement)
+				|| parent instanceof BindingElement
+				|| (parent instanceof VariableDeclaration && parent.eContainer instanceof BindingElement)
 		}
 		return false;
 	}

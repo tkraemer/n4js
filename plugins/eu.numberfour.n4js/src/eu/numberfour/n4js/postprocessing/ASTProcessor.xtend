@@ -73,16 +73,15 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private TypeDeferredProcessor typeDeferredProcessor;
 
-
 	/**
 	 * Called from N4JSPostProcessor.
 	 * Will throw IllegalStateException if called more than once per N4JSResource.
-	 *
+	 * 
 	 * @param resource  may not be null.
 	 * @param cancelIndicator  may be null.
 	 */
 	def public void processAST(N4JSResource resource, CancelIndicator cancelIndicator) {
-		if(resource===null)
+		if (resource === null)
 			throw new IllegalArgumentException("resource may not be null");
 
 		// the following is required, because typing may have been initiated by resolution of a proxy
@@ -94,17 +93,16 @@ public class ASTProcessor extends AbstractProcessor {
 		processAST(G, resource, cancelIndicator); // will throw exception if called more than once per resource
 	}
 
-
 	/**
 	 * Initiates processing of the entire AST in the given resource.
 	 * Will throw IllegalStateException if called more than once per N4JSResource.
 	 */
 	def private void processAST(RuleEnvironment G, N4JSResource resource, CancelIndicator cancelIndicator) {
 
-		log(0, "### processing resource: "+resource.URI);
+		log(0, "### processing resource: " + resource.URI);
 
 		val cache = typingCacheHelper.getOrCreate(resource);
-		if(cache.isTypingInProgress || cache.isFullyTyped) {
+		if (cache.isTypingInProgress || cache.isFullyTyped) {
 			// this method should never be called more than once per N4JSResource
 			throw new IllegalStateException("reentrant invocation of #typeEntireAST()")
 		}
@@ -116,12 +114,12 @@ public class ASTProcessor extends AbstractProcessor {
 			processSubtree(G, script, cache, 0);
 			// step 2: processing of postponed subtrees (only Blocks, so far)
 			var Block block;
-			while((block=cache.postponedSubTrees.poll)!==null) {
+			while ((block = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
 				processSubtree(G, block, cache, 0);
 			}
 		} finally {
-			if(cache.canceled) {
+			if (cache.canceled) {
 				log(0, "CANCELED by cancelIndicator");
 			}
 
@@ -131,42 +129,42 @@ public class ASTProcessor extends AbstractProcessor {
 			cache.isTypingInProgress = false;
 			cache.cancelIndicator = null;
 
-			if(isDEBUG_LOG_RESULT) {
-				log(0, "### result for "+resource.URI);
+			if (isDEBUG_LOG_RESULT) {
+				log(0, "### result for " + resource.URI);
 				log(4, resource.script, cache);
 			}
-			log(0, "### done: "+resource.URI);
+			log(0, "### done: " + resource.URI);
 		}
 	}
 
 	/**
 	 * Process given node and all of its direct and indirect children.
-	 *
+	 * 
 	 * @param node  the root of the subtree to process; must be an AST node.
 	 */
 	def package void processSubtree(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 
-		log(indentLevel, "processing: "+node.objectInfo);
+		log(indentLevel, "processing: " + node.objectInfo);
 
-		if(cache.canceled) {
+		if (cache.canceled) {
 			return;
 		}
 
 		// already done as part of a forward processing?
-		if(cache.forwardProcessedSubTrees.contains(node)) {
-			if(isDEBUG_LOG) {
+		if (cache.forwardProcessedSubTrees.contains(node)) {
+			if (isDEBUG_LOG) {
 				log(indentLevel, "(subtree already processed as a forward reference)");
 				log(indentLevel, cache.getFailSafe(node));
 			}
 			return;
 		}
 
-		if(!cache.astNodesCurrentlyBeingTyped.add(node)) {
+		if (!cache.astNodesCurrentlyBeingTyped.add(node)) {
 			// this subtree is currently being processed
 			// (can happen, for example, if we are processing a member (e.g. field) and during that processing we
 			// encounter a reference to the containing class (e.g. in the initializer expression))
-			if(isDEBUG_LOG) {
+			if (isDEBUG_LOG) {
 				log(indentLevel, "(subtree currently in progress - skipping)");
 			}
 			return;
@@ -188,8 +186,8 @@ public class ASTProcessor extends AbstractProcessor {
 					cache.postponedSubTrees.add(child as Block);
 				} else {
 					// process now
-					processSubtree(G, child, cache, indentLevel+1);
-					if(cache.canceled) {
+					processSubtree(G, child, cache, indentLevel + 1);
+					if (cache.canceled) {
 						return;
 					}
 				}
@@ -215,7 +213,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * <p>
 	 * Via this method, other processors can request a forward processing of some subtree. Does nothing if the given
 	 * node was processed already, either as part of a forward reference or during normal processing.
-	 *
+	 * 
 	 * @return <code>true</code> iff the forward processing is legal, <code>false</code> otherwise.
 	 */
 	def package boolean processSubtree_forwardReference(RuleEnvironment G, EObject node, TypingCache cache) {
@@ -224,25 +222,26 @@ public class ASTProcessor extends AbstractProcessor {
 		if (!subtree) {
 			val resource = node.eResource as XtextResource
 			if (resource !== null) {
-				assertTrueIfRigid("forward reference only allowed to identifiable subtrees; but was: "+node + " in\n"+resource.parseResult.rootNode.text, subtree)
+				assertTrueIfRigid(
+					"forward reference only allowed to identifiable subtrees; but was: " + node + " in\n" +
+						resource.parseResult.rootNode.text, subtree)
 			} else {
-				assertTrueIfRigid("forward reference only allowed to identifiable subtrees; but was: "+node, subtree)
+				assertTrueIfRigid("forward reference only allowed to identifiable subtrees; but was: " + node, subtree)
 			}
 		}
 
 		val fromCache = cache.getFailSafe(node);
-		if(fromCache!==null) {
+		if (fromCache !== null) {
 			// already processed, nothing else to do
 			// note: this is not an error, we may have many forward references to the same identifiable subtree
 			return true;
 		}
 
-		if(cache.astNodesCurrentlyBeingTyped.contains(node)) {
+		if (cache.astNodesCurrentlyBeingTyped.contains(node)) {
 			// cyclic forward reference
-
 			// legal cases of a cyclic reference
 			val isCyclicForwardReference = cache.astNodesCurrentlyBeingTyped.contains(node);
-			if(isCyclicForwardReference && (
+			if (isCyclicForwardReference && (
 				node instanceof VariableDeclaration
 				|| node instanceof N4ClassifierDeclaration
 				|| node instanceof N4FieldDeclaration
@@ -255,28 +254,27 @@ public class ASTProcessor extends AbstractProcessor {
 			}
 
 			// illegal cyclic node inference
-			val msg = "*#*#*#*#*#* illegal cyclic forward reference to " + node.objectInfo
-					+ " (resource: "+node.eResource?.URI+")";
+			val msg = "*#*#*#*#*#* illegal cyclic forward reference to " + node.objectInfo + " (resource: "
+				+ node.eResource?.URI + ")";
 			logErr(msg);
 			return false;
-		}
-		else if(isSemiCyclicForwardReferenceInForLoop(node, cache)) {
+		} else if (isSemiCyclicForwardReferenceInForLoop(node, cache)) {
 			// semi-cyclic forward reference
 			// (this is deemed legal for the same reason why 'var x = 1+x;' is treated as a legal forward reference)
 			return true;
 		}
 
-		if(cache.forwardProcessedSubTrees.contains(node)) {
+		if (cache.forwardProcessedSubTrees.contains(node)) {
 			// we saw above that the cache does not contain anything for node, so this is an error
 			throw new IllegalStateException
 		}
 
 		// actually perform the forward processing
-		log(0, "===START of identifiable sub-tree below "+node.objectInfo);
+		log(0, "===START of identifiable sub-tree below " + node.objectInfo);
 		val G_fresh = RuleEnvironmentExtensions.newRuleEnvironment(G); // use a new, empty environment here
 		processSubtree(G_fresh, node, cache, 0); // note how we reset the indent level
 		cache.forwardProcessedSubTrees.add(node);
-		log(0, "===END of identifiable sub-tree below "+node.objectInfo);
+		log(0, "===END of identifiable sub-tree below " + node.objectInfo);
 
 		return true;
 	}
@@ -290,7 +288,6 @@ public class ASTProcessor extends AbstractProcessor {
 		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node);
 	}
 
-
 	def private void processNode_postChildren(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node);
@@ -298,7 +295,7 @@ public class ASTProcessor extends AbstractProcessor {
 		typeProcessor.typeNode(G, node, cache, indentLevel);
 
 		// references to other files via import statements:
-		if(node instanceof NamedImportSpecifier) {
+		if (node instanceof NamedImportSpecifier) {
 			val elem = node.importedElement;
 			// we're not interested in the type here, but invoking the type system will let us reuse
 			// all the logic from method #xsemantics_type() above for handling references to other resources
@@ -312,7 +309,7 @@ public class ASTProcessor extends AbstractProcessor {
 
 	def private List<EObject> childrenToBeProcessed(RuleEnvironment G, EObject obj) {
 		// order in return value is important!
-		return switch(obj) {
+		return switch (obj) {
 			SetterDeclaration: {
 				// process formal parameter before body
 				obj.eContents.bringToFront(obj.fpar)
@@ -347,19 +344,18 @@ public class ASTProcessor extends AbstractProcessor {
 	 * </pre>
 	 */
 	def package boolean isSemiCyclicForwardReferenceInForLoop(EObject node, TypingCache cache) {
-		if(node instanceof VariableDeclaration) {
+		if (node instanceof VariableDeclaration) {
 			val parent = node.eContainer;
-			if(parent instanceof ForStatement) {
-				return (parent.forIn || parent.forOf)
-					&& cache.astNodesCurrentlyBeingTyped.contains(parent.expression);
+			if (parent instanceof ForStatement) {
+				return (parent.forIn || parent.forOf) && cache.astNodesCurrentlyBeingTyped.contains(parent.expression);
 			}
 		}
 		return false;
 	}
 
 	def private void resolveProxiesInNode(EObject astNode) {
-		for(eRef : astNode.eClass.EReferences) {
-			if(!eRef.isContainment) { // only cross-references have proxies (in our case)
+		for (eRef : astNode.eClass.EReferences) {
+			if (!eRef.isContainment) { // only cross-references have proxies (in our case)
 				astNode.eGet(eRef, true);
 			}
 		}
@@ -369,7 +365,7 @@ public class ASTProcessor extends AbstractProcessor {
 		val result = new ArrayList(l);
 		val elemSanitized = elements.filterNull.toList;
 		result.removeAll(elemSanitized);
-		result.addAll(0,elemSanitized);
+		result.addAll(0, elemSanitized);
 		return result;
 	}
 }

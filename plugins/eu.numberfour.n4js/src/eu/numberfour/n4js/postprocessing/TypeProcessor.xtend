@@ -70,10 +70,10 @@ public class TypeProcessor extends AbstractProcessor {
 
 
 	def void typeNode(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
-		if(node instanceof TypableElement) {
+		if (node instanceof TypableElement) {
 			// we have a typable node
-
-			if(N4JSASTUtils.isArrayOrObjectLiteralUsedAsDestructuringPattern(node) && polyProcessor.isEntryPoint(node)) {
+			if (N4JSASTUtils.isArrayOrObjectLiteralUsedAsDestructuringPattern(node)
+				&& polyProcessor.isEntryPoint(node)) {
 				// special case: array or object literal being used as a destructuring pattern
 				log(indentLevel, "ignored (array or object literal being used as a destructuring pattern)")
 				destructureProcessor.typeDestructuringPattern(G, node, cache, indentLevel);
@@ -84,32 +84,31 @@ public class TypeProcessor extends AbstractProcessor {
 			}
 		} else {
 			// not a typable node
-			log(indentLevel, "ignored (not a typable node: "+node?.eClass?.name+")")
+			log(indentLevel, "ignored (not a typable node: " + node?.eClass?.name + ")")
 		}
 	}
 
 	def private void typeNode(RuleEnvironment G, TypableElement node, TypingCache cache, int indentLevel) {
 		try {
-			if(polyProcessor.isResponsibleFor(node)) {
-				if(polyProcessor.isEntryPoint(node)) {
+			if (polyProcessor.isResponsibleFor(node)) {
+				if (polyProcessor.isEntryPoint(node)) {
 					log(indentLevel, "asking PolyComputer ...");
 					polyProcessor.inferType(G, node as Expression, cache.cancelIndicator);
 					// in this case, the polyComputer will store the type in the cache;
 					// also, the poly computer is responsible for replacing all DeferredTypeRefs
 					assertTrueIfRigid("poly computer did not replace DeferredTypeRef", [
 						val typeModelElem = node.definedTypeModelElement;
-						return typeModelElem===null
-								|| typeModelElem.eAllContents.filter(DeferredTypeRef).empty
+						return typeModelElem === null || typeModelElem.eAllContents.filter(DeferredTypeRef).empty
 					]);
 				} else {
 					// we have a poly expression, but one that is nested in another poly expression
 					// -> ignore here, because polyComputer will deal with it when computing the parent poly expression
-					log(indentLevel, "deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
+					log(indentLevel,
+						"deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
 
 					return; // return only required to avoid confusing logging of cache.getFailSafe(node) below
 				}
-			}
-			else {
+			} else {
 				// ordinary typing of typable AST nodes
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
@@ -118,13 +117,12 @@ public class TypeProcessor extends AbstractProcessor {
 				// (Xsemantics does not know of the cache)
 				cache.put(node, result);
 			}
-		}
-		catch(RuleFailedException e) {
+		} catch (RuleFailedException e) {
 			cache.put(node, new Result(e));
-		}
-		catch(Throwable th) {
+		} catch (Throwable th) {
 			th.printStackTrace
-			cache.put(node, new Result(new RuleFailedException("error while asking Xsemantics: "+th.message,"YYY",th)));
+			cache.put(node,
+				new Result(new RuleFailedException("error while asking Xsemantics: " + th.message, "YYY", th)));
 		}
 
 		log(indentLevel, cache.getFailSafe(node));
@@ -133,13 +131,14 @@ public class TypeProcessor extends AbstractProcessor {
 	def private Result<TypeRef> inferType(RuleEnvironment G, TypableElement obj) {
 		return inferType(G, null, obj);
 	}
+
 	def private Result<TypeRef> inferType(RuleEnvironment G, RuleApplicationTrace trace, TypableElement obj) {
-		if(obj.eIsProxy) {
+		if (obj.eIsProxy) {
 			return new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
 		}
 		// special case:
 		// "this" in the default initializer expression of fpars is not supported yet
-		if(obj.isThisKeywordInFparDefaultExpression || obj.isFparRefInFparDefaultExpression) {
+		if (obj.isThisKeywordInFparDefaultExpression || obj.isFparRefInFparDefaultExpression) {
 			// TODO IDE-1345 remove this work-around when fpar default initializers are properly supported
 			// To see why the following work-around is required, remove it and check the following code:
 			//
@@ -159,16 +158,18 @@ public class TypeProcessor extends AbstractProcessor {
 		// special case:
 		// TStructMembers are special in that they may be types (in case of TStructMethod) and appear as AST nodes
 		// -> if we are dealing with an AST node, make sure to use the definedMember in the TModule
-		val definedMember = if(obj instanceof TStructMember) obj.definedMember;
-		if(definedMember!==null && obj.isASTNode) {
+		val definedMember = if (obj instanceof TStructMember) obj.definedMember;
+		if (definedMember !== null && obj.isASTNode) {
 			return inferType(G, trace, definedMember);
 		}
 		// standard case:
 		return askXsemanticsForType(G, trace, obj);
 	}
+
 	def private boolean isThisKeywordInFparDefaultExpression(TypableElement elem) {
 		return elem instanceof ThisLiteral && elem.isContainedInFparDefaultExpression;
 	}
+
 	def private boolean isFparRefInFparDefaultExpression(TypableElement elem) {
 		return elem instanceof IdentifierRef
 			&& (
@@ -177,17 +178,18 @@ public class TypeProcessor extends AbstractProcessor {
 			)
 			&& elem.isContainedInFparDefaultExpression;
 	}
+
 	def private boolean isContainedInFparDefaultExpression(TypableElement elem) {
 		val containingFunctionOrAccessor = N4JSASTUtils.getContainingFunctionOrAccessor(elem);
-		val containingFunctionOrAccessorFpars = switch(containingFunctionOrAccessor) {
+		val containingFunctionOrAccessorFpars = switch (containingFunctionOrAccessor) {
 			FunctionDefinition: containingFunctionOrAccessor.fpars
 			SetterDeclaration: #[containingFunctionOrAccessor.fpar]
 			default: #[]
 		};
 		val containingFpar = EcoreUtil2.getContainerOfType(elem, FormalParameter);
-		if(containingFpar!==null && containingFunctionOrAccessorFpars.contains(containingFpar)) {
+		if (containingFpar !== null && containingFunctionOrAccessorFpars.contains(containingFpar)) {
 			val containingFparInitializer = containingFpar.initializer;
-			if(containingFparInitializer!==null && EcoreUtil.isAncestor(containingFparInitializer, elem)) {
+			if (containingFparInitializer !== null && EcoreUtil.isAncestor(containingFparInitializer, elem)) {
 				return true;
 			}
 		}
@@ -204,26 +206,26 @@ public class TypeProcessor extends AbstractProcessor {
 	 */
 	def public Result<TypeRef> xsemantics_type(RuleEnvironment G, RuleApplicationTrace trace, TypableElement objRaw) {
 
-		if(objRaw===null) {
+		if (objRaw === null) {
 			// failing safely here; otherwise we would need preemptive null-checks wherever type inference is applied
 			return new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
 		}
 
-		var obj = if(objRaw.eIsProxy) {
-			val resSet = RuleEnvironmentExtensions.getContextResource(G).resourceSet;
-			EcoreUtil.resolve(objRaw,resSet) as TypableElement;
-		} else {
-			objRaw
-		};
+		var obj = if (objRaw.eIsProxy) {
+				val resSet = RuleEnvironmentExtensions.getContextResource(G).resourceSet;
+				EcoreUtil.resolve(objRaw, resSet) as TypableElement;
+			} else {
+				objRaw
+			};
 
 		val res = obj.eResource;
-		if(res instanceof N4JSResource) {
+		if (res instanceof N4JSResource) {
 
-			if(res.isFullyProcessed && res.script.eIsProxy) {
+			if (res.isFullyProcessed && res.script.eIsProxy) {
 				// special case: this is a resource loaded from the index!
 				// -> for now, we entirely by-pass TypingCache and just directly wrap the type model element in a TypeRef
-				if(!obj.isTypeModelElement) {
-					throw new IllegalStateException("not a type model element: "+obj)
+				if (!obj.isTypeModelElement) {
+					throw new IllegalStateException("not a type model element: " + obj)
 				}
 				return inferType(G, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
 			}
@@ -231,58 +233,51 @@ public class TypeProcessor extends AbstractProcessor {
 			// make sure post-processing on the containing N4JS resource is initiated
 			res.performPostProcessing
 
-			if(obj.isTypeModelElement) {
+			if (obj.isTypeModelElement) {
 				// for type model elements, we by-pass all caching ...
-
 				// but: if the type model element corresponds to an AST node, we forward-process that AST node
-				val astNodeToProcess = if(obj instanceof SyntaxRelatedTElement) {
-					obj.astElement // NOTE: we've made sure above that we are *NOT* in a Resource loaded from the index!
-				};
-				if(astNodeToProcess!==null) {
+				val astNodeToProcess = if (obj instanceof SyntaxRelatedTElement) {
+						obj.astElement // NOTE: we've made sure above that we are *NOT* in a Resource loaded from the index!
+					};
+				if (astNodeToProcess !== null) {
 					return getTypeOfForwardReference(G, astNodeToProcess, typingCacheHelper.getOrCreate(res));
 				}
 
 				return inferType(G, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
-			}
-			else if(obj.isASTNode && obj.isTypableNode) {
+			} else if (obj.isASTNode && obj.isTypableNode) {
 				// here we read from the cache (if AST node 'obj' was already processed) or forward-process 'obj'
 				val cache = typingCacheHelper.getOrCreate(res);
-				if(!cache.isTypingInProgress && !cache.isFullyTyped) {
+				if (!cache.isTypingInProgress && !cache.isFullyTyped) {
 					// we have called #performPostProcessing() on the containing resource above, so this is "impossible"
 					// (HINT: if you get an exception here, this often indicates an accidental cache clear; use the
 					// debug code in TypingCacheHelper to track creation/deletion of typing caches to investigate this)
 					val e = new IllegalStateException("typing of entire AST not initiated yet!!")
 					e.printStackTrace // make sure we see this on the console (some clients eat up all exceptions!)
 					throw e;
-				}
-				else if(cache.isTypingInProgress) {
+				} else if (cache.isTypingInProgress) {
 
 					// while AST typing is in progress, just read from the cache we are currently filling
 					val resultFromCache = cache.getFailSafe(obj);
 
-					if(resultFromCache===null) {
+					if (resultFromCache === null) {
 						// cache does not contain type for 'obj' (i.e. not processed yet)
 						// -> we have a forward reference!
-						log(0, "***** forward reference to: "+obj);
+						log(0, "***** forward reference to: " + obj);
 
 						return getTypeOfForwardReference(G, obj, cache);
-					}
-					else {
+					} else {
 						// cache contains a type for 'obj' (i.e. it was already processed)
 						// -> simply read from cache
 						return resultFromCache;
 					}
-				}
-				else if(cache.isFullyTyped) {
+				} else if (cache.isFullyTyped) {
 					return cache.get(obj); // will throw exception in case of cache miss
 				}
-			}
-			else {
+			} else {
 				// a non-typable AST node OR some entity in the TModule for which obj.isTypeModelElement returns false
-				return new Result(new RuleFailedExceptionWithoutStacktrace("cannot type object: "+obj));
+				return new Result(new RuleFailedExceptionWithoutStacktrace("cannot type object: " + obj));
 			}
-		}
-		else {
+		} else {
 			// obj not contained in an N4JSResource -> fall back to default behavior
 			// can happen for:
 			// - objects that are not contained in a Resource
@@ -296,71 +291,67 @@ public class TypeProcessor extends AbstractProcessor {
 
 		// TODO improve handling of destructuring patterns in ASTProcessor/TypeProcessor
 		// (this is a temporary hack to avoid many illegal forward references within destructuring patterns)
-		if(destructureProcessor.isForwardReferenceWhileTypingDestructuringPattern(node)) {
+		if (destructureProcessor.isForwardReferenceWhileTypingDestructuringPattern(node)) {
 			return destructureProcessor.handleForwardReferenceWhileTypingDestructuringPattern(G, node, cache);
 		}
 
 		val isLegal = astProcessor.processSubtree_forwardReference(G, node, cache);
-		if(isLegal) {
+		if (isLegal) {
 			val isCyclicForwardReference = cache.astNodesCurrentlyBeingTyped.contains(node);
-			if(isCyclicForwardReference) {
+			if (isCyclicForwardReference) {
 				// in case of a legal cyclic forward reference, we cannot obtain the type of 'node' in the usual
 				// way by fully processing 'node' and its subtree, so we have to "guess" a type
-				if(node instanceof VariableDeclaration || node instanceof N4FieldDeclaration
-					|| node instanceof PropertyNameValuePair) {
+				if (node instanceof VariableDeclaration || node instanceof N4FieldDeclaration ||
+					node instanceof PropertyNameValuePair) {
+
 					val expr = node.expressionOfVFP;
-					if(expr instanceof N4ClassExpression) {
+					if (expr instanceof N4ClassExpression) {
 						return askXsemanticsForType(G, expr);
 					}
-					if(expr instanceof NewExpression) {
+					if (expr instanceof NewExpression) {
 						val callee = expr.callee;
-						if(callee instanceof N4ClassExpression) {
+						if (callee instanceof N4ClassExpression) {
 							val calleeType = askXsemanticsForType(G, callee).value;
 							return new Result(TypeUtils.createTypeRef((calleeType as ClassifierTypeRef).staticType));
 						}
 					}
 					val declTypeRef = node.declaredTypeRefOfVFP;
-					return if(declTypeRef!==null) {
+					return if (declTypeRef !== null) {
 						new Result(declTypeRef)
 					} else {
 						new Result(G.anyTypeRef)
 					};
-				}
-				else if(node instanceof FieldAccessor) {
+				} else if (node instanceof FieldAccessor) {
 					val declTypeRef = node.declaredTypeRef;
-					return if(declTypeRef!==null) {
+					return if (declTypeRef !== null) {
 						new Result(declTypeRef)
 					} else {
 						new Result(G.anyTypeRef)
 					};
-				}
-				else if(node instanceof TypeDefiningElement) {
+				} else if (node instanceof TypeDefiningElement) {
 					return new Result(wrapTypeInTypeRef(G, node.definedType));
-				}
-				else {
+				} else {
 					val e = new IllegalStateException(
 						"handling of a legal case of cyclic forward references missing in TypeProcessor");
 					e.printStackTrace;
 					return new Result(e);
 				}
-			}
-			else if(astProcessor.isSemiCyclicForwardReferenceInForLoop(node,cache)) {
+			} else if (astProcessor.isSemiCyclicForwardReferenceInForLoop(node, cache)) {
 				// semi-cyclic forward reference to a variable declaration in a for in/of loop:
 				// -> similar to cyclic variable declarations, we have to "guess" a type.
 				val declTypeRef = (node as VariableDeclaration).declaredTypeRef;
-				return if(declTypeRef!==null) {
+				return if (declTypeRef !== null) {
 					new Result(declTypeRef)
 				} else {
 					new Result(G.anyTypeRef)
 				};
-			}
-			else {
+			} else {
 				// in case of a legal, *non*-cyclic forward reference, we can assume that the subtree below 'node'
 				// has now been processed, which means node's type is now in the typing cache
 				return cache.get(node);
 			}
 		} else {
-			val msg = "*#*#*#*#*#* ILLEGAL FORWARD REFERENCE to "+node+" in "+node.eResource?.URI;
+			val msg = "*#*#*#*#*#* ILLEGAL FORWARD REFERENCE to " + node + " in " + node.eResource?.URI;
 			logErr(msg);
 			return new Result(new IllegalStateException(msg));
 		}
@@ -371,7 +362,7 @@ public class TypeProcessor extends AbstractProcessor {
 
 
 	def private static Expression getExpressionOfVFP(EObject vfp) {
-		switch(vfp) {
+		switch (vfp) {
 			VariableDeclaration:
 				vfp.expression
 			N4FieldDeclaration:
@@ -380,8 +371,9 @@ public class TypeProcessor extends AbstractProcessor {
 				vfp.expression
 		}
 	}
+
 	def private static TypeRef getDeclaredTypeRefOfVFP(EObject vfp) {
-		switch(vfp) {
+		switch (vfp) {
 			VariableDeclaration:
 				vfp.declaredTypeRef
 			N4FieldDeclaration:

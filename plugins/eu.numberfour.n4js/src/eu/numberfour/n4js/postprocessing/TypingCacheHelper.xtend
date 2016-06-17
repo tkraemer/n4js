@@ -65,26 +65,26 @@ public class TypingCacheHelper {
 			}
 			if (actualTypes.put(astNode, actualType) !== null) {
 				throw reportError(new IllegalStateException(
-					"cache collision: multiple actual types put into cache for AST node: " + astNode
-					+ " in resource: " + resource.URI));
+					"cache collision: multiple actual types put into cache for AST node: " + astNode +
+						" in resource: " + resource.URI));
 			}
 		}
 
 		def Result<TypeRef> get(EObject astNode) {
 			val result = getFailSafe(astNode);
-			if(result===null) {
+			if (result === null) {
 				throw reportError(new IllegalStateException(
-					"cache miss: no actual type in cache for AST node: " + astNode
-					+ " in resource: " + resource.URI));
+					"cache miss: no actual type in cache for AST node: " + astNode + " in resource: " + resource.URI));
 			}
 			return result;
 		}
+
 		def Result<TypeRef> getFailSafe(EObject astNode) {
 			return actualTypes.get(astNode);
 		}
 
 		def boolean isCanceled() {
-			return cancelIndicator!==null && cancelIndicator.isCanceled;
+			return cancelIndicator !== null && cancelIndicator.isCanceled;
 		}
 	}
 
@@ -134,7 +134,7 @@ public class TypingCacheHelper {
 	 */
 	def TypeRef typeOf(EObject astNode) {
 		val Result<TypeRef> result = resultOf(astNode);
-		return if(result!==null) result.getValue() else null;
+		return if (result !== null) result.getValue() else null;
 	}
 
 	/**
