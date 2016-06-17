@@ -23,12 +23,13 @@ import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 /**
  */
 @XpectSuiteClasses({
-	ValidationTest.class,
-	OutputXpectMethod.class,
-	NoerrorsXpectMethod.class,
+		ValidationTest.class,
+		OutputXpectMethod.class,
+		NoerrorsXpectMethod.class,
 })
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata", fileExtensions = { "xt" })
 @RunWith(XpectRunner.class)
+// @XpectImport(SuppressUnusedVariableWarningSetup.class)
 public class SpecExamplesTest {
 	// nop
 }

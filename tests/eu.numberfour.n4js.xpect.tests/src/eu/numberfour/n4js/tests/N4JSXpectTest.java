@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -25,6 +26,7 @@ import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.validation.ReturnXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
 
 /**
  * Xpect test class, also configured in fragment.xml, executes all Xpect tests found in model folder.
@@ -42,6 +44,7 @@ import eu.numberfour.n4js.xpect.validation.ReturnXpectMethod;
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model", fileExtensions = { "xt" })
+@XpectImport(SuppressUnusedVariableWarningSetup.class)
 public class N4JSXpectTest {
 	//
 }

@@ -1,4 +1,11 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest
+   
+IssueConfiguration {
+	IssueCode "AST_LOCAL_VAR_UNUSED" {enabled=true}
+}
+   
+   END_SETUP
+ */
 
 class D {}
 
