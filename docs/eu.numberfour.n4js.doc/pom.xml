@@ -148,9 +148,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <icons>font</icons>
                                 <linkcss>true</linkcss>
                                 <stylesdir>${basedir}/src/styles</stylesdir>
-                                <stylesheet>n4js-adoc-90%.css</stylesheet>
-                                <highlightjsdir>${basedir}/src/sourcehighlight</highlightjsdir>
-                                <highlightjs-theme>n4js</highlightjs-theme>
+                                <stylesheet>n4js-adoc-1.css</stylesheet>
+                                <highlightjsdir>/scripts</highlightjsdir>
+                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <doctype>book</doctype>
                                 <experimental>true</experimental>
                                 <commandkey>&#8984;</commandkey>
@@ -160,7 +160,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idprefix/>
                                 <idseparator>-</idseparator>
                                 <docinfodir>${basedir}/headers</docinfodir>
-                                <docinfo2>true</docinfo2>
+                                <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>
                     </execution>

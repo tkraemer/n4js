@@ -118,7 +118,7 @@ In Java, primitive types can be auto-boxed to their corresponding object types (
 ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:
 
 
-[source,javascript]
+[source,n4js]
 ----
 let bool: boolean = false;
 let Bool: Boolean = new Boolean( false );
@@ -131,7 +131,7 @@ console.log( Bool.valueOf(), Bool ? "true" : "false");
 Probably surprising for Java programmers, this would print out
 
 
-[source]
+[source,n4js]
 false 'false'
 false 'true'
 
@@ -167,7 +167,7 @@ In N4JS,`*f'*` is override comptabible to `*f*` (or its type is a subtype of the
 
 For example, the following code is correct in N4JS while it would cause compile errors in Java:
 
-[source,javascript]
+[source,n4js]
 class A {
   foo(s: string): void {}
 }
@@ -201,7 +201,7 @@ Note that the `this` literal is bound to the class (to the constructor function,
 static polymorphism as shown in the next example:
 
 
-[source,javascript]
+[source,n4js]
 ----
 class A {
   public static s() { console.log("A.s"); this.t(); };
