@@ -430,8 +430,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					if (!tresult.failed) {
 						val tr = tresult.value
 						if (tr instanceof ConstructorTypeRef) {
-							val str = tr.typeRef
-							val isReceiverPromise = TypeUtils.isPromise(str, tscope)
+							val str = tr.getTypeArg
+							val isReceiverPromise = if (str instanceof TypeRef) TypeUtils.isPromise(str, tscope) else false;
 							return isReceiverPromise
 						}
 					}
@@ -1229,7 +1229,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 								d instanceof TObjectPrototype;
 						};
 						if (T instanceof ClassifierTypeRef) { // implies || T instanceof ConstructorTypeRef)
-							val d = T.typeRef.declaredType;
+							val d = T.staticType;
 							val concreteMetaType = d instanceof TClass || d instanceof TEnum ||
 								d instanceof PrimitiveType || d instanceof TObjectPrototype;
 							return concreteMetaType;

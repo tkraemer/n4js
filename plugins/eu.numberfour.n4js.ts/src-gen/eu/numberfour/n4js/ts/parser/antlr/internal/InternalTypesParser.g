@@ -4200,7 +4200,20 @@ ruleTypeRefInClassifierType returns [EObject current=null]
         $current = $this_ThisTypeRefNominal_1.current;
         afterParserOrEnumRuleCall();
     }
+
+    |((((
 )
+QuestionMark
+))=>
+    { 
+        newCompositeNode(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); 
+    }
+    this_Wildcard_2=ruleWildcard
+    {
+        $current = $this_Wildcard_2.current;
+        afterParserOrEnumRuleCall();
+    }
+))
 ;
 
 
@@ -5932,16 +5945,16 @@ ruleConstructorTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_typeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstructorTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"typeRef",
-        		lv_typeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -5992,16 +6005,16 @@ ruleClassifierTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_typeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getClassifierTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"typeRef",
-        		lv_typeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }

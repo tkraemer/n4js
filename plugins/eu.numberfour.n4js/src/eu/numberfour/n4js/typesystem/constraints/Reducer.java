@@ -642,8 +642,8 @@ public class Reducer {
 	 * @return true iff new bounds were added (this signals a round of incorporation should follow)
 	 */
 	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
-		final TypeRef leftStatic = TypeUtils.copy(left.getTypeRef());
-		final TypeRef rightStatic = TypeUtils.copy(right.getTypeRef());
+		final TypeArgument leftStatic = TypeUtils.copy(left.getTypeArg());
+		final TypeArgument rightStatic = TypeUtils.copy(right.getTypeArg());
 		if (!(left instanceof ConstructorTypeRef) && !(right instanceof ConstructorTypeRef)) {
 			// both sides are plain ClassifierTypeRefs
 			return reduce(leftStatic, rightStatic, variance);

@@ -239,7 +239,7 @@ import eu.numberfour.n4js.ts.types.Type;
 		} else if (ref1 instanceof ClassifierTypeRef) {
 			final ClassifierTypeRef cref1 = (ClassifierTypeRef) ref1;
 			final ClassifierTypeRef cref2 = (ClassifierTypeRef) ref2;
-			c = compare(fqnProvider, cref1.getTypeRef(), cref2.getTypeRef());
+			c = compare(fqnProvider, cref1.getTypeArg(), cref2.getTypeArg());
 			if (c != 0) {
 				return c;
 			}

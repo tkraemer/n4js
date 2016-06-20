@@ -6276,7 +6276,10 @@ ruleTypeRefForCast :
 // Rule TypeRefInClassifierType
 ruleTypeRefInClassifierType :
 	ruleParameterizedTypeRefNominal |
-	ruleThisTypeRefNominal
+	ruleThisTypeRefNominal |
+	( (
+	'?'
+	) => ruleWildcard )
 ;
 
 // Rule ThisTypeRef

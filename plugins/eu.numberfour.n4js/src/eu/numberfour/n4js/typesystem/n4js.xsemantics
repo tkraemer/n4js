@@ -134,7 +134,6 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
@@ -1050,7 +1049,7 @@ from {
 			if( (E instanceof BoundThisTypeRef)
 				||
 				  ( (E instanceof ClassifierTypeRef)
-				    && ((E as ClassifierTypeRef).typeRef instanceof BoundThisTypeRef)
+				    && ((E as ClassifierTypeRef).getTypeArg instanceof BoundThisTypeRef)
 				  )
 			) {
 				// N.T.D. on purpose:
@@ -1183,7 +1182,7 @@ from {
  */
 rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: ClassifierTypeRef ctr
 from {
-	val typeRef = ctr.typeRef
+	val typeRef = ctr.getTypeArg
 	// staticTypeRef is either ThisTypeRefNominal OR ParemterizedTypeRef:
 	if(  typeRef instanceof ParameterizedTypeRef ) {
 		typeRef.declaredType === G.n4EnumType &&  ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
@@ -1585,39 +1584,48 @@ from {
 rule subtypeConstructorTypeRef
 	G |- ConstructorTypeRef left <: ConstructorTypeRef right
 from {
-	// check static types
-	G |- left.typeRef <: right.typeRef
-
-	// check constructors
-	val left_staticType = left.staticType
-	val right_staticType = right.staticType
-	if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
-		// special case: we have a type variable on one or both sides
-		// left <: right if and only if the type variables are identical
-		left_staticType === right_staticType
-		// (for a type variable itself we cannot get the constructor, we could only get the constructor
-		// of the upper/lower bound; however, in contrast to other type rules, we cannot say
-		// constructor{upperBound(T)} <: constructor{X} implies constructor{T} <: constructor{X}
-		// because the subtype relation for ConstructorTypeRefs is not transitive; so we need
-		// the identical type - in this case: the identical type variable - on both sides)
-	}
-	else {
-		val leftCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(left_staticType as ContainerType<?>);
-		val rightCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(right_staticType as ContainerType<?>);
-		leftCtor!=null && rightCtor!=null
-
-		// support for type variables and [~]~this as type of fpars in constructors
-		val G_left = G.wrap;
-		val G_right = G.wrap;
-		typeSystemHelper.addSubstitutions(G_left, left_staticType.ref);
-		G_left.addThisType(left_staticType.ref)
-		typeSystemHelper.addSubstitutions(G_right, right_staticType.ref);
-		G_right.addThisType(right_staticType.ref)
-		G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst
-		G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst
-
-		G |- leftCtorRefSubst <: rightCtorRefSubst
-	}
+	if (right.typeArg instanceof TypeRef) { // right contains no wildcard
+		G |- left.getTypeArg <: right.getTypeArg
+	
+		// check constructors
+		val left_staticType = left.staticType
+		val right_staticType = right.staticType
+		if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
+			// special case: we have a type variable on one or both sides
+			// left <: right if and only if the type variables are identical
+			left_staticType === right_staticType
+			// (for a type variable itself we cannot get the constructor, we could only get the constructor
+			// of the upper/lower bound; however, in contrast to other type rules, we cannot say
+			// constructor{upperBound(T)} <: constructor{X} implies constructor{T} <: constructor{X}
+			// because the subtype relation for ConstructorTypeRefs is not transitive; so we need
+			// the identical type - in this case: the identical type variable - on both sides)
+		}
+		else {
+			val leftCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(left_staticType as ContainerType<?>);
+			val rightCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(right_staticType as ContainerType<?>);
+			leftCtor!=null && rightCtor!=null
+	
+			// support for type variables and [~]~this as type of fpars in constructors
+			val G_left = G.wrap;
+			val G_right = G.wrap;
+			typeSystemHelper.addSubstitutions(G_left, left_staticType.ref);
+			G_left.addThisType(left_staticType.ref)
+			typeSystemHelper.addSubstitutions(G_right, right_staticType.ref);
+			G_right.addThisType(right_staticType.ref)
+			G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst
+			G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst
+	
+			G |- leftCtorRefSubst <: rightCtorRefSubst
+		}
+	} else { // right contains a wilcard
+		G |~ left.typeArg /\ var TypeRef upperBoundLeft
+		G |~ left.typeArg \/ var TypeRef lowerBoundLeft
+		G |~ right.typeArg /\ var TypeRef upperBoundRight
+		G |~ right.typeArg \/ var TypeRef lowerBoundRight
+		
+		G |- upperBoundLeft <: upperBoundRight
+		G |- lowerBoundRight <: lowerBoundLeft 
+	} 
 }
 
 rule subtypeClassifierTypeRef
@@ -1628,7 +1636,7 @@ from {
 	!(right instanceof ConstructorTypeRef)
 
 	// check static types
-	G |- left.typeRef <: right.typeRef
+	G |- left.getTypeArg <: right.getTypeArg
 }
 
 rule subtypeClassifierTypeRefObject
@@ -2280,7 +2288,7 @@ from {
 		ConstructorTypeRef: {
 		}
 		default: { /* case ClassifierTypeRef */
-			val typeRef = ct.typeRef
+			val typeRef = ct.getTypeArg
 			switch(typeRef) {
 				 BoundThisTypeRef: {
 						result = TypeUtils.createResolvedClassifierTypeRef(ct)
@@ -2478,12 +2486,12 @@ rule substTypeVariablesInClassifierTypeRef
 	G |- ClassifierTypeRef typeRef ~> ClassifierTypeRef result
 from {
 	// Substitute in Parameterized Typeref.
-	G |- typeRef.typeRef ~> var TypeRef tResult
-	if( typeRef.typeRef !== tResult ) {
+	G |- typeRef.getTypeArg ~> var TypeRef tResult
+	if( typeRef.getTypeArg !== tResult ) {
 		// changes.
 		tResult = TypeUtils.copy( tResult )
 			result = TypeUtils.copy( typeRef )
-			result.typeRef = tResult
+			result.typeArg = tResult
 	} else {
 		// nothing changed.
 		result = typeRef

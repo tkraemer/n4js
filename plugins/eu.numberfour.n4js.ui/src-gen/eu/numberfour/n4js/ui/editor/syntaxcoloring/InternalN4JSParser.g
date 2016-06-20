@@ -15192,7 +15192,10 @@ ruleTypeRefInClassifierType
 (	ParameterizedTypeRefNominalParserRuleCall_0=ruleParameterizedTypeRefNominal		{ announce($ParameterizedTypeRefNominalParserRuleCall_0.start, $ParameterizedTypeRefNominalParserRuleCall_0.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getParameterizedTypeRefNominalParserRuleCall_0()); }
 
     |	ThisTypeRefNominalParserRuleCall_1=ruleThisTypeRefNominal		{ announce($ThisTypeRefNominalParserRuleCall_1.start, $ThisTypeRefNominalParserRuleCall_1.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getThisTypeRefNominalParserRuleCall_1()); }
-)
+
+    |(((
+	QuestionMark 	))=>	WildcardParserRuleCall_2=ruleWildcard		{ announce($WildcardParserRuleCall_2.start, $WildcardParserRuleCall_2.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
+))
 ;
 
 
@@ -15870,7 +15873,7 @@ ruleConstructorTypeRef
 	ConstructorKeyword_1=Constructor 	 { announce($ConstructorKeyword_1, grammarAccess.getConstructorTypeRefAccess().getConstructorKeyword_1()); }
 	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getConstructorTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
 (
-	TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
+	TypeArgTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
 )
 )
 	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getConstructorTypeRefAccess().getRightCurlyBracketKeyword_4()); })
@@ -15895,7 +15898,7 @@ ruleClassifierTypeRef
 	TypeKeyword_1=Type 	 { announce($TypeKeyword_1, grammarAccess.getClassifierTypeRefAccess().getTypeKeyword_1()); }
 	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getClassifierTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
 (
-	TypeRefTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeRefTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
+	TypeArgTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
 )
 )
 	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getClassifierTypeRefAccess().getRightCurlyBracketKeyword_4()); })

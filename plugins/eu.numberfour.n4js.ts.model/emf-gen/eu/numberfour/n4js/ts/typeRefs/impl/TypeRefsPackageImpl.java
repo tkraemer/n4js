@@ -1211,7 +1211,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getClassifierTypeRef_TypeRef() {
+	public EReference getClassifierTypeRef_TypeArg() {
 		return (EReference)classifierTypeRefEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1800,7 +1800,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(constructorTypeRefEClass, CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		classifierTypeRefEClass = createEClass(CLASSIFIER_TYPE_REF);
-		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__TYPE_REF);
+		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__TYPE_ARG);
 		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING);
 		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___STATIC_TYPE);
 
@@ -2107,7 +2107,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getConstructorTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(classifierTypeRefEClass, ClassifierTypeRef.class, "ClassifierTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getClassifierTypeRef_TypeRef(), this.getTypeRef(), null, "typeRef", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClassifierTypeRef_TypeArg(), this.getTypeArgument(), null, "typeArg", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getClassifierTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

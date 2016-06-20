@@ -84,9 +84,10 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| UnionTypeExpressionOLD
 	| IntersectionTypeExpressionOLD;
 
-TypeRefInClassifierType returns StaticBaseTypeRef:
+TypeRefInClassifierType returns TypeArgument:
 	  ParameterizedTypeRefNominal
-	| ThisTypeRefNominal;
+	| ThisTypeRefNominal
+	| Wildcard;
 
 
 ThisTypeRef returns ThisTypeRef:
@@ -207,10 +208,10 @@ terminal STRUCTMODSUFFIX:
 ;
 
 ConstructorTypeRef returns ConstructorTypeRef:
-	{ConstructorTypeRef} 'constructor' '{' typeRef=TypeRefInClassifierType '}';
+	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
 
 ClassifierTypeRef returns ClassifierTypeRef:
-	{ClassifierTypeRef} 'type' '{' typeRef=TypeRefInClassifierType '}';
+	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
 
 TypeReferenceName:
 	IDENTIFIER ('.' IDENTIFIER)*;

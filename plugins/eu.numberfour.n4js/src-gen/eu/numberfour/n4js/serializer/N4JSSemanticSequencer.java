@@ -1500,7 +1500,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					sequence_WildcardNewNotation(context, (Wildcard) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getWildcardRule()) {
+				else if (rule == grammarAccess.getTypeRefInClassifierTypeRule()
+						|| rule == grammarAccess.getWildcardRule()) {
 					sequence_Wildcard(context, (Wildcard) semanticObject); 
 					return; 
 				}
@@ -8424,15 +8425,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ClassifierTypeRef returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     typeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ClassifierTypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeRef());
+		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -8450,7 +8451,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeArgument returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -8549,15 +8550,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ConstructorTypeRef returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     typeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ConstructorTypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeRef());
+		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -8575,7 +8576,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeArgument returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (typeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -23952,6 +23953,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     TypeRefInClassifierType returns Wildcard
 	 *     Wildcard returns Wildcard
 	 *
 	 * Constraint:

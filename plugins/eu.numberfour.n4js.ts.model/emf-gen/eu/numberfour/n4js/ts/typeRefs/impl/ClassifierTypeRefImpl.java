@@ -36,21 +36,21 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl#getTypeRef <em>Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl#getTypeArg <em>Type Arg</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements ClassifierTypeRef {
 	/**
-	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
+	 * The cached value of the '{@link #getTypeArg() <em>Type Arg</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTypeRef()
+	 * @see #getTypeArg()
 	 * @generated
 	 * @ordered
 	 */
-	protected TypeRef typeRef;
+	protected TypeArgument typeArg;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -76,8 +76,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TypeRef getTypeRef() {
-		return typeRef;
+	public TypeArgument getTypeArg() {
+		return typeArg;
 	}
 
 	/**
@@ -85,11 +85,11 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTypeRef(TypeRef newTypeRef, NotificationChain msgs) {
-		TypeRef oldTypeRef = typeRef;
-		typeRef = newTypeRef;
+	public NotificationChain basicSetTypeArg(TypeArgument newTypeArg, NotificationChain msgs) {
+		TypeArgument oldTypeArg = typeArg;
+		typeArg = newTypeArg;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF, oldTypeRef, newTypeRef);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, oldTypeArg, newTypeArg);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -100,18 +100,18 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypeRef(TypeRef newTypeRef) {
-		if (newTypeRef != typeRef) {
+	public void setTypeArg(TypeArgument newTypeArg) {
+		if (newTypeArg != typeArg) {
 			NotificationChain msgs = null;
-			if (typeRef != null)
-				msgs = ((InternalEObject)typeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF, null, msgs);
-			if (newTypeRef != null)
-				msgs = ((InternalEObject)newTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF, null, msgs);
-			msgs = basicSetTypeRef(newTypeRef, msgs);
+			if (typeArg != null)
+				msgs = ((InternalEObject)typeArg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, null, msgs);
+			if (newTypeArg != null)
+				msgs = ((InternalEObject)newTypeArg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, null, msgs);
+			msgs = basicSetTypeArg(newTypeArg, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF, newTypeRef, newTypeRef));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, newTypeArg, newTypeArg));
 	}
 
 	/**
@@ -120,10 +120,10 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * @generated
 	 */
 	public String getTypeRefAsString() {
-		TypeRef _typeRef = this.getTypeRef();
+		TypeArgument _typeArg = this.getTypeArg();
 		String _typeRefAsString = null;
-		if (_typeRef!=null) {
-			_typeRefAsString=_typeRef.getTypeRefAsString();
+		if (_typeArg!=null) {
+			_typeRefAsString=_typeArg.getTypeRefAsString();
 		}
 		final String refName = _typeRefAsString;
 		String _modifiersAsString = this.getModifiersAsString();
@@ -137,18 +137,18 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 */
 	public Type staticType() {
 		Type _switchResult = null;
-		TypeRef _typeRef = this.getTypeRef();
+		TypeArgument _typeArg = this.getTypeArg();
 		boolean _matched = false;
-		if (_typeRef instanceof ParameterizedTypeRef) {
+		if (_typeArg instanceof ParameterizedTypeRef) {
 			_matched=true;
-			TypeRef _typeRef_1 = this.getTypeRef();
-			_switchResult = _typeRef_1.getDeclaredType();
+			TypeArgument _typeArg_1 = this.getTypeArg();
+			_switchResult = ((ParameterizedTypeRef) _typeArg_1).getDeclaredType();
 		}
 		if (!_matched) {
-			if (_typeRef instanceof BoundThisTypeRef) {
+			if (_typeArg instanceof BoundThisTypeRef) {
 				_matched=true;
-				TypeRef _typeRef_1 = this.getTypeRef();
-				ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef) _typeRef_1).getActualThisTypeRef();
+				TypeArgument _typeArg_1 = this.getTypeArg();
+				ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef) _typeArg_1).getActualThisTypeRef();
 				Type _declaredType = null;
 				if (_actualThisTypeRef!=null) {
 					_declaredType=_actualThisTypeRef.getDeclaredType();
@@ -170,8 +170,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF:
-				return basicSetTypeRef(null, msgs);
+			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+				return basicSetTypeArg(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -184,8 +184,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF:
-				return getTypeRef();
+			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+				return getTypeArg();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -198,8 +198,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF:
-				setTypeRef((TypeRef)newValue);
+			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+				setTypeArg((TypeArgument)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -213,8 +213,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF:
-				setTypeRef((TypeRef)null);
+			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+				setTypeArg((TypeArgument)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -228,8 +228,8 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_REF:
-				return typeRef != null;
+			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+				return typeArg != null;
 		}
 		return super.eIsSet(featureID);
 	}

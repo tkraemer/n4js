@@ -234,7 +234,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ClassifierTypeRef ref = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-			ref.setTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -259,7 +259,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
-			ref.setTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -406,18 +406,18 @@ public class TypeUtils {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
 		ClassifierTypeRef classifierBoundThisTypeRef = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		TypeRef typeRef = actualThisTypeRef.getTypeRef();
+		TypeArgument typeArg = actualThisTypeRef.getTypeArg();
 		final BoundThisTypeRef boundThisTypeRef;
-		if (typeRef instanceof ParameterizedTypeRef) {
-			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) typeRef);
-		} else if (typeRef instanceof BoundThisTypeRef) {
-			boundThisTypeRef = (BoundThisTypeRef) typeRef;
+		if (typeArg instanceof ParameterizedTypeRef) {
+			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) typeArg);
+		} else if (typeArg instanceof BoundThisTypeRef) {
+			boundThisTypeRef = (BoundThisTypeRef) typeArg;
 		} else {
 			// invalid use
 			throw new IllegalArgumentException(
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
-		classifierBoundThisTypeRef.setTypeRef(boundThisTypeRef);
+		classifierBoundThisTypeRef.setTypeArg(boundThisTypeRef);
 		// TODO is there anything else to copy ?
 		return classifierBoundThisTypeRef;
 	}
@@ -458,13 +458,13 @@ public class TypeUtils {
 	 */
 	public static ClassifierTypeRef createResolvedClassifierTypeRef(ClassifierTypeRef ct) {
 		// as part of IDE-785
-		TypeRef replacement = ct.getTypeRef();
-		if (ct.getTypeRef() instanceof BoundThisTypeRef) {
-			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getTypeRef());
+		TypeArgument replacement = ct.getTypeArg();
+		if (ct.getTypeArg() instanceof BoundThisTypeRef) {
+			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getTypeArg());
 		}
 
 		ClassifierTypeRef resolved = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		resolved.setTypeRef(replacement);
+		resolved.setTypeArg(replacement);
 		return resolved;
 	}
 

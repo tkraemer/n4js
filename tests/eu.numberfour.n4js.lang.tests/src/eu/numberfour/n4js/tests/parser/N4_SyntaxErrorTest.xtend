@@ -394,7 +394,7 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		assertEquals('x', param.name)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
 		val returnType = paramType.returnTypeRef as ClassifierTypeRef
-		assertNull(returnType.typeRef)
+		assertNull(returnType.getTypeArg)
 	}
 
 	@Test
@@ -407,7 +407,7 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		assertEquals('x', param.name)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
 		val returnType = paramType.returnTypeRef as ConstructorTypeRef
-		assertNull(returnType.typeRef)
+		assertNull(returnType.getTypeArg)
 	}
 
 	@Test

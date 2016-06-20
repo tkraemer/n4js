@@ -4106,13 +4106,13 @@ public interface TypeRefsPackage extends EPackage {
 	int CLASSIFIER_TYPE_REF__DYNAMIC = BASE_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * The feature id for the '<em><b>Type Arg</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_TYPE_REF__TYPE_REF = BASE_TYPE_REF_FEATURE_COUNT + 0;
+	int CLASSIFIER_TYPE_REF__TYPE_ARG = BASE_TYPE_REF_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Classifier Type Ref</em>' class.
@@ -4377,13 +4377,13 @@ public interface TypeRefsPackage extends EPackage {
 	int CONSTRUCTOR_TYPE_REF__DYNAMIC = CLASSIFIER_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * The feature id for the '<em><b>Type Arg</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF__TYPE_REF = CLASSIFIER_TYPE_REF__TYPE_REF;
+	int CONSTRUCTOR_TYPE_REF__TYPE_ARG = CLASSIFIER_TYPE_REF__TYPE_ARG;
 
 	/**
 	 * The number of structural features of the '<em>Constructor Type Ref</em>' class.
@@ -7322,15 +7322,15 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getClassifierTypeRef();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeRef <em>Type Ref</em>}'.
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeArg <em>Type Arg</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeRef()
+	 * @return the meta object for the containment reference '<em>Type Arg</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeArg()
 	 * @see #getClassifierTypeRef()
 	 * @generated
 	 */
-	EReference getClassifierTypeRef_TypeRef();
+	EReference getClassifierTypeRef_TypeArg();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
@@ -8695,12 +8695,12 @@ public interface TypeRefsPackage extends EPackage {
 		EClass CLASSIFIER_TYPE_REF = eINSTANCE.getClassifierTypeRef();
 
 		/**
-		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Type Arg</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CLASSIFIER_TYPE_REF__TYPE_REF = eINSTANCE.getClassifierTypeRef_TypeRef();
+		EReference CLASSIFIER_TYPE_REF__TYPE_ARG = eINSTANCE.getClassifierTypeRef_TypeArg();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.

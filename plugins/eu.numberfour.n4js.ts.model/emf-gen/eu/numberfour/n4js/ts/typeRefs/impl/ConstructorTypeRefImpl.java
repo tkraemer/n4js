@@ -53,14 +53,14 @@ public class ConstructorTypeRefImpl extends ClassifierTypeRefImpl implements Con
 	 */
 	public String getTypeRefAsString() {
 		String _xifexpression = null;
-		TypeRef _typeRef = this.getTypeRef();
-		boolean _tripleEquals = (null == _typeRef);
+		TypeArgument _typeArg = this.getTypeArg();
+		boolean _tripleEquals = (null == _typeArg);
 		if (_tripleEquals) {
 			_xifexpression = "";
 		}
 		else {
-			TypeRef _typeRef_1 = this.getTypeRef();
-			_xifexpression = _typeRef_1.getTypeRefAsString();
+			TypeArgument _typeArg_1 = this.getTypeArg();
+			_xifexpression = _typeArg_1.getTypeRefAsString();
 		}
 		final String refName = _xifexpression;
 		String _modifiersAsString = this.getModifiersAsString();

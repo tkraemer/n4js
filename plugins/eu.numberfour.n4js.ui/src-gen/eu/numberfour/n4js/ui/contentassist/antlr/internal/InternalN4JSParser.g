@@ -15175,6 +15175,12 @@ rule__TypeRefInClassifierType__Alternatives
 { after(grammarAccess.getTypeRefInClassifierTypeAccess().getThisTypeRefNominalParserRuleCall_1()); }
 )
 
+    |(
+{ before(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
+(	ruleWildcard)
+{ after(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -84977,9 +84983,9 @@ rule__ConstructorTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
-(rule__ConstructorTypeRef__TypeRefAssignment_3)
-{ after(grammarAccess.getConstructorTypeRefAccess().getTypeRefAssignment_3()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
+(rule__ConstructorTypeRef__TypeArgAssignment_3)
+{ after(grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
 )
 
 ;
@@ -85139,9 +85145,9 @@ rule__ClassifierTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
-(rule__ClassifierTypeRef__TypeRefAssignment_3)
-{ after(grammarAccess.getClassifierTypeRefAccess().getTypeRefAssignment_3()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
+(rule__ClassifierTypeRef__TypeArgAssignment_3)
+{ after(grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
 )
 
 ;
@@ -97223,14 +97229,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstructorTypeRef__TypeRefAssignment_3
+rule__ConstructorTypeRef__TypeArgAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;
@@ -97238,14 +97244,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ClassifierTypeRef__TypeRefAssignment_3
+rule__ClassifierTypeRef__TypeArgAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;
