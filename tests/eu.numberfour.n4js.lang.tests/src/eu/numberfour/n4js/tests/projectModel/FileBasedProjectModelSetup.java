@@ -85,7 +85,7 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"VendorId: eu.numberfour\n" +
 					"ProjectName: \"N4JS Tests\"\n" +
 					"VendorName: \"NumberFour AG\"\n" +
-					"ProjectType: lib\n" +
+					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"\n" +
@@ -102,7 +102,7 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"VendorId: eu.numberfour\n" +
 					"ProjectName: \"N4JS Tests\"\n" +
 					"VendorName: \"NumberFour AG\"\n" +
-					"ProjectType: lib\n" +
+					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"\n" +
@@ -136,7 +136,7 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 				"VendorId: eu.numberfour\n" +
 				"ProjectName: \"N4JS Tests\"\n" +
 				"VendorName: \"NumberFour AG\"\n" +
-				"ProjectType: lib\n" +
+				"ProjectType: library\n" +
 				"ProjectVersion: 0.0.1-SNAPSHOT\n" +
 				"Output: \"src-gen\"\n" +
 				"Sources {\n" +

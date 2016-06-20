@@ -10,8 +10,10 @@
  */
 package eu.numberfour.n4js.validation.validators;
 
+import static eu.numberfour.n4js.validation.IssueCodes.AST_CATCH_VAR_TYPED;
 import static eu.numberfour.n4js.validation.IssueCodes.SYN_KW_EXTENDS_IMPLEMENTS_MIXED_UP;
 import static eu.numberfour.n4js.validation.IssueCodes.SYN_KW_INSTEAD_OF_COMMA_WARN;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForAST_CATCH_VAR_TYPED;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForSYN_KW_EXTENDS_IMPLEMENTS_MIXED_UP;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForSYN_KW_INSTEAD_OF_COMMA_WARN;
 
@@ -39,18 +41,20 @@ import org.eclipse.xtext.validation.EValidatorRegistrar;
 
 import com.google.common.base.Joiner;
 
+import eu.numberfour.n4js.n4JS.CatchVariable;
 import eu.numberfour.n4js.n4JS.ModifiableElement;
 import eu.numberfour.n4js.n4JS.ModifierUtils;
 import eu.numberfour.n4js.n4JS.N4ClassDefinition;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
+import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.N4Modifier;
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
+import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * Validates syntax of N4JS not already checked by the parser. The parser is designed to accept some invalid constructs
@@ -359,6 +363,22 @@ public class N4JSSyntaxValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 		return filteredLeaves == null ? Collections.emptyList() : filteredLeaves;
+	}
+
+	/**
+	 * Ensures that a catch variable has not type annotation. This is supported by the parser to enable better error
+	 * messages.
+	 * 
+	 * @see "Spec, 9.1.8"
+	 * @see <a href="https://github.com/NumberFour/n4js/issues/179">GH-179</a>
+	 */
+	@Check
+	public void checkCatchVariable(CatchVariable catchVariable) {
+		if (catchVariable.getDeclaredTypeRef() != null) {
+			addIssue(getMessageForAST_CATCH_VAR_TYPED(), catchVariable,
+					N4JSPackage.eINSTANCE.getTypedElement_DeclaredTypeRef(),
+					AST_CATCH_VAR_TYPED);
+		}
 	}
 
 }

@@ -22,33 +22,32 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalN4MFParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ExtendedRuntimeEnvironment", "ProvidedRuntimeLibraries", "RequiredRuntimeLibraries", "ImplementedProjects", "ProjectDependencies", "RuntimeEnvironment", "ImplementationId", "ProjectVersion", "TestedProjects", "RuntimeLibrary", "ModuleFilters", "ModuleLoader", "NoModuleWrap", "Node_builtin", "InitModules", "ProjectName", "ProjectType", "Application", "ArtifactId", "ExecModule", "MainModule", "VendorName", "NoValidate", "Libraries", "Resources", "Processor", "VendorId", "Commonjs", "External", "Sources", "Compile", "Content", "Library", "Output", "Source", "KW_System", "N4js", "Test", "User", "API", "App", "Lib", "In", "LeftParenthesis", "RightParenthesis", "Comma", "HyphenMinus", "FullStop", "Colon", "LeftSquareBracket", "RightSquareBracket", "LeftCurlyBracket", "RightCurlyBracket", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ExtendedRuntimeEnvironment", "ProvidedRuntimeLibraries", "RequiredRuntimeLibraries", "ImplementedProjects", "ProjectDependencies", "RuntimeEnvironment", "ImplementationId", "ProjectVersion", "TestedProjects", "RuntimeLibrary", "ModuleFilters", "ModuleLoader", "NoModuleWrap", "Node_builtin", "InitModules", "ProjectName", "ProjectType", "Application", "ArtifactId", "ExecModule", "MainModule", "VendorName", "NoValidate", "Libraries", "Resources", "Processor", "VendorId", "Commonjs", "External", "Sources", "Compile", "Content", "Library", "Output", "Source", "KW_System", "N4js", "Test", "User", "API", "In", "LeftParenthesis", "RightParenthesis", "Comma", "HyphenMinus", "FullStop", "Colon", "LeftSquareBracket", "RightSquareBracket", "LeftCurlyBracket", "RightCurlyBracket", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
     };
-    public static final int App=44;
     public static final int ArtifactId=22;
     public static final int TestedProjects=12;
     public static final int KW_System=39;
     public static final int ProjectDependencies=8;
     public static final int ExecModule=23;
-    public static final int LeftParenthesis=47;
+    public static final int LeftParenthesis=45;
     public static final int Test=41;
     public static final int ProjectVersion=11;
     public static final int Libraries=27;
     public static final int ModuleFilters=14;
-    public static final int RightSquareBracket=54;
+    public static final int RightSquareBracket=52;
     public static final int VendorName=25;
     public static final int RuntimeEnvironment=9;
-    public static final int RULE_ID=57;
+    public static final int RULE_ID=55;
     public static final int NoValidate=26;
     public static final int NoModuleWrap=16;
-    public static final int RightParenthesis=48;
+    public static final int RightParenthesis=46;
     public static final int Sources=33;
     public static final int Content=35;
-    public static final int RULE_INT=58;
+    public static final int RULE_INT=56;
     public static final int ProjectType=20;
     public static final int External=32;
-    public static final int RULE_ML_COMMENT=60;
-    public static final int LeftSquareBracket=53;
+    public static final int RULE_ML_COMMENT=58;
+    public static final int LeftSquareBracket=51;
     public static final int Resources=28;
     public static final int Library=36;
     public static final int Application=21;
@@ -56,31 +55,30 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
     public static final int Processor=29;
     public static final int User=42;
     public static final int ProjectName=19;
-    public static final int In=46;
+    public static final int In=44;
     public static final int VendorId=30;
-    public static final int RULE_STRING=59;
+    public static final int RULE_STRING=57;
     public static final int Node_builtin=17;
     public static final int N4js=40;
     public static final int Compile=34;
     public static final int Source=38;
-    public static final int RULE_SL_COMMENT=61;
+    public static final int RULE_SL_COMMENT=59;
     public static final int ImplementationId=10;
-    public static final int Comma=49;
-    public static final int HyphenMinus=50;
+    public static final int Comma=47;
+    public static final int HyphenMinus=48;
     public static final int Output=37;
     public static final int MainModule=24;
-    public static final int Colon=52;
-    public static final int RightCurlyBracket=56;
+    public static final int Colon=50;
+    public static final int RightCurlyBracket=54;
     public static final int EOF=-1;
     public static final int ExtendedRuntimeEnvironment=4;
-    public static final int FullStop=51;
+    public static final int FullStop=49;
     public static final int ModuleLoader=15;
     public static final int Commonjs=31;
-    public static final int Lib=45;
-    public static final int RULE_WS=62;
-    public static final int LeftCurlyBracket=55;
+    public static final int RULE_WS=60;
+    public static final int LeftCurlyBracket=53;
     public static final int ProvidedRuntimeLibraries=5;
-    public static final int RULE_ANY_OTHER=63;
+    public static final int RULE_ANY_OTHER=61;
     public static final int RequiredRuntimeLibraries=6;
     public static final int InitModules=18;
     public static final int API=43;
@@ -6108,7 +6106,7 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProjectType"
-    // InternalN4MFParser.g:2577:1: ruleProjectType returns [Enumerator current=null] : ( (enumLiteral_0= Application ) | (enumLiteral_1= App ) | (enumLiteral_2= Processor ) | (enumLiteral_3= Library ) | (enumLiteral_4= Lib ) | (enumLiteral_5= KW_System ) | (enumLiteral_6= API ) | (enumLiteral_7= RuntimeEnvironment ) | (enumLiteral_8= RuntimeLibrary ) | (enumLiteral_9= Test ) ) ;
+    // InternalN4MFParser.g:2577:1: ruleProjectType returns [Enumerator current=null] : ( (enumLiteral_0= Application ) | (enumLiteral_1= Processor ) | (enumLiteral_2= Library ) | (enumLiteral_3= API ) | (enumLiteral_4= RuntimeEnvironment ) | (enumLiteral_5= RuntimeLibrary ) | (enumLiteral_6= Test ) ) ;
     public final Enumerator ruleProjectType() throws RecognitionException {
         Enumerator current = null;
 
@@ -6119,66 +6117,48 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
         Token enumLiteral_4=null;
         Token enumLiteral_5=null;
         Token enumLiteral_6=null;
-        Token enumLiteral_7=null;
-        Token enumLiteral_8=null;
-        Token enumLiteral_9=null;
 
          enterRule(); 
         try {
-            // InternalN4MFParser.g:2579:28: ( ( (enumLiteral_0= Application ) | (enumLiteral_1= App ) | (enumLiteral_2= Processor ) | (enumLiteral_3= Library ) | (enumLiteral_4= Lib ) | (enumLiteral_5= KW_System ) | (enumLiteral_6= API ) | (enumLiteral_7= RuntimeEnvironment ) | (enumLiteral_8= RuntimeLibrary ) | (enumLiteral_9= Test ) ) )
-            // InternalN4MFParser.g:2580:1: ( (enumLiteral_0= Application ) | (enumLiteral_1= App ) | (enumLiteral_2= Processor ) | (enumLiteral_3= Library ) | (enumLiteral_4= Lib ) | (enumLiteral_5= KW_System ) | (enumLiteral_6= API ) | (enumLiteral_7= RuntimeEnvironment ) | (enumLiteral_8= RuntimeLibrary ) | (enumLiteral_9= Test ) )
+            // InternalN4MFParser.g:2579:28: ( ( (enumLiteral_0= Application ) | (enumLiteral_1= Processor ) | (enumLiteral_2= Library ) | (enumLiteral_3= API ) | (enumLiteral_4= RuntimeEnvironment ) | (enumLiteral_5= RuntimeLibrary ) | (enumLiteral_6= Test ) ) )
+            // InternalN4MFParser.g:2580:1: ( (enumLiteral_0= Application ) | (enumLiteral_1= Processor ) | (enumLiteral_2= Library ) | (enumLiteral_3= API ) | (enumLiteral_4= RuntimeEnvironment ) | (enumLiteral_5= RuntimeLibrary ) | (enumLiteral_6= Test ) )
             {
-            // InternalN4MFParser.g:2580:1: ( (enumLiteral_0= Application ) | (enumLiteral_1= App ) | (enumLiteral_2= Processor ) | (enumLiteral_3= Library ) | (enumLiteral_4= Lib ) | (enumLiteral_5= KW_System ) | (enumLiteral_6= API ) | (enumLiteral_7= RuntimeEnvironment ) | (enumLiteral_8= RuntimeLibrary ) | (enumLiteral_9= Test ) )
-            int alt34=10;
+            // InternalN4MFParser.g:2580:1: ( (enumLiteral_0= Application ) | (enumLiteral_1= Processor ) | (enumLiteral_2= Library ) | (enumLiteral_3= API ) | (enumLiteral_4= RuntimeEnvironment ) | (enumLiteral_5= RuntimeLibrary ) | (enumLiteral_6= Test ) )
+            int alt34=7;
             switch ( input.LA(1) ) {
             case Application:
                 {
                 alt34=1;
                 }
                 break;
-            case App:
+            case Processor:
                 {
                 alt34=2;
                 }
                 break;
-            case Processor:
+            case Library:
                 {
                 alt34=3;
                 }
                 break;
-            case Library:
+            case API:
                 {
                 alt34=4;
                 }
                 break;
-            case Lib:
+            case RuntimeEnvironment:
                 {
                 alt34=5;
                 }
                 break;
-            case KW_System:
+            case RuntimeLibrary:
                 {
                 alt34=6;
                 }
                 break;
-            case API:
-                {
-                alt34=7;
-                }
-                break;
-            case RuntimeEnvironment:
-                {
-                alt34=8;
-                }
-                break;
-            case RuntimeLibrary:
-                {
-                alt34=9;
-                }
-                break;
             case Test:
                 {
-                alt34=10;
+                alt34=7;
                 }
                 break;
             default:
@@ -6207,15 +6187,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:2586:6: (enumLiteral_1= App )
+                    // InternalN4MFParser.g:2586:6: (enumLiteral_1= Processor )
                     {
-                    // InternalN4MFParser.g:2586:6: (enumLiteral_1= App )
-                    // InternalN4MFParser.g:2586:11: enumLiteral_1= App
+                    // InternalN4MFParser.g:2586:6: (enumLiteral_1= Processor )
+                    // InternalN4MFParser.g:2586:11: enumLiteral_1= Processor
                     {
-                    enumLiteral_1=(Token)match(input,App,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,Processor,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_1, grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1()); 
+                            current = grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_1, grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1()); 
                         
 
                     }
@@ -6224,15 +6204,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:2592:6: (enumLiteral_2= Processor )
+                    // InternalN4MFParser.g:2592:6: (enumLiteral_2= Library )
                     {
-                    // InternalN4MFParser.g:2592:6: (enumLiteral_2= Processor )
-                    // InternalN4MFParser.g:2592:11: enumLiteral_2= Processor
+                    // InternalN4MFParser.g:2592:6: (enumLiteral_2= Library )
+                    // InternalN4MFParser.g:2592:11: enumLiteral_2= Library
                     {
-                    enumLiteral_2=(Token)match(input,Processor,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,Library,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_2, grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2()); 
+                            current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_2, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2()); 
                         
 
                     }
@@ -6241,15 +6221,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalN4MFParser.g:2598:6: (enumLiteral_3= Library )
+                    // InternalN4MFParser.g:2598:6: (enumLiteral_3= API )
                     {
-                    // InternalN4MFParser.g:2598:6: (enumLiteral_3= Library )
-                    // InternalN4MFParser.g:2598:11: enumLiteral_3= Library
+                    // InternalN4MFParser.g:2598:6: (enumLiteral_3= API )
+                    // InternalN4MFParser.g:2598:11: enumLiteral_3= API
                     {
-                    enumLiteral_3=(Token)match(input,Library,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,API,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_3, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3()); 
+                            current = grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_3, grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3()); 
                         
 
                     }
@@ -6258,15 +6238,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalN4MFParser.g:2604:6: (enumLiteral_4= Lib )
+                    // InternalN4MFParser.g:2604:6: (enumLiteral_4= RuntimeEnvironment )
                     {
-                    // InternalN4MFParser.g:2604:6: (enumLiteral_4= Lib )
-                    // InternalN4MFParser.g:2604:11: enumLiteral_4= Lib
+                    // InternalN4MFParser.g:2604:6: (enumLiteral_4= RuntimeEnvironment )
+                    // InternalN4MFParser.g:2604:11: enumLiteral_4= RuntimeEnvironment
                     {
-                    enumLiteral_4=(Token)match(input,Lib,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,RuntimeEnvironment,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_4, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4()); 
+                            current = grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_4, grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4()); 
                         
 
                     }
@@ -6275,15 +6255,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalN4MFParser.g:2610:6: (enumLiteral_5= KW_System )
+                    // InternalN4MFParser.g:2610:6: (enumLiteral_5= RuntimeLibrary )
                     {
-                    // InternalN4MFParser.g:2610:6: (enumLiteral_5= KW_System )
-                    // InternalN4MFParser.g:2610:11: enumLiteral_5= KW_System
+                    // InternalN4MFParser.g:2610:6: (enumLiteral_5= RuntimeLibrary )
+                    // InternalN4MFParser.g:2610:11: enumLiteral_5= RuntimeLibrary
                     {
-                    enumLiteral_5=(Token)match(input,KW_System,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,RuntimeLibrary,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_5, grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5()); 
+                            current = grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_5, grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5()); 
                         
 
                     }
@@ -6292,66 +6272,15 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalN4MFParser.g:2616:6: (enumLiteral_6= API )
+                    // InternalN4MFParser.g:2616:6: (enumLiteral_6= Test )
                     {
-                    // InternalN4MFParser.g:2616:6: (enumLiteral_6= API )
-                    // InternalN4MFParser.g:2616:11: enumLiteral_6= API
+                    // InternalN4MFParser.g:2616:6: (enumLiteral_6= Test )
+                    // InternalN4MFParser.g:2616:11: enumLiteral_6= Test
                     {
-                    enumLiteral_6=(Token)match(input,API,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,Test,FOLLOW_2); 
 
-                            current = grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_6, grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6()); 
-                        
-
-                    }
-
-
-                    }
-                    break;
-                case 8 :
-                    // InternalN4MFParser.g:2622:6: (enumLiteral_7= RuntimeEnvironment )
-                    {
-                    // InternalN4MFParser.g:2622:6: (enumLiteral_7= RuntimeEnvironment )
-                    // InternalN4MFParser.g:2622:11: enumLiteral_7= RuntimeEnvironment
-                    {
-                    enumLiteral_7=(Token)match(input,RuntimeEnvironment,FOLLOW_2); 
-
-                            current = grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_7, grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7()); 
-                        
-
-                    }
-
-
-                    }
-                    break;
-                case 9 :
-                    // InternalN4MFParser.g:2628:6: (enumLiteral_8= RuntimeLibrary )
-                    {
-                    // InternalN4MFParser.g:2628:6: (enumLiteral_8= RuntimeLibrary )
-                    // InternalN4MFParser.g:2628:11: enumLiteral_8= RuntimeLibrary
-                    {
-                    enumLiteral_8=(Token)match(input,RuntimeLibrary,FOLLOW_2); 
-
-                            current = grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_8, grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8()); 
-                        
-
-                    }
-
-
-                    }
-                    break;
-                case 10 :
-                    // InternalN4MFParser.g:2634:6: (enumLiteral_9= Test )
-                    {
-                    // InternalN4MFParser.g:2634:6: (enumLiteral_9= Test )
-                    // InternalN4MFParser.g:2634:11: enumLiteral_9= Test
-                    {
-                    enumLiteral_9=(Token)match(input,Test,FOLLOW_2); 
-
-                            current = grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
-                            newLeafNode(enumLiteral_9, grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9()); 
+                            current = grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+                            newLeafNode(enumLiteral_6, grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6()); 
                         
 
                     }
@@ -6380,7 +6309,7 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSourceFragmentType"
-    // InternalN4MFParser.g:2644:1: ruleSourceFragmentType returns [Enumerator current=null] : ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) ) ;
+    // InternalN4MFParser.g:2626:1: ruleSourceFragmentType returns [Enumerator current=null] : ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) ) ;
     public final Enumerator ruleSourceFragmentType() throws RecognitionException {
         Enumerator current = null;
 
@@ -6390,10 +6319,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalN4MFParser.g:2646:28: ( ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) ) )
-            // InternalN4MFParser.g:2647:1: ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) )
+            // InternalN4MFParser.g:2628:28: ( ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) ) )
+            // InternalN4MFParser.g:2629:1: ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) )
             {
-            // InternalN4MFParser.g:2647:1: ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) )
+            // InternalN4MFParser.g:2629:1: ( (enumLiteral_0= Source ) | (enumLiteral_1= External ) | (enumLiteral_2= Test ) )
             int alt35=3;
             switch ( input.LA(1) ) {
             case Source:
@@ -6420,10 +6349,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
             switch (alt35) {
                 case 1 :
-                    // InternalN4MFParser.g:2647:2: (enumLiteral_0= Source )
+                    // InternalN4MFParser.g:2629:2: (enumLiteral_0= Source )
                     {
-                    // InternalN4MFParser.g:2647:2: (enumLiteral_0= Source )
-                    // InternalN4MFParser.g:2647:7: enumLiteral_0= Source
+                    // InternalN4MFParser.g:2629:2: (enumLiteral_0= Source )
+                    // InternalN4MFParser.g:2629:7: enumLiteral_0= Source
                     {
                     enumLiteral_0=(Token)match(input,Source,FOLLOW_2); 
 
@@ -6437,10 +6366,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:2653:6: (enumLiteral_1= External )
+                    // InternalN4MFParser.g:2635:6: (enumLiteral_1= External )
                     {
-                    // InternalN4MFParser.g:2653:6: (enumLiteral_1= External )
-                    // InternalN4MFParser.g:2653:11: enumLiteral_1= External
+                    // InternalN4MFParser.g:2635:6: (enumLiteral_1= External )
+                    // InternalN4MFParser.g:2635:11: enumLiteral_1= External
                     {
                     enumLiteral_1=(Token)match(input,External,FOLLOW_2); 
 
@@ -6454,10 +6383,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:2659:6: (enumLiteral_2= Test )
+                    // InternalN4MFParser.g:2641:6: (enumLiteral_2= Test )
                     {
-                    // InternalN4MFParser.g:2659:6: (enumLiteral_2= Test )
-                    // InternalN4MFParser.g:2659:11: enumLiteral_2= Test
+                    // InternalN4MFParser.g:2641:6: (enumLiteral_2= Test )
+                    // InternalN4MFParser.g:2641:11: enumLiteral_2= Test
                     {
                     enumLiteral_2=(Token)match(input,Test,FOLLOW_2); 
 
@@ -6491,7 +6420,7 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModuleFilterType"
-    // InternalN4MFParser.g:2669:1: ruleModuleFilterType returns [Enumerator current=null] : ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) ) ;
+    // InternalN4MFParser.g:2651:1: ruleModuleFilterType returns [Enumerator current=null] : ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) ) ;
     public final Enumerator ruleModuleFilterType() throws RecognitionException {
         Enumerator current = null;
 
@@ -6500,10 +6429,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalN4MFParser.g:2671:28: ( ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) ) )
-            // InternalN4MFParser.g:2672:1: ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) )
+            // InternalN4MFParser.g:2653:28: ( ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) ) )
+            // InternalN4MFParser.g:2654:1: ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) )
             {
-            // InternalN4MFParser.g:2672:1: ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) )
+            // InternalN4MFParser.g:2654:1: ( (enumLiteral_0= NoValidate ) | (enumLiteral_1= NoModuleWrap ) )
             int alt36=2;
             int LA36_0 = input.LA(1);
 
@@ -6521,10 +6450,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
             }
             switch (alt36) {
                 case 1 :
-                    // InternalN4MFParser.g:2672:2: (enumLiteral_0= NoValidate )
+                    // InternalN4MFParser.g:2654:2: (enumLiteral_0= NoValidate )
                     {
-                    // InternalN4MFParser.g:2672:2: (enumLiteral_0= NoValidate )
-                    // InternalN4MFParser.g:2672:7: enumLiteral_0= NoValidate
+                    // InternalN4MFParser.g:2654:2: (enumLiteral_0= NoValidate )
+                    // InternalN4MFParser.g:2654:7: enumLiteral_0= NoValidate
                     {
                     enumLiteral_0=(Token)match(input,NoValidate,FOLLOW_2); 
 
@@ -6538,10 +6467,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:2678:6: (enumLiteral_1= NoModuleWrap )
+                    // InternalN4MFParser.g:2660:6: (enumLiteral_1= NoModuleWrap )
                     {
-                    // InternalN4MFParser.g:2678:6: (enumLiteral_1= NoModuleWrap )
-                    // InternalN4MFParser.g:2678:11: enumLiteral_1= NoModuleWrap
+                    // InternalN4MFParser.g:2660:6: (enumLiteral_1= NoModuleWrap )
+                    // InternalN4MFParser.g:2660:11: enumLiteral_1= NoModuleWrap
                     {
                     enumLiteral_1=(Token)match(input,NoModuleWrap,FOLLOW_2); 
 
@@ -6575,7 +6504,7 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProjectDependencyScope"
-    // InternalN4MFParser.g:2688:1: ruleProjectDependencyScope returns [Enumerator current=null] : ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) ) ;
+    // InternalN4MFParser.g:2670:1: ruleProjectDependencyScope returns [Enumerator current=null] : ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) ) ;
     public final Enumerator ruleProjectDependencyScope() throws RecognitionException {
         Enumerator current = null;
 
@@ -6584,10 +6513,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalN4MFParser.g:2690:28: ( ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) ) )
-            // InternalN4MFParser.g:2691:1: ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) )
+            // InternalN4MFParser.g:2672:28: ( ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) ) )
+            // InternalN4MFParser.g:2673:1: ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) )
             {
-            // InternalN4MFParser.g:2691:1: ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) )
+            // InternalN4MFParser.g:2673:1: ( (enumLiteral_0= Compile ) | (enumLiteral_1= Test ) )
             int alt37=2;
             int LA37_0 = input.LA(1);
 
@@ -6605,10 +6534,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
             }
             switch (alt37) {
                 case 1 :
-                    // InternalN4MFParser.g:2691:2: (enumLiteral_0= Compile )
+                    // InternalN4MFParser.g:2673:2: (enumLiteral_0= Compile )
                     {
-                    // InternalN4MFParser.g:2691:2: (enumLiteral_0= Compile )
-                    // InternalN4MFParser.g:2691:7: enumLiteral_0= Compile
+                    // InternalN4MFParser.g:2673:2: (enumLiteral_0= Compile )
+                    // InternalN4MFParser.g:2673:7: enumLiteral_0= Compile
                     {
                     enumLiteral_0=(Token)match(input,Compile,FOLLOW_2); 
 
@@ -6622,10 +6551,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:2697:6: (enumLiteral_1= Test )
+                    // InternalN4MFParser.g:2679:6: (enumLiteral_1= Test )
                     {
-                    // InternalN4MFParser.g:2697:6: (enumLiteral_1= Test )
-                    // InternalN4MFParser.g:2697:11: enumLiteral_1= Test
+                    // InternalN4MFParser.g:2679:6: (enumLiteral_1= Test )
+                    // InternalN4MFParser.g:2679:11: enumLiteral_1= Test
                     {
                     enumLiteral_1=(Token)match(input,Test,FOLLOW_2); 
 
@@ -6659,7 +6588,7 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModuleLoader"
-    // InternalN4MFParser.g:2707:1: ruleModuleLoader returns [Enumerator current=null] : ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) ) ;
+    // InternalN4MFParser.g:2689:1: ruleModuleLoader returns [Enumerator current=null] : ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) ) ;
     public final Enumerator ruleModuleLoader() throws RecognitionException {
         Enumerator current = null;
 
@@ -6669,10 +6598,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalN4MFParser.g:2709:28: ( ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) ) )
-            // InternalN4MFParser.g:2710:1: ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) )
+            // InternalN4MFParser.g:2691:28: ( ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) ) )
+            // InternalN4MFParser.g:2692:1: ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) )
             {
-            // InternalN4MFParser.g:2710:1: ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) )
+            // InternalN4MFParser.g:2692:1: ( (enumLiteral_0= N4js ) | (enumLiteral_1= Commonjs ) | (enumLiteral_2= Node_builtin ) )
             int alt38=3;
             switch ( input.LA(1) ) {
             case N4js:
@@ -6699,10 +6628,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
             switch (alt38) {
                 case 1 :
-                    // InternalN4MFParser.g:2710:2: (enumLiteral_0= N4js )
+                    // InternalN4MFParser.g:2692:2: (enumLiteral_0= N4js )
                     {
-                    // InternalN4MFParser.g:2710:2: (enumLiteral_0= N4js )
-                    // InternalN4MFParser.g:2710:7: enumLiteral_0= N4js
+                    // InternalN4MFParser.g:2692:2: (enumLiteral_0= N4js )
+                    // InternalN4MFParser.g:2692:7: enumLiteral_0= N4js
                     {
                     enumLiteral_0=(Token)match(input,N4js,FOLLOW_2); 
 
@@ -6716,10 +6645,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:2716:6: (enumLiteral_1= Commonjs )
+                    // InternalN4MFParser.g:2698:6: (enumLiteral_1= Commonjs )
                     {
-                    // InternalN4MFParser.g:2716:6: (enumLiteral_1= Commonjs )
-                    // InternalN4MFParser.g:2716:11: enumLiteral_1= Commonjs
+                    // InternalN4MFParser.g:2698:6: (enumLiteral_1= Commonjs )
+                    // InternalN4MFParser.g:2698:11: enumLiteral_1= Commonjs
                     {
                     enumLiteral_1=(Token)match(input,Commonjs,FOLLOW_2); 
 
@@ -6733,10 +6662,10 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:2722:6: (enumLiteral_2= Node_builtin )
+                    // InternalN4MFParser.g:2704:6: (enumLiteral_2= Node_builtin )
                     {
-                    // InternalN4MFParser.g:2722:6: (enumLiteral_2= Node_builtin )
-                    // InternalN4MFParser.g:2722:11: enumLiteral_2= Node_builtin
+                    // InternalN4MFParser.g:2704:6: (enumLiteral_2= Node_builtin )
+                    // InternalN4MFParser.g:2704:11: enumLiteral_2= Node_builtin
                     {
                     enumLiteral_2=(Token)match(input,Node_builtin,FOLLOW_2); 
 
@@ -6900,34 +6829,34 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_8s = "\1\uffff\14\25\1\uffff\3\25\1\uffff\2\25\2\uffff\2\25";
     static final String dfa_9s = "\1\10\14\4\1\47\3\4\1\46\2\4\2\uffff\2\4";
-    static final String dfa_10s = "\1\71\14\72\1\47\3\72\1\46\2\72\2\uffff\2\72";
+    static final String dfa_10s = "\1\67\14\70\1\47\3\70\1\46\2\70\2\uffff\2\70";
     static final String dfa_11s = "\24\uffff\1\1\1\2\2\uffff";
     static final String dfa_12s = "\30\uffff}>";
     static final String[] dfa_13s = {
-            "\1\15\2\uffff\1\7\2\uffff\1\14\4\uffff\1\4\1\6\1\20\1\2\2\uffff\1\5\1\uffff\1\11\1\12\1\21\1\3\2\uffff\1\13\1\uffff\1\22\1\uffff\1\10\3\uffff\1\23\1\17\1\16\15\uffff\1\1",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\1\15\2\uffff\1\7\2\uffff\1\14\4\uffff\1\4\1\6\1\20\1\2\2\uffff\1\5\1\uffff\1\11\1\12\1\21\1\3\2\uffff\1\13\1\uffff\1\22\1\uffff\1\10\3\uffff\1\23\1\17\1\16\13\uffff\1\1",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
             "\1\26",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
             "\1\27",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
             "",
             "",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
-            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\5\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25"
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\2\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\24\1\25\2\uffff\1\25\1\uffff\1\25"
     };
     static final short[] dfa_8 = DFA.unpackEncodedString(dfa_8s);
     static final char[] dfa_9 = DFA.unpackEncodedStringToUnsignedChars(dfa_9s);
@@ -6957,28 +6886,28 @@ public class InternalN4MFParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0010000000000000L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x02000E2A7A784900L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00800E2A7A784900L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x000000225BDCDDF2L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x00003A9020202200L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0400000000000000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0080000000000000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0102000000000000L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x00000A1020202200L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0040800000000000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000024100000000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0100024100000000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0040024100000000L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000004010000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0100000004010000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0040000004010000L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000010080020000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x03000E2A7A784900L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0900000000000000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x000C000000000002L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000400000000002L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0420820400000002L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x00C00E2A7A784900L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0240000000000000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0003000000000002L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000100000000002L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0108220400000002L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000020400000002L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0003000000000002L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0041000000000000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000C00000000002L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0010400000000000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000008000000000L});
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000004000000000L});
 

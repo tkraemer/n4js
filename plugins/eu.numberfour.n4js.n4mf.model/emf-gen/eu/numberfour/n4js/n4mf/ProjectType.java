@@ -26,7 +26,6 @@ import org.eclipse.emf.common.util.Enumerator;
  * <dt>application			</dt><dd>10.2.1. Apps</dd>
  * <dt>processor 			</dt><dd>10.2.2. Processors</dd>
  * <dt>library				</dt><dd>10.2.3. Libraries</dd>
- * <dt>system				</dt><dd>10.2.4. System Libraries </dd>
  * <dt>runtimeEnvironment	</dt><dd>10.2.5. Runtime Environment</dd>
  * <dt>runtimeLibrary		</dt><dd>10.2.5. Runtime Library</dd>
  * </description>
@@ -65,16 +64,6 @@ public enum ProjectType implements Enumerator {
 	 * @ordered
 	 */
 	LIBRARY(0, "LIBRARY", "LIBRARY"),
-
-	/**
-	 * The '<em><b>SYSTEM</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #SYSTEM_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	SYSTEM(0, "SYSTEM", "SYSTEM"),
 
 	/**
 	 * The '<em><b>API</b></em>' literal object.
@@ -162,21 +151,6 @@ public enum ProjectType implements Enumerator {
 	public static final int LIBRARY_VALUE = 0;
 
 	/**
-	 * The '<em><b>SYSTEM</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>SYSTEM</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #SYSTEM
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int SYSTEM_VALUE = 0;
-
-	/**
 	 * The '<em><b>API</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -247,7 +221,6 @@ public enum ProjectType implements Enumerator {
 			APPLICATION,
 			PROCESSOR,
 			LIBRARY,
-			SYSTEM,
 			API,
 			RUNTIME_ENVIRONMENT,
 			RUNTIME_LIBRARY,

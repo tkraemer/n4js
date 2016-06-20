@@ -2,7 +2,7 @@ ArtifactId: ProjectMain
 VendorId: eu.numberfour
 ProjectName: "ProjectMain"
 VendorName: "NumberFour AG"
-ProjectType: lib
+ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 ProjectDependencies {
 	ProjectImportee
