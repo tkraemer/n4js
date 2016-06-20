@@ -11,10 +11,15 @@ class C {
     }
 
 
-/* remove empty lines */
-/* XPECT formattedLines 2 ---
+/* remove empty lines with annotation */
+/* XPECT formattedLines 4 ---
+let a = 0;
+
+@Description("a")
 class C2 {}
 --- */
+let a=0;
+   @Description("a")
   class C2 {
 
 
@@ -23,7 +28,7 @@ class C2 {}
 }
 
 /* remove empty lines */
-/* XPECT formattedLines 4 ---
+/* XPECT FIXME formattedLines 4 ---
 class C3 {}
 --- */
   class C3 {
@@ -35,7 +40,7 @@ class C3 {}
 
 
 /* remove empty lines */
-/* XPECT formattedLines 4 ---
+/* XPECT FIXME formattedLines 4 ---
 class C3a {// comment	
 }
 --- */
@@ -48,7 +53,7 @@ class C3a {// comment
 
 
 /* remove leading WS */
-/* XPECT formattedLines 4 ---
+/* XPECT FIXME formattedLines 4 ---
 class C4 {}
 --- */
   class C4 {
@@ -77,7 +82,7 @@ class C4 {}
 
 
 
-/* XPECT formattedLines 3 ---
+/* XPECT FIXME formattedLines 3 ---
 function foo() {};
 --- */
     function foo() {

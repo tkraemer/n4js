@@ -98,14 +98,13 @@ import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.n4JS.Annotation
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
-import eu.numberfour.n4js.n4JS.ObjectBindingPattern
 import eu.numberfour.n4js.n4JS.BindingPattern
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
-import org.eclipse.xtext.formatting2.internal.RootDocument
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
 import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
 import org.eclipse.xtext.formatting2.regionaccess.IHiddenRegion
+import eu.numberfour.n4js.n4JS.AnnotablePropertyAssignment
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -145,7 +144,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		script.formatColon(document);
 
 		for (element : script.scriptElements) {
-			element.append[setNewLines(1, 1, maxConsecutiveNewLines);noSpace; autowrap].prepend[noSpace];
+			// element.append[setNewLines(1, 1, maxConsecutiveNewLines);noSpace; autowrap].prepend[noSpace];
+			element.append[setNewLines(1, 1, maxConsecutiveNewLines); autowrap];
 			element.format;
 		}
 
@@ -180,8 +180,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch format(N4ClassDeclaration clazz, extension IFormattableDocument document) {
+		
+		clazz.configureAnnotations(document);
 		clazz.insertSpaceInFrontOfCurlyBlockOpener(document);
-		clazz.interior[indent];
+		clazz.indentExcludingAnnotations(document);
+		
 		
 		clazz.configureTypingStrategy(document);
 		clazz.configureModifiers(document);
@@ -267,7 +270,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		interf.configureAnnotations(document);
 		interf.configureModifiers(document);
 		interf.insertSpaceInFrontOfCurlyBlockOpener(document);
-		interf.interior[indent];
+		interf.indentExcludingAnnotations(document);// .interiorBUGFIX([indent],document);	//interf.interior[indent];
 
 		interf.ownedMembersRaw.head.prepend[setNewLines(1, 1, maxConsecutiveNewLines)]
 		for (member : interf.ownedMembersRaw) {
@@ -290,10 +293,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		field.configureModifiers(document);
 		field.insertSpaceInfrontOfPropertyNames(document);
 		
-		//Exclude Annotations from indentation	field.interior[indent];
-		val begin = field.semanticRegions.findFirst[!(semanticElement instanceof Annotation)];
-		val end = field.semanticRegions.last;
-		if( begin !== end )	interior(begin,end,[indent]);
+		field.indentExcludingAnnotations(document);
 
 		field.regionFor.keyword("=").prepend[oneSpace].append[oneSpace];
 		field.expression.format;
@@ -301,6 +301,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		field.bogusTypeRef.format;
 	}
+	
+	
+
 
 //	def dispatch format(N4MethodDeclaration method, extension IFormattableDocument document) {
 //		method.configureAnnotations(document);
@@ -407,7 +410,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		enumDecl.configureAnnotations(document);
 		enumDecl.configureModifiers(document);
 		enumDecl.insertSpaceInFrontOfCurlyBlockOpener(document);
-		enumDecl.interior[indent];
+		enumDecl.indentExcludingAnnotations(document);//.interiorBUGFIX([indent],document);	//enumDecl.interior[indent];
 		enumDecl.configureCommas(document);
 		
 		val braces = enumDecl.regionFor.keywordPairs("{","}").head;
@@ -435,14 +438,13 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		dotKW.prepend[noSpace; autowrap; setNewLines(0,0,1)].append[noSpace;];
 		if( exp.eContainer instanceof ExpressionStatement) {
 			// top-level PPA, indent one level.
-			exp.interior[
-				indent
-			];
+			exp.interiorBUGFIX([indent],document);	//exp.interior[indent];
 		}
 		exp.target.format;
 	}
 
 	def dispatch void format(ParameterizedCallExpression exp, extension IFormattableDocument document) {
+		// FIXME process typeArgs !!!
 		val dotKW = exp.regionFor.keyword(".");
 		dotKW.prepend[noSpace; autowrap;].append[noSpace;]
 		exp.regionFor.keyword("(").prepend[noSpace].append[noSpace];
@@ -454,9 +456,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		if( exp.eContainer instanceof ExpressionStatement) {
 			// top-level PPA, indent one level.
-			exp.interior[
-				indent
-			];
+			exp.interiorBUGFIX([indent],document);	//exp.interior[indent];
 		}
 		exp.target.format;
 	}
@@ -504,7 +504,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	def dispatch void format(SwitchStatement swStmt, extension IFormattableDocument document) {
 		swStmt.insertSpaceInFrontOfCurlyBlockOpener(document);
-		swStmt.interior[indent]; 
+		swStmt.interiorBUGFIX([indent],document);	//swStmt.interior[indent]; 
 		swStmt.expression.format;
 		swStmt.cases.head.prepend[newLine];
 		swStmt.cases.forEach[format];
@@ -513,7 +513,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	/** Formats DefaultCaseClause + CaseClause */
 	def dispatch void format(AbstractCaseClause caseClause, extension IFormattableDocument document) {
 		caseClause.insertNewlineAfterColon(document,getPreference(FORMAT_SWITCH_CASES_HAVE_SPACE_IN_FRONT_OF_COLON));
-		caseClause.interior[indent];
+		caseClause.interiorBUGFIX([indent],document);	//caseClause.interior[indent];
 		caseClause.statements.last.append[setNewLines(1, 1, 2);]
 	}
 
@@ -533,7 +533,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			block.regionFor.keyword("{").prepend[oneSpace];
 		}
 
-		block.interior[indent];
+		block.interiorBUGFIX([indent],document);	//block.interior[indent];
 		
 		block.statements.head.prepend[setNewLines(1,1,maxConsecutiveNewLines)];
 		block.statements.forEach[append[setNewLines(1,1,maxConsecutiveNewLines)]];
@@ -556,7 +556,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	
 
 	def dispatch void format(ReturnStatement ret, extension IFormattableDocument document) {
-		ret.interior[indent;]
+		ret.interiorBUGFIX([indent],document);	//ret.interior[indent;]
 		ret.expression.prepend[oneSpace; newLines = 0];
 		ret.expression.format;
 	}
@@ -697,7 +697,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(ParenExpression parenE, extension IFormattableDocument document) {
 		parenE.semanticRegions.head.append[noSpace;newLines=0;autowrap];
 		parenE.semanticRegions.last.prepend[noSpace;newLines=0;autowrap];
-		parenE.interior[indent];
+		parenE.interiorBUGFIX([indent],document);	//parenE.interior[indent];
 		parenE.expression.format;
 	}
 	
@@ -774,7 +774,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(TemplateLiteral tl, extension IFormattableDocument document) {
-		tl.interior[indent;];
+		tl.interiorBUGFIX([indent],document);	//tl.interior[indent;];
 		tl.segments.forEach[
 			switch(it) {
 				TemplateSegment: noOp	
@@ -856,7 +856,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 		vStmt.configureCommas(document);
 		
-		vStmt.interior[indent];
+		vStmt.interiorBUGFIX([indent],document);	//vStmt.interior[indent];
 		val lastIdx = vStmt.varDeclsOrBindings.size - 1;
 
 		vStmt.varDeclsOrBindings.forEach [ e, int i |
@@ -958,11 +958,24 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			append[oneSpace; autowrap];
 		];
 	}
+	
+	def void indentExcludingAnnotations(EObject semObject, extension IFormattableDocument document) {
+		//Exclude Annotations from indentation	field.interior[indent];
+		val begin = semObject.semanticRegions.findFirst[!(semanticElement instanceof Annotation)];
+		val end = semObject.semanticRegions.last;
+		if( begin !== end )	{ // guard to prevent wrong indentation
+			interior(begin,end,[indent]);
+		}
+	}
 
 	
 	private def dispatch void configureAnnotations(AnnotableN4MemberDeclaration semEObject, extension IFormattableDocument document) {
 		configureAnnotations( semEObject.annotationList, document );
 	}
+
+	private def dispatch void configureAnnotations(AnnotablePropertyAssignment semEObject, extension IFormattableDocument document) {
+		configureAnnotations( semEObject.annotationList, document );
+	} 
 
 	private def dispatch void configureAnnotations(AnnotableScriptElement semEObject, extension IFormattableDocument document) {
 		configureAnnotations( semEObject.annotationList, document );
@@ -1110,7 +1123,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	
 	def dispatch void format( ParameterizedTypeRef ptr, extension IFormattableDocument document) {
-		ptr.interior[indent];
+		ptr.interiorBUGFIX([indent],document);	//ptr.interior[indent];
 
 		// Union / Intersection
 		ptr.regionFor.keywords("&","|").forEach[ surround[oneSpace;newLines=0].append[autowrap;highPriority]];
@@ -1157,5 +1170,47 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 		
 	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Bug-workarounds
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/** Temporarily used method to replace document.interior(EObject, Procedure1) to prevent wrong indentations.
+	 * 
+	 * Main pattern replace document-extension method call:
+	 * <pre>
+	 * object.interior[indent]
+	 * </pre>
+	 * by
+	 * <pre>
+	 * object.interiorBUGFIX([indent],document);
+	 * <pre> 
+	 * 
+	 */
+	def void interiorBUGFIX(EObject object, Procedure1<? super IHiddenRegionFormatter> init,IFormattableDocument document ){
+		val IEObjectRegion objRegion = getTextRegionAccess().regionForEObject(object);
+		if (objRegion !== null) {
+			val IHiddenRegion previous = objRegion.getPreviousHiddenRegion();
+			val IHiddenRegion next = objRegion.getNextHiddenRegion();
+			if (previous !== null && next !== null && previous != next) {
+				val nsr = previous.getNextSemanticRegion();
+				val psr = next.getPreviousSemanticRegion();
+				if( nsr != psr )
+				{ // standard case
+					document.interior(nsr, psr , init);
+				} else {
+					// former error-case:
+					// there is no interior --> apply to next or don't do anything?
+					document.set(nsr.nextHiddenRegion,init);
+				}
+			}
+		}
+	}
+	
+	
+	/** Dummy method to prevent accidentally calling interior - extension method form document. You should call interiorBUGFIX instead ! */
+	def Procedure1<? super IFormattableDocument> interior( EObject eo, Procedure1<? super IHiddenRegionFormatter> init ){
+		throw new IllegalStateException("Method should not be called.")
+	}	
 	
 }

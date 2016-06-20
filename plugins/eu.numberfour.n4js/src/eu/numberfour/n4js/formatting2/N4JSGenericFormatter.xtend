@@ -52,26 +52,33 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 	 */
 	def void formatSemicolons(EObject script, extension IFormattableDocument document) {
 		for (region : script.allRegionsFor.ruleCallsTo(semiRule)) {
-			val text = region.text
-			val previous = region.previousHiddenRegion
+			val text = region.text;
+			val previous = region.previousHiddenRegion;
 			if (text == ";") {
 
 				// there is already a ";" so let's format it
-				region.prepend[noSpace; newLines = 0; highPriority]
+				region.prepend[noSpace; newLines = 0; highPriority];
 			} else if (previous.containsComment) {
 
 				// we're behind a comment - insert semicolon before the comment
 				val insertAt = region.textRegionAccess.regionForOffset(previous.offset, 0)
-				document.addReplacer(new InsertSemi(insertAt, ";"))
+				document.addReplacer(new InsertSemi(insertAt, ";"));
 			} else if (text.trim.isEmpty) {
-
-				// the text region only contains whitespace, e.g. \n - so let's insert a ;
-				document.addReplacer(new InsertSemi(region, ";\n"))
+				// Don't eat up white space here.	
+				// Look for first line break and replace with ";\n":
+				val lbIdx = text.indexOf("\n");
+				if( lbIdx >= 0 ) {
+					val replaceRegion = region.textRegionAccess.regionForOffset(region.offset, lbIdx+1 );
+					document.addReplacer(new InsertSemi(replaceRegion, ";\n"));
+				} else {
+					// the text region only contains whitespace, e.g. so let's insert a ; and a "\n"
+					document.addReplacer(new InsertSemi(region, ";\n"));
+				}
 			} else {
 
 				// we probably are the comment, so let's prefix it with ;
-				val insertAt = region.textRegionAccess.regionForOffset(region.offset, 0)
-				document.addReplacer(new InsertSemi(insertAt, ";"))
+				val insertAt = region.textRegionAccess.regionForOffset(region.offset, 0);
+				document.addReplacer(new InsertSemi(insertAt, ";"));
 			}
 		}
 	}

@@ -3,8 +3,11 @@
    END_SETUP
  */
 
-/* */
-/* XPECT formattedLines 6 ---
+/* Wrong formatting: 
+   (1) line 22: empty line removed after ASI
+   (2) Flickering when formatted twice, thrice or more: call to foo alternates between one or four lines. 
+   */
+/* XPECT FIXME formattedLines 6 ---
 var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
 
 foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,

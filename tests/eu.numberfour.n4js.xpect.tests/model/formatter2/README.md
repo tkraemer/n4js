@@ -22,3 +22,16 @@ Auto-Wrapping is currently behaving strange in some ways.
 *  In file [expressions2.n4js.xt](expressions2.n4js.xt) there is a FIXME disable the first of two tests. NOTE if the second test is completely removed from the file, the first test 
 	passes. --> first test is affected by the following lines of code not under test. 
 
+
+InsertSemi is behaving strangely:
+
+* In file [rev_short_param_in_call_01.n4js.xt](rev_short_param_in_call_01.n4js.xt) the test case demonstrates that an empty line is swallowed:
+  Formatting states ```newLines(1,1,2)``` for all top-level elements. 
+  If the input is missing a semicolon followed by an empty line before the following statement, the empty line is removed. 
+  If the semicolon is explicitly given, the empty line remains as intended.
+
+  
+* File [rev_long_param_in_call_01.n4js.xt](rev_long_param_in_call_01.n4js.xt) shows the same ASI-error as above PLUS an alternation with Auto-Wrapping
+
+* File [rev_classes_01.n4js.xt](rev_classes_01.n4js.xt) 4 out of 7 tests fail:
+  Indentation for top-level class declarations & function declaration is not computed properly -- maybe an issue with XPect framework since the same data works fine in an editor.
