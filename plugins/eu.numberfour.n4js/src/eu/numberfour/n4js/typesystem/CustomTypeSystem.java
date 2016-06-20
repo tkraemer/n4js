@@ -157,11 +157,11 @@ public class CustomTypeSystem extends N4JSTypeSystem {
 
 	/**
 	 * <b>All invocations of 'type' judgment in Xsemantics - from outside or from within Xsemantics - are now delegated
-	 * to {@link ASTProcessor}.</b>
+	 * to {@link TypeProcessor}.</b>
 	 * <p>
-	 * {@code TypingASTWalker} will simply read the type from the cache (if containing resource is fully processed) or
+	 * {@code TypeProcessor} will simply read the type from the cache (if containing resource is fully processed) or
 	 * initiate the post-processing of the entire resource. Actual use of the 'type' judgment will only be done by
-	 * {@link ASTProcessor} during post-processing of a resource via method
+	 * {@link TypeProcessor} during post-processing of a resource via method
 	 * {@link #use_type_judgment_from_PostProcessors(RuleEnvironment, RuleApplicationTrace, TypableElement)}. Once
 	 * post-processing of an {@link N4JSResource} has finished, the 'type' judgment will never be used again for this
 	 * resource!
