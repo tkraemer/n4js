@@ -1571,14 +1571,15 @@ from {
 }
 
 /*
- * Constructors are functions
+ * Constructors are functions (also see #227)
  */
 rule subtypeConstructorTypeRef__Function
 	G |- ConstructorTypeRef left <: ParameterizedTypeRef right
 from {
-	right.declaredType instanceof AnyType
-	||
-	right.declaredType === G.objectType
+//	right.declaredType instanceof AnyType
+//	||
+	// right.declaredType === G.objectType see #227
+	G |- G.functionTypeRef <: right
 }
 
 rule subtypeConstructorTypeRef

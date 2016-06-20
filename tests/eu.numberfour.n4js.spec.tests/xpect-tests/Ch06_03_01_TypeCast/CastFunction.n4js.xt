@@ -13,7 +13,8 @@ f as any;
 f as Object;
 // XPECT errors --> "Cannot cast from Function to E" at "f as E"
 f as E;
-// XPECT errors --> "Cannot cast from Function to constructor{C}" at "f as constructor{C}"
+// TODO "Cannot cast from Function to constructor{C}" at "f as constructor{C}" see #227
+// XPECT noerrors -->
 f as constructor{C};
 // XPECT errors --> "Cannot cast from Function to type{C}" at "f as type{C}"
 f as type{C};

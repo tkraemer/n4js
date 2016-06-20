@@ -4537,11 +4537,9 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeConstructorTypeRef__Function(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
-    /* right.declaredType instanceof AnyType || right.declaredType === G.objectType */
-    if (!((right.getDeclaredType() instanceof AnyType) || 
-      (right.getDeclaredType() == RuleEnvironmentExtensions.objectType(G)))) {
-      sneakyThrowRuleFailedException("right.declaredType instanceof AnyType || right.declaredType === G.objectType");
-    }
+    /* G |- G.functionTypeRef <: right */
+    ParameterizedTypeRef _functionTypeRef = RuleEnvironmentExtensions.functionTypeRef(G);
+    subtypeInternal(G, _trace_, _functionTypeRef, right);
     return new Result<Boolean>(true);
   }
   
