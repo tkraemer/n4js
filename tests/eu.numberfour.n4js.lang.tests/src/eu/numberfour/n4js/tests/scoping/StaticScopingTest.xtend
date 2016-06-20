@@ -19,7 +19,6 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.members.MemberScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -36,6 +35,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.List
 import static org.junit.Assert.*
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 
 /**
  * Tests for static scoping, combined with type system test.
@@ -51,7 +51,7 @@ class StaticScopingTest {
 
 	@Inject extension ParseHelper<Script>
 	@Inject extension ValidationTestHelper
-	@Inject extension N4JSTypeInferencer
+	@Inject extension N4JSTypeSystem
 	@Inject extension IScopeProvider scopeProvider
 
 	private static var numberOfInstanceMembersInN4ObjectCache = -1;

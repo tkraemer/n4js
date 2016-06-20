@@ -119,7 +119,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 		if (newExpression?.callee === null)
 			return; // invalid AST
 
-		val typeRef = typeInferencer.tau(newExpression.callee)
+		val typeRef = ts.tau(newExpression.callee)
 		if (typeRef === null)
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)

@@ -57,7 +57,6 @@ import eu.numberfour.n4js.ts.types.TypeAccessModifier;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
 import eu.numberfour.n4js.typesystem.ITypeReplacementProvider;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
@@ -77,8 +76,6 @@ public class ProjectCompareHelper {
 	private ProjectUtils projectUtils;
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
-	@Inject
-	private N4JSTypeInferencer typeInferencer;
 	@Inject
 	private N4JSTypeSystem typeSystem;
 
@@ -582,8 +579,8 @@ public class ProjectCompareHelper {
 			}
 
 			final TypeRef context = TypeUtils.createTypeRef((Type) api.eContainer());
-			final TypeRef typeApi = typeInferencer.tau(apiMember, context);
-			final TypeRef typeImpl = typeInferencer.tau(implMember, context);
+			final TypeRef typeApi = typeSystem.tau(apiMember, context);
+			final TypeRef typeImpl = typeSystem.tau(implMember, context);
 
 			final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(api);
 			RuleEnvironmentExtensions.setTypeReplacement(G, new ImplToApiReplacementProvider(entry.getRoot()));

@@ -10,14 +10,22 @@
  */
 package eu.numberfour.n4js.typesystem;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TypableElement;
+import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -66,11 +74,166 @@ public class N4JSTypeSystem {
 		return its.lowerBound(G, typeArgument);
 	}
 
+	public TypeRef substTypeVariablesXXX(RuleEnvironment G, TypeRef typeRef) {
+		return (TypeRef) substTypeVariables(G, typeRef).getValue();
+	}
+
 	public Result<TypeArgument> substTypeVariables(RuleEnvironment G, TypeArgument typeArgument) {
 		return its.substTypeVariables(G, typeArgument);
 	}
 
 	public Result<TypeRef> thisTypeRef(RuleEnvironment G, EObject location) {
 		return its.thisTypeRef(G, location);
+	}
+
+	// --------------------------------------------------------
+	// FIXME:
+
+	/**
+	 * Creates a rule environment for the given context, i.e. it will be populated with type variable substitutions,
+	 * this-bindings, etc. For details about the context argument see {@link #tau(TypableElement,TypeRef)}. Returns an
+	 * empty rule environment without any bindings if context is <code>null</code>. For consistency with
+	 * {@link RuleEnvironmentExtensions#newRuleEnvironment(EObject)} this will throw an exception if resourceSet is
+	 * <code>null</code>.
+	 */
+	public RuleEnvironment createRuleEnvironmentForContext(TypeRef context, Resource resource) {
+		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
+		if (context != null) {
+			tsh.addSubstitutions(G, context);
+			if (context instanceof ParameterizedTypeRef) {
+				if (context.getDeclaredType() instanceof TClassifier)
+					RuleEnvironmentExtensions.addThisType(G, context);
+			}
+		}
+		return G;
+	}
+
+	@Inject
+	private TypeSystemHelper tsh;
+
+	/**
+	 * Convenience method to create a simplified union type. Returns <code>null</code> if resource set is null.
+	 */
+	public TypeRef createSimplifiedUnion(List<TypeRef> typeRefs, Resource resource) {
+		if (typeRefs.size() > 1 && resource != null) {
+			return tsh.createUnionType(
+					RuleEnvironmentExtensions.newRuleEnvironment(resource),
+					typeRefs.toArray(new TypeRef[typeRefs.size()]));
+		} else if (typeRefs.size() == 1) {
+			return TypeUtils.copyIfContained(typeRefs.get(0));
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Convenience method to create a simplified intersection type. Returns <code>null</code> if resource set is null.
+	 */
+	public TypeRef createSimplifiedIntersection(List<TypeRef> typeRefs, Resource resource) {
+		if (typeRefs.size() > 1 && resource != null) {
+			return tsh.createIntersectionType(
+					RuleEnvironmentExtensions.newRuleEnvironment(resource),
+					typeRefs.toArray(new TypeRef[typeRefs.size()]));
+		} else if (typeRefs.size() == 1) {
+			return TypeUtils.copyIfContained(typeRefs.get(0));
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Infers type of <code>object</code> using the {@link N4JSTypeSystem}. The given object must be contained in a
+	 * ResourceSet (required for creating a RuleEnvironment).
+	 * <p>
+	 * IMPORTANT: this method does not handle generics and the binding of type parameters/ arguments; if you need this
+	 * behavior, use method {@link #tau(TypableElement,TypeRef)} instead!
+	 */
+	public TypeRef tau(TypableElement object) {
+		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(object);
+		return tau(G, object);
+	}
+
+	/**
+	 * Same as {@link #tau(TypableElement)}, but <code>object</code> need not be contained in a ResourceSet; instead, a
+	 * RuleEnvironment is provided as argument.
+	 */
+	public TypeRef tau(RuleEnvironment G, TypableElement object) {
+		return tau(G, object, false, true);
+	}
+
+	/**
+	 * Convenience method, calls {@link #tau(TypableElement,TypeRef)} with type wrapped into a a reference (without any
+	 * further type arguments).
+	 */
+	public TypeRef tau(TypableElement object, Type context) {
+		return tau(object, TypeUtils.createTypeRef(context));
+	}
+
+	/**
+	 * This is the generics-aware version of method {@link #tau(TypableElement)}; if you do not care about generics and
+	 * the binding of type variables, use plain {@link #tau(TypableElement)} instead (it is less expensive + caching)!
+	 * <p>
+	 * Parameter <code>context</code> defines if and how type variables are bound. Consider the following example:
+	 *
+	 * <pre>
+	 * class A&lt;T> {
+	 * 	T f;
+	 * }
+	 *
+	 * class B&lt;S> extends A&lt;S> {
+	 * }
+	 *
+	 * class C extends B&lt;string> {
+	 * }
+	 * </pre>
+	 *
+	 * If you call this method passing in the TField instance representing field 'f' as <code>object</code>, the type
+	 * inferred by this method will depend on parameter <code>context</code> as follows:
+	 * <ul>
+	 * <li>passing in A as the context will return type variable T as type of field 'f'.
+	 * <li>passing in B as the context will return type variable B as type of field 'f' (note: here type variable T was
+	 * bound but type variable S remained unbound).
+	 * <li>passing in C as the context will return built-in type 'string' as type of field 'f' (now both type variables
+	 * S and T have been bound).
+	 * </ul>
+	 * Furthermore, if the TypeRef passed in as context is a ParameterizedTypeRef, it may define additional type
+	 * variable bindings (cf. ParameterizedTypeRef).
+	 */
+	public TypeRef tau(TypableElement object, TypeRef context) {
+		return tau(object, context, true);
+	}
+
+	/**
+	 * Similar as {@link #tau(TypableElement, TypeRef)}, but if {@code takeUpperBound} is {@code false} the upper bound
+	 * will not be acquired for the calculated type reference. Passing {@code true} for {@code takeUpperBound} will be
+	 * an identical call of {@link #tau(RuleEnvironment, TypableElement)}.
+	 */
+	public TypeRef tau(TypableElement object, TypeRef context, boolean takeUpperBound) {
+		final RuleEnvironment G = createRuleEnvironmentForContext(context, object != null ? object.eResource() : null);
+		return tau(G, object, true, takeUpperBound);
+	}
+
+	private TypeRef tau(RuleEnvironment G, TypableElement object, boolean substituteTypeVariables,
+			boolean takeUpperBound) {
+		final Result<TypeRef> result = type(G, object);
+		final TypeRef value = result.getValue();
+		if (value != null) {
+			// Replace bound type variables with type arguments if required. Otherwise keep working with the original
+			// value.
+			final TypeRef substValue = substituteTypeVariables ? substTypeVariablesXXX(G, value) : value;
+			if (substValue != null) {
+				// Required, because #upperBound() will return 'null' if it gets a type variable!
+				if (substValue.getDeclaredType() instanceof TypeVariable) {
+					return substValue;
+				}
+				if (takeUpperBound) {
+					final Result<TypeRef> upperBoundResult = upperBound(G, substValue);
+					return upperBoundResult.getValue();
+				} else {
+					return substValue;
+				}
+			}
+		}
+		return null;
 	}
 }

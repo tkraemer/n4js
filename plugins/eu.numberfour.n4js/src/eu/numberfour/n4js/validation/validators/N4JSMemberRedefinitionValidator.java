@@ -130,7 +130,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
 	@Inject
-	private N4JSTypeSystem typeSystem;
+	private N4JSTypeSystem ts;
 
 	@Inject
 	private MemberVisibilityChecker memberVisibilityChecker;
@@ -876,10 +876,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		// will return type of value for fields, function type for methods, type of return value for getters, type of
 		// parameter for setters
-		TypeRef typeLeft = typeInferencer.tau(left, classTypeRef, false);
-		TypeRef typeRight = typeInferencer.tau(right, classTypeRef, false);
+		TypeRef typeLeft = ts.tau(left, classTypeRef, false);
+		TypeRef typeRight = ts.tau(right, classTypeRef, false);
 
-		return typeSystem.subtype(G, typeLeft, typeRight);
+		return ts.subtype(G, typeLeft, typeRight);
 	}
 
 	private TClassifier getCurrentClassifier() {

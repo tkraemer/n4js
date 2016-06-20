@@ -51,7 +51,7 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.util.Variance
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator.MethodWrapperCancelable
@@ -88,7 +88,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	@Inject
 	protected N4JSGrammarAccess grammarAccess
 	@Inject
-	protected N4JSTypeInferencer typeInferencer;
+	private N4JSTypeSystem ts;
 	@Inject
 	protected TypeSystemHelper tsh;
 	@Inject
@@ -199,7 +199,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			val G_subst = source.newRuleEnvironment;
 			if(source instanceof ParameterizedPropertyAccessExpression) {
 				val G = source.newRuleEnvironment;
-				val targetTypeRef = typeInferencer.tau(G, source.target); // note: not using G_subst here
+				val targetTypeRef = ts.tau(G, source.target); // note: not using G_subst here
 				tsh.addSubstitutions(G_subst, targetTypeRef);
 			}
 			for (int i : 0 ..< typeArgs.size) {
@@ -237,10 +237,12 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 
 				// check bounds
 				for (TypeRef upperBound : typeParameter.declaredUpperBounds) {
-					val substituted = typeInferencer.substituteTypeVariables(G_subst, upperBound)
-					val result = typeInferencer.subtypeTypeRef(typeArgument, substituted);
-					if (result.failed) {
-						errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
+					if(upperBound!==null) {
+						val substituted = ts.substTypeVariables(G_subst, upperBound).value;
+						val result = ts.subtype(G_subst, typeArgument, substituted);
+						if (result.failed) {
+							errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
+						}
 					}
 				}
 			}

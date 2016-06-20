@@ -41,7 +41,6 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
@@ -58,7 +57,6 @@ import org.eclipse.xtext.scoping.Scopes
  */
 class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
-	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject ComposedMemberScope.ComposedMemberScopeFactory composedMemberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
@@ -285,7 +283,7 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(ComposedTypeRef ctr, EObject context, boolean staticAccess) {
 		return composedMemberScopeFactory.create(ctr, context, ctr.typeRefs.map[members(context, staticAccess)],
-			ctr instanceof IntersectionTypeExpression, typeInferencer);
+			ctr instanceof IntersectionTypeExpression, ts);
 	}
 
 	// TODO type variable can specify multiple upper bounds!

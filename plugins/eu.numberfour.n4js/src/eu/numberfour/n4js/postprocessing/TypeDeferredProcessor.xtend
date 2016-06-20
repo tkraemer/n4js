@@ -23,7 +23,6 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
@@ -43,8 +42,6 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 	private N4JSTypeSystem ts;
 	@Inject
 	private TypeSystemHelper tsh;
-	@Inject
-	private N4JSTypeInferencer typeInferencer;
 
 	def void handleDeferredTypeRefs_preChildren(RuleEnvironment G, EObject obj) {
 		// DeferredTypeRefs related to poly expressions should not be handled here (poly computer responsible for this!)
@@ -116,7 +113,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 							tField.typeRef instanceof DeferredTypeRef);
 						val context = if (tField.eContainer instanceof ContainerType<?>) TypeUtils.createTypeRef(
 								tField.eContainer as ContainerType<?>) else null;
-						val G_withContext = typeInferencer.createRuleEnvironmentForContext(context, G.contextResource);
+						val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
 						val fieldTypeRef = askXsemanticsForType(G_withContext, obj).value; // delegate to Xsemantics rule typeN4FieldDeclaration
 						val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
 						val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);

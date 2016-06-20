@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.base.Joiner;
 
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
@@ -32,6 +31,7 @@ import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.UndefModifier;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -46,7 +46,7 @@ public class ComposedMemberDescriptor {
 
 	private final boolean writeAccess;
 	private final Resource resource;
-	private final N4JSTypeInferencer typeInferencer;
+	private final N4JSTypeSystem ts;
 
 	// the following fields will contain the characteristics of the combined member
 	// and will be updated in the #mergeXYZ() methods below
@@ -82,7 +82,7 @@ public class ComposedMemberDescriptor {
 				typeRefsToUse = new ArrayList<>(this.typeRefs);
 				typeRefsToUse.addAll(ComposedMemberDescriptor.this.typeRefs);
 			}
-			fpar.setTypeRef(typeInferencer.createSimplifiedIntersection(typeRefsToUse,
+			fpar.setTypeRef(ts.createSimplifiedIntersection(typeRefsToUse,
 					ComposedMemberDescriptor.this.resource));
 			if (this.optional && null != fpar.getTypeRef())
 				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
@@ -92,7 +92,7 @@ public class ComposedMemberDescriptor {
 	}
 
 	/**
-	 * Constructor. The Resource and the typeInferencer will be used for type inference, etc. during merging of the
+	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
 	 * members.
 	 *
 	 * @param writeAccess
@@ -100,15 +100,15 @@ public class ComposedMemberDescriptor {
 	 *            intended for read-access. This is only required in the case that we have only fields but those fields
 	 *            are of different type, because then we will combine them into a getter or setter.
 	 */
-	public ComposedMemberDescriptor(boolean writeAccess, Resource resource, N4JSTypeInferencer typeInferencer) {
+	public ComposedMemberDescriptor(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
 		this.writeAccess = writeAccess;
-		this.typeInferencer = typeInferencer;
+		this.ts = ts;
 		this.resource = resource;
 	}
 
 	private TypeRef getSimplifiedUnionOfTypeRefs() {
 		if (cachedSimplifiedUnionOfTypeRefs == null)
-			cachedSimplifiedUnionOfTypeRefs = typeInferencer.createSimplifiedUnion(typeRefs, resource);
+			cachedSimplifiedUnionOfTypeRefs = ts.createSimplifiedUnion(typeRefs, resource);
 		return cachedSimplifiedUnionOfTypeRefs;
 	}
 
@@ -129,7 +129,10 @@ public class ComposedMemberDescriptor {
 			mergeReadOnlyField(nextMember instanceof TField ? !((TField) nextMember).isWriteable() : false);
 			// mergeConst(nextMember instanceof TField ? ((TField) nextMember).isConst() : false);
 			mergeAccessibility(nextMember.getMemberAccessModifier());
-			mergeTypeRef(typeInferencer.substituteTypeVariables(G, TypeUtils.getMemberTypeRef(nextMember)));
+			final TypeRef nextMemberTypeRef = TypeUtils.getMemberTypeRef(nextMember);
+			if (nextMemberTypeRef != null) {
+				mergeTypeRef(ts.substTypeVariablesXXX(G, nextMemberTypeRef));
+			}
 			if (nextMember instanceof TSetter) {
 				mergeFpar(G, 0, ((TSetter) nextMember).getFpar());
 			} else if (nextMember instanceof TMethod) {
@@ -171,9 +174,10 @@ public class ComposedMemberDescriptor {
 	}
 
 	private void mergeTypeRef(TypeRef nextTypeRef) {
-		if (nextTypeRef != null)
+		if (nextTypeRef != null) {
 			// remember ALL types we have encountered (so we do not actually merge anything here)
 			typeRefs.add(TypeUtils.copyIfContained(nextTypeRef));
+		}
 	}
 
 	private void mergeFpar(RuleEnvironment G, int fparIdx, TFormalParameter nextFpar) {
@@ -189,7 +193,7 @@ public class ComposedMemberDescriptor {
 			if (nextName != null && !desc.names.contains(nextName))
 				desc.names.add(nextName); // collect all fpar names (without duplicates)
 			if (nextFpar.getTypeRef() != null) {
-				final TypeRef nextFparTypeRef = typeInferencer.substituteTypeVariables(G, nextFpar.getTypeRef());
+				final TypeRef nextFparTypeRef = ts.substTypeVariablesXXX(G, nextFpar.getTypeRef());
 				desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
 			}
 			desc.optional &= nextFpar.isOptional(); // remember if ALL were optional

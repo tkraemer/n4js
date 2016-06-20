@@ -41,7 +41,6 @@ import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TStructSetter
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
@@ -71,13 +70,10 @@ import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
 class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
-	N4JSTypeInferencer ti;
+	private N4JSTypeSystem ts;
 
 	@Inject
-	protected N4JSTypeSystem typeSystem;
-
-	@Inject
-	protected ReturnOrThrowAnalysis returnOrThrowAnalysis
+	private ReturnOrThrowAnalysis returnOrThrowAnalysis
 	
 	@Inject
 	private HiddenLeafAccess hla;
@@ -204,7 +200,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	// three checks above.
 	private def boolean holdsFunctionReturn(FunctionOrFieldAccessor functionOrFieldAccessor) {
 		// simple inference without context: we only need to check IF there is a return type declared (or inferred), we do not need the concrete type
-		val inferredType = ti.tau(functionOrFieldAccessor)
+		val inferredType = ts.tau(functionOrFieldAccessor)
 		val TypeRef retTypeRef = switch inferredType {
 			// note: order is important, because FunctionTypeRef IS a ParameterizedTypeRef as well
 			FunctionTypeExprOrRef: {
@@ -279,7 +275,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			// ...no expression
 			if (rst.expression !== null) {
 
-				val expressionType = ti.tau(rst.expression)
+				val expressionType = ts.tau(rst.expression)
 
 				val actualType = if (expressionType instanceof ParameterizedTypeRef) {
 						expressionType.declaredType

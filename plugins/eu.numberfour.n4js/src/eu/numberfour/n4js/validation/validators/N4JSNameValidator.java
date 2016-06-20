@@ -43,6 +43,8 @@ import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.EValidatorRegistrar;
 
+import com.google.inject.Inject;
+
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSFeatureUtils;
@@ -51,15 +53,19 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4TypeDeclaration;
 import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.Variable;
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
+import eu.numberfour.n4js.validation.JavaScriptVariant;
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
  */
 public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
+
+	@Inject
+	private N4JSTypeSystem ts;
 
 	/**
 	 * NEEEDED
@@ -157,7 +163,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 						&& holdsNoTypeNameOrNameEqualsType(n4Member) //
 						&& holdsDoesNotContainDiscouragedCharacter(n4Member) //
 						&& holdsNameMayNotBeConfusedWith(n4Member, "access modifier", ACCESS_MODIFIERS) //
-		)) {
+				)) {
 			// error messages are created with in constraint validation
 		}
 
@@ -321,7 +327,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (namedElement instanceof TypableElement) {
 			String name = namedElement.getName();
 			if (BASE_TYPES.contains(name)) {
-				TypeRef typeRef = typeInferencer.tau((TypableElement) namedElement);
+				TypeRef typeRef = ts.tau((TypableElement) namedElement);
 				if (typeRef != null && typeRef.getDeclaredType() != null) {
 					String typeName = typeRef.getDeclaredType().getName();
 					if (!Strings.isEmpty(typeName) && !name.equals(typeName)) {

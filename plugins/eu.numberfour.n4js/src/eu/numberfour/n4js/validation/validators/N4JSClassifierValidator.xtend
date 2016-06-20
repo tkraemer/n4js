@@ -29,8 +29,6 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.util.Variance
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import java.util.Collection
@@ -54,11 +52,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.*
 class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
-	protected N4JSTypeInferencer typeInferencer;
-	@Inject
-	protected N4JSTypeSystem ts;
-	@Inject
-	protected extension IQualifiedNameProvider qualifiedNameProvider;
+	private extension IQualifiedNameProvider qualifiedNameProvider;
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter
 

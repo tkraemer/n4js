@@ -55,7 +55,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TStructMethod
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xtext.scoping.FilteringScope
 import java.util.List
@@ -76,7 +76,7 @@ import org.eclipse.xtext.scoping.impl.MapBasedScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import org.eclipse.xtext.util.IResourceScopeCache
 
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * This class contains custom scoping description.
@@ -107,7 +107,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 	/* Poor mans filter to reduce number of elements in getAllElements */
 	@Inject extension N4JSTypesScopeFilter
 
-	@Inject extension N4JSTypeInferencer
+	@Inject N4JSTypeSystem ts
 
 	@Inject MemberScopingHelper memberScopingHelper
 
@@ -402,7 +402,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 
 		val TypeRef typeRef = switch (receiver) {
 			ThisLiteral: {
-				val thisTypeRef = receiver.tau
+				val thisTypeRef = ts.tau(receiver);
 				if (thisTypeRef === null && !receiver.strictMode) {
 
 					// if not strict mode, we assume the global object == script context
@@ -413,7 +413,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 				thisTypeRef
 			}
 			default: {
-				receiver.tau;
+				ts.tau(receiver);
 			}
 		};
 

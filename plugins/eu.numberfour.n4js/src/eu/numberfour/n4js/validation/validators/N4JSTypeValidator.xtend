@@ -50,7 +50,6 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -79,9 +78,6 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private XsemanticsValidatorErrorGenerator errorGenerator;
-
-	@Inject
-	private N4JSTypeInferencer typeInferencer;
 
 	@Inject
 	private N4JSTypeSystem ts;
@@ -303,7 +299,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 				// ok, we have the situation we are interested in (setter on LHS of compound assignment)
 				// --> now check if there is a matching getter of correct type
 				val TSetter setter = prop;
-				val Type targetType = typeInferencer.tau(lhs.target)?.declaredType;
+				val Type targetType = ts.tau(lhs.target)?.declaredType;
 				if (targetType instanceof ContainerType<?>) {
 					val TMember m = containerTypesHelper.fromContext(assExpr).findMember(targetType, setter.name, false, setter.static);
 					if (m === null) {
@@ -320,7 +316,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 						val expectedType = ts.expectedTypeIn(G, assExpr, assExpr.rhs).value;
 						val TypeRef typeOfGetterRAW = TypeUtils.getMemberTypeRef(getter);
 						if (expectedType !== null && typeOfGetterRAW !== null) {
-							val TypeRef typeOfGetter = typeInferencer.substituteTypeVariables(G, typeOfGetterRAW);
+							val TypeRef typeOfGetter = ts.substTypeVariablesXXX(G, typeOfGetterRAW);
 							if (typeOfGetter !== null) {
 								val result = ts.subtype(G, typeOfGetter, expectedType);
 								createError(result, assExpr.lhs);

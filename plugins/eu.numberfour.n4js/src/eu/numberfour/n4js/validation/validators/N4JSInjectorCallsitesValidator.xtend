@@ -193,7 +193,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 * Expression must denote a DIC constructor. If so, return the TClass of the DIC. Otherwise return null.
 	 */
 	private def TClass holdsDenotesDICConstructor(Expression ctorOfDICArg) {
-		val ctorOfDICTypeRef = typeInferencer.tau(ctorOfDICArg)
+		val ctorOfDICTypeRef = ts.tau(ctorOfDICArg)
 		if (ctorOfDICTypeRef instanceof ClassifierTypeRef) {
 			val dicTClass = dicTClassOf(ctorOfDICTypeRef.staticTypeRef)
 			if (null !== dicTClass) {
@@ -227,7 +227,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def void internalCheckInjectorCreateCallsite(ParameterizedCallExpression callExpression) {
 		val ctorArg = callExpression.arguments.head?.expression
-		val ctorArgTypeRef = typeInferencer.tau(ctorArg)
+		val ctorArgTypeRef = ts.tau(ctorArg)
 		if (ctorArgTypeRef instanceof ClassifierTypeRef) {
 			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.staticTypeRef)) {
 				return
@@ -268,7 +268,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 * Expression must denote at runtime an N4Injector instance, null, or undefined.
 	 */
 	private def void holdsDenotesInjector(Expression expr) {
-		val tr = typeInferencer.tau(expr)
+		val tr = ts.tau(expr)
 		if (isAllowedAsInjectorInstance(tr.declaredType)) {
 			return
 		}
@@ -288,7 +288,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 		Iterable<TClass> bindersForWhichInstancesAreNeeded
 	) {
 		val G = newRuleEnvironment(providedBinders.get(0));
-		val availableTypeRefs = providedBinders.map[expr| typeInferencer.tau(expr) ].filter[tr| !isNullOrUndefinedType(tr.declaredType) ]
+		val availableTypeRefs = providedBinders.map[expr| ts.tau(expr) ].filter[tr| !isNullOrUndefinedType(tr.declaredType) ]
 		val missingBinders = bindersForWhichInstancesAreNeeded.filter[requirement|
 			!someBinderSatisfies(G, availableTypeRefs, requirement)
 		]

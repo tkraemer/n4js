@@ -280,7 +280,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (callExpression?.target === null)
 			return; // invalid AST
 
-		val typeRef = typeInferencer.tau(callExpression.target);
+		val typeRef = ts.tau(callExpression.target);
 		if (typeRef === null)
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)
@@ -464,7 +464,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (newExpression?.callee === null)
 			return; // invalid AST
 
-		val typeRef = typeInferencer.tau(newExpression.callee)
+		val typeRef = ts.tau(newExpression.callee)
 		if (typeRef === null)
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)
@@ -555,7 +555,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkRelationalExpression(RelationalExpression relationalExpression) {
 		if (relationalExpression.rhs !== null && relationalExpression.op === RelationalOperator.INSTANCEOF) {
-			val typeRef = typeInferencer.tau(relationalExpression.rhs)
+			val typeRef = ts.tau(relationalExpression.rhs)
 			if (typeRef instanceof ClassifierTypeRef) {
 				val staticType = typeRef.staticType
 				if (staticType instanceof TN4Classifier) {
@@ -606,7 +606,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			if (property instanceof TGetter) {
 
 				// access through getter --> a matching setter is required:
-				val propertyTargetType = typeInferencer.tau(expression.target)
+				val propertyTargetType = ts.tau(expression.target)
 				val declaredType = propertyTargetType?.declaredType
 				if (declaredType instanceof TClassifier) {
 					val setterExists = containerTypesHelper.fromContext(expression).members(declaredType).filter(TSetter).exists[
@@ -678,7 +678,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 		val target = callExpression.target
 		if (target !== null) {
-			val targetTypeRef = typeInferencer.tau(target); // no context, we only need the number of fpars
+			val targetTypeRef = ts.tau(target); // no context, we only need the number of fpars
 
 			if (targetTypeRef instanceof FunctionTypeExprOrRef) {
 
@@ -712,7 +712,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 
-		val typeRef = typeInferencer.tau(newExpression.callee)
+		val typeRef = ts.tau(newExpression.callee)
 		val staticType = if (typeRef instanceof ClassifierTypeRef) typeRef.staticType else null;
 
 		if (staticType instanceof TClass) {
@@ -779,14 +779,14 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			// The types of the operands must be subtypes of number if the operator is not ’+’
 			val bits = BuiltInTypeScope.get(ae.eResource.resourceSet)
 
-			val tlhs = typeInferencer.tau(ae.lhs)
+			val tlhs = ts.tau(ae.lhs)
 			if (tlhs === null) {
 				return; // corrupt AST (e.g., while editing)
 			}
 			if (tlhs.declaredType === bits.nullType || tlhs.declaredType === bits.undefinedType)
 				issueNotANumberType(tlhs.declaredType.name, ae.lhs);
 
-			val trhs = typeInferencer.tau(ae.rhs)
+			val trhs = ts.tau(ae.rhs)
 			if (trhs === null) {
 				return; // corrupt AST (e.g., while editing)
 			}
@@ -973,7 +973,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	private def doCheckForbiddenType(Expression e, Type forbidden, String typeName) {
 		if (forbidden !== null) {
-			val theType = typeInferencer.tau(e)?.declaredType
+			val theType = ts.tau(e)?.declaredType
 			if (theType === forbidden) {
 				addIssue(
 					IssueCodes.getMessageForEXP_FORBIDDEN_TYPE_IN_BINARY_LOGICAL_EXPRESSION(typeName),
@@ -1003,7 +1003,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 		val G = newRuleEnvironment(e)
 
-		val declaredT = typeInferencer.tau(expressionToCheck)?.declaredType
+		val declaredT = ts.tau(expressionToCheck)?.declaredType
 
 		var ConstBoolean cboolValue = ConstBoolean.NotPrecomputable
 
@@ -1076,7 +1076,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkCastExpression(CastExpression castExpression) {
 		val Type typeContext = EcoreUtil2.getContainerOfType(castExpression, TypeDefiningElement)?.definedType;
 		val context = if (typeContext === null) null else createTypeRef(typeContext);
-		val S = typeInferencer.tau(castExpression.expression, context);
+		val S = ts.tau(castExpression.expression, context);
 
 		val T = castExpression.targetTypeRef
 
