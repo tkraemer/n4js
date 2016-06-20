@@ -70,10 +70,12 @@ import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
+import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TEnum
+import eu.numberfour.n4js.ts.types.TExportableElement
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
@@ -90,6 +92,7 @@ import eu.numberfour.n4js.ts.types.TypeDefs
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -101,7 +104,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import eu.numberfour.n4js.validation.ValidatorMessageHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
@@ -122,8 +124,6 @@ import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.types.TExportableElement
-import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 
 /**
  */

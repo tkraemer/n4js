@@ -50,7 +50,7 @@
  * 			Specification. <a href="https://github.com/NumberFour/specs/">https://github.com/NumberFour/specs/</a></dd>
  * </dl>
  */
-system eu.numberfour.n4js.xsemantics.N4JSTypeSystem validatorExtends AbstractMessageAdjustingN4JSValidator // AbstractN4JSValidator
+system eu.numberfour.n4js.xsemantics.InternalTypeSystem validatorExtends AbstractMessageAdjustingN4JSValidator // AbstractN4JSValidator
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.misc.DestructureHelper

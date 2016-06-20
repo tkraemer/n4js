@@ -11,31 +11,30 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.CastExpression
+import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.naming.QualifiedNameComputer
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.NullType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import it.xsemantics.runtime.RuleEnvironment
+import java.util.List
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.AnnotationDefinition.*
+import static eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-
-import java.util.List
-import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
-import eu.numberfour.n4js.n4JS.Expression
-import eu.numberfour.n4js.n4JS.CastExpression
-import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
-import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import it.xsemantics.runtime.RuleEnvironment
-import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.ts.types.UndefinedType
-import eu.numberfour.n4js.ts.types.NullType
-import eu.numberfour.n4js.naming.QualifiedNameComputer
 
 /**
  * Validations related to callsites targeting N4Injector methods.

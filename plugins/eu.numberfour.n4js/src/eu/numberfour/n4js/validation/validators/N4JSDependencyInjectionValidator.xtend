@@ -23,10 +23,8 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -48,9 +46,17 @@ import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.VirtualBaseType
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.SuperInterfacesIterable
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
 import java.util.concurrent.atomic.AtomicBoolean
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.validation.Check
@@ -58,16 +64,10 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
-import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.ts.types.TypingStrategy.*
+import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.ThisLiteral
-import java.util.HashMap
-import java.util.ArrayList
-import java.util.List
-import eu.numberfour.n4js.ts.utils.TypeUtils
-import org.eclipse.emf.ecore.EObject
 
 /**
  * Validations related to dependency injection (covering annotations and instantiations).

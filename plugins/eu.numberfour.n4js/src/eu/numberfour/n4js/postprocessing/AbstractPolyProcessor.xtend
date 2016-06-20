@@ -37,9 +37,9 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List

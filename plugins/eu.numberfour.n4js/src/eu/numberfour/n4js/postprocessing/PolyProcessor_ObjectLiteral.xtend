@@ -29,10 +29,10 @@ import eu.numberfour.n4js.ts.types.TStructuralType
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.utils.EcoreUtilN4
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*

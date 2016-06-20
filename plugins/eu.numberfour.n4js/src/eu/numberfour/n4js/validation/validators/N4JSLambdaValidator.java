@@ -26,11 +26,11 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.utils.LambdaUtils;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 

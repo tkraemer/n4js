@@ -18,10 +18,10 @@ import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.junit4.InjectWith

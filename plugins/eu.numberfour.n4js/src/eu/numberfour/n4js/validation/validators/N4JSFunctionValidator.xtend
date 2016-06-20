@@ -14,6 +14,7 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.BreakStatement
+import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FieldAccessor
 import eu.numberfour.n4js.n4JS.FormalParameter
@@ -27,10 +28,6 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.ThrowStatement
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -44,6 +41,13 @@ import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TStructSetter
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
+import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
@@ -55,16 +59,12 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
+import static eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
 import static org.eclipse.xtext.util.Strings.toFirstUpper
 
 import static extension com.google.common.base.Strings.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
-import static extension eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.n4JS.ExportDeclaration
-import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
-import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 
 /**
  */

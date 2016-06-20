@@ -20,7 +20,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.CustomTypeSystem
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.xsemantics.InternalTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -44,7 +44,7 @@ package abstract class AbstractProcessor {
 
 
 // FIXME get rid of this!!
-@Inject private N4JSTypeSystem ts;
+@Inject private InternalTypeSystem ts;
 // call this method to delegate type inference back to Xsemantics
 def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, RuleApplicationTrace trace, TypableElement elem) {
 	return (ts as CustomTypeSystem).use_type_judgment_from_PostProcessors(G, trace, elem);

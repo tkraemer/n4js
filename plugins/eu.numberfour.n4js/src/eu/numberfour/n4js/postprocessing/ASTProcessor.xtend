@@ -31,8 +31,8 @@ import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.ArrayList
 import java.util.List

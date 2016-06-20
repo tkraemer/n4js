@@ -43,10 +43,10 @@ import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.util.Tuples

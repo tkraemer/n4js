@@ -21,7 +21,7 @@ import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
+import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.ErrorInformation;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
@@ -31,7 +31,7 @@ import it.xsemantics.runtime.RuleFailedException;
 /**
  */
 @Singleton
-public class CustomTypeSystem extends N4JSTypeSystem {
+public class CustomTypeSystem extends InternalTypeSystem {
 
 	@Inject
 	private TypeProcessor typeProcessor;

@@ -15,7 +15,7 @@ import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import java.util.ArrayList
 import java.util.Collections

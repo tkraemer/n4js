@@ -19,14 +19,6 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypingStrategyFilter
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.IssueUserDataKeys
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
@@ -41,6 +33,14 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TSetter
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypingStrategyFilter
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.IssueUserDataKeys
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -50,10 +50,9 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static com.google.common.collect.Iterables.getOnlyElement
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
-import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.ts.types.TypingStrategy.*
-
-import static extension eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
+import static eu.numberfour.n4js.validation.IssueCodes.*
+import static eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
 
 /**
  * superfluous properties in {@code @Spec} constructor.

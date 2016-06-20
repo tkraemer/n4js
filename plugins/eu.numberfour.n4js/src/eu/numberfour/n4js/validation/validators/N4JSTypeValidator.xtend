@@ -23,6 +23,7 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.TypedElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
@@ -50,13 +51,13 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import org.eclipse.emf.ecore.EObject
@@ -70,7 +71,6 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.TypedElement
 
 /**
  * Class for validating the N4JS types.

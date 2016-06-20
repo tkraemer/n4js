@@ -13,9 +13,6 @@ package eu.numberfour.n4js.typeinference
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.ArrowFunction
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
@@ -25,6 +22,9 @@ import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List

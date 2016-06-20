@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -96,7 +95,7 @@ public class ComposedTypeUtils {
 				}
 			}
 		}
-		assert!disjoint.isEmpty();
+		assert !disjoint.isEmpty();
 		if (disjoint.size() == 1) {
 			return disjoint.get(0);
 		}
@@ -182,7 +181,7 @@ public class ComposedTypeUtils {
 				}
 			}
 		}
-		assert!outgoing.isEmpty();
+		assert !outgoing.isEmpty();
 		if (outgoing.size() == 1) {
 			return outgoing.get(0);
 		}

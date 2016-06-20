@@ -2,7 +2,7 @@ package eu.numberfour.n4js.xsemantics.validation;
 
 import com.google.inject.Inject;
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
+import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 
 /**
@@ -47,14 +47,14 @@ import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
  * </dl>
  */
 @SuppressWarnings("all")
-public class N4JSTypeSystemValidator extends AbstractMessageAdjustingN4JSValidator {
+public class InternalTypeSystemValidator extends AbstractMessageAdjustingN4JSValidator {
   @Inject
   protected XsemanticsValidatorErrorGenerator errorGenerator;
   
   @Inject
-  protected N4JSTypeSystem xsemanticsSystem;
+  protected InternalTypeSystem xsemanticsSystem;
   
-  protected N4JSTypeSystem getXsemanticsSystem() {
+  protected InternalTypeSystem getXsemanticsSystem() {
     return this.xsemanticsSystem;
   }
 }

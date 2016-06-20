@@ -13,6 +13,7 @@ package eu.numberfour.n4js.validation.validators
 import com.google.common.collect.Multimaps
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.N4ClassDefinition
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
@@ -26,11 +27,12 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import java.util.Collection
 import java.util.HashMap
 import java.util.List
@@ -45,8 +47,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
-import eu.numberfour.n4js.ts.types.TypesPackage
 
 /**
  * Validation of rules that apply to all classifiers w/o examining members of the classifiers.<p>

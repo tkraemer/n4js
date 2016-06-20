@@ -30,15 +30,14 @@ import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.postprocessing.TypingCacheHelper;
 import eu.numberfour.n4js.resource.N4JSResource;
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.IEObjectCoveringRegion;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.IEObjectCoveringRegion;
 import it.xsemantics.runtime.Result;
-import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -108,13 +107,12 @@ public class TypeXpectMethod {
 		final String calculatedString;
 		EObject eobject = offset.getEObject();
 		RuleEnvironment G = newRuleEnvironment(eobject);
-		RuleApplicationTrace trace = new RuleApplicationTrace();
 		Result<eu.numberfour.n4js.ts.typeRefs.TypeRef> result;
 		if (expectedType) {
 			if (!(eobject instanceof Expression && eobject.eContainer() != null))
 				return "Not an Expression at given region (required to obtain expected type); got instead: "
 						+ eobject.eClass().getName();
-			result = ts.expectedTypeIn(G, trace, eobject.eContainer(), (Expression) eobject);
+			result = ts.expectedTypeIn(G, eobject.eContainer(), (Expression) eobject);
 		} else {
 			if (eobject instanceof BindingProperty) {
 				/*-
@@ -134,7 +132,7 @@ public class TypeXpectMethod {
 			}
 			if (!(eobject instanceof TypableElement))
 				return "Not a TypableElement at given region; got instead: " + eobject.eClass().getName();
-			result = ts.type(G, trace, (TypableElement) eobject);
+			result = ts.type(G, (TypableElement) eobject);
 		}
 		if (result.getRuleFailedException() != null) {
 			calculatedString = result.getRuleFailedException().getMessage();

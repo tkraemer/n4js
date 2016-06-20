@@ -94,6 +94,7 @@ import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
@@ -103,7 +104,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
