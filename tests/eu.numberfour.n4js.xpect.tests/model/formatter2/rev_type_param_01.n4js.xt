@@ -5,8 +5,8 @@
 
 /* */
 /* XPECT formattedLines 6 ---
-class C <S, T> {
-}
+class C <S, T> {}
+        
 --- */
 class C
 
@@ -23,8 +23,7 @@ class C
 
 /* */
 /* XPECT formattedLines 4 ---
-function <S, T> foo() {
-};
+function <S, T> foo() {};
 --- */
 
 function <   S

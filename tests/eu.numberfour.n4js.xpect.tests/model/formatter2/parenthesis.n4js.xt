@@ -13,8 +13,7 @@ if((a === 0)) { ; }
 
 /* no linebreak between "if" and "(" opening parenthesis  */
 /* XPECT formattedLines 2 ---
-if (b === 0) {
-}
+if (b === 0) {}
 --- */
 if
   (b === 0){}

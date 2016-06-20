@@ -8,8 +8,8 @@
 var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
 
 foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
-	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, 
-	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, 
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
 	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);
 	
 function foo(...param) {};
@@ -17,8 +17,9 @@ function foo(...param) {};
 var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
 
 foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe)
-
+   
 function foo(...param) {}
+
 
 
 

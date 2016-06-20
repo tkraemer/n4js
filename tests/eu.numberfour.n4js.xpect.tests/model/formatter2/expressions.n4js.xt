@@ -96,9 +96,9 @@ let z = bool?5:10;
 /* XPECT formattedLines 3 ---
 interface GooSupperLongWordWithSomeSuperHeros {}
 let abc: int, bar, hoo;
-let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros)
-			&& (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423,
-		23423, 23423, 23423, 23423];
+let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) && (hoo instanceof
+				GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423,
+		23423, 23423];
 --- */
 interface GooSupperLongWordWithSomeSuperHeros {}
 let abc:int, bar, hoo;

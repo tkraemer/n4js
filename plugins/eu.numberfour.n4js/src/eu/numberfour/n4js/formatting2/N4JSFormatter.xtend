@@ -94,6 +94,18 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.n4JS.ModifiableElement
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
+import eu.numberfour.n4js.n4JS.Annotation
+import eu.numberfour.n4js.n4JS.FunctionDeclaration
+import eu.numberfour.n4js.n4JS.ObjectBindingPattern
+import eu.numberfour.n4js.n4JS.BindingPattern
+import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
+import org.eclipse.xtext.formatting2.internal.RootDocument
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
+import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
+import org.eclipse.xtext.formatting2.regionaccess.IHiddenRegion
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -129,12 +141,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// TODO the following line requires more conflict handling with semicolons:
 		// script.interior[noIndentation;];
 		
-		script.formatSemicolons(document)
-		script.formatColon(document)
+		script.formatSemicolons(document);
+		script.formatColon(document);
 
 		for (element : script.scriptElements) {
-			element.append[setNewLines(1, 1, maxConsecutiveNewLines); autowrap]
-			element.format
+			element.append[setNewLines(1, 1, maxConsecutiveNewLines);noSpace; autowrap].prepend[noSpace];
+			element.format;
 		}
 
 		// format last import, overrides default newLines:
@@ -158,7 +170,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def void formatTypeVariables(GenericDeclaration semObject, extension IFormattableDocument document) {
 		if( semObject.typeVars.isEmpty ) return;
 		// to "<":
-		semObject.regionFor.keyword("<").append[noSpace];
+		semObject.regionFor.keyword("<").prepend[oneSpace].append[noSpace];
 		semObject.regionFor.keyword(">").prepend[noSpace];
 		for( typeVar: semObject.typeVars ){
 			typeVar.append[noSpace].immediatelyFollowing.keyword(",").append[oneSpace];
@@ -243,6 +255,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			member.append[setNewLines(1, 1, maxConsecutiveNewLines)]
 			member.format
 		}
+		
+		// Collapse empty block:
+		if( clazz.ownedMembersRaw.isEmpty) {
+			// Empty body:
+			kwBrace.append[noSpace;newLines=0];
+		}
 	}
 
 	def dispatch format(N4InterfaceDeclaration interf, extension IFormattableDocument document) {
@@ -271,9 +289,17 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		field.configureAnnotations(document);
 		field.configureModifiers(document);
 		field.insertSpaceInfrontOfPropertyNames(document);
+		
+		//Exclude Annotations from indentation	field.interior[indent];
+		val begin = field.semanticRegions.findFirst[!(semanticElement instanceof Annotation)];
+		val end = field.semanticRegions.last;
+		if( begin !== end )	interior(begin,end,[indent]);
 
 		field.regionFor.keyword("=").prepend[oneSpace].append[oneSpace];
 		field.expression.format;
+		field.declaredTypeRef.format;
+		
+		field.bogusTypeRef.format;
 	}
 
 //	def dispatch format(N4MethodDeclaration method, extension IFormattableDocument document) {
@@ -295,7 +321,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		if (funE.isArrowFunction) {
 			throw new IllegalStateException("Arrow functions should be formated differently.")
 		}
-		
+		funE.fpars.configureFormalParameters(document,[/*n.t.d.*/]);
+		val parenPair = funE.regionFor.keywordPairs("(",")").head;
+		parenPair.key.append[noSpace];
+		parenPair.value.prepend[noSpace];
 		funE.body.format;
 	}
 		
@@ -313,13 +342,20 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			}
 		];
 		
+		// Formal parameters
 		switch( fDecl) {
 			FunctionDefinition :
 				fDecl.fpars.configureFormalParameters(document, cbInsertEmptyLineInBody )
 			N4SetterDeclaration:	
 				fDecl.fpar.prepend[noSpace].append[noSpace] /* no autowrap for setters: cbInsertEmptyLineInBody */
 		}
-//		fDecl.fpars.configureFormalParameters(document, cbInsertEmptyLineInBody );
+		
+		// Type Variables
+		switch( fDecl) {
+			FunctionDeclaration : 
+				fDecl.formatTypeVariables(document)
+		}
+		
 		
 		val parenPair = fDecl.regionFor.keywordPairs("(",")").head;
 		parenPair.key.prepend[noSpace; newLines = 0].append[noSpace];
@@ -411,8 +447,9 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		dotKW.prepend[noSpace; autowrap;].append[noSpace;]
 		exp.regionFor.keyword("(").prepend[noSpace].append[noSpace];
 		exp.regionFor.keyword(")").prepend[noSpace];
+		exp.configureCommas(document);
 		
-		exp.arguments.tail.forEach[prepend[oneSpace]];
+		exp.arguments.tail.forEach[prepend[oneSpace;autowrap]];
 		exp.arguments.forEach[format];
 		
 		if( exp.eContainer instanceof ExpressionStatement) {
@@ -421,9 +458,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 				indent
 			];
 		}
-		exp.target.format;
-		
-		
 		exp.target.format;
 	}
 
@@ -512,7 +546,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			&& braces.key.nextSemanticRegion == braces.value
 		) {
 			// empty block:
-			braces.key.append[setNewLines(1,1,maxConsecutiveNewLines)];
+			if( braces.key.nextHiddenRegion.containsComment ) {
+				braces.key.append[setNewLines(1,1,maxConsecutiveNewLines)];
+			} else {
+				braces.key.append[newLines=0;noSpace];
+			}
 		}
 	}
 	
@@ -524,13 +562,13 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(AdditiveExpression add, extension IFormattableDocument document) {
-		add.regionFor.feature(N4JSPackage.Literals.ADDITIVE_EXPRESSION__OP).surround[oneSpace];
+		add.regionFor.feature(N4JSPackage.Literals.ADDITIVE_EXPRESSION__OP).surround[oneSpace].append[autowrap];
 		add.lhs.format
 		add.rhs.format
 	}
 	
 	def dispatch void format(MultiplicativeExpression mul, extension IFormattableDocument document) {
-		mul.regionFor.feature(N4JSPackage.Literals.MULTIPLICATIVE_EXPRESSION__OP).surround[oneSpace];
+		mul.regionFor.feature(N4JSPackage.Literals.MULTIPLICATIVE_EXPRESSION__OP).surround[oneSpace].append[autowrap];
 		mul.lhs.format
 		mul.rhs.format
 	}
@@ -556,19 +594,19 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(EqualityExpression eqExpr, extension IFormattableDocument document) {
-		eqExpr.regionFor.feature(N4JSPackage.Literals.EQUALITY_EXPRESSION__OP).surround[oneSpace];
+		eqExpr.regionFor.feature(N4JSPackage.Literals.EQUALITY_EXPRESSION__OP).surround[oneSpace].append[autowrap];
 		eqExpr.lhs.format
 		eqExpr.rhs.format
 	}
 	
 	def dispatch void format(RelationalExpression relExpr, extension IFormattableDocument document) {
-		relExpr.regionFor.feature(N4JSPackage.Literals.RELATIONAL_EXPRESSION__OP).surround[oneSpace];
+		relExpr.regionFor.feature(N4JSPackage.Literals.RELATIONAL_EXPRESSION__OP).surround[oneSpace].append[autowrap];
 		relExpr.lhs.format
 		relExpr.rhs.format
 	}
 	
 	def dispatch void format(ShiftExpression shiftExpr, extension IFormattableDocument document) {
-		shiftExpr.regionFor.feature(N4JSPackage.Literals.SHIFT_EXPRESSION__OP).surround[oneSpace];
+		shiftExpr.regionFor.feature(N4JSPackage.Literals.SHIFT_EXPRESSION__OP).surround[oneSpace].append[autowrap];
 		shiftExpr.lhs.format
 		shiftExpr.rhs.format
 	}
@@ -657,6 +695,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(ParenExpression parenE, extension IFormattableDocument document) {
+		parenE.semanticRegions.head.append[noSpace;newLines=0;autowrap];
+		parenE.semanticRegions.last.prepend[noSpace;newLines=0;autowrap];
 		parenE.interior[indent];
 		parenE.expression.format;
 	}
@@ -665,6 +705,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		arrowF.configureCommas(document);
 		arrowF.regionFor.keyword("=>").surround[oneSpace];
 		arrowF.regionFor.keywordPairs("(",")").head?.interior[noSpace];
+		// too lax: arrowF.fpars.configureFormalParameters(document,[/*NTD*/]);
+		
 		if( arrowF.isHasBracesAroundBody ) {
 			// format body as block. NOTE: this block differs from other blocks, since the curly braces are defined in the ArrowExpression.
 			arrowF.body.format;
@@ -700,7 +742,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(ObjectLiteral ol, extension IFormattableDocument document) {
 		val bracePair = ol.regionFor.keywordPairs("{","}").head;
 		bracePair.interior[indent];
-		val sameLine = bracePair.key.lineRegions.head.contains( bracePair.value );
+		
+		// Decide on multiline or not. 
+		// Rule: if opening brace is preceded by a line break, then go multiline. 
+		val sameLine = bracePair.key.lineRegions.head.contains( bracePair.key.nextSemanticRegion.lineRegions.head );
+		// OLD: val sameLine = bracePair.key.lineRegions.head.contains( bracePair.value );
 		if( ! sameLine) {
 			bracePair.value.prepend[newLine]; // format WS in front of closing brace
 			ol.propertyAssignments.forEach[it,num|prepend[newLine]];
@@ -709,9 +755,22 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 				bracePair.key.append[newLine];
 			}	
 		} else { // in one line
-			ol.propertyAssignments.forEach[it,num|prepend[autowrap;if(num!==0)oneSpace]];
+			bracePair.key.append[newLines=0];
+			ol.propertyAssignments.forEach[it,num|prepend[newLines=0;if(num!==0) { autowrap; oneSpace; } else {noSpace;}]];
+			bracePair.value.prepend[newLines=0; noSpace;];
 		}
 		
+	}
+	
+	def dispatch void format( ForStatement fst, extension IFormattableDocument document){
+		val parenPair = fst.regionFor.keywordPairs("(",")").head;
+		parenPair.key.surround[noSpace;newLines=0].append[autowrap];
+		parenPair.value.prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap;]
+		
+		fst.regionFor.keywords("in","of").forEach[ it.surround[oneSpace; newLines=0; autowrap] ];
+		fst.regionFor.keywords(";").forEach[it.prepend[noSpace;newLines=0;].append[noSpace;newLines=0;autowrap]];
+		
+		fst.eContents.forEach[format];
 	}
 	
 	def dispatch void format(TemplateLiteral tl, extension IFormattableDocument document) {
@@ -747,16 +806,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	}
 	
-	def dispatch void format( ParameterizedTypeRef ptr, extension IFormattableDocument document) {
-		// Union / Intersection
-		ptr.regionFor.keywords("&","|").forEach[ surround[oneSpace]];
-		// Array
-		ptr.regionFor.keyword("[").append[noSpace];
-		ptr.regionFor.keyword("]").append[noSpace];
-		
-		ptr.eContents.forEach[format]
-		
-	}
+
 		
 	def dispatch void format(Expression exp, extension IFormattableDocument document) {
 		switch(exp) {
@@ -845,6 +895,21 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		vBind.pattern.format;
 		vBind.expression.format;
 	}
+	
+	def dispatch void format( BindingPattern bp, extension IFormattableDocument document) {
+		// ObjectBindingPattern
+		// ArrayBindingPattern
+		
+		// '{' or '['
+		bp.semanticRegions.head.append[noSpace;newLines=0;autowrap];
+		bp.semanticRegions.last.prepend[noSpace;newLines=0;autowrap];
+		bp.configureCommas(document); // doesn't handle elision.
+		
+		bp.eContents.forEach[format];
+	}
+	
+	
+	
 
 	/** */
 	def dispatch void format(CatchBlock ctch, extension IFormattableDocument document) {
@@ -1011,6 +1076,86 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			done = true;
 			return ret;
 		} 	
+	}
+	
+	
+	/**************************************************************************************************************** 
+	 * 
+	 * Type Expression
+	 * 
+	 ***************************************************************************************************************/
+	def dispatch void format(UnionTypeExpression ute, extension IFormattableDocument document) {
+		ute.regionFor.keywords("|").forEach[ surround[oneSpace;newLines=0].prepend[autowrap;highPriority] ];
+		ute.typeRefs.forEach[format];
+		// OLD syntax:
+		val kwUnion = ute.regionFor.keyword("union");
+		if( kwUnion !== null ) {
+			kwUnion.prepend[oneSpace].append[oneSpace;newLines=0].nextSemanticRegion/*'{'*/.append[oneSpace;newLines=0];
+			ute.semanticRegions.last/*'}'*/.prepend[oneSpace;newLines=0];
+		}
+	}
+
+	def dispatch void format(IntersectionTypeExpression ite, extension IFormattableDocument document) {
+		ite.regionFor.keywords("&").forEach[surround[oneSpace;newLines=0].prepend[autowrap;highPriority]];
+		ite.typeRefs.forEach[format];
+		// OLD syntax
+		val kwInersection = ite.regionFor.keyword("intersection");
+		if( kwInersection !== null ) {
+			kwInersection.prepend[oneSpace].append[oneSpace;newLines=0].nextSemanticRegion/*'{'*/.append[oneSpace;newLines=0];
+			ite.semanticRegions.last/*'}'*/.prepend[oneSpace;newLines=0];
+		}
+	}
+	
+	
+
+	
+	def dispatch void format( ParameterizedTypeRef ptr, extension IFormattableDocument document) {
+		ptr.interior[indent];
+
+		// Union / Intersection
+		ptr.regionFor.keywords("&","|").forEach[ surround[oneSpace;newLines=0].append[autowrap;highPriority]];
+		// ArrayTypeRef
+		if( ptr.isArrayTypeLiteral ) {
+			ptr.regionFor.keyword("[").append[noSpace];
+			ptr.regionFor.keyword("]").append[noSpace];
+		}
+		ptr.formatTypeArguments(document);
+		
+		// ParameterizedTypeRefStructural : 
+		val semRegTypingStrategy = ptr.regionFor.ruleCallTo(typingStrategyUseSiteOperatorRule);
+		if( semRegTypingStrategy!== null) {
+			semRegTypingStrategy.prepend[oneSpace].append[noSpace;newLines=0;];
+	
+			// declaredType
+			semRegTypingStrategy.nextSemanticRegion.append[]; 
+
+			val kwWith = ptr.regionFor.keyword("with");
+			if( kwWith !== null ) {
+				kwWith.surround[oneSpace;newLines=0;autowrap];
+				val bracesPair = ptr.regionFor.keywordPairs("{","}").head;
+				bracesPair.key.append[noSpace;newLines=0;autowrap];
+				bracesPair.value.prepend[noSpace;newLines=0;autowrap];
+				//ptr.regionFor.keywords(",",";").forEach[ prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap] ]
+				((ptr as ParameterizedTypeRefStructural).astStructuralMembers.tail
+					.forEach[ regionForEObject.previousHiddenRegion.set[oneSpace;newLines=0;autowrap]]
+				);
+			}
+		
+		}
+		// generically format content:
+		ptr.eContents.forEach[format]
+	}
+	
+	def void formatTypeArguments(ParameterizedTypeRef semObject, extension IFormattableDocument document) {
+		if( semObject.typeArgs.isEmpty ) return;
+		// to "<":
+		semObject.regionFor.keyword("<").append[noSpace];
+		semObject.regionFor.keyword(">").prepend[noSpace];
+		for( typeArg: semObject.typeArgs ){
+			typeArg.append[noSpace].immediatelyFollowing.keyword(",").append[oneSpace];
+			typeArg.format(document);
+		}
+		
 	}
 	
 }

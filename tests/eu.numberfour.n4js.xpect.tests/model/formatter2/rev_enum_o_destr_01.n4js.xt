@@ -74,11 +74,14 @@ donkey
 
 
 /*  object destructuring, pt. 2:
+ *  Multiline
  */
 /* XPECT formattedLines 5 ---
 var bar;
 
-({donkey: bar} = {donkey: null});
+({
+		donkey: bar
+	} = {donkey: null});
 --- */
 var bar;
 
@@ -89,6 +92,21 @@ donkey
 
 
 
+/*  object destructuring, pt. 2:
+ * single line.
+ */
+/* XPECT formattedLines 4 ---
+var bar;
+
+({donkey: bar} = {donkey: null});
+--- */
+var bar;
+
+(                   {   	donkey
+:            bar
+} = {donkey: null});
+
+
 /*
 object destructuring, pt. 3: 
  */
@@ -97,8 +115,8 @@ for(var {donkey: bar3} of [{donkey: null}]) {
 	//
 }
 --- */
-for(
-var
+for     (
+   var
                     {
 donkey
 :            bar3

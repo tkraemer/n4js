@@ -30,12 +30,12 @@ interface GooSupperLongWordWithSomeSuperHeros5 {}
 
 @N4JS @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
-export public abstract class Shorty<ValueT extends SomethingLongHere> extends Array<int>
+export public abstract class Shorty <ValueT extends SomethingLongHere> extends Array<int>
     implements Goo {}
 
 @N4JS @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
-export public abstract class Shortiest<ValueT> extends Array<int> implements Goo {
+export public abstract class Shortiest <ValueT> extends Array<int> implements Goo {
     noExtraLinefeedIfWeDontWrap: any;
 }
 
@@ -48,7 +48,7 @@ export public abstract class Shortiest<ValueT> extends Array<int> implements Goo
  *\/
 @N4JS @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
-export public abstract class GenericLongName<ValueT extends SomethingLongHere>
+export public abstract class GenericLongName <ValueT extends SomethingLongHere>
     extends Array<int> // comment here long comment sdfjsiofjsfo hsoh x<fgkjh <xkjh <yfkjhx<gkjl<hxkjl<yhf kl<jh< lkjh
     implements GooSupperLongWordWithSomeSuperHeros, GooSupperLongWordWithSomeSuperHeros2,
         GooSupperLongWordWithSomeSuperHeros3 /\* dont touch me :) *\/, Goo,
@@ -79,26 +79,26 @@ export public abstract class GenericLongName<ValueT extends SomethingLongHere>
         return k as int;
     }
 
-    public fooBooGooZooGoo(bar: int): ~Object with {bar: int?; baz: int?; baz2: int?;
-        baz2: int?; baz43: int?;} {
+    public fooBooGooZooGoo(bar: int): ~Object with {bar: int?; baz: int?; baz2: int?; baz2: int?;
+        baz43: int?;} {
 
         return {};
     }
 
-    public async fooBooGooZooGoo23495872948624876247624(bar: int): ~Object with {bar: int?;
-        baz: int?; baz2: int?; baz2: int?; baz43: int?; baz43098: int?; ba098z43: int?;
-        baz40983: int?; baz09843: int?;} {
+    public async fooBooGooZooGoo23495872948624876247624(bar: int): ~Object with {
+        bar: int?; baz: int?; baz2: int?; baz2: int?; baz43: int?; baz43098: int?;
+        ba098z43: int?; baz40983: int?; baz09843: int?;} {
 
         return {};
     }
 
-    public async fooBooGooZooGoo234958729486284876247624(bar: int): ~Object with {bar: int?;
-        baz: int?; baz2: int?; baz2: int?; baz43: int?; baz43098: int?; ba098z43: int?;
-        baz40983: int?; baz09843: int?;} {
+    public async fooBooGooZooGoo234958729486284876247624(bar: int): ~Object with {
+        bar: int?; baz: int?; baz2: int?; baz2: int?; baz43: int?; baz43098: int?;
+        ba098z43: int?; baz40983: int?; baz09843: int?;} {
 
         let p: Promise<ValueT, any>;
         p.then(val => {
-                    return val;
+                return val;
             }).catch(err => console.error(err));
 
         let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,

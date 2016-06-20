@@ -7,11 +7,11 @@
 /* XPECT formattedLines 20 ---
 class LooooooooooongC {
 
-	looooooooooooooooongField: LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC & 
-		LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC;
+	looooooooooooooooongField: LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC
+		& LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC;
 
-	shortField: ~Object with {looooooooooooooooongMember0; looooooooooooooooongMember1; looooooooooooooooongMember2; 
-		looooooooooooooooongMember3; };
+	shortField: ~Object with {looooooooooooooooongMember0;
+			looooooooooooooooongMember1; looooooooooooooooongMember2; looooooooooooooooongMember3;};
 
 }
 --- */

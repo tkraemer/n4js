@@ -51,14 +51,12 @@ class ~A {
 	public get ["@type2"](): string {
 		return "";
 	};
-	public set ["@type3"](p: string) {
-	};
+	public set ["@type3"](p: string) {};
 	public static ["@type1s"]: string;
 	public static get ["@type2s"](): string {
 		return "";
 	};
-	public static set ["@type3s"](p: string) {
-	};
+	public static set ["@type3s"](p: string) {};
 
 	public ["@type4"](par1: string): string {
 		return "";

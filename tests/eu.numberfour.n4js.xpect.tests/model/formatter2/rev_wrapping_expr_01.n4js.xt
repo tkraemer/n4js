@@ -9,7 +9,7 @@ var midSizedVariableName;
 
 class C {
 
-	field = midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName + 
+	field = midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName +
 		midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName;
 }
 --- */

@@ -5,8 +5,7 @@
 
 /* Remove spaces, fix indentation */
 /* XPECT formattedLines 2 ---
-class C {
-}
+class C {}
 --- */
 class C {
     }
@@ -14,8 +13,7 @@ class C {
 
 /* remove empty lines */
 /* XPECT formattedLines 2 ---
-class C2 {
-}
+class C2 {}
 --- */
   class C2 {
 
@@ -26,8 +24,7 @@ class C2 {
 
 /* remove empty lines */
 /* XPECT formattedLines 4 ---
-class C3 {
-}
+class C3 {}
 --- */
   class C3 {
 
@@ -36,10 +33,23 @@ class C3 {
 	
 }
 
+
+/* remove empty lines */
+/* XPECT formattedLines 4 ---
+class C3a {// comment	
+}
+--- */
+  class C3a {
+
+// comment	
+
+	
+}
+
+
 /* remove leading WS */
 /* XPECT formattedLines 4 ---
- class C4 {
-}
+class C4 {}
 --- */
   class C4 {
 
@@ -68,9 +78,7 @@ class C3 {
 
 
 /* XPECT formattedLines 3 ---
-function foo() {
-
-};
+function foo() {};
 --- */
     function foo() {
 	

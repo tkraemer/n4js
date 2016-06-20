@@ -9,8 +9,7 @@ let e = 1;
 /\**
  * Error to notify a cancelation.
  *\/
-export public abstract class ~CanceledError {
-}
+export public abstract class ~CanceledError {}
 
 let f = 2;
 --- */

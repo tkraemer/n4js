@@ -5,8 +5,7 @@
 
 /* */
 /* XPECT formattedLines 3 ---
-export public class C {
-}
+export public class C {}
 --- */
 export 
 
