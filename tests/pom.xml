@@ -104,7 +104,7 @@ Contributors:
 
 		<!-- commands and command lines for code coverage, empty by default and
 			set by profiles -->
-		<loggingArgs>-Dlog4j.configuration=file:${basedir}/../../plugins/eu.numberfour.n4js.utils/log4j.xml -Dlog4j.debug -Dorg.apache.logging.log4j.simplelog.StatusLogger.level=TRACE</loggingArgs>
+		<loggingArgs>-Dlog4j.configuration=file:${basedir}/../../plugins/eu.numberfour.n4js.utils.logging/log4j_tests.xml -Dlog4j.debug -Dorg.apache.logging.log4j.simplelog.StatusLogger.level=TRACE</loggingArgs>
 
 		<junit-version>4.12</junit-version>
 		<ts-version>[0.0.1,0.1.0)</ts-version>
