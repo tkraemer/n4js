@@ -73,7 +73,7 @@ keyboard shortcuts kbd:[{commandkey} + n] for Mac, kbd:[Alt+Shift+n] on Windows)
 
 image::newprojectwizard.png[New Project Wizard, 700]
 
-When we select btn:[Finish], a new project folder is created with the following content:
+When we select kbd:[Finish], a new project folder is created with the following content:
 
 * folder *src*: contains the .n4js source files for the project.
 * folder *src-gen*: contains the transpiled JavaScript that is generated after compiling n4js
@@ -142,10 +142,10 @@ N4JS also provides the concept of *access modifiers* similar to Java with the mo
 +public+, +protected+, +project+ and +private+. Access modifiers constrain the visibility
 of elements, that is, they restrict from where an element can be accessed.
 
-* +public+ means that the element can be accessed from everywhere,
-* +protected+ may only be accessed from subclasses,
-* +project+ only from within the project (this is the default visibility)
-* +private+ accessed only from within the same module.
+* `public` means that the element can be accessed from everywhere,
+* `protected` may only be accessed from subclasses,
+* `project` only from within the project (this is the default visibility)
+* `private` accessed only from within the same module.
 
 We now manually add two classes to the same file:
 
