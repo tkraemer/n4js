@@ -30,7 +30,6 @@ import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.Statement
-import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
@@ -76,6 +75,7 @@ import org.eclipse.xtext.scoping.impl.MapBasedScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import org.eclipse.xtext.util.IResourceScopeCache
 
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
@@ -400,22 +400,26 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 			}
 		}
 
-		val TypeRef typeRef = switch (receiver) {
-			ThisLiteral: {
-				val thisTypeRef = ts.tau(receiver);
-				if (thisTypeRef === null && !receiver.strictMode) {
-
-					// if not strict mode, we assume the global object == script context
-					// TODO add validation for that case
-					val script = EcoreUtil2.getContainerOfType(receiver, Script)
-					return getLexicalEnvironmentScope(script, propertyAccess, ref);
-				}
-				thisTypeRef
-			}
-			default: {
-				ts.tau(receiver);
-			}
-		};
+//		val TypeRef typeRef = switch (receiver) {
+//			ThisLiteral: {
+//				val thisTypeRef = ts.tau(receiver);
+//				if (thisTypeRef === null && !receiver.strictMode) {
+//
+//					// if not strict mode, we assume the global object == script context
+//					// TODO add validation for that case
+//					val script = EcoreUtil2.getContainerOfType(receiver, Script)
+//					return getLexicalEnvironmentScope(script, propertyAccess, ref);
+//				}
+//				thisTypeRef
+//			}
+//			default: {
+//				ts.tau(receiver);
+//			}
+//		};
+val G = propertyAccess.newRuleEnvironment;
+val TypeRef typeRefRaw = ts.type(G, receiver).value;
+// take upper bound to get rid of ExistentialTypeRefs, ThisTypeRefs, etc.
+val TypeRef typeRef = if(typeRefRaw!==null) ts.upperBound(G, typeRefRaw).value else null;
 
 		val staticAccess = typeRef instanceof ClassifierTypeRef;
 		val checkVisibility = true;

@@ -86,11 +86,11 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	@Inject
 	private XsemanticsValidatorErrorGenerator errorGenerator;
 	@Inject
-	protected N4JSGrammarAccess grammarAccess
+	private N4JSGrammarAccess grammarAccess
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
-	protected TypeSystemHelper tsh;
+	private TypeSystemHelper tsh;
 	@Inject
 	private IN4JSCore n4jsCore;
 
@@ -199,7 +199,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			val G_subst = source.newRuleEnvironment;
 			if(source instanceof ParameterizedPropertyAccessExpression) {
 				val G = source.newRuleEnvironment;
-				val targetTypeRef = ts.tau(G, source.target); // note: not using G_subst here
+				val targetTypeRef = ts.type(G, source.target).getValue(); // note: not using G_subst here
 				tsh.addSubstitutions(G_subst, targetTypeRef);
 			}
 			for (int i : 0 ..< typeArgs.size) {

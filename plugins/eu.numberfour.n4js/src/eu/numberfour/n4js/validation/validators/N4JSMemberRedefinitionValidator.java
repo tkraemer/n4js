@@ -876,8 +876,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		// will return type of value for fields, function type for methods, type of return value for getters, type of
 		// parameter for setters
-		TypeRef typeLeft = ts.tau(left, classTypeRef, false);
-		TypeRef typeRight = ts.tau(right, classTypeRef, false);
+		TypeRef typeLeft = ts.tau(left, classTypeRef);
+		TypeRef typeRight = ts.tau(right, classTypeRef);
 
 		return ts.subtype(G, typeLeft, typeRight);
 	}

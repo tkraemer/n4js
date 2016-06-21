@@ -23,6 +23,8 @@ import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TMember
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import java.util.List
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -33,9 +35,10 @@ import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.List
+
 import static org.junit.Assert.*
-import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * Tests for static scoping, combined with type system test.
@@ -51,7 +54,7 @@ class StaticScopingTest {
 
 	@Inject extension ParseHelper<Script>
 	@Inject extension ValidationTestHelper
-	@Inject extension N4JSTypeSystem
+	@Inject extension N4JSTypeSystem ts
 	@Inject extension IScopeProvider scopeProvider
 
 	private static var numberOfInstanceMembersInN4ObjectCache = -1;
@@ -239,7 +242,7 @@ class StaticScopingTest {
 		val script = '''
 			class A {
 				static m() {
-					return this; // type {A}
+					return this; // type{A}
 				}
 				m() {
 					return this; // A
@@ -251,14 +254,15 @@ class StaticScopingTest {
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
-		val thisType1 = thisInMethod1.tau
+		val G = script.newRuleEnvironment
+		val thisType1 = ts.upperBound(G, ts.type(G, thisInMethod1).value).value
 		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ClassifierTypeRef)
 		val classifierTypeRef1 = thisType1 as ClassifierTypeRef
 		val typeName1 = classifierTypeRef1.staticTypeRef.declaredType.name
 		Assert.assertEquals("A", typeName1)
 
 		val thisInMethod2 = script.eAllContents.filter(ThisLiteral).last
-		val thisType2 = thisInMethod2.tau
+		val thisType2 = ts.upperBound(G, ts.type(G, thisInMethod2).value).value
 		Assert.assertTrue("expected type{A} but was " + thisType2.class, thisType2 instanceof ParameterizedTypeRef)
 		val parameterizedTypeRef = thisType2 as ParameterizedTypeRef
 		val typeName2 = parameterizedTypeRef.declaredType.name

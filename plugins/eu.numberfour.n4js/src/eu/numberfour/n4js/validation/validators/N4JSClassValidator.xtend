@@ -52,6 +52,7 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
+import eu.numberfour.n4js.ts.utils.TypeUtils
 
 /**
  * superfluous properties in {@code @Spec} constructor.
@@ -335,8 +336,8 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 		for (smember : fparType.structuralMembers) {
 			val tfield = tclass.ownedMembers.findFirst[name == smember.name];
 			if (tfield !== null && (tfield.isField || tfield.isSetter)) {
-				val fieldType = ts.tau(tfield, tclass);
-				val smemberType = ts.tau(smember, tclass);
+				val fieldType = ts.tau(tfield, TypeUtils.createTypeRef(tclass));
+				val smemberType = ts.tau(smember, TypeUtils.createTypeRef(tclass));
 				val subtypeRes = ts.subtype(G, smemberType, fieldType);
 				if (subtypeRes.failed) {
 					val message = getMessageForCLF_SPEC_WRONG_ADD_MEMBERTYPE(smember.name, description(tfield),

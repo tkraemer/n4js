@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
@@ -23,8 +24,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TypableElement;
-import eu.numberfour.n4js.ts.types.Type;
-import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.Result;
@@ -33,6 +32,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 /**
  *
  */
+@Singleton
 public class N4JSTypeSystem {
 
 	@Inject
@@ -89,25 +89,6 @@ public class N4JSTypeSystem {
 	// --------------------------------------------------------
 	// FIXME:
 
-	/**
-	 * Creates a rule environment for the given context, i.e. it will be populated with type variable substitutions,
-	 * this-bindings, etc. For details about the context argument see {@link #tau(TypableElement,TypeRef)}. Returns an
-	 * empty rule environment without any bindings if context is <code>null</code>. For consistency with
-	 * {@link RuleEnvironmentExtensions#newRuleEnvironment(EObject)} this will throw an exception if resourceSet is
-	 * <code>null</code>.
-	 */
-	public RuleEnvironment createRuleEnvironmentForContext(TypeRef context, Resource resource) {
-		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
-		if (context != null) {
-			tsh.addSubstitutions(G, context);
-			if (context instanceof ParameterizedTypeRef) {
-				if (context.getDeclaredType() instanceof TClassifier)
-					RuleEnvironmentExtensions.addThisType(G, context);
-			}
-		}
-		return G;
-	}
-
 	@Inject
 	private TypeSystemHelper tsh;
 
@@ -142,31 +123,15 @@ public class N4JSTypeSystem {
 	}
 
 	/**
-	 * Infers type of <code>object</code> using the {@link N4JSTypeSystem}. The given object must be contained in a
-	 * ResourceSet (required for creating a RuleEnvironment).
+	 * Infers type of <code>object</code>. The given object must be contained in a ResourceSet (required for creating a
+	 * RuleEnvironment).
 	 * <p>
-	 * IMPORTANT: this method does not handle generics and the binding of type parameters/ arguments; if you need this
+	 * IMPORTANT: this method does not handle generics and the binding of type parameters/arguments; if you need this
 	 * behavior, use method {@link #tau(TypableElement,TypeRef)} instead!
 	 */
 	public TypeRef tau(TypableElement object) {
 		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(object);
-		return tau(G, object);
-	}
-
-	/**
-	 * Same as {@link #tau(TypableElement)}, but <code>object</code> need not be contained in a ResourceSet; instead, a
-	 * RuleEnvironment is provided as argument.
-	 */
-	public TypeRef tau(RuleEnvironment G, TypableElement object) {
-		return tau(G, object, false, true);
-	}
-
-	/**
-	 * Convenience method, calls {@link #tau(TypableElement,TypeRef)} with type wrapped into a a reference (without any
-	 * further type arguments).
-	 */
-	public TypeRef tau(TypableElement object, Type context) {
-		return tau(object, TypeUtils.createTypeRef(context));
+		return type(G, object).getValue();
 	}
 
 	/**
@@ -197,43 +162,35 @@ public class N4JSTypeSystem {
 	 * S and T have been bound).
 	 * </ul>
 	 * Furthermore, if the TypeRef passed in as context is a ParameterizedTypeRef, it may define additional type
-	 * variable bindings (cf. ParameterizedTypeRef).
+	 * variable bindings through its type arguments (c.f. {@link ParameterizedTypeRef}).
 	 */
 	public TypeRef tau(TypableElement object, TypeRef context) {
-		return tau(object, context, true);
-	}
-
-	/**
-	 * Similar as {@link #tau(TypableElement, TypeRef)}, but if {@code takeUpperBound} is {@code false} the upper bound
-	 * will not be acquired for the calculated type reference. Passing {@code true} for {@code takeUpperBound} will be
-	 * an identical call of {@link #tau(RuleEnvironment, TypableElement)}.
-	 */
-	public TypeRef tau(TypableElement object, TypeRef context, boolean takeUpperBound) {
 		final RuleEnvironment G = createRuleEnvironmentForContext(context, object != null ? object.eResource() : null);
-		return tau(G, object, true, takeUpperBound);
-	}
-
-	private TypeRef tau(RuleEnvironment G, TypableElement object, boolean substituteTypeVariables,
-			boolean takeUpperBound) {
 		final Result<TypeRef> result = type(G, object);
 		final TypeRef value = result.getValue();
 		if (value != null) {
-			// Replace bound type variables with type arguments if required. Otherwise keep working with the original
-			// value.
-			final TypeRef substValue = substituteTypeVariables ? substTypeVariablesXXX(G, value) : value;
-			if (substValue != null) {
-				// Required, because #upperBound() will return 'null' if it gets a type variable!
-				if (substValue.getDeclaredType() instanceof TypeVariable) {
-					return substValue;
-				}
-				if (takeUpperBound) {
-					final Result<TypeRef> upperBoundResult = upperBound(G, substValue);
-					return upperBoundResult.getValue();
-				} else {
-					return substValue;
-				}
-			}
+			final TypeRef substValue = substTypeVariablesXXX(G, value);
+			return substValue;
 		}
 		return null;
+	}
+
+	/**
+	 * Creates a rule environment for the given context, i.e. it will be populated with type variable substitutions,
+	 * this-bindings, etc. For details about the context argument see {@link #tau(TypableElement,TypeRef)}. Returns an
+	 * empty rule environment without any bindings if context is <code>null</code>. For consistency with
+	 * {@link RuleEnvironmentExtensions#newRuleEnvironment(EObject)} this will throw an exception if resourceSet is
+	 * <code>null</code>.
+	 */
+	public RuleEnvironment createRuleEnvironmentForContext(TypeRef context, Resource resource) {
+		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
+		if (context != null) {
+			tsh.addSubstitutions(G, context);
+			if (context instanceof ParameterizedTypeRef) {
+				if (context.getDeclaredType() instanceof TClassifier)
+					RuleEnvironmentExtensions.addThisType(G, context);
+			}
+		}
+		return G;
 	}
 }
