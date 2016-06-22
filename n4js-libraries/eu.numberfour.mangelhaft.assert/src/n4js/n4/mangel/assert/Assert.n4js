@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
- * 
+ *
  * 3rd Party Code used here:
  * - [node-deep-equal](https://github.com/substack/node-deep-equal), [MIT](https://raw.githubusercontent.com/substack/node-deep-equal/master/LICENSE)
  * - [Node.js Assert Library](https://raw.githubusercontent.com/nodejs/node/master/lib/assert.js), [MIT like](https://raw.githubusercontent.com/nodejs/node/master/lib/assert.js)
@@ -80,7 +80,11 @@ const Object_keys = typeof Object.keys === 'function'
 ;
 
 function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
-    let a = aAny as Object, b = bAny as Object;
+    let a = aAny as Object,
+        b = bAny as Object,
+        ka: Array<string>, kb: Array<string>,
+        key: string, i: int;
+
     if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
         return false;
     if (!ignorePrototype && (a["prototype"] !== b["prototype"])){
@@ -90,15 +94,14 @@ function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
     if (isArguments(a)) {
         if (!isArguments(b)) {
             return false;
-    }
-    a = pSlice.call(a) as Object;
-    b = pSlice.call(b) as Object;
-    return _deepEqual(a, b, ignorePrototype);
+        }
+        a = pSlice.call(a) as Object;
+        b = pSlice.call(b) as Object;
+        return _deepEqual(a, b, ignorePrototype);
     }
     try {
-        var ka = Object_keys(a),
-        kb = Object_keys(b),
-        key, i: number;
+        ka = Object_keys(a);
+        kb = Object_keys(b);
     } catch (e) {
         return false;
     }
@@ -146,15 +149,13 @@ function  _deepEqual(actual: any, expected: any, ignorePrototype: boolean?):bool
 
 
 
-function expectedException(actual: any, expected: union{ErrorPrimitiveType, type{Object}}) {
+function expectedException(actual: any, expected: union{ErrorPrimitiveType, type{Object}, string,Object}) {
     if (typeof expected === "string") {
         return ((typeof actual) === expected as string);
     }
     if (Object.getPrototypeOf({}).toString.call(expected) == '[object RegExp]') {
         return (expected as RegExp).test((actual as Object).toString());
     } else if (actual instanceof expected as type{Object}) {
-        return true;
-    } else if (typeof expected === "function" && (expected as Function).call({}, actual) === true) {
         return true;
     }
     return false;
@@ -196,6 +197,7 @@ export public class Assert {
                         , operator: string?
                         , stackStartFunction: Function?
     ) {
+
         let error = new AssertionError({
             string message: message,
             any actual: actual,
@@ -444,7 +446,7 @@ export public class Assert {
             actual = e;
         }
         if (!threw) {
-            this.fail_(null, null, message, "throws", this.throws);
+            this.fail_(null, null, message, "Did not throw any exception", this.throws);
         }
         return this.thrownCheck(true, actual, error, message, "throws", this.throws);
     }
@@ -486,7 +488,7 @@ export public class Assert {
             actual = e;
         }
         if (!threw) {
-            this.fail_(null, null, message, "throws", this.throwsAsync);
+            this.fail_(null, null, message, "Did not throw any exception", this.throwsAsync);
         }
         return this.thrownCheck(true, actual, expectedErrorType, message, "throws", this.throwsAsync);
     }
@@ -554,8 +556,9 @@ export public class Assert {
         });
     }
 
-    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Object}}?, message: string?, operator: string?, stackStartFunction: Function?): any {
+    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Object},Object}?, message: string?, operator: string?, stackStartFunction: Function?): any {
         this.rethrowIfSpecialError(actual, expected);
+        // TODO seems odd: type of expected should be error in the first place
         message = (expected && (expected as Error).name ? ' (' + (expected as Error).name + ').': '.') +
         (message ? ' ' + message: '.');
 
@@ -573,6 +576,5 @@ export public class Assert {
         return actual;
     }
 }
-
-export public let deepEqual = _deepEqual;
-/* -*- mode: typescript;-*- */
+export public const deepEqual = _deepEqual;
+/* -*- mode: javascript;-*- */
