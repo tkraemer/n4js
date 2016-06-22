@@ -3971,19 +3971,40 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
                                       checkAssignableTo(result_5.getFirst(), TypeRef.class);
                                       rightArgLower = (TypeRef) result_5.getFirst();
                                       
-                                      /* { if(variance!=Variance.CONTRA) { G |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                      RuleEnvironment G2 = null;
+                                      if (((rightArg instanceof Wildcard) && ((Wildcard) rightArg).isImplicitUpperBoundInEffect())) {
+                                        Pair<String, TypeArgument> _mappedTo_4 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
+                                        Object _get_1 = G.get(_mappedTo_4);
+                                        final boolean isGuarded = (_get_1 != null);
+                                        if ((!isGuarded)) {
+                                          RuleEnvironment _wrap_1 = RuleEnvironmentExtensions.wrap(G);
+                                          G2 = _wrap_1;
+                                          Pair<String, TypeArgument> _mappedTo_5 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
+                                          /* G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE) */
+                                          if (!G2.add(_mappedTo_5, Boolean.TRUE)) {
+                                            sneakyThrowRuleFailedException("G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE)");
+                                          }
+                                        } else {
+                                          ParameterizedTypeRef _pTypeRef = RuleEnvironmentExtensions.topTypeRef(G);
+                                          rightArgUpper = _pTypeRef;
+                                          G2 = G;
+                                        }
+                                      } else {
+                                        G2 = G;
+                                      }
+                                      /* { if(variance!=Variance.CONTRA) { G2 |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G2 |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
                                       {
                                         RuleFailedException previousFailure = null;
                                         try {
                                           boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
                                           if (_notEquals) {
-                                            /* G |- leftArgUpper <: rightArgUpper */
-                                            subtypeInternal(G, _trace_, leftArgUpper, rightArgUpper);
+                                            /* G2 |- leftArgUpper <: rightArgUpper */
+                                            subtypeInternal(G2, _trace_, leftArgUpper, rightArgUpper);
                                           }
                                           boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
                                           if (_notEquals_1) {
-                                            /* G |- rightArgLower <: leftArgLower */
-                                            subtypeInternal(G, _trace_, rightArgLower, leftArgLower);
+                                            /* G2 |- rightArgLower <: leftArgLower */
+                                            subtypeInternal(G2, _trace_, rightArgLower, leftArgLower);
                                           }
                                         } catch (Exception e) {
                                           previousFailure = extractRuleFailedException(e);

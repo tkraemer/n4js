@@ -96,10 +96,6 @@ User : 'user';
 
 API : 'API';
 
-App : 'app';
-
-Lib : 'lib';
-
 In : 'in';
 
 LeftParenthesis : '(';

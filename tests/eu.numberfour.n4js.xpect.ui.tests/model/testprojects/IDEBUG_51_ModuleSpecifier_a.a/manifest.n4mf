@@ -2,7 +2,7 @@ ArtifactId: IDEBUG_51_ModuleSpecifier_a.a
 VendorId: eu.numberfour
 ProjectName: "IDEBUG_51_ModuleSpecifier_a.a"
 VendorName: "NumberFour AG"
-ProjectType: system
+ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
 Sources {

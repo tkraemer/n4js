@@ -1346,8 +1346,17 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWildcard__GetTypeRefAsString() {
+	public EOperation getWildcard__IsImplicitUpperBoundInEffect() {
 		return wildcardEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getWildcard__GetTypeRefAsString() {
+		return wildcardEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -1818,6 +1827,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEReference(wildcardEClass, WILDCARD__DECLARED_LOWER_BOUND);
 		createEAttribute(wildcardEClass, WILDCARD__USING_IN_OUT_NOTATION);
 		createEOperation(wildcardEClass, WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS);
+		createEOperation(wildcardEClass, WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT);
 		createEOperation(wildcardEClass, WILDCARD___GET_TYPE_REF_AS_STRING);
 
 		functionTypeExprOrRefEClass = createEClass(FUNCTION_TYPE_EXPR_OR_REF);
@@ -2132,6 +2142,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEAttribute(getWildcard_UsingInOutNotation(), theEcorePackage.getEBoolean(), "usingInOutNotation", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getWildcard__GetDeclaredOrImplicitUpperBounds(), this.getTypeRef(), "getDeclaredOrImplicitUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getWildcard__IsImplicitUpperBoundInEffect(), theEcorePackage.getEBoolean(), "isImplicitUpperBoundInEffect", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWildcard__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

@@ -117,6 +117,10 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 				return createTypeVariableAdapter();
 			}
 			@Override
+			public Adapter caseInferenceVariable(InferenceVariable object) {
+				return createInferenceVariableAdapter();
+			}
+			@Override
 			public Adapter caseTFunction(TFunction object) {
 				return createTFunctionAdapter();
 			}
@@ -439,6 +443,20 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeVariableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.types.InferenceVariable <em>Inference Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.types.InferenceVariable
+	 * @generated
+	 */
+	public Adapter createInferenceVariableAdapter() {
 		return null;
 	}
 

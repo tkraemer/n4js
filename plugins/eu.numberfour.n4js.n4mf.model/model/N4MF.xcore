@@ -210,7 +210,6 @@ class DeclaredVersion {
  * <dt>application			</dt><dd>10.2.1. Apps</dd>
  * <dt>processor 			</dt><dd>10.2.2. Processors</dd>
  * <dt>library				</dt><dd>10.2.3. Libraries</dd>
- * <dt>system				</dt><dd>10.2.4. System Libraries </dd>
  * <dt>runtimeEnvironment	</dt><dd>10.2.5. Runtime Environment</dd>
  * <dt>runtimeLibrary		</dt><dd>10.2.5. Runtime Library</dd>
  * </description>
@@ -219,7 +218,6 @@ enum ProjectType {
 	APPLICATION,
 	PROCESSOR,
 	LIBRARY,
-	SYSTEM, //TODO remove this
 	API,
 	RUNTIME_ENVIRONMENT,
 	RUNTIME_LIBRARY,

@@ -4946,13 +4946,22 @@ public interface TypeRefsPackage extends EPackage {
 	int WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS = TYPE_ARGUMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Is Implicit Upper Bound In Effect</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT = TYPE_ARGUMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WILDCARD___GET_TYPE_REF_AS_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 1;
+	int WILDCARD___GET_TYPE_REF_AS_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Wildcard</em>' class.
@@ -4961,7 +4970,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WILDCARD_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 2;
+	int WILDCARD_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExprOrRefImpl <em>Function Type Expr Or Ref</em>}' class.
@@ -7477,6 +7486,16 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getWildcard__GetDeclaredOrImplicitUpperBounds();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isImplicitUpperBoundInEffect() <em>Is Implicit Upper Bound In Effect</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Implicit Upper Bound In Effect</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Wildcard#isImplicitUpperBoundInEffect()
+	 * @generated
+	 */
+	EOperation getWildcard__IsImplicitUpperBoundInEffect();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8819,6 +8838,14 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS = eINSTANCE.getWildcard__GetDeclaredOrImplicitUpperBounds();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Implicit Upper Bound In Effect</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT = eINSTANCE.getWildcard__IsImplicitUpperBoundInEffect();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.

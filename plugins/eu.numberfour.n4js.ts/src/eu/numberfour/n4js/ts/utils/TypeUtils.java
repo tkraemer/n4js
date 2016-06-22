@@ -22,8 +22,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Spliterators;
-import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -60,6 +58,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.PrimitiveType;
 import eu.numberfour.n4js.ts.types.TClass;
@@ -781,6 +780,31 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Tells if the given type reference refers to an inference variable.
+	 */
+	public static boolean isInferenceVariable(TypeRef typeRef) {
+		return typeRef != null && typeRef.getDeclaredType() instanceof InferenceVariable;
+	}
+
+	/**
+	 * Tells if the given type reference represents a <em>proper</em> type. A type reference is proper iff it does not
+	 * mention any inference variables. Mentioning an inference variable makes it improper, even if an instantiation may
+	 * exist for the inference variable in some inference context.
+	 * <p>
+	 * For example, given inference variable α, all of the following are improper type references:
+	 * <ul>
+	 * <li>α (i.e. a ParameterizedTypeRef with α as its declared type)
+	 * <li>G&lt;α>
+	 * <li>union{C,α}
+	 * <li>{function():α}
+	 * <li>constructor{α}
+	 * </ul>
+	 */
+	public static boolean isProper(TypeArgument typeRef) {
+		return !isOrContainsRefToInfVar(typeRef);
+	}
+
+	/**
 	 * Returns true if the (unparameterized) declared type of the given type ref or, in case of a union or intersection,
 	 * the declared type of a contained element type ref is the same as the given declared type. In all cases,
 	 * parameterization is ignored and the types are compared via identity (not equals!).
@@ -836,30 +860,38 @@ public class TypeUtils {
 	 * the given typeRef references a type variable or contains a reference to a type variable.
 	 */
 	public static boolean isOrContainsRefToTypeVar(EObject obj, TypeVariable... typeVars) {
-		if (obj == null)
-			return false;
-		if (isRefToTypeVar(obj, typeVars))
-			return true;
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(obj.eAllContents(), 0), false).anyMatch(
-				child -> {
-					return isRefToTypeVar(child, typeVars);
-				});
+		return isOrContainsRefToTypeVar(obj, false, typeVars);
 	}
 
 	/**
-	 * Returns true iff the given typeRef references one of the given type variables.
-	 * <p>
-	 * If no type variables are given, then this method checks for <em>any</em> type variables, i.e. it returns true iff
-	 * the given typeRef references a type variable.
+	 * Like {@link #isOrContainsRefToTypeVar(EObject, TypeVariable...)}, but checks for inference variables.
 	 */
-	private static boolean isRefToTypeVar(EObject obj, TypeVariable... typeVars) {
+	public static boolean isOrContainsRefToInfVar(EObject obj, InferenceVariable... infVars) {
+		return isOrContainsRefToTypeVar(obj, true, infVars);
+	}
+
+	private static boolean isOrContainsRefToTypeVar(EObject obj, boolean checkForInfVars, TypeVariable... typeVars) {
+		if (obj == null)
+			return false;
+		if (isRefToTypeVar(obj, checkForInfVars, typeVars))
+			return true;
+		final Iterator<EObject> iter = obj.eAllContents();
+		while (iter.hasNext()) {
+			if (isRefToTypeVar(iter.next(), checkForInfVars, typeVars))
+				return true;
+		}
+		return false;
+	}
+
+	private static boolean isRefToTypeVar(EObject obj, boolean checkForInfVars, TypeVariable... typeVars) {
 		// special case: for StructuralTypeRef we have to consider the TStructuralType as well
 		if (obj instanceof StructuralTypeRef
 				// FIXME should better use #getStructuralMembers() in next line???
-				&& isOrContainsRefToTypeVar(((StructuralTypeRef) obj).getStructuralType(), typeVars))
+				&& isOrContainsRefToTypeVar(((StructuralTypeRef) obj).getStructuralType(), checkForInfVars, typeVars))
 			return true;
+		final Class<?> expectedType = checkForInfVars ? InferenceVariable.class : TypeVariable.class;
 		return obj instanceof TypeRef
-				&& ((TypeRef) obj).getDeclaredType() instanceof TypeVariable
+				&& expectedType.isInstance(((TypeRef) obj).getDeclaredType())
 				&& (typeVars.length == 0 || org.eclipse.xtext.util.Arrays.contains(
 						typeVars, ((TypeRef) obj).getDeclaredType()));
 	}
@@ -1044,15 +1076,26 @@ public class TypeUtils {
 
 		@Override
 		protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject) {
-			if (eReference == eRef_StructuralTypeRef_astStructuralMembers)
-				return; // do not copy 'astStructuralMembers' of StructuralTypeRefs
-			if (eReference == eRef_Wildcard_declaredUpperBound) {
-				((Wildcard) copyEObject).setDeclaredUpperBound(
-						TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound((Wildcard) eObject)));
-				return;
+			if (org.eclipse.xtext.util.Arrays.contains(eRefsToIgnore, eReference)) {
+				return; // abort, do not copy ignored references
+			} else if (eReference == eRef_StructuralTypeRef_astStructuralMembers) {
+				return; // abort, do not copy 'astStructuralMembers' of StructuralTypeRefs
+			} else if (eReference == eRef_Wildcard_declaredUpperBound) {
+				final Wildcard wOrig = (Wildcard) eObject;
+				final Wildcard wCopy = (Wildcard) copyEObject;
+				if (wOrig.isImplicitUpperBoundInEffect()) {
+					final EObject parent = wOrig.eContainer();
+					final boolean parentIsBeingCopiedAsWell = parent != null && containsKey(parent);
+					final boolean needToMakeImplicitUpperBoundExplicit = !parentIsBeingCopiedAsWell;
+					if (needToMakeImplicitUpperBoundExplicit) {
+						wCopy.setDeclaredUpperBound(
+								TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound(wOrig)));
+						return;
+					}
+				}
+				// continue with default behavior ... (do not return!)
 			}
-			if (org.eclipse.xtext.util.Arrays.contains(eRefsToIgnore, eReference))
-				return; // do not copy ignored references
+			// default behavior:
 			super.copyContainment(eReference, eObject, copyEObject);
 		}
 

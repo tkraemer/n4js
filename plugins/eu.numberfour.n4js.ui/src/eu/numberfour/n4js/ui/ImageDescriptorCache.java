@@ -65,9 +65,6 @@ public enum ImageDescriptorCache {
 		/** The decorator for {@link ProjectType#RUNTIME_LIBRARY runtime library} projects. */
 		PROJECT_TYPE_RL_DECOR("rl_project_type.png"),
 
-		/** The decorator for {@link ProjectType#SYSTEM system} projects. */
-		PROJECT_TYPE_SYS_DECOR("sys_project_type.png"),
-
 		/** Library path image reference. */
 		LIB_PATH("classpath.gif"),
 

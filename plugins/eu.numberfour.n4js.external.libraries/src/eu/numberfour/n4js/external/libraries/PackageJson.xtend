@@ -84,7 +84,10 @@ class PackageJson {
 	/** The file name with the extension of the {@code package.json} file for npm. */
 	public static val String PACKAGE_JSON = 'package.json';
 
-	var Collection<Collection<String>> _args;
+	// GH-217: changed type from "Collection<Collection<String>>" to "Collection<Collection<Object>>", 
+	// since https://github.com/npm/npm/blob/a3d718f5e4f15f0c2498e74304c979120611d67e/lib/fetch-package-metadata.js#L77
+	// introduces objects in the inner notation. This change went live with npm version 3.9.3
+	var Collection<Collection<Object>> _args;
 	var String _from;
 	var String _id;
 	var boolean _inCache

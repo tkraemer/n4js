@@ -1496,42 +1496,31 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cAPPLICATIONEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cAPPLICATIONApplicationKeyword_0_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cAPPLICATIONEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cAPPLICATIONAppKeyword_1_0 = (Keyword)cAPPLICATIONEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cPROCESSOREnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cPROCESSORProcessorKeyword_2_0 = (Keyword)cPROCESSOREnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cLIBRARYEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cLIBRARYLibraryKeyword_3_0 = (Keyword)cLIBRARYEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cLIBRARYEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cLIBRARYLibKeyword_4_0 = (Keyword)cLIBRARYEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cSYSTEMEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cSYSTEMSystemKeyword_5_0 = (Keyword)cSYSTEMEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cAPIEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cAPIAPIKeyword_6_0 = (Keyword)cAPIEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_7_0 = (Keyword)cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7.eContents().get(0);
-		private final EnumLiteralDeclaration cRUNTIME_LIBRARYEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
-		private final Keyword cRUNTIME_LIBRARYRuntimeLibraryKeyword_8_0 = (Keyword)cRUNTIME_LIBRARYEnumLiteralDeclaration_8.eContents().get(0);
-		private final EnumLiteralDeclaration cTESTEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
-		private final Keyword cTESTTestKeyword_9_0 = (Keyword)cTESTEnumLiteralDeclaration_9.eContents().get(0);
+		private final EnumLiteralDeclaration cPROCESSOREnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cPROCESSORProcessorKeyword_1_0 = (Keyword)cPROCESSOREnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cLIBRARYEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cLIBRARYLibraryKeyword_2_0 = (Keyword)cLIBRARYEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cAPIEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cAPIAPIKeyword_3_0 = (Keyword)cAPIEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_4_0 = (Keyword)cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cRUNTIME_LIBRARYEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cRUNTIME_LIBRARYRuntimeLibraryKeyword_5_0 = (Keyword)cRUNTIME_LIBRARYEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cTESTEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cTESTTestKeyword_6_0 = (Keyword)cTESTEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum ProjectType:
 		//	APPLICATION='application' |
-		//	APPLICATION='app' | //XXX deprecated. Will be removed soon. Use application instead.
 		//	PROCESSOR='processor' |
 		//	LIBRARY='library' |
-		//	LIBRARY='lib' | //XXX deprecated. Will be removed soon. Use library instead.
-		//	SYSTEM='system' | //XXX deprecated. Will be removed soon. Use either API or Library instead.
 		//	API |
 		//	RUNTIME_ENVIRONMENT="runtimeEnvironment" |
 		//	RUNTIME_LIBRARY="runtimeLibrary" |
 		//	TEST="test";
 		public EnumRule getRule() { return rule; }
 
-		//APPLICATION='application' | APPLICATION='app' | //XXX deprecated. Will be removed soon. Use application instead.
-		//PROCESSOR='processor' | LIBRARY='library' | LIBRARY='lib' | //XXX deprecated. Will be removed soon. Use library instead.
-		//SYSTEM='system' | //XXX deprecated. Will be removed soon. Use either API or Library instead.
-		//API | RUNTIME_ENVIRONMENT="runtimeEnvironment" | RUNTIME_LIBRARY="runtimeLibrary" | TEST="test"
+		//APPLICATION='application' | PROCESSOR='processor' | LIBRARY='library' | API | RUNTIME_ENVIRONMENT="runtimeEnvironment" |
+		//RUNTIME_LIBRARY="runtimeLibrary" | TEST="test"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//APPLICATION='application'
@@ -1540,62 +1529,41 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//'application'
 		public Keyword getAPPLICATIONApplicationKeyword_0_0() { return cAPPLICATIONApplicationKeyword_0_0; }
 
-		//APPLICATION='app'
-		public EnumLiteralDeclaration getAPPLICATIONEnumLiteralDeclaration_1() { return cAPPLICATIONEnumLiteralDeclaration_1; }
-
-		//'app'
-		public Keyword getAPPLICATIONAppKeyword_1_0() { return cAPPLICATIONAppKeyword_1_0; }
-
-		////XXX deprecated. Will be removed soon. Use application instead.
 		//PROCESSOR='processor'
-		public EnumLiteralDeclaration getPROCESSOREnumLiteralDeclaration_2() { return cPROCESSOREnumLiteralDeclaration_2; }
+		public EnumLiteralDeclaration getPROCESSOREnumLiteralDeclaration_1() { return cPROCESSOREnumLiteralDeclaration_1; }
 
 		//'processor'
-		public Keyword getPROCESSORProcessorKeyword_2_0() { return cPROCESSORProcessorKeyword_2_0; }
+		public Keyword getPROCESSORProcessorKeyword_1_0() { return cPROCESSORProcessorKeyword_1_0; }
 
 		//LIBRARY='library'
-		public EnumLiteralDeclaration getLIBRARYEnumLiteralDeclaration_3() { return cLIBRARYEnumLiteralDeclaration_3; }
+		public EnumLiteralDeclaration getLIBRARYEnumLiteralDeclaration_2() { return cLIBRARYEnumLiteralDeclaration_2; }
 
 		//'library'
-		public Keyword getLIBRARYLibraryKeyword_3_0() { return cLIBRARYLibraryKeyword_3_0; }
+		public Keyword getLIBRARYLibraryKeyword_2_0() { return cLIBRARYLibraryKeyword_2_0; }
 
-		//LIBRARY='lib'
-		public EnumLiteralDeclaration getLIBRARYEnumLiteralDeclaration_4() { return cLIBRARYEnumLiteralDeclaration_4; }
-
-		//'lib'
-		public Keyword getLIBRARYLibKeyword_4_0() { return cLIBRARYLibKeyword_4_0; }
-
-		////XXX deprecated. Will be removed soon. Use library instead.
-		//SYSTEM='system'
-		public EnumLiteralDeclaration getSYSTEMEnumLiteralDeclaration_5() { return cSYSTEMEnumLiteralDeclaration_5; }
-
-		//'system'
-		public Keyword getSYSTEMSystemKeyword_5_0() { return cSYSTEMSystemKeyword_5_0; }
-
-		////XXX deprecated. Will be removed soon. Use either API or Library instead.
 		//API
-		public EnumLiteralDeclaration getAPIEnumLiteralDeclaration_6() { return cAPIEnumLiteralDeclaration_6; }
+		public EnumLiteralDeclaration getAPIEnumLiteralDeclaration_3() { return cAPIEnumLiteralDeclaration_3; }
 
 		//'API'
-		public Keyword getAPIAPIKeyword_6_0() { return cAPIAPIKeyword_6_0; }
+		public Keyword getAPIAPIKeyword_3_0() { return cAPIAPIKeyword_3_0; }
 
 		//RUNTIME_ENVIRONMENT="runtimeEnvironment"
-		public EnumLiteralDeclaration getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7() { return cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7; }
+		public EnumLiteralDeclaration getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4() { return cRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4; }
 
 		//"runtimeEnvironment"
-		public Keyword getRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_7_0() { return cRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_7_0; }
+		public Keyword getRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_4_0() { return cRUNTIME_ENVIRONMENTRuntimeEnvironmentKeyword_4_0; }
 
 		//RUNTIME_LIBRARY="runtimeLibrary"
-		public EnumLiteralDeclaration getRUNTIME_LIBRARYEnumLiteralDeclaration_8() { return cRUNTIME_LIBRARYEnumLiteralDeclaration_8; }
+		public EnumLiteralDeclaration getRUNTIME_LIBRARYEnumLiteralDeclaration_5() { return cRUNTIME_LIBRARYEnumLiteralDeclaration_5; }
 
 		//"runtimeLibrary"
-		public Keyword getRUNTIME_LIBRARYRuntimeLibraryKeyword_8_0() { return cRUNTIME_LIBRARYRuntimeLibraryKeyword_8_0; }
+		public Keyword getRUNTIME_LIBRARYRuntimeLibraryKeyword_5_0() { return cRUNTIME_LIBRARYRuntimeLibraryKeyword_5_0; }
 
 		//TEST="test"
-		public EnumLiteralDeclaration getTESTEnumLiteralDeclaration_9() { return cTESTEnumLiteralDeclaration_9; }
+		public EnumLiteralDeclaration getTESTEnumLiteralDeclaration_6() { return cTESTEnumLiteralDeclaration_6; }
 
 		//"test"
-		public Keyword getTESTTestKeyword_9_0() { return cTESTTestKeyword_9_0; }
+		public Keyword getTESTTestKeyword_6_0() { return cTESTTestKeyword_6_0; }
 	}
 
 	public class SourceFragmentTypeElements extends AbstractEnumRuleElementFinder {
@@ -1860,11 +1828,8 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 
 	//enum ProjectType:
 	//	APPLICATION='application' |
-	//	APPLICATION='app' | //XXX deprecated. Will be removed soon. Use application instead.
 	//	PROCESSOR='processor' |
 	//	LIBRARY='library' |
-	//	LIBRARY='lib' | //XXX deprecated. Will be removed soon. Use library instead.
-	//	SYSTEM='system' | //XXX deprecated. Will be removed soon. Use either API or Library instead.
 	//	API |
 	//	RUNTIME_ENVIRONMENT="runtimeEnvironment" |
 	//	RUNTIME_LIBRARY="runtimeLibrary" |

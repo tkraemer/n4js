@@ -19,6 +19,7 @@ import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType;
@@ -173,6 +174,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	private EClass typeVariableEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass inferenceVariableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -995,6 +1003,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 */
 	public EOperation getTypeVariable__GetTypeVariableAsString__Collection() {
 		return typeVariableEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getInferenceVariable() {
+		return inferenceVariableEClass;
 	}
 
 	/**
@@ -2855,6 +2872,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_AS_STRING);
 		createEOperation(typeVariableEClass, TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION);
 
+		inferenceVariableEClass = createEClass(INFERENCE_VARIABLE);
+
 		tFunctionEClass = createEClass(TFUNCTION);
 		createEAttribute(tFunctionEClass, TFUNCTION__EXTERNAL);
 		createEReference(tFunctionEClass, TFUNCTION__FPARS);
@@ -3137,6 +3156,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tAnnotationStringArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
 		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
 		typeVariableEClass.getESuperTypes().add(this.getType());
+		inferenceVariableEClass.getESuperTypes().add(this.getTypeVariable());
 		tFunctionEClass.getESuperTypes().add(this.getDeclaredTypeWithAccessModifier());
 		tFunctionEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		typeEClass.getESuperTypes().add(this.getTExportableElement());
@@ -3284,6 +3304,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		op = initEOperation(getTypeVariable__GetTypeVariableAsString__Collection(), theEcorePackage.getEString(), "getTypeVariableAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getCollectionOfTypeRef(), "upperBounds", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEClass(inferenceVariableEClass, InferenceVariable.class, "InferenceVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(tFunctionEClass, TFunction.class, "TFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTFunction_External(), theEcorePackage.getEBoolean(), "external", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

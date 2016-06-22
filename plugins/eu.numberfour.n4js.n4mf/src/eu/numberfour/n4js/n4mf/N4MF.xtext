@@ -60,11 +60,8 @@ ProjectDescription:
 
 enum ProjectType :
 	APPLICATION = 'application' |
-	APPLICATION = 'app' | //XXX deprecated. Will be removed soon. Use application instead.
 	PROCESSOR = 'processor' |
 	LIBRARY = 'library' |
-	LIBRARY = 'lib' | //XXX deprecated. Will be removed soon. Use library instead.
-	SYSTEM = 'system' | //XXX deprecated. Will be removed soon. Use either API or Library instead.
 	API = 'API' |
 	RUNTIME_ENVIRONMENT = "runtimeEnvironment" |
 	RUNTIME_LIBRARY = "runtimeLibrary" |
