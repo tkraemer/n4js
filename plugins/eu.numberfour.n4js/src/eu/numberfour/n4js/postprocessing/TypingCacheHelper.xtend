@@ -46,7 +46,7 @@ class TypingCacheHelper {
 		public boolean isTypingInProgress = false;
 		public boolean isFullyTyped = false;
 
-		public CancelIndicator cancelIndicator;
+		public CancelIndicator cancelIndicator; // FIXME IDE-1848 make private; document that it can be null
 
 		/** While walking the AST, this set will contain AST nodes that have been processed as part of a forward reference. */
 		public final Set<EObject> forwardProcessedSubTrees = newLinkedHashSet; // TODO make this non-null only while isTypingInProgress===true
@@ -71,7 +71,7 @@ class TypingCacheHelper {
 		def Result<TypeRef> get(EObject astNode) {
 			val result = getFailSafe(astNode);
 			if(result===null) {
-				if(cancelIndicator.canceled) {
+				if(isCanceled()) {
 					return new Result<TypeRef>(TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
 				} else {
 					throw reportError(new IllegalStateException(
