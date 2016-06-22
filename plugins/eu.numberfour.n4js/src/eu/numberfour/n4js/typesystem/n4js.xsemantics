@@ -741,6 +741,18 @@ from {
 		}
 
 		G2 |- propTypeRef ~> T
+		
+		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // cf. GH-95
+			val F = T as FunctionTypeExprOrRef;
+			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {
+				var TypeRef rawT; G |~ expr ~> rawT;
+				val thisType = TypeUtils.enforceNominalTyping(rawT);
+				T = TypeUtils.createFunctionTypeExpression(thisType, 
+					F.typeVars, F.fpars, thisType);
+			}
+		}
+		
+		
 	}
 }
 
@@ -791,7 +803,12 @@ from {
 
 			if (F.returnTypeRef instanceof ThisTypeRef) {
 
-				G2 |- expr.receiver: T
+				if (expr.receiver instanceof SuperLiteral) { // cf. GH-95
+					var TypeRef rawT; G |~ expr ~> rawT;
+					T = TypeUtils.enforceNominalTyping(rawT);
+				} else {
+					G2 |- expr.receiver: T
+				}
 
 				// IDE-785 if F is a static method with returnType this, we need to
 				// Type	 to the Class-Type of the receiver.
