@@ -46,7 +46,7 @@ class GH_184_TemplateStringTest extends AbstractTranspilerTest {
 		val moduleWrapped = '''
 			'use strict';
 			System.register([], function($n4Export) {
-				var foo, bar;
+				var foo, bar, foo2, bar2;
 				return {
 					setters: [],
 					execute: function() {
