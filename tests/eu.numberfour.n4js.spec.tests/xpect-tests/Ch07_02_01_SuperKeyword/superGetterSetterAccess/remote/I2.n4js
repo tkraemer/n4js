@@ -1,4 +1,4 @@
-import { I1 } from "Ch07_03_01__SuperKeyword/superGetterSetterAccess/remote/I1"
+import { I1 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote/I1"
 
 
 export public interface I2 extends I1 {}

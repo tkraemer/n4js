@@ -24,7 +24,7 @@
 //
 
 
-import { C3 } from "Ch07_03_01__SuperKeyword/superGetterSetterAccess/remote/C3"
+import { C3 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote/C3"
 
 
 new C3().test();
