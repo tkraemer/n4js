@@ -3,6 +3,8 @@
 .N4JS and Java
 = N4JS and Java
 
+== Introduction
+
 N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript is. There are additional features which
 are quite similar to Java, actually making ECMAScript feel more like **Java**Script. In the following, we describe the most
 important similarities and differences of Java and N4JS.
