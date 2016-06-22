@@ -334,9 +334,11 @@ class N4JSLanguageUtils {
 					vFactor = switch(parent) {
 					ComposedTypeRef case parent.typeRefs.contains(curr): 
 						Variance.CO
-					ConstructorTypeRef case parent.getTypeArg===curr:
-						Variance.INV
-					ClassifierTypeRef case parent.getTypeArg===curr:
+					ConstructorTypeRef case parent.getTypeArg===curr: // TODO MOR: review that
+							Variance.INV
+					ConstructorTypeRef case parent.getTypeArg!==curr:
+						Variance.CO
+					ClassifierTypeRef: // case parent.getTypeArg===curr: // TODO MOR: review that
 						Variance.CO
 					BoundThisTypeRef case parent.actualThisTypeRef===curr:
 						Variance.CO // note: this should never happen in the typical use cases of this method,

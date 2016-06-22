@@ -102,6 +102,7 @@ import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.AnyType;
 import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType;
 import eu.numberfour.n4js.ts.types.NullType;
@@ -358,13 +359,13 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String SUBTYPEEXISTENTIALTYPEREF_LEFT = "eu.numberfour.n4js.xsemantics.SubtypeExistentialTypeRef_Left";
   
-  public final static String SUBTYPECONSTRUCTORTYPEREF__FUNCTION = "eu.numberfour.n4js.xsemantics.SubtypeConstructorTypeRef__Function";
+  public final static String SUBTYPECLASSIFIERTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeClassifierTypeRef";
   
   public final static String SUBTYPECONSTRUCTORTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeConstructorTypeRef";
   
-  public final static String SUBTYPECLASSIFIERTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeClassifierTypeRef";
+  public final static String SUBTYPECLASSIFIERTYPEREF_PARAMETERIZEDTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeClassifierTypeRef_ParameterizedTypeRef";
   
-  public final static String SUBTYPECLASSIFIERTYPEREFOBJECT = "eu.numberfour.n4js.xsemantics.SubtypeClassifierTypeRefObject";
+  public final static String SUBTYPECONSTRUCTORTYPEREF__PARAMETERIZEDTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeConstructorTypeRef__ParameterizedTypeRef";
   
   public final static String SUBTYPEFUNCTIONTYPEEXPRORREF = "eu.numberfour.n4js.xsemantics.SubtypeFunctionTypeExprOrRef";
   
@@ -4538,29 +4539,34 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
+  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ClassifierTypeRef right) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeConstructorTypeRef__Function(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleSubtypeClassifierTypeRef(G, _subtrace_, left, right);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("subtypeConstructorTypeRef__Function") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("subtypeClassifierTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
-    } catch (Exception e_applyRuleSubtypeConstructorTypeRef__Function) {
-    	subtypeThrowException(ruleName("subtypeConstructorTypeRef__Function") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
-    		SUBTYPECONSTRUCTORTYPEREF__FUNCTION,
-    		e_applyRuleSubtypeConstructorTypeRef__Function, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    } catch (Exception e_applyRuleSubtypeClassifierTypeRef) {
+    	subtypeThrowException(ruleName("subtypeClassifierTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    		SUBTYPECLASSIFIERTYPEREF,
+    		e_applyRuleSubtypeClassifierTypeRef, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleSubtypeConstructorTypeRef__Function(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
-    /* G |- G.functionTypeRef <: right */
-    ParameterizedTypeRef _functionTypeRef = RuleEnvironmentExtensions.functionTypeRef(G);
-    subtypeInternal(G, _trace_, _functionTypeRef, right);
+  protected Result<Boolean> applyRuleSubtypeClassifierTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ClassifierTypeRef right) throws RuleFailedException {
+    /* !(right instanceof ConstructorTypeRef) */
+    if (!(!(right instanceof ConstructorTypeRef))) {
+      sneakyThrowRuleFailedException("!(right instanceof ConstructorTypeRef)");
+    }
+    /* G |- left.getTypeArg <: right.getTypeArg */
+    TypeArgument _typeArg = left.getTypeArg();
+    TypeArgument _typeArg_1 = right.getTypeArg();
+    subtypeInternal(G, _trace_, _typeArg, _typeArg_1);
     return new Result<Boolean>(true);
   }
   
@@ -4584,12 +4590,11 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeConstructorTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ConstructorTypeRef right) throws RuleFailedException {
-    TypeArgument _typeArg = right.getTypeArg();
-    if ((_typeArg instanceof TypeRef)) {
+    if (((right.getTypeArg() instanceof TypeRef) && (((TypeRef) right.getTypeArg()).getDeclaredType() instanceof DeclaredTypeWithAccessModifier))) {
       /* G |- left.getTypeArg <: right.getTypeArg */
-      TypeArgument _typeArg_1 = left.getTypeArg();
-      TypeArgument _typeArg_2 = right.getTypeArg();
-      subtypeInternal(G, _trace_, _typeArg_1, _typeArg_2);
+      TypeArgument _typeArg = left.getTypeArg();
+      TypeArgument _typeArg_1 = right.getTypeArg();
+      subtypeInternal(G, _trace_, _typeArg, _typeArg_1);
       final Type left_staticType = left.staticType();
       final Type right_staticType = right.staticType();
       if (((left_staticType instanceof TypeVariable) || (right_staticType instanceof TypeVariable))) {
@@ -4637,30 +4642,30 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
       }
     } else {
       /* G |~ left.typeArg /\ var TypeRef upperBoundLeft */
-      TypeArgument _typeArg_3 = left.getTypeArg();
+      TypeArgument _typeArg_2 = left.getTypeArg();
       TypeRef upperBoundLeft = null;
-      Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, _typeArg_3);
+      Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, _typeArg_2);
       checkAssignableTo(result_2.getFirst(), TypeRef.class);
       upperBoundLeft = (TypeRef) result_2.getFirst();
       
       /* G |~ left.typeArg \/ var TypeRef lowerBoundLeft */
-      TypeArgument _typeArg_4 = left.getTypeArg();
+      TypeArgument _typeArg_3 = left.getTypeArg();
       TypeRef lowerBoundLeft = null;
-      Result<TypeRef> result_3 = lowerBoundInternal(G, _trace_, _typeArg_4);
+      Result<TypeRef> result_3 = lowerBoundInternal(G, _trace_, _typeArg_3);
       checkAssignableTo(result_3.getFirst(), TypeRef.class);
       lowerBoundLeft = (TypeRef) result_3.getFirst();
       
       /* G |~ right.typeArg /\ var TypeRef upperBoundRight */
-      TypeArgument _typeArg_5 = right.getTypeArg();
+      TypeArgument _typeArg_4 = right.getTypeArg();
       TypeRef upperBoundRight = null;
-      Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, _typeArg_5);
+      Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, _typeArg_4);
       checkAssignableTo(result_4.getFirst(), TypeRef.class);
       upperBoundRight = (TypeRef) result_4.getFirst();
       
       /* G |~ right.typeArg \/ var TypeRef lowerBoundRight */
-      TypeArgument _typeArg_6 = right.getTypeArg();
+      TypeArgument _typeArg_5 = right.getTypeArg();
       TypeRef lowerBoundRight = null;
-      Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, _typeArg_6);
+      Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, _typeArg_5);
       checkAssignableTo(result_5.getFirst(), TypeRef.class);
       lowerBoundRight = (TypeRef) result_5.getFirst();
       
@@ -4672,62 +4677,57 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ClassifierTypeRef right) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeClassifierTypeRef(G, _subtrace_, left, right);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("subtypeClassifierTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleSubtypeClassifierTypeRef) {
-    	subtypeThrowException(ruleName("subtypeClassifierTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
-    		SUBTYPECLASSIFIERTYPEREF,
-    		e_applyRuleSubtypeClassifierTypeRef, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
-    	return null;
-    }
-  }
-  
-  protected Result<Boolean> applyRuleSubtypeClassifierTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ClassifierTypeRef right) throws RuleFailedException {
-    /* !(right instanceof ConstructorTypeRef) */
-    if (!(!(right instanceof ConstructorTypeRef))) {
-      sneakyThrowRuleFailedException("!(right instanceof ConstructorTypeRef)");
-    }
-    /* G |- left.getTypeArg <: right.getTypeArg */
-    TypeArgument _typeArg = left.getTypeArg();
-    TypeArgument _typeArg_1 = right.getTypeArg();
-    subtypeInternal(G, _trace_, _typeArg, _typeArg_1);
-    return new Result<Boolean>(true);
-  }
-  
   protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeClassifierTypeRefObject(G, _subtrace_, left, right);
+    	final Result<Boolean> _result_ = applyRuleSubtypeClassifierTypeRef_ParameterizedTypeRef(G, _subtrace_, left, right);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("subtypeClassifierTypeRefObject") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    			return ruleName("subtypeClassifierTypeRef_ParameterizedTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
-    } catch (Exception e_applyRuleSubtypeClassifierTypeRefObject) {
-    	subtypeThrowException(ruleName("subtypeClassifierTypeRefObject") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
-    		SUBTYPECLASSIFIERTYPEREFOBJECT,
-    		e_applyRuleSubtypeClassifierTypeRefObject, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    } catch (Exception e_applyRuleSubtypeClassifierTypeRef_ParameterizedTypeRef) {
+    	subtypeThrowException(ruleName("subtypeClassifierTypeRef_ParameterizedTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    		SUBTYPECLASSIFIERTYPEREF_PARAMETERIZEDTYPEREF,
+    		e_applyRuleSubtypeClassifierTypeRef_ParameterizedTypeRef, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
     	return null;
     }
   }
   
-  protected Result<Boolean> applyRuleSubtypeClassifierTypeRefObject(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
+  protected Result<Boolean> applyRuleSubtypeClassifierTypeRef_ParameterizedTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
     /* right.declaredType instanceof AnyType || right.declaredType == G.objectType */
     if (!((right.getDeclaredType() instanceof AnyType) || 
       Objects.equal(right.getDeclaredType(), RuleEnvironmentExtensions.objectType(G)))) {
       sneakyThrowRuleFailedException("right.declaredType instanceof AnyType || right.declaredType == G.objectType");
     }
+    return new Result<Boolean>(true);
+  }
+  
+  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<Boolean> _result_ = applyRuleSubtypeConstructorTypeRef__ParameterizedTypeRef(G, _subtrace_, left, right);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("subtypeConstructorTypeRef__ParameterizedTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right);
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleSubtypeConstructorTypeRef__ParameterizedTypeRef) {
+    	subtypeThrowException(ruleName("subtypeConstructorTypeRef__ParameterizedTypeRef") + stringRepForEnv(G) + " |- " + stringRep(left) + " <: " + stringRep(right),
+    		SUBTYPECONSTRUCTORTYPEREF__PARAMETERIZEDTYPEREF,
+    		e_applyRuleSubtypeConstructorTypeRef__ParameterizedTypeRef, left, right, new ErrorInformation[] {new ErrorInformation(left), new ErrorInformation(right)});
+    	return null;
+    }
+  }
+  
+  protected Result<Boolean> applyRuleSubtypeConstructorTypeRef__ParameterizedTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ConstructorTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
+    /* G |- G.functionTypeRef <: right */
+    ParameterizedTypeRef _functionTypeRef = RuleEnvironmentExtensions.functionTypeRef(G);
+    subtypeInternal(G, _trace_, _functionTypeRef, right);
     return new Result<Boolean>(true);
   }
   
@@ -6908,20 +6908,20 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeArgument> applyRuleSubstTypeVariablesInClassifierTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ClassifierTypeRef typeRef) throws RuleFailedException {
     ClassifierTypeRef result = null; // output parameter
-    /* G |- typeRef.getTypeArg ~> var TypeRef tResult */
+    /* G |- typeRef.getTypeArg ~> var TypeArgument tResult */
     TypeArgument _typeArg = typeRef.getTypeArg();
-    TypeRef tResult = null;
+    TypeArgument tResult = null;
     Result<TypeArgument> result_1 = substTypeVariablesInternal(G, _trace_, _typeArg);
-    checkAssignableTo(result_1.getFirst(), TypeRef.class);
-    tResult = (TypeRef) result_1.getFirst();
+    checkAssignableTo(result_1.getFirst(), TypeArgument.class);
+    tResult = (TypeArgument) result_1.getFirst();
     
     TypeArgument _typeArg_1 = typeRef.getTypeArg();
     boolean _tripleNotEquals = (_typeArg_1 != tResult);
     if (_tripleNotEquals) {
-      TypeRef _copy = TypeUtils.<TypeRef>copy(tResult);
-      tResult = _copy;
-      ClassifierTypeRef _copy_1 = TypeUtils.<ClassifierTypeRef>copy(typeRef);
-      result = _copy_1;
+      TypeArgument _copyIfContained = TypeUtils.<TypeArgument>copyIfContained(tResult);
+      tResult = _copyIfContained;
+      ClassifierTypeRef _copyIfContained_1 = TypeUtils.<ClassifierTypeRef>copyIfContained(typeRef);
+      result = _copyIfContained_1;
       result.setTypeArg(tResult);
     } else {
       result = typeRef;
