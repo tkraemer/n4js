@@ -2,12 +2,12 @@
   padding-right: 2rem;
   max-height: 1rem;  
   padding: .7rem;
-  max-width: 66.666%;
+  max-width: 50%;
   vertical-align: middle;
 
   @media (max-width: 800px) {
     flex-basis: 66.666%%;
-    max-width: 100%;
+    max-width: 25%;
 
   }
 }
@@ -26,6 +26,7 @@
     margin-left: 30px;
     position: relative;
     z-index: 10000;
+    flex-basis: 66.666%%;
 
 
 }

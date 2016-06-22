@@ -130,7 +130,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <idprefix/>
                                 <idseparator>-</idseparator>
                                 <linkcss>true</linkcss>
-                                <docinfodir>${basedir}/headers</docinfodir>
+                                <docinfodir>${basedir}/src/_headers</docinfodir>
                                 <docinfo>true</docinfo>
                             </attributes>
                         </configuration>
@@ -166,7 +166,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
-                                <docinfodir>${basedir}/headers</docinfodir>
+                                <docinfodir>${basedir}/src/_headers</docinfodir>
                                 <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>

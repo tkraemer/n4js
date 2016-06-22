@@ -72,7 +72,7 @@ sub { bottom: -0.25em; }
 
 /* ========================================================================== Embedded content ========================================================================== */
 /** Remove border when inside `a` element in IE 8/9. */
-img { border: 0; padding-left: 2rem; padding-right: 2rem;}
+img { border: 0; }
 
 /** Correct overflow displayed oddly in IE 9. */
 svg:not(:root) { overflow: hidden; }
@@ -175,12 +175,14 @@ object, svg { display: inline-block; vertical-align: middle; }
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { font-size: .5em; line-height: 1.6; max-width: 66.666%; }
 
 
-/* Typography wraps */
+/* Typography padding etc */
 .subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 1.4; color: #6999d6; font-weight: 400; margin-top: 0em; margin-bottom: 0.5em; padding-left: 2rem; }
+
 
 /* Typography resets */
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; }
-
+div.openblock.partintro {  max-width: 66.666% }
+div.openblock > .title {padding-left: 0rem}
 
 /* Default Link Styles */
 a { color: #2ba6cb; text-decoration: none; line-height: inherit; }
@@ -188,7 +190,7 @@ a:hover, a:focus { color: #2795b6; }
 a img { border: none; }
 
 /* Default paragraph styles */
-p { font-family: "ITC Officina Sans W01"; font-weight: 500; font-size: 1.2rem; line-height: 1.1; margin-bottom: .5em;   max-width: 66.666%; padding-left: 2rem;}
+p { font-family: "ITC Officina Sans W01"; font-weight: 500; font-size: 1.2rem; line-height: 1.1; margin-bottom: .5em;   max-width: 66.666%; }
 p aside { font-size: 0.575em; line-height: 1.35; font-style: italic; max-width: 66.666%;}
 
 /* Default header styles */
@@ -222,7 +224,7 @@ code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; 
 ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: inside; font-family: "ITC Officina Sans W01"; padding-left: 0rem;}
 
 ul, ol { margin-left: 0em;  }
-ul.no-bullet, ol.no-bullet { margin-left: 1.5em; padding-left: 2rem; padding-right: 2rem; margin-bottom: 0;}
+ul.no-bullet, ol.no-bullet { margin-left: 1.5em; padding-right: 2rem; margin-bottom: 0;}
 
 /* Unordered Lists */
 ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* Override nested font-size change */ }
@@ -233,7 +235,7 @@ ul.disc { list-style-type: disc; }
 ul.no-bullet { list-style: none; }
 
 /* Ordered Lists */
-ol li ul, ol li ol { margin-left: 1.25em; margin-bottom: 0; padding-left: 2rem; padding-right: 2rem; }
+ol li ul, ol li ol { margin-left: 1.25em; margin-bottom: 0;  padding-right: 2rem; }
 
 /* Definition Lists */
 dl dt { margin-bottom: 0.3125em; font-weight: bold; }
@@ -278,7 +280,7 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 
 body { tab-size: 4; max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; }
 
-h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; padding-left: 2rem; padding-right: 2rem;}
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4;  padding-right: 2rem;}
 
 .clearfix:before, .clearfix:after, .float-group:before, .float-group:after { content: " "; display: table; }
 .clearfix:after, .float-group:after { clear: both; }
@@ -303,7 +305,7 @@ b.button:before { content: "["; padding: 0 3px 0 2px; }
 
 b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
-#header, #content, #footnotes, #footer {  max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; padding-left: 0rem; padding-right: 0rem;}
+#header, #content, #footnotes, #footer {  max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; padding-left: 2rem; padding-right: 0rem;}
 #header:before, #header:after, #content:before, #content:after, #footnotes:before, #footnotes:after, #footer:before, #footer:after { content: " "; display: table; }
 #header:after, #content:after, #footnotes:after, #footer:after { clear: both; }
 
@@ -373,7 +375,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
 .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { text-rendering: optimizeLegibility; text-align: left; padding-left: 2rem;  }
 
-table.tableblock > caption.title { white-space: nowrap; overflow: visible; max-width: 0; }
+table.tableblock > caption.title { white-space: nowrap; overflow: visible; max-width: 0;  }
 
 .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { color: black; }
 
@@ -407,7 +409,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .literalblock.output pre { color: #eeeeee; background-color: black; }
 
-.listingblock pre.highlightjs { padding: 0;  margin-left: 2rem; max-width: 66.66%}
+.listingblock pre.highlightjs { padding: 0;  max-width: 66.66%}
 .listingblock pre.highlightjs > code { padding: 0.8em 0.8em 0.65em 0.8em; -webkit-border-radius: 0; border-radius: 0; }
 
 .listingblock > .content { position: relative; }
@@ -459,7 +461,7 @@ table.pyhltable .linenodiv { background: none !important; padding-right: 0 !impo
 table.tableblock { max-width: 100%; border-collapse: separate; }
 table.tableblock td > .paragraph:last-child p > p:last-child, table.tableblock th > p:last-child, table.tableblock td > p:last-child { margin-bottom: 0; }
 
-table.tableblock, th.tableblock, td.tableblock { border: 0 solid #dddddd; }
+table.tableblock, th.tableblock, td.tableblock { border: 0 solid #dddddd; margin-right: 2rem;}
 
 table.grid-all th.tableblock, table.grid-all td.tableblock { border-width: 0 1px 1px 0; }
 
@@ -471,7 +473,7 @@ table.grid-all * > tr > .tableblock:last-child, table.grid-cols * > tr > .tableb
 
 table.grid-rows th.tableblock, table.grid-rows td.tableblock { border-width: 0 0 1px 0; }
 
-table.grid-all tbody > tr:last-child > th.tableblock, table.grid-all tbody > tr:last-child > td.tableblock, table.grid-all thead:last-child > tr > th.tableblock, table.grid-rows tbody > tr:last-child > th.tableblock, table.grid-rows tbody > tr:last-child > td.tableblock, table.grid-rows thead:last-child > tr > th.tableblock { border-bottom-width: 0; }
+table.grid-all tbody > tr:last-child > th.tableblock, table.grid-all tbody > tr:last-child > td.tableblock, table.grid-all thead:last-child > tr > th.tableblock, table.grid-rows tbody > tr:last-child > th.tableblock, table.grid-rows tbody > tr:last-child > td.tableblock, table.grid-rows thead:last-child > tr > th.tableblock { border-bottom-width: 0;}
 
 table.grid-rows tfoot > tr > th.tableblock, table.grid-rows tfoot > tr > td.tableblock { border-width: 1px 0 0 0; }
 
