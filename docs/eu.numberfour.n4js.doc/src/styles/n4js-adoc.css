@@ -181,18 +181,29 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 
 /* Typography resets */
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; }
-div.paragraph {  max-width: 100% }
-div.openblock > .content {max-width: 66.666%}
+div.openblock.content {max-width: 66.666%}
+
 
 
 /* Default Link Styles */
-a { color: #2ba6cb; text-decoration: none; line-height: inherit; }
+a { color: #2ba6cb; text-decoration: none; line-height: inherit;  }
 a:hover, a:focus { color: #2795b6; }
 a img { border: none; }
+
+/* Grey links with black transition 
+
+a { color: #2ba6cb; text-decoration: none; line-height: inherit; color: rgba(0,0,0,.3); transition: .2s; }
+a:active, a:hover, a:focus { color: #212121; }
+a img { border: none; }
+
+*/
+
+
 
 /* Default paragraph styles */
 p { font-family: "ITC Officina Sans W01"; font-weight: 500; font-size: 1.2rem; line-height: 1.1; margin-bottom: .5em;   max-width: 66.666%; }
 p aside { font-size: 0.575em; line-height: 1.35; font-style: italic; max-width: 66.666%;}
+div.p { width: 100% }
 
 /* Default header styles */
 h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: "ITC Officina Serif W01", Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; color: #244d82; text-rendering: optimizeLegibility; margin-top: 1em; margin-bottom: 0.5em; line-height: 1.2125em; }
@@ -327,14 +338,15 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
 #content > h1:first-child:not([class]) { color: black; font-weight: bold; border-bottom: 1px solid #dddddd; max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 4rem; margin-bottom: 4rem; padding-top: 0rem; padding-left: 2rem; padding-right: 2rem; }
 
+
+/*
 #toc { border-bottom: 1px solid #dddddd; padding-bottom: 0.5em; right: 4rem }
 #toc > ul { margin-left: 0.125em; }
 #toc ul.sectlevel0 > li > a { font-style: italic; }
 #toc ul.sectlevel0 ul.sectlevel1 { margin: 0.5em 0; }
 #toc ul { font-family: "ITC Officina Serif W01", Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; list-style-type: none; }
 #toc li { line-height: 1.3334; margin-top: 0.3334em; }
-#toc a { text-decoration: none; }
-#toc a:active { text-decoration: underline; }
+
 
 #toctitle { color: #6999d6; font-size: 1.2em; }
 
@@ -356,6 +368,36 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #content #toc { border-style: solid; border-width: 1px; border-color: #d9d9d9; margin-bottom: 1.25em; padding: 1.25em; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; }
 #content #toc > :first-child { margin-top: 0; }
 #content #toc > :last-child { margin-bottom: 0; }
+*/
+
+#toc, #toc.toc2 {
+
+  position: absolute;
+  z-index: 1;
+  right: 4rem;
+  top: 4rem;
+
+max-width: 25%;
+  width: 100%;
+  @media (max-width: 800px;) {
+    max-width: 100%;
+  }
+
+  padding-left: 1rem;
+  border-left: 1px solid #D3D3D3;
+
+  @media (max-width: 800px;) {
+    position: static;
+    width: 100%;
+    padding-left: 0rem;
+    border-left: none;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #D3D3D3;
+  }
+
+
+}
 
 #footer { max-width: 100%; background-color: #222222; padding: 1.25em; }
 
@@ -553,7 +595,7 @@ td.hdlist1, td.hdlist2 { vertical-align: top; padding: 0 0.625em; }
 
 td.hdlist1 { font-weight: bold; padding-bottom: 1.25em; }
 
-.literalblock + .colist, .listingblock + .colist { margin-top: -0.5em; }
+.literalblock + .colist, .listingblock + .colist { margin-top: -0.5em; max-width: 66.666%; }
 
 .colist > table tr > td:first-of-type { padding: 0 0.75em; line-height: 1; }
 .colist > table tr > td:last-of-type { padding: 0.25em 0; }
@@ -679,6 +721,7 @@ span.icon > .fa { cursor: default; }
 pre .conum[data-value] { position: relative; top: -0.125em; }
 
 b.conum * { color: inherit !important; }
+
 
 .conum:not([data-value]):empty { display: none; }
 

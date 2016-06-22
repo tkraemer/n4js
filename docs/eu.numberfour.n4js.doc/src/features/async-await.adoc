@@ -1,13 +1,12 @@
+.Async/Await
 :doctype: book
 
-.Async/Await
 = Async/Await
 
 Due to the event-driven nature inherent in JavaScript, asynchronous code has
 always been explicit and verbose, leading to projects which are hard to read and maintain.
 N4JS already implements the async/await proposal and it provides additional features allowing
 the use of legacy code in combination with await and promises.
-
 
 Over the years, growing trends have been to migrate from
 simple callbacks to Promise objects which is making the chaining of asynchronous data

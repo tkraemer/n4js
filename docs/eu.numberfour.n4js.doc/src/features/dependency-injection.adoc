@@ -5,7 +5,9 @@
 
 Dependency injection (DI) is a concept that allows for configuring dependencies
 between classes at a central location. Instead of passing dependencies from class to class, N4JS' built-in
-DI support does this automatically. This makes the user code much cleaner, easier to maintain and also improves
+DI support does this automatically.
+
+This makes the user code much cleaner, easier to maintain and also improves
 its testability. N4JS DI framework follows Java JSR-330/Google Guice, making its usage easy for Java developers.
 
 == Application Object Graph

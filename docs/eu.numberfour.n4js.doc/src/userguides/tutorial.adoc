@@ -1,9 +1,10 @@
 :doctype: book
-
+:toc: right
 
 .N4JS Tutorial
 = N4JS Tutorial
 
+== Introduction
 
 *The flexibility of JavaScript with the type-safety of Java.*
 
