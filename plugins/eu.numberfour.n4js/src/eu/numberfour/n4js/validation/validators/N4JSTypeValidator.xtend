@@ -316,7 +316,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 						val expectedType = ts.expectedTypeIn(G, assExpr, assExpr.rhs).value;
 						val TypeRef typeOfGetterRAW = TypeUtils.getMemberTypeRef(getter);
 						if (expectedType !== null && typeOfGetterRAW !== null) {
-							val TypeRef typeOfGetter = ts.substTypeVariablesXXX(G, typeOfGetterRAW);
+							val TypeRef typeOfGetter = ts.substTypeVariablesInTypeRef(G, typeOfGetterRAW);
 							if (typeOfGetter !== null) {
 								val result = ts.subtype(G, typeOfGetter, expectedType);
 								createError(result, assExpr.lhs);

@@ -26,6 +26,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.xtext.EcoreUtil2;
@@ -281,10 +282,10 @@ public class TypeUtils {
 
 	/**
 	 * Creates a new union type with the given elements. The elements are copied if they have a container. The created
-	 * union type may contain duplicates or nested union types, that is, it is not simplified! Thus, the returned type
-	 * is expected to be processed further!
+	 * union type may contain duplicates or nested union types, that is, it is not simplified!
 	 *
-	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper.simplify(UnionTypeExpression)
+	 * @see eu.numberfour.n4js.typesystem.N4JSTypeSystem#createSimplifiedUnion(List, Resource)
+	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper#simplify(RuleEnvironment, ComposedTypeRef)
 	 */
 	@SuppressWarnings("javadoc")
 	public static UnionTypeExpression createNonSimplifiedUnionType(Iterable<? extends TypeRef> elements) {
@@ -302,6 +303,31 @@ public class TypeUtils {
 	 */
 	public static UnionTypeExpression createNonSimplifiedUnionType(TypeRef... elements) {
 		return createNonSimplifiedUnionType(Arrays.asList(elements));
+	}
+
+	/**
+	 * Creates a new intersection type with the given elements. The elements are copied if they have a container. The
+	 * created intersection type may contain duplicates or nested intersection types, that is, it is not simplified!
+	 *
+	 * @see eu.numberfour.n4js.typesystem.N4JSTypeSystem#createSimplifiedIntersection(List, Resource)
+	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper#simplify(RuleEnvironment, ComposedTypeRef)
+	 */
+	@SuppressWarnings("javadoc")
+	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(Iterable<? extends TypeRef> elements) {
+		IntersectionTypeExpression intersectionType = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
+		EList<TypeRef> intersectionElements = intersectionType.getTypeRefs();
+
+		for (TypeRef e : elements) {
+			intersectionElements.add(TypeUtils.copyIfContained(e));
+		}
+		return intersectionType;
+	}
+
+	/**
+	 * Convenience method, delegates to {@link #createNonSimplifiedIntersectionType(Iterable)}.
+	 */
+	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(TypeRef... elements) {
+		return createNonSimplifiedIntersectionType(Arrays.asList(elements));
 	}
 
 	/**
@@ -541,31 +567,6 @@ public class TypeUtils {
 		if (containsDeferredTypeRefs(object)) {
 			throw new IllegalStateException("found a DeferredTypeRef in " + object.eResource().getURI());
 		}
-	}
-
-	/**
-	 * Creates a new intersection type with the given elements. The elements are copied if they have a container. The
-	 * created intersection type may contain duplicates or nested intersection types, that is, it is not simplified!
-	 * Thus, the returned type is expected to be processed further!
-	 *
-	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper.simplify(UnionTypeExpression)
-	 */
-	@SuppressWarnings("javadoc")
-	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(Iterable<? extends TypeRef> elements) {
-		IntersectionTypeExpression intersectionType = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
-		EList<TypeRef> intersectionElements = intersectionType.getTypeRefs();
-
-		for (TypeRef e : elements) {
-			intersectionElements.add(TypeUtils.copyIfContained(e));
-		}
-		return intersectionType;
-	}
-
-	/**
-	 * Convenience method, delegates to {@link #createNonSimplifiedIntersectionType(Iterable)}.
-	 */
-	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(TypeRef... elements) {
-		return createNonSimplifiedIntersectionType(Arrays.asList(elements));
 	}
 
 	/**

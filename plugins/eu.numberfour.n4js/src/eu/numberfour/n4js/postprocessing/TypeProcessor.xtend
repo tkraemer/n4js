@@ -37,7 +37,6 @@ import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typesystem.CustomTypeSystem.RuleFailedExceptionWithoutStacktrace
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
@@ -49,6 +48,7 @@ import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptionWithoutStacktrace
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to

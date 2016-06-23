@@ -19,7 +19,6 @@ import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
-import eu.numberfour.n4js.typesystem.CustomTypeSystem
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
@@ -29,6 +28,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
 
 /**
  * Provides some common base functionality used across all processors. See {@link ASTProcessor} for more details on
@@ -47,7 +47,7 @@ package abstract class AbstractProcessor {
 @Inject private InternalTypeSystem ts;
 // call this method to delegate type inference back to Xsemantics
 def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, RuleApplicationTrace trace, TypableElement elem) {
-	return (ts as CustomTypeSystem).use_type_judgment_from_PostProcessors(G, trace, elem);
+	return (ts as CustomInternalTypeSystem).use_type_judgment_from_PostProcessors(G, trace, elem);
 }
 // TODO further reduce visibility, if possible
 def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, TypableElement elem) {

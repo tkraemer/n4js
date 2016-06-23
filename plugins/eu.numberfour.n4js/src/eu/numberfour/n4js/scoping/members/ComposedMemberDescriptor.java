@@ -131,7 +131,7 @@ public class ComposedMemberDescriptor {
 			mergeAccessibility(nextMember.getMemberAccessModifier());
 			final TypeRef nextMemberTypeRef = TypeUtils.getMemberTypeRef(nextMember);
 			if (nextMemberTypeRef != null) {
-				mergeTypeRef(ts.substTypeVariablesXXX(G, nextMemberTypeRef));
+				mergeTypeRef(ts.substTypeVariablesInTypeRef(G, nextMemberTypeRef));
 			}
 			if (nextMember instanceof TSetter) {
 				mergeFpar(G, 0, ((TSetter) nextMember).getFpar());
@@ -193,7 +193,7 @@ public class ComposedMemberDescriptor {
 			if (nextName != null && !desc.names.contains(nextName))
 				desc.names.add(nextName); // collect all fpar names (without duplicates)
 			if (nextFpar.getTypeRef() != null) {
-				final TypeRef nextFparTypeRef = ts.substTypeVariablesXXX(G, nextFpar.getTypeRef());
+				final TypeRef nextFparTypeRef = ts.substTypeVariablesInTypeRef(G, nextFpar.getTypeRef());
 				desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
 			}
 			desc.optional &= nextFpar.isOptional(); // remember if ALL were optional

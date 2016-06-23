@@ -69,7 +69,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 			if (solution !== null) {
 				val G_solution = G.newRuleEnvironment;
 				solution.entrySet.forEach[G_solution.addTypeMapping(key,value)];
-				val leftSubst = ts.substTypeVariablesXXX(G_solution, left_withInfVars);
+				val leftSubst = ts.substTypeVariablesInTypeRef(G_solution, left_withInfVars);
 				if (leftSubst instanceof FunctionTypeExprOrRef) {
 					return primIsSubtypeFunction(G, leftSubst, right);
 				}
@@ -107,7 +107,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 			for (i : 0 ..< leftTypeVars.size) {
 				G2.addTypeMapping(rightTypeVars.get(i), TypeUtils.createTypeRef(leftTypeVars.get(i)))
 			}
-			val TypeRef rightSubst = ts.substTypeVariablesXXX(G2, right);
+			val TypeRef rightSubst = ts.substTypeVariablesInTypeRef(G2, right);
 			if (!(rightSubst instanceof FunctionTypeExprOrRef &&
 				primIsSubtypeFunction(G, left, rightSubst as FunctionTypeExprOrRef)))
 				return false;
@@ -261,7 +261,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 					G.anyTypeRef
 				else
 					createIntersectionType(G, rightTypeVar.declaredUpperBounds);
-			val rightUpperBoundSubst = ts.substTypeVariablesXXX(G, rightUpperBound);
+			val rightUpperBoundSubst = ts.substTypeVariablesInTypeRef(G, rightUpperBound);
 
 			// leftUpperBound must be a super(!) type of rightUpperBound,
 			// i.e. rightUpperBound <: leftUpperBound

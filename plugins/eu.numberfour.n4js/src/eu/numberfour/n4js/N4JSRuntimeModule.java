@@ -91,7 +91,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
 import eu.numberfour.n4js.ts.scoping.builtin.ResourceSetWithBuiltInScheme;
 import eu.numberfour.n4js.ts.validation.TypesKeywordProvider;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
-import eu.numberfour.n4js.typesystem.CustomTypeSystem;
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
@@ -404,7 +404,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	 * its exception protocol.
 	 */
 	public Class<? extends InternalTypeSystem> bindInternalTypeSystem() {
-		return CustomTypeSystem.class;
+		return CustomInternalTypeSystem.class;
 	}
 
 	/**

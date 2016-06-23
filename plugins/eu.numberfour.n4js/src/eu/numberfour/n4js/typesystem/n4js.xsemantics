@@ -203,9 +203,9 @@ inject PromisifyHelper promisifyHelper
 judgments {
 
 	/*
-	 * Infers the type for a given typable element. Note that the judgment is overridden in subclasses
-	 * for ensuring that all type inference takes place during post-processing of an N4JSResource and
-	 * after that this method will just read from the cache.
+	 * Infers the type for a given typable element. Note that the judgment is overridden in subclass
+	 * CustomInternalTypeSystem, to ensure that all type inference takes place during post-processing
+	 * of an N4JSResource and after that this judgment will never be invoked again.
 	 */
 	type |- TypableElement element : output TypeRef
 		error "cannot type " + element?.eClass?.name + " " + stringRep(element)
@@ -224,11 +224,6 @@ judgments {
 	 * Returns the expected type of an expression in a given container or <code>null</code> (i.e.
 	 * no type expectation at all) or the top type (i.e. not particular type expected but a value
 	 * is expected, meaning all types are fine except 'void').
-	 * <p>
-	 * Note that this only works for expressions. There are two cases where we need type check for
-	 * non-expressions as well: in parameterized method calls and new expressions. These two latter
-	 * cases are handled in the expression validator (as otherwise all TypeRefs would have to be
-	 * processed).
 	 */
 	expectedTypeIn |- EObject container |> Expression expression : output TypeRef
 

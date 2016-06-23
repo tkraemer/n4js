@@ -31,7 +31,7 @@ import it.xsemantics.runtime.RuleFailedException;
 /**
  */
 @Singleton
-public class CustomTypeSystem extends InternalTypeSystem {
+public class CustomInternalTypeSystem extends InternalTypeSystem {
 
 	@Inject
 	private TypeProcessor typeProcessor;
