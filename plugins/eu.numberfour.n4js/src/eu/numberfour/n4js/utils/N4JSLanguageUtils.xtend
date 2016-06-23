@@ -489,7 +489,7 @@ class N4JSLanguageUtils {
 	 * Moved from {@link IdentifierValueConverter}.
 	 */
 	public def static boolean isValidIdentifierStart(char c) {
-		return CharTypes.isLetter(c) || c == '_' || c == '$';
+		return CharTypes.isLetter(c) || c.isChar('_') || c.isChar('$');
 	}
 	
 	/**
@@ -499,7 +499,7 @@ class N4JSLanguageUtils {
 	 */
 	public def static boolean isValidIdentifierPart(char c) {
 		return N4JSLanguageUtils.isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
-				|| CharTypes.isCombiningMark(c) || '\u200C' == c || '\u200D' == c;
+				|| CharTypes.isCombiningMark(c) || c.isChar('\u200C') || c.isChar('\u200D');
 	}
 	
 	/** 
@@ -518,6 +518,12 @@ class N4JSLanguageUtils {
 			}	
 		}
 		return true;
+	}
+	/**
+	 * Helper method to overcome missing xtend support for character literals
+	 */
+	private def static isChar(char c1, String c2) {
+		c1 == c2.charAt(0);
 	}
 	
 }

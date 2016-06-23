@@ -72,6 +72,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 				String text = ((N4JSEditor) activeEditor).getDocument().get(range.x, range.y);
 
 				if (N4JSLanguageUtils.isValidIdentifier(text)
+						&& !startWithLowercaseLetter(text)
 						&& !grammarBasedLanguageConstants.isReservedIdentifier(text)) {
 					return text;
 				}
@@ -83,4 +84,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 		return "";
 	}
 
+	private boolean startWithLowercaseLetter(String string) {
+		return !string.isEmpty() && string.charAt(0) == string.toLowerCase().charAt(0);
+	}
 }
