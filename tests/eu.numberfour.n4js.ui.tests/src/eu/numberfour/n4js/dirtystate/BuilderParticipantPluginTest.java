@@ -81,13 +81,13 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		// Couldn't resolve reference to TModule 'pr0_0pa0.Class1'.
 		// Couldn't resolve reference to Type 'Class1'.
 		// Import of Class1 cannot be resolved.
-		// Still: The value of the local variable dummy is not used
+		// As before: The value of the local variable dummy is not used
 		assertMarkers("File1 should have 6 markers", file1, 6);
 
 		IFile file2 = createTestFile(pr0_0pa0, "Class1", TestFiles.class1());
 		waitForAutoBuild();
-		// Still: The value of the local variable dummy is not used
-		assertMarkers("File1 should have exactly one marker", file1, 1);
+		// As before: The value of the local variable dummy is not used
+		assertMarkers("File1 should have exactly one unused variable warning", file1, 1);
 		assertMarkers("File2 should have no errors", file2, 0);
 	}
 
@@ -115,16 +115,17 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		IFile fileB = createTestFile(module2Folder, "B", InheritanceTestFiles.B());
 
 		// The value of the local variable a is not used
-		assertMarkers("File A should only have exactly one unused variable warning", fileA, 1);
+		assertMarkers("File A should only have no errors and exactly one unused variable warning", fileA, 1);
 		// The value of the local variable b is not used
-		assertMarkers("File B should only have exactly one unused variable warning", fileB, 1);
+		assertMarkers("File B should only have no errors and exactly one unused variable warning", fileB, 1);
 
 		fileA.setContents(new StringInputStream(InheritanceTestFiles.AOtherMethodName().toString()), true, true,
 				monitor());
 		waitForAutoBuild();
 
 		// The value of the local variable a is not used
-		assertMarkers("File A with other method name should have exactly one marker", fileA, 1);
+		assertMarkers("File A with other method name should have no errors and exactly one unused variable warning",
+				fileA, 1);
 
 		// One marker for using the old method name
 		// Additional marker for: The value of the local variable b is not used
@@ -134,10 +135,13 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		waitForAutoBuild();
 
 		// The value of the local variable a is not used
-		assertMarkers("File A with old method name should have no errors, one unused variable warning", fileA, 1);
+		assertMarkers("File A with old method name should have no errors and exactly one unused variable warning",
+				fileA, 1);
 
 		// The value of the local variable b is not used
-		assertMarkers("File B should have no errors, one unused variable warning after changing back to old A", fileB,
+		assertMarkers(
+				"File B should have no errors and exactly one unused variable warning after changing back to old A",
+				fileB,
 				1);
 	}
 
@@ -165,19 +169,20 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		IFile fileD = createTestFile(module1Folder, "D", InheritanceTestFiles.D());
 
 		// The value of the local variable a is not used
-		assertMarkers("File A should only have one unused variable warning", fileA, 1);
+		assertMarkers("File A should only have no errors and exactly one unused variable warning", fileA, 1);
 
 		// The value of the local variable b is not used
-		assertMarkers("File B should only have one unused variable warning", fileB, 1);
+		assertMarkers("File B should only have no errors and exactly one unused variable warning", fileB, 1);
 		assertMarkers("File C should have no markers", fileC, 0);
 		// The value of the local variable a is not used
 		// The value of the local variable b is not used
-		assertMarkers("File D should only have two unused variable warnings", fileD, 2);
+		assertMarkers("File D should no errors and only two unused variable warnings", fileD, 2);
 
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.AOtherMethodName().toString());
 
 		// Still has: The value of the local variable a is not used
-		assertMarkers("File A with other method name should only have one unused variable warning", fileA, 1);
+		assertMarkers("File A with other method name should have no errors and exactly one unused variable warning",
+				fileA, 1);
 
 		// First marker for using old method name
 		// Additionally: The value of the local variable a is not used
@@ -187,11 +192,14 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.A().toString());
 
 		// The value of the local variable a is not used
-		assertMarkers("File A with old method name should have no errors, one unused variable warning", fileA, 1);
+		assertMarkers("File A with old method name should have no errors and exactly one unused variable warning",
+				fileA, 1);
 
 		// The value of the local variable a is not used
 		// The value of the local variable b is not used
-		assertMarkers("File D should have no errors, two unused variable warnings after changing back to old A", fileD,
+		assertMarkers(
+				"File D should have no errors and exactly two unused variable warnings after changing back to old A",
+				fileD,
 				2);
 	}
 

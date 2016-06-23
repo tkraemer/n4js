@@ -10,18 +10,18 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  * Here we test constraints like <code>⟨ G&lt;B> <: G&lt;α> ⟩</code>.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class InferenceContext_GenericsTest extends AbstractInferenceContextTest {
 
 

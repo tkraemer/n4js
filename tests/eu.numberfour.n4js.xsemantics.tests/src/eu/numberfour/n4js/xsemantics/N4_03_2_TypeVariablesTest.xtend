@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.typesystem.AbstractTypeSystemHelperTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -18,12 +17,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static eu.numberfour.n4js.typesystem.SubTypeRelationForTest.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  * N4JS Spec Test: 4.3.2. Type Variables
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class N4_03_2_TypeVariablesTest extends AbstractTypeSystemHelperTests {
 
 	final static CharSequence scriptPrefix =

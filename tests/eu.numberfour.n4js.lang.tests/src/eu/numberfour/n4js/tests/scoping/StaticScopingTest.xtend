@@ -38,7 +38,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.IssueFilterUtils
+import eu.numberfour.n4js.IssueFilterExtension
 
 /**
  * Tests for static scoping, combined with type system test.
@@ -56,7 +56,7 @@ class StaticScopingTest {
 	@Inject extension N4JSValidationTestHelper
 	@Inject extension N4JSTypeInferencer
 	@Inject extension IScopeProvider scopeProvider
-	@Inject extension IssueFilterUtils
+	@Inject extension IssueFilterExtension
 
 	private static var numberOfInstanceMembersInN4ObjectCache = -1;
 	private static var numberOfStaticMembersInN4ObjectCache = -1;
@@ -251,7 +251,7 @@ class StaticScopingTest {
 			}
 		'''.parse
 
-		val issues = validate(script).without(IssueCodes.AST_LOCAL_VAR_UNUSED);
+		val issues = validate(script).ignore(#[IssueCodes.AST_LOCAL_VAR_UNUSED]);
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
@@ -268,7 +268,7 @@ class StaticScopingTest {
 		val typeName2 = parameterizedTypeRef.declaredType.name
 		Assert.assertEquals("A", typeName2)
 	}
-
+	
 	@Test
 	def void testTyping() {
 		val script = '''
@@ -280,7 +280,7 @@ class StaticScopingTest {
 			var z2 = new C()
 		'''.parse
 
-		val issues = validate(script).without(IssueCodes.AST_LOCAL_VAR_UNUSED)
+		val issues = validate(script).ignore(#[IssueCodes.AST_LOCAL_VAR_UNUSED])
 		Assert.assertEquals(issues.join(", "), 1, issues.size)
 		assertEquals("A reference to method constructor is created detached from a (correct) this-instance.", issues.get(0).getMessage())
 

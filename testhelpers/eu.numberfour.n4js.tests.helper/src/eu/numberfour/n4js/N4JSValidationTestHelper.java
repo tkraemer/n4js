@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper;
 import org.eclipse.xtext.validation.Issue;
-import org.junit.Assert;
 
 import com.google.common.base.Joiner;
 
@@ -34,12 +33,12 @@ import com.google.common.base.Joiner;
 public class N4JSValidationTestHelper extends ValidationTestHelper {
 
 	/**
-	 * Asserts the given model to not have any issues except the ones with one of the exception issue codes.
+	 * Asserts the given model to not have any issues except the ones specified by the exception issue codes parameter.
 	 *
 	 * @param model
 	 *            The model
 	 * @param exceptionIssueCodes
-	 *            Issue codes which should be allowed
+	 *            Issue codes which should be ignored
 	 */
 	public void assertNoIssuesExcept(EObject model, String... exceptionIssueCodes) {
 		Resource resource = model.eResource();
@@ -48,16 +47,6 @@ public class N4JSValidationTestHelper extends ValidationTestHelper {
 		if (removeIssuesWithCode(issues, exceptionIssueCodes).size() > 0) {
 			fail("Expected no issues, but got :" + getIssuesAsString(resource, issues, new StringBuilder()));
 		}
-	}
-
-	/**
-	 * Asserts the number of given issues excluding the given issue codes.
-	 */
-	public void assertIssueCountExcluding(List<Issue> issues, String message, int count, String... codes) {
-		List<Issue> filteredIssues = removeIssuesWithCode(issues, codes);
-		int issueCount = filteredIssues.size();
-
-		Assert.assertEquals("Expected " + count + "issues, but got" + issueCount + ": " + message, count, issueCount);
 	}
 
 	private List<Issue> removeIssuesWithCode(List<Issue> issues, String... codes) {

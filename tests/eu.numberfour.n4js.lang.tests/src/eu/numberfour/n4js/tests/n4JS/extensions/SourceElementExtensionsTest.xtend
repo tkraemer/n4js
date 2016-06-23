@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.tests.n4JS.extensions
 
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.IfStatement
@@ -28,10 +27,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  */
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 @RunWith(XtextRunner)
 class SourceElementExtensionsTest {
 	@Inject private extension ParseHelper<Script>

@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
@@ -31,12 +30,13 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /*
  * Tests for generics, see n4js.xsemantics for judgment, axiom and rules.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class GenericsTest extends AbstractTypesystemTest {
 
 	@Inject

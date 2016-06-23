@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
@@ -24,11 +23,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class N7_3_2_ExportStatementOfVariablesTest extends N7_1_1_VariablesTest {
 
 	@Inject

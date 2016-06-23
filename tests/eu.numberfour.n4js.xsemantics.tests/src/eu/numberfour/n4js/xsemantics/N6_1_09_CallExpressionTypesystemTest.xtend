@@ -10,13 +10,13 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.utils.Log
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  * N4JS Spec Test: 6.1.9. Function Calls
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
  * @see IDE-346
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 @Log
 class N6_1_09_CallExpressionTypesystemTest extends AbstractCallExpressionTypesystemTest {
 

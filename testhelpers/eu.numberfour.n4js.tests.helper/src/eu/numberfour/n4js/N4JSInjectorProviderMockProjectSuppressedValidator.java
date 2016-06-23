@@ -17,7 +17,7 @@ import com.google.inject.Injector;
 
 /**
  * A runtime module which combines {@link N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject} and
- * additionally binds {@link N4JSInjectorProviderWithSuppressedValidator.FilteredResourceValidator} to
+ * additionally binds {@link N4JSInjectorProviderWithFilteredValidator.FilteredResourceValidator} to
  * {@link IResourceValidator}.
  */
 public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInjectorProvider {
@@ -30,7 +30,7 @@ public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInje
 						new N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject() {
 							@Override
 							public Class<? extends IResourceValidator> bindIResourceValidator() {
-								return N4JSInjectorProviderWithSuppressedValidator.FilteredResourceValidator.class;
+								return N4JSInjectorProviderWithFilteredValidator.FilteredResourceValidator.class;
 							}
 						});
 			}

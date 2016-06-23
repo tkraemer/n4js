@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.transpiler.es.tests
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM
 import eu.numberfour.n4js.transpiler.im.ParameterizedPropertyAccessExpression_IM
 import eu.numberfour.n4js.transpiler.im.ParameterizedTypeRef_IM
@@ -27,13 +26,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  * Tests the code in the transpiler that creates the initial transpiler state, mainly the intermediate model.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class PreparationStepTest extends AbstractTranspilerTest {
 
 

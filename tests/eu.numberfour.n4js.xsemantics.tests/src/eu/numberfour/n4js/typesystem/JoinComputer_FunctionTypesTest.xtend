@@ -10,18 +10,18 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /*
  * Tests for {@link TypeSystemHelper#join(RuleEnvironment, TypeRef...)} method with function types.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class JoinComputer_FunctionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Before

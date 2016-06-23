@@ -28,12 +28,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  * Tests for utility methods related to finding the root of a destructuring pattern.
  */
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 @RunWith(XtextRunner)
 class RootOfDestructuringPatternTest {
 

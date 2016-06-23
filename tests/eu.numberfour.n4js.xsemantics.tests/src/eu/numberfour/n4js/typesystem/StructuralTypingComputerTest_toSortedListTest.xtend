@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TClass
@@ -22,11 +21,12 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class StructuralTypingComputerTest_toSortedListTest extends AbstractStructuralTypingComputerTest {
 
 	@Inject ContainerTypesHelper containerTypesHelper

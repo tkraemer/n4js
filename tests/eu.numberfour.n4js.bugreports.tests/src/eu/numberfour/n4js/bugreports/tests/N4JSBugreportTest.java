@@ -25,9 +25,7 @@ import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
 
-/**
- * Test setup targeting the bugreports-tests folder.
- */
+/** Test setup targeting the bugreports-tests folder. */
 @XpectSuiteClasses({
 		LinkingTest.class, ResourceDescriptionTest.class,
 		TypeXpectMethod.class,

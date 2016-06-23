@@ -27,10 +27,12 @@ import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
 
 /**
- * A N4JSInjectorProvider which injects a delegating IResourceValidator which filters out issues based on their issue
- * codes.
+ * A N4JSInjectorProvider which binds a custom {@link IResourceValidator}, which filters all diagnosed issues.
+ *
  */
-public class N4JSInjectorProviderWithSuppressedValidator extends N4JSInjectorProvider {
+public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvider {
+
+	/* Suppressed issue codes */
 	private static final List<String> SUPPRESSED_ISSUE_CODES = Arrays.asList(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 	@Override
@@ -44,7 +46,7 @@ public class N4JSInjectorProviderWithSuppressedValidator extends N4JSInjectorPro
 	}
 
 	/**
-	 * A test runtime module which binds a specific filtering resource validator.
+	 * A test runtime module which binds a custom filtering resource validator.
 	 */
 	public static class N4JSSuppressedValidatorRuntimeModule extends N4JSTestRuntimeModule {
 		@Override
@@ -58,6 +60,9 @@ public class N4JSInjectorProviderWithSuppressedValidator extends N4JSInjectorPro
 	 *
 	 */
 	public static class FilteredResourceValidator extends N4JSResourceValidator {
+		/*
+		 * Validate and only return non-suppressed issues.
+		 */
 		@Override
 		protected void validate(Resource resource, CheckMode mode, CancelIndicator monitor, IAcceptor<Issue> acceptor) {
 			super.validate(resource, mode, monitor, new IAcceptor<Issue>() {

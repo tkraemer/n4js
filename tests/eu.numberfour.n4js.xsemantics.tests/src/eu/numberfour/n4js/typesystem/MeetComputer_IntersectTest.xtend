@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import org.eclipse.xtext.junit4.InjectWith
@@ -21,13 +20,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
 
 /*
  * Tests for {@link TypeSystemHelper#intersect(RuleEnvironment, TypeRef...)} method.
  */
 // TODO to be enhanced, see IDE-142/IDE-385
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
+@InjectWith(N4JSInjectorProviderWithFilteredValidator)
 class MeetComputer_IntersectTest extends AbstractTypeSystemHelperTests {
 
 	@Inject MeetComputer meetComputer
