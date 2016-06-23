@@ -569,7 +569,11 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Creates a new function type expression with the given attribtues, attributes are copied if contained.
+	 * Creates a new function type expression with the given attributes, attributes are copied if contained. All
+	 * references are copied if they are already contained.
+	 *
+	 * @param declaredThisType
+	 *            type referenced in @This annotation, may be null
 	 */
 	public static FunctionTypeExpression createFunctionTypeExpression(
 			TypeRef declaredThisType, List<TypeVariable> ownedTypeVars,

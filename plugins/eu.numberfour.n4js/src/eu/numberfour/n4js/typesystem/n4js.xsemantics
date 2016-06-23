@@ -746,13 +746,13 @@ from {
 			val F = T as FunctionTypeExprOrRef;
 			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {
 				var TypeRef rawT; G |~ expr ~> rawT;
-				val thisType = TypeUtils.enforceNominalTyping(rawT);
+				val thisTypeRef = TypeUtils.enforceNominalTyping(rawT);
 				if (T instanceof FunctionTypeExpression && T.eContainer==null) { // avoid creation of new instance
 					val fte = T as FunctionTypeExpression
-					fte.returnTypeRef = thisType;
+					fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef);
 				} else {
 					T = TypeUtils.createFunctionTypeExpression(null, 
-						F.typeVars, F.fpars, thisType);
+						F.typeVars, F.fpars, thisTypeRef);
 				}
 			}
 		}
