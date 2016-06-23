@@ -170,7 +170,7 @@ object, svg { display: inline-block; vertical-align: middle; }
 
 .center { margin-left: auto; margin-right: auto; }
 
-.spread { width: 100%; }
+.spread { width: 100%; margin-right: 2rem; }
 
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { font-size: .5em; line-height: 1.6; max-width: 66.666%; }
 
@@ -290,7 +290,7 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 
 /* adjusted body width with padding from designers */
 
-body { tab-size: 4; max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; }
+body { tab-size: 4; max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; /* padding-right: 2rem; Fixes tables, breaks headers */}
 
 h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4;  padding-right: 2rem;}
 
