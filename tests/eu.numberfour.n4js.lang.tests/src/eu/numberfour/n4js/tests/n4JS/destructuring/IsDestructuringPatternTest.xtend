@@ -12,15 +12,16 @@ package eu.numberfour.n4js.tests.n4JS.destructuring
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSValidationTestHelper
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -35,7 +36,7 @@ import static org.junit.Assert.*
 class IsDestructuringPatternTest {
 
 	@Inject extension ParseHelper<Script>
-	@Inject extension ValidationTestHelper
+	@Inject extension N4JSValidationTestHelper
 
 
 	@Test
@@ -49,6 +50,8 @@ class IsDestructuringPatternTest {
 			arr = [1,2,3];
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssues;
 
 		val arrLit0 = script.eAllContents.filter(ArrayLiteral).toList.get(0);
 		val arrLit1 = script.eAllContents.filter(ArrayLiteral).toList.get(1);
@@ -75,6 +78,8 @@ class IsDestructuringPatternTest {
 			for([a,b,c] = [1,2,3] ; ; ) {}
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssuesExcept(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 		val arrLit0 = script.eAllContents.filter(ArrayLiteral).toList.get(0);
 		val arrLit1 = script.eAllContents.filter(ArrayLiteral).toList.get(1);
@@ -97,6 +102,8 @@ class IsDestructuringPatternTest {
 			for([a,b,c] of [[1,2,3]]) {}
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssuesExcept(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 		val arrLit0 = script.eAllContents.filter(ForStatement).head.initExpr;
 		val arrLit1 = script.eAllContents.filter(ForStatement).head.expression;
@@ -125,6 +132,8 @@ class IsDestructuringPatternTest {
 			obj = {prop1:0,prop2:0,prop3:0};
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ObjectLiteral).toList.get(0);
 		val objLit1 = script.eAllContents.filter(ObjectLiteral).toList.get(1);
@@ -151,6 +160,8 @@ class IsDestructuringPatternTest {
 			for({prop1:a,prop2:b} = {prop1:1,prop2:2} ; ; ) {}
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ObjectLiteral).toList.get(0);
 		val objLit1 = script.eAllContents.filter(ObjectLiteral).toList.get(1);
@@ -173,6 +184,8 @@ class IsDestructuringPatternTest {
 			for({prop1:a,prop2:b} of [{prop1:1,prop2:2}]) {}
 
 		'''.parseAndValidate;
+		
+		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ForStatement).head.initExpr;
 		val arrLit0 = script.eAllContents.filter(ForStatement).head.expression;
@@ -194,7 +207,6 @@ class IsDestructuringPatternTest {
 	def private Script parseAndValidate(CharSequence scriptSrc) {
 		val script = scriptSrc.parse
 		script.validate;
-		script.assertNoIssues;
 		return script;
 	}
 }

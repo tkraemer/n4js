@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import org.eclipse.xtext.junit4.InjectWith
@@ -27,7 +27,7 @@ import static org.junit.Assert.*
  */
 // TODO to be enhanced, see IDE-142/IDE-385
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class MeetComputer_IntersectTest extends AbstractTypeSystemHelperTests {
 
 	@Inject MeetComputer meetComputer

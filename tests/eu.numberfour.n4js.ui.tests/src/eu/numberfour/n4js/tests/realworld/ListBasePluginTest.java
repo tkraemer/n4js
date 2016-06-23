@@ -47,10 +47,10 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 	 * (N4JS identifier recommendations) in the specification. In a nutshell: & (dollar sign) is discouraged to be used
 	 * in field and variable names. See issue IDE-1143 for more details.
 	 */
-	private static final int NUMBER_OF_EXPECTED_ISSUES = 21;
+	private static final int NUMBER_OF_EXPECTED_ISSUES = 25;
 
 	private static final String EXPECTED_NUMBER_OF_ISSUE_TEMPLATE = //
-	"Expected exactly " + NUMBER_OF_EXPECTED_ISSUES + " validation issues but found {0} instead.";
+			"Expected exactly " + NUMBER_OF_EXPECTED_ISSUES + " validation issues but found {0} instead.";
 
 	private static final int UNKNOWN_SEVERITY = -1;
 
@@ -59,26 +59,26 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 	 * identifier recommendations) constraint from the specification.
 	 */
 	private static final Predicate<IMarker> EXPECTED_VALIDATION_PREDICATE = //
-	new Predicate<IMarker>() {
+			new Predicate<IMarker>() {
 
-		@Override
-		public boolean apply(final IMarker marker) {
-			return hasWarningSeverity(marker) && hasExpectedErrorCode(marker);
-		}
+				@Override
+				public boolean apply(final IMarker marker) {
+					return hasWarningSeverity(marker) && hasExpectedErrorCode(marker);
+				}
 
-		private boolean hasWarningSeverity(final IMarker marker) {
-			return SEVERITY_WARNING == marker.getAttribute(SEVERITY, UNKNOWN_SEVERITY);
-		}
+				private boolean hasWarningSeverity(final IMarker marker) {
+					return SEVERITY_WARNING == marker.getAttribute(SEVERITY, UNKNOWN_SEVERITY);
+				}
 
-		private boolean hasExpectedErrorCode(final IMarker marker) {
-			try {
-				return valueOf(marker.getAttribute(CODE_KEY)).equals(CLF_NAME_CONTAINS_DISCOURAGED_CHARACTER);
-			} catch (final CoreException e) {
-				throw new RuntimeException("Error while getting the error code for marker: " + marker, e);
-			}
-		}
+				private boolean hasExpectedErrorCode(final IMarker marker) {
+					try {
+						return valueOf(marker.getAttribute(CODE_KEY)).equals(CLF_NAME_CONTAINS_DISCOURAGED_CHARACTER);
+					} catch (final CoreException e) {
+						throw new RuntimeException("Error while getting the error code for marker: " + marker, e);
+					}
+				}
 
-	};
+			};
 
 	@SuppressWarnings("javadoc")
 	@Test
@@ -87,7 +87,7 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 		IResourcesSetupUtil.waitForBuild();
 		IFile underscore_js = project.getFile("src/underscore/underscore.n4js");
 		assertTrue(underscore_js.exists());
-		assertMarkers(underscore_js + " should have no errors", underscore_js, 0);
+		assertMarkers(underscore_js + " should have no errors, one unused variable warning", underscore_js, 1);
 
 		IFile listbase_js = project.getFile("src/n4/lang/ListBase.n4js");
 

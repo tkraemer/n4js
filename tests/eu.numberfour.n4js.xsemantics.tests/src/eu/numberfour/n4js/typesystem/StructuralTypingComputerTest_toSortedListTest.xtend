@@ -11,13 +11,13 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.VariableStatement
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.StructuralMembersTripleIterator
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.types.TClass
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class StructuralTypingComputerTest_toSortedListTest extends AbstractStructuralTypingComputerTest {
 
 	@Inject ContainerTypesHelper containerTypesHelper

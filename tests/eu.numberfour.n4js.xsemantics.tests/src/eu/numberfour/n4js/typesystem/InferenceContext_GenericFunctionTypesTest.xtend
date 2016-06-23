@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
@@ -21,7 +21,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class InferenceContext_GenericFunctionTypesTest extends AbstractInferenceContextTest {
 
 

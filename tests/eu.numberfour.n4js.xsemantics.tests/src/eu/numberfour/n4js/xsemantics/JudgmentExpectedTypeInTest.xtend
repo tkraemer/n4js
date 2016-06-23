@@ -11,14 +11,14 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
@@ -33,7 +33,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
  * Tests for judgment expectedtypein, see n4js.xsemantics for judgment, axiom and rules.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class JudgmentExpectedTypeInTest extends AbstractTypesystemTest {
 
 	@Inject

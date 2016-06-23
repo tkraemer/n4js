@@ -12,6 +12,7 @@ package eu.numberfour.n4js.tests.scoping
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSValidationTestHelper
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
@@ -19,23 +20,25 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.members.MemberScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TMember
+import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.validation.IssueCodes
+import java.util.List
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.List
+
 import static org.junit.Assert.*
+import eu.numberfour.n4js.IssueFilterUtils
 
 /**
  * Tests for static scoping, combined with type system test.
@@ -50,9 +53,10 @@ import static org.junit.Assert.*
 class StaticScopingTest {
 
 	@Inject extension ParseHelper<Script>
-	@Inject extension ValidationTestHelper
+	@Inject extension N4JSValidationTestHelper
 	@Inject extension N4JSTypeInferencer
 	@Inject extension IScopeProvider scopeProvider
+	@Inject extension IssueFilterUtils
 
 	private static var numberOfInstanceMembersInN4ObjectCache = -1;
 	private static var numberOfStaticMembersInN4ObjectCache = -1;
@@ -247,7 +251,7 @@ class StaticScopingTest {
 			}
 		'''.parse
 
-		val issues = validate(script)
+		val issues = validate(script).without(IssueCodes.AST_LOCAL_VAR_UNUSED);
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
@@ -276,7 +280,7 @@ class StaticScopingTest {
 			var z2 = new C()
 		'''.parse
 
-		val issues = validate(script)
+		val issues = validate(script).without(IssueCodes.AST_LOCAL_VAR_UNUSED)
 		Assert.assertEquals(issues.join(", "), 1, issues.size)
 		assertEquals("A reference to method constructor is created detached from a (correct) this-instance.", issues.get(0).getMessage())
 

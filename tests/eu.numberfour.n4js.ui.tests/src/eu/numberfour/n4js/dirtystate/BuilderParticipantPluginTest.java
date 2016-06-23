@@ -55,7 +55,9 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		assertMarkers("File2 should have no errors", file2, 0);
 
 		IFile file1 = createTestFile(moduleFolder, "Class0", TestFiles.class0());
-		assertMarkers("File1 should have no errors", file1, 0);
+
+		// The value of the local variable dummy is not used
+		assertMarkers("File1 should have no errors", file1, 1);
 	}
 
 	// @formatter:off
@@ -79,11 +81,13 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		// Couldn't resolve reference to TModule 'pr0_0pa0.Class1'.
 		// Couldn't resolve reference to Type 'Class1'.
 		// Import of Class1 cannot be resolved.
-		assertMarkers("File1 should have four errors", file1, 5);
+		// Still: The value of the local variable dummy is not used
+		assertMarkers("File1 should have 6 markers", file1, 6);
 
 		IFile file2 = createTestFile(pr0_0pa0, "Class1", TestFiles.class1());
 		waitForAutoBuild();
-		assertMarkers("File1 should have no errors", file1, 0);
+		// Still: The value of the local variable dummy is not used
+		assertMarkers("File1 should have exactly one marker", file1, 1);
 		assertMarkers("File2 should have no errors", file2, 0);
 	}
 
@@ -110,23 +114,31 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		IFile fileA = createTestFile(module1Folder, "A", InheritanceTestFiles.A());
 		IFile fileB = createTestFile(module2Folder, "B", InheritanceTestFiles.B());
 
-		assertMarkers("File A should have no errors", fileA, 0);
-		assertMarkers("File B should have no errors", fileB, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A should only have exactly one unused variable warning", fileA, 1);
+		// The value of the local variable b is not used
+		assertMarkers("File B should only have exactly one unused variable warning", fileB, 1);
 
 		fileA.setContents(new StringInputStream(InheritanceTestFiles.AOtherMethodName().toString()), true, true,
 				monitor());
 		waitForAutoBuild();
 
-		assertMarkers("File A with other method name should have no errors", fileA, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A with other method name should have exactly one marker", fileA, 1);
 
-		assertMarkers("File B should have errors as using old method name", fileB, 1);
+		// One marker for using the old method name
+		// Additional marker for: The value of the local variable b is not used
+		assertMarkers("File B should have errors as using old method name", fileB, 2);
 
 		fileA.setContents(new StringInputStream(InheritanceTestFiles.A().toString()), true, true, monitor());
 		waitForAutoBuild();
 
-		assertMarkers("File A with old method name should have no errors", fileA, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A with old method name should have no errors, one unused variable warning", fileA, 1);
 
-		assertMarkers("File B should have no errors after changing back to old A", fileB, 0);
+		// The value of the local variable b is not used
+		assertMarkers("File B should have no errors, one unused variable warning after changing back to old A", fileB,
+				1);
 	}
 
 	// @formatter:off
@@ -152,20 +164,35 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		IFile fileC = createTestFile(module2Folder, "C", InheritanceTestFiles.C());
 		IFile fileD = createTestFile(module1Folder, "D", InheritanceTestFiles.D());
 
-		assertMarkers("File A should have no errors", fileA, 0);
-		assertMarkers("File B should have no errors", fileB, 0);
-		assertMarkers("File C should have no errors", fileC, 0);
-		assertMarkers("File D should have no errors", fileD, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A should only have one unused variable warning", fileA, 1);
+
+		// The value of the local variable b is not used
+		assertMarkers("File B should only have one unused variable warning", fileB, 1);
+		assertMarkers("File C should have no markers", fileC, 0);
+		// The value of the local variable a is not used
+		// The value of the local variable b is not used
+		assertMarkers("File D should only have two unused variable warnings", fileD, 2);
 
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.AOtherMethodName().toString());
-		assertMarkers("File A with other method name should have no errors", fileA, 0);
 
-		assertMarkers("File D should have errors as using old method name", fileD, 1);
+		// Still has: The value of the local variable a is not used
+		assertMarkers("File A with other method name should only have one unused variable warning", fileA, 1);
+
+		// First marker for using old method name
+		// Additionally: The value of the local variable a is not used
+		// Additionally: The value of the local variable b is not used
+		assertMarkers("File D should have errors as using old method name.", fileD, 3);
 
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.A().toString());
-		assertMarkers("File A with old method name should have no errors", fileA, 0);
 
-		assertMarkers("File D should have no errors after changing back to old A", fileD, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A with old method name should have no errors, one unused variable warning", fileA, 1);
+
+		// The value of the local variable a is not used
+		// The value of the local variable b is not used
+		assertMarkers("File D should have no errors, two unused variable warnings after changing back to old A", fileD,
+				2);
 	}
 
 	// @formatter:off
@@ -214,7 +241,8 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		// ... sister.getBrother().getChild().age;
 		// Consequential error, not reported anymore:
 		// --> Couldn't resolve reference to TMember 'age'. at var brotherChildAge = sister.getBrother().getChild().age;
-		assertMarkers("new sister file should have errors as calling oldMethod via brother file", sisterFile, 2);
+		// Additional warning: The value of the local variable sister is not used
+		assertMarkers("new sister file should have errors as calling oldMethod via brother file", sisterFile, 3);
 
 		sisterFile.setContents(new StringInputStream(TestFiles.classSister().toString()), true, true, monitor());
 		waitForAutoBuild();
@@ -269,9 +297,9 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 
 		assertMarkers("File A with old method name should have no errors", fileARole, 0);
 
-		assertMarkers("File B should have no errors after changing back to old A", fileBRole, 0);
+		assertMarkers("File B should have exactly one marker after changing back to old A", fileBRole, 0);
 
-		assertMarkers("File C should have no errors after changing back to old A", fileCRole, 0);
+		assertMarkers("File C should have exactly one marker after changing back to old A", fileCRole, 0);
 	}
 
 	// @formatter:off
@@ -773,7 +801,9 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		waitForAutoBuild();
 
 		assertMarkers("File MyEnum should have no errors", fileMyEnum, 0);
-		assertMarkers("File MyEnumUser should have no errors", fileMyEnumUser, 0);
+
+		// The value of the local variable myEnum is not used
+		assertMarkers("File MyEnumUser should only have one unused variable warning", fileMyEnumUser, 1);
 
 		fileMyEnum.setContents(new StringInputStream(EnumTestFiles.myEnum_changed().toString()),
 				true,
@@ -782,8 +812,10 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		waitForAutoBuild();
 
 		assertMarkers("File MyEnum should have no errors", fileMyEnum, 0);
-		assertMarkers("File MyEnumUser with old literal should have errors", fileMyEnumUser,
-				1);
+
+		// Still uses old enum
+		// Additionally: The value of the local variable myEnum is not used
+		assertMarkers("File MyEnumUser with old literal should have errors", fileMyEnumUser, 2);
 
 		fileMyEnum.setContents(new StringInputStream(EnumTestFiles.myEnum().toString()),
 				true,
@@ -791,7 +823,9 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 				monitor());
 		waitForAutoBuild();
 
-		assertMarkers("File MyEnumUser with old literal access have no errors", fileMyEnumUser, 0);
+		// Still has: The value of the local variable myEnum is not used
+		assertMarkers("File MyEnumUser with old literal access have no errors, one unused variable warning",
+				fileMyEnumUser, 1);
 	}
 
 	// @formatter:off
@@ -817,18 +851,27 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		IFile fileA = createTestFile(module1Folder, "A", InheritanceTestFiles.A());
 		IFile fileB = createTestFile(module2Folder, "B", InheritanceTestFiles.B());
 
-		assertMarkers("File A should have no errors", fileA, 0);
-		assertMarkers("File B should have no errors", fileB, 0);
+		// The value of the local variable a is not used
+		assertMarkers("File A should only have one unused variable warning", fileA, 1);
+
+		// The value of the local variable b is not used
+		assertMarkers("File B should only have one unused variable warning", fileB, 1);
 
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.AOtherMethodName().toString());
-		assertMarkers("File A with other method name should have no errors", fileA, 0);
+		assertMarkers("File A with other method name should have exactly one marker", fileA, 1);
 
-		assertMarkers("File B should have errors as using old method name", fileB, 1);
+		// Uses the old method name
+		// Additionally: The value of the local variable b is not used
+		assertMarkers("File B should have errors as using old method name", fileB, 2);
 
 		replaceFileContentAndWaitForRefresh(folder, fileA, InheritanceTestFiles.A().toString());
-		assertMarkers("File A with old method name should have no errors", fileA, 0);
 
-		assertMarkers("File B should have no errors after changing back to old A", fileB, 0);
+		// Still has: The value of the local variable a is not used
+		assertMarkers("File A with old method name should only have one unused variable warning", fileA, 1);
+
+		// Still has: The value of the local variable b is not used
+		assertMarkers("File B should have no errors, one unused variable warning after changing back to old A",
+				fileB, 1);
 	}
 
 }

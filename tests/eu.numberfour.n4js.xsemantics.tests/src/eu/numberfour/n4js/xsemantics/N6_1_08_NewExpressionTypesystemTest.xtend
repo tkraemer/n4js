@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
  * TODO add tests for generic constructors (has been postponed in IDE-159; now part of IDE-654).
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class N6_1_08_NewExpressionTypesystemTest extends AbstractTypesystemTest {
 
 	@Inject

@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
@@ -24,7 +24,7 @@ import static eu.numberfour.n4js.validation.JavaScriptVariant.*
  * @see https://numberfour.jira.com/browse/IDE-345
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class N6_1_10_PostfixExpressionTypesystemTest extends AbstractOperatorExpressionTypesystemTest {
 
 	@Test

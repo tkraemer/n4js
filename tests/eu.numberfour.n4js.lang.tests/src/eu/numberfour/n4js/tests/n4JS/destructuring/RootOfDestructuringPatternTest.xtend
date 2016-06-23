@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.tests.n4JS.destructuring
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.IdentifierRef
@@ -29,11 +28,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 
 /**
  * Tests for utility methods related to finding the root of a destructuring pattern.
  */
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 @RunWith(XtextRunner)
 class RootOfDestructuringPatternTest {
 

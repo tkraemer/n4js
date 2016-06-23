@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.JavaScriptVariant
@@ -28,7 +28,7 @@ import static org.junit.Assert.*
  * @see N7_3_2_ExportStatementOfConstsTest
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class N7_3_1_ConstTest extends AbstractTypesystemTest {
 
 	@Inject
