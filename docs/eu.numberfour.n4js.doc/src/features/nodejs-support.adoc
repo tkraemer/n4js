@@ -3,8 +3,6 @@
 .Node.js Support
 = Node.js Support
 
-== Introduction
-
 N4JS and its IDE are optimized to develop large scale server applications with https://nodejs.org[Node.js]
 Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading
 https://www.npmjs.com/[npm] packages and exporting N4JS projects to npm. This allows for seamless integration

@@ -4,8 +4,6 @@
 .N4JS Tutorial
 = N4JS Tutorial
 
-== Introduction
-
 *The flexibility of JavaScript with the type-safety of Java.*
 
 N4JS is a language and IDE designed for developers who need to build scalable projects whose code is
@@ -953,7 +951,6 @@ export public class TaskManagerTest {
 With these little changes, we can now configure the storage solution from outside the TaskManager class.
 Running this test will behave as before but we have removed the hard-coded dependency from TaskManager to
 StorageInMemory.
-
 
 == Web UI module
 

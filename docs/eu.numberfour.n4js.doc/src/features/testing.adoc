@@ -3,9 +3,6 @@
 .Testing
 = Testing
 
-== Introduction
-
-
 Test Driven Development (TDD) is one of the key techniques to write large systems with maintainable code.
 The more tests you write, the more confident you can be that your software works as expected and the more
 comfortable you feel when your refactoring the code, because the tests will tell you if you break something.
