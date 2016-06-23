@@ -187,8 +187,8 @@ div.openblock.partintro, div.sectionbody.paragraph {max-width: 66.666%; font-wei
 
 
 /* Default Link Styles */
-a { color: #2ba6cb; text-decoration: none; line-height: inherit;  }
-a:hover, a:focus { color: #2795b6; }
+a { color: #6999d6; text-decoration: none; line-height: inherit;  }
+a:hover, a:focus { color: #132445; }
 a img { border: none; }
 
 
@@ -384,10 +384,10 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 max-width: 25%;
   width: 100%;
   @media (max-width: 800px;) {
-    max-width: 100%;
+  max-width: 100%;
   }
 
-  padding-left: 1rem;
+  padding-left: 2rem;
   border-left: 1px solid #D3D3D3;
 
   @media (max-width: 800px;) {
