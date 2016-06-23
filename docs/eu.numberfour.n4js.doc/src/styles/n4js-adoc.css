@@ -452,12 +452,12 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .literalblock.output pre { color: #eeeeee; background-color: black; }
 
-.listingblock pre.highlightjs { padding: 0;  max-width: 66.66%}
-.listingblock pre.highlightjs > code { padding: 0.8em 0.8em 0.65em 0.8em; -webkit-border-radius: 0; border-radius: 0; }
+.listingblock pre.highlightjs { padding: 0;  margin-right: 2rem;}
+.listingblock pre.highlightjs > code { padding: 0.8em 2rem 0.65em 0.8em; -webkit-border-radius: 0; border-radius: 0; }
 
 .listingblock > .content { position: relative; }
 
-.listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; }
+.listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; padding-right: 2rem; }
 
 .listingblock:hover code[data-lang]:before { display: block; }
 
