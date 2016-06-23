@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+function who(): ~Object with { what: any }? {
+    // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'what'." at "what"
+    what;
+}
+
+// XxPECT noerrors -->
+//who().what;

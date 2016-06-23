@@ -4,22 +4,22 @@
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
 
 @This (~Object with {name: string; price: number; })
-function Product(name, price) {
+function product(name: string, price: number) {
 	this.name = name;
 	this.price = price;
 	return this;
 }
 
 @This (~Object with {name: string; price: number; category: string;})
-function Food(name, price) {
+function food(name: string, price: number) {
   this.category = 'food';
-  return Product.call(this, name, price);
+  return product.call(this, name, price);
 }
 
-var cheese = Food.call({name: '', price: 0, category: ""}, 'feta', 20);
+var cheese = food.call({name: '', price: 0, category: ""}, 'feta', 20);
 console.log(cheese);
 
-var cheese2 = Food.call({}, 'feta', 20);
+var cheese2 = food.call({}, 'feta', 20);
 console.log(cheese2);
 
 /* XPECT output --- 

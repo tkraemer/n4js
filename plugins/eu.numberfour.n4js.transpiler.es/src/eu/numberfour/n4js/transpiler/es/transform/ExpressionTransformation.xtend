@@ -202,7 +202,7 @@ class ExpressionTransformation extends Transformation {
 		replace(template, replacement);
 	}
 	def private dispatch void transformExpression(TemplateSegment segment) {
-		replace(segment, _StringLiteral(segment.valueAsString));
+		replace(segment, _StringLiteral(segment.valueAsString, segment.rawValue.wrapAndQuote));
 	}
 
 
@@ -216,5 +216,10 @@ class ExpressionTransformation extends Transformation {
 				return expr
 			}
 		];
+	}
+	
+	/** put raw into double quote and escape all existing double-quotes {@code '"' -> '\"' } and newlines {@code '\n' -> '\\n'}. */ 
+	def private static String wrapAndQuote(String raw){
+		'"'+raw.replace('"','\\"').replace('\n','\\n')+'"'
 	}
 }

@@ -519,7 +519,7 @@ public class TranspilerBuilderBlocks
 			}
 			case PROJECT: result.declaredModifiers += N4Modifier.PROJECT
 			case PRIVATE: result.declaredModifiers += N4Modifier.PRIVATE
-			case UNDEFINED: {/* nop */}
+			case UNDEFINED: {/* NOP */}
 		}
 		return result;
 	}
@@ -608,6 +608,12 @@ public class TranspilerBuilderBlocks
 		return result;
 	}
 
+	public static def StringLiteral _StringLiteral(String s, String rawValue) {
+		val result = _StringLiteral(s);
+		result.rawValue = rawValue;
+		return result;
+	}
+	
 	public static def StringLiteral _StringLiteral(String s) {
 		val result = N4JSFactory.eINSTANCE.createStringLiteral;
 		result.value = s;
@@ -617,6 +623,7 @@ public class TranspilerBuilderBlocks
 	public static def StringLiteral _StringLiteralForSTE(SymbolTableEntry symbolTableEntry) {
 		return _StringLiteralForSTE(symbolTableEntry, false);
 	}
+	
 	public static def StringLiteral _StringLiteralForSTE(SymbolTableEntry symbolTableEntry, boolean useExportedName) {
 		val result = ImFactory.eINSTANCE.createStringLiteralForSTE;
 		result.entry = symbolTableEntry;
@@ -644,19 +651,19 @@ public class TranspilerBuilderBlocks
 		return N4JSFactory.eINSTANCE.createEmptyStatement
 	}
 
-	/** generic export where the {@cide steExportedElement} is exported under its name. */
+	/** generic export where the {@code steExportedElement} is exported under its name. */
 	public static def _N4ExportExpr(SymbolTableEntry steExportedElement, SymbolTableEntry symbolFor_n4Export )
 	{
 		return _N4ExportExpr(steExportedElement, _IdentRef( steExportedElement ), symbolFor_n4Export)
 	}
 
-	/** export of {@code expr}-to-be-evaluated under the name of {@code steExportedElement} */
-	public static def _N4ExportExpr(SymbolTableEntry steExportedElement, Expression expr, SymbolTableEntry symbolFor_n4Export )
+	/** export of {@code expression}-to-be-evaluated under the name of {@code steExportedElement} */
+	public static def _N4ExportExpr(SymbolTableEntry steExportedElement, Expression expression, SymbolTableEntry symbolFor_n4Export )
 	{
 		return _CallExpr => [
 			target = _IdentRef(symbolFor_n4Export)
 			arguments += _Argument(_StringLiteralForSTE( steExportedElement, true ))
-			arguments += _Argument(expr)
+			arguments += _Argument(expression)
 		]
 	}
 

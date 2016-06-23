@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.IResourceScopeCache
 
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
 
 /**
  * Extensions for source element, in particular for statements.
@@ -176,6 +177,9 @@ class SourceElementExtensions {
 				Expression: {
 					// optimization:
 					// variable declarations are statements and expression don't ever contain statements
+					allContents.prune
+				}
+				TypeRef: { // do not collect elements of type refs, such as fields in structural types. cf. GH-130
 					allContents.prune
 				}
 			}
