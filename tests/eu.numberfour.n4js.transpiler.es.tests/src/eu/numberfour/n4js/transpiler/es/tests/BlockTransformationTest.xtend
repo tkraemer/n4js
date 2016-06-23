@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.transpiler.es.tests
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProviderWithMockProject
+import eu.numberfour.n4js.N4JSInjectorProviderMockProjectSuppressedValidator
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
@@ -33,7 +33,7 @@ import static extension org.junit.Assert.*
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithMockProject)
+@InjectWith(N4JSInjectorProviderMockProjectSuppressedValidator)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class BlockTransformationTest extends AbstractTranspilerTest {
 

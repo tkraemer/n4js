@@ -48,6 +48,8 @@ import org.eclipse.xtext.util.CancelIndicator
 
 import static org.junit.Assert.*
 import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
+import eu.numberfour.n4js.IssueFilterUtils
+import eu.numberfour.n4js.validation.IssueCodes
 
 /**
  */
@@ -57,6 +59,7 @@ abstract class AbstractTranspilerTest {
 	@Inject private extension ResourceHelper;
 	@Inject private extension N4JSParseHelper;
 	@Inject private extension ValidationTestHelper;
+	@Inject private extension IssueFilterUtils;
 
 	@Inject private PreparationStep preparationStep;
 

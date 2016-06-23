@@ -27,12 +27,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithSuppressedValidator
 
 /**
  * Tests the code in the transpiler that creates the initial transpiler state, mainly the intermediate model.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithSuppressedValidator)
 class PreparationStepTest extends AbstractTranspilerTest {
 
 

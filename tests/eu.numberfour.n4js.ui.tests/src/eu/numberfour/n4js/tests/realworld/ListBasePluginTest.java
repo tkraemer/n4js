@@ -10,9 +10,7 @@
  */
 package eu.numberfour.n4js.tests.realworld;
 
-import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Sets.newHashSet;
-import static eu.numberfour.n4js.validation.IssueCodes.CLF_NAME_CONTAINS_DISCOURAGED_CHARACTER;
 import static java.lang.String.valueOf;
 import static java.text.MessageFormat.format;
 import static org.eclipse.core.resources.IMarker.SEVERITY;
@@ -20,7 +18,10 @@ import static org.eclipse.core.resources.IMarker.SEVERITY_WARNING;
 import static org.eclipse.xtext.validation.Issue.CODE_KEY;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -31,10 +32,9 @@ import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.MarkerTypes;
 import org.junit.Test;
 
-import com.google.common.base.Predicate;
-
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
+import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * Tests parsing and validation of ListBase and underscore.
@@ -61,8 +61,12 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 	private static final Predicate<IMarker> EXPECTED_VALIDATION_PREDICATE = //
 			new Predicate<IMarker>() {
 
+				private final List<String> EXPECTED_ERROR_CODES = Arrays.asList(
+						IssueCodes.AST_LOCAL_VAR_UNUSED,
+						IssueCodes.CLF_NAME_CONTAINS_DISCOURAGED_CHARACTER);
+
 				@Override
-				public boolean apply(final IMarker marker) {
+				public boolean test(final IMarker marker) {
 					return hasWarningSeverity(marker) && hasExpectedErrorCode(marker);
 				}
 
@@ -72,7 +76,7 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 
 				private boolean hasExpectedErrorCode(final IMarker marker) {
 					try {
-						return valueOf(marker.getAttribute(CODE_KEY)).equals(CLF_NAME_CONTAINS_DISCOURAGED_CHARACTER);
+						return EXPECTED_ERROR_CODES.contains(valueOf(marker.getAttribute(CODE_KEY)));
 					} catch (final CoreException e) {
 						throw new RuntimeException("Error while getting the error code for marker: " + marker, e);
 					}
@@ -98,8 +102,11 @@ public class ListBasePluginTest extends AbstractBuilderParticipantTest {
 		assertTrue(format(EXPECTED_NUMBER_OF_ISSUE_TEMPLATE, allMarkers.size()),
 				NUMBER_OF_EXPECTED_ISSUES == allMarkers.size());
 
-		allMarkers.removeAll(filter(allMarkers, EXPECTED_VALIDATION_PREDICATE));
-		assertTrue("Unexpected validation issues were found. " + toString(allMarkers), allMarkers.isEmpty());
+		long unexpectedMarkerCount = allMarkers.stream()
+				.filter(EXPECTED_VALIDATION_PREDICATE.negate())
+				.count();
+
+		assertTrue("Unexpected validation issues were found. " + toString(allMarkers), unexpectedMarkerCount == 0);
 	}
 
 	private String toString(final Iterable<IMarker> markers) {

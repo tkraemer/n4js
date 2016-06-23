@@ -38,17 +38,26 @@ public class N4JSInjectorProviderWithSuppressedValidator extends N4JSInjectorPro
 		return new N4JSStandaloneSetup() {
 			@Override
 			public Injector createInjector() {
-				return Guice.createInjector(new N4JSTestRuntimeModule() {
-					@Override
-					public Class<? extends IResourceValidator> bindIResourceValidator() {
-						return FilteredResourceValidator.class;
-					}
-				});
+				return Guice.createInjector(new N4JSSuppressedValidatorRuntimeModule());
 			}
 		}.createInjectorAndDoEMFRegistration();
 	}
 
-	private static class FilteredResourceValidator extends N4JSResourceValidator {
+	/**
+	 * A test runtime module which binds a specific filtering resource validator.
+	 */
+	public static class N4JSSuppressedValidatorRuntimeModule extends N4JSTestRuntimeModule {
+		@Override
+		public Class<? extends IResourceValidator> bindIResourceValidator() {
+			return FilteredResourceValidator.class;
+		}
+	}
+
+	/**
+	 * A resource validator which filters all suppressed issues before returning them.
+	 *
+	 */
+	public static class FilteredResourceValidator extends N4JSResourceValidator {
 		@Override
 		protected void validate(Resource resource, CheckMode mode, CancelIndicator monitor, IAcceptor<Issue> acceptor) {
 			super.validate(resource, mode, monitor, new IAcceptor<Issue>() {
