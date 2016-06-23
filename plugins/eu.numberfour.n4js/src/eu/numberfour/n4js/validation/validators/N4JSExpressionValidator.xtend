@@ -197,6 +197,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * and become assigned to a variable. An example where a method reference is consumed
 	 * before escaping is <code>typeof method-ref-expr</code>, for which no warning is raised.
 	 *
+	 * @see N4JSSpec, 5.2.1
 	 */
 	private def internalCheckMethodReference(ParameterizedPropertyAccessExpression propAccessExpression) {
 		if (JavaScriptVariant.getVariant(propAccessExpression) !== JavaScriptVariant.n4js) {
@@ -211,6 +212,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	    	return
 	    }
 	    val TMethod method = prop as TMethod
+	    
+	    if ( !method.static && "constructor"==method.name ) {
+	    	return; // constructor cannot be detached, cf. GH-224
+	    }
+	    
 		val enclosing = propAccessExpression.eContainer
 		/*
 		 * Unless we find a good reason not to, we'll warn.
