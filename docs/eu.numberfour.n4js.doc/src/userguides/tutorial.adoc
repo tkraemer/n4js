@@ -1,5 +1,6 @@
 :doctype: book
 :toc: right
+:toc-title: Jump to topic:
 
 .N4JS Tutorial
 = N4JS Tutorial
@@ -31,17 +32,19 @@ N4JS has an IDE based on Eclipse. It comes with its own workspace, libraries and
 IDE has a transpiler (i.e. a compiler that translates from one language to another) which validates
 N4JS code and then transforms it to JavaScript. The transpiler also performs imports from ECMAScript
 to N4JS. The benefit of type safety means that errors in code are noticed while editing in the
-IDE, allowing for problem-solving before code is ever deployed. The following screenshot shows
-the most important views of the IDE:
-
-
-image::ide.png[N4JS IDE, title="N4JS IDE"]
+IDE, allowing for problem-solving before code is ever deployed.
 
 Developers who have previous experience using Eclipse will be familiar with many common UI features
 such as the Editor, Project Outline, Project Explorer and Console views. The arrangement of views
 can be easily selected using the perspectives icons as highlighted in the upper-right of the window.
 
 == Using N4JS to Implement a Node.js Application
+
+The following screenshot shows
+the most important views of the IDE:
+
+
+image::ide.png[N4JS IDE, title="N4JS IDE"]
 
 In order to illustrate some of the features of N4JS, we shall look at building a Node.js-based
 server of a Task Manager which serves as a reminder or to-do list application. As we build this

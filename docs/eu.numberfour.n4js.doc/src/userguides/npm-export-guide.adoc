@@ -1,5 +1,6 @@
 :doctype: book
 :toc: left
+:toc-title: Jump to topic:
 
 .N4JS npm Export Guide
 = N4JS npm Export Guide

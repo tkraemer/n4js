@@ -136,7 +136,7 @@ body {  background: white; color: #222222;   padding: ; margin: 0; font-family: 
 
 a:hover { cursor: pointer; }
 
-img, object, embed {  height: auto; width: 75%}
+img, object, embed {  height: auto; max-width: 90%; }
 
 
 object, embed { height: 100%; }
@@ -362,8 +362,6 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #toc li { line-height: 1.3334; margin-top: 0.3334em; }
 
 
-#toctitle { color: #6999d6; font-size: 1.2em; }
-
 @media only screen and (min-width: 768px) { #toctitle { font-size: 1.375em; }
   body.toc2 { padding-left: 15em; padding-right: 0; }
   #toc.toc2 { margin-top: 0 !important; background-color: #f2f2f2; position: fixed; width: 15em; left: 0; top: 0; border-right: 1px solid #dddddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 1em; height: 100%; overflow: auto; }
@@ -384,6 +382,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #content #toc > :last-child { margin-bottom: 0; }
 */
 
+#toctitle { padding-top: 0; padding-left: 0.5rem; margin-top: 0; }
 #toc, #toc.toc2 {
 
   position: absolute;
@@ -420,7 +419,7 @@ max-width: 25%;
     list-style: none;
 }
 
-#footer {  background-color: rgb(15,26,54); padding: 1.25em; margin-right: -2rem; margin-left: -2rem;}
+#footer {  background-color: rgb(15,26,54); padding: 1.25em; margin-right: -2rem; margin-left: -2rem; margin-top: 2rem;}
 
 #footer-text { color: #dddddd; line-height: 1.44; }
 
@@ -446,7 +445,7 @@ table.tableblock > caption.title { white-space: nowrap; overflow: visible; max-w
 
 table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-size: inherit; }
 
-.admonitionblock > table { border-collapse: separate; border: 0; background: none; max-width: 66.666%;}
+.admonitionblock > table { border-collapse: separate; border: 0; background: none; max-width: 80%;}
 .admonitionblock > table td.icon { text-align: center; width: 80px; }
 .admonitionblock > table td.icon img { max-width: none; }
 .admonitionblock > table td.icon .title { font-weight: bold; font-family: "ITC Officina Serif W01", Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; text-transform: uppercase; }

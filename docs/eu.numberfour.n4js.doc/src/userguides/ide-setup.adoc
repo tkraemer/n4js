@@ -1,5 +1,6 @@
 :doctype: book
 :toc: right
+:toc-title: Jump to topic:
 .N4JS IDE Setup
 = N4JS IDE Setup
 
