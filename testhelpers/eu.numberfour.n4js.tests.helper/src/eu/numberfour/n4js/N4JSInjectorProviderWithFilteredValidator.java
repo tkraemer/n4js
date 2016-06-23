@@ -13,10 +13,9 @@ package eu.numberfour.n4js;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.util.CancelIndicator;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.xtext.util.IAcceptor;
-import org.eclipse.xtext.validation.CheckMode;
+import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
 
@@ -24,7 +23,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.validation.N4JSResourceValidator;
 
 /**
  * A N4JSInjectorProvider which binds a custom {@link IResourceValidator}, which filters all diagnosed issues.
@@ -50,22 +48,18 @@ public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvi
 	 */
 	public static class N4JSSuppressedValidatorRuntimeModule extends N4JSTestRuntimeModule {
 		@Override
-		public Class<? extends IResourceValidator> bindIResourceValidator() {
-			return FilteredResourceValidator.class;
+		public Class<? extends DiagnosticConverterImpl> bindDiagnosticConverter() {
+			return FilteringDiagnosticConverter.class;
 		}
 	}
 
 	/**
-	 * A resource validator which filters all suppressed issues before returning them.
-	 *
+	 * A diagnostic converter that filters incoming diagnostics before passing them to the super implementations.
 	 */
-	public static class FilteredResourceValidator extends N4JSResourceValidator {
-		/*
-		 * Validate and only return non-suppressed issues.
-		 */
+	public static class FilteringDiagnosticConverter extends DiagnosticConverterImpl {
 		@Override
-		protected void validate(Resource resource, CheckMode mode, CancelIndicator monitor, IAcceptor<Issue> acceptor) {
-			super.validate(resource, mode, monitor, new IAcceptor<Issue>() {
+		public void convertValidatorDiagnostic(Diagnostic diagnostic, IAcceptor<Issue> acceptor) {
+			super.convertValidatorDiagnostic(diagnostic, new IAcceptor<Issue>() {
 				@Override
 				public void accept(Issue t) {
 					if (!SUPPRESSED_ISSUE_CODES.contains(t.getCode())) {

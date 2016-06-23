@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js;
 
+import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 import org.eclipse.xtext.validation.IResourceValidator;
 
 import com.google.inject.Guice;
@@ -17,7 +18,7 @@ import com.google.inject.Injector;
 
 /**
  * A runtime module which combines {@link N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject} and
- * additionally binds {@link N4JSInjectorProviderWithFilteredValidator.FilteredResourceValidator} to
+ * additionally binds {@link N4JSInjectorProviderWithFilteredValidator.FilteringDiagnosticConverter} to
  * {@link IResourceValidator}.
  */
 public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInjectorProvider {
@@ -28,9 +29,10 @@ public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInje
 			public Injector createInjector() {
 				return Guice.createInjector(
 						new N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject() {
-							@Override
-							public Class<? extends IResourceValidator> bindIResourceValidator() {
-								return N4JSInjectorProviderWithFilteredValidator.FilteredResourceValidator.class;
+							/** */
+							@SuppressWarnings("unused")
+							public Class<? extends DiagnosticConverterImpl> bindDiagnosticConverter() {
+								return N4JSInjectorProviderWithFilteredValidator.FilteringDiagnosticConverter.class;
 							}
 						});
 			}
