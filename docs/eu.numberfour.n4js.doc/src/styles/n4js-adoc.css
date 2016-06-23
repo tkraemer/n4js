@@ -236,13 +236,23 @@ small { font-size: 60%; line-height: inherit; }
 code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
 
 /* Lists */
-ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: inside; font-family: "ITC Officina Sans W01"; padding-left: 0rem;}
+ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: inside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
+
+
+/*
+ul li:before {
+    content: "›";
+    margin-left: -1rem;
+    color: #244d82;
+    list-style: none;
+}
+*/
 
 ul, ol { margin-left: 0em;  }
 ul.no-bullet, ol.no-bullet { margin-left: 1.5em;  margin-bottom: 0;}
 
 /* Unordered Lists */
-ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* Override nested font-size change */ }
+ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* Override nested font-size change */  }
 ul.square li ul, ul.circle li ul, ul.disc li ul { list-style: inherit; }
 ul.square { list-style-type: square; }
 ul.circle { list-style-type: circle; }
@@ -387,7 +397,7 @@ max-width: 25%;
   max-width: 100%;
   }
 
-  padding-left: 2rem;
+  padding-left: 1rem;
   border-left: 1px solid #D3D3D3;
 
   @media (max-width: 800px;) {
@@ -399,8 +409,15 @@ max-width: 25%;
     padding-bottom: 3rem;
     border-bottom: 1px solid #D3D3D3;
   }
+}
 
 
+#toc ul li:before, #toc li, ol {
+    content: "›";
+    margin-left: -.1rem;
+    margin-right: .4em;
+    color: #244d82;
+    list-style: none;
 }
 
 #footer {  background-color: rgb(15,26,54); padding: 1.25em; margin-right: -2rem; margin-left: -2rem;}
@@ -558,6 +575,7 @@ td > div.verse { white-space: pre; }
 ol { margin-left: 1.75em; }
 
 ul li ol { margin-left: 1.5em; }
+
 
 dl dd { margin-left: 1.125em; }
 

@@ -1,5 +1,5 @@
 :doctype: book
-:toc: right
+:toc: left
 
 .N4JS npm Export Guide
 = N4JS npm Export Guide
