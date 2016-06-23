@@ -575,8 +575,9 @@ public class TypeUtils {
 			TypeRef declaredThisType, List<TypeVariable> ownedTypeVars,
 			List<TFormalParameter> fpars, TypeRef returnTypeRef) {
 		final FunctionTypeExpression f = TypeRefsFactory.eINSTANCE.createFunctionTypeExpression();
-
-		f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		if (declaredThisType != null) {
+			f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		}
 		ownedTypeVars.stream().forEachOrdered(tv -> f.getOwnedTypeVars().add(TypeUtils.copyIfContained(tv)));
 		fpars.stream().forEachOrdered(tp -> f.getFpars().add(TypeUtils.copyIfContained(tp)));
 		f.setReturnTypeRef(TypeUtils.copyIfContained(returnTypeRef));

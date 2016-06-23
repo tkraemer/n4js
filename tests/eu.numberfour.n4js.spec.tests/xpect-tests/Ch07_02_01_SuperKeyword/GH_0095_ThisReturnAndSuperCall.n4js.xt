@@ -12,8 +12,11 @@ class B extends A {
     	// XPECT type of 'super.f()' --> this[B]
         super.f();
         
-    	// XPECT type of 'x0' --> {@This(this[B]) function():B}
+    	// XPECT type of 'x0' --> {function():B}
     	var x0 = super.f;
+
+    	// XPECT type of 'x1' --> {function():B}
+    	var x1 = this.f;
     	
     	// XPECT type of 'this.f()' --> this[B]
         this.f();

@@ -742,13 +742,18 @@ from {
 
 		G2 |- propTypeRef ~> T
 		
-		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // cf. GH-95
+		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
 			val F = T as FunctionTypeExprOrRef;
 			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {
 				var TypeRef rawT; G |~ expr ~> rawT;
 				val thisType = TypeUtils.enforceNominalTyping(rawT);
-				T = TypeUtils.createFunctionTypeExpression(thisType, 
-					F.typeVars, F.fpars, thisType);
+				if (T instanceof FunctionTypeExpression && T.eContainer==null) { // avoid creation of new instance
+					val fte = T as FunctionTypeExpression
+					fte.returnTypeRef = thisType;
+				} else {
+					T = TypeUtils.createFunctionTypeExpression(null, 
+						F.typeVars, F.fpars, thisType);
+				}
 			}
 		}
 		
