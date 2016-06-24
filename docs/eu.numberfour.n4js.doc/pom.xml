@@ -149,6 +149,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
+                            <showtitle>false</showtitle>
                             <attributes> 
                                 <!-- Individual attributes per conversion execution -->
                                 <icons>font</icons>

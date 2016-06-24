@@ -177,7 +177,7 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 
 
 /* Typography padding etc */
-.subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 2.4; color: #6999d6; font-weight: 400; margin-top: 0em; margin-bottom: 0.5em;  }
+.subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 2.4; color: #132445; font-weight: 400; margin-top: 0em; margin-bottom: 0.5em;  }
 
 
 /* Typography resets */
@@ -382,7 +382,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #content #toc > :last-child { margin-bottom: 0; }
 */
 
-#toctitle { padding-top: 0; padding-left: 0.5rem; margin-top: 0; }
+#toctitle { padding-top: 0; padding-left: 0rem; margin-top: 0; }
 #toc, #toc.toc2 {
 
   position: absolute;
@@ -412,9 +412,9 @@ max-width: 25%;
 
 
 #toc ul li:before, #toc li, ol {
-    content: "›";
-    margin-left: -.1rem;
-    margin-right: .4em;
+    content: "› ";
+    margin-left: 0;
+    margin-right: 0;
     color: #244d82;
     list-style: none;
 }

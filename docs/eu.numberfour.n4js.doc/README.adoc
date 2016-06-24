@@ -8,6 +8,7 @@ Bring your experience or fresh perspectives to enrich help resources that assist
 
 * <<How to Contribute,How to Contribute Help Content>>
 ** <<N4JS Documentation Plugin, Configuring The Documentation Build>>
+*** <<Running the Documentation Plugin as a Standalone, Running as Standalone>>
 * <<About AsciiDoc & AsciiDoctor>>
 ** <<Tools, Tools for Writing>>
 ** <<Developing AsciiDoc>>
@@ -99,7 +100,9 @@ n4js/docs/eu.numberfour.n4js.doc/
 * **toc.xml** - Table Of Contents; contains a structured index of the help pages so they may be registered online or within the N4JS IDE
 * **build.properties** - Describes which items in the root folder are to be included in the N4JS IDE build
 
-TIP: Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
+==== Running the Documentation Plugin as a Standalone
+
+Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
 Generating the documentation using this method reduces the build time to approximately 1 minute.
 
 
