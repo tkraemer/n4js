@@ -22,16 +22,12 @@
 // 1) getter/setter defined in a super class
 // 2) getter/setter defined (with body) in an interface and consumed by a super class
 //
-// NOTE: sub-case 2) does *not* apply to the static case tested in this file. However, this might
-//       be changed by IDE-1453, and then this test should be aligned to the one for the non-static
-//       case in folder "../remote"; see: https://jira.numberfour.eu/browse/IDE-1453
-//
 
 
-import { C3 } from "Ch07_03_01__SuperKeyword/superGetterSetterAccess/remote_static/C3"
+import { C3 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote/C3"
 
 
-C3.test();
+new C3().test();
 
 
 /* XPECT output ---
@@ -41,10 +37,16 @@ stdout:
 called C1#g
 called C1#s
 called C1#m
+called I1#gI
+called I1#sI
+called I1#mI
 * testing access with "super"
 called C1#g
 called C1#s
 called C1#m
+called I1#gI
+called I1#sI
+called I1#mI
 stderr:
 ==>
 --- */
