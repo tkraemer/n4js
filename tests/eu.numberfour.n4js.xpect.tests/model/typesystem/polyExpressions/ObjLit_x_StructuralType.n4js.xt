@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+interface ~I {
+	public get value(): string
+}
+
+var i1: I;
+// XPECT noerrors -->
+i1 = {value: undefined};
+// XPECT noerrors -->
+i1 = {value: null};
+
+
+var i2: ~Object with { get value(): string };
+// XPECT noerrors -->
+i2 = {value: undefined};
+// XPECT noerrors -->
+i2 = {value: null};
+

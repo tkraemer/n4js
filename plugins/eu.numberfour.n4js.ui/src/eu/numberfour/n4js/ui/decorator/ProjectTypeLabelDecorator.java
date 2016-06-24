@@ -10,21 +10,19 @@
  */
 package eu.numberfour.n4js.ui.decorator;
 
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_APP_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_LIB_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_PROC_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_RE_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_RL_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_SYS_DECOR;
-import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_TEST_DECOR;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.n4mf.ProjectType.APPLICATION;
 import static eu.numberfour.n4js.n4mf.ProjectType.LIBRARY;
 import static eu.numberfour.n4js.n4mf.ProjectType.PROCESSOR;
 import static eu.numberfour.n4js.n4mf.ProjectType.RUNTIME_ENVIRONMENT;
 import static eu.numberfour.n4js.n4mf.ProjectType.RUNTIME_LIBRARY;
-import static eu.numberfour.n4js.n4mf.ProjectType.SYSTEM;
 import static eu.numberfour.n4js.n4mf.ProjectType.TEST;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_APP_DECOR;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_LIB_DECOR;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_PROC_DECOR;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_RE_DECOR;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_RL_DECOR;
+import static eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef.PROJECT_TYPE_TEST_DECOR;
 import static org.apache.log4j.Logger.getLogger;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
@@ -41,10 +39,10 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.n4mf.ProjectType;
 
 /**
  * Lightweight label decorator for decorating N4JS projects based on their project type.
@@ -61,7 +59,6 @@ public class ProjectTypeLabelDecorator implements ILightweightLabelDecorator {
 			.put(RUNTIME_LIBRARY, PROJECT_TYPE_RL_DECOR)
 			.put(LIBRARY, PROJECT_TYPE_LIB_DECOR)
 			.put(PROCESSOR, PROJECT_TYPE_PROC_DECOR)
-			.put(SYSTEM, PROJECT_TYPE_SYS_DECOR)
 			.build();
 
 	@Inject

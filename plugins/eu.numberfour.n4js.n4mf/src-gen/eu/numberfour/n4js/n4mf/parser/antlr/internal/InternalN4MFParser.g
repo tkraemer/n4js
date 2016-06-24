@@ -2583,58 +2583,40 @@ ruleProjectType returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_0()); 
     }
 )
-    |(    enumLiteral_1=App
+    |(    enumLiteral_1=Processor
     {
-        $current = grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1()); 
+        $current = grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1()); 
     }
 )
-    |(    enumLiteral_2=Processor
+    |(    enumLiteral_2=Library
     {
-        $current = grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_2, grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2()); 
+        $current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2()); 
     }
 )
-    |(    enumLiteral_3=Library
+    |(    enumLiteral_3=API
     {
-        $current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_3, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3()); 
+        $current = grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3()); 
     }
 )
-    |(    enumLiteral_4=Lib
+    |(    enumLiteral_4=RuntimeEnvironment
     {
-        $current = grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_4, grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4()); 
+        $current = grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_4, grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4()); 
     }
 )
-    |(    enumLiteral_5=KW_System
+    |(    enumLiteral_5=RuntimeLibrary
     {
-        $current = grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_5, grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5()); 
+        $current = grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_5, grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5()); 
     }
 )
-    |(    enumLiteral_6=API
+    |(    enumLiteral_6=Test
     {
-        $current = grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_6, grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6()); 
-    }
-)
-    |(    enumLiteral_7=RuntimeEnvironment
-    {
-        $current = grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_7, grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7()); 
-    }
-)
-    |(    enumLiteral_8=RuntimeLibrary
-    {
-        $current = grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_8, grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8()); 
-    }
-)
-    |(    enumLiteral_9=Test
-    {
-        $current = grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_9, grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9()); 
+        $current = grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_6, grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6()); 
     }
 ));
 

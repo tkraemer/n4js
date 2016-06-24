@@ -28,8 +28,8 @@ public class ProcessExecutor {
 	@Inject
 	private OutputStreamPrinterThreadProvider printerThreadProvider;
 
-	private static final long DEFAULT_PROCESS_TIMEOUT = 30L;
-	private static final long DEFAULT_THREAD_TIMEOUT = 3000L;
+	private static final long DEFAULT_PROCESS_TIMEOUT = 240L;
+	private static final long DEFAULT_THREAD_TIMEOUT = 30_000L;
 	private static final int ERROR_EXIT_CODE = -1;
 	private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class);
 
@@ -75,6 +75,7 @@ public class ProcessExecutor {
 				if (!finished) {
 					LOGGER.error(
 							"Process didn't finish after " + DEFAULT_PROCESS_TIMEOUT + " " + SECONDS);
+					return new ProcessResult(ERROR_EXIT_CODE, "", "");
 				}
 
 				stdOutThread.join(DEFAULT_THREAD_TIMEOUT);// ms

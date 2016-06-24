@@ -22,22 +22,41 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.Variance;
 
 /**
+ * A type constraint of the form
+ *
+ * <pre>
+ * left variance right
+ * </pre>
+ *
+ * where <code>left</code>, <code>right</code> are arbitrary type arguments (i.e. type references or wildcards) and
+ * <code>variance</code> is one of <code>&lt;:</code>, <code>:&gt;</code>, or <code>=</code>.
+ * <p>
+ * No restrictions apply as to whether inference variables appear on none, one, or both sides.
  */
-@SuppressWarnings("javadoc")
 public class TypeConstraint {
 
 	private static final String PREFIX = "\u27e8 ";
 	private static final String SUFFIX = " \u27e9";
 
+	/**
+	 * A type constraint representing the boolean value <code>true</code>.
+	 */
 	public static final TypeConstraint TRUE = new TypeConstraint(null, null, Variance.CO);
+	/**
+	 * A type constraint representing the boolean value <code>false</code>. Adding it to an inference context will
+	 * {@link InferenceContext#isDoomed() doom} the context.
+	 */
 	public static final TypeConstraint FALSE = new TypeConstraint(null, null, Variance.CONTRA);
 
+	/** Left-hand side of this constraint. */
 	public final TypeArgument left;
+	/** Right-hand side of this constraint. */
 	public final TypeArgument right;
+	/** The {@link Variance variance} of this constraint. */
 	public final Variance variance;
 
 	/**
-	 *
+	 * Creates an instance.
 	 */
 	public TypeConstraint(TypeArgument left, TypeArgument right, Variance variance) {
 		this.left = left;
@@ -45,10 +64,16 @@ public class TypeConstraint {
 		this.variance = variance;
 	}
 
+	/**
+	 * Convenience method returning the declared type of the left-hand side or <code>null</code>.
+	 */
 	public Type leftDeclaredType() {
 		return (left instanceof TypeRef) ? ((TypeRef) left).getDeclaredType() : null;
 	}
 
+	/**
+	 * Convenience method returning the declared type of the right-hand side or <code>null</code>.
+	 */
 	public Type rightDeclaredType() {
 		return (right instanceof TypeRef) ? ((TypeRef) right).getDeclaredType() : null;
 	}
@@ -62,11 +87,14 @@ public class TypeConstraint {
 		return toString(left, right, variance);
 	}
 
+	/**
+	 * Like {@link #toString()}, but does not require an instance of {@link TypeConstraint} to be created.
+	 */
 	public static final String toString(EObject left, EObject right, Variance variance) {
 		return PREFIX + toString(left) + " " + variance.getRelationString() + " " + toString(right) + SUFFIX;
 	}
 
-	public static final String toString(EObject obj) {
+	private static final String toString(EObject obj) {
 		if (obj == null)
 			return "null";
 		if (obj instanceof TypeArgument)

@@ -1838,8 +1838,10 @@ public providedByRuntime interface ~IteratorEntry<out T> {
 	/**
 	 * Any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 */
-	// TODO dirty: we use covariant T at invariant position (type of field) - only works because no validation in n4ts!
-	public value: T?;
+	// TODO dirty hack: to use covariant T as type of field 'value', we make the field final; but usually fields
+	// in interfaces cannot be final - only works because no validation in n4ts!
+	public final value: T?;
+	// this would be the alternative, but then we would lose the optionality of 'value':
 //	public get value(): T
 }
 

@@ -41,6 +41,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.types.InferenceVariable
 
 /**
  */
@@ -129,11 +130,11 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 	protected var Type G2;
 	protected var Type H;
 
-	protected var TypeVariable alpha;
-	protected var TypeVariable beta;
-	protected var TypeVariable gamma;
-	protected var TypeVariable delta;
-	protected var TypeVariable epsilon;
+	protected var InferenceVariable alpha;
+	protected var InferenceVariable beta;
+	protected var InferenceVariable gamma;
+	protected var InferenceVariable delta;
+	protected var InferenceVariable epsilon;
 
 
 	/** The N4JS code used as a basis for the tests. Subclasses may override. */
@@ -173,11 +174,11 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 		G2 = selectType("G2");
 		H = selectType("H");
 
-		alpha = createTypeVar("\u03B1"); // "α"
-		beta = createTypeVar("\u03B2");
-		gamma = createTypeVar("\u03B3");
-		delta = createTypeVar("\u03B4");
-		epsilon = createTypeVar("\u03B5");
+		alpha = createInfVar("\u03B1"); // "α"
+		beta = createInfVar("\u03B2");
+		gamma = createInfVar("\u03B3");
+		delta = createInfVar("\u03B4");
+		epsilon = createInfVar("\u03B5");
 	}
 
 
@@ -193,8 +194,13 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 		result.name = name;
 		return result;
 	}
+	protected def InferenceVariable createInfVar(String name) {
+		val result = TypesFactory.eINSTANCE.createInferenceVariable();
+		result.name = name;
+		return result;
+	}
 
-	def protected void assertSolution(Script script, TypeConstraint[] constraints, Pair<TypeVariable,TypeRef>... expectedInstantiations) {
+	def protected void assertSolution(Script script, TypeConstraint[] constraints, Pair<InferenceVariable,TypeRef>... expectedInstantiations) {
 		if(expectedInstantiations===null || expectedInstantiations.empty) {
 			throw new IllegalArgumentException("should provide one or more expected instantiations to #assertNoSolution()");
 		}
@@ -212,15 +218,15 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 			}
 		]
 	}
-	def protected void assertNoSolution(Script script, TypeConstraint[] constraints, TypeVariable... inferenceVariables) {
+	def protected void assertNoSolution(Script script, TypeConstraint[] constraints, InferenceVariable... inferenceVariables) {
 		if(inferenceVariables===null || inferenceVariables.empty) {
 			throw new IllegalArgumentException("should provide one or more inference variables to #assertNoSolution()");
 		}
 		val solution = getSolutionFromInferenceContext(script, constraints, inferenceVariables.map[it->null]);
 		Assert.assertNull("expected no solution, but InferenceContext found a solution", solution);
 	}
-	def private Map<TypeVariable,TypeRef> getSolutionFromInferenceContext(
-		Script script, TypeConstraint[] constraints, Pair<TypeVariable,TypeRef>... expectedInstantiations) {
+	def private Map<InferenceVariable,TypeRef> getSolutionFromInferenceContext(
+		Script script, TypeConstraint[] constraints, Pair<InferenceVariable,TypeRef>... expectedInstantiations) {
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(script)
 		val infVars = expectedInstantiations.map[key].toSet
 		val InferenceContext infCtx = new InferenceContext(ts,tsh,CancelIndicator.NullImpl,G,infVars)

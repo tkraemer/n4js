@@ -22,7 +22,7 @@ class NodeJsWorkAround<T> implements Iterable<T>, Iterator<T> {
 		return this.iteratorOfWrappedIterable;
 	}
 	@Override
-	public next() : ~Object with {done : boolean; value : T?;} {
+	public next() : IteratorEntry<T> {
 		return this.iteratorOfWrappedIterable.next();
 	}
 	public static <T> build(someIterable : Iterable<T>) : NodeJsWorkAround<T> {
@@ -40,7 +40,7 @@ class MyIterator<T> implements Iterator<T> {
 	}
 	
 	@Override
-	public next() : ~Object with {done : boolean; value : T?;} {
+	public next() : IteratorEntry<T> {
 		if (this.index >= 0 && this.index < this.arr.length) {
 			console.log('returning next element (current index: '+this.index+') ...');
 			return { done: false, value: this.arr[this.index++] };
