@@ -17,13 +17,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static eu.numberfour.n4js.typesystem.SubTypeRelationForTest.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * N4JS Spec Test: 4.3.2. Type Variables
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithFilteredValidator)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N4_03_2_TypeVariablesTest extends AbstractTypeSystemHelperTests {
 
 	final static CharSequence scriptPrefix =

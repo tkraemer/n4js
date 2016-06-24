@@ -21,14 +21,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * @see N7_1_1_VariablesTest
  * @see N7_3_2_ExportStatementOfConstsTest
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithFilteredValidator)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N7_3_1_ConstTest extends AbstractTypesystemTest {
 
 	@Inject

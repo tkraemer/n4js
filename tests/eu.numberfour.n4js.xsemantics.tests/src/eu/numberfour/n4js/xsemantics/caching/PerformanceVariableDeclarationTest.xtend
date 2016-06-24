@@ -14,13 +14,13 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
-import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * Test performance involving typing expressions
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithFilteredValidator)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class PerformanceVariableDeclarationTest extends AbstractTypesystemForPerformanceTest {
 
 	@Test

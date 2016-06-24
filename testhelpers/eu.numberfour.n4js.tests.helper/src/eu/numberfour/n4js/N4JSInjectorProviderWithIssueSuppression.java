@@ -22,12 +22,13 @@ import com.google.inject.Injector;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
- * A N4JSInjectorProvider which binds a custom {@link IResourceValidator}, which filters the diagnosed issues.
+ * A N4JSInjectorProvider which binds a custom {@link IResourceValidator} which filters the diagnosed issues.
  *
- * See {@code N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTING} for configuration.
+ * This can be used to suppress certain issues based on their issue codes. See
+ * {@code N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTING} for configuration.
  *
  */
-public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvider {
+public class N4JSInjectorProviderWithIssueSuppression extends N4JSInjectorProvider {
 
 	@Override
 	protected Injector internalCreateInjector() {
@@ -50,7 +51,7 @@ public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvi
 	}
 
 	/**
-	 * A diagnostic converter that filters incoming diagnostics before passing them to the super implementations.
+	 * A diagnostic converter which filters incoming diagnostics before passing them to the super implementations.
 	 */
 	public static class FilteringDiagnosticConverter extends DiagnosticConverterImpl {
 		@Override

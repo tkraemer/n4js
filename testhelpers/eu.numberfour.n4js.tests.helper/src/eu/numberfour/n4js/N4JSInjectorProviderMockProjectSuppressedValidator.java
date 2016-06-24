@@ -18,7 +18,7 @@ import com.google.inject.Injector;
 
 /**
  * A runtime module which combines {@link N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject} and
- * additionally binds {@link N4JSInjectorProviderWithFilteredValidator.FilteringDiagnosticConverter} to
+ * additionally binds {@link N4JSInjectorProviderWithIssueSuppression.FilteringDiagnosticConverter} to
  * {@link IResourceValidator}.
  */
 public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInjectorProvider {
@@ -32,7 +32,7 @@ public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInje
 							/** */
 							@SuppressWarnings("unused")
 							public Class<? extends DiagnosticConverterImpl> bindDiagnosticConverter() {
-								return N4JSInjectorProviderWithFilteredValidator.FilteringDiagnosticConverter.class;
+								return N4JSInjectorProviderWithIssueSuppression.FilteringDiagnosticConverter.class;
 							}
 						});
 			}

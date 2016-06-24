@@ -12,13 +12,14 @@ package eu.numberfour.n4js.xpect.validation.suppression
 
 import java.util.List
 import org.xpect.setup.XpectSetupComponent
+import org.xpect.XpectImport
 
 /**
  * An xpect setup element which allows to explicitly 
  * configure issues to be enabled for the validation of an xpect file.
  * 
  * An issue code configuration in the X!PECT_SETUP overrides 
- * the test-setup-wide configuration.  
+ * the configuration imposed by the Xpect runner class.  
  * 
  * Example:
  * <p>
@@ -29,6 +30,7 @@ import org.xpect.setup.XpectSetupComponent
  * </p>
  */
 @XpectSetupComponent
+@XpectImport(IssueCode)
 class IssueConfiguration {
 	private List<IssueCode> issueCodes = newArrayList
 	

@@ -44,7 +44,7 @@ public abstract class N4JSLanguageConstants {
 	 * Default issue codes to suppress while running tests which are configured for issue suppression.
 	 *
 	 * You can use {@code N4JSInjectorProviderWithFilteredValidator} to configure JUnit tests
-	 * or {@code SuppressIssuesSetup} for XPECT tests.
+	 * or {@code SuppressIssuesSetup} to configure XPECT tests for issue suppression.
 	 */
 	public static final Collection<String> DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS = unmodifiableCollection(newHashSet(
 			IssueCodes.AST_LOCAL_VAR_UNUSED

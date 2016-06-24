@@ -29,14 +29,17 @@ import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.TestingResourceValida
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
- * An XpectSetupFactory which allows to suppress certain issue codes.
+ * This setup factory filters issues based on their issue code before 
+ * passing them to xpect methods.  
+ * 
+ * For more detail on which issue codes are suppressed see {@link N4JSLanguageConstants#DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS}.
  * 
  * To integrate this setup with an xpect runner, import this class via @XpectImport.
  * 
  * For further configuration you can use {@link IssueConfiguration} in the XPECT_SETUP of specific files.
  */
 @XpectReplace(IssuesByOffsetSetup)
-@XpectImport( #[SuppressIssuesSetupRoot, IssueCode, IssueConfiguration])
+@XpectImport( #[SuppressIssuesSetupRoot])
 class SuppressIssuesSetup extends IssuesByOffsetSetup {
 	
 	private final Collection<String> suppressedIssueCodes = new ArrayList<String>(

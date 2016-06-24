@@ -22,13 +22,13 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  *
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithFilteredValidator)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 abstract class AbstractN4JSLanguageUtilsTest {
 	
 	@Inject private extension N4JSParseHelper parseHelper;

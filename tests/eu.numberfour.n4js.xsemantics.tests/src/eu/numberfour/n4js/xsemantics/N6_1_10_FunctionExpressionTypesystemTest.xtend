@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * Test class for function expression, see  6.1.10. Function Expression
@@ -34,7 +34,7 @@ import eu.numberfour.n4js.N4JSInjectorProviderWithFilteredValidator
  * @see https://numberfour.jira.com/browse/IDE-433
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProviderWithFilteredValidator)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 
 	@Inject	extension ParseHelper<Script>
