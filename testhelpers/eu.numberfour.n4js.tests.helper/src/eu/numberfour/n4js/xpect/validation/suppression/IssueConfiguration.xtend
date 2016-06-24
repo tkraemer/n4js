@@ -17,7 +17,7 @@ import org.xpect.setup.XpectSetupComponent
  * An xpect setup element which allows to explicitly 
  * configure issues to be enabled for the validation of an xpect file.
  * 
- * An issue code configuration in the XPECT_SETUP overrides 
+ * An issue code configuration in the X!PECT_SETUP overrides 
  * the test-setup-wide configuration.  
  * 
  * Example:

@@ -24,7 +24,7 @@ import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Test class for all Xpect tests in folder xpect-tests; this test class is also configured in the plugin.xml so that is
@@ -40,7 +40,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWar
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests", fileExtensions = { "xt" })
-@XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSSpecTest {
 	// nop
 }

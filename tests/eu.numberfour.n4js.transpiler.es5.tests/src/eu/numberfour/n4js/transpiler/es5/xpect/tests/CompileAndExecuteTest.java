@@ -20,7 +20,7 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  */
@@ -30,7 +30,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWar
 		OutputXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressIssuesSetup.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata", fileExtensions = { "xt" })
 public class CompileAndExecuteTest {
 	// nop

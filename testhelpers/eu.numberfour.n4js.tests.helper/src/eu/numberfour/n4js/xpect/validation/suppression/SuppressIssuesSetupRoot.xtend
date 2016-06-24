@@ -12,14 +12,15 @@ package eu.numberfour.n4js.xpect.validation.suppression
 
 import org.xpect.XpectImport
 import org.xpect.setup.XpectSetupRoot
+import org.xpect.xtext.lib.setup.InjectorSetup
 
 /**
  * An xpect setup root which allows to configure a {@link SuppressIssuesSetup}.
  * 
- * Also see {@link IssueConfiguration}. 
+ * Also see {@link IssueConfiguration}.
  */
 @XpectSetupRoot
-@XpectImport( # [ IssueConfiguration, IssueCode ] )
+@XpectImport( # [ IssueConfiguration, IssueCode, InjectorSetup] )
 class SuppressIssuesSetupRoot {
 	private IssueConfiguration issueConfiguration;
 	
@@ -29,5 +30,5 @@ class SuppressIssuesSetupRoot {
 	
 	def getIssueConfiguration() {
 		return issueConfiguration;
-	}	
+	}
 } 

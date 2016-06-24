@@ -29,7 +29,7 @@ import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin linking test
@@ -50,7 +50,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWar
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model_ui", fileExtensions = "xt")
-@XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSXpectPluginUITest {
 	//
 }

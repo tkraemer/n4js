@@ -26,20 +26,22 @@ import org.xpect.xtext.lib.setup.ThisResource
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByLine
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByOffsetSetup
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.TestingResourceValidator
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
  * An XpectSetupFactory which allows to suppress certain issue codes.
  * 
- * To integrate this setup with an xpect runner, subclass it and import the subclass using @XpectImport.
- * The subclass has to be annotated with @XpectSetupFactory.
+ * To integrate this setup with an xpect runner, import this class via @XpectImport.
  * 
- * For further configuration use {@link IssueConfiguration} in the XPECT_SETUP of your file.
+ * For further configuration you can use {@link IssueConfiguration} in the XPECT_SETUP of specific files.
  */
 @XpectReplace(IssuesByOffsetSetup)
 @XpectImport( #[SuppressIssuesSetupRoot, IssueCode, IssueConfiguration])
 class SuppressIssuesSetup extends IssuesByOffsetSetup {
 	
-	private final Collection<String> suppressedIssueCodes;
+	private final Collection<String> suppressedIssueCodes = new ArrayList<String>(
+		N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS
+	);
 	private Multimap<Integer, Issue> issuesByLine;
 	
 	/**
@@ -54,11 +56,9 @@ class SuppressIssuesSetup extends IssuesByOffsetSetup {
 	 * 
 	 */
 	new(@ThisResource XtextResource resource,
-		ISetupInitializer<SuppressIssuesSetupRoot> setupInitializer, Collection<String> suppressedIssueCodes
-	) {
+		ISetupInitializer<SuppressIssuesSetupRoot> setupInitializer) {
 		super(resource);
 		
-		this.suppressedIssueCodes = new ArrayList(suppressedIssueCodes);
 		initialize(setupInitializer);
 	}
 	

@@ -10,9 +10,6 @@
  */
 package eu.numberfour.n4js;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
@@ -22,16 +19,15 @@ import org.eclipse.xtext.validation.Issue;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import eu.numberfour.n4js.validation.IssueCodes;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
- * A N4JSInjectorProvider which binds a custom {@link IResourceValidator}, which filters all diagnosed issues.
+ * A N4JSInjectorProvider which binds a custom {@link IResourceValidator}, which filters the diagnosed issues.
+ *
+ * See {@code N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTING} for configuration.
  *
  */
 public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvider {
-
-	/* Suppressed issue codes */
-	private static final List<String> SUPPRESSED_ISSUE_CODES = Arrays.asList(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 	@Override
 	protected Injector internalCreateInjector() {
@@ -62,7 +58,7 @@ public class N4JSInjectorProviderWithFilteredValidator extends N4JSInjectorProvi
 			super.convertValidatorDiagnostic(diagnostic, new IAcceptor<Issue>() {
 				@Override
 				public void accept(Issue t) {
-					if (!SUPPRESSED_ISSUE_CODES.contains(t.getCode())) {
+					if (!N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS.contains(t.getCode())) {
 						acceptor.accept(t);
 					}
 				}

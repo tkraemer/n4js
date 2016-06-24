@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableMap;
 
 import eu.numberfour.n4js.n4JS.N4JSASTUtils;
 import eu.numberfour.n4js.n4mf.ModuleLoader;
+import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * Contains constants for the N4JS language.
@@ -39,6 +40,15 @@ public abstract class N4JSLanguageConstants {
 	/** Direct access to the external keyword */
 	public static final String EXTERNAL_KEYWORD = "external";
 
+	/**
+	 * Default issue codes to suppress while running tests which are configured for issue suppression.
+	 *
+	 * You can use {@code N4JSInjectorProviderWithFilteredValidator} to configure JUnit tests
+	 * or {@code SuppressIssuesSetup} for XPECT tests.
+	 */
+	public static final Collection<String> DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS = unmodifiableCollection(newHashSet(
+			IssueCodes.AST_LOCAL_VAR_UNUSED
+	));
 
 
 	/** <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-keywords">ECMAScript ver. [6 11.6.2.1] Keywords</a>.*/

@@ -23,7 +23,7 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.expectmatrix.tests.utils.N4JSRuntimeTest;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  */
@@ -36,7 +36,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWar
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests")
-@XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSExpectMatrixTest {
 	//
 }

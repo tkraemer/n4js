@@ -23,7 +23,7 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWarningSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Test setup targeting the bugreports-pending folder.
@@ -37,7 +37,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressUnusedVariableWar
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "bugreports-pending", fileExtensions = { "xt" })
-@XpectImport(SuppressUnusedVariableWarningSetup.class)
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSBugreportPendingTest {
 	//
 }
