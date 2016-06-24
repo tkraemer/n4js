@@ -112,7 +112,7 @@ function getDIComponentMeta(type : any): DIComponentMeta?{
  */
 
 (function checkInjectedClassDeps(){
-	var meta = getInjectedClassMeta(Injected as constructor{N4Object});
+	var meta = getInjectedClassMeta(Injected);
 
     strictEqual(meta.superType.n4type.name, 'P', "Injected class super type not present");
 

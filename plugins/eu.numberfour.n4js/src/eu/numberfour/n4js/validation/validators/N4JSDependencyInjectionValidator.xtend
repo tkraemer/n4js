@@ -68,6 +68,7 @@ import java.util.ArrayList
 import java.util.List
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 
 /**
  * Validations related to dependency injection (covering annotations and instantiations).
@@ -870,13 +871,14 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 	 * <li>or conform to Provider-of-T where T is injectable itself</li>
 	 * </ul>
 	 */
-	public static def boolean isInjectableType(TypeRef typeRef) {
+	public static def boolean isInjectableType(TypeArgument typeArg) {
 		// must be non-null, a ParameterizedTypeRef and have a declared type
 		// (sorts out things like ComposedTypeRefs, ClassifierTypeRefs, etc.)
 		//can be structural type (DefSite and UseSite)
-		if (!(typeRef instanceof ParameterizedTypeRef)) {
+		if (!(typeArg instanceof ParameterizedTypeRef)) {
 			return false;
 		}
+		val typeRef = typeArg as ParameterizedTypeRef;
 		val declType = typeRef.declaredType;
 		if (declType===null) {
 			return false;

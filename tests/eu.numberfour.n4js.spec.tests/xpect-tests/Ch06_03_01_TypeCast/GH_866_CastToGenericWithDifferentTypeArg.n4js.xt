@@ -1,0 +1,7 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT noerrors -->
+var x1 = [] as Array<string>;
+
+// XPECT errors --> "Cannot cast from Array<int> to Array<string>" at "[42] as Array<string>"
+var x2 = [42] as Array<string>;

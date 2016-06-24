@@ -1,12 +1,4 @@
-:experimental:
-:commandkey: &#8984;
-:data-uri:
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
-
 .FAQ
 = FAQ
 
@@ -62,5 +54,5 @@ Eventually both approaches will lead to similar solutions: The smarter and bette
 of N4JS becomes, the more programs it will accept without losing its soundness. The smarter and better
 TypeScript's type checker becomes, the less gaps there will be for incorrect ECMAScript code.
 
-For a thorough explanation of the <<features/comparison-typescript#_comparison_typescript,differences and similarities
+For a thorough explanation of the <<comparison-typescript#_comparison_typescript,differences and similarities
 between N4JS and TypeScript>> see our comparison page.
