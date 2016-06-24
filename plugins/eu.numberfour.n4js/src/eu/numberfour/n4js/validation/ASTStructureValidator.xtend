@@ -94,7 +94,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static extension eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter.*
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringAssignment
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringForStatement
-import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants
+import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper
 
 /**
  * A utility that validates the structure of the AST in one pass.
@@ -111,7 +111,7 @@ class ASTStructureValidator {
 	private ValidatorMessageHelper messageHelper;
 	
 	@Inject
-	private GrammarBasedLanguageConstants languageConstants;
+	private LanguageConstantsHelper languageConstants;
 	
 	@ToString
 	protected static class Constraints {
@@ -588,7 +588,7 @@ class ASTStructureValidator {
 			if (arguments == name && !(model instanceof LocalArgumentsVariable)) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else {
-				if (languageConstants.ECMAKeywords.contains(name)
+				if (languageConstants.getECMAKeywords.contains(name)
 					|| 'enum'.equals(name) || 'await'.equals(name) || 'let'.equals(name)
 					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name)) {
 					issueNameDiagnostic(model, producer, name)

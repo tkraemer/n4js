@@ -25,13 +25,13 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
 
 /**
- * This helper class allows access on ECMAScript as well as N4JS keywords.
+ * This helper class offers access to ECMAScript as well as N4JS keywords.
  *
  * Its implementation directly accesses the grammar which means that any grammar changes will be reflected by this
  * class.
  *
  */
-public final class GrammarBasedLanguageConstants {
+public final class LanguageConstantsHelper {
 	@Inject
 	N4JSGrammarAccess grammarAccess;
 

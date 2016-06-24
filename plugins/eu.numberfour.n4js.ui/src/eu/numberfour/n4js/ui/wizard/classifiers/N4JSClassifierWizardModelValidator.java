@@ -45,7 +45,7 @@ import eu.numberfour.n4js.ui.wizard.model.AccessModifier;
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference;
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModelValidator;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
-import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants;
+import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 
 /**
  * Base validator implementation for N4JS classifiers.
@@ -59,7 +59,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Inject
-	GrammarBasedLanguageConstants languageConstants;
+	LanguageConstantsHelper languageConstants;
 
 	private IResourceDescriptions descriptions;
 

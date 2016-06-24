@@ -29,7 +29,7 @@ import eu.numberfour.n4js.n4mf.ModuleLoader;
  */
 public abstract class N4JSLanguageConstants {
 
-	/** Use {@link GrammarBasedLanguageConstants} for a full list of keywords. */
+	/** Use {@link LanguageConstantsHelper} for a full list of keywords. */
 
 	//@formatter:off
 

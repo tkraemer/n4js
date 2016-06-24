@@ -65,7 +65,7 @@ import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
-import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants
+import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper
 
 /**
  */
@@ -84,7 +84,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	private HiddenLeafAccess hla;
 	
 	@Inject
-	private GrammarBasedLanguageConstants grammarBasedLanguageConstants;
+	private LanguageConstantsHelper grammarBasedLanguageConstants;
 	
 
 	/**
@@ -403,7 +403,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "future reserved word")
 				}
 
-				if (grammarBasedLanguageConstants.ECMAKeywords.contains(name)) {
+				if ('yield' != name && grammarBasedLanguageConstants.getECMAKeywords.contains(name)) {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "keyword")
 				}
 			}

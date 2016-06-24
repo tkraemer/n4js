@@ -26,7 +26,7 @@ import com.google.inject.Provider;
 import eu.numberfour.n4js.ui.N4JSEditor;
 import eu.numberfour.n4js.ui.utils.HandlerServiceUtils;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
-import eu.numberfour.n4js.validation.helper.GrammarBasedLanguageConstants;
+import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 
 /**
  * Handler for opening the N4JS type selection dialog.
@@ -41,7 +41,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 	private Provider<OpenTypeSelectionDialog> provider;
 
 	@Inject
-	private GrammarBasedLanguageConstants grammarBasedLanguageConstants;
+	private LanguageConstantsHelper grammarBasedLanguageConstants;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
