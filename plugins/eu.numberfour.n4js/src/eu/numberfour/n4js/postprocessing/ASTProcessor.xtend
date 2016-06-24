@@ -28,7 +28,6 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -41,6 +40,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.ts.types.TypableElement
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -67,7 +67,7 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
 	private TypeProcessor typeProcessor;
 	@Inject
@@ -101,13 +101,13 @@ public class ASTProcessor extends AbstractProcessor {
 
 		log(0, "### processing resource: " + resource.URI);
 
-		val cache = typingCacheHelper.getOrCreate(resource);
+		val cache = astMetaInfoCacheHelper.getOrCreate(resource);
 		if (cache.isTypingInProgress || cache.isFullyTyped) {
 			// this method should never be called more than once per N4JSResource
-			throw new IllegalStateException("reentrant invocation of #typeEntireAST()")
+			throw new IllegalStateException("reentrant invocation of #processAST()")
 		}
 		cache.isTypingInProgress = true;
-		cache.cancelIndicator = cancelIndicator; // null is ok here
+		cache.cancelIndicator = cancelIndicator ?: CancelIndicator.NullImpl;
 		try {
 			// step 1: main processing
 			val script = resource.script;
@@ -119,7 +119,7 @@ public class ASTProcessor extends AbstractProcessor {
 				processSubtree(G, block, cache, 0);
 			}
 		} finally {
-			if (cache.canceled) {
+			if (cache.cancelIndicator.canceled) {
 				log(0, "CANCELED by cancelIndicator");
 			}
 
@@ -142,12 +142,12 @@ public class ASTProcessor extends AbstractProcessor {
 	 * 
 	 * @param node  the root of the subtree to process; must be an AST node.
 	 */
-	def package void processSubtree(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
+	def package void processSubtree(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 
 		log(indentLevel, "processing: " + node.objectInfo);
 
-		if (cache.canceled) {
+		if (cache.cancelIndicator.canceled) {
 			return;
 		}
 
@@ -155,7 +155,9 @@ public class ASTProcessor extends AbstractProcessor {
 		if (cache.forwardProcessedSubTrees.contains(node)) {
 			if (isDEBUG_LOG) {
 				log(indentLevel, "(subtree already processed as a forward reference)");
-				log(indentLevel, cache.getFailSafe(node));
+				if(node instanceof TypableElement) {
+					log(indentLevel, cache.getTypeFailSafe(node));
+				}
 			}
 			return;
 		}
@@ -187,7 +189,7 @@ public class ASTProcessor extends AbstractProcessor {
 				} else {
 					// process now
 					processSubtree(G, child, cache, indentLevel + 1);
-					if (cache.canceled) {
+					if (cache.cancelIndicator.canceled) {
 						return;
 					}
 				}
@@ -216,7 +218,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * 
 	 * @return <code>true</code> iff the forward processing is legal, <code>false</code> otherwise.
 	 */
-	def package boolean processSubtree_forwardReference(RuleEnvironment G, EObject node, TypingCache cache) {
+	def package boolean processSubtree_forwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 		val subtree = node.isIdentifiableSubtree
 		if (!subtree) {
@@ -230,7 +232,7 @@ public class ASTProcessor extends AbstractProcessor {
 			}
 		}
 
-		val fromCache = cache.getFailSafe(node);
+		val fromCache = cache.getTypeFailSafe(node);
 		if (fromCache !== null) {
 			// already processed, nothing else to do
 			// note: this is not an error, we may have many forward references to the same identifiable subtree
@@ -283,12 +285,12 @@ public class ASTProcessor extends AbstractProcessor {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
-	def private void processNode_preChildren(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
+	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node);
 	}
 
-	def private void processNode_postChildren(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
+	def private void processNode_postChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node);
 
@@ -343,7 +345,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * for(var x of foo(x)) {}
 	 * </pre>
 	 */
-	def package boolean isSemiCyclicForwardReferenceInForLoop(EObject node, TypingCache cache) {
+	def package boolean isSemiCyclicForwardReferenceInForLoop(EObject node, ASTMetaInfoCache cache) {
 		if (node instanceof VariableDeclaration) {
 			val parent = node.eContainer;
 			if (parent instanceof ForStatement) {

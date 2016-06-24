@@ -14,11 +14,11 @@ import com.google.common.base.Throwables
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.NamedElement
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
 
 /**
  * Provides some common base functionality used across all processors. See {@link ASTProcessor} for more details on
@@ -85,11 +84,11 @@ def protected Result<TypeRef> askXsemanticsForType(RuleEnvironment G, TypableEle
 		log(indentLevel, result.resultToString);
 	}
 
-	def protected static void log(int indentLevel, EObject astNode, TypingCache cache) {
+	def protected static void log(int indentLevel, EObject astNode, ASTMetaInfoCache cache) {
 		if (!isDEBUG_LOG)
 			return;
 		if (astNode.isTypableNode) {
-			val result = cache.getFailSafe(astNode);
+			val result = cache.getTypeFailSafe(astNode as TypableElement);
 			val resultStr = if (result !== null) result.resultToString else "*** MISSING ***";
 			log(indentLevel, astNode.objectInfo + " " + resultStr);
 		} else {

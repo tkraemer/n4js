@@ -20,6 +20,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
 import eu.numberfour.n4js.ts.types.TStructMember;
+import eu.numberfour.n4js.ts.types.TypableElement;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -364,6 +365,11 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 				default: return -1;
 			}
 		}
+		if (baseClass == TypableElement.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == PropertyAssignment.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM: return N4JSPackage.PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM;
@@ -399,6 +405,11 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 			switch (baseFeatureID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND;
 				case N4JSPackage.PROPERTY_NAME_OWNER__NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == TypableElement.class) {
+			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}
@@ -440,6 +451,11 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == TypableElement.class) {
+			switch (baseOperationID) {
 				default: return -1;
 			}
 		}

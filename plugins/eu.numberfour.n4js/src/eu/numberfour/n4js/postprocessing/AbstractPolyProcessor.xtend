@@ -40,9 +40,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
-import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
@@ -55,7 +53,7 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	def boolean isPoly(EObject obj) {
 		return switch (obj) {
@@ -154,19 +152,7 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 	 * nested poly expression's type from the cache.
 	 */
 	def protected TypeRef getFinalResultTypeOfNestedPolyExpression(Expression nestedPolyExpression) {
-		return restoreFromCache(nestedPolyExpression);
-	}
-
-	def protected TypeRef restoreFromCache(EObject astNode) {
-		typingCacheHelper.typeOf(astNode);
-	}
-
-	def protected void storeInCache(EObject astNode, TypeRef actualType) {
-		typingCacheHelper.store(astNode, new Result<TypeRef>(actualType));
-	}
-
-	def protected void storeInferredTypeArgsInCache(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
-		typingCacheHelper.storeInferredTypeArgs(callExpr, typeArgs);
+		return astMetaInfoCacheHelper.getTypeFailSafe(nestedPolyExpression);
 	}
 
 	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G,

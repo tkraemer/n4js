@@ -17,7 +17,7 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
@@ -50,7 +50,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 class PolyProcessorTest extends AbstractTypesystemTest {
 
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
 	private N4JSTypeSystem ts;
 //	@Inject
@@ -165,7 +165,7 @@ class PolyProcessorTest extends AbstractTypesystemTest {
 //	}
 	def private TypeRef getTypeFromTypingCache(Expression expression) {
 		// NOTE: not using N4JSTypeSystem#type() here to make 100% sure we are just reading from the cache
-		return typingCacheHelper.typeOf(expression);
+		return astMetaInfoCacheHelper.getTypeFailSafe(expression);
 	}
 
 

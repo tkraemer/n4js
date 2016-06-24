@@ -35,7 +35,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TStructMethod;
-import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 
@@ -899,11 +898,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				default: return -1;
 			}
 		}
-		if (baseClass == TypableElement.class) {
-			switch (derivedFeatureID) {
-				default: return -1;
-			}
-		}
 		if (baseClass == FunctionOrFieldAccessor.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.PROPERTY_METHOD_DECLARATION__BODY: return N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR__BODY;
@@ -960,11 +954,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == ThisArgProvider.class) {
-			switch (baseFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == TypableElement.class) {
 			switch (baseFeatureID) {
 				default: return -1;
 			}
@@ -1037,11 +1026,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 			}
 		}
 		if (baseClass == ThisArgProvider.class) {
-			switch (baseOperationID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == TypableElement.class) {
 			switch (baseOperationID) {
 				default: return -1;
 			}

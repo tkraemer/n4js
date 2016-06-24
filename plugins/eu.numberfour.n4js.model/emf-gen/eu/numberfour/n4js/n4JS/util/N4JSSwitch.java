@@ -764,6 +764,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAnnotableElement(propertyAssignment);
 				if (result == null) result = caseVariableEnvironmentElement(propertyAssignment);
 				if (result == null) result = casePropertyNameOwner(propertyAssignment);
+				if (result == null) result = caseTypableElement(propertyAssignment);
 				if (result == null) result = caseNamedElement(propertyAssignment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -782,6 +783,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAnnotableElement(annotablePropertyAssignment);
 				if (result == null) result = caseVariableEnvironmentElement(annotablePropertyAssignment);
 				if (result == null) result = casePropertyNameOwner(annotablePropertyAssignment);
+				if (result == null) result = caseTypableElement(annotablePropertyAssignment);
 				if (result == null) result = caseNamedElement(annotablePropertyAssignment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -794,6 +796,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAnnotableElement(propertyAssignmentAnnotationList);
 				if (result == null) result = caseVariableEnvironmentElement(propertyAssignmentAnnotationList);
 				if (result == null) result = casePropertyNameOwner(propertyAssignmentAnnotationList);
+				if (result == null) result = caseTypableElement(propertyAssignmentAnnotationList);
 				if (result == null) result = caseNamedElement(propertyAssignmentAnnotationList);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -803,12 +806,12 @@ public class N4JSSwitch<T> extends Switch<T> {
 				T result = casePropertyNameValuePair(propertyNameValuePair);
 				if (result == null) result = caseAnnotablePropertyAssignment(propertyNameValuePair);
 				if (result == null) result = caseTypedElement(propertyNameValuePair);
-				if (result == null) result = caseTypableElement(propertyNameValuePair);
 				if (result == null) result = casePropertyAssignment(propertyNameValuePair);
 				if (result == null) result = caseTypeProvidingElement(propertyNameValuePair);
 				if (result == null) result = caseAnnotableElement(propertyNameValuePair);
 				if (result == null) result = caseVariableEnvironmentElement(propertyNameValuePair);
 				if (result == null) result = casePropertyNameOwner(propertyNameValuePair);
+				if (result == null) result = caseTypableElement(propertyNameValuePair);
 				if (result == null) result = caseNamedElement(propertyNameValuePair);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -819,12 +822,12 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = casePropertyNameValuePair(propertyNameValuePairSingleName);
 				if (result == null) result = caseAnnotablePropertyAssignment(propertyNameValuePairSingleName);
 				if (result == null) result = caseTypedElement(propertyNameValuePairSingleName);
-				if (result == null) result = caseTypableElement(propertyNameValuePairSingleName);
 				if (result == null) result = casePropertyAssignment(propertyNameValuePairSingleName);
 				if (result == null) result = caseTypeProvidingElement(propertyNameValuePairSingleName);
 				if (result == null) result = caseAnnotableElement(propertyNameValuePairSingleName);
 				if (result == null) result = caseVariableEnvironmentElement(propertyNameValuePairSingleName);
 				if (result == null) result = casePropertyNameOwner(propertyNameValuePairSingleName);
+				if (result == null) result = caseTypableElement(propertyNameValuePairSingleName);
 				if (result == null) result = caseNamedElement(propertyNameValuePairSingleName);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -845,8 +848,8 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAnnotableElement(propertyMethodDeclaration);
 				if (result == null) result = caseVariableEnvironmentElement(propertyMethodDeclaration);
 				if (result == null) result = caseNamedElement(propertyMethodDeclaration);
-				if (result == null) result = caseThisArgProvider(propertyMethodDeclaration);
 				if (result == null) result = caseTypableElement(propertyMethodDeclaration);
+				if (result == null) result = caseThisArgProvider(propertyMethodDeclaration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

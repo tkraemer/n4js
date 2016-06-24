@@ -38,8 +38,8 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 
-	def package TypeRef processCallExpression(RuleEnvironment G, InferenceContext infCtx,
-		ParameterizedCallExpression callExpr, TypeRef expectedTypeRef) {
+	def package TypeRef processCallExpression(RuleEnvironment G, ParameterizedCallExpression callExpr,
+		TypeRef expectedTypeRef, InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		val target = callExpr.target;
 		val targetTypeRef = ts.type(G, target).value; // IMPORTANT: do not use #processExpr() here (if target is a PolyExpression, it has been processed in a separate, independent inference!)
@@ -91,7 +91,7 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 				val fparTypeRef = curr_fpar.getTypeRef();
 				val fparTypeRefSubst = fparTypeRef.subst(G, typeParam2infVar);
 //				val TypeRef argType = ts.type(G, arg).getValue();
-				val TypeRef argType = polyProcessor.processExpr(G, infCtx, arg, fparTypeRefSubst);
+				val TypeRef argType = polyProcessor.processExpr(G, arg, fparTypeRefSubst, infCtx, cache);
 				if (argType !== null) {
 //					val TypeRef[] ignoredTypeRefs = getInferredTypeRefsInFunctionArgument(arg, argType);
 					// constraint: argType <: fpar.type
@@ -103,7 +103,7 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 				// more arguments provided than fpars available
 				// -> this is an error case, but make sure to process the surplus arguments to avoid
 				// inconsistencies later on (cache misses etc.)
-				polyProcessor.processExpr(G, infCtx, arg, null);
+				polyProcessor.processExpr(G, arg, null, infCtx, cache);
 			}
 		}
 
@@ -136,9 +136,9 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		infCtx.onSolved [ solution |
 			if (solution.present) {
 				// success case:
-				storeInCache(callExpr, resultTypeRefSubst.applySolution(G, solution.get));
+				cache.storeType(callExpr, resultTypeRefSubst.applySolution(G, solution.get));
 				val inferredTypeArgs = typeParam2infVar.values.map[solution.get.get(it)].toList;
-				storeInferredTypeArgsInCache(callExpr, inferredTypeArgs);
+				cache.storeInferredTypeArgs(callExpr, inferredTypeArgs);
 			} else {
 				// failure case (unsolvable constraint system):
 				// to avoid leaking inference variables, replace them by their original type parameter
@@ -146,8 +146,8 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 				for (e : typeParam2infVar.entrySet) {
 					fakeSolution.put(e.value, TypeUtils.createTypeRef(e.key));
 				}
-				storeInCache(callExpr, resultTypeRefSubst.applySolution(G, fakeSolution));
-				storeInferredTypeArgsInCache(callExpr, #[]);
+				cache.storeType(callExpr, resultTypeRefSubst.applySolution(G, fakeSolution));
+				cache.storeInferredTypeArgs(callExpr, #[]);
 			}
 		];
 

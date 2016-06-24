@@ -26,7 +26,6 @@ import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper.TypingCache
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
@@ -60,7 +59,7 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptio
 public class TypeProcessor extends AbstractProcessor {
 
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
 	private ASTProcessor astProcessor;
 	@Inject
@@ -69,7 +68,7 @@ public class TypeProcessor extends AbstractProcessor {
 	private DestructureProcessor destructureProcessor;
 
 
-	def void typeNode(RuleEnvironment G, EObject node, TypingCache cache, int indentLevel) {
+	def void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 		if (node instanceof TypableElement) {
 			// we have a typable node
 			if (N4JSASTUtils.isArrayOrObjectLiteralUsedAsDestructuringPattern(node)
@@ -88,12 +87,12 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
-	def private void typeNode(RuleEnvironment G, TypableElement node, TypingCache cache, int indentLevel) {
+	def private void typeNode(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache, int indentLevel) {
 		try {
 			if (polyProcessor.isResponsibleFor(node)) {
 				if (polyProcessor.isEntryPoint(node)) {
 					log(indentLevel, "asking PolyComputer ...");
-					polyProcessor.inferType(G, node as Expression, cache.cancelIndicator);
+					polyProcessor.inferType(G, node as Expression, cache);
 					// in this case, the polyComputer will store the type in the cache;
 					// also, the poly computer is responsible for replacing all DeferredTypeRefs
 					assertTrueIfRigid("poly computer did not replace DeferredTypeRef", [
@@ -115,17 +114,17 @@ public class TypeProcessor extends AbstractProcessor {
 				val result = inferType(G, node);
 				// in this case, we are responsible for storing the type in the cache
 				// (Xsemantics does not know of the cache)
-				cache.put(node, result);
+				cache.storeType(node, result);
 			}
 		} catch (RuleFailedException e) {
-			cache.put(node, new Result(e));
+			cache.storeType(node, new Result(e));
 		} catch (Throwable th) {
 			th.printStackTrace
-			cache.put(node,
+			cache.storeType(node,
 				new Result(new RuleFailedException("error while asking Xsemantics: " + th.message, "YYY", th)));
 		}
 
-		log(indentLevel, cache.getFailSafe(node));
+		log(indentLevel, cache.getTypeFailSafe(node));
 	}
 
 	def private Result<TypeRef> inferType(RuleEnvironment G, TypableElement obj) {
@@ -223,7 +222,7 @@ public class TypeProcessor extends AbstractProcessor {
 
 			if (res.isFullyProcessed && res.script.eIsProxy) {
 				// special case: this is a resource loaded from the index!
-				// -> for now, we entirely by-pass TypingCache and just directly wrap the type model element in a TypeRef
+				// -> for now, we entirely by-pass ASTMetaInfoCache and just directly wrap the type model element in a TypeRef
 				if (!obj.isTypeModelElement) {
 					throw new IllegalStateException("not a type model element: " + obj)
 				}
@@ -239,25 +238,25 @@ public class TypeProcessor extends AbstractProcessor {
 				val astNodeToProcess = if (obj instanceof SyntaxRelatedTElement) {
 						obj.astElement // NOTE: we've made sure above that we are *NOT* in a Resource loaded from the index!
 					};
-				if (astNodeToProcess !== null) {
-					return getTypeOfForwardReference(G, astNodeToProcess, typingCacheHelper.getOrCreate(res));
+				if (astNodeToProcess instanceof TypableElement) {
+					return getTypeOfForwardReference(G, astNodeToProcess, astMetaInfoCacheHelper.getOrCreate(res));
 				}
 
 				return inferType(G, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
 			} else if (obj.isASTNode && obj.isTypableNode) {
 				// here we read from the cache (if AST node 'obj' was already processed) or forward-process 'obj'
-				val cache = typingCacheHelper.getOrCreate(res);
+				val cache = astMetaInfoCacheHelper.getOrCreate(res);
 				if (!cache.isTypingInProgress && !cache.isFullyTyped) {
 					// we have called #performPostProcessing() on the containing resource above, so this is "impossible"
 					// (HINT: if you get an exception here, this often indicates an accidental cache clear; use the
-					// debug code in TypingCacheHelper to track creation/deletion of typing caches to investigate this)
+					// debug code in ASTMetaInfoCacheHelper to track creation/deletion of typing caches to investigate this)
 					val e = new IllegalStateException("typing of entire AST not initiated yet!!")
 					e.printStackTrace // make sure we see this on the console (some clients eat up all exceptions!)
 					throw e;
 				} else if (cache.isTypingInProgress) {
 
 					// while AST typing is in progress, just read from the cache we are currently filling
-					val resultFromCache = cache.getFailSafe(obj);
+					val resultFromCache = cache.getTypeFailSafe(obj);
 
 					if (resultFromCache === null) {
 						// cache does not contain type for 'obj' (i.e. not processed yet)
@@ -271,7 +270,7 @@ public class TypeProcessor extends AbstractProcessor {
 						return resultFromCache;
 					}
 				} else if (cache.isFullyTyped) {
-					return cache.get(obj); // will throw exception in case of cache miss
+					return cache.getType(obj); // will throw exception in case of cache miss
 				}
 			} else {
 				// a non-typable AST node OR some entity in the TModule for which obj.isTypeModelElement returns false
@@ -286,7 +285,7 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
-	def private Result<TypeRef> getTypeOfForwardReference(RuleEnvironment G, EObject node, TypingCache cache) {
+	def private Result<TypeRef> getTypeOfForwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 
 		// TODO improve handling of destructuring patterns in ASTProcessor/TypeProcessor
@@ -348,7 +347,7 @@ public class TypeProcessor extends AbstractProcessor {
 			} else {
 				// in case of a legal, *non*-cyclic forward reference, we can assume that the subtree below 'node'
 				// has now been processed, which means node's type is now in the typing cache
-				return cache.get(node);
+				return cache.getType(node);
 			}
 		} else {
 			val msg = "*#*#*#*#*#* ILLEGAL FORWARD REFERENCE to " + node + " in " + node.eResource?.URI;

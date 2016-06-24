@@ -44,8 +44,8 @@ package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
 	@Inject
 	private DestructureHelper destructureHelper;
 
-	def package TypeRef processArrayLiteral(RuleEnvironment G, InferenceContext infCtx, ArrayLiteral arrLit,
-		TypeRef expectedTypeRef) {
+	def package TypeRef processArrayLiteral(RuleEnvironment G, ArrayLiteral arrLit, TypeRef expectedTypeRef,
+		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		// always poly
 		val numOfElems = arrLit.elements.size;
@@ -76,13 +76,13 @@ if (!haveUsableExpectedType) {
 	// -> just derive type from elements (and do not introduce a new inference variable for this ArrayLiteral!)
 	val elemTypeRefs = newArrayList;
 	arrLit.elements.filter[expression !== null].forEach [ arrElem |
-		elemTypeRefs += polyProcessor.processExpr(G, infCtx, arrElem.expression, null);
+		elemTypeRefs += polyProcessor.processExpr(G, arrElem.expression, null, infCtx, cache);
 	]
 	infCtx.onSolved [ solution |
 		val betterElemTypeRefs = arrLit.elements.filter[expression !== null].map [
 			getFinalResultTypeOfNestedPolyExpression(expression)
 		].toList;
-		storeInCache(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
+		cache.storeType(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
 	]
 	val unionOfElemTypes = if (!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
 	return G.arrayTypeRef(unionOfElemTypes);
@@ -123,7 +123,7 @@ if (!haveUsableExpectedType) {
 				// -> add constraint currElemTypeRef <: Ti (Ti being the corresponding inf. variable in resultTypeRef)
 				val idxResult = Math.min(idxElem, resultLen - 1);
 				val currResultInfVar = resultInfVars.get(idxResult);
-				val currElemTypeRef = polyProcessor.processExpr(G, infCtx, currElem.expression, null);
+				val currElemTypeRef = polyProcessor.processExpr(G, currElem.expression, null, infCtx, cache);
 				infCtx.addConstraint(currElemTypeRef, TypeUtils.createTypeRef(currResultInfVar), Variance.CO);
 			}
 		}
@@ -137,7 +137,7 @@ if (!haveUsableExpectedType) {
 		infCtx.onSolved [ solution |
 			if (solution.present) {
 				// success case
-				storeInCache(arrLit, resultTypeRef.applySolution(G, solution.get))
+				cache.storeType(arrLit, resultTypeRef.applySolution(G, solution.get))
 			} else {
 				// failure case (unsolvable constraint system)
 				val betterElemTypeRefs = arrLit.elements.map [
@@ -145,7 +145,7 @@ if (!haveUsableExpectedType) {
 				];
 				val fallback = buildFallbackTypeForArrayLiteral(isIterableN, resultLen, betterElemTypeRefs,
 					expectedElemTypeRefs, G);
-				storeInCache(arrLit, fallback);
+				cache.storeType(arrLit, fallback);
 			}
 		];
 

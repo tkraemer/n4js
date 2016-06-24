@@ -50,8 +50,8 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 	@Inject
 	private TypeSystemHelper tsh;
 
-	def package TypeRef processObjectLiteral(RuleEnvironment G, InferenceContext infCtx, ObjectLiteral objLit,
-		TypeRef expectedTypeRef) {
+	def package TypeRef processObjectLiteral(RuleEnvironment G, ObjectLiteral objLit, TypeRef expectedTypeRef,
+		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		if (!objLit.isPoly) {
 			val result = ts.type(G, objLit).getValue();
@@ -62,7 +62,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		val haveUsableExpectedType = expectedTypeRef !== null
 				&& (expectedTypeRef.useSiteStructuralTyping || expectedTypeRef.defSiteStructuralTyping); // FIXME reconsider
 		if (!haveUsableExpectedType) {
-			return getTypeForObjectLiteralWithoutExpectation(G, infCtx, objLit);
+			return getTypeForObjectLiteralWithoutExpectation(G, objLit, infCtx, cache);
 		}
 
 		// create the members for the structural result type reference
@@ -88,7 +88,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 								// add a constraint for the initializer expression (if any)
 								if (pa instanceof PropertyNameValuePair) {
 									if (pa.expression !== null) {
-										val exprTypeRef = polyProcessor.processExpr(G, infCtx, pa.expression, null);
+										val exprTypeRef = polyProcessor.processExpr(G, pa.expression, null, infCtx, cache);
 										mapInfVar2ExpressionTypeRef.put(iv, exprTypeRef); // will be copied below when taken out of the map!
 										infCtx.addConstraint(exprTypeRef, TypeUtils.createTypeRef(iv), Variance.CO); // exprTypeRef <: iv
 									}
@@ -165,12 +165,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 			}
 			val resultFinal = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL,
 				objLit.definedType as TStructuralType);
-			storeInCache(objLit, resultFinal);
+			cache.storeType(objLit, resultFinal);
 			for (currAss : objLit.propertyAssignments) {
 				if (currAss instanceof PropertyMethodDeclaration) {
-					storeInCache(currAss, TypeUtils.createTypeRef(currAss.definedMember));
+					cache.storeType(currAss, TypeUtils.createTypeRef(currAss.definedMember));
 				} else {
-					storeInCache(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
+					cache.storeType(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
 				}
 			}
 		];
@@ -178,8 +178,8 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		return result;
 	}
 
-	def private TypeRef getTypeForObjectLiteralWithoutExpectation(RuleEnvironment G, InferenceContext infCtx,
-		ObjectLiteral objLit) {
+	def private TypeRef getTypeForObjectLiteralWithoutExpectation(RuleEnvironment G, ObjectLiteral objLit,
+		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		// create the members for the structural result type reference
 		val tMembers = <TStructMember>newArrayList;
@@ -198,7 +198,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 								// no usable expected type
 								val fallbackType = switch (pa) {
 									PropertyNameValuePair case pa.expression !== null:
-										polyProcessor.processExpr(G, infCtx, pa.expression, null)
+										polyProcessor.processExpr(G, pa.expression, null, infCtx, cache)
 									PropertyGetterDeclaration:
 										pa.declaredTypeOfOtherAccessorInPair ?: G.anyTypeRef
 									PropertySetterDeclaration:
@@ -249,12 +249,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 			}
 			val resultFinal = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL,
 				objLit.definedType as TStructuralType);
-			storeInCache(objLit, resultFinal);
+			cache.storeType(objLit, resultFinal);
 			for (currAss : objLit.propertyAssignments) {
 				if (currAss instanceof PropertyMethodDeclaration) {
-					storeInCache(currAss, TypeUtils.createTypeRef(currAss.definedMember));
+					cache.storeType(currAss, TypeUtils.createTypeRef(currAss.definedMember));
 				} else {
-					storeInCache(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
+					cache.storeType(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
 				}
 			}
 		];

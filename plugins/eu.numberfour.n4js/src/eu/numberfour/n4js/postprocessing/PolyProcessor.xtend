@@ -33,7 +33,6 @@ import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.util.CancelIndicator
 
 /**
  */
@@ -76,15 +75,15 @@ package class PolyProcessor extends AbstractPolyProcessor {
 	// ----------------------------------------------------------------------------------------------------------------
 
 
-	def public void inferType(RuleEnvironment G, Expression rootPoly, CancelIndicator cancelIndicator) {
+	def public void inferType(RuleEnvironment G, Expression rootPoly, ASTMetaInfoCache cache) {
 
 		// create a new constraint system
-		val InferenceContext infCtx = new InferenceContext(ts, tsh, cancelIndicator, G);
+		val InferenceContext infCtx = new InferenceContext(ts, tsh, cache.cancelIndicator, G);
 
 // in plain JS files, we want to avoid searching for a solution (to avoid performance problems in some JS files
 // with extremely large array/object literals) but to avoid having to deal with this case with additional code,
 // we still build a constraint system as usual (TEMPORARAY HACK)
-// TODO find proper way to deal with extremely large array/object literals (also see compaction phase in InferenceContext)
+// TODO find proper way to deal with extremely large array/object literals
 if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 	infCtx.addConstraint(TypeConstraint.FALSE);
 }
@@ -98,7 +97,7 @@ if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 			};
 
 		// call #getType() (this will recursively call #getType() on nested expressions)
-		val typeRef = processExpr(G, infCtx, rootPoly, expectedTypeRef);
+		val typeRef = processExpr(G, rootPoly, expectedTypeRef, infCtx, cache);
 
 		// add constraint to ensure that type of 'rootPoly' is subtype of the expected type
 		if (!TypeUtils.isVoid(typeRef)) {
@@ -109,7 +108,8 @@ if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 
 		// compute solution
 		// (note: we're not actually interested in the solution, here; we just want to make sure to trigger the
-		// onSuccess/onFailure handlers registered by the #getType() methods)
+		// onSuccess/onFailure handlers registered by the #process*() methods of the other poly processors; see
+		// responsibilities of #processExpr(RuleEnvironment, Expression, TypeRef, InferenceContext, ASTMetaInfoCache)
 		infCtx.solve;
 	}
 
@@ -119,46 +119,40 @@ if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
 	 * <li>if given expression is non-poly: simply return its type.
 	 * <li>if given expression is poly:
 	 *     <ol>
-	 *     <li>add appropriate constraints to the constraint system of the given inference context.
+	 *     <li>add appropriate constraints to the constraint system of the given inference context,
 	 *     <li>recursively invoke this method for nested expressions (poly or non-poly).
-	 *     <li>add all required types for 'expr' and its non-expression children (e.g. fpars) to the typing cache.
-	 *         This should usually be done in an onSuccess or onFailure handler added to the given inference context.
-	 *     <li>return type of the given expression <code>expr</code>.
+	 *     <li>add all required <b>final types</b> for 'expr' and its non-expression children (e.g. fpars) to the typing
+	 *         cache. This should usually be done in an <code>onSuccess</code> or <code>onFailure</code> handler added
+	 *         to the given inference context.
+	 *     <li>return <b>temporary type</b> of the given expression <code>expr</code>.
 	 *     </ol>
 	 * </ul>
-	 * IMPORTANT: the type returned by this method may contain inference variables!
+	 * IMPORTANT: the "temporary" type may contain inference variables; the "final" types must be proper, i.e. not
+	 * contain any inference variables!
 	 */
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx, Expression expr,
-		TypeRef expectedTypeRef) {
+	def protected TypeRef processExpr(RuleEnvironment G, Expression expr, TypeRef expectedTypeRef,
+		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		if (isPoly(expr)) {
-			throw new IllegalArgumentException("missing dispatch method #getType() for poly expression: " +
-				expr);
+			// poly -> delegate this to the appropriate, specific PolyProcessor
+			return switch(expr) {
+				ArrayLiteral:
+					arrayLiteralProcessor.processArrayLiteral(G, expr, expectedTypeRef, infCtx, cache)
+				ObjectLiteral:
+					objectLiteralProcessor.processObjectLiteral(G, expr, expectedTypeRef, infCtx, cache)
+				FunctionExpression:
+					functionExpressionProcessor.processFunctionExpression(G, expr, expectedTypeRef, infCtx, cache)
+				ParameterizedCallExpression:
+					callExpressionProcessor.processCallExpression(G, expr, expectedTypeRef, infCtx, cache)
+				default:
+					throw new IllegalArgumentException("missing case in #processExpr() for poly expression: " + expr)
+			};
+		} else {
+			// never poly -> directly infer type via type system
+			val result = ts.type(G, expr).getValue();
+			// do *not* store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache!)
+			return result;
 		}
-		// never poly -> directly infer type via type system
-		val result = ts.type(G, expr).getValue();
-		// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
-		return result;
-	}
-
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
-		ArrayLiteral arrLit, TypeRef expectedTypeRef) {
-		return arrayLiteralProcessor.processArrayLiteral(G, infCtx, arrLit, expectedTypeRef);
-	}
-
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
-		ObjectLiteral objLit, TypeRef expectedTypeRef) {
-		return objectLiteralProcessor.processObjectLiteral(G, infCtx, objLit, expectedTypeRef);
-	}
-
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
-		FunctionExpression funExpr, TypeRef expectedTypeRef) {
-		return functionExpressionProcessor.processFunctionExpression(G, infCtx, funExpr, expectedTypeRef);
-	}
-
-	def dispatch protected TypeRef processExpr(RuleEnvironment G, InferenceContext infCtx,
-		ParameterizedCallExpression callExpr, TypeRef expectedTypeRef) {
-		return callExpressionProcessor.processCallExpression(G, infCtx, callExpr, expectedTypeRef);
 	}
 
 	/**

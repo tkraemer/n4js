@@ -28,7 +28,7 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.n4JS.BindingProperty;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper;
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
@@ -45,7 +45,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 @XpectImport(N4JSOffsetAdapter.class)
 public class TypeXpectMethod {
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
 	private N4JSTypeSystem ts;
 
@@ -193,7 +193,7 @@ public class TypeXpectMethod {
 		if (callExpr.getTypeArgs().isEmpty()) {
 			// no type arguments given in call expression -> use inferred type arguments
 			// (should be the standard case when testing)
-			final List<TypeRef> inferredTypeArgs = typingCacheHelper.getInferredTypeArgs(callExpr);
+			final List<TypeRef> inferredTypeArgs = astMetaInfoCacheHelper.getInferredTypeArgs(callExpr);
 			if (inferredTypeArgs != null) {
 				typeArgs = inferredTypeArgs;
 			} else {

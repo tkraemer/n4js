@@ -36,8 +36,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 
-	def package TypeRef processFunctionExpression(RuleEnvironment G, InferenceContext infCtx,
-		FunctionExpression funExpr, TypeRef expectedTypeRef) {
+	def package TypeRef processFunctionExpression(RuleEnvironment G, FunctionExpression funExpr, TypeRef expectedTypeRef,
+		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		if (!funExpr.isPoly) { // funExpr has declared types on all fpars and explicitly declared return type
@@ -120,11 +120,11 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		infCtx.onSolved [ solution |
 			val solution2 = if (solution.present) solution.get else infCtx.createPseudoSolution(G.anyTypeRef);
 			val resultSolved = result.applySolution(G, solution2) as FunctionTypeExprOrRef;
-			storeInCache(funExpr, resultSolved);
+			cache.storeType(funExpr, resultSolved);
 			fun.replaceDeferredTypeRefs(resultSolved);
 			// store types of fpars in cache ...
 			for (currFpar : funExpr.fpars) {
-				storeInCache(currFpar,
+				cache.storeType(currFpar,
 // delegate to Xsemantics rule typeFormalParameter (because it contains special handling for 'this'-type and variadic)
 askXsemanticsForType(G, currFpar).getValue() // FIXME clean this up!
 //					TypeUtils.copy(currFpar.definedTypeElement.typeRef)
