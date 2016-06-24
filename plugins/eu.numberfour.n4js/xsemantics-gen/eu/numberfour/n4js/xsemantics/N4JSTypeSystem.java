@@ -2447,7 +2447,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
     
     if ((targetTypeRef instanceof FunctionTypeExprOrRef)) {
       final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef)targetTypeRef);
-      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { (F.returnTypeRef===null); T = G.anyTypeRef; } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if (F.returnTypeRef instanceof ThisTypeRef) { if (expr.receiver instanceof SuperLiteral) { var TypeRef rawT; G |~ expr ~> rawT; T = TypeUtils.enforceNominalTyping(rawT); } else { G2 |- expr.receiver: T } if( F.declaredType instanceof TMethod && (F.declaredType as TMethod).isStatic() ) { if( T instanceof ConstructorTypeRef ) { T = T.createTypeRefFromStaticType(targetTypeRef.typeArgs); } else if ( T instanceof EnumTypeRef ) { T= T.enumType.ref(targetTypeRef.typeArgs) } } } else { typeSystemHelper.addSubstitutions(G2,expr,targetTypeRef); G2 |- F.returnTypeRef ~> T } } */
+      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { (F.returnTypeRef===null); T = G.anyTypeRef; } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- F.returnTypeRef ~> T if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -2460,7 +2460,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
           
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { (F.returnTypeRef===null); T = G.anyTypeRef; } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if (F.returnTypeRef instanceof ThisTypeRef) { if (expr.receiver instanceof SuperLiteral) { var TypeRef rawT; G |~ expr ~> rawT; T = TypeUtils.enforceNominalTyping(rawT); } else { G2 |- expr.receiver: T } if( F.declaredType instanceof TMethod && (F.declaredType as TMethod).isStatic() ) { if( T instanceof ConstructorTypeRef ) { T = T.createTypeRefFromStaticType(targetTypeRef.typeArgs); } else if ( T instanceof EnumTypeRef ) { T= T.enumType.ref(targetTypeRef.typeArgs) } } } else { typeSystemHelper.addSubstitutions(G2,expr,targetTypeRef); G2 |- F.returnTypeRef ~> T } } */
+          /* { (F.returnTypeRef===null); T = G.anyTypeRef; } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- F.returnTypeRef ~> T if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
           {
             try {
               TypeRef _returnTypeRef = F.getReturnTypeRef();
@@ -2481,47 +2481,18 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
               if (!_add) {
                 sneakyThrowRuleFailedException("G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef)");
               }
+              this.typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
+              /* G2 |- F.returnTypeRef ~> T */
               TypeRef _returnTypeRef_2 = F.getReturnTypeRef();
-              if ((_returnTypeRef_2 instanceof ThisTypeRef)) {
-                Expression _receiver = expr.getReceiver();
-                if ((_receiver instanceof SuperLiteral)) {
-                  TypeRef rawT = null;
-                  /* G |~ expr ~> rawT */
-                  Result<TypeRef> result_2 = thisTypeRefInternal(G, _trace_, expr);
-                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                  rawT = (TypeRef) result_2.getFirst();
-                  
-                  TypeRef _enforceNominalTyping = TypeUtils.enforceNominalTyping(rawT);
-                  T = _enforceNominalTyping;
-                } else {
-                  /* G2 |- expr.receiver: T */
-                  Expression _receiver_1 = expr.getReceiver();
-                  Result<TypeRef> result_3 = typeInternal(G2, _trace_, _receiver_1);
-                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                  T = (TypeRef) result_3.getFirst();
-                  
-                }
-                if (((F.getDeclaredType() instanceof TMethod) && ((TMethod) F.getDeclaredType()).isStatic())) {
-                  if ((T instanceof ConstructorTypeRef)) {
-                    EList<TypeArgument> _typeArgs = ((FunctionTypeExprOrRef)targetTypeRef).getTypeArgs();
-                    TypeRef _createTypeRefFromStaticType = RuleEnvironmentExtensions.createTypeRefFromStaticType(((ClassifierTypeRef)T), ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
-                    T = _createTypeRefFromStaticType;
-                  } else {
-                    if ((T instanceof EnumTypeRef)) {
-                      TEnum _enumType = ((EnumTypeRef)T).getEnumType();
-                      EList<TypeArgument> _typeArgs_1 = ((FunctionTypeExprOrRef)targetTypeRef).getTypeArgs();
-                      TypeRef _ref = TypeExtensions.ref(_enumType, ((TypeArgument[])Conversions.unwrapArray(_typeArgs_1, TypeArgument.class)));
-                      T = _ref;
-                    }
-                  }
-                }
-              } else {
-                this.typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
-                /* G2 |- F.returnTypeRef ~> T */
-                TypeRef _returnTypeRef_3 = F.getReturnTypeRef();
-                Result<TypeArgument> result_4 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef_3);
-                checkAssignableTo(result_4.getFirst(), TypeRef.class);
-                T = (TypeRef) result_4.getFirst();
+              Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef_2);
+              checkAssignableTo(result_2.getFirst(), TypeRef.class);
+              T = (TypeRef) result_2.getFirst();
+              
+              if (((T instanceof BoundThisTypeRef) && (!((expr.getReceiver() instanceof ThisLiteral) || (expr.getReceiver() instanceof SuperLiteral))))) {
+                /* G2 |~ T /\ T */
+                Result<TypeRef> result_3 = upperBoundInternal(G2, _trace_, T);
+                checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                T = (TypeRef) result_3.getFirst();
                 
               }
             }

@@ -806,28 +806,20 @@ from {
 			val G2 = G.wrap;
 			G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef)
 
-			if (F.returnTypeRef instanceof ThisTypeRef) {
+			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
+			G2 |- F.returnTypeRef ~> T
 
-				if (expr.receiver instanceof SuperLiteral) { // cf. GH-95
-					var TypeRef rawT; G |~ expr ~> rawT;
-					T = TypeUtils.enforceNominalTyping(rawT);
-				} else {
-					G2 |- expr.receiver: T
-				}
-
-				// IDE-785 if F is a static method with returnType this, we need to
-				// Type	 to the Class-Type of the receiver.
-				if( F.declaredType instanceof TMethod && (F.declaredType as TMethod).isStatic() ) {
-
-					if( T instanceof ConstructorTypeRef ) {
-						T = T.createTypeRefFromStaticType(targetTypeRef.typeArgs);
-					} else if ( T instanceof EnumTypeRef ) {
-						T= T.enumType.ref(targetTypeRef.typeArgs)
-					}
-				}
-			} else {
-				typeSystemHelper.addSubstitutions(G2,expr,targetTypeRef);
-				G2 |- F.returnTypeRef ~> T
+			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
+				// we've got something like "this[C]" as return type of a call expression of the form
+				// "new C().method()" but *not* "this.method()" or "super.method()"
+				// -> detach 'this'-type from its 'this'-context to make sure it won't be confused with the current
+				// 'this'-context or other this contexts, e.g.
+				//     class C {
+				//         method(): this {
+				//             return new C().method(); // must lead to an error!
+				//         }
+				//     }
+				G2 |~ T /\ T // taking upper bound turns this[C] into C
 			}
 		}
 	} else if(targetTypeRef?.declaredType===G.functionType) {
