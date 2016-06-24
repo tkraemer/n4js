@@ -111,7 +111,7 @@ class ASTStructureValidator {
 	private ValidatorMessageHelper messageHelper;
 	
 	@Inject
-	private LanguageConstantsHelper languageConstants;
+	private LanguageConstantsHelper languageConstantsHelper;
 	
 	@ToString
 	protected static class Constraints {
@@ -588,7 +588,7 @@ class ASTStructureValidator {
 			if (arguments == name && !(model instanceof LocalArgumentsVariable)) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else {
-				if (languageConstants.getECMAKeywords.contains(name)
+				if (languageConstantsHelper.getECMAKeywords.contains(name)
 					|| 'enum'.equals(name) || 'await'.equals(name) || 'let'.equals(name)
 					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name)) {
 					issueNameDiagnostic(model, producer, name)

@@ -41,7 +41,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 	private Provider<OpenTypeSelectionDialog> provider;
 
 	@Inject
-	private LanguageConstantsHelper grammarBasedLanguageConstants;
+	private LanguageConstantsHelper languageConstantsHelper;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -73,7 +73,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 
 				if (N4JSLanguageUtils.isValidIdentifier(text)
 						&& !startWithLowercaseLetter(text)
-						&& !grammarBasedLanguageConstants.isReservedIdentifier(text)) {
+						&& !languageConstantsHelper.isReservedIdentifier(text)) {
 					return text;
 				}
 			} catch (BadLocationException e) {

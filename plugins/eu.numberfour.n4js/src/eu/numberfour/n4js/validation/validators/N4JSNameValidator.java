@@ -64,7 +64,7 @@ import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
-	private LanguageConstantsHelper grammarBasedLanguageConstants;
+	private LanguageConstantsHelper languageConstantsHelper;
 
 	/**
 	 * NEEEDED
@@ -90,13 +90,12 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (Character.isUpperCase(n4TypeDeclaration.getName().charAt(0))) {
 			return;
 		}
-
 		if (holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "getter/setter", GETTER_SETTER) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "access modifier", ACCESS_MODIFIERS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "boolean literal", BOOLEAN_LITERALS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "base type", BASE_TYPES) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword",
-						grammarBasedLanguageConstants.getECMAKeywords())
+						languageConstantsHelper.getECMAKeywords())
 				&& holdsDoesNotStartWithLowerCaseLetter(n4TypeDeclaration)) {
 			// error messages are created with in constraint validation
 		}

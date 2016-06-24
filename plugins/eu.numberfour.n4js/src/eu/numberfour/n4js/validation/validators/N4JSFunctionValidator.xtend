@@ -84,7 +84,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	private HiddenLeafAccess hla;
 	
 	@Inject
-	private LanguageConstantsHelper grammarBasedLanguageConstants;
+	private LanguageConstantsHelper languageConstantsHelper;
 	
 
 	/**
@@ -403,7 +403,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "future reserved word")
 				}
 
-				if ('yield' != name && grammarBasedLanguageConstants.getECMAKeywords.contains(name)) {
+				if ('yield' != name && languageConstantsHelper.getECMAKeywords.contains(name)) {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "keyword")
 				}
 			}

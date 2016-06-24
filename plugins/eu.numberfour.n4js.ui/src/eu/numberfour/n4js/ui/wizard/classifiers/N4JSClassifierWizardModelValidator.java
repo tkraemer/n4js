@@ -59,7 +59,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 	private IQualifiedNameConverter qualifiedNameConverter;
 
 	@Inject
-	LanguageConstantsHelper languageConstants;
+	private LanguageConstantsHelper languageConstantsHelper;
 
 	private IResourceDescriptions descriptions;
 
@@ -101,7 +101,7 @@ public abstract class N4JSClassifierWizardModelValidator<M extends N4JSClassifie
 			throw new ValidationException(format(ErrorMessages.INVALID_CLASSIFIER_NAME, getClassifierName()));
 		}
 
-		if (languageConstants.isReservedIdentifier(className)) {
+		if (languageConstantsHelper.isReservedIdentifier(className)) {
 			throw new ValidationException(
 					format(ErrorMessages.RESERVED_CLASSIFIER_NAME, getClassifierName(), className));
 		}
