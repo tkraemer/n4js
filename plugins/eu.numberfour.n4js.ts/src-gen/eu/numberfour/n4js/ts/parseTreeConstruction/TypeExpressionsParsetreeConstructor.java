@@ -2057,11 +2057,13 @@ protected class TypeRefFunctionTypeExpression_IntersectionTypeExpressionOLDParse
  * 	| ClassifierTypeRef
  * 	| FunctionTypeExpressionOLD
  * 	| ArrowFunctionTypeExpression
+ * 	| UnionTypeExpressionOLD
+ * 	| IntersectionTypeExpressionOLD
  *
  **/
 
 // ParameterizedTypeRef | ArrayTypeRef | ThisTypeRef | ConstructorTypeRef | ClassifierTypeRef | FunctionTypeExpressionOLD |
-// ArrowFunctionTypeExpression
+// ArrowFunctionTypeExpression | UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
 protected class TypeRefForCast_Alternatives extends AlternativesToken {
 
 	public TypeRefForCast_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2083,6 +2085,8 @@ protected class TypeRefForCast_Alternatives extends AlternativesToken {
 			case 4: return new TypeRefForCast_ClassifierTypeRefParserRuleCall_4(lastRuleCallOrigin, this, 4, inst);
 			case 5: return new TypeRefForCast_FunctionTypeExpressionOLDParserRuleCall_5(lastRuleCallOrigin, this, 5, inst);
 			case 6: return new TypeRefForCast_ArrowFunctionTypeExpressionParserRuleCall_6(lastRuleCallOrigin, this, 6, inst);
+			case 7: return new TypeRefForCast_UnionTypeExpressionOLDParserRuleCall_7(lastRuleCallOrigin, this, 7, inst);
+			case 8: return new TypeRefForCast_IntersectionTypeExpressionOLDParserRuleCall_8(lastRuleCallOrigin, this, 8, inst);
 			default: return null;
 		}	
 	}
@@ -2092,10 +2096,12 @@ protected class TypeRefForCast_Alternatives extends AlternativesToken {
 		if(getEObject().eClass() != grammarAccess.getClassifierTypeRefAccess().getClassifierTypeRefAction_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getConstructorTypeRefAccess().getConstructorTypeRefAction_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getArrowFunctionTypeExpressionAccess().getFunctionTypeExpressionAction_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getArrayTypeRefRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getParameterizedTypeRefStructuralRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getThisTypeRefNominalAccess().getThisTypeRefNominalAction_0().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getThisTypeRefStructuralRule().getType().getClassifier())
+		   getEObject().eClass() != grammarAccess.getThisTypeRefStructuralRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -2356,19 +2362,92 @@ protected class TypeRefForCast_ArrowFunctionTypeExpressionParserRuleCall_6 exten
 	}	
 }
 
+// UnionTypeExpressionOLD
+protected class TypeRefForCast_UnionTypeExpressionOLDParserRuleCall_7 extends RuleCallToken {
+	
+	public TypeRefForCast_UnionTypeExpressionOLDParserRuleCall_7(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new UnionTypeExpressionOLD_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getUnionTypeExpressionOLDAccess().getUnionTypeExpressionAction_0().getType().getClassifier())
+			return null;
+		if(checkForRecursion(UnionTypeExpressionOLD_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// IntersectionTypeExpressionOLD
+protected class TypeRefForCast_IntersectionTypeExpressionOLDParserRuleCall_8 extends RuleCallToken {
+	
+	public TypeRefForCast_IntersectionTypeExpressionOLDParserRuleCall_8(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new IntersectionTypeExpressionOLD_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getIntersectionTypeExpressionOLDAccess().getIntersectionTypeExpressionAction_0().getType().getClassifier())
+			return null;
+		if(checkForRecursion(IntersectionTypeExpressionOLD_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
 
 /************ end Rule TypeRefForCast ****************/
 
 
 /************ begin Rule TypeRefInClassifierType ****************
  *
- * TypeRefInClassifierType StaticBaseTypeRef:
+ * TypeRefInClassifierType TypeArgument:
  * 	ParameterizedTypeRefNominal
  * 	| ThisTypeRefNominal
+ * 	| Wildcard
  *
  **/
 
-// ParameterizedTypeRefNominal | ThisTypeRefNominal
+// ParameterizedTypeRefNominal | ThisTypeRefNominal | Wildcard
 protected class TypeRefInClassifierType_Alternatives extends AlternativesToken {
 
 	public TypeRefInClassifierType_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2385,6 +2464,7 @@ protected class TypeRefInClassifierType_Alternatives extends AlternativesToken {
 		switch(index) {
 			case 0: return new TypeRefInClassifierType_ParameterizedTypeRefNominalParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new TypeRefInClassifierType_ThisTypeRefNominalParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new TypeRefInClassifierType_WildcardParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	
 	}
@@ -2392,7 +2472,8 @@ protected class TypeRefInClassifierType_Alternatives extends AlternativesToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getParameterizedTypeRefNominalRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getThisTypeRefNominalAccess().getThisTypeRefNominalAction_0().getType().getClassifier())
+		   getEObject().eClass() != grammarAccess.getThisTypeRefNominalAccess().getThisTypeRefNominalAction_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getWildcardAccess().getWildcardAction_0_0_0().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -2460,6 +2541,42 @@ protected class TypeRefInClassifierType_ThisTypeRefNominalParserRuleCall_1 exten
 		if(getEObject().eClass() != grammarAccess.getThisTypeRefNominalAccess().getThisTypeRefNominalAction_0().getType().getClassifier())
 			return null;
 		if(checkForRecursion(ThisTypeRefNominal_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// Wildcard
+protected class TypeRefInClassifierType_WildcardParserRuleCall_2 extends RuleCallToken {
+	
+	public TypeRefInClassifierType_WildcardParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Wildcard_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getWildcardAccess().getWildcardAction_0_0_0().getType().getClassifier())
+			return null;
+		if(checkForRecursion(Wildcard_Group.class, eObjectConsumer)) return null;
 		return eObjectConsumer;
 	}
 	
@@ -7384,11 +7501,11 @@ protected class TStructSetter_RightParenthesisKeyword_3 extends KeywordToken  {
 /************ begin Rule ConstructorTypeRef ****************
  *
  * ConstructorTypeRef:
- * 	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+ * 	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
  *
  **/
 
-// {ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}'
+// {ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}'
 protected class ConstructorTypeRef_Group extends GroupToken {
 	
 	public ConstructorTypeRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7487,16 +7604,16 @@ protected class ConstructorTypeRef_LeftCurlyBracketKeyword_2 extends KeywordToke
 
 }
 
-// staticTypeRef=TypeRefInClassifierType
-protected class ConstructorTypeRef_StaticTypeRefAssignment_3 extends AssignmentToken  {
+// typeArg=TypeRefInClassifierType
+protected class ConstructorTypeRef_TypeArgAssignment_3 extends AssignmentToken  {
 	
-	public ConstructorTypeRef_StaticTypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ConstructorTypeRef_TypeArgAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3();
+		return grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3();
 	}
 
     @Override
@@ -7509,13 +7626,13 @@ protected class ConstructorTypeRef_StaticTypeRefAssignment_3 extends AssignmentT
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("staticTypeRef",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("staticTypeRef");
+		if((value = eObjectConsumer.getConsumable("typeArg",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("typeArg");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTypeRefInClassifierTypeRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
+				element = grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -7548,7 +7665,7 @@ protected class ConstructorTypeRef_RightCurlyBracketKeyword_4 extends KeywordTok
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ConstructorTypeRef_StaticTypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ConstructorTypeRef_TypeArgAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -7562,11 +7679,11 @@ protected class ConstructorTypeRef_RightCurlyBracketKeyword_4 extends KeywordTok
 /************ begin Rule ClassifierTypeRef ****************
  *
  * ClassifierTypeRef:
- * 	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+ * 	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
  *
  **/
 
-// {ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}'
+// {ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}'
 protected class ClassifierTypeRef_Group extends GroupToken {
 	
 	public ClassifierTypeRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7665,16 +7782,16 @@ protected class ClassifierTypeRef_LeftCurlyBracketKeyword_2 extends KeywordToken
 
 }
 
-// staticTypeRef=TypeRefInClassifierType
-protected class ClassifierTypeRef_StaticTypeRefAssignment_3 extends AssignmentToken  {
+// typeArg=TypeRefInClassifierType
+protected class ClassifierTypeRef_TypeArgAssignment_3 extends AssignmentToken  {
 	
-	public ClassifierTypeRef_StaticTypeRefAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ClassifierTypeRef_TypeArgAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3();
+		return grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3();
 	}
 
     @Override
@@ -7687,13 +7804,13 @@ protected class ClassifierTypeRef_StaticTypeRefAssignment_3 extends AssignmentTo
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("staticTypeRef",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("staticTypeRef");
+		if((value = eObjectConsumer.getConsumable("typeArg",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("typeArg");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTypeRefInClassifierTypeRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(); 
+				element = grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -7726,7 +7843,7 @@ protected class ClassifierTypeRef_RightCurlyBracketKeyword_4 extends KeywordToke
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ClassifierTypeRef_StaticTypeRefAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ClassifierTypeRef_TypeArgAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}

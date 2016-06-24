@@ -5,21 +5,40 @@
 
 
 //// -- example 5
-// XPECT errors --> "mismatched input '?' expecting '{'" at "?"
+/* XPECT errors ---
+"No wildcards allowed in classifier type." at "?"
+"missing '{' at '?'" at "?"
+"missing '}' at ')'" at ")"
+---
+*/
 function f5( x : union { intersection { type ?  } } ){}
 
 
 //// -- example 4
-// XPECT errors --> "mismatched input '?' expecting '{'" at "?"
+/* XPECT errors ---
+"missing '{' at '?'" at "?"
+"missing '}' at ')'" at ")"
+---
+*/
 function f4( x : union { constructor ? } ) {}
 
 //// -- example 3
-// XPECT errors --> "mismatched input '?' expecting '{'" at "?"
+/* XPECT errors ---
+"No wildcards allowed in classifier type." at "?"
+"missing '{' at '?'" at "?"
+"missing '}' at ')'" at ")"
+---
+*/
 function f3( x : intersection { type ? } ) {}
 
 
 //// -- example 2
-// XPECT errors --> "mismatched input '?' expecting '{'" at "?"
+/* XPECT errors ---
+"No wildcards allowed in classifier type." at "?"
+"missing '{' at '?'" at "?"
+"missing '}' at ')'" at ")"
+---
+*/
 function f2( x : union{type ?} ) {}
 
 

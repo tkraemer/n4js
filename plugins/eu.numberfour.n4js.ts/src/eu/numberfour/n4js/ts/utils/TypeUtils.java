@@ -48,7 +48,6 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural;
-import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural;
@@ -234,7 +233,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ClassifierTypeRef ref = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-			ref.setStaticTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -259,7 +258,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
-			ref.setStaticTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -406,18 +405,18 @@ public class TypeUtils {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
 		ClassifierTypeRef classifierBoundThisTypeRef = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		StaticBaseTypeRef staticTypeRef = actualThisTypeRef.getStaticTypeRef();
+		TypeArgument typeArg = actualThisTypeRef.getTypeArg();
 		final BoundThisTypeRef boundThisTypeRef;
-		if (staticTypeRef instanceof ParameterizedTypeRef) {
-			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) staticTypeRef);
-		} else if (staticTypeRef instanceof BoundThisTypeRef) {
-			boundThisTypeRef = (BoundThisTypeRef) staticTypeRef;
+		if (typeArg instanceof ParameterizedTypeRef) {
+			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) typeArg);
+		} else if (typeArg instanceof BoundThisTypeRef) {
+			boundThisTypeRef = (BoundThisTypeRef) typeArg;
 		} else {
 			// invalid use
 			throw new IllegalArgumentException(
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
-		classifierBoundThisTypeRef.setStaticTypeRef(boundThisTypeRef);
+		classifierBoundThisTypeRef.setTypeArg(boundThisTypeRef);
 		// TODO is there anything else to copy ?
 		return classifierBoundThisTypeRef;
 	}
@@ -458,13 +457,13 @@ public class TypeUtils {
 	 */
 	public static ClassifierTypeRef createResolvedClassifierTypeRef(ClassifierTypeRef ct) {
 		// as part of IDE-785
-		StaticBaseTypeRef replacement = ct.getStaticTypeRef();
-		if (ct.getStaticTypeRef() instanceof BoundThisTypeRef) {
-			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getStaticTypeRef());
+		TypeArgument replacement = ct.getTypeArg();
+		if (ct.getTypeArg() instanceof BoundThisTypeRef) {
+			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getTypeArg());
 		}
 
 		ClassifierTypeRef resolved = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		resolved.setStaticTypeRef(replacement);
+		resolved.setTypeArg(replacement);
 		return resolved;
 	}
 
@@ -658,7 +657,7 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Check if superTypeCandidate is raw super type of Type
+	 * Check if superTypeCandidate is raw super type of Type. Structural typing is ignored here.
 	 */
 	public static boolean isRawSuperType(Type type, Type superTypeCandidate) {
 		return isRawSuperType(type, superTypeCandidate, new RecursionGuard<Type>());

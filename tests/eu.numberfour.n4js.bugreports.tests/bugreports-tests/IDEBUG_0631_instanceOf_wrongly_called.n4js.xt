@@ -28,7 +28,6 @@ e instanceof E  true
 ###############
 c instanceof C  true
 c instanceof C  true
-c instanceof C  true
 c instanceof D  false
 d instanceof C  false
 d instanceof D  true
@@ -46,9 +45,6 @@ e instanceof E  true
  {} instanceof *N4Object.prototype =  false
  {} instanceof String =  false
  {} instanceof Number =  false
- {} instanceof *{}=  false
- {} instanceof *String("a") =  false
- {} instanceof *new Number(5) =  false
 ++++++
 
 stderr:
@@ -99,7 +95,6 @@ console.log("{}instanceof I ",  instanceOf({}, I));
 
 
 console.log("###############");
-console.log("c instanceof C ",c instanceof (C as constructor{D}));
 console.log("c instanceof C ",c instanceof (C));
 
 console.log("c instanceof C ",c instanceof C);
@@ -122,12 +117,4 @@ console.log( " {} instanceof *Object.prototype = ", {} instanceof (Object.protot
 console.log( " {} instanceof *N4Object.prototype = ", {} instanceof (N4Object.prototype as type{N4Enum}) )
 console.log( " {} instanceof String = ", {} instanceof String )
 console.log( " {} instanceof Number = ", {} instanceof Number )
-console.log( " {} instanceof *{}= ", {} instanceof ({} as type{Object}) )
-console.log( " {} instanceof *String(\"a\") = ", {} instanceof (new String("a") as type{Object}))
-console.log( " {} instanceof *new Number(5) = ", {} instanceof (new Number(5)as type{Object}))
 console.log("++++++\n")
-// the following will produce runtime-errors:
-//console.log( " {} instanceof * 5 = ", {} instanceof (5 as type{Object}))
-//console.log( " {} instanceof \"a\" = ", {} instanceof ("a" as type{Object}))
-//console.log( " {} instanceof *number = ", {} instanceof (number as type{Object}) )
-//console.log( " {} instanceof *string = ", {} instanceof (string as type{Object}) )
