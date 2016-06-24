@@ -27,6 +27,7 @@ import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByLine
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByOffsetSetup
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.TestingResourceValidator
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
+import org.xpect.setup.XpectSetupFactory
 
 /**
  * This setup factory filters issues based on their issue code before 
@@ -38,6 +39,7 @@ import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
  * 
  * For further configuration you can use {@link IssueConfiguration} in the XPECT_SETUP of specific files.
  */
+@XpectSetupFactory
 @XpectReplace(IssuesByOffsetSetup)
 @XpectImport( #[SuppressIssuesSetupRoot])
 class SuppressIssuesSetup extends IssuesByOffsetSetup {
