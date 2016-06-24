@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -60,7 +60,7 @@ export public class AssertionError extends Error{
         // work out the line that called in to assert.js.
                 try {
                     let err: Error+ = new Error();
-                    stackHolder.stack = err.stack.toString();
+                    stackHolder.stack = err.stack.toString() as string;
                 } catch (e) {}
             }
         }

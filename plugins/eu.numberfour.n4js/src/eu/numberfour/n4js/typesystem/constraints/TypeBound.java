@@ -10,27 +10,29 @@
  */
 package eu.numberfour.n4js.typesystem.constraints;
 
-import eu.numberfour.n4js.typesystem.TypeVarUtils;
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.types.TypeVariable;
+import eu.numberfour.n4js.ts.types.InferenceVariable;
 import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeCompareUtils;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
+ * Type bounds are similar to {@link TypeConstraint}s, but are required to be of a simpler, more unified form: the LHS
+ * must always be an inference variable. The RHS, however, may be a {@link TypeUtils#isProper(TypeArgument) proper} or
+ * improper type.
  */
-@SuppressWarnings("javadoc")
-public class TypeBound {
-	public final TypeVariable left; // TypeVariableImpl inherits hashCode() from j.l.Object
+/* package */ final class TypeBound {
+	public final InferenceVariable left;
 	public final TypeRef right;
 	public final Variance variance;
 
 	private Integer hashCode = null;
 
 	/**
-	 *
+	 * Creates an instance.
 	 */
-	public TypeBound(TypeVariable left, TypeRef right, Variance variance) {
+	public TypeBound(InferenceVariable left, TypeRef right, Variance variance) {
 		this.left = left;
 		this.right = right;
 		this.variance = variance;
@@ -51,7 +53,8 @@ public class TypeBound {
 		}
 		if (obj instanceof TypeBound) {
 			final TypeBound other = (TypeBound) obj;
-			return other.left == this.left && TypeCompareUtils.isEqual(other.right, this.right)
+			return other.left == this.left // n.b.: types can be compared with identity check!
+					&& TypeCompareUtils.isEqual(other.right, this.right) // but: type references require deep compare
 					&& other.variance == this.variance;
 		}
 		return false;
@@ -63,20 +66,19 @@ public class TypeBound {
 				+ this.right.getTypeRefAsString();
 	}
 
-	public void log(InferenceContext ic) {
-		ic.log("    " + toString());
-	}
-
 	/**
-	 * Is this bound of the form `alpha op alpha`?
+	 * Tells if this bound is of the form `α op α`.
 	 */
 	public boolean isTrivial() {
-		return TypeVarUtils.denotesVar(right, left);
+		return right.getDeclaredType() == left;
 	}
 
 	/**
-	 * If 'right' is a {@link TypeUtils#isRawTypeRef(TypeRef) raw type reference}, this method will return a copy of the
-	 * receiving type bound with 'right' being sanitized; otherwise, the receiving type bound will be returned.
+	 * If a {@link TypeUtils#isRawTypeRef(TypeRef) raw type reference} is on the RHS of this bounds, returns a copy with
+	 * a {@link TypeUtils#sanitizeRawTypeRef(TypeRef) sanitized} RHS; otherwise, the receiving type bound will be
+	 * returned.
+	 * <p>
+	 * In any case, the receiving type bound will remain unchanged.
 	 */
 	public TypeBound sanitizeRawTypeRef() {
 		if (TypeUtils.isRawTypeRef(right)) {

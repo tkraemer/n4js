@@ -36340,6 +36340,26 @@ ruleTypeRefForCast returns [EObject current=null]
         $current = $this_ArrowFunctionTypeExpression_6.current;
         afterParserOrEnumRuleCall();
     }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); 
+    }
+    this_UnionTypeExpressionOLD_7=ruleUnionTypeExpressionOLD
+    {
+        $current = $this_UnionTypeExpressionOLD_7.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); 
+    }
+    this_IntersectionTypeExpressionOLD_8=ruleIntersectionTypeExpressionOLD
+    {
+        $current = $this_IntersectionTypeExpressionOLD_8.current;
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -36380,7 +36400,20 @@ ruleTypeRefInClassifierType returns [EObject current=null]
         $current = $this_ThisTypeRefNominal_1.current;
         afterParserOrEnumRuleCall();
     }
+
+    |((((
 )
+QuestionMark
+))=>
+    { 
+        newCompositeNode(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); 
+    }
+    this_Wildcard_2=ruleWildcard
+    {
+        $current = $this_Wildcard_2.current;
+        afterParserOrEnumRuleCall();
+    }
+))
 ;
 
 
@@ -38036,16 +38069,16 @@ ruleConstructorTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstructorTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -38096,16 +38129,16 @@ ruleClassifierTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getClassifierTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -38371,6 +38404,8 @@ ruleUndefModifierToken returns [AntlrDatatypeRuleToken current=new AntlrDatatype
     }
 
     ;
+
+
 
 
 

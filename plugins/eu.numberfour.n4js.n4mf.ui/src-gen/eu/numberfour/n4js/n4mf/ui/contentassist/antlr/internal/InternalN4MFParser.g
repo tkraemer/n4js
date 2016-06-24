@@ -48,8 +48,6 @@ import eu.numberfour.n4js.n4mf.services.N4MFGrammarAccess;
 		tokenNameToValue.put("RightCurlyBracket", "'}'");
 		tokenNameToValue.put("In", "'in'");
 		tokenNameToValue.put("API", "'API'");
-		tokenNameToValue.put("App", "'app'");
-		tokenNameToValue.put("Lib", "'lib'");
 		tokenNameToValue.put("N4js", "'n4js'");
 		tokenNameToValue.put("Test", "'test'");
 		tokenNameToValue.put("User", "'user'");
@@ -1087,66 +1085,45 @@ rule__ProjectType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1()); }
-(	App
-)
-{ after(grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_1()); }
-)
-
-    |(
-{ before(grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2()); }
+{ before(grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1()); }
 (	Processor
 )
-{ after(grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_2()); }
+{ after(grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1()); }
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3()); }
+{ before(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2()); }
 (	Library
 )
-{ after(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_3()); }
+{ after(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2()); }
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4()); }
-(	Lib
-)
-{ after(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_4()); }
-)
-
-    |(
-{ before(grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5()); }
-(	KW_System
-)
-{ after(grammarAccess.getProjectTypeAccess().getSYSTEMEnumLiteralDeclaration_5()); }
-)
-
-    |(
-{ before(grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6()); }
+{ before(grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3()); }
 (	API
 )
-{ after(grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_6()); }
+{ after(grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3()); }
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7()); }
+{ before(grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4()); }
 (	RuntimeEnvironment
 )
-{ after(grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_7()); }
+{ after(grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4()); }
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8()); }
+{ before(grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5()); }
 (	RuntimeLibrary
 )
-{ after(grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_8()); }
+{ after(grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5()); }
 )
 
     |(
-{ before(grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9()); }
+{ before(grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6()); }
 (	Test
 )
-{ after(grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_9()); }
+{ after(grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6()); }
 )
 
 ;

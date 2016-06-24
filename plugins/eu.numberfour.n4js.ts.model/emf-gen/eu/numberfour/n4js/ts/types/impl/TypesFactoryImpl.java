@@ -80,6 +80,7 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 			case TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT: return createTAnnotationTypeRefArgument();
 			case TypesPackage.TANNOTABLE_ELEMENT: return createTAnnotableElement();
 			case TypesPackage.TYPE_VARIABLE: return createTypeVariable();
+			case TypesPackage.INFERENCE_VARIABLE: return createInferenceVariable();
 			case TypesPackage.TFUNCTION: return createTFunction();
 			case TypesPackage.TYPE: return createType();
 			case TypesPackage.DECLARED_TYPE_WITH_ACCESS_MODIFIER: return createDeclaredTypeWithAccessModifier();
@@ -272,6 +273,16 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	public TypeVariable createTypeVariable() {
 		TypeVariableImpl typeVariable = new TypeVariableImpl();
 		return typeVariable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InferenceVariable createInferenceVariable() {
+		InferenceVariableImpl inferenceVariable = new InferenceVariableImpl();
+		return inferenceVariable;
 	}
 
 	/**

@@ -116,13 +116,13 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '('?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'constructor' '{' staticTypeRef=TypeRefInClassifierType
+	 *     (rule start) (ambiguity) 'constructor' '{' typeArg=TypeRefInClassifierType
 	 *     (rule start) (ambiguity) 'intersection' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) 'this' (rule start)
 	 *     (rule start) (ambiguity) 'this' dynamic?='+'
 	 *     (rule start) (ambiguity) 'this' nullModifier=NullModifierToken
 	 *     (rule start) (ambiguity) 'this' undefModifier=UndefModifierToken
-	 *     (rule start) (ambiguity) 'type' '{' staticTypeRef=TypeRefInClassifierType
+	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeRefInClassifierType
 	 *     (rule start) (ambiguity) 'union' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) '{' '@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' ':' returnTypeRef=TypeRef

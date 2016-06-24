@@ -1,15 +1,10 @@
-﻿:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc: false
-:source-highlighter: prettify
-:doctype: book
+﻿:doctype: book
 ifdef::website[{set:relative:}]
-ifdef::eclipse[{set:relative:documentation/}]
+ifdef::eclipse[{set:relative:userguides/}]
 
 
 .N4JS Documentation
-= N4JS Documentation
+= N4JS Userguides
 
 
 .All the resources you need to begin type safe development with the N4JS IDE
@@ -44,4 +39,5 @@ New features of the N4JS IDE are introduced along the way such as *modules* , *t
 
 For a complete reference of the N4JS Language, the Specification
 is available to download as a pdf from the following link:
+
 * https://goo.gl/2Lv2Te[N4JS Language Specification (pdf)]

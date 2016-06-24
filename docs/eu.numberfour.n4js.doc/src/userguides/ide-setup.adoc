@@ -1,16 +1,6 @@
 :doctype: book
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:references: drop
-:imagesdir: images
-:toc: left
-
-
-////
-:data-uri:
-////
-
+:toc: right
+:toc-title: Jump to topic:
 .N4JS IDE Setup
 = N4JS IDE Setup
 
@@ -124,7 +114,7 @@ image::helloworldclass.png[]
 
 Let's have a look at what a simple *HelloWorld!* example looks like in N4JS:
 
-[source,javascript]
+[source,n4js]
 .HelloWorld.n4js
 ----
 export public class HelloWorld {
@@ -156,7 +146,7 @@ The default visibility of an element is +project+.
 
 If we create a new class and define it as follows:
 
-[source,javascript]
+[source,n4js]
 .HelloCaller.n4js
 ----
 import { HelloWorld } from "HelloWorld";

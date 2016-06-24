@@ -16,6 +16,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.types.InferenceVariable
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
@@ -54,7 +55,7 @@ class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		}
 
 		// create an inference variable for each type parameter of F
-		val Map<TypeVariable,TypeVariable> typeParam2infVar = newLinkedHashMap // type parameter of F -> inference variable
+		val Map<TypeVariable,InferenceVariable> typeParam2infVar = newLinkedHashMap // type parameter of F -> inference variable
 		for(typeParam : F.typeVars) {
 			typeParam2infVar.put(typeParam, infCtx.newInferenceVariable);
 		}

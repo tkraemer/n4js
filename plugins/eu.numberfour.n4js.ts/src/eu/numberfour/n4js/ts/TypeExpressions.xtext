@@ -80,11 +80,14 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| ConstructorTypeRef
 	| ClassifierTypeRef
 	| FunctionTypeExpressionOLD
-	| ArrowFunctionTypeExpression;
+	| ArrowFunctionTypeExpression
+	| UnionTypeExpressionOLD
+	| IntersectionTypeExpressionOLD;
 
-TypeRefInClassifierType returns StaticBaseTypeRef:
+TypeRefInClassifierType returns TypeArgument:
 	  ParameterizedTypeRefNominal
-	| ThisTypeRefNominal;
+	| ThisTypeRefNominal
+	| Wildcard;
 
 
 ThisTypeRef returns ThisTypeRef:
@@ -205,10 +208,10 @@ terminal STRUCTMODSUFFIX:
 ;
 
 ConstructorTypeRef returns ConstructorTypeRef:
-	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
 
 ClassifierTypeRef returns ClassifierTypeRef:
-	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
 
 TypeReferenceName:
 	IDENTIFIER ('.' IDENTIFIER)*;
@@ -228,6 +231,11 @@ UndefModifierToken returns UndefModifier:
 	'?';
 
 TypeVariable:
+	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+
+TypeVariableWithDefSiteVariance returns TypeVariable:
+	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
 	declaredUpperBounds+=ParameterizedTypeRef)*)?;
 

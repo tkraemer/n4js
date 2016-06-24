@@ -1039,11 +1039,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
 		private final Keyword cLessThanSignKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_7_1_0 = (RuleCall)cTypeVarsAssignment_7_1.eContents().get(0);
+		private final RuleCall cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_1_0 = (RuleCall)cTypeVarsAssignment_7_1.eContents().get(0);
 		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
 		private final Keyword cCommaKeyword_7_2_0 = (Keyword)cGroup_7_2.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_7_2_1 = (Assignment)cGroup_7_2.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_7_2_1_0 = (RuleCall)cTypeVarsAssignment_7_2_1.eContents().get(0);
+		private final RuleCall cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_2_1_0 = (RuleCall)cTypeVarsAssignment_7_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
 		private final Keyword cExtendsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
@@ -1074,9 +1074,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//	declaredProvidedByRuntime?='providedByRuntime'?
 		//	declaredAbstract?='abstract'?
 		//	declaredFinal?='final'?
-		//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariable (','
-		//	typeVars+=TypeVariable)* '>')? ('extends' superClassRef=ParameterizedTypeRefNominal)? ('implements'
-		//	implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+		//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+		//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
+		//	superClassRef=ParameterizedTypeRefNominal)? ('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (','
+		//	implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 		//	annotations+=TAnnotation*
 		//	'{'
 		//	ownedMembers+=TMember* (callableCtor=CallableCtor
@@ -1086,10 +1087,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'?
 		//declaredAbstract?='abstract'? declaredFinal?='final'? 'class' typingStrategy=TypingStrategyDefSiteOperator?
-		//name=TypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
-		//superClassRef=ParameterizedTypeRefNominal)? ('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (','
-		//implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)? annotations+=TAnnotation* '{' ownedMembers+=TMember*
-		//(callableCtor=CallableCtor ownedMembers+=TMember*)? '}'
+		//name=TypesIdentifier ('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)*
+		//'>')? ('extends' superClassRef=ParameterizedTypeRefNominal)? ('implements'
+		//implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+		//annotations+=TAnnotation* '{' ownedMembers+=TMember* (callableCtor=CallableCtor ownedMembers+=TMember*)? '}'
 		public Group getGroup() { return cGroup; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier
@@ -1131,29 +1132,29 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypesIdentifier
 		public RuleCall getNameTypesIdentifierParserRuleCall_6_0() { return cNameTypesIdentifierParserRuleCall_6_0; }
 
-		//('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+		//('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')?
 		public Group getGroup_7() { return cGroup_7; }
 
 		//'<'
 		public Keyword getLessThanSignKeyword_7_0() { return cLessThanSignKeyword_7_0; }
 
-		//typeVars+=TypeVariable
+		//typeVars+=TypeVariableWithDefSiteVariance
 		public Assignment getTypeVarsAssignment_7_1() { return cTypeVarsAssignment_7_1; }
 
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_7_1_0() { return cTypeVarsTypeVariableParserRuleCall_7_1_0; }
+		//TypeVariableWithDefSiteVariance
+		public RuleCall getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_1_0() { return cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_1_0; }
 
-		//(',' typeVars+=TypeVariable)*
+		//(',' typeVars+=TypeVariableWithDefSiteVariance)*
 		public Group getGroup_7_2() { return cGroup_7_2; }
 
 		//','
 		public Keyword getCommaKeyword_7_2_0() { return cCommaKeyword_7_2_0; }
 
-		//typeVars+=TypeVariable
+		//typeVars+=TypeVariableWithDefSiteVariance
 		public Assignment getTypeVarsAssignment_7_2_1() { return cTypeVarsAssignment_7_2_1; }
 
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_7_2_1_0() { return cTypeVarsTypeVariableParserRuleCall_7_2_1_0; }
+		//TypeVariableWithDefSiteVariance
+		public RuleCall getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_2_1_0() { return cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_2_1_0; }
 
 		//'>'
 		public Keyword getGreaterThanSignKeyword_7_3() { return cGreaterThanSignKeyword_7_3; }
@@ -1244,11 +1245,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cLessThanSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_5_1_0 = (RuleCall)cTypeVarsAssignment_5_1.eContents().get(0);
+		private final RuleCall cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_1_0 = (RuleCall)cTypeVarsAssignment_5_1.eContents().get(0);
 		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
 		private final Keyword cCommaKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_5_2_1_0 = (RuleCall)cTypeVarsAssignment_5_2_1.eContents().get(0);
+		private final RuleCall cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_2_1_0 = (RuleCall)cTypeVarsAssignment_5_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Keyword cExtendsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
@@ -1268,16 +1269,16 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TInterface:
 		//	declaredTypeAccessModifier=TypeAccessModifier
 		//	declaredProvidedByRuntime?='providedByRuntime'?
-		//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariable (','
-		//	typeVars+=TypeVariable)* '>')? ('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (','
-		//	superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+		//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+		//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
+		//	superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 		//	annotations+=TAnnotation*
 		//	'{' ownedMembers+=TMember* '}';
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'? 'interface'
-		//typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariable (','
-		//typeVars+=TypeVariable)* '>')? ('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (','
+		//typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariableWithDefSiteVariance (','
+		//typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (','
 		//superInterfaceRefs+=ParameterizedTypeRefNominal)*)? annotations+=TAnnotation* '{' ownedMembers+=TMember* '}'
 		public Group getGroup() { return cGroup; }
 
@@ -1308,29 +1309,29 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypesIdentifier
 		public RuleCall getNameTypesIdentifierParserRuleCall_4_0() { return cNameTypesIdentifierParserRuleCall_4_0; }
 
-		//('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+		//('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//'<'
 		public Keyword getLessThanSignKeyword_5_0() { return cLessThanSignKeyword_5_0; }
 
-		//typeVars+=TypeVariable
+		//typeVars+=TypeVariableWithDefSiteVariance
 		public Assignment getTypeVarsAssignment_5_1() { return cTypeVarsAssignment_5_1; }
 
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_5_1_0() { return cTypeVarsTypeVariableParserRuleCall_5_1_0; }
+		//TypeVariableWithDefSiteVariance
+		public RuleCall getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_1_0() { return cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_1_0; }
 
-		//(',' typeVars+=TypeVariable)*
+		//(',' typeVars+=TypeVariableWithDefSiteVariance)*
 		public Group getGroup_5_2() { return cGroup_5_2; }
 
 		//','
 		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
 
-		//typeVars+=TypeVariable
+		//typeVars+=TypeVariableWithDefSiteVariance
 		public Assignment getTypeVarsAssignment_5_2_1() { return cTypeVarsAssignment_5_2_1; }
 
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_5_2_1_0() { return cTypeVarsTypeVariableParserRuleCall_5_2_1_0; }
+		//TypeVariableWithDefSiteVariance
+		public RuleCall getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_2_1_0() { return cTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_2_1_0; }
 
 		//'>'
 		public Keyword getGreaterThanSignKeyword_5_3() { return cGreaterThanSignKeyword_5_3; }
@@ -2687,9 +2688,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	declaredProvidedByRuntime?='providedByRuntime'?
 	//	declaredAbstract?='abstract'?
 	//	declaredFinal?='final'?
-	//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariable (','
-	//	typeVars+=TypeVariable)* '>')? ('extends' superClassRef=ParameterizedTypeRefNominal)? ('implements'
-	//	implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+	//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+	//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
+	//	superClassRef=ParameterizedTypeRefNominal)? ('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (','
+	//	implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	//	annotations+=TAnnotation*
 	//	'{'
 	//	ownedMembers+=TMember* (callableCtor=CallableCtor
@@ -2706,9 +2708,9 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TInterface:
 	//	declaredTypeAccessModifier=TypeAccessModifier
 	//	declaredProvidedByRuntime?='providedByRuntime'?
-	//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariable (','
-	//	typeVars+=TypeVariable)* '>')? ('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (','
-	//	superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+	//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+	//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
+	//	superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	//	annotations+=TAnnotation*
 	//	'{' ownedMembers+=TMember* '}';
 	public TInterfaceElements getTInterfaceAccess() {
@@ -2924,6 +2926,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ClassifierTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefForCastElements getTypeRefForCastAccess() {
 		return gaTypeExpressions.getTypeRefForCastAccess();
 	}
@@ -2932,9 +2936,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeRefForCastAccess().getRule();
 	}
 
-	//TypeRefInClassifierType StaticBaseTypeRef:
+	//TypeRefInClassifierType TypeArgument:
 	//	ParameterizedTypeRefNominal
 	//	| ThisTypeRefNominal
+	//	| Wildcard
 	public TypeExpressionsGrammarAccess.TypeRefInClassifierTypeElements getTypeRefInClassifierTypeAccess() {
 		return gaTypeExpressions.getTypeRefInClassifierTypeAccess();
 	}
@@ -3198,7 +3203,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ConstructorTypeRefElements getConstructorTypeRefAccess() {
 		return gaTypeExpressions.getConstructorTypeRefAccess();
 	}
@@ -3208,7 +3213,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ClassifierTypeRef:
-	//	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ClassifierTypeRefElements getClassifierTypeRefAccess() {
 		return gaTypeExpressions.getClassifierTypeRefAccess();
 	}
@@ -3258,6 +3263,18 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypeVariableRule() {
 		return getTypeVariableAccess().getRule();
+	}
+
+	//TypeVariableWithDefSiteVariance TypeVariable:
+	//	(declaredCovariant?='out' | declaredContravariant?='in')?
+	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+	//	declaredUpperBounds+=ParameterizedTypeRef)*)?
+	public TypeExpressionsGrammarAccess.TypeVariableWithDefSiteVarianceElements getTypeVariableWithDefSiteVarianceAccess() {
+		return gaTypeExpressions.getTypeVariableWithDefSiteVarianceAccess();
+	}
+	
+	public ParserRule getTypeVariableWithDefSiteVarianceRule() {
+		return getTypeVariableWithDefSiteVarianceAccess().getRule();
 	}
 
 	//// GH-203

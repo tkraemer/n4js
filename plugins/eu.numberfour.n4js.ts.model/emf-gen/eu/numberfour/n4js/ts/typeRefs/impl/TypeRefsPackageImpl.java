@@ -356,7 +356,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsTreeHierarchyType() {
+	public EOperation getTypeRef__IsDynamic() {
 		return typeRefEClass.getEOperations().get(2);
 	}
 
@@ -365,7 +365,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsDynamic() {
+	public EOperation getTypeRef__IsExistential() {
 		return typeRefEClass.getEOperations().get(3);
 	}
 
@@ -374,7 +374,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsExistential() {
+	public EOperation getTypeRef__IsGeneric() {
 		return typeRefEClass.getEOperations().get(4);
 	}
 
@@ -383,7 +383,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsGeneric() {
+	public EOperation getTypeRef__IsParameterized() {
 		return typeRefEClass.getEOperations().get(5);
 	}
 
@@ -392,7 +392,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsParameterized() {
+	public EOperation getTypeRef__IsRaw() {
 		return typeRefEClass.getEOperations().get(6);
 	}
 
@@ -401,7 +401,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsRaw() {
+	public EOperation getTypeRef__GetDeclaredUpperBound() {
 		return typeRefEClass.getEOperations().get(7);
 	}
 
@@ -410,7 +410,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetDeclaredUpperBound() {
+	public EOperation getTypeRef__GetDeclaredLowerBound() {
 		return typeRefEClass.getEOperations().get(8);
 	}
 
@@ -419,7 +419,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetDeclaredLowerBound() {
+	public EOperation getTypeRef__GetTypeArgs() {
 		return typeRefEClass.getEOperations().get(9);
 	}
 
@@ -428,7 +428,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetTypeArgs() {
+	public EOperation getTypeRef__UndefinedOrNull() {
 		return typeRefEClass.getEOperations().get(10);
 	}
 
@@ -437,7 +437,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__UndefinedOrNull() {
+	public EOperation getTypeRef__GetTypeRefAsString() {
 		return typeRefEClass.getEOperations().get(11);
 	}
 
@@ -446,7 +446,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetTypeRefAsString() {
+	public EOperation getTypeRef__ToString() {
 		return typeRefEClass.getEOperations().get(12);
 	}
 
@@ -455,7 +455,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__ToString() {
+	public EOperation getTypeRef__GetDeclaredType() {
 		return typeRefEClass.getEOperations().get(13);
 	}
 
@@ -464,7 +464,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetDeclaredType() {
+	public EOperation getTypeRef__IsTopType() {
 		return typeRefEClass.getEOperations().get(14);
 	}
 
@@ -473,7 +473,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsTopType() {
+	public EOperation getTypeRef__IsBottomType() {
 		return typeRefEClass.getEOperations().get(15);
 	}
 
@@ -482,7 +482,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsBottomType() {
+	public EOperation getTypeRef__GetTypingStrategy() {
 		return typeRefEClass.getEOperations().get(16);
 	}
 
@@ -491,7 +491,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetTypingStrategy() {
+	public EOperation getTypeRef__GetStructuralMembers() {
 		return typeRefEClass.getEOperations().get(17);
 	}
 
@@ -500,7 +500,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__GetStructuralMembers() {
+	public EOperation getTypeRef__IsUseSiteStructuralTyping() {
 		return typeRefEClass.getEOperations().get(18);
 	}
 
@@ -509,17 +509,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTypeRef__IsUseSiteStructuralTyping() {
-		return typeRefEClass.getEOperations().get(19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getTypeRef__IsDefSiteStructuralTyping() {
-		return typeRefEClass.getEOperations().get(20);
+		return typeRefEClass.getEOperations().get(19);
 	}
 
 	/**
@@ -1220,7 +1211,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getClassifierTypeRef_StaticTypeRef() {
+	public EReference getClassifierTypeRef_TypeArg() {
 		return (EReference)classifierTypeRefEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1355,8 +1346,17 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWildcard__GetTypeRefAsString() {
+	public EOperation getWildcard__IsImplicitUpperBoundInEffect() {
 		return wildcardEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getWildcard__GetTypeRefAsString() {
+		return wildcardEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -1698,7 +1698,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEAttribute(typeRefEClass, TYPE_REF__UNDEF_MODIFIER);
 		createEOperation(typeRefEClass, TYPE_REF___GET_MODIFIERS_AS_STRING);
 		createEOperation(typeRefEClass, TYPE_REF___IS_FINAL_BY_TYPE);
-		createEOperation(typeRefEClass, TYPE_REF___IS_TREE_HIERARCHY_TYPE);
 		createEOperation(typeRefEClass, TYPE_REF___IS_DYNAMIC);
 		createEOperation(typeRefEClass, TYPE_REF___IS_EXISTENTIAL);
 		createEOperation(typeRefEClass, TYPE_REF___IS_GENERIC);
@@ -1810,7 +1809,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(constructorTypeRefEClass, CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		classifierTypeRefEClass = createEClass(CLASSIFIER_TYPE_REF);
-		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__STATIC_TYPE_REF);
+		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__TYPE_ARG);
 		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING);
 		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___STATIC_TYPE);
 
@@ -1828,6 +1827,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEReference(wildcardEClass, WILDCARD__DECLARED_LOWER_BOUND);
 		createEAttribute(wildcardEClass, WILDCARD__USING_IN_OUT_NOTATION);
 		createEOperation(wildcardEClass, WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS);
+		createEOperation(wildcardEClass, WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT);
 		createEOperation(wildcardEClass, WILDCARD___GET_TYPE_REF_AS_STRING);
 
 		functionTypeExprOrRefEClass = createEClass(FUNCTION_TYPE_EXPR_OR_REF);
@@ -1939,8 +1939,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getTypeRef__GetModifiersAsString(), theEcorePackage.getEString(), "getModifiersAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTypeRef__IsFinalByType(), theEcorePackage.getEBoolean(), "isFinalByType", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getTypeRef__IsTreeHierarchyType(), theEcorePackage.getEBoolean(), "isTreeHierarchyType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTypeRef__IsDynamic(), theEcorePackage.getEBoolean(), "isDynamic", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2119,7 +2117,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getConstructorTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(classifierTypeRefEClass, ClassifierTypeRef.class, "ClassifierTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getClassifierTypeRef_StaticTypeRef(), this.getStaticBaseTypeRef(), null, "staticTypeRef", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClassifierTypeRef_TypeArg(), this.getTypeArgument(), null, "typeArg", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getClassifierTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2144,6 +2142,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEAttribute(getWildcard_UsingInOutNotation(), theEcorePackage.getEBoolean(), "usingInOutNotation", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getWildcard__GetDeclaredOrImplicitUpperBounds(), this.getTypeRef(), "getDeclaredOrImplicitUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getWildcard__IsImplicitUpperBoundInEffect(), theEcorePackage.getEBoolean(), "isImplicitUpperBoundInEffect", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWildcard__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

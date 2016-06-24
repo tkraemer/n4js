@@ -10009,6 +10009,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleTypesIdentifier
 entryRuleTypesIdentifier 
 :
@@ -15139,6 +15141,18 @@ rule__TypeRefForCast__Alternatives
 { after(grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_6()); }
 )
 
+    |(
+{ before(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
+	ruleUnionTypeExpressionOLD
+{ after(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
+)
+
+    |(
+{ before(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
+	ruleIntersectionTypeExpressionOLD
+{ after(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -15159,6 +15173,12 @@ rule__TypeRefInClassifierType__Alternatives
 { before(grammarAccess.getTypeRefInClassifierTypeAccess().getThisTypeRefNominalParserRuleCall_1()); }
 	ruleThisTypeRefNominal
 { after(grammarAccess.getTypeRefInClassifierTypeAccess().getThisTypeRefNominalParserRuleCall_1()); }
+)
+
+    |(
+{ before(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
+(	ruleWildcard)
+{ after(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
 )
 
 ;
@@ -15365,6 +15385,7 @@ rule__WildcardNewNotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__TypesIdentifier__Alternatives
     @init {
@@ -84962,9 +84983,9 @@ rule__ConstructorTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); }
-(rule__ConstructorTypeRef__StaticTypeRefAssignment_3)
-{ after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefAssignment_3()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
+(rule__ConstructorTypeRef__TypeArgAssignment_3)
+{ after(grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
 )
 
 ;
@@ -85124,9 +85145,9 @@ rule__ClassifierTypeRef__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); }
-(rule__ClassifierTypeRef__StaticTypeRefAssignment_3)
-{ after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefAssignment_3()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
+(rule__ClassifierTypeRef__TypeArgAssignment_3)
+{ after(grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
 )
 
 ;
@@ -85573,6 +85594,9 @@ rule__WildcardNewNotation__Group_1__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
 
 
 
@@ -97205,14 +97229,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstructorTypeRef__StaticTypeRefAssignment_3
+rule__ConstructorTypeRef__TypeArgAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;
@@ -97220,14 +97244,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ClassifierTypeRef__StaticTypeRefAssignment_3
+rule__ClassifierTypeRef__TypeArgAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
-	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); }
+{ before(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
+	ruleTypeRefInClassifierType{ after(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); }
 )
 
 ;
@@ -97340,5 +97364,10 @@ rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
+
 
 

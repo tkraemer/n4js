@@ -2,7 +2,7 @@ ArtifactId: java_project
 VendorId: eu.numberfour
 ProjectName: "Project2"
 VendorName: "NumberFour AG"
-ProjectType: lib
+ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"
 Sources {

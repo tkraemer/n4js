@@ -16,6 +16,8 @@ import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 
+import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -31,11 +33,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
-import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
-
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -272,36 +269,17 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isImplicitUpperBoundInEffect() {
+		return (((this.getDeclaredUpperBound() == null) && (this.getDeclaredLowerBound() == null)) && (!this.getDeclaredOrImplicitUpperBounds().isEmpty()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getTypeRefAsString() {
-		final EList<TypeRef> upperBounds = this.getDeclaredOrImplicitUpperBounds();
-		String _xifexpression = null;
-		boolean _isEmpty = upperBounds.isEmpty();
-		boolean _not = (!_isEmpty);
-		if (_not) {
-			final Function1<TypeRef, String> _function = new Function1<TypeRef, String>() {
-				public String apply(final TypeRef it) {
-					return it.getTypeRefAsString();
-				}
-			};
-			EList<String> _map = XcoreEListExtensions.<TypeRef, String>map(upperBounds, _function);
-			String _join = IterableExtensions.join(_map, " & ");
-			_xifexpression = (" extends " + _join);
-		}
-		else {
-			String _xifexpression_1 = null;
-			TypeRef _declaredLowerBound = this.getDeclaredLowerBound();
-			boolean _tripleNotEquals = (_declaredLowerBound != null);
-			if (_tripleNotEquals) {
-				TypeRef _declaredLowerBound_1 = this.getDeclaredLowerBound();
-				String _typeRefAsString = _declaredLowerBound_1.getTypeRefAsString();
-				_xifexpression_1 = (" super " + _typeRefAsString);
-			}
-			else {
-				_xifexpression_1 = "";
-			}
-			_xifexpression = _xifexpression_1;
-		}
-		return ("?" + _xifexpression);
+		return WildcardAsStringUtils.getTypeRefAsString(this);
 	}
 
 	/**
@@ -408,6 +386,8 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 		switch (operationID) {
 			case TypeRefsPackage.WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS:
 				return getDeclaredOrImplicitUpperBounds();
+			case TypeRefsPackage.WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT:
+				return isImplicitUpperBoundInEffect();
 			case TypeRefsPackage.WILDCARD___GET_TYPE_REF_AS_STRING:
 				return getTypeRefAsString();
 		}

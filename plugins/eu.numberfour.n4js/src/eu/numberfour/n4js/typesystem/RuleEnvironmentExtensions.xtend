@@ -103,9 +103,10 @@ class RuleEnvironmentExtensions {
 	public static final String GUARD_TYPE_CALL_EXPRESSION = "typeCallExpression";
 	public static final String GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION = "typePropertyAccessExpression";
 	public static final String GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT = "subtypeRefParameterizedTypeRef__struct";
-	public static final String GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__NOMINAL = "subtypeRefParameterizedTypeRef__nominal";
+	public static final String GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS = "subtypeRefParameterizedTypeRef__args";
 	public static final String GUARD_SUBST_TYPE_VARS = "substTypeVariablesInParameterizedTypeRef";
 	public static final String GUARD_STRUCTURAL_TYPING_COMPUTER = "StructuralTypingComputer";
+	public static final String GUARD_REDUCER_REDUCE_PROPER = "Reducer#reduceProper";
 
 	/**
 	 * Returns a new {@code RuleEnvironment}; we need this because of the
@@ -198,7 +199,9 @@ class RuleEnvironmentExtensions {
 	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
 		switch (actualThisTypeRef) {
 			ClassifierTypeRef: // IDE-785 decompose
-			  addThisType(G,actualThisTypeRef.staticTypeRef)
+			  if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
+			  	addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
+			  } 
 			ParameterizedTypeRef:
 				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 			BoundThisTypeRef:

@@ -124,6 +124,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 			case TypeRefsPackage.INTERSECTION_TYPE_EXPRESSION:
 				if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getIntersectionTypeExpressionOLDRule()) {
 					sequence_IntersectionTypeExpressionOLD(context, (IntersectionTypeExpression) semanticObject); 
 					return; 
@@ -272,6 +273,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 				}
 				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getUnionTypeExpressionOLDRule()) {
 					sequence_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
 					return; 
@@ -282,7 +284,8 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 					sequence_WildcardNewNotation(context, (Wildcard) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getWildcardRule()) {
+				else if (rule == grammarAccess.getTypeRefInClassifierTypeRule()
+						|| rule == grammarAccess.getWildcardRule()) {
 					sequence_Wildcard(context, (Wildcard) semanticObject); 
 					return; 
 				}
@@ -313,8 +316,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 				sequence_TStructSetter(context, (TStructSetter) semanticObject); 
 				return; 
 			case TypesPackage.TYPE_VARIABLE:
-				sequence_TypeVariable(context, (TypeVariable) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getTypeVariableWithDefSiteVarianceRule()) {
+					sequence_TypeVariableWithDefSiteVariance(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTypeVariableRule()) {
+					sequence_TypeVariable(context, (TypeVariable) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -409,15 +419,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ClassifierTypeRef returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ClassifierTypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -435,7 +445,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeArgument returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -450,15 +460,15 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ConstructorTypeRef returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ConstructorTypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -476,7 +486,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeArgument returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -556,6 +566,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns IntersectionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns IntersectionTypeExpression
+	 *     TypeRefForCast returns IntersectionTypeExpression
 	 *     IntersectionTypeExpressionOLD returns IntersectionTypeExpression
 	 *
 	 * Constraint:
@@ -926,6 +937,22 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     TypeVariableWithDefSiteVariance returns TypeVariable
+	 *
+	 * Constraint:
+	 *     (
+	 *         (declaredCovariant?='out' | declaredContravariant?='in')? 
+	 *         name=IDENTIFIER 
+	 *         (declaredUpperBounds+=ParameterizedTypeRef declaredUpperBounds+=ParameterizedTypeRef*)?
+	 *     )
+	 */
+	protected void sequence_TypeVariableWithDefSiteVariance(ISerializationContext context, TypeVariable semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     TypeVariable returns TypeVariable
 	 *
 	 * Constraint:
@@ -940,6 +967,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns UnionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns UnionTypeExpression
+	 *     TypeRefForCast returns UnionTypeExpression
 	 *     UnionTypeExpressionOLD returns UnionTypeExpression
 	 *
 	 * Constraint:
@@ -964,6 +992,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     TypeRefInClassifierType returns Wildcard
 	 *     Wildcard returns Wildcard
 	 *
 	 * Constraint:

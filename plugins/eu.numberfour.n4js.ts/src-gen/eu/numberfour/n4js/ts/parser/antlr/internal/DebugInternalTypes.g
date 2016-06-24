@@ -188,8 +188,8 @@ ruleVirtualBaseType :
 ruleTClass :
 	ruleTypeAccessModifier 'providedByRuntime'? 'abstract'? 'final'? 'class'
 	ruleTypingStrategyDefSiteOperator? ruleTypesIdentifier (
-		'<' ruleTypeVariable (
-			',' ruleTypeVariable
+		'<' ruleTypeVariableWithDefSiteVariance (
+			',' ruleTypeVariableWithDefSiteVariance
 		)* '>'
 	)? (
 		'extends' ruleParameterizedTypeRefNominal
@@ -208,8 +208,8 @@ ruleTClass :
 ruleTInterface :
 	ruleTypeAccessModifier 'providedByRuntime'? 'interface'
 	ruleTypingStrategyDefSiteOperator? ruleTypesIdentifier (
-		'<' ruleTypeVariable (
-			',' ruleTypeVariable
+		'<' ruleTypeVariableWithDefSiteVariance (
+			',' ruleTypeVariableWithDefSiteVariance
 		)* '>'
 	)? (
 		'extends' ruleParameterizedTypeRefNominal (
@@ -437,7 +437,10 @@ ruleTypeRefFunctionTypeExpression :
 // Rule TypeRefInClassifierType
 ruleTypeRefInClassifierType :
 	ruleParameterizedTypeRefNominal |
-	ruleThisTypeRefNominal
+	ruleThisTypeRefNominal |
+	( (
+	'?'
+	) => ruleWildcard )
 ;
 
 // Rule ThisTypeRef
@@ -673,6 +676,18 @@ ruleWildcardNewNotation :
 // Rule TypeVariable
 ruleTypeVariable :
 	RULE_IDENTIFIER (
+		'extends' ruleParameterizedTypeRef (
+			'&' ruleParameterizedTypeRef
+		)*
+	)?
+;
+
+// Rule TypeVariableWithDefSiteVariance
+ruleTypeVariableWithDefSiteVariance :
+	(
+		'out' |
+		'in'
+	)? RULE_IDENTIFIER (
 		'extends' ruleParameterizedTypeRef (
 			'&' ruleParameterizedTypeRef
 		)*
