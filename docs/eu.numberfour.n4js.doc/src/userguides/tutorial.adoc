@@ -1,16 +1,10 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:icons: font
-:imagesdir: images
-:toc: left
+:toc: right
+:toc-title: Jump to topic:
+
 
 .N4JS Tutorial
 = N4JS Tutorial
-
 
 *The flexibility of JavaScript with the type-safety of Java.*
 
@@ -39,17 +33,19 @@ N4JS has an IDE based on Eclipse. It comes with its own workspace, libraries and
 IDE has a transpiler (i.e. a compiler that translates from one language to another) which validates
 N4JS code and then transforms it to JavaScript. The transpiler also performs imports from ECMAScript
 to N4JS. The benefit of type safety means that errors in code are noticed while editing in the
-IDE, allowing for problem-solving before code is ever deployed. The following screenshot shows
-the most important views of the IDE:
-
-
-image::ide.png[N4JS IDE, title="N4JS IDE"]
+IDE, allowing for problem-solving before code is ever deployed.
 
 Developers who have previous experience using Eclipse will be familiar with many common UI features
 such as the Editor, Project Outline, Project Explorer and Console views. The arrangement of views
 can be easily selected using the perspectives icons as highlighted in the upper-right of the window.
 
 == Using N4JS to Implement a Node.js Application
+
+The following screenshot shows
+the most important views of the IDE:
+
+
+image::ide.png[N4JS IDE, title="N4JS IDE"]
 
 In order to illustrate some of the features of N4JS, we shall look at building a Node.js-based
 server of a Task Manager which serves as a reminder or to-do list application. As we build this
@@ -80,7 +76,7 @@ keyboard shortcuts kbd:[{commandkey} + n] for Mac, kbd:[Alt+Shift+n] on Windows)
 
 image::newprojectwizard.png[New Project Wizard, 700]
 
-When we select btn:[Finish], a new project folder is created with the following content:
+When we select kbd:[Finish], a new project folder is created with the following content:
 
 * folder *src*: contains the .n4js source files for the project.
 * folder *src-gen*: contains the transpiled JavaScript that is generated after compiling n4js
@@ -122,7 +118,7 @@ the module *model* in the project source folder.
 The class wizard has already created a file and the empty class "Task". We will
 manually enhance this class as follows:
 
-[source,javascript]
+[source, n4js]
 ----
 export abstract class Task {  // <1>
   public id: string?;
@@ -149,14 +145,14 @@ N4JS also provides the concept of *access modifiers* similar to Java with the mo
 +public+, +protected+, +project+ and +private+. Access modifiers constrain the visibility
 of elements, that is, they restrict from where an element can be accessed.
 
-* +public+ means that the element can be accessed from everywhere,
-* +protected+ may only be accessed from subclasses,
-* +project+ only from within the project (this is the default visibility)
-* +private+ accessed only from within the same module.
+* `public` means that the element can be accessed from everywhere,
+* `protected` may only be accessed from subclasses,
+* `project` only from within the project (this is the default visibility)
+* `private` accessed only from within the same module.
 
 We now manually add two classes to the same file:
 
-[source,javascript]
+[source, n4js]
 .model.n4js
 ----
 /** An appointment. */ // <1>
@@ -202,7 +198,7 @@ Add an Enumeration
 We also want to add a priority field to the +Todo+ class. We will modify the
  +Todo+ class and add a new type +Priority+ as follows:
 
-[source,javascript]
+[source, n4js]
 .model.n4js (cntd.)
 ----
 export class Todo extends Task {
@@ -247,7 +243,7 @@ NOTE: An interface wizard will be available soon. For the moment, either create
 an empty file with extension n4js or use the class wizard and manually change the file name.
 
 
-[source, javascript]
+[source, n4js]
 .Storage.n4js
 ----
 import { Task } from "model"
@@ -291,7 +287,7 @@ This module will simply keep all entities in memory. If you copy-paste the
 following code snippet in your IDE, you will see a few errors. Do not fret,
 it is expected and we will deal with them shortly.
 
-[source,javascript]
+[source, n4js]
 .StorageInMemory.n4js
 ----
 import { Storage } from "Storage"
@@ -362,7 +358,7 @@ Such meta information about an N4JS project is kept in a so-called *manifest fil
 We need to open the `manifest.n4mf` file and edit a dependency. The default manifest
 files created by the New Project wizard look like the following:
 
-[source, javascript]
+[source, n4js]
 .manifest.n4mf
 ----
 ArtifactId: n4js.example.tasks
@@ -382,7 +378,7 @@ Sources {
 We need to add the following section at the end. Note that the manifest editor supports content
 assist similar to the N4JS editor.
 
-[source,javascript]
+[source, n4js]
 ----
 RequiredRuntimeLibraries {
   n4js-runtime-es2015
@@ -397,7 +393,7 @@ This will add all additionally defined types of ECMAScript 2015. It will also ad
 Having created the first version of our domain model and storage tier, we are ready to try it out.
  For that, we create a module "Runner.n4js" with the following code:
 
-[source,javascript]
+[source, n4js]
 ----
 import { StorageInMemory } from "StorageInMemory"
 import { Todo } from "model"
@@ -429,7 +425,7 @@ When we look at the runner code, creating a new task is quite annoying: It has t
 a new expression, and then every data field has to be set separately. To simplify this, we add
 a constructor to our base entity class Task as follows:
 
-[source,javascript]
+[source, n4js]
 .model.n4js (cntd.)
 ----
 export abstract class Task {
@@ -478,7 +474,7 @@ its fields are either optional or have an initializer. It contains the optional 
 In most cases, we need this information in the constructor to set the fields accordingly.
 For Task we would write:
 
-[source,javascript]
+[source, n4js]
 ----
 constructor(spec: ~i~this?) {
   this.id = spec.id;
@@ -494,7 +490,7 @@ we have solved the problem of initialization for all our entity classes with a s
 
 Using this `@Spec` constructor would then look similar to this:
 
-[source,javascript]
+[source, n4js]
 ----
 let todo = new Todo({dueDate: new Date(), label: "Test TODO"});
 sim.storeTask(todo);
@@ -538,7 +534,7 @@ supported by several JavaScript frameworks and it is also built-in to N4JS inclu
 First we have to change the Storage interface and mark all methods which are supposed to be asynchronous as
 `async`:
 
-[source,javascript]
+[source, n4js]
 .Storage.n4js (cntd.)
 ------
 
@@ -573,7 +569,7 @@ We can easily fix that by simply adding `async` to all the indicated methods.
 If you still have the runner module, you probably will get a warning there as well. If you ignore that
 warning and run it again, you will get the following
 
-[source,javascript]
+[source, n4js]
 ----
 Promise { <pending> }
 ----
@@ -583,7 +579,7 @@ of testing the code after the next step.
 
 *Create TaskManager*
 
-[source,javascript]
+[source, n4js]
 .TaskManager.n4js
 ----
 import { Todo } from "model"
@@ -636,7 +632,7 @@ collection of assert methods.
 
 After adding these changes, the manifest of the test project will look as follows:
 
-[source,javascript]
+[source, n4js]
 .manifest.n4mf (in project n4js.example.tasks.tests)
 ----
 …
@@ -658,7 +654,7 @@ ProjectDependencies {
 We can now write our first test. Again, we use the class wizard to create a module "TaskManagerTest"
 containing a class with the same name. The first test should look like that:
 
-[source,javascript]
+[source, n4js]
 .TaskManagerTest.n4js
 ----
 import { TaskManager } from "TaskManager"
@@ -703,7 +699,7 @@ Instead of "storing" the entities in memory, we want to use a real database. In 
 to use https://www.mongodb.com/[MongoDB]. To follow along this section on your own computer,
 you must have MongoDB installed and start a data base server instance via the command line as follows:
 
-[source]
+[source,bash]
 mongod --dbpath /db
 
 
@@ -711,7 +707,7 @@ In order to use MongoDB from N4JS, we need the appropriate npm package which all
 ECMAScript. Adding this npm and making it available in N4JS is as simple as adding any project dependency.
 We have to open the manifest editor (of the tasks project) and add the following project dependency:
 
-[source,javascript]
+[source, n4js]
 ----
 ProjectDependencies {
   mongodb
@@ -730,7 +726,7 @@ definition files are provided at https://github.com/NumberFour/n4jsd[github.com/
 Let's assume for the moment there are no `.n4jsd` file available for MongoDB; we import MongoDB using
 a *dynamic import* as follows:
 
-[source,javascript]
+[source, n4js]
 ----
 import * as mongodb+ from "mongodb"
 
@@ -746,7 +742,7 @@ However, since we do have an `.n4jsd` file available, we can import types such a
 or `ObjectID` provided by MongoDB using an ordinary ECMAScript2015 named import, just as if we were
 importing from an N4JS module:
 
-[source,javascript]
+[source, n4js]
 .StorageMongoDB.n4js
 ----
 import { Storage } from "Storage";
@@ -780,7 +776,7 @@ The next step is to retrieve the information about our Tasks and to store them i
 the storeTask method, we are then retrieving the inserted item id's from MongoDB and returning them as a
 `task.id`.
 
-[source,javascript]
+[source, n4js]
 .StorageMongoDB.n4js (cntd.)
 ----
 export class StorageMongoDB implements Storage {
@@ -828,7 +824,7 @@ in N4JS: reflection and so-called `@Spec` constructors, respectively. Reflection
 languages and allows for retrieving information of a type and its members at runtime. It is used in
 `fromData()` as follows:
 
-[source,javascript]
+[source, n4js]
 .StorageMongoDB.n4js (cntd.)
 ----
 function toData(task: Task): ~~Task {
@@ -848,7 +844,7 @@ function toData(task: Task): ~~Task {
 Conversely, `@Spec` constructors are special constructors that allow to create a new instance of a class and
 initialize it with values provided by a plain data object in properties that correspond to the type's fields.
 
-[source,javscript]
+[source,n4js]
 .StorageMongoDB.n4js (cntd.)
 ----
 function fromData(data: any+): Task {
@@ -886,7 +882,7 @@ In short, N4JS provides built-in support for dependency injection using the same
 Google Guice. Instead of using initializers calling the constructor for certain fields, we just mark them
 with `@Inject`. We will do that with the storage field in the TaskManager class:
 
-[source,javscript]
+[source,n4js]
 .TaskManger.n4js (cntd.)
 ----
 export public class TaskManager {
@@ -910,7 +906,7 @@ instance of StorageInMemory or StorageMongoDB. We are going to adjust the test a
 
 For that, we first add a binder to the test module "TaskManagerTest.n4js":
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 @Binder
@@ -930,7 +926,7 @@ associated with an injector; this is done by using the annotation `@GenerateInje
 to tell the framework which configuration it should use for the injector, this is done via the annotation
  `@UseBinder`, which expects the type name of a binder class.
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 @GenerateInjector @UseBinder(InMemoryBinder)
@@ -946,7 +942,7 @@ image::injectionwarning.png[]
 
 This is hard to find but easy to fix: We just have to replace the initalizer with an `@Inject` annotation.
 
-[source,javscript]
+[source,n4js]
 .TaskMangerTest.n4js (cntd.)
 ----
 …
@@ -960,7 +956,6 @@ With these little changes, we can now configure the storage solution from outsid
 Running this test will behave as before but we have removed the hard-coded dependency from TaskManager to
 StorageInMemory.
 
-
 == Web UI module
 
 The final step in building functionality into our model is to create a simple web user interface using
@@ -972,7 +967,7 @@ N4JS is as simple as adding any project dependency, as already shown for MongoDB
 manifest editor (of the tasks project) and add the following project dependency (along with the existing
 dependencies):
 
-[source,javscript]
+[source,n4js]
 .manifest.n4mf (cntd.)
 ----
 ProjectDependencies {
@@ -985,7 +980,7 @@ The quickfix will automatically download all required npm packages, that is, exp
 dependencies. We can now use express in our N4JS code (for more details, esp. N4JS definition files, see
 above description on MongoDB).
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 //Creating a simple Web User Interface in HTML
@@ -1018,7 +1013,7 @@ Express is a web framework that provides (among other things) HTTP helpers for w
 example, we are importing the classes `Application` and `Response` from express and creating a home page
 that we can render some HTML to. Next we will add a method for creating new tasks:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 public start() {
@@ -1037,7 +1032,7 @@ public start() {
 
 Have express listen on port 4000 at localhost:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 public start() {
@@ -1052,7 +1047,7 @@ public start() {
 
 Finally, we add a helper method for rendering a simple HTML page so we can view our Todos and edit them:
 
-[source,javscript]
+[source,n4js]
 .WebUI.n4js
 ----
 export class WebUI {
@@ -1098,7 +1093,7 @@ At this point, we have to launch our web server. For this purpose, we create a s
 configures the dependency injection (as shown in the section on dependency injection, above), creates an
 intance of class `WebUI`, and invokes method `start()`:
 
-[source,javscript]
+[source,n4js]
 .launch.n4js
 ----
 import { Storage } from "Storage";
@@ -1135,7 +1130,7 @@ If we want a method to be executed once before all tests, such as clearing a dat
 keyword `@BeforeAll`.
 
 
-[source,javascript]
+[source, n4js]
 ----
 import { Priority, Appointment, Todo } from "model";
 import { Storage } from "Storage";
@@ -1171,7 +1166,7 @@ of our tests. The next section with the annotation `@Before`, ensures that the s
 before each test. After all tests are complete, we run a 'garbage collector' method telling MongoDB to
 `shutdown` which cleans up all database resources and terminates the process.
 
-[source,javascript]
+[source, n4js]
 ----
 @Test
 async testStoreAppointment() {
@@ -1208,7 +1203,7 @@ Assert.equal(todo.dueDate.getTime(), restoredTodo.dueDate.getTime());
 Now that our AbstractStorageTest module is completed, we can create further test modules for other sections
 of our project:
 
-[source,javascript]
+[source, n4js]
 ----
 // Creating StorageInMemoryTest to extend AbstractStorageTest
 
@@ -1231,7 +1226,7 @@ adapting it for use in testing our StorageInMemory module.
 
 The same can be done to test our MongoDB module:
 
-[source,javascript]
+[source, n4js]
 ----
 //Creating StorageMongoDBTest to extend AbstractStorageTest
 
@@ -1287,7 +1282,7 @@ Once you've exported your project, you can either publish it to
 https://www.npmjs.com/[npmjs.com] or install directly from your hard disk and call the launch
 module, for example
 
-[source,text]
+[source,bash]
 ----
 $ npm install -g n4js.example.tasks
 $ node -r n4js.example.tasks/launch
@@ -1298,7 +1293,7 @@ In case you want to install dependencies and run it right away in the exported n
 manually set up the `NODE_PATH` to the folder hosting the exported npms, otherwise node cannot resolve the
 project/npm IDs.
 
-[source]
+[source,bash]
 ----
 $ export NODE_PATH=`pwd`
 $ pushd n4js.example.tasks; npm install; popd
@@ -1315,7 +1310,7 @@ which has more support to resolve cyclic dependencies across modules, you could 
 executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environmentnpm (a default
 dependency of any exported npm) and is therefore already installed:
 
-[source]
+[source,bash]
 ----
 $ export NODE_PATH=`pwd`
 $ cd n4js.example.tasks; npm install
