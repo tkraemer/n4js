@@ -34,12 +34,11 @@
 #menubar > ul > li > a {
     color: #FFFFFF;
     font-family: ITC Officina Sans W01, sans-serif, Verdana, Arial, Helvetica, sans-serif;
-    font-size: 1.2em;
+    font-size: 19px;
+    height: auto;
     font-weight: 800;
-    font-style: bold
-    line-height: 1em;
-    padding-top: 1.8rem;
-    padding-right: 5px;
+    line-height: 19px;
+    padding-top: 2rem;
 -webkit-transition: color .15s;
    -moz-transition: color .15s;
      -o-transition: color .15s;
