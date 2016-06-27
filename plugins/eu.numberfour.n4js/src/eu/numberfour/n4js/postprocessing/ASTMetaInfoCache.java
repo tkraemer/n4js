@@ -36,33 +36,21 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * The <em>AST meta-info cache</em> is created and filled with information during post-processing of an N4JS resource
- * and contains meta information on the AST, such as types of AST nodes.
+ * and contains meta information on the AST, such as types of AST nodes, links from declarations to all places where the
+ * declared element is used, etc.
  * <p>
  * It is created only for {@link N4JSResource}s and only for such N4JS resources that are <u>loaded from source code</u>
  * and therefore have an AST (not those that are loaded from the Xtext index / TModule).
  */
 public final class ASTMetaInfoCache {
 
-	// ----------------------------------------------------------------------------------------------------------------
-	// actual content of the cache
+	// ################################################################################################################
+	// main content of the cache
+	// (add new properties here; getters should be public, setters should have package visibility)
 
 	private final N4JSResource resource;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// helper variables used *only* by post-processors in package eu.numberfour.n4js.postprocessing
-
-	boolean isTypingInProgress = false;
-	boolean isFullyTyped = false;
-
-	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
-	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
-
-	CancelIndicator cancelIndicator = CancelIndicator.NullImpl;
-
-	// ----------------------------------------------------------------------------------------------------------------
 
 	ASTMetaInfoCache(N4JSResource resource) {
 		this.resource = resource;
@@ -108,6 +96,9 @@ public final class ASTMetaInfoCache {
 	}
 
 	void storeType(TypableElement astNode, Result<TypeRef> actualType) {
+		if (!isProcessingInProgress()) {
+			throw new IllegalStateException();
+		}
 		if (actualType == null) {
 			throw new IllegalArgumentException("actualType may not be null");
 		}
@@ -128,6 +119,58 @@ public final class ASTMetaInfoCache {
 	}
 
 	void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
+		if (!isProcessingInProgress()) {
+			throw new IllegalStateException();
+		}
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
+	}
+
+	// ################################################################################################################
+	// helper variables used *only* by post-processors in package eu.numberfour.n4js.postprocessing
+
+	private boolean isProcessingInProgress = false;
+	private boolean isFullyProcessed = false;
+	CancelIndicator cancelIndicator = null;
+
+	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
+	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
+	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+
+	/* package */ boolean isProcessingInProgress() {
+		return isProcessingInProgress;
+	}
+
+	/* package */ boolean isFullyProcessed() {
+		return isFullyProcessed;
+	}
+
+	/* package */ boolean isCanceled() {
+		return cancelIndicator != null && cancelIndicator.isCanceled();
+	}
+
+	/* package */ boolean isEmpty() {
+		// only used for debugging to spot a suspicious cache clear (see ASTMetaInfoCacheHelper)
+		return actualTypes.isEmpty() && inferredTypeArgs.isEmpty();
+	}
+
+	/* package */ void startProcessing(@SuppressWarnings("hiding") CancelIndicator cancelIndicator) {
+		if (isProcessingInProgress || isFullyProcessed) {
+			// this method should never be called more than once per N4JSResource
+			throw new IllegalStateException("multiple invocation of method ASTMetaInfoCache#startProcessing()");
+		}
+		isProcessingInProgress = true;
+		this.cancelIndicator = cancelIndicator; // may be null
+	}
+
+	/* package */ void endProcessing() {
+		if (!isProcessingInProgress) {
+			throw new IllegalStateException("invalid invocation of method ASTMetaInfoCache#endProcessing()");
+		}
+		isFullyProcessed = true;
+		isProcessingInProgress = false;
+		cancelIndicator = null;
+		forwardProcessedSubTrees.clear();
+		astNodesCurrentlyBeingTyped.clear();
+		postponedSubTrees.clear();
 	}
 }

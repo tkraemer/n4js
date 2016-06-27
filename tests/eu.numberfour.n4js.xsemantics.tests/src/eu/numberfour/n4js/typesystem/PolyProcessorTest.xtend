@@ -165,7 +165,7 @@ class PolyProcessorTest extends AbstractTypesystemTest {
 //	}
 	def private TypeRef getTypeFromTypingCache(Expression expression) {
 		// NOTE: not using N4JSTypeSystem#type() here to make 100% sure we are just reading from the cache
-		return astMetaInfoCacheHelper.getTypeFailSafe(expression);
+		return astMetaInfoCacheHelper.getTypeFailSafe(expression)?.value;
 	}
 
 

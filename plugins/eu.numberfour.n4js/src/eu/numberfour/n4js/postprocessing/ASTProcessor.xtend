@@ -96,18 +96,16 @@ public class ASTProcessor extends AbstractProcessor {
 	/**
 	 * Initiates processing of the entire AST in the given resource.
 	 * Will throw IllegalStateException if called more than once per N4JSResource.
+	 * 
+	 * @param resource  may not be null.
+	 * @param cancelIndicator  may be null.
 	 */
 	def private void processAST(RuleEnvironment G, N4JSResource resource, CancelIndicator cancelIndicator) {
 
 		log(0, "### processing resource: " + resource.URI);
 
 		val cache = astMetaInfoCacheHelper.getOrCreate(resource);
-		if (cache.isTypingInProgress || cache.isFullyTyped) {
-			// this method should never be called more than once per N4JSResource
-			throw new IllegalStateException("reentrant invocation of #processAST()")
-		}
-		cache.isTypingInProgress = true;
-		cache.cancelIndicator = cancelIndicator ?: CancelIndicator.NullImpl;
+		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed
 		try {
 			// step 1: main processing
 			val script = resource.script;
@@ -119,15 +117,13 @@ public class ASTProcessor extends AbstractProcessor {
 				processSubtree(G, block, cache, 0);
 			}
 		} finally {
-			if (cache.cancelIndicator.canceled) {
+			if (cache.canceled) {
 				log(0, "CANCELED by cancelIndicator");
 			}
 
 			// note: doesn't matter if processing succeeded, failed or was canceled
 			// (even if it failed or was canceled, we do not want to try again)
-			cache.isFullyTyped = true;
-			cache.isTypingInProgress = false;
-			cache.cancelIndicator = null;
+			cache.endProcessing();
 
 			if (isDEBUG_LOG_RESULT) {
 				log(0, "### result for " + resource.URI);
@@ -147,7 +143,7 @@ public class ASTProcessor extends AbstractProcessor {
 
 		log(indentLevel, "processing: " + node.objectInfo);
 
-		if (cache.cancelIndicator.canceled) {
+		if (cache.canceled) {
 			return;
 		}
 
@@ -189,7 +185,7 @@ public class ASTProcessor extends AbstractProcessor {
 				} else {
 					// process now
 					processSubtree(G, child, cache, indentLevel + 1);
-					if (cache.cancelIndicator.canceled) {
+					if (cache.canceled) {
 						return;
 					}
 				}

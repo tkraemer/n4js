@@ -13,6 +13,7 @@ package eu.numberfour.n4js.postprocessing;
 import java.util.List;
 
 import org.eclipse.xtext.util.IResourceScopeCache;
+import org.eclipse.xtext.util.OnChangeEvictingCache;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -26,10 +27,13 @@ import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * Front-end for accessing the {@link ASTMetaInfoCache}.
+ * Front-end for accessing the {@link ASTMetaInfoCache}. Should have a public getter for each public getter in
+ * {@code ASTMetaInfoCache}.
  */
 @Singleton
 public final class ASTMetaInfoCacheHelper {
+
+	private static final boolean DEBUG_TRACK_CACHE_CREATION_DELETION = false;
 
 	@Inject
 	private IResourceScopeCache resourceScopeCacheHelper;
@@ -39,9 +43,8 @@ public final class ASTMetaInfoCacheHelper {
 	 * <p>
 	 * Convenience method for {@link ASTMetaInfoCache#getTypeFailSafe(TypableElement)}.
 	 */
-	public TypeRef getTypeFailSafe(TypableElement astNode) {
-		final Result<TypeRef> result = getOrCreate((N4JSResource) astNode.eResource()).getTypeFailSafe(astNode);
-		return result != null ? result.getValue() : null;
+	public Result<TypeRef> getTypeFailSafe(TypableElement astNode) {
+		return getOrCreate((N4JSResource) astNode.eResource()).getTypeFailSafe(astNode);
 	}
 
 	/**
@@ -58,19 +61,23 @@ public final class ASTMetaInfoCacheHelper {
 		return resourceScopeCacheHelper.get(ASTMetaInfoCache.class, res, () -> {
 			final ASTMetaInfoCache newCache = new ASTMetaInfoCache(res);
 
-			// use the following debug code to track cache creation/deletion
-			// println("!! creating new cache "+Integer.toHexString(newCache.hashCode)+" (on resource
-			// "+Integer.toHexString(res.hashCode)+"; URI: "+res.URI+")");
-			// (mainCacheHelper as OnChangeEvictingCache).getOrCreate(res).addCacheListener[cacheAdapter|
-			// if(!newCache.actualTypes.empty) {
-			// println("!!!!! clearing non-empty cache "+Integer.toHexString(newCache.hashCode));
-			// } else {
-			// println("!!!!! clearing empty cache "+Integer.toHexString(newCache.hashCode));
-			// }
-			// if(newCache.isTypingInProgress) {
-			// println("!!!!! WARNING suspicious cache clear (cache "+Integer.toHexString(newCache.hashCode)+")");
-			// }
-			// ];
+			// DEBUG: use the following code to track cache creation/deletion
+			if (DEBUG_TRACK_CACHE_CREATION_DELETION) {
+				final String newCacheId = Integer.toHexString(newCache.hashCode());
+				System.out.println("!! creating new cache " + newCacheId
+						+ " (on resource " + Integer.toHexString(res.hashCode()) + "; URI: " + res.getURI() + ")");
+				((OnChangeEvictingCache) resourceScopeCacheHelper).getOrCreate(res).addCacheListener((cacheAdapter) -> {
+					if (!newCache.isEmpty()) {
+						System.out.println("!!!! clearing non-empty cache " + newCacheId);
+					} else {
+						System.out.println("!!!! clearing empty cache " + newCacheId);
+					}
+					if (newCache.isProcessingInProgress()) {
+						// DEBUG: good place for a break point when hunting down an accidental cache clear
+						System.out.println("!!!! WARNING suspicious cache clear (cache " + newCacheId + ")");
+					}
+				});
+			}
 
 			return newCache;
 		});

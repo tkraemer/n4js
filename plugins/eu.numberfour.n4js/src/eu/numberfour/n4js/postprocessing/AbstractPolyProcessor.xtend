@@ -152,7 +152,7 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 	 * nested poly expression's type from the cache.
 	 */
 	def protected TypeRef getFinalResultTypeOfNestedPolyExpression(Expression nestedPolyExpression) {
-		return astMetaInfoCacheHelper.getTypeFailSafe(nestedPolyExpression);
+		return astMetaInfoCacheHelper.getTypeFailSafe(nestedPolyExpression)?.value;
 	}
 
 	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G,
