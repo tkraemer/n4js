@@ -25,7 +25,7 @@
   
   // 
 | import {A[|} from "proposal/module/A"]
-| [|import { B]} from "proposal/module/A"/\* multi line comment in a an ASI place 
+| [|import { B]} from "proposal/module/A"[|;]/\* multi line comment in a an ASI place 
    *\/
   var a: A;
   var b: B; 
