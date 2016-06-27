@@ -27,6 +27,7 @@ import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.BuiltInType
@@ -870,13 +871,14 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 	 * <li>or conform to Provider-of-T where T is injectable itself</li>
 	 * </ul>
 	 */
-	public static def boolean isInjectableType(TypeRef typeRef) {
+	public static def boolean isInjectableType(TypeArgument typeArg) {
 		// must be non-null, a ParameterizedTypeRef and have a declared type
 		// (sorts out things like ComposedTypeRefs, ClassifierTypeRefs, etc.)
 		//can be structural type (DefSite and UseSite)
-		if (!(typeRef instanceof ParameterizedTypeRef)) {
+		if (!(typeArg instanceof ParameterizedTypeRef)) {
 			return false;
 		}
+		val typeRef = typeArg as ParameterizedTypeRef;
 		val declType = typeRef.declaredType;
 		if (declType===null) {
 			return false;

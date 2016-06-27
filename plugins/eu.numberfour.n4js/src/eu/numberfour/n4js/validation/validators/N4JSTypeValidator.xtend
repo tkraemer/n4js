@@ -31,12 +31,14 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
@@ -471,6 +473,20 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 //		}
 //
 //	}
+
+	/**
+	 * @see <a href="https://github.com/NumberFour/n4js/issues/221">#221</a>
+	 */
+	@Check
+	def checkClassifierType(ClassifierTypeRef classifierTypeRef) {
+		if (! (classifierTypeRef instanceof ConstructorTypeRef)) { // type{X}, not ctor{X}
+			if (classifierTypeRef.typeArg instanceof Wildcard) {
+				addIssue(IssueCodes.getMessageForTYS_WILDCARD_IN_TYPETYPE, classifierTypeRef.typeArg, TYS_WILDCARD_IN_TYPETYPE);
+			}
+		}
+	}
+
+
 
 	def boolean createError(Result<?> result, EObject source) {
 		if (result.failed) {

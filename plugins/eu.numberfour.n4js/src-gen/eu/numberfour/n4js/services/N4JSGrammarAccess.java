@@ -13785,6 +13785,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ClassifierTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
+	//	| UnionTypeExpressionOLD
+	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefForCastElements getTypeRefForCastAccess() {
 		return gaTypeExpressions.getTypeRefForCastAccess();
 	}
@@ -13793,9 +13795,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeRefForCastAccess().getRule();
 	}
 
-	//TypeRefInClassifierType StaticBaseTypeRef:
+	//TypeRefInClassifierType TypeArgument:
 	//	ParameterizedTypeRefNominal
 	//	| ThisTypeRefNominal
+	//	| Wildcard
 	public TypeExpressionsGrammarAccess.TypeRefInClassifierTypeElements getTypeRefInClassifierTypeAccess() {
 		return gaTypeExpressions.getTypeRefInClassifierTypeAccess();
 	}
@@ -14059,7 +14062,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} 'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ConstructorTypeRefElements getConstructorTypeRefAccess() {
 		return gaTypeExpressions.getConstructorTypeRefAccess();
 	}
@@ -14069,7 +14072,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ClassifierTypeRef:
-	//	{ClassifierTypeRef} 'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+	//	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
 	public TypeExpressionsGrammarAccess.ClassifierTypeRefElements getClassifierTypeRefAccess() {
 		return gaTypeExpressions.getClassifierTypeRefAccess();
 	}

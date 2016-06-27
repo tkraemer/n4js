@@ -230,7 +230,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ParameterizedTypeRef ptr, EObject context, boolean staticAccess) {
-		val IScope result = members(ptr.declaredType, context, false)
+		val IScope result = members(ptr.declaredType, context, staticAccess);
 		if (ptr.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}
@@ -238,7 +238,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ParameterizedTypeRefStructural ptrs, EObject context, boolean staticAccess) {
-		val IScope result = ptrs.declaredType.members(context, false)
+		val IScope result = ptrs.declaredType.members(context, staticAccess);
 		if (ptrs.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}
@@ -274,7 +274,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ClassifierTypeRef ctr, EObject context, boolean staticAccess) {
-		val IScope result = ctr.staticType.members(context, true)
+		val IScope result = ctr.staticType.members(context, true) // staticAccess is always true in this case
 		if (ctr.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}

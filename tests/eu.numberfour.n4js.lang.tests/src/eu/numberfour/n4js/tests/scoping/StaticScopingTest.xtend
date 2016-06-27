@@ -258,7 +258,7 @@ class StaticScopingTest {
 		val thisType1 = ts.upperBound(G, ts.type(G, thisInMethod1).value).value
 		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ClassifierTypeRef)
 		val classifierTypeRef1 = thisType1 as ClassifierTypeRef
-		val typeName1 = classifierTypeRef1.staticTypeRef.declaredType.name
+		val typeName1 = classifierTypeRef1.staticType.name
 		Assert.assertEquals("A", typeName1)
 
 		val thisInMethod2 = script.eAllContents.filter(ThisLiteral).last
@@ -288,7 +288,7 @@ class StaticScopingTest {
 		val varXType = varX.tau
 		Assert.assertTrue("type{C}", varXType instanceof ConstructorTypeRef)
 		val varXConstructorTypeRef = varXType as ConstructorTypeRef
-		val varXTypeName = varXConstructorTypeRef.staticTypeRef.declaredType.name
+		val varXTypeName = varXConstructorTypeRef.staticType.name
 		Assert.assertEquals("C", varXTypeName)
 
 		val varC = script.eAllContents.filter(VariableDeclaration).filter[name == "c"].head
@@ -302,7 +302,7 @@ class StaticScopingTest {
 		val identifierRefType = newCExpression.callee.tau
 		Assert.assertTrue("ConstructorTypeRef expected but was " + identifierRefType.class,
 			identifierRefType instanceof ConstructorTypeRef)
-		val identifierConstructorTypeName = (identifierRefType as ConstructorTypeRef).staticTypeRef?.declaredType?.name
+		val identifierConstructorTypeName = (identifierRefType as ConstructorTypeRef).staticType?.name
 		Assert.assertEquals("C", identifierConstructorTypeName)
 
 		val varZ2 = script.eAllContents.filter(VariableDeclaration).filter[name == "z2"].head

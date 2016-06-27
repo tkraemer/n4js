@@ -195,9 +195,11 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	private def TClass holdsDenotesDICConstructor(Expression ctorOfDICArg) {
 		val ctorOfDICTypeRef = ts.tau(ctorOfDICArg)
 		if (ctorOfDICTypeRef instanceof ClassifierTypeRef) {
-			val dicTClass = dicTClassOf(ctorOfDICTypeRef.staticTypeRef)
-			if (null !== dicTClass) {
-				return dicTClass
+			if (ctorOfDICTypeRef.getTypeArg instanceof TypeRef) {
+				val dicTClass = dicTClassOf(ctorOfDICTypeRef.getTypeArg as TypeRef)
+				if (null !== dicTClass) {
+					return dicTClass
+				}
 			}
 		}
 		addIssue(getMessageForDI_ANN_INJECTOR_REQUIRED(), ctorOfDICArg, DI_ANN_INJECTOR_REQUIRED);
@@ -229,7 +231,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 		val ctorArg = callExpression.arguments.head?.expression
 		val ctorArgTypeRef = ts.tau(ctorArg)
 		if (ctorArgTypeRef instanceof ClassifierTypeRef) {
-			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.staticTypeRef)) {
+			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.getTypeArg)) {
 				return
 			}
 		}

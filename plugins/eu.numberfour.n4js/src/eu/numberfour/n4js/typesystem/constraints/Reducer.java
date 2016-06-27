@@ -474,8 +474,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
-		final TypeRef leftStatic = TypeUtils.copy(left.getStaticTypeRef());
-		final TypeRef rightStatic = TypeUtils.copy(right.getStaticTypeRef());
+		final TypeArgument leftStatic = TypeUtils.copy(left.getTypeArg());
+		final TypeArgument rightStatic = TypeUtils.copy(right.getTypeArg());
 		if (!(left instanceof ConstructorTypeRef) && !(right instanceof ConstructorTypeRef)) {
 			// both sides are plain ClassifierTypeRefs
 			return reduce(leftStatic, rightStatic, variance);

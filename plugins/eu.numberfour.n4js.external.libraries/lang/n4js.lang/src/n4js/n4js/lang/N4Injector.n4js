@@ -208,7 +208,9 @@ export public class N4Injector{
         // - ? <: T
         // - ~N4Provider<T>
         // - ? <: ~N4Provider<T>
-        return this.internalCreate(ctor as constructor{N4Object}, this, cachedInstances) as T;
+        
+        // TODO: ctor as any cast is a hack. In the long run, we should properly type this whole file
+        return this.internalCreate((ctor as any) as constructor{N4Object}, this, cachedInstances) as T;
     }
 
     /**
