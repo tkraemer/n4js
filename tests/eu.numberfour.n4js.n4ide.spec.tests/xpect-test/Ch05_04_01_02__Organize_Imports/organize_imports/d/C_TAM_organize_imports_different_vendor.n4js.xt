@@ -20,12 +20,13 @@
 
 
 /* XPECT organizeImports ---
-   + import { C2 } 
-   | [class|from "a/TAM"]
+     
+   + import { C2 } from "
+   | [class|a/TAM";]
    | [|class] B0 extends C0 {}// private
-     export class B1 extends C1 {}	// project
-     export project class B1_project extends C1_project {}	// project
-     export @Internal public class B1_vendor extends C1_vendor {} 	// public@Internal
+     export class B1 extends C1 {}// projectexport project class B1_project extends C1_project {}	// project
+     export @Internal public class B1_vendor extends C1_vendor {}	// public@Int
+     ernal
    (...)
 --- */
 

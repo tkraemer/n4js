@@ -19,8 +19,8 @@
 
 
 /* XPECT quickFix at 'class B<|> extends' apply 'Import A' --- 
-+ import { A } from "
-| [class|proposal/module/A"]
++ import { A } from "proposal/
+| [class|module/A";]
 | [|class] B extends [a|A] {
   }
 ---

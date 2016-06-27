@@ -68,6 +68,8 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
+import org.eclipse.xtext.naming.QualifiedName
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
  * Intended for small, static utility methods that
@@ -481,5 +483,19 @@ class N4JSLanguageUtils {
 	def static boolean isContainedInStaticPolyfillAware(TAnnotableElement tsElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( tsElement ); // transitively inherited
 	}
+	
+	/** checks if the qualifiedName has a last segment named 'default' {@link eu.numberfour.n4js.validation.helper.N4JSLanguageConstants#EXPORT_DEFAULT_NAME} */
+	def static boolean isDefaultExport(QualifiedName qualifiedName) {
+		return  ( qualifiedName !== null
+				&& qualifiedName.getSegmentCount() > 1
+				&& qualifiedName.getLastSegment() == N4JSLanguageConstants.EXPORT_DEFAULT_NAME );
+	}
+	
+	/** Returns the semantically important last part of a qualified name. This is commonly the last segment except for 'default' exports, where it is the second last segment. */
+	def static String lastSegmentOrDefaultHost(QualifiedName qualifiedName) {
+		if( isDefaultExport(qualifiedName) ) return  qualifiedName.getSegment(qualifiedName.getSegmentCount() - 2)
+		return qualifiedName.getLastSegment();
+	}
+	
 	
 }

@@ -16,7 +16,7 @@
      
      /\** first comment *\/
      "directive"
-   + import { A } from "a/a2/A"
+   + import { A } from "a/a2/A";
      /\** second comment *\/ 
      ;
      /\* third comment *\/
