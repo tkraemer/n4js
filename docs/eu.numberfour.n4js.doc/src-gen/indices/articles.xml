@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE xml>
 <toc topic="target/eclipse-html/articles/index.html" label="N4JS Articles">
 	<topic href="target/eclipse-html/articles/index.html" label="Index"></topic>
 	<topic href="target/eclipse-html/experiments/commandlinks.html" label="Active Help Command Links">
