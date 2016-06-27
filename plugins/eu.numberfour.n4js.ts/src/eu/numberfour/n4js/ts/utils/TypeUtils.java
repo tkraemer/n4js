@@ -568,14 +568,19 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Creates a new function type expression with the given attribtues, attributes are copied if contained.
+	 * Creates a new function type expression with the given attributes, attributes are copied if contained. All
+	 * references are copied if they are already contained.
+	 *
+	 * @param declaredThisType
+	 *            type referenced in @This annotation, may be null
 	 */
 	public static FunctionTypeExpression createFunctionTypeExpression(
 			TypeRef declaredThisType, List<TypeVariable> ownedTypeVars,
 			List<TFormalParameter> fpars, TypeRef returnTypeRef) {
 		final FunctionTypeExpression f = TypeRefsFactory.eINSTANCE.createFunctionTypeExpression();
-
-		f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		if (declaredThisType != null) {
+			f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		}
 		ownedTypeVars.stream().forEachOrdered(tv -> f.getOwnedTypeVars().add(TypeUtils.copyIfContained(tv)));
 		fpars.stream().forEachOrdered(tp -> f.getFpars().add(TypeUtils.copyIfContained(tp)));
 		f.setReturnTypeRef(TypeUtils.copyIfContained(returnTypeRef));
