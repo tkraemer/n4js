@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
+ * Base for all poly processors. Contains some utility and convenience methods.
  */
 package abstract class AbstractPolyProcessor extends AbstractProcessor {
 
@@ -55,6 +56,10 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 	@Inject
 	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
+	/**
+	 * Convenience method for {@link #isPoly(Expression)} and {@link #isPoly(PropertyAssignment)}, accepting any type of
+	 * EObject.
+	 */
 	def boolean isPoly(EObject obj) {
 		return switch (obj) {
 			Expression: obj.isPoly
@@ -64,7 +69,7 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 	}
 
 	/**
-	 * Returns true iff obj is an AST node that requires constraint-based type inference.
+	 * Tells whether the given expression is a poly expression, i.e. requires constraint-based type inference.
 	 */
 	def boolean isPoly(Expression obj) {
 		return switch (obj) {
@@ -90,6 +95,9 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		}
 	}
 
+	/**
+	 * Tells whether the given PropertyAssignment is a poly "expression", i.e. requires constraint-based type inference.
+	 */
 	def private boolean isPoly(PropertyAssignment pa) {
 		switch (pa) {
 			PropertyNameValuePair:
@@ -107,10 +115,21 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		}
 	}
 
+	/**
+	 * Convenience method for {@link #isRootPoly(Expression)}, accepting any type of EObject.
+	 */
 	def boolean isRootPoly(EObject obj) {
 		if (obj instanceof Expression) obj.isRootPoly else false
 	}
 
+	/**
+	 * Tells whether the given expression is a root poly expression, i.e. it
+	 * <ol>
+	 * <li>is a {@link #isPoly(Expression) poly expression}, <em>and</em>
+	 * <li>represents the root of a tree of nested poly expressions which have to be inferred together within a single
+	 * constraint system (this tree may have depth 0, i.e. consist only of the given expression).
+	 * </ol>
+	 */
 	def boolean isRootPoly(Expression obj) {
 		if (isPoly(obj)) {
 			val p = getParentPolyCandidate(obj);
@@ -119,6 +138,10 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		return false;
 	}
 
+	/**
+	 * Given a poly expression, returns the parent expression that <em>might</em> be the parent poly expression.
+	 * If the given expression is not poly, the return value is undefined.
+	 */
 	def private EObject getParentPolyCandidate(Expression poly) {
 		val directParent = poly?.eContainer;
 		val grandParent = directParent?.eContainer;
@@ -174,7 +197,7 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		val result = ts.substTypeVariables(Gx, typeRef);
 		if (result.failed)
 			throw new IllegalArgumentException("substitution failed", result.ruleFailedException);
-		return result.value as TypeRef; // FIXME what about wildcards here??
+		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
 	}
 
 	def protected TypeRef applySolution(TypeRef typeRef, RuleEnvironment G, Map<InferenceVariable, TypeRef> solution) {
@@ -201,15 +224,21 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 				val iMod = modifiers.iterator;
 				val iFpar = resultValue.fpars.iterator;
 				while (iFpar.hasNext && iMod.hasNext) {
-					mergeUndefModifier(iFpar.next.typeRef, iMod.next);
+					setUndefModifierNullSafe(iFpar.next.typeRef, iMod.next);
 				}
 				if (iMod.hasNext) {
-					mergeUndefModifier(resultValue.returnTypeRef, iMod.next);
+					setUndefModifierNullSafe(resultValue.returnTypeRef, iMod.next);
 				}
 			}
 		}
 		// END OF PART 2
-		return result.value as TypeRef; // FIXME what about wildcards here??
+		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
+	}
+
+	def private void setUndefModifierNullSafe(TypeRef typeRef, UndefModifier modifier) {
+		if (typeRef !== null && modifier !== null) {
+			typeRef.undefModifier = modifier;
+		}
 	}
 
 	def protected Map<InferenceVariable, TypeRef> createPseudoSolution(InferenceContext infCtx,
@@ -256,15 +285,5 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 			default:
 				throw new IllegalArgumentException("unknown subtype of TMember: " + m?.eClass?.name)
 		}
-	}
-
-	def protected void mergeUndefModifier(TypeRef typeRef, UndefModifier modifier) {
-		if (typeRef !== null && modifier !== null) {
-			typeRef.undefModifier = modifier;
-		}
-	}
-
-	def protected void setUndefModifier(TypeRef typeRef, UndefModifier modifier) {
-		typeRef.undefModifier = modifier;
 	}
 }
