@@ -18,9 +18,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <eclipse.html>eclipse-html</eclipse.html>
         <website.html>website-html</website.html>
         <epub.dir>epub</epub.dir>
+        
         <eclipseHelpBaseDir>${basedir}/target</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
-        <help.pages.list>help-pages.txt</help.pages.list>
+        <eclipseUserguidesDir>${eclipseHelpDir}/userguides</eclipseUserguidesDir>
+
+        <help.userguides.list>userguide-list.txt</help.userguides.list>
+        <help.articles.list>article-list.txt</help.articles.list>
+
+        <indices.dir>${basedir}/src-gen/indices</indices.dir>
+
     </properties>
 
 
@@ -224,12 +231,34 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution> 
                 </executions>
-             </plugin>          
+            </plugin>
+
             <!-- eclipse-help file list generation -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
+                    <!-- userguides file list generation -->
                     <execution>
+                        <id>userguide-page-list-creation</id> 
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo>Running directory listing dir=${eclipseUserguidesDir}</echo>
+                                <fileset id="eclipseuserguides.pages" dir="${eclipseUserguidesDir}" includes="*.html" excludes=""/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipseuserguides.pages">
+                                    <map from="${basedir}/" to="" />
+                                </pathconvert> 
+                                <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${indices.dir}/${help.userguides.list}">${prop.dist.contents}</echo>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <!-- articles and features file list generation -->
+                    <execution>
+                        <id>article-page-list-creation</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>run</goal>
@@ -237,12 +266,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/index.html"/>
-                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
+                                <fileset id="eclipsehelp.articles.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/*.html,_headers/*.html"/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.articles.pages">
                                     <map from="${basedir}/" to="" />
                                 </pathconvert> 
                                 <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
-                                <echo encoding="${file.encoding}" output="${help.pages.list}">${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${indices.dir}/${help.articles.list}">${prop.dist.contents}</echo>
                             </target>
                         </configuration>
                     </execution>
@@ -255,67 +284,79 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 <artifactId>geneclipsetoc-maven-plugin</artifactId>
                 <version>1.0.2</version>
                 <executions>
+                    <!-- generating userguides TOC -->
                     <execution>
+                        <id>userguides-toc</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>geneclipsetoc</goal>
                         </goals>
                         <configuration>
                             <sourceFolder>${basedir}</sourceFolder>
-                            <pagesListFile>${help.pages.list}</pagesListFile>
-                            <outputTocFile>toc.xml</outputTocFile>
+                            <pagesListFile>${indices.dir}/${help.userguides.list}</pagesListFile>
+                            <outputTocFile>${indices.dir}/userguides.xml</outputTocFile>
+                        </configuration>
+                    </execution>
+                    <!-- generating articles TOC -->
+	                <execution>
+		                <id>articles-toc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>geneclipsetoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFolder>${basedir}</sourceFolder>
+                            <pagesListFile>${indices.dir}/${help.articles.list}</pagesListFile>
+                            <outputTocFile>${indices.dir}/articles.xml</outputTocFile>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> 
+            </plugin>
         </plugins>
     </build>
-    
     
     <profiles>
         <!-- disable tycho functionality in case of "-Dtycho.mode=maven" on command line -->
         <profile>
-          <id>tycho.mode.maven</id>
-          <activation>
+            <id>tycho.mode.maven</id>
+            <activation>
             <property>
                 <name>tycho.mode</name>
                 <value>maven</value>
             </property>
-          </activation>
-          <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-packaging-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-build-qualifier</id> <phase /> </execution>
-                        <execution> <id>default-validate-version</id> <phase /> </execution>
-                        <execution> <id>default-validate-id</id> <phase /> </execution>
-                        <execution> <id>default-package-plugin</id> <phase /> </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-compiler-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-compile</id> <phase /> </execution>
-                    </executions>
-                </plugin> 
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-p2-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
-                        <execution> <id>attach-p2-metadata</id> <phase /> </execution>
-                    </executions>
-                </plugin>
-                
-            </plugins>
-          </build>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-packaging-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-build-qualifier</id> <phase /> </execution>
+                            <execution> <id>default-validate-version</id> <phase /> </execution>
+                            <execution> <id>default-validate-id</id> <phase /> </execution>
+                            <execution> <id>default-package-plugin</id> <phase /> </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-compiler-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-compile</id> <phase /> </execution>
+                        </executions>
+                    </plugin> 
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-p2-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
+                            <execution> <id>attach-p2-metadata</id> <phase /> </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
-    
 </project>

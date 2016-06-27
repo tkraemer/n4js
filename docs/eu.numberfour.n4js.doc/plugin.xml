@@ -9,29 +9,12 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 -->
-<?eclipse version="3.4"?>
 <plugin>
 
    <extension
          point="org.eclipse.help.toc">
-      <toc
-            file="toc.xml"
-            primary="true">
-      </toc>
+      <toc file="src-gen/indices/userguides.xml" primary="true"> </toc>
+      <toc file="src-gen/indices/articles.xml" primary="true"> </toc>
    </extension>
-
-<!--
-   <extension
-         point="org.eclipse.help">
-      <launchConfigurationType
-            delegate="java.ActiveHelpOpenDialogAction"
-            delegateDescription="Testing Active Help"
-            delegateName="Active Help Launcher"
-            id="ActiveHelpOpenDialogAction"
-            modes="run"
-            name="Active Help">
-      </launchConfigurationType>
-   </extension>
--->
 
 </plugin>
