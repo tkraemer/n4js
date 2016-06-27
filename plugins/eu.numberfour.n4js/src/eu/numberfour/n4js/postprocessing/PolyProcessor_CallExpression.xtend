@@ -28,6 +28,10 @@ import it.xsemantics.runtime.RuleEnvironment
 import java.util.Map
 
 /**
+ * {@link PolyProcessor} delegates here for processing array literals.
+ * 
+ * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
+ * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
 @Singleton
 package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
@@ -38,6 +42,10 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 
+	/**
+	 * BEFORE CHANGING THIS METHOD, READ THIS:
+	 * {@link PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)}
+	 */
 	def package TypeRef processCallExpression(RuleEnvironment G, ParameterizedCallExpression callExpr,
 		TypeRef expectedTypeRef, InferenceContext infCtx, ASTMetaInfoCache cache) {
 
@@ -52,7 +60,7 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 
 		if (!isPoly) {
 			val result = ts.type(G, callExpr).value;
-			// do not store in cache (TypingASTWalker responsible for storing types of non-poly expressions in cache)
+			// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
 			return result;
 		}
 
@@ -90,10 +98,8 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 			if (arg !== null && curr_fpar !== null) {
 				val fparTypeRef = curr_fpar.getTypeRef();
 				val fparTypeRefSubst = fparTypeRef.subst(G, typeParam2infVar);
-//				val TypeRef argType = ts.type(G, arg).getValue();
 				val TypeRef argType = polyProcessor.processExpr(G, arg, fparTypeRefSubst, infCtx, cache);
 				if (argType !== null) {
-//					val TypeRef[] ignoredTypeRefs = getInferredTypeRefsInFunctionArgument(arg, argType);
 					// constraint: argType <: fpar.type
 					infCtx.addConstraint(fparTypeRefSubst, argType, Variance.CONTRA);
 					// (note: no substitution in argType required, because it cannot contain any of the new inference
@@ -109,48 +115,33 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 
 		//
 		// (3) derive constraints from matching expected return type to return type of function
+		// --> not required here (will be done by caller)
 		//
 
-// not required here (will be done by caller):
-//		var TypeRef expectedReturnTypeRef = null;
-//		if (F.getReturnTypeRef() != null) {
-//
-//			// TODO the following exception case is a nasty, evil hack; should be removed
-//			// (but this requires redesign of recursion guards, see Xsem rule typeCallExpression)
-////			final boolean isInitExprInVarDeclWithoutTypeDecl = callExpr.eContainer() instanceof VariableDeclaration
-////					&& ((VariableDeclaration) callExpr.eContainer()).getExpression() == callExpr
-////					&& ((VariableDeclaration) callExpr.eContainer()).getDeclaredTypeRef() == null;
-//
-////			if (!isInitExprInVarDeclWithoutTypeDecl) {
-//				expectedReturnTypeRef = ts.expectedTypeIn(G, callExpr.eContainer(), callExpr).getValue();
-//				if (expectedReturnTypeRef != null) {
-//					// constraint: F.returnType <: expected type
-//					infCtx.addConstraint(F.getReturnTypeRef(), expectedReturnTypeRef, Variance.CO, #[]);
-//				}
-////			}
-//		}
+		// create temporary type (i.e. may contain inference variables)
+		val resultTypeRefRaw = F.getReturnTypeRef();
+		val resultTypeRef = resultTypeRefRaw.subst(G, typeParam2infVar);
 
-		val resultTypeRef = F.getReturnTypeRef();
-		val resultTypeRefSubst = resultTypeRef.subst(G, typeParam2infVar);
-
+		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
 		infCtx.onSolved [ solution |
 			if (solution.present) {
 				// success case:
-				cache.storeType(callExpr, resultTypeRefSubst.applySolution(G, solution.get));
+				cache.storeType(callExpr, resultTypeRef.applySolution(G, solution.get));
 				val inferredTypeArgs = typeParam2infVar.values.map[solution.get.get(it)].toList;
 				cache.storeInferredTypeArgs(callExpr, inferredTypeArgs);
 			} else {
-				// failure case (unsolvable constraint system):
+				// failure case (unsolvable constraint system)
 				// to avoid leaking inference variables, replace them by their original type parameter
 				val fakeSolution = newHashMap;
 				for (e : typeParam2infVar.entrySet) {
 					fakeSolution.put(e.value, TypeUtils.createTypeRef(e.key));
 				}
-				cache.storeType(callExpr, resultTypeRefSubst.applySolution(G, fakeSolution));
+				cache.storeType(callExpr, resultTypeRef.applySolution(G, fakeSolution));
 				cache.storeInferredTypeArgs(callExpr, #[]);
 			}
 		];
 
-		return resultTypeRefSubst;
+		// return temporary type of callExpr (i.e. may contain inference variables)
+		return resultTypeRef;
 	}
 }

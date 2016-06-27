@@ -305,12 +305,12 @@ public class TypeProcessor extends AbstractProcessor {
 
 					val expr = node.expressionOfVFP;
 					if (expr instanceof N4ClassExpression) {
-						return askXsemanticsForType(G, expr);
+						return askXsemanticsForType(G, null, expr);
 					}
 					if (expr instanceof NewExpression) {
 						val callee = expr.callee;
 						if (callee instanceof N4ClassExpression) {
-							val calleeType = askXsemanticsForType(G, callee).value;
+							val calleeType = askXsemanticsForType(G, null, callee).value;
 							return new Result(TypeUtils.createTypeRef((calleeType as ClassifierTypeRef).staticType));
 						}
 					}

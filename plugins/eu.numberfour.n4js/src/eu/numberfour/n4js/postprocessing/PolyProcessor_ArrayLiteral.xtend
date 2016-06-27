@@ -30,6 +30,10 @@ import java.util.List
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
+ * {@link PolyProcessor} delegates here for processing array literals.
+ * 
+ * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
+ * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
 @Singleton
 package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
@@ -44,10 +48,16 @@ package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
 	@Inject
 	private DestructureHelper destructureHelper;
 
+	/**
+	 * BEFORE CHANGING THIS METHOD, READ THIS:
+	 * {@link PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)}
+	 */
 	def package TypeRef processArrayLiteral(RuleEnvironment G, ArrayLiteral arrLit, TypeRef expectedTypeRef,
 		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
-		// always poly
+		// note: we do not have the case !arrLit.isPoly here, as in the other poly processors
+		// (array literals are always poly, because they cannot be explicitly typed in N4JS)
+
 		val numOfElems = arrLit.elements.size;
 
 		// the following will give us #[ T ] for an expectedTypeRef of the form Array<T> or Iterable<T>,
@@ -57,8 +67,7 @@ package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
 			if (expectedTypeRef !== null)
 				destructureHelper.extractIterableElementTypesUBs(G, expectedTypeRef).toList // will have len>1 only if expectation is IterableN
 			else
-newArrayList
-//				#[] // no or invalid type expectation
+				newArrayList // no or invalid type expectation
 		};
 
 // hack: faking an expectation of IterableN<...> here
@@ -69,27 +78,27 @@ if(isValueToBeDestructured) {
 		expectedElemTypeRefs.add(G.anyTypeRef);
 }
 
-// experimental performance tweak:
-val haveUsableExpectedType = !expectedElemTypeRefs.empty;
-if (!haveUsableExpectedType) {
-	// no type expectation or some entirely wrong type expectation (i.e. other than Array, Iterable, IterableN)
-	// -> just derive type from elements (and do not introduce a new inference variable for this ArrayLiteral!)
-	val elemTypeRefs = newArrayList;
-	arrLit.elements.filter[expression !== null].forEach [ arrElem |
-		elemTypeRefs += polyProcessor.processExpr(G, arrElem.expression, null, infCtx, cache);
-	]
-	infCtx.onSolved [ solution |
-		val betterElemTypeRefs = arrLit.elements.filter[expression !== null].map [
-			getFinalResultTypeOfNestedPolyExpression(expression)
-		].toList;
-		cache.storeType(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
-	]
-	val unionOfElemTypes = if (!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
-	return G.arrayTypeRef(unionOfElemTypes);
-}
+		// performance tweak:
+		val haveUsableExpectedType = !expectedElemTypeRefs.empty;
+		if (!haveUsableExpectedType) {
+			// no type expectation or some entirely wrong type expectation (i.e. other than Array, Iterable, IterableN)
+			// -> just derive type from elements (and do not introduce a new inference variable for this ArrayLiteral!)
+			val elemTypeRefs = newArrayList;
+			arrLit.elements.filter[expression !== null].forEach [ arrElem |
+				elemTypeRefs += polyProcessor.processExpr(G, arrElem.expression, null, infCtx, cache);
+			]
+			infCtx.onSolved [ solution |
+				val betterElemTypeRefs = arrLit.elements.filter[expression !== null].map [
+					getFinalResultTypeOfNestedPolyExpression(expression)
+				].toList;
+				cache.storeType(arrLit, buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G));
+			]
+			val unionOfElemTypes = if (!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
+			return G.arrayTypeRef(unionOfElemTypes);
+		}
 
 		// choose correct number of type arguments in our to-be-created resultTypeRef
-		// (e.g., 1 for Array<T> and 3 for Iterable3<T1,T2,T3>)
+		// (always 1 for Array<T> or Iterable<T> but N for IterableN<..>, e.g. 3 for Iterable3<T1,T2,T3>)
 		val resultLen = Math.max(
 			Math.min(
 				Math.min(
@@ -101,15 +110,8 @@ if (!haveUsableExpectedType) {
 			1 // ... but at least 1 (even if numOfElems is 0, for example)
 		);
 
-		// create resultTypeRef, i.e. type of the array literal:
-		// Array<T> (where T is a new inference variable) or
-		// IterableN<T1,T2,...,TN> (where T1,...TN are new inference variables, N>=2)
 		val isIterableN = resultLen >= 2;
 		val TypeVariable[] resultInfVars = infCtx.newInferenceVariables(resultLen);
-		val TypeRef resultTypeRef = TypeUtils.createTypeRef(
-			if (isIterableN) G.iterableNType(resultLen) else G.arrayType,
-			resultInfVars.map[TypeUtils.createTypeRef(it)]
-		);
 
 		// for each array element, add a constraint to ensure that its corresponding infVar in result type will be
 		// a super type of the array element's expression
@@ -128,12 +130,16 @@ if (!haveUsableExpectedType) {
 			}
 		}
 
-// not required here (will be done by caller):
-//		val expectedTypeRef = ts.expectedTypeIn(G, arrLit.eContainer(), arrLit).getValue();
-//
-//		// Array<T> <: expectedTypeRef
-//		infCtx.addConstraint(arrTypeRef, expectedTypeRef, Variance.CO, #[]);
+		// create temporary type (i.e. may contain inference variables):
+		// Array<T> (where T is a new inference variable) or
+		// Iterable<T> (where T is a new inference variable) or
+		// IterableN<T1,T2,...,TN> (where T1,...TN are new inference variables, N>=2)
+		val TypeRef resultTypeRef = TypeUtils.createTypeRef(
+			if (isIterableN) G.iterableNType(resultLen) else G.arrayType,
+			resultInfVars.map[TypeUtils.createTypeRef(it)]
+		);
 
+		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
 		infCtx.onSolved [ solution |
 			if (solution.present) {
 				// success case
@@ -149,9 +155,14 @@ if (!haveUsableExpectedType) {
 			}
 		];
 
+		// return temporary type of arrLit (i.e. may contain inference variables)
 		return resultTypeRef;
 	}
 
+	/**
+	 * Makes a best effort for building a type in case something went awry. It's only non-trivial in case we have an
+	 * expectation of IterableN.
+	 */
 	def private TypeRef buildFallbackTypeForArrayLiteral(boolean isIterableN, int resultLen,
 		List<TypeRef> elemTypeRefs, List<TypeRef> expectedElemTypeRefs, RuleEnvironment G) {
 

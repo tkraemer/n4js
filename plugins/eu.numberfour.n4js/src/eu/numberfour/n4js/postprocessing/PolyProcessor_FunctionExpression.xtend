@@ -29,6 +29,10 @@ import it.xsemantics.runtime.RuleEnvironment
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
+ * {@link PolyProcessor} delegates here for processing array literals.
+ * 
+ * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
+ * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
 @Singleton
 package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
@@ -36,20 +40,26 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	@Inject
 	private N4JSTypeSystem ts;
 
+	/**
+	 * BEFORE CHANGING THIS METHOD, READ THIS:
+	 * {@link PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)}
+	 */
 	def package TypeRef processFunctionExpression(RuleEnvironment G, FunctionExpression funExpr, TypeRef expectedTypeRef,
 		InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
+
 		if (!funExpr.isPoly) { // funExpr has declared types on all fpars and explicitly declared return type
 			// can't use xsemantics here, because it would give us a DeferredTypeRef
 			// return ts.type(G, funExpr).getValue();
 			val retTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, funExpr.returnTypeRef,
 				G.predefinedTypes.builtInTypeScope); // FIXME support for declared this type!!
 			val result = TypeUtils.createFunctionTypeExpression(null, #[], fun.fpars, retTypeRef);
-			// do not store in cache (TypingASTWalker responsible for storing types of non-poly expressions in cache)
+			// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
 			return result;
 		}
 
+		// prepare temporary result type reference
 		val result1 = TypeRefsFactory.eINSTANCE.createFunctionTypeExpression;
 
 		if (fun.declaredThisType !== null) {
@@ -60,7 +70,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			result1.ownedTypeVars += fun.typeVars.map[tv|TypeUtils.copy(tv)];
 		}
 
-		// fpars
+		// fpars (also introduce inference variables for types of fpars, where needed)
 		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
 		for (var i = 0; i < len; i++) {
 
@@ -81,7 +91,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			}
 		}
 
-		// return type
+		// return type (also introduce inference variable for return type, if needed)
 		var TypeRef returnTypeRef;
 		if (funExpr.returnTypeRef !== null) {
 			// explicitly declared return type
@@ -108,31 +118,33 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		}
 		result1.returnTypeRef = returnTypeRef;
 
-		// if fun is generic, we now have to replace the type variables of fun by those of result1
-		val result = if (fun.typeVars.empty) {
+		// create temporary type (i.e. may contain inference variables)
+		val resultTypeRef = if (fun.typeVars.empty) {
 				result1
 			} else {
+				// if fun is generic, we have to replace the type variables of fun by those of result1
 				val Gx = G.newRuleEnvironment;
 				Gx.addTypeMappings(fun.typeVars, result1.ownedTypeVars.map[TypeUtils.createTypeRef(it)]);
 				ts.substTypeVariables(Gx, result1).value as FunctionTypeExpression;
 			};
 
+		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
 		infCtx.onSolved [ solution |
 			val solution2 = if (solution.present) solution.get else infCtx.createPseudoSolution(G.anyTypeRef);
-			val resultSolved = result.applySolution(G, solution2) as FunctionTypeExprOrRef;
+			val resultSolved = resultTypeRef.applySolution(G, solution2) as FunctionTypeExprOrRef;
 			cache.storeType(funExpr, resultSolved);
 			fun.replaceDeferredTypeRefs(resultSolved);
 			// store types of fpars in cache ...
 			for (currFpar : funExpr.fpars) {
-				cache.storeType(currFpar,
-// delegate to Xsemantics rule typeFormalParameter (because it contains special handling for 'this'-type and variadic)
-askXsemanticsForType(G, currFpar).getValue() // FIXME clean this up!
-//					TypeUtils.copy(currFpar.definedTypeElement.typeRef)
-					);
+				// delegate to Xsemantics rule typeFormalParameter (because it contains special handling for 'this'-type
+				// and variadic that we do not want to duplicate here)
+				val currTypeRef = askXsemanticsForType(G, null, currFpar).getValue()
+				cache.storeType(currFpar, currTypeRef);
 			}
 		];
 
-		return result;
+		// return temporary type of funExpr (i.e. may contain inference variables)
+		return resultTypeRef;
 	}
 
 	/**

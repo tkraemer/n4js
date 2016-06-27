@@ -97,7 +97,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 					if (tVariable !== null) { // note: tVariable===null happens if obj.name===null (see types builder)
 						assertTrueIfRigid("return type of TVariable in TModule should be a DeferredTypeRef",
 							tVariable.typeRef instanceof DeferredTypeRef);
-						val variableTypeRef = askXsemanticsForType(G, obj).value; // delegate to Xsemantics rule typeVariableDeclaration
+						val variableTypeRef = askXsemanticsForType(G, null, obj).value; // delegate to Xsemantics rule typeVariableDeclaration
 						val variableTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, variableTypeRef);
 						EcoreUtilN4.doWithDeliver(false, [
 							tVariable.typeRef = TypeUtils.copy(variableTypeRefSane);
@@ -114,7 +114,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 						val context = if (tField.eContainer instanceof ContainerType<?>) TypeUtils.createTypeRef(
 								tField.eContainer as ContainerType<?>) else null;
 						val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
-						val fieldTypeRef = askXsemanticsForType(G_withContext, obj).value; // delegate to Xsemantics rule typeN4FieldDeclaration
+						val fieldTypeRef = askXsemanticsForType(G_withContext, null, obj).value; // delegate to Xsemantics rule typeN4FieldDeclaration
 						val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
 						val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);
 						EcoreUtilN4.doWithDeliver(false, [
