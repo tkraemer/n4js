@@ -6268,13 +6268,18 @@ ruleTypeRefForCast :
 	ruleConstructorTypeRef |
 	ruleClassifierTypeRef |
 	ruleFunctionTypeExpressionOLD |
-	ruleArrowFunctionTypeExpression
+	ruleArrowFunctionTypeExpression |
+	ruleUnionTypeExpressionOLD |
+	ruleIntersectionTypeExpressionOLD
 ;
 
 // Rule TypeRefInClassifierType
 ruleTypeRefInClassifierType :
 	ruleParameterizedTypeRefNominal |
-	ruleThisTypeRefNominal
+	ruleThisTypeRefNominal |
+	( (
+	'?'
+	) => ruleWildcard )
 ;
 
 // Rule ThisTypeRef

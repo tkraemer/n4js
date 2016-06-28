@@ -336,10 +336,18 @@ class N4JSLanguageUtils {
 					vFactor = switch(parent) {
 					ComposedTypeRef case parent.typeRefs.contains(curr): 
 						Variance.CO
-					ConstructorTypeRef case parent.staticTypeRef===curr:
-						Variance.INV
-					ClassifierTypeRef case parent.staticTypeRef===curr:
-						Variance.CO
+					ConstructorTypeRef case parent.typeArg===curr:
+						Variance.INV // constructor{T}
+					ClassifierTypeRef case parent.typeArg===curr:
+						Variance.CO // type{T}
+					ClassifierTypeRef case parent.typeArg instanceof Wildcard: {
+						val wc = parent.typeArg as Wildcard;
+						if(wc.declaredUpperBound===curr) {
+							Variance.CO // type{? extends T} OR constructor{? extends T}
+						} else if(wc.declaredLowerBound===curr) {
+							Variance.CONTRA // type{? super T} OR constructor{? super T}
+						}
+					}
 					BoundThisTypeRef case parent.actualThisTypeRef===curr:
 						Variance.CO // note: this should never happen in the typical use cases of this method,
 						// because BoundThisTypeRefs do not appear in AST but are created programmatically

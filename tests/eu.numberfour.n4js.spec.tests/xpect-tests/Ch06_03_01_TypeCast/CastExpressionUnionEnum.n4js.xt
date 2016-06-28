@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+@StringBased enum E { L1, L2 }
+let e: int|E;
+// XPECT noerrors -->
+e as string;
+
+// XPECT noerrors -->
+e as E;
+
+// XPECT noerrors -->
+e as int;
+
+// XPECT errors --> "Cannot cast from union{int,E} to boolean" at "e as boolean"
+e as boolean;
+
+enum V { L1, L2 }
+let v: int|V;
+// XPECT errors --> "Cannot cast from union{int,V} to string" at "v as string"
+v as string;
+
+// XPECT noerrors -->
+v as V;
+
+// XPECT noerrors -->
+v as int;
+
+// XPECT errors --> "Cannot cast from union{int,V} to boolean" at "v as boolean"
+v as boolean;
+
+
