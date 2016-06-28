@@ -1,0 +1,12 @@
+= N4JS Documentation
+:docsdir: ../userguides/
+:doctype: book
+:keywords: Asciidoctor, samples, e-book, EPUB3, KF8, MOBI, Asciidoctor.js
+//:front-cover-image: image:front-cover.jpg[Front Cover,1050,1600]
+
+
+include::{docsdir}n4js-ide-setup.adoc[]
+
+include::{docsdir}npm-export-guide.adoc[]
+
+include::{docsdir}tutorial.adoc[]

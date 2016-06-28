@@ -1,5 +1,4 @@
 target/eclipse-html/articles/index.html
-target/eclipse-html/experiments/commandlinks.html
 target/eclipse-html/faq/comparison-java.html
 target/eclipse-html/faq/comparison-typescript.html
 target/eclipse-html/faq/index.html

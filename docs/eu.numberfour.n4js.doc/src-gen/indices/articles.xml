@@ -2,13 +2,6 @@
 <!DOCTYPE xml>
 <toc topic="target/eclipse-html/articles/index.html" label="N4JS Articles">
 	<topic href="target/eclipse-html/articles/index.html" label="Index"></topic>
-	<topic href="target/eclipse-html/experiments/commandlinks.html" label="Active Help Command Links">
-		<topic href="target/eclipse-html/experiments/commandlinks.html#formatting" label="Formatting"></topic>
-		<topic href="target/eclipse-html/experiments/commandlinks.html#asciidoc-source" label="Asciidoc Source">
-			<topic href="target/eclipse-html/experiments/commandlinks.html#whitespace" label="Whitespace"></topic>
-		</topic>
-		<topic href="target/eclipse-html/experiments/commandlinks.html#passthrough-asciidoc-processing" label="Passthrough Asciidoc Processing"></topic>
-	</topic>
 	<topic href="target/eclipse-html/faq/comparison-java.html" label="N4JS and Java">
 		<topic href="target/eclipse-html/faq/comparison-java.html#introduction" label="Introduction"></topic>
 		<topic href="target/eclipse-html/faq/comparison-java.html#similarities" label="Similarities">
