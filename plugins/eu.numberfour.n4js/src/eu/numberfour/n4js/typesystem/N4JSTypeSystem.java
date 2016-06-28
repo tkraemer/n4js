@@ -42,7 +42,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 public class N4JSTypeSystem {
 
 	@Inject
-	private InternalTypeSystem its;
+	private InternalTypeSystem ts_internal;
 	@Inject
 	private TypeSystemHelper tsh;
 	@Inject
@@ -70,42 +70,42 @@ public class N4JSTypeSystem {
 	 * </ul>
 	 */
 	public Result<TypeRef> expectedTypeIn(RuleEnvironment G, EObject container, Expression expression) {
-		return its.expectedTypeIn(G, container, expression);
+		return ts_internal.expectedTypeIn(G, container, expression);
 	}
 
 	/** Tells if {@code left} is a subtype of {@code right}. Never returns <code>null</code>. */
 	public Result<Boolean> subtype(RuleEnvironment G, TypeArgument left, TypeArgument right) {
-		return its.subtype(G, left, right);
+		return ts_internal.subtype(G, left, right);
 	}
 
 	/** Tells if {@code left} is a subtype of {@code right}. */
 	public boolean subtypeSucceeded(RuleEnvironment G, TypeArgument left, TypeArgument right) {
-		return its.subtypeSucceeded(G, left, right);
+		return ts_internal.subtypeSucceeded(G, left, right);
 	}
 
 	/** Tells if {@code left} is a super type of {@code right}. Never returns <code>null</code>. */
 	public Result<Boolean> supertype(RuleEnvironment G, TypeArgument left, TypeArgument right) {
-		return its.supertype(G, left, right);
+		return ts_internal.supertype(G, left, right);
 	}
 
 	/** Tells if {@code left} is equal to {@code right}. Never returns <code>null</code>. */
 	public Result<Boolean> equaltype(RuleEnvironment G, TypeArgument left, TypeArgument right) {
-		return its.equaltype(G, left, right);
+		return ts_internal.equaltype(G, left, right);
 	}
 
 	/** Tells if {@code left} is equal to {@code right}. */
 	public boolean equaltypeSucceeded(RuleEnvironment G, TypeArgument left, TypeArgument right) {
-		return its.equaltypeSucceeded(G, left, right);
+		return ts_internal.equaltypeSucceeded(G, left, right);
 	}
 
 	/** Returns the upper bound of the given type wrapped in a {@link Result}. Never returns <code>null</code>. */
 	public Result<TypeRef> upperBound(RuleEnvironment G, TypeArgument typeArgument) {
-		return its.upperBound(G, typeArgument);
+		return ts_internal.upperBound(G, typeArgument);
 	}
 
 	/** Returns the lower bound of the given type wrapped in a {@link Result}. Never returns <code>null</code>. */
 	public Result<TypeRef> lowerBound(RuleEnvironment G, TypeArgument typeArgument) {
-		return its.lowerBound(G, typeArgument);
+		return ts_internal.lowerBound(G, typeArgument);
 	}
 
 	/**
@@ -133,12 +133,12 @@ public class N4JSTypeSystem {
 	 * FunctionTypeExpression back).
 	 */
 	public Result<TypeArgument> substTypeVariables(RuleEnvironment G, TypeArgument typeArgument) {
-		return its.substTypeVariables(G, typeArgument);
+		return ts_internal.substTypeVariables(G, typeArgument);
 	}
 
 	/** Returns the this type at the given location wrapped in a {@link Result}. Never returns <code>null</code>. */
 	public Result<TypeRef> thisTypeRef(RuleEnvironment G, EObject location) {
-		return its.thisTypeRef(G, location);
+		return ts_internal.thisTypeRef(G, location);
 	}
 
 	// ###############################################################################################################
