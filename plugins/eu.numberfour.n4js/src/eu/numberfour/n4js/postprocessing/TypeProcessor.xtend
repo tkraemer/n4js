@@ -14,16 +14,11 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FieldAccessor
-import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
-import eu.numberfour.n4js.n4JS.SetterDeclaration
-import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.resource.N4JSResource
@@ -32,10 +27,9 @@ import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
-import eu.numberfour.n4js.ts.types.TFormalParameter
-import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptionWithoutStacktrace
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
@@ -43,11 +37,9 @@ import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.RuleFailedException
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptionWithoutStacktrace
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -111,7 +103,7 @@ public class TypeProcessor extends AbstractProcessor {
 				// ordinary typing of typable AST nodes
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
-				val result = inferType(G, node);
+				val result = askXsemanticsForType(G, null, node);
 				// in this case, we are responsible for storing the type in the cache
 				// (Xsemantics does not know of the cache)
 				cache.storeType(node, result);
@@ -125,74 +117,6 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 
 		log(indentLevel, cache.getTypeFailSafe(node));
-	}
-
-	def private Result<TypeRef> inferType(RuleEnvironment G, TypableElement obj) {
-		return inferType(G, null, obj);
-	}
-
-	def private Result<TypeRef> inferType(RuleEnvironment G, RuleApplicationTrace trace, TypableElement obj) {
-		if (obj.eIsProxy) {
-			return new Result(TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
-		}
-		// special case:
-		// "this" in the default initializer expression of fpars is not supported yet
-		if (obj.isThisKeywordInFparDefaultExpression || obj.isFparRefInFparDefaultExpression) {
-			// TODO IDE-1345 remove this work-around when fpar default initializers are properly supported
-			// To see why the following work-around is required, remove it and check the following code:
-			//
-			//     var ol = {
-			//         prop1: "p1",
-			//         prop2: function(x = this.prop1) {}
-			//     };
-			//
-			// or
-			//
-			//     var ol = {
-			//         prop: function(x = 42, y = x) {}
-			//     };
-			//
-			return new Result(G.undefinedTypeRef);
-		}
-		// special case:
-		// TStructMembers are special in that they may be types (in case of TStructMethod) and appear as AST nodes
-		// -> if we are dealing with an AST node, make sure to use the definedMember in the TModule
-		val definedMember = if (obj instanceof TStructMember) obj.definedMember;
-		if (definedMember !== null && obj.isASTNode) {
-			return inferType(G, trace, definedMember);
-		}
-		// standard case:
-		return askXsemanticsForType(G, trace, obj);
-	}
-
-	def private boolean isThisKeywordInFparDefaultExpression(TypableElement elem) {
-		return elem instanceof ThisLiteral && elem.isContainedInFparDefaultExpression;
-	}
-
-	def private boolean isFparRefInFparDefaultExpression(TypableElement elem) {
-		return elem instanceof IdentifierRef
-			&& (
-				(elem as IdentifierRef).id instanceof FormalParameter
-				|| (elem as IdentifierRef).id instanceof TFormalParameter
-			)
-			&& elem.isContainedInFparDefaultExpression;
-	}
-
-	def private boolean isContainedInFparDefaultExpression(TypableElement elem) {
-		val containingFunctionOrAccessor = N4JSASTUtils.getContainingFunctionOrAccessor(elem);
-		val containingFunctionOrAccessorFpars = switch (containingFunctionOrAccessor) {
-			FunctionDefinition: containingFunctionOrAccessor.fpars
-			SetterDeclaration: #[containingFunctionOrAccessor.fpar]
-			default: #[]
-		};
-		val containingFpar = EcoreUtil2.getContainerOfType(elem, FormalParameter);
-		if (containingFpar !== null && containingFunctionOrAccessorFpars.contains(containingFpar)) {
-			val containingFparInitializer = containingFpar.initializer;
-			if (containingFparInitializer !== null && EcoreUtil.isAncestor(containingFparInitializer, elem)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 
@@ -212,7 +136,7 @@ public class TypeProcessor extends AbstractProcessor {
 
 		var obj = if (objRaw.eIsProxy) {
 				val resSet = RuleEnvironmentExtensions.getContextResource(G).resourceSet;
-				EcoreUtil.resolve(objRaw, resSet) as TypableElement;
+				EcoreUtil.resolve(objRaw, resSet) as TypableElement
 			} else {
 				objRaw
 			};
@@ -226,7 +150,7 @@ public class TypeProcessor extends AbstractProcessor {
 				if (!obj.isTypeModelElement) {
 					throw new IllegalStateException("not a type model element: " + obj)
 				}
-				return inferType(G, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
+				return askXsemanticsForType(G, trace, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
 			}
 
 			// make sure post-processing on the containing N4JS resource is initiated
@@ -242,7 +166,7 @@ public class TypeProcessor extends AbstractProcessor {
 					return getTypeOfForwardReference(G, astNodeToProcess, astMetaInfoCacheHelper.getOrCreate(res));
 				}
 
-				return inferType(G, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
+				return askXsemanticsForType(G, trace, obj); // obj is a type model element, so this will just wrap it in a TypeRef (no actual inference)
 			} else if (obj.isASTNode && obj.isTypableNode) {
 				// here we read from the cache (if AST node 'obj' was already processed) or forward-process 'obj'
 				val cache = astMetaInfoCacheHelper.getOrCreate(res);
@@ -281,7 +205,7 @@ public class TypeProcessor extends AbstractProcessor {
 			// can happen for:
 			// - objects that are not contained in a Resource
 			// - objects that are contained in a Resource but not an N4JSResource
-			return inferType(G, trace, obj);
+			return askXsemanticsForType(G, trace, obj);
 		}
 	}
 
