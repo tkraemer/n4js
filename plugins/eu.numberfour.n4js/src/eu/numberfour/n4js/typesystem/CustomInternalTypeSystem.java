@@ -157,9 +157,9 @@ public class CustomInternalTypeSystem extends InternalTypeSystem {
 
 	/**
 	 * <b>All invocations of 'type' judgment in Xsemantics - from outside or from within Xsemantics - are now delegated
-	 * to {@link TypeProcessor}.</b>
+	 * to {@link TypeProcessor#getType(RuleEnvironment, RuleApplicationTrace, TypableElement)}.</b>
 	 * <p>
-	 * {@code TypeProcessor} will simply read the type from the cache (if containing resource is fully processed) or
+	 * {@link TypeProcessor} will simply read the type from the cache (if containing resource is fully processed) or
 	 * initiate the post-processing of the entire resource. Actual use of the 'type' judgment will only be done by
 	 * {@link TypeProcessor} during post-processing of a resource via method
 	 * {@link #use_type_judgment_from_PostProcessors(RuleEnvironment, RuleApplicationTrace, TypableElement)}. Once
@@ -169,7 +169,7 @@ public class CustomInternalTypeSystem extends InternalTypeSystem {
 	@Override
 	protected Result<TypeRef> typeInternal(RuleEnvironment _environment_, RuleApplicationTrace _trace_,
 			TypableElement expression) {
-		return typeProcessor.xsemantics_type(_environment_, _trace_, expression);
+		return typeProcessor.getType(_environment_, _trace_, expression);
 	}
 
 	/**

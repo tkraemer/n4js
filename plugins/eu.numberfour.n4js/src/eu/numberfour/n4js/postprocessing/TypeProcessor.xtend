@@ -124,10 +124,37 @@ public class TypeProcessor extends AbstractProcessor {
 
 
 	/**
-	 * Will be called by Xsemantics when the type judgment is invoked, either from within Xsemantics or from the
-	 * outside.
+	 * This is the single, central method for obtaining the type of a typable element (AST node or TModule element).
+	 * <b>It should never be invoked directly by client code!</b> Instead, client code should always call
+	 * {@link eu.numberfour.n4js.typesystem.N4JSTypeSystem#type(RuleEnvironment,TypableElement) N4JSTypeSystem#type()}.
+	 * <p>
+	 * The behavior of this method depends on the state the containing {@link N4JSResource} is in:
+	 * <ul>
+	 * <li>before post-processing has started:<br>
+	 *     -> simply initiate post-processing; once it's finished, return type from AST meta-info cache.
+	 * <li>during post-processing:
+	 *     <ul>
+	 *     <li>in case of a backward reference:<br>
+	 *         -> simply return type from AST meta-info cache.
+	 *     <li>in case of a forward reference:<br>
+	 *         -> trigger forward-processing of the identifiable subtree below the given typable element, see
+	 *         {@link #getTypeOfForwardReference(RuleEnvironment,TypableElement,ASTMetaInfoCache) #getTypeOfForwardReference()},
+	 *         which delegates to {@link eu.numberfour.n4js.postprocessing.ASTProcessor#processSubtree_forwardReference(
+	 *         RuleEnvironment,TypableElement,ASTMetaInfoCache) ASTProcessor#processSubtree_forwardReference()}.
+	 *     </ul>
+	 * <li>after post-processing has completed:<br>
+	 *     -> simply return type from AST meta-info cache.
+	 * </ul>
+	 * This overview is simplified, check the code for precise rules!
+	 * <p>
+	 * Two methods delegate here (no one else should call this method):
+	 * <ol>
+	 * <li>{@link eu.numberfour.n4js.typesystem.N4JSTypeSystem#type(RuleEnvironment,TypableElement)}
+	 * <li>{@link eu.numberfour.n4js.typesystem.CustomInternalTypeSystem#typeInternal(RuleEnvironment,
+	 *     RuleApplicationTrace,TypableElement)}
+	 * </ol>
 	 */
-	def public Result<TypeRef> xsemantics_type(RuleEnvironment G, RuleApplicationTrace trace, TypableElement objRaw) {
+	def public Result<TypeRef> getType(RuleEnvironment G, RuleApplicationTrace trace, TypableElement objRaw) {
 
 		if (objRaw === null) {
 			// failing safely here; otherwise we would need preemptive null-checks wherever type inference is applied
@@ -209,6 +236,7 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
+	/** @see eu.numberfour.n4js.postprocessing.TypeProcessor#getType(RuleEnvironment,RuleApplicationTrace,TypableElement) */
 	def private Result<TypeRef> getTypeOfForwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 
