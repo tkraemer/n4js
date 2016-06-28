@@ -12,7 +12,7 @@ var actualX = 136;
 
 
 // Exactly is default case, Order defaults to 'unordered'
-/* XPECT FIXME contentAssistList at '--actua<|>lX' proposals exactly ---
+/* XPECT contentAssistList at '--actua<|>lX' proposals exactly ---
 "actual", "actualX"
 ---
 */
@@ -30,7 +30,7 @@ var unexpected : int = actual ;
 
 
 // Exactly is default case, Order defaults to 'unordered'
-/* XPECT FIXME contentAssistList at '( act<|> )' proposals exactly ---
+/* XPECT contentAssistList at '( act<|> )' proposals exactly ---
 "actual", "actualX"
 ---
 */
