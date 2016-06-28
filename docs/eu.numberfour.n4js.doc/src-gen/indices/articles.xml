@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE xml>
 <toc topic="target/eclipse-html/articles/index.html" label="N4JS Articles">
 	<topic href="target/eclipse-html/articles/index.html" label="Index"></topic>
 	<topic href="target/eclipse-html/faq/comparison-java.html" label="N4JS and Java">

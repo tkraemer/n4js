@@ -15,10 +15,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
         
-        <docs.src.dir>${basedir}/src</docs.src.dir>
-    
         <eclipse.html>eclipse-html</eclipse.html>
         <website.html>website-html</website.html>
+
         <epub.target.dir>${basedir}/target/epub</epub.target.dir>
         <pdf.dir>${basedir}/target/pdf</pdf.dir>
 
@@ -120,7 +119,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${docs.src.dir}</sourceDirectory>
+                            <sourceDirectory>src/</sourceDirectory>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>target/eclipse-html</outputDirectory>
                             <backend>html5</backend>
@@ -154,7 +153,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${docs.src.dir}</sourceDirectory>
+                            <sourceDirectory>src/</sourceDirectory>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <preserveDirectories>true</preserveDirectories> 
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
@@ -190,7 +189,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <skip>true</skip>  <!-- Execution skipped! -->
-                            <sourceDirectory>${docs.src.dir}/_epub</sourceDirectory>
+                            <sourceDirectory>src/_epub</sourceDirectory>
                             <outputDirectory>${epub.target.dir}</outputDirectory>
                             <preserveDirectories>true</preserveDirectories>
                             <docsdir>${docs.src.dir}/userguides/</docsdir>
@@ -218,8 +217,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <skip>skip</skip> <!-- Execution skipped! -->
-                            <sourceDirectory>${docs.src.dir}</sourceDirectory>
+                            <skip>true</skip> <!-- Execution skipped! -->
+                            <sourceDirectory>src/</sourceDirectory>
                             <outputDirectory>${pdf.dir}</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
