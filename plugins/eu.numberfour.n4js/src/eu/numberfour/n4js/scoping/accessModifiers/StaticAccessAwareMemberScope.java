@@ -44,7 +44,7 @@ public class StaticAccessAwareMemberScope extends FilterWithErrorMarkerScope {
 	private String memberTypeAlias = null;
 
 	/**
-	 * Creates a new scope instance.
+	 * Creates a new scope instance filtering parent.
 	 *
 	 * @param context
 	 *            usually a ParameterizedPropertyAccessExpression.

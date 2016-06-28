@@ -1531,6 +1531,37 @@ Elision returns BindingElement:
 	{BindingElement} ','
 ;
 
+
+TStructMethod returns types::TStructMethod:
+	=>
+	({types::TStructMethod}
+		('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+	    name=IdentifierName '('
+	) TAnonymousFormalParameterList ')'
+	(':' returnTypeRef=TypeRef)?
+;
+
+
+TStructField returns types::TStructField:
+	name=IdentifierName (':' typeRef=TypeRef)?
+;
+
+TStructGetter returns types::TStructGetter:
+	=> ({types::TStructGetter}
+	'get'
+	name=IdentifierName)
+	'(' ')' (':' declaredTypeRef=TypeRef)?
+;
+
+TStructSetter returns types::TStructSetter:
+	=> ({types::TStructSetter}
+	'set'
+	name=IdentifierName)
+	'(' fpar=TAnonymousFormalParameter ')'
+;
+
+
+
 /**
  * Intentionally unused to get rid of bogus lexer errors when
  * the input contains an incomplete asyncArrow?='@=>' keyword, e.g. @=)

@@ -1196,4 +1196,17 @@ public class TypeUtils {
 	public static boolean isBuiltIn(Type type) {
 		return N4Scheme.isFromResourceWithN4Scheme(type);
 	}
+
+	/**
+	 * Null and proxy-safe method for retrieving typing strategy of a type ref.
+	 *
+	 * @param typeRef
+	 *            may be null or a proxy
+	 */
+	public static TypingStrategy retrieveTypingStrategy(TypeRef typeRef) {
+		if (typeRef != null && !typeRef.eIsProxy()) {
+			return typeRef.getTypingStrategy();
+		}
+		return TypingStrategy.DEFAULT;
+	}
 }

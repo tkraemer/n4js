@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+var u: union{~Object};
+// XPECT errors -->"Couldn't resolve reference to IdentifiableElement 'constructor'." at "constructor"
+u.constructor;
+
+var s: ~Object;
+// XPECT errors -->"method constructor is not available for structurally referenced type ~Object." at "constructor"
+s.constructor;
+
+var c: Object;
+// XPECT noerrors -->
+c.constructor;
+

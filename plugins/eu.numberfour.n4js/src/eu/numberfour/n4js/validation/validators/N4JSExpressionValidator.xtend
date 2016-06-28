@@ -250,8 +250,16 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	private def isMethodEffectivelyFinal(TMethod method) {
-		method.isFinal || method.getMemberAccessModifier() == MemberAccessModifier.PRIVATE ||
-			method.containingType.isFinal // if the containing type is final all its method are assumed final too
+		if (method.isFinal || method.getMemberAccessModifier() == MemberAccessModifier.PRIVATE) {
+			return true;
+		}
+		val containingType = method.containingType;
+		// If the containing type is final all its method are assumed final too
+		// Attention: containing type may be a UnionUypeExpression and thus the "containingType" method will return null
+		if (containingType!==null && containingType.isFinal) {
+			return true; 
+		}
+		return false;
 	}
 
 	/**

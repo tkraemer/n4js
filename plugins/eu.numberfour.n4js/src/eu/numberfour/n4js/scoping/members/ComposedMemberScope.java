@@ -40,10 +40,17 @@ import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * Scope implementation for ComposedTypeRefs, i.e. union types and intersection types.
+ * <p>
+ * This scope assumes that the sub-scopes are already filtered according to static access and visibility. Static access
+ * can be modified by the sub-scope and checking it here again would lead to problems, e.g., in case of classifier type.
+ * <p>
+ * Note that there cannot be static access to a union or intersection type, since a definition of a composed type
+ * actually is a reference.
  */
 public class ComposedMemberScope extends MemberScope {
 
@@ -102,7 +109,9 @@ public class ComposedMemberScope extends MemberScope {
 		for (IScope currSubScope : subScopes) {
 			try {
 				for (IEObjectDescription currDesc : currSubScope.getAllElements()) {
-					names.add(currDesc.getName().getLastSegment());
+					if (!(currDesc instanceof IEObjectDescriptionWithError)) {
+						names.add(currDesc.getName().getLastSegment());
+					}
 				}
 			} catch (UnsupportedOperationException e) {
 				// according to API doc of IScope#getAllElements(), scopes are free to throw an
@@ -124,22 +133,29 @@ public class ComposedMemberScope extends MemberScope {
 		return result;
 	}
 
+	/**
+	 * Returns member by delegating to {@link #getOrCreateComposedMember(String, boolean)} if staticAccess is false,
+	 * otherwise null is returned right away since union or intersection types cannot be statically accessed.
+	 */
 	@Override
 	protected TMember findMember(String name, boolean writeAccess, boolean isStaticAccess) {
-		return getOrCreateComposedMember(name, writeAccess, isStaticAccess);
+		if (isStaticAccess) {
+			return null;
+		}
+		return getOrCreateComposedMember(name, writeAccess);
 	}
 
-	private TMember getOrCreateComposedMember(String memberName, boolean writeAccess, boolean isStaticAccess) {
-		final TMember member = getComposedMember(memberName, writeAccess, isStaticAccess);
+	private TMember getOrCreateComposedMember(String memberName, boolean writeAccess) {
+		final TMember member = getComposedMember(memberName, writeAccess);
 		if (member == null)
-			return createComposedMember(memberName, writeAccess, isStaticAccess);
+			return createComposedMember(memberName, writeAccess);
 		return member;
 	}
 
-	private TMember getComposedMember(String memberName, boolean writeAccess, boolean isStaticAccess) {
+	private TMember getComposedMember(String memberName, boolean writeAccess) {
 		for (TMember currM : getCacheHolder(composedTypeRef).getCachedComposedMembers())
 			if (memberName.equals(currM.getName()) &&
-					hasCorrectAccess(currM, writeAccess, isStaticAccess))
+					hasCorrectAccess(currM, writeAccess))
 				return currM;
 		return null;
 	}
@@ -149,7 +165,7 @@ public class ComposedMemberScope extends MemberScope {
 	 * given name in the union type's contained types. If those members cannot be combined into a single valid member,
 	 * this method creates a dummy placeholder.
 	 */
-	private TMember createComposedMember(String memberName, boolean writeAccess, boolean isStaticAccess) {
+	private TMember createComposedMember(String memberName, boolean writeAccess) {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final ComposedMemberDescriptor composedMember = new ComposedMemberDescriptor(
@@ -160,7 +176,7 @@ public class ComposedMemberScope extends MemberScope {
 					EcoreUtilN4.getResource(context, composedTypeRef));
 			composedMember.merge(
 					GwithSubstitutions,
-					findMemberInSubScope(idx, memberName, writeAccess, isStaticAccess));
+					findMemberInSubScope(idx, memberName, writeAccess));
 		}
 		// produce result
 		if (!composedMember.isEmpty()) {
@@ -241,14 +257,14 @@ public class ComposedMemberScope extends MemberScope {
 	/**
 	 * Searches for a member of the given name and for the given access in the sub-scope with index 'subScopeIdx'.
 	 */
-	private TMember findMemberInSubScope(int subScopeIdx, String name, boolean writeAccess, boolean isStaticAccess) {
+	private TMember findMemberInSubScope(int subScopeIdx, String name, boolean writeAccess) {
 		final IEObjectDescription currElem = getSubScope(subScopeIdx).getSingleElement(QualifiedName.create(name));
-		if (currElem != null) {
+		if (currElem != null && !(currElem instanceof IEObjectDescriptionWithError)) {
 			final EObject objOrProxy = currElem.getEObjectOrProxy();
 			if (objOrProxy != null && !objOrProxy.eIsProxy() && objOrProxy instanceof TMember) {
 				final TMember currM = (TMember) objOrProxy;
-				if (hasCorrectAccess(currM, writeAccess, isStaticAccess)
-						|| (currM instanceof TField && hasCorrectAccess(currM, !writeAccess, isStaticAccess)))
+				if (hasCorrectAccess(currM, writeAccess)
+						|| (currM instanceof TField && hasCorrectAccess(currM, !writeAccess)))
 					return currM;
 			}
 		}
@@ -263,9 +279,8 @@ public class ComposedMemberScope extends MemberScope {
 		return new UncommonMemberDescription(result, composedTypeRef, subScopes);
 	}
 
-	private static boolean hasCorrectAccess(TMember currM, boolean writeAccess, boolean staticAccess) {
-		return ((!writeAccess && currM.isReadable()) || (writeAccess && currM.isWriteable())) &&
-				staticAccess == currM.isStatic();
+	private static boolean hasCorrectAccess(TMember currM, boolean writeAccess) {
+		return ((!writeAccess && currM.isReadable()) || (writeAccess && currM.isWriteable()));
 	}
 
 	/**

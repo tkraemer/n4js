@@ -124,8 +124,8 @@ public abstract class FilterWithErrorMarkerScope implements IScope {
 			Iterable<IEObjectDescription> originalDescriptions) {
 		// warning produced here is a bug, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=445465
 		// explicitly declaring type of element fixes the warning
-		Iterable<IEObjectDescription> filteredResult =
-				Iterables.transform(originalDescriptions, (IEObjectDescription it) -> {
+		Iterable<IEObjectDescription> filteredResult = Iterables.transform(originalDescriptions,
+				(IEObjectDescription it) -> {
 					if (it == null || isAccepted(it)) {
 						return it;
 					} else {

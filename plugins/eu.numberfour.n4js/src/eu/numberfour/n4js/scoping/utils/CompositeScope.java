@@ -20,8 +20,11 @@ import org.eclipse.xtext.scoping.IScope;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
+
 /**
- * A scope that is composed of other scopes.
+ * A scope that is composed of other scopes. Erroneous descriptions are filtered out if (at least) one other scope
+ * contains a non-erroneous description for the same name/object in case of single element access.
  * <p>
  * IMPORTANT:<br>
  * Usually, scopes should *not* be composed with this class, instead nesting should be used (one scope being a parent of
@@ -50,22 +53,38 @@ public class CompositeScope implements IScope {
 
 	@Override
 	public IEObjectDescription getSingleElement(QualifiedName name) {
+		IEObjectDescription result = null;
 		for (IScope currScope : childScopes) {
 			final IEObjectDescription currResult = currScope.getSingleElement(name);
-			if (currResult != null)
-				return currResult;
+			if (currResult != null) {
+				if (!(currResult instanceof IEObjectDescriptionWithError)) {
+					return currResult; // no error, use scope order as precedence (first one wins) and return
+				}
+				if (result == null) {
+					result = currResult; // with error, maybe we find something w/o error in following scope, do not
+											// return yet
+				}
+			}
 		}
-		return null;
+		return result; // return null or (first) description with error
 	}
 
 	@Override
 	public IEObjectDescription getSingleElement(EObject object) {
+		IEObjectDescription result = null;
 		for (IScope currScope : childScopes) {
 			final IEObjectDescription currResult = currScope.getSingleElement(object);
-			if (currResult != null)
-				return currResult;
+			if (currResult != null) {
+				if (!(currResult instanceof IEObjectDescriptionWithError)) {
+					return currResult; // no error, use scope order as precedence (first one wins) and return
+				}
+				if (result == null) {
+					result = currResult; // with error, maybe we find something w/o error in following scope, do not
+											// return yet
+				}
+			}
 		}
-		return null;
+		return result; // return null or (first) description with error
 	}
 
 	@Override
