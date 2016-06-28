@@ -281,11 +281,17 @@ public class ASTProcessor extends AbstractProcessor {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	/**
+	 * Top-down processing of AST nodes happens here, i.e. this method will see all AST nodes in a top-down order.
+	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node);
 	}
 
+	/**
+	 * Bottom-up processing of AST nodes happens here, i.e. this method will see all AST nodes in a bottom-up order.
+	 */
 	def private void processNode_postChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node);
