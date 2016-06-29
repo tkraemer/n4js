@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.scoping.members;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,8 +18,10 @@ import java.util.Set;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import com.google.inject.Inject;
 
@@ -29,6 +30,7 @@ import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.TField;
@@ -52,12 +54,12 @@ import it.xsemantics.runtime.RuleEnvironment;
  * Note that there cannot be static access to a union or intersection type, since a definition of a composed type
  * actually is a reference.
  */
-public class ComposedMemberScope extends MemberScope {
+public class UnionMemberScope extends AbstractScope {
 
 	/**
 	 * Emulates a factory w/o FactoryModuleBuilder
 	 */
-	public static class ComposedMemberScopeFactory {
+	public static class UnionMemberScopeFactory {
 
 		@Inject
 		ContainerTypesHelper containerTypesHelper;
@@ -65,98 +67,97 @@ public class ComposedMemberScope extends MemberScope {
 		/**
 		 * Creates an instance of this class for the given ComposedTypeRef.
 		 */
-		public IScope create(ComposedTypeRef composedTypeRef, EObject context, List<IScope> subScopes,
-				boolean isIntersection, N4JSTypeInferencer typeInferencer) {
+		public IScope create(UnionTypeExpression unionTypeExpression, EObject context, List<IScope> subScopes,
+				N4JSTypeInferencer typeInferencer) {
 			if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
 				return new DynamicPseudoScope();
 			}
-
-			// TODO add support for intersection types
-			if (isIntersection)
-				return IScope.NULLSCOPE;
-			return new ComposedMemberScope(containerTypesHelper, composedTypeRef, context, subScopes, typeInferencer);
+			return new UnionMemberScope(containerTypesHelper, unionTypeExpression, context, subScopes, typeInferencer);
 		}
 	}
 
-	private final ComposedTypeRef composedTypeRef;
+	private final UnionTypeExpression unionTypeExpression;
 	private final IScope[] subScopes;
+	private final EObject context;
 
 	private final N4JSTypeInferencer typeInferencer;
+	private final boolean writeAccess;
 
-	private ComposedMemberScope(ContainerTypesHelper containerTypesHelper, ComposedTypeRef composedTypeRef,
-			EObject context,
-			List<IScope> subScopes, N4JSTypeInferencer typeInferencer) {
-		super(containerTypesHelper, IScope.NULLSCOPE, Collections.emptyList(), context, false);
-		this.composedTypeRef = composedTypeRef;
+	private UnionMemberScope(ContainerTypesHelper containerTypesHelper, UnionTypeExpression unionTypeExpression,
+			EObject context, List<IScope> subScopes, N4JSTypeInferencer typeInferencer) {
+
+		super(IScope.NULLSCOPE, false);
+
+		this.unionTypeExpression = unionTypeExpression;
 		this.subScopes = subScopes.toArray(new IScope[subScopes.size()]);
 		this.typeInferencer = typeInferencer;
+		this.context = context;
+		this.writeAccess = ExpressionExtensions.isLeftHandSide(context);
 	}
 
 	@Override
-	protected IEObjectDescription getSingleLocalElementByName(QualifiedName name) {
-		// only overriding this method to use our own implementation of AbstractDescriptionWithError
-		final IEObjectDescription result = super.getSingleLocalElementByName(name);
-		final EObject eObjOrProxy = result != null ? result.getEObjectOrProxy() : null;
-		if (isErrorPlaceholder(eObjOrProxy))
-			return createUncommonDescriptionWrapper(result);
-		return result;
-	}
+	protected Iterable<IEObjectDescription> getAllLocalElements() {
 
-	@Override
-	protected List<TMember> getMembers() {
 		// collect all names from subScopes
 		final Set<String> names = new HashSet<>();
 		for (IScope currSubScope : subScopes) {
 			try {
 				for (IEObjectDescription currDesc : currSubScope.getAllElements()) {
-					if (!(currDesc instanceof IEObjectDescriptionWithError)) {
-						names.add(currDesc.getName().getLastSegment());
-					}
+					String name = currDesc.getName().getLastSegment();
+					names.add(name);
 				}
 			} catch (UnsupportedOperationException e) {
 				// according to API doc of IScope#getAllElements(), scopes are free to throw an
 				// UnsupportedOperationException --> therefore we catch and ignore this here
 			}
 		}
-		// build combined members for these names
-		// (for the "current" read/write-access derived from the context,
-		// see MemberScope#getSingleLocalElementByName(QualifiedName))
-		final boolean accessForWriteOperation = ExpressionExtensions.isLeftHandSide(context);
-		final List<TMember> result = new ArrayList<>();
-		for (String currName : names) {
-			final TMember currM = findMember(currName, accessForWriteOperation, false);
-			// don't include invalid combined members
-			// (otherwise they would appear in code completion proposals, etc.)
-			if (currM != null && !isErrorPlaceholder(currM))
-				result.add(currM);
+
+		List<IEObjectDescription> descriptions = new ArrayList<>(names.size());
+		for (String name : names) {
+			IEObjectDescription description = getSingleLocalElementByName(QualifiedName.create(name));
+			if (description != null) {
+				descriptions.add(description);
+			}
 		}
-		return result;
+		return descriptions;
 	}
 
-	/**
-	 * Returns member by delegating to {@link #getOrCreateComposedMember(String, boolean)} if staticAccess is false,
-	 * otherwise null is returned right away since union or intersection types cannot be statically accessed.
-	 */
 	@Override
-	protected TMember findMember(String name, boolean writeAccess, boolean isStaticAccess) {
-		if (isStaticAccess) {
+	protected IEObjectDescription getSingleLocalElementByName(QualifiedName qualifiedName) {
+		String name = qualifiedName.getLastSegment();
+		TMember member = getOrCreateComposedMember(name);
+		if (member == null) { // no such member, no need for "merging" descriptions, there won't be any
 			return null;
 		}
-		return getOrCreateComposedMember(name, writeAccess);
+
+		if (isErrorPlaceholder(member)) {
+			return createUnionMemberDescriptionWithErrors(EObjectDescription.create(member.getName(), member));
+		}
+		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
+
+		QualifiedName qn = QualifiedName.create(name);
+		for (IScope currSubScope : subScopes) {
+			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
+			if (description == null || subDescription instanceof IEObjectDescriptionWithError) {
+				return createUnionMemberDescriptionWithErrors(description);
+			}
+		}
+		return description;
 	}
 
-	private TMember getOrCreateComposedMember(String memberName, boolean writeAccess) {
-		final TMember member = getComposedMember(memberName, writeAccess);
+	private TMember getOrCreateComposedMember(String memberName) {
+		final TMember member = getCachedComposedMember(memberName);
 		if (member == null)
-			return createComposedMember(memberName, writeAccess);
+			return createComposedMember(memberName);
 		return member;
 	}
 
-	private TMember getComposedMember(String memberName, boolean writeAccess) {
-		for (TMember currM : getCacheHolder(composedTypeRef).getCachedComposedMembers())
-			if (memberName.equals(currM.getName()) &&
-					hasCorrectAccess(currM, writeAccess))
+	private TMember getCachedComposedMember(String memberName) {
+		for (TMember currM : getCacheHolder(unionTypeExpression).getCachedComposedMembers()) {
+			if (memberName.equals(currM.getName()) && hasCorrectAccess(currM, writeAccess)) {
 				return currM;
+			}
+		}
 		return null;
 	}
 
@@ -165,38 +166,38 @@ public class ComposedMemberScope extends MemberScope {
 	 * given name in the union type's contained types. If those members cannot be combined into a single valid member,
 	 * this method creates a dummy placeholder.
 	 */
-	private TMember createComposedMember(String memberName, boolean writeAccess) {
+	private TMember createComposedMember(String memberName) {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
-		final ComposedMemberDescriptor composedMember = new ComposedMemberDescriptor(
-				writeAccess, EcoreUtilN4.getResource(context, composedTypeRef), typeInferencer);
+		final ComposedMemberDescriptor composedMemberDescr = new ComposedMemberDescriptor(
+				writeAccess, EcoreUtilN4.getResource(context, unionTypeExpression), typeInferencer);
 		for (int idx = 0; idx < subScopes.length; idx++) {
+			IScope subScope = subScopes[idx];
 			final RuleEnvironment GwithSubstitutions = typeInferencer.createRuleEnvironmentForContext(
-					composedTypeRef.getTypeRefs().get(idx),
-					EcoreUtilN4.getResource(context, composedTypeRef));
-			composedMember.merge(
-					GwithSubstitutions,
-					findMemberInSubScope(idx, memberName, writeAccess));
+					unionTypeExpression.getTypeRefs().get(idx),
+					EcoreUtilN4.getResource(context, unionTypeExpression));
+			TMember member = findMemberInSubScope(subScope, memberName);
+			composedMemberDescr.merge(GwithSubstitutions, member);
 		}
 		// produce result
-		if (!composedMember.isEmpty()) {
+		if (!composedMemberDescr.isEmpty()) {
 			// at least one of the subScopes had an element of that name
 			final TMember result;
-			if (composedMember.isValid()) {
+			if (composedMemberDescr.isValid()) {
 				// success case:
 				// 1) ALL of the subScopes have an element for that name and
 				// 2) they can be merged into a valid composed member
-				result = composedMember.create(memberName);
+				result = composedMemberDescr.create(memberName);
 			} else {
 				// some of the subScopes do not have an element for that name OR
 				// they do not form a valid composed member (e.g. they are of different kind)
 				// -> produce a specific error message explaining the incompatibility
 				// (this error placeholder will be wrapped with a UncommonMemberDescription
 				// in #getSingleLocalElementByName(QualifiedName) above)
-				result = createErrorPlaceholder(memberName, writeAccess);
+				result = createErrorPlaceholder(memberName);
 			}
 			// add composed member to ComposedTypeRef (without notifications to avoid cache-clear)
-			final ComposedTypeRef cacheHolder = getCacheHolder(composedTypeRef);
+			final ComposedTypeRef cacheHolder = getCacheHolder(unionTypeExpression);
 			EcoreUtilN4.doWithDeliver(false, () -> {
 				cacheHolder.getCachedComposedMembers().add(result);
 			}, cacheHolder);
@@ -234,7 +235,7 @@ public class ComposedMemberScope extends MemberScope {
 	 * write-access independently (i.e. we might have, for example, a valid composed member for read access but an error
 	 * placeholder for write access); therefore we have to use getters/setters for error place holders.
 	 */
-	private TMember createErrorPlaceholder(String memberName, boolean writeAccess) {
+	private TMember createErrorPlaceholder(String memberName) {
 		if (writeAccess) {
 			return TypeUtils.createTSetter(memberName, null, TypeRefsFactory.eINSTANCE.createUnknownTypeRef());
 		} else {
@@ -246,7 +247,7 @@ public class ComposedMemberScope extends MemberScope {
 	}
 
 	/**
-	 * Returns true iff 'obj' was created by method {@link #createErrorPlaceholder(String, boolean)}.
+	 * Returns true iff 'obj' was created by method {@link #createErrorPlaceholder(String)}.
 	 */
 	private boolean isErrorPlaceholder(EObject obj) {
 		return obj != null && !obj.eIsProxy() &&
@@ -257,26 +258,25 @@ public class ComposedMemberScope extends MemberScope {
 	/**
 	 * Searches for a member of the given name and for the given access in the sub-scope with index 'subScopeIdx'.
 	 */
-	private TMember findMemberInSubScope(int subScopeIdx, String name, boolean writeAccess) {
-		final IEObjectDescription currElem = getSubScope(subScopeIdx).getSingleElement(QualifiedName.create(name));
-		if (currElem != null && !(currElem instanceof IEObjectDescriptionWithError)) {
+	private TMember findMemberInSubScope(IScope subScope, String name) {
+		final IEObjectDescription currElem = subScope.getSingleElement(QualifiedName.create(name));
+		if (currElem != null) {
 			final EObject objOrProxy = currElem.getEObjectOrProxy();
 			if (objOrProxy != null && !objOrProxy.eIsProxy() && objOrProxy instanceof TMember) {
 				final TMember currM = (TMember) objOrProxy;
 				if (hasCorrectAccess(currM, writeAccess)
-						|| (currM instanceof TField && hasCorrectAccess(currM, !writeAccess)))
+						|| (currM instanceof TField && hasCorrectAccess(currM, !writeAccess))) {
 					return currM;
+				} else {
+					return createErrorPlaceholder(name);
+				}
 			}
 		}
 		return null;
 	}
 
-	private IScope getSubScope(int idx) {
-		return idx >= 0 && idx < subScopes.length ? subScopes[idx] : null;
-	}
-
-	private IEObjectDescription createUncommonDescriptionWrapper(IEObjectDescription result) {
-		return new UncommonMemberDescription(result, composedTypeRef, subScopes);
+	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
+		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes);
 	}
 
 	private static boolean hasCorrectAccess(TMember currM, boolean writeAccess) {

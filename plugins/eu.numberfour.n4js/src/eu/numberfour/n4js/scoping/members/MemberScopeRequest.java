@@ -49,4 +49,14 @@ public class MemberScopeRequest {
 		return new MemberScopeRequest(originalReceiverTypeRef, context, checkVisibility, true);
 	}
 
+	/**
+	 * Returns a request similar to the current one, enforcing the static access flag to be false.
+	 */
+	public MemberScopeRequest enforceInstance() {
+		if (!staticAccess) {
+			return this;
+		}
+		return new MemberScopeRequest(originalReceiverTypeRef, context, checkVisibility, false);
+	}
+
 }

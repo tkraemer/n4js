@@ -74,7 +74,7 @@ var s3 : string = N4Type.of(u_enum).fqn;
 u_enum.name = null;
 // XPECT errors --> "Union combines fields and getters with name value and therefore property value is read-only." at "value"
 u_enum.value = null;
-// XPECT errors --> "Member n4type not present in all types of union; missing from: Color." at "n4type"
+// XPECT errors --> "The accessor n4type is read-only in E. The static member n4type cannot be accessed from a non-static context in Color." at "n4type"
 u_enum.n4type = null;
 
 u_enum.toString();
@@ -90,7 +90,7 @@ var s6 : string = N4Type.of(u_enum2).fqn;
 u_enum2.name = null;
 // XPECT errors --> "The accessor value is read-only." at "value"
 u_enum2.value = null;
-// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'n4type'." at "n4type"
+// XPECT errors --> "The static member n4type cannot be accessed from a non-static context." at "n4type"
 u_enum2.n4type = null;
 
 u_enum2.toString();
@@ -119,15 +119,15 @@ u_prim.toLowerCase();
 //
 
 var u_type1 : union{ type{A}, type{B} };
-// type only refers to static members, not the constructor XPECT errors -->"Couldn't resolve reference to IdentifiableElement 'constructor'." at "constructor"
+// type only refers to static members, not the constructor XPECT errors -->"The non-static member constructor cannot be accessed from a static context." at "constructor"
 u_type1.constructor;
 
 var u_type2 : union{ type{A}, B };
-// type only refers to static members, not the constructor XPECT errors -->"Member constructor not present in all types of union; missing from: type{A}." at "constructor"
+// type only refers to static members, not the constructor XPECT errors -->"The non-static member constructor cannot be accessed from a static context in type{A}." at "constructor"
 u_type2.constructor;
 
 var u_type3 : union{ type{A}, string };
-// type only refers to static members, not the constructor XPECT errors -->"Member constructor not present in all types of union; missing from: type{A}." at "constructor"
+// type only refers to static members, not the constructor XPECT errors -->"The non-static member constructor cannot be accessed from a static context in type{A}." at "constructor"
 u_type3.constructor;
 
 

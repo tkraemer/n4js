@@ -14,10 +14,11 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
+import eu.numberfour.n4js.scoping.utils.CompositeScope
 import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -27,6 +28,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
@@ -46,14 +48,14 @@ import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
-import eu.numberfour.n4js.scoping.utils.CompositeScope
+import eu.numberfour.n4js.scoping.accessModifiers.StaticWriteAccessFilterScope
 
 /**
  */
@@ -61,7 +63,7 @@ class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
 	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
-	@Inject ComposedMemberScope.ComposedMemberScopeFactory composedMemberScopeFactory
+	@Inject UnionMemberScope.UnionMemberScopeFactory unionMemberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
 
 	/**
@@ -95,17 +97,26 @@ class MemberScopingHelper {
 		return result;
 	}
 
+	/**
+	 * Called only be members functions to decorate returned scope.
+	 */
 	private def IScope decorate(IScope scope, MemberScopeRequest memberScopeRequest, TypeRef receiverTypeRef) {
-		// no need to filter out by staticAccess again -- this has been done already by previous call!
-		if (memberScopeRequest.checkVisibility && scope !== IScope.NULLSCOPE &&
-			!(scope instanceof TypingStrategyAwareMemberScope)) {
-			return new TypingStrategyAwareMemberScope(
-				new VisibilityAwareMemberScope(scope, memberVisibilityChecker, memberScopeRequest.originalReceiverTypeRef,
-					memberScopeRequest.context), receiverTypeRef);
+		if (scope==IScope.NULLSCOPE) {
+			return scope;
 		}
-		return scope;
+		var decoratedScope = scope;
+		if (memberScopeRequest.checkVisibility && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, VisibilityAwareMemberScope)) {
+			decoratedScope = new VisibilityAwareMemberScope(decoratedScope, memberVisibilityChecker, receiverTypeRef, memberScopeRequest.context);
+		}
+		if (memberScopeRequest.staticAccess && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, StaticWriteAccessFilterScope)) {
+			decoratedScope = new StaticWriteAccessFilterScope(decoratedScope, memberScopeRequest.context);
+		} 
+		if (memberScopeRequest.checkVisibility && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, TypingStrategyAwareMemberScope)) {
+			decoratedScope = new TypingStrategyAwareMemberScope(decoratedScope, receiverTypeRef);
+		}
+		return decoratedScope;
 	}
-
+	
 	/**
 	 * Is there a member (visible or not) in the given scope matching the given (name, staticAccess) combination?
 	 */
@@ -216,36 +227,51 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ConstructorTypeRef ctr, MemberScopeRequest request) {
-		var IScope staticMembers = membersOfType(ctr.staticType, request.enforceStatic) // staticAccess is always true in this case
+		val MemberScopeRequest staticRequest = request.enforceStatic;
+		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
 		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
-			staticMembers = new DynamicPseudoScope(staticMembers.decorate(request, ctr))
+			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
 		// additionally we need instance members of Function in case of constructor{T}, cf. GH-219
-		val G = RuleEnvironmentExtensions.newRuleEnvironment(request.context);
-		val functionType = RuleEnvironmentExtensions.functionType(G);
-		val IScope ftypeScope = membersOfType(functionType, request);
+		val MemberScopeRequest instanceRequest = request.enforceInstance;
+		val builtInScope = BuiltInTypeScope.get(getResourceSet(ctr, request.context));
+		val functionType = builtInScope.functionType
+		val IScope ftypeScope = membersOfType(functionType, instanceRequest);
 
-		val result = CompositeScope.create(ftypeScope.decorate(request, ctr), staticMembers.decorate(request, ctr));
+		val result = CompositeScope.create(ftypeScope.decorate(instanceRequest, ctr), staticMembers.decorate(staticRequest,ctr));
 		return result
 	}
 
 	private def dispatch IScope members(ClassifierTypeRef ctr, MemberScopeRequest request) {
-		val IScope result = membersOfType(ctr.staticType, request.enforceStatic) // staticAccess is always true in this case
-		if (ctr.dynamic && !(result instanceof DynamicPseudoScope)) {
-			return new DynamicPseudoScope(result.decorate(request, ctr))
+		val MemberScopeRequest staticRequest = request.enforceStatic;
+		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
+		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
+			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
-		return result.decorate(request, ctr)
+		return staticMembers.decorate(staticRequest,ctr)
 	}
 
-	private def dispatch IScope members(ComposedTypeRef ctr, MemberScopeRequest request) {
+	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {
 
-		val subScopes = ctr.typeRefs.map [ elementTypeRef |
+		val subScopes = uniontypeexp.typeRefs.map [ elementTypeRef |
 			val scope = members(elementTypeRef, request);
 			return scope;
 		]
 
-		return composedMemberScopeFactory.create(ctr, request.context, subScopes,
-			ctr instanceof IntersectionTypeExpression, typeInferencer);
+		return unionMemberScopeFactory.create(uniontypeexp, request.context, subScopes, typeInferencer);
+	}
+
+	private def dispatch IScope members(IntersectionTypeExpression intersectiontypeexp, MemberScopeRequest request) {
+		if (intersectiontypeexp.typeRefs.isEmpty) {
+			return IScope.NULLSCOPE;
+		}
+		// TODO implement that, seriously -- this is just a hack:
+		val subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
+			val scope = members(elementTypeRef, request);
+			return scope;
+		]
+		return CompositeScope.create(subScopes.toArray as IScope[]);
+		
 	}
 
 	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {

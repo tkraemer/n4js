@@ -16,7 +16,7 @@ var ctor: constructor{A};
 ctor.staticField;
 // XPECT noerrors -->
 ctor.staticGetter;
-// XPECT noerrors -->
+// XPECT errors --> "Write access to the static member staticSetter defined in A must use A directly." at "staticSetter"
 ctor.staticSetter = "";
 // XPECT errors -->"The accessor staticGetter is read-only." at "staticGetter"
 ctor.staticGetter = "";
@@ -34,10 +34,10 @@ ctorUnion.staticGetter;
 
 // XPECT errors -->"Union combines fields and getters with name staticGetter and therefore property staticGetter is read-only." at "staticGetter"
 ctorUnion.staticGetter = "";
-// XPECT errors -->"Couldn't resolve reference to IdentifiableElement 'instField'." at "instField"
+// XPECT errors -->"Member instField not present in all types of union; missing from: ~Object with { staticField: string; staticGetter: any }." at "instField"
 ctorUnion.instField;
 
-// XPECT errors -->"Couldn't resolve reference to IdentifiableElement 'constructor'."
+// XPECT errors -->"method constructor is not available for structurally referenced type ~Object with { staticField: string; staticGetter: any }." at "constructor"
 ctorUnion.constructor;
 
 // Union with structural type and classifier
@@ -50,8 +50,8 @@ classifierUnion.staticGetter;
 
 // XPECT errors -->"Union combines fields and getters with name staticGetter and therefore property staticGetter is read-only." at "staticGetter"
 classifierUnion.staticGetter = "";
-// XPECT errors -->"Couldn't resolve reference to IdentifiableElement 'instField'." at "instField"
+// XPECT errors -->"Member instField not present in all types of union; missing from: ~Object with { staticField: string; staticGetter: any }." at "instField"
 classifierUnion.instField;
 
-// XPECT errors -->"Member constructor not present in all types of union; missing from: type{A}." at "constructor"
+// XPECT errors -->"method constructor is not available for structurally referenced type ~Object with { staticField: string; staticGetter: any }. The non-static member constructor cannot be accessed from a static context in type{A}." at "constructor"
 classifierUnion.constructor;

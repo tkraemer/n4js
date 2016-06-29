@@ -17,9 +17,9 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError;
 import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
- * Description marking invalid access to static member via subtype or other expression.
+ * Description marking invalid write access to static member via subtype or other expression.
  */
-public class InvalidStaticMemberDescription extends AbstractDescriptionWithError {
+public class InvalidStaticWriteAccessDescription extends AbstractDescriptionWithError {
 
 	private final String memberDefTypeName;
 	private final String aliasOfMemberDefiningType; // nullable
@@ -34,7 +34,7 @@ public class InvalidStaticMemberDescription extends AbstractDescriptionWithError
 	 * @param aliasOfMemberDefiningType
 	 *            the current alias in the script or <code>null</code> if no alias was given.
 	 */
-	public InvalidStaticMemberDescription(IEObjectDescription delegate, String memberDefiningTypeName,
+	public InvalidStaticWriteAccessDescription(IEObjectDescription delegate, String memberDefiningTypeName,
 			String aliasOfMemberDefiningType) {
 		super(delegate);
 		this.memberDefTypeName = memberDefiningTypeName;

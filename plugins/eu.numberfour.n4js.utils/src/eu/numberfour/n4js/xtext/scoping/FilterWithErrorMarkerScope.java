@@ -36,6 +36,20 @@ import com.google.common.collect.Iterables;
  */
 public abstract class FilterWithErrorMarkerScope implements IScope {
 
+	/**
+	 * Returns true if given scope is already decorated with given filter scope type.
+	 */
+	public static boolean isDecoratedWithFilter(IScope scope,
+			Class<? extends FilterWithErrorMarkerScope> filterScopeType) {
+		if (filterScopeType.isInstance(scope)) {
+			return true;
+		}
+		if (scope instanceof FilterWithErrorMarkerScope) {
+			return isDecoratedWithFilter(((FilterWithErrorMarkerScope) scope).parent, filterScopeType);
+		}
+		return false;
+	}
+
 	/** The encapsulated parent scope */
 	protected final IScope parent;
 

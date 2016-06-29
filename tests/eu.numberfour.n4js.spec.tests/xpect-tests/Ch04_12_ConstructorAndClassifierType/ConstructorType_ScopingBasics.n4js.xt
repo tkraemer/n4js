@@ -27,5 +27,8 @@ var ctorCtor = A.constructor;
 // XPECT type of 'ctor' --> constructor{A}
 var ctor = a.constructor;
 
+// XPECT errors --> "Write access to the static member staticField defined in A must use A directly." at "staticField"
+ctor.staticField = "x";
+
 // XPECT noerrors -->
 a.instField;
