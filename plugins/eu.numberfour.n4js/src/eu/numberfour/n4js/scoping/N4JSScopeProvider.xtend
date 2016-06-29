@@ -197,6 +197,8 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 					return scope_EObject_id(context, reference)
 				Argument:
 					return scope_EObject_id(context, reference)
+				Expression:
+					return scope_EObject_id(context, reference)
 			}
 		}
 		return scope;
