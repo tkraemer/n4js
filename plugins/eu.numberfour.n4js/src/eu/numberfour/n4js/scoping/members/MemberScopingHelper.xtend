@@ -51,7 +51,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
-import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.QualifiedName
