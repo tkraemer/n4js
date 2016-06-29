@@ -51,6 +51,7 @@ import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
+import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.QualifiedName
@@ -100,22 +101,26 @@ class MemberScopingHelper {
 	 * Called only be members functions to decorate returned scope.
 	 */
 	private def IScope decorate(IScope scope, MemberScopeRequest memberScopeRequest, TypeRef receiverTypeRef) {
-		if (scope==IScope.NULLSCOPE) {
+		if (scope == IScope.NULLSCOPE) {
 			return scope;
 		}
 		var decoratedScope = scope;
-		if (memberScopeRequest.checkVisibility && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, VisibilityAwareMemberScope)) {
-			decoratedScope = new VisibilityAwareMemberScope(decoratedScope, memberVisibilityChecker, receiverTypeRef, memberScopeRequest.context);
+		if (memberScopeRequest.checkVisibility &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, VisibilityAwareMemberScope)) {
+			decoratedScope = new VisibilityAwareMemberScope(decoratedScope, memberVisibilityChecker, receiverTypeRef,
+				memberScopeRequest.context);
 		}
-		if (memberScopeRequest.staticAccess && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, StaticWriteAccessFilterScope)) {
+		if (memberScopeRequest.staticAccess &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, StaticWriteAccessFilterScope)) {
 			decoratedScope = new StaticWriteAccessFilterScope(decoratedScope, memberScopeRequest.context);
-		} 
-		if (memberScopeRequest.checkVisibility && ! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, TypingStrategyAwareMemberScope)) {
+		}
+		if (memberScopeRequest.checkVisibility &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, TypingStrategyAwareMemberScope)) {
 			decoratedScope = new TypingStrategyAwareMemberScope(decoratedScope, receiverTypeRef);
 		}
 		return decoratedScope;
 	}
-	
+
 	/**
 	 * Is there a member (visible or not) in the given scope matching the given (name, staticAccess) combination?
 	 */
@@ -239,8 +244,8 @@ class MemberScopingHelper {
 
 		// order matters (shadowing!)
 		val result = CompositeScope.create(
-			staticMembers.decorate(staticRequest,ctr),
-			ftypeScope.decorate(instanceRequest, ctr) 
+			staticMembers.decorate(staticRequest, ctr),
+			ftypeScope.decorate(instanceRequest, ctr)
 		);
 		return result
 	}
@@ -251,7 +256,7 @@ class MemberScopingHelper {
 		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
 			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
-		return staticMembers.decorate(staticRequest,ctr)
+		return staticMembers.decorate(staticRequest, ctr)
 	}
 
 	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {
@@ -259,26 +264,29 @@ class MemberScopingHelper {
 		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
-		
+
 		val subScopes = uniontypeexp.typeRefs.map [ elementTypeRef |
 			val scope = members(elementTypeRef, request);
 			return scope;
 		]
 
-		return new UnionMemberScope(uniontypeexp, request.context, subScopes, typeInferencer);
+		switch (subScopes.size) { // only create union scope if really necessary, remember this optimization in test, since union{A} tests scope of A only!
+			case 0: return IScope.NULLSCOPE
+			case 1: return subScopes.get(0)
+			default: return new UnionMemberScope(uniontypeexp, request.context, subScopes, typeInferencer)
+		}
 	}
 
 	private def dispatch IScope members(IntersectionTypeExpression intersectiontypeexp, MemberScopeRequest request) {
-		if (intersectiontypeexp.typeRefs.isEmpty) {
-			return IScope.NULLSCOPE;
-		}
-		// TODO implement that, seriously -- this is just a hack:
-		val subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
-			val scope = members(elementTypeRef, request);
-			return scope;
-		]
-		return CompositeScope.create(subScopes.toArray as IScope[]);
-		
+//		if (intersectiontypeexp.typeRefs.isEmpty) {
+		return IScope.NULLSCOPE;
+//		}
+	// TODO implement that (uncommented hack to have a stable situation)
+//		val List<IScope> subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
+//			val scope = members(elementTypeRef, request);
+//			return scope;
+//		]
+//		return CompositeScope.create(subScopes);
 	}
 
 	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {

@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.scoping.utils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
@@ -38,17 +39,32 @@ public class CompositeScope implements IScope {
 	protected final IScope[] childScopes;
 
 	/**
+	 * Creates a new {@link CompositeScope}; if no scopes are given, {@link IScope#NULLSCOPE} is returned.
+	 */
+	public static final IScope create(IScope... scopes) {
+		if (scopes.length == 0) {
+			return IScope.NULLSCOPE;
+		}
+		return new CompositeScope(scopes);
+	}
+
+	/**
+	 * Creates a new {@link CompositeScope}; if no scopes are given, {@link IScope#NULLSCOPE} is returned.
+	 */
+	public static final IScope create(List<IScope> scopes) {
+		if (scopes == null || scopes.isEmpty()) {
+			return IScope.NULLSCOPE;
+		}
+		IScope[] arrayScopes = new IScope[scopes.size()];
+		scopes.toArray(arrayScopes);
+		return new CompositeScope(arrayScopes);
+	}
+
+	/**
 	 * @see #create(IScope...)
 	 */
 	protected CompositeScope(IScope... scopes) {
 		childScopes = scopes;
-	}
-
-	/**
-	 * Creates a new {@link CompositeScope}.
-	 */
-	public static final CompositeScope create(IScope... scopes) {
-		return new CompositeScope(scopes);
 	}
 
 	@Override

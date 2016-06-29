@@ -1,6 +1,10 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-var u: union{~Object};
+var u0: union{~Object};
+// XPECT errors -->"method constructor is not available for structurally referenced type ~Object." at "constructor"
+u0.constructor;
+
+var u: union{~Object, String};
 // XPECT errors -->"method constructor is not available for structurally referenced type ~Object." at "constructor"
 u.constructor;
 
