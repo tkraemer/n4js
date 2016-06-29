@@ -277,9 +277,8 @@ class StaticScopingTest {
 		'''.parse
 
 		val issues = validate(script)
-		Assert.assertEquals(issues.join(", "), 1, issues.size)
-		assertEquals("A reference to method constructor is created detached from a (correct) this-instance.", issues.get(0).getMessage())
-
+		Assert.assertEquals(issues.join(", "), 0, issues.size)
+		
 		val varX = script.eAllContents.filter(VariableDeclaration).filter[name == "x"].head
 		val varXType = varX.tau
 		Assert.assertTrue("type{C}", varXType instanceof ConstructorTypeRef)
