@@ -30,7 +30,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
         <indices.dir>${basedir}/src-gen/indices</indices.dir>
         
-        <distribution.dir>${basedir}/dist</distribution.dir>
+        <dist>dist</dist>
+        <distribution.dir>${basedir}/${dist}</distribution.dir>
 
     </properties>
 
@@ -255,7 +256,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <echo>Running directory listing dir=${eclipseUserguidesDir}</echo>
                                 <fileset id="eclipseuserguides.pages" dir="${eclipseUserguidesDir}" includes="*.html" excludes=""/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipseuserguides.pages">
-                                    <map from="${basedir}/" to="" />
+                                    <map from="${project.build.directory}" to="${dist}" />
                                 </pathconvert>
                                 <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
                                 <echo encoding="${file.encoding}" output="${indices.dir}/${help.userguides.list}">${prop.dist.contents}</echo>
@@ -274,7 +275,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
                                 <fileset id="eclipsehelp.articles.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/*.html,_headers/*.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.articles.pages">
-                                    <map from="${basedir}/" to="" />
+                                    <map from="${project.build.directory}" to="${dist}" />
                                 </pathconvert>
                                 <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
                                 <echo encoding="${file.encoding}" output="${indices.dir}/${help.articles.list}">${prop.dist.contents}</echo>
