@@ -16,7 +16,7 @@
      
      /\** first comment *\/
      /\** second comment *\/
-   + import { A } from "a/a2/A"
+   + import { A } from "a/a2/A";
      /\** third comment *\/
      var placeholder:string;
      var a : A = new A();

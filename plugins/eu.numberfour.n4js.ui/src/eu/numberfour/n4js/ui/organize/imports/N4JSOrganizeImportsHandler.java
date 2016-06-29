@@ -81,6 +81,7 @@ import eu.numberfour.n4js.ui.changes.ChangeProvider;
 import eu.numberfour.n4js.ui.changes.IAtomicChange;
 import eu.numberfour.n4js.ui.changes.IChange;
 import eu.numberfour.n4js.ui.changes.Replacement;
+import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakException;
 import eu.numberfour.n4js.utils.UtilN4;
 
 /**
@@ -338,6 +339,8 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 											organizedImportSection));
 									return changes;
 								}
+							} catch (UserCanceledBreakException e) {
+								return null; // user-triggered cancellation, nothing to report.
 							} catch (BreakException e) {
 								LOGGER.warn("Organize imports broke:", e);
 								throw new RuntimeException(e);

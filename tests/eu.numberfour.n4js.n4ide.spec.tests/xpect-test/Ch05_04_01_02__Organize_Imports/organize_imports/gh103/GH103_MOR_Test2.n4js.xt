@@ -15,7 +15,7 @@
 /* XPECT organizeImports ---
   
   "use strict"
-+ import { A } from "a/a2/A"
++ import { A } from "a/a2/A";
   A;
   // ERROR WAS: 
   // import added above the directive

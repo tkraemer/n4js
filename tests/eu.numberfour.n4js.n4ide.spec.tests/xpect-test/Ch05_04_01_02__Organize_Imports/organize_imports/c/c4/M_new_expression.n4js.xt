@@ -13,8 +13,9 @@
 */
 
 /* XPECT organizeImports ---
+  
 + import { A } from "
-| [new|a/a2/A"]
+| [new|a/a2/A";]
 | [|new] A();
   /\* Description: 
    * exported class A seems not to be considered when part of an expression

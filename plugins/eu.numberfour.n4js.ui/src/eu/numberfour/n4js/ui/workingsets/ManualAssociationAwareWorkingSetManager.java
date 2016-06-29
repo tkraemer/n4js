@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.osgi.service.prefs.BackingStoreException;
@@ -230,9 +231,14 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 	 */
 	private void resetEclipseWorkingSetsBaseOnCurrentState() {
 		try {
+			if (getWorkbench() == null || getWorkbench().getWorkingSetManager() == null) {
+				return; // happens during shutdown
+			}
+
 			// Removed listener otherwise due to the Eclipse based working set deletion
 			// we would delete our content.
 			getWorkbench().getWorkingSetManager().removePropertyChangeListener(this);
+
 			deleteEclipseResourcesWorkingSets();
 			final IWorkingSetManager manager = getWorkbench().getWorkingSetManager();
 			for (final WorkingSet workingSet : getAllWorkingSets()) {
@@ -243,7 +249,13 @@ public class ManualAssociationAwareWorkingSetManager extends WorkingSetManagerIm
 				}
 			}
 		} finally {
-			getWorkbench().getWorkingSetManager().addPropertyChangeListener(this);
+			IWorkbench wb = getWorkbench();
+			if (wb != null) {
+				IWorkingSetManager wsm = wb.getWorkingSetManager();
+				if (wsm != null) { // null-safe re-adding (can be null during shutdown)
+					wsm.addPropertyChangeListener(this);
+				}
+			}
 		}
 	}
 
