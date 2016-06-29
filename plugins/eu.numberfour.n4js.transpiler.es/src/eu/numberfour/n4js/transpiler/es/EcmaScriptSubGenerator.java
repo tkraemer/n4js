@@ -93,7 +93,7 @@ public class EcmaScriptSubGenerator extends AbstractSubGenerator {
 		}
 
 		/*
-		 * In addition to here, check for cancelation is done also on file-emit boundaries, see fsa.generateFile().
+		 * In addition to here, check for cancellation is done also on file-emit boundaries, see fsa.generateFile().
 		 */
 		CancelIndicator monitor = ciExtractor.extractCancelIndicator(fsa);
 
@@ -109,7 +109,7 @@ public class EcmaScriptSubGenerator extends AbstractSubGenerator {
 			final String simpleSourceMapFileName = new File(sourceMapFileName).toPath().getFileName().toString();
 			final String simpleCompiledFileName = new File(filename).toPath().getFileName().toString();
 
-			// the next two variables stor the navigation-prefix to get to the sources
+			// the next two variables store the navigation-prefix to get to the sources
 			final Path relativeNavigationToSrc = calculateNavigationFromOutputToSourcePath(fsa, getCompilerID(),
 					resourceCasted);
 			final Path explicitNavigationToSrc = Paths.get("/sources");

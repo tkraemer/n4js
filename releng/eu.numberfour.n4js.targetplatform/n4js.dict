@@ -114,3 +114,6 @@ proxify
 unresolvable
 >>>>>>> master
 supertype
+injectable
+importable
+exportable
