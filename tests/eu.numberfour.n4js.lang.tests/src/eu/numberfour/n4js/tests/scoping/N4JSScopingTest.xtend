@@ -266,47 +266,7 @@ class N4JSScopingTest {
 		assertFalse((typeRefA.declaredType as TClass).ownedMembers.empty);
 	}
 
-	@Test
-	def void testImportExportVariable() {
-
-		val rs = resourceSetProvider.get
-
-		val supplier = '''
-			export var s = class Supplier {
-				foo(): Supplier {}
-			}
-		'''.parse(URI.createURI("eu.numberfour.n4js/tests/scoping/Supplier.n4js"), rs)
-
-		// syntax ok?
-		assertTrue(supplier.eResource.errors.toString, supplier.eResource.errors.empty)
-		val idFoo = supplier.eAllContents.filter(N4MemberDeclaration).head.name;
-		assertEquals("foo", idFoo)
-
-		val typeClient = '''
-			import { s } from "eu.numberfour.n4js/tests/scoping/Supplier";
-			s.foo()
-		'''.parse(URI.createURI("TypeClient.js"), rs)
-
-		// syntax ok?
-		assertTrue(typeClient.eResource.errors.empty)
-
-		val importDecl = typeClient.scriptElements.head as ImportDeclaration
-		val importSpec = importDecl.importSpecifiers.head as NamedImportSpecifier
-		val imported = importSpec.importedElement as TVariable
-		val expected = ((supplier.scriptElements.head as ExportDeclaration).exportedElement as VariableStatement).
-			varDecl.head
-		assertSame(expected, imported.astElement)
-
-		val call = (typeClient.scriptElements.last as ExpressionStatement).expression as ParameterizedCallExpression
-		val foo = call.target as ParameterizedPropertyAccessExpression
-
-		val s = foo.target as IdentifierRef
-		assertSame(imported, s.id)
-		val property = foo.property
-		assertFalse("Unexpected proxy", property.eIsProxy);
-		assertEquals('Supplier.foo', (property.eContainer as TClass).name + '.' + property.name)
-	}
-
+	
 	@Test
 	def void testImportExportAliasedType() {
 
