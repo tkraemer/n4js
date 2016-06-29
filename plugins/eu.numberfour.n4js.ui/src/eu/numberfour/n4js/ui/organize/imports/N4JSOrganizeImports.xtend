@@ -72,6 +72,7 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
+import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 
 /**
  */
@@ -862,6 +863,21 @@ public class N4JSOrganizeImports {
 //	}
 //	}
 
+	/** 
+	 * Enhanced information, not deducible from the IEObjectDescription:
+	 * <ul>
+	 *  <li>how to import {@link #exportedAsDefault}</li>
+	 *  <li>name used in script 
+	 * </ul>
+	 * Mainly it provides information used in cases of default exports, 
+	 * where the IEObjectdescription must be handled differently. 
+	 * 
+	 * Also overrides {@code equals()} and {@code hashCode()} to enable set-based operations.
+	 * 
+	 * It differs from {@link ImportProvidedElement} as this light-weight structure only describes potential imports, 
+	 * while instances of {@link ImportProvidedElement} are objects for tracking usage of already imported elements.
+	 * 
+	 */
 	@Data
 	public final static class ImportableObject{
 		String name;
