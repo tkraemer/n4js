@@ -1,5 +1,5 @@
-import { C2 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C2"
-import { C1 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C1"
+import { C2 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C2"
+import { C1 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C1"
 
 
 export public class C3 extends C2 {

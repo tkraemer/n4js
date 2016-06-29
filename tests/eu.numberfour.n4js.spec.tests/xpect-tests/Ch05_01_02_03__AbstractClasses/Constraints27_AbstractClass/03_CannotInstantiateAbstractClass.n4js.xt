@@ -17,6 +17,7 @@ var y = new B();
 
 
 function foo(ctor : constructor{A}) {
+	// XPECT noerrors -->
 	return new ctor();
 }
 
