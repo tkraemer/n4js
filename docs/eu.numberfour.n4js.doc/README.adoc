@@ -110,7 +110,7 @@ Generating the documentation using this method reduces the build time to less th
 
 === Generating N4JS IDE Help
 
-The Eclipse Help bundled with the N4JS IDE is a collection of HTML files accompanied by a ``toc.xml`` that lists their heriarchy.
+The Eclipse Help bundled with the N4JS IDE is a collection of HTML files accompanied by a ``toc.xml`` that lists their hierarchy.
 In the Maven build, the POM at ``n4js/docs/eu.numberfour.n4js.doc/pom.xml`` is configured to execute these plugins in the following order:
 
 . The ``asciidoctor-maven-plugin`` converts source AsciiDoc files (``src`` folder) to HTML (``target`` folder).

@@ -1,41 +1,42 @@
 ﻿:doctype: book
-ifdef::website[{set:relative:}]
-ifdef::eclipse[{set:relative:userguides/}]
-
 
 .N4JS Documentation
 = N4JS Userguides
 
-
 .All the resources you need to begin type safe development with the N4JS IDE
 
-== IDE Setup & HelloWorld!
+== Index
+
+[[ide-setup]]IDE Setup & HelloWorld!
 
 This short introduction covers the basics of getting up and running with the
 N4JS IDE. From installation to running HelloWorld!, quickly learn about new features
 of the N4JS IDE, how to create a new project, manage workspaces and begin development!
 
-* <<{relative}ide-setup#_ide_setup,N4JS IDE Setup Guide>>: Basic installation and setup instructions.
+* <<n4js-ide-setup.adoc#n4js-ide-setup,N4JS IDE Setup Guide>>: Basic installation and setup instructions.
 
-== npm Export Guide
+***
+[[npm-export-guide]]npm Export Guide
 
 The npm Export Guide briefly covers the essentials of Node.js development. A simple
 code example is written and exported from the N4JS IDE as an npm package, run from
 the command line and published to the npm registry. Quickly learn how to streamline Node.js development
 using the N4JS IDE.
 
-* <<{relative}npm-export-guide#_npm_export_guide,npm Export Guide>>: Basic npm export and publishing instructions.
+* <<npm-export-guide.adoc#npm-export-guide,npm Export Guide>>: Basic npm export and publishing instructions.
 
-== In-Depth Tutorial
+***
+[[tutorial]]In-Depth Tutorial
 
 Using the built-in example projects as a reference, this in-depth tutorial covers the most important tools and features
 of the N4JS IDE. The example project is explained as a domain model and built step-by-step.
 New features of the N4JS IDE are introduced along the way such as *modules* , *type annotations* ,
 *dependency injection* , *testing*  with an example test project and more.
 
-* <<{relative}tutorial#_tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
+* <<tutorial.adoc#tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
 
-== N4JS Specification
+***
+[[language-spec]]N4JS Specification
 
 For a complete reference of the N4JS Language, the Specification
 is available to download as a pdf from the following link:
