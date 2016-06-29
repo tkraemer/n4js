@@ -14,16 +14,13 @@ import com.google.common.base.Splitter
 import com.google.inject.Inject
 import com.google.inject.Provider
 import eu.numberfour.n4js.N4JSInjectorProvider
-import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
@@ -36,7 +33,6 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TModule
-import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.Log
 import java.util.Set

@@ -13,6 +13,7 @@ package eu.numberfour.n4js.scoping.members
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
+import eu.numberfour.n4js.scoping.accessModifiers.StaticWriteAccessFilterScope
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
 import eu.numberfour.n4js.scoping.utils.CompositeScope
 import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
@@ -55,7 +56,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import eu.numberfour.n4js.scoping.accessModifiers.StaticWriteAccessFilterScope
 
 /**
  */
@@ -63,7 +63,6 @@ class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
 	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
-	@Inject UnionMemberScope.UnionMemberScopeFactory unionMemberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
 
 	/**
@@ -257,12 +256,16 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {
 
+		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+			return new DynamicPseudoScope();
+		}
+		
 		val subScopes = uniontypeexp.typeRefs.map [ elementTypeRef |
 			val scope = members(elementTypeRef, request);
 			return scope;
 		]
 
-		return unionMemberScopeFactory.create(uniontypeexp, request.context, subScopes, typeInferencer);
+		return new UnionMemberScope(uniontypeexp, request.context, subScopes, typeInferencer);
 	}
 
 	private def dispatch IScope members(IntersectionTypeExpression intersectiontypeexp, MemberScopeRequest request) {

@@ -23,10 +23,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractScope;
 
-import com.google.inject.Inject;
-
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
-import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
@@ -39,9 +36,7 @@ import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
-import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -56,26 +51,6 @@ import it.xsemantics.runtime.RuleEnvironment;
  */
 public class UnionMemberScope extends AbstractScope {
 
-	/**
-	 * Emulates a factory w/o FactoryModuleBuilder
-	 */
-	public static class UnionMemberScopeFactory {
-
-		@Inject
-		ContainerTypesHelper containerTypesHelper;
-
-		/**
-		 * Creates an instance of this class for the given ComposedTypeRef.
-		 */
-		public IScope create(UnionTypeExpression unionTypeExpression, EObject context, List<IScope> subScopes,
-				N4JSTypeInferencer typeInferencer) {
-			if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
-				return new DynamicPseudoScope();
-			}
-			return new UnionMemberScope(containerTypesHelper, unionTypeExpression, context, subScopes, typeInferencer);
-		}
-	}
-
 	private final UnionTypeExpression unionTypeExpression;
 	private final IScope[] subScopes;
 	private final EObject context;
@@ -83,7 +58,11 @@ public class UnionMemberScope extends AbstractScope {
 	private final N4JSTypeInferencer typeInferencer;
 	private final boolean writeAccess;
 
-	private UnionMemberScope(ContainerTypesHelper containerTypesHelper, UnionTypeExpression unionTypeExpression,
+	/**
+	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
+	 * etc.)
+	 */
+	public UnionMemberScope(UnionTypeExpression unionTypeExpression,
 			EObject context, List<IScope> subScopes, N4JSTypeInferencer typeInferencer) {
 
 		super(IScope.NULLSCOPE, false);
@@ -95,6 +74,12 @@ public class UnionMemberScope extends AbstractScope {
 		this.writeAccess = ExpressionExtensions.isLeftHandSide(context);
 	}
 
+	/**
+	 * Returns all elements of union. No erroneous descriptions (instances of IEObjectDescriptionWithError) will be
+	 * considered here, as we assume this method to be called from content assist and we do not want to show wrong
+	 * elements. These descriptions will be returned by {@link #getSingleElement(QualifiedName)} though to show errors
+	 * in case of explicit references to these members.
+	 */
 	@Override
 	protected Iterable<IEObjectDescription> getAllLocalElements() {
 
@@ -103,8 +88,11 @@ public class UnionMemberScope extends AbstractScope {
 		for (IScope currSubScope : subScopes) {
 			try {
 				for (IEObjectDescription currDesc : currSubScope.getAllElements()) {
-					String name = currDesc.getName().getLastSegment();
-					names.add(name);
+					// omit erroneous bindings (they will be provided in getSingleLocalElement... though)
+					if (!(currDesc instanceof IEObjectDescriptionWithError)) {
+						String name = currDesc.getName().getLastSegment();
+						names.add(name);
+					}
 				}
 			} catch (UnsupportedOperationException e) {
 				// according to API doc of IScope#getAllElements(), scopes are free to throw an
@@ -115,13 +103,19 @@ public class UnionMemberScope extends AbstractScope {
 		List<IEObjectDescription> descriptions = new ArrayList<>(names.size());
 		for (String name : names) {
 			IEObjectDescription description = getSingleLocalElementByName(QualifiedName.create(name));
-			if (description != null) {
+			if (description != null && !(description instanceof IEObjectDescriptionWithError)) {
 				descriptions.add(description);
 			}
 		}
 		return descriptions;
 	}
 
+	/**
+	 * Returns description for given element, name is assumed to consist of a single segment containing the simple name
+	 * of the member. If no subScope contains a member with given name, null is returned. In other error cases (no or
+	 * wrong access, mixed types etc.), {@link IEObjectDescriptionWithError}, and in particular
+	 * {@link UnionMemberDescriptionWithError}, will be returned.
+	 */
 	@Override
 	protected IEObjectDescription getSingleLocalElementByName(QualifiedName qualifiedName) {
 		String name = qualifiedName.getLastSegment();
@@ -145,20 +139,24 @@ public class UnionMemberScope extends AbstractScope {
 		return description;
 	}
 
-	private TMember getOrCreateComposedMember(String memberName) {
-		final TMember member = getCachedComposedMember(memberName);
-		if (member == null)
-			return createComposedMember(memberName);
-		return member;
+	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
+		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes);
 	}
 
-	private TMember getCachedComposedMember(String memberName) {
+	/**
+	 * For members of a union, pseudo instances need to be created (since the "union member" is not one of the members
+	 * of the sub-elements, but a new "merged" version). These pseudo instances are cached in the resource.
+	 */
+	private TMember getOrCreateComposedMember(String memberName) {
+		// look up cache
 		for (TMember currM : getCacheHolder(unionTypeExpression).getCachedComposedMembers()) {
 			if (memberName.equals(currM.getName()) && hasCorrectAccess(currM, writeAccess)) {
 				return currM;
 			}
 		}
-		return null;
+		// not found, then create
+		return createComposedMember(memberName);
+
 	}
 
 	/**
@@ -273,10 +271,6 @@ public class UnionMemberScope extends AbstractScope {
 			}
 		}
 		return null;
-	}
-
-	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
-		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes);
 	}
 
 	private static boolean hasCorrectAccess(TMember currM, boolean writeAccess) {
