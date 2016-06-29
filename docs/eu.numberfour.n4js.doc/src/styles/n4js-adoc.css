@@ -236,7 +236,7 @@ small { font-size: 60%; line-height: inherit; }
 code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
 
 /* Lists */
-ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: inside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
+ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: outside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
 
 
 /*
