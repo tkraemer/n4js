@@ -15,7 +15,7 @@
 /* XPECT organizeImports ---
    
    /\* X *\/
- + import { A } from "a/a2/A"
+ + import { A } from "a/a2/A";
    export var a: A;
    // not nice: import immediately before var decl
    // The intention of this test is to make sure, that the whitespace between the 

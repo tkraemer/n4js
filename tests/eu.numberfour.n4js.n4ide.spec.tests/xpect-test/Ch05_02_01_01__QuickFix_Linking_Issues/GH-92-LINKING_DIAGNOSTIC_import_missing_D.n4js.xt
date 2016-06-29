@@ -25,7 +25,7 @@
   
   // 
 | import {A[|} from "proposal/module/A";]
-| [|import { B]} from "proposal/module/A"[;|]// single line comment after standard semicolon
+| [|import { B]} from "proposal/module/A";// single line comment after standard semicolon
   var a: A;
   var b: B; 
 ---

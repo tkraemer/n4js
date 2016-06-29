@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+   END_SETUP
+ */
+
+
+
+
+
+var actual = 36;
+var actualX = 136;
+
+
+
+// Exactly is default case, Order defaults to 'unordered'
+/* XPECT contentAssistList at '--actua<|>lX' proposals exactly ---
+"actual", "actualX"
+---
+*/
+var expected : int = --actualX   ;
+
+
+
+
+// Exactly is default case, Order defaults to 'unordered'
+/* XPECT contentAssistList at 'actua<|>l' proposals exactly ---
+"actual", "actualX"
+---
+*/
+var unexpected : int = actual ;
+
+
+// Exactly is default case, Order defaults to 'unordered'
+/* XPECT contentAssistList at '( act<|> )' proposals exactly ---
+"actual", "actualX"
+---
+*/
+var parenExpression : int = ( act ) ;

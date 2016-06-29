@@ -16,7 +16,7 @@
   
   /\* 
   *\/""
-+ import { A } from "a/a2/A"
++ import { A } from "a/a2/A";
   /\**
    * 
    * 

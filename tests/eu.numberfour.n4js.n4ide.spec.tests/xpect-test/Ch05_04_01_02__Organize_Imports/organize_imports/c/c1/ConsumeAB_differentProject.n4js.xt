@@ -25,8 +25,8 @@
   //var string placeholder;
 | import { [A|B] } from "[d|a]/[|a1/]A"
 | import { [B|B1] } from "a/a1/A"
-| import { [B1|IB] } from "a/a1[|/A"]
-| [|import { A } from "d]/A"
+| import { [B1|IB] } from "a/a1/[|A";]
+| [|import { A } from "d/]A"
   import { IA } from "d/A"
   var a : A = new A();
   var b : B = new B();
