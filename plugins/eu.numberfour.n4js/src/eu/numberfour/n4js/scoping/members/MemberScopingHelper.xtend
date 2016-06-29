@@ -238,7 +238,11 @@ class MemberScopingHelper {
 		val functionType = builtInScope.functionType
 		val IScope ftypeScope = membersOfType(functionType, instanceRequest);
 
-		val result = CompositeScope.create(ftypeScope.decorate(instanceRequest, ctr), staticMembers.decorate(staticRequest,ctr));
+		// order matters (shadowing!)
+		val result = CompositeScope.create(
+			staticMembers.decorate(staticRequest,ctr),
+			ftypeScope.decorate(instanceRequest, ctr) 
+		);
 		return result
 	}
 
