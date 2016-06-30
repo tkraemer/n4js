@@ -10,6 +10,9 @@
  */
 package eu.numberfour.n4js.ui.proposals.imports;
 
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.isDefaultExport;
+import static eu.numberfour.n4js.utils.N4JSLanguageUtils.lastSegmentOrDefaultHost;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,9 +45,9 @@ import com.google.inject.Inject;
 import com.google.inject.MembersInjector;
 
 import eu.numberfour.n4js.scoping.imports.PlainAccessOfNamespacedImportDescription;
+import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
 import eu.numberfour.n4js.ui.proposals.linkedEditing.IdentifierExitPolicy;
 import eu.numberfour.n4js.ui.proposals.linkedEditing.N4JSCompletionProposal;
-import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
 
 /**
  * The FQNImporter can be set on a {@link ConfigurableCompletionProposal} to handle a selected proposal that inserts a
@@ -234,12 +237,14 @@ public class FQNImporter extends ReplacementTextApplier {
 			return;
 		}
 		String alias = null;
+		boolean isDefaultImport = isDefaultExport(qualifiedName);
+		String shortQName = lastSegmentOrDefaultHost(qualifiedName);
 		IEObjectDescription descriptionFullQN = scope
-				.getSingleElement(QualifiedName.create(qualifiedName.getLastSegment()));
+				.getSingleElement(QualifiedName.create(shortQName));
 
 		// element is imported via namespace
 		// exported packages just for this, maybe we can use similar check for PlainAccessOfAliasedImportDescription
-		if (descriptionFullQN instanceof PlainAccessOfNamespacedImportDescription) {
+		if (descriptionFullQN instanceof PlainAccessOfNamespacedImportDescription && !isDefaultImport) {
 			simpleApply(document,
 					((PlainAccessOfNamespacedImportDescription) descriptionFullQN).getNamespacedName(),
 					proposal);
@@ -260,7 +265,7 @@ public class FQNImporter extends ReplacementTextApplier {
 			// trying to detect namespace access without PlainAccessOfNamespacedImportDescription being accessible
 
 			// no alias used, yet - add an alias and insert that one
-			alias = "Alias" + qualifiedName.getLastSegment();
+			alias = "Alias" + shortQName;
 		}
 
 		applyWithImport(qualifiedName, alias, document, proposal);
@@ -324,7 +329,7 @@ public class FQNImporter extends ReplacementTextApplier {
 	 */
 	private int doApply(QualifiedName qualifiedName, String alias, IDocument document,
 			ConfigurableCompletionProposal proposal) throws BadLocationException {
-		String shortSemanticReplacementString = alias != null ? alias : qualifiedName.getLastSegment();
+		String shortSemanticReplacementString = alias != null ? alias : lastSegmentOrDefaultHost(qualifiedName);
 		String shortSyntacticReplacementString = valueConverter.toString(shortSemanticReplacementString);
 
 		ImportRewriter importRewriter = importRewriterFactory.create(document, context);

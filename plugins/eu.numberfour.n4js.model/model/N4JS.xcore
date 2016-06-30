@@ -945,7 +945,7 @@ class ObjectLiteral extends PrimaryExpression, ThisTarget, TypeDefiningElement {
  * or a property accessor, that is a {@link PropertyGetterDeclaration} or
  * {@link PropertySetterDeclaration}.
  */
-abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentElement, PropertyNameOwner {
+abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentElement, PropertyNameOwner, TypableElement {
 	contains Expression computeNameFrom
 	op TStructMember getDefinedMember()
 	/**

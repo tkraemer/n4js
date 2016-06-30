@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class C {};
+class D extends C {};
+enum E {L};
+
+var c = new C();
+var a: any;
+
+// XPECT errors --> "Cannot cast from C to union{int,string}" at "c as union{int,string}"
+c as union{int,string};
+// XPECT warnings -->"Unnecessary cast from C to union{int,C}" at "c as union{int, C}"
+c as union{int, C};
+// XPECT noerrors -->
+c as union{int, D};
+
+// XPECT noerrors -->
+a as union{int,string};
+// XPECT noerrors -->
+a as union{int, C};
+// XPECT noerrors -->
+a as union{int, D};

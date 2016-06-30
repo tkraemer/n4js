@@ -20,7 +20,6 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.TStructField;
-import eu.numberfour.n4js.ts.types.TypableElement;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -426,11 +425,6 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 				default: return -1;
 			}
 		}
-		if (baseClass == TypableElement.class) {
-			switch (derivedFeatureID) {
-				default: return -1;
-			}
-		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -450,11 +444,6 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 			switch (baseFeatureID) {
 				case N4JSPackage.TYPED_ELEMENT__DECLARED_TYPE_REF: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_TYPE_REF;
 				case N4JSPackage.TYPED_ELEMENT__BOGUS_TYPE_REF: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR__BOGUS_TYPE_REF;
-				default: return -1;
-			}
-		}
-		if (baseClass == TypableElement.class) {
-			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}
@@ -489,11 +478,6 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 			}
 		}
 		if (baseClass == TypedElement.class) {
-			switch (baseOperationID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == TypableElement.class) {
 			switch (baseOperationID) {
 				default: return -1;
 			}

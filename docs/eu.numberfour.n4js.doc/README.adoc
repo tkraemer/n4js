@@ -2,12 +2,13 @@
 
 = N4JS IDE Documentation
 
-Contributions to the source code and documentation of N4JS is highly encouraged.
+Contributions to the source code and documentation of N4JS are highly encouraged.
 Updating, maintaining and improving documentation can be done by experts or complete beginners alike.
 Bring your experience or fresh perspectives to enrich help resources that assist N4JS developers everywhere.
 
 * <<How to Contribute,How to Contribute Help Content>>
 ** <<N4JS Documentation Plugin, Configuring The Documentation Build>>
+*** <<Running the Documentation Plugin as a Standalone, Running as Standalone>>
 * <<About AsciiDoc & AsciiDoctor>>
 ** <<Tools, Tools for Writing>>
 ** <<Developing AsciiDoc>>
@@ -16,12 +17,14 @@ Bring your experience or fresh perspectives to enrich help resources that assist
 == How to Contribute
 
 
-All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is processed using a single-source documentation toolchain described in detail below.
-The source AsciiDoc documentation is located at the NumberFour N4JS repository at:
+All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed by a single-source toolchain described in detail below.
+The source AsciiDoc documentation is located in the NumberFour N4JS repository at:
 
 ``https://github.numberfour.eu/NumberFour/n4js/tree/master/docs/eu.numberfour.n4js.doc/src[n4js/docs/eu.numberfour.n4js.doc/src]``
 
 As the N4JS IDE is built using https://maven.apache.org/[Apache Maven], the command ``mvn verify`` will trigger the build of the N4JS IDE and documentation is generated at ``n4js/docs/eu.numberfour.n4js.doc/target``.
+
+TIP: See the <<Running the Documentation Plugin as a Standalone, running as standalone>> section to build only the documentation.
 
 To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo/[fork the N4JS repo], create a pull request with edited or new AsciiDoc files in the source folder and your contribution will be reviewed for inclusion.
 
@@ -33,7 +36,7 @@ This XML file, is called ``POM.XML`` (Project Object Model) and is located at
 ``https://github.com/NumberFour/n4js/blob/master/pom.xml``
 
 The standard convention for building large software projects with Maven is that they are divided into several modules, each with its own POM.
-The POM in the root folder points at several modules:
+The POM in the N4JS root folder points at several modules:
 
 .n4js/pom.xml
 [source,xml]
@@ -99,20 +102,22 @@ n4js/docs/eu.numberfour.n4js.doc/
 * **toc.xml** - Table Of Contents; contains a structured index of the help pages so they may be registered online or within the N4JS IDE
 * **build.properties** - Describes which items in the root folder are to be included in the N4JS IDE build
 
-TIP: Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
-Generating the documentation using this method reduces the build time to approximately 1 minute.
+==== Running the Documentation Plugin as a Standalone
+
+Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
+Generating the documentation using this method reduces the build time to less than 1 minute.
 
 
 === Generating N4JS IDE Help
 
-The Eclipse Help bundled with the N4JS IDE is essentially HTML files accompanied by a ``toc.xml`` that lists the structure of these help files.
+The Eclipse Help bundled with the N4JS IDE is a collection of HTML files accompanied by a ``toc.xml`` that lists their hierarchy.
 In the Maven build, the POM at ``n4js/docs/eu.numberfour.n4js.doc/pom.xml`` is configured to execute these plugins in the following order:
 
 . The ``asciidoctor-maven-plugin`` converts source AsciiDoc files (``src`` folder) to HTML (``target`` folder).
 . An ``antrun-plugin`` creates a .txt file containing the paths to the generated HTML pages called ``help-pages.txt``.
 . The ``geneclipsetoc-maven-plugin`` searches for headings in the generated HTML in the ``target`` folder and creates a structured ``toc.xml`` based on this hierarchy that the N4JS IDE can index.
 
-A single execution of the ``asciidoctor-maven-plugin`` to convert our source files to HTML in the ``generate-resources`` phase of a Maven build looks like the following:
+An example execution of the ``asciidoctor-maven-plugin`` to convert source files to HTML in the ``generate-resources`` phase of a Maven build looks like the following:
 
 [source,xml]
 <execution>
@@ -123,24 +128,22 @@ A single execution of the ``asciidoctor-maven-plugin`` to convert our source fil
     </goals>
     <configuration>
         <sourceDirectory>src/</sourceDirectory>
+        <outputDirectory>${eclipseHelpDir}</outputDirectory>
         <imagesdir>../images</imagesdir>
         <preserveDirectories>true</preserveDirectories>
-        <outputDirectory>${eclipseHelpDir}</outputDirectory>
         <backend>html5</backend>
-        <sourceHighlighter>coderay</sourceHighlighter>
+        <sourceHighlighter>highlightjs</sourceHighlighter>
         <attributes>
             <toc>false</toc>
             <icons>font</icons>
             <sectanchors>true</sectanchors>
             <idprefix/>
             <idseparator>-</idseparator>
-            <docinfo1>false</docinfo1>
         </attributes>
     </configuration>
 </execution>
 
-These executions can then be run consecutively with different backends, target folders and with specific attributes that will override those in the headers of the source ``.adoc`` files.
-
+These executions can then be run consecutively with different backends, target folders and with individual attributes.
 For generating PDF and EPUB from the source AsciiDoc files, the addition of the following dependencies are required in the ``asciidoctor-maven-plugin``:
 
 [source,xml]
@@ -236,17 +239,6 @@ Asciidoctor also has several add-on converters, which can be plugged in by addin
 3+|Mallard 1.0 XML. **Requires the asciidoctor-mallard gem** (not yet released).
 |===
 
-=== Customising Processed Output Per Format
-
-Some of the documentation in the ``src`` folder contains http://asciidoctor.org/docs/user-manual/#conditional-preprocessor-directives[Conditional Preprocessor Directives]. The ``ide-setup.adoc`` file located at ``n4js/docs/eu.numberfour.n4js.doc/src/docs/documentation/ide-setup.adoc`` contains the following:
-
-[source,asciidoc]
-\ifdef::backend-html5[]
-image::runhello.gif[]
-
-Where the animated .gif is embedded/processed in the target **only if the html5** backend is used.
-
-This presents the opportunity for custom content per document type (i.e. html header/footer)
 
 == Developing AsciiDoc
 

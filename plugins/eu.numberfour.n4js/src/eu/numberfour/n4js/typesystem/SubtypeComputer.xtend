@@ -21,9 +21,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
 import org.eclipse.xtext.util.CancelIndicator
@@ -39,8 +37,6 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 @Singleton
 class SubtypeComputer extends TypeSystemHelperStrategy {
 
-	@Inject
-	private N4JSTypeInferencer typeInferencer;
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
@@ -73,7 +69,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 			if (solution !== null) {
 				val G_solution = G.newRuleEnvironment;
 				solution.entrySet.forEach[G_solution.addTypeMapping(key,value)];
-				val leftSubst = typeInferencer.substituteTypeVariables(G_solution, left_withInfVars);
+				val leftSubst = ts.substTypeVariablesInTypeRef(G_solution, left_withInfVars);
 				if (leftSubst instanceof FunctionTypeExprOrRef) {
 					return primIsSubtypeFunction(G, leftSubst, right);
 				}
@@ -111,7 +107,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 			for (i : 0 ..< leftTypeVars.size) {
 				G2.addTypeMapping(rightTypeVars.get(i), TypeUtils.createTypeRef(leftTypeVars.get(i)))
 			}
-			val TypeRef rightSubst = typeInferencer.substituteTypeVariables(G2, right);
+			val TypeRef rightSubst = ts.substTypeVariablesInTypeRef(G2, right);
 			if (!(rightSubst instanceof FunctionTypeExprOrRef &&
 				primIsSubtypeFunction(G, left, rightSubst as FunctionTypeExprOrRef)))
 				return false;
@@ -265,7 +261,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 					G.anyTypeRef
 				else
 					createIntersectionType(G, rightTypeVar.declaredUpperBounds);
-			val rightUpperBoundSubst = typeInferencer.substituteTypeVariables(G, rightUpperBound);
+			val rightUpperBoundSubst = ts.substTypeVariablesInTypeRef(G, rightUpperBound);
 
 			// leftUpperBound must be a super(!) type of rightUpperBound,
 			// i.e. rightUpperBound <: leftUpperBound

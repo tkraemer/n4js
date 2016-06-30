@@ -392,9 +392,10 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		val f = script.scriptElements.head as FunctionDeclaration
 		val param = f.fpars.head
 		assertEquals('x', param.name)
+		assertTrue(param.declaredTypeRef instanceof FunctionTypeExpression)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
-		val returnType = paramType.returnTypeRef as ClassifierTypeRef
-		assertNull(returnType.staticTypeRef)
+		assertTrue(paramType.returnTypeRef instanceof ClassifierTypeRef)
+		// returnType.getTypeArg is now interpreted as wildcard, but check other AST elements:
 	}
 
 	@Test
@@ -405,9 +406,10 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		val f = script.scriptElements.head as FunctionDeclaration
 		val param = f.fpars.head
 		assertEquals('x', param.name)
+		assertTrue(param.declaredTypeRef instanceof FunctionTypeExpression)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
-		val returnType = paramType.returnTypeRef as ConstructorTypeRef
-		assertNull(returnType.staticTypeRef)
+		assertTrue(paramType.returnTypeRef instanceof ConstructorTypeRef)
+		// returnType.getTypeArg is now interpreted as wildcard, but check other AST elements:
 	}
 
 	@Test

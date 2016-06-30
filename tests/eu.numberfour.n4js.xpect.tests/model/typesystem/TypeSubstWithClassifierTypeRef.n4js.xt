@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+class B {}
+
+class G<T> {
+    ctor: constructor{? extends T}; // error: "substTypeVariablesInClassifierTypeRef: [...] |- constructor{? extends T} ~> ClassifierTypeRef."
+}
+
+// XPECT type of 'x' --> constructor{? extends B}
+var x = new G<B>().ctor; // <-- remove .ctor and above error will go away
+ 

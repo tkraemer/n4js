@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface I {}
+interface J {}
+class C {}
+class D extends C {}
+class X {}
+
+let iIC: I&C;
+let iIJ: I&J;
+
+// XPECT errors -->"Cannot cast from intersection{I,C} to X" at "iIC as X"
+iIC as X;
+// XPECT noerrors -->
+iIC as D;
+// XPECT noerrors -->
+iIC as J;
+// XPECT errors -->"Cannot cast from intersection{I,C} to int" at "iIC as int"
+iIC as int;
+
+// XPECT noerrors -->
+iIJ as X;
+
+let uIC: I|C;
+
+// XPECT noerrors -->
+uIC as X;
+// XPECT noerrors -->
+uIC as D;
+// XPECT noerrors -->
+uIC as J;
+// XPECT errors -->"Cannot cast from union{I,C} to int" at "uIC as int"
+uIC as int;
+

@@ -11,31 +11,30 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.CastExpression
+import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.naming.QualifiedNameComputer
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.NullType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import it.xsemantics.runtime.RuleEnvironment
+import java.util.List
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.AnnotationDefinition.*
+import static eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-
-import java.util.List
-import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
-import eu.numberfour.n4js.n4JS.Expression
-import eu.numberfour.n4js.n4JS.CastExpression
-import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
-import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import it.xsemantics.runtime.RuleEnvironment
-import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.ts.types.UndefinedType
-import eu.numberfour.n4js.ts.types.NullType
-import eu.numberfour.n4js.naming.QualifiedNameComputer
 
 /**
  * Validations related to callsites targeting N4Injector methods.
@@ -194,11 +193,13 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 * Expression must denote a DIC constructor. If so, return the TClass of the DIC. Otherwise return null.
 	 */
 	private def TClass holdsDenotesDICConstructor(Expression ctorOfDICArg) {
-		val ctorOfDICTypeRef = typeInferencer.tau(ctorOfDICArg)
+		val ctorOfDICTypeRef = ts.tau(ctorOfDICArg)
 		if (ctorOfDICTypeRef instanceof ClassifierTypeRef) {
-			val dicTClass = dicTClassOf(ctorOfDICTypeRef.staticTypeRef)
-			if (null !== dicTClass) {
-				return dicTClass
+			if (ctorOfDICTypeRef.getTypeArg instanceof TypeRef) {
+				val dicTClass = dicTClassOf(ctorOfDICTypeRef.getTypeArg as TypeRef)
+				if (null !== dicTClass) {
+					return dicTClass
+				}
 			}
 		}
 		addIssue(getMessageForDI_ANN_INJECTOR_REQUIRED(), ctorOfDICArg, DI_ANN_INJECTOR_REQUIRED);
@@ -228,9 +229,9 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def void internalCheckInjectorCreateCallsite(ParameterizedCallExpression callExpression) {
 		val ctorArg = callExpression.arguments.head?.expression
-		val ctorArgTypeRef = typeInferencer.tau(ctorArg)
+		val ctorArgTypeRef = ts.tau(ctorArg)
 		if (ctorArgTypeRef instanceof ClassifierTypeRef) {
-			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.staticTypeRef)) {
+			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.getTypeArg)) {
 				return
 			}
 		}
@@ -269,7 +270,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 * Expression must denote at runtime an N4Injector instance, null, or undefined.
 	 */
 	private def void holdsDenotesInjector(Expression expr) {
-		val tr = typeInferencer.tau(expr)
+		val tr = ts.tau(expr)
 		if (isAllowedAsInjectorInstance(tr.declaredType)) {
 			return
 		}
@@ -289,7 +290,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 		Iterable<TClass> bindersForWhichInstancesAreNeeded
 	) {
 		val G = newRuleEnvironment(providedBinders.get(0));
-		val availableTypeRefs = providedBinders.map[expr| typeInferencer.tau(expr) ].filter[tr| !isNullOrUndefinedType(tr.declaredType) ]
+		val availableTypeRefs = providedBinders.map[expr| ts.tau(expr) ].filter[tr| !isNullOrUndefinedType(tr.declaredType) ]
 		val missingBinders = bindersForWhichInstancesAreNeeded.filter[requirement|
 			!someBinderSatisfies(G, availableTypeRefs, requirement)
 		]

@@ -11,8 +11,6 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -35,7 +33,6 @@ import it.xsemantics.runtime.RuleEnvironment
 class DerivationComputer extends TypeSystemHelperStrategy {
 
 	@Inject private N4JSTypeSystem ts;
-	@Inject private N4JSTypeInferencer typeInferencer;
 
 	private enum BoundType { UPPER, LOWER }
 
@@ -63,13 +60,13 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 
 		// substitution on this type
 		if (F.declaredThisType !== null) {
-			val TypeRef resultDeclaredThisType = typeInferencer.substituteTypeVariables(G,F.declaredThisType);
+			val TypeRef resultDeclaredThisType = ts.substTypeVariablesInTypeRef(G,F.declaredThisType);
 			result.declaredThisType = TypeUtils.copy(resultDeclaredThisType)
 		}
 
 		// substitution on return type
 		if (F.returnTypeRef !== null) {
-			val TypeRef resultReturnTypeRef = typeInferencer.substituteTypeVariables(G,F.returnTypeRef);
+			val TypeRef resultReturnTypeRef = ts.substTypeVariablesInTypeRef(G,F.returnTypeRef);
 			result.returnTypeRef = TypeUtils.copyIfContained(resultReturnTypeRef)
 		}
 
@@ -81,7 +78,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 				newPar.variadic = fpar.variadic
 
 				if(fpar.typeRef !== null) {
-					val TypeRef resultParTypeRef = typeInferencer.substituteTypeVariables(G,fpar.typeRef);
+					val TypeRef resultParTypeRef = ts.substTypeVariablesInTypeRef(G,fpar.typeRef);
 					newPar.typeRef = TypeUtils.copyIfContained(resultParTypeRef)
 				}
 
@@ -181,7 +178,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 
 		if(!currTV.declaredUpperBounds.empty) {
 			val oldUBs = F.getTypeVarUpperBounds(currTV);
-			val newUBs = oldUBs.map[typeInferencer.substituteTypeVariables(G,it)].toList;
+			val newUBs = oldUBs.filterNull.map[ts.substTypeVariablesInTypeRef(G,it)].toList;
 			val unchanged = (newUBs == currTV.declaredUpperBounds); // note: identity compare for the elements is what we want
 			if(!unchanged) {
 				val idx = result.unboundTypeVars.indexOf(currTV);

@@ -35,20 +35,16 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.n4mf.ProjectType
 import eu.numberfour.n4js.projectModel.IN4JSCore
-import eu.numberfour.n4js.services.N4JSGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypingStrategy
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.util.Tuples
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
@@ -68,15 +64,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	]
 
 	@Inject
-	protected N4JSTypeInferencer typeInferencer;
-	@Inject
-	protected N4JSTypeSystem ts;
-	@Inject
-	protected N4JSGrammarAccess grammarAccess
-	@Inject
-	protected IN4JSCore n4jsCore;
-	@Inject
-	protected extension IQualifiedNameProvider;
+	private IN4JSCore n4jsCore;
 
 	/**
 	 * NEEEDED

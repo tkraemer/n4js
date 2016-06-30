@@ -15,11 +15,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.StaticAccessAwareMemberScope
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
@@ -37,6 +33,7 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
+import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TN4Classifier
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TStructuralType
@@ -44,21 +41,22 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import org.eclipse.xtext.naming.QualifiedName
-import eu.numberfour.n4js.ts.types.TMember
-import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
-import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 
 /**
  */
 class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
-	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject ComposedMemberScope.ComposedMemberScopeFactory composedMemberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
@@ -232,7 +230,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ParameterizedTypeRef ptr, EObject context, boolean staticAccess) {
-		val IScope result = members(ptr.declaredType, context, false)
+		val IScope result = members(ptr.declaredType, context, staticAccess);
 		if (ptr.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}
@@ -240,7 +238,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ParameterizedTypeRefStructural ptrs, EObject context, boolean staticAccess) {
-		val IScope result = ptrs.declaredType.members(context, false)
+		val IScope result = ptrs.declaredType.members(context, staticAccess);
 		if (ptrs.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}
@@ -276,7 +274,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(ClassifierTypeRef ctr, EObject context, boolean staticAccess) {
-		val IScope result = ctr.staticType.members(context, true)
+		val IScope result = ctr.staticType.members(context, true) // staticAccess is always true in this case
 		if (ctr.dynamic && !(result instanceof DynamicPseudoScope)) {
 			return new DynamicPseudoScope(result)
 		}
@@ -285,7 +283,7 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(ComposedTypeRef ctr, EObject context, boolean staticAccess) {
 		return composedMemberScopeFactory.create(ctr, context, ctr.typeRefs.map[members(context, staticAccess)],
-			ctr instanceof IntersectionTypeExpression, typeInferencer);
+			ctr instanceof IntersectionTypeExpression, ts);
 	}
 
 	// TODO type variable can specify multiple upper bounds!

@@ -13,8 +13,6 @@ package eu.numberfour.n4js.typesystem
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import com.google.inject.Inject
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
@@ -41,6 +39,7 @@ import eu.numberfour.n4js.ts.utils.SuperTypesList
 import eu.numberfour.n4js.ts.utils.TypeCompareHelper
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.utils.ContainerTypesHelper
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.HashMap
 import java.util.HashSet
@@ -50,8 +49,8 @@ import java.util.Set
 import static eu.numberfour.n4js.ts.utils.SuperTypesList.*
 import static java.util.Collections.*
 
-import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * Type System Helper Strategy computing the join of a given collection of types.

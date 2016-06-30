@@ -473,7 +473,7 @@
 					create: {
 						value: function create___n4(ctor) {
 							var cachedInstances = new Map();
-							return this.internalCreate(ctor, this, cachedInstances);
+							return this.internalCreate((ctor), this, cachedInstances);
 						}
 					},
 					internalCreate: {

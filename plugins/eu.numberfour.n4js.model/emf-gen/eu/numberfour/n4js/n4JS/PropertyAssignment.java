@@ -8,6 +8,7 @@
 package eu.numberfour.n4js.n4JS;
 
 import eu.numberfour.n4js.ts.types.TStructMember;
+import eu.numberfour.n4js.ts.types.TypableElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import eu.numberfour.n4js.ts.types.TStructMember;
  * @model abstract="true"
  * @generated
  */
-public interface PropertyAssignment extends AnnotableElement, VariableEnvironmentElement, PropertyNameOwner {
+public interface PropertyAssignment extends AnnotableElement, VariableEnvironmentElement, PropertyNameOwner, TypableElement {
 	/**
 	 * Returns the value of the '<em><b>Compute Name From</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

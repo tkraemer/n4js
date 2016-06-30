@@ -16,7 +16,8 @@ import eu.numberfour.n4js.N4JSParseHelper
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.diagnostics.Diagnostic
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -26,7 +27,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.validation.JavaScriptVariant
 
 /**
  * Tests for this handling undefined type.
@@ -39,7 +39,7 @@ class UndefinedHandlingTest {
 
 	@Inject extension N4JSParseHelper
 	@Inject extension ValidationTestHelper
-	@Inject N4JSTypeInferencer typeInferencer
+	@Inject N4JSTypeSystem ts
 
 
 	@Test
@@ -91,7 +91,7 @@ class UndefinedHandlingTest {
 		val builtInTypeScope = BuiltInTypeScope.get(script.eResource.resourceSet);
 		val undefinedType = builtInTypeScope.undefinedType
 		assertNotNull("bogus test, no predefined undefined type found", undefinedType);
-		val receiverType = typeInferencer.tau(access.target).declaredType;
+		val receiverType = ts.tau(access.target).declaredType;
 		assertEquals("wrong type inferred", undefinedType, receiverType);
 		assertTrue("property must not be bound", access.property.eIsProxy)
 

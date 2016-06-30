@@ -17,7 +17,7 @@ import org.osgi.framework.BundleContext;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.N4JSGuiceUIPlugin;
 import eu.numberfour.n4js.utils.Arrays2;
@@ -39,7 +39,7 @@ public class GH_180_CheckInjectedSharedSingletons_PluginUITest extends AbstractI
 	@Test
 	public void testInjectorsSharingSameSingleton() throws Exception {
 
-		final Class<N4JSTypeInferencer> testedType = N4JSTypeInferencer.class;
+		final Class<N4JSTypeSystem> testedType = N4JSTypeSystem.class;
 		final Singleton[] singletons = testedType.getAnnotationsByType(Singleton.class);
 		assertTrue(testedType.getSimpleName() + " is not annotated with " + Singleton.class.getName() + ".",
 				!Arrays2.isEmpty(singletons));
@@ -53,8 +53,8 @@ public class GH_180_CheckInjectedSharedSingletons_PluginUITest extends AbstractI
 			assertTrue("Mock bundle is not running yet.", Bundle.ACTIVE == mockBundle.getBundle().getState());
 			final Injector childInjector = mockBundle.getN4JSChildInjector();
 
-			final N4JSTypeInferencer instanceFromParent = parentInjector.getInstance(testedType);
-			final N4JSTypeInferencer instanceFromChild = childInjector.getInstance(testedType);
+			final N4JSTypeSystem instanceFromParent = parentInjector.getInstance(testedType);
+			final N4JSTypeSystem instanceFromChild = childInjector.getInstance(testedType);
 
 			assertTrue(
 					"Expected the same instance of " + testedType.getSimpleName() + " from parent and child injectors.",
