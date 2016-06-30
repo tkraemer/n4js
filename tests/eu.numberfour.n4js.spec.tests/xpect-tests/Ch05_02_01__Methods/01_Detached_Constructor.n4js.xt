@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// Test for GH-224
+
+let o: Object;
+// constructor cannot be "detached" XPECT nowarnings -->
+var ctor = o.constructor;
+
+class C {
+	// XPECT warnings -->"Name may be confused with constructor." at "constructor"
+	static constructor() {}
+	constructor() {}
+}
+
+let c: C;
+
+// constructor cannot be "detached" XPECT nowarnings -->
+let ctorInstance = c.constructor
+// this is static and no constructor XPECT warnings -->"A reference to method constructor is created detached from a (correct) this-instance." at "constructor"
+let ctorStatic = C.constructor
