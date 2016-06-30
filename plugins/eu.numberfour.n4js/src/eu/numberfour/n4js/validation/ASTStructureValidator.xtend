@@ -588,9 +588,9 @@ class ASTStructureValidator {
 			if (arguments == name && !(model instanceof LocalArgumentsVariable)) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else {
-				if (languageConstantsHelper.getECMAKeywords.contains(name)
+				if (name != 'yield' && (languageConstantsHelper.getECMAKeywords.contains(name)
 					|| 'enum'.equals(name) || 'await'.equals(name) || 'let'.equals(name)
-					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name)) {
+					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name))) {
 					issueNameDiagnostic(model, producer, name)
 				} else if (constraints.isStrict) {
 					if (reservedWordInStrictMode.contains(name) || eval == name) {
