@@ -45,6 +45,7 @@ import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
 
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.VariableStatementKeyword
 
 /**
  * Transforms ES6 destructuring patterns into equivalent ES5 code. If the target engine supports ES6 destructuring
@@ -153,6 +154,7 @@ class DestructuringTransformation extends Transformation {
 			val iterVarSTE = createSymbolTableEntryIMOnly(iterVar);
 
 			var needDeclarations = false;
+			var varStmtKeyword = VariableStatementKeyword.VAR;
 			val helperVars = <VariableDeclaration>newArrayList;
 			val simpleAssignments = <Pair<SymbolTableEntry,? extends Expression>>newArrayList;
 			if(!stmnt.varDeclsOrBindings.empty) {
@@ -164,12 +166,14 @@ class DestructuringTransformation extends Transformation {
 				val rootNode = DestructNode.unify(stmnt.varDeclsOrBindings.head as VariableBinding);
 				traverse(helperVars, simpleAssignments, rootNode, _IdentRef(iterVarSTE));
 				needDeclarations = true;
+				varStmtKeyword = stmnt.varStmtKeyword;
 
 			} else if(stmnt.initExpr instanceof ArrayLiteral || stmnt.initExpr instanceof ObjectLiteral) {
 				// something like: for( [a,b] of [ [1,2], [3,4] ] ) {}
 
 				val rootNode = DestructNode.unify(stmnt);
 				traverse(helperVars, simpleAssignments, rootNode, _IdentRef(iterVarSTE));
+				needDeclarations = false;
 
 			} else {
 				throw new IllegalArgumentException();
@@ -182,8 +186,8 @@ class DestructuringTransformation extends Transformation {
 
 			val toBeInserted = <Statement>newArrayList;
 			if(needDeclarations) {
-				toBeInserted += _VariableStatement(simpleAssignments.map[
-					var varDecl = key.getVariableDeclarationFromSTE;
+				toBeInserted += _VariableStatement(varStmtKeyword, simpleAssignments.map[
+					val varDecl = key.getVariableDeclarationFromSTE;
 					varDecl.expression = value;
 					return varDecl;
 				]);

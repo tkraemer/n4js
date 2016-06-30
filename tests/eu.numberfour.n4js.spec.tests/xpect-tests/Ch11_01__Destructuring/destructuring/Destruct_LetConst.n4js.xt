@@ -1,0 +1,67 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+const values = [["foo", 42], ["bar", 43]];
+
+
+console.log('### with let');
+function f01() {
+    let v = 0; // <-- makes sure we would get a runtime error if the "let" inside the block were changed to a "var"
+    if (true) {
+	    	let [k, v] = values[0];
+		console.log(k,v);
+    }
+}
+f01();
+
+
+console.log('### with const');
+function f02() {
+    let v = 0; // <-- makes sure we would get a runtime error if the "const" inside the block were changed to a "var"
+    if (true) {
+	    	const [k, v] = values[0];
+		console.log(k,v);
+    }
+}
+f02();
+
+
+console.log('### for..of with let');
+function f03() {
+    let v = 0; // <-- makes sure we would get a runtime error if the "let" inside the for loop were changed to a "var"
+    for (let [k, v] of values) {
+		console.log(k,v);
+    }
+}
+f03();
+
+
+console.log('### for..of with const');
+function f04() {
+    let v = 0; // <-- makes sure we would get a runtime error if the "const" inside the for loop were changed to a "var"
+    for (const [k, v] of values) {
+		console.log(k,v);
+    }
+}
+f04();
+
+
+
+
+/* XPECT output ---
+<==
+stdout:
+### with let
+foo 42
+### with const
+foo 42
+### for..of with let
+foo 42
+bar 43
+### for..of with const
+foo 42
+bar 43
+stderr:
+==>
+--- */
+
