@@ -16,10 +16,10 @@ import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.ui.labeling.TypesHoverProvider
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider
 

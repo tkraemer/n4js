@@ -18,6 +18,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
 import eu.numberfour.n4js.ts.types.TStructMember;
+import eu.numberfour.n4js.ts.types.TypableElement;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -354,6 +355,11 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 				default: return -1;
 			}
 		}
+		if (baseClass == TypableElement.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -378,6 +384,11 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 			switch (baseFeatureID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.PROPERTY_ASSIGNMENT__KIND;
 				case N4JSPackage.PROPERTY_NAME_OWNER__NAME: return N4JSPackage.PROPERTY_ASSIGNMENT__NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == TypableElement.class) {
+			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}
@@ -407,6 +418,11 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT___IS_VALID_NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == TypableElement.class) {
+			switch (baseOperationID) {
 				default: return -1;
 			}
 		}

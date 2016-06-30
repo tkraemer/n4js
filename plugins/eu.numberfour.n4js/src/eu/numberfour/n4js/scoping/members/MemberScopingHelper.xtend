@@ -43,12 +43,11 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import org.eclipse.emf.ecore.EObject
@@ -61,7 +60,6 @@ import org.eclipse.xtext.scoping.Scopes
  */
 class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
-	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
 
@@ -272,7 +270,7 @@ class MemberScopingHelper {
 		switch (subScopes.size) { // only create union scope if really necessary, remember this optimization in test, since union{A} tests scope of A only!
 			case 0: return IScope.NULLSCOPE
 			case 1: return subScopes.get(0)
-			default: return new UnionMemberScope(uniontypeexp, request.context, subScopes, typeInferencer)
+			default: return new UnionMemberScope(uniontypeexp, request.context, subScopes, ts)
 		}
 	}
 

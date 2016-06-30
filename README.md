@@ -23,7 +23,7 @@ This installer is to be downloaded from https://wiki.eclipse.org/Eclipse_Install
 Run the installer and apply the following steps:
 
 1. change to "Advance Mode" via the menu (upper-right corner) (no need to move the installer)
-2. select a product, e.g. "Eclipse Platform"
+2. select a product, e.g. "Eclipse Platform" with product version "Latest(Neon)" 
 4. on the next page, drag'n'drop the following URI on the "github" label:
  
     https://raw.githubusercontent.com/NumberFour/n4js/master/releng/eu.numberfour.n4js.targetplatform/N4JS.setup
@@ -39,12 +39,12 @@ The installer will then guide you through the rest of the installation. All plug
 
 For a manual install, clone the code and import all top-level projects from the docs, features, plugins, releng, testhelpers, and tests folders. Activate the targetplatform contained in the ```releng/eu.numberfour.ide.targetplatform``` project.
 
-The N4JS IDE is developed with Eclipse Mars 4.5 or better since the system is based on Eclipse anyway. 
+The N4JS IDE is developed with Eclipse Neon 4.6 or better since the system is based on Eclipse anyway. 
 It is almost impossible to use another IDE to develop Eclipse plugins. The list of required plugins includes:
 
-- Xtext/Xtend 2.9.1
-- Xcore 1.3.1 
-- Xsemantics 1.9.0
+- Xtext/Xtend 2.10.0
+- Xcore 1.4.0 
+- Xsemantics 1.10.0
 - XpectN4 0.1
 
 It is important to use the latest version of Xtext and the corresponding service release of Xcore. You will find the latest version numbers and plugins used in the target platform definition at

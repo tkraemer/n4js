@@ -19,14 +19,14 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ScriptElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import it.xsemantics.runtime.Result
-import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.TraceUtils
 import java.util.List
@@ -60,25 +60,18 @@ abstract class AbstractTypesystemTest {
 
 	def assertTypeByName(String expectedTypeAsString, TypableElement expression) {
 		val G = newRuleEnvironment(expression);
-		val trace = new RuleApplicationTrace();
-		var result = ts.type(G, trace, expression)
+		val result = ts.type(G, expression)
 		if (result.ruleFailedException!==null) {
 			fail(result.ruleFailedException.failureTraceAsString);
 		}
 		val typeExpr = result.value;
-		assertEquals("Assert at " + expression + ", trace:\n" + trace.traceAsString, expectedTypeAsString, typeExpr.typeRefAsString);
+		assertEquals("Assert at " + expression, expectedTypeAsString, typeExpr.typeRefAsString);
 	}
 
 
 	/* Tests that the result's value is a ParameterizedTypeRef and the declared type must equal the given type. */
 	def assertType(Result<TypeRef> result, Type expectedType) {
 		result.assertNoFailure
-		assertTrue(result.value instanceof ParameterizedTypeRef)
-		assertEquals(expectedType, (result.value as ParameterizedTypeRef).declaredType)
-	}
-
-	def assertType(Result<TypeRef> result, Type expectedType, RuleApplicationTrace trace) {
-		result.assertNoFailure(trace)
 		assertTrue(result.value instanceof ParameterizedTypeRef)
 		assertEquals(expectedType, (result.value as ParameterizedTypeRef).declaredType)
 	}
@@ -97,13 +90,9 @@ abstract class AbstractTypesystemTest {
 	def void assertTypeName(String expectedTypeName, TypableElement elementToBeTypeInferred) {
 
 		val G = newRuleEnvironment(elementToBeTypeInferred);
-		var trace = new RuleApplicationTrace();
-		val result = ts.type(G, trace, elementToBeTypeInferred);
+		val result = ts.type(G, elementToBeTypeInferred);
 
-		if (result.ruleFailedException !== null && ! trace.trace.empty) {
-			logger.warn("Trace: " + trace.traceAsString)
-		}
-		result.assertNoFailure(trace)
+		result.assertNoFailure
 		assertNotNull("No type inferred", result.value)
 		assertEquals("Wrong type inferred", expectedTypeName, result.value.typeRefAsString)
 	}
@@ -114,13 +103,9 @@ abstract class AbstractTypesystemTest {
 	def void assertExpectedTypeName(String expectedTypeName, Expression element) {
 
 		val G = newRuleEnvironment(element);
-		var trace = new RuleApplicationTrace();
-		val result = ts.expectedTypeIn(G,trace,element.eContainer, element);
+		val result = ts.expectedTypeIn(G,element.eContainer, element);
 
-		if (result.ruleFailedException!==null && ! trace.trace.empty) {
-			logger.warn("Trace: " + trace.traceAsString)
-		}
-		result.assertNoFailure(trace)
+		result.assertNoFailure
 		assertNotNull("No expected type inferred", result.value)
 		assertEquals("Wrong expected type inferred", expectedTypeName, result.value.typeRefAsString)
 	}
@@ -133,23 +118,21 @@ abstract class AbstractTypesystemTest {
 	def void assertTypeFailure(TypableElement elementToBeTypeInferred, String expectedFailure, String expectedMainReason) {
 
 		val G = newRuleEnvironment(elementToBeTypeInferred);
-		var trace = new RuleApplicationTrace();
-		val result = ts.type(G,trace,elementToBeTypeInferred);
+		val result = ts.type(G,elementToBeTypeInferred);
 
-		result.assertFailure(trace, expectedFailure, expectedMainReason)
+		result.assertFailure(expectedFailure, expectedMainReason)
 	}
 
 	def void assertSubtype(RuleEnvironment G, TypeRef left, TypeRef right, boolean expectedResult) {
 		assertNotNull("Left hand side must not be null", left)
 		assertNotNull("Right hand side must not be null", right)
 
-		var trace = new RuleApplicationTrace()
-		var result = ts.subtype(G, trace, left, right)
+		val result = ts.subtype(G, left, right)
 		if (expectedResult) {
 			result.assertNoFailure
 			assertEquals(expectedResult, result.value)
 		} else {
-			result.assertFailure(trace)
+			result.assertFailure
 		}
 	}
 
@@ -164,42 +147,25 @@ abstract class AbstractTypesystemTest {
 	}
 
 	def void assertNoFailure(Result<?> result) {
-		result.assertNoFailure(null)
+		assertNull(result.ruleFailedException?.failureTraceAsString, result.ruleFailedException)
+		assertNotNull(result.value)
 	}
 
-	def void assertNoFailure(Result<?> result, RuleApplicationTrace trace) {
-		if (result.ruleFailedException !== null) {
-			System.err.println("failure trace:\n" + result.ruleFailedException.failureTraceAsString)
-			assertNull(result.ruleFailedException.failureTraceAsString,
-				result.ruleFailedException)
-		}
-		if (trace === null)
-			assertNotNull(result.value)
-		else {
-			val traceAsString = trace.traceAsString
-			if (result.value === null)
-				System.err.println("Trace that lead to null result:\n" + traceAsString)
-			assertNotNull("Result value null:\n" + traceAsString, result.value)
-		}
+	def void assertFailure(Result<?> result, String expectedFailureMessage) {
+		result.assertFailure(expectedFailureMessage, null)
 	}
 
-	def void assertFailure(Result<?> result, RuleApplicationTrace trace, String expectedFailureMessage) {
-		result.assertFailure(trace, expectedFailureMessage, null)
-	}
-
-	def void assertFailure(Result<?> result, RuleApplicationTrace trace, String expectedFailureMessage, String mainReason) {
-		result.assertFailure(trace)
+	def void assertFailure(Result<?> result, String expectedFailureMessage, String mainReason) {
+		result.assertFailure
 		assertEquals(expectedFailureMessage, result.ruleFailedException.message)
 		if (mainReason !== null)
 			assertEquals(mainReason, result.ruleFailedException.failureTraceAsStrings.last)
 	}
 
-	def void assertFailure(Result<?> result, RuleApplicationTrace trace) {
-		if (result.ruleFailedException === null) {
-			System.err.println("unexpected success:\n" + trace.traceAsString)
-			assertNotNull(trace.traceAsString, result.ruleFailedException)
-		}
-		assertNull(result.value)
+	def void assertFailure(Result<?> result) {
+		assertTrue("unexpected success", result.failed);
+		assertNotNull(result.ruleFailedException);
+		assertNull(result.value);
 	}
 
 	def void assertIssueCount(int expectedNumber, List<Issue> issues) {

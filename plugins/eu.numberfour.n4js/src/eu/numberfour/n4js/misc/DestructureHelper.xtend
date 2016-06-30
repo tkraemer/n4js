@@ -19,9 +19,6 @@ import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
@@ -36,6 +33,9 @@ import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.util.AllSuperTypeRefsCollector
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.ContainerTypesHelper
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Map
 import org.eclipse.emf.ecore.EObject

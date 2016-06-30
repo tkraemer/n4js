@@ -6789,6 +6789,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		propertyAssignmentEClass.getESuperTypes().add(this.getAnnotableElement());
 		propertyAssignmentEClass.getESuperTypes().add(this.getVariableEnvironmentElement());
 		propertyAssignmentEClass.getESuperTypes().add(this.getPropertyNameOwner());
+		propertyAssignmentEClass.getESuperTypes().add(theTypesPackage.getTypableElement());
 		propertyNameOwnerEClass.getESuperTypes().add(this.getNamedElement());
 		annotablePropertyAssignmentEClass.getESuperTypes().add(this.getPropertyAssignment());
 		propertyAssignmentAnnotationListEClass.getESuperTypes().add(this.getAbstractAnnotationList());

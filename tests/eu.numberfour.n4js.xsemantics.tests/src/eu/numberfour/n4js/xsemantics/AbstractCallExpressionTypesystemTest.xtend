@@ -21,7 +21,6 @@ import eu.numberfour.n4js.typesystem.AbstractScriptAssembler
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.Log
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
 import org.eclipse.xtext.junit4.InjectWith
@@ -107,10 +106,9 @@ abstract class AbstractCallExpressionTypesystemTest extends AbstractTypesystemTe
 				else
 					null;
 			if (expectedType !== null) {
-				val trace = new RuleApplicationTrace();
-				val actualTypeResult = ts.expectedTypeIn(G, trace, arg, arg.expression);
+				val actualTypeResult = ts.expectedTypeIn(G, arg, arg.expression);
 				if (actualTypeResult.failed) {
-					assertNoFailure(actualTypeResult, trace);
+					assertNoFailure(actualTypeResult);
 				}
 				assertNotNull("rule expectedTypeIn returned null for argument "+i, actualTypeResult.value);
 				assertEquals(expectedType, actualTypeResult.value.typeRefAsString)

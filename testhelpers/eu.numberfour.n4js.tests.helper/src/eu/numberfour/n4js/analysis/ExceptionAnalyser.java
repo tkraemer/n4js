@@ -30,9 +30,9 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.Script;
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;

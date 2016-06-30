@@ -35,7 +35,7 @@ import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -55,21 +55,21 @@ public class UnionMemberScope extends AbstractScope {
 	private final IScope[] subScopes;
 	private final EObject context;
 
-	private final N4JSTypeInferencer typeInferencer;
+	private final N4JSTypeSystem ts;
 	private final boolean writeAccess;
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
 	 * etc.)
 	 */
-	public UnionMemberScope(UnionTypeExpression unionTypeExpression,
-			EObject context, List<IScope> subScopes, N4JSTypeInferencer typeInferencer) {
+	public UnionMemberScope(UnionTypeExpression unionTypeExpression, EObject context, List<IScope> subScopes,
+			N4JSTypeSystem ts) {
 
 		super(IScope.NULLSCOPE, false);
 
 		this.unionTypeExpression = unionTypeExpression;
 		this.subScopes = subScopes.toArray(new IScope[subScopes.size()]);
-		this.typeInferencer = typeInferencer;
+		this.ts = ts;
 		this.context = context;
 		this.writeAccess = ExpressionExtensions.isLeftHandSide(context);
 	}
@@ -168,10 +168,10 @@ public class UnionMemberScope extends AbstractScope {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final ComposedMemberDescriptor composedMemberDescr = new ComposedMemberDescriptor(
-				writeAccess, EcoreUtilN4.getResource(context, unionTypeExpression), typeInferencer);
+				writeAccess, EcoreUtilN4.getResource(context, unionTypeExpression), ts);
 		for (int idx = 0; idx < subScopes.length; idx++) {
 			IScope subScope = subScopes[idx];
-			final RuleEnvironment GwithSubstitutions = typeInferencer.createRuleEnvironmentForContext(
+			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(
 					unionTypeExpression.getTypeRefs().get(idx),
 					EcoreUtilN4.getResource(context, unionTypeExpression));
 			TMember member = findMemberInSubScope(subScope, memberName);

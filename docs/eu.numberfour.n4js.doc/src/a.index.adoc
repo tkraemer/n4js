@@ -1,5 +1,0 @@
-﻿:doctype: book
-
-
-
-include::userguides/index.adoc[]

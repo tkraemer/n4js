@@ -12,19 +12,17 @@ package eu.numberfour.n4js.transpiler.es.assistants
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ArrowFunction
-import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.ReturnStatement
-import eu.numberfour.n4js.n4JS.Statement
 import eu.numberfour.n4js.transpiler.TransformationAssistant
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import org.eclipse.emf.common.util.EList
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  */
 class BlockAssistant extends TransformationAssistant {
 
 	@Inject
-	N4JSTypeInferencer typeInferencer
+	private N4JSTypeSystem ts
 
 	/**
 	 * Some assertions related to arrow functions that apply to several transformations and are
@@ -39,36 +37,18 @@ class BlockAssistant extends TransformationAssistant {
 			]);
 	}
 
-	/**
-	 * Upon executing the body of the argument, does control flow reach past the last statement without encountering any
-	 * return statement? In other words, does execution "fall off" past the last statement?
-	 * <p>
-	 * Returns true for methods that are executed until the end, and then execution "falls off". For those methods,
-	 * provided they are async, appending "yield undefined" is necessary. This method takes into account
-	 * transpiler-inserted returns for single-expression arrow functions (ie, for the body of such arrow functions,
-	 * execution doesn't fall off).
-	 */
-	public final def boolean hasBodyWhereExecutionFallsOff(FunctionDefinition conFD) {
-		val EList<Statement> stmts = conFD.getBody().getStatements();
-		if (stmts.isEmpty()) {
-			return true;
-		}
-		val Statement last = stmts.get(stmts.size() - 1);
-		if (last instanceof ReturnStatement) {
+	def public final boolean needsReturnInsertionForBody(ArrowFunction arrowFuncInIM) {
+		// unfortunately, we need a properly contained AST element below (see preconditions above)
+		val origAST = state.tracer.getOriginalASTNodeOfSameType(arrowFuncInIM, true);
+		if (!origAST.isSingleExprImplicitReturn) {
 			return false;
 		}
-		if (conFD instanceof ArrowFunction) {
-			val boolean hasInsertedReturn = needsReturnInsertionForBody(conFD);
-			return !hasInsertedReturn;
-		} else {
-			return true;
+		// check if body is typed void, in which case no return will be inserted
+		val singleExpr = origAST.implicitReturnExpr();
+		val implicitReturnTypeRef = ts.type(state.G, singleExpr).value;
+		if (implicitReturnTypeRef?.declaredType === state.G.voidType) {
+			return false;
 		}
-	}
-
-	def public final boolean needsReturnInsertionForBody(ArrowFunction arrowFuncInIM) {
-		// unfortunately, we need a properly contained AST element for the helper method below
-		// (see preconditions above)
-		val origAST = state.tracer.getOriginalASTNodeOfSameType(arrowFuncInIM, true);
-		return typeInferencer.needsReturnInsertionForBody( origAST );
+		return true;
 	}
 }

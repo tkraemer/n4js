@@ -21,7 +21,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import it.xsemantics.runtime.Result
-import it.xsemantics.runtime.RuleApplicationTrace
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
@@ -164,14 +163,12 @@ class GenericsTest extends AbstractTypesystemTest {
 		assertSubtype(result, true)
 
 		// with trace:
-		var trace = new RuleApplicationTrace()
-		result = ts.subtype(G, trace, g3, g1)
+		result = ts.subtype(G, g3, g1)
 
 		// println(trace.traceAsString())
 		assertSubtype(result, false)
 
-		trace = new RuleApplicationTrace()
-		result = ts.subtype(G, trace, g1, g5)
+		result = ts.subtype(G, g1, g5)
 
 		//		println(trace.traceAsString())
 		assertSubtype(result, true)
@@ -184,8 +181,7 @@ class GenericsTest extends AbstractTypesystemTest {
 		assertSubtype(result, false)
 
 		// G<? extends B> <: G<? extends A> // --> true
-		trace = new RuleApplicationTrace()
-		result = ts.subtype(G, trace, g6, g7)
+		result = ts.subtype(G, g6, g7)
 
 		// println(result.ruleFailedException.failureTraceAsString())
 		assertSubtype(result, true)
@@ -242,8 +238,7 @@ class GenericsTest extends AbstractTypesystemTest {
 		val g2 = (script.scriptElements.get(4) as VariableStatement).varDecl.head.declaredTypeRef
 		val ga = (script.scriptElements.get(5) as VariableStatement).varDecl.head.declaredTypeRef
 
-		var trace = new RuleApplicationTrace()
-		var result = ts.subtype(G, trace, g1, g2)
+		var result = ts.subtype(G, g1, g2)
 
 		//		println("Trace: " + trace.traceAsString())
 		//		if (result.ruleFailedException!=null) {
@@ -256,8 +251,7 @@ class GenericsTest extends AbstractTypesystemTest {
 		assertSubtype(result, true) // and vice versa
 
 		G = newRuleEnvironment(script);
-		trace = new RuleApplicationTrace()
-		result = ts.subtype(G, trace, ga, g1)
+		result = ts.subtype(G, ga, g1)
 
 		//		println("Trace: " + trace.traceAsString())
 		//		if (result.ruleFailedException!=null) {
@@ -266,8 +260,7 @@ class GenericsTest extends AbstractTypesystemTest {
 		assertSubtype(result, true) // we can use ga wherever we use g1!
 
 		G = newRuleEnvironment(script);
-		trace = new RuleApplicationTrace()
-		result = ts.subtype(G, trace, g1, ga)
+		result = ts.subtype(G, g1, ga)
 
 		//		println("Trace: " + trace.traceAsString())
 		//		if (result.ruleFailedException!=null) {
@@ -303,9 +296,8 @@ class GenericsTest extends AbstractTypesystemTest {
 		val assignment = (script.scriptElements.get(4) as ExpressionStatement).expression as AssignmentExpression;
 
 		val typeLeft = ts.type(G, assignment.lhs);
-		val trace = new RuleApplicationTrace
-		val typeRight = ts.type(G, trace, assignment.rhs);
-		assertType(typeRight, (typeLeft.value as ParameterizedTypeRef).declaredType, trace);
+		val typeRight = ts.type(G, assignment.rhs);
+		assertType(typeRight, (typeLeft.value as ParameterizedTypeRef).declaredType);
 
 		// but the last line should create an error:
 		val issues = script.validate();

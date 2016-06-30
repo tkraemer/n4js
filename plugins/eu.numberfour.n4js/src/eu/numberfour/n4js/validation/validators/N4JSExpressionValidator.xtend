@@ -63,17 +63,22 @@ import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
+import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TEnum
+import eu.numberfour.n4js.ts.types.TExportableElement
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
@@ -82,6 +87,7 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TN4Classifier
+import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TStructuralType
 import eu.numberfour.n4js.ts.types.TVariable
@@ -90,6 +96,7 @@ import eu.numberfour.n4js.ts.types.TypeDefs
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -101,7 +108,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import eu.numberfour.n4js.validation.ValidatorMessageHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
@@ -122,12 +128,6 @@ import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.types.TExportableElement
-import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.types.TObjectPrototype
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
-import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 
 /**
  */
@@ -199,6 +199,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * To be safe, we warn on expressions out of which a method reference might escape
 	 * and become assigned to a variable. An example where a method reference is consumed
 	 * before escaping is <code>typeof method-ref-expr</code>, for which no warning is raised.
+	 *
+	 * @see N4JSSpec, 5.2.1
 	 * 
 	 */
 	private def internalCheckMethodReference(ParameterizedPropertyAccessExpression propAccessExpression) {
@@ -214,6 +216,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 		val TMethod method = prop as TMethod
+		
+		if ( !method.static && "constructor"==method.name ) {
+			return; // constructor cannot be detached, cf. GH-224
+		}
+		
 		val enclosing = propAccessExpression.eContainer
 		/*
 		 * Unless we find a good reason not to, we'll warn.
@@ -291,7 +298,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			}
 			if (callExpression?.target === null)
 				return; // invalid AST
-			val typeRef = typeInferencer.tau(callExpression.target);
+			val typeRef = ts.tau(callExpression.target);
 			if (typeRef === null)
 				return; // invalid AST
 			if (typeRef instanceof UnknownTypeRef)
@@ -479,7 +486,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			}
 			if (newExpression?.callee === null)
 				return; // invalid AST
-			val typeRef = typeInferencer.tau(newExpression.callee)
+			val typeRef = ts.tau(newExpression.callee)
 			if (typeRef === null)
 				return; // invalid AST
 			if (typeRef instanceof UnknownTypeRef)
@@ -573,7 +580,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		@Check
 		def checkRelationalExpression(RelationalExpression relationalExpression) {
 			if (relationalExpression.rhs !== null && relationalExpression.op === RelationalOperator.INSTANCEOF) {
-				val typeRef = typeInferencer.tau(relationalExpression.rhs)
+				val typeRef = ts.tau(relationalExpression.rhs)
 				if (typeRef instanceof ClassifierTypeRef) {
 					val staticType = typeRef.staticType
 					if (staticType instanceof TN4Classifier) {
@@ -623,7 +630,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				if (property instanceof TGetter) {
 
 					// access through getter --> a matching setter is required:
-					val propertyTargetType = typeInferencer.tau(expression.target)
+					val propertyTargetType = ts.tau(expression.target)
 					val declaredType = propertyTargetType?.declaredType
 					if (declaredType instanceof TClassifier) {
 						val setterExists = containerTypesHelper.fromContext(expression).members(declaredType).filter(
@@ -696,7 +703,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 				val target = callExpression.target
 				if (target !== null) {
-					val targetTypeRef = typeInferencer.tau(target); // no context, we only need the number of fpars
+					val targetTypeRef = ts.tau(target); // no context, we only need the number of fpars
 					if (targetTypeRef instanceof FunctionTypeExprOrRef) {
 
 						// obtain fpars from invoked function/method
@@ -729,7 +736,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					return
 				}
 
-				val typeRef = typeInferencer.tau(newExpression.callee)
+				val typeRef = ts.tau(newExpression.callee)
 				val staticType = if (typeRef instanceof ClassifierTypeRef) typeRef.staticType else null;
 
 				if (staticType instanceof TClass) {
@@ -797,14 +804,14 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					// The types of the operands must be subtypes of number if the operator is not ’+’
 					val bits = BuiltInTypeScope.get(ae.eResource.resourceSet)
 
-					val tlhs = typeInferencer.tau(ae.lhs)
+					val tlhs = ts.tau(ae.lhs)
 					if (tlhs === null) {
 						return; // corrupt AST (e.g., while editing)
 					}
 					if (tlhs.declaredType === bits.nullType || tlhs.declaredType === bits.undefinedType)
 						issueNotANumberType(tlhs.declaredType.name, ae.lhs);
 
-					val trhs = typeInferencer.tau(ae.rhs)
+					val trhs = ts.tau(ae.rhs)
 					if (trhs === null) {
 						return; // corrupt AST (e.g., while editing)
 					}
@@ -1000,7 +1007,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 			private def doCheckForbiddenType(Expression e, Type forbidden, String typeName) {
 				if (forbidden !== null) {
-					val theType = typeInferencer.tau(e)?.declaredType
+					val theType = ts.tau(e)?.declaredType
 					if (theType === forbidden) {
 						addIssue(
 							IssueCodes.getMessageForEXP_FORBIDDEN_TYPE_IN_BINARY_LOGICAL_EXPRESSION(typeName),
@@ -1030,7 +1037,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 				val G = newRuleEnvironment(e)
 
-				val declaredT = typeInferencer.tau(expressionToCheck)?.declaredType
+				val declaredT = ts.tau(expressionToCheck)?.declaredType
 
 				var ConstBoolean cboolValue = ConstBoolean.NotPrecomputable
 
@@ -1102,7 +1109,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			def checkCastExpression(CastExpression castExpression) {
 				val Type typeContext = EcoreUtil2.getContainerOfType(castExpression, TypeDefiningElement)?.definedType;
 				val context = if (typeContext === null) null else createTypeRef(typeContext);
-				val S = typeInferencer.tau(castExpression.expression, context);
+				val S = ts.tau(castExpression.expression, context);
 				val T = castExpression.targetTypeRef
 
 				// avoid consequential errors
