@@ -208,19 +208,19 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 		val prop = propAccessExpression.property;
-	    if (!(prop instanceof TMethod)) {
-	    	/*
-	    	 * Other kinds of members (fields, getters; similarly for setters) need not be checked because
-	    	 * when used in a property access they return the underlying value as opposed to a "member-reference".
-	    	 */
-	    	return
-	    }
-	    val TMethod method = prop as TMethod
-	    
-	    if ( !method.static && "constructor"==method.name ) {
-	    	return; // constructor cannot be detached, cf. GH-224
-	    }
-	    
+		if (!(prop instanceof TMethod)) {
+			/*
+			 * Other kinds of members (fields, getters; similarly for setters) need not be checked because
+			 * when used in a property access they return the underlying value as opposed to a "member-reference".
+			 */
+			return
+		}
+		val TMethod method = prop as TMethod
+		
+		if ( !method.static && "constructor"==method.name ) {
+			return; // constructor cannot be detached, cf. GH-224
+		}
+		
 		val enclosing = propAccessExpression.eContainer
 		/*
 		 * Unless we find a good reason not to, we'll warn.
