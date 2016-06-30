@@ -84,7 +84,7 @@ public class N4JSDocumentationProvider extends MultiLineCommentDocumentationProv
 
 	/**
 	 * This is a fix for shadowed jsdoc-style documentation. Example:
-	 * 
+	 *
 	 * <pre>
 	 * "use strict" /&#42;&#42;
 	 * jsdoc-style comment
@@ -92,7 +92,7 @@ public class N4JSDocumentationProvider extends MultiLineCommentDocumentationProv
 	 * class A {
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * Parsing the snippet above will trigger automatic semicolon insertion (ASI) in the first line. Currently ASI
 	 * replaces the HiddenLeaf MultiLine comment starting in the same line as the missing ';' by a
 	 * {@link LeafNodeWithSyntaxError} which is not hidden. It also transfers the "ownership" from the class-node to the
@@ -129,7 +129,7 @@ public class N4JSDocumentationProvider extends MultiLineCommentDocumentationProv
 		}
 		if (!found) {
 			throw new IllegalStateException(
-					"Node model broken. Unable to find the current node in the nodemodel by traversing from root.");
+					"Node model broken. Unable to find the current node in the node model by traversing from root.");
 		}
 
 		// Second search:
@@ -208,15 +208,15 @@ public class N4JSDocumentationProvider extends MultiLineCommentDocumentationProv
 
 	/** logging utility, quickly-returns if logging is off. */
 	private void dump(int counter, INode next) {
-		if (!logger.isDebugEnabled()) {
+		if (!logger.isTraceEnabled()) {
 			return;
 		}
 
 		String leafText = leafText(next);
-		logger.debug(String.format("%4d: %90s - %s", counter, next.toString(), leafText));
+		logger.trace(String.format("%4d: %90s - %s", counter, next.toString(), leafText));
 	}
 
-	/** Extract text of Leafnode. Returns empty String for other node types. */
+	/** Extract text of LeafNode. Returns empty String for other node types. */
 	private String leafText(INode next) {
 		String leafText = "";
 		if (next instanceof LeafNode) {

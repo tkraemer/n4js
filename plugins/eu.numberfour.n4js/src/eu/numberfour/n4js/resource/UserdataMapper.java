@@ -207,7 +207,11 @@ public final class UserdataMapper {
 							: serializedData.getBytes(TRANSFORMATION_CHARSET_NAME));
 			xres.load(bais, getOptions(uri, binary));
 		} catch (Exception e) {
-			LOGGER.error("error deserializing module from IEObjectDescription: " + uri, e); //$NON-NLS-1$
+			LOGGER.warn("error deserializing module from IEObjectDescription: " + uri); //$NON-NLS-1$
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("error deserializing module from IEObjectDescription=" + eObjectDescription
+						+ ": " + uri, e); //$NON-NLS-1$
+			}
 			// fail safe, because not uncommon (serialized data might have been created with an old version of the N4JS
 			// IDE, so the format could be out of date (after an update of the IDE))
 			return null;

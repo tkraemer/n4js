@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "P1" {
+   	 	Folder "src" { 	Folder "a" {
+   	 		Folder "a1" { File "C.n4js" { from="A.n4js" } } 
+   	 		Folder "c"  { ThisFile {} }	   	 		
+   	 	}}
+   	 	File "manifest.n4mf" { from="manifest_p1.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+/* Do not import when default exported from module "C".A
+   XPECT organizeImports ---
+(...)
+--- */
+
+
+/** first comment */
+/** second comment */
+/** third comment */
+var placeholder:string;
+
+/* XPECT errors ---
+"Couldn't resolve reference to IdentifiableElement 'A'." at "A"
+"Couldn't resolve reference to Type 'A'." at "A"
+--- */
+var a : A = new A();
+

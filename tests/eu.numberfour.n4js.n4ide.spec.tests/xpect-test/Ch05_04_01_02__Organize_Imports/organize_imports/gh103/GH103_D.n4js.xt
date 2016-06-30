@@ -15,7 +15,7 @@
 /* XPECT organizeImports ---
      
    + import { A } from "a
-   | /[|a2/A"]
+   | /[|a2/A";]
    | [|/]** first comment *\/
      /\*** second comment *\/
      /\* third comment *\/

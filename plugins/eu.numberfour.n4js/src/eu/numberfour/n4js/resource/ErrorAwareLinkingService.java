@@ -37,6 +37,7 @@ import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
@@ -100,7 +101,7 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 	protected String getCrossRefNodeAsString(EObject context, EReference ref, INode node) {
 		if (ref == NAMED_IMPORT_SPECIFIER__IMPORTED_ELEMENT && context instanceof DefaultImportSpecifier) {
 			// special case: we got a default import of the form: import localName from "some/module"
-			return "default";
+			return N4JSLanguageConstants.EXPORT_DEFAULT_NAME; // "default"
 		}
 		// standard cases:
 		String result = getCrossRefNodeAsString(node);
