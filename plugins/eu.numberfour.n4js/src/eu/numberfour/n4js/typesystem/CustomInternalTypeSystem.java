@@ -16,6 +16,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.postprocessing.ASTProcessor;
 import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.resource.N4JSResource;
@@ -29,6 +30,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 
 /**
+ * This class contains some customizations of the Xsemantics-generated types system {@link InternalTypeSystem}. It is
+ * bound to {@code InternalTypeSystem} via {@link N4JSRuntimeModule#bindInternalTypeSystem()}. <b>Most client code
+ * should neither use {@code InternalTypeSystem} nor this class directly</b>, but instead use the facade class
+ * {@link N4JSTypeSystem}.
  */
 @Singleton
 public class CustomInternalTypeSystem extends InternalTypeSystem {
