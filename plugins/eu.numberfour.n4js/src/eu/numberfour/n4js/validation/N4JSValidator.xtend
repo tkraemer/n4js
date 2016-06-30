@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.validation
 
+import eu.numberfour.n4js.ts.validation.TypesValidator
+import eu.numberfour.n4js.utils.Log
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator.MethodWrapperCancelable
 import eu.numberfour.n4js.validation.validators.IDEBUGValidator
 import eu.numberfour.n4js.validation.validators.N4JSAccessModifierValidator
@@ -37,9 +39,7 @@ import eu.numberfour.n4js.validation.validators.N4JSTypeValidator
 import eu.numberfour.n4js.validation.validators.N4JSUniqueModuleNameValidator
 import eu.numberfour.n4js.validation.validators.N4JSVariableValidator
 import eu.numberfour.n4js.validation.validators.UnsupportedFeatureValidator
-import eu.numberfour.n4js.xsemantics.validation.N4JSTypeSystemValidator
-import eu.numberfour.n4js.ts.validation.TypesValidator
-import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.xsemantics.validation.InternalTypeSystemValidator
 import java.lang.reflect.Method
 import org.eclipse.emf.common.util.BasicDiagnostic
 import org.eclipse.emf.common.util.Diagnostic
@@ -98,7 +98,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 	UnsupportedFeatureValidator
 ])
 @Log
-class N4JSValidator extends N4JSTypeSystemValidator {
+class N4JSValidator extends InternalTypeSystemValidator {
 
 
 	// validations are defined in composed validator classes
@@ -133,5 +133,4 @@ class N4JSValidator extends N4JSTypeSystemValidator {
 			}
 		};
 	}
-
 }

@@ -16,12 +16,13 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.postprocessing.ASTProcessor;
 import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
+import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.ErrorInformation;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
@@ -29,9 +30,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 
 /**
+ * This class contains some customizations of the Xsemantics-generated types system {@link InternalTypeSystem}. It is
+ * bound to {@code InternalTypeSystem} via {@link N4JSRuntimeModule#bindInternalTypeSystem()}. <b>Most client code
+ * should neither use {@code InternalTypeSystem} nor this class directly</b>, but instead use the facade class
+ * {@link N4JSTypeSystem}.
  */
 @Singleton
-public class CustomTypeSystem extends N4JSTypeSystem {
+public class CustomInternalTypeSystem extends InternalTypeSystem {
 
 	@Inject
 	private TypeProcessor typeProcessor;
@@ -157,11 +162,11 @@ public class CustomTypeSystem extends N4JSTypeSystem {
 
 	/**
 	 * <b>All invocations of 'type' judgment in Xsemantics - from outside or from within Xsemantics - are now delegated
-	 * to {@link ASTProcessor}.</b>
+	 * to {@link TypeProcessor#getType(RuleEnvironment, RuleApplicationTrace, TypableElement)}.</b>
 	 * <p>
-	 * {@code TypingASTWalker} will simply read the type from the cache (if containing resource is fully processed) or
+	 * {@link TypeProcessor} will simply read the type from the cache (if containing resource is fully processed) or
 	 * initiate the post-processing of the entire resource. Actual use of the 'type' judgment will only be done by
-	 * {@link ASTProcessor} during post-processing of a resource via method
+	 * {@link TypeProcessor} during post-processing of a resource via method
 	 * {@link #use_type_judgment_from_PostProcessors(RuleEnvironment, RuleApplicationTrace, TypableElement)}. Once
 	 * post-processing of an {@link N4JSResource} has finished, the 'type' judgment will never be used again for this
 	 * resource!
@@ -169,7 +174,7 @@ public class CustomTypeSystem extends N4JSTypeSystem {
 	@Override
 	protected Result<TypeRef> typeInternal(RuleEnvironment _environment_, RuleApplicationTrace _trace_,
 			TypableElement expression) {
-		return typeProcessor.xsemantics_type(_environment_, _trace_, expression);
+		return typeProcessor.getType(_environment_, _trace_, expression);
 	}
 
 	/**

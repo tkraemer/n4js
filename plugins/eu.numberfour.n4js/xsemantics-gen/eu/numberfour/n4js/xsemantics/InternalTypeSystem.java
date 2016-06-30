@@ -212,7 +212,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
  * </dl>
  */
 @SuppressWarnings("all")
-public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
+public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String TYPETYPE = "eu.numberfour.n4js.xsemantics.TypeType";
   
   public final static String TYPETENUMLITERAL = "eu.numberfour.n4js.xsemantics.TypeTEnumLiteral";
@@ -514,7 +514,7 @@ public class N4JSTypeSystem extends XsemanticsRuntimeSystem {
   
   private PolymorphicDispatcher<Result<TypeRef>> thisTypeRefDispatcher;
   
-  public N4JSTypeSystem() {
+  public InternalTypeSystem() {
     init();
   }
   

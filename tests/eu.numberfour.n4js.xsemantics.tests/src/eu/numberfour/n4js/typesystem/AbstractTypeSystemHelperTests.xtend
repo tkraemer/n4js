@@ -13,13 +13,12 @@ package eu.numberfour.n4js.typesystem
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeCompareHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.validation.JavaScriptVariant
 
 import static org.junit.Assert.*
 

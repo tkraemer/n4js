@@ -13,8 +13,7 @@ package eu.numberfour.n4js.typesystem
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
@@ -51,7 +50,7 @@ class GenericsComputer extends TypeSystemHelperStrategy {
 	@Inject
 	private N4JSTypeSystem ts
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	@Inject
 	extension TypeCompareHelper;
@@ -251,7 +250,7 @@ class GenericsComputer extends TypeSystemHelperStrategy {
 			val typeArgs = if(callExpr.parameterized) {
 				callExpr.typeArgs
 			} else {
-				typingCacheHelper.getInferredTypeArgs(callExpr) ?: #[]
+				astMetaInfoCacheHelper.getInferredTypeArgs(callExpr) ?: #[]
 			};
 			G.addTypeMappings(F.typeVars, typeArgs);
 		}

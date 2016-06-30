@@ -14,11 +14,13 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
@@ -29,7 +31,6 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import it.xsemantics.runtime.RuleEnvironment
 
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

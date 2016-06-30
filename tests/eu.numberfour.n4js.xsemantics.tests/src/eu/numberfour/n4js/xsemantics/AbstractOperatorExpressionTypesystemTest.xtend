@@ -14,8 +14,8 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.TraceUtils
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -23,7 +23,6 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 
 /**
  * Base test class for operator test (6.1.10- 6.1.18)
@@ -58,14 +57,13 @@ abstract class AbstractOperatorExpressionTypesystemTest extends AbstractTypesyst
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(script);
 		val expr = (script.scriptElements.reverseView.head as ExpressionStatement).expression;
 
-		var trace = new RuleApplicationTrace();
-		val result = ts.type(G, trace, expr);
+		val result = ts.type(G, expr);
 		if (result.ruleFailedException !== null) {
 			fail(result.ruleFailedException.failureTraceAsString);
 		}
 		val typeExpr = result.value;
 
-		assertEquals("Assert at " + expression + " // " + variant + ", trace:\n" + trace.traceAsString, expectedTypeAsString, typeExpr.typeRefAsString);
+		assertEquals("Assert at " + expression + " // " + variant, expectedTypeAsString, typeExpr.typeRefAsString);
 	}
 
 	def void assertOperatorFailure(JavaScriptVariant variant, String expression) {

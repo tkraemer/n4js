@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.common.annotations.VisibleForTesting
+import com.google.inject.Inject
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -20,8 +21,6 @@ import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static extension java.util.Collections.*
-import com.google.inject.Inject
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 
 /**
  * Type System Helper Strategy computing the meet of a given collection of types.
