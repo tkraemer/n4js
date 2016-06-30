@@ -29,7 +29,7 @@ import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
 import eu.numberfour.n4js.utils.StructuralMembersTriple
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List

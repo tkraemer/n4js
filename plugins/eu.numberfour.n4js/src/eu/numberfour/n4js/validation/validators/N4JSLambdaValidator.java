@@ -26,11 +26,11 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.utils.LambdaUtils;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -104,7 +104,7 @@ public class N4JSLambdaValidator extends AbstractN4JSDeclarativeValidator {
 			if (singleExpr == null) { // due to parse error, expression may be null
 				return;
 			}
-			TypeRef bodyInferredType = typeInferencer.tau(singleExpr);
+			TypeRef bodyInferredType = ts.tau(singleExpr);
 			if (bodyInferredType != null) {
 				if (TypeUtils.isVoid(bodyInferredType)) {
 					// special handling for void body in single expression arrow function (only required because the
@@ -230,7 +230,7 @@ public class N4JSLambdaValidator extends AbstractN4JSDeclarativeValidator {
 	 * {@link eu.numberfour.n4js.ts.types.TFunction} because it's too rough, or even buggy. To recap: that
 	 * <code>TFunction</code> was set by the type builder, and with the information available at the time the best
 	 * approx it could make for the function's return type is invariably <code>any</code>. Instead, it is inferred by
-	 * the injected {@link eu.numberfour.n4js.typeinference.N4JSTypeInferencer}. See also the comment in method
+	 * the injected {@link eu.numberfour.n4js.typesystem.N4JSTypeSystem}. See also the comment in method
 	 * {@link #checkArrowFunction(ArrowFunction)}.
 	 *
 	 * @return the expected type for the argument, otherwise null if for whatever reason it couldn't be inferred.

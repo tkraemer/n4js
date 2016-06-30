@@ -26,11 +26,11 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TStructField
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -50,7 +50,7 @@ class AT_185_ThisScopingTest {
 
 	@Inject extension ParseHelper<Script>
 	@Inject extension ValidationTestHelper
-	@Inject N4JSTypeInferencer typeInferer
+	@Inject N4JSTypeSystem ts
 
 	@Test
 	@Ignore("see IDE-496")
@@ -342,7 +342,7 @@ allowClassExpressions[
 		val yLiteral = script.eAllContents.filter(ObjectLiteral).last
 		val y = yLiteral.eContainer as PropertyNameValuePair
 		val xLiteral = y.eContainer as ObjectLiteral
-		val xLiteralType = typeInferer.tau(xLiteral) as ParameterizedTypeRefStructural
+		val xLiteralType = ts.tau(xLiteral) as ParameterizedTypeRefStructural
 		val yElement = xLiteralType.structuralMembers.last as TStructField
 		val yLiteralType = yElement.typeRef as ParameterizedTypeRefStructural
 		val expectation = yLiteralType.structuralMembers.head
@@ -365,7 +365,7 @@ allowClassExpressions[
 		'''.parse
 		val thisName = script.eAllContents.filter(ParameterizedPropertyAccessExpression).last // z: this.name
 		val xLiteral = script.eAllContents.filter(ObjectLiteral).head
-		val xLiteralType = typeInferer.tau(xLiteral) as ParameterizedTypeRefStructural
+		val xLiteralType = ts.tau(xLiteral) as ParameterizedTypeRefStructural
 		val expectation = xLiteralType.structuralMembers.head
 		assertSame(expectation, thisName.property)
 	}

@@ -33,18 +33,19 @@ public class TemplateAwareTokenScanner extends TokenScanner {
 		TemplateToken result = new TemplateToken();
 		switch (id) {
 		case RULE_TEMPLATE_HEAD:
-			result.delimiter = false;
+			result.delimiter = false; // ranges defined by 'offsets' and 'lengths' do *not* start with a delimiter
 			result.offsets = new int[] { tokenOffset, tokenOffset + tokenLength - 2 };
 			result.lengths = new int[] { tokenLength - 2, 2 };
 			break;
 		case RULE_TEMPLATE_MIDDLE:
-			result.delimiter = true;
-			if (tokenLength == 3) {
+			if (tokenLength == 2) {
+				result.delimiter = true; // ranges defined by 'offsets' and 'lengths' start with a delimiter
 				result.offsets = new int[] { tokenOffset };
 				result.lengths = new int[] { tokenLength };
 			} else {
-				result.offsets = new int[] { tokenOffset, tokenOffset + 1, tokenOffset + tokenLength - 2 };
-				result.lengths = new int[] { 1, tokenLength - 3, 2 };
+				result.delimiter = false; // ranges defined by 'offsets' and 'lengths' do *not* start with a delimiter
+				result.offsets = new int[] { tokenOffset, tokenOffset + tokenLength - 2 };
+				result.lengths = new int[] { tokenLength - 2, 2 };
 			}
 		}
 		return result;
