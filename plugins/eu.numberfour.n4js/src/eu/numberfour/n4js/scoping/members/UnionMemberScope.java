@@ -140,7 +140,7 @@ public class UnionMemberScope extends AbstractScope {
 	}
 
 	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
-		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes);
+		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes, writeAccess);
 	}
 
 	/**

@@ -84,6 +84,7 @@ public class UnionMemberDescriptionWithError extends AbstractDescriptionWithErro
 
 	private final ComposedTypeRef composedTypeRef;
 	private final IScope[] subScopes;
+	private final boolean writeAccess;
 	/** length of scopes */
 	private final int max;
 
@@ -97,11 +98,12 @@ public class UnionMemberDescriptionWithError extends AbstractDescriptionWithErro
 	 *            the decorated description.
 	 */
 	public UnionMemberDescriptionWithError(IEObjectDescription delegate,
-			ComposedTypeRef composedTypeRef, IScope[] subScopes) {
+			ComposedTypeRef composedTypeRef, IScope[] subScopes, boolean writeAccess) {
 		super(delegate);
 		this.composedTypeRef = composedTypeRef;
 		this.subScopes = subScopes;
 		max = subScopes.length;
+		this.writeAccess = writeAccess;
 	}
 
 	@Override
@@ -144,7 +146,8 @@ public class UnionMemberDescriptionWithError extends AbstractDescriptionWithErro
 				}
 			}
 
-			return initMissingFrom(missingFrom)
+			return //
+			initMissingFrom(missingFrom)
 					|| initDifferentMemberTypes(indexesPerMemberType, name, readOnlyField)
 					|| initSubMessages(descriptions, indexesPerCode)
 					|| initDefault();
@@ -201,19 +204,28 @@ public class UnionMemberDescriptionWithError extends AbstractDescriptionWithErro
 			int numberOfFields = indexesPerMemberType.numberOf("field");
 			// check for three special cases of error 'multipleKinds' that require a more informative message
 			if (numberOfFields + indexesPerMemberType.numberOf("getter") == max) {
-				message = IssueCodes.getMessageForUNI_INVALID_COMBINATION("getters", name, "read-only");
-				code = IssueCodes.UNI_INVALID_COMBINATION;
-				return true;
+				if (writeAccess) {
+					message = IssueCodes.getMessageForUNI_INVALID_COMBINATION("getters", name, "read-only");
+					code = IssueCodes.UNI_INVALID_COMBINATION;
+					return true;
+				} else {
+					return false; // access would be ok, there must be another reason
+				}
 			}
 			if (numberOfFields + indexesPerMemberType.numberOf("setter") == max) {
-				if (readOnlyField) {
-					message = IssueCodes.getMessageForUNI_INVALID_COMBINATION_SETTER_VS_READ_ONLY_FIELD(name);
-					code = IssueCodes.UNI_INVALID_COMBINATION_SETTER_VS_READ_ONLY_FIELD;
-				} else {
-					message = IssueCodes.getMessageForUNI_INVALID_COMBINATION("setters", name, "write-only");
-					code = IssueCodes.UNI_INVALID_COMBINATION;
+				if (writeAccess) {
+					if (readOnlyField) {
+						message = IssueCodes.getMessageForUNI_INVALID_COMBINATION_SETTER_VS_READ_ONLY_FIELD(name);
+						code = IssueCodes.UNI_INVALID_COMBINATION_SETTER_VS_READ_ONLY_FIELD;
+					} else {
+						message = IssueCodes.getMessageForUNI_INVALID_COMBINATION("setters", name, "write-only");
+						code = IssueCodes.UNI_INVALID_COMBINATION;
+					}
+					return true;
 				}
-				return true;
+				{
+					return false; // access would be ok, there must be another reason
+				}
 			}
 
 			StringBuilder strb = new StringBuilder();
