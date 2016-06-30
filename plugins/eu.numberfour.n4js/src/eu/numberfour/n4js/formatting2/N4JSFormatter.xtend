@@ -170,8 +170,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def void formatTypeVariables(GenericDeclaration semObject, extension IFormattableDocument document) {
 		if( semObject.typeVars.isEmpty ) return;
 		// to "<":
-		semObject.regionFor.keyword("<").prepend[oneSpace].append[noSpace];
-		semObject.regionFor.keyword(">").prepend[noSpace];
+		semObject.regionFor.keyword("<").prepend[oneSpace;newLines=0].append[noSpace];
+		semObject.regionFor.keyword(">").prepend[noSpace;newLines=0];
 		for( typeVar: semObject.typeVars ){
 			typeVar.append[noSpace].immediatelyFollowing.keyword(",").append[oneSpace];
 			typeVar.format(document);
@@ -647,11 +647,16 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(NewExpression newExp, extension IFormattableDocument document) {
 		newExp.regionFor.keyword("new").prepend[oneSpace].append[oneSpace;newLines=0];
 		newExp.callee.format;
-		// val typeArgsAngle = newExp.regionFor.keywordPairs("<",">").head;
 		// Watch out, commas are used in Type-args and in argument list ! If necessary distinguish by offset.
 		val commas = newExp.regionFor.keyword(",");
 		commas.prepend[noSpace].append[oneSpace];
 		
+		// TODO maybe factor out TypeArgs formatting.
+		val typeArgsAngle = newExp.regionFor.keywordPairs("<",">").head;
+		if( typeArgsAngle !== null ) {
+			typeArgsAngle.key.append[noSpace;newLines=0].prepend[noSpace;newLines=0];
+			typeArgsAngle.value.prepend[noSpace;newLines=0];
+		}
 		newExp.typeArgs.forEach[format];
 		
 		if( newExp.isWithArgs ) {
@@ -887,6 +892,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		vDecl.previousHiddenRegion.set[oneSpace];
 		vDecl.regionFor.keyword("=").surround[oneSpace];
 		vDecl.expression.format;
+		vDecl.declaredTypeRef.format;
 	}
 
 	def dispatch void format(VariableBinding vBind, extension IFormattableDocument document) {
@@ -1159,11 +1165,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		ptr.eContents.forEach[format]
 	}
 	
+	/** formats type argument section including outside border. */
 	def void formatTypeArguments(ParameterizedTypeRef semObject, extension IFormattableDocument document) {
 		if( semObject.typeArgs.isEmpty ) return;
 		// to "<":
-		semObject.regionFor.keyword("<").append[noSpace];
-		semObject.regionFor.keyword(">").prepend[noSpace];
+		semObject.regionFor.keyword("<").append[noSpace].prepend[noSpace; newLines=0; lowPriority];
+		semObject.regionFor.keyword(">").prepend[noSpace].append[noSpace; newLines=0; lowPriority];
 		for( typeArg: semObject.typeArgs ){
 			typeArg.append[noSpace].immediatelyFollowing.keyword(",").append[oneSpace];
 			typeArg.format(document);
