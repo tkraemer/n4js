@@ -23,7 +23,6 @@ class D<T extends C> {
         // XPECT type of t.constructor --> constructor{T}
         t.constructor;
         
-        // XPECT warnings --> "A reference to method constructor is created detached from a (correct) this-instance." at "constructor"
         var ctor_T = t.constructor;
         
          // XPECT errors --> "Cannot instantiate T." at "ctor_T"
