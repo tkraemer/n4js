@@ -1531,6 +1531,8 @@ Elision returns BindingElement:
 	{BindingElement} ','
 ;
 
+// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
+// (having these rules here, is a temporary work-around for the problem described in GH-206)
 
 TStructMethod returns types::TStructMethod:
 	=>
