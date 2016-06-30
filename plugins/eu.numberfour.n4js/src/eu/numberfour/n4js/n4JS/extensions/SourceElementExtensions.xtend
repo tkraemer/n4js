@@ -26,7 +26,7 @@ import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.IResourceScopeCache
@@ -41,7 +41,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 @Singleton
 class SourceElementExtensions {
 
-	@Inject extension N4JSTypeInferencer
+	@Inject N4JSTypeSystem ts
 
 	@Inject extension IResourceScopeCache cache
 
@@ -97,7 +97,7 @@ class SourceElementExtensions {
 
 	/**
 	 * Determines the defined for the given element, if there is no one, it is tried to infer it via
-	 * {@link N4JSTypeInferencer#tau(EObject)}. If a type could be inferred or was already there it
+	 * {@link N4JSTypeSystem#tau(EObject)}. If a type could be inferred or was already there it
 	 * will be collected.
 	 */
 	def private <T extends TypableElement, U extends IdentifiableElement> collectVisibleIdentifiableElement(T element,
@@ -105,7 +105,7 @@ class SourceElementExtensions {
 		if(calculateType!==null) {
 			var type = calculateType.apply(element)
 			if (type === null) {
-				element.tau();
+				ts.tau(element);
 			}
 			type = calculateType.apply(element)
 			if (type !== null)

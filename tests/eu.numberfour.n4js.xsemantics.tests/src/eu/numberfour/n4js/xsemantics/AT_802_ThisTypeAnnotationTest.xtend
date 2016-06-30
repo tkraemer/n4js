@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
@@ -21,14 +20,12 @@ import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.utils.Log
-import it.xsemantics.runtime.RuleApplicationTrace
-import it.xsemantics.runtime.TraceUtils
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -45,8 +42,6 @@ import static org.junit.Assert.*
 @InjectWith(N4JSInjectorProvider)
 @Log
 class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
-
-	@Inject extension TraceUtils;
 
 	@Test
 	def void testMethodWithoutDeclaredThisType() {
@@ -251,13 +246,9 @@ class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
 
 	def infer(TypableElement elementToBeTypeInferred) {
 		val G = newRuleEnvironment(elementToBeTypeInferred);
-		var trace = new RuleApplicationTrace();
-		val result = ts.type(G, trace, elementToBeTypeInferred);
+		val result = ts.type(G, elementToBeTypeInferred);
 
-		if (result.ruleFailedException !== null && ! trace.trace.empty) {
-			logger.warn("Trace: " + trace.traceAsString)
-		}
-		result.assertNoFailure(trace)
+		result.assertNoFailure
 		return result.value
 	}
 }

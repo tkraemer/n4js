@@ -50,7 +50,7 @@
  * 			Specification. <a href="https://github.com/NumberFour/specs/">https://github.com/NumberFour/specs/</a></dd>
  * </dl>
  */
-system eu.numberfour.n4js.xsemantics.N4JSTypeSystem validatorExtends AbstractMessageAdjustingN4JSValidator // AbstractN4JSValidator
+system eu.numberfour.n4js.xsemantics.InternalTypeSystem validatorExtends AbstractMessageAdjustingN4JSValidator // AbstractN4JSValidator
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.misc.DestructureHelper
@@ -134,7 +134,6 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
@@ -149,6 +148,7 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.NullType
 import eu.numberfour.n4js.ts.types.PrimitiveType
+import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
@@ -203,9 +203,9 @@ inject PromisifyHelper promisifyHelper
 judgments {
 
 	/*
-	 * Infers the type for a given typable element. Note that the judgment is overridden in subclasses
-	 * for ensuring that all type inference takes place during post-processing of an N4JSResource and
-	 * after that this method will just read from the cache.
+	 * Infers the type for a given typable element. Note that the judgment is overridden in subclass
+	 * CustomInternalTypeSystem, to ensure that all type inference takes place during post-processing
+	 * of an N4JSResource and after that this judgment will never be invoked again.
 	 */
 	type |- TypableElement element : output TypeRef
 		error "cannot type " + element?.eClass?.name + " " + stringRep(element)
@@ -224,11 +224,6 @@ judgments {
 	 * Returns the expected type of an expression in a given container or <code>null</code> (i.e.
 	 * no type expectation at all) or the top type (i.e. not particular type expected but a value
 	 * is expected, meaning all types are fine except 'void').
-	 * <p>
-	 * Note that this only works for expressions. There are two cases where we need type check for
-	 * non-expressions as well: in parameterized method calls and new expressions. These two latter
-	 * cases are handled in the expression validator (as otherwise all TypeRefs would have to be
-	 * processed).
 	 */
 	expectedTypeIn |- EObject container |> Expression expression : output TypeRef
 
@@ -741,6 +736,23 @@ from {
 		}
 
 		G2 |- propTypeRef ~> T
+		
+		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
+			val F = T as FunctionTypeExprOrRef;
+			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {
+				var TypeRef rawT; G |~ expr ~> rawT;
+				val thisTypeRef = TypeUtils.enforceNominalTyping(rawT);
+				if (T instanceof FunctionTypeExpression && T.eContainer==null) { // avoid creation of new instance
+					val fte = T as FunctionTypeExpression
+					fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef);
+				} else {
+					T = TypeUtils.createFunctionTypeExpression(null, 
+						F.typeVars, F.fpars, thisTypeRef);
+				}
+			}
+		}
+		
+		
 	}
 }
 
@@ -789,23 +801,20 @@ from {
 			val G2 = G.wrap;
 			G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef)
 
-			if (F.returnTypeRef instanceof ThisTypeRef) {
+			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
+			G2 |- F.returnTypeRef ~> T
 
-				G2 |- expr.receiver: T
-
-				// IDE-785 if F is a static method with returnType this, we need to
-				// Type	 to the Class-Type of the receiver.
-				if( F.declaredType instanceof TMethod && (F.declaredType as TMethod).isStatic() ) {
-
-					if( T instanceof ConstructorTypeRef ) {
-						T = T.createTypeRefFromStaticType(targetTypeRef.typeArgs);
-					} else if ( T instanceof EnumTypeRef ) {
-						T= T.enumType.ref(targetTypeRef.typeArgs)
-					}
-				}
-			} else {
-				typeSystemHelper.addSubstitutions(G2,expr,targetTypeRef);
-				G2 |- F.returnTypeRef ~> T
+			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
+				// we've got something like "this[C]" as return type of a call expression of the form
+				// "new C().method()" but *not* "this.method()" or "super.method()"
+				// -> detach 'this'-type from its 'this'-context to make sure it won't be confused with the current
+				// 'this'-context or other this contexts, e.g.
+				//     class C {
+				//         method(): this {
+				//             return new C().method(); // must lead to an error!
+				//         }
+				//     }
+				G2 |~ T /\ T // taking upper bound turns this[C] into C
 			}
 		}
 	} else if(targetTypeRef?.declaredType===G.functionType) {
@@ -1051,7 +1060,7 @@ from {
 			if( (E instanceof BoundThisTypeRef)
 				||
 				  ( (E instanceof ClassifierTypeRef)
-				    && ((E as ClassifierTypeRef).staticTypeRef instanceof BoundThisTypeRef)
+				    && ((E as ClassifierTypeRef).getTypeArg instanceof BoundThisTypeRef)
 				  )
 			) {
 				// N.T.D. on purpose:
@@ -1184,16 +1193,16 @@ from {
  */
 rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: ClassifierTypeRef ctr
 from {
-	val staticTypeRef = ctr.staticTypeRef
+	val typeRef = ctr.getTypeArg
 	// staticTypeRef is either ThisTypeRefNominal OR ParemterizedTypeRef:
-	if(  staticTypeRef instanceof ParameterizedTypeRef ) {
-		staticTypeRef.declaredType === G.n4EnumType &&  ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+	if(  typeRef instanceof ParameterizedTypeRef ) {
+		typeRef.declaredType === G.n4EnumType &&  ! TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === G.n4StringBasedEnumType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+		typeRef.declaredType === G.n4StringBasedEnumType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === G.stringType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
+		typeRef.declaredType === G.stringType &&  TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
 		||
-		staticTypeRef.declaredType === etr.enumType
+		typeRef.declaredType === etr.enumType
 	} else {
 		// cases of ThisTypeRefNominal are never a supertype of EnumTypeRef
 		false
@@ -1602,55 +1611,6 @@ from {
 	}
 }
 
-/*
- * Constructors are functions
- */
-rule subtypeConstructorTypeRef__Function
-	G |- ConstructorTypeRef left <: ParameterizedTypeRef right
-from {
-	right.declaredType instanceof AnyType
-	||
-	right.declaredType === G.functionType
-}
-
-rule subtypeConstructorTypeRef
-	G |- ConstructorTypeRef left <: ConstructorTypeRef right
-from {
-	// check static types
-	G |- left.staticTypeRef <: right.staticTypeRef
-
-	// check constructors
-	val left_staticType = left.staticType
-	val right_staticType = right.staticType
-	if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
-		// special case: we have a type variable on one or both sides
-		// left <: right if and only if the type variables are identical
-		left_staticType === right_staticType
-		// (for a type variable itself we cannot get the constructor, we could only get the constructor
-		// of the upper/lower bound; however, in contrast to other type rules, we cannot say
-		// constructor{upperBound(T)} <: constructor{X} implies constructor{T} <: constructor{X}
-		// because the subtype relation for ConstructorTypeRefs is not transitive; so we need
-		// the identical type - in this case: the identical type variable - on both sides)
-	}
-	else {
-		val leftCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(left_staticType as ContainerType<?>);
-		val rightCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(right_staticType as ContainerType<?>);
-		leftCtor!=null && rightCtor!=null
-
-		// support for type variables and [~]~this as type of fpars in constructors
-		val G_left = G.wrap;
-		val G_right = G.wrap;
-		typeSystemHelper.addSubstitutions(G_left, left_staticType.ref);
-		G_left.addThisType(left_staticType.ref)
-		typeSystemHelper.addSubstitutions(G_right, right_staticType.ref);
-		G_right.addThisType(right_staticType.ref)
-		G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst
-		G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst
-
-		G |- leftCtorRefSubst <: rightCtorRefSubst
-	}
-}
-
 rule subtypeClassifierTypeRef
 	G |- ClassifierTypeRef left <: ClassifierTypeRef right
 from {
@@ -1659,7 +1619,78 @@ from {
 	!(right instanceof ConstructorTypeRef)
 
 	// check static types
-	G |- left.staticTypeRef <: right.staticTypeRef
+	G |- left.getTypeArg <: right.getTypeArg
+}
+
+rule subtypeConstructorTypeRef
+	G |- ConstructorTypeRef left <: ConstructorTypeRef right
+from {
+	if (right.typeArg instanceof TypeRef
+		&& ((right.typeArg as TypeRef).declaredType instanceof DeclaredTypeWithAccessModifier)
+	) { // right points to concrete type
+		G |- left.getTypeArg <: right.getTypeArg
+	
+		// check constructors
+		val left_staticType = left.staticType
+		val right_staticType = right.staticType
+		if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
+			// special case: we have a type variable on one or both sides
+			// left <: right if and only if the type variables are identical
+			left_staticType === right_staticType
+			// (for a type variable itself we cannot get the constructor, we could only get the constructor
+			// of the upper/lower bound; however, in contrast to other type rules, we cannot say
+			// constructor{upperBound(T)} <: constructor{X} implies constructor{T} <: constructor{X}
+			// because the subtype relation for ConstructorTypeRefs is not transitive; so we need
+			// the identical type - in this case: the identical type variable - on both sides)
+		}
+		else {
+			val leftCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(left_staticType as ContainerType<?>);
+			val rightCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(right_staticType as ContainerType<?>);
+			leftCtor!=null && rightCtor!=null
+	
+			// support for type variables and [~]~this as type of fpars in constructors
+			val G_left = G.wrap;
+			val G_right = G.wrap;
+			typeSystemHelper.addSubstitutions(G_left, left_staticType.ref);
+			G_left.addThisType(left_staticType.ref)
+			typeSystemHelper.addSubstitutions(G_right, right_staticType.ref);
+			G_right.addThisType(right_staticType.ref)
+			G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst
+			G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst
+	
+			G |- leftCtorRefSubst <: rightCtorRefSubst
+		}
+	} else { // right contains a wilcard
+		G |~ left.typeArg /\ var TypeRef upperBoundLeft
+		G |~ left.typeArg \/ var TypeRef lowerBoundLeft
+		G |~ right.typeArg /\ var TypeRef upperBoundRight
+		G |~ right.typeArg \/ var TypeRef lowerBoundRight
+		
+		G |- upperBoundLeft <: upperBoundRight
+		G |- lowerBoundRight <: lowerBoundLeft 
+	} 
+}
+
+
+
+rule subtypeClassifierTypeRef_ParameterizedTypeRef
+	G |- ClassifierTypeRef left <: ParameterizedTypeRef right
+from {
+	right.declaredType instanceof AnyType
+	||
+	right.declaredType == G.objectType
+}
+
+/*
+ * Constructors are functions (also see #227)
+ */
+rule subtypeConstructorTypeRef__ParameterizedTypeRef
+	G |- ConstructorTypeRef left <: ParameterizedTypeRef right
+from {
+//	right.declaredType instanceof AnyType
+//	||
+	// right.declaredType === G.objectType see #227
+	G |- G.functionTypeRef <: right
 }
 
 /* @see [N4JS] 4.7.2. Functions and FunctionType */
@@ -2303,8 +2334,8 @@ from {
 		ConstructorTypeRef: {
 		}
 		default: { /* case ClassifierTypeRef */
-			val staticTypeRef = ct.staticTypeRef
-			switch(staticTypeRef) {
+			val typeRef = ct.getTypeArg
+			switch(typeRef) {
 				 BoundThisTypeRef: {
 						result = TypeUtils.createResolvedClassifierTypeRef(ct)
 				 }
@@ -2494,16 +2525,19 @@ from {
 	}
 }
 
+/**
+ * Substitute in ClassifierTypeRef and ConstructorTypeRef.
+ */
 rule substTypeVariablesInClassifierTypeRef
 	G |- ClassifierTypeRef typeRef ~> ClassifierTypeRef result
 from {
-	// Substitue in Parameterized Typeref.
-	G |- typeRef.staticTypeRef ~> var TypeRef tResult
-	if( typeRef.staticTypeRef !== tResult ) {
+	// Substitute in Parameterized Typeref.
+	G |- typeRef.getTypeArg ~> var TypeArgument tResult
+	if( typeRef.getTypeArg !== tResult ) {
 		// changes.
-		tResult = TypeUtils.copy( tResult )
-			result = TypeUtils.copy( typeRef )
-			result.staticTypeRef = ( tResult as StaticBaseTypeRef )
+		tResult = TypeUtils.copyIfContained( tResult )
+		result = TypeUtils.copyIfContained( typeRef )
+		result.typeArg = tResult
 	} else {
 		// nothing changed.
 		result = typeRef

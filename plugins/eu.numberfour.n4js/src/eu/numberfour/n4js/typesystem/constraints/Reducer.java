@@ -45,6 +45,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector;
 import eu.numberfour.n4js.ts.types.util.Variance;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.typesystem.StructuralTypingComputer;
 import eu.numberfour.n4js.typesystem.StructuralTypingComputer.StructTypingInfo;
@@ -53,7 +54,6 @@ import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.StructuralMembersTriple;
 import eu.numberfour.n4js.utils.StructuralMembersTripleIterator;
 import eu.numberfour.n4js.utils.StructuralTypesHelper;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -474,8 +474,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
-		final TypeRef leftStatic = TypeUtils.copy(left.getStaticTypeRef());
-		final TypeRef rightStatic = TypeUtils.copy(right.getStaticTypeRef());
+		final TypeArgument leftStatic = TypeUtils.copy(left.getTypeArg());
+		final TypeArgument rightStatic = TypeUtils.copy(right.getTypeArg());
 		if (!(left instanceof ConstructorTypeRef) && !(right instanceof ConstructorTypeRef)) {
 			// both sides are plain ClassifierTypeRefs
 			return reduce(leftStatic, rightStatic, variance);

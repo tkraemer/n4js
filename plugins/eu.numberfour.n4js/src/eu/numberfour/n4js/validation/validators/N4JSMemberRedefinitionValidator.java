@@ -94,6 +94,7 @@ import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
@@ -103,7 +104,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -130,7 +130,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
 	@Inject
-	private N4JSTypeSystem typeSystem;
+	private N4JSTypeSystem ts;
 
 	@Inject
 	private MemberVisibilityChecker memberVisibilityChecker;
@@ -876,10 +876,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		// will return type of value for fields, function type for methods, type of return value for getters, type of
 		// parameter for setters
-		TypeRef typeLeft = typeInferencer.tau(left, classTypeRef, false);
-		TypeRef typeRight = typeInferencer.tau(right, classTypeRef, false);
+		TypeRef typeLeft = ts.tau(left, classTypeRef);
+		TypeRef typeRight = ts.tau(right, classTypeRef);
 
-		return typeSystem.subtype(G, typeLeft, typeRight);
+		return ts.subtype(G, typeLeft, typeRight);
 	}
 
 	private TClassifier getCurrentClassifier() {

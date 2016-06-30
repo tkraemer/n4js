@@ -54,6 +54,7 @@ import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.Variable;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
@@ -65,6 +66,9 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private LanguageConstantsHelper languageConstantsHelper;
+
+	@Inject
+	private N4JSTypeSystem ts;
 
 	/**
 	 * NEEEDED
@@ -326,7 +330,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (namedElement instanceof TypableElement) {
 			String name = namedElement.getName();
 			if (BASE_TYPES.contains(name)) {
-				TypeRef typeRef = typeInferencer.tau((TypableElement) namedElement);
+				TypeRef typeRef = ts.tau((TypableElement) namedElement);
 				if (typeRef != null && typeRef.getDeclaredType() != null) {
 					String typeName = typeRef.getDeclaredType().getName();
 					if (!Strings.isEmpty(typeName) && !name.equals(typeName)) {

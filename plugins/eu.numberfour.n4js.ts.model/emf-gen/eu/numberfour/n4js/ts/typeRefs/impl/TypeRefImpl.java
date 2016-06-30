@@ -16,10 +16,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
 import eu.numberfour.n4js.ts.types.AnyType;
 import eu.numberfour.n4js.ts.types.NullModifier;
-import eu.numberfour.n4js.ts.types.PrimitiveType;
-import eu.numberfour.n4js.ts.types.TClass;
-import eu.numberfour.n4js.ts.types.TEnum;
-import eu.numberfour.n4js.ts.types.TObjectPrototype;
 import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
@@ -214,20 +210,6 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 			return false;
 		}
 		return dtype.isFinal();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isTreeHierarchyType() {
-		final Type dtype = this.getDeclaredType();
-		if ((dtype == null)) {
-			return false;
-		}
-		return ((((dtype instanceof TClass) || (dtype instanceof PrimitiveType)) || (dtype instanceof TObjectPrototype)) || 
-			(dtype instanceof TEnum));
 	}
 
 	/**
@@ -474,8 +456,6 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return getModifiersAsString();
 			case TypeRefsPackage.TYPE_REF___IS_FINAL_BY_TYPE:
 				return isFinalByType();
-			case TypeRefsPackage.TYPE_REF___IS_TREE_HIERARCHY_TYPE:
-				return isTreeHierarchyType();
 			case TypeRefsPackage.TYPE_REF___IS_DYNAMIC:
 				return isDynamic();
 			case TypeRefsPackage.TYPE_REF___IS_EXISTENTIAL:

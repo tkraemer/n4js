@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.validation.validators
 
-import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
@@ -27,10 +26,9 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.SuperLiteral
 import eu.numberfour.n4js.n4JS.ThisLiteral
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
@@ -43,9 +41,6 @@ import static eu.numberfour.n4js.validation.IssueCodes.*
  * N4JS spec  6.2.1 and 4.18.2
  */
 class N4JSSuperValidator extends AbstractN4JSDeclarativeValidator {
-
-	@Inject
-	protected N4JSTypeInferencer typeInferencer;
 
 	/**
 	 * NEEEDED

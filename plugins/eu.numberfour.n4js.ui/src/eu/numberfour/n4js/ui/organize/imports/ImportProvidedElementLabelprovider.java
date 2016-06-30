@@ -22,6 +22,7 @@ import eu.numberfour.n4js.n4JS.ImportDeclaration;
 import eu.numberfour.n4js.organize.imports.ImportProvidedElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider;
+import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports.ImportableObject;
 
 /**
  */
@@ -60,7 +61,10 @@ public class ImportProvidedElementLabelprovider implements ILabelProvider {
 
 	@Override
 	public String getText(Object element) {
-		if (element instanceof ImportProvidedElement) {
+		if (element instanceof ImportableObject) {
+			ImportableObject io = (ImportableObject) element;
+			return getText(io.getEobj());
+		} else if (element instanceof ImportProvidedElement) {
 			ImportProvidedElement ele = ((ImportProvidedElement) element);
 			// return n4Labelprovider.getText( ele.ambiguityList.get(0) );
 			TModule tm = ((ImportDeclaration) ele.importSpec.eContainer()).getModule();

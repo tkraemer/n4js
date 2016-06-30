@@ -129,30 +129,6 @@ public interface TypeRef extends TypeArgument {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * *
-	 * Returns true if the referenced type referenced is a type which,
-	 * ignoring other (meta types) defined which may be involved, defines a type hierarchy which is a tree.
-	 * 	 * Concrete these are either classes, object prototypes, primitives, or enums. That is, a class can be inherited only from a single other class, and primitives or enums can not be inherited at all. On the other hand, interfaces or roles support multi-inheritance.
-	 * So, this method will return true if the declared type is either
-	 * <ul>
-	 * <li>a class</li>
-	 * <li>an object prototype</li>
-	 * <li>an enum</li>
-	 * <li>a primitive</li>
-	 * </ul>
-	 * 	 * <p>
-	 * The method is robust, if typeRef is null or the declared type is null, false is returned.
-	 * <!-- end-model-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn ((((dtype instanceof <%eu.numberfour.n4js.ts.types.TClass%>) || (dtype instanceof <%eu.numberfour.n4js.ts.types.PrimitiveType%>)) || (dtype instanceof <%eu.numberfour.n4js.ts.types.TObjectPrototype%>)) || \n\t(dtype instanceof <%eu.numberfour.n4js.ts.types.TEnum%>));'"
-	 * @generated
-	 */
-	boolean isTreeHierarchyType();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
 	 * Convenience method, flag indicating whether user can add properties to the instance not defined in the type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"

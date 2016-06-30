@@ -12,7 +12,7 @@ package eu.numberfour.n4js.ui.labeling
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Expression
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import org.eclipse.emf.ecore.EObject
 
 import static eu.numberfour.n4js.utils.UtilN4.sanitizeForHTML

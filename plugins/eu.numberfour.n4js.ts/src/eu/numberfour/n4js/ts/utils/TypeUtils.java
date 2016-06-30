@@ -48,7 +48,6 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural;
-import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural;
@@ -234,7 +233,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ClassifierTypeRef ref = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-			ref.setStaticTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -259,7 +258,7 @@ public class TypeUtils {
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
 			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
-			ref.setStaticTypeRef(createTypeRef(tClassifier, typeArgs));
+			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
 		}
 		return typeRef;
@@ -284,7 +283,8 @@ public class TypeUtils {
 	 * union type may contain duplicates or nested union types, that is, it is not simplified! Thus, the returned type
 	 * is expected to be processed further!
 	 *
-	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper.simplify(UnionTypeExpression)
+	 * @see eu.numberfour.n4js.typesystem.N4JSTypeSystem#createSimplifiedUnion(List, Resource)
+	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper#simplify(RuleEnvironment, ComposedTypeRef)
 	 */
 	@SuppressWarnings("javadoc")
 	public static UnionTypeExpression createNonSimplifiedUnionType(Iterable<? extends TypeRef> elements) {
@@ -302,6 +302,31 @@ public class TypeUtils {
 	 */
 	public static UnionTypeExpression createNonSimplifiedUnionType(TypeRef... elements) {
 		return createNonSimplifiedUnionType(Arrays.asList(elements));
+	}
+
+	/**
+	 * Creates a new intersection type with the given elements. The elements are copied if they have a container. The
+	 * created intersection type may contain duplicates or nested intersection types, that is, it is not simplified!
+	 *
+	 * @see eu.numberfour.n4js.typesystem.N4JSTypeSystem#createSimplifiedIntersection(List, Resource)
+	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper#simplify(RuleEnvironment, ComposedTypeRef)
+	 */
+	@SuppressWarnings("javadoc")
+	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(Iterable<? extends TypeRef> elements) {
+		IntersectionTypeExpression intersectionType = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
+		EList<TypeRef> intersectionElements = intersectionType.getTypeRefs();
+
+		for (TypeRef e : elements) {
+			intersectionElements.add(TypeUtils.copyIfContained(e));
+		}
+		return intersectionType;
+	}
+
+	/**
+	 * Convenience method, delegates to {@link #createNonSimplifiedIntersectionType(Iterable)}.
+	 */
+	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(TypeRef... elements) {
+		return createNonSimplifiedIntersectionType(Arrays.asList(elements));
 	}
 
 	/**
@@ -406,18 +431,18 @@ public class TypeUtils {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
 		ClassifierTypeRef classifierBoundThisTypeRef = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		StaticBaseTypeRef staticTypeRef = actualThisTypeRef.getStaticTypeRef();
+		TypeArgument typeArg = actualThisTypeRef.getTypeArg();
 		final BoundThisTypeRef boundThisTypeRef;
-		if (staticTypeRef instanceof ParameterizedTypeRef) {
-			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) staticTypeRef);
-		} else if (staticTypeRef instanceof BoundThisTypeRef) {
-			boundThisTypeRef = (BoundThisTypeRef) staticTypeRef;
+		if (typeArg instanceof ParameterizedTypeRef) {
+			boundThisTypeRef = createBoundThisTypeRef((ParameterizedTypeRef) typeArg);
+		} else if (typeArg instanceof BoundThisTypeRef) {
+			boundThisTypeRef = (BoundThisTypeRef) typeArg;
 		} else {
 			// invalid use
 			throw new IllegalArgumentException(
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
-		classifierBoundThisTypeRef.setStaticTypeRef(boundThisTypeRef);
+		classifierBoundThisTypeRef.setTypeArg(boundThisTypeRef);
 		// TODO is there anything else to copy ?
 		return classifierBoundThisTypeRef;
 	}
@@ -458,13 +483,13 @@ public class TypeUtils {
 	 */
 	public static ClassifierTypeRef createResolvedClassifierTypeRef(ClassifierTypeRef ct) {
 		// as part of IDE-785
-		StaticBaseTypeRef replacement = ct.getStaticTypeRef();
-		if (ct.getStaticTypeRef() instanceof BoundThisTypeRef) {
-			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getStaticTypeRef());
+		TypeArgument replacement = ct.getTypeArg();
+		if (ct.getTypeArg() instanceof BoundThisTypeRef) {
+			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getTypeArg());
 		}
 
 		ClassifierTypeRef resolved = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		resolved.setStaticTypeRef(replacement);
+		resolved.setTypeArg(replacement);
 		return resolved;
 	}
 
@@ -544,39 +569,19 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Creates a new intersection type with the given elements. The elements are copied if they have a container. The
-	 * created intersection type may contain duplicates or nested intersection types, that is, it is not simplified!
-	 * Thus, the returned type is expected to be processed further!
+	 * Creates a new function type expression with the given attributes, attributes are copied if contained. All
+	 * references are copied if they are already contained.
 	 *
-	 * @see eu.numberfour.n4js.typesystem.TypeSystemHelper.simplify(UnionTypeExpression)
-	 */
-	@SuppressWarnings("javadoc")
-	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(Iterable<? extends TypeRef> elements) {
-		IntersectionTypeExpression intersectionType = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
-		EList<TypeRef> intersectionElements = intersectionType.getTypeRefs();
-
-		for (TypeRef e : elements) {
-			intersectionElements.add(TypeUtils.copyIfContained(e));
-		}
-		return intersectionType;
-	}
-
-	/**
-	 * Convenience method, delegates to {@link #createNonSimplifiedIntersectionType(Iterable)}.
-	 */
-	public static IntersectionTypeExpression createNonSimplifiedIntersectionType(TypeRef... elements) {
-		return createNonSimplifiedIntersectionType(Arrays.asList(elements));
-	}
-
-	/**
-	 * Creates a new function type expression with the given attribtues, attributes are copied if contained.
+	 * @param declaredThisType
+	 *            type referenced in @This annotation, may be null
 	 */
 	public static FunctionTypeExpression createFunctionTypeExpression(
 			TypeRef declaredThisType, List<TypeVariable> ownedTypeVars,
 			List<TFormalParameter> fpars, TypeRef returnTypeRef) {
 		final FunctionTypeExpression f = TypeRefsFactory.eINSTANCE.createFunctionTypeExpression();
-
-		f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		if (declaredThisType != null) {
+			f.setDeclaredThisType(TypeUtils.copyIfContained(declaredThisType));
+		}
 		ownedTypeVars.stream().forEachOrdered(tv -> f.getOwnedTypeVars().add(TypeUtils.copyIfContained(tv)));
 		fpars.stream().forEachOrdered(tp -> f.getFpars().add(TypeUtils.copyIfContained(tp)));
 		f.setReturnTypeRef(TypeUtils.copyIfContained(returnTypeRef));
@@ -658,7 +663,7 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Check if superTypeCandidate is raw super type of Type
+	 * Check if superTypeCandidate is raw super type of Type. Structural typing is ignored here.
 	 */
 	public static boolean isRawSuperType(Type type, Type superTypeCandidate) {
 		return isRawSuperType(type, superTypeCandidate, new RecursionGuard<Type>());

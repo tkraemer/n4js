@@ -36,7 +36,7 @@ import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
@@ -59,7 +59,7 @@ public class ComposedMemberScope extends MemberScope {
 		 * Creates an instance of this class for the given ComposedTypeRef.
 		 */
 		public IScope create(ComposedTypeRef composedTypeRef, EObject context, List<IScope> subScopes,
-				boolean isIntersection, N4JSTypeInferencer typeInferencer) {
+				boolean isIntersection, N4JSTypeSystem ts) {
 			if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
 				return new DynamicPseudoScope();
 			}
@@ -67,22 +67,22 @@ public class ComposedMemberScope extends MemberScope {
 			// TODO add support for intersection types
 			if (isIntersection)
 				return IScope.NULLSCOPE;
-			return new ComposedMemberScope(containerTypesHelper, composedTypeRef, context, subScopes, typeInferencer);
+			return new ComposedMemberScope(containerTypesHelper, composedTypeRef, context, subScopes, ts);
 		}
 	}
 
 	private final ComposedTypeRef composedTypeRef;
 	private final IScope[] subScopes;
 
-	private final N4JSTypeInferencer typeInferencer;
+	private final N4JSTypeSystem ts;
 
 	private ComposedMemberScope(ContainerTypesHelper containerTypesHelper, ComposedTypeRef composedTypeRef,
 			EObject context,
-			List<IScope> subScopes, N4JSTypeInferencer typeInferencer) {
+			List<IScope> subScopes, N4JSTypeSystem ts) {
 		super(containerTypesHelper, IScope.NULLSCOPE, Collections.emptyList(), context, false);
 		this.composedTypeRef = composedTypeRef;
 		this.subScopes = subScopes.toArray(new IScope[subScopes.size()]);
-		this.typeInferencer = typeInferencer;
+		this.ts = ts;
 	}
 
 	@Override
@@ -153,9 +153,9 @@ public class ComposedMemberScope extends MemberScope {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final ComposedMemberDescriptor composedMember = new ComposedMemberDescriptor(
-				writeAccess, EcoreUtilN4.getResource(context, composedTypeRef), typeInferencer);
+				writeAccess, EcoreUtilN4.getResource(context, composedTypeRef), ts);
 		for (int idx = 0; idx < subScopes.length; idx++) {
-			final RuleEnvironment GwithSubstitutions = typeInferencer.createRuleEnvironmentForContext(
+			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(
 					composedTypeRef.getTypeRefs().get(idx),
 					EcoreUtilN4.getResource(context, composedTypeRef));
 			composedMember.merge(

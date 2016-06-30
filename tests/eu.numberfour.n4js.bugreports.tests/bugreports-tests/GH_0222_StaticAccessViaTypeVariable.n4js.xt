@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+class C {
+    static foo() {}
+    bar() {}
+}
+
+function <T extends C> f(x: T) {
+    // XPECT FIXME noerrors -->
+    T.foo();
+    // XPECT errors --> "The static member foo cannot be accessed from a non-static context." at "foo"
+    x.foo();
+    // XPECT FIXME errors --> "The instance member foo cannot be accessed from a static context." at "bar"
+    T.bar();
+    // XPECT noerrors -->
+    x.bar();
+}

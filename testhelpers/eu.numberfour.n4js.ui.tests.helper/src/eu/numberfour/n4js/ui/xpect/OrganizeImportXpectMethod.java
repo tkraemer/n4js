@@ -41,6 +41,10 @@ import junit.framework.AssertionFailedError;
  */
 public class OrganizeImportXpectMethod {
 
+	static { // avoid Exceptions (mainly in IDE)
+		EclipseGracefulUIShutdownEnabler.enableOnce();
+	}
+
 	private final static Logger logger = Logger.getLogger(OrganizeImportXpectMethod.class);
 
 	@Inject

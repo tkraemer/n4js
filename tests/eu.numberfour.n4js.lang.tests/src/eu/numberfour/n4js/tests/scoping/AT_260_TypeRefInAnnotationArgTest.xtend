@@ -20,7 +20,8 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.resource.N4JSResource
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -30,7 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.resource.N4JSResource
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  */
@@ -116,7 +117,7 @@ class AT_260_TypeRefInAnnotationArgTest {
 		N4JSResource.postProcessContainingN4JSResourceOf(script); // should make no difference, but maybe it helps to fix a Windows problem
 		val thisRef = script.eAllContents.filter(ThisLiteral).head;
 		assertNotNull("This ref not found", thisRef);
-		val thisRefTypeResult = ts.type(thisRef);
+		val thisRefTypeResult = ts.type(script.newRuleEnvironment, thisRef);
 		if (thisRefTypeResult.ruleFailedException!==null) {
 			assertNull("Error typing this reference", thisRefTypeResult.ruleFailedException)
 		}

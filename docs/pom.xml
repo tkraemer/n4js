@@ -26,6 +26,13 @@ Contributors:
 	<modules>
 		<!-- main user documentation, to be split up later -->
 		<module>eu.numberfour.n4js.doc</module>
+<!--
+
+ A separate active help plugin
+
+		<module>eu.numberfour.n4js.help.active</module>
+
+-->
 	</modules>
 
 </project>

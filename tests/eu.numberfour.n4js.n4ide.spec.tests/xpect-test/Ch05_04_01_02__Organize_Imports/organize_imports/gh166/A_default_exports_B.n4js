@@ -1,0 +1,22 @@
+export public class A {
+	public m1() : number {return 1;}
+}
+
+export default public class B {
+	
+}
+
+export public interface IA {
+	
+}
+
+export public interface IB {
+	
+}
+
+export public interface AR {
+
+}
+
+class NotVisible {}
+

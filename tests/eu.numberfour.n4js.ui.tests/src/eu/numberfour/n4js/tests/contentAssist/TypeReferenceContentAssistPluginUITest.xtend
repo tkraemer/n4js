@@ -25,7 +25,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 	@Test def void testTypeProposals_importAdded() {
 		//TODO IDE-1869 should be ...assertProposal("MyFirstClass")
 		newBuilder().append("var x: My").assertProposal("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path/Libs').apply.expectContent('''
-			import { MyFirstClass } from "path/Libs"
+			import { MyFirstClass } from "path/Libs";
 			var x: MyFirstClass''')
 	}
 
@@ -69,7 +69,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 // new expectation after disabling ImportRewriter#enhanceExistingImportDeclaration(ImportDeclaration,QualifiedName,String,MultiTextEdit):
 		'''
 			import { MySecondClass } from 'path/Libs'
-			import { MyFirstClass } from "path/Libs"
+			import { MyFirstClass } from "path/Libs";
 
 			var varName: MyFirstClass<|>
 		'''
@@ -94,7 +94,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 		newBuilder().append('''
 			/* some comment */
 			var varName: MLiFi''').applyProposal("path.MoreLibs.MoreLibFirstClass").expectContent('''
-			import { MoreLibFirstClass } from "path/MoreLibs"
+			import { MoreLibFirstClass } from "path/MoreLibs";
 			/* some comment */
 			var varName: MoreLibFirstClass''')
 	}
@@ -105,7 +105,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
 			import { MoreLibFirstClass } from "path/MoreLibs"
-			import { MyFirstClass } from "path/Libs"
+			import { MyFirstClass } from "path/Libs";
 
 			var varName: MyFirstClass''')
 	}
@@ -116,7 +116,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
 			import { MoreLibFirstClass } from "path/MoreLibs" /* some comment */
-			import { MyFirstClass } from "path/Libs"
+			import { MyFirstClass } from "path/Libs";
 
 			var varName: MyFirstClass''')
 	}
@@ -128,7 +128,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
 			import { MoreLibFirstClass } from "path/MoreLibs"
-			import { MyFirstClass } from "path/Libs"
+			import { MyFirstClass } from "path/Libs";
 
 
 			var varName: MyFirstClass''')
@@ -144,7 +144,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 			"/* leading comment */import { MoreLibSecondClass } from \"path/MoreLibs\" /* trailing comment */"
 
 		val expected = "import { MoreLibFirstClass } from \"path/MoreLibs\" /* trailing comment */" + "\n" +
-			"import { MyFirstClass } from \"path/Libs\"" + "\n" +
+			"import { MyFirstClass } from \"path/Libs\"" + ";" +"\n" +
 			"\n" +
 			"var varName: MyFirstClass" + "\n" +
 			"\n" +

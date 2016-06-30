@@ -32,7 +32,9 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.IContentAssistScopeProvider;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
+import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
 import eu.numberfour.n4js.ui.contentassist.N4JSCandidateFilter;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
  * Custom proposal creator that is used to query a scope and produce completion proposals for the elements in that
@@ -98,9 +100,24 @@ public class ImportsAwareReferenceProposalCreator {
 				// that name. Consider only the simple name of the element from the index
 				// and make sure that the import is inserted as soon as the proposal is applied
 				if (reference == N4JSPackage.Literals.IDENTIFIER_REF__ID && input.getName().getSegmentCount() > 1) {
-					inputToUse = new AliasedEObjectDescription(QualifiedName.create(input.getName().getLastSegment()),
+					inputToUse = new AliasedEObjectDescription(
+							QualifiedName.create(input.getName().getLastSegment()),
 							input);
 				}
+				// filter out non-importable things:
+				// globally provided things should never be imported:
+				if (input.getName().getSegmentCount() == 2 && N4TSQualifiedNameProvider.GLOBAL_NAMESPACE_SEGMENT
+						.equals(input.getName().getFirstSegment())) {
+					inputToUse = new AliasedEObjectDescription(
+							QualifiedName.create(input.getName().getLastSegment()),
+							input);
+				} else // special handling for defaults:
+				if (input.getName().getLastSegment().equals(N4JSLanguageConstants.EXPORT_DEFAULT_NAME)) {
+					inputToUse = new AliasedEObjectDescription(
+							QualifiedName.create(input.getName().getSegment(input.getName().getSegmentCount() - 2)),
+							input);
+				}
+
 				final ICompletionProposal result = proposalFactory.apply(inputToUse);
 				if (result instanceof ConfigurableCompletionProposal) {
 					final FQNImporter importer = fqnImporterFactory.create(

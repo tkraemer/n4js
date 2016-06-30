@@ -91,8 +91,9 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
 import eu.numberfour.n4js.ts.scoping.builtin.ResourceSetWithBuiltInScheme;
 import eu.numberfour.n4js.ts.validation.TypesKeywordProvider;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
-import eu.numberfour.n4js.typesystem.CustomTypeSystem;
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
@@ -100,7 +101,7 @@ import eu.numberfour.n4js.utils.validation.PrePostDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem;
+import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.StringRepresentation;
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 
@@ -392,10 +393,18 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	}
 
 	/**
-	 * Bind an implementation that doesn't use stack-traces in its exception protocol.
+	 * Binds the main type system facade used as an entry point into the type system.
 	 */
 	public Class<? extends N4JSTypeSystem> bindTypeSystem() {
-		return CustomTypeSystem.class;
+		return N4JSTypeSystem.class;
+	}
+
+	/**
+	 * Binds the internal, Xsemantics-generated type system. Binds an implementation that doesn't use stack-traces in
+	 * its exception protocol.
+	 */
+	public Class<? extends InternalTypeSystem> bindInternalTypeSystem() {
+		return CustomInternalTypeSystem.class;
 	}
 
 	/**

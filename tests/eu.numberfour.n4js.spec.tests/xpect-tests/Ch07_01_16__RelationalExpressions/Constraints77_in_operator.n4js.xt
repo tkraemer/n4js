@@ -41,15 +41,15 @@ funcv() in new A()
 
 
 var bin7 : boolean =
-// XPECT errors --> "constructor{A} is not a subtype of Object." at "A"
+// ctor is an Object as well XPECT noerrors -->
 1 in A
 
 
 var bin8 : boolean =
-// XPECT errors --> "type{I} is not a subtype of Object." at "I"
+// type is an Object as well XPECT noerrors -->
 1 in I
 
 
 var bin9 : boolean =
-// XPECT errors --> "type{R} is not a subtype of Object." at "R"
+// type is an Object as well XPECT noerrors -->
 1 in R
