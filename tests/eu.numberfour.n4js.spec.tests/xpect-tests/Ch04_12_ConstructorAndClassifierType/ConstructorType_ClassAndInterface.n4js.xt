@@ -19,7 +19,7 @@ class D extends C {
 
 
 function f(ctor : constructor{I}) {
-	// XPECT noerrors -->
+	// XPECT noerrors -->"Cannot instantiate interface I." at "ctor"
 	var i : I = new ctor();
 	// ...
 }

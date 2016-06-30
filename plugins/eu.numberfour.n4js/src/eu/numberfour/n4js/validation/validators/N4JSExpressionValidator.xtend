@@ -483,6 +483,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
+			
+		// use classifier type ref in order to improve error messages	
 		if (! (typeRef instanceof ClassifierTypeRef)) {
 			if (typeRef instanceof EnumTypeRef) {
 				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("enum", typeRef.enumType?.name);
@@ -519,7 +521,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				IssueCodes.BIT_SYMBOL_NOT_A_CTOR);
 			return;
 		}
-		if (isNewExpressionViaTypeIdentifier(newExpression.callee, staticType)) { // new I() is different from new ctor (where ctor is constructor{i})
+		
+		if (! (classifierTypeRef instanceof ConstructorTypeRef) && staticType instanceof TN4Classifier) {
 			if (staticType instanceof TInterface) {
 				// error case #2: trying to instantiate an interface
 				val message = IssueCodes.
@@ -528,7 +531,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 				return;
 
-			} else if (staticType instanceof TClass && (staticType as TClass).abstract) {
+			} else if (staticType instanceof TClass && (staticType as TClass).abstract) { // check for abstract is unnecessary, just to be sure
 				// error case #3: trying to instantiate an abstract class
 				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("abstract class", staticType.name);
 				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
@@ -536,6 +539,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				return;
 			}
 		}
+		
+		// all other cases with generic error message:
 		if (! (typeRef instanceof ConstructorTypeRef)) {
 			issueNotACtor(typeRef, newExpression);
 			return;
@@ -547,13 +552,6 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
 
-	}
-
-	private def boolean isNewExpressionViaTypeIdentifier(Expression expression, Type type) {
-		if (expression instanceof IdentifierRef) {
-			return expression?.id?.name == type.name
-		}
-		return false;
 	}
 
 	/** Helper to issue the error case of having a new-expression on a non-constructor element */
