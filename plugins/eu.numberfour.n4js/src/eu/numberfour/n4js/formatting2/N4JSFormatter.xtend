@@ -105,6 +105,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
 import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
 import org.eclipse.xtext.formatting2.regionaccess.IHiddenRegion
 import eu.numberfour.n4js.n4JS.AnnotablePropertyAssignment
+import org.eclipse.xtext.Keyword
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -122,6 +123,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	 * </ul>
 	 */
 	static val PRIO_4 = PRIO_3 + 1;
+	static val PRIO_13 = IHiddenRegionFormatter.HIGH_PRIORITY + 1;
 
 	
 	private def maxConsecutiveNewLines() {
@@ -142,6 +144,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		script.formatSemicolons(document);
 		script.formatColon(document);
+
+		formatScriptAnnotations(script,document);
 
 		for (element : script.scriptElements) {
 			// element.append[setNewLines(1, 1, maxConsecutiveNewLines);noSpace; autowrap].prepend[noSpace];
@@ -483,8 +487,26 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format(ExportDeclaration export, extension IFormattableDocument document){
-		export.regionFor.keyword("export").append[oneSpace];
+		export.regionFor.keyword("export").append[
+			oneSpace;
+			newLines=0;
+			// Apply prioritization to catch cases of 'trapped' annotations e.g. "export @Final public class" which
+			// could also be reordered to "@Final export public class.."
+			priority=PRIO_13; // Priority higher then highPriority used in AnnotationList.
+		];
+		 
 		export.eContents.forEach[format];
+		
+		// Fix Trapped annotations:
+		val exported = export.exportedElement;
+		if( exported instanceof AnnotableScriptElement ){
+			val annoList = exported.annotationList;
+			if( annoList !== null && !annoList.annotations.isEmpty) {
+				annoList.annotations.last.append[
+					newLines = 0; oneSpace; priority = PRIO_13; 
+				]
+			}
+		}
 	}
 
 	def dispatch void format(IfStatement stmt, extension IFormattableDocument document) {
@@ -658,6 +680,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			typeArgsAngle.value.prepend[noSpace;newLines=0];
 		}
 		newExp.typeArgs.forEach[format];
+		
 		
 		if( newExp.isWithArgs ) {
 			val argParen = newExp.regionFor.keywordPairs("(",")").head;
@@ -900,6 +923,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		vBind.regionFor.keyword("=").surround[oneSpace];
 		vBind.pattern.format;
 		vBind.expression.format;
+		vBind.pattern.format;
 	}
 	
 	def dispatch void format( BindingPattern bp, extension IFormattableDocument document) {
@@ -994,7 +1018,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	private def dispatch void configureAnnotations(AbstractAnnotationList aList, extension IFormattableDocument document) {
 		if( aList === null || aList.annotations.isEmpty ) return;
 		
-		aList.prepend[setNewLines(2,2,2);highPriority];
+		aList.prepend[setNewLines(2,2,2);highPriority]; // TODO in case of trapped in Annotation like 'export @Final public class A{}' - a reorder would be necessary (see format for export)
 		aList.append[newLine]; // TODO special annotations like @Internal ? --> together with public, reorder to be in same line?
 		aList.annotations.forEach[it,idx|
 			// configure arguments 
@@ -1011,10 +1035,43 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 				];
 				it.configureCommas(document);
 			}
+			it.semanticRegions.head =>[println(it.text)]; // TODO Debug remove		
+			
+				
 			// Configure @-Syntax
-			it.semanticRegions.head.append[noSpace; newLines=0];			
+			it.semanticRegions.head =>[
+				if( it.grammarElement instanceof Keyword) {
+					println(it.text) // TODO debug
+					// assume '@' 
+					it.append[ noSpace; newLines=0	];
+				} else {
+					it.prepend[ // for "@Final" "Final" will be the first semantic region in case of exported classes, 
+						noSpace; newLines=0
+					];
+				}
+			];
+			
+			
 		];
 	}
+	
+	/** only script-level annotations '@@' */
+	private def void formatScriptAnnotations(Script script, extension IFormattableDocument document) {
+		if( script.annotations.isEmpty ) return;
+		
+		script.annotations.head.prepend[noSpace;newLines=0;];
+		script.annotations.last.append[setNewLines(2,2,2)];
+		
+		script.annotations.forEach[it,idx|
+			if( idx !==0 ) it.prepend[newLines=1;noSpace];
+			it.semanticRegions.head=>[ // its an '@@'
+				append[noSpace;newLines=0]
+			]
+		]
+		
+	}
+	
+	
 	
 	private def dispatch void configureAnnotations(Object semEObject, extension IFormattableDocument document) {
 		// no annotations to be configured.

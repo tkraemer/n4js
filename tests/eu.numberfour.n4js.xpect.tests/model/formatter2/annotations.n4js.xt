@@ -35,7 +35,7 @@ class A1 {
 
 
 /* */
-/* XPECT formattedLines 14 ---
+/* XPECT formattedLines 13 ---
 @Internal export public abstract class Annos {
 	field;
 	abstract m1();
@@ -70,6 +70,19 @@ class A1 {
     Group("X") @Group("Y") @Group("Xlkdsjfklasjdflkajsldfjasldkjflaksjdflkasjdflkjasdlkfjlsdkjflkasjdflkjasdlfkjasldkfjlasdkjflaksdjf")
     @ Final @ Test @ Override @Description("alsjfdlkajsfdlkjasdfljsdlkfjasldkjflsakdjflkasjdflkjasdlkfjalsdkj")
     m1(){}
+}
+
+
+
+interface SomeLongLonglongName{}
+interface ParameterizedLongLonglongName<P>{}
+       
+// Don't tear export KW and exported statement apart.
+/* XPECT formattedLines 3 ---
+export @Final public class FixedPoint6 implements ParameterizedLongLonglongName<FixedPoint6>, SomeLongLonglongName {}
+--- */
+export @Final public class FixedPoint6 implements ParameterizedLongLonglongName<FixedPoint6>, SomeLongLonglongName {
+   
 }
 
 
