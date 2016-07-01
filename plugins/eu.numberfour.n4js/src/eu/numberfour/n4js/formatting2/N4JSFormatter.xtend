@@ -3,35 +3,57 @@
 package eu.numberfour.n4js.formatting2;
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.formatting2.N4JSFormatter.StateTrack
+import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AbstractCaseClause
 import eu.numberfour.n4js.n4JS.AdditiveExpression
+import eu.numberfour.n4js.n4JS.AnnotableExpression
+import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration
+import eu.numberfour.n4js.n4JS.AnnotablePropertyAssignment
+import eu.numberfour.n4js.n4JS.AnnotableScriptElement
+import eu.numberfour.n4js.n4JS.Annotation
 import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AwaitExpression
 import eu.numberfour.n4js.n4JS.BinaryBitwiseExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
+import eu.numberfour.n4js.n4JS.BindingPattern
 import eu.numberfour.n4js.n4JS.Block
+import eu.numberfour.n4js.n4JS.BooleanLiteral
 import eu.numberfour.n4js.n4JS.CastExpression
 import eu.numberfour.n4js.n4JS.CatchBlock
 import eu.numberfour.n4js.n4JS.CommaExpression
 import eu.numberfour.n4js.n4JS.ConditionalExpression
 import eu.numberfour.n4js.n4JS.EqualityExpression
+import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.FieldAccessor
 import eu.numberfour.n4js.n4JS.FinallyBlock
+import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FormalParameter
+import eu.numberfour.n4js.n4JS.FunctionDeclaration
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
+import eu.numberfour.n4js.n4JS.GenericDeclaration
+import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IfStatement
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
 import eu.numberfour.n4js.n4JS.IntLiteral
+import eu.numberfour.n4js.n4JS.ModifiableElement
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
+import eu.numberfour.n4js.n4JS.N4SetterDeclaration
+import eu.numberfour.n4js.n4JS.NamedImportSpecifier
+import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.ObjectLiteral
@@ -40,72 +62,59 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PostfixExpression
 import eu.numberfour.n4js.n4JS.PromisifyExpression
+import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.RelationalExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ShiftExpression
 import eu.numberfour.n4js.n4JS.StringLiteral
+import eu.numberfour.n4js.n4JS.SuperLiteral
 import eu.numberfour.n4js.n4JS.SwitchStatement
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
+import eu.numberfour.n4js.n4JS.TemplateLiteral
+import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.UnaryExpression
+import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableBinding
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.services.N4JSGrammarAccess
 import eu.numberfour.n4js.ts.formatting2.TypeExpressionsFormatter
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef
+import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
+import eu.numberfour.n4js.ts.types.TStructMember
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.TypesPackage
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.AbstractRule
+import org.eclipse.xtext.Keyword
+import org.eclipse.xtext.formatting2.IAutowrapFormatter
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import org.eclipse.xtext.formatting2.IHiddenRegionFormatter
+import org.eclipse.xtext.formatting2.IHiddenRegionFormatting
 import org.eclipse.xtext.formatting2.ITextReplacer
 import org.eclipse.xtext.formatting2.internal.SinglelineCodeCommentReplacer
 import org.eclipse.xtext.formatting2.internal.SinglelineDocCommentReplacer
 import org.eclipse.xtext.formatting2.regionaccess.IComment
+import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
+import org.eclipse.xtext.formatting2.regionaccess.IHiddenRegion
+import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
+import org.eclipse.xtext.formatting2.regionaccess.ITextSegment
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
 import org.eclipse.xtext.xtext.generator.parser.antlr.splitting.simpleExpressions.NumberLiteral
 
 import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
-import eu.numberfour.n4js.n4JS.BooleanLiteral
-import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
-import eu.numberfour.n4js.n4JS.UnaryOperator
-import org.eclipse.xtext.formatting2.IAutowrapFormatter
-import org.eclipse.xtext.formatting2.regionaccess.ITextSegment
-import org.eclipse.xtext.formatting2.IHiddenRegionFormatting
-import org.eclipse.xtext.formatting2.IHiddenRegionFormatter
-import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration
-import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
-import eu.numberfour.n4js.n4JS.AbstractAnnotationList
-import eu.numberfour.n4js.n4JS.AnnotableScriptElement
-import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.AnnotableExpression
-import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
-import org.eclipse.emf.common.util.EList
-import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.n4JS.TemplateLiteral
-import eu.numberfour.n4js.n4JS.TemplateSegment
-import eu.numberfour.n4js.n4JS.SuperLiteral
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
-import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
-import eu.numberfour.n4js.n4JS.NamedImportSpecifier
-import eu.numberfour.n4js.n4JS.ExportDeclaration
-import eu.numberfour.n4js.n4JS.GenericDeclaration
-import eu.numberfour.n4js.ts.types.TypeVariable
-import eu.numberfour.n4js.ts.types.TypesPackage
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.n4JS.ModifiableElement
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
-import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
-import eu.numberfour.n4js.n4JS.Annotation
-import eu.numberfour.n4js.n4JS.FunctionDeclaration
-import eu.numberfour.n4js.n4JS.BindingPattern
-import eu.numberfour.n4js.n4JS.ForStatement
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1
-import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
-import org.eclipse.xtext.formatting2.regionaccess.IHiddenRegion
-import eu.numberfour.n4js.n4JS.AnnotablePropertyAssignment
-import org.eclipse.xtext.Keyword
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -234,13 +243,15 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		clazz.regionFor.keyword("extends").prepend[
 			setNewLines(0,0,1); // allow line break in front.
 			autowrap;
-		];
+		].append[oneSpace; autowrap;];
+		
 		clazz.regionFor.keyword("implements").prepend[
 			setNewLines(0,0,1);
 			autowrap;
 			priority = IHiddenRegionFormatter.LOW_PRIORITY;
 			onAutowrap=callBackOnAutoWrap;
-		];
+		].append[oneSpace; autowrap;];
+		
 		clazz.implementedInterfaceRefs.tail.forEach[prepend[
 			autowrap;
 			priority = IHiddenRegionFormatter.LOW_PRIORITY;
@@ -334,6 +345,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		parenPair.value.prepend[noSpace];
 		funE.body.format;
 	}
+	
+	
 		
 	def dispatch format(FunctionOrFieldAccessor fDecl, extension IFormattableDocument document) {
 		fDecl.configureAnnotations(document);
@@ -363,13 +376,21 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 				fDecl.formatTypeVariables(document)
 		}
 		
+		// special case for accessors: get / set keywords
+		if(fDecl instanceof FieldAccessor){
+			// get or set
+			val kw = if( fDecl instanceof GetterDeclaration ) "get" else "set"; 
+			fDecl.regionFor.keyword(kw).prepend[oneSpace].append[oneSpace; newLines=0; autowrap];
+		}
+		
+		
 		
 		val parenPair = fDecl.regionFor.keywordPairs("(",")").head;
 		parenPair.key.prepend[noSpace; newLines = 0].append[noSpace];
 		parenPair.interior[indent];
-		if( parenPair.isMultiLine ) {
+		if( parenPair.isMultiLine && ! (fDecl instanceof FieldAccessor)) {
 			// it is already a multiline, insert the newLine immediately.
-			cbInsertEmptyLineInBody.apply(null,null,null);
+			// cbInsertEmptyLineInBody.apply(null,null,null); // TODO re-think, if all will be collapsed this assumption does not hold an
 		} else {
 			// single line parameter block
 		}
@@ -386,6 +407,14 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		list.forEach[it,idx|
 			if(idx !== 0) it.prepend[oneSpace;setNewLines(0,0,1);onAutowrap=x];
 			it.append[noSpace];
+			it.configureAnnotationsInLine(document); // TODO maybe we need some in-line-annotation config here.
+//			it.regionFor.ruleCallTo( bindingIdentifierAsFormalParameterRule  ) // feature(N4JSPackage.Literals.FORMAL_PARAMETER__NAME)
+//				.prepend[oneSpace;newLines=0].append[]
+			it.declaredTypeRef.format(document);
+			if( it.isVariadic )		
+				it.regionFor.keyword("...").prepend[newLines=0;/*oneSpace;*/].append[newLines=0;noSpace]
+			it.initializer.format(document);
+				
 		];
 	}
 	
@@ -1020,28 +1049,36 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		aList.prepend[setNewLines(2,2,2);highPriority]; // TODO in case of trapped in Annotation like 'export @Final public class A{}' - a reorder would be necessary (see format for export)
 		aList.append[newLine]; // TODO special annotations like @Internal ? --> together with public, reorder to be in same line?
-		aList.annotations.forEach[it,idx|
+		aList.annotations.forEach[it, idx | 
+			it.configureAnnotation(document,true,idx ===0);
+		];
+	}
+	
+	/**
+	 * 
+	 * @param withLineWraps  <code>true</code> do line-wrapping
+	 * @param isFirstenAnnotation if this is the first annotation in a sequence ( used with line-wrapping in front of '@')
+	 */
+	private def configureAnnotation(Annotation it, extension IFormattableDocument document, boolean withLineWraps, boolean isFirstAnnotation ){
 			// configure arguments 
 			val parens = it.regionFor.keywordPairs("(",")").head;
 			if( parens !== null ) {
 				parens=>[ 
 					it.key.prepend[noSpace].append[noSpace];
-					it.value.prepend[noSpace].append[noSpace;newLines=1];
+					it.value.prepend[noSpace].append[if( withLineWraps ) {noSpace; newLines=1;} else {oneSpace; newLines=0;}];
 					it.interior[indent];
 					// line break before "@":
-					if( idx !==  0) {
+					if( withLineWraps && !isFirstAnnotation ) {
 						it.key.previousSemanticRegion.previousSemanticRegion.prepend[newLines = 1];
 					}
 				];
 				it.configureCommas(document);
 			}
-			it.semanticRegions.head =>[println(it.text)]; // TODO Debug remove		
-			
 				
-			// Configure @-Syntax
+			// Configure @-Syntax 
+			// Special case here: for "@XY" we can either get "@" or "XY" as the first semantic element
 			it.semanticRegions.head =>[
 				if( it.grammarElement instanceof Keyword) {
-					println(it.text) // TODO debug
 					// assume '@' 
 					it.append[ noSpace; newLines=0	];
 				} else {
@@ -1050,11 +1087,32 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 					];
 				}
 			];
-			
-			
-		];
 	}
 	
+	private def dispatch void configureAnnotations(Object semEObject, extension IFormattableDocument document) {
+		// no annotations to be configured.
+	}
+
+	private def dispatch void configureAnnotations(Void x, extension IFormattableDocument document) {
+		// no annotations to be configured.
+	}
+	
+	private def void configureAnnotationsInLine(FormalParameter fpar, extension IFormattableDocument document) {
+		if( fpar.annotations.isEmpty ) return;
+		println("Configure formal parameter. "+fpar)
+		// (@x @y("") bogus a:typ)
+		fpar.annotations.head=>[
+			it.configureAnnotation(document,false,true);
+			prepend[noSpace;newLines=0;autowrap;];
+		]
+		fpar.annotations.tail.forEach[ 
+			configureAnnotation(document,false,false);
+			prepend[oneSpace;newLines=0;autowrap;];
+		]
+		fpar.annotations.last.append[oneSpace;newLines=0;autowrap;];
+	}
+	
+		
 	/** only script-level annotations '@@' */
 	private def void formatScriptAnnotations(Script script, extension IFormattableDocument document) {
 		if( script.annotations.isEmpty ) return;
@@ -1071,15 +1129,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 	}
 	
-	
-	
-	private def dispatch void configureAnnotations(Object semEObject, extension IFormattableDocument document) {
-		// no annotations to be configured.
-	}
 
-	private def dispatch void configureAnnotations(Void x, extension IFormattableDocument document) {
-		// no annotations to be configured.
-	}
+	
 
 	public override ITextReplacer createCommentReplacer(IComment comment) {
 		// Overridden to distinguish between JSDOC-style, standard ML, formatter-off ML-comment.
@@ -1182,12 +1233,36 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 	}
 	
+	def dispatch void format( TStructMember tsm, extension IFormattableDocument document) {
+		// get, set, method, field
+		tsm.eContents.forEach[format;];
+		// TODO format TStruct* more thoroughly 
+	}
 	
-
+	
+	
+	def void configureUndefModifier( StaticBaseTypeRef sbtr,  extension IFormattableDocument document){
+		// UndefModifier "?"
+		sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__UNDEF_MODIFIER).prepend[noSpace;newLines=0;];
+		// NullModifier 
+		// sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__NULL_MODIFIER().prepend[oneSpace;newLines=0;].append[oneSpace;newLines=0;autoWrap]		
+	}
+	
+	def dispatch void format( ThisTypeRef ttr, extension IFormattableDocument document) {
+		ttr.configureUndefModifier(document);
+		if( ttr instanceof ThisTypeRefStructural) {
+			ttr.interiorBUGFIX([indent],document)
+			configureStructuralAdditions(ttr,document);
+			ttr.eContents.forEach[
+				format;
+			]
+		}	
+	}
 	
 	def dispatch void format( ParameterizedTypeRef ptr, extension IFormattableDocument document) {
 		ptr.interiorBUGFIX([indent],document);	//ptr.interior[indent];
-
+		ptr.configureUndefModifier(document);
+		
 		// Union / Intersection
 		ptr.regionFor.keywords("&","|").forEach[ surround[oneSpace;newLines=0].append[autowrap;highPriority]];
 		// ArrayTypeRef
@@ -1197,7 +1272,15 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 		ptr.formatTypeArguments(document);
 		
-		// ParameterizedTypeRefStructural : 
+		// ParameterizedTypeRefStructural :
+		configureStructuralAdditions(ptr,document); 
+		
+		// generically format content:
+		ptr.eContents.forEach[format]
+	}
+	
+	/** used for "~X with {}" except for the 'X' part. */
+	def void configureStructuralAdditions( TypeRef ptr, extension IFormattableDocument document) {
 		val semRegTypingStrategy = ptr.regionFor.ruleCallTo(typingStrategyUseSiteOperatorRule);
 		if( semRegTypingStrategy!== null) {
 			semRegTypingStrategy.prepend[oneSpace].append[noSpace;newLines=0;];
@@ -1212,14 +1295,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 				bracesPair.key.append[noSpace;newLines=0;autowrap];
 				bracesPair.value.prepend[noSpace;newLines=0;autowrap];
 				//ptr.regionFor.keywords(",",";").forEach[ prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap] ]
-				((ptr as ParameterizedTypeRefStructural).astStructuralMembers.tail
+				ptr.regionFor.keywords(";").forEach[ prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap;lowPriority] ]
+				((ptr as StructuralTypeRef).astStructuralMembers.tail
 					.forEach[ regionForEObject.previousHiddenRegion.set[oneSpace;newLines=0;autowrap]]
 				);
 			}
-		
 		}
-		// generically format content:
-		ptr.eContents.forEach[format]
 	}
 	
 	/** formats type argument section including outside border. */
