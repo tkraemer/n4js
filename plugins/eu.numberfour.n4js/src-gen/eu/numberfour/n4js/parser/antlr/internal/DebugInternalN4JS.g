@@ -6187,6 +6187,52 @@ ruleElision :
 	','
 ;
 
+// Rule TStructMethod
+ruleTStructMethod :
+	( (
+	(
+		'<' ruleTypeVariable (
+			',' ruleTypeVariable
+		)* '>'
+	)? ruleIdentifierName '('
+	) => (
+		(
+			'<' ruleTypeVariable (
+				',' ruleTypeVariable
+			)* '>'
+		)? ruleIdentifierName '('
+	) ) ruleTAnonymousFormalParameterList ')' (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructField
+ruleTStructField :
+	ruleIdentifierName (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructGetter
+ruleTStructGetter :
+	( (
+	'get' ruleIdentifierName
+	) => (
+		'get' ruleIdentifierName
+	) ) '(' ')' (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructSetter
+ruleTStructSetter :
+	( (
+	'set' ruleIdentifierName
+	) => (
+		'set' ruleIdentifierName
+	) ) '(' ruleTAnonymousFormalParameter ')'
+;
+
 // Rule TypeRef
 ruleTypeRef :
 	ruleUnionTypeExpression
@@ -6398,65 +6444,19 @@ ruleTStructMemberList :
 // Rule TStructMember
 ruleTStructMember :
 	( (
-	'get' ruleTypesIdentifier
+	'get' ruleIdentifierName
 	) => ruleTStructGetter ) |
 	( (
-	'set' ruleTypesIdentifier
+	'set' ruleIdentifierName
 	) => ruleTStructSetter ) |
 	( (
 	(
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
-	)? ruleTypesIdentifier '('
+	)? ruleIdentifierName '('
 	) => ruleTStructMethod ) |
 	ruleTStructField
-;
-
-// Rule TStructMethod
-ruleTStructMethod :
-	( (
-	(
-		'<' ruleTypeVariable (
-			',' ruleTypeVariable
-		)* '>'
-	)? ruleTypesIdentifier '('
-	) => (
-		(
-			'<' ruleTypeVariable (
-				',' ruleTypeVariable
-			)* '>'
-		)? ruleTypesIdentifier '('
-	) ) ruleTAnonymousFormalParameterList ')' (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructField
-ruleTStructField :
-	ruleTypesIdentifier (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructGetter
-ruleTStructGetter :
-	( (
-	'get' ruleTypesIdentifier
-	) => (
-		'get' ruleTypesIdentifier
-	) ) '(' ')' (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructSetter
-ruleTStructSetter :
-	( (
-	'set' ruleTypesIdentifier
-	) => (
-		'set' ruleTypesIdentifier
-	) ) '(' ruleTAnonymousFormalParameter ')'
 ;
 
 // Rule TypingStrategyUseSiteOperator

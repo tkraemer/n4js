@@ -7,7 +7,7 @@ class A {
 }
 
 A.dump();
-// XPECT errors --> "Write access to the static member c defined in A must use A directly." at "c"
+// XPECT errors --> "The operation requires both read and write access, but only read-access is available." at "c"
 ((A.give()).c)++   ;
 A.dump();
 // XPECT errors -->  "The operation requires both read and write access, but only read-access is available." at "c"

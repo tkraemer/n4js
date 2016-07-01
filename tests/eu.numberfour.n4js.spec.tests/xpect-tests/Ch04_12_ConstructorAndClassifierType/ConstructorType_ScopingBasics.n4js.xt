@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// cf. https://github.com/NumberFour/n4js/issues/219
+
+class A {
+	instField: string;
+    static staticField: string;
+    static get staticGetter() { return null; }
+    static set staticSetter(s:string) {}
+}
+
+var a = new A();
+
+// XPECT noerrors -->
+A.staticField;
+// XPECT noerrors -->
+A.staticGetter;
+// XPECT noerrors -->
+A.staticSetter = "x";
+
+// XPECT errors --> "The non-static member instField cannot be accessed from a static context." at "instField"
+A.instField;
+
+// XPECT type of 'ctorCtor' --> {function(string):void}
+var ctorCtor = A.constructor;
+
+// XPECT type of 'ctor' --> constructor{A}
+var ctor = a.constructor;
+
+// XPECT errors --> "Write access to the static member staticField defined in A must use A directly." at "staticField"
+ctor.staticField = "x";
+
+// XPECT noerrors -->
+a.instField;

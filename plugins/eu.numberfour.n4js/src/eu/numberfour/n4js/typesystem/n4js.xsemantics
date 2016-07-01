@@ -712,8 +712,8 @@ from {
 
 		var TypeRef propTypeRef;
 
-		// cases "C.constructor", "this.constructor" and "c.constructor"
-		if((receiverTypeRef instanceof ClassifierTypeRef || receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef)
+		// cases "this.constructor" and "c.constructor" (but not "C.constructor", since this refers to Function.constructor and not C itself!)
+		if((receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef)
 				&& expr.property instanceof TMethod
 				&& expr.property.name == 'constructor') {
 

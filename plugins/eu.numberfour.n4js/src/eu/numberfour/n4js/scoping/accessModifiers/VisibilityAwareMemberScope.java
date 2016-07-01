@@ -37,7 +37,7 @@ public class VisibilityAwareMemberScope extends FilterWithErrorMarkerScope {
 	private final HashMap<String, String> accessModifierSuggestionStore = new HashMap<>();
 
 	/**
-	 * Creates a new scope instance.
+	 * Creates a new scope instance filtering given parent.
 	 *
 	 * @param context
 	 *            usually a ParameterizedPropertyAccessExpression.
@@ -52,7 +52,8 @@ public class VisibilityAwareMemberScope extends FilterWithErrorMarkerScope {
 
 	@Override
 	protected IEObjectDescriptionWithError wrapFilteredDescription(IEObjectDescription result) {
-		return new InvisibleMemberDescription(result, accessModifierSuggestionStore.get(result.getEObjectURI().toString()));
+		return new InvisibleMemberDescription(result,
+				accessModifierSuggestionStore.get(result.getEObjectURI().toString()));
 	}
 
 	@Override
@@ -64,7 +65,8 @@ public class VisibilityAwareMemberScope extends FilterWithErrorMarkerScope {
 				MemberVisibility result = checker.isVisible(context, receiverType, member);
 
 				if (!result.visibility)
-					this.accessModifierSuggestionStore.put(description.getEObjectURI().toString(), result.accessModifierSuggestion);
+					this.accessModifierSuggestionStore.put(description.getEObjectURI().toString(),
+							result.accessModifierSuggestion);
 
 				return result.visibility;
 			} else if (proxyOrInstance instanceof TEnumLiteral) {

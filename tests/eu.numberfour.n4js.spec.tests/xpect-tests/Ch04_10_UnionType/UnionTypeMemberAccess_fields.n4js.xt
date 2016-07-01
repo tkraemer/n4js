@@ -43,7 +43,7 @@ u.f_onlyInT1;
 u.f_onlyInT2;
 // XPECT type of 'u.f1' --> A
 u.f1;
-// XPECT errors --> "The field f2 is not visible." at "f2"
+// private fields are visible inside same module XPECT noerrors --> 
 u.f2;
 // XPECT type of 'u.f3' --> union{A,ASub}
 u.f3;
