@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface I {}
+enum E { l1, l2}
+
+// XPECT errors --> "Cannot instantiate interface I." at "I"
+new I();
+// XPECT errors --> "Cannot instantiate enum E." at "E"
+new E();

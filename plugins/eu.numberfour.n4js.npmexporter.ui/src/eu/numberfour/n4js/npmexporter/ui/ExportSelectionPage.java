@@ -12,7 +12,10 @@ package eu.numberfour.n4js.npmexporter.ui;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.equinox.bidi.StructuredTextTypeHandlerFactory;
@@ -21,6 +24,7 @@ import org.eclipse.jface.util.BidiUtils;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -42,8 +46,6 @@ import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.eclipse.ui.internal.wizards.datatransfer.DataTransferMessages;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import com.google.common.collect.Lists;
-
 @SuppressWarnings({ "javadoc", "restriction" })
 public class ExportSelectionPage extends WizardExportResourcesPage {
 
@@ -54,7 +56,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 	private Button destinationBrowseButton;
 	private Text errorText;
 
-	private final List<IProject> initialSelection;
+	private final Map<IProject, Boolean> projects;
 
 	private CheckboxTableViewer choiceList;
 	private Button compressContentsCheckbox;
@@ -65,10 +67,10 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 	 * @param iProjects
 	 * @param labelProvider
 	 */
-	protected ExportSelectionPage(String name, List<IProject> iProjects) {
+	protected ExportSelectionPage(String name, Map<IProject, Boolean> iProjects) {
 		super(name, null);
 		this.setTitle(name);
-		this.initialSelection = iProjects;
+		this.projects = iProjects;
 		setMessage("Select npm export root folder.");
 	}
 
@@ -119,9 +121,14 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		choiceListGroup.setLayout(layout);
 		choiceListGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		choiceListGroup.setFont(parent.getFont());
-		choiceList = CheckboxTableViewer.newCheckList(choiceListGroup, SWT.NONE);
+		choiceList = CheckboxTableViewer.newCheckList(choiceListGroup, SWT.BORDER);
 		choiceList.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		choiceList.setLabelProvider(WorkbenchLabelProvider.getDecoratingWorkbenchLabelProvider());
+		
+		// sort the projects before displaying, ignoring case like in the workspace projects view.
+		final List<IProject> sortedProjects = new ArrayList<>(projects.keySet());
+		sortedProjects.sort((a, b) -> a.getName()
+				.compareToIgnoreCase(b.getName()));
 		choiceList.setContentProvider(new IStructuredContentProvider() {
 
 			@Override
@@ -136,16 +143,27 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-
-				return initialSelection.toArray();
+				return sortedProjects.toArray();
 			}
 		});
-		choiceList.setInput(new StructuredSelection(initialSelection));
-		choiceList.setAllChecked(true);
+		choiceList.setCheckStateProvider(new ICheckStateProvider() {
+
+			@Override
+			public boolean isGrayed(Object element) {
+				return false;
+			}
+
+			@Override
+			public boolean isChecked(Object element) {
+				Boolean checkedState = projects.get(element);
+				return checkedState != null && checkedState.booleanValue();
+			}
+		});
+		choiceList.setInput(new StructuredSelection(projects));
 		choiceList.addCheckStateListener(new ICheckStateListener() {
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
-				handleCheckStateChange();
+				handleCheckStateChange(event);
 			}
 		});
 
@@ -162,7 +180,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		errorGroup.setLayout(layout);
 		errorGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		errorGroup.setFont(parent.getFont());
-		errorText = new Text(errorGroup, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+		errorText = new Text(errorGroup, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.BORDER);
 		errorText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		errorText.setText("asldfjlasjflkj");
 	}
@@ -248,7 +266,13 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 	}
 
 	/** recompute page completion upon check-changes. */
-	protected void handleCheckStateChange() {
+	protected void handleCheckStateChange(CheckStateChangedEvent event) {
+		// Update the selection map accordingly
+		Object changedElement = event.getElement();
+		if (changedElement instanceof IProject) {
+			projects.put((IProject) changedElement, event.getChecked());
+		}
+
 		updatePageCompletion();
 	}
 
@@ -288,12 +312,12 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 
 	/** Get the user-selection of Projects. */
 	protected List<IProject> getChosenProjects() {
-		Object[] checked = choiceList.getCheckedElements();
-		List<IProject> ret = Lists.newArrayList();
-		for (Object c : checked) {
-			ret.add((IProject) c);
-		}
-		return ret;
+		return projects.entrySet().stream()
+				// Filter selected projects
+				.filter(entry -> entry.getValue().booleanValue())
+				// Map to project (key)
+				.map(entry -> entry.getKey())
+				.collect(Collectors.toList());
 	}
 
 	@Override

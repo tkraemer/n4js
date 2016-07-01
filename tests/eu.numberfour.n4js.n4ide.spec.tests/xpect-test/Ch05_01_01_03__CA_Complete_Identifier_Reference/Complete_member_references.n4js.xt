@@ -38,8 +38,8 @@ var x : X<string>;
 // XPECT contentAssistList at 'x.<|>field' proposals not --> prototype, getOwnPropertyNames, defineProperty
 x.field1;
 
-// XPECT contentAssistList at 'X.<|>sfoo' proposals contains --> prototype, getOwnPropertyNames, defineProperty, sfoo1, sfoo2, sfoo3
-// XPECT contentAssistList at 'X.<|>sfoo' proposals not --> toString, hasOwnProperty, valueOf
+// static members of X XPECT contentAssistList at 'X.<|>sfoo' proposals contains --> prototype, getOwnPropertyNames, defineProperty, sfoo1, sfoo2, sfoo3
+// instance members of Function XPECT contentAssistList at 'X.<|>sfoo' proposals contains --> hasOwnProperty, toString, valueOf
 X.sfoo1;
 
 

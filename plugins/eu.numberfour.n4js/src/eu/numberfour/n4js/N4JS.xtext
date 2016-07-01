@@ -1531,6 +1531,39 @@ Elision returns BindingElement:
 	{BindingElement} ','
 ;
 
+// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
+// (having these rules here, is a temporary work-around for the problem described in GH-206)
+
+TStructMethod returns types::TStructMethod:
+	=>
+	({types::TStructMethod}
+		('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+	    name=IdentifierName '('
+	) TAnonymousFormalParameterList ')'
+	(':' returnTypeRef=TypeRef)?
+;
+
+
+TStructField returns types::TStructField:
+	name=IdentifierName (':' typeRef=TypeRef)?
+;
+
+TStructGetter returns types::TStructGetter:
+	=> ({types::TStructGetter}
+	'get'
+	name=IdentifierName)
+	'(' ')' (':' declaredTypeRef=TypeRef)?
+;
+
+TStructSetter returns types::TStructSetter:
+	=> ({types::TStructSetter}
+	'set'
+	name=IdentifierName)
+	'(' fpar=TAnonymousFormalParameter ')'
+;
+
+
+
 /**
  * Intentionally unused to get rid of bogus lexer errors when
  * the input contains an incomplete asyncArrow?='@=>' keyword, e.g. @=)

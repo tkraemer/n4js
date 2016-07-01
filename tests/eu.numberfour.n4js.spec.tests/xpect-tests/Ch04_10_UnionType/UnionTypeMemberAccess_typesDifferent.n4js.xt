@@ -77,7 +77,7 @@ u.m3;
 u.m3 = null;
 
 // field + setter behaves like a setter: write access ok, no read access
-// XPECT errors --> "Union combines fields and setters with name m4 and therefore property m4 is write-only." at "m4"
+// XPECT errors --> "The accessor m4 is write-only in T2." at "m4"
 u.m4;
 u.m4 = null;
 
@@ -117,7 +117,7 @@ v.m1 = null;
 // XPECT type of 'v.m1' --> union{A,B,C,D}
 v.m1;
 
-// XPECT errors --> "Union combines fields and setters with name m2 and therefore property m2 is write-only." at "m2"
+// XPECT errors --> "The accessor m2 is write-only in S1, S3, S5." at "m2"
 v.m2;
 v.m2 = null;
 // XPECT expectedType at 'null' --> intersection{A,B,C,D}
