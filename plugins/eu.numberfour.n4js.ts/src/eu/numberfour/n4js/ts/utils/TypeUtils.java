@@ -260,6 +260,11 @@ public class TypeUtils {
 			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
 			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
+		} else if (declaredType instanceof TypeVariable) {
+			TypeVariable tTypeVar = (TypeVariable) declaredType;
+			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
+			ref.setTypeArg(createTypeRef(tTypeVar));
+			typeRef = ref;
 		}
 		return typeRef;
 	}

@@ -11,7 +11,7 @@ class C{
     private createFromInjectedTypeMeta(meta: G<? extends N4Object>) {
     	// XPECT noerrors -->
         let metaType = meta.type;
-        // XPECT errors --> "Not a reference to a constructor: constructor{? extends N4Object}." at "metaType"
+        // XPECT errors --> "Cannot instantiate ? extends N4Object." at "metaType"
     	new metaType();
     }
 }

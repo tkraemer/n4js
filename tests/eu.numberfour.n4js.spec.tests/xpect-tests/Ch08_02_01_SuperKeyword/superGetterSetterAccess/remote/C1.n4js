@@ -1,4 +1,4 @@
-import { I3 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote/I3"
+import { I3 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote/I3"
 
 
 export public class C1 implements I3 {
