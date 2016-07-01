@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.tests.scoping
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.IssueFilterExtension
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NewExpression
@@ -54,7 +53,6 @@ class StaticScopingTest {
 	@Inject extension ValidationTestHelper
 	@Inject extension N4JSTypeSystem ts
 	@Inject extension IScopeProvider scopeProvider
-	@Inject extension IssueFilterExtension
 
 	@Test
 	def void testStaticGetterSetterAccess() {
@@ -111,7 +109,7 @@ class StaticScopingTest {
 			}
 		'''.parse
 
-		val issues = validate(script).ignore(#[IssueCodes.AST_LOCAL_VAR_UNUSED]);
+		val issues = validate(script).filter[it.code != IssueCodes.AST_LOCAL_VAR_UNUSED]
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
@@ -141,7 +139,7 @@ class StaticScopingTest {
 			var z2 = new C()
 		'''.parse
 
-		val issues = validate(script).ignore(#[IssueCodes.AST_LOCAL_VAR_UNUSED])
+		val issues = validate(script).filter[it.code != IssueCodes.AST_LOCAL_VAR_UNUSED];
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val varX = script.eAllContents.filter(VariableDeclaration).filter[name == "x"].head
