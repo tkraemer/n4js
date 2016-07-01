@@ -111,9 +111,6 @@ public abstract class AbstractHierachyTraverser<Result> extends TypesSwitch<Bool
 					return result;
 				}
 			}
-			if (object.getAutoboxedType() != null) {
-				return doSwitch(object.getAutoboxedType());
-			}
 		}
 		return Boolean.FALSE;
 	}

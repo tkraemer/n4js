@@ -20,6 +20,7 @@ import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.PrimitiveType;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TInterface;
+import eu.numberfour.n4js.ts.types.TObjectPrototype;
 
 /**
  */
@@ -52,12 +53,13 @@ public class AllSuperTypeRefsCollector extends AbstractCompleteHierarchyTraverse
 			if (superType != null) {
 				result.add(superType);
 			}
-		}
-		else if (containerType instanceof TInterface) {
+		} else if (containerType instanceof TInterface) {
 			TInterface casted = (TInterface) containerType;
 			result.addAll(casted.getSuperInterfaceRefs());
-		}
-		else if (containerType instanceof PrimitiveType) {
+		} else if (containerType instanceof TObjectPrototype) {
+			TObjectPrototype casted = (TObjectPrototype) containerType;
+			result.add(casted.getSuperType());
+		} else if (containerType instanceof PrimitiveType) {
 			PrimitiveType assignmentCompatible = ((PrimitiveType) containerType).getAssignmentCompatible();
 			if (assignmentCompatible != null) {
 				ParameterizedTypeRef typeRef = TypeRefsFactory.eINSTANCE.createParameterizedTypeRef();
