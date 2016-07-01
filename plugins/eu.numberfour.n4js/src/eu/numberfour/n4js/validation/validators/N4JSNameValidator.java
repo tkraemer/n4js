@@ -55,9 +55,9 @@ import eu.numberfour.n4js.n4JS.Variable;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.N4JSLanguageHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
-import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
@@ -65,7 +65,7 @@ import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
-	private LanguageConstantsHelper languageConstantsHelper;
+	private N4JSLanguageHelper languageHelper;
 
 	@Inject
 	private N4JSTypeSystem ts;
@@ -99,7 +99,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "boolean literal", BOOLEAN_LITERALS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "base type", BASE_TYPES) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword",
-						languageConstantsHelper.getECMAKeywords())
+						languageHelper.getECMAKeywords())
 				&& holdsDoesNotStartWithLowerCaseLetter(n4TypeDeclaration)) {
 			// error messages are created with in constraint validation
 		}

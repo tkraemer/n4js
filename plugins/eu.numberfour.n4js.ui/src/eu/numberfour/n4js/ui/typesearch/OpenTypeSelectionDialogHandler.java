@@ -25,8 +25,8 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.ui.N4JSEditor;
 import eu.numberfour.n4js.ui.utils.HandlerServiceUtils;
+import eu.numberfour.n4js.utils.N4JSLanguageHelper;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
-import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper;
 
 /**
  * Handler for opening the N4JS type selection dialog.
@@ -41,7 +41,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 	private Provider<OpenTypeSelectionDialog> provider;
 
 	@Inject
-	private LanguageConstantsHelper languageConstantsHelper;
+	private N4JSLanguageHelper languageHelper;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -73,7 +73,7 @@ public class OpenTypeSelectionDialogHandler extends AbstractHandler {
 
 				if (N4JSLanguageUtils.isValidIdentifier(text)
 						&& !startWithLowercaseLetter(text)
-						&& !languageConstantsHelper.isReservedIdentifier(text)) {
+						&& !languageHelper.isReservedIdentifier(text)) {
 					return text;
 				}
 			} catch (BadLocationException e) {

@@ -40,6 +40,8 @@ public abstract class N4JSLanguageConstants {
 	public static final String EXPORT_KEYWORD = "export";
 	/** Direct access to the external keyword */
 	public static final String EXTERNAL_KEYWORD = "external";
+	/** Direct access to the yield keyword */
+	public static final String YIELD_KEYWORD = "yield";
 
 	//@formatter:on
 

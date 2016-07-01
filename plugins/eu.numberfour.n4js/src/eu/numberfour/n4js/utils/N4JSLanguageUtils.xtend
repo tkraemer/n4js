@@ -67,10 +67,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
 import eu.numberfour.n4js.common.unicode.CharTypes
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import org.eclipse.xtext.naming.QualifiedName
+import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
@@ -544,7 +544,7 @@ class N4JSLanguageUtils {
 	/**
 	 * Helper method to overcome missing xtend support for character literals
 	 */
-	private def static isChar(char c1, String c2) {
+	private def static boolean isChar(char c1, String c2) {
 		c1 == c2.charAt(0);
 	}
 	

@@ -52,7 +52,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import static org.eclipse.xtext.util.Strings.toFirstUpper
 
 import static extension com.google.common.base.Strings.*
@@ -63,8 +62,10 @@ import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
-import eu.numberfour.n4js.validation.helper.LanguageConstantsHelper
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
+import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*;
+import eu.numberfour.n4js.utils.N4JSLanguageHelper
 
 /**
  */
@@ -80,7 +81,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	private HiddenLeafAccess hla;
 	
 	@Inject
-	private LanguageConstantsHelper languageConstantsHelper;
+	private N4JSLanguageHelper languageHelper;
 	
 
 	/**
@@ -399,7 +400,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "future reserved word")
 				}
 
-				if ('yield' != name && languageConstantsHelper.getECMAKeywords.contains(name)) {
+				if (N4JSLanguageConstants.YIELD_KEYWORD != name && languageHelper.getECMAKeywords.contains(name)) {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "keyword")
 				}
 			}
