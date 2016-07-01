@@ -42,8 +42,15 @@ class ValidatorMessageHelper {
 	/**
 	 * Returns type of member and short qualified name, and, if this is similar to another member, including the line number.
 	 */
-	public def String descriptionDifferentFrom(TMember member, TMember differentMember) {
-		if (member.containingType.name == differentMember?.containingType.name) {
+	public def String descriptionDifferentFrom(TMember member, TMember differentMembers) {
+		return descriptionDifferentFrom(member, #[differentMembers]);
+	}
+
+	/**
+	 * Returns type of member and short qualified name, and, if this is similar one of the other members, including the line number.
+	 */
+	public def String descriptionDifferentFrom(TMember member, Iterable<TMember> differentMembers) {
+		if (differentMembers.map[it.containingType.name].toList.contains(member.containingType.name)) {
 			val EObject ast = member.eGet(TypesPackage.Literals.SYNTAX_RELATED_TELEMENT__AST_ELEMENT, false) as EObject
 			if (null !== ast && !ast.eIsProxy) { // do not trigger automatic resolving here, since it will possibly invalidate TMember-references in our caller
 				val node = NodeModelUtils::getNode(ast);

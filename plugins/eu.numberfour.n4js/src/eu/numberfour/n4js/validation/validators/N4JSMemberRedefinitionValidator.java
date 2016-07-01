@@ -87,10 +87,13 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
+import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
@@ -187,7 +190,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			constraints_59_NonOverride(mm);
 			constraints_42_AbstractMember(mm);
 
-			messageMissingOverride(mm, membersMissingOverrideAnnotation);
+			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
 		constraints_41_AbstractClass(tClassifier, memberCube);
 
@@ -226,7 +229,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	/**
 	 * Constraints 60 (Override Compatible) Constraints defined in 5.4.1 Overriding of Members
-	 * 
+	 *
 	 * Check constraints wrt member overrides.
 	 *
 	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
@@ -666,43 +669,76 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	 *            A collection of overridden members
 	 *
 	 */
-	private void messageMissingOverride(MemberMatrix mm,
+	private void messageMissingOverrideAnnotation(MemberMatrix mm,
 			Collection<TMember> missingOverrideAnnotationMembers) {
-		if (mm.hasOwned()) {
+		if (mm.hasOwned() && missingOverrideAnnotationMembers.size() > 0) {
 			Iterable<TMember> overriddenMembers = Iterables.concat(mm.implemented(), mm.inherited());
-	
-			boolean overridingSuperclassMember = StreamSupport.stream(overriddenMembers.spliterator(), false)
-					.anyMatch(member -> member.getContainingType() instanceof TClass);
-			boolean overridingInterfaceMembers = StreamSupport.stream(overriddenMembers.spliterator(), false)
-					.anyMatch(member -> member.getContainingType() instanceof TInterface);
-	
-			// choose redefinition verb based on the origin of the overridden members
-			String redefinitionVerb = "";
-	
-			if (overridingSuperclassMember && overridingInterfaceMembers) {
-				redefinitionVerb = "overriding/implementing";
-			} else if (overridingSuperclassMember) {
-				redefinitionVerb = "overriding";
-			} else if (overridingInterfaceMembers) {
-				redefinitionVerb = "implementing";
-			} else {
-				// return since this must not happen
-				return;
-			}
-	
+
 			for (TMember overriding : mm.owned()) {
 				// skip members with proper annotation
 				if (!missingOverrideAnnotationMembers.contains(overriding)) {
 					continue;
 				}
+				Iterable<TMember> filteredOverriddenMembers = filterOverriddenMemberCandidates(overriding,
+						overriddenMembers);
+
+				// choose redefinition verb based on the origin of the overridden members
+				String redefinitionVerb = getRedefinitionVerb(filteredOverriddenMembers);
+
 				String message = getMessageForCLF_OVERRIDE_ANNOTATION(
-						validatorMessageHelper.description(overriding),
+						validatorMessageHelper.descriptionDifferentFrom(overriding, overriddenMembers),
 						redefinitionVerb,
-						validatorMessageHelper.descriptions(overriddenMembers));
-	
+						validatorMessageHelper.descriptions(filteredOverriddenMembers));
+
 				addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
 						CLF_OVERRIDE_ANNOTATION);
 			}
+		}
+	}
+
+	/**
+	 * Filters the given overriddenMembers to only contain members that can directly be overridden by overridingMember.
+	 *
+	 * That is for example a getter cannot directly override a setter.
+	 */
+	private Iterable<TMember> filterOverriddenMemberCandidates(TMember overridingMember,
+			Iterable<TMember> overriddenMembers) {
+		if (overridingMember instanceof TSetter)
+			return Iterables.filter(overriddenMembers, member -> !(member instanceof TGetter));
+		else if (overridingMember instanceof TGetter)
+			return Iterables.filter(overriddenMembers, member -> !(member instanceof TSetter));
+		else
+			return overriddenMembers;
+	}
+
+	/**
+	 * Returns the fitting verb for a redefinition of all of the redefined members by the current classifier.
+	 *
+	 * @param redefinedMembers
+	 *            The redefined members
+	 */
+	private String getRedefinitionVerb(Iterable<TMember> redefinedMembers) {
+		Set<?> overriddenClassifierTypes = StreamSupport.stream(redefinedMembers.spliterator(), false)
+				.map(member -> member.getContainingType().eClass())
+				.collect(Collectors.toSet());
+
+		boolean isOverridingSuperclassMember = overriddenClassifierTypes.contains(TypesPackage.eINSTANCE.getTClass());
+		boolean isOverridingObjectPrototypeMembers = overriddenClassifierTypes
+				.contains(TypesPackage.eINSTANCE.getTObjectPrototype());
+
+		boolean isImplementing = overriddenClassifierTypes.contains(TypesPackage.eINSTANCE.getTInterface());
+		boolean isOverriding = isOverridingSuperclassMember || isOverridingObjectPrototypeMembers;
+		boolean isInterfaceExtendingInterface = getCurrentClassifier() instanceof TInterface;
+
+		if (isOverriding && isImplementing) {
+			return "overriding/implementing";
+		} else if (isOverriding || isInterfaceExtendingInterface) {
+			return "overriding";
+		} else if (isImplementing) {
+			return "implementing";
+		} else {
+			// General case, should not happen
+			return "redefining";
 		}
 	}
 
