@@ -1,14 +1,8 @@
-:experimental:
-:commandkey: &#8984;
-:data-uri:
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
-:imagesdir: ../images
 :doctype: book
+.Releases
+= Releases
 
-.Release Notes
-= Release Notes
+== Current N4JS Release
 
 The current release of N4JS, version 0.3, is a "public alpha".
 What that implies:
@@ -34,7 +28,7 @@ why we call it a "public alpha".
 
 Since we are using N4JS and the N4JS IDE internally for quite a while, we have found some
 issues. There are still a lot of bugs open and we have plenty of ideas for new features.
-We used an non-public bug tracking system to manage bugs internally. We will review migrate
+We used an non-public bug tracking system to manage bugs internally. We will review and migrate
 them to https://github.com/numberfour/n4js/issues[GitHub issues] as soon as possible.
 
 == Unknown Issues

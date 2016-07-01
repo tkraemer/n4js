@@ -15,10 +15,10 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Predicate;
 
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
+import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
 /**
@@ -29,15 +29,8 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 
 	final TypingStrategy typingStrategy;
 
-	TypingStrategyFilter(TypeRef receiverType) {
-		typingStrategy = retrieveTypingStrategy(receiverType);
-	}
-
-	TypingStrategy retrieveTypingStrategy(TypeRef receiverType) {
-		if (receiverType != null && !receiverType.eIsProxy()) {
-			return receiverType.getTypingStrategy();
-		}
-		return TypingStrategy.DEFAULT;
+	TypingStrategyFilter(TypingStrategy typingStrategy) {
+		this.typingStrategy = typingStrategy;
 	}
 
 	/**
@@ -61,7 +54,12 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 					return false;
 				}
 				if (member instanceof TMethod) {
-					return typingStrategy == TypingStrategy.STRUCTURAL;
+					if (typingStrategy != TypingStrategy.STRUCTURAL) { // field structural typing
+						return false;
+					}
+					if ("constructor".equals(member.getName())) {
+						return member instanceof TStructMember; // only if explicitly mentioned
+					}
 				}
 			}
 		}

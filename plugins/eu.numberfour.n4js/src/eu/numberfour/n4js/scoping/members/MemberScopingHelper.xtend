@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -13,16 +13,13 @@ package eu.numberfour.n4js.scoping.members
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
-import eu.numberfour.n4js.scoping.accessModifiers.StaticAccessAwareMemberScope
+import eu.numberfour.n4js.scoping.accessModifiers.StaticWriteAccessFilterScope
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
+import eu.numberfour.n4js.scoping.utils.CompositeScope
+import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -32,11 +29,13 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
+import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TN4Classifier
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TStructuralType
@@ -44,23 +43,24 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import org.eclipse.xtext.naming.QualifiedName
-import eu.numberfour.n4js.ts.types.TMember
-import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
-import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 
 /**
  */
 class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
-	@Inject N4JSTypeInferencer typeInferencer
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
-	@Inject ComposedMemberScope.ComposedMemberScopeFactory composedMemberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
 
 	/**
@@ -68,7 +68,7 @@ class MemberScopingHelper {
 	 * <p>
 	 * When choosing static scope, the {@code context} is inspected to determine read/write access
 	 * but only if it's a {@link ParameterizedPropertyAccessExpression} or a {@code IndexedAccessExpression}.
-	 *
+	 * 
 	 * @param receiverTypeRef
 	 *               TypeRef for the value whose scope is of interest.
 	 * @param context
@@ -80,18 +80,42 @@ class MemberScopingHelper {
 	 * @param staticAccess
 	 *               true: only static members are relevant; false: only non-static ones.
 	 */
-	public def IScope createMemberScopeFor(TypeRef receiverTypeRef, EObject context, boolean checkVisibility, boolean staticAccess) {
-		var result = members(receiverTypeRef,context,staticAccess);
-		if(checkVisibility) {
-			result = new VisibilityAwareMemberScope(result, memberVisibilityChecker, receiverTypeRef, context)
-		}
-		if(staticAccess) {
-			result = new StaticAccessAwareMemberScope(result, receiverTypeRef, context);
-		}
-		if(checkVisibility) {
-			result = new TypingStrategyAwareMemberScope(result, receiverTypeRef);
-		}
+	public def IScope createMemberScopeFor(TypeRef receiverTypeRef, EObject context, boolean checkVisibility,
+		boolean staticAccess) {
+		return decoratedMemberScopeFor(receiverTypeRef,
+			new MemberScopeRequest(receiverTypeRef, context, checkVisibility, staticAccess));
+	}
+
+	/**
+	 * Creates member scope via #members and decorates it via #decorate.
+	 */
+	private def IScope decoratedMemberScopeFor(TypeRef typeRef, MemberScopeRequest memberScopeRequest) {
+		var result = members(typeRef, memberScopeRequest);
 		return result;
+	}
+
+	/**
+	 * Called only be members functions to decorate returned scope.
+	 */
+	private def IScope decorate(IScope scope, MemberScopeRequest memberScopeRequest, TypeRef receiverTypeRef) {
+		if (scope == IScope.NULLSCOPE) {
+			return scope;
+		}
+		var decoratedScope = scope;
+		if (memberScopeRequest.checkVisibility &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, VisibilityAwareMemberScope)) {
+			decoratedScope = new VisibilityAwareMemberScope(decoratedScope, memberVisibilityChecker, receiverTypeRef,
+				memberScopeRequest.context);
+		}
+		if (memberScopeRequest.staticAccess &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, StaticWriteAccessFilterScope)) {
+			decoratedScope = new StaticWriteAccessFilterScope(decoratedScope, memberScopeRequest.context);
+		}
+		if (memberScopeRequest.checkVisibility &&
+			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, TypingStrategyAwareMemberScope)) {
+			decoratedScope = new TypingStrategyAwareMemberScope(decoratedScope, receiverTypeRef);
+		}
+		return decoratedScope;
 	}
 
 	/**
@@ -107,9 +131,10 @@ class MemberScopingHelper {
 	 * <p>
 	 * Precondition: {@link #isNonExistentMember} has negative answer.
 	 */
-	public def Iterable<IEObjectDescriptionWithError> getErrorsForMember(IScope scope, String memberName, boolean staticAccess) {
+	public def Iterable<IEObjectDescriptionWithError> getErrorsForMember(IScope scope, String memberName,
+		boolean staticAccess) {
 		val descriptions = scope.getElements(QualifiedName.create(memberName))
-		val errorsOrNulls = descriptions.map[d| IEObjectDescriptionWithError.getDescriptionWithError(d)]
+		val errorsOrNulls = descriptions.map[d|IEObjectDescriptionWithError.getDescriptionWithError(d)]
 		return errorsOrNulls.filterNull
 	}
 
@@ -117,10 +142,14 @@ class MemberScopingHelper {
 	 * Look up all non-erroneous {@link TMember} in the given scope having the given name.
 	 */
 	public def Iterable<TMember> findMembersForName(IScope scope, String memberName, boolean staticAccess) {
-		val candidates = scope.getElements(QualifiedName.create(memberName)).filter[description| !(IEObjectDescriptionWithError.isErrorDescription(description))]
-		val proxysOrInstances = candidates.map[description| description.getEObjectOrProxy()]
-		val tmembers = proxysOrInstances.filter[proxyOrInstance| proxyOrInstance !== null && !proxyOrInstance.eIsProxy() && (proxyOrInstance instanceof TMember)]
-		return tmembers.map[m| m as TMember].filter[m| m.static == staticAccess]
+		val candidates = scope.getElements(QualifiedName.create(memberName)).filter [ description |
+			!(IEObjectDescriptionWithError.isErrorDescription(description))
+		]
+		val proxysOrInstances = candidates.map[description|description.getEObjectOrProxy()]
+		val tmembers = proxysOrInstances.filter [ proxyOrInstance |
+			proxyOrInstance !== null && !proxyOrInstance.eIsProxy() && (proxyOrInstance instanceof TMember)
+		]
+		return tmembers.map[m|m as TMember].filter[m|m.static == staticAccess]
 	}
 
 	/**
@@ -128,60 +157,188 @@ class MemberScopingHelper {
 	 */
 	public def TMember findUniqueMemberForName(IScope scope, String memberName, boolean staticAccess) {
 		val candidates = findMembersForName(scope, memberName, staticAccess)
-		if(candidates.size == 1) {
+		if (candidates.size == 1) {
 			return candidates.head
 		}
 		return null
 	}
 
-	// TODO member computation should be extracted
-	private def dispatch IScope members(Type type, EObject context, boolean staticAccess) {
+	private def dispatch IScope members(TypeRef type, MemberScopeRequest request) {
+		return IScope.NULLSCOPE
+	}
+
+	private def dispatch IScope members(UnknownTypeRef type, MemberScopeRequest request) {
+		return new DynamicPseudoScope()
+	}
+
+	private def dispatch IScope members(EnumTypeRef etr, MemberScopeRequest request) {
+		val builtInScope = BuiltInTypeScope.get(getResourceSet(etr, request.context));
+		// IDE-1221 select builtin-scope upon whether this enumeration is tagged string-based
+		val enumType = if (TypeSystemHelper.isStringBasedEnumeration(etr.enumType))
+				builtInScope.n4StringBasedEnumType
+			else
+				builtInScope.getN4EnumType()
+		val IScope staticEnumScope = memberScopeFactory.create(enumType, request.context, true);
+		return Scopes.scopeFor(etr.enumType.literals, staticEnumScope).decorate(request, etr)
+	}
+
+	private def dispatch IScope members(ParameterizedTypeRef ptr, MemberScopeRequest request) {
+		val IScope result = membersOfType(ptr.declaredType, request);
+		if (ptr.dynamic && !(result instanceof DynamicPseudoScope)) {
+			return new DynamicPseudoScope(result.decorate(request, ptr))
+		}
+		return result.decorate(request, ptr)
+	}
+
+	private def dispatch IScope members(ParameterizedTypeRefStructural ptrs, MemberScopeRequest request) {
+		val IScope result = membersOfType(ptrs.declaredType, request);
+		if (ptrs.dynamic && !(result instanceof DynamicPseudoScope)) {
+			return new DynamicPseudoScope(result.decorate(request, ptrs))
+		}
+		if (ptrs.structuralMembers.empty) {
+			return result.decorate(request, ptrs)
+		}
+		val memberScopeRaw = if (ptrs.structuralType !== null) {
+				memberScopeFactory.create(result, ptrs.structuralType, request.context, request.staticAccess);
+			} else {
+				// note: these are not the members of the defined type
+				// however, we only scope locally, so that doesn't matter
+				memberScopeFactory.create(result, ptrs.structuralMembers, request.context, request.staticAccess);
+			}
+
+		return decorate(memberScopeRaw, request, ptrs);
+	}
+
+	/**
+	 * Note: N4JSScopeProvider already taking the upper bound before using this class (thus resolving ThisTypeRefs
+	 * beforehand), so we will never enter this method from there; still provided to support uses from other code.
+	 */
+	private def dispatch IScope members(ThisTypeRef thisTypeRef, MemberScopeRequest request) {
+		// taking the upper bound to "resolve" the ThisTypeRef:
+		// this[C] --> C (ParameterizedTypeRef)
+		// ~~this[C] with { number prop; } --> ~~C with { number prop; } (ParameterizedTypeRefStructural)
+		val ub = ts.upperBound(RuleEnvironmentExtensions.newRuleEnvironment(request.context), thisTypeRef);
+
+		if (!ub.failed) { // ThisTypeRef was resolved
+			return members(ub.first, request);
+		}
+
+		// probably an unbound ThisTypeRef or some other error (reported elsewhere)
+		return IScope.NULLSCOPE;
+	}
+
+	private def dispatch IScope members(ConstructorTypeRef ctr, MemberScopeRequest request) {
+		val MemberScopeRequest staticRequest = request.enforceStatic;
+		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
+		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
+			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
+		}
+		// additionally we need instance members of Function in case of constructor{T}, cf. GH-219
+		val MemberScopeRequest instanceRequest = request.enforceInstance;
+		val builtInScope = BuiltInTypeScope.get(getResourceSet(ctr, request.context));
+		val functionType = builtInScope.functionType
+		val IScope ftypeScope = membersOfType(functionType, instanceRequest);
+
+		// order matters (shadowing!)
+		val result = CompositeScope.create(
+			staticMembers.decorate(staticRequest, ctr),
+			ftypeScope.decorate(instanceRequest, ctr)
+		);
+		return result
+	}
+
+	private def dispatch IScope members(ClassifierTypeRef ctr, MemberScopeRequest request) {
+		val MemberScopeRequest staticRequest = request.enforceStatic;
+		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
+		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
+			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
+		}
+		return staticMembers.decorate(staticRequest, ctr)
+	}
+
+	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {
+
+		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+			return new DynamicPseudoScope();
+		}
+
+		val subScopes = uniontypeexp.typeRefs.map [ elementTypeRef |
+			val scope = members(elementTypeRef, request);
+			return scope;
+		]
+
+		switch (subScopes.size) { // only create union scope if really necessary, remember this optimization in test, since union{A} tests scope of A only!
+			case 0: return IScope.NULLSCOPE
+			case 1: return subScopes.get(0)
+			default: return new UnionMemberScope(uniontypeexp, request.context, subScopes, ts)
+		}
+	}
+
+	private def dispatch IScope members(IntersectionTypeExpression intersectiontypeexp, MemberScopeRequest request) {
+//		if (intersectiontypeexp.typeRefs.isEmpty) {
+		return IScope.NULLSCOPE;
+//		}
+	// TODO implement that (uncommented hack to have a stable situation)
+//		val List<IScope> subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
+//			val scope = members(elementTypeRef, request);
+//			return scope;
+//		]
+//		return CompositeScope.create(subScopes);
+	}
+
+	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {
+		return membersOfFunctionTypeRef(ftExpr, request)
+	}
+
+	private def dispatch IScope members(FunctionTypeExpression ftExpr, MemberScopeRequest request) {
+		return membersOfFunctionTypeRef(ftExpr, request)
+	}
+
+	/** delegated from two methods above, to avoid catch-all of ParameterizedTypeRef for FuntionTypeRefs while dispatching */
+	def private IScope membersOfFunctionTypeRef(FunctionTypeExprOrRef ftExpr, MemberScopeRequest request) {
+		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(ftExpr, request.context));
+		val fType = builtInTypeScope.functionType
+		val ret = membersOfType(fType, request)
+		return ret.decorate(request, ftExpr);
+	}
+
+// TODO member computation should be extracted
+	private def dispatch IScope membersOfType(Type type, MemberScopeRequest request) {
 		if (type.eIsProxy) {
 			return new DynamicPseudoScope()
 		}
-		if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
+		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
 
 		return IScope.NULLSCOPE
 	}
 
-	private def dispatch IScope members(UndefinedType type, EObject context, boolean staticAccess) {
-		if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
+	private def dispatch IScope membersOfType(UndefinedType type, MemberScopeRequest request) {
+		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
 
 		return IScope.NULLSCOPE
 	}
 
-	private def dispatch IScope members(UnknownTypeRef type, EObject context, boolean staticAccess) {
+	private def dispatch IScope membersOfType(Void type, MemberScopeRequest request) {
 		return new DynamicPseudoScope()
-	}
-
-	private def dispatch IScope members(Void type, EObject context, boolean staticAccess) {
-		return new DynamicPseudoScope()
-	}
-
-	private def dispatch IScope members(Object object, EObject context, boolean staticAccess) {
-		if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
-			return new DynamicPseudoScope();
-		}
-		return IScope.NULLSCOPE
 	}
 
 	/**
 	 * Primitive types have no members, but they can be auto-boxed to their
 	 * corresponding object type which then, transparently to the user, provide members.
 	 */
-	private def dispatch IScope members(PrimitiveType prim, EObject context, boolean staticAccess) {
-		return members(prim.autoboxedType, context, staticAccess);
+	private def dispatch IScope membersOfType(PrimitiveType prim, MemberScopeRequest request) {
+		return membersOfType(prim.autoboxedType, request);
 	}
 
 	/**
 	 * Creates member scope with parent containing members of implicit super types.
 	 */
-	private def dispatch IScope members(ContainerType<?> type, EObject context, boolean staticAccess) {
-		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(type, context));
+	private def dispatch IScope membersOfType(ContainerType<?> type, MemberScopeRequest request) {
+		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(type, request.context));
 		var implicitSuperType = builtInTypeScope.objectType
 		if (type instanceof TN4Classifier) {
 			if (type.typingStrategy !== TypingStrategy.DEFAULT) {
@@ -194,22 +351,13 @@ class MemberScopingHelper {
 				implicitSuperType = builtInTypeScope.n4ObjectType;
 			}
 		}
-		val implicitSuperTypeMemberScope = if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
-				memberScopeFactory.create(new DynamicPseudoScope(), implicitSuperType, context, staticAccess);
+		val implicitSuperTypeMemberScope = if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+				memberScopeFactory.create(new DynamicPseudoScope(), implicitSuperType, request.context,
+					request.staticAccess);
 			} else {
-				memberScopeFactory.create(implicitSuperType, context, staticAccess);
+				memberScopeFactory.create(implicitSuperType, request.context, request.staticAccess);
 			}
-		return memberScopeFactory.create(implicitSuperTypeMemberScope, type, context, staticAccess)
-
-	}
-
-	private def dispatch IScope members(EnumTypeRef etr, EObject context, boolean staticAccess) {
-		val builtInScope = BuiltInTypeScope.get(getResourceSet(etr, context));
-		// IDE-1221 select builtin-scope upon whether this enumration is tagged stringbased
-		val enumType = if (TypeSystemHelper.isStringBasedEnumeration(etr.enumType)) builtInScope.
-				n4StringBasedEnumType else builtInScope.getN4EnumType()
-		val IScope staticEnumScope = memberScopeFactory.create(enumType, context, true);
-		return Scopes.scopeFor(etr.enumType.literals, staticEnumScope)
+		return memberScopeFactory.create(implicitSuperTypeMemberScope, type, request.context, request.staticAccess);
 	}
 
 	/**
@@ -217,110 +365,34 @@ class MemberScopingHelper {
 	 * That is, the instance members of an enumeration. The static members are made available
 	 * in {@link #members(EnumTypeRef, EObject, boolean)}
 	 */
-	private def dispatch IScope members(TEnum enumeration, EObject context, boolean staticAccess) {
-		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(enumeration, context));
+	private def dispatch IScope membersOfType(TEnum enumeration, MemberScopeRequest request) {
+		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(enumeration, request.context));
 		// IDE-1221 select builtin-scope upon whether this enumration is tagged stringbased
-		val TObjectPrototype specificEnumType = (if (TypeSystemHelper::
-				isStringBasedEnumeration(enumeration)) builtInTypeScope.n4StringBasedEnumType else builtInTypeScope.
-				n4EnumType);
-		val instanceEnumScope = memberScopeFactory.create(specificEnumType, context, false);
+		val TObjectPrototype specificEnumType = (if (TypeSystemHelper::isStringBasedEnumeration(enumeration))
+				builtInTypeScope.n4StringBasedEnumType
+			else
+				builtInTypeScope.n4EnumType);
+		val instanceEnumScope = memberScopeFactory.create(specificEnumType, request.context, false);
 		return instanceEnumScope;
 	}
 
-	private def dispatch IScope members(TypeRef type, EObject context, boolean staticAccess) {
-		return IScope.NULLSCOPE
-	}
-
-	private def dispatch IScope members(ParameterizedTypeRef ptr, EObject context, boolean staticAccess) {
-		val IScope result = members(ptr.declaredType, context, false)
-		if (ptr.dynamic && !(result instanceof DynamicPseudoScope)) {
-			return new DynamicPseudoScope(result)
-		}
-		return result
-	}
-
-	private def dispatch IScope members(ParameterizedTypeRefStructural ptrs, EObject context, boolean staticAccess) {
-		val IScope result = ptrs.declaredType.members(context, false)
-		if (ptrs.dynamic && !(result instanceof DynamicPseudoScope)) {
-			return new DynamicPseudoScope(result)
-		}
-		if (ptrs.structuralMembers.empty) {
-			return result
-		}
-		if (ptrs.structuralType !== null) {
-			return memberScopeFactory.create(result, ptrs.structuralType, context, staticAccess);
-		}
-
-		// note: this are not the members of the defined type
-		// however, we only scope locally, so that doesn't matter
-		return memberScopeFactory.create(result, ptrs.structuralMembers, context, staticAccess);
-	}
-
-	/**
-	 * Note: N4JSScopeProvider already taking the upper bound before using this class (thus resolving ThisTypeRefs
-	 * beforehand), so we will never enter this method from there; still provided to support uses from other code.
-	 */
-	private def dispatch IScope members(ThisTypeRef thisTypeRef, EObject context, boolean staticAccess) {
-		// taking the upper bound to "resolve" the ThisTypeRef:
-		// this[C] --> C (ParameterizedTypeRef)
-		// ~~this[C] with { number prop; } --> ~~C with { number prop; } (ParameterizedTypeRefStructural)
-		val ub = ts.upperBound(RuleEnvironmentExtensions.newRuleEnvironment(context), thisTypeRef);
-
-		if (!(ub instanceof ThisTypeRef)) {
-			// ThisTypeRef was resolved
-			return members(ub, context, staticAccess);
-		}
-
-		// probably an unbound ThisTypeRef or some other error (reported elsewhere)
-		return IScope.NULLSCOPE;
-	}
-
-	private def dispatch IScope members(ClassifierTypeRef ctr, EObject context, boolean staticAccess) {
-		val IScope result = ctr.staticType.members(context, true)
-		if (ctr.dynamic && !(result instanceof DynamicPseudoScope)) {
-			return new DynamicPseudoScope(result)
-		}
-		return result
-	}
-
-	private def dispatch IScope members(ComposedTypeRef ctr, EObject context, boolean staticAccess) {
-		return composedMemberScopeFactory.create(ctr, context, ctr.typeRefs.map[members(context, staticAccess)],
-			ctr instanceof IntersectionTypeExpression, typeInferencer);
-	}
-
-	// TODO type variable can specify multiple upper bounds!
-	private def dispatch IScope members(TypeVariable typeVar, EObject context, boolean staticAccess) {
+// TODO type variable can specify multiple upper bounds!
+	private def dispatch IScope membersOfType(TypeVariable typeVar, MemberScopeRequest request) {
 		if (!typeVar.declaredUpperBounds.isEmpty) {
-			return typeVar.declaredUpperBounds.head.members(context, staticAccess)
+			return members(typeVar.declaredUpperBounds.head, request)
 		} else {
-			val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(typeVar, context));
+			val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(typeVar, request.context));
 			val anyType = builtInTypeScope.anyType
-			return members(anyType, context, staticAccess)
+			return membersOfType(anyType, request);
 		}
+
 	}
 
-	private def dispatch IScope members(TStructuralType structType, EObject context, boolean staticAccess) {
-		val IScope parent = IScope.NULLSCOPE
+	private def dispatch IScope membersOfType(TStructuralType structType, MemberScopeRequest request) {
 		if (structType.ownedMembers.empty) {
-			return parent
+			return IScope.NULLSCOPE
 		}
-		return memberScopeFactory.create(structType, context, staticAccess)
-	}
-
-	private def dispatch IScope members(FunctionTypeRef ftExpr, EObject context, boolean staticAccess) {
-		return internal_members(ftExpr, context, staticAccess)
-	}
-
-	private def dispatch IScope members(FunctionTypeExpression ftExpr, EObject context, boolean staticAccess) {
-		return internal_members(ftExpr, context, staticAccess)
-	}
-
-	/** internal to avoid catch-all of ParameterizedTypeRef for FuntionTypeRefs while dispatching */
-	def private IScope internal_members(FunctionTypeExprOrRef ftExpr, EObject context, boolean staticAccess) {
-		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(ftExpr, context));
-		val fType = builtInTypeScope.functionType
-		val ret = members(fType, context, staticAccess)
-		return ret;
+		return memberScopeFactory.create(structType, request.context, request.staticAccess)
 	}
 
 	def private ResourceSet getResourceSet(EObject type, EObject context) {

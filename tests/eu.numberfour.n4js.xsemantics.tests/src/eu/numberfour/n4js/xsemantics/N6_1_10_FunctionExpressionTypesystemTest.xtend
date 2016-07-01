@@ -11,10 +11,10 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.EcoreUtil2
@@ -26,7 +26,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * Test class for function expression, see  6.1.10. Function Expression
@@ -39,7 +38,6 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 
 	@Inject	extension ParseHelper<Script>
 	@Inject extension ValidationTestHelper
-	@Inject N4JSTypeInferencer inferencer
 
 	@Test
 	def void testFunctionExpressionAsArgumentDefaultReturnVoid() {
@@ -323,7 +321,7 @@ class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 
 //		val type = ts.type(call).value; // will cause an NPE internally
 		val typeG = ts.type(RuleEnvironmentExtensions.newRuleEnvironment(call), call).value;
-		val typeI = inferencer.tau(call);
+		val typeI = ts.tau(call);
 
 		assertEquals(typeG.declaredType, typeI.declaredType);
 

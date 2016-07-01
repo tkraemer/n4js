@@ -12,12 +12,11 @@ package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
-import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import it.xsemantics.runtime.RuleApplicationTrace
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -292,10 +291,8 @@ class JudgmentTypeTest extends AbstractTypesystemTest {
 
 		val call = (script.scriptElements.get(3) as ExpressionStatement).expression as ParameterizedCallExpression;
 
-		var trace = new RuleApplicationTrace()
-		var result = ts.type(G, trace, call)
+		var result = ts.type(G, call)
 
-		//		println("Trace: " + trace.traceAsString())
 		if (result.ruleFailedException !== null) {
 			result.ruleFailedException.printStackTrace
 		}

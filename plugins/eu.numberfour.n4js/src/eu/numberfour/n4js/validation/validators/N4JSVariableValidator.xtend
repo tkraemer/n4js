@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
-import eu.numberfour.n4js.postprocessing.TypingCacheHelper
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 
@@ -35,7 +35,7 @@ import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	/**
 	 * NEEDED
@@ -76,7 +76,7 @@ class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		}
 		
-		if (typingCacheHelper.getLocalVariableReferences(varDecl).empty) {
+		if (astMetaInfoCacheHelper.getLocalVariableReferences(varDecl).empty) {
 			val message = IssueCodes.getMessageForAST_LOCAL_VAR_UNUSED(varDecl.name);
 			addIssue(message, varDecl, findNameFeature(varDecl).value, IssueCodes.AST_LOCAL_VAR_UNUSED);
 		}

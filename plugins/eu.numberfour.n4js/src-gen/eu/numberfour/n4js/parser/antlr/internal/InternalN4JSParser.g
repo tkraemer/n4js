@@ -35690,6 +35690,405 @@ ruleElision returns [EObject current=null]
 
 
 
+// Entry rule entryRuleTStructMethod
+entryRuleTStructMethod returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getTStructMethodRule()); }
+	 iv_ruleTStructMethod=ruleTStructMethod 
+	 { $current=$iv_ruleTStructMethod.current; } 
+	 EOF 
+;
+
+// Rule TStructMethod
+ruleTStructMethod returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((((
+)(
+LessThanSign
+(
+(
+ruleTypeVariable
+)
+)(
+Comma
+(
+(
+ruleTypeVariable
+)
+))*
+GreaterThanSign
+)?(
+(
+ruleIdentifierName
+)
+)
+LeftParenthesis
+))=>((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTStructMethodAccess().getTStructMethodAction_0_0_0(),
+            $current);
+    }
+)(
+	otherlv_1=LessThanSign
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_1_0()); 
+	    }
+		lv_typeVars_2_0=ruleTypeVariable		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
+	        }
+       		add(
+       			$current, 
+       			"typeVars",
+        		lv_typeVars_2_0, 
+        		"eu.numberfour.n4js.N4JS.TypeVariable");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_3=Comma
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0()); 
+	    }
+		lv_typeVars_4_0=ruleTypeVariable		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
+	        }
+       		add(
+       			$current, 
+       			"typeVars",
+        		lv_typeVars_4_0, 
+        		"eu.numberfour.n4js.N4JS.TypeVariable");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*
+	otherlv_5=GreaterThanSign
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3());
+    }
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructMethodAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_name_6_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_6_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_7=LeftParenthesis
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3());
+    }
+))
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getTStructMethodRule());
+		}
+        newCompositeNode(grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); 
+    }
+    this_TAnonymousFormalParameterList_8=ruleTAnonymousFormalParameterList[$current]
+    {
+        $current = $this_TAnonymousFormalParameterList_8.current;
+        afterParserOrEnumRuleCall();
+    }
+
+	otherlv_9=RightParenthesis
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2());
+    }
+(
+	otherlv_10=Colon
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructMethodAccess().getReturnTypeRefTypeRefParserRuleCall_3_1_0()); 
+	    }
+		lv_returnTypeRef_11_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
+	        }
+       		set(
+       			$current, 
+       			"returnTypeRef",
+        		lv_returnTypeRef_11_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructField
+entryRuleTStructField returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getTStructFieldRule()); }
+	 iv_ruleTStructField=ruleTStructField 
+	 { $current=$iv_ruleTStructField.current; } 
+	 EOF 
+;
+
+// Rule TStructField
+ruleTStructField returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructFieldAccess().getNameIdentifierNameParserRuleCall_0_0()); 
+	    }
+		lv_name_0_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructFieldRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_0_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_1=Colon
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructFieldAccess().getTypeRefTypeRefParserRuleCall_1_1_0()); 
+	    }
+		lv_typeRef_2_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructFieldRule());
+	        }
+       		set(
+       			$current, 
+       			"typeRef",
+        		lv_typeRef_2_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructGetter
+entryRuleTStructGetter returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getTStructGetterRule()); }
+	 iv_ruleTStructGetter=ruleTStructGetter 
+	 { $current=$iv_ruleTStructGetter.current; } 
+	 EOF 
+;
+
+// Rule TStructGetter
+ruleTStructGetter returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((((
+)
+Get
+(
+(
+ruleIdentifierName
+)
+)))=>((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTStructGetterAccess().getTStructGetterAction_0_0_0(),
+            $current);
+    }
+)
+	otherlv_1=Get
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructGetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_name_2_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructGetterRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_2_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
+	otherlv_3=LeftParenthesis
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1());
+    }
+
+	otherlv_4=RightParenthesis
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2());
+    }
+(
+	otherlv_5=Colon
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefTypeRefParserRuleCall_3_1_0()); 
+	    }
+		lv_declaredTypeRef_6_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructGetterRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredTypeRef",
+        		lv_declaredTypeRef_6_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructSetter
+entryRuleTStructSetter returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getTStructSetterRule()); }
+	 iv_ruleTStructSetter=ruleTStructSetter 
+	 { $current=$iv_ruleTStructSetter.current; } 
+	 EOF 
+;
+
+// Rule TStructSetter
+ruleTStructSetter returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((((
+)
+Set
+(
+(
+ruleIdentifierName
+)
+)))=>((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTStructSetterAccess().getTStructSetterAction_0_0_0(),
+            $current);
+    }
+)
+	otherlv_1=Set
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_name_2_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructSetterRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_2_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
+	otherlv_3=LeftParenthesis
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0()); 
+	    }
+		lv_fpar_4_0=ruleTAnonymousFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTStructSetterRule());
+	        }
+       		set(
+       			$current, 
+       			"fpar",
+        		lv_fpar_4_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TAnonymousFormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_5=RightParenthesis
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3());
+    }
+)
+;
+
+
+
+
+
 // Entry rule entryRuleTypeRef
 entryRuleTypeRef returns [EObject current=null]
 	:
@@ -36340,6 +36739,26 @@ ruleTypeRefForCast returns [EObject current=null]
         $current = $this_ArrowFunctionTypeExpression_6.current;
         afterParserOrEnumRuleCall();
     }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); 
+    }
+    this_UnionTypeExpressionOLD_7=ruleUnionTypeExpressionOLD
+    {
+        $current = $this_UnionTypeExpressionOLD_7.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); 
+    }
+    this_IntersectionTypeExpressionOLD_8=ruleIntersectionTypeExpressionOLD
+    {
+        $current = $this_IntersectionTypeExpressionOLD_8.current;
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -36380,7 +36799,20 @@ ruleTypeRefInClassifierType returns [EObject current=null]
         $current = $this_ThisTypeRefNominal_1.current;
         afterParserOrEnumRuleCall();
     }
+
+    |((((
 )
+QuestionMark
+))=>
+    { 
+        newCompositeNode(grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); 
+    }
+    this_Wildcard_2=ruleWildcard
+    {
+        $current = $this_Wildcard_2.current;
+        afterParserOrEnumRuleCall();
+    }
+))
 ;
 
 
@@ -37458,7 +37890,7 @@ ruleTStructMember returns [EObject current=null]
 Get
 (
 (
-ruleTypesIdentifier
+ruleIdentifierName
 )
 )))=>
     { 
@@ -37475,7 +37907,7 @@ ruleTypesIdentifier
 Set
 (
 (
-ruleTypesIdentifier
+ruleIdentifierName
 )
 )))=>
     { 
@@ -37504,7 +37936,7 @@ ruleTypeVariable
 GreaterThanSign
 )?(
 (
-ruleTypesIdentifier
+ruleIdentifierName
 )
 )
 LeftParenthesis
@@ -37526,405 +37958,6 @@ LeftParenthesis
     {
         $current = $this_TStructField_3.current;
         afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructMethod
-entryRuleTStructMethod returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getTStructMethodRule()); }
-	 iv_ruleTStructMethod=ruleTStructMethod 
-	 { $current=$iv_ruleTStructMethod.current; } 
-	 EOF 
-;
-
-// Rule TStructMethod
-ruleTStructMethod returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(((((
-)(
-LessThanSign
-(
-(
-ruleTypeVariable
-)
-)(
-Comma
-(
-(
-ruleTypeVariable
-)
-))*
-GreaterThanSign
-)?(
-(
-ruleTypesIdentifier
-)
-)
-LeftParenthesis
-))=>((
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getTStructMethodAccess().getTStructMethodAction_0_0_0(),
-            $current);
-    }
-)(
-	otherlv_1=LessThanSign
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_1_0()); 
-	    }
-		lv_typeVars_2_0=ruleTypeVariable		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
-	        }
-       		add(
-       			$current, 
-       			"typeVars",
-        		lv_typeVars_2_0, 
-        		"eu.numberfour.n4js.N4JS.TypeVariable");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-	otherlv_3=Comma
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0()); 
-	    }
-		lv_typeVars_4_0=ruleTypeVariable		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
-	        }
-       		add(
-       			$current, 
-       			"typeVars",
-        		lv_typeVars_4_0, 
-        		"eu.numberfour.n4js.N4JS.TypeVariable");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*
-	otherlv_5=GreaterThanSign
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3());
-    }
-)?(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructMethodAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0()); 
-	    }
-		lv_name_6_0=ruleTypesIdentifier		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_6_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypesIdentifier");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-	otherlv_7=LeftParenthesis
-    {
-    	newLeafNode(otherlv_7, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3());
-    }
-))
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getTStructMethodRule());
-		}
-        newCompositeNode(grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); 
-    }
-    this_TAnonymousFormalParameterList_8=ruleTAnonymousFormalParameterList[$current]
-    {
-        $current = $this_TAnonymousFormalParameterList_8.current;
-        afterParserOrEnumRuleCall();
-    }
-
-	otherlv_9=RightParenthesis
-    {
-    	newLeafNode(otherlv_9, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2());
-    }
-(
-	otherlv_10=Colon
-    {
-    	newLeafNode(otherlv_10, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructMethodAccess().getReturnTypeRefTypeRefParserRuleCall_3_1_0()); 
-	    }
-		lv_returnTypeRef_11_0=ruleTypeRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructMethodRule());
-	        }
-       		set(
-       			$current, 
-       			"returnTypeRef",
-        		lv_returnTypeRef_11_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructField
-entryRuleTStructField returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getTStructFieldRule()); }
-	 iv_ruleTStructField=ruleTStructField 
-	 { $current=$iv_ruleTStructField.current; } 
-	 EOF 
-;
-
-// Rule TStructField
-ruleTStructField returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructFieldAccess().getNameTypesIdentifierParserRuleCall_0_0()); 
-	    }
-		lv_name_0_0=ruleTypesIdentifier		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructFieldRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypesIdentifier");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-	otherlv_1=Colon
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructFieldAccess().getTypeRefTypeRefParserRuleCall_1_1_0()); 
-	    }
-		lv_typeRef_2_0=ruleTypeRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructFieldRule());
-	        }
-       		set(
-       			$current, 
-       			"typeRef",
-        		lv_typeRef_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructGetter
-entryRuleTStructGetter returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getTStructGetterRule()); }
-	 iv_ruleTStructGetter=ruleTStructGetter 
-	 { $current=$iv_ruleTStructGetter.current; } 
-	 EOF 
-;
-
-// Rule TStructGetter
-ruleTStructGetter returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(((((
-)
-Get
-(
-(
-ruleTypesIdentifier
-)
-)))=>((
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getTStructGetterAccess().getTStructGetterAction_0_0_0(),
-            $current);
-    }
-)
-	otherlv_1=Get
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructGetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0()); 
-	    }
-		lv_name_2_0=ruleTypesIdentifier		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructGetterRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypesIdentifier");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)))
-	otherlv_3=LeftParenthesis
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1());
-    }
-
-	otherlv_4=RightParenthesis
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2());
-    }
-(
-	otherlv_5=Colon
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefTypeRefParserRuleCall_3_1_0()); 
-	    }
-		lv_declaredTypeRef_6_0=ruleTypeRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructGetterRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredTypeRef",
-        		lv_declaredTypeRef_6_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructSetter
-entryRuleTStructSetter returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getTStructSetterRule()); }
-	 iv_ruleTStructSetter=ruleTStructSetter 
-	 { $current=$iv_ruleTStructSetter.current; } 
-	 EOF 
-;
-
-// Rule TStructSetter
-ruleTStructSetter returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(((((
-)
-Set
-(
-(
-ruleTypesIdentifier
-)
-)))=>((
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getTStructSetterAccess().getTStructSetterAction_0_0_0(),
-            $current);
-    }
-)
-	otherlv_1=Set
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0()); 
-	    }
-		lv_name_2_0=ruleTypesIdentifier		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructSetterRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypesIdentifier");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)))
-	otherlv_3=LeftParenthesis
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0()); 
-	    }
-		lv_fpar_4_0=ruleTAnonymousFormalParameter		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTStructSetterRule());
-	        }
-       		set(
-       			$current, 
-       			"fpar",
-        		lv_fpar_4_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TAnonymousFormalParameter");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-	otherlv_5=RightParenthesis
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3());
     }
 )
 ;
@@ -38036,16 +38069,16 @@ ruleConstructorTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstructorTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -38096,16 +38129,16 @@ ruleClassifierTypeRef returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0()); 
 	    }
-		lv_staticTypeRef_3_0=ruleTypeRefInClassifierType		{
+		lv_typeArg_3_0=ruleTypeRefInClassifierType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getClassifierTypeRefRule());
 	        }
        		set(
        			$current, 
-       			"staticTypeRef",
-        		lv_staticTypeRef_3_0, 
+       			"typeArg",
+        		lv_typeArg_3_0, 
         		"eu.numberfour.n4js.ts.TypeExpressions.TypeRefInClassifierType");
 	        afterParserOrEnumRuleCall();
 	    }

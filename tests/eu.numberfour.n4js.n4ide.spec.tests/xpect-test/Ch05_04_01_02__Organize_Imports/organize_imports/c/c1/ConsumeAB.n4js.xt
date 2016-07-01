@@ -13,11 +13,12 @@
 */
 
 /* XPECT organizeImports ---
-   + import { A } from "a/a2/A"
-   + import { B } from "a/a2/A"
+     
+   + import { A } from "a/a2/A";
+   + import { B } from "a/a2/A";
    - var 
-   + import { IA } from "a/a2/A"
-   + import { IB } from "a/a2/A"
+   + import { IA } from "a/a2/A";
+   + import { IB } from "a/a2/A";
    | [|var] string placeholder;
      var a : A = new A();
      var b : B = new B();

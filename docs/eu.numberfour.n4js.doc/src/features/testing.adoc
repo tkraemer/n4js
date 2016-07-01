@@ -1,14 +1,7 @@
-:experimental:
-:commandkey: &#8984;
-:revdate: {localdate}
-:toc:
-:source-highlighter: prettify
 :doctype: book
-:imagesdir: ../images
 
 .Testing
 = Testing
-
 
 Test Driven Development (TDD) is one of the key techniques to write large systems with maintainable code.
 The more tests you write, the more confident you can be that your software works as expected and the more
@@ -29,7 +22,7 @@ Besides the test execution and reporting engine support, Mangelhaft provides var
 that could come handy when test assertions or preconditions have to be used in the test suites or when negative tests are required.
 
 
-[source,javascript]
+[source,n4js]
 ----
 import { Assert } from 'n4/mangel/assert/Assert';
 import { Precondition } from 'n4/mangel/precondition/Precondition';

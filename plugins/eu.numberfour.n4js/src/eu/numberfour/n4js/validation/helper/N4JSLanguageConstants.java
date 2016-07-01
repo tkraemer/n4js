@@ -164,4 +164,7 @@ public abstract class N4JSLanguageConstants {
 			this.usePlainModuleSpecifier = usePlainModuleSpecifier;
 		}
 	}
+
+	/** Elements exported by 'export default' syntax are visible under this name from outside. */
+	public static final String EXPORT_DEFAULT_NAME = "default";
 }

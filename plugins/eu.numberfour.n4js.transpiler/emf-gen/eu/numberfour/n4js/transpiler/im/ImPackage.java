@@ -926,15 +926,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___IS_FINAL_BY_TYPE = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_FINAL_BY_TYPE;
 
 	/**
-	 * The operation id for the '<em>Is Tree Hierarchy Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___IS_TREE_HIERARCHY_TYPE = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_TREE_HIERARCHY_TYPE;
-
-	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1303,15 +1294,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_FINAL_BY_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_FINAL_BY_TYPE;
-
-	/**
-	 * The operation id for the '<em>Is Tree Hierarchy Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_TREE_HIERARCHY_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_TREE_HIERARCHY_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.

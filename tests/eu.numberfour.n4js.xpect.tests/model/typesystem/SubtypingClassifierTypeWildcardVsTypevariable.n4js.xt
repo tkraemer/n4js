@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+class A {}
+class B extends A {}
+class C extends B {}
+
+// ---------------------------------------------
+// part 1: subtype with wildcards
+
+var ctorA: constructor{? extends A};
+var ctorB: constructor{? extends B};
+var ctorC: constructor{? extends C};
+
+// XPECT errors --> "constructor{? extends A} is not a subtype of constructor{? extends B}." at "ctorA"
+ctorB = ctorA;
+// XPECT noerrors -->
+ctorB = ctorC;
+
+
+
+// ---------------------------------------------
+// part 1: subtype with type variables
+
+class G<T> {
+    ctor: constructor{T};
+}
+
+var ga: G<? extends A>;
+var gb: G<? extends B>;
+var gc: G<? extends C>;
+
+// XPECT errors --> "constructor{? extends A} is not a subtype of constructor{? extends B}." at "ga.ctor"
+gb.ctor = ga.ctor;
+// XPECT noerrors -->
+gb.ctor = gc.ctor;

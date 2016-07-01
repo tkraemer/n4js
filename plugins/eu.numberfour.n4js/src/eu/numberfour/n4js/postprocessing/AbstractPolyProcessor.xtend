@@ -37,51 +37,54 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
-import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
-import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
+ * Base for all poly processors. Contains some utility and convenience methods.
  */
-class AbstractPolyProcessor extends AbstractProcessor {
+package abstract class AbstractPolyProcessor extends AbstractProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
-	private TypingCacheHelper typingCacheHelper;
+	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
-
+	/**
+	 * Convenience method for {@link #isPoly(Expression)} and {@link #isPoly(PropertyAssignment)}, accepting any type of
+	 * EObject.
+	 */
 	def boolean isPoly(EObject obj) {
-		return switch(obj) {
+		return switch (obj) {
 			Expression: obj.isPoly
 			PropertyAssignment: obj.isPoly
 			default: false
 		}
 	}
+
 	/**
-	 * Returns true iff obj is an AST node that requires constraint-based type inference.
+	 * Tells whether the given expression is a poly expression, i.e. requires constraint-based type inference.
 	 */
 	def boolean isPoly(Expression obj) {
-		return switch(obj) {
+		return switch (obj) {
 			ParameterizedCallExpression: {
 				val G = RuleEnvironmentExtensions.newRuleEnvironment(obj);
 				val TypeRef targetTypeRef = ts.type(G, obj.target).value; // note: this is a backward reference!
-				if(targetTypeRef instanceof FunctionTypeExprOrRef) {
+				if (targetTypeRef instanceof FunctionTypeExprOrRef) {
 					targetTypeRef.generic && obj.typeArgs.size < targetTypeRef.typeVars.size
 				} else {
 					false
 				}
 			}
 			FunctionExpression:
-				obj.fpars.exists[declaredTypeRef===null] // type of 1 or more fpars is undeclared
-				|| obj.returnTypeRef===null // return type is undeclared
+				obj.fpars.exists[declaredTypeRef === null] // type of 1 or more fpars is undeclared
+				|| obj.returnTypeRef === null // return type is undeclared
 				// note: if the FunctionExpression is generic, this does *not* make it poly!
 			ArrayLiteral:
 				true
@@ -91,46 +94,66 @@ class AbstractPolyProcessor extends AbstractProcessor {
 				false
 		}
 	}
+
+	/**
+	 * Tells whether the given PropertyAssignment is a poly "expression", i.e. requires constraint-based type inference.
+	 */
 	def private boolean isPoly(PropertyAssignment pa) {
-		switch(pa) {
+		switch (pa) {
 			PropertyNameValuePair:
-				pa.expression!==null && pa.declaredTypeRef===null // FIXME requiring pa.expression!==null is inconsistent!
+				pa.expression !== null && pa.declaredTypeRef === null // FIXME requiring pa.expression!==null is inconsistent!
 			PropertyGetterDeclaration:
-				pa.declaredTypeRef===null
+				pa.declaredTypeRef === null
 			PropertySetterDeclaration:
-				pa.declaredTypeRef===null
+				pa.declaredTypeRef === null
 			PropertyMethodDeclaration:
 				false
 			PropertyAssignmentAnnotationList:
 				false
 			default:
-				throw new IllegalArgumentException("unsupported subclass of PropertyAssignment: "+pa.eClass.name)
+				throw new IllegalArgumentException("unsupported subclass of PropertyAssignment: " + pa.eClass.name)
 		}
 	}
+
+	/**
+	 * Convenience method for {@link #isRootPoly(Expression)}, accepting any type of EObject.
+	 */
 	def boolean isRootPoly(EObject obj) {
-		if(obj instanceof Expression) obj.isRootPoly else false
+		if (obj instanceof Expression) obj.isRootPoly else false
 	}
+
+	/**
+	 * Tells whether the given expression is a root poly expression, i.e. it
+	 * <ol>
+	 * <li>is a {@link #isPoly(Expression) poly expression}, <em>and</em>
+	 * <li>represents the root of a tree of nested poly expressions which have to be inferred together within a single
+	 * constraint system (this tree may have depth 0, i.e. consist only of the given expression).
+	 * </ol>
+	 */
 	def boolean isRootPoly(Expression obj) {
-		if(isPoly(obj)) {
+		if (isPoly(obj)) {
 			val p = getParentPolyCandidate(obj);
-			return p===null || !isPoly(p);
+			return p === null || !isPoly(p);
 		}
 		return false;
 	}
 
-
+	/**
+	 * Given a poly expression, returns the parent expression that <em>might</em> be the parent poly expression.
+	 * If the given expression is not poly, the return value is undefined.
+	 */
 	def private EObject getParentPolyCandidate(Expression poly) {
 		val directParent = poly?.eContainer;
 		val grandParent = directParent?.eContainer;
-		return switch(directParent) {
-			Argument case grandParent instanceof ParameterizedCallExpression
-					&& (grandParent as ParameterizedCallExpression).arguments.map[expression].contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
+		return switch (directParent) {
+			Argument case grandParent instanceof ParameterizedCallExpression &&
+				(grandParent as ParameterizedCallExpression).arguments.map[expression].contains(poly): // TODO what about the target expression? i.e.: || directParent.target===poly
 				grandParent
 			FunctionExpression:
 				null // function expressions never have nested poly expressions (expression in the body are detached)
-			ArrayElement case directParent.expression===poly:
+			ArrayElement case directParent.expression === poly:
 				directParent.eContainer as ArrayLiteral // return the ArrayLiteral as parent (not the ArrayElement)
-			PropertyNameValuePair case directParent.expression===poly:
+			PropertyNameValuePair case directParent.expression === poly:
 				directParent // return the PropertyNameValuePair as parent (not the ObjectLiteral)
 			PropertyGetterDeclaration:
 				null // getters never have nested poly expressions
@@ -152,86 +175,90 @@ class AbstractPolyProcessor extends AbstractProcessor {
 	 * nested poly expression's type from the cache.
 	 */
 	def protected TypeRef getFinalResultTypeOfNestedPolyExpression(Expression nestedPolyExpression) {
-		return restoreFromCache(nestedPolyExpression);
+		return astMetaInfoCacheHelper.getTypeFailSafe(nestedPolyExpression)?.value;
 	}
 
-	def protected TypeRef restoreFromCache(EObject astNode) {
-		typingCacheHelper.typeOf(astNode);
-	}
-	def protected void storeInCache(EObject astNode, TypeRef actualType) {
-		typingCacheHelper.store(astNode, new Result<TypeRef>(actualType));
-	}
+	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G,
+		Map<TypeVariable, ? extends TypeVariable> substitutions) {
 
-	def protected void storeInferredTypeArgsInCache(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
-		typingCacheHelper.storeInferredTypeArgs(callExpr, typeArgs);
-	}
-
-	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,? extends TypeVariable> substitutions) {
 		subst(typeRef, G, substitutions, false)
 	}
-	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G, Map<TypeVariable,? extends TypeVariable> substitutions, boolean reverse) {
+
+	def protected TypeRef subst(TypeRef typeRef, RuleEnvironment G,
+		Map<TypeVariable, ? extends TypeVariable> substitutions, boolean reverse) {
+
 		val Gx = G.wrap;
-		substitutions.entrySet.forEach[e|
-			if(reverse)
-				Gx.add(e.value,TypeUtils.createTypeRef(e.key))
+		substitutions.entrySet.forEach [ e |
+			if (reverse)
+				Gx.add(e.value, TypeUtils.createTypeRef(e.key))
 			else
-				Gx.add(e.key,TypeUtils.createTypeRef(e.value))
+				Gx.add(e.key, TypeUtils.createTypeRef(e.value))
 		];
-		val result = ts.substTypeVariables(Gx,typeRef);
-		if(result.failed)
+		val result = ts.substTypeVariables(Gx, typeRef);
+		if (result.failed)
 			throw new IllegalArgumentException("substitution failed", result.ruleFailedException);
-		return result.value as TypeRef; // FIXME what about wildcards here??
+		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
 	}
-	def protected TypeRef applySolution(TypeRef typeRef, RuleEnvironment G, Map<InferenceVariable,TypeRef> solution) {
-		if(typeRef===null || solution===null || solution.empty) {
+
+	def protected TypeRef applySolution(TypeRef typeRef, RuleEnvironment G, Map<InferenceVariable, TypeRef> solution) {
+		if (typeRef === null || solution === null || solution.empty) {
 			return typeRef; // note: returning 'null' if typeRef==null (broken AST, etc.)
 		}
 		// PART 1 OF TEMPORARY WORK-AROUND
-		val UndefModifier[] modifiers = if(typeRef instanceof FunctionTypeExprOrRef) {
-			typeRef.fpars.map[solution.get(it?.typeRef?.declaredType)?.undefModifier] + #[typeRef.returnTypeRef.undefModifier];
-		} else {
-			null
-		};
+		val UndefModifier[] modifiers = if (typeRef instanceof FunctionTypeExprOrRef) {
+				typeRef.fpars.map[solution.get(it?.typeRef?.declaredType)?.undefModifier] +
+					#[typeRef.returnTypeRef.undefModifier]
+			} else {
+				null
+			};
 		// END OF PART 1
 		val Gx = G.wrap;
-		solution.entrySet.forEach[e|Gx.add(e.key,e.value)];
-		val result = ts.substTypeVariables(Gx,typeRef);
-		if(result.failed)
+		solution.entrySet.forEach[e|Gx.add(e.key, e.value)];
+		val result = ts.substTypeVariables(Gx, typeRef);
+		if (result.failed)
 			throw new IllegalArgumentException("substitution failed", result.ruleFailedException);
 		// PART 2 OF TEMPORARY WORK-AROUND
-		if(typeRef instanceof FunctionTypeExprOrRef) {
+		if (typeRef instanceof FunctionTypeExprOrRef) {
 			val resultValue = result.value;
-			if(resultValue instanceof FunctionTypeExprOrRef) {
+			if (resultValue instanceof FunctionTypeExprOrRef) {
 				val iMod = modifiers.iterator;
 				val iFpar = resultValue.fpars.iterator;
-				while(iFpar.hasNext && iMod.hasNext) {
-					mergeUndefModifier(iFpar.next.typeRef, iMod.next);
+				while (iFpar.hasNext && iMod.hasNext) {
+					setUndefModifierNullSafe(iFpar.next.typeRef, iMod.next);
 				}
-				if(iMod.hasNext) {
-					mergeUndefModifier(resultValue.returnTypeRef, iMod.next);
+				if (iMod.hasNext) {
+					setUndefModifierNullSafe(resultValue.returnTypeRef, iMod.next);
 				}
 			}
 		}
 		// END OF PART 2
-		return result.value as TypeRef; // FIXME what about wildcards here??
+		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
 	}
 
-	def protected Map<InferenceVariable,TypeRef> createPseudoSolution(InferenceContext infCtx, TypeRef defaultTypeRef) {
+	def private void setUndefModifierNullSafe(TypeRef typeRef, UndefModifier modifier) {
+		if (typeRef !== null && modifier !== null) {
+			typeRef.undefModifier = modifier;
+		}
+	}
+
+	def protected Map<InferenceVariable, TypeRef> createPseudoSolution(InferenceContext infCtx,
+		TypeRef defaultTypeRef) {
+
 		val pseudoSolution = newHashMap;
-		for(iv : infCtx.getInferenceVariables) {
-			pseudoSolution.put(iv,defaultTypeRef); // map all inference variables to the default
+		for (iv : infCtx.getInferenceVariables) {
+			pseudoSolution.put(iv, defaultTypeRef); // map all inference variables to the default
 		}
 		return pseudoSolution;
 	}
 
 	// FIXME move to a better place
 	def protected boolean isReturningValue(FunctionDefinition fun) {
-		return (fun.body!==null && fun.body.allReturnStatements.exists[expression!==null])
-				|| (if(fun instanceof ArrowFunction) fun.singleExprImplicitReturn else false); // TODO except call to void function!!
+		return (fun.body !== null && fun.body.allReturnStatements.exists[expression !== null]) ||
+			(if (fun instanceof ArrowFunction) fun.singleExprImplicitReturn else false); // TODO except call to void function!!
 	}
 
 	def protected TypeRef getTypeOfMember(TMember m) {
-		switch(m) {
+		switch (m) {
 			TField:
 				m.typeRef
 			TGetter:
@@ -241,29 +268,22 @@ class AbstractPolyProcessor extends AbstractProcessor {
 			TMethod:
 				throw new IllegalArgumentException("this method should not be used for TMethod")
 			default:
-				throw new IllegalArgumentException("unknown subtype of TMember: "+m?.eClass?.name)
+				throw new IllegalArgumentException("unknown subtype of TMember: " + m?.eClass?.name)
 		}
 	}
+
 	def protected void setTypeOfMember(TMember m, TypeRef type) {
-		switch(m) {
+		switch (m) {
 			TField:
 				m.typeRef = type
 			TGetter:
 				m.declaredTypeRef = type
 			TSetter:
-				if(m.fpar!==null) m.fpar.typeRef = type
+				if (m.fpar !== null) m.fpar.typeRef = type
 			TMethod:
 				throw new IllegalArgumentException("this method should not be used for TMethod")
 			default:
-				throw new IllegalArgumentException("unknown subtype of TMember: "+m?.eClass?.name)
+				throw new IllegalArgumentException("unknown subtype of TMember: " + m?.eClass?.name)
 		}
-	}
-	def protected void mergeUndefModifier(TypeRef typeRef, UndefModifier modifier) {
-		if(typeRef!==null && modifier!==null) {
-			typeRef.undefModifier = modifier;
-		}
-	}
-	def protected void setUndefModifier(TypeRef typeRef, UndefModifier modifier) {
-		typeRef.undefModifier = modifier;
 	}
 }

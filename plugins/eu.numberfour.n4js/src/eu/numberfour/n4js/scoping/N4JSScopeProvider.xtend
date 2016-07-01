@@ -30,7 +30,6 @@ import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.Statement
-import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
@@ -55,7 +54,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TStructMethod
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.xtext.scoping.FilteringScope
 import java.util.List
@@ -76,7 +75,8 @@ import org.eclipse.xtext.scoping.impl.MapBasedScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import org.eclipse.xtext.util.IResourceScopeCache
 
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * This class contains custom scoping description.
@@ -107,7 +107,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 	/* Poor mans filter to reduce number of elements in getAllElements */
 	@Inject extension N4JSTypesScopeFilter
 
-	@Inject extension N4JSTypeInferencer
+	@Inject N4JSTypeSystem ts
 
 	@Inject MemberScopingHelper memberScopingHelper
 
@@ -196,6 +196,8 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 				ParameterizedCallExpression:
 					return scope_EObject_id(context, reference)
 				Argument:
+					return scope_EObject_id(context, reference)
+				Expression:
 					return scope_EObject_id(context, reference)
 			}
 		}
@@ -400,22 +402,10 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 			}
 		}
 
-		val TypeRef typeRef = switch (receiver) {
-			ThisLiteral: {
-				val thisTypeRef = receiver.tau
-				if (thisTypeRef === null && !receiver.strictMode) {
-
-					// if not strict mode, we assume the global object == script context
-					// TODO add validation for that case
-					val script = EcoreUtil2.getContainerOfType(receiver, Script)
-					return getLexicalEnvironmentScope(script, propertyAccess, ref);
-				}
-				thisTypeRef
-			}
-			default: {
-				receiver.tau;
-			}
-		};
+		val G = propertyAccess.newRuleEnvironment;
+		val TypeRef typeRefRaw = ts.type(G, receiver).value;
+		// take upper bound to get rid of ExistentialTypeRefs, ThisTypeRefs, etc.
+		val TypeRef typeRef = if(typeRefRaw!==null) ts.upperBound(G, typeRefRaw).value else null;
 
 		val staticAccess = typeRef instanceof ClassifierTypeRef;
 		val checkVisibility = true;

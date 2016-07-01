@@ -23,6 +23,7 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.TypedElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
@@ -30,12 +31,14 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
@@ -49,14 +52,13 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.typeinference.N4JSTypeInferencer
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import org.eclipse.emf.ecore.EObject
@@ -70,7 +72,6 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.TypedElement
 
 /**
  * Class for validating the N4JS types.
@@ -79,9 +80,6 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private XsemanticsValidatorErrorGenerator errorGenerator;
-
-	@Inject
-	private N4JSTypeInferencer typeInferencer;
 
 	@Inject
 	private N4JSTypeSystem ts;
@@ -303,7 +301,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 				// ok, we have the situation we are interested in (setter on LHS of compound assignment)
 				// --> now check if there is a matching getter of correct type
 				val TSetter setter = prop;
-				val Type targetType = typeInferencer.tau(lhs.target)?.declaredType;
+				val Type targetType = ts.tau(lhs.target)?.declaredType;
 				if (targetType instanceof ContainerType<?>) {
 					val TMember m = containerTypesHelper.fromContext(assExpr).findMember(targetType, setter.name, false, setter.static);
 					if (m === null) {
@@ -320,7 +318,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 						val expectedType = ts.expectedTypeIn(G, assExpr, assExpr.rhs).value;
 						val TypeRef typeOfGetterRAW = TypeUtils.getMemberTypeRef(getter);
 						if (expectedType !== null && typeOfGetterRAW !== null) {
-							val TypeRef typeOfGetter = typeInferencer.substituteTypeVariables(G, typeOfGetterRAW);
+							val TypeRef typeOfGetter = ts.substTypeVariablesInTypeRef(G, typeOfGetterRAW);
 							if (typeOfGetter !== null) {
 								val result = ts.subtype(G, typeOfGetter, expectedType);
 								createError(result, assExpr.lhs);
@@ -475,6 +473,20 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 //		}
 //
 //	}
+
+	/**
+	 * @see <a href="https://github.com/NumberFour/n4js/issues/221">#221</a>
+	 */
+	@Check
+	def checkClassifierType(ClassifierTypeRef classifierTypeRef) {
+		if (! (classifierTypeRef instanceof ConstructorTypeRef)) { // type{X}, not ctor{X}
+			if (classifierTypeRef.typeArg instanceof Wildcard) {
+				addIssue(IssueCodes.getMessageForTYS_WILDCARD_IN_TYPETYPE, classifierTypeRef.typeArg, TYS_WILDCARD_IN_TYPETYPE);
+			}
+		}
+	}
+
+
 
 	def boolean createError(Result<?> result, EObject source) {
 		if (result.failed) {

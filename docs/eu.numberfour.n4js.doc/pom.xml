@@ -5,7 +5,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <artifactId>eu.numberfour.n4js.doc</artifactId>
     <packaging>eclipse-plugin</packaging>
     <description>Converting AsciiDoc to HTML5, using an external page list to point the eclipse help plugin to the HTML files which generates a toc.xml in basedir (same dir as plugin.xml)</description>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <asciidoctor.maven.plugin.version>1.5.3</asciidoctor.maven.plugin.version>
@@ -14,17 +14,29 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <asciidoctorj.pdf.version>1.5.0-alpha.11</asciidoctorj.pdf.version>
         <asciidoctor-epub3.version>1.5.0-alpha.6</asciidoctor-epub3.version>
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-        
+
         <eclipse.html>eclipse-html</eclipse.html>
-        <website.html>documentation</website.html>
-        <epub.dir>epub</epub.dir>
-        <eclipseHelpBaseDir>${basedir}</eclipseHelpBaseDir>
+        <website.html>website-html</website.html>
+
+        <epub.target.dir>${basedir}/target/epub</epub.target.dir>
+        <pdf.dir>${basedir}/target/pdf</pdf.dir>
+
+        <eclipseHelpBaseDir>${basedir}/target</eclipseHelpBaseDir>
         <eclipseHelpDir>${eclipseHelpBaseDir}/${eclipse.html}</eclipseHelpDir>
-        <help.pages.list>help-pages.txt</help.pages.list>
+        <eclipseUserguidesDir>${eclipseHelpDir}/userguides</eclipseUserguidesDir>
+
+        <help.userguides.list>userguide-list.txt</help.userguides.list>
+        <help.articles.list>article-list.txt</help.articles.list>
+
+        <indices.dir>${basedir}/src-gen/indices</indices.dir>
+        
+        <dist>dist</dist>
+        <distribution.dir>${basedir}/${dist}</distribution.dir>
+
     </properties>
 
 
-    
+
     <parent>
         <groupId>eu.numberfour.n4js</groupId>
         <artifactId>eu.numberfour.n4js.docs</artifactId>
@@ -75,7 +87,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>${asciidoctor.maven.plugin.version}</version>              
+                <version>${asciidoctor.maven.plugin.version}</version>
                 <dependencies>
                     <!-- Comment this section to use the default jruby artifact provided by the plugin -->
                     <dependency>
@@ -100,62 +112,73 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <version>${asciidoctor-epub3.version}</version>
                     </dependency>
                 </dependencies>
-                
-                <executions> 
-                    <!-- Generate Eclipse HTML without TOC-->
+
+                <executions>
+                    <!-- Generate Eclipse HTML-->
                     <execution>
-                        <id>asciidoc-to-eclipse-html</id> 
+                        <id>asciidoc-to-eclipse-html</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
                             <sourceDirectory>src/</sourceDirectory>
-                            <preserveDirectories>true</preserveDirectories> 
-                            <outputDirectory>${eclipseHelpDir}</outputDirectory>
-                            <includedir>${basedir}/documentation</includedir>
+                            <preserveDirectories>true</preserveDirectories>
+                            <outputDirectory>target/eclipse-html</outputDirectory>
                             <backend>html5</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes> <!-- Individual attributes per conversion execution -->
                                 <toc>false</toc> <!-- No embedded TOC -->
-                                <stylesdir>styles</stylesdir>
+                                <stylesdir>../styles</stylesdir>
                                 <stylesheet>foundation.css</stylesheet>
+                                <highlightjsdir>../scripts</highlightjsdir>
+                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <eclipse>true</eclipse>
                                 <website>false</website>
+                                <experimental>true</experimental>
+                                <commandkey>&#8984;</commandkey>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
+                                <linkcss>true</linkcss>
+                                <docinfodir>${basedir}/src/_headers</docinfodir>
+                                <docinfo>true</docinfo>
                             </attributes>
                         </configuration>
                     </execution>
-                    
+
                     <!-- Convert ADOC to HTML (website) -->
                     <execution>
-                        <id>asciidoc-to-website-html</id> 
+                        <id>asciidoc-to-website-html</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${basedir}/src/documentation</sourceDirectory>
-                            <preserveDirectories>false</preserveDirectories> 
+                            <sourceDirectory>src/</sourceDirectory>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
+                            <preserveDirectories>true</preserveDirectories>
                             <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
                             <backend>html5</backend>
-                            <sourceHighlighter>highlightjs</sourceHighlighter>
-                            <attributes> 
+                            <showtitle>false</showtitle>
+                            <attributes>
                                 <!-- Individual attributes per conversion execution -->
-                                <stylesdir>../styles</stylesdir>
-                                <toc>left</toc>
-                                <stylesheet>n4js-adoc.css</stylesheet>
                                 <icons>font</icons>
-                                <docinfodir>../../</docinfodir>
+                                <linkcss>true</linkcss>
+                                <stylesdir>${basedir}/src/styles</stylesdir>
+                                <stylesheet>n4js-adoc.css</stylesheet>
+                                <highlightjsdir>/scripts</highlightjsdir>
+                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
+                                <doctype>book</doctype>
+                                <experimental>true</experimental>
+                                <commandkey>&#8984;</commandkey>
                                 <eclipse>false</eclipse>
                                 <website>true</website>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
+                                <docinfodir>${basedir}/src/_headers</docinfodir>
                                 <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>
@@ -169,14 +192,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </goals>
                         <configuration>
                             <skip>true</skip>  <!-- Execution skipped! -->
-                            <sourceDirectory>src/</sourceDirectory>
-                            <sourceDocumentName>userguides.adoc</sourceDocumentName>
-                            <outputDirectory>${project.build.directory}/${epub.dir}</outputDirectory>
-                            <preserveDirectories>false</preserveDirectories> 
+                            <sourceDirectory>src/_epub</sourceDirectory>
+                            <outputDirectory>${epub.target.dir}</outputDirectory>
+                            <preserveDirectories>true</preserveDirectories>
+                            <docsdir>${docs.src.dir}/userguides/</docsdir>
                             <backend>epub3</backend>
-                            <sourceHighlighter>highlightjs</sourceHighlighter>
                             <attributes>
-                                <imagesdir>images</imagesdir>
+                                <sourceHighlighter>highlightjs</sourceHighlighter>
+                                <highlightjsdir>/scripts</highlightjsdir>
+                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
                                 <doctype>book</doctype>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
@@ -187,23 +211,24 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution>
 
-                   
+
                     <!-- PDF Generation of User Guides -->
-                    <execution> 
-                        <id>asciidoc-to-pdf</id> 
+                    <execution>
+                        <id>asciidoc-to-pdf</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
                             <skip>true</skip> <!-- Execution skipped! -->
-                            <sourceDirectory>src/documentation</sourceDirectory>
-                            <outputDirectory>${project.build.directory}/pdf</outputDirectory>
+                            <sourceDirectory>src/</sourceDirectory>
+                            <outputDirectory>${pdf.dir}</outputDirectory>
                             <backend>pdf</backend>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
-                            <attributes> 
-                                <toc>left</toc> 
-                                <imagesdir>../images</imagesdir>
+                            <highlightjsdir>/scripts</highlightjsdir>
+                            <highlightjs-theme>n4jshighlighter</highlightjs-theme>
+                            <attributes>
+                                <toc>left</toc>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
@@ -211,14 +236,36 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <docinfo1>false</docinfo1>
                             </attributes>
                         </configuration>
-                    </execution> 
+                    </execution>
                 </executions>
-             </plugin>          
+            </plugin>
+
             <!-- eclipse-help file list generation -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
+                    <!-- userguides file list generation -->
                     <execution>
+                        <id>userguide-page-list-creation</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo>Running directory listing dir=${eclipseUserguidesDir}</echo>
+                                <fileset id="eclipseuserguides.pages" dir="${eclipseUserguidesDir}" includes="*.html" excludes=""/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipseuserguides.pages">
+                                    <map from="${project.build.directory}" to="${dist}" />
+                                </pathconvert>
+                                <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${indices.dir}/${help.userguides.list}">${prop.dist.contents}</echo>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <!-- articles and features file list generation -->
+                    <execution>
+                        <id>article-page-list-creation</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>run</goal>
@@ -226,16 +273,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="documentation/index.html"/>
-                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.pages">
-                                    <map from="${eclipseHelpBaseDir}/" to="" />
-                                </pathconvert> 
+                                <fileset id="eclipsehelp.articles.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/*.html,_headers/*.html"/>
+                                <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.articles.pages">
+                                    <map from="${project.build.directory}" to="${dist}" />
+                                </pathconvert>
                                 <echo encoding="${file.encoding}" >${prop.dist.contents}</echo>
-                                <echo encoding="${file.encoding}" output="${help.pages.list}">${prop.dist.contents}</echo>
+                                <echo encoding="${file.encoding}" output="${indices.dir}/${help.articles.list}">${prop.dist.contents}</echo>
                             </target>
                         </configuration>
                     </execution>
-                </executions>           
+                </executions>
             </plugin>
 
             <!-- HTML to Eclipse TOC.XML -->
@@ -244,67 +291,116 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 <artifactId>geneclipsetoc-maven-plugin</artifactId>
                 <version>1.0.2</version>
                 <executions>
+                    <!-- generating userguides TOC -->
                     <execution>
+                        <id>userguides-toc</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>geneclipsetoc</goal>
                         </goals>
                         <configuration>
                             <sourceFolder>${basedir}</sourceFolder>
-                            <pagesListFile>${help.pages.list}</pagesListFile>
-                            <outputTocFile>toc.xml</outputTocFile>
+                            <pagesListFile>${indices.dir}/${help.userguides.list}</pagesListFile>
+                            <outputTocFile>${indices.dir}/userguides.xml</outputTocFile>
+                        </configuration>
+                    </execution>
+                    <!-- generating articles TOC -->
+                    <execution>
+                        <id>articles-toc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>geneclipsetoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFolder>${basedir}</sourceFolder>
+                            <pagesListFile>${indices.dir}/${help.articles.list}</pagesListFile>
+                            <outputTocFile>${indices.dir}/articles.xml</outputTocFile>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> 
+            </plugin>
+            
+            <!-- 
+            	Plugin to copy the final output from the /target/ folder into the /dist/folder  
+            	
+            	-->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>${maven-resources-plugin.version}</version>
+              <executions>
+                <execution>
+                  <id>distribute-eclipse-help-content</id>
+                  <phase>process-resources</phase>
+                  <configuration>
+                    <outputDirectory>${distribution.dir}</outputDirectory>
+                    <overwrite>true</overwrite>
+                    <includeEmptyDirs>true</includeEmptyDirs>
+                    <resources>
+                      <resource>
+                        <directory>${project.build.directory}</directory>
+                        
+                        <includes>
+                          <!-- Insert more folders here. Make sure that folders end with slash ('/') -->
+                          <include>${eclipse.html}/</include>
+                        </includes>
+                        
+                        <filtering>false</filtering>
+                      </resource>
+                    </resources>
+                  </configuration>
+                  <goals>
+                    <goal>copy-resources</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+
         </plugins>
     </build>
-    
-    
+
     <profiles>
         <!-- disable tycho functionality in case of "-Dtycho.mode=maven" on command line -->
         <profile>
-          <id>tycho.mode.maven</id>
-          <activation>
+            <id>tycho.mode.maven</id>
+            <activation>
             <property>
                 <name>tycho.mode</name>
                 <value>maven</value>
             </property>
-          </activation>
-          <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-packaging-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-build-qualifier</id> <phase /> </execution>
-                        <execution> <id>default-validate-version</id> <phase /> </execution>
-                        <execution> <id>default-validate-id</id> <phase /> </execution>
-                        <execution> <id>default-package-plugin</id> <phase /> </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-compiler-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-compile</id> <phase /> </execution>
-                    </executions>
-                </plugin> 
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-p2-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <executions>
-                        <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
-                        <execution> <id>attach-p2-metadata</id> <phase /> </execution>
-                    </executions>
-                </plugin>
-                
-            </plugins>
-          </build>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-packaging-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-build-qualifier</id> <phase /> </execution>
+                            <execution> <id>default-validate-version</id> <phase /> </execution>
+                            <execution> <id>default-validate-id</id> <phase /> </execution>
+                            <execution> <id>default-package-plugin</id> <phase /> </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-compiler-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-compile</id> <phase /> </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-p2-plugin</artifactId>
+                        <version>${tycho.version}</version>
+                        <executions>
+                            <execution> <id>default-p2-metadata-default</id> <phase /> </execution>
+                            <execution> <id>attach-p2-metadata</id> <phase /> </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
-    
 </project>

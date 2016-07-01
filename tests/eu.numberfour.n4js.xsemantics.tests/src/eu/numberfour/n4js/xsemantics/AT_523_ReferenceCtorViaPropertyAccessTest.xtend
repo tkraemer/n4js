@@ -39,7 +39,6 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var resultNewInstance: C = new ctor();
 		'''.assertValidationErrors(
 		'''
-		A reference to method constructor is created detached from a (correct) this-instance.
 		'''
 		)
 	}
@@ -84,7 +83,6 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var result2: C = z2;
 		'''.assertValidationErrors(
 		'''
-		A reference to method constructor is created detached from a (correct) this-instance.
 		'''
 		)
 	}

@@ -13,8 +13,9 @@
 */
 
 /* XPECT organizeImports --- 
+  
 + import { A } from "
-| [var|a/a2/A"]
+| [var|a/a2/A";]
 | [|var] x = A;
 --- */
 var x = A;

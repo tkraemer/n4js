@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+// cf. https://github.com/NumberFour/n4js/issues/221
+
+interface G<T extends N4Object> {
+    // XPECT noerrors -->
+    type: constructor{T}; 
+}
+
+class C{
+
+    private createFromInjectedTypeMeta(meta: G<? extends N4Object>) {
+    	// XPECT noerrors -->
+        let metaType = meta.type;
+        // XPECT errors --> "Cannot instantiate ? extends N4Object." at "metaType"
+    	new metaType();
+    }
+}
+

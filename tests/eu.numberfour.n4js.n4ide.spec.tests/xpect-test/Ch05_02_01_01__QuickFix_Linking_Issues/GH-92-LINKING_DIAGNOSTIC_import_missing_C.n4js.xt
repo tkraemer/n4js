@@ -26,7 +26,7 @@
   // 
   import {A} from "proposal/module/A"// single line comment in ASI place
 + import { B } from "
-| [var|proposal/module/A"]
+| [var|proposal/module/A";]
 | [|var] a: A;
   var b: B; 
 ---

@@ -1340,6 +1340,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case TypeRefsPackage.INTERSECTION_TYPE_EXPRESSION:
 				if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getIntersectionTypeExpressionOLDRule()) {
 					sequence_IntersectionTypeExpressionOLD(context, (IntersectionTypeExpression) semanticObject); 
 					return; 
@@ -1488,6 +1489,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				}
 				else if (rule == grammarAccess.getTypeRefWithoutModifiersRule()
 						|| rule == grammarAccess.getTypeRefFunctionTypeExpressionRule()
+						|| rule == grammarAccess.getTypeRefForCastRule()
 						|| rule == grammarAccess.getUnionTypeExpressionOLDRule()) {
 					sequence_UnionTypeExpressionOLD(context, (UnionTypeExpression) semanticObject); 
 					return; 
@@ -1498,7 +1500,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					sequence_WildcardNewNotation(context, (Wildcard) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getWildcardRule()) {
+				else if (rule == grammarAccess.getTypeRefInClassifierTypeRule()
+						|| rule == grammarAccess.getWildcardRule()) {
 					sequence_Wildcard(context, (Wildcard) semanticObject); 
 					return; 
 				}
@@ -8422,15 +8425,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ClassifierTypeRef returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ClassifierTypeRef(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getClassifierTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -8448,7 +8451,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeArgument returns ClassifierTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ClassifierTypeRef_TypeRefWithModifiers(ISerializationContext context, ClassifierTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -8547,15 +8550,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ConstructorTypeRef returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     staticTypeRef=TypeRefInClassifierType
+	 *     typeArg=TypeRefInClassifierType
 	 */
 	protected void sequence_ConstructorTypeRef(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__STATIC_TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF__TYPE_ARG));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getStaticTypeRefTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getStaticTypeRef());
+		feeder.accept(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeRefInClassifierTypeParserRuleCall_3_0(), semanticObject.getTypeArg());
 		feeder.finish();
 	}
 	
@@ -8573,7 +8576,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TypeArgument returns ConstructorTypeRef
 	 *
 	 * Constraint:
-	 *     (staticTypeRef=TypeRefInClassifierType undefModifier=UndefModifierToken?)
+	 *     (typeArg=TypeRefInClassifierType undefModifier=UndefModifierToken?)
 	 */
 	protected void sequence_ConstructorTypeRef_TypeRefWithModifiers(ISerializationContext context, ConstructorTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -12570,6 +12573,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns IntersectionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns IntersectionTypeExpression
+	 *     TypeRefForCast returns IntersectionTypeExpression
 	 *     IntersectionTypeExpressionOLD returns IntersectionTypeExpression
 	 *
 	 * Constraint:
@@ -21957,13 +21961,13 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructMember returns TStructMethod
 	 *     TStructMethod returns TStructMethod
+	 *     TStructMember returns TStructMethod
 	 *
 	 * Constraint:
 	 *     (
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
-	 *         name=TypesIdentifier 
+	 *         name=IdentifierName 
 	 *         (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? 
 	 *         returnTypeRef=TypeRef?
 	 *     )
@@ -21999,11 +22003,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructMember returns TStructField
 	 *     TStructField returns TStructField
+	 *     TStructMember returns TStructField
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier typeRef=TypeRef?)
+	 *     (name=IdentifierName typeRef=TypeRef?)
 	 */
 	protected void sequence_TStructField(ISerializationContext context, TStructField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -22012,11 +22016,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructMember returns TStructGetter
 	 *     TStructGetter returns TStructGetter
+	 *     TStructMember returns TStructGetter
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier declaredTypeRef=TypeRef?)
+	 *     (name=IdentifierName declaredTypeRef=TypeRef?)
 	 */
 	protected void sequence_TStructGetter(ISerializationContext context, TStructGetter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -22071,11 +22075,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructMember returns TStructSetter
 	 *     TStructSetter returns TStructSetter
+	 *     TStructMember returns TStructSetter
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier fpar=TAnonymousFormalParameter)
+	 *     (name=IdentifierName fpar=TAnonymousFormalParameter)
 	 */
 	protected void sequence_TStructSetter(ISerializationContext context, TStructSetter semanticObject) {
 		if (errorAcceptor != null) {
@@ -22085,7 +22089,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.TSETTER__FPAR));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTStructSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0(), semanticObject.getFpar());
 		feeder.finish();
 	}
@@ -23813,6 +23817,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Contexts:
 	 *     TypeRefWithoutModifiers returns UnionTypeExpression
 	 *     TypeRefFunctionTypeExpression returns UnionTypeExpression
+	 *     TypeRefForCast returns UnionTypeExpression
 	 *     UnionTypeExpressionOLD returns UnionTypeExpression
 	 *
 	 * Constraint:
@@ -23948,6 +23953,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     TypeRefInClassifierType returns Wildcard
 	 *     Wildcard returns Wildcard
 	 *
 	 * Constraint:

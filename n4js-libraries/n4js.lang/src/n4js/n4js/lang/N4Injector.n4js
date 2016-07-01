@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -208,7 +208,7 @@ export public class N4Injector{
         // - ? <: T
         // - ~N4Provider<T>
         // - ? <: ~N4Provider<T>
-        return this.internalCreate(ctor as constructor{N4Object}, this, cachedInstances) as T;
+        return this.internalCreate((ctor as Object) as constructor{N4Object}, this, cachedInstances) as T;
     }
 
     /**
@@ -451,9 +451,13 @@ export public class N4Injector{
             }
         }
         //TODO IDEBUG-541 handle ctor of an abstract class
-        var instance = Object.create(ctor.prototype) as N4Object;
-        instance = (ctor as Function).apply(instance, parameters) as N4Object || instance;
-        return instance;
+
+        var args = parameters.slice();
+        args.unshift(null);
+        ctor = Function.prototype.bind.apply(ctor, args) as constructor{N4Object};
+        return new ctor();
+        // TODO node6 until Reflect.construct has settled
+        //return Reflect.construct(ctor, parameters) as N4Object;
     }
 
     /**

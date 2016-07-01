@@ -34,11 +34,6 @@ import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.projectModel.ProjectUtils
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.utils.StructuralTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.xsemantics.N4JSTypeSystem
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -54,6 +49,12 @@ import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.ResourceType
+import eu.numberfour.n4js.utils.StructuralTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
@@ -62,7 +63,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
