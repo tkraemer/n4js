@@ -1,0 +1,59 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   Preference "format.switch_cases_have_space_in_front_of_colon" "true" {}
+   
+   END_SETUP
+ */
+ 
+enum XMode {
+	A,B,C,Z
+}
+class YStuff {
+	static E = 1;
+	static F = 2;
+	static G = 3;
+}
+
+
+/* XPECT formattedLines 19 ---
+class A {
+	// This is a comment.
+	private static getSomething(mode: XMode): number {
+		switch(mode) {
+			case XMode.A :
+				return YStuff.E;
+
+			case XMode.B :
+				return YStuff.F;
+
+			case XMode.C :
+				return YStuff.G;
+
+			case XMode.Z :
+				return -1;
+
+			default :
+				throw new Error("Incorrect XMode!");
+		}
+	}
+}
+--- */
+class A {
+    // This is a comment.
+    private static getSomething(mode: XMode): number {
+        switch(mode){
+            case XMode.A: 
+            	return YStuff.E;
+
+      case XMode.B: 
+            	return YStuff.F;
+
+            case XMode.C: return YStuff.G;
+
+            case XMode.Z: 
+            	return -1;
+
+            default: throw new Error("Incorrect XMode!");
+        }
+    }
+}

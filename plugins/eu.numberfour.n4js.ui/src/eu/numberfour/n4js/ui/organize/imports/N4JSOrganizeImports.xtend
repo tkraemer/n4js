@@ -14,7 +14,6 @@ import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import eu.numberfour.n4js.documentation.N4JSDocumentationProvider
-import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
@@ -73,6 +72,7 @@ import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 import eu.numberfour.n4js.organize.imports.ImportProvidedElement
+import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 
 /**
  */
@@ -406,7 +406,7 @@ public class N4JSOrganizeImports {
 		
 
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
-		// cannot be solved here. Candidate for quickfix.
+		// cannot be solved here. Candidate for quick fix.
 		// val unresolved = state.unresolved
 		val Map<EObject,Collection<EStructuralFeature.Setting>> unres = EcoreUtil.UnresolvedProxyCrossReferencer.find(script)
 
@@ -659,9 +659,9 @@ public class N4JSOrganizeImports {
 
 	private def String extractPureText(ImportDeclaration declaration) {
 		if (declaration.eAdapters.contains(nodelessMarker)) {
-			
-			val impSpec = declaration.importSpecifiers
-			val module = declaration.module.moduleSpecifier
+			// wrap importSpecifiers in new ArrayList, to support sorting (GH-48)
+			val impSpec = new ArrayList( declaration.importSpecifiers ); 
+			val module = declaration.module.moduleSpecifier;
 			
 			if (impSpec.size === 1) {
 

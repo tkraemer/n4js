@@ -20,7 +20,6 @@ import org.eclipse.xtext.formatting2.regionaccess.ITextRegionAccess;
 import org.eclipse.xtext.formatting2.regionaccess.ITextReplacement;
 import org.eclipse.xtext.formatting2.regionaccess.ITextSegment;
 import org.eclipse.xtext.formatting2.regionaccess.TextRegionAccessBuilder;
-import org.eclipse.xtext.preferences.MapBasedPreferenceValues;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.ExceptionAcceptor;
 import org.xpect.XpectImport;
@@ -28,6 +27,7 @@ import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
+import org.xpect.setup.ISetupInitializer;
 import org.xpect.setup.XpectSetupFactory;
 import org.xpect.state.Creates;
 import org.xpect.xtext.lib.setup.ThisOffset;
@@ -38,13 +38,15 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys;
 import eu.numberfour.n4js.xpect.FormatterXpectMethod.TextRegionAccessFactory;
+import eu.numberfour.n4js.xpect.config.Preference;
+import eu.numberfour.n4js.xpect.config.Preferences;
 
 /**
  * @author Moritz Eysholdt
  */
 
 @SuppressWarnings("restriction")
-@XpectImport(TextRegionAccessFactory.class)
+@XpectImport({ TextRegionAccessFactory.class, Preferences.class, Preference.class })
 public class FormatterXpectMethod {
 
 	/**
@@ -79,16 +81,20 @@ public class FormatterXpectMethod {
 	@ParameterParser(syntax = "arg1=INT")
 	public void formattedLines(
 			@StringExpectation(whitespaceSensitive = true) IStringExpectation exp,
-			int lines,
+			int lines, // arg1
 			@ThisOffset int o,
-			ITextRegionAccess reg) {
+			ITextRegionAccess reg,
+			ISetupInitializer<Preferences> prefInit) {
 		ITextSegment region = getRegionForLines(reg, o, lines);
 
-		IFormatter2 formatter = formatterProvider.get();
+		Preferences prefs = new Preferences();
+		// First put some defaults
+		prefs.put(N4JSFormatterPreferenceKeys.FORMAT_PARENTHESIS, true);
+		prefs.put(FormatterPreferenceKeys.lineSeparator, "\n");
+		// Second init from concrete tests - will override defaults.
+		prefInit.initialize(prefs);
 
-		MapBasedPreferenceValues preferenceValues = new MapBasedPreferenceValues();
-		preferenceValues.put(N4JSFormatterPreferenceKeys.FORMAT_PARENTHESIS, true);
-		preferenceValues.put(FormatterPreferenceKeys.lineSeparator, "\n");
+		IFormatter2 formatter = formatterProvider.get();
 
 		FormatterRequest request = formatterRequestProvider.get();
 		request.setTextRegionAccess(reg);
@@ -98,7 +104,7 @@ public class FormatterXpectMethod {
 		request.setAllowIdentityEdits(true);
 		request.setFormatUndefinedHiddenRegionsOnly(false);
 		request.addRegion(region);
-		request.setPreferences(preferenceValues);
+		request.setPreferences(prefs);
 
 		List<ITextReplacement> replacements = formatter.format(request);
 		String fmt = reg.getRewriter().renderToString(replacements);

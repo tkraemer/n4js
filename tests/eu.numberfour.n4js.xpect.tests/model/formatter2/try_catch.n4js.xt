@@ -1,0 +1,68 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+ 
+enum XMode {
+	A,B,C,Z
+}
+class YStuff {
+	static E = 1;
+	static F = 2;
+	static G = 3;
+}
+
+/* XPECT formattedLines 13 ---
+class A {
+	// This is a comment.
+	private static getSomething(mode: XMode): String {
+		try {
+			// If a base is specified, ....
+			let bigNumber = 10;
+			return new String(bigNumber);
+		} catch(exc) { // Catch any internal xx.js errors!
+			throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+		}
+	}
+}
+--- */
+class A {
+    // This is a comment.
+    private static getSomething(mode: XMode): String {
+         try {
+            //If a base is specified, ....
+            let bigNumber = 10;
+            return new String(bigNumber);
+        } 
+        catch(exc) {//Catch any internal xx.js errors!
+            throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+        }
+    }
+}
+
+
+/* XPECT formattedLines 14 ---
+try {
+	// If a base is specified, ....
+	let bigNumber = 10;
+	new String(bigNumber);
+} catch(exc) { // Catch any internal xx.js errors!
+	throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+} finally {
+	console.log("abc");
+}
+--- */
+try {
+    //If a base is specified, ....
+    let bigNumber = 10;
+    new String(bigNumber);
+} 
+catch(exc) 
+{//Catch any internal xx.js errors!
+    throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+}
+finally
+{
+	console.log("abc");	
+}
+
