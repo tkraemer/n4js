@@ -4619,6 +4619,18 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         if (!((!Objects.equal(leftCtor, null)) && (!Objects.equal(rightCtor, null)))) {
           sneakyThrowRuleFailedException("leftCtor!=null && rightCtor!=null");
         }
+        /* G |- leftCtor : var TypeRef leftCtorRef */
+        TypeRef leftCtorRef = null;
+        Result<TypeRef> result = typeInternal(G, _trace_, leftCtor);
+        checkAssignableTo(result.getFirst(), TypeRef.class);
+        leftCtorRef = (TypeRef) result.getFirst();
+        
+        /* G |- rightCtor : var TypeRef rightCtorRef */
+        TypeRef rightCtorRef = null;
+        Result<TypeRef> result_1 = typeInternal(G, _trace_, rightCtor);
+        checkAssignableTo(result_1.getFirst(), TypeRef.class);
+        rightCtorRef = (TypeRef) result_1.getFirst();
+        
         final RuleEnvironment G_left = RuleEnvironmentExtensions.wrap(G);
         final RuleEnvironment G_right = RuleEnvironmentExtensions.wrap(G);
         TypeRef _ref = TypeExtensions.ref(left_staticType);
@@ -4629,19 +4641,17 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         this.typeSystemHelper.addSubstitutions(G_right, _ref_2);
         TypeRef _ref_3 = TypeExtensions.ref(right_staticType);
         RuleEnvironmentExtensions.addThisType(G_right, _ref_3);
-        /* G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst */
-        FunctionTypeRef _ref_4 = TypeExtensions.ref(leftCtor);
+        /* G_left |- leftCtorRef ~> var TypeRef leftCtorRefSubst */
         TypeRef leftCtorRefSubst = null;
-        Result<TypeArgument> result = substTypeVariablesInternal(G_left, _trace_, _ref_4);
-        checkAssignableTo(result.getFirst(), TypeRef.class);
-        leftCtorRefSubst = (TypeRef) result.getFirst();
+        Result<TypeArgument> result_2 = substTypeVariablesInternal(G_left, _trace_, leftCtorRef);
+        checkAssignableTo(result_2.getFirst(), TypeRef.class);
+        leftCtorRefSubst = (TypeRef) result_2.getFirst();
         
-        /* G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst */
-        FunctionTypeRef _ref_5 = TypeExtensions.ref(rightCtor);
+        /* G_right |- rightCtorRef ~> var TypeRef rightCtorRefSubst */
         TypeRef rightCtorRefSubst = null;
-        Result<TypeArgument> result_1 = substTypeVariablesInternal(G_right, _trace_, _ref_5);
-        checkAssignableTo(result_1.getFirst(), TypeRef.class);
-        rightCtorRefSubst = (TypeRef) result_1.getFirst();
+        Result<TypeArgument> result_3 = substTypeVariablesInternal(G_right, _trace_, rightCtorRef);
+        checkAssignableTo(result_3.getFirst(), TypeRef.class);
+        rightCtorRefSubst = (TypeRef) result_3.getFirst();
         
         /* G |- leftCtorRefSubst <: rightCtorRefSubst */
         subtypeInternal(G, _trace_, leftCtorRefSubst, rightCtorRefSubst);
@@ -4650,30 +4660,30 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       /* G |~ left.typeArg /\ var TypeRef upperBoundLeft */
       TypeArgument _typeArg_2 = left.getTypeArg();
       TypeRef upperBoundLeft = null;
-      Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, _typeArg_2);
-      checkAssignableTo(result_2.getFirst(), TypeRef.class);
-      upperBoundLeft = (TypeRef) result_2.getFirst();
+      Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, _typeArg_2);
+      checkAssignableTo(result_4.getFirst(), TypeRef.class);
+      upperBoundLeft = (TypeRef) result_4.getFirst();
       
       /* G |~ left.typeArg \/ var TypeRef lowerBoundLeft */
       TypeArgument _typeArg_3 = left.getTypeArg();
       TypeRef lowerBoundLeft = null;
-      Result<TypeRef> result_3 = lowerBoundInternal(G, _trace_, _typeArg_3);
-      checkAssignableTo(result_3.getFirst(), TypeRef.class);
-      lowerBoundLeft = (TypeRef) result_3.getFirst();
+      Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, _typeArg_3);
+      checkAssignableTo(result_5.getFirst(), TypeRef.class);
+      lowerBoundLeft = (TypeRef) result_5.getFirst();
       
       /* G |~ right.typeArg /\ var TypeRef upperBoundRight */
       TypeArgument _typeArg_4 = right.getTypeArg();
       TypeRef upperBoundRight = null;
-      Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, _typeArg_4);
-      checkAssignableTo(result_4.getFirst(), TypeRef.class);
-      upperBoundRight = (TypeRef) result_4.getFirst();
+      Result<TypeRef> result_6 = upperBoundInternal(G, _trace_, _typeArg_4);
+      checkAssignableTo(result_6.getFirst(), TypeRef.class);
+      upperBoundRight = (TypeRef) result_6.getFirst();
       
       /* G |~ right.typeArg \/ var TypeRef lowerBoundRight */
       TypeArgument _typeArg_5 = right.getTypeArg();
       TypeRef lowerBoundRight = null;
-      Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, _typeArg_5);
-      checkAssignableTo(result_5.getFirst(), TypeRef.class);
-      lowerBoundRight = (TypeRef) result_5.getFirst();
+      Result<TypeRef> result_7 = lowerBoundInternal(G, _trace_, _typeArg_5);
+      checkAssignableTo(result_7.getFirst(), TypeRef.class);
+      lowerBoundRight = (TypeRef) result_7.getFirst();
       
       /* G |- upperBoundLeft <: upperBoundRight */
       subtypeInternal(G, _trace_, upperBoundLeft, upperBoundRight);
