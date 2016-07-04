@@ -659,9 +659,9 @@ public class N4JSOrganizeImports {
 
 	private def String extractPureText(ImportDeclaration declaration) {
 		if (declaration.eAdapters.contains(nodelessMarker)) {
-			
-			val impSpec = declaration.importSpecifiers
-			val module = declaration.module.moduleSpecifier
+			// wrap importSpecifiers in new ArrayList, to support sorting (GH-48)
+			val impSpec = new ArrayList( declaration.importSpecifiers ); 
+			val module = declaration.module.moduleSpecifier;
 			
 			if (impSpec.size === 1) {
 
