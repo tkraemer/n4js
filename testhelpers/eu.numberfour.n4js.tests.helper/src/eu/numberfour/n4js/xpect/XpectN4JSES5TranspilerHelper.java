@@ -56,12 +56,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.AnnotationDefinition;
 import eu.numberfour.n4js.generator.common.AbstractSubGenerator;
-import eu.numberfour.n4js.n4JS.Annotation;
-import eu.numberfour.n4js.n4JS.AnnotationArgument;
-import eu.numberfour.n4js.n4JS.Literal;
-import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument;
 import eu.numberfour.n4js.n4JS.Script;
-import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
@@ -225,8 +220,8 @@ public class XpectN4JSES5TranspilerHelper {
 	 * @param fileSetupContext
 	 *            xpect injected
 	 * @param decorateStdStreams
-	 *            false-just connect stdout+stderr or errors to resulting string, true - decorate the streams with
-	 *            "<== stdout: ..."
+	 *            false-just connect stdout+stderr or errors to resulting string, true - decorate the streams with "<==
+	 *            stdout: ..."
 	 * @param resourceTweaker
 	 *            - resource-modifier like QuickFix application, can be null
 	 * @param systemLoader
@@ -462,7 +457,7 @@ public class XpectN4JSES5TranspilerHelper {
 			return;
 		}
 
-		String path = getPathFromImplementedByAnnotation(script);
+		// String path = null;
 
 		Optional<? extends IN4JSSourceContainer> sourceOpt = core.findN4JSSourceContainer(dep.getURI());
 		if (sourceOpt.isPresent()) {
@@ -473,21 +468,10 @@ public class XpectN4JSES5TranspilerHelper {
 					String sourceRelativePath = dep.getURI().toString()
 							.replace(source.getLocation().toString(), "");
 					String[] potentialExternalSourceRelativeURISegments = null;
-					if (path == null || !path.contains("/")) {
-						String potentialExternalSourceRelativePath = sourceRelativePath.replace(".n4jsd", ".js");
-						potentialExternalSourceRelativeURISegments = URI.createURI(potentialExternalSourceRelativePath)
-								.segments();
-						if (path != null && !path.contains("/")
-								&& potentialExternalSourceRelativeURISegments.length > 0) {
-							potentialExternalSourceRelativeURISegments[potentialExternalSourceRelativeURISegments.length
-									- 1] = path;
-						}
-					} else {
-						if (!path.endsWith(".js")) {
-							path += ".js";
-						}
-						potentialExternalSourceRelativeURISegments = path.split("/");
-					}
+					String potentialExternalSourceRelativePath = sourceRelativePath.replace(".n4jsd", ".js");
+					potentialExternalSourceRelativeURISegments = URI.createURI(potentialExternalSourceRelativePath)
+							.segments();
+
 					if (potentialExternalSourceRelativeURISegments != null) {
 						URI potentialExternalSourceURI = c.getLocation().appendSegments(
 								potentialExternalSourceRelativeURISegments);
@@ -504,21 +488,6 @@ public class XpectN4JSES5TranspilerHelper {
 				}
 			}
 		}
-	}
-
-	private String getPathFromImplementedByAnnotation(Script depRoot) {
-		String path = null;
-		Annotation scriptAnno = AnnotationDefinition.IMPLEMENTED_BY.getAnnotation(depRoot);
-		if (scriptAnno != null && scriptAnno.getArgs().size() == 1) {
-			AnnotationArgument arg = scriptAnno.getArgs().get(0);
-			if (arg instanceof LiteralAnnotationArgument) {
-				Literal literal = ((LiteralAnnotationArgument) arg).getLiteral();
-				if (literal instanceof StringLiteral) {
-					path = ((StringLiteral) literal).getValue();
-				}
-			}
-		}
-		return path;
 	}
 
 	private File createTempJsFileWithScript(final Script script, final boolean replaceQuotes) throws IOException {
