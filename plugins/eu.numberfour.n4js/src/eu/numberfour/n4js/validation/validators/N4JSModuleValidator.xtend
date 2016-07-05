@@ -15,13 +15,17 @@ import com.google.inject.Provider
 import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4mf.ProjectType
 import eu.numberfour.n4js.projectModel.IN4JSCore
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
+import java.util.Set
 import java.util.regex.Pattern
+import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
@@ -34,13 +38,15 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import org.eclipse.emf.common.util.URI
-import java.util.Set
 
 /**
- * Validates unique module names
+ * Contains module-level validations, i.e. validations that need to be checked once per module / file.
+ * For example: unique module names.
+ * <p>
+ * It contains a helper method to conveniently add issues that do not relate to a particular statement, expression, etc.
+ * but instead relate to the entire file. See {@link N4JSModuleValidator#addIssue(String,Script,String)}
  */
-class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
+class N4JSModuleValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject ResourceDescriptionsProvider resourceDescriptionsProvider
 
@@ -63,6 +69,22 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
+	 * Make sure .n4js files are not located in runtime environments or runtime libraries.
+	 */
+	@Check
+	def void checkNoN4jsInRuntimeEnvOrLib(Script script) {
+		if(JavaScriptVariant.getVariant(script)===JavaScriptVariant.n4js) {
+			val n4jsProject = n4jscore.findProject(script.eResource.URI).orNull;
+			if(n4jsProject!==null) {
+				val projectType = n4jsProject.projectType;
+				if (projectType===ProjectType.RUNTIME_ENVIRONMENT || projectType===ProjectType.RUNTIME_LIBRARY) {
+					addIssue(IssueCodes.messageForNO_N4JS_IN_RUNTIME_ENV_OR_LIBS, script, IssueCodes.NO_N4JS_IN_RUNTIME_ENV_OR_LIBS);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Validates the module name that is derived from the given script.
 	 *
 	 * This validation is defined for the script itself since we need it for the error marker anyway
@@ -77,7 +99,7 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * If the module exists, obtain its name and validate it for uniqueness.
 	 */
-	protected def void checkUniqueName(Script script, TModule module) {
+	private def void checkUniqueName(Script script, TModule module) {
 		if (module === null) {
 			return;
 		}
@@ -91,7 +113,7 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 	 * Find all other modules in the index with the same name and check all the obtained
 	 * candidates for reachable duplicates.
 	 */
-	protected def void doCheckUniqueName(Script script, TModule module, QualifiedName name) {
+	private def void doCheckUniqueName(Script script, TModule module, QualifiedName name) {
 		val resource = module.eResource as XtextResource
 		val index = resourceDescriptionsProvider.getResourceDescriptions(resource)
 		val others = index.getExportedObjects(TypesPackage.Literals.TMODULE, name, false)
@@ -107,7 +129,7 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Check the found candidates for reach	ability via the visible containers.
 	 */
-	protected def void checkUniqueInIndex(Script script, TModule module, Iterable<IEObjectDescription> descriptions, Provider<List<IContainer>> lazyContainersList) {
+	private def void checkUniqueInIndex(Script script, TModule module, Iterable<IEObjectDescription> descriptions, Provider<List<IContainer>> lazyContainersList) {
 		val resourceURIs = descriptions.map[
 			EObjectURI.trimFragment
 		].filter[
@@ -171,9 +193,9 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 				if(filteredMutVisibleResourceURIs.isEmpty) return;
 
 				// list all locations - give the user the possibility to check by himself.
-				val msg = filteredMutVisibleResourceURIs.map[segmentsList.drop(1).join('/')].join("; ");
-
-				script.addIssue(module, msg );
+				val filePathStr = filteredMutVisibleResourceURIs.map[segmentsList.drop(1).join('/')].join("; ");
+				val message = IssueCodes.getMessageForCLF_DUP_MODULE(module.qualifiedName, filePathStr);
+				addIssue(message, script, IssueCodes.CLF_DUP_MODULE);
 			}
 		}
 	}
@@ -189,17 +211,16 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 		return false;
 	}
 
-	static val nonEmpty = Pattern.compile('^.+$', Pattern.MULTILINE)
+	static private val nonEmpty = Pattern.compile('^.+$', Pattern.MULTILINE)
 
 	/**
-	 * Annotated the script with a an error marker on the first AST element or the first none-empty line.
+	 * Annotates the script with a an error marker on the first AST element or the first none-empty line.
 	 */
-	protected def void addIssue(Script script, TModule module, String filePath) {
-		val message = IssueCodes.getMessageForCLF_DUP_MODULE(module.qualifiedName, filePath)
+	private def void addIssue(String message, Script script, String issueCode) {
 
 		val first = script.scriptElements.head;
 		if(first !== null){
-			addIssue(message, first, IssueCodes.CLF_DUP_MODULE);
+			addIssue(message, first, issueCode);
 			return;
 		}
 		val resource = script.eResource as XtextResource;
@@ -213,7 +234,6 @@ class N4JSUniqueModuleNameValidator extends AbstractN4JSDeclarativeValidator {
 			start = matcher.start;
 			end = matcher.end;
 		}
-		addIssue(message, script, start, end - start, IssueCodes.CLF_DUP_MODULE);
+		addIssue(message, script, start, end - start, issueCode);
 	}
-
 }
