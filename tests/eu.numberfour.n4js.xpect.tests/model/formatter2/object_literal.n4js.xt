@@ -13,6 +13,65 @@ let 													u ={ a: 5, b: 6, "z": 7 };
 
 // format single line with trainling comma
 /* XPECT formattedLines 1 ---
-let u2 = {a: 5, b: 6, "z": 7,};
+let u2 = {a: 5, b: 6, "z": 7, };
 --- */
 let u2 ={ a: 5, b: 6, "z": 7, };
+
+
+function o2o (o:Object):Object { return o; }
+
+/* XPECT formattedLines 1 ---
+let u3 = o2o({a: 5, b: 6, "z": 7, dt: {a: 1, n: 2}}),
+	z = o2o({});
+--- */
+let u3=o2o({a:5,b:6,"z":7,dt:{a:1,n:2}}),z=o2o({});
+
+/* XPECT formattedLines 50 ---
+let u4 = o2o({
+		a: 5,
+		b: 6,
+		"z": 7,
+		dt: {a: 1, n: 2}
+	}),
+	z4 = o2o({
+	});
+--- */
+let u4
+   =
+      o2o
+         (
+                { 
+                     a
+                        :
+                           5
+                            , 
+                            b 
+                            :   6
+                              ,
+                                 "z"
+                                    :
+                                       7 
+                                         ,
+                                            dt
+                                             :  
+                                             {  a
+                                                  :
+                                                    1
+                                                      ,
+                                                       n 
+                                                         :
+                                                           2
+                                                             
+                                                 }
+                    }
+         )   
+            , 
+               z4
+                  =
+                     o2o
+                        (
+                                { 
+                                       
+                                }
+                        );
+

@@ -797,8 +797,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(ObjectLiteral ol, extension IFormattableDocument document) {
+		ol.configureCommas(document);
+
 		val bracePair = ol.regionFor.keywordPairs("{","}").head;
 		bracePair.interior[indent];
+		
 		
 		// Decide on multiline or not. 
 		// Rule: if opening brace is preceded by a line break, then go multiline. 
@@ -814,9 +817,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		} else { // in one line
 			bracePair.key.append[newLines=0];
 			ol.propertyAssignments.forEach[it,num|prepend[newLines=0;if(num!==0) { autowrap; oneSpace; } else {noSpace;}]];
-			bracePair.value.prepend[newLines=0; noSpace;];
+			bracePair.value.prepend[newLines=0; noSpace; lowPriority]; // low priority to avoid conflict with dangling commas
 		}
 		
+		ol.eContents.forEach[format];
 	}
 	
 	def dispatch void format( ForStatement fst, extension IFormattableDocument document){
