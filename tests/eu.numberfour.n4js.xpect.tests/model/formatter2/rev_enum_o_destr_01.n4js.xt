@@ -111,7 +111,7 @@ var bar;
 object destructuring, pt. 3: 
  */
 /* XPECT formattedLines 8 ---
-for(var {donkey: bar3} of [{donkey: null}]) {
+for (var {donkey: bar3} of [{donkey: null}]) {
 	//
 }
 --- */
