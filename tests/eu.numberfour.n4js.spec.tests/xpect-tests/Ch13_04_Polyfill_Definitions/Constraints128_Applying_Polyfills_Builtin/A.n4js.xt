@@ -7,6 +7,11 @@
 
 END_SETUP */
 
+
+// XPECT errors --> "An n4js file may not be contained in a runtime component (i.e. runtime environment or runtime library)." at "'first statement for module-level errors';"
+'first statement for module-level errors';
+
+
 // Note: if this test fails, maybe have a look at
 // eu.numberfour.n4js.naming.N4JSQualifiedNameProvider.getPolyfillFQN(TClassifier, IQualifiedNameProvider)
 // as there is a hack which handles built-in types and their global segment slightly differently

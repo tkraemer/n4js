@@ -78,7 +78,7 @@ class N4JSModuleValidator extends AbstractN4JSDeclarativeValidator {
 			if(n4jsProject!==null) {
 				val projectType = n4jsProject.projectType;
 				if (projectType===ProjectType.RUNTIME_ENVIRONMENT || projectType===ProjectType.RUNTIME_LIBRARY) {
-					addIssue(IssueCodes.messageForNO_N4JS_IN_RUNTIME_ENV_OR_LIBS, script, IssueCodes.NO_N4JS_IN_RUNTIME_ENV_OR_LIBS);
+					addIssue(IssueCodes.messageForNO_N4JS_IN_RUNTIME_COMPONENT, script, IssueCodes.NO_N4JS_IN_RUNTIME_COMPONENT);
 				}
 			}
 		}
