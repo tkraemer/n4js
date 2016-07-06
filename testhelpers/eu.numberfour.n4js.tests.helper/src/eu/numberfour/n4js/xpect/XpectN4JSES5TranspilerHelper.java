@@ -457,8 +457,6 @@ public class XpectN4JSES5TranspilerHelper {
 			return;
 		}
 
-		// String path = null;
-
 		Optional<? extends IN4JSSourceContainer> sourceOpt = core.findN4JSSourceContainer(dep.getURI());
 		if (sourceOpt.isPresent()) {
 			IN4JSSourceContainer source = sourceOpt.get();
