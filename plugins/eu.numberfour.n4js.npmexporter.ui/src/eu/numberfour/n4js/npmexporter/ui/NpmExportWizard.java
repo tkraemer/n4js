@@ -19,7 +19,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
@@ -32,6 +35,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.compressors.CompressorException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -293,8 +297,9 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 		// this.selection = currentSelection;
 
 		List<?> selectedResources = IDE.computeSelectedResources(currentSelection);
+		List<IProject> workspaceProjects = Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects());
 
-		// Find all projects
+		// Find all selected projects
 		Set<IProject> projects = selectedResources.stream()
 				.filter(m -> m instanceof IResource)
 				.map(m -> ((IResource) m).getProject())
@@ -302,7 +307,8 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 				.collect(Collectors.toSet());
 		// make the behavior predictable by ordering:
 		TreeSet<IProject> sortedProjects = Sets
-				.<IProject> newTreeSet((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+				.<IProject> newTreeSet((a, b) -> a.getName()
+						.compareToIgnoreCase(b.getName()));
 		sortedProjects.addAll(projects);
 
 		// 0) turn into IN4JSProject and give and process further.
@@ -314,7 +320,7 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 		// 0)
 		List<IN4JSEclipseProject> rawN4jsProjects = Lists.newArrayList();
 		iP2in4jsP = HashBiMap.create();
-		for (IProject iProject : sortedProjects) {
+		for (IProject iProject : workspaceProjects) {
 			IN4JSEclipseProject mappedIn4jsProject = map2In4js(iProject);
 			if (mappedIn4jsProject != null) {
 				rawN4jsProjects.add(mappedIn4jsProject);
@@ -323,18 +329,24 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 			}
 		}
 
-		// remove all filtered out Non-N4JS-projects.
+		// filter out Non-N4JS-projects from initial selection.
 		sortedProjects.retainAll(iP2in4jsP.keySet());
 
-		// if (!selectedResources.isEmpty()) {
-		// this.selection = new StructuredSelection(sortedProjects.toArray());
-		// }
+		// filter out all non-N4JS-projects from the workspace projects.
+		ArrayList<IProject> filteredWorkspaceProjects = new ArrayList<>(workspaceProjects);
+		filteredWorkspaceProjects.retainAll(iP2in4jsP.keySet());
 
 		setWindowTitle("N4JS to npm Export");
 		setNeedsProgressMonitor(true);
 
+		Map<IProject, Boolean> selectedProjects = new HashMap<>();
+		// Add all workspace projects to list, default selection value is false
+		filteredWorkspaceProjects.forEach(project -> selectedProjects.put(project, false));
+		// Override selection value for all initially selected projects
+		sortedProjects.forEach(project -> selectedProjects.put(project, true));
+
 		// exportPage = new ExportSelectionPage("Export Page", rawN4jsProjects, labelProvider);
-		exportPage = new ExportSelectionPage("Export Page", newArrayList(sortedProjects));
+		exportPage = new ExportSelectionPage("Export Page", selectedProjects);
 		if (runTools())
 			toolRunnerPage = new NpmToolRunnerPage("npm Execution Page");
 		comparePage = new PackageJsonComparePage("Compare package.json Page");
@@ -374,7 +386,13 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 	private IN4JSEclipseProject map2In4js(IProject iProject) {
 		URI projectURI = URI.createPlatformResourceURI(iProject.getName(), true);
 		IN4JSEclipseProject project = n4JSCore.findProject(projectURI).orNull();
-		return project;
+		
+		// Additionally check for existence to only obtain visible N4JS workspace projects.
+		if (project.exists()) {
+			return project;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

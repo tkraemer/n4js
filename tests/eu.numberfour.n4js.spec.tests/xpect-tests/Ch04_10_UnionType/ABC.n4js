@@ -1,0 +1,11 @@
+export class A {
+	private s;
+}
+
+export class B {
+	s;
+}
+
+export class C {
+	public s;
+}

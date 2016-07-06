@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -34,12 +35,25 @@ public class GeneratorMarkerSupport implements IGeneratorMarkerSupport {
 	private final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
 	@Override
-	public void createMarker(Resource res, String message) {
+	public void createMarker(Resource res, String message, Severity severity) {
+
+		final int severityEclipse;
+		switch (severity) {
+		case INFO:
+			severityEclipse = IMarker.SEVERITY_INFO;
+			break;
+		case WARNING:
+			severityEclipse = IMarker.SEVERITY_WARNING;
+			break;
+		default:
+			severityEclipse = IMarker.SEVERITY_ERROR;
+			break;
+		}
 
 		try {
 			IMarker marker = toIFile(res).createMarker(MARKER__EU_NUMBERFOUR_IDE_N4JS_UI_COMPILER_ERROR);
 			marker.setAttribute(IMarker.MESSAGE, message);
-			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+			marker.setAttribute(IMarker.SEVERITY, severityEclipse);
 			marker.setAttribute(IMarker.LINE_NUMBER, 1);
 		} catch (CoreException e) {
 			GeneratorUiActivator.getInstance().getLog().log(e.getStatus());
@@ -76,6 +90,11 @@ public class GeneratorMarkerSupport implements IGeneratorMarkerSupport {
 		return false;
 	}
 
+	@Override
+	public boolean isOperationCanceledException(Throwable th) {
+		return th instanceof OperationCanceledException;
+	}
+
 	private IFile toIFile(Resource res) {
 		return toIFile(res.getURI());
 	}
@@ -83,5 +102,4 @@ public class GeneratorMarkerSupport implements IGeneratorMarkerSupport {
 	private IFile toIFile(URI uri) {
 		return workspaceRoot.getFile(new Path(uri.toPlatformString(true)));
 	}
-
 }

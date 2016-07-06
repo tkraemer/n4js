@@ -178,6 +178,7 @@ abstract class TypeRef extends TypeArgument {
 	op TypingStrategy getTypingStrategy() {
 		return TypingStrategy.NOMINAL
 	}
+	
 	/**
 	 * Convenience method, returns empty list for simply reference by default.
 	 * Overridden in {@link ParameterizedTypeRefStructural}

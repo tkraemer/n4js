@@ -33,7 +33,7 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  * </p>
  */
 public abstract class AbstractDescriptionWithError extends AbstractEObjectDescription implements
-IEObjectDescriptionWithError {
+		IEObjectDescriptionWithError {
 
 	/**
 	 * This is a temporarily added method due to a bug in the Xtend Maven plugin, which causes errors when calling a
@@ -110,7 +110,7 @@ IEObjectDescriptionWithError {
 	/**
 	 * Returns the name of the member type, e.g., method or field.
 	 */
-	protected String getMemberTypeName(EObject eObject) {
+	protected static String getMemberTypeName(EObject eObject) {
 		if (eObject instanceof TMethod) {
 			return "method";
 		}

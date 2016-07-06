@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+/* XPECT formattedLines 19 ---
+@@StaticPolyfillAware
+@@Global
+
+export public class A1 {
+
+	field: any = 4;
+}
+
+let theSemi = 0;
+--- */
+@@    
+
+StaticPolyfillAware     @@ Global
+   
+   
+   
+   
+   
+   
+    export  
+        public
+   
+      class A1 {
+
+    field:
+        any = 4;
+     } 
+
+
+let theSemi=0;
+

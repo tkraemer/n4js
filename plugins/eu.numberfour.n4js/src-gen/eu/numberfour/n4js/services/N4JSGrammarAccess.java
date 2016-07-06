@@ -4070,7 +4070,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cNameBindingIdentifierParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
 		
-		//CatchVariable <Yield>:
+		/// **
+		// * CatchVariable must not have a type reference, this is tested during validation (to enable better error messages).
+		// * / CatchVariable <Yield>:
 		//	=> bindingPattern=BindingPattern<Yield> | => (name=BindingIdentifier<Yield> -> ColonSepTypeRef) |
 		//	BogusTypeRefFragment? name=BindingIdentifier<Yield>;
 		@Override public ParserRule getRule() { return rule; }
@@ -10100,6 +10102,259 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//','
 		public Keyword getCommaKeyword_1() { return cCommaKeyword_1; }
 	}
+
+	public class TStructMethodElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructMethod");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final Action cTStructMethodAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
+		private final Group cGroup_0_0_1 = (Group)cGroup_0_0.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_0_0_1_0 = (Keyword)cGroup_0_0_1.eContents().get(0);
+		private final Assignment cTypeVarsAssignment_0_0_1_1 = (Assignment)cGroup_0_0_1.eContents().get(1);
+		private final RuleCall cTypeVarsTypeVariableParserRuleCall_0_0_1_1_0 = (RuleCall)cTypeVarsAssignment_0_0_1_1.eContents().get(0);
+		private final Group cGroup_0_0_1_2 = (Group)cGroup_0_0_1.eContents().get(2);
+		private final Keyword cCommaKeyword_0_0_1_2_0 = (Keyword)cGroup_0_0_1_2.eContents().get(0);
+		private final Assignment cTypeVarsAssignment_0_0_1_2_1 = (Assignment)cGroup_0_0_1_2.eContents().get(1);
+		private final RuleCall cTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0 = (RuleCall)cTypeVarsAssignment_0_0_1_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_0_0_1_3 = (Keyword)cGroup_0_0_1.eContents().get(3);
+		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
+		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_0_3 = (Keyword)cGroup_0_0.eContents().get(3);
+		private final RuleCall cTAnonymousFormalParameterListParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColonKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cReturnTypeRefAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cReturnTypeRefTypeRefParserRuleCall_3_1_0 = (RuleCall)cReturnTypeRefAssignment_3_1.eContents().get(0);
+		
+		//TStructMethod types::TStructMethod:
+		//	=>
+		//	({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+		//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//=> ({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
+		//TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
+		public Group getGroup() { return cGroup; }
+
+		//=> ({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
+		public Group getGroup_0() { return cGroup_0; }
+
+		//({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//{types::TStructMethod}
+		public Action getTStructMethodAction_0_0_0() { return cTStructMethodAction_0_0_0; }
+
+		//('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+		public Group getGroup_0_0_1() { return cGroup_0_0_1; }
+
+		//'<'
+		public Keyword getLessThanSignKeyword_0_0_1_0() { return cLessThanSignKeyword_0_0_1_0; }
+
+		//typeVars+=TypeVariable
+		public Assignment getTypeVarsAssignment_0_0_1_1() { return cTypeVarsAssignment_0_0_1_1; }
+
+		//TypeVariable
+		public RuleCall getTypeVarsTypeVariableParserRuleCall_0_0_1_1_0() { return cTypeVarsTypeVariableParserRuleCall_0_0_1_1_0; }
+
+		//(',' typeVars+=TypeVariable)*
+		public Group getGroup_0_0_1_2() { return cGroup_0_0_1_2; }
+
+		//','
+		public Keyword getCommaKeyword_0_0_1_2_0() { return cCommaKeyword_0_0_1_2_0; }
+
+		//typeVars+=TypeVariable
+		public Assignment getTypeVarsAssignment_0_0_1_2_1() { return cTypeVarsAssignment_0_0_1_2_1; }
+
+		//TypeVariable
+		public RuleCall getTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0() { return cTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0; }
+
+		//'>'
+		public Keyword getGreaterThanSignKeyword_0_0_1_3() { return cGreaterThanSignKeyword_0_0_1_3; }
+
+		//name=IdentifierName
+		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
+
+		//IdentifierName
+		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_0_0_3() { return cLeftParenthesisKeyword_0_0_3; }
+
+		//TAnonymousFormalParameterList
+		public RuleCall getTAnonymousFormalParameterListParserRuleCall_1() { return cTAnonymousFormalParameterListParserRuleCall_1; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+
+		//(':' returnTypeRef=TypeRef)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//':'
+		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
+
+		//returnTypeRef=TypeRef
+		public Assignment getReturnTypeRefAssignment_3_1() { return cReturnTypeRefAssignment_3_1; }
+
+		//TypeRef
+		public RuleCall getReturnTypeRefTypeRefParserRuleCall_3_1_0() { return cReturnTypeRefTypeRefParserRuleCall_3_1_0; }
+	}
+
+	public class TStructFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIdentifierNameParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cTypeRefAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeRefTypeRefParserRuleCall_1_1_0 = (RuleCall)cTypeRefAssignment_1_1.eContents().get(0);
+		
+		//TStructField types::TStructField:
+		//	name=IdentifierName (':' typeRef=TypeRef)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//name=IdentifierName (':' typeRef=TypeRef)?
+		public Group getGroup() { return cGroup; }
+
+		//name=IdentifierName
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+
+		//IdentifierName
+		public RuleCall getNameIdentifierNameParserRuleCall_0_0() { return cNameIdentifierNameParserRuleCall_0_0; }
+
+		//(':' typeRef=TypeRef)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//':'
+		public Keyword getColonKeyword_1_0() { return cColonKeyword_1_0; }
+
+		//typeRef=TypeRef
+		public Assignment getTypeRefAssignment_1_1() { return cTypeRefAssignment_1_1; }
+
+		//TypeRef
+		public RuleCall getTypeRefTypeRefParserRuleCall_1_1_0() { return cTypeRefTypeRefParserRuleCall_1_1_0; }
+	}
+
+	public class TStructGetterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructGetter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final Action cTStructGetterAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
+		private final Keyword cGetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
+		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
+		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColonKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cDeclaredTypeRefAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cDeclaredTypeRefTypeRefParserRuleCall_3_1_0 = (RuleCall)cDeclaredTypeRefAssignment_3_1.eContents().get(0);
+		
+		//TStructGetter types::TStructGetter:
+		//	=> ({types::TStructGetter}
+		//	'get'
+		//	name=IdentifierName)
+		//	'(' ')' (':' declaredTypeRef=TypeRef)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//=> ({types::TStructGetter} 'get' name=IdentifierName) '(' ')' (':' declaredTypeRef=TypeRef)?
+		public Group getGroup() { return cGroup; }
+
+		//=> ({types::TStructGetter} 'get' name=IdentifierName)
+		public Group getGroup_0() { return cGroup_0; }
+
+		//({types::TStructGetter} 'get' name=IdentifierName)
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//{types::TStructGetter}
+		public Action getTStructGetterAction_0_0_0() { return cTStructGetterAction_0_0_0; }
+
+		//'get'
+		public Keyword getGetKeyword_0_0_1() { return cGetKeyword_0_0_1; }
+
+		//name=IdentifierName
+		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
+
+		//IdentifierName
+		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+
+		//(':' declaredTypeRef=TypeRef)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//':'
+		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
+
+		//declaredTypeRef=TypeRef
+		public Assignment getDeclaredTypeRefAssignment_3_1() { return cDeclaredTypeRefAssignment_3_1; }
+
+		//TypeRef
+		public RuleCall getDeclaredTypeRefTypeRefParserRuleCall_3_1_0() { return cDeclaredTypeRefTypeRefParserRuleCall_3_1_0; }
+	}
+
+	public class TStructSetterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructSetter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final Action cTStructSetterAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
+		private final Keyword cSetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
+		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
+		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cFparAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFparTAnonymousFormalParameterParserRuleCall_2_0 = (RuleCall)cFparAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//TStructSetter types::TStructSetter:
+		//	=> ({types::TStructSetter}
+		//	'set'
+		//	name=IdentifierName)
+		//	'(' fpar=TAnonymousFormalParameter ')'
+		@Override public ParserRule getRule() { return rule; }
+
+		//=> ({types::TStructSetter} 'set' name=IdentifierName) '(' fpar=TAnonymousFormalParameter ')'
+		public Group getGroup() { return cGroup; }
+
+		//=> ({types::TStructSetter} 'set' name=IdentifierName)
+		public Group getGroup_0() { return cGroup_0; }
+
+		//({types::TStructSetter} 'set' name=IdentifierName)
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//{types::TStructSetter}
+		public Action getTStructSetterAction_0_0_0() { return cTStructSetterAction_0_0_0; }
+
+		//'set'
+		public Keyword getSetKeyword_0_0_1() { return cSetKeyword_0_0_1; }
+
+		//name=IdentifierName
+		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
+
+		//IdentifierName
+		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//fpar=TAnonymousFormalParameter
+		public Assignment getFparAssignment_2() { return cFparAssignment_2; }
+
+		//TAnonymousFormalParameter
+		public RuleCall getFparTAnonymousFormalParameterParserRuleCall_2_0() { return cFparTAnonymousFormalParameterParserRuleCall_2_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
 	
 	
 	public class VariableStatementKeywordElements extends AbstractEnumRuleElementFinder {
@@ -10671,6 +10926,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	private final BindingElementElements pBindingElement;
 	private final BindingRestElementElements pBindingRestElement;
 	private final ElisionElements pElision;
+	private final TStructMethodElements pTStructMethod;
+	private final TStructFieldElements pTStructField;
+	private final TStructGetterElements pTStructGetter;
+	private final TStructSetterElements pTStructSetter;
 	private final TerminalRule tINCOMPLETE_ASYNC_ARROW;
 	
 	private final Grammar grammar;
@@ -10923,6 +11182,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBindingElement = new BindingElementElements();
 		this.pBindingRestElement = new BindingRestElementElements();
 		this.pElision = new ElisionElements();
+		this.pTStructMethod = new TStructMethodElements();
+		this.pTStructField = new TStructFieldElements();
+		this.pTStructGetter = new TStructGetterElements();
+		this.pTStructSetter = new TStructSetterElements();
 		this.tINCOMPLETE_ASYNC_ARROW = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.INCOMPLETE_ASYNC_ARROW");
 	}
 	
@@ -11857,7 +12120,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getCatchBlockAccess().getRule();
 	}
 
-	//CatchVariable <Yield>:
+	/// **
+	// * CatchVariable must not have a type reference, this is tested during validation (to enable better error messages).
+	// * / CatchVariable <Yield>:
 	//	=> bindingPattern=BindingPattern<Yield> | => (name=BindingIdentifier<Yield> -> ColonSepTypeRef) |
 	//	BogusTypeRefFragment? name=BindingIdentifier<Yield>;
 	public CatchVariableElements getCatchVariableAccess() {
@@ -13662,6 +13927,54 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getElisionAccess().getRule();
 	}
 
+	//TStructMethod types::TStructMethod:
+	//	=>
+	//	({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+	//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
+	public TStructMethodElements getTStructMethodAccess() {
+		return pTStructMethod;
+	}
+	
+	public ParserRule getTStructMethodRule() {
+		return getTStructMethodAccess().getRule();
+	}
+
+	//TStructField types::TStructField:
+	//	name=IdentifierName (':' typeRef=TypeRef)?
+	public TStructFieldElements getTStructFieldAccess() {
+		return pTStructField;
+	}
+	
+	public ParserRule getTStructFieldRule() {
+		return getTStructFieldAccess().getRule();
+	}
+
+	//TStructGetter types::TStructGetter:
+	//	=> ({types::TStructGetter}
+	//	'get'
+	//	name=IdentifierName)
+	//	'(' ')' (':' declaredTypeRef=TypeRef)?
+	public TStructGetterElements getTStructGetterAccess() {
+		return pTStructGetter;
+	}
+	
+	public ParserRule getTStructGetterRule() {
+		return getTStructGetterAccess().getRule();
+	}
+
+	//TStructSetter types::TStructSetter:
+	//	=> ({types::TStructSetter}
+	//	'set'
+	//	name=IdentifierName)
+	//	'(' fpar=TAnonymousFormalParameter ')'
+	public TStructSetterElements getTStructSetterAccess() {
+		return pTStructSetter;
+	}
+	
+	public ParserRule getTStructSetterRule() {
+		return getTStructSetterAccess().getRule();
+	}
+
 	//terminal INCOMPLETE_ASYNC_ARROW:
 	//	'@=';
 	public TerminalRule getINCOMPLETE_ASYNC_ARROWRule() {
@@ -13975,64 +14288,16 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * Most type references are optional. However, in the types language (n4ts), these
 	// * references are NOT optional.
 	// * / TStructMember:
-	//	TStructGetter
-	//	| TStructSetter
-	//	| TStructMethod
-	//	| TStructField;
+	//	super::TStructGetter
+	//	| super::TStructSetter
+	//	| super::TStructMethod
+	//	| super::TStructField;
 	public TypeExpressionsGrammarAccess.TStructMemberElements getTStructMemberAccess() {
 		return gaTypeExpressions.getTStructMemberAccess();
 	}
 	
 	public ParserRule getTStructMemberRule() {
 		return getTStructMemberAccess().getRule();
-	}
-
-	//TStructMethod:
-	//	=>
-	//	({TStructMethod} ('<' typeVars+=super::TypeVariable (',' typeVars+=super::TypeVariable)* '>')?
-	//	name=TypesIdentifier '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?;
-	public TypeExpressionsGrammarAccess.TStructMethodElements getTStructMethodAccess() {
-		return gaTypeExpressions.getTStructMethodAccess();
-	}
-	
-	public ParserRule getTStructMethodRule() {
-		return getTStructMethodAccess().getRule();
-	}
-
-	//TStructField:
-	//	name=TypesIdentifier (':' typeRef=TypeRef)?;
-	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
-		return gaTypeExpressions.getTStructFieldAccess();
-	}
-	
-	public ParserRule getTStructFieldRule() {
-		return getTStructFieldAccess().getRule();
-	}
-
-	//TStructGetter:
-	//	=> ({TStructGetter}
-	//	'get'
-	//	name=TypesIdentifier)
-	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
-	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
-		return gaTypeExpressions.getTStructGetterAccess();
-	}
-	
-	public ParserRule getTStructGetterRule() {
-		return getTStructGetterAccess().getRule();
-	}
-
-	//TStructSetter:
-	//	=> ({TStructSetter}
-	//	'set'
-	//	name=TypesIdentifier)
-	//	'(' fpar=TAnonymousFormalParameter ')';
-	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
-		return gaTypeExpressions.getTStructSetterAccess();
-	}
-	
-	public ParserRule getTStructSetterRule() {
-		return getTStructSetterAccess().getRule();
 	}
 
 	//TypingStrategyUseSiteOperator TypingStrategy:

@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT noerrors -->
+new Function();
+
+class C extends Function {}
+
+// XPECT noerrors --> 
+new C();
+
+function foo() {}
+
+// XPECT errors --> "Not a reference to a constructor: {function():void}." at "foo"
+new foo();

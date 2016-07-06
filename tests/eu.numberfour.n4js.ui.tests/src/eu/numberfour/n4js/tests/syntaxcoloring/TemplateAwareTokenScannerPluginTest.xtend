@@ -74,7 +74,7 @@ class TemplateAwareTokenScannerPluginTest extends Assert {
 	}
 
 	@Test
-	def void testTemplateSubstSubst() {
+	def void testTemplateSubst() {
 		tokenize("`${a}text`")
 		assertNotSame(Token.EOF, scanner.nextToken)
 		assertEquals(0, scanner.tokenOffset)
@@ -91,6 +91,49 @@ class TemplateAwareTokenScannerPluginTest extends Assert {
 		assertNotSame(Token.EOF, scanner.nextToken)
 		assertEquals(5, scanner.tokenOffset)
 		assertEquals("text`".length, scanner.tokenLength)
+		assertSame(Token.EOF, scanner.nextToken)
+	}
+
+	@Test
+	def void testTemplateSubstSomethingSubst() {
+		tokenize("`aaa${0}bbb${0}ccc`");
+		var currOffset = 0;
+		currOffset = assertNextToken(currOffset, "`aaa".length);
+		currOffset = assertNextToken(currOffset, "${".length);
+		currOffset = assertNextToken(currOffset, "0".length);
+		currOffset = assertNextToken(currOffset, "}".length);
+		currOffset = assertNextToken(currOffset, "bbb".length);
+		currOffset = assertNextToken(currOffset, "${".length);
+		currOffset = assertNextToken(currOffset, "0".length);
+		currOffset = assertNextToken(currOffset, "}".length);
+		currOffset = assertNextToken(currOffset, "ccc`".length);
+		assertNextTokenEOF();
+	}
+
+	@Test
+	def void testTemplateSubstNothingSubst() {
+		tokenize("`aaa${0}${0}ccc`");
+		var currOffset = 0;
+		currOffset = assertNextToken(currOffset, "`aaa".length);
+		currOffset = assertNextToken(currOffset, "${".length);
+		currOffset = assertNextToken(currOffset, "0".length);
+		currOffset = assertNextToken(currOffset, "}".length);
+		currOffset = assertNextToken(currOffset, "${".length);
+		currOffset = assertNextToken(currOffset, "0".length);
+		currOffset = assertNextToken(currOffset, "}".length);
+		currOffset = assertNextToken(currOffset, "ccc`".length);
+		assertNextTokenEOF();
+	}
+
+	/** Returns the next expected offset, i.e. {@code expectedOffset} + {@code expectedLength}. */
+	def private int assertNextToken(int expectedOffset, int expectedLength) {
+		assertNotSame(Token.EOF, scanner.nextToken);
+		assertEquals(expectedOffset, scanner.tokenOffset);
+		assertEquals(expectedLength, scanner.tokenLength);
+		return expectedOffset + expectedLength;
+	}
+
+	def private void assertNextTokenEOF() {
 		assertSame(Token.EOF, scanner.nextToken)
 	}
 }

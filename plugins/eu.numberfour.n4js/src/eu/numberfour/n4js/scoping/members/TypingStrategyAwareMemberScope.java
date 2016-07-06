@@ -16,6 +16,7 @@ import org.eclipse.xtext.scoping.IScope;
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
+import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
@@ -29,6 +30,8 @@ public class TypingStrategyAwareMemberScope extends FilterWithErrorMarkerScope {
 	final String receiverTypeName;
 
 	/**
+	 * Creates new scope instance, filtering out members of parent not matching current typing strategy.
+	 *
 	 * @param parent
 	 *            the nested parent scope, usually a {@link VisibilityAwareMemberScope}
 	 * @param receiverType
@@ -36,7 +39,7 @@ public class TypingStrategyAwareMemberScope extends FilterWithErrorMarkerScope {
 	 */
 	public TypingStrategyAwareMemberScope(IScope parent, TypeRef receiverType) {
 		super(parent);
-		strategyFilter = new TypingStrategyFilter(receiverType);
+		strategyFilter = new TypingStrategyFilter(TypeUtils.retrieveTypingStrategy(receiverType));
 		useSite = receiverType != null && receiverType.isUseSiteStructuralTyping();
 		receiverTypeName = (receiverType == null || receiverType.eIsProxy()) ? "unknown type" : receiverType
 				.getTypeRefAsString();

@@ -43,7 +43,7 @@ u.g_onlyInT1;
 u.g_onlyInT2;
 // XPECT type of 'u.g1' --> A
 u.g1;
-// XPECT errors --> "The getter g2 is not visible." at "g2"
+// private members are visible inside module XPECT noerrors --> 
 u.g2;
 // XPECT type of 'u.g3' --> union{A,ASub}
 u.g3;

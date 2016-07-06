@@ -260,6 +260,11 @@ public class TypeUtils {
 			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
 			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
 			typeRef = ref;
+		} else if (declaredType instanceof TypeVariable) {
+			TypeVariable tTypeVar = (TypeVariable) declaredType;
+			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
+			ref.setTypeArg(createTypeRef(tTypeVar));
+			typeRef = ref;
 		}
 		return typeRef;
 	}
@@ -1196,5 +1201,18 @@ public class TypeUtils {
 	 */
 	public static boolean isBuiltIn(Type type) {
 		return N4Scheme.isFromResourceWithN4Scheme(type);
+	}
+
+	/**
+	 * Null and proxy-safe method for retrieving typing strategy of a type ref.
+	 *
+	 * @param typeRef
+	 *            may be null or a proxy
+	 */
+	public static TypingStrategy retrieveTypingStrategy(TypeRef typeRef) {
+		if (typeRef != null && !typeRef.eIsProxy()) {
+			return typeRef.getTypingStrategy();
+		}
+		return TypingStrategy.DEFAULT;
 	}
 }

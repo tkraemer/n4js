@@ -43,7 +43,7 @@ u.s_onlyInT1 = null;
 u.s_onlyInT2 = null;
 // XPECT expectedType at 'null' --> A
 u.s1 = null;
-// XPECT errors --> "The setter s2 is not visible." at "s2"
+// private members are visible inside module XPECT errors -->
 u.s2 = null;
 // XPECT expectedType at 'null' --> intersection{A,ASub}
 u.s3 = null;

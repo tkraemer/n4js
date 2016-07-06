@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+// XPECT noerrors -->
+new Object();
+// XPECT noerrors -->
+new Function();
+// XPECT noerrors -->
+new String();
+// XPECT noerrors -->
+new Boolean();
+// XPECT noerrors -->
+new Number();
+// XPECT noerrors -->
+new Array<any>();
+// XPECT noerrors -->
+new Date();
+// XPECT noerrors -->
+new RegExp();
+// XPECT noerrors -->
+new Error();
+
+// XPECT errors --> "Not a reference to a constructor: string." at "string"
+new string();
+// XPECT errors --> "Not a reference to a constructor: boolean." at "boolean"
+new boolean();
+// XPECT errors --> "Not a reference to a constructor: number." at "number"
+new number();
+// XPECT errors --> "Not a reference to a constructor: int." at "int"
+new int();
+// XPECT errors --> "Not a reference to a constructor: any." at "any"
+new any();

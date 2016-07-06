@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+/* XPECT formattedLines 15 ---
+public class A {
+	public toNFONObject(nfonRawSerializer: {function(any): any}): ~Object {
+		return null;
+	}
+}
+--- */
+public class A {   
+    public toNFONObject(nfonRawSerializer:{function(any): any}): ~Object {
+        return null;
+    }
+}
+
+

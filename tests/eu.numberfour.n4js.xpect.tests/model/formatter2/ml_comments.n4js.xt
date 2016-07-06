@@ -1,0 +1,56 @@
+/*  XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+
+
+/* Off ML with indentation */
+/*  XPECT formattedLines  4 ---
+{
+	/\*-    z
+0
+                 *\/ }
+--- */
+{
+                       /*-    z
+0
+                 */              }
+
+                 
+                 
+                 
+/* Off ML without indentation */
+/*  XPECT formattedLines  4 ---
+{
+/\*-                           z
+0
+                 *\/ }
+--- */
+{
+/*-                           z
+0
+                 */              }
+ 
+ 
+ 
+/* JSDoc - no additional whitespace after pefix-'*' */                 
+/*  XPECT formattedLines  10 ---
+let a = 8;
+/\**
+ * My docuementation
+ *
+ *
+ *
+ *
+ * asdf.
+ *\/
+class X {}
+--- */
+let a=8;                 
+            /**
+ * My docuementation
+    *
+  *
+  
+  
+    * asdf.
+        */
+class X {}
+                 

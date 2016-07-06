@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest 
+    ResourceSet {
+		ThisFile {}
+		File "ABC.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+// cf GH-219
+
+import {A,B,C} from "Ch04_10_UnionType/ABC"
+
+let a: A;
+// XPECT errors --> "The field s is not visible." at "s"
+a.s;
+
+let _a: union{A};
+// XPECT errors --> "The field s is not visible." at "s"
+_a.s;
+
+
+let ab: A|B;
+// XPECT errors --> "The field s is not visible in A." at "s"
+ab.s;
+
+let bc: B|C;
+// XPECT noerrors -->
+bc.s;

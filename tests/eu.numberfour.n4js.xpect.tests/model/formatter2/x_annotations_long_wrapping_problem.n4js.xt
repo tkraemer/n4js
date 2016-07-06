@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+
+/* Autowrap in wrong place: Overlong annotation at m1 will trigger autowrap. 
+   It goes back to the 'extends' keyword and triggers autowrap there.
+   
+   It should have stopped at the first linebreak before the annotation-list.
+   
+   REAL expectation: no autowrap should happen.
+   */
+/* XPECT FIXME formattedLines 14 ---
+@Internal export public abstract class Annos {
+}
+
+@Final export public class Annos2 extends Annos {
+
+	@Description("alsjfdlkajsfdlkjasdfljsdlkfjasldkjflsakdjflkasjdflkjasdlkfjalsdkjflaksjdflaksjdflkjasdlfkjsadlkfjlsadkjfsldkaj")
+	m1() {
+	}
+}
+--- */
+@Internal export public abstract class Annos {
+}
+
+@Final export public class Annos2 extends Annos {
+
+    @Description("alsjfdlkajsfdlkjasdfljsdlkfjasldkjflsakdjflkasjdflkjasdlkfjalsdkjflaksjdflaksjdflkjasdlfkjsadlkfjlsadkjfsldkaj")
+    m1(){}
+}
+
+

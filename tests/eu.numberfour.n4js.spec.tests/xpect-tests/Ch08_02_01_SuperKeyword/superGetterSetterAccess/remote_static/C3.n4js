@@ -1,0 +1,24 @@
+import { C2 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C2"
+import { C1 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote_static/C1"
+
+
+export public class C3 extends C2 {
+	static test() {
+		console.log('* testing access with "this"');
+		this.g;
+		/*this*/C1.s = 42; // this-Dissallowed since IDE-1071
+		this.m();
+// does not apply to static case (see IDE-1453)
+//		this.gI;
+//		this.sI = 42;
+//		this.mI();
+		console.log('* testing access with "super"');
+		super.g;
+		/*super*/C1.s = 42; // super-Dissallowed since IDE-1071
+		super.m();
+// does not apply to static case (see IDE-1453)
+//		super.gI;
+//		super.sI = 42;
+//		super.mI();
+	}
+}

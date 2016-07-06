@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+var c: any+;
+/* Don't break condition if block needs wrapping.*/
+/* XPECT FIXME formattedLines 8 ---
+class C {
+	m() {
+		if (c.selector.toString().includes(".pkeys[#i:")) {
+			throw "boah, what an incredibly, insanely long string literal, especially when considering that it extends beyond the wrap limit";
+		}
+	}
+}
+--- */
+class C {
+    m() {
+        if (c.selector.toString().includes(".pkeys[#i:")) {
+            throw "boah, what an incredibly, insanely long string literal, especially when considering that it extends beyond the wrap limit";
+        }
+    }
+}
+
