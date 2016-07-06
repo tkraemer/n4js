@@ -1,8 +1,8 @@
 (function(System) {
 	'use strict';
 	System.register([
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ITestReporter',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy'
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ITestReporter',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy'
 	], function($n4Export) {
 		var ITestReporter, TestSpy, IDEReporter;
 		IDEReporter = function IDEReporter(endpoint, timeoutBufferOverride) {
@@ -27,11 +27,11 @@
 		$n4Export('IDEReporter', IDEReporter);
 		return {
 			setters: [
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
-					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
+					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
 				}
 			],
 			execute: function() {
@@ -74,7 +74,7 @@
 					register: {
 						value: function register___n4() {
 							return $spawn(function*() {
-								let that = this, sessionId = null;
+								let that = this, sessionId = null, inParameterized = false;
 								;
 								var handleTestingStart = function handleTestingStart(numAllGroups, sid, numAllTests) {
 									return $spawn(function*() {
@@ -91,8 +91,14 @@
 									}.apply(this, arguments));
 								};
 								this.spy.testingStarted.add(handleTestingStart);
-								var handleTestStart = function handleTestStart(group, test) {
+								this.spy.parameterizedGroupsStarted.add((function(test) {
+									return inParameterized = true;
+								}).bind(this));
+								var handleTestStart = function handleTestStart(groupName, testName, timeout) {
 									return $spawn(function*() {
+										if (inParameterized) {
+											return;
+										}
 										if (!sessionId) {
 											throw new Error("Test start sent before session start");
 										}
@@ -100,19 +106,26 @@
 											"/n4.ide/testing/sessions",
 											sessionId,
 											"tests",
-											group.name + "%23" + test.name,
+											groupName + "%23" + testName,
 											"start"
 										].join("/"), 'POST', {
 											'Content-Type': "application/vnd.n4.ide.start_test_req.tm+json",
 											Accept: "application/json"
 										}, {
-											timeout: test.timeout + that.timeoutBuffer
+											timeout: timeout + that.timeoutBuffer
 										}));
 									}.apply(this, arguments));
 								};
-								this.spy.testStarted.add(handleTestStart);
-								var handleTestFinished = function handleTestFinished(group, test, testResult) {
+								this.spy.testStarted.add((function(group, test) {
 									return $spawn(function*() {
+										(yield handleTestStart(group.name, test.name, test.timeout));
+									}.apply(this, arguments));
+								}).bind(this));
+								var handleTestFinished = function handleTestFinished(groupName, testName, testResult) {
+									return $spawn(function*() {
+										if (inParameterized) {
+											return;
+										}
 										if (!sessionId) {
 											throw new Error("Test end sent outside active session");
 										}
@@ -120,7 +133,7 @@
 											"/n4.ide/testing/sessions",
 											sessionId,
 											"tests",
-											group.name + "%23" + test.name,
+											groupName + "%23" + testName,
 											"end"
 										].join("/"), 'POST', {
 											'Content-Type': "application/vnd.n4.ide.end_test_req.tm+json",
@@ -128,7 +141,21 @@
 										}, testResult));
 									}.apply(this, arguments));
 								};
-								this.spy.testFinished.add(handleTestFinished);
+								this.spy.testFinished.add((function(group, test, testResult) {
+									return $spawn(function*() {
+										(yield handleTestFinished(group.name, test.name, testResult));
+									}.apply(this, arguments));
+								}).bind(this));
+								this.spy.parameterizedGroupsFinished.add((function(resultGroups) {
+									return $spawn(function*() {
+										inParameterized = false;
+										let resultGroup = resultGroups.aggregate();
+										for(let testResult of resultGroup.testResults) {
+											(yield handleTestStart(resultGroup.description, testResult.description, 100));
+											(yield handleTestFinished(resultGroup.description, testResult.description, testResult));
+										}
+									}.apply(this, arguments));
+								}).bind(this));
 								var handleTestingFinished = function handleTestingFinished(resultGroups) {
 									return $spawn(function*() {
 										let response = (yield that.send([

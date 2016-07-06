@@ -3,11 +3,11 @@
 	System.register([
 		'eu.numberfour.mangelhaft/n4/mangel/InstrumentedTest',
 		'eu.numberfour.mangelhaft/n4/mangel/TestExecutor',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroup',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroups',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestFunctionType',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestMethodDescriptor',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ResultGroup',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ResultGroups',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestFunctionType',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestMethodDescriptor',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy',
 		'eu.numberfour.mangelhaft.assert/n4/mangel/precondition/PreconditionNotMet',
 		'n4js.lang/n4js/lang/N4Injector'
 	], function($n4Export) {
@@ -27,20 +27,20 @@
 				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestExecutor) {
 					TestExecutor = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestExecutor.TestExecutor;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroup) {
-					ResultGroup = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroup.ResultGroup;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroup) {
+					ResultGroup = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroup.ResultGroup;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroups) {
-					ResultGroups = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroups.ResultGroups;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroups) {
+					ResultGroups = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroups.ResultGroups;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType) {
-					TestFunctionType = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType.TestFunctionType;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType) {
+					TestFunctionType = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType.TestFunctionType;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor) {
-					TestMethodDescriptor = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor.TestMethodDescriptor;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor) {
+					TestMethodDescriptor = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor.TestMethodDescriptor;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
 				},
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet) {
 					PreconditionNotMet = $_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet.PreconditionNotMet;
@@ -93,7 +93,7 @@
 								}
 								(yield this.spy.groupFinished.dispatch([
 									testObject,
-									new ResultGroup(testResults, info.fqn)
+									new ResultGroup(testResults, ("" + info.fqn + " " + testObject.parameterizedName + ""))
 								]));
 								return true;
 							}.apply(this, arguments));
@@ -102,7 +102,7 @@
 					instrument: {
 						value: function instrument___n4(info) {
 							return $spawn(function*() {
-								let parts, ctorName, groupModule, groupCTORs, groupCTOR, instrumentedTestObjects = [], instrumentedTestObject, moduleName;
+								let parts, ctorName, groupModule, testClasses, testClass, instrumentedTestObjects = [], instrumentedTestObject, moduleName;
 								;
 								parts = info.fqn.split("\.");
 								ctorName = parts.pop();
@@ -113,26 +113,21 @@
 									(yield this.errorGroup(info, info.origin + "/" + moduleName, null, ex));
 									return null;
 								}
-								groupCTORs = [
+								testClasses = [
 									groupModule[ctorName]
 								];
-								if (groupCTORs) {
+								if (testClasses) {
 									instrumentedTestObjects = [];
-									for(groupCTOR of groupCTORs) {
-										instrumentedTestObject = new InstrumentedTest();
-										if (!groupCTOR) {
+									for(testClass of testClasses) {
+										if (!testClass) {
 											(yield this.errorGroup(info, info.origin + "/" + moduleName, null, new Error("Empty object loaded (is the test class exported?)")));
 											continue;
 										} else {
-											instrumentedTestObject.load(groupCTOR, info);
-											if (info.testMethods) {
-												instrumentedTestObject.filterTests(info.testMethods);
-											}
 											try {
-												let testClass = groupCTOR, diClass = testClass;
+												let diClass = testClass;
 												let testInjector;
 												let testType = testClass.n4type;
-												for(;testType;testType = testType.n4superType, diClass = (diClass)["__proto__"]) {
+												for(;testType;testType = testType.n4superType, diClass = Object.getPrototypeOf(diClass)) {
 													if (testType.allAnnotations("GenerateInjector").length) {
 														if (testType.allAnnotations("WithParentInjector").length) {
 															if (!this.injector.canBeParentOf(diClass)) {
@@ -148,12 +143,12 @@
 												if (!testType) {
 													testInjector = this.injector;
 												}
-												instrumentedTestObject.setTestObject(testInjector.create(testClass));
+												let classITO = InstrumentedTest.getInstrumentedTest(testClass, info, testInjector);
+												instrumentedTestObjects.push(classITO);
 											} catch(ex2) {
-												instrumentedTestObject.setTestObject(new N4Object()).setError(ex2);
+												instrumentedTestObjects.push(new InstrumentedTest(testClass, info).setTestObject(new N4Object()).setError(ex2));
 											}
 										}
-										instrumentedTestObjects.push(instrumentedTestObject);
 									}
 								} else {
 									(yield this.errorGroup(info, info.origin + "/" + parts.join("/")));
@@ -172,7 +167,7 @@
 								if (!testInfoObject) {
 									throw new Error("TestController::runGroups called with a null testInfoObject");
 								}
-								let executor = this.executor, that = this, reses = [], res, testInfos = testInfoObject.testDescriptors, batchedTestInfos = [], ii = 0, groupCTORs, modules, testInfosBatch, instrumentedTestsBatch2d, instrumentedTestsBatch, fixme;
+								let executor = this.executor, that = this, reses = [], res, testInfos = testInfoObject.testDescriptors, batchedTestInfos = [], ii = 0, modules, testInfosBatch, instrumentedTestsBatch2d, instrumentedTestsBatch, fixme;
 								;
 								if (numTests === undefined) {
 									numTests = testInfoObject.testDescriptors.reduce(function(acc, info) {
