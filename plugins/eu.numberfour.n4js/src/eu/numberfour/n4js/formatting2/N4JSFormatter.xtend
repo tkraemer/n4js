@@ -722,7 +722,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(PostfixExpression postFix, extension IFormattableDocument document) {
 		// no line break allowed between Expression and operator ! 
 		postFix.regionFor.feature(N4JSPackage.Literals.POSTFIX_EXPRESSION__OP)
-			.prepend[newLines=0;noSpace;].append[oneSpace;];
+			.prepend[newLines=0;noSpace;].append[oneSpace;lowPriority]; // giving low priority for situations of closing parenthesis: "(a++)"
 		postFix.expression.format;
 	}
 	
@@ -797,8 +797,11 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 
 	def dispatch void format(ObjectLiteral ol, extension IFormattableDocument document) {
+		ol.configureCommas(document);
+
 		val bracePair = ol.regionFor.keywordPairs("{","}").head;
 		bracePair.interior[indent];
+		
 		
 		// Decide on multiline or not. 
 		// Rule: if opening brace is preceded by a line break, then go multiline. 
@@ -814,18 +817,22 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		} else { // in one line
 			bracePair.key.append[newLines=0];
 			ol.propertyAssignments.forEach[it,num|prepend[newLines=0;if(num!==0) { autowrap; oneSpace; } else {noSpace;}]];
-			bracePair.value.prepend[newLines=0; noSpace;];
+			bracePair.value.prepend[newLines=0; noSpace; lowPriority]; // low priority to avoid conflict with dangling commas
 		}
 		
+		ol.eContents.forEach[format];
 	}
 	
 	def dispatch void format( ForStatement fst, extension IFormattableDocument document){
+
+		fst.regionFor.keyword("for").append[oneSpace;newLines=0; autowrap];
+
 		val parenPair = fst.regionFor.keywordPairs("(",")").head;
-		parenPair.key.surround[noSpace;newLines=0].append[autowrap];
-		parenPair.value.prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap;]
+		parenPair.key.append[noSpace;autowrap;newLines=0];
+		parenPair.value.prepend[noSpace;newLines=0].append[oneSpace;newLines=0;autowrap;];
 		
 		fst.regionFor.keywords("in","of").forEach[ it.surround[oneSpace; newLines=0; autowrap] ];
-		fst.regionFor.keywords(";").forEach[it.prepend[noSpace;newLines=0;].append[noSpace;newLines=0;autowrap]];
+		fst.regionFor.keywords(";").forEach[it.prepend[noSpace;newLines=0;].append[oneSpace;newLines=0;autowrap]];
 		
 		fst.eContents.forEach[format];
 	}
@@ -1099,7 +1106,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	
 	private def void configureAnnotationsInLine(FormalParameter fpar, extension IFormattableDocument document) {
 		if( fpar.annotations.isEmpty ) return;
-		println("Configure formal parameter. "+fpar)
 		// (@x @y("") bogus a:typ)
 		fpar.annotations.head=>[
 			it.configureAnnotation(document,false,true);
