@@ -1,0 +1,31 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+// XPECT FIXME warnings --> "Type variable T not used in parameters or return type." at "T"
+function <T> f1(s: string): void {}
+
+// XPECT nowarnings -->
+function <T> f2(s: T): void {}
+
+// XPECT nowarnings -->
+function <T> f3(s: Array<T>): void {}
+
+class C<S> {
+    // XPECT nowarnings -->
+    m1(s: string): void {}
+
+    // XPECT FIXME warnings --> "Type variable T not used in parameters or return type." at "T"
+    <T> m2(s: T): void {}
+
+    // XPECT nowarnings -->
+    <T> m3(s: Array<T>): void {}
+
+    // XPECT FIXME warnings --> "Type variable S not used in parameters or return type." at "S"
+    static <S> s1(s: string): void {}
+
+    // XPECT nowarnings -->
+    static <S> s2(s: S): void {}
+
+    // XPECT nowarnings -->
+    static <S> s3(s: Array<S>): void {}
+
+}
