@@ -23,10 +23,6 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import java.util.List
 import org.eclipse.jface.viewers.StyledString
 import org.eclipse.xtext.ui.label.AbstractLabelProvider
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
-import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 
 /**
  * This helper class serves as replacement for the polymorphic dispatch done
@@ -132,14 +128,6 @@ class StyledTextCalculationHelper {
 	}
 
 	def private getStyledTextForFormalParameter(FormalParameter formalParameter, TFormalParameter tFormalParameter) {
-		if (formalParameter.declaredTypeRef instanceof ComposedTypeRef) {
-			return new StyledString(formalParameter.declaredTypeRef.typeRefAsString);
-		} else if (formalParameter.declaredTypeRef instanceof FunctionTypeRef) {
-			return new StyledString(formalParameter.declaredTypeRef.typeRefAsString);
-		} else if (formalParameter.declaredTypeRef instanceof ConstructorTypeRef) {
-			return new StyledString(formalParameter.declaredTypeRef.typeRefAsString);
-		}
-				
 		return if(formalParameter.declaredTypeRef?.declaredType === null) {
 			// type was inferred
 			new StyledString(tFormalParameter.typeRef?.declaredType?.name ?: "<unknown>", StyledString.DECORATIONS_STYLER)
@@ -153,7 +141,7 @@ class StyledTextCalculationHelper {
 		val styledText = getLabelProvider.getSuperStyledText(n4FieldDeclaration)
 		val definedField = n4FieldDeclaration.definedField
 		val typeStr = (if(definedField?.typeRef !== null) " : "
-			+ definedField?.typeRef?.declaredType?.typeAsString else "")
+			+ definedField?.typeRef?.declaredType?.name else "")
 		return if(n4FieldDeclaration.declaredTypeRef?.declaredType === null) {
 			// type was inferred
 			styledText?.append(typeStr, StyledString.DECORATIONS_STYLER)
