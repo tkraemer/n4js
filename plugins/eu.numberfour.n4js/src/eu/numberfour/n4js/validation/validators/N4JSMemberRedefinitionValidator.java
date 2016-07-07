@@ -10,9 +10,6 @@
  */
 package eu.numberfour.n4js.validation.validators;
 
-import static eu.numberfour.n4js.ts.types.MemberType.FIELD;
-import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
-import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_INHERITED_MEMBER_UNSOLVABLE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_MEMBER_SOLVABLE_CONFLICT;
@@ -87,13 +84,9 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
-import eu.numberfour.n4js.ts.types.TGetter;
-import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TModule;
-import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.Type;
-import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
@@ -108,6 +101,7 @@ import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
+import eu.numberfour.n4js.validation.validators.utils.MemberRedefinitionUtils;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -452,25 +446,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		// 2. meta type
-		boolean metaTypeMatches = s.getMemberType() == m.getMemberType();
-		if (!metaTypeMatches) {
-			switch (s.getMemberType()) {
-			case METHOD:
-				break; // initial test covers this case
-			case FIELD:
-				metaTypeMatches = m.getMemberType() == GETTER || m.getMemberType() == SETTER;
-				break;
-			case SETTER:
-			case GETTER:
-				metaTypeMatches = m.getMemberType() == FIELD;
-				break;
+		boolean metaTypeCompatible = MemberRedefinitionUtils.metaTypeCompatible(m, s);
+		if (!metaTypeCompatible) {
+			if (!consumptionConflict) { // avoid consequential errors
+				messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
 			}
-			if (!metaTypeMatches) {
-				if (!consumptionConflict) { // avoid consequential errors
-					messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
-				}
-				return OverrideCompatibilityResult.ERROR;
-			}
+			return OverrideCompatibilityResult.ERROR;
 		}
 
 		// 3. s not final
@@ -679,11 +660,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				if (!missingOverrideAnnotationMembers.contains(overriding)) {
 					continue;
 				}
-				Iterable<TMember> filteredOverriddenMembers = filterOverriddenMemberCandidates(overriding,
-						overriddenMembers);
+				/*
+				 * Filter overridden members to only contain metatype compatible members to prevent the generation of
+				 * confusing error message
+				 */
+				Iterable<TMember> filteredOverriddenMembers = MemberRedefinitionUtils
+						.getMetatypeCompatibleOverriddenMembers(overriding, overriddenMembers);
 
 				// choose redefinition verb based on the origin of the overridden members
-				String redefinitionVerb = getRedefinitionVerb(filteredOverriddenMembers);
+				String redefinitionVerb = MemberRedefinitionUtils.getRedefinitionVerb(filteredOverriddenMembers,
+						getCurrentClassifier());
 
 				String message = getMessageForCLF_OVERRIDE_ANNOTATION(
 						validatorMessageHelper.descriptionDifferentFrom(overriding, overriddenMembers),
@@ -693,52 +679,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
 						CLF_OVERRIDE_ANNOTATION);
 			}
-		}
-	}
-
-	/**
-	 * Filters the given overriddenMembers to only contain members that can directly be overridden by overridingMember.
-	 *
-	 * That is for example that a getter cannot directly override a setter.
-	 */
-	private Iterable<TMember> filterOverriddenMemberCandidates(TMember overridingMember,
-			Iterable<TMember> overriddenMembers) {
-		if (overridingMember instanceof TSetter)
-			return Iterables.filter(overriddenMembers, member -> !(member instanceof TGetter));
-		else if (overridingMember instanceof TGetter)
-			return Iterables.filter(overriddenMembers, member -> !(member instanceof TSetter));
-		else
-			return overriddenMembers;
-	}
-
-	/**
-	 * Returns the fitting verb for a redefinition of all of the redefined members by the current classifier.
-	 *
-	 * @param redefinedMembers
-	 *            The redefined members
-	 */
-	private String getRedefinitionVerb(Iterable<TMember> redefinedMembers) {
-		Set<?> overriddenClassifierTypes = StreamSupport.stream(redefinedMembers.spliterator(), false)
-				.map(member -> member.getContainingType().eClass())
-				.collect(Collectors.toSet());
-
-		boolean isOverridingSuperclassMember = overriddenClassifierTypes.contains(TypesPackage.eINSTANCE.getTClass());
-		boolean isOverridingObjectPrototypeMembers = overriddenClassifierTypes
-				.contains(TypesPackage.eINSTANCE.getTObjectPrototype());
-
-		boolean isImplementing = overriddenClassifierTypes.contains(TypesPackage.eINSTANCE.getTInterface());
-		boolean isOverriding = isOverridingSuperclassMember || isOverridingObjectPrototypeMembers;
-		boolean isInterfaceExtendingInterface = getCurrentClassifier() instanceof TInterface;
-
-		if (isOverriding && isImplementing) {
-			return "overriding/implementing";
-		} else if (isOverriding || isInterfaceExtendingInterface) {
-			return "overriding";
-		} else if (isImplementing) {
-			return "implementing";
-		} else {
-			// General case, should not happen
-			return "redefining";
 		}
 	}
 
