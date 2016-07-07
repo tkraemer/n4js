@@ -699,7 +699,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	/**
 	 * Filters the given overriddenMembers to only contain members that can directly be overridden by overridingMember.
 	 *
-	 * That is for example a getter cannot directly override a setter.
+	 * That is for example that a getter cannot directly override a setter.
 	 */
 	private Iterable<TMember> filterOverriddenMemberCandidates(TMember overridingMember,
 			Iterable<TMember> overriddenMembers) {
