@@ -25,7 +25,7 @@ import org.apache.log4j.Logger
 annotation Log {}
 
 /**
- * Adds logger declaration (field name "log") to annotated class.
+ * Adds logger declaration (field name "logger") to annotated class.
  * Manual definition:
  * <pre>
  * private final static Logger logger = Logger.getLogger(TYPE.class);

@@ -1,0 +1,88 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+
+
+
+
+/* Remove spaces, fix indentation, insert line above.*/
+/* XPECT formattedLines 4 ---
+class A1 {
+
+	@Parameter(4)
+	field: any = 4;
+}
+--- */
+class A1 {
+           @ Parameter ( 4 ) 
+    field: any = 4;
+}
+
+/* Inser linebreak if arguments are given  */
+/* XPECT formattedLines 3 ---
+class A1 {
+
+	@Parameter(4)
+	@Configurable(false)
+	field: any = 4;
+--- */
+class A1 {
+    @Parameter(4) @Configurable(false)
+    field: any = 4;
+}
+
+
+/* */
+/* XPECT formattedLines 13 ---
+@Internal export public abstract class Annos {
+	field;
+	abstract m1();
+}
+
+@Final export public class Annos2 extends Annos {
+
+	@Override @Final
+	@Parameter(4)
+	@Configurable(false)
+	field: any = 4;
+
+	@Ignore
+	@Group("X")
+	@Group("Y")
+	@Group("Xlkdsjfklasjdflkajsldfjasldkjflaksjdflkasjdflkjasdlkfjlsdkjflkasjdflkjasdlfkjasldkfjlasdkjflaksdjf")
+	@Final @Test @Override
+	@Description("alsjfdlkajsfdlkjasdfljsdlkfjasldkjflsakdjflkasjdflkjasdlkfjalsdkj")
+	m1() {}
+}
+--- */
+@Internal export public abstract class Annos {
+    field;
+    abstract m1();
+}
+
+@Final export public class Annos2 extends Annos {
+    @Override @Final @Parameter(4) @Configurable(false)
+    field:any = 4;
+    
+    @Ignore @
+    Group("X") @Group("Y") @Group("Xlkdsjfklasjdflkajsldfjasldkjflaksjdflkasjdflkjasdlkfjlsdkjflkasjdflkjasdlfkjasldkfjlasdkjflaksdjf")
+    @ Final @ Test @ Override @Description("alsjfdlkajsfdlkjasdfljsdlkfjasldkjflsakdjflkasjdflkjasdlkfjalsdkj")
+    m1(){}
+}
+
+
+
+interface SomeLongLonglongName{}
+interface ParameterizedLongLonglongName<P>{}
+       
+// Don't tear export KW and exported statement apart.
+/* XPECT formattedLines 3 ---
+export @Final public class FixedPoint6 implements ParameterizedLongLonglongName<FixedPoint6>, SomeLongLonglongName {}
+--- */
+export @Final public class FixedPoint6 implements ParameterizedLongLonglongName<FixedPoint6>, SomeLongLonglongName {
+   
+}
+
+

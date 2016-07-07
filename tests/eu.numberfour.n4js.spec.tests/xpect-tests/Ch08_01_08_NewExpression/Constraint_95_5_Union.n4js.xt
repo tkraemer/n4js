@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class A {}
+class B {}
+
+class C<T> {
+	ctor: constructor{T};
+}
+
+let c: C<A|B>;
+
+
+// XPECT errors --> "Cannot instantiate union{A,B}." at "c.ctor"
+new c.ctor();

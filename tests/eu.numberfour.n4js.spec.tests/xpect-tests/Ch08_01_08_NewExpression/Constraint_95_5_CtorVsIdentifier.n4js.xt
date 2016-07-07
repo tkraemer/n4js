@@ -1,0 +1,14 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+abstract class A {}
+
+function f(ctor: constructor{A}) {
+	// although A is abstract, only concrete types can create subtype of constructor{A} XPECT noerrors --> 
+	new ctor();
+}
+
+// but:
+// XPECT errors --> "Cannot instantiate abstract class A." at "A"
+new A();

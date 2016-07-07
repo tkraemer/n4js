@@ -24,11 +24,11 @@ export public class B extends A {
 
 function <T extends N4Object> me (ctor : constructor{T}) : T {
  
- 	// XPECT noerrors --> "not even an Exception should be created here." 
+ 	// XPECT errors --> "Cannot instantiate T." at "ctor"
  	var x = new ctor();
  	
  	return x;
 }
 
 me(A).m1();
-me(B).m1(); // will expolode in constructor of B
+me(B).m1(); // will explode in constructor of B

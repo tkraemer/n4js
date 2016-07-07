@@ -1,0 +1,73 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest  
+
+
+   END_SETUP
+*/
+
+interface LongNameLongNameLongNameLongNameLongNameLongNameLongName {}
+interface LongName2LongName2LongName2LongName2LongName2LongName2LongName2 {}
+interface LongName23LongName23LongName23LongName23LongName23LongName23LongName23 {}
+interface LongName3LongName3LongName3LongName3LongName3LongName3LongName3 {}
+
+
+/* XPECT formattedLines 7 ---
+let e = 1;
+/\**
+ * Error to notify a cancelation.
+ *\/
+export public class CanceledError {
+	public fieldA: int = 3;
+}
+--- */
+let e = 1;
+/**
+ * Error to notify a cancelation.
+ */
+export public class CanceledError {
+  public fieldA:int = 3;
+}
+
+
+
+/* XPECT formattedLines 8 ---
+let e = 1;
+/\**
+ * Error to notify a cancelation.
+ *\/
+export public class CanceledError2
+	implements LongNameLongNameLongNameLongNameLongNameLongNameLongName {
+
+	public fieldA: int = 3;
+}
+--- */
+let e = 1;
+/**
+ * Error to notify a cancelation.
+ */
+export public class CanceledError2
+  implements LongNameLongNameLongNameLongNameLongNameLongNameLongName{
+  public fieldA:int = 3;
+}
+
+
+/* XPECT formattedLines 7 ---
+let e = 1;
+/\**
+ * Error to notify a cancelation.
+ *\/
+export public class CanceledError3 implements LongNameLongNameLongNameLongNameLongNameLongNameLongName,
+	LongName2LongName2LongName2LongName2LongName2LongName2LongName2 {
+
+	public fieldA: int = 3;
+}
+--- */
+let e = 1;
+/**
+ * Error to notify a cancelation.
+ */
+export public class CanceledError3 implements LongNameLongNameLongNameLongNameLongNameLongNameLongName, LongName2LongName2LongName2LongName2LongName2LongName2LongName2 {
+  public fieldA:int = 3;
+}
+
+
+let f=2;

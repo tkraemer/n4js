@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+/* indent missing indentation */
+/* XPECT formattedLines 3 ---
+class E {
+	private e: Array<Object> = [];
+}
+--- */
+class E {
+	private e:Array<Object> =[];
+}
+

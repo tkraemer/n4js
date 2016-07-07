@@ -1,22 +1,19 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-
-abstract class A {
-	public abstract foo();
-}
-
-class B extends A {
-	@Override
-	public foo() {}
-}
-
+abstract class A {}
+class B extends A {}
 
 // XPECT errors --> "Cannot instantiate abstract class A." at "A"
 var x = new A();
+// XPECT noerrors -->
 var y = new B();
 
-
 function foo(ctor : constructor{A}) {
+	// XPECT noerrors -->
 	return new ctor();
 }
 
+// XPECT errors --> "type{A} is not a subtype of constructor{A}." at "A"
+foo(A);
+// XPECT noerrors -->
+foo(B);

@@ -1,0 +1,43 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+var a,b;
+/* insert single space between "if" and "(" opening parenthesis  */
+/* XPECT formattedLines 1 ---
+if ((a === 0)) {
+	;
+}
+--- */
+if((a === 0)) { ; }
+
+
+
+/* no linebreak between "if" and "(" opening parenthesis  */
+/* XPECT formattedLines 2 ---
+if (b === 0) {}
+--- */
+if
+  (b === 0){}
+
+
+/* no linebreak between "if" and "(" opening parenthesis  */
+/* XPECT formattedLines 5 ---
+if (b === 0) {
+	// stuff
+}
+--- */
+if
+  (b === 0)
+  {
+  	// stuff
+  }
+
+
+
+/*
+Based on empirical result of hand-formatted code:
+:~/stdlib/stdlib_n4js$ find . -name "*.n4js" -exec grep "if(" {} \; | wc -l
+      10
+:~/stdlib/stdlib_n4js$ find . -name "*.n4js" -exec grep "if\W*(" {} \; | wc -l
+    1257
+)
+*/
