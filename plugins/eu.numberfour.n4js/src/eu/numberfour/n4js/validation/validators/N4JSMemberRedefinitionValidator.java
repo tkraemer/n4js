@@ -653,7 +653,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private void messageMissingOverrideAnnotation(MemberMatrix mm,
 			Collection<TMember> missingOverrideAnnotationMembers) {
 		if (mm.hasOwned() && missingOverrideAnnotationMembers.size() > 0) {
-			Iterable<TMember> overriddenMembers = Iterables.concat(mm.implemented(), mm.inherited());
+			Iterable<TMember> overriddenMembers = Iterables.concat(mm.inherited(), mm.implemented());
 
 			for (TMember overriding : mm.owned()) {
 				// skip members with proper annotation
