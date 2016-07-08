@@ -33,6 +33,12 @@ function <T> f10(t: Array<? extends T>): void {}
 // XPECT nowarnings -->
 function <T> f11(): Array<? super T> { return null; }
 
+/* XPECT warnings ---
+	"Type variable T not used in parameters or return type." at "T"
+	"Type variable S not used in parameters or return type." at "S"
+--- */
+function <T,S> f12(s: string): void {}
+
 class C<S> {
     // XPECT nowarnings -->
     m1(s: string): void {}
@@ -70,6 +76,12 @@ class C<S> {
 	// XPECT nowarnings -->
 	<T> m12(): Array<? extends T> { return null; }
 
+	/* XPECT warnings ---
+		"Type variable T not used in parameters or return type." at "T"
+		"Type variable X not used in parameters or return type." at "X"
+	--- */
+	<T,X> m13(s: string): void {}
+
     // XPECT warnings --> "Type variable S not used in parameters or return type." at "S"
     static <S> s1(s: string): void {}
 
@@ -90,6 +102,12 @@ class C<S> {
 
     // XPECT nowarnings -->
     static <S> s7(): Array<Array<S>> { return null; }
+
+	/* XPECT warnings ---
+		"Type variable T not used in parameters or return type." at "T"
+		"Type variable X not used in parameters or return type." at "X"
+	--- */
+	static <T,X> s8(s: string): void {}
 }
 
 class D<S> extends C<S> {
