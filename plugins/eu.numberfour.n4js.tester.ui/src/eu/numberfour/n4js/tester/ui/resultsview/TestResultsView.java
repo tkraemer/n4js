@@ -565,9 +565,13 @@ public class TestResultsView extends ViewPart {
 				this::performRelaunchFailed);
 		actionStop = createAction(
 				"Stop", IAction.AS_PUSH_BUTTON,
-				"Stop currently running test session.",
+				/* "Stop currently running test session.", */
+				"Stopping the running test session is currently not supported. You can use the Console to terminate it. ",
 				TesterUiActivator.getImageDescriptor(TesterUiActivator.ICON_STOP),
 				this::performStop);
+		// Disable stop action for now since testing framework doesn't support stopping yet.
+		actionStop.setEnabled(false);
+
 		actionShowHistory = new ShowHistoryAction(this);
 		actionClearTerminated = createAction(
 				"Clear Terminated", IAction.AS_PUSH_BUTTON,
@@ -598,10 +602,10 @@ public class TestResultsView extends ViewPart {
 		return a;
 	}
 
-			/**
-			 * Allow {@link ShowHistoryAction} to access our action for clearing terminated sessions from the outside.
-			 */
-			/* package */Action getActionClearTerminated() {
+	/**
+	 * Allow {@link ShowHistoryAction} to access our action for clearing terminated sessions from the outside.
+	 */
+	/* package */Action getActionClearTerminated() {
 		return actionClearTerminated;
 	}
 
@@ -612,7 +616,7 @@ public class TestResultsView extends ViewPart {
 		actionLock.setEnabled(true);
 		actionRelaunch.setEnabled(null != currentRoot && !currentRoot.isRunning());
 		actionRelaunchFailed.setEnabled(false);
-		actionStop.setEnabled(currentRoot != null && currentRoot.isRunning());
+		// actionStop.setEnabled(currentRoot != null && currentRoot.isRunning());
 		actionShowHistory.setEnabled(true);
 		actionClearTerminated.setEnabled(containsTerminated());
 	}
@@ -651,7 +655,7 @@ public class TestResultsView extends ViewPart {
 	 * Invoked when user performs {@link #actionStop}.
 	 */
 	protected void performStop() {
-		// TODO
+		System.out.println("Stop!");
 	}
 
 	/**
