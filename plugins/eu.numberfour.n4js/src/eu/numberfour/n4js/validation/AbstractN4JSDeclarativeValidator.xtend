@@ -270,6 +270,9 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	 * @param genericFunctionDeclaration the generic function or method declaration to check.
 	 */
 	protected def <T extends GenericDeclaration & FunctionDefinition> internalCheckNoUnusedTypeParameters(T genericFunctionOrMethod) {
+		if (genericFunctionOrMethod.definedType === null)
+			return;
+			
 		var TFunction functionType = (genericFunctionOrMethod.definedType as TFunction);
 		var int typeVarCount = Math.min(functionType.typeVars.size, genericFunctionOrMethod.typeVars.size)
 		
