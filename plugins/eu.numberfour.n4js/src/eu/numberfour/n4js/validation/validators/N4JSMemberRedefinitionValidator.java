@@ -181,6 +181,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 			constraints_59_NonOverride(mm);
 			constraints_42_AbstractMember(mm);
+			unusedGenericTypeVariable(mm);
 		}
 		constraints_41_AbstractClass(tClassifier, memberCube);
 
@@ -230,14 +231,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	private void constraints_60_MemberOverride_checkEntry(MemberMatrix mm) {
 		for (TMember m : mm.owned()) {
-			boolean overrides = false;
 			for (TMember s : mm.inherited()) {
 				// 1. override compatible
 				if (overrideCompatible(RedefinitionType.overridden, m, s, false,
 						mm) == OverrideCompatibilityResult.COMPATIBLE) {
 					// avoid consequential errors
 
-					overrides = true;
 					// 2. accessor pair for fields
 					if (s.isField() && m.isAccessor()) {
 						if (!mm.hasOwnedAccessorPair()) {
@@ -251,21 +250,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						continue; // avoid consequential errors
 					}
 				}
-			}
-
-			// GH-234 add warning for unused type variables in function and method declarations (unless the method
-			// overrides any other method).
-			if (!overrides && m instanceof TMethod) {
-				TMethod method = (TMethod) m;
-				// Unfortunately, we need the method declaration from the AST in order to pass it to the internal
-				// validation function. This is necessary because we want to attach the warning to the actual unused
-				// type variable in the method declaration, and the type variable in the type model is not identical
-				// to the one in the AST which we actually need.
-				// Since method is owned by the type being validated, we can safely navigate back from the type model
-				// to the AST without triggering another parse.
-
-				MethodDeclaration methodDeclaration = (MethodDeclaration) method.getAstElement();
-				internalCheckNoUnusedTypeParameters(methodDeclaration);
 			}
 		}
 	}
@@ -619,6 +603,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		return true;
+	}
+
+	/**
+	 * GH-234 add warning for unused type variables in function and method declarations (unless the method overrides any
+	 * other method).
+	 */
+	private void unusedGenericTypeVariable(MemberMatrix mm) {
+		for (TMember member : mm.owned()) {
+			if (member instanceof TMethod) {
+				TMethod method = (TMethod) member;
+				if (!mm.hasInherited() && !mm.hasImplemented()) {
+					// We need the method declaration from the AST in order to pass it to the internal
+					// validation function. This is necessary because we want to attach the warning to the actual unused
+					// type variable in the method declaration, and the type variable in the type model is not identical
+					// to the one in the AST which we actually need.
+					// Since method is owned by the type being validated, we can safely navigate back from the type
+					// model to the AST without triggering another parse.
+
+					MethodDeclaration methodDeclaration = (MethodDeclaration) method.getAstElement();
+					internalCheckNoUnusedTypeParameters(methodDeclaration);
+				}
+			}
+		}
 	}
 
 	/**
