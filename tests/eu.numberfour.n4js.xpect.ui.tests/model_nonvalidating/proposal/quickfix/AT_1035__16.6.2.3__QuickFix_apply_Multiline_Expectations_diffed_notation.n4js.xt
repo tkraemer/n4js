@@ -18,16 +18,14 @@
  */
 
 
-/* XPECT quickFix at 'class B<|> extends' apply 'Import A' --- 
+/* X---PECT quickFix at 'class B<|> extends' apply 'Import A' --- 
 + import { A } from "proposal/
 | [class|contentassist/A";]
 | [|class] B extends [a|A] {
   }
 ---
 */
-class B extends a {
-		
-}
-
-
+//class B extends a {
+//		
+//}
 
