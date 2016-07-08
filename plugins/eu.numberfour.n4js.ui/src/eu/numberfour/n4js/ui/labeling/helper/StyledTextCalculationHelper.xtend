@@ -90,7 +90,7 @@ class StyledTextCalculationHelper {
 			val typeStr = (if (!definedType.constructor && definedType.returnTypeRef !== null) 
 				" : " + getTypeRefDescription(definedType.returnTypeRef) else "")
 				
-			return if(functionDefinition.returnTypeRef?.declaredType === null) {
+			return if(functionDefinition.returnTypeRef === null) {
 				// type was inferred
 				styledText.append(typeStr, INFERRED_TYPE_STYLER)
 			} else {
@@ -113,7 +113,7 @@ class StyledTextCalculationHelper {
 		val typeStr = (if(definedGetter.declaredTypeRef !== null) " : "
 			+ getTypeRefDescription(definedGetter.declaredTypeRef) else "")
 		
-		return if(n4GetterDeclaration.declaredTypeRef?.declaredType === null) {
+		return if(n4GetterDeclaration.declaredTypeRef === null) {
 			// type was inferred
 			styledText.append(typeStr, INFERRED_TYPE_STYLER)
 		} else {
@@ -156,9 +156,9 @@ class StyledTextCalculationHelper {
 		
 		return if(variableDeclaration.declaredTypeRef === null) {
 			// type was inferred
-			styledText?.append(" : " + typeRefString, INFERRED_TYPE_STYLER)
+			styledText?.append(typeRefString, INFERRED_TYPE_STYLER)
 		} else {
-			styledText?.append(" : " + typeRefString)
+			styledText?.append(typeRefString)
 		}
 	}
 	
