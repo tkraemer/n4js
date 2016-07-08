@@ -34,7 +34,7 @@ class B extends A implements I {
 	// XPECT errors --> "The field B.b overriding field A.b must be annotated with @Override." at "b"
 	b : string = "B";	
 	
-	// XPECT errors --> "The field B.c overriding/implementing field I.c and field A.c must be annotated with @Override." at "c"
+	// XPECT errors --> "The field B.c overriding/implementing field A.c and field I.c must be annotated with @Override." at "c"
 	c : string = "B";
 	
 	// XPECT errors --> "The getter B.d overriding field A.d must be annotated with @Override." at "d"
@@ -48,7 +48,7 @@ class B extends A implements I {
 	// XPECT errors --> "The method B.method overriding method A.method must be annotated with @Override." at "method"
 	method() : int { return 3; }
 	
-	// XPECT errors --> "The method B.interfaceMethod overriding/implementing method I.interfaceMethod and method A.interfaceMethod must be annotated with @Override." at "interfaceMethod"
+	// XPECT errors --> "The method B.interfaceMethod overriding/implementing method A.interfaceMethod and method I.interfaceMethod must be annotated with @Override." at "interfaceMethod"
 	interfaceMethod() : string { return "B"; }
 }
 
