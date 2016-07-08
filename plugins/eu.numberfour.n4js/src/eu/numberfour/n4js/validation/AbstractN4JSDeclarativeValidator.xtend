@@ -19,6 +19,8 @@ import eu.numberfour.n4js.n4JS.DebuggerStatement
 import eu.numberfour.n4js.n4JS.DoStatement
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.IfStatement
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4JSFeatureUtils
@@ -43,6 +45,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
@@ -51,6 +54,7 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.UtilN4
@@ -257,6 +261,26 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 //					"**** hopefully unnecessary use of explicit type arguments ****",
 //					source, feature, INSIGNIFICANT_INDEX, IssueCodes.EXP_WRONG_NUMBER_OF_TYPEARGS);
 //		}
+	}
+
+	/**
+	 * Check whether every type parameter of a generic function or method declaration is actually used by that
+	 * declaration.
+	 * 
+	 * @param genericFunctionDeclaration the generic function or method declaration to check.
+	 */
+	protected def <T extends GenericDeclaration & FunctionDefinition> internalCheckNoUnusedTypeParameters(T genericFunctionOrMethod) {
+		var TFunction functionType = (genericFunctionOrMethod.definedType as TFunction);
+		var int typeVarCount = Math.min(functionType.typeVars.size, genericFunctionOrMethod.typeVars.size)
+		
+		for (var int i = 0; i < typeVarCount; i++) {
+			var TypeVariable typeVar = genericFunctionOrMethod.typeVars.get(i)
+			var TypeVariable declaredTypeVar = functionType.typeVars.get(i)
+			
+			if (!TypeUtils.isOrContainsRefToTypeVar(genericFunctionOrMethod, declaredTypeVar)) {
+				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(typeVar.name), typeVar, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+			}
+		}
 	}
 
 	/**

@@ -39,7 +39,6 @@ import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TStructSetter
-import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -65,8 +64,6 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper
 import static extension com.google.common.base.Strings.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
-import eu.numberfour.n4js.ts.typeRefs.TypeArgument
-import eu.numberfour.n4js.ts.typeRefs.Wildcard
 
 /**
  */
@@ -748,42 +745,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkNoUnusedTypeParameters(FunctionDeclaration functionDeclaration) {
-		for (TypeVariable typeVariable : functionDeclaration.typeVars) {
-			if (!isReturnType(functionDeclaration, typeVariable) &&
-				!isParameterType(functionDeclaration, typeVariable)
-			) {
-				addIssue(getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(typeVariable.name), typeVariable, FUN_UNUSED_GENERIC_TYPE_PARAM);
-			}
-		}
-	}
-
-	private def boolean isReturnType(FunctionDefinition functionDefinition, TypeVariable typeVariable) {
-		return referencesTypeVariable(functionDefinition.returnTypeRef, typeVariable)
-	}
-	
-	private def boolean isParameterType(FunctionDefinition functionDefinition, TypeVariable typeVariable) {
-		for (FormalParameter param : functionDefinition.fpars) {
-			if (referencesTypeVariable(param.declaredTypeRef, typeVariable))
-				return true;
-		}
-		return false;
-	}
-	
-	private def boolean referencesTypeVariable(TypeRef typeRef, TypeVariable typeVariable) {
-		if (typeRef === null)
-			return false;
-		if (typeRef.declaredType !== null && typeRef.declaredType.name == typeVariable.name)
-			return true;
-		if (referencesTypeVariable(typeRef.declaredLowerBound, typeVariable) ||
-			referencesTypeVariable(typeRef.declaredUpperBound, typeVariable))
-			return true;
-		for (TypeArgument typeArgument : typeRef.typeArgs) {
-			switch typeArgument {
-				TypeRef  case referencesTypeVariable(typeArgument, typeVariable): return true
-				Wildcard case referencesTypeVariable(typeArgument.declaredLowerBound, typeVariable) || 
-				              referencesTypeVariable(typeArgument.declaredUpperBound, typeVariable): return true
-			}
-		}
-		return false;
+		internalCheckNoUnusedTypeParameters(functionDeclaration);
 	}
 }
