@@ -1,8 +1,8 @@
 (function(System) {
 	'use strict';
 	System.register([
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ITestReporter',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy'
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ITestReporter',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy'
 	], function($n4Export) {
 		var ITestReporter, TestSpy, q, getLocation, updateURLParameter, getParm, filterClickHandler, HTMLReporter;
 		getLocation = function getLocation() {
@@ -14,7 +14,7 @@
 			queryParts = urlObj.search.split("&").filter((function(part) {
 				return part.split('=')[0] != param;
 			}).bind(this));
-			queryParts.push(String(('' + param + '=' + encodeURIComponent(paramVal) + '')));
+			queryParts.push(String(("" + param + "=" + encodeURIComponent(paramVal) + "")));
 			urlObj.search = queryParts.join("&");
 			return String(urlObj);
 		};
@@ -52,6 +52,8 @@
 			window.history.pushState(null, null, updateURLParameter(getLocation(), "showOnly", showOnly.join(",")));
 		};
 		HTMLReporter = function HTMLReporter() {
+			this.spinnerHandle = undefined;
+			this.spinnerChar = '░';
 			this.spy = undefined;
 			this.timers = undefined;
 			this.testsElm = undefined;
@@ -69,6 +71,8 @@
 				return !!showType;
 			}).bind(this));
 			ITestReporter.$fieldInit(this, undefined, {
+				spinnerHandle: undefined,
+				spinnerChar: undefined,
 				spy: undefined,
 				timers: undefined,
 				testsElm: undefined,
@@ -89,10 +93,10 @@
 			this.spinner = document.createElement("pre");
 			this.spinner.classList.add("mangelhaft-spinner");
 			let ii = 0;
-			setInterval((function() {
-				this.spinner.innerText += '░';
+			this.spinnerHandle = setInterval((function() {
+				this.spinner.innerText += this.spinnerChar;
 			}).bind(this), 500);
-			this.timers.innerHTML = 'Fetching catalog: ';
+			this.timers.innerHTML = "Fetching catalog: ";
 			this.timers.appendChild(this.spinner);
 			this.testsElm.appendChild(this.timers);
 			this.catalogTime = new Date().getTime();
@@ -101,11 +105,11 @@
 		$n4Export('HTMLReporter', HTMLReporter);
 		return {
 			setters: [
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
-					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
+					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
 				}
 			],
 			execute: function() {
@@ -175,16 +179,34 @@
 							return fb;
 						}
 					},
+					getFQNAnchors: {
+						value: function getFQNAnchors___n4(fqnString) {
+							let moduleParts = fqnString.split('.'), moduleAnchors, filterStr = null;
+							moduleAnchors = moduleParts.map((function(modulePart) {
+								let url;
+								filterStr = filterStr ? filterStr + "." + modulePart : modulePart;
+								url = updateURLParameter(updateURLParameter(getLocation(), "filter", filterStr), "tests", "");
+								return [
+									"<a href='",
+									url,
+									"' >",
+									modulePart,
+									"</a>"
+								].join("");
+							}).bind(this));
+							return moduleAnchors;
+						}
+					},
 					register: {
 						value: function register___n4() {
 							return $spawn(function*() {
-								let that = this, testsElm = this.testsElm, header = document.createElement("div"), countersElm = this.countersElm, numGroupsElm = document.createElement("span"), numGroups = 0, numTestsElm = document.createElement("span"), numTests = 0, numTestsOkElm = document.createElement("span"), numTestsOk = 0, numTestsFailElm = document.createElement("span"), numTestsFail = 0, totalTestsElm = document.createElement("span"), numTestsRun = 0, numTestsSkipped = 0, numTestsSkippedElm = document.createElement("span");
+								let testsElm = this.testsElm, header = document.createElement("div"), countersElm = this.countersElm, numGroupsElm = document.createElement("span"), numGroups = 0, numTestsElm = document.createElement("span"), numTests = 0, numTestsOkElm = document.createElement("span"), numTestsOk = 0, numTestsFailElm = document.createElement("span"), numTestsFail = 0, totalTestsElm = document.createElement("span"), numTestsRun = 0, numTestsSkipped = 0, numTestsSkippedElm = document.createElement("span"), that = this;
 								;
 								countersElm.classList.add("mangelhaft-counters");
 								header.classList.add("mangelhaft-header");
 								header.innerHTML = "<h1><a title='all tests' href='/test.html'>Mangelhaft</a></h1>";
 								testsElm.appendChild(countersElm);
-								testsElm.appendChild(that.createFilterBox());
+								testsElm.appendChild(this.createFilterBox());
 								testsElm.appendChild(header);
 								numGroupsElm.classList.add("mangelhaft-num-groups");
 								countersElm.appendChild(numGroupsElm);
@@ -208,13 +230,14 @@
 									'SKIPPED_IGNORE',
 									'SKIPPED_FIXME'
 								], "mangelhaft-num-SKIPPED", "Show only skipped results"));
-								if (!that.reRunning) {
+								if (!this.reRunning) {
 									document.body.innerHTML = "";
 									document.body.appendChild(testsElm);
 									this.catalogTime = new Date().getTime() - this.catalogTime;
 									this.testingTime = new Date().getTime();
-									this.spinner.innerText = "";
-									this.timers.innerHTML = ('Fetching catalog: ' + (that.catalogTime / 1000) + 's Testing: ');
+									clearInterval(this.spinnerHandle);
+									this.spinner.innerText = this.spinnerChar;
+									this.timers.innerHTML = ("Fetching catalog: " + (this.catalogTime / 1000) + "s Testing: ");
 									this.timers.appendChild(this.spinner);
 								}
 								var updateTotals = function updateTotals() {
@@ -225,40 +248,47 @@
 									numTestsSkippedElm.innerText = numTestsSkipped.toString();
 									totalTestsElm.innerText = numTestsRun.toString();
 								};
-								this.spy.testingStarted.add(function(numAllGroups, sessionId, numAllTests) {
-									if (that.reRunning) {
+								this.spy.testingStarted.add((function(numAllGroups, sessionId, numAllTests) {
+									if (this.reRunning) {
 										return;
 									}
 									numGroups = numAllGroups;
 									numTests = numAllTests;
 									updateTotals();
-								});
-								this.spy.groupStarted.add(function(group) {
-									if (that.reRunning) {
+								}).bind(this));
+								this.spy.parameterizedGroupsStarted.add((function(group) {
+									if (this.reRunning) {
 										return;
 									}
-									let groupElm = document.createElement("div"), groupTitleElm = document.createElement("div"), moduleParts = group.fqn.split('.'), moduleAnchors, groupUrl = updateURLParameter(getLocation(), "filter", moduleParts.join(".")), filterStr = null;
+									let groupElm = document.createElement("div"), groupTitleElm = document.createElement("div"), moduleAnchors, groupUrl = updateURLParameter(getLocation(), "filter", group.fqn);
+									;
+									groupUrl = updateURLParameter(groupUrl, "tests", "");
+									groupElm.classList.add("mangelhaft-group");
+									groupElm.classList.add("mangelhaft-parameterized");
+									groupTitleElm.classList.add("mangelhaft-group-title");
+									moduleAnchors = this.getFQNAnchors(group.fqn);
+									groupTitleElm.innerHTML = "<span class='mangelhaft-group-title-name'>" + moduleAnchors.join(".") + "</span>";
+									groupTitleElm.innerHTML += group.parameterizedName ? ("( " + group.parameterizedName + " )") : "";
+									groupElm.appendChild(groupTitleElm);
+									testsElm.appendChild(groupElm);
+									testsElm = groupElm;
+								}).bind(this));
+								this.spy.groupStarted.add((function(group) {
+									if (this.reRunning) {
+										return;
+									}
+									let groupElm = document.createElement("div"), groupTitleElm = document.createElement("div"), moduleAnchors, groupUrl = updateURLParameter(getLocation(), "filter", group.fqn);
 									;
 									groupUrl = updateURLParameter(groupUrl, "tests", "");
 									groupElm.classList.add("mangelhaft-group");
 									groupTitleElm.classList.add("mangelhaft-group-title");
-									moduleAnchors = moduleParts.map((function(modulePart) {
-										let url;
-										filterStr = filterStr ? filterStr + "." + modulePart : modulePart;
-										url = updateURLParameter(updateURLParameter(getLocation(), "filter", filterStr), "tests", "");
-										return [
-											"<a href='",
-											url,
-											"' >",
-											modulePart,
-											"</a>"
-										].join("");
-									}).bind(this));
+									moduleAnchors = this.getFQNAnchors(group.fqn);
 									groupTitleElm.innerHTML = "<span class='mangelhaft-group-title-name'>" + moduleAnchors.join(".") + "</span>";
+									groupTitleElm.innerHTML += group.parameterizedName ? ("( " + group.parameterizedName + " )") : "";
 									groupElm.appendChild(groupTitleElm);
-									that.groupDivs.set(group, groupElm);
+									this.groupDivs.set(group, groupElm);
 									testsElm.appendChild(groupElm);
-									group.tests.forEach(function(test) {
+									group.tests.forEach((function(test) {
 										let testName = test.description ? test.description : test.name, testElm = document.createElement("div"), status = document.createElement("span"), testNameElm = document.createElement("span"), tooltip = document.createElement("pre"), tooltipInner = document.createElement("code"), testUrl = updateURLParameter(groupUrl, "tests", test.name), nameParts = testName.match(/^(?:([a-zA-Z0-9]*)__)?(.*)___(.*)?$/);
 										;
 										if (nameParts) {
@@ -287,20 +317,20 @@
 										testElm.appendChild(status);
 										status.classList.add("mangelhaft-status");
 										groupElm.appendChild(testElm);
-										that.testDivs.set(test, testElm);
-										that.statuses.set(test, status);
-									});
-								});
-								this.spy.testFinished.add(function(group, test, testResult, rerunTestFunc) {
+										this.testDivs.set(test, testElm);
+										this.statuses.set(test, status);
+									}).bind(this));
+								}).bind(this));
+								this.spy.testFinished.add((function(group, test, testResult, rerunTestFunc) {
 									let reason, stackElm = null, elapsed = document.createElement("span"), groupElm, testElm, status, module = group.fqn, groupUrl = updateURLParameter(getLocation(), "filter", module), testUrl = updateURLParameter(groupUrl, "tests", test.name), elapsedStr;
 									;
-									groupElm = that.groupDivs.get(group);
-									testElm = that.testDivs.get(test);
+									groupElm = this.groupDivs.get(group);
+									testElm = this.testDivs.get(test);
 									if (!(groupElm && testElm)) {
-										throw new Error(('Missing group (' + group.name + ') or test (' + test.name + ') html element in reporter (reload) '));
+										throw new Error(("Missing group (" + group.name + ") or test (" + test.name + ") html element in reporter (reload) "));
 									}
-									status = that.statuses.get(test);
-									if (!that.reRunning) {
+									status = this.statuses.get(test);
+									if (!this.reRunning) {
 										numTestsRun += 1;
 									}
 									testElm.setAttribute("data-mangelhaft-test-status", testResult.testStatus);
@@ -315,7 +345,7 @@
 											{
 												status.classList.add("mangelhaft-SKIPPED");
 												status.innerHTML = "<a title='re-run test' href='" + testUrl + "'>" + testResult.testStatus.toString() + "</a>";
-												if (!that.reRunning) {
+												if (!this.reRunning) {
 													numTestsSkipped += 1;
 													numTestsRun -= 1;
 												}
@@ -326,7 +356,7 @@
 												status.classList.remove("mangelhaft-FAIL");
 												status.classList.add("mangelhaft-OK");
 												status.innerHTML = "<a title='re-run test' href='" + testUrl + "'>OK</a>";
-												if (!that.reRunning) {
+												if (!this.reRunning) {
 													numTestsOk += 1;
 												}
 												break;
@@ -342,10 +372,10 @@
 													stackElm.classList.add("mangelhaft-FAIL-stack");
 													testElm.appendChild(stackElm);
 												}
-												if (!that.reRunning) {
+												if (!this.reRunning) {
 													numTestsFail += 1;
 												}
-												that.setFavIconRed();
+												this.setFavIconRed();
 												break;
 											}
 									}
@@ -355,7 +385,7 @@
 										reason.className = status.className + " " + "mangelhaft-reason";
 										testElm.insertBefore(reason, stackElm);
 									}
-									if (that.showOnly && that.showOnly.length && that.showOnly.indexOf(testResult.testStatus.toString()) === -1) {
+									if (this.showOnly && this.showOnly.length && this.showOnly.indexOf(testResult.testStatus.toString()) === -1) {
 										(testElm).style.display = "none";
 										testElm.classList.add("mangelhaft-hidden");
 										testElm.classList.remove("mangelhaft-shown");
@@ -366,7 +396,7 @@
 										elapsed.innerText = " (" + elapsedStr + "ms) ";
 										elapsed.addEventListener("click", (function(e) {
 											if (rerunTestFunc) {
-												that.reRunning = true;
+												this.reRunning = true;
 												status.innerHTML = "<a title='re-run test' href='" + testUrl + "'>Running...</a>";
 												if (stackElm) {
 													stackElm.innerHTML = "";
@@ -381,15 +411,16 @@
 											}
 										}).bind(this));
 										testElm.insertBefore(elapsed, status);
-										that.reRunning = false;
+										this.reRunning = false;
 									}
 									updateTotals();
-								});
+								}).bind(this));
+								let groupsRan = 0;
 								this.spy.groupFinished.add((function(group, resultGroup) {
-									if (that.reRunning) {
+									if (this.reRunning) {
 										return;
 									}
-									let groupElm = that.groupDivs.get(group);
+									let groupElm = this.groupDivs.get(group);
 									if (this.showOnly && this.showOnly.length && groupElm.querySelectorAll(".mangelhaft-test.mangelhaft-shown").length === 0) {
 										(groupElm).style.display = "none";
 										groupElm.classList.add("mangelhaft-hidden");
@@ -398,23 +429,39 @@
 										groupElm.classList.remove("mangelhaft-hidden");
 										groupElm.classList.add("mangelhaft-shown");
 									}
+									if ((++groupsRan % 10) === 0) {
+										that.spinner.innerText += that.spinnerChar;
+									}
 								}).bind(this));
-								this.spy.testingFinished.add(function(resultGroups) {
-									if (that.reRunning) {
+								this.spy.parameterizedGroupsFinished.add((function(resultGroups) {
+									return $spawn(function*() {
+										testsElm = this.testsElm;
+									}.apply(this, arguments));
+								}).bind(this));
+								this.spy.testingFinished.add((function(resultGroups) {
+									if (this.reRunning) {
 										return null;
 									}
 									let done = document.createElement("span"), timers = document.createElement("div"), groupElm;
 									;
-									that.testingTime = new Date().getTime() - that.testingTime;
-									that.timers.innerHTML = ('Fetching catalog: ' + (that.catalogTime / 1000) + 's Testing: ' + (that.testingTime / 1000) + 's');
+									this.testingTime = new Date().getTime() - this.testingTime;
+									this.timers.innerHTML = ("Fetching catalog: " + (this.catalogTime / 1000) + "s Testing: " + (this.testingTime / 1000) + "s");
 									done.innerText = "DONE";
 									countersElm.appendChild(done);
 									window.prettyPrint();
 									return resultGroups;
-								});
+								}).bind(this));
 								return this;
 							}.apply(this, arguments));
 						}
+					},
+					spinnerHandle: {
+						value: undefined,
+						writable: true
+					},
+					spinnerChar: {
+						value: undefined,
+						writable: true
 					},
 					spy: {
 						value: undefined,
@@ -474,6 +521,16 @@
 							'n4.mangel.mangeltypes.ITestReporter.ITestReporter'
 						],
 						ownedMembers: [
+							new N4DataField({
+								name: 'spinnerHandle',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'spinnerChar',
+								isStatic: false,
+								annotations: []
+							}),
 							new N4Method({
 								name: 'constructor',
 								isStatic: false,
@@ -561,6 +618,12 @@
 								name: 'createFilterBox',
 								isStatic: false,
 								jsFunction: instanceProto['createFilterBox'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'getFQNAnchors',
+								isStatic: false,
+								jsFunction: instanceProto['getFQNAnchors'],
 								annotations: []
 							}),
 							new N4Method({

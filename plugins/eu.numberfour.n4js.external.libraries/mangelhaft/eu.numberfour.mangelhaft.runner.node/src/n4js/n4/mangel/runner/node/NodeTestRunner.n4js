@@ -22,6 +22,7 @@ import { XUnitReporter } from "n4/mangel/reporter/xunit/XUnitReporter"
 import NodeTestCLI from "n4/mangel/runner/node/NodeTestCLI"
 import {N4Injector} from "n4js/lang/N4Injector"
 import * as lib_fs from "fs"
+import * as cli_color_+ from "cli-color"
 
 class NodeTestRunner  {
     @Inject
@@ -57,7 +58,7 @@ class NodeTestRunner  {
                 return options.filter.some(f => info.fqn.indexOf(f) >= 0);
             });
         }
-
+        this.consoleReporter.cliColor = cli_color_.default;
         let reporters: Array<ITestReporter> = [this.consoleReporter];
         if (options.xunitReportFile) {
             this.xunitReporter.spec = options;

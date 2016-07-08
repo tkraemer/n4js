@@ -10,7 +10,7 @@
  */
 import NodeTestOptions from "n4/mangel/runner/node/NodeTestOptions"
 import NodeTestAPI from "n4/mangel/runner/node/NodeTestAPI"
-import * as lib_nomnom+ from "nomnom-patched/nomnom"
+import * as lib_nomnom+ from "nomnom-patched"
 import * as lib_path from "path"
 
 export default public class NodeTestCLI {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +14,7 @@
  * Use this interface type to denote common ES2015 work-around cases
  * used to make Iterators compatible with for..of loops.
  */
-export public interface ~IteratorExt<T> extends Iterator<T> {
+export public interface ~IteratorExt<out T> extends Iterator<T> {
     public [Symbol.iterator](): IteratorExt<T>; // must return this
 }
 

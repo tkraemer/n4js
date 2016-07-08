@@ -1,10 +1,12 @@
 (function(System) {
 	'use strict';
 	System.register([
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ITestReporter',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy'
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ITestReporter',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy'
 	], function($n4Export) {
-		var ITestReporter, TestSpy, cli_color, ConsoleReporter;
+		var ITestReporter, TestSpy, CliColor, ConsoleReporter;
+		CliColor = function CliColor() {};
+		$n4Export('CliColor', CliColor);
 		ConsoleReporter = function ConsoleReporter() {
 			this.timeoutBuffer = 1000 * 30;
 			this.logger = function() {
@@ -13,27 +15,87 @@
 			};
 			this.buffered = false;
 			this.buffer = [];
+			this.cliColor = new CliColor();
 			this.spy = undefined;
 			ITestReporter.$fieldInit(this, undefined, {
 				timeoutBuffer: undefined,
 				logger: undefined,
 				buffered: undefined,
 				buffer: undefined,
+				cliColor: undefined,
 				spy: undefined
 			});
 		};
 		$n4Export('ConsoleReporter', ConsoleReporter);
 		return {
 			setters: [
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
-					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
+					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
 				}
 			],
 			execute: function() {
-				cli_color = System._nodeRequire("cli-color");
+				$makeClass(CliColor, Object, [], {
+					red: {
+						value: function red___n4(str) {
+							return str;
+						}
+					},
+					green: {
+						value: function green___n4(str) {
+							return str;
+						}
+					},
+					cyan: {
+						value: function cyan___n4(str) {
+							return str;
+						}
+					},
+					yellow: {
+						value: function yellow___n4(str) {
+							return str;
+						}
+					}
+				}, {}, function(instanceProto, staticProto) {
+					var metaClass = new N4Class({
+						name: 'CliColor',
+						origin: 'eu.numberfour.mangelhaft.reporter.console',
+						fqn: 'n4.mangel.reporter.console.ConsoleReporter.CliColor',
+						n4superType: N4Object.n4type,
+						allImplementedInterfaces: [],
+						ownedMembers: [
+							new N4Method({
+								name: 'red',
+								isStatic: false,
+								jsFunction: instanceProto['red'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'green',
+								isStatic: false,
+								jsFunction: instanceProto['green'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'cyan',
+								isStatic: false,
+								jsFunction: instanceProto['cyan'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'yellow',
+								isStatic: false,
+								jsFunction: instanceProto['yellow'],
+								annotations: []
+							})
+						],
+						consumedMembers: [],
+						annotations: []
+					});
+					return metaClass;
+				});
 				$makeClass(ConsoleReporter, Object, [
 					ITestReporter
 				], {
@@ -60,19 +122,22 @@
 						value: function register___n4() {
 							return $spawn(function*() {
 								let sessionId = null;
+								let indent = 0;
 								this.spy.testingStarted.add((function(numAllGroups, sid, numAllTests) {
-									this.logger.call(this, "Begin tests");
+									this.logger.call(this, ("" + "   ".repeat(indent) + "Begin tests"));
+								}).bind(this));
+								this.spy.parameterizedGroupsStarted.add((function(group) {
+									++indent;
+									this.logger.call(this, ("" + "   ".repeat(indent) + " Parameterized Group " + group.name + ":"));
 								}).bind(this));
 								this.spy.groupStarted.add((function(group) {
-									this.logger.call(this, [
-										"  ",
-										"Group",
-										group.name,
-										":"
-									].join(" "));
+									++indent;
+									let name = group.parameterizedName ? group.parameterizedName : "Group " + group.name;
+									this.logger.call(this, ("" + "   ".repeat(indent) + " " + name + ":"));
 								}).bind(this));
 								this.spy.testFinished.add((function(group, test, testResult) {
 									let unsuccessString = "FAIL";
+									++indent;
 									if (!testResult) {
 										let err = new Error("testResult is null in handleTestFinished");
 										console.error(this.constructor.n4type.fqn, test ? test.name : "unknown test", err, err.stack);
@@ -81,82 +146,48 @@
 									switch(testResult.testStatus) {
 										case 'PASSED':
 											{
-												this.logger.call(this, [
-													"  ",
-													"  ",
-													test.name,
-													":",
-													cli_color.green("OK")
-												].join(" "));
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.green("OK") + ""));
 												break;
 											}
 										case 'ERROR':
-											unsuccessString = cli_color.red("ERROR");
+											unsuccessString = this.cliColor.red("ERROR");
 										case 'FAILED':
 											{
 												let trace;
 												try {
-													trace = cli_color.red(testResult && testResult.trace && testResult.trace.length ? testResult.trace.join("\n") : "NO TRACE");
+													trace = this.cliColor.red(testResult && testResult.trace && testResult.trace.length ? testResult.trace.join("\n") : "NO TRACE");
 												} catch(er) {
-													this.logger(er, cli_color.red(typeof (testResult.trace)));
+													this.logger(er, this.cliColor.red(typeof (testResult.trace)));
 													trace = testResult.trace.toString();
 												}
-												this.logger([
-													"  ",
-													"  ",
-													test.name,
-													":",
-													unsuccessString
-												].join(" "));
-												this.logger([
-													"  ",
-													"  ",
-													"  ",
-													cli_color.red(testResult.message)
-												].join(" "));
-												this.logger([
-													"  ",
-													"  ",
-													"  ",
-													"Stack:",
-													trace.split(/\n/).join("\n                ")
-												].join(" "));
+												this.logger(("" + "   ".repeat(indent) + " " + test.name + " :  " + unsuccessString + ""));
+												this.logger(("" + "   ".repeat(indent + 1) + " " + this.cliColor.red(testResult.message) + ""));
+												this.logger(("" + "   ".repeat(indent + 1) + " Stack: " + trace.split(/\n/).join("\n" + "   ".repeat(indent + 1)) + ""));
 												break;
 											}
 										case 'SKIPPED_PRECONDITION':
 											{
-												this.logger.call(this, [
-													"  ",
-													"  ",
-													test.name,
-													":",
-													cli_color.cyan("SKIPPED_PRECONDITION")
-												].join(" "));
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.cyan("SKIPPED_PRECONDITION") + ""));
 												break;
 											}
 										case 'SKIPPED_NOT_IMPLEMENTED':
 											{
-												this.logger.call(this, [
-													"  ",
-													"  ",
-													test.name,
-													":",
-													cli_color.cyan("SKIPPED_NOT_IMPLEMENTED")
-												].join(" "));
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.cyan("SKIPPED_NOT_IMPLEMENTED") + ""));
 												break;
 											}
 										case 'SKIPPED':
 											{
-												this.logger.call(this, [
-													"  ",
-													"  ",
-													test.name,
-													":",
-													cli_color.yellow("SKIPPED")
-												].join(" "));
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.yellow("SKIPPED") + ""));
 												break;
 											}
 									}
+									--indent;
+								}).bind(this));
+								this.spy.groupFinished.add((function(group) {
+									--indent;
+								}).bind(this));
+								this.spy.parameterizedGroupsFinished.add((function(group) {
+									--indent;
 								}).bind(this));
 								this.spy.testingFinished.add((function(resultGroups) {
 									return $spawn(function*() {
@@ -180,6 +211,10 @@
 						writable: true
 					},
 					buffer: {
+						value: undefined,
+						writable: true
+					},
+					cliColor: {
 						value: undefined,
 						writable: true
 					},
@@ -214,6 +249,11 @@
 							}),
 							new N4DataField({
 								name: 'buffer',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'cliColor',
 								isStatic: false,
 								annotations: []
 							}),

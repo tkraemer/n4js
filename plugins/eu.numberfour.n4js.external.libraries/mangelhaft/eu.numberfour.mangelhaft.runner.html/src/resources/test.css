@@ -80,28 +80,21 @@
     font-weight: bold;
     margin-right: 1em;
 }
-
+.mangelhaft-parameterized .mangelhaft-group{
+	padding-left: 2em;
+}
+.mangelhaft-parameterized .mangelhaft-group .mangelhaft-group-title-name {
+    display: none;
+}
 .mangelhaft-group {
     /*border: 1px solid #000;*/
     /*width: 50%;*/
     margin-bottom: 10px;
 }
  
-.mangelhaft-group-title-name {
+.mangelhaft-group-title {
     text-align: left;
     font-weight: bold;
-}
-.mangelhaft-group-title-fqn {
-    font-weight: 100;
-    font-family: monospace;
-}
-
-.mangelhaft-group-title-fqn::before{
-    content: " (";
-}
-
-.mangelhaft-group-title-fqn::after{
-    content: ")";
 }
 
 .mangelhaft-test {
