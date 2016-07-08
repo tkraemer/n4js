@@ -221,3 +221,25 @@ interface K<S> extends I<S> {
 	// XPECT nowarnings -->
 	<T,X> m9(t: T): void;
 }
+
+interface L<S> {
+	<T> m(p: T) : void;
+}
+
+interface M<S> extends L<S> {
+	@Override
+    // XPECT nowarnings -->
+	<T> m() : void;
+}
+
+class F<S> implements L<S> {
+	@Override
+    // XPECT nowarnings -->
+	<T> m() : void {}
+}
+
+class G<S> implements M<S> {
+	@Override
+    // XPECT nowarnings -->
+	<T> m() : void {}
+}
