@@ -100,6 +100,7 @@ public class N4jscJarUtils {
 		final List<String> cmdline = new ArrayList<>();
 		cmdline.addAll(Arrays.asList(
 				"java",
+				"-Xmx2000m", // TODO make this configurable
 				"-jar", getAbsoluteRunnableN4jsc().getAbsolutePath(),
 				// "--debug", "-v", // generate more output
 				"-t", "allprojects"));
