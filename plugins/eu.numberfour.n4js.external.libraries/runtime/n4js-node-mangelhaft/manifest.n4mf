@@ -13,22 +13,23 @@ VendorId: eu.numberfour
 ProjectName: "n4js-node-mangelhaft"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
-ProjectVersion: 0.3.1
+ProjectVersion: 0.3.2
 ExtendedRuntimeEnvironment: n4js-node
 
-// TODO fix dependencies
 ProvidedRuntimeLibraries {
     n4js-runtime-n4,
     n4js-runtime-v8,
     n4js-runtime-es2015,
     n4js-runtime-esnext,
     n4js-runtime-fetch,
+    n4js-runtime-mangelhaft,
+    // TODO ProjectDependencies doesn't work here:
     n4js.lang,
     eu.numberfour.mangelhaft.runner.ide,
     eu.numberfour.mangelhaft,
-    eu.numberfour.mangelhaft.mangeltypes,
     eu.numberfour.mangelhaft.reporter.ide
 }
+
 
 Output: "src-gen"
 Sources {

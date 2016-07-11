@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"ResultGroups.js",
-"lineCount":127,
-"mappings":"A;;;;EAYA,qCAOuB,OAPvB;;oBAE+B,CAF/B;mBAG8B,CAH9B;kBAI6B,CAJ7B;iBAK4B,CAL5B;GAQQ,eAAe,OAAf,CARR;GASQ,+BAA+B,IAA/B,EAAqC,OAArC,EATR;I;;;;;IAAoB;;;;;;;;;;;;;;;;;;;;;;;6CAYiB,MAZjB,EAYsC,OAZtC,EAY6E;OACzF,QAAS,MAAT,IAAmB,OAAnB;QACI,oBAAoB,gBAApB,CADJ;QAEI,mBAAmB,eAAnB,CAFJ;QAGI,iBAAiB,aAAjB,CAHJ;QAII,kBAAkB,cAAlB,CAJJ;QAKI,IAAI,kBAAkB,YAAtB;SACI,iBAAiB,sBAAsB,CAAQ,MAAR,SAAtB,CAAjB,CADJ;SALJ;QADyF;OAUzF,OAAO,MAAP,CAVyF;OAZ7E;;;oCA8BmC;OAA3B,4DAA2B;OAC/C,OAAO,iBAAiB,YAAjB,CAAP,CAD+C;OA9BnC;;;uCAoCU,aApCV,EAoC6C;OACzD,OAAO,uBAAuB,IAAI,YAAJ,CAAiB,EAAjB,CAAvB,EAA6C,aAA7C,CAAP,CADyD;OApC7C;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroups.n4js"],
-"names":[]
-}

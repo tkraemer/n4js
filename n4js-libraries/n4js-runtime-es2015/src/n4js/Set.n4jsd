@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,11 +16,6 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     public constructor(arg: Iterable<ValueT>?);
 
     @Override public [Symbol.iterator](): IteratorExt<ValueT>;
-
-    /**
-     * Length property is 1.
-     */
-    @Final public length: int;
 
     /**
      * Number of values.
@@ -48,7 +43,7 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     /**
      * New iterator of [value, value] tuples for each element, in insertion order.
      */
-    public entries(): IteratorExt<Array<any>>;
+    public entries(): IteratorExt<Iterable2<ValueT, ValueT>>;
 
     /**
      * Calls callbackFn for each value, in insertion order.

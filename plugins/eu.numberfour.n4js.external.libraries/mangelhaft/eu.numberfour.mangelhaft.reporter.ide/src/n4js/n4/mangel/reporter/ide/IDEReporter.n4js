@@ -80,7 +80,8 @@ export public class IDEReporter implements ITestReporter {
     }
     @Override public async register() {
         let that = this
-            , sessionId: string = null
+          , sessionId: string = null
+          , inParameterized = false
         ;
         async function handleTestingStart(numAllGroups: number, sid: string, numAllTests: number) {
             sessionId = sid
@@ -96,38 +97,54 @@ export public class IDEReporter implements ITestReporter {
         this.spy.testingStarted.add(handleTestingStart);
 //        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
 //        });
-
-        async function handleTestStart(group: IInstrumentedTest, test: TestMethodDescriptor) {
+        this.spy.parameterizedGroupsStarted.add(test => inParameterized = true);
+        async function handleTestStart(groupName: string, testName: string, timeout: number) {
+            if (inParameterized) return; //test starts will be handled at the end of the parameterized tests
             if (!sessionId) {
                 throw new Error("Test start sent before session start")
             }
             let response = await that.send(
-                        ["/n4.ide/testing/sessions", sessionId, "tests", group.name + "%23" + test.name, "start"].join("/")
+                        ["/n4.ide/testing/sessions", sessionId, "tests", groupName + "%23" + testName, "start"].join("/")
                         , Method.POST
                         , { "Content-Type": "application/vnd.n4.ide.start_test_req.tm+json"
                             , "Accept": "application/json"
                         }
-                        , {number timeout: test.timeout + that.timeoutBuffer}
+                        , {number timeout: timeout + that.timeoutBuffer}
             );
         }
-        this.spy.testStarted.add(handleTestStart);
+        this.spy.testStarted.add(async (group: IInstrumentedTest, test: TestMethodDescriptor) => {
+            await handleTestStart(group.name, test.name, test.timeout)
+        });
 
-        async function handleTestFinished (group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult) {
+        async function handleTestFinished (groupName: string, testName: string, testResult: TestResult) {
+            if (inParameterized) return; //test finishes will be handled at the end of the parameterized tests
             if (!sessionId) {
                 throw new Error("Test end sent outside active session")
             }
 
             let response = await that.send(
-                        ["/n4.ide/testing/sessions", sessionId, "tests", group.name + "%23" + test.name, "end"].join("/")
+                        ["/n4.ide/testing/sessions", sessionId, "tests", groupName + "%23" + testName, "end"].join("/")
                         , Method.POST
                         , { "Content-Type": "application/vnd.n4.ide.end_test_req.tm+json"
                             , "Accept": "application/json"
                         }
-
                         , testResult
             );
         }
-        this.spy.testFinished.add(handleTestFinished);
+        this.spy.testFinished.add(async (group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult) => {
+            await handleTestFinished(group.name, test.name, testResult)
+        });
+
+        this.spy.parameterizedGroupsFinished.add(async (resultGroups:ResultGroups) => {
+            inParameterized = false;
+            let resultGroup = resultGroups.aggregate();
+            
+            for (let testResult of resultGroup.testResults) {
+                await handleTestStart(resultGroup.description, testResult.description, 100);
+                await handleTestFinished(resultGroup.description, testResult.description, testResult);
+            }
+            
+        })
 
         async function handleTestingFinished(resultGroups: ResultGroups) {
             let response = await that.send(  ["/n4.ide/testing/sessions", sessionId, "end"].join("/")

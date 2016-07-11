@@ -170,7 +170,7 @@
 						help: "Debug output."
 					}
 				};
-				nomnomHelp = 'Runs N4JS mangelhaft testing.\n\nBy default n4js-mangelhaft will retrieve the test catalog from a running IDE and just runs the tests.\nOn CI systems, you may want to compile and run the tests in one go:\n\n$ n4js-mangelhaft --compile --xunitReportFile ./jenkins/reports.xml --scan ./projects\n';
+				nomnomHelp = "Runs N4JS mangelhaft testing.\n\nBy default n4js-mangelhaft will retrieve the test catalog from a running IDE and just runs the tests.\nOn CI systems, you may want to compile and run the tests in one go:\n\n$ n4js-mangelhaft --compile --xunitReportFile ./jenkins/reports.xml --scan ./projects\n";
 			}
 		};
 	});
