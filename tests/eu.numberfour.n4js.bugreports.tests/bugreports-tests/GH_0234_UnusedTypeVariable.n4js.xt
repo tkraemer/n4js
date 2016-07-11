@@ -39,6 +39,21 @@ function <T> f11(): Array<? super T> { return null; }
 --- */
 function <T,S> f12(s: string): void {}
 
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
+var vf1 = function <T> () {}
+
+/* XPECT warnings ---
+	"Type variable T not used in parameters or return type." at "T"
+	"Type variable S not used in parameters or return type." at "S"
+--- */
+var vf2 = function <T,S> () {}
+
+// XPECT nowarnings -->
+var vf3 = function <T> (s: T) {}
+
+// XPECT nowarnings -->
+var vf4 = function <T> () : T { return null; }
+
 class C<S> {
     // XPECT nowarnings -->
     m1(s: string): void {}

@@ -741,10 +741,18 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 	
 	/**
-	 * GH-234 add warning for unused type variables in function and method declarations
+	 * GH-234 add warning for unused type variables in function declarations.
 	 */
 	@Check
 	def checkNoUnusedTypeParameters(FunctionDeclaration functionDeclaration) {
 		internalCheckNoUnusedTypeParameters(functionDeclaration);
+	}
+	
+	/**
+	 * GH-234 add warning for unused type variables in function expressions.
+	 */
+	@Check
+	def checkNoUnusedTypeParameters(FunctionExpression functionExpression) {
+		internalCheckNoUnusedTypeParameters(functionExpression);
 	}
 }
