@@ -281,7 +281,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			var TypeVariable declaredTypeVar = functionType.typeVars.get(i)
 			
 			if (!TypeUtils.isOrContainsRefToTypeVar(genericFunctionOrMethod, declaredTypeVar)) {
-				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(typeVar.name), typeVar, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(typeVar.name), typeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
 			}
 		}
 	}
