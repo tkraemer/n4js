@@ -131,12 +131,12 @@ public class DestructNode {
 			switch(astElement) {
 				PropertyNameValuePairSingleName:
 					astElement -> N4JSPackage.eINSTANCE.propertyNameValuePairSingleName_IdentifierRef
-				PropertyNameOwner:
-					astElement -> N4JSPackage.eINSTANCE.propertyNameOwner_Name
 				BindingProperty case astElement.declaredName!==null:
-					astElement -> N4JSPackage.eINSTANCE.bindingProperty_DeclaredName
+					astElement -> N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName
 				BindingProperty case astElement.value?.varDecl?.name!==null:
 					astElement.value.varDecl -> TypesPackage.eINSTANCE.identifiableElement_Name
+				PropertyNameOwner:
+					astElement -> N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName
 				default:
 					astElement -> null // show error on entire node
 			}

@@ -9,6 +9,9 @@ package eu.numberfour.n4js.n4JS.impl;
 
 import eu.numberfour.n4js.n4JS.IdentifierRef;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.NamedElement;
+import eu.numberfour.n4js.n4JS.PropertyAssignment;
+import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.PropertyNameValuePairSingleName;
 
 import java.lang.reflect.InvocationTargetException;
@@ -200,6 +203,34 @@ public class PropertyNameValuePairSingleNameImpl extends PropertyNameValuePairIm
 				return identifierRef != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.NAMED_ELEMENT___GET_NAME: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == PropertyNameOwner.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == PropertyAssignment.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.PROPERTY_ASSIGNMENT___GET_NAME: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
 	/**

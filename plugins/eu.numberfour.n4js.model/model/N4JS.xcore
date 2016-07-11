@@ -946,7 +946,6 @@ class ObjectLiteral extends PrimaryExpression, ThisTarget, TypeDefiningElement {
  * {@link PropertySetterDeclaration}.
  */
 abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentElement, PropertyNameOwner, TypableElement {
-	contains Expression computeNameFrom
 	op TStructMember getDefinedMember()
 	/**
 	 * Properties may not be called 'prototype' or 'constructor' (except for computed names).
@@ -955,24 +954,40 @@ abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentE
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED_FROM_STRING_LITERAL) {
+		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
 	}
 }
 
+/*
+ * Base for all entities that can have a literal or computed property name (see grammar rule
+ * LiteralOrComputedPropertyName).
+ */
 abstract class PropertyNameOwner extends NamedElement {
 	/*
 	 * This is set by the IAstFactory while parsing a property assignment.
 	 */
-	transient PropertyNameKind kind
-	String name
+	transient PropertyNameKind kind // FIXME move to LiteralOrPropertyName!
+	contains LiteralOrComputedPropertyName declaredName
+	op String getName() {
+		return declaredName?.name;
+	}
 	op TStructMember getDefinedMember()
 	/**
 	 * Used to detect early errors according the the ES6 spec.
 	 */
 	op boolean isValidName()
+}
+
+class LiteralOrComputedPropertyName {
+	String literalName
+	transient String computedName
+	contains Expression expression
+	op String getName() {
+		return literalName ?: computedName;
+	}
 }
 
 abstract class AnnotablePropertyAssignment extends PropertyAssignment {
@@ -1019,15 +1034,9 @@ enum PropertyNameKind {
 	,
 	/*
 	 * The name is assigned from a object literal property with
-	 * a number as the concrete syntax for the name. This variant is discouraged.
+	 * a computed property name expression as the concrete syntax for the name. This variant is discouraged.
 	 */
-	computedFromIdentifierExpr
-	,
-	/*
-	 * The name is assigned from a object literal property with
-	 * a number as the concrete syntax for the name. This variant is discouraged.
-	 */
-	computedFromStringLiteral
+	computed
 }
 
 class PropertyNameValuePair extends AnnotablePropertyAssignment, TypedElement, TypableElement {
@@ -1275,6 +1284,7 @@ class ParameterizedPropertyAccessExpression extends Expression, ParameterizedAcc
 	 */
 	contains Expression target
 	refers IdentifiableElement property
+	transient String propertyAsText
 	/**
 	 * Returns true.
 	 */
@@ -1913,7 +1923,6 @@ abstract class MethodDeclaration extends FunctionDefinition, GenericDeclaration,
 }
 
 class N4MethodDeclaration extends AnnotableN4MemberDeclaration, MethodDeclaration {
-	contains Expression computeNameFrom
 	op boolean isAbstract() {
 		return (eContainer instanceof N4InterfaceDeclaration && body === null &&
 			! annotations.exists[name == "ProvidesDefaultImplementation"]
@@ -1925,7 +1934,7 @@ class N4MethodDeclaration extends AnnotableN4MemberDeclaration, MethodDeclaratio
 		return 'constructor' == name && !isStatic
 	}
 	op boolean isCallableConstructor() {
-		return null === name && null === computeNameFrom;
+		return declaredName === null;
 	}
 	op boolean isStatic() {
 		return declaredModifiers.contains(N4Modifier.STATIC)
@@ -1938,15 +1947,14 @@ class N4MethodDeclaration extends AnnotableN4MemberDeclaration, MethodDeclaratio
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && isGenerator && kind !== PropertyNameKind.COMPUTED_FROM_STRING_LITERAL) {
+		if ('constructor' == name && isGenerator && kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
 	}
 }
 
-abstract class N4FieldAccessor extends FieldAccessor, AnnotableN4MemberDeclaration {
-	contains Expression computeNameFrom
+abstract class N4FieldAccessor extends AnnotableN4MemberDeclaration, FieldAccessor {
 	op boolean isAbstract() {
 		return (eContainer instanceof N4InterfaceDeclaration && body === null &&
 			! annotations.exists[name == "ProvidesDefaultImplementation"]) ||
@@ -1959,7 +1967,7 @@ abstract class N4FieldAccessor extends FieldAccessor, AnnotableN4MemberDeclarati
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED_FROM_STRING_LITERAL) {
+		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
@@ -1987,12 +1995,11 @@ class ObjectBindingPattern extends BindingPattern {}
 
 class ArrayBindingPattern extends BindingPattern {}
 
-class BindingProperty extends NamedElement {
-	String declaredName
+class BindingProperty extends PropertyNameOwner {
 	contains BindingElement value
 	contains VariableDeclaration varDecl // for single name binding (no declaredName in this case)
 	op String getName() {
-		declaredName ?: value?.varDecl?.name
+		super.getName() ?: value?.varDecl?.name
 	}
 }
 

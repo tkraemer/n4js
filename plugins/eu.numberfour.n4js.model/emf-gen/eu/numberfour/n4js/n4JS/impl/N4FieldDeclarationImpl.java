@@ -10,10 +10,12 @@ package eu.numberfour.n4js.n4JS.impl;
 import com.google.common.base.Objects;
 
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4Modifier;
+import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.ThisArgProvider;
@@ -47,7 +49,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getKind <em>Kind</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getDeclaredName <em>Declared Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getDefinedField <em>Defined Field</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getExpression <em>Expression</em>}</li>
  * </ul>
@@ -96,24 +98,14 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	protected PropertyNameKind kind = KIND_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getDeclaredName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected LiteralOrComputedPropertyName declaredName;
 
 	/**
 	 * The cached value of the '{@link #getDefinedField() <em>Defined Field</em>}' reference.
@@ -266,8 +258,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public LiteralOrComputedPropertyName getDeclaredName() {
+		return declaredName;
 	}
 
 	/**
@@ -275,11 +267,33 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_FIELD_DECLARATION__NAME, oldName, name));
+	public NotificationChain basicSetDeclaredName(LiteralOrComputedPropertyName newDeclaredName, NotificationChain msgs) {
+		LiteralOrComputedPropertyName oldDeclaredName = declaredName;
+		declaredName = newDeclaredName;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME, oldDeclaredName, newDeclaredName);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredName(LiteralOrComputedPropertyName newDeclaredName) {
+		if (newDeclaredName != declaredName) {
+			NotificationChain msgs = null;
+			if (declaredName != null)
+				msgs = ((InternalEObject)declaredName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME, null, msgs);
+			if (newDeclaredName != null)
+				msgs = ((InternalEObject)newDeclaredName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME, null, msgs);
+			msgs = basicSetDeclaredName(newDeclaredName, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME, newDeclaredName, newDeclaredName));
 	}
 
 	/**
@@ -424,6 +438,20 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+		String _name = null;
+		if (_declaredName!=null) {
+			_name=_declaredName.getName();
+		}
+		return _name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -431,6 +459,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return basicSetDeclaredTypeRef(null, msgs);
 			case N4JSPackage.N4_FIELD_DECLARATION__BOGUS_TYPE_REF:
 				return basicSetBogusTypeRef(null, msgs);
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME:
+				return basicSetDeclaredName(null, msgs);
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
@@ -451,8 +481,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return getBogusTypeRef();
 			case N4JSPackage.N4_FIELD_DECLARATION__KIND:
 				return getKind();
-			case N4JSPackage.N4_FIELD_DECLARATION__NAME:
-				return getName();
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME:
+				return getDeclaredName();
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				if (resolve) return getDefinedField();
 				return basicGetDefinedField();
@@ -479,8 +509,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 			case N4JSPackage.N4_FIELD_DECLARATION__KIND:
 				setKind((PropertyNameKind)newValue);
 				return;
-			case N4JSPackage.N4_FIELD_DECLARATION__NAME:
-				setName((String)newValue);
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)newValue);
 				return;
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				setDefinedField((TField)newValue);
@@ -509,8 +539,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 			case N4JSPackage.N4_FIELD_DECLARATION__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
-			case N4JSPackage.N4_FIELD_DECLARATION__NAME:
-				setName(NAME_EDEFAULT);
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				setDefinedField((TField)null);
@@ -536,8 +566,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return bogusTypeRef != null;
 			case N4JSPackage.N4_FIELD_DECLARATION__KIND:
 				return kind != KIND_EDEFAULT;
-			case N4JSPackage.N4_FIELD_DECLARATION__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME:
+				return declaredName != null;
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				return definedField != null;
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
@@ -568,7 +598,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		if (baseClass == PropertyNameOwner.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.N4_FIELD_DECLARATION__KIND: return N4JSPackage.PROPERTY_NAME_OWNER__KIND;
-				case N4JSPackage.N4_FIELD_DECLARATION__NAME: return N4JSPackage.PROPERTY_NAME_OWNER__NAME;
+				case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME: return N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -597,7 +627,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.N4_FIELD_DECLARATION__KIND;
-				case N4JSPackage.PROPERTY_NAME_OWNER__NAME: return N4JSPackage.N4_FIELD_DECLARATION__NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME: return N4JSPackage.N4_FIELD_DECLARATION__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -611,10 +641,17 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.NAMED_ELEMENT___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
 		if (baseClass == N4MemberDeclaration.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.N4_MEMBER_DECLARATION___GET_DEFINED_TYPE_ELEMENT: return N4JSPackage.N4_FIELD_DECLARATION___GET_DEFINED_TYPE_ELEMENT;
 				case N4JSPackage.N4_MEMBER_DECLARATION___IS_STATIC: return N4JSPackage.N4_FIELD_DECLARATION___IS_STATIC;
+				case N4JSPackage.N4_MEMBER_DECLARATION___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -630,6 +667,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.N4_FIELD_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
@@ -656,6 +694,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return isValid();
 			case N4JSPackage.N4_FIELD_DECLARATION___IS_VALID_NAME:
 				return isValidName();
+			case N4JSPackage.N4_FIELD_DECLARATION___GET_NAME:
+				return getName();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -672,8 +712,6 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (kind: ");
 		result.append(kind);
-		result.append(", name: ");
-		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

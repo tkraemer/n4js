@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS.impl;
 
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
@@ -16,10 +17,12 @@ import eu.numberfour.n4js.ts.types.TStructMember;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -33,7 +36,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameOwnerImpl#getKind <em>Kind</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameOwnerImpl#getName <em>Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameOwnerImpl#getDeclaredName <em>Declared Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,24 +63,14 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	protected PropertyNameKind kind = KIND_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getDeclaredName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected LiteralOrComputedPropertyName declaredName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -124,8 +117,8 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public LiteralOrComputedPropertyName getDeclaredName() {
+		return declaredName;
 	}
 
 	/**
@@ -133,11 +126,47 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_OWNER__NAME, oldName, name));
+	public NotificationChain basicSetDeclaredName(LiteralOrComputedPropertyName newDeclaredName, NotificationChain msgs) {
+		LiteralOrComputedPropertyName oldDeclaredName = declaredName;
+		declaredName = newDeclaredName;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME, oldDeclaredName, newDeclaredName);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredName(LiteralOrComputedPropertyName newDeclaredName) {
+		if (newDeclaredName != declaredName) {
+			NotificationChain msgs = null;
+			if (declaredName != null)
+				msgs = ((InternalEObject)declaredName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME, null, msgs);
+			if (newDeclaredName != null)
+				msgs = ((InternalEObject)newDeclaredName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME, null, msgs);
+			msgs = basicSetDeclaredName(newDeclaredName, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME, newDeclaredName, newDeclaredName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+		String _name = null;
+		if (_declaredName!=null) {
+			_name=_declaredName.getName();
+		}
+		return _name;
 	}
 
 	/**
@@ -168,12 +197,26 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME:
+				return basicSetDeclaredName(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_OWNER__KIND:
 				return getKind();
-			case N4JSPackage.PROPERTY_NAME_OWNER__NAME:
-				return getName();
+			case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME:
+				return getDeclaredName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -189,8 +232,8 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 			case N4JSPackage.PROPERTY_NAME_OWNER__KIND:
 				setKind((PropertyNameKind)newValue);
 				return;
-			case N4JSPackage.PROPERTY_NAME_OWNER__NAME:
-				setName((String)newValue);
+			case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -207,8 +250,8 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 			case N4JSPackage.PROPERTY_NAME_OWNER__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
-			case N4JSPackage.PROPERTY_NAME_OWNER__NAME:
-				setName(NAME_EDEFAULT);
+			case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -224,8 +267,8 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 		switch (featureID) {
 			case N4JSPackage.PROPERTY_NAME_OWNER__KIND:
 				return kind != KIND_EDEFAULT;
-			case N4JSPackage.PROPERTY_NAME_OWNER__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME:
+				return declaredName != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -238,6 +281,8 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME:
+				return getName();
 			case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER:
 				return getDefinedMember();
 			case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME:
@@ -258,8 +303,6 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (kind: ");
 		result.append(kind);
-		result.append(", name: ");
-		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

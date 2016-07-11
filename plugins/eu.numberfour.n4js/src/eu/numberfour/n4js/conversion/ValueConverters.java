@@ -66,9 +66,6 @@ public class ValueConverters extends AbstractDeclarativeValueConverterService {
 	private QualifiedTypeReferenceNameValueConverter qualifiedTypeReferenceNameValueConverter;
 
 	@Inject
-	private SymbolLiteralComputedNameConverter symbolLiteralComputedNameConverter;
-
-	@Inject
 	private RegExLiteralConverter regExLiteralConverter;
 
 	@Inject
@@ -222,14 +219,6 @@ public class ValueConverters extends AbstractDeclarativeValueConverterService {
 	@ValueConverter(rule = "QualifiedTypeReferenceName")
 	public IValueConverter<String> QualifiedTypeReferenceName() {
 		return qualifiedTypeReferenceNameValueConverter;
-	}
-
-	/**
-	 * @return the registered value converter for the rule {@code SymbolLiteralComputedName}
-	 */
-	@ValueConverter(rule = "SymbolLiteralComputedName")
-	public IValueConverter<String> JsPropertyComputedName() {
-		return symbolLiteralComputedNameConverter;
 	}
 
 	/**

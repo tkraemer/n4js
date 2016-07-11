@@ -12,7 +12,6 @@ import com.google.common.base.Objects;
 import eu.numberfour.n4js.n4JS.AnnotableElement;
 import eu.numberfour.n4js.n4JS.AnnotablePropertyAssignment;
 import eu.numberfour.n4js.n4JS.Annotation;
-import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.FieldAccessor;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyAssignment;
@@ -45,23 +44,12 @@ import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyGetterDeclarationImpl#getComputeNameFrom <em>Compute Name From</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyGetterDeclarationImpl#getAnnotationList <em>Annotation List</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl implements PropertyGetterDeclaration {
-	/**
-	 * The cached value of the '{@link #getComputeNameFrom() <em>Compute Name From</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getComputeNameFrom()
-	 * @generated
-	 * @ordered
-	 */
-	protected Expression computeNameFrom;
-
 	/**
 	 * The cached value of the '{@link #getAnnotationList() <em>Annotation List</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -89,49 +77,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	protected EClass eStaticClass() {
 		return N4JSPackage.Literals.PROPERTY_GETTER_DECLARATION;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Expression getComputeNameFrom() {
-		return computeNameFrom;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComputeNameFrom(Expression newComputeNameFrom, NotificationChain msgs) {
-		Expression oldComputeNameFrom = computeNameFrom;
-		computeNameFrom = newComputeNameFrom;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM, oldComputeNameFrom, newComputeNameFrom);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComputeNameFrom(Expression newComputeNameFrom) {
-		if (newComputeNameFrom != computeNameFrom) {
-			NotificationChain msgs = null;
-			if (computeNameFrom != null)
-				msgs = ((InternalEObject)computeNameFrom).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			if (newComputeNameFrom != null)
-				msgs = ((InternalEObject)newComputeNameFrom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			msgs = basicSetComputeNameFrom(newComputeNameFrom, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM, newComputeNameFrom, newComputeNameFrom));
 	}
 
 	/**
@@ -239,8 +184,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return basicSetComputeNameFrom(null, msgs);
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION__ANNOTATION_LIST:
 				return basicSetAnnotationList(null, msgs);
 		}
@@ -255,8 +198,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return getComputeNameFrom();
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION__ANNOTATION_LIST:
 				return getAnnotationList();
 		}
@@ -271,9 +212,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)newValue);
-				return;
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION__ANNOTATION_LIST:
 				setAnnotationList((PropertyAssignmentAnnotationList)newValue);
 				return;
@@ -289,9 +227,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)null);
-				return;
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION__ANNOTATION_LIST:
 				setAnnotationList((PropertyAssignmentAnnotationList)null);
 				return;
@@ -307,8 +242,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return computeNameFrom != null;
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION__ANNOTATION_LIST:
 				return annotationList != null;
 		}
@@ -324,7 +257,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == PropertyAssignment.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM: return N4JSPackage.PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}
@@ -346,7 +278,6 @@ public class PropertyGetterDeclarationImpl extends GetterDeclarationImpl impleme
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == PropertyAssignment.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM: return N4JSPackage.PROPERTY_GETTER_DECLARATION__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}

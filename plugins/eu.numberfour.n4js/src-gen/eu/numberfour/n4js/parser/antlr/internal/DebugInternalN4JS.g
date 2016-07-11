@@ -4572,20 +4572,6 @@ ruleN4Keyword :
 	'out'
 ;
 
-// Rule SymbolLiteralComputedName
-ruleSymbolLiteralComputedName :
-	ruleBindingIdentifier (
-		'.' ruleIdentifierName
-	)?
-;
-
-// Rule SymbolLiteralComputedName
-norm1_SymbolLiteralComputedName :
-	norm1_BindingIdentifier (
-		'.' ruleIdentifierName
-	)?
-;
-
 // Rule REGEX_LITERAL
 ruleREGEX_LITERAL :
 	(
@@ -5363,78 +5349,9 @@ norm1_AnnotatedN4MemberDeclaration :
 	)
 ;
 
-// Rule LiteralOrComputedPropertyName
-ruleLiteralOrComputedPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		( (
-		(
-			ruleSymbolLiteralComputedName |
-			ruleStringLiteralAsName
-		) ']'
-		) => (
-			(
-				ruleSymbolLiteralComputedName |
-				ruleStringLiteralAsName
-			) ']'
-		) ) |
-		norm1_AssignmentExpression ']'
-	)
-;
-
-// Rule LiteralOrComputedPropertyName
-norm1_LiteralOrComputedPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		( (
-		(
-			norm1_SymbolLiteralComputedName |
-			ruleStringLiteralAsName
-		) ']'
-		) => (
-			(
-				norm1_SymbolLiteralComputedName |
-				ruleStringLiteralAsName
-			) ']'
-		) ) |
-		norm3_AssignmentExpression ']'
-	)
-;
-
-// Rule LiteralPropertyName
-ruleLiteralPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		ruleSymbolLiteralComputedName |
-		ruleStringLiteralAsName
-	) ']'
-;
-
-// Rule LiteralPropertyName
-norm1_LiteralPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		norm1_SymbolLiteralComputedName |
-		ruleStringLiteralAsName
-	) ']'
-;
-
-// Rule StringLiteralAsName
-ruleStringLiteralAsName :
-	RULE_STRING
-;
-
 // Rule FieldDeclarationImpl
 ruleFieldDeclarationImpl :
-	ruleN4Modifier* ruleBogusTypeRefFragment? ruleLiteralPropertyName
+	ruleN4Modifier* ruleBogusTypeRefFragment? ruleLiteralOrComputedPropertyName
 	ruleColonSepTypeRef? (
 		'=' norm1_Expression
 	)? ruleSemi
@@ -5442,7 +5359,7 @@ ruleFieldDeclarationImpl :
 
 // Rule FieldDeclarationImpl
 norm1_FieldDeclarationImpl :
-	ruleN4Modifier* ruleBogusTypeRefFragment? norm1_LiteralPropertyName
+	ruleN4Modifier* ruleBogusTypeRefFragment? norm1_LiteralOrComputedPropertyName
 	ruleColonSepTypeRef? (
 		'=' norm3_Expression
 	)? ruleSemi
@@ -6079,9 +5996,9 @@ norm1_ArrayBindingPattern :
 // Rule BindingProperty
 ruleBindingProperty :
 	( (
-	ruleLiteralBindingPropertyName ':'
+	ruleLiteralOrComputedPropertyName ':'
 	) => (
-		ruleLiteralBindingPropertyName ':'
+		ruleLiteralOrComputedPropertyName ':'
 	) ) ruleBindingElement |
 	ruleSingleNameBinding
 ;
@@ -6089,33 +6006,11 @@ ruleBindingProperty :
 // Rule BindingProperty
 norm1_BindingProperty :
 	( (
-	norm1_LiteralBindingPropertyName ':'
+	norm1_LiteralOrComputedPropertyName ':'
 	) => (
-		norm1_LiteralBindingPropertyName ':'
+		norm1_LiteralOrComputedPropertyName ':'
 	) ) norm1_BindingElement |
 	norm1_SingleNameBinding
-;
-
-// Rule LiteralBindingPropertyName
-ruleLiteralBindingPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		ruleSymbolLiteralComputedName |
-		RULE_STRING
-	) ']'
-;
-
-// Rule LiteralBindingPropertyName
-norm1_LiteralBindingPropertyName :
-	ruleIdentifierName |
-	RULE_STRING |
-	ruleNumericLiteralAsString |
-	'[' (
-		norm1_SymbolLiteralComputedName |
-		RULE_STRING
-	) ']'
 ;
 
 // Rule SingleNameBinding
@@ -6231,6 +6126,22 @@ ruleTStructSetter :
 	) => (
 		'set' ruleIdentifierName
 	) ) '(' ruleTAnonymousFormalParameter ')'
+;
+
+// Rule LiteralOrComputedPropertyName
+ruleLiteralOrComputedPropertyName :
+	ruleIdentifierName |
+	RULE_STRING |
+	ruleNumericLiteralAsString |
+	'[' norm1_AssignmentExpression ']'
+;
+
+// Rule LiteralOrComputedPropertyName
+norm1_LiteralOrComputedPropertyName :
+	ruleIdentifierName |
+	RULE_STRING |
+	ruleNumericLiteralAsString |
+	'[' norm3_AssignmentExpression ']'
 ;
 
 // Rule TypeRef

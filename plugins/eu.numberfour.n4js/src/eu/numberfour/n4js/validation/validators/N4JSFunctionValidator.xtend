@@ -355,7 +355,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		// at least one leaking control-flow path out of Method w/o returning anything:
 		val highlightFeature = switch accessor {
 			FunctionDeclaration: N4JSPackage.Literals.FUNCTION_DECLARATION__NAME
-			N4MethodDeclaration: N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME
+			N4MethodDeclaration: N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME
 			FunctionExpression: N4JSPackage.Literals.FUNCTION_EXPRESSION__NAME
 			GetterDeclaration: N4JSPackage.Literals.GETTER_DECLARATION__DEFINED_GETTER
 			default: null
@@ -404,7 +404,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!errorMessage.nullOrEmpty) {
 			var feature = switch (definition) {
 				FunctionDeclaration: FUNCTION_DECLARATION__NAME
-				N4MethodDeclaration: PROPERTY_NAME_OWNER__NAME
+				N4MethodDeclaration: PROPERTY_NAME_OWNER__DECLARED_NAME
 				FunctionExpression: FUNCTION_EXPRESSION__NAME
 				default: null
 			}

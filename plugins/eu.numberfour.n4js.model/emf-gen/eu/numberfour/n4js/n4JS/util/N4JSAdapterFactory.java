@@ -396,6 +396,10 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 				return createPropertyNameOwnerAdapter();
 			}
 			@Override
+			public Adapter caseLiteralOrComputedPropertyName(LiteralOrComputedPropertyName object) {
+				return createLiteralOrComputedPropertyNameAdapter();
+			}
+			@Override
 			public Adapter caseAnnotablePropertyAssignment(AnnotablePropertyAssignment object) {
 				return createAnnotablePropertyAssignmentAdapter();
 			}
@@ -1848,6 +1852,20 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPropertyNameOwnerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName <em>Literal Or Computed Property Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
+	 * @generated
+	 */
+	public Adapter createLiteralOrComputedPropertyNameAdapter() {
 		return null;
 	}
 

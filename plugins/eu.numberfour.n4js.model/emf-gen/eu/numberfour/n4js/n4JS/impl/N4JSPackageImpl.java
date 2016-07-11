@@ -87,6 +87,7 @@ import eu.numberfour.n4js.n4JS.LabelledStatement;
 import eu.numberfour.n4js.n4JS.LegacyOctalIntLiteral;
 import eu.numberfour.n4js.n4JS.Literal;
 import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.ModifiableElement;
@@ -763,6 +764,13 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	private EClass propertyNameOwnerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass literalOrComputedPropertyNameEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -3454,15 +3462,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPropertyAssignment_ComputeNameFrom() {
-		return (EReference)propertyAssignmentEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getPropertyAssignment__GetDefinedMember() {
 		return propertyAssignmentEClass.getEOperations().get(0);
 	}
@@ -3499,8 +3498,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPropertyNameOwner_Name() {
-		return (EAttribute)propertyNameOwnerEClass.getEStructuralFeatures().get(1);
+	public EReference getPropertyNameOwner_DeclaredName() {
+		return (EReference)propertyNameOwnerEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -3508,7 +3507,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getPropertyNameOwner__GetDefinedMember() {
+	public EOperation getPropertyNameOwner__GetName() {
 		return propertyNameOwnerEClass.getEOperations().get(0);
 	}
 
@@ -3517,8 +3516,62 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getPropertyNameOwner__IsValidName() {
+	public EOperation getPropertyNameOwner__GetDefinedMember() {
 		return propertyNameOwnerEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPropertyNameOwner__IsValidName() {
+		return propertyNameOwnerEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLiteralOrComputedPropertyName() {
+		return literalOrComputedPropertyNameEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLiteralOrComputedPropertyName_LiteralName() {
+		return (EAttribute)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLiteralOrComputedPropertyName_ComputedName() {
+		return (EAttribute)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLiteralOrComputedPropertyName_Expression() {
+		return (EReference)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLiteralOrComputedPropertyName__GetName() {
+		return literalOrComputedPropertyNameEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -4050,6 +4103,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 */
 	public EReference getParameterizedPropertyAccessExpression_Property() {
 		return (EReference)parameterizedPropertyAccessExpressionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterizedPropertyAccessExpression_PropertyAsText() {
+		return (EAttribute)parameterizedPropertyAccessExpressionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -5569,15 +5631,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getN4MethodDeclaration_ComputeNameFrom() {
-		return (EReference)n4MethodDeclarationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getN4MethodDeclaration__IsAbstract() {
 		return n4MethodDeclarationEClass.getEOperations().get(0);
 	}
@@ -5625,15 +5678,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 */
 	public EClass getN4FieldAccessor() {
 		return n4FieldAccessorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getN4FieldAccessor_ComputeNameFrom() {
-		return (EReference)n4FieldAccessorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -5749,17 +5793,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getBindingProperty_DeclaredName() {
-		return (EAttribute)bindingPropertyEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getBindingProperty_Value() {
-		return (EReference)bindingPropertyEClass.getEStructuralFeatures().get(1);
+		return (EReference)bindingPropertyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -5768,7 +5803,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	public EReference getBindingProperty_VarDecl() {
-		return (EReference)bindingPropertyEClass.getEStructuralFeatures().get(2);
+		return (EReference)bindingPropertyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -6286,15 +6321,21 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(objectLiteralEClass, OBJECT_LITERAL__PROPERTY_ASSIGNMENTS);
 
 		propertyAssignmentEClass = createEClass(PROPERTY_ASSIGNMENT);
-		createEReference(propertyAssignmentEClass, PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM);
 		createEOperation(propertyAssignmentEClass, PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER);
 		createEOperation(propertyAssignmentEClass, PROPERTY_ASSIGNMENT___IS_VALID_NAME);
 
 		propertyNameOwnerEClass = createEClass(PROPERTY_NAME_OWNER);
 		createEAttribute(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__KIND);
-		createEAttribute(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__NAME);
+		createEReference(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__DECLARED_NAME);
+		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___IS_VALID_NAME);
+
+		literalOrComputedPropertyNameEClass = createEClass(LITERAL_OR_COMPUTED_PROPERTY_NAME);
+		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME);
+		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME);
+		createEReference(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION);
+		createEOperation(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME___GET_NAME);
 
 		annotablePropertyAssignmentEClass = createEClass(ANNOTABLE_PROPERTY_ASSIGNMENT);
 		createEReference(annotablePropertyAssignmentEClass, ANNOTABLE_PROPERTY_ASSIGNMENT__ANNOTATION_LIST);
@@ -6372,6 +6413,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		parameterizedPropertyAccessExpressionEClass = createEClass(PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION);
 		createEReference(parameterizedPropertyAccessExpressionEClass, PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__TARGET);
 		createEReference(parameterizedPropertyAccessExpressionEClass, PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY);
+		createEAttribute(parameterizedPropertyAccessExpressionEClass, PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT);
 		createEOperation(parameterizedPropertyAccessExpressionEClass, PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION___IS_VALID_SIMPLE_ASSIGNMENT_TARGET);
 
 		awaitExpressionEClass = createEClass(AWAIT_EXPRESSION);
@@ -6591,7 +6633,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(methodDeclarationEClass, METHOD_DECLARATION___IS_STATIC);
 
 		n4MethodDeclarationEClass = createEClass(N4_METHOD_DECLARATION);
-		createEReference(n4MethodDeclarationEClass, N4_METHOD_DECLARATION__COMPUTE_NAME_FROM);
 		createEOperation(n4MethodDeclarationEClass, N4_METHOD_DECLARATION___IS_ABSTRACT);
 		createEOperation(n4MethodDeclarationEClass, N4_METHOD_DECLARATION___IS_CONSTRUCTOR);
 		createEOperation(n4MethodDeclarationEClass, N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR);
@@ -6599,7 +6640,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(n4MethodDeclarationEClass, N4_METHOD_DECLARATION___IS_VALID_NAME);
 
 		n4FieldAccessorEClass = createEClass(N4_FIELD_ACCESSOR);
-		createEReference(n4FieldAccessorEClass, N4_FIELD_ACCESSOR__COMPUTE_NAME_FROM);
 		createEOperation(n4FieldAccessorEClass, N4_FIELD_ACCESSOR___IS_ABSTRACT);
 		createEOperation(n4FieldAccessorEClass, N4_FIELD_ACCESSOR___IS_VALID_NAME);
 
@@ -6618,7 +6658,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		arrayBindingPatternEClass = createEClass(ARRAY_BINDING_PATTERN);
 
 		bindingPropertyEClass = createEClass(BINDING_PROPERTY);
-		createEAttribute(bindingPropertyEClass, BINDING_PROPERTY__DECLARED_NAME);
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VALUE);
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VAR_DECL);
 		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___GET_NAME);
@@ -6895,15 +6934,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		methodDeclarationEClass.getESuperTypes().add(this.getPropertyNameOwner());
 		n4MethodDeclarationEClass.getESuperTypes().add(this.getAnnotableN4MemberDeclaration());
 		n4MethodDeclarationEClass.getESuperTypes().add(this.getMethodDeclaration());
-		n4FieldAccessorEClass.getESuperTypes().add(this.getFieldAccessor());
 		n4FieldAccessorEClass.getESuperTypes().add(this.getAnnotableN4MemberDeclaration());
+		n4FieldAccessorEClass.getESuperTypes().add(this.getFieldAccessor());
 		n4GetterDeclarationEClass.getESuperTypes().add(this.getGetterDeclaration());
 		n4GetterDeclarationEClass.getESuperTypes().add(this.getN4FieldAccessor());
 		n4SetterDeclarationEClass.getESuperTypes().add(this.getSetterDeclaration());
 		n4SetterDeclarationEClass.getESuperTypes().add(this.getN4FieldAccessor());
 		objectBindingPatternEClass.getESuperTypes().add(this.getBindingPattern());
 		arrayBindingPatternEClass.getESuperTypes().add(this.getBindingPattern());
-		bindingPropertyEClass.getESuperTypes().add(this.getNamedElement());
+		bindingPropertyEClass.getESuperTypes().add(this.getPropertyNameOwner());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -7255,7 +7294,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getObjectLiteral_PropertyAssignments(), this.getPropertyAssignment(), null, "propertyAssignments", null, 0, -1, ObjectLiteral.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(propertyAssignmentEClass, PropertyAssignment.class, "PropertyAssignment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPropertyAssignment_ComputeNameFrom(), this.getExpression(), null, "computeNameFrom", null, 0, 1, PropertyAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getPropertyAssignment__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7263,11 +7301,20 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(propertyNameOwnerEClass, PropertyNameOwner.class, "PropertyNameOwner", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPropertyNameOwner_Kind(), this.getPropertyNameKind(), "kind", null, 0, 1, PropertyNameOwner.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPropertyNameOwner_Name(), theEcorePackage.getEString(), "name", null, 0, 1, PropertyNameOwner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPropertyNameOwner_DeclaredName(), this.getLiteralOrComputedPropertyName(), null, "declaredName", null, 0, 1, PropertyNameOwner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getPropertyNameOwner__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getPropertyNameOwner__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getPropertyNameOwner__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEClass(literalOrComputedPropertyNameEClass, LiteralOrComputedPropertyName.class, "LiteralOrComputedPropertyName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLiteralOrComputedPropertyName_LiteralName(), theEcorePackage.getEString(), "literalName", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLiteralOrComputedPropertyName_ComputedName(), theEcorePackage.getEString(), "computedName", null, 0, 1, LiteralOrComputedPropertyName.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLiteralOrComputedPropertyName_Expression(), this.getExpression(), null, "expression", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getLiteralOrComputedPropertyName__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(annotablePropertyAssignmentEClass, AnnotablePropertyAssignment.class, "AnnotablePropertyAssignment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAnnotablePropertyAssignment_AnnotationList(), this.getPropertyAssignmentAnnotationList(), null, "annotationList", null, 0, 1, AnnotablePropertyAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -7364,6 +7411,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEClass(parameterizedPropertyAccessExpressionEClass, ParameterizedPropertyAccessExpression.class, "ParameterizedPropertyAccessExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParameterizedPropertyAccessExpression_Target(), this.getExpression(), null, "target", null, 0, 1, ParameterizedPropertyAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameterizedPropertyAccessExpression_Property(), theTypesPackage.getIdentifiableElement(), null, "property", null, 0, 1, ParameterizedPropertyAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterizedPropertyAccessExpression_PropertyAsText(), theEcorePackage.getEString(), "propertyAsText", null, 0, 1, ParameterizedPropertyAccessExpression.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getParameterizedPropertyAccessExpression__IsValidSimpleAssignmentTarget(), theEcorePackage.getEBoolean(), "isValidSimpleAssignmentTarget", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7636,7 +7684,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getMethodDeclaration__IsStatic(), theEcorePackage.getEBoolean(), "isStatic", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(n4MethodDeclarationEClass, N4MethodDeclaration.class, "N4MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getN4MethodDeclaration_ComputeNameFrom(), this.getExpression(), null, "computeNameFrom", null, 0, 1, N4MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getN4MethodDeclaration__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7649,7 +7696,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getN4MethodDeclaration__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(n4FieldAccessorEClass, N4FieldAccessor.class, "N4FieldAccessor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getN4FieldAccessor_ComputeNameFrom(), this.getExpression(), null, "computeNameFrom", null, 0, 1, N4FieldAccessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getN4FieldAccessor__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7672,7 +7718,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEClass(arrayBindingPatternEClass, ArrayBindingPattern.class, "ArrayBindingPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(bindingPropertyEClass, BindingProperty.class, "BindingProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getBindingProperty_DeclaredName(), theEcorePackage.getEString(), "declaredName", null, 0, 1, BindingProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBindingProperty_Value(), this.getBindingElement(), null, "value", null, 0, 1, BindingProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBindingProperty_VarDecl(), this.getVariableDeclaration(), null, "varDecl", null, 0, 1, BindingProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -7694,8 +7739,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.IDENTIFIER);
 		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.STRING);
 		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.NUMBER);
-		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.COMPUTED_FROM_IDENTIFIER_EXPR);
-		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
+		addEEnumLiteral(propertyNameKindEEnum, PropertyNameKind.COMPUTED);
 
 		initEEnum(postfixOperatorEEnum, PostfixOperator.class, "PostfixOperator");
 		addEEnumLiteral(postfixOperatorEEnum, PostfixOperator.INC);

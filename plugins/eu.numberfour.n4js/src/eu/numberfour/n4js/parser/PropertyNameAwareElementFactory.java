@@ -42,16 +42,14 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	private String stringRuleName;
 	private String identifierRuleName;
 	private String numberRuleName;
-	private String computedFromExpressionRuleName;
-	private String computedFromStringRuleName;
+	private String assignmentExpressionRuleName;
 
 	@Inject
 	private void readRuleNames(N4JSGrammarAccess grammarAccess, RuleNames ruleNames) {
 		stringRuleName = ruleNames.getQualifiedName(grammarAccess.getSTRINGRule());
 		identifierRuleName = ruleNames.getQualifiedName(grammarAccess.getIdentifierNameRule());
 		numberRuleName = ruleNames.getQualifiedName(grammarAccess.getNumericLiteralAsStringRule());
-		computedFromExpressionRuleName = ruleNames.getQualifiedName(grammarAccess.getSymbolLiteralComputedNameRule());
-		computedFromStringRuleName = ruleNames.getQualifiedName(grammarAccess.getStringLiteralAsNameRule());
+		assignmentExpressionRuleName = ruleNames.getQualifiedName(grammarAccess.getAssignmentExpressionRule());
 	}
 
 	/**
@@ -115,10 +113,8 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 				nameOwner.setKind(PropertyNameKind.STRING);
 			} else if (numberRuleName.equals(ruleName)) {
 				nameOwner.setKind(PropertyNameKind.NUMBER);
-			} else if (computedFromStringRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			} else if (computedFromExpressionRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.COMPUTED_FROM_IDENTIFIER_EXPR);
+			} else if (assignmentExpressionRuleName.equals(ruleName)) {
+				nameOwner.setKind(PropertyNameKind.COMPUTED);
 			} else {
 				throw new IllegalArgumentException(ruleName);
 			}

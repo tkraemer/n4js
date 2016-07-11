@@ -12,7 +12,6 @@ import com.google.common.base.Objects;
 import eu.numberfour.n4js.n4JS.AnnotableElement;
 import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.Annotation;
-import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.FieldAccessor;
 import eu.numberfour.n4js.n4JS.ModifiableElement;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
@@ -63,7 +62,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl#getDeclaredModifiers <em>Declared Modifiers</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl#getOwner <em>Owner</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl#getAnnotationList <em>Annotation List</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl#getComputeNameFrom <em>Compute Name From</em>}</li>
  * </ul>
  *
  * @generated
@@ -88,16 +86,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 	 * @ordered
 	 */
 	protected N4MemberAnnotationList annotationList;
-
-	/**
-	 * The cached value of the '{@link #getComputeNameFrom() <em>Compute Name From</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getComputeNameFrom()
-	 * @generated
-	 * @ordered
-	 */
-	protected Expression computeNameFrom;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -229,49 +217,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Expression getComputeNameFrom() {
-		return computeNameFrom;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComputeNameFrom(Expression newComputeNameFrom, NotificationChain msgs) {
-		Expression oldComputeNameFrom = computeNameFrom;
-		computeNameFrom = newComputeNameFrom;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM, oldComputeNameFrom, newComputeNameFrom);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComputeNameFrom(Expression newComputeNameFrom) {
-		if (newComputeNameFrom != computeNameFrom) {
-			NotificationChain msgs = null;
-			if (computeNameFrom != null)
-				msgs = ((InternalEObject)computeNameFrom).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			if (newComputeNameFrom != null)
-				msgs = ((InternalEObject)newComputeNameFrom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			msgs = basicSetComputeNameFrom(newComputeNameFrom, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM, newComputeNameFrom, newComputeNameFrom));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TMember getDefinedTypeElement() {
 		return this.getDefinedGetter();
 	}
@@ -303,7 +248,7 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		if (_equals) {
 			return false;
 		}
-		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
+		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED))) {
 			return false;
 		}
 		return true;
@@ -429,8 +374,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 				return basicSetOwner(null, msgs);
 			case N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST:
 				return basicSetAnnotationList(null, msgs);
-			case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return basicSetComputeNameFrom(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -464,8 +407,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 				return basicGetOwner();
 			case N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST:
 				return getAnnotationList();
-			case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return getComputeNameFrom();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -489,9 +430,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 			case N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST:
 				setAnnotationList((N4MemberAnnotationList)newValue);
 				return;
-			case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -513,9 +451,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 			case N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST:
 				setAnnotationList((N4MemberAnnotationList)null);
 				return;
-			case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -534,8 +469,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 				return basicGetOwner() != null;
 			case N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST:
 				return annotationList != null;
-			case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM:
-				return computeNameFrom != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -567,7 +500,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		}
 		if (baseClass == N4FieldAccessor.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM: return N4JSPackage.N4_FIELD_ACCESSOR__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}
@@ -601,7 +533,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		}
 		if (baseClass == N4FieldAccessor.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.N4_FIELD_ACCESSOR__COMPUTE_NAME_FROM: return N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}

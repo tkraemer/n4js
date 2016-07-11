@@ -994,7 +994,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	private def void insertSpaceInfrontOfPropertyNames(EObject field, extension IFormattableDocument document) {
 		// Space in front of name, esp. for names like "[@name]"
 		val nameRegion = field.regionFor.feature(
-			N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME);
+			N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME);
 		if (nameRegion === null) return;
 
 		val precBracket = nameRegion.immediatelyPreceding.keyword("[");
