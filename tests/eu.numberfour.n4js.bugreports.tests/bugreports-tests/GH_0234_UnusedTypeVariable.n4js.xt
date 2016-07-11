@@ -39,6 +39,9 @@ function <T> f11(): Array<? super T> { return null; }
 --- */
 function <T,S> f12(s: string): void {}
 
+
+// Function expressions
+
 // XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 var vf1 = function <T> () {}
 
@@ -53,6 +56,51 @@ var vf3 = function <T> (s: T) {}
 
 // XPECT nowarnings -->
 var vf4 = function <T> () : T { return null; }
+
+
+// Function types
+
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
+var ft1: {function <T> (s: string): void}
+
+// XPECT nowarnings -->
+var ft2: {function <T> (s: T): void }
+
+// XPECT nowarnings -->
+var ft3: {function <T> (s: Array<T>): void}
+
+// XPECT nowarnings -->
+var ft4: {function <T> (s: Array<Array<T>>): void}
+
+// XPECT nowarnings -->
+var ft5: {function <T> (): T}
+
+// XPECT nowarnings -->
+var ft6: {function <T> (): Array<T>}
+
+// XPECT nowarnings -->
+var ft7: {function <T> (): Array<Array<T>> }
+
+// XPECT warnings --> "Type variable S not used in parameters or return type." at "S"
+var ft8: {function <T,S> (): Array<Array<T>>}
+
+// XPECT warnings --> "Type variable S not used in parameters or return type." at "S"
+var ft9: {function <T,S> (t: T): Array<Array<T>>}
+
+// XPECT nowarnings -->
+var ft10: {function <T> (t: Array<? extends T>): void}
+
+// XPECT nowarnings -->
+var ft11: {function <T> (): Array<? super T>}
+
+/* XPECT warnings ---
+	"Type variable T not used in parameters or return type." at "T"
+	"Type variable S not used in parameters or return type." at "S"
+--- */
+var ft12: {function <T,S> (s: string): void}
+
+
+// Methods
 
 class C<S> {
     // XPECT nowarnings -->

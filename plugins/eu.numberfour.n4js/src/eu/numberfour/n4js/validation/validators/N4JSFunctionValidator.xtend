@@ -64,6 +64,7 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper
 import static extension com.google.common.base.Strings.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 
 /**
  */
@@ -754,5 +755,14 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkNoUnusedTypeParameters(FunctionExpression functionExpression) {
 		internalCheckNoUnusedTypeParameters(functionExpression);
+	}
+
+	
+	/**
+	 * GH-234 add warning for unused type variables in function type expressions.
+	 */
+	@Check
+	def checkNoUnusedTypeParameters(FunctionTypeExpression functionTypeExp) {
+		internalCheckNoUnusedTypeParameters(functionTypeExp);
 	}
 }
