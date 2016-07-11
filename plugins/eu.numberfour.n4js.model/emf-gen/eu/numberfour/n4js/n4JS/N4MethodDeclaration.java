@@ -64,7 +64,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * Generators may not be called 'constructor' either (except for computed names).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nif (((<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && this.isGenerator()) && (this.getKind() != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED)))\n{\n\treturn false;\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nboolean _and = false;\nif (!(<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && this.isGenerator()))\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%> _declaredName = this.getDeclaredName();\n\t<%eu.numberfour.n4js.n4JS.PropertyNameKind%> _kind = null;\n\tif (_declaredName!=null)\n\t{\n\t\t_kind=_declaredName.getKind();\n\t}\n\tboolean _tripleNotEquals = (_kind != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED);\n\t_and = _tripleNotEquals;\n}\nif (_and)\n{\n\treturn false;\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isValidName();

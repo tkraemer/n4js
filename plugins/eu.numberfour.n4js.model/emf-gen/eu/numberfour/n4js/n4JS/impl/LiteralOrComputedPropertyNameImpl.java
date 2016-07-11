@@ -10,6 +10,7 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.PropertyNameKind;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.LiteralOrComputedPropertyNameImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.LiteralOrComputedPropertyNameImpl#getLiteralName <em>Literal Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.LiteralOrComputedPropertyNameImpl#getComputedName <em>Computed Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.LiteralOrComputedPropertyNameImpl#getExpression <em>Expression</em>}</li>
@@ -40,6 +42,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * @generated
  */
 public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Container implements LiteralOrComputedPropertyName {
+	/**
+	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final PropertyNameKind KIND_EDEFAULT = PropertyNameKind.IDENTIFIER;
+
+	/**
+	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected PropertyNameKind kind = KIND_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getLiteralName() <em>Literal Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -107,6 +129,27 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 	@Override
 	protected EClass eStaticClass() {
 		return N4JSPackage.Literals.LITERAL_OR_COMPUTED_PROPERTY_NAME;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PropertyNameKind getKind() {
+		return kind;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setKind(PropertyNameKind newKind) {
+		PropertyNameKind oldKind = kind;
+		kind = newKind == null ? KIND_EDEFAULT : newKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND, oldKind, kind));
 	}
 
 	/**
@@ -233,6 +276,8 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND:
+				return getKind();
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME:
 				return getLiteralName();
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME:
@@ -251,6 +296,9 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND:
+				setKind((PropertyNameKind)newValue);
+				return;
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME:
 				setLiteralName((String)newValue);
 				return;
@@ -272,6 +320,9 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND:
+				setKind(KIND_EDEFAULT);
+				return;
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME:
 				setLiteralName(LITERAL_NAME_EDEFAULT);
 				return;
@@ -293,6 +344,8 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND:
+				return kind != KIND_EDEFAULT;
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME:
 				return LITERAL_NAME_EDEFAULT == null ? literalName != null : !LITERAL_NAME_EDEFAULT.equals(literalName);
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME:
@@ -327,7 +380,9 @@ public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Contai
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (literalName: ");
+		result.append(" (kind: ");
+		result.append(kind);
+		result.append(", literalName: ");
 		result.append(literalName);
 		result.append(", computedName: ");
 		result.append(computedName);

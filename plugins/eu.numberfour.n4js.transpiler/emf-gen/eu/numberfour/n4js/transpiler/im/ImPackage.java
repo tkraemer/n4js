@@ -1803,15 +1803,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION__LOK = N4JSPackage.N4_GETTER_DECLARATION__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_GETTER_DECLARATION__KIND = N4JSPackage.N4_GETTER_DECLARATION__KIND;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2108,15 +2099,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION__LOK = N4JSPackage.N4_SETTER_DECLARATION__LOK;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_SETTER_DECLARATION__KIND = N4JSPackage.N4_SETTER_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -2505,15 +2487,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION__BOGUS_TYPE_REF = N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION__KIND = N4JSPackage.N4_METHOD_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.

@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS;
 
+import eu.numberfour.n4js.ts.types.TStructMember;
 
 /**
  * <!-- begin-user-doc -->
@@ -86,5 +87,23 @@ public interface BindingProperty extends PropertyNameOwner {
 	 * @generated
 	 */
 	String getName();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return null;'"
+	 * @generated
+	 */
+	TStructMember getDefinedMember();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return true;'"
+	 * @generated
+	 */
+	boolean isValidName();
 
 } // BindingProperty

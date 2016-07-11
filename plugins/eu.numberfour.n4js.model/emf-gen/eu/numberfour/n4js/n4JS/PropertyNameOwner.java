@@ -23,7 +23,6 @@ import eu.numberfour.n4js.ts.types.TStructMember;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#getKind <em>Kind</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#getDeclaredName <em>Declared Name</em>}</li>
  * </ul>
  *
@@ -32,34 +31,6 @@ import eu.numberfour.n4js.ts.types.TStructMember;
  * @generated
  */
 public interface PropertyNameOwner extends NamedElement {
-	/**
-	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
-	 * The literals are from the enumeration {@link eu.numberfour.n4js.n4JS.PropertyNameKind}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * This is set by the IAstFactory while parsing a property assignment.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Kind</em>' attribute.
-	 * @see eu.numberfour.n4js.n4JS.PropertyNameKind
-	 * @see #setKind(PropertyNameKind)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getPropertyNameOwner_Kind()
-	 * @model unique="false" transient="true"
-	 * @generated
-	 */
-	PropertyNameKind getKind();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#getKind <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Kind</em>' attribute.
-	 * @see eu.numberfour.n4js.n4JS.PropertyNameKind
-	 * @see #getKind()
-	 * @generated
-	 */
-	void setKind(PropertyNameKind value);
-
 	/**
 	 * Returns the value of the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

@@ -954,7 +954,7 @@ abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentE
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED) {
+		if ('constructor' == name && declaredName?.kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
@@ -966,10 +966,6 @@ abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentE
  * LiteralOrComputedPropertyName).
  */
 abstract class PropertyNameOwner extends NamedElement {
-	/*
-	 * This is set by the IAstFactory while parsing a property assignment.
-	 */
-	transient PropertyNameKind kind // FIXME move to LiteralOrPropertyName!
 	contains LiteralOrComputedPropertyName declaredName
 	op String getName() {
 		return declaredName?.name;
@@ -982,9 +978,18 @@ abstract class PropertyNameOwner extends NamedElement {
 }
 
 class LiteralOrComputedPropertyName {
+	/* This is set by the IAstFactory while parsing a property assignment. */
+	transient PropertyNameKind kind
+	/* The literal name given in the source code or <code>null</code> if this is a computed property name. */
 	String literalName
+	/*
+	 * Iff this is a computed property name and the expression is one of the special cases that are statically
+	 * evaluated, then this will be set to the value of the expression, i.e. the computed name.
+	 */
 	transient String computedName
+	/* The expression provided in the source code for computing the property name, or <code>null</code>. */
 	contains Expression expression
+
 	op String getName() {
 		return literalName ?: computedName;
 	}
@@ -1947,7 +1952,7 @@ class N4MethodDeclaration extends AnnotableN4MemberDeclaration, MethodDeclaratio
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && isGenerator && kind !== PropertyNameKind.COMPUTED) {
+		if ('constructor' == name && isGenerator && declaredName?.kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
@@ -1967,7 +1972,7 @@ abstract class N4FieldAccessor extends AnnotableN4MemberDeclaration, FieldAccess
 		if ('prototype' == name) {
 			return false
 		}
-		if ('constructor' == name && kind !== PropertyNameKind.COMPUTED) {
+		if ('constructor' == name && declaredName?.kind !== PropertyNameKind.COMPUTED) {
 			return false
 		}
 		return true
@@ -2000,6 +2005,12 @@ class BindingProperty extends PropertyNameOwner {
 	contains VariableDeclaration varDecl // for single name binding (no declaredName in this case)
 	op String getName() {
 		super.getName() ?: value?.varDecl?.name
+	}
+	op TStructMember getDefinedMember() {
+		null
+	}
+	op boolean isValidName() {
+		true
 	}
 }
 

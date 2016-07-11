@@ -3489,17 +3489,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPropertyNameOwner_Kind() {
-		return (EAttribute)propertyNameOwnerEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getPropertyNameOwner_DeclaredName() {
-		return (EReference)propertyNameOwnerEClass.getEStructuralFeatures().get(1);
+		return (EReference)propertyNameOwnerEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3543,7 +3534,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLiteralOrComputedPropertyName_LiteralName() {
+	public EAttribute getLiteralOrComputedPropertyName_Kind() {
 		return (EAttribute)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -3552,7 +3543,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLiteralOrComputedPropertyName_ComputedName() {
+	public EAttribute getLiteralOrComputedPropertyName_LiteralName() {
 		return (EAttribute)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -3561,8 +3552,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getLiteralOrComputedPropertyName_ComputedName() {
+		return (EAttribute)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getLiteralOrComputedPropertyName_Expression() {
-		return (EReference)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(2);
+		return (EReference)literalOrComputedPropertyNameEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -5820,6 +5820,24 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getBindingProperty__GetDefinedMember() {
+		return bindingPropertyEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBindingProperty__IsValidName() {
+		return bindingPropertyEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getBindingElement() {
 		return bindingElementEClass;
 	}
@@ -6325,13 +6343,13 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(propertyAssignmentEClass, PROPERTY_ASSIGNMENT___IS_VALID_NAME);
 
 		propertyNameOwnerEClass = createEClass(PROPERTY_NAME_OWNER);
-		createEAttribute(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__KIND);
 		createEReference(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__DECLARED_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___IS_VALID_NAME);
 
 		literalOrComputedPropertyNameEClass = createEClass(LITERAL_OR_COMPUTED_PROPERTY_NAME);
+		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND);
 		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME);
 		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME);
 		createEReference(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION);
@@ -6661,6 +6679,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VALUE);
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VAR_DECL);
 		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___GET_NAME);
+		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___GET_DEFINED_MEMBER);
+		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___IS_VALID_NAME);
 
 		bindingElementEClass = createEClass(BINDING_ELEMENT);
 		createEAttribute(bindingElementEClass, BINDING_ELEMENT__REST);
@@ -7300,7 +7320,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getPropertyAssignment__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(propertyNameOwnerEClass, PropertyNameOwner.class, "PropertyNameOwner", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPropertyNameOwner_Kind(), this.getPropertyNameKind(), "kind", null, 0, 1, PropertyNameOwner.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPropertyNameOwner_DeclaredName(), this.getLiteralOrComputedPropertyName(), null, "declaredName", null, 0, 1, PropertyNameOwner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getPropertyNameOwner__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7310,6 +7329,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getPropertyNameOwner__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(literalOrComputedPropertyNameEClass, LiteralOrComputedPropertyName.class, "LiteralOrComputedPropertyName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLiteralOrComputedPropertyName_Kind(), this.getPropertyNameKind(), "kind", null, 0, 1, LiteralOrComputedPropertyName.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLiteralOrComputedPropertyName_LiteralName(), theEcorePackage.getEString(), "literalName", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLiteralOrComputedPropertyName_ComputedName(), theEcorePackage.getEString(), "computedName", null, 0, 1, LiteralOrComputedPropertyName.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLiteralOrComputedPropertyName_Expression(), this.getExpression(), null, "expression", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -7722,6 +7742,10 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getBindingProperty_VarDecl(), this.getVariableDeclaration(), null, "varDecl", null, 0, 1, BindingProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getBindingProperty__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBindingProperty__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBindingProperty__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(bindingElementEClass, BindingElement.class, "BindingElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getBindingElement_Rest(), theEcorePackage.getEBoolean(), "rest", null, 0, 1, BindingElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

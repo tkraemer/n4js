@@ -1809,22 +1809,13 @@ public interface N4JSPackage extends EPackage {
 	int FIELD_ACCESSOR__LOK = FUNCTION_OR_FIELD_ACCESSOR__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIELD_ACCESSOR__KIND = FUNCTION_OR_FIELD_ACCESSOR_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR__DECLARED_NAME = FUNCTION_OR_FIELD_ACCESSOR_FEATURE_COUNT + 1;
+	int FIELD_ACCESSOR__DECLARED_NAME = FUNCTION_OR_FIELD_ACCESSOR_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Field Accessor</em>' class.
@@ -1833,7 +1824,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_FEATURE_COUNT = FUNCTION_OR_FIELD_ACCESSOR_FEATURE_COUNT + 2;
+	int FIELD_ACCESSOR_FEATURE_COUNT = FUNCTION_OR_FIELD_ACCESSOR_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -5261,22 +5252,13 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT = 78;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_ASSIGNMENT__KIND = ANNOTABLE_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT__DECLARED_NAME = ANNOTABLE_ELEMENT_FEATURE_COUNT + 1;
+	int PROPERTY_ASSIGNMENT__DECLARED_NAME = ANNOTABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Property Assignment</em>' class.
@@ -5285,7 +5267,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 2;
+	int PROPERTY_ASSIGNMENT_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -5352,22 +5334,13 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_NAME_OWNER = 79;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_NAME_OWNER__KIND = NAMED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_OWNER__DECLARED_NAME = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int PROPERTY_NAME_OWNER__DECLARED_NAME = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Property Name Owner</em>' class.
@@ -5376,7 +5349,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_OWNER_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
+	int PROPERTY_NAME_OWNER_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -5425,13 +5398,22 @@ public interface N4JSPackage extends EPackage {
 	int LITERAL_OR_COMPUTED_PROPERTY_NAME = 80;
 
 	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND = 0;
+
+	/**
 	 * The feature id for the '<em><b>Literal Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME = 0;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Computed Name</b></em>' attribute.
@@ -5440,7 +5422,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME = 1;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME = 2;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -5449,7 +5431,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION = 2;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION = 3;
 
 	/**
 	 * The number of structural features of the '<em>Literal Or Computed Property Name</em>' class.
@@ -5458,7 +5440,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME_FEATURE_COUNT = 3;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME_FEATURE_COUNT = 4;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -5487,15 +5469,6 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	int ANNOTABLE_PROPERTY_ASSIGNMENT = 81;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ANNOTABLE_PROPERTY_ASSIGNMENT__KIND = PROPERTY_ASSIGNMENT__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -5598,22 +5571,13 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST__ANNOTATIONS = ABSTRACT_ANNOTATION_LIST__ANNOTATIONS;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND = ABSTRACT_ANNOTATION_LIST_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME = ABSTRACT_ANNOTATION_LIST_FEATURE_COUNT + 1;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME = ABSTRACT_ANNOTATION_LIST_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Property Assignment Annotation List</em>' class.
@@ -5622,7 +5586,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_FEATURE_COUNT = ABSTRACT_ANNOTATION_LIST_FEATURE_COUNT + 2;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_FEATURE_COUNT = ABSTRACT_ANNOTATION_LIST_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -5687,15 +5651,6 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	int PROPERTY_NAME_VALUE_PAIR = 83;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_NAME_VALUE_PAIR__KIND = ANNOTABLE_PROPERTY_ASSIGNMENT__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -5832,15 +5787,6 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME = 84;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME__KIND = PROPERTY_NAME_VALUE_PAIR__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -5986,15 +5932,6 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	int PROPERTY_METHOD_DECLARATION = 85;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_METHOD_DECLARATION__KIND = ANNOTABLE_PROPERTY_ASSIGNMENT__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -6259,15 +6196,6 @@ public interface N4JSPackage extends EPackage {
 	int GETTER_DECLARATION__LOK = FIELD_ACCESSOR__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GETTER_DECLARATION__KIND = FIELD_ACCESSOR__KIND;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6431,15 +6359,6 @@ public interface N4JSPackage extends EPackage {
 	int SETTER_DECLARATION__LOK = FIELD_ACCESSOR__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SETTER_DECLARATION__KIND = FIELD_ACCESSOR__KIND;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6592,15 +6511,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_GETTER_DECLARATION__LOK = GETTER_DECLARATION__LOK;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_GETTER_DECLARATION__KIND = GETTER_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -6782,15 +6692,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_SETTER_DECLARATION__LOK = SETTER_DECLARATION__LOK;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_SETTER_DECLARATION__KIND = SETTER_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -11737,22 +11638,13 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_DECLARATION__BOGUS_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int N4_FIELD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
+	int N4_FIELD_DECLARATION__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Defined Field</b></em>' reference.
@@ -11761,7 +11653,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__DEFINED_FIELD = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 4;
+	int N4_FIELD_DECLARATION__DEFINED_FIELD = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -11770,7 +11662,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION__EXPRESSION = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 5;
+	int N4_FIELD_DECLARATION__EXPRESSION = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>N4 Field Declaration</em>' class.
@@ -11779,7 +11671,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 6;
+	int N4_FIELD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -12017,22 +11909,13 @@ public interface N4JSPackage extends EPackage {
 	int METHOD_DECLARATION__BOGUS_TYPE_REF = FUNCTION_DEFINITION_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int METHOD_DECLARATION__KIND = FUNCTION_DEFINITION_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION__DECLARED_NAME = FUNCTION_DEFINITION_FEATURE_COUNT + 4;
+	int METHOD_DECLARATION__DECLARED_NAME = FUNCTION_DEFINITION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Method Declaration</em>' class.
@@ -12041,7 +11924,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION_FEATURE_COUNT = FUNCTION_DEFINITION_FEATURE_COUNT + 5;
+	int METHOD_DECLARATION_FEATURE_COUNT = FUNCTION_DEFINITION_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -12279,22 +12162,13 @@ public interface N4JSPackage extends EPackage {
 	int N4_METHOD_DECLARATION__BOGUS_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 9;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int N4_METHOD_DECLARATION__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 10;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 11;
+	int N4_METHOD_DECLARATION__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>N4 Method Declaration</em>' class.
@@ -12303,7 +12177,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 12;
+	int N4_METHOD_DECLARATION_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -12523,22 +12397,13 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_ACCESSOR__LOK = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int N4_FIELD_ACCESSOR__KIND = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
+	int N4_FIELD_ACCESSOR__DECLARED_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>N4 Field Accessor</em>' class.
@@ -12547,7 +12412,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 4;
+	int N4_FIELD_ACCESSOR_FEATURE_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -12738,15 +12603,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_GETTER_DECLARATION__LOK = GETTER_DECLARATION__LOK;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int N4_GETTER_DECLARATION__KIND = GETTER_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -13009,15 +12865,6 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_SETTER_DECLARATION__LOK = SETTER_DECLARATION__LOK;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int N4_SETTER_DECLARATION__KIND = SETTER_DECLARATION__KIND;
 
 	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
@@ -13393,15 +13240,6 @@ public interface N4JSPackage extends EPackage {
 	int BINDING_PROPERTY = 156;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BINDING_PROPERTY__KIND = PROPERTY_NAME_OWNER__KIND;
-
-	/**
 	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13438,24 +13276,6 @@ public interface N4JSPackage extends EPackage {
 	int BINDING_PROPERTY_FEATURE_COUNT = PROPERTY_NAME_OWNER_FEATURE_COUNT + 2;
 
 	/**
-	 * The operation id for the '<em>Get Defined Member</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BINDING_PROPERTY___GET_DEFINED_MEMBER = PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER;
-
-	/**
-	 * The operation id for the '<em>Is Valid Name</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BINDING_PROPERTY___IS_VALID_NAME = PROPERTY_NAME_OWNER___IS_VALID_NAME;
-
-	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13465,13 +13285,31 @@ public interface N4JSPackage extends EPackage {
 	int BINDING_PROPERTY___GET_NAME = PROPERTY_NAME_OWNER_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Defined Member</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINDING_PROPERTY___GET_DEFINED_MEMBER = PROPERTY_NAME_OWNER_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Is Valid Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINDING_PROPERTY___IS_VALID_NAME = PROPERTY_NAME_OWNER_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Binding Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BINDING_PROPERTY_OPERATION_COUNT = PROPERTY_NAME_OWNER_OPERATION_COUNT + 1;
+	int BINDING_PROPERTY_OPERATION_COUNT = PROPERTY_NAME_OWNER_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.BindingElementImpl <em>Binding Element</em>}' class.
@@ -16009,17 +15847,6 @@ public interface N4JSPackage extends EPackage {
 	EClass getPropertyNameOwner();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#getKind <em>Kind</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Kind</em>'.
-	 * @see eu.numberfour.n4js.n4JS.PropertyNameOwner#getKind()
-	 * @see #getPropertyNameOwner()
-	 * @generated
-	 */
-	EAttribute getPropertyNameOwner_Kind();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#getDeclaredName <em>Declared Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16069,6 +15896,17 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getLiteralOrComputedPropertyName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#getKind()
+	 * @see #getLiteralOrComputedPropertyName()
+	 * @generated
+	 */
+	EAttribute getLiteralOrComputedPropertyName_Kind();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#getLiteralName <em>Literal Name</em>}'.
@@ -18695,6 +18533,26 @@ public interface N4JSPackage extends EPackage {
 	EOperation getBindingProperty__GetName();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.BindingProperty#getDefinedMember() <em>Get Defined Member</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Defined Member</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.BindingProperty#getDefinedMember()
+	 * @generated
+	 */
+	EOperation getBindingProperty__GetDefinedMember();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.BindingProperty#isValidName() <em>Is Valid Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Valid Name</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.BindingProperty#isValidName()
+	 * @generated
+	 */
+	EOperation getBindingProperty__IsValidName();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.BindingElement <em>Binding Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -20868,14 +20726,6 @@ public interface N4JSPackage extends EPackage {
 		EClass PROPERTY_NAME_OWNER = eINSTANCE.getPropertyNameOwner();
 
 		/**
-		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PROPERTY_NAME_OWNER__KIND = eINSTANCE.getPropertyNameOwner_Kind();
-
-		/**
 		 * The meta object literal for the '<em><b>Declared Name</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -20916,6 +20766,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LITERAL_OR_COMPUTED_PROPERTY_NAME = eINSTANCE.getLiteralOrComputedPropertyName();
+
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LITERAL_OR_COMPUTED_PROPERTY_NAME__KIND = eINSTANCE.getLiteralOrComputedPropertyName_Kind();
 
 		/**
 		 * The meta object literal for the '<em><b>Literal Name</b></em>' attribute feature.
@@ -23092,6 +22950,22 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation BINDING_PROPERTY___GET_NAME = eINSTANCE.getBindingProperty__GetName();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Defined Member</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BINDING_PROPERTY___GET_DEFINED_MEMBER = eINSTANCE.getBindingProperty__GetDefinedMember();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Valid Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BINDING_PROPERTY___IS_VALID_NAME = eINSTANCE.getBindingProperty__IsValidName();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.BindingElementImpl <em>Binding Element</em>}' class.

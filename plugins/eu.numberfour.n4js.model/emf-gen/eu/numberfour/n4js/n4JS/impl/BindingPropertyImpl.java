@@ -14,6 +14,8 @@ import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 
+import eu.numberfour.n4js.ts.types.TStructMember;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -196,6 +198,24 @@ public class BindingPropertyImpl extends PropertyNameOwnerImpl implements Bindin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TStructMember getDefinedMember() {
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isValidName() {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -291,6 +311,8 @@ public class BindingPropertyImpl extends PropertyNameOwnerImpl implements Bindin
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.BINDING_PROPERTY___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.BINDING_PROPERTY___GET_DEFINED_MEMBER;
+				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.BINDING_PROPERTY___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -307,6 +329,10 @@ public class BindingPropertyImpl extends PropertyNameOwnerImpl implements Bindin
 		switch (operationID) {
 			case N4JSPackage.BINDING_PROPERTY___GET_NAME:
 				return getName();
+			case N4JSPackage.BINDING_PROPERTY___GET_DEFINED_MEMBER:
+				return getDefinedMember();
+			case N4JSPackage.BINDING_PROPERTY___IS_VALID_NAME:
+				return isValidName();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

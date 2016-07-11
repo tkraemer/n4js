@@ -13,6 +13,7 @@ import eu.numberfour.n4js.n4JS.AnnotableElement;
 import eu.numberfour.n4js.n4JS.AnnotableN4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.FieldAccessor;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.ModifiableElement;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4FieldAccessor;
@@ -248,7 +249,21 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		if (_equals) {
 			return false;
 		}
-		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED))) {
+		boolean _and = false;
+		String _name_1 = this.getName();
+		boolean _equals_1 = Objects.equal("constructor", _name_1);
+		if (!_equals_1) {
+			_and = false;
+		} else {
+			LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+			PropertyNameKind _kind = null;
+			if (_declaredName!=null) {
+				_kind=_declaredName.getKind();
+			}
+			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED);
+			_and = _tripleNotEquals;
+		}
+		if (_and) {
 			return false;
 		}
 		return true;

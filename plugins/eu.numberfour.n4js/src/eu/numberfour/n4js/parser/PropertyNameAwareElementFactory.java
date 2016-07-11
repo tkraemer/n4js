@@ -22,10 +22,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.conversion.N4JSValueConverterException;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyAssignment;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
-import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
 import eu.numberfour.n4js.validation.IssueCodes;
@@ -105,16 +105,16 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	}
 
 	private void setPropertyNameKind(EObject object, String feature, String ruleName) {
-		if ("name".equals(feature) && object instanceof PropertyNameOwner) {
-			final PropertyNameOwner nameOwner = (PropertyNameOwner) object;
+		if ("literalName".equals(feature) && object instanceof LiteralOrComputedPropertyName) {
+			final LiteralOrComputedPropertyName nameDecl = (LiteralOrComputedPropertyName) object;
 			if (identifierRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.IDENTIFIER);
+				nameDecl.setKind(PropertyNameKind.IDENTIFIER);
 			} else if (stringRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.STRING);
+				nameDecl.setKind(PropertyNameKind.STRING);
 			} else if (numberRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.NUMBER);
+				nameDecl.setKind(PropertyNameKind.NUMBER);
 			} else if (assignmentExpressionRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.COMPUTED);
+				nameDecl.setKind(PropertyNameKind.COMPUTED);
 			} else {
 				throw new IllegalArgumentException(ruleName);
 			}

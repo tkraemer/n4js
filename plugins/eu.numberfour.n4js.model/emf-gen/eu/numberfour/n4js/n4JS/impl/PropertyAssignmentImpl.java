@@ -40,33 +40,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentImpl#getDeclaredName <em>Declared Name</em>}</li>
  * </ul>
  *
  * @generated
  */
 public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implements PropertyAssignment {
-	/**
-	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKind()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final PropertyNameKind KIND_EDEFAULT = PropertyNameKind.IDENTIFIER;
-
-	/**
-	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKind()
-	 * @generated
-	 * @ordered
-	 */
-	protected PropertyNameKind kind = KIND_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -94,27 +73,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	@Override
 	protected EClass eStaticClass() {
 		return N4JSPackage.Literals.PROPERTY_ASSIGNMENT;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PropertyNameKind getKind() {
-		return kind;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setKind(PropertyNameKind newKind) {
-		PropertyNameKind oldKind = kind;
-		kind = newKind == null ? KIND_EDEFAULT : newKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT__KIND, oldKind, kind));
 	}
 
 	/**
@@ -182,7 +140,21 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 		if (_equals) {
 			return false;
 		}
-		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED))) {
+		boolean _and = false;
+		String _name_1 = this.getName();
+		boolean _equals_1 = Objects.equal("constructor", _name_1);
+		if (!_equals_1) {
+			_and = false;
+		} else {
+			LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+			PropertyNameKind _kind = null;
+			if (_declaredName!=null) {
+				_kind=_declaredName.getKind();
+			}
+			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED);
+			_and = _tripleNotEquals;
+		}
+		if (_and) {
 			return false;
 		}
 		return true;
@@ -233,8 +205,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT__KIND:
-				return getKind();
 			case N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME:
 				return getDeclaredName();
 		}
@@ -249,9 +219,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT__KIND:
-				setKind((PropertyNameKind)newValue);
-				return;
 			case N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)newValue);
 				return;
@@ -267,9 +234,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT__KIND:
-				setKind(KIND_EDEFAULT);
-				return;
 			case N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
@@ -285,8 +249,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT__KIND:
-				return kind != KIND_EDEFAULT;
 			case N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME:
 				return declaredName != null;
 		}
@@ -312,7 +274,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.PROPERTY_ASSIGNMENT__KIND: return N4JSPackage.PROPERTY_NAME_OWNER__KIND;
 				case N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME: return N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME;
 				default: return -1;
 			}
@@ -344,7 +305,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.PROPERTY_ASSIGNMENT__KIND;
 				case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT__DECLARED_NAME;
 				default: return -1;
 			}
@@ -410,22 +370,6 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (kind: ");
-		result.append(kind);
-		result.append(')');
-		return result.toString();
 	}
 
 } //PropertyAssignmentImpl
