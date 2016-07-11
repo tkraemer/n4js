@@ -17,7 +17,10 @@ function FA16() : { function() } { return FA00; }
 // XPECT errors --> "{function<T>():any} is not a subtype of {function():string}." at "FA01"
 function FA17() : { function() : string } { return FA01; }
 
-// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
+/* XPECT warnings ---
+	"Type variable T not used in parameters or return type." at "T"
+	"Type variable T not used in parameters or return type." at "T"
+--- */
 function <T> FA18() : {function <T> () } { return FA01; }
 
 // OK XPECT FIXME noerrors -->

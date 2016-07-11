@@ -67,6 +67,8 @@ feg();
 //
 
 var fte : {function():void};
+
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 var fteg : {function<T extends B>():void};
 
 // XPECT noerrors -->
