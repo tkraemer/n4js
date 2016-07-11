@@ -613,7 +613,6 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.N4_FIELD_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}

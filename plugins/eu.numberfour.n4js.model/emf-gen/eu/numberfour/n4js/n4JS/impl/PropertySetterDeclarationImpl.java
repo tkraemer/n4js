@@ -305,14 +305,12 @@ public class PropertySetterDeclarationImpl extends SetterDeclarationImpl impleme
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_SETTER_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_SETTER_DECLARATION___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
 		if (baseClass == FieldAccessor.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_SETTER_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME: return N4JSPackage.PROPERTY_SETTER_DECLARATION___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}

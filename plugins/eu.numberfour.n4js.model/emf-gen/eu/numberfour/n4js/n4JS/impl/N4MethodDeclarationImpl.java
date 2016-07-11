@@ -1176,7 +1176,6 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_METHOD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}

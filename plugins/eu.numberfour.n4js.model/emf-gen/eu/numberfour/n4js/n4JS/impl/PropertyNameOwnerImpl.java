@@ -11,8 +11,6 @@ import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 
-import eu.numberfour.n4js.ts.types.TStructMember;
-
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -131,17 +129,6 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TStructMember getDefinedMember() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isValidName() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -230,8 +217,6 @@ public abstract class PropertyNameOwnerImpl extends MinimalEObjectImpl.Container
 		switch (operationID) {
 			case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME:
 				return getName();
-			case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER:
-				return getDefinedMember();
 			case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME:
 				return isValidName();
 		}

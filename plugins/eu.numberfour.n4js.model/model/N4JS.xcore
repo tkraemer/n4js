@@ -970,7 +970,6 @@ abstract class PropertyNameOwner extends NamedElement {
 	op String getName() {
 		return declaredName?.name;
 	}
-	op TStructMember getDefinedMember()
 	/**
 	 * Used to detect early errors according the the ES6 spec.
 	 */
@@ -1842,9 +1841,6 @@ abstract class AnnotableN4MemberDeclaration extends N4MemberDeclaration {
 	op Annotation[] getAnnotations() {
 		annotationList?.annotations ?: emptyEList
 	}
-	op TStructMember getDefinedMember() {
-		return null
-	}
 }
 
 /*
@@ -2005,9 +2001,6 @@ class BindingProperty extends PropertyNameOwner {
 	contains VariableDeclaration varDecl // for single name binding (no declaredName in this case)
 	op String getName() {
 		super.getName() ?: value?.varDecl?.name
-	}
-	op TStructMember getDefinedMember() {
-		null
 	}
 	op boolean isValidName() {
 		true

@@ -17,8 +17,6 @@ import eu.numberfour.n4js.n4JS.TypeProvidingElement;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
-import eu.numberfour.n4js.ts.types.TStructMember;
-
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -149,17 +147,6 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 			_name=_declaredName.getName();
 		}
 		return _name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TStructMember getDefinedMember() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -325,7 +312,6 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.FIELD_ACCESSOR___GET_NAME;
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -347,8 +333,6 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 				return getDefinedAccessor();
 			case N4JSPackage.FIELD_ACCESSOR___GET_NAME:
 				return getName();
-			case N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_MEMBER:
-				return getDefinedMember();
 			case N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME:
 				return isValidName();
 		}

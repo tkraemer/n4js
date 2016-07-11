@@ -28,7 +28,6 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 
@@ -356,17 +355,6 @@ public abstract class MethodDeclarationImpl extends FunctionDefinitionImpl imple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TStructMember getDefinedMember() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isValidName() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -599,7 +587,6 @@ public abstract class MethodDeclarationImpl extends FunctionDefinitionImpl imple
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.METHOD_DECLARATION___GET_NAME;
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.METHOD_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.METHOD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -623,8 +610,6 @@ public abstract class MethodDeclarationImpl extends FunctionDefinitionImpl imple
 				return isStatic();
 			case N4JSPackage.METHOD_DECLARATION___GET_NAME:
 				return getName();
-			case N4JSPackage.METHOD_DECLARATION___GET_DEFINED_MEMBER:
-				return getDefinedMember();
 			case N4JSPackage.METHOD_DECLARATION___IS_VALID_NAME:
 				return isValidName();
 		}

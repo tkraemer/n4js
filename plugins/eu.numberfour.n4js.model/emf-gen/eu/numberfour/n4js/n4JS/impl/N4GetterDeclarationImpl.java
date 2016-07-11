@@ -27,7 +27,6 @@ import eu.numberfour.n4js.n4JS.PropertyNameKind;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TStructMember;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -288,15 +287,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 			_elvis = _emptyEList;
 		}
 		return _elvis;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TStructMember getDefinedMember() {
-		return null;
 	}
 
 	/**
@@ -569,14 +559,12 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_GETTER_DECLARATION___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
 		if (baseClass == FieldAccessor.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_MEMBER: return N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_MEMBER;
 				case N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME: return N4JSPackage.N4_GETTER_DECLARATION___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -601,7 +589,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 		if (baseClass == AnnotableN4MemberDeclaration.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.ANNOTABLE_N4_MEMBER_DECLARATION___GET_ANNOTATIONS: return N4JSPackage.N4_GETTER_DECLARATION___GET_ANNOTATIONS;
-				case N4JSPackage.ANNOTABLE_N4_MEMBER_DECLARATION___GET_DEFINED_MEMBER: return N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_MEMBER;
 				default: return -1;
 			}
 		}
@@ -631,8 +618,6 @@ public class N4GetterDeclarationImpl extends GetterDeclarationImpl implements N4
 				return isValidName();
 			case N4JSPackage.N4_GETTER_DECLARATION___GET_ANNOTATIONS:
 				return getAnnotations();
-			case N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_MEMBER:
-				return getDefinedMember();
 			case N4JSPackage.N4_GETTER_DECLARATION___IS_DECLARED_STATIC:
 				return isDeclaredStatic();
 			case N4JSPackage.N4_GETTER_DECLARATION___IS_STATIC:

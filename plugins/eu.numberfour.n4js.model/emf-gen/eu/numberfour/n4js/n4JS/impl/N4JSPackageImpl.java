@@ -3507,17 +3507,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getPropertyNameOwner__GetDefinedMember() {
-		return propertyNameOwnerEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getPropertyNameOwner__IsValidName() {
-		return propertyNameOwnerEClass.getEOperations().get(2);
+		return propertyNameOwnerEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -5469,15 +5460,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getAnnotableN4MemberDeclaration__GetDefinedMember() {
-		return annotableN4MemberDeclarationEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getN4MemberAnnotationList() {
 		return n4MemberAnnotationListEClass;
 	}
@@ -5820,17 +5802,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBindingProperty__GetDefinedMember() {
-		return bindingPropertyEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getBindingProperty__IsValidName() {
-		return bindingPropertyEClass.getEOperations().get(2);
+		return bindingPropertyEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -6345,7 +6318,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		propertyNameOwnerEClass = createEClass(PROPERTY_NAME_OWNER);
 		createEReference(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__DECLARED_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_NAME);
-		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___IS_VALID_NAME);
 
 		literalOrComputedPropertyNameEClass = createEClass(LITERAL_OR_COMPUTED_PROPERTY_NAME);
@@ -6629,7 +6601,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		annotableN4MemberDeclarationEClass = createEClass(ANNOTABLE_N4_MEMBER_DECLARATION);
 		createEReference(annotableN4MemberDeclarationEClass, ANNOTABLE_N4_MEMBER_DECLARATION__ANNOTATION_LIST);
 		createEOperation(annotableN4MemberDeclarationEClass, ANNOTABLE_N4_MEMBER_DECLARATION___GET_ANNOTATIONS);
-		createEOperation(annotableN4MemberDeclarationEClass, ANNOTABLE_N4_MEMBER_DECLARATION___GET_DEFINED_MEMBER);
 
 		n4MemberAnnotationListEClass = createEClass(N4_MEMBER_ANNOTATION_LIST);
 		createEOperation(n4MemberAnnotationListEClass, N4_MEMBER_ANNOTATION_LIST___GET_DEFINED_TYPE_ELEMENT);
@@ -6679,7 +6650,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VALUE);
 		createEReference(bindingPropertyEClass, BINDING_PROPERTY__VAR_DECL);
 		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___GET_NAME);
-		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___GET_DEFINED_MEMBER);
 		createEOperation(bindingPropertyEClass, BINDING_PROPERTY___IS_VALID_NAME);
 
 		bindingElementEClass = createEClass(BINDING_ELEMENT);
@@ -7324,8 +7294,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getPropertyNameOwner__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getPropertyNameOwner__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
 		initEOperation(getPropertyNameOwner__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(literalOrComputedPropertyNameEClass, LiteralOrComputedPropertyName.class, "LiteralOrComputedPropertyName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -7671,8 +7639,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getAnnotableN4MemberDeclaration__GetAnnotations(), this.getAnnotation(), "getAnnotations", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getAnnotableN4MemberDeclaration__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
 		initEClass(n4MemberAnnotationListEClass, N4MemberAnnotationList.class, "N4MemberAnnotationList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEOperation(getN4MemberAnnotationList__GetDefinedTypeElement(), theTypesPackage.getTMember(), "getDefinedTypeElement", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7742,8 +7708,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getBindingProperty_VarDecl(), this.getVariableDeclaration(), null, "varDecl", null, 0, 1, BindingProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getBindingProperty__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getBindingProperty__GetDefinedMember(), theTypesPackage.getTStructMember(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getBindingProperty__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

@@ -7,8 +7,6 @@
  */
 package eu.numberfour.n4js.n4JS;
 
-import eu.numberfour.n4js.ts.types.TStructMember;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -62,14 +60,5 @@ public interface AnnotableN4MemberDeclaration extends N4MemberDeclaration {
 	 * @generated
 	 */
 	EList<Annotation> getAnnotations();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return null;'"
-	 * @generated
-	 */
-	TStructMember getDefinedMember();
 
 } // AnnotableN4MemberDeclaration

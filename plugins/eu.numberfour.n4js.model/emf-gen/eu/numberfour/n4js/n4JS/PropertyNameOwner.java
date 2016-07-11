@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.n4JS;
 
-import eu.numberfour.n4js.ts.types.TStructMember;
 
 /**
  * <!-- begin-user-doc -->
@@ -65,14 +64,6 @@ public interface PropertyNameOwner extends NamedElement {
 	 * @generated
 	 */
 	String getName();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 * @generated
-	 */
-	TStructMember getDefinedMember();
 
 	/**
 	 * <!-- begin-user-doc -->
