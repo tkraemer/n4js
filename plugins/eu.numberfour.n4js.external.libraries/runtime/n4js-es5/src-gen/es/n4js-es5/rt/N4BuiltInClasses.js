@@ -608,7 +608,7 @@
         }
     }, {});
 
-    $makeN4BuiltInClass(N4StringBasedEnum, String, {
+    $makeN4BuiltInClass(N4StringBasedEnum, Object, {
         toString: {
             value: function toString() {
                 return this.value;

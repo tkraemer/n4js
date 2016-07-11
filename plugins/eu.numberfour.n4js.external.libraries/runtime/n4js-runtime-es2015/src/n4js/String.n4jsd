@@ -15,9 +15,10 @@
     public static raw(callSite: Object, ... substitutions: string): string;
     public startsWith(searchString: string, position: number?): boolean;
     public endsWith(searchString: string, endPosition: number?): boolean;
-    public contains(searchString: string, position: number?): boolean;
+    public includes(searchString: string, position: number?): boolean;
     public codePointAt(pos: int): number;
     public normalize(form: string): string;
+    public repeat(count: number): string;
 }
 
 /* -*- mode: typescript;-*- */

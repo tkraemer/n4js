@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,12 +8,14 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+
 import {IInstrumentedTest} from "n4/mangel/mangeltypes/IInstrumentedTest"
 import {TestFunctionType} from "n4/mangel/mangeltypes/TestFunctionType"
 import {TestInfo} from "n4/mangel/mangeltypes/TestInfo"
 import {TestMethodDescriptor} from "n4/mangel/mangeltypes/TestMethodDescriptor"
+import {N4Injector} from "n4js/lang/N4Injector"
 
-function getAllPropertyNames (objProt: constructor{N4Object}, propNames: Map<string, boolean>?):Map<string, boolean> {
+function getAllPropertyNames (objProt: constructor{? extends N4Object}, propNames: Map<string, boolean>?):Map<string, boolean> {
     propNames = propNames || new Map<string, boolean>;
     let  names = Object.getOwnPropertyNames(objProt as Object);
 
@@ -23,15 +25,12 @@ function getAllPropertyNames (objProt: constructor{N4Object}, propNames: Map<str
     return propNames;
 }
 export public class InstrumentedTest implements IInstrumentedTest{
-    @Override public name: string;
     @Override public tests: Array<TestMethodDescriptor> = [];
     @Override public beforeAlls: Array<TestMethodDescriptor> = [];
     @Override public afterAlls: Array<TestMethodDescriptor> = [];
     @Override public befores: Array<TestMethodDescriptor> = [];
     @Override public afters: Array<TestMethodDescriptor> = [];
-    @Override public testObject: N4Object;
     @Override public fqn: string = "";
-    @Override public parent: IInstrumentedTest = null;
     /**
      * This is not a tree because we are only interested in the ancestors of a particular class
      * no siblings at any level.
@@ -45,34 +44,105 @@ export public class InstrumentedTest implements IInstrumentedTest{
         })
     }
 
+    public constructor(testClass: constructor{? extends N4Object}?, info: TestInfo?, testObject: N4Object?, 
+        parameterizedName: string?, parameterizedTests: Array<? extends IInstrumentedTest>?
+    ) {
+        if (testClass) {
+            this.load(testClass, info);
+            this.parameterizedName = parameterizedName;
+            this.setTestObject(testObject); //if no testObject supplied sets to undefined which is fine.
+            if (info && info.testMethods) {
+                this.filterTests(info.testMethods);
+            }
+        }
+        if (parameterizedTests) {
+            this.hasParameterizedTests = true;
+            this.parameterizedTests = parameterizedTests;
+        }
+    }
 
-    public getTestMethodDescriptors(meths: Array<? extends N4Method>
-                                                                     , tftype: TestFunctionType): Array<TestMethodDescriptor> {
-        let that = this;
-        return meths.map(
-            function (methodDescriptor: N4Method) {
-                let desc = methodDescriptor.anyAnnotation("Description")
-                  , fixmeAnnotation = methodDescriptor.anyAnnotation("Fixme")
-                  , ignoreAnnotation = that.classIgnoreAnnotation ? that.classIgnoreAnnotation: methodDescriptor.anyAnnotation("Ignore")
-                  , timeoutAnnotation = methodDescriptor.anyAnnotation("Timeout")
-                  , timeout = timeoutAnnotation && timeoutAnnotation.details? parseInt(timeoutAnnotation.details.pop()): 60 * 1000
-                  , name: string
-                  , description: string
-                  , details: Array<?> = desc ? desc.details: []
-                  , ignoreReason = ignoreAnnotation? ignoreAnnotation.details.join(" "): ""
-                  , fixmeReason = fixmeAnnotation? fixmeAnnotation.details.join(" "): ""
+    private static getParameterizedFields(testClass: constructor{? extends N4Object}): Map<int, string> {
+        let parameterizedFields = new Map<int, string>();
+
+        for (let field of testClass.n4type.dataFieldsWithAnnotation("Parameter", true, true, false)) {
+            let [indexStr: string] = field.anyAnnotation("Parameter").details || [""];
+            let argNum = Number.parseInt(indexStr) || 0;
+            parameterizedFields.set(argNum, field.name);
+        }
+        return parameterizedFields;
+    }
+
+    private static getParameterizedInstrumentedTests(testClass:constructor{N4Object}, info: TestInfo,
+        testInjector:N4Injector, parameterGroups:Array<Array<any>>, nameTemplate: string): Array<InstrumentedTest> {
+        
+        nameTemplate = nameTemplate || "{index}";
+        let tests: Array<InstrumentedTest> = [];
+        let parameterizedFields = this.getParameterizedFields(testClass);
+        if (parameterGroups && parameterGroups.length) {
+            let ii = 0;
+            for (let pGroup of parameterGroups) {
+                let testObject = testInjector.create(testClass);
+                let jj = 0;
+                for (let parm of pGroup) {
+                    if (parameterizedFields.has(jj)) {
+                        (testObject as Object)[parameterizedFields.get(jj)] = parm;
+                    }
+                    ++jj;
+                }
+                let parameterizedName = nameTemplate.replace(/{(index|[0-9]*)}/g, (match, item: string) => {
+                    if (item === "index") {
+                        return ii;
+                    } else {
+                        let paramNumber = Number.parseInt(item);
+                        return pGroup[paramNumber] || "";
+                    }
+                });
+                tests.push(new InstrumentedTest(testClass, info, testObject, parameterizedName));
+                ++ii
+            }
+        } else {
+            tests.push(new InstrumentedTest(testClass, info, testInjector.create(testClass)));
+        }
+        return tests;
+    }
+    public static getInstrumentedTest(
+        testClass:constructor{N4Object}, info: TestInfo, testInjector:N4Injector
+    ): IInstrumentedTest {
+        let parameters: Array<Array<any>> = null;
+        let nameTemplate: string = null;
+        let pMeth = testClass.n4type.methodsWithAnnotation("Parameters", true, true, true).pop();
+        if (pMeth) {
+            let anno = pMeth.anyAnnotation("Parameters");
+            [nameTemplate] = anno.details || [""];
+            parameters = pMeth.jsFunction.call(testClass) as Array<Array<any>>;
+        }
+
+        let parameterizedTests: Array<InstrumentedTest>;
+
+        if (parameters) {
+            parameterizedTests = this.getParameterizedInstrumentedTests(testClass, info, testInjector, parameters, nameTemplate);
+        }
+        return new InstrumentedTest(testClass, info, testInjector.create(testClass), null, parameterizedTests)
+    }
+    
+
+    public getTestMethodDescriptors(meths: Array<? extends N4Method>, tftype: TestFunctionType): Array<TestMethodDescriptor> {
+        return meths.map( (methodDescriptor: N4Method) => {
+                const desc = methodDescriptor.anyAnnotation("Description")
+                    , fixmeAnnotation = methodDescriptor.anyAnnotation("Fixme")
+                    , ignoreAnnotation = this.classIgnoreAnnotation ? this.classIgnoreAnnotation: methodDescriptor.anyAnnotation("Ignore")
+                    , timeoutAnnotation = methodDescriptor.anyAnnotation("Timeout")
+                    , details: Array<?> = desc ? desc.details: []
                 ;
 
-                description = details.length ? details.join(" "): "";
-                name =  methodDescriptor.name;
                 return new TestMethodDescriptor({
-                      timeout: timeout
-                    , description: description
+                      timeout: timeoutAnnotation && timeoutAnnotation.details? parseInt(timeoutAnnotation.details.pop()): 60 * 1000
+                    , description: details.length ? details.join(" "): ""
                     , ignore: !!ignoreAnnotation
-                    , ignoreReason: ignoreReason
+                    , ignoreReason: ignoreAnnotation? ignoreAnnotation.details.join(" "): ""
                     , fixme: !!fixmeAnnotation
-                    , fixmeReason: fixmeReason
-                    , name: name
+                    , fixmeReason: fixmeAnnotation? fixmeAnnotation.details.join(" "): ""
+                    , name: methodDescriptor.name
                     , value: methodDescriptor.jsFunction as {function()}
                     , type:tftype
                 });
@@ -80,21 +150,25 @@ export public class InstrumentedTest implements IInstrumentedTest{
             }
         )
     }
+
     @Override
     public setTestObject(test: N4Object): this {
         this.testObject = test;
         return this;
     }
+
     @Override public setError(error: any): this {
         this.error = error;
         return this;
     }
 
-    @Override public load(testClass: constructor{N4Object}, info: TestInfo?): this {
+    @IDEBUG(2140, "any is not a subtype of N4Annotation.")
+    @Override public load(testClass: constructor{? extends N4Object}, info: TestInfo?): this {
         let that = this
           , props = getAllPropertyNames(testClass).keys()
-          , parentClass = Object.getPrototypeOf(testClass as Object) as constructor{N4Object}
-       ;
+          , parentClass = Object.getPrototypeOf(testClass) as constructor{? extends N4Object}
+        ;
+
         this.classIgnoreAnnotation = testClass.n4type.allAnnotations("Ignore")[0];
         //console.log(testClass);
         this.beforeAlls = this.getTestMethodDescriptors(

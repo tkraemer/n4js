@@ -1,0 +1,19 @@
+// manifest used by projects in model
+ArtifactId: N4JSXPECTTests
+VendorId: eu.numberfour
+ProjectName: "N4JS XPECT Tests"
+VendorName: "NumberFour AG"
+ProjectType: runtimeLibrary
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"model"
+	}
+}
+ModuleFilters {
+	noValidate {
+		"validation/IDE_754_noValidate/novalidate/*",
+		"validation/IDE_754_noValidate/nowrap/*"
+	}
+}

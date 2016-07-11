@@ -3,11 +3,12 @@
 	System.register([
 		'eu.numberfour.mangelhaft/n4/mangel/Test',
 		'eu.numberfour.mangelhaft/n4/mangel/TestController',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestDIComponent',
+		'eu.numberfour.mangelhaft.reporter.console/n4/mangel/reporter/console/ConsoleReporter',
 		'eu.numberfour.mangelhaft.reporter.html/n4/mangel/reporter/html/HTMLReporter',
-		'n4js.lang/n4js/lang/N4Injector',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestDIComponent'
+		'n4js.lang/n4js/lang/N4Injector'
 	], function($n4Export) {
-		var FIXME1, FIXME2, IFIXME, IFIXME2, TestController, HTMLReporter, N4Injector, TestDIComponent, getParm, HTMLTestPageRunner, TestBinder, Root, parentinj, root, main;
+		var FIXME1, FIXME2, IFIXME, IFIXME2, TestController, TestDIComponent, ConsoleReporter, HTMLReporter, N4Injector, getParm, HTMLTestPageRunner, TestBinder, Root, parentinj, root, main;
 		getParm = function getParm(name) {
 			let names = new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)').exec(location.search);
 			if (names) {
@@ -16,6 +17,7 @@
 			return "";
 		};
 		HTMLTestPageRunner = function HTMLTestPageRunner() {
+			this.consoleReporter = undefined;
 			this.htmlReporter = undefined;
 			this.controller = undefined;
 		};
@@ -34,14 +36,17 @@
 				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestController) {
 					TestController = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestController.TestController;
 				},
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
+					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
+				},
+				function($_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002econsole_n4_u002fmangel_u002freporter_u002fconsole_u002fConsoleReporter) {
+					ConsoleReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002econsole_n4_u002fmangel_u002freporter_u002fconsole_u002fConsoleReporter.ConsoleReporter;
+				},
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002ehtml_n4_u002fmangel_u002freporter_u002fhtml_u002fHTMLReporter) {
 					HTMLReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002ehtml_n4_u002fmangel_u002freporter_u002fhtml_u002fHTMLReporter.HTMLReporter;
 				},
 				function($_import_n4js_u002elang_n4js_u002flang_u002fN4Injector) {
 					N4Injector = $_import_n4js_u002elang_n4js_u002flang_u002fN4Injector.N4Injector;
-				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
-					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
 				}
 			],
 			execute: function() {
@@ -51,13 +56,19 @@
 							return $spawn(function*() {
 								let groupsStr = getParm("groups"), groupsFilter = getParm("filter"), groupsArray, testsStr = getParm("tests"), testsArray, reporterStr = getParm("reporter"), endpoint = getParm("endpoint"), tests, buffer = [], resultGroups;
 								;
-								tests = ((yield ((yield window.fetch("/test-catalog.json", {
-									headers: {
-										'Content-Type': "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
-									}
-								}))).json()));
+								try {
+									tests = ((yield ((yield window.fetch("/test-catalog.json", {
+										headers: {
+											'Content-Type': "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
+										}
+									}))).json()));
+								} catch(ex) {
+									document.body.innerHTML = "<h3>Could not fetch the test catalog. (Try restarting the LDE and reloading)";
+									return;
+								}
 								this.controller.reporters = [
-									this.htmlReporter
+									this.htmlReporter,
+									this.consoleReporter
 								];
 								if (groupsStr) {
 									groupsArray = groupsStr.split(",").map(function(group) {
@@ -92,6 +103,10 @@
 							}.apply(this, arguments));
 						}
 					},
+					consoleReporter: {
+						value: undefined,
+						writable: true
+					},
 					htmlReporter: {
 						value: undefined,
 						writable: true
@@ -108,6 +123,16 @@
 						n4superType: N4Object.n4type,
 						allImplementedInterfaces: [],
 						ownedMembers: [
+							new N4DataField({
+								name: 'consoleReporter',
+								isStatic: false,
+								annotations: [
+									new N4Annotation({
+										name: 'Inject',
+										details: []
+									})
+								]
+							}),
 							new N4DataField({
 								name: 'htmlReporter',
 								isStatic: false,
@@ -143,6 +168,10 @@
 				Object.defineProperty(HTMLTestPageRunner, '$di', {
 					value: {
 						fieldsInjectedTypes: [
+							{
+								name: 'consoleReporter',
+								type: ConsoleReporter
+							},
 							{
 								name: 'htmlReporter',
 								type: HTMLReporter

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,6 +27,14 @@ export external public interface ~Stats {
     mtime: Date;
     ctime: Date;
     birthtime: Date;
+    
+    public isFile(): boolean;
+    public isDirectory(): boolean;
+    public isBlockDevice(): boolean;
+    public isCharacterDevice(): boolean;
+    public isSymbolicLink(): boolean;
+    public isFIFO(): boolean;
+    public isSocket(): boolean;
 }
 interface ~FSWatcher extends events.IEventEmitter {
     public close(): void;
@@ -109,8 +117,12 @@ export external public function rmdir(path: string, callback: {function(Error?):
 export external public function rmdirSync(path: string): void;
 
 @Promisifiable
-export external public function mkdir(path: string, callback: {function(Error?):void}?): void;
+export external public function mkdir(path: string, mode: union{number, string}?, callback: {function(Error?):void}?): void;
 export external public function mkdirSync(path: string, mode: union{number, string}?): void;
+
+@Promisifiable
+export external public function mkdtemp(prefix: string, callback: {function(Error, string):void}?): void;
+export external public function mkdtempSync(prefix: string): string;
 
 @Promisifiable
 export external public function readdir(path: string, callback: {function(Error, Array<string>): void}?): void;

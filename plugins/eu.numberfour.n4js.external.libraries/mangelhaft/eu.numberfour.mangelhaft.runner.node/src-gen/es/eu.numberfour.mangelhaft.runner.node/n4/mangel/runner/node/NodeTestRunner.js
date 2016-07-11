@@ -3,14 +3,15 @@
 	System.register([
 		'eu.numberfour.mangelhaft/n4/mangel/Test',
 		'eu.numberfour.mangelhaft/n4/mangel/TestController',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestDIComponent',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestDIComponent',
 		'eu.numberfour.mangelhaft.reporter.console/n4/mangel/reporter/console/ConsoleReporter',
 		'eu.numberfour.mangelhaft.reporter.xunit/n4/mangel/reporter/xunit/XUnitReporter',
 		'eu.numberfour.mangelhaft.runner.node/n4/mangel/runner/node/NodeTestCLI',
 		'n4js.lang/n4js/lang/N4Injector',
-		'@node/fs'
+		'@node/fs',
+		'@@cjs/cli-color/index'
 	], function($n4Export) {
-		var FIXME1, FIXME2, IFIXME, IFIXME2, TestController, TestDIComponent, ConsoleReporter, XUnitReporter, NodeTestCLI, N4Injector, lib_fs, NodeTestRunner, TestBinder, Root, parentinj, root, main;
+		var FIXME1, FIXME2, IFIXME, IFIXME2, TestController, TestDIComponent, ConsoleReporter, XUnitReporter, NodeTestCLI, N4Injector, lib_fs, cli_color_, NodeTestRunner, TestBinder, Root, parentinj, root, main;
 		NodeTestRunner = function NodeTestRunner() {
 			this.controller = undefined;
 			this.consoleReporter = undefined;
@@ -31,8 +32,8 @@
 				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestController) {
 					TestController = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTestController.TestController;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
-					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
+					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
 				},
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002econsole_n4_u002fmangel_u002freporter_u002fconsole_u002fConsoleReporter) {
 					ConsoleReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002ereporter_u002econsole_n4_u002fmangel_u002freporter_u002fconsole_u002fConsoleReporter.ConsoleReporter;
@@ -48,6 +49,9 @@
 				},
 				function($_import_n4js_u002druntime_u002dnode_fs) {
 					lib_fs = $_import_n4js_u002druntime_u002dnode_fs;
+				},
+				function($_import_cli_u002dcolor_index) {
+					cli_color_ = $_import_cli_u002dcolor_index;
 				}
 			],
 			execute: function() {
@@ -83,6 +87,7 @@
 										}).bind(this));
 									}).bind(this));
 								}
+								this.consoleReporter.cliColor = cli_color_.default;
 								let reporters = [
 									this.consoleReporter
 								];
@@ -93,7 +98,7 @@
 								this.controller.reporters = reporters;
 								let resGroups = (yield this.controller.runGroups(testCatalog, 420187));
 								if ((resGroups.failures !== 0) || (resGroups.errors !== 0)) {
-									throw new Error(('Test run failed with ' + resGroups.errors + ' errors and ' + resGroups.failures + ' failures.'));
+									throw new Error(("Test run failed with " + resGroups.errors + " errors and " + resGroups.failures + " failures."));
 								}
 							}.apply(this, arguments));
 						}
