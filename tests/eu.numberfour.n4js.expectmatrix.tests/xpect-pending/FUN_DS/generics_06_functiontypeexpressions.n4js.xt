@@ -11,7 +11,7 @@ function <T,S> FA06(p1 : T, ...p2 : S) : T  { return null; }
 
 // + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
 // references to
-// OK XPECT noerrors -->
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 var fa201 : { function () :any } = function <T> FA201()  { return null; }
 
 // OK XPECT noerrors -->

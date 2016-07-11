@@ -1,6 +1,5 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
 
-
 // XPECT noerrors -->
 class C<out T> {}
 
@@ -9,22 +8,43 @@ interface I<out T> {}
 
 
 class D {
-	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+	/* XPECT issues ---
+		"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+		"Type variable T not used in parameters or return type." at "T"
+	--- */
 	<out T> m1() {}
-	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+
+	/* XPECT issues ---
+		"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+		"Type variable T not used in parameters or return type." at "T"
+	--- */
 	<in T> m2() {}
 }
 
 interface J {
-	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+	/* XPECT issues ---
+		"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+		"Type variable T not used in parameters or return type." at "T"
+	--- */
 	<out T> m1()
-	// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+
+	/* XPECT issues ---
+		"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+		"Type variable T not used in parameters or return type." at "T"
+	--- */
 	<in T> m2()
 }
 
 
-// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+/* XPECT issues ---
+	"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "out"
+	"Type variable T not used in parameters or return type." at "T"
+--- */
 function <out T> foo1() {}
-// XPECT errors --> "Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+
+/* XPECT issues ---
+	"Declaration of definition-site variance only allowed in generic classes and interfaces, not in generic functions or methods." at "in"
+	"Type variable T not used in parameters or return type." at "T"
+--- */
 function <in T> foo2() {}
 
