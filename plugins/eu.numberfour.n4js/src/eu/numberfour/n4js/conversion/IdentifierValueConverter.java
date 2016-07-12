@@ -15,7 +15,7 @@ import org.eclipse.xtext.conversion.impl.IDValueConverter;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.util.Strings;
 
-import eu.numberfour.n4js.common.unicode.CharTypes;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
@@ -40,21 +40,6 @@ public class IdentifierValueConverter extends IDValueConverter {
 		} catch (IllegalArgumentException e) {
 			throw new ValueConverterException(e.getMessage(), node, e);
 		}
-	}
-
-	/**
-	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier start.
-	 */
-	public static boolean isValidIdentifierStart(char c) {
-		return CharTypes.isLetter(c) || c == '_' || c == '$';
-	}
-
-	/**
-	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier part.
-	 */
-	public static boolean isValidIdentifierPart(char c) {
-		return isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
-				|| CharTypes.isCombiningMark(c) || '\u200C' == c || '\u200D' == c;
 	}
 
 	/**
@@ -261,11 +246,11 @@ public class IdentifierValueConverter extends IDValueConverter {
 
 	private static boolean setChar(final int outLen, char[] out, char c) {
 		if (outLen == 0) {
-			if (!isValidIdentifierStart(c)) {
+			if (!N4JSLanguageUtils.isValidIdentifierStart(c)) {
 				return false;
 			}
 		} else {
-			if (!isValidIdentifierPart(c)) {
+			if (!N4JSLanguageUtils.isValidIdentifierPart(c)) {
 				return false;
 			}
 		}
