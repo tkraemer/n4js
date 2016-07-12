@@ -80,7 +80,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.types.TypesPackage
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.Set
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
@@ -95,6 +94,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static extension eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter.*
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringAssignment
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringForStatement
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
+import eu.numberfour.n4js.utils.N4JSLanguageHelper
 
 /**
  * A utility that validates the structure of the AST in one pass.
@@ -109,6 +110,10 @@ class ASTStructureValidator {
 
 	@Inject
 	private ValidatorMessageHelper messageHelper;
+	
+	@Inject
+	private N4JSLanguageHelper languageHelper;
+	
 	@ToString
 	protected static class Constraints {
 		static val STRICT = 1
@@ -584,7 +589,7 @@ class ASTStructureValidator {
 			if (arguments == name && !(model instanceof LocalArgumentsVariable)) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else {
-				if (name != 'yield' && (N4JSLanguageConstants.KEYWORDS.contains(name)
+				if (name != N4JSLanguageConstants.YIELD_KEYWORD && (languageHelper.getECMAKeywords.contains(name)
 					|| 'enum'.equals(name) || 'await'.equals(name) || 'let'.equals(name)
 					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name))) {
 					issueNameDiagnostic(model, producer, name)

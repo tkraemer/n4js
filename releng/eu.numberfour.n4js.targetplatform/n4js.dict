@@ -127,5 +127,7 @@ injectable
 importable
 exportable
 prioritization
+lax
+stateful
 transpiling
 jenkins
