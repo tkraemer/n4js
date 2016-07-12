@@ -252,17 +252,14 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 					//appearance order
 					lstEO.sort(
 						[EObject e1, EObject e2|
-							try {
-								Integer.valueOf(NodeModelUtils.getNode(e1).getOffset()).compareTo(
-									Integer.valueOf(
-										NodeModelUtils.getNode(e2).getOffset()
-									))
-							} catch (NullPointerException npe) {
-
-								//NPE will happen when artificially enriched AST,
-								//for example instance of {@link LocalArgumentsVariable}
-								0;
-							}]); val ListIterator<EObject> iter = lstEO.listIterator(); val EObject baseEO = iter.next();
+							val n1=NodeModelUtils.getNode(e1);
+							val n2=NodeModelUtils.getNode(e2);
+							// null-node will happen if artificially enriched AST,
+							// for example instance of {@link LocalArgumentsVariable} is encountered.
+							return if( n1===null || n2===null ) { 0 } else { n1.getOffset() - n2.getOffset() };
+						]); 
+					val ListIterator<EObject> iter = lstEO.listIterator(); 
+					val EObject baseEO = iter.next();
 					iter.forEachRemaining(
 						[ dupeEO |
 							{
