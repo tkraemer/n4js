@@ -8,17 +8,18 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+
 import {FIXME1} from "n4/mangel/Test"
 import {FIXME2} from "n4/mangel/Test"
 import {IFIXME} from "n4/mangel/Test"
 import {IFIXME2} from "n4/mangel/Test"
 import {TestController} from "n4/mangel/TestController"
 import {ResultGroups} from "n4/mangel/mangeltypes/ResultGroups"
+import {TestDIComponent} from "n4/mangel/mangeltypes/TestDIComponent"
 import {TestInfos} from "n4/mangel/mangeltypes/TestInfos"
+import { ConsoleReporter } from "n4/mangel/reporter/console/ConsoleReporter"
 import {HTMLReporter} from "n4/mangel/reporter/html/HTMLReporter"
 import {N4Injector} from "n4js/lang/N4Injector"
-import {TestDIComponent} from "n4/mangel/mangeltypes/TestDIComponent"
-
 function getParm(name: string): string{
     let names: Array<string> = new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)').exec(location.search);
     if(names) {
@@ -29,11 +30,13 @@ function getParm(name: string): string{
 
 class HTMLTestPageRunner {
     @Inject
+    private consoleReporter: ConsoleReporter;
+    @Inject
     private htmlReporter: HTMLReporter;
     @Inject
     private controller: TestController;
 
-     public async run(): void {
+    public async run(): void {
         let groupsStr = getParm("groups")
         , groupsFilter: string = getParm("filter")
         , groupsArray: Array<string>
@@ -45,14 +48,20 @@ class HTMLTestPageRunner {
         , buffer: Array<Array<?>> = []
         , resultGroups: ResultGroups
         ;
-
-        tests = (await (await window.fetch("/test-catalog.json", {
-                union{Headers,Array<Array<string>>,Object} headers: {
-                    "Content-Type": "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
-                }
-            })).json()) as TestInfos;
-
-        this.controller.reporters = [this.htmlReporter];
+        
+        try {
+            tests = (await (await window.fetch("/test-catalog.json", {
+                    union{Headers,Array<Array<string>>,Object} headers: {
+                        "Content-Type": "application/vnd.n4.ide.assemble_test_catalog_req.tm+json"
+                    }
+                })).json()) as TestInfos;
+        } catch (ex) {
+            document.body.innerHTML = "<h3>Could not fetch the test catalog. (Try restarting the LDE and reloading)";
+            return;
+            
+        }
+        
+        this.controller.reporters = [this.htmlReporter, this.consoleReporter];
         if (groupsStr) {
             groupsArray = groupsStr.split(",").map(function(group: string) {return group.trim()})
         }

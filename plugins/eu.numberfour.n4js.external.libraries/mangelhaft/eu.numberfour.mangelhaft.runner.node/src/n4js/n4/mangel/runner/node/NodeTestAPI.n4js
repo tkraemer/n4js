@@ -16,18 +16,15 @@ import * as os from "os"
 import * as lib_path from "path"
 import * as n4mf_parser from "n4mf-parser"
 import * as n4js_cli from "n4js-cli";
-
-const requireResolve = (System._nodeRequire as Object)["resolve"] as {function(string): string};
+ 
 const MANIFEST_N4MF = "manifest.n4mf";
 
-export public async function mkdirp(path: string, mode: int?): void {
-    if (!(await lib_fs.exists(path))) {
-        await mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode);
-        await lib_fs.mkdir(path, mode);
-    }
+export function requireResolve(id): string {
+    return (System._nodeRequire as Object)["resolve"](id);
 }
 
 let count = Date.now();
+
 export public async function createTempDir(): string {
     let tempDir = lib_path.join(os.tmpdir(), "n4js-mangelhaft-" + count++);
     await lib_fs.mkdir(tempDir);
@@ -98,10 +95,7 @@ export default public class NodeTestAPI {
                 options.testCatalog = lib_path.join(await createTempDir(), "catalog.json");
             }
 
-            // TODO: make sure dir exists, otherwise n4jsc fails
-            if (options.targetPlatformInstallLocation) {
-                await mkdirp(options.targetPlatformInstallLocation);
-            } else {
+            if (!options.targetPlatformInstallLocation) {
                 options.targetPlatformInstallLocation = await createTempDir();
             }
 

@@ -1,9 +1,9 @@
 (function(System) {
 	'use strict';
 	System.register([
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/IInstrumentedTest',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestFunctionType',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestMethodDescriptor'
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/IInstrumentedTest',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestFunctionType',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestMethodDescriptor'
 	], function($n4Export) {
 		var IInstrumentedTest, TestFunctionType, TestMethodDescriptor, getAllPropertyNames, InstrumentedTest;
 		getAllPropertyNames = function getAllPropertyNames(objProt, propNames) {
@@ -14,45 +14,51 @@
 			});
 			return propNames;
 		};
-		InstrumentedTest = function InstrumentedTest() {
-			this.name = undefined;
+		InstrumentedTest = function InstrumentedTest(testClass, info, testObject, parameterizedName, parameterizedTests) {
 			this.tests = [];
 			this.beforeAlls = [];
 			this.afterAlls = [];
 			this.befores = [];
 			this.afters = [];
-			this.testObject = undefined;
 			this.fqn = "";
-			this.parent = null;
 			this.child = null;
 			this.error = undefined;
 			this.classIgnoreAnnotation = undefined;
 			IInstrumentedTest.$fieldInit(this, undefined, {
-				name: undefined,
 				tests: undefined,
 				beforeAlls: undefined,
 				afterAlls: undefined,
 				befores: undefined,
 				afters: undefined,
-				testObject: undefined,
 				fqn: undefined,
-				parent: undefined,
 				child: undefined,
 				error: undefined,
 				classIgnoreAnnotation: undefined
 			});
+			if (testClass) {
+				this.load(testClass, info);
+				this.parameterizedName = parameterizedName;
+				this.setTestObject(testObject);
+				if (info && info.testMethods) {
+					this.filterTests(info.testMethods);
+				}
+			}
+			if (parameterizedTests) {
+				this.hasParameterizedTests = true;
+				this.parameterizedTests = parameterizedTests;
+			}
 		};
 		$n4Export('InstrumentedTest', InstrumentedTest);
 		return {
 			setters: [
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fIInstrumentedTest) {
-					IInstrumentedTest = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fIInstrumentedTest.IInstrumentedTest;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fIInstrumentedTest) {
+					IInstrumentedTest = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fIInstrumentedTest.IInstrumentedTest;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType) {
-					TestFunctionType = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType.TestFunctionType;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType) {
+					TestFunctionType = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestFunctionType.TestFunctionType;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor) {
-					TestMethodDescriptor = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor.TestMethodDescriptor;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor) {
+					TestMethodDescriptor = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestMethodDescriptor.TestMethodDescriptor;
 				}
 			],
 			execute: function() {
@@ -68,24 +74,21 @@
 					},
 					getTestMethodDescriptors: {
 						value: function getTestMethodDescriptors___n4(meths, tftype) {
-							let that = this;
-							return meths.map(function(methodDescriptor) {
-								let desc = methodDescriptor.anyAnnotation("Description"), fixmeAnnotation = methodDescriptor.anyAnnotation("Fixme"), ignoreAnnotation = that.classIgnoreAnnotation ? that.classIgnoreAnnotation : methodDescriptor.anyAnnotation("Ignore"), timeoutAnnotation = methodDescriptor.anyAnnotation("Timeout"), timeout = timeoutAnnotation && timeoutAnnotation.details ? parseInt(timeoutAnnotation.details.pop()) : 60 * 1000, name, description, details = desc ? desc.details : [], ignoreReason = ignoreAnnotation ? ignoreAnnotation.details.join(" ") : "", fixmeReason = fixmeAnnotation ? fixmeAnnotation.details.join(" ") : "";
+							return meths.map((function(methodDescriptor) {
+								const desc = methodDescriptor.anyAnnotation("Description"), fixmeAnnotation = methodDescriptor.anyAnnotation("Fixme"), ignoreAnnotation = this.classIgnoreAnnotation ? this.classIgnoreAnnotation : methodDescriptor.anyAnnotation("Ignore"), timeoutAnnotation = methodDescriptor.anyAnnotation("Timeout"), details = desc ? desc.details : [];
 								;
-								description = details.length ? details.join(" ") : "";
-								name = methodDescriptor.name;
 								return new TestMethodDescriptor({
-									timeout: timeout,
-									description: description,
+									timeout: timeoutAnnotation && timeoutAnnotation.details ? parseInt(timeoutAnnotation.details.pop()) : 60 * 1000,
+									description: details.length ? details.join(" ") : "",
 									ignore: !!ignoreAnnotation,
-									ignoreReason: ignoreReason,
+									ignoreReason: ignoreAnnotation ? ignoreAnnotation.details.join(" ") : "",
 									fixme: !!fixmeAnnotation,
-									fixmeReason: fixmeReason,
-									name: name,
+									fixmeReason: fixmeAnnotation ? fixmeAnnotation.details.join(" ") : "",
+									name: methodDescriptor.name,
 									value: methodDescriptor.jsFunction,
 									type: tftype
 								});
-							});
+							}).bind(this));
 						}
 					},
 					setTestObject: {
@@ -127,10 +130,6 @@
 							return this;
 						}
 					},
-					name: {
-						value: undefined,
-						writable: true
-					},
 					tests: {
 						value: undefined,
 						writable: true
@@ -151,15 +150,7 @@
 						value: undefined,
 						writable: true
 					},
-					testObject: {
-						value: undefined,
-						writable: true
-					},
 					fqn: {
-						value: undefined,
-						writable: true
-					},
-					parent: {
 						value: undefined,
 						writable: true
 					},
@@ -174,8 +165,103 @@
 					classIgnoreAnnotation: {
 						value: undefined,
 						writable: true
+					},
+					parent: {
+						value: undefined,
+						writable: true
+					},
+					hasParameterizedTests: {
+						value: undefined,
+						writable: true
+					},
+					parameterizedTests: {
+						value: undefined,
+						writable: true
+					},
+					testObject: {
+						value: undefined,
+						writable: true
+					},
+					name: {
+						value: undefined,
+						writable: true
+					},
+					parameterizedName: {
+						value: undefined,
+						writable: true
 					}
-				}, {}, function(instanceProto, staticProto) {
+				}, {
+					getParameterizedFields: {
+						value: function getParameterizedFields___n4(testClass) {
+							let parameterizedFields = new Map();
+							for(let field of testClass.n4type.dataFieldsWithAnnotation("Parameter", true, true, false)) {
+								let $destruct0 = $sliceToArrayForDestruct((field.anyAnnotation("Parameter").details || [
+									""
+								]), 1), indexStr = $destruct0[0];
+								let argNum = Number.parseInt(indexStr) || 0;
+								parameterizedFields.set(argNum, field.name);
+							}
+							return parameterizedFields;
+						}
+					},
+					getParameterizedInstrumentedTests: {
+						value: function getParameterizedInstrumentedTests___n4(testClass, info, testInjector, parameterGroups, nameTemplate) {
+							nameTemplate = nameTemplate || "{index}";
+							let tests = [];
+							let parameterizedFields = this.getParameterizedFields(testClass);
+							if (parameterGroups && parameterGroups.length) {
+								let ii = 0;
+								for(let pGroup of parameterGroups) {
+									let testObject = testInjector.create(testClass);
+									let jj = 0;
+									for(let parm of pGroup) {
+										if (parameterizedFields.has(jj)) {
+											(testObject)[parameterizedFields.get(jj)] = parm;
+										}
+										++jj;
+									}
+									let parameterizedName = nameTemplate.replace(/{(index|[0-9]*)}/g, (function(match, item) {
+										if (item === "index") {
+											return ii;
+										} else {
+											let paramNumber = Number.parseInt(item);
+											return pGroup[paramNumber] || "";
+										}
+									}).bind(this));
+									tests.push(new InstrumentedTest(testClass, info, testObject, parameterizedName));
+									++ii;
+								}
+							} else {
+								tests.push(new InstrumentedTest(testClass, info, testInjector.create(testClass)));
+							}
+							return tests;
+						}
+					},
+					getInstrumentedTest: {
+						value: function getInstrumentedTest___n4(testClass, info, testInjector) {
+							let parameters = null;
+							let nameTemplate = null;
+							let pMeth = testClass.n4type.methodsWithAnnotation("Parameters", true, true, true).pop();
+							if (pMeth) {
+								let anno = pMeth.anyAnnotation("Parameters");
+								(function() {
+									var $destruct0;
+									$destruct0 = $sliceToArrayForDestruct((anno.details || [
+										""
+									]), 1);
+									nameTemplate = $destruct0[0];
+									return $destruct0;
+								})();
+								parameters = pMeth.jsFunction.call(testClass);
+							}
+							let parameterizedTests;
+							if (parameters) {
+								parameterizedTests = this.getParameterizedInstrumentedTests(testClass, info, testInjector, parameters, nameTemplate);
+							}
+							return new InstrumentedTest(testClass, info, testInjector.create(testClass), null, parameterizedTests);
+						}
+					}
+				}, function(instanceProto, staticProto) {
 					var metaClass = new N4Class({
 						name: 'InstrumentedTest',
 						origin: 'eu.numberfour.mangelhaft',
@@ -185,11 +271,6 @@
 							'n4.mangel.mangeltypes.IInstrumentedTest.IInstrumentedTest'
 						],
 						ownedMembers: [
-							new N4DataField({
-								name: 'name',
-								isStatic: false,
-								annotations: []
-							}),
 							new N4DataField({
 								name: 'tests',
 								isStatic: false,
@@ -216,17 +297,7 @@
 								annotations: []
 							}),
 							new N4DataField({
-								name: 'testObject',
-								isStatic: false,
-								annotations: []
-							}),
-							new N4DataField({
 								name: 'fqn',
-								isStatic: false,
-								annotations: []
-							}),
-							new N4DataField({
-								name: 'parent',
 								isStatic: false,
 								annotations: []
 							}),
@@ -249,6 +320,30 @@
 								name: 'filterTests',
 								isStatic: false,
 								jsFunction: instanceProto['filterTests'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'constructor',
+								isStatic: false,
+								jsFunction: instanceProto['constructor'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'getParameterizedFields',
+								isStatic: true,
+								jsFunction: staticProto['getParameterizedFields'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'getParameterizedInstrumentedTests',
+								isStatic: true,
+								jsFunction: staticProto['getParameterizedInstrumentedTests'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'getInstrumentedTest',
+								isStatic: true,
+								jsFunction: staticProto['getInstrumentedTest'],
 								annotations: []
 							}),
 							new N4Method({
@@ -276,7 +371,38 @@
 								annotations: []
 							})
 						],
-						consumedMembers: [],
+						consumedMembers: [
+							new N4DataField({
+								name: 'parent',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'hasParameterizedTests',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'parameterizedTests',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'testObject',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'name',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'parameterizedName',
+								isStatic: false,
+								annotations: []
+							})
+						],
 						annotations: []
 					});
 					return metaClass;

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"TestSpy.js",
-"lineCount":115,
-"mappings":"A;;;EAeA,0E;;MAAQ,M;EACR;yBAE4B,IAAI,MAAJ,EAF5B;uBAG0B,IAAI,MAAJ,EAH1B;sBAIyB,IAAI,MAAJ,EAJzB;uBAO0B,IAAI,MAAJ,EAP1B;wBAQ2B,IAAI,MAAJ,EAR3B;0BAS6B,IAAI,MAAJ,EAT7B;I;;;;;KADQ,qI;;;;IAEY;;mCAYF;OAEN,IADA,KACA,EAAC,GAAD,CAFM;OAGV,CAHU;OAIV,IAAK,KAAL,IAAc,IAAd;QACI,IAAI,oBAAoB,KAApB,CAAJ;SACI,MAA8B,CAAlB,IAAkB,EAAP,KAAO,CAA9B,CADJ;SAEI,yBAFJ;SADJ;QAJU;OAUV,OAAO,IAAP,CAVU;OAZE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy.n4js"],
-"names":[]
-}

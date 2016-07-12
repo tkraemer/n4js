@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"TestSpy.js",
+"lineCount":135,
+"mappings":"A;;;EAeA,8D;;MAAQ,M;EACR;yBAE4B,IAAI,MAAJ,EAF5B;qCAGwC,IAAI,MAAJ,EAHxC;sCAIyC,IAAI,MAAJ,EAJzC;uBAM0B,IAAI,MAAJ,EAN1B;sBAOyB,IAAI,MAAJ,EAPzB;uBAS0B,IAAI,MAAJ,EAT1B;wBAU2B,IAAI,MAAJ,EAV3B;0BAW6B,IAAI,MAAJ,EAX7B;I;;;;;KADQ,oH;;;;IAEY;;mCAcF;OAEN,IADA,KACA,EAAC,GAAD,CAFM;OAGV,CAHU;OAIV,IAAK,KAAL,IAAc,IAAd;QACI,IAAI,oBAAoB,KAApB,CAAJ;SACI,MAA8B,CAAlB,IAAkB,EAAP,KAAO,CAA9B,CADJ;SAEI,yBAFJ;SADJ;QAJU;OAUV,OAAO,IAAP,CAVU;OAdE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy.n4js"],
+"names":[]
+}
