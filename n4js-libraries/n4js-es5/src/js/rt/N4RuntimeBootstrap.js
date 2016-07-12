@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,7 +44,7 @@
      */
     function $makeClass(ctor, superCtor, implementedInterfaces, instanceMethods, staticMethods, n4typeFn) {
         if (typeof superCtor === "function") {
-            ctor.__proto__ = superCtor;
+            Object.setPrototypeOf(ctor, superCtor);
         }
         Object.defineProperties(ctor, staticMethods);
 
@@ -187,11 +187,11 @@
     }
 
     /**
-     * Executes the given generator function and executes step by step chaining up promises.
+     * Executes the given generator step by step chaining up promises.
      *
-     * @param genFn - generator function to be sequentially executed.
+     * @param gen - generator object to be sequentially executed.
      */
-    function $spawn(genFn) {
+    function $spawn(gen) {
         function exec(step, v) {
             var res;
             try {
@@ -200,14 +200,13 @@
                 return Promise.reject(exc);
             }
             if (res.done) {
-                return v;
+                return Promise.resolve(res.value);
             } else {
                 return Promise.resolve(res.value).then(next, throwr);
             }
         }
 
-        var gen = genFn(),
-            next = exec.bind(gen, "next"),
+        var next = exec.bind(gen, "next"),
             throwr = exec.bind(gen, "throw");
         return next();
     }

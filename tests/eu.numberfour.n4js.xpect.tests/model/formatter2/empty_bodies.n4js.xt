@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+
+
+/* */
+/* XPECT formattedLines 1 ---
+function foo(...params) {}
+--- */
+function foo(...params) {}
+
+
+
+let lastforSem;

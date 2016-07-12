@@ -12,13 +12,16 @@ ArtifactId: eu.numberfour.mangelhaft.reporter.ide
 VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.reporter.ide"
 VendorName: "NumberFour AG"
-ProjectType: runtimeLibrary
-ProjectVersion: 0.3.1
+ProjectType: library
+ProjectVersion: 0.3.2
 Output: "src-gen"
 
 RequiredRuntimeLibraries {
     n4js-runtime-fetch 
-    ,eu.numberfour.mangelhaft.mangeltypes
+}
+
+ProjectDependencies {
+    eu.numberfour.mangelhaft
 } 
 
 Sources {

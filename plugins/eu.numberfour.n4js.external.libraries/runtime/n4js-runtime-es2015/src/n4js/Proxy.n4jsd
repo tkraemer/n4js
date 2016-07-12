@@ -10,7 +10,7 @@
  */
 @@Global @@ProvidedByRuntime
 
-export external public class ~ProxyHandler<T extends Object> {
+export external public interface ~ProxyHandler<T extends Object> {
     public construct: {function(/*target: */T, /*argumentsList: */Array<any>): Object}?;
     public apply: {function(/*target: */T, /*thisArg: */Object, /*argumentsList: */Array<any>): any}?;
     public has: {function(/*target: */T, /*property: */union{string, symbol}): boolean}?;
@@ -31,7 +31,7 @@ export external public class ~ProxyHandler<T extends Object> {
     /**
      * Creates a proxy for the given target.
      */
-    public constructor(target: T, handler: ProxyHandler<T>)/*: T*/;
+    public constructor(target: T, handler: ~ProxyHandler<T>)/*: T*/;
 
     /**
      * Creates a revocable proxy, i.e. {proxy, revoke function}.
@@ -39,7 +39,7 @@ export external public class ~ProxyHandler<T extends Object> {
      * Calling revoke() redners the proxy unusable, any trap will throw a TypeError.
      * Revoked proxies can be garbage collected.
      */
-    public static <T extends Object> revocable(target: T, handler: ProxyHandler<T>): ~Object with { proxy: T; revoke: Function; };
+    public static <T extends Object> revocable(target: T, handler: ~ProxyHandler<T>): ~Object with { proxy: T; revoke: Function; };
 }
 
 /* -*- mode: typescript;-*- */

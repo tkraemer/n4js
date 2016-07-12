@@ -5,7 +5,7 @@
 		'eu.numberfour.mangelhaft.reporter.ide/n4/mangel/reporter/ide/IDEReporter',
 		'n4js.lang/n4js/lang/N4Injector',
 		'eu.numberfour.mangelhaft/n4/mangel/Test',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestDIComponent'
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestDIComponent'
 	], function($n4Export) {
 		var TestController, IDEReporter, N4Injector, FIXME1, FIXME2, IFIXME, IFIXME2, TestDIComponent, IDENodeTestRunner, TestBinder, Root, parentinj, root, main;
 		IDENodeTestRunner = function IDENodeTestRunner() {
@@ -33,8 +33,8 @@
 					IFIXME = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTest.IFIXME;
 					IFIXME2 = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fTest.IFIXME2;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
-					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent) {
+					TestDIComponent = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestDIComponent.TestDIComponent;
 				}
 			],
 			execute: function() {
