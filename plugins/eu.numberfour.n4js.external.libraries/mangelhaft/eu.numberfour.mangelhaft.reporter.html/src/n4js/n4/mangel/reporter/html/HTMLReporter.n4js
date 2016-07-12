@@ -73,6 +73,8 @@ function filterClickHandler(e: Event, showOnly: Array<TestStatus>) {
 }
 
 export public class HTMLReporter implements ITestReporter {
+    private spinnerHandle:number;
+    private spinnerChar = '░';
     constructor() {
         this.timers = document.createElement("div");
         this.testsElm = document.createElement("div")
@@ -81,8 +83,8 @@ export public class HTMLReporter implements ITestReporter {
         this.spinner = document.createElement("pre");
         this.spinner.classList.add("mangelhaft-spinner");
         let ii:number = 0;
-        setInterval(() => {
-           this.spinner.innerText += '░';
+        this.spinnerHandle = setInterval(() => {
+           this.spinner.innerText += this.spinnerChar;
        }, 500);
        this.timers.innerHTML = `Fetching catalog: `;
        this.timers.appendChild(this.spinner);
@@ -160,9 +162,21 @@ export public class HTMLReporter implements ITestReporter {
 
         return fb;
     }
+    private getFQNAnchors(fqnString:string): Array<string> {
+        let moduleParts = fqnString.split('.')
+         , moduleAnchors: Array<string>
+         , filterStr: string = null;
+
+        moduleAnchors = moduleParts.map((modulePart) => {
+            let url;
+            filterStr = filterStr ? filterStr + "." + modulePart: modulePart;
+            url = updateURLParameter(updateURLParameter(getLocation(), "filter", filterStr), "tests", "");
+            return ["<a href='", url, "' >", modulePart, "</a>"].join("");
+        });
+        return moduleAnchors;
+    }
     @Override public async register(): any {
-        let that = this
-          , testsElm: Element = this.testsElm
+        let testsElm: Element = this.testsElm
           , header: Element = document.createElement("div")
           , countersElm: Element = this.countersElm
           , numGroupsElm: Element = document.createElement("span")
@@ -177,7 +191,7 @@ export public class HTMLReporter implements ITestReporter {
           , numTestsRun: number = 0
           , numTestsSkipped: number = 0
           , numTestsSkippedElm: Element = document.createElement("span")
-
+          , that = this
         ;
 
         countersElm.classList.add("mangelhaft-counters");
@@ -186,7 +200,7 @@ export public class HTMLReporter implements ITestReporter {
         header.innerHTML = "<h1><a title='all tests' href='/test.html'>Mangelhaft</a></h1>";
         testsElm.appendChild(countersElm);
 
-        testsElm.appendChild(that.createFilterBox());
+        testsElm.appendChild(this.createFilterBox());
 
         testsElm.appendChild(header);
 
@@ -203,13 +217,14 @@ export public class HTMLReporter implements ITestReporter {
             "mangelhaft-num-total-ran", "Show only non-skipped results"));
         countersElm.appendChild(this.wrapFilterElement(numTestsSkippedElm, [TestStatus.skipped, TestStatus.skipped_not_implemented, TestStatus.skipped_precondition, TestStatus.skipped_ignore, TestStatus.skipped_fixme],
             "mangelhaft-num-SKIPPED", "Show only skipped results"));
-        if (!that.reRunning) {
+        if (!this.reRunning) {
             document.body.innerHTML = "";
             document.body.appendChild(testsElm);
             this.catalogTime = new Date().getTime() - this.catalogTime;
             this.testingTime = new Date().getTime();
-            this.spinner.innerText = "";
-            this.timers.innerHTML = `Fetching catalog: ${that.catalogTime/1000}s Testing: `;
+            clearInterval(this.spinnerHandle);
+            this.spinner.innerText = this.spinnerChar;
+            this.timers.innerHTML = `Fetching catalog: ${this.catalogTime/1000}s Testing: `;
             this.timers.appendChild(this.spinner);
         }
         function updateTotals() {
@@ -221,39 +236,52 @@ export public class HTMLReporter implements ITestReporter {
             totalTestsElm.innerText = numTestsRun.toString();
 
         }
-        this.spy.testingStarted.add(function (numAllGroups: number, sessionId: string, numAllTests: number) {
-            if (that.reRunning) {return;}
+        this.spy.testingStarted.add((numAllGroups: number, sessionId: string, numAllTests: number) => {
+            if (this.reRunning) {return;}
             numGroups = numAllGroups;
             numTests = numAllTests;
             updateTotals();
         });
-        this.spy.groupStarted.add(function (group: IInstrumentedTest) {
-            if (that.reRunning) {return;}
+        this.spy.parameterizedGroupsStarted.add((group: IInstrumentedTest) => {
+            if (this.reRunning) {return;}
+            let groupElm = document.createElement("div")
+              , groupTitleElm = document.createElement("div")
+              , moduleAnchors: Array<string>
+              , groupUrl = updateURLParameter(getLocation(), "filter", group.fqn)
+            ;
+            groupUrl = updateURLParameter(groupUrl, "tests", "");
+            groupElm.classList.add("mangelhaft-group");
+            groupElm.classList.add("mangelhaft-parameterized");
+            groupTitleElm.classList.add("mangelhaft-group-title");
+
+            moduleAnchors = this.getFQNAnchors(group.fqn);
+
+            groupTitleElm.innerHTML = "<span class='mangelhaft-group-title-name'>"+ moduleAnchors.join(".") +"</span>";
+            groupTitleElm.innerHTML += group.parameterizedName ? `( ${group.parameterizedName} )` : "";
+            groupElm.appendChild(groupTitleElm);
+            testsElm.appendChild(groupElm);
+            testsElm = groupElm; //set sub groups to append to base group. Will reset in pgroupEnded
+        });
+        
+        this.spy.groupStarted.add((group: IInstrumentedTest) => {
+            if (this.reRunning) {return;}
             let groupElm = document.createElement("div")
             , groupTitleElm = document.createElement("div")
-            , moduleParts = group.fqn.split('.')
             , moduleAnchors: Array<string>
-            , groupUrl = updateURLParameter(getLocation(), "filter", moduleParts.join("."))
-            , filterStr: string = null;
+            , groupUrl = updateURLParameter(getLocation(), "filter", group.fqn)
             ;
             groupUrl = updateURLParameter(groupUrl, "tests", "");
             groupElm.classList.add("mangelhaft-group");
             groupTitleElm.classList.add("mangelhaft-group-title");
 
-            moduleAnchors = moduleParts.map((modulePart) => {
-                let url;
-
-                filterStr = filterStr ? filterStr + "." + modulePart: modulePart;
-                url = updateURLParameter(updateURLParameter(getLocation(), "filter", filterStr), "tests", "");
-                return ["<a href='", url, "' >", modulePart, "</a>"].join("");
-            });
+            moduleAnchors = this.getFQNAnchors(group.fqn);
 
             groupTitleElm.innerHTML = "<span class='mangelhaft-group-title-name'>"+ moduleAnchors.join(".") +"</span>";
-
+            groupTitleElm.innerHTML += group.parameterizedName ? `( ${group.parameterizedName} )` : "";
             groupElm.appendChild(groupTitleElm);
-            that.groupDivs.set(group, groupElm);
+            this.groupDivs.set(group, groupElm);
             testsElm.appendChild(groupElm);
-            group.tests.forEach(function(test) {
+            group.tests.forEach((test) => {
                 let testName = test.description? test.description: test.name
                 , testElm: Element = document.createElement("div")
                 , status: Element = document.createElement("span")
@@ -281,10 +309,7 @@ export public class HTMLReporter implements ITestReporter {
                 tooltipInner.innerText = test.value.toString();
                 tooltip.appendChild(tooltipInner);
 
-
                 testElm.classList.add("mangelhaft-test");
-
-
                 testNameElm.className = "mangelhaft-test-name";
                 testNameElm.innerHTML = testName;
                 testNameElm.appendChild(tooltip);
@@ -293,12 +318,14 @@ export public class HTMLReporter implements ITestReporter {
                 testElm.appendChild(status);
                 status.classList.add("mangelhaft-status");
                 groupElm.appendChild(testElm);
-                that.testDivs.set(test, testElm);
-                that.statuses.set(test, status);
+                this.testDivs.set(test, testElm);
+                this.statuses.set(test, status);
             })
 
         });
-        this.spy.testFinished.add(function (group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult, rerunTestFunc: {function()}) {
+        this.spy.testFinished.add((group: IInstrumentedTest, test: TestMethodDescriptor, 
+            testResult: TestResult, rerunTestFunc: {function()}
+        ) => {
             let reason: Element
             , stackElm: Element = null
             , elapsed: Element = document.createElement("span")
@@ -310,14 +337,14 @@ export public class HTMLReporter implements ITestReporter {
             , testUrl = updateURLParameter(groupUrl, "tests", test.name)
             , elapsedStr: string
             ;
-            groupElm = that.groupDivs.get(group);
-            testElm = that.testDivs.get(test);
+            groupElm = this.groupDivs.get(group);
+            testElm = this.testDivs.get(test);
 
             if (!(groupElm && testElm)) {
                 throw new Error(`Missing group (${group.name}) or test (${test.name}) html element in reporter (reload) `)
             }
-            status = that.statuses.get(test);
-            if (!that.reRunning) {
+            status = this.statuses.get(test);
+            if (!this.reRunning) {
                numTestsRun += 1;
             }
             testElm.setAttribute("data-mangelhaft-test-status", testResult.testStatus);
@@ -334,7 +361,7 @@ export public class HTMLReporter implements ITestReporter {
 
                     status.classList.add("mangelhaft-SKIPPED");
                     status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>" + testResult.testStatus.toString() + "</a>";
-                    if (!that.reRunning) {
+                    if (!this.reRunning) {
                         numTestsSkipped += 1;
                         numTestsRun -= 1;                                       
                     }
@@ -345,7 +372,7 @@ export public class HTMLReporter implements ITestReporter {
                     status.classList.remove("mangelhaft-FAIL");
                     status.classList.add("mangelhaft-OK");
                     status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>OK</a>";
-                    if (!that.reRunning) {
+                    if (!this.reRunning) {
                         numTestsOk += 1;                                       
                     }
                     break;
@@ -361,10 +388,10 @@ export public class HTMLReporter implements ITestReporter {
                         stackElm.classList.add("mangelhaft-FAIL-stack")
                         testElm.appendChild(stackElm);
                     }
-                    if (!that.reRunning) {
+                    if (!this.reRunning) {
                         numTestsFail +=1;  
                     }
-                    that.setFavIconRed();                     
+                    this.setFavIconRed();                     
                     break;
                 }
             }
@@ -375,7 +402,7 @@ export public class HTMLReporter implements ITestReporter {
                 testElm.insertBefore(reason, stackElm);
             }
 
-            if (that.showOnly && that.showOnly.length && that.showOnly.indexOf(testResult.testStatus.toString()) === -1) {
+            if (this.showOnly && this.showOnly.length && this.showOnly.indexOf(testResult.testStatus.toString()) === -1) {
                 (testElm as HTMLElement).style.display = "none";
                 testElm.classList.add("mangelhaft-hidden");
                 testElm.classList.remove("mangelhaft-shown");
@@ -387,7 +414,7 @@ export public class HTMLReporter implements ITestReporter {
                 elapsed.innerText = " (" + elapsedStr + "ms) ";
                 elapsed.addEventListener("click", (e)=>{
                     if (rerunTestFunc) {
-                        that.reRunning = true;
+                        this.reRunning = true;
                         status.innerHTML = "<a title='re-run test' href='" +testUrl+ "'>Running...</a>";
                         if (stackElm) {
                             stackElm.innerHTML = "";
@@ -402,14 +429,15 @@ export public class HTMLReporter implements ITestReporter {
                     }
                 })
                 testElm.insertBefore(elapsed, status);
-                that.reRunning = false;
+                this.reRunning = false;
             }
             updateTotals();
 
         });
+        let groupsRan = 0;
         this.spy.groupFinished.add((group: IInstrumentedTest, resultGroup: ResultGroup) => {
-            if (that.reRunning) {return;}
-            let groupElm: Element = that.groupDivs.get(group);
+            if (this.reRunning) {return;}
+            let groupElm: Element = this.groupDivs.get(group);
             if (this.showOnly && this.showOnly.length && groupElm.querySelectorAll(".mangelhaft-test.mangelhaft-shown").length === 0) {
                 (groupElm as HTMLElement).style.display = "none";
                 groupElm.classList.add("mangelhaft-hidden");
@@ -418,15 +446,21 @@ export public class HTMLReporter implements ITestReporter {
                 groupElm.classList.remove("mangelhaft-hidden");
                 groupElm.classList.add("mangelhaft-shown");
             }
+            if ((++groupsRan % 10) === 0) {
+                that.spinner.innerText += that.spinnerChar;
+            }
         })
-        this.spy.testingFinished.add(function(resultGroups: ResultGroups) {
-            if (that.reRunning) {return null;}
+        this.spy.parameterizedGroupsFinished.add(async (resultGroups: ResultGroups) => {
+            testsElm = this.testsElm;
+        });
+        this.spy.testingFinished.add((resultGroups: ResultGroups) => {
+            if (this.reRunning) {return null;}
                 let done = document.createElement("span")
                   , timers = document.createElement("div")
                   , groupElm: Element
                 ;
-                that.testingTime = new Date().getTime() - that.testingTime;
-                that.timers.innerHTML = `Fetching catalog: ${that.catalogTime/1000}s Testing: ${that.testingTime/1000}s`;
+                this.testingTime = new Date().getTime() - this.testingTime;
+                this.timers.innerHTML = `Fetching catalog: ${this.catalogTime/1000}s Testing: ${this.testingTime/1000}s`;
                 
                 done.innerText = "DONE"
                 countersElm.appendChild(done);

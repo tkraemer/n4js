@@ -1,0 +1,4 @@
+export interface IB{}
+export function f():IB{return null;}
+export function fx(){}
+

@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.generator.common
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.generator.common.IGeneratorMarkerSupport.Severity
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.projectModel.ProjectUtils
@@ -85,7 +86,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 * </li>
 	 * </ul>
 	 */
-	override doGenerate(Resource input, extension IFileSystemAccess fsa) {
+	override doGenerate(Resource input, IFileSystemAccess fsa) {
 		try {
 			
 			// remove error-marker
@@ -94,17 +95,33 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 			updateOutputPath(fsa, getCompilerID, input);
 			internalDoGenerate(input, fsa);
 		} catch (Exception e) {
+
+			// special case: cancellation during transpilation
+			val isCanceled = genMarkerSupport.isOperationCanceledException(e);
+
 			// issue error marker
 			val target = if (input instanceof N4JSResource) input.module.moduleSpecifier else input.URI;
-			genMarkerSupport.createMarker(input , "Unexpected error occurred while compiling module " + target + ". Check error log for details about the failure.")
+			val severity = if(isCanceled) Severity.ERROR else Severity.ERROR; // keep severity in cancel case on error, for now (can later be reduced to warning)
+			val msgMarker = if (isCanceled) {
+				"Build canceled while transpiling module " + target + ". Generated target file might be invalid."
+			} else {
+				"Severe error occurred while transpiling module " + target + ". Check error log for details about the failure."
+			};
+			genMarkerSupport.createMarker(input, msgMarker, severity);
+
+			if (isCanceled) {
+				// in this case 'e' is of type OperationCanceledException
+				// -> simply re-throw without wrapping it into a GeneratorException to give client code a chance to
+				// recognize that this is only a cancellation, not an actual error
+				throw e as RuntimeException; // OperationCanceledException <: RuntimeException
+			}
 
 			// re-throw as GeneratorException to have the frameworks notify the error.
 			if (e instanceof GeneratorException) {
 				throw e;
 			}
-
 			var msg = if (e.message === null) "type=" + e.class.name else "message=" + e.message;
-			handleError('''Severe problem detected in compiler=«compilerID» «msg».''',  e);
+			handleError('''Severe error occurred in transpiler=«compilerID» «msg».''',  e);
 		}
 	}
 

@@ -1,0 +1,19 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 3 ---
+export public class C {}
+--- */
+export 
+
+
+
+
+public
+
+class C {}
+
+

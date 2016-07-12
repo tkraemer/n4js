@@ -3,33 +3,33 @@
 
 /* replace newlines with semicolons */
 /* XPECT formattedLines 1 ---
-var b =[ 7 ];
+var b = [ 7 ];
 --- */
 var b = [ 7 ]
 
 
 /* keep semicolons */
 /* XPECT formattedLines 1 ---
-var a =[ 7 ];
+var a = [ 7 ];
 --- */
 var a = [ 7 ];
 
 
 
 /* XPECT formattedLines 1 ---
-var c =[ 7 ];// foo
+var c = [ 7 ]; // foo
 --- */
 var c = [ 7 ]// foo
 
 
 /* XPECT formattedLines 1 ---
-var d =[ 7 ];/\* foo *\/
+var d = [ 7 ]; /\* foo *\/ 
 --- */
 var d = [ 7 ]/* foo */
 
 
 /* XPECT formattedLines 3 ---
-var d =[ 7 ];/\* 
+var d = [ 7 ];/\* 
    foo
  *\/
 --- */

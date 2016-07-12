@@ -18,11 +18,6 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     @Override public [Symbol.iterator](): IteratorExt<ValueT>;
 
     /**
-     * Length property is 0.
-     */
-    @Final public length: int;
-
-    /**
      * Number of values.
      */
     public get size(): int;
@@ -48,7 +43,7 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     /**
      * New iterator of [value, value] tuples for each element, in insertion order.
      */
-    public entries(): IteratorExt<Array<any>>;
+    public entries(): IteratorExt<Iterable2<ValueT, ValueT>>;
 
     /**
      * Calls callbackFn for each value, in insertion order.

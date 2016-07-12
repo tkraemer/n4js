@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+// The second step must be stable.
+
+/* Format long lines*/
+/* XPECT formattedLines 3 ---
+var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
+
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);
+function foo(...param) {};
+--- */
+var thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe;
+
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe, thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);
+function foo(...param) {};
+
+
+
+/* Format wrapped lines from first step. */
+/* XPECT FIXME formattedLines 4 ---
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);
+--- */
+foo(thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe,
+	thisVariableHasSuchALongNameItsNotEvenFunnyIMeanIDontEvenWhatThe);

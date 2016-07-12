@@ -1,5 +1,0 @@
-import { C1 } from "Ch07_02_01_SuperKeyword/superGetterSetterAccess/remote/C1"
-
-
-export public class C2 extends C1 {}
-

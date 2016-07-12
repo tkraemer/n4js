@@ -8,8 +8,10 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+
 import {InstrumentedTest} from "n4/mangel/InstrumentedTest"
 import {TestExecutor} from "n4/mangel/TestExecutor"
+import { IInstrumentedTest } from "n4/mangel/mangeltypes/IInstrumentedTest"
 import {ITestReporter} from "n4/mangel/mangeltypes/ITestReporter"
 import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
 import {ResultGroups} from "n4/mangel/mangeltypes/ResultGroups"
@@ -21,7 +23,6 @@ import {TestResult} from "n4/mangel/mangeltypes/TestResult"
 import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
 import {PreconditionNotMet} from "n4/mangel/precondition/PreconditionNotMet"
 import {N4Injector} from "n4js/lang/N4Injector"
-
 export public class TestController {
     static MAX_GROUPS_PER_TEST_BATCH = 10;
     @Inject
@@ -73,7 +74,7 @@ export public class TestController {
             testResults.push(testResult);
             await that.spy.testFinished.dispatch([testObject, test, testResult]);
         }
-        await this.spy.groupFinished.dispatch([testObject, new ResultGroup(testResults, info.fqn)]);
+        await this.spy.groupFinished.dispatch([testObject, new ResultGroup(testResults, `${info.fqn} ${testObject.parameterizedName}`)]);
         return true;
     }
 
@@ -81,9 +82,9 @@ export public class TestController {
         let parts: Array<string>
           , ctorName: string
           , groupModule: any+
-          , groupCTORs: Array<constructor{N4Object}>
-          , groupCTOR: constructor{N4Object}
-          , instrumentedTestObjects: Array<InstrumentedTest> = []
+          , testClasses: Array<constructor{N4Object}>
+          , testClass: constructor{N4Object}
+          , instrumentedTestObjects: Array<IInstrumentedTest> = []
           , instrumentedTestObject: InstrumentedTest
           , moduleName: string
         ;
@@ -97,27 +98,21 @@ export public class TestController {
             await this.errorGroup(info, info.origin +  "/" + moduleName,null, ex);
             return null;
         }
-        groupCTORs = [groupModule[ctorName] as constructor{N4Object}];
-        if (groupCTORs) {
+        testClasses = [groupModule[ctorName] as constructor{N4Object}];
+        if (testClasses) {
             instrumentedTestObjects = [];
-            for (groupCTOR of groupCTORs) {
-                instrumentedTestObject = new InstrumentedTest();
-                if (!groupCTOR) {
+            for (testClass of testClasses) {
+                if (!testClass) {
                     await this.errorGroup(info, info.origin +  "/" + moduleName,null, new Error("Empty object loaded (is the test class exported?)"));
                     continue;
                 } else {
-                    instrumentedTestObject.load(groupCTOR, info);
-                    if (info.testMethods) {
-                        instrumentedTestObject.filterTests(info.testMethods);
-                    }
 
                     try {
-                        let testClass = groupCTOR,
-                            diClass = testClass;
+                        let diClass = testClass;
                         let testInjector: N4Injector;
                         let testType = testClass.n4type;
 
-                        for (; testType; testType = testType.n4superType, diClass = (diClass as Object)["__proto__"] as constructor{N4Object}) {
+                        for (; testType; testType = testType.n4superType, diClass = Object.getPrototypeOf(diClass) as constructor{N4Object}) {
                             if (testType.allAnnotations("GenerateInjector").length) {
                                 if (testType.allAnnotations("WithParentInjector").length) {
                                     if (!this.injector.canBeParentOf(diClass)) {
@@ -133,14 +128,16 @@ export public class TestController {
                         if (!testType) {
                             testInjector = this.injector;
                         }
-                        instrumentedTestObject.setTestObject(testInjector.create(testClass));
+                        let classITO = InstrumentedTest.getInstrumentedTest(testClass, info, testInjector);
+                        instrumentedTestObjects.push(classITO);
                     } catch(ex2) {
-                        instrumentedTestObject
-                            .setTestObject(new N4Object())
-                            .setError(ex2);
+                        instrumentedTestObjects.push(
+                            new InstrumentedTest(testClass, info)
+                                .setTestObject(new N4Object())
+                                .setError(ex2)
+                        );
                     }
                 }
-                instrumentedTestObjects.push(instrumentedTestObject);
             }
         } else {
             await this.errorGroup(info, info.origin +  "/" + parts.join("/"));
@@ -149,7 +146,6 @@ export public class TestController {
         let arr = (await Promise.all(instrumentedTestObjects)).filter((item) => item !== null);
         return (arr as any) as Array<InstrumentedTest>;
     }
-
     public async runGroups(testInfoObject: TestInfos, numTests: number?): ResultGroups {
         if (!testInfoObject) {
             throw new Error("TestController::runGroups called with a null testInfoObject");
@@ -161,7 +157,6 @@ export public class TestController {
           , testInfos: Array<TestInfo> = testInfoObject.testDescriptors
           , batchedTestInfos: Array<Array<TestInfo>> = []
           , ii: number = 0
-          , groupCTORs: Array<?>
           , modules: Array<string>
           , testInfosBatch: Array<TestInfo>
           , instrumentedTestsBatch2d: Array<Array<InstrumentedTest>>

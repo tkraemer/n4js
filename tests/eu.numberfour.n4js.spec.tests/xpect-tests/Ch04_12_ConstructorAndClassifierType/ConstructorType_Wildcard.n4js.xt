@@ -68,7 +68,7 @@ ctor = Y;
 
 // XPECT noerrors -->
 new ctor("");
-// XPECT errors --> "Not a reference to a constructor: constructor{? extends C}." at "_ctor"
+// XPECT errors --> "Cannot instantiate ? extends C." at "_ctor"
 new _ctor();
-// XPECT errors --> "Not a reference to a constructor: constructor{?}." at "_xtor"
+// XPECT errors --> "Cannot instantiate ?." at "_xtor"
 new _xtor();

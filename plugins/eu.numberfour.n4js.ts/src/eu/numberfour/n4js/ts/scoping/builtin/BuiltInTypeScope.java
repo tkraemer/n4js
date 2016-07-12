@@ -40,8 +40,8 @@ import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * This scope provides access to the built in JS types. It is recommended to use BuiltInTypeScopeAccess directly to get
- * the instance.
+ * This scope provides access to the built in JS types. It is recommended to use {@link BuiltInTypeScopeAccess} directly
+ * to get the instance via {@link #get(ResourceSet)}.
  *
  * The scope basically decorates the resource set and provides strongly typed accessors to an enumerated set of built-in
  * types.

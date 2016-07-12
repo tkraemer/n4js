@@ -31,16 +31,20 @@ var myArray : Array<string> = new Array<string>()
 var myFilledArray : Array<?> = myArray.concat("1", "2", "3")
 
 /* XPECT scope at 'Array.|isArray' ---
-	create, defineProperties, defineProperty, freeze,
-	getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is, isArray, isExtensible, isFrozen,
-	isSealed, keys, preventExtensions, prototype, seal
+	apply, arguments, bind, call, constructor, create, defineProperties,
+	defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+	hasOwnProperty, is, isArray, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length,
+	preventExtensions, propertyIsEnumerable, prototype, prototype, seal, toLocaleString, toString,
+	valueOf
 --- */
 var myIsArray : boolean = Array.isArray(myFilledArray)
 
 /* XPECT scope at 'String.|fromCharCode' ---
-	create, defineProperties, defineProperty, freeze,
-	fromCharCode, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is,
-	isExtensible, isFrozen, isSealed, keys, preventExtensions, prototype, seal
+	apply, arguments, bind, call, constructor, create, defineProperties,
+	defineProperty, freeze, fromCharCode, getOwnPropertyDescriptor, getOwnPropertyNames,
+	getPrototypeOf, hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys,
+	length, preventExtensions, propertyIsEnumerable, prototype, prototype, seal,
+	toLocaleString, toString, valueOf
 --- */
 var myString : string = String.fromCharCode(10)
 /* XPECT scope at 'myString.|charAt' ---
@@ -60,9 +64,11 @@ var myCharacterFound : string = myString.charAt(0)
 myCharacterFound = myCharacterFound.charAt(0)
 
 /* XPECT scope at 'String.|fromCharCode' ---
-create, defineProperties, defineProperty, freeze,
-fromCharCode, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is,
-isExtensible, isFrozen, isSealed, keys, preventExtensions, prototype, seal
+apply, arguments, bind, call, constructor, create, defineProperties,
+defineProperty, freeze, fromCharCode, getOwnPropertyDescriptor, getOwnPropertyNames,
+getPrototypeOf, hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys,
+length, preventExtensions, propertyIsEnumerable, prototype, prototype, seal,
+toLocaleString, toString, valueOf
 --- */
 String.fromCharCode(1)
 
@@ -88,19 +94,21 @@ var myMaxValue : number = Number.MAX_VALUE
 var myFixedNumber : string = myMaxValue.toFixed()
 
 /* XPECT scope at 'Number.|MAX_VALUE' ---
-MAX_VALUE, MIN_VALUE, NEGATIVE_INFINITY, NaN, POSITIVE_INFINITY, create,
-defineProperties, defineProperty, freeze, getOwnPropertyDescriptor,
-getOwnPropertyNames, getPrototypeOf, is, isExtensible, isFrozen, isSealed, keys,
-preventExtensions, prototype, seal
+MAX_VALUE, MIN_VALUE, NEGATIVE_INFINITY, NaN, POSITIVE_INFINITY, apply,
+arguments, bind, call, constructor, create, defineProperties, defineProperty, freeze,
+getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, hasOwnProperty, is, isExtensible,
+isFrozen, isPrototypeOf, isSealed, keys, length, preventExtensions, propertyIsEnumerable,
+prototype, prototype, seal, toLocaleString, toString, valueOf
 --- */
 Number.MAX_VALUE
 
 /* XPECT scope at 'Math.|abs' ---
-	E, LN10, LN2, LOG10E, LOG2E, PI, SQRT1_2, SQRT2, abs, acos, asin, atan, atan2,
-	ceil, cos, create, defineProperties, defineProperty, exp,
-	floor, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is,
-	isExtensible, isFrozen, isSealed, keys, log, max, min, pow, preventExtensions,
-	prototype, random, round, seal, sin, sqrt, tan
+	E, LN10, LN2, LOG10E, LOG2E, PI, SQRT1_2, SQRT2, abs, acos, apply, arguments,
+	asin, atan, atan2, bind, call, ceil, constructor, cos, create, defineProperties,
+	defineProperty, exp, floor, freeze, getOwnPropertyDescriptor, getOwnPropertyNames,
+	getPrototypeOf, hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys,
+	length, log, max, min, pow, preventExtensions, propertyIsEnumerable, prototype,
+	prototype, random, round, seal, sin, sqrt, tan, toLocaleString, toString, valueOf
 --- */
 var myAbsNumber : number = Math.abs(1.1)
 
@@ -127,9 +135,11 @@ var myDate : Date = new Date(Date.now())
 var myDateAsNumber : number = myDate.getDate()
 
 /* XPECT scope at 'Date.|parse' ---
-UTC, create, defineProperties, defineProperty, freeze,
-getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is, isExtensible, isFrozen, isSealed,
-keys, now, parse, preventExtensions, prototype, seal
+UTC, apply, arguments, bind, call, constructor, create, defineProperties,
+defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, now, parse,
+preventExtensions, propertyIsEnumerable, prototype, prototype, seal, toLocaleString, toString,
+valueOf
 --- */
 Date.parse("04.02.2014")
 
@@ -191,9 +201,11 @@ var myUriError : URIError = new URIError()
 var myUriErrorMessage : string = myUriError.message
 
 /* XPECT scope at 'JSON.|parse("bla")' ---
-	create, defineProperties, defineProperty, freeze,
-	getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is, isExtensible, isFrozen, isSealed,
-	keys, parse, preventExtensions, prototype, seal, stringify
+	apply, arguments, bind, call, constructor, create, defineProperties,
+	defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+	hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, parse,
+	preventExtensions, propertyIsEnumerable, prototype, prototype, seal, stringify, toLocaleString,
+	toString, valueOf
 --- */
 var myJson : any = JSON.parse("bla")
 var someJson : JSON;
@@ -204,9 +216,11 @@ var someJson : JSON;
 someJson.constructor
 
 /* XPECT scope at 'JSON.|parse' ---
-create, defineProperties, defineProperty, freeze,
-getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is, isExtensible, isFrozen, isSealed,
-keys, parse, preventExtensions, prototype, seal, stringify
+apply, arguments, bind, call, constructor, create, defineProperties,
+defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, parse,
+preventExtensions, propertyIsEnumerable, prototype, prototype, seal, stringify, toLocaleString,
+toString, valueOf
 --- */
 JSON.parse("bla")
 
@@ -252,9 +266,11 @@ var myN4Object : N4Object = new N4Object()
 var myN4ObjectStr = myN4Object.toString()
 
 /* XPECT scope at 'N4Object.|isFrozen' ---
-create, defineProperties, defineProperty, freeze,
-getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf, is, isExtensible, isFrozen, isSealed,
-keys, n4type, preventExtensions, prototype, seal
+apply, arguments, bind, call, constructor, create, defineProperties,
+defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, n4type,
+preventExtensions, propertyIsEnumerable, prototype, prototype, seal, toLocaleString, toString,
+valueOf
 --- */
 N4Object.isFrozen(myN4Object)
 

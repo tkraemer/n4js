@@ -1,0 +1,5 @@
+import { I1 } from "Ch08_02_01_SuperKeyword/superGetterSetterAccess/remote/I1"
+
+
+export public interface I2 extends I1 {}
+

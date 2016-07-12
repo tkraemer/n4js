@@ -1,0 +1,2 @@
+export public class Ce <T> {}
+export public class B {}

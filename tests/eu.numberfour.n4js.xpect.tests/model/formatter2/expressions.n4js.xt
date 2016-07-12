@@ -1,0 +1,108 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+class A { a:A; }
+var exc = null;
+
+// Nested String-concat.
+/* XPECT formattedLines 1 ---
+throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as Error);
+--- */
+throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as Error);
+
+
+
+/* XPECT formattedLines 2 ---
+let bool = true;
+let z = bool ? 5 : 10;
+--- */
+let bool = true;
+let z = bool?5:10;
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines 6 ---
+{
+	let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+	values.map(val => 2 * val).reduce((memo, val) => {
+			return memo;
+		}, 56);
+}
+--- */
+{
+        let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+        values.map(val => 2 * val).reduce((memo, val) => {
+            return memo;
+        }, 56);
+}
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines 8 ---
+{
+	let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+	values
+		.map(val => 2 * val)
+		.reduce((memo, val) => {
+			return memo;
+		}, 56);
+}
+--- */
+{
+        let values = [223, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23];
+        values   
+          .map(  val    =>2*val   )  
+      .reduce(   (   memo   ,    val    )    =>    {   
+                   return memo;   
+   },   56   );
+}
+
+/** Inlined Chained property calls. */
+/* XPECT formattedLines  16 ---
+{
+	let a: A;
+	a.a.a.a.a.a;
+	a.a
+		.a
+		.a;
+	a
+		.a
+		.a
+		.a;
+}
+--- */
+{
+        let a:A;
+         a.a.a.a.a.a
+         a.
+         a
+         .
+         a
+         .a
+         a
+         .
+         a
+         .
+         a
+         .
+         a
+}
+
+
+/** wrappign of logical expressions */
+/* XPECT formattedLines 3 ---
+interface GooSupperLongWordWithSomeSuperHeros {}
+let abc: int, bar, hoo;
+let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) && (hoo instanceof
+				GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423,
+		23423, 23423];
+--- */
+interface GooSupperLongWordWithSomeSuperHeros {}
+let abc:int, bar, hoo;
+let juergen = (1 === abc % 2 || ((bar instanceof GooSupperLongWordWithSomeSuperHeros) && (hoo instanceof GooSupperLongWordWithSomeSuperHeros))) ? [23423, 23423, 23423, 23423, 23423] : [23423, 23423, 23423, 23423, 23423];
+
+
+

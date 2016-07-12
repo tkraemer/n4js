@@ -13,16 +13,16 @@ VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.reporter.xunit"
 VendorName: "NumberFour AG"
 ProjectType: library
-ProjectVersion: 0.3.1
+ProjectVersion: 0.3.4
 Output: "src-gen"
 
 RequiredRuntimeLibraries {
     n4js-runtime-node,
-    n4js-runtime-es2015,
-    eu.numberfour.mangelhaft.mangeltypes
+    n4js-runtime-es2015
 }
 
 ProjectDependencies {
+    eu.numberfour.mangelhaft,
     xmlbuilder
 }
 

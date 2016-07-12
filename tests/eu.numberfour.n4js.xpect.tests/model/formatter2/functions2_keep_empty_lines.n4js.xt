@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+
+
+/* Special requirement: keep additional empty lines */
+/* XPECT FIXME formattedLines 17 ---
+function goo(bar: int, hoo: int) {
+
+
+
+	// leave the lines as they are, but fix base indentation 
+
+
+
+
+
+
+	// do not clear up linefeed
+
+
+
+};
+--- */
+function goo(bar: int, hoo: int) {
+
+
+
+    // leave the lines as they are, but fix base indentation 
+
+
+
+
+
+
+    // do not clear up linefeed
+    
+    
+    
+}
+

@@ -36,6 +36,20 @@ import com.google.common.collect.Iterables;
  */
 public abstract class FilterWithErrorMarkerScope implements IScope {
 
+	/**
+	 * Returns true if given scope is already decorated with given filter scope type.
+	 */
+	public static boolean isDecoratedWithFilter(IScope scope,
+			Class<? extends FilterWithErrorMarkerScope> filterScopeType) {
+		if (filterScopeType.isInstance(scope)) {
+			return true;
+		}
+		if (scope instanceof FilterWithErrorMarkerScope) {
+			return isDecoratedWithFilter(((FilterWithErrorMarkerScope) scope).parent, filterScopeType);
+		}
+		return false;
+	}
+
 	/** The encapsulated parent scope */
 	protected final IScope parent;
 
@@ -124,8 +138,8 @@ public abstract class FilterWithErrorMarkerScope implements IScope {
 			Iterable<IEObjectDescription> originalDescriptions) {
 		// warning produced here is a bug, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=445465
 		// explicitly declaring type of element fixes the warning
-		Iterable<IEObjectDescription> filteredResult =
-				Iterables.transform(originalDescriptions, (IEObjectDescription it) -> {
+		Iterable<IEObjectDescription> filteredResult = Iterables.transform(originalDescriptions,
+				(IEObjectDescription it) -> {
 					if (it == null || isAccepted(it)) {
 						return it;
 					} else {

@@ -31,12 +31,12 @@ import eu.numberfour.n4js.validation.validators.N4JSInterfaceValidator
 import eu.numberfour.n4js.validation.validators.N4JSLambdaValidator
 import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator
 import eu.numberfour.n4js.validation.validators.N4JSMemberValidator
+import eu.numberfour.n4js.validation.validators.N4JSModuleValidator
 import eu.numberfour.n4js.validation.validators.N4JSNameValidator
 import eu.numberfour.n4js.validation.validators.N4JSStatementValidator
 import eu.numberfour.n4js.validation.validators.N4JSSuperValidator
 import eu.numberfour.n4js.validation.validators.N4JSSyntaxValidator
 import eu.numberfour.n4js.validation.validators.N4JSTypeValidator
-import eu.numberfour.n4js.validation.validators.N4JSUniqueModuleNameValidator
 import eu.numberfour.n4js.validation.validators.N4JSVariableValidator
 import eu.numberfour.n4js.validation.validators.UnsupportedFeatureValidator
 import eu.numberfour.n4js.xsemantics.validation.InternalTypeSystemValidator
@@ -93,7 +93,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 	N4JSSyntaxValidator,
 	N4JSDependencyInjectionValidator,
 	N4JSInjectorCallsitesValidator,
-	N4JSUniqueModuleNameValidator,
+	N4JSModuleValidator,
 	N4JSDestructureValidator,
 	UnsupportedFeatureValidator
 ])

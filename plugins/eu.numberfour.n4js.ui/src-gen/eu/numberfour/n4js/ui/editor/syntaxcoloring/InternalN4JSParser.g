@@ -14916,6 +14916,159 @@ ruleElision
 
 
 
+// Entry rule entryRuleTStructMethod
+entryRuleTStructMethod
+	:
+	ruleTStructMethod 
+	EOF 
+;
+
+// Rule TStructMethod
+ruleTStructMethod 
+    @init {
+    }:
+(((((
+	LessThanSign 	(
+(
+	ruleTypeVariable
+)
+)(
+	Comma 	(
+(
+	ruleTypeVariable
+)
+))*
+	GreaterThanSign 	)?(
+(
+	ruleIdentifierName
+)
+)
+	LeftParenthesis 	))=>((
+	LessThanSignKeyword_0_0_1_0=LessThanSign 	 { announce($LessThanSignKeyword_0_0_1_0, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0()); }(
+(
+	TypeVarsTypeVariableParserRuleCall_0_0_1_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_1()); }
+)
+)(
+	CommaKeyword_0_0_1_2_0=Comma 	 { announce($CommaKeyword_0_0_1_2_0, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0()); }(
+(
+	TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_2_1()); }
+)
+))*
+	GreaterThanSignKeyword_0_0_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_0_0_1_3, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3()); })?(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructMethodAccess().getNameAssignment_0_0_2()); }
+)
+)
+	LeftParenthesisKeyword_0_0_3=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_3, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3()); }))	TAnonymousFormalParameterListParserRuleCall_1=ruleTAnonymousFormalParameterList		{ announce($TAnonymousFormalParameterListParserRuleCall_1.start, $TAnonymousFormalParameterListParserRuleCall_1.stop, grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); }
+
+	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2()); }(
+	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0()); }(
+(
+	ReturnTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructMethodAccess().getReturnTypeRefAssignment_3_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructField
+entryRuleTStructField
+	:
+	ruleTStructField 
+	EOF 
+;
+
+// Rule TStructField
+ruleTStructField 
+    @init {
+    }:
+((
+(
+	NameIdentifierNameParserRuleCall_0_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0.start, $NameIdentifierNameParserRuleCall_0_0.stop, grammarAccess.getTStructFieldAccess().getNameAssignment_0()); }
+)
+)(
+	ColonKeyword_1_0=Colon 	 { announce($ColonKeyword_1_0, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0()); }(
+(
+	TypeRefTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($TypeRefTypeRefParserRuleCall_1_1_0.start, $TypeRefTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_1_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructGetter
+entryRuleTStructGetter
+	:
+	ruleTStructGetter 
+	EOF 
+;
+
+// Rule TStructGetter
+ruleTStructGetter 
+    @init {
+    }:
+((((
+	Get 	(
+(
+	ruleIdentifierName
+)
+)))=>(
+	GetKeyword_0_0_1=Get 	 { announce($GetKeyword_0_0_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1()); }(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructGetterAccess().getNameAssignment_0_0_2()); }
+)
+)))
+	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1()); }
+	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2()); }(
+	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0()); }(
+(
+	DeclaredTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_3_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructSetter
+entryRuleTStructSetter
+	:
+	ruleTStructSetter 
+	EOF 
+;
+
+// Rule TStructSetter
+ruleTStructSetter 
+    @init {
+    }:
+((((
+	Set 	(
+(
+	ruleIdentifierName
+)
+)))=>(
+	SetKeyword_0_0_1=Set 	 { announce($SetKeyword_0_0_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1()); }(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2()); }
+)
+)))
+	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1()); }(
+(
+	FparTAnonymousFormalParameterParserRuleCall_2_0=ruleTAnonymousFormalParameter { announce($FparTAnonymousFormalParameterParserRuleCall_2_0.start, $FparTAnonymousFormalParameterParserRuleCall_2_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_2()); }
+)
+)
+	RightParenthesisKeyword_3=RightParenthesis 	 { announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3()); })
+;
+
+
+
+
+
 // Entry rule entryRuleTypeRef
 entryRuleTypeRef
 	:
@@ -15622,14 +15775,14 @@ ruleTStructMember
 ((((
 	Get 	(
 (
-	ruleTypesIdentifier
+	ruleIdentifierName
 )
 )))=>	TStructGetterParserRuleCall_0=ruleTStructGetter		{ announce($TStructGetterParserRuleCall_0.start, $TStructGetterParserRuleCall_0.stop, grammarAccess.getTStructMemberAccess().getTStructGetterParserRuleCall_0()); }
 )
     |(((
 	Set 	(
 (
-	ruleTypesIdentifier
+	ruleIdentifierName
 )
 )))=>	TStructSetterParserRuleCall_1=ruleTStructSetter		{ announce($TStructSetterParserRuleCall_1.start, $TStructSetterParserRuleCall_1.stop, grammarAccess.getTStructMemberAccess().getTStructSetterParserRuleCall_1()); }
 )
@@ -15646,166 +15799,13 @@ ruleTStructMember
 ))*
 	GreaterThanSign 	)?(
 (
-	ruleTypesIdentifier
+	ruleIdentifierName
 )
 )
 	LeftParenthesis 	))=>	TStructMethodParserRuleCall_2=ruleTStructMethod		{ announce($TStructMethodParserRuleCall_2.start, $TStructMethodParserRuleCall_2.stop, grammarAccess.getTStructMemberAccess().getTStructMethodParserRuleCall_2()); }
 )
     |	TStructFieldParserRuleCall_3=ruleTStructField		{ announce($TStructFieldParserRuleCall_3.start, $TStructFieldParserRuleCall_3.stop, grammarAccess.getTStructMemberAccess().getTStructFieldParserRuleCall_3()); }
 )
-;
-
-
-
-
-
-// Entry rule entryRuleTStructMethod
-entryRuleTStructMethod
-	:
-	ruleTStructMethod 
-	EOF 
-;
-
-// Rule TStructMethod
-ruleTStructMethod 
-    @init {
-    }:
-(((((
-	LessThanSign 	(
-(
-	ruleTypeVariable
-)
-)(
-	Comma 	(
-(
-	ruleTypeVariable
-)
-))*
-	GreaterThanSign 	)?(
-(
-	ruleTypesIdentifier
-)
-)
-	LeftParenthesis 	))=>((
-	LessThanSignKeyword_0_0_1_0=LessThanSign 	 { announce($LessThanSignKeyword_0_0_1_0, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0()); }(
-(
-	TypeVarsTypeVariableParserRuleCall_0_0_1_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_1()); }
-)
-)(
-	CommaKeyword_0_0_1_2_0=Comma 	 { announce($CommaKeyword_0_0_1_2_0, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0()); }(
-(
-	TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_2_1()); }
-)
-))*
-	GreaterThanSignKeyword_0_0_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_0_0_1_3, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3()); })?(
-(
-	NameTypesIdentifierParserRuleCall_0_0_2_0=ruleTypesIdentifier { announce($NameTypesIdentifierParserRuleCall_0_0_2_0.start, $NameTypesIdentifierParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructMethodAccess().getNameAssignment_0_0_2()); }
-)
-)
-	LeftParenthesisKeyword_0_0_3=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_3, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3()); }))	TAnonymousFormalParameterListParserRuleCall_1=ruleTAnonymousFormalParameterList		{ announce($TAnonymousFormalParameterListParserRuleCall_1.start, $TAnonymousFormalParameterListParserRuleCall_1.stop, grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); }
-
-	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2()); }(
-	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructMethodAccess().getReturnTypeRefAssignment_3_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructField
-entryRuleTStructField
-	:
-	ruleTStructField 
-	EOF 
-;
-
-// Rule TStructField
-ruleTStructField 
-    @init {
-    }:
-((
-(
-	NameTypesIdentifierParserRuleCall_0_0=ruleTypesIdentifier { announce($NameTypesIdentifierParserRuleCall_0_0.start, $NameTypesIdentifierParserRuleCall_0_0.stop, grammarAccess.getTStructFieldAccess().getNameAssignment_0()); }
-)
-)(
-	ColonKeyword_1_0=Colon 	 { announce($ColonKeyword_1_0, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0()); }(
-(
-	TypeRefTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($TypeRefTypeRefParserRuleCall_1_1_0.start, $TypeRefTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_1_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructGetter
-entryRuleTStructGetter
-	:
-	ruleTStructGetter 
-	EOF 
-;
-
-// Rule TStructGetter
-ruleTStructGetter 
-    @init {
-    }:
-((((
-	Get 	(
-(
-	ruleTypesIdentifier
-)
-)))=>(
-	GetKeyword_0_0_1=Get 	 { announce($GetKeyword_0_0_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1()); }(
-(
-	NameTypesIdentifierParserRuleCall_0_0_2_0=ruleTypesIdentifier { announce($NameTypesIdentifierParserRuleCall_0_0_2_0.start, $NameTypesIdentifierParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructGetterAccess().getNameAssignment_0_0_2()); }
-)
-)))
-	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1()); }
-	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2()); }(
-	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0()); }(
-(
-	DeclaredTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_3_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructSetter
-entryRuleTStructSetter
-	:
-	ruleTStructSetter 
-	EOF 
-;
-
-// Rule TStructSetter
-ruleTStructSetter 
-    @init {
-    }:
-((((
-	Set 	(
-(
-	ruleTypesIdentifier
-)
-)))=>(
-	SetKeyword_0_0_1=Set 	 { announce($SetKeyword_0_0_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1()); }(
-(
-	NameTypesIdentifierParserRuleCall_0_0_2_0=ruleTypesIdentifier { announce($NameTypesIdentifierParserRuleCall_0_0_2_0.start, $NameTypesIdentifierParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2()); }
-)
-)))
-	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1()); }(
-(
-	FparTAnonymousFormalParameterParserRuleCall_2_0=ruleTAnonymousFormalParameter { announce($FparTAnonymousFormalParameterParserRuleCall_2_0.start, $FparTAnonymousFormalParameterParserRuleCall_2_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_2()); }
-)
-)
-	RightParenthesisKeyword_3=RightParenthesis 	 { announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3()); })
 ;
 
 

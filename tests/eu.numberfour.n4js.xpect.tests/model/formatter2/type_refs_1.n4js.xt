@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+class Annos {}
+class A <X, Y> {}
+
+/* XPECT formattedLines 27 ---
+let a: A<[Annos], [A<[[Annos]], [A<Annos & string, number | Annos>]>]>;
+--- */
+let a : 
+   A
+      <
+      [
+          Annos
+            ]
+                ,
+                    [
+                            A
+                                <
+                                    [
+                                            [
+                                                    Annos
+                                            ]
+                                    ]   
+                                    ,
+                                        [
+                                                A
+                                                    <
+                                                        Annos
+                                                            &
+                                                                string,
+                                                                    number
+                                                                        |
+                                                                            Annos>
+                                        ]>
+                    ]>
+      
+
+
+
+
+
+

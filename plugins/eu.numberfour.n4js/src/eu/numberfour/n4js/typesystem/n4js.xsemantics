@@ -712,8 +712,8 @@ from {
 
 		var TypeRef propTypeRef;
 
-		// cases "C.constructor", "this.constructor" and "c.constructor"
-		if((receiverTypeRef instanceof ClassifierTypeRef || receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef)
+		// cases "this.constructor" and "c.constructor" (but not "C.constructor", since this refers to Function.constructor and not C itself!)
+		if((receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef)
 				&& expr.property instanceof TMethod
 				&& expr.property.name == 'constructor') {
 
@@ -1647,7 +1647,13 @@ from {
 			val leftCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(left_staticType as ContainerType<?>);
 			val rightCtor = containerTypesHelper.fromContext(G.contextResource).findConstructor(right_staticType as ContainerType<?>);
 			leftCtor!=null && rightCtor!=null
-	
+
+			// we need the type of the two constructors (i.e. their signature)
+			// DO NOT USE "var leftCtorRef = TypeUtils.createTypeRef(leftCtor)", because this would by-pass the handling
+			// of forward references during AST traversal! Instead, obtain the type via the type judgment:
+			G |- leftCtor : var TypeRef leftCtorRef;
+			G |- rightCtor : var TypeRef rightCtorRef;
+
 			// support for type variables and [~]~this as type of fpars in constructors
 			val G_left = G.wrap;
 			val G_right = G.wrap;
@@ -1655,9 +1661,9 @@ from {
 			G_left.addThisType(left_staticType.ref)
 			typeSystemHelper.addSubstitutions(G_right, right_staticType.ref);
 			G_right.addThisType(right_staticType.ref)
-			G_left |- leftCtor.ref ~> var TypeRef leftCtorRefSubst
-			G_right |- rightCtor.ref ~> var TypeRef rightCtorRefSubst
-	
+			G_left |- leftCtorRef ~> var TypeRef leftCtorRefSubst
+			G_right |- rightCtorRef ~> var TypeRef rightCtorRefSubst
+
 			G |- leftCtorRefSubst <: rightCtorRefSubst
 		}
 	} else { // right contains a wilcard
