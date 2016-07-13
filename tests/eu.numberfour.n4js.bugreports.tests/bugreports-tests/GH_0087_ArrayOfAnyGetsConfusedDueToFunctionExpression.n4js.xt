@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+// XPECT noerrors --> "Array<union{string,{function():any}}> is not a subtype of Array<any>." at "[()=>false, "hello", "goodbye"]"
+var arr1: Array<any> = [()=>false, "hello", "goodbye"];
+// XPECT noerrors --> "Array<union{string,{function():any}}> is not a subtype of Array<any>." at "[function() {return false;}, "hello", "goodbye"]"
+var arr2: Array<any> = [function() {return false;}, "hello", "goodbye"];
+// XPECT noerrors --> "already worked before"
+var arr3: Array<any> = [():boolean=>false, "hello", "goodbye"];
+
