@@ -11,11 +11,11 @@
 import * as N from "validation/IDE_707_modifier/Private"
 
 class B extends N.A {
-	// to be removed when private fields are rewritten XPECT errors --> "The field B.x overriding field A.x must be annotated with @Override." at "'x'"
+	// to be removed when private fields are rewritten XPECT errors --> "The field B.x overriding field A.x must be annotated with @Override." at "['x']"
 	private ['x']; 
 	
 	@Override
-// XPECT errors --> "The method B.m cannot override private method A.m." at "'m'"
+// XPECT errors --> "The method B.m cannot override private method A.m." at "['m']"
 	private ['m']() {
 		
 	}

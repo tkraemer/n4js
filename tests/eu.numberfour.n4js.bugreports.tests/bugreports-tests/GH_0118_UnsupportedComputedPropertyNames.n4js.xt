@@ -1,0 +1,10 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+let some: any+;
+
+class C {
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal or built-in symbol." at "`someMethod`"
+	[`someMethod`]() {}
+}
+

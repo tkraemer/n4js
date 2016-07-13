@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedPropertyAccessExpressionImpl#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedPropertyAccessExpressionImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedPropertyAccessExpressionImpl#getProperty <em>Property</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.ParameterizedPropertyAccessExpressionImpl#getPropertyAsText <em>Property As Text</em>}</li>
  * </ul>
  *
  * @generated
@@ -78,6 +79,26 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 	 * @ordered
 	 */
 	protected IdentifiableElement property;
+
+	/**
+	 * The default value of the '{@link #getPropertyAsText() <em>Property As Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPropertyAsText()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PROPERTY_AS_TEXT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPropertyAsText() <em>Property As Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPropertyAsText()
+	 * @generated
+	 * @ordered
+	 */
+	protected String propertyAsText = PROPERTY_AS_TEXT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +217,27 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getPropertyAsText() {
+		return propertyAsText;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPropertyAsText(String newPropertyAsText) {
+		String oldPropertyAsText = propertyAsText;
+		propertyAsText = newPropertyAsText;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT, oldPropertyAsText, propertyAsText));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isValidSimpleAssignmentTarget() {
 		return true;
 	}
@@ -242,6 +284,8 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY:
 				if (resolve) return getProperty();
 				return basicGetProperty();
+			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT:
+				return getPropertyAsText();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -265,6 +309,9 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY:
 				setProperty((IdentifiableElement)newValue);
 				return;
+			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT:
+				setPropertyAsText((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -286,6 +333,9 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY:
 				setProperty((IdentifiableElement)null);
 				return;
+			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT:
+				setPropertyAsText(PROPERTY_AS_TEXT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -304,6 +354,8 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 				return target != null;
 			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY:
 				return property != null;
+			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT:
+				return PROPERTY_AS_TEXT_EDEFAULT == null ? propertyAsText != null : !PROPERTY_AS_TEXT_EDEFAULT.equals(propertyAsText);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -376,6 +428,22 @@ public class ParameterizedPropertyAccessExpressionImpl extends ExpressionImpl im
 				return isParameterized();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (propertyAsText: ");
+		result.append(propertyAsText);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ParameterizedPropertyAccessExpressionImpl

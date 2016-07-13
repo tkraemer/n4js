@@ -12,8 +12,6 @@ import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList;
 
-import eu.numberfour.n4js.ts.types.TStructMember;
-
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -140,15 +138,6 @@ public abstract class AnnotableN4MemberDeclarationImpl extends N4MemberDeclarati
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TStructMember getDefinedMember() {
-		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -226,8 +215,6 @@ public abstract class AnnotableN4MemberDeclarationImpl extends N4MemberDeclarati
 		switch (operationID) {
 			case N4JSPackage.ANNOTABLE_N4_MEMBER_DECLARATION___GET_ANNOTATIONS:
 				return getAnnotations();
-			case N4JSPackage.ANNOTABLE_N4_MEMBER_DECLARATION___GET_DEFINED_MEMBER:
-				return getDefinedMember();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

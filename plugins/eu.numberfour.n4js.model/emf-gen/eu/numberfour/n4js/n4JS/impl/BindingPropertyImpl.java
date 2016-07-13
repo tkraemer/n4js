@@ -10,6 +10,8 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.BindingElement;
 import eu.numberfour.n4js.n4JS.BindingProperty;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.NamedElement;
+import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +25,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,34 +34,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.BindingPropertyImpl#getDeclaredName <em>Declared Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.BindingPropertyImpl#getValue <em>Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.BindingPropertyImpl#getVarDecl <em>Var Decl</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements BindingProperty {
-	/**
-	 * The default value of the '{@link #getDeclaredName() <em>Declared Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDeclaredName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String DECLARED_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDeclaredName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String declaredName = DECLARED_NAME_EDEFAULT;
-
+public class BindingPropertyImpl extends PropertyNameOwnerImpl implements BindingProperty {
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -98,27 +78,6 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	protected EClass eStaticClass() {
 		return N4JSPackage.Literals.BINDING_PROPERTY;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getDeclaredName() {
-		return declaredName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDeclaredName(String newDeclaredName) {
-		String oldDeclaredName = declaredName;
-		declaredName = newDeclaredName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.BINDING_PROPERTY__DECLARED_NAME, oldDeclaredName, declaredName));
 	}
 
 	/**
@@ -214,22 +173,31 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	 */
 	public String getName() {
 		String _elvis = null;
-		String _declaredName = this.getDeclaredName();
-		if (_declaredName != null) {
-			_elvis = _declaredName;
+		String _name = super.getName();
+		if (_name != null) {
+			_elvis = _name;
 		} else {
 			BindingElement _value = this.getValue();
 			VariableDeclaration _varDecl = null;
 			if (_value!=null) {
 				_varDecl=_value.getVarDecl();
 			}
-			String _name = null;
+			String _name_1 = null;
 			if (_varDecl!=null) {
-				_name=_varDecl.getName();
+				_name_1=_varDecl.getName();
 			}
-			_elvis = _name;
+			_elvis = _name_1;
 		}
 		return _elvis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isValidName() {
+		return true;
 	}
 
 	/**
@@ -256,8 +224,6 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case N4JSPackage.BINDING_PROPERTY__DECLARED_NAME:
-				return getDeclaredName();
 			case N4JSPackage.BINDING_PROPERTY__VALUE:
 				return getValue();
 			case N4JSPackage.BINDING_PROPERTY__VAR_DECL:
@@ -274,9 +240,6 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case N4JSPackage.BINDING_PROPERTY__DECLARED_NAME:
-				setDeclaredName((String)newValue);
-				return;
 			case N4JSPackage.BINDING_PROPERTY__VALUE:
 				setValue((BindingElement)newValue);
 				return;
@@ -295,9 +258,6 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.BINDING_PROPERTY__DECLARED_NAME:
-				setDeclaredName(DECLARED_NAME_EDEFAULT);
-				return;
 			case N4JSPackage.BINDING_PROPERTY__VALUE:
 				setValue((BindingElement)null);
 				return;
@@ -316,8 +276,6 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.BINDING_PROPERTY__DECLARED_NAME:
-				return DECLARED_NAME_EDEFAULT == null ? declaredName != null : !DECLARED_NAME_EDEFAULT.equals(declaredName);
 			case N4JSPackage.BINDING_PROPERTY__VALUE:
 				return value != null;
 			case N4JSPackage.BINDING_PROPERTY__VAR_DECL:
@@ -332,12 +290,21 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case N4JSPackage.BINDING_PROPERTY___GET_NAME:
-				return getName();
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.NAMED_ELEMENT___GET_NAME: return N4JSPackage.BINDING_PROPERTY___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
 		}
-		return super.eInvoke(operationID, arguments);
+		if (baseClass == PropertyNameOwner.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.BINDING_PROPERTY___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.BINDING_PROPERTY___IS_VALID_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
 	/**
@@ -346,14 +313,14 @@ public class BindingPropertyImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (declaredName: ");
-		result.append(declaredName);
-		result.append(')');
-		return result.toString();
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case N4JSPackage.BINDING_PROPERTY___GET_NAME:
+				return getName();
+			case N4JSPackage.BINDING_PROPERTY___IS_VALID_NAME:
+				return isValidName();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //BindingPropertyImpl

@@ -1059,22 +1059,22 @@ class ASTStructureValidator {
 					}
 				} else if (constraints.isStrict) {
 					if (RESERVED_WORDS_IN_STRICT_MODE.contains(name)) {
-						issueNameDiagnostic(model, producer, name, model.eClass.getEStructuralFeature('name'), Severity.WARNING)
+						issueNameDiagnostic(model, producer, name, getNameFeature(model), Severity.WARNING)
 					}
 				}
 			}
 		}
 	}
 
-	private def issueArgumentsError(EObject model, String name, boolean strict, ASTStructureDiagnosticProducer producer) {
-		issueNameDiagnostic(model, producer, name, model.eClass.getEStructuralFeature('name'), if (strict) Severity.ERROR else Severity.WARNING);
+	private def void issueArgumentsError(EObject model, String name, boolean strict, ASTStructureDiagnosticProducer producer) {
+		issueNameDiagnostic(model, producer, name, getNameFeature(model), if (strict) Severity.ERROR else Severity.WARNING);
 	}
 
-	private def issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name) {
-		issueNameDiagnostic(model, producer, name, model.eClass.getEStructuralFeature('name'), IssueCodes.getDefaultSeverity(IssueCodes.AST_RESERVED_IDENTIFIER))
+	private def void issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name) {
+		issueNameDiagnostic(model, producer, name, getNameFeature(model), IssueCodes.getDefaultSeverity(IssueCodes.AST_RESERVED_IDENTIFIER))
 	}
 
-	private def issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name, EStructuralFeature feature, Severity severity) {
+	private def void issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name, EStructuralFeature feature, Severity severity) {
 		val nodes = NodeModelUtils.findNodesForFeature(model, feature)
 		val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
 		producer.node = target
@@ -1084,6 +1084,10 @@ class ASTStructureValidator {
 					severity,
 					IssueCodes.AST_RESERVED_IDENTIFIER))
 		}
+	}
+
+	private def EStructuralFeature getNameFeature(EObject model) {
+		return model.eClass.getEStructuralFeature('name') ?: model.eClass.getEStructuralFeature('declaredName');
 	}
 
 	def dispatch void validateASTStructure(
