@@ -459,7 +459,6 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR___GET_DEFINED_MEMBER;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_NAME_VALUE_PAIR___IS_VALID_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}

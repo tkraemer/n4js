@@ -200,15 +200,15 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_NON_EXISTENT(keywordProvider.keyword(member),
 								member.getName());
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_NON_EXISTENT);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
 					} else if (AccessModifiers.fixed(m) == MemberAccessModifier.PRIVATE) {
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_PRIVATE(
 								validatorMessageHelper.description(member),
 								validatorMessageHelper.description(m));
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_PRIVATE);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_PRIVATE);
 					}
 				}
 			}
@@ -681,7 +681,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			String message = getMessageForCLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR(
 					validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
 					validatorMessageHelper.descriptionDifferentFrom(overridden, overriding), missingAccessor);
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					CLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR);
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
@@ -694,7 +694,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
 					"overriding",
 					validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					CLF_OVERRIDE_ANNOTATION);
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
@@ -849,7 +849,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					validatorMessageHelper.description(overriding),
 					redefinitionVerb,
 					validatorMessageHelper.descriptions(implementedMembers));
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					CLF_OVERRIDE_ANNOTATION);
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
@@ -875,7 +875,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		TClassifier currentClassifier = getCurrentClassifier();
 		if (overriding.getContainingType() == currentClassifier) {
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, issueCode,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+					issueCode,
 					issueData);
 		} else {
 			MemberCollector memberCollector = containerTypesHelper.fromContext(getCurrentClassifierDefinition());

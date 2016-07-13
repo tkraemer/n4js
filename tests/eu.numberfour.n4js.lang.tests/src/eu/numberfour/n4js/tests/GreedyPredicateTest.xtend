@@ -54,6 +54,7 @@ class GreedyPredicateTest {
 		'AnnotatedPropertyAssignment',
 		'PropertyMethodDeclaration',
 		'PropertyNameValuePair',
+		'BindingProperty',
 		'BindingElement',
 		'BindingRestElement',
 		'AnnotatedN4MemberDeclaration',
