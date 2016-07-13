@@ -307,7 +307,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(N4FieldDeclaration field, extension IFormattableDocument document) {
 		field.configureAnnotations(document);
 		field.configureModifiers(document);
-		field.insertSpaceInfrontOfPropertyNames(document);
 		
 		field.indentExcludingAnnotations(document);
 
@@ -336,7 +335,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(FunctionExpression funE, extension IFormattableDocument document) {
 		funE.configureAnnotations(document);
 		funE.configureModifiers(document);
-		funE.insertSpaceInfrontOfPropertyNames(document);
 		if (funE.isArrowFunction) {
 			throw new IllegalStateException("Arrow functions should be formated differently.")
 		}
@@ -1008,18 +1006,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(FinallyBlock finlly, extension IFormattableDocument document) {
 		finlly.previousHiddenRegion.set[newLines = 0; oneSpace];
 		finlly.block.format;
-	}
-
-	/** Elements implementing PropertyNameOwner may have symbols or computed names given in brackets. 
-	 * Inserts a space in front of the opening bracket.*/
-	private def void insertSpaceInfrontOfPropertyNames(EObject field, extension IFormattableDocument document) {
-		// Space in front of name, esp. for names like "[@name]"
-		val nameRegion = field.regionFor.feature(
-			N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME);
-		if (nameRegion === null) return;
-
-		val precBracket = nameRegion.immediatelyPreceding.keyword("[");
-		precBracket.prepend[oneSpace];
 	}
 
 	/** Insert one space in front of first '{' in the direct content of the element. 

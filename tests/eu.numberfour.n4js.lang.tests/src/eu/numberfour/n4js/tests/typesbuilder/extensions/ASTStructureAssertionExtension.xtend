@@ -249,7 +249,7 @@ class ASTStructureAssertionExtension {
 		val propertyNameValuePair = objectLiteral.propertyAssignments.filter(PropertyNameValuePair).filter[
 			it.name == expectedName].head
 		assertNotNull(phase + ": Property assignment should be found for name " + expectedName, propertyNameValuePair)
-		assertEquals(phase + ": expected property kind", propertyNameValuePair.kind, expectedKind)
+		assertEquals(phase + ": expected property kind", propertyNameValuePair.declaredName.kind, expectedKind)
 		assertEquals(phase + ": expected value", expectedValue, valueCalculation.apply(propertyNameValuePair))
 	}
 

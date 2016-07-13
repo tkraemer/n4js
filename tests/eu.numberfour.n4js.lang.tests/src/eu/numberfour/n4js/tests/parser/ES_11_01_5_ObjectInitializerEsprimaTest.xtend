@@ -56,7 +56,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
 		assertEquals("answer", answer.name)
-		assertEquals(PropertyNameKind.IDENTIFIER, answer.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, answer.declaredName.kind)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
 
@@ -100,7 +100,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val set = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.IDENTIFIER, set.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, set.declaredName.kind)
 		assertEquals("set", set.name)
 		assertEquals(43, (set.expression as IntLiteral).toInt)
 	}
@@ -127,7 +127,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.IDENTIFIER, answer.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, answer.declaredName.kind)
 		assertEquals("if", answer.name)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
@@ -141,7 +141,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.IDENTIFIER, answer.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, answer.declaredName.kind)
 		assertEquals("true", answer.name)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
@@ -155,7 +155,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.IDENTIFIER, answer.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, answer.declaredName.kind)
 		assertEquals("false", answer.name)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
@@ -169,7 +169,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.IDENTIFIER, answer.kind)
+		assertEquals(PropertyNameKind.IDENTIFIER, answer.declaredName.kind)
 		assertEquals("null", answer.name)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
@@ -183,7 +183,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val answer = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.STRING, answer.kind)
+		assertEquals(PropertyNameKind.STRING, answer.declaredName.kind)
 		assertEquals("answer", answer.name)
 		assertEquals(42, (answer.expression as IntLiteral).toInt)
 	}
@@ -197,7 +197,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val proto = objectLiteral.propertyAssignments.head as PropertyNameValuePair
-		assertEquals(PropertyNameKind.STRING, proto.kind)
+		assertEquals(PropertyNameKind.STRING, proto.declaredName.kind)
 		assertEquals("__proto__", proto.name)
 		assertEquals(2, (proto.expression as IntLiteral).toInt)
 	}
@@ -327,7 +327,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val getter = objectLiteral.propertyAssignments.head as PropertyGetterDeclaration
-		assertEquals(PropertyNameKind.NUMBER, getter.kind)
+		assertEquals(PropertyNameKind.NUMBER, getter.declaredName.kind)
 		assertEquals("10", getter.name)
 		val body = getter.body
 		assertTrue(body.statements.empty)
@@ -450,7 +450,7 @@ class ES_11_01_5_ObjectInitializerEsprimaTest extends AbstractParserTest {
 		assertEquals('x', identifier.text)
 		val objectLiteral = assignment.rhs as ObjectLiteral
 		val setter = objectLiteral.propertyAssignments.head as PropertySetterDeclaration
-		assertEquals(PropertyNameKind.NUMBER, setter.kind)
+		assertEquals(PropertyNameKind.NUMBER, setter.declaredName.kind)
 		assertEquals("10", setter.name)
 		assertEquals("w", setter.fpar.name)
 		val body = setter.body

@@ -27,6 +27,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.BindingProperty;
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper;
 import eu.numberfour.n4js.resource.N4JSResource;
@@ -106,6 +107,9 @@ public class TypeXpectMethod {
 	private String getTypeString(IEObjectCoveringRegion offset, boolean expectedType) {
 		final String calculatedString;
 		EObject eobject = offset.getEObject();
+		if (eobject instanceof LiteralOrComputedPropertyName) {
+			eobject = eobject.eContainer();
+		}
 		RuleEnvironment G = newRuleEnvironment(eobject);
 		Result<eu.numberfour.n4js.ts.typeRefs.TypeRef> result;
 		if (expectedType) {

@@ -178,7 +178,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 		inputMembers.forEach [
 			if (!publicWritableFields.contains(name)) {
 				val message = getMessageForCLF_SPEC_SUPERFLUOUS_PROPERTIES(name);
-				addIssue(message, astElement, PROPERTY_NAME_OWNER__NAME, CLF_SPEC_SUPERFLUOUS_PROPERTIES);
+				addIssue(message, astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_SPEC_SUPERFLUOUS_PROPERTIES);
 			}
 		];
 

@@ -2,7 +2,7 @@
 
 class C1 {
 
-	// XPECT errors --> "The getter m (line 6) duplicates getter m (line 8)." at "'m'"
+	// XPECT errors --> "The getter m (line 6) duplicates getter m (line 8)." at "['m']"
 	get ['m']() : string { return "1"; }
 	// XPECT errors --> "The getter m (line 8) duplicates getter m (line 6)." at "m"
 	get m() : string { return "2"; }

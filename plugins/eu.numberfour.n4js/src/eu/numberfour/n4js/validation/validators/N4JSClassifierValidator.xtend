@@ -199,26 +199,26 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 							NodeModelUtils::getNode(firstDup.astElement).startLine,
 							NodeModelUtils::getNode(otherDup.astElement).startLine
 						);
-						addIssue(message, firstDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+						addIssue(message, firstDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 							CLF_DUP_CTOR)
 						createErrorForFirst = false;
 					}
 					val message = getMessageForCLF_DUP_CTOR(
 						NodeModelUtils::getNode(otherDup.astElement).startLine,
 						NodeModelUtils::getNode(firstDup.astElement).startLine);
-					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_DUP_CTOR)
 				} else {
 					if (createErrorForFirst) {
 						val message = getMessageForCLF_DUP_MEMBER(firstDup.descriptionWithLine(),
 							otherDup.descriptionWithLine());
-						addIssue(message, firstDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+						addIssue(message, firstDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 							CLF_DUP_MEMBER)
 						createErrorForFirst = false;
 					}
 					val message = getMessageForCLF_DUP_MEMBER(otherDup.descriptionWithLine(),
 						firstDup.descriptionWithLine());
-					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+					addIssue(message, otherDup.astElement, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_DUP_MEMBER)
 				}
 			}

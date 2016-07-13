@@ -668,18 +668,18 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 	PropertyAssignmentAnnotationList (
 	// TODO extract property header into an own instance to defer the object instantiation
 	=>(	{PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRefWithModifiers?
-			LiteralOrComputedPropertyName<Yield> ':'
+			declaredName=LiteralOrComputedPropertyName<Yield> ':'
 		) expression=AssignmentExpression<In=true,Yield>
 	| =>({PropertyGetterDeclaration.annotationList=current}
 			GetterHeader<Yield>
 		) body=Block<Yield=false>
 	| =>({PropertySetterDeclaration.annotationList=current}
-			'set' ->LiteralOrComputedPropertyName <Yield>
+			'set' ->declaredName=LiteralOrComputedPropertyName <Yield>
 		) '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
 	| =>({PropertyMethodDeclaration.annotationList=current}
 			TypeVariables? returnTypeRef=TypeRefWithModifiers?
-			(generator?='*' LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
-				| LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody <Generator=false>
+			(generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
+				| declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody <Generator=false>
 			)
 		) ';'?
 	| {PropertyNameValuePairSingleName.annotationList=current} declaredTypeRef=TypeRef? identifierRef=IdentifierRef<Yield>
@@ -690,8 +690,8 @@ PropertyMethodDeclaration <Yield>:
 	=> ({PropertyMethodDeclaration}
 		TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(
-				generator?='*'	LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody<Generator=true>
-				| LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
+				generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody<Generator=true>
+				| declaredName=LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
 			)
 		)
 	';'?
@@ -699,7 +699,7 @@ PropertyMethodDeclaration <Yield>:
 
 PropertyNameValuePair <Yield>:
 	=> (
-		{PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? LiteralOrComputedPropertyName<Yield> ':'
+		{PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName<Yield> ':'
 	)
 	expression=AssignmentExpression<In=true,Yield>
 ;
@@ -726,7 +726,7 @@ PropertySetterDeclaration <Yield>:
 	=>(
 		{PropertySetterDeclaration}
 		'set'
-		->LiteralOrComputedPropertyName <Yield>
+		->declaredName=LiteralOrComputedPropertyName <Yield>
 	)
 	'(' fpar=FormalParameter<Yield> ')'	body=Block<Yield=false>
 ;
@@ -1046,10 +1046,6 @@ N4Keyword:
 	| 'private' | 'protected' | 'public' // package not used in N4JS
 	// definition-site variance
 	| 'out'
-;
-
-SymbolLiteralComputedName <Yield>:
-	BindingIdentifier<Yield> ('.' IdentifierName)?
 ;
 
 /**
@@ -1386,38 +1382,22 @@ N4MemberDeclaration <Yield>:
 AnnotatedN4MemberDeclaration <Yield> returns N4MemberDeclaration:
 	N4MemberAnnotationList (
 			=> ({N4GetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* GetterHeader<Yield>) (body=Block<Yield>)? ';'?
-		| 	=> ({N4SetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* 'set' -> LiteralOrComputedPropertyName <Yield>)
+		| 	=> ({N4SetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* 'set' -> declaredName=LiteralOrComputedPropertyName <Yield>)
 				'(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 		| 	=> (
 				{N4MethodDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* TypeVariables? BogusTypeRefFragment?
 				(
-						generator?='*' LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
-					| 	AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
+						generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
+					| 	AsyncNoTrailingLineBreak declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
 				)
 				)';'?
 		| 	{N4FieldDeclaration.annotationList=current} FieldDeclarationImpl<Yield>
 	)
 ;
 
-fragment LiteralOrComputedPropertyName <Yield>*:
-	name=IdentifierName | name=STRING | name=NumericLiteralAsString
-	// this is added here due to special treatment for a known set of expressions
-	| '[' (=>((name=SymbolLiteralComputedName<Yield> | name=StringLiteralAsName) ']') |	computeNameFrom=AssignmentExpression<In=true,Yield> ']')
-;
-
-fragment LiteralPropertyName <Yield>*:
-	name=IdentifierName | name=STRING | name=NumericLiteralAsString
-	// this is added here due to special treatment for a known set of expressions
-	| '[' (name=SymbolLiteralComputedName<Yield> | name=StringLiteralAsName) ']'
-;
-
-StringLiteralAsName:
-	STRING
-;
-
 fragment FieldDeclarationImpl <Yield>*:
 	(declaredModifiers+=N4Modifier)* BogusTypeRefFragment?
-	LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi
+	declaredName=LiteralOrComputedPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi
 ;
 
 N4FieldDeclaration <Yield>:
@@ -1428,8 +1408,8 @@ N4FieldDeclaration <Yield>:
 N4MethodDeclaration <Yield>:
 	=> ({N4MethodDeclaration} (declaredModifiers+=N4Modifier)* TypeVariables? BogusTypeRefFragment?
 		(
-				generator?='*' LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
-			|	AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
+				generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
+			|	AsyncNoTrailingLineBreak declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
 		)
 	) ';'?
 ;
@@ -1460,14 +1440,14 @@ N4GetterDeclaration <Yield>:
 ;
 
 fragment GetterHeader <Yield>*:
-	BogusTypeRefFragment? 'get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?
+	BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?
 ;
 
 N4SetterDeclaration <Yield>:
 	=>({N4SetterDeclaration}
 		(declaredModifiers+=N4Modifier)*
 		'set'
-		->LiteralOrComputedPropertyName <Yield>
+		->declaredName=LiteralOrComputedPropertyName <Yield>
 	)
 	'(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 ;
@@ -1500,14 +1480,8 @@ ArrayBindingPattern <Yield> returns BindingPattern:
  * segment, e.g. { prop: newVar: TypeOfNewVar }.
  */
 BindingProperty <Yield, AllowType>:
-	  =>(LiteralBindingPropertyName<Yield> ':') value=BindingElement<Yield>
+	  =>(declaredName=LiteralOrComputedPropertyName<Yield> ':') value=BindingElement<Yield>
 	| value=SingleNameBinding<Yield,AllowType>
-;
-
-fragment LiteralBindingPropertyName <Yield>*:
-	declaredName=IdentifierName | declaredName=STRING | declaredName=NumericLiteralAsString
-	// this is added here due to special treatment for a known set of expressions
-	| '[' (declaredName=SymbolLiteralComputedName<Yield> | declaredName=STRING) ']'
 ;
 
 SingleNameBinding <Yield, AllowType> returns BindingElement:
@@ -1562,6 +1536,13 @@ TStructSetter returns types::TStructSetter:
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
 
+
+LiteralOrComputedPropertyName <Yield>:
+	literalName=IdentifierName
+	| literalName=STRING
+	| literalName=NumericLiteralAsString
+	| '[' expression=AssignmentExpression<In=true,Yield> ']'
+;
 
 
 /**

@@ -13,44 +13,12 @@ package eu.numberfour.n4js.n4JS;
  * A representation of the model object '<em><b>N4 Field Accessor</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.N4FieldAccessor#getComputeNameFrom <em>Compute Name From</em>}</li>
- * </ul>
  *
  * @see eu.numberfour.n4js.n4JS.N4JSPackage#getN4FieldAccessor()
  * @model abstract="true"
  * @generated
  */
-public interface N4FieldAccessor extends FieldAccessor, AnnotableN4MemberDeclaration {
-	/**
-	 * Returns the value of the '<em><b>Compute Name From</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Compute Name From</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Compute Name From</em>' containment reference.
-	 * @see #setComputeNameFrom(Expression)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getN4FieldAccessor_ComputeNameFrom()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Expression getComputeNameFrom();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.N4FieldAccessor#getComputeNameFrom <em>Compute Name From</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Compute Name From</em>' containment reference.
-	 * @see #getComputeNameFrom()
-	 * @generated
-	 */
-	void setComputeNameFrom(Expression value);
-
+public interface N4FieldAccessor extends AnnotableN4MemberDeclaration, FieldAccessor {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -68,7 +36,7 @@ public interface N4FieldAccessor extends FieldAccessor, AnnotableN4MemberDeclara
 	 * Field accessors in classes may not be called 'prototype' or 'constructor' (except for computed names).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nif ((<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && (this.getKind() != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED_FROM_STRING_LITERAL)))\n{\n\treturn false;\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nboolean _and = false;\n<%java.lang.String%> _name_1 = this.getName();\nboolean _equals_1 = <%com.google.common.base.Objects%>.equal(\"constructor\", _name_1);\nif (!_equals_1)\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%> _declaredName = this.getDeclaredName();\n\t<%eu.numberfour.n4js.n4JS.PropertyNameKind%> _kind = null;\n\tif (_declaredName!=null)\n\t{\n\t\t_kind=_declaredName.getKind();\n\t}\n\tboolean _tripleNotEquals = (_kind != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED);\n\t_and = _tripleNotEquals;\n}\nif (_and)\n{\n\treturn false;\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isValidName();

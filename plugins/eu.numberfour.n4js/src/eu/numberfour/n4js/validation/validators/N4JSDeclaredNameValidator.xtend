@@ -63,8 +63,8 @@ import java.util.List
 import java.util.ListIterator
 import java.util.Set
 import java.util.stream.Collectors
-import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
@@ -73,7 +73,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  */
@@ -624,7 +625,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	 * returns attribute holding name for given EObject. Throws error if provided EObject does not define name
 	 * attribute.
 	 */
-	def private EAttribute findNameEAttribute(EObject eo) {
+	def private EStructuralFeature findNameEAttribute(EObject eo) {
 		if (eo instanceof N4TypeDeclaration) {
 			return N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME;
 		}
@@ -661,7 +662,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		if (eo instanceof PropertyAssignment) {
-			return N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME;
+			return N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME;
 		}
 
 		throw new RuntimeException("cannot obtain name attribute for " + eo);

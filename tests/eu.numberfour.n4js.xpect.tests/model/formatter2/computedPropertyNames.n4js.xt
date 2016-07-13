@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+/* XPECT formattedLines 4 ---
+var ol = {
+		get ['getter'](): number {
+			return null;
+		},
+		set ['setter'](value) {}
+	};
+--- */
+var ol = {
+    get['getter']():number {return null;},
+    set['setter'](value) {}
+};
+
+
+/* XPECT formattedLines 6 ---
+class C {
+	public ['field']: number;
+	get ['getter'](): number {
+		return null;
+	}
+	set ['setter'](value) {}
+	public ['method']() {}
+}
+--- */
+class C {
+    public['field']:number;
+    get['getter']():number {return null;}
+    set['setter'](value) {}
+    public['method']() {}
+}
