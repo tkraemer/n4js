@@ -275,7 +275,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 		if (genericFunctionOrMethod.definedType === null)
 			return;
 			
-		var TFunction functionType = genericFunctionOrMethod.definedType as TFunction;
+		val TFunction functionType = genericFunctionOrMethod.definedType as TFunction;
 		internalCheckNoUnusedTypeParameters(genericFunctionOrMethod, genericFunctionOrMethod.typeVars, functionType.typeVars);
 	}
 	
@@ -289,7 +289,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 		if (functionTypeExp.declaredType === null)
 			return;
 		
-		var TFunction declaredType = functionTypeExp.declaredType;
+		val TFunction declaredType = functionTypeExp.declaredType;
 		internalCheckNoUnusedTypeParameters(functionTypeExp, functionTypeExp.ownedTypeVars, declaredType.typeVars);
 	}
 	
@@ -313,14 +313,26 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 	 * @param declaredTypeVars the declared type variables from the type model
 	 */
 	private def internalCheckNoUnusedTypeParameters(EObject root, EList<TypeVariable> actualTypeVars, EList<TypeVariable> declaredTypeVars) {
-		var int typeVarCount = Math.min(actualTypeVars.size, declaredTypeVars.size)
-		
-		for (var int i = 0; i < typeVarCount; i++) {
-			var TypeVariable actualTypeVar = actualTypeVars.get(i)
-			var TypeVariable declaredTypeVar = declaredTypeVars.get(i)
-			
+		val int typeVarCount = Math.min(actualTypeVars.size, declaredTypeVars.size)
+		if (typeVarCount == 1) {
+			// Since this is a very common case, we want it to be as fast as possible. Therefore we don't
+			// build a set of all reference type variables and do the check once directly.
+			val TypeVariable actualTypeVar = actualTypeVars.get(0)
+			val TypeVariable declaredTypeVar = declaredTypeVars.get(0)
 			if (!TypeUtils.isOrContainsRefToTypeVar(root, declaredTypeVar)) {
 				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(actualTypeVar.name), actualTypeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+			}
+		} else {
+			// In this case, we avoid repeatedly traversing the tree with the given root by getting a set of
+			// all type variables it references up front and using that to perform our check.
+			val referencedTypeVars = TypeUtils.getReferencedTypeVars(root);
+			for (var int i = 0; i < typeVarCount; i++) {
+				val TypeVariable actualTypeVar = actualTypeVars.get(i)
+				val TypeVariable declaredTypeVar = declaredTypeVars.get(i)
+				
+				if (!referencedTypeVars.contains(declaredTypeVar)) {
+					addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(actualTypeVar.name), actualTypeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+				}
 			}
 		}
 	}
