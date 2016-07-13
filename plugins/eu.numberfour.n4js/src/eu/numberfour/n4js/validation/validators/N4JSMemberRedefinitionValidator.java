@@ -76,6 +76,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
@@ -88,6 +89,7 @@ import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
@@ -179,6 +181,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 			constraints_59_NonOverride(mm);
 			constraints_42_AbstractMember(mm);
+			unusedGenericTypeVariable(mm);
 		}
 		constraints_41_AbstractClass(tClassifier, memberCube);
 
@@ -244,6 +247,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					// 3. declared overridden
 					if (!m.isDeclaredOverride()) {
 						messageMissingOverrideAnnotation(m, s);
+						continue; // avoid consequential errors
 					}
 				}
 			}
@@ -599,6 +603,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		return true;
+	}
+
+	/**
+	 * GH-234 add warning for unused type variables in function and method declarations (unless the method overrides any
+	 * other method).
+	 */
+	private void unusedGenericTypeVariable(MemberMatrix mm) {
+		for (TMember member : mm.owned()) {
+			if (member instanceof TMethod) {
+				TMethod method = (TMethod) member;
+				if (!mm.hasInherited() && !mm.hasImplemented()) {
+					// We need the method declaration from the AST in order to pass it to the internal
+					// validation function. This is necessary because we want to attach the warning to the actual unused
+					// type variable in the method declaration, and the type variable in the type model is not identical
+					// to the one in the AST which we actually need.
+					// Since method is owned by the type being validated, we can safely navigate back from the type
+					// model to the AST without triggering another parse.
+
+					MethodDeclaration methodDeclaration = (MethodDeclaration) method.getAstElement();
+					internalCheckNoUnusedTypeParameters(methodDeclaration);
+				}
+			}
+		}
 	}
 
 	/**
