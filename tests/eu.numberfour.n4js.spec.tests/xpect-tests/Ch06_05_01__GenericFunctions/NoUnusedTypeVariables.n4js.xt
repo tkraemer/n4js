@@ -41,6 +41,30 @@ function <T> f11(): Array<? super T> { return null; }
 --- */
 function <T,S> f12(s: string): void {}
 
+// XPECT nowarnings -->
+function <T> f13(a: T & string) {}
+
+// XPECT nowarnings -->
+function <T> f14(a: string | T) {}
+
+// XPECT nowarnings -->
+function <T> f15() : string & T { return null; }
+
+// XPECT nowarnings -->
+function <T> f16() : T | string { return null; }
+
+// XPECT nowarnings -->
+function <T,S> f17(a : T & S) { return null; }
+
+// XPECT nowarnings -->
+function <T,S> f18(a : T | S) { return null; }
+
+// XPECT nowarnings -->
+function <T,S> f19(): T & S { return null; }
+
+// XPECT nowarnings -->
+function <T,S> f20(): S | T { return null; }
+
 
 // Function expressions
 
@@ -100,3 +124,27 @@ var ft11: {function <T> (): Array<? super T>}
 	"Type variable S not used in parameters or return type." at "S"
 --- */
 var ft12: {function <T,S> (s: string): void}
+
+// XPECT nowarnings -->
+var ft13: {function <T> (s: string & T)}
+
+// XPECT nowarnings -->
+var ft14: {function <T> (s: T | string)}
+
+// XPECT nowarnings -->
+var ft15: {function <T> (): T & string}
+
+// XPECT nowarnings -->
+var ft16: {function <T> (): string | T}
+
+// XPECT nowarnings -->
+var ft17: {function <T,S> (a: T & S)}
+
+// XPECT nowarnings -->
+var ft18: {function <T,S> (a: S | T)}
+
+// XPECT nowarnings -->
+var ft19: {function <T,S> (): T & S}
+
+// XPECT nowarnings -->
+var ft20: {function <T,S> (): T | S}

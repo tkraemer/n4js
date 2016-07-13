@@ -45,6 +45,30 @@ class C<S> {
 	--- */
 	<T,X> m13(s: string): void {}
 
+	// XPECT nowarnings -->
+	<T> m14(a: T & string) {}
+	
+	// XPECT nowarnings -->
+	<T> m15(a: string | T) {}
+	
+	// XPECT nowarnings -->
+	<T> m16() : string & T { return null; }
+	
+	// XPECT nowarnings -->
+	<T> m17() : T | string { return null; }
+	
+	// XPECT nowarnings -->
+	<T,X> m18(a : T & X) { return null; }
+	
+	// XPECT nowarnings -->
+	<T,X> m19(a : T | X) { return null; }
+	
+	// XPECT nowarnings -->
+	<T,X> m20(): T & X { return null; }
+	
+	// XPECT nowarnings -->
+	<T,X> m21(): X | T { return null; }
+	
     // XPECT warnings --> "Type variable S not used in parameters or return type." at "S"
     static <S> s1(s: string): void {}
 
@@ -71,6 +95,9 @@ class C<S> {
 		"Type variable X not used in parameters or return type." at "X"
 	--- */
 	static <T,X> s8(s: string): void {}
+	
+	// XPECT nowarnings -->
+	static <T,S> s21(): S | T { return null; }
 }
 
 class D<S> extends C<S> {
