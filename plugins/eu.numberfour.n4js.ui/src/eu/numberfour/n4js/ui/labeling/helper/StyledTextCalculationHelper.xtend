@@ -30,6 +30,7 @@ import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider
 import java.util.List
 import org.eclipse.jface.viewers.StyledString
 import org.eclipse.xtext.ui.label.AbstractLabelProvider
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 
 /**
  * This helper class serves as replacement for the polymorphic dispatch done
@@ -146,8 +147,7 @@ class StyledTextCalculationHelper {
 			styledText?.append(typeStr)
 		}
 	}
-
-	// produces e.g. variableName : variableTypeName
+		// produces e.g. variableName : variableTypeName
 	def dispatch StyledString dispatchGetStyledText(ExportedVariableDeclaration variableDeclaration) {
 		val styledText = getLabelProvider.getSuperStyledText(variableDeclaration)
 		val definedVariable = variableDeclaration.definedVariable
@@ -161,7 +161,7 @@ class StyledTextCalculationHelper {
 			styledText?.append(typeRefString)
 		}
 	}
-	
+
 	// produces e.g. (param1TypeName, param2TypeName)
 	def private appendStyledTextForFormalParameters(StyledString styledText, FunctionDefinition n4Function, TFunction tFunction) {
 		 (styledText.append("(") => [
@@ -224,9 +224,7 @@ class StyledTextCalculationHelper {
 		
 		// build parameter and return type in two different styled strings to reset the compression threshold for each of them
 		val parameterString = new StyledString();
-		for (fpar : ref.fpars) {
-			getCompressedTypeRefDescription(fpar.typeRef, parameterString)
-		}
+		appendCommaSeparatedTypeRefList(ref.fpars.map[it.typeRef], parameterString, true);
 		styledString.append(parameterString);
 		
 		val returnTypeString = new StyledString();
@@ -245,13 +243,13 @@ class StyledTextCalculationHelper {
 			ThisTypeRef:
 				"this"
 			default:
-				ref.staticType?.name
+				ref.nominalTypeNameOrWildCard
 		}
 		styledString.append('''type{«typeName»}''');
 	}
 	// produces constructor{typeName} 
 	def dispatch private void dispatchGetTypeRefDescription(ConstructorTypeRef ref, StyledString styledString) {
-		styledString.append('''constructor{«ref.staticType.name»}''');
+		styledString.append('''constructor{«ref.nominalTypeNameOrWildCard»}''');
 	}
 	
 	// produces union{type1, type2, ...} or intersection{type1, type2, ...} 
@@ -284,5 +282,24 @@ class StyledTextCalculationHelper {
 		}
 	}
 	
+	def private String getWildcardDescription(Wildcard wildcard) {
+		val string = new StyledString();
+		string.append("?");
+		if (wildcard.declaredLowerBound !== null) {
+			string.append(" super ");
+			getCompressedTypeRefDescription(wildcard.declaredLowerBound, string);
+		} else {
+			string.append(" extends ");
+			getCompressedTypeRefDescription(wildcard.declaredUpperBound, string);
+		} 
+		return string.string;
+	}
 	
+	def private String nominalTypeNameOrWildCard(ClassifierTypeRef ref) {
+		switch (ref.typeArg) {
+			TypeRef: (ref.typeArg as TypeRef).declaredType?.name
+			Wildcard: getWildcardDescription(ref.typeArg as Wildcard)
+			default: ""
+		}
+	}	
 }

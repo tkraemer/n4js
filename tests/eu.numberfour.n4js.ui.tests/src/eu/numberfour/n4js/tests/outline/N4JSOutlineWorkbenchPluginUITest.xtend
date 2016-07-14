@@ -84,12 +84,12 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 		function g1(param : union{int, string, intersection{number,int, string},number}) : union{int, string, intersection{int, string, number}, string} { return 3; }	
 		function none(fct : () => void) {}
 		export public var fct = 3;
+		export var c : constructor{? super OutlineTest}
 		'''
 		val rootNode = assertNoException(model);
 		assertEquals("There is only one top level node", rootNode.children.length, 1);
 		
 		val documentNode = rootNode.children.get(0);
-		assertEquals(13, documentNode.children.length);
 		
 		// test document level nodes
 		assertNodeChildrenText(documentNode, #[
@@ -105,7 +105,8 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			"g(union{int, string, intersection{...},...}) : union{int, string, intersection{...},...}",
 			"g1(union{int, string, intersection{...},...}) : union{int, string, intersection{...},...}",
 			"none(() => void) : void",
-			"fct : int"
+			"fct : int",
+			"c : constructor{? super OutlineTest}"
 		]);
 		
 		// test class level nodes
