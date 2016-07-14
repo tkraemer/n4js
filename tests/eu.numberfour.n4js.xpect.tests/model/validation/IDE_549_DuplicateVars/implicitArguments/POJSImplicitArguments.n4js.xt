@@ -12,36 +12,36 @@
 
 //-- FD
 /* XPECT errors ---
-	"Parameter arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 function fd1(arguments){};
 
 function fd2(){
 /* XPECT errors ---
-	"Variable arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 	var arguments;
 };
 
 /* XPECT errors ---
-	"Function arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 function arguments(){};
 
 // --FE
 /* XPECT errors ---
-	"Parameter arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 var fe1 = function (arguments){};
 
 var fe2 = function (){
 /* XPECT errors ---
-	"Variable arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 	var arguments;
 };
 
 /* XPECT errors ---
-	"Function expression arguments shadows implicit function parameter." at "arguments"
+	"arguments is a reserved identifier." at "arguments"
 --- */
 var fe3 = function arguments (){};

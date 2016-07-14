@@ -143,27 +143,27 @@ var case5b = function case5b() {
 // let vs. arguments
 
 function case6a() {
-	// XPECT errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+	// XPECT errors --> "arguments is a reserved identifier." at "arguments"
 	let arguments = 'none';
 }
 
 function case6b() {
 	{
-		// XPECT errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+		// XPECT errors --> "arguments is a reserved identifier." at "arguments"
 		let arguments = 'none';
 	}
 }
 
 function case6c() {
 	if(true) {
-		// XPECT errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+		// XPECT errors --> "arguments is a reserved identifier." at "arguments"
 		let arguments = 'none';
 	}
 }
 
 function case6d() {
 	for(;;) {
-		// XPECT errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+		// XPECT errors --> "arguments is a reserved identifier." at "arguments"
 		let arguments = 'none';
 	}
 }
