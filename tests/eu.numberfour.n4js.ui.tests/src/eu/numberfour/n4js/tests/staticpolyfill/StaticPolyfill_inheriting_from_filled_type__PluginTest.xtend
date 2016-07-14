@@ -66,7 +66,7 @@ class StaticPolyfill_inheriting_from_filled_type__PluginTest extends AbstractSta
 		// line 1: Import of Poly cannot be resolved.
 		// line 11: The method action must override or implement a method from a super class or interface.
 		// line 21: The method action2 must override or implement a method from a super class or interface.
-		assertMarkers("filling file should have X errors", cNextToFilling, 10);
+		assertMarkers("filling file should have X errors", cNextToFilling, 9);
 
 		val cFilled = createTestFile(src, "A", idebug657_filled);
 

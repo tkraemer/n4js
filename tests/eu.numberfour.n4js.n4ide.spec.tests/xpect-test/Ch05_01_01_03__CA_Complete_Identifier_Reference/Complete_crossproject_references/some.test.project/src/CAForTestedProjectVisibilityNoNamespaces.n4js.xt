@@ -29,7 +29,6 @@ import {VMPublicClass, VMInternalPublicClass, VMProjectClass, VMPrivateClass} fr
 /*XPECT errors ---
 "Cannot resolve import target :: resolving simple module import : found no matching modules" at ""NotVisibleModule""
 "Couldn't resolve reference to TExportableElement 'NVMPublicClass'." at "NVMPublicClass"
-"Couldn't resolve reference to TModule 'NotVisibleModule'." at ""NotVisibleModule""
 "Import of NVMPublicClass cannot be resolved." at "NVMPublicClass"
 --- */
 import { NVMPublicClass } from "NotVisibleModule"

@@ -79,7 +79,7 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		// Couldn't resolve reference to TModule 'pr0_0pa0.Class1'.
 		// Couldn't resolve reference to Type 'Class1'.
 		// Import of Class1 cannot be resolved.
-		assertMarkers("File1 should have four errors", file1, 5);
+		assertMarkers("File1 should have four errors", file1, 4);
 
 		IFile file2 = createTestFile(pr0_0pa0, "Class1", TestFiles.class1());
 		waitForAutoBuild();

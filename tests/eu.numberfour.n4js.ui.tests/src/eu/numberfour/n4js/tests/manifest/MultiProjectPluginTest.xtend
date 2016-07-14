@@ -141,10 +141,10 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src2, "D", "export public class D {}");
 		// Same as above, errors are not resolved by just exporting class, it should be added as a dependency.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		addSecondProjectToDependencies
 		assertMarkers("file should have no errors", c, 0, errorMarkerPredicate);
 	}
@@ -166,7 +166,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 	}
 
 	@Test
@@ -206,7 +206,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", file, 5);
+		assertMarkers("file should have four errors", file, 4);
 		addSecondProjectToDependencies
 		assertMarkers("file should have no errors", file, 0, errorMarkerPredicate);
 	}

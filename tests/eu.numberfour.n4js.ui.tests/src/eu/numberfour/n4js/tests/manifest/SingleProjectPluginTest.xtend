@@ -118,7 +118,7 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src, "D", "export class D {}");
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -136,10 +136,10 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src2, "D", "export class D {}");
 		//Same as above, src2 folder is not set as source folder yet.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		addSrc2ToSources
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -202,7 +202,7 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of  D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 	}
 
 	@Test
@@ -220,7 +220,7 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of  D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		src2.rename("src3")
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -250,7 +250,7 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 
 		// Couldn't resolve reference to TModule 'a.b.c.C'.
 		// Import of * as C from module was a proxy cannot be resolved.
-		assertMarkers("file should have two errors", d, 3);
+		assertMarkers("file should have two errors", d, 2);
 	}
 
 	@Test
@@ -272,7 +272,7 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to IdentifiableElement 'C'.
 		// Couldn't resolve reference to TModule 'a.b.c.C'.
 		// Import of C cannot be resolved.
-		assertMarkers("file should have three errors", d, 4);
+		assertMarkers("file should have three errors", d, 3);
 	}
 
 	@Test
