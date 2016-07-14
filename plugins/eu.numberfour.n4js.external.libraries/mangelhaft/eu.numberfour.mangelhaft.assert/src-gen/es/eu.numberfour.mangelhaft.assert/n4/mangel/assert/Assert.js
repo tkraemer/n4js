@@ -109,8 +109,6 @@
 				return (expected).test((actual).toString());
 			} else if ($instanceof(actual, expected)) {
 				return true;
-			} else if (typeof expected === "function" && (expected).call({}, actual) === true) {
-				return true;
 			}
 			return false;
 		};
@@ -346,7 +344,7 @@
 								actual = e;
 							}
 							if (!threw) {
-								this.fail_(null, null, message, "throws", this.throws);
+								this.fail_(null, null, message, "Did not throw any exception", this.throws);
 							}
 							return this.thrownCheck(true, actual, error, message, "throws", this.throws);
 						}
@@ -378,7 +376,7 @@
 									actual = e;
 								}
 								if (!threw) {
-									this.fail_(null, null, message, "throws", this.throwsAsync);
+									this.fail_(null, null, message, "Did not throw any exception", this.throwsAsync);
 								}
 								return this.thrownCheck(true, actual, expectedErrorType, message, "throws", this.throwsAsync);
 							}.apply(this, arguments));
@@ -430,7 +428,18 @@
 					thrownCheck: {
 						value: function thrownCheck___n4(shouldThrow, actual, expected, message, operator, stackStartFunction) {
 							this.rethrowIfSpecialError(actual, expected);
-							message = (expected && (expected).name ? ' (' + (expected).name + ').' : '.') + (message ? ' ' + message : '.');
+							let msg = ".";
+							if (expected) {
+								let ctorFn = ((expected));
+								if (ctorFn.name) {
+									msg = (" (" + ctorFn.name + ").");
+								}
+							}
+							if (message) {
+								msg += (" " + message + "");
+							} else {
+								msg += ".";
+							}
 							if (!shouldThrow && expectedException(actual, expected)) {
 								this.fail_(actual, expected, 'Got unwanted exception' + message, operator, stackStartFunction);
 							}

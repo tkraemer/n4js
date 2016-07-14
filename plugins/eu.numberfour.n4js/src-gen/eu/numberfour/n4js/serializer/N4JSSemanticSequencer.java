@@ -59,6 +59,7 @@ import eu.numberfour.n4js.n4JS.IntLiteral;
 import eu.numberfour.n4js.n4JS.LabelledStatement;
 import eu.numberfour.n4js.n4JS.LegacyOctalIntLiteral;
 import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression;
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassExpression;
@@ -268,7 +269,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				}
 				else break;
 			case N4JSPackage.BINDING_PROPERTY:
-				sequence_BindingProperty_LiteralBindingPropertyName(context, (BindingProperty) semanticObject); 
+				sequence_BindingProperty(context, (BindingProperty) semanticObject); 
 				return; 
 			case N4JSPackage.BLOCK:
 				if (rule == grammarAccess.getBlockMinusBracesRule()) {
@@ -632,6 +633,9 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case N4JSPackage.LITERAL_ANNOTATION_ARGUMENT:
 				sequence_LiteralAnnotationArgument(context, (LiteralAnnotationArgument) semanticObject); 
 				return; 
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME:
+				sequence_LiteralOrComputedPropertyName(context, (LiteralOrComputedPropertyName) semanticObject); 
+				return; 
 			case N4JSPackage.MULTIPLICATIVE_EXPRESSION:
 				sequence_MultiplicativeExpression(context, (MultiplicativeExpression) semanticObject); 
 				return; 
@@ -735,29 +739,29 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case N4JSPackage.N4_FIELD_DECLARATION:
 				if (rule == grammarAccess.getAnnotatedN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName(context, (N4FieldDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl(context, (N4FieldDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName_N4FieldDeclaration(context, (N4FieldDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_N4FieldDeclaration(context, (N4FieldDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4FieldDeclarationRule()) {
-					sequence_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName_N4FieldDeclaration(context, (N4FieldDeclaration) semanticObject); 
+					sequence_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_N4FieldDeclaration(context, (N4FieldDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
 			case N4JSPackage.N4_GETTER_DECLARATION:
 				if (rule == grammarAccess.getAnnotatedN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName(context, (N4GetterDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader(context, (N4GetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_N4GetterDeclaration(context, (N4GetterDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_N4GetterDeclaration(context, (N4GetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4GetterDeclarationRule()) {
-					sequence_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_N4GetterDeclaration(context, (N4GetterDeclaration) semanticObject); 
+					sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_N4GetterDeclaration(context, (N4GetterDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -788,15 +792,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case N4JSPackage.N4_METHOD_DECLARATION:
 				if (rule == grammarAccess.getN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAnnotatedN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4MethodDeclarationRule()) {
-					sequence_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
+					sequence_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(context, (N4MethodDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4CallableConstructorDeclarationRule()) {
@@ -806,15 +810,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				else break;
 			case N4JSPackage.N4_SETTER_DECLARATION:
 				if (rule == grammarAccess.getAnnotatedN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_LiteralOrComputedPropertyName(context, (N4SetterDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration(context, (N4SetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4MemberDeclarationRule()) {
-					sequence_AnnotatedN4MemberDeclaration_LiteralOrComputedPropertyName_N4SetterDeclaration(context, (N4SetterDeclaration) semanticObject); 
+					sequence_AnnotatedN4MemberDeclaration_N4SetterDeclaration(context, (N4SetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getN4SetterDeclarationRule()) {
-					sequence_LiteralOrComputedPropertyName_N4SetterDeclaration(context, (N4SetterDeclaration) semanticObject); 
+					sequence_N4SetterDeclaration(context, (N4SetterDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1013,43 +1017,43 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case N4JSPackage.PROPERTY_GETTER_DECLARATION:
 				if (rule == grammarAccess.getAnnotatedPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName(context, (PropertyGetterDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader(context, (PropertyGetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_PropertyGetterDeclaration(context, (PropertyGetterDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_PropertyGetterDeclaration(context, (PropertyGetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyGetterDeclarationRule()) {
-					sequence_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_PropertyGetterDeclaration(context, (PropertyGetterDeclaration) semanticObject); 
+					sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_PropertyGetterDeclaration(context, (PropertyGetterDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION:
 				if (rule == grammarAccess.getPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAnnotatedPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_MethodParamsAndBody_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_MethodParamsAndBody_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyMethodDeclarationRule()) {
-					sequence_LiteralOrComputedPropertyName_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
+					sequence_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(context, (PropertyMethodDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR:
 				if (rule == grammarAccess.getAnnotatedPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName(context, (PropertyNameValuePair) semanticObject); 
+					sequence_AnnotatedPropertyAssignment(context, (PropertyNameValuePair) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_PropertyNameValuePair(context, (PropertyNameValuePair) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_PropertyNameValuePair(context, (PropertyNameValuePair) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyNameValuePairRule()) {
-					sequence_LiteralOrComputedPropertyName_PropertyNameValuePair(context, (PropertyNameValuePair) semanticObject); 
+					sequence_PropertyNameValuePair(context, (PropertyNameValuePair) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1069,15 +1073,15 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				else break;
 			case N4JSPackage.PROPERTY_SETTER_DECLARATION:
 				if (rule == grammarAccess.getAnnotatedPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName(context, (PropertySetterDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment(context, (PropertySetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertyAssignmentRule()) {
-					sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_PropertySetterDeclaration(context, (PropertySetterDeclaration) semanticObject); 
+					sequence_AnnotatedPropertyAssignment_PropertySetterDeclaration(context, (PropertySetterDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPropertySetterDeclarationRule()) {
-					sequence_LiteralOrComputedPropertyName_PropertySetterDeclaration(context, (PropertySetterDeclaration) semanticObject); 
+					sequence_PropertySetterDeclaration(context, (PropertySetterDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -3349,51 +3353,66 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         (
 	 *             (
 	 *                 (
-	 *                     annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 
-	 *                     declaredModifiers+=N4Modifier* 
-	 *                     (declaredAsync?='async' | generator?='*')?
-	 *                 ) | 
-	 *                 (
+	 *                     (annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 declaredModifiers+=N4Modifier* bogusTypeRef=BogusTypeRef?) | 
 	 *                     (
-	 *                         (
-	 *                             annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 
-	 *                             declaredModifiers+=N4Modifier* 
-	 *                             (typeVars+=TypeVariable typeVars+=TypeVariable*)?
-	 *                         ) | 
-	 *                         (declaredModifiers+=N4Modifier+ typeVars+=TypeVariable typeVars+=TypeVariable*)
-	 *                     ) 
-	 *                     (declaredAsync?='async' | generator?='*' | generator?='*')
-	 *                 ) | 
-	 *                 (
-	 *                     (
-	 *                         (
-	 *                             annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 
-	 *                             declaredModifiers+=N4Modifier* 
-	 *                             (typeVars+=TypeVariable typeVars+=TypeVariable*)?
-	 *                         ) | 
-	 *                         declaredModifiers+=N4Modifier+ | 
-	 *                         (declaredModifiers+=N4Modifier+ typeVars+=TypeVariable typeVars+=TypeVariable*)
-	 *                     )? 
-	 *                     bogusTypeRef=BogusTypeRef 
-	 *                     (declaredAsync?='async' | generator?='*' | generator?='*')
-	 *                 ) | 
-	 *                 (declaredModifiers+=N4Modifier+ (declaredAsync?='async' | generator?='*')?)
-	 *             ) 
+	 *                         ((annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 declaredModifiers+=N4Modifier*) | declaredModifiers+=N4Modifier+) 
+	 *                         typeVars+=TypeVariable 
+	 *                         typeVars+=TypeVariable* 
+	 *                         bogusTypeRef=BogusTypeRef?
+	 *                     ) | 
+	 *                     declaredModifiers+=N4Modifier+ | 
+	 *                     (declaredModifiers+=N4Modifier+ bogusTypeRef=BogusTypeRef?)
+	 *                 )? 
+	 *                 declaredAsync?='async' 
+	 *                 (declaredName=LiteralOrComputedPropertyName | declaredName=LiteralOrComputedPropertyName)
+	 *             ) | 
 	 *             (
-	 *                 name=IdentifierName | 
-	 *                 name=STRING | 
-	 *                 name=NumericLiteralAsString | 
-	 *                 name=SymbolLiteralComputedName | 
-	 *                 name=StringLiteralAsName | 
-	 *                 computeNameFrom=AssignmentExpression
-	 *             )
+	 *                 annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 
+	 *                 declaredModifiers+=N4Modifier* 
+	 *                 (
+	 *                     (bogusTypeRef=BogusTypeRef? generator?='*' declaredName=LiteralOrComputedPropertyName) | 
+	 *                     (bogusTypeRef=BogusTypeRef? generator?='*' declaredName=LiteralOrComputedPropertyName) | 
+	 *                     declaredName=LiteralOrComputedPropertyName
+	 *                 )
+	 *             ) | 
+	 *             (
+	 *                 ((annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 declaredModifiers+=N4Modifier*) | declaredModifiers+=N4Modifier+) 
+	 *                 typeVars+=TypeVariable 
+	 *                 typeVars+=TypeVariable* 
+	 *                 (
+	 *                     (bogusTypeRef=BogusTypeRef? generator?='*' declaredName=LiteralOrComputedPropertyName) | 
+	 *                     (bogusTypeRef=BogusTypeRef? generator?='*' declaredName=LiteralOrComputedPropertyName) | 
+	 *                     declaredName=LiteralOrComputedPropertyName | 
+	 *                     declaredName=LiteralOrComputedPropertyName
+	 *                 )
+	 *             ) | 
+	 *             (
+	 *                 (
+	 *                     (
+	 *                         annotationList=AnnotatedN4MemberDeclaration_N4MethodDeclaration_1_2_0_0_0 
+	 *                         declaredModifiers+=N4Modifier* 
+	 *                         (typeVars+=TypeVariable typeVars+=TypeVariable*)?
+	 *                     ) | 
+	 *                     declaredModifiers+=N4Modifier+ | 
+	 *                     (declaredModifiers+=N4Modifier+ (typeVars+=TypeVariable typeVars+=TypeVariable*)?)
+	 *                 ) 
+	 *                 bogusTypeRef=BogusTypeRef? 
+	 *                 (declaredName=LiteralOrComputedPropertyName | declaredName=LiteralOrComputedPropertyName)
+	 *             ) | 
+	 *             (
+	 *                 (declaredModifiers+=N4Modifier+ | (declaredModifiers+=N4Modifier+ bogusTypeRef=BogusTypeRef?)) 
+	 *                 generator?='*' 
+	 *                 declaredName=LiteralOrComputedPropertyName
+	 *             ) | 
+	 *             (declaredModifiers+=N4Modifier+ declaredName=LiteralOrComputedPropertyName) | 
+	 *             (declaredModifiers+=N4Modifier+ bogusTypeRef=BogusTypeRef? generator?='*' declaredName=LiteralOrComputedPropertyName)
 	 *         )? 
 	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
 	 *         returnTypeRef=TypeRef? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3409,21 +3428,13 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (declaredAsync?='async' | generator?='*')? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         ((declaredAsync?='async'? declaredName=LiteralOrComputedPropertyName) | (generator?='*' declaredName=LiteralOrComputedPropertyName)) 
 	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
 	 *         returnTypeRef=TypeRef? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3438,12 +3449,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         annotationList=AnnotatedN4MemberDeclaration_N4FieldDeclaration_1_3_0 
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (name=IdentifierName | name=STRING | name=NumericLiteralAsString | name=SymbolLiteralComputedName | name=StringLiteralAsName) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName(ISerializationContext context, N4FieldDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl(ISerializationContext context, N4FieldDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3458,12 +3469,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         annotationList=AnnotatedN4MemberDeclaration_N4FieldDeclaration_1_3_0? 
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (name=IdentifierName | name=STRING | name=NumericLiteralAsString | name=SymbolLiteralComputedName | name=StringLiteralAsName) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName_N4FieldDeclaration(ISerializationContext context, N4FieldDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_N4FieldDeclaration(ISerializationContext context, N4FieldDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3478,19 +3489,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         annotationList=AnnotatedN4MemberDeclaration_N4GetterDeclaration_1_0_0_0_0 
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName(ISerializationContext context, N4GetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader(ISerializationContext context, N4GetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3504,19 +3508,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         ((annotationList=AnnotatedN4MemberDeclaration_N4GetterDeclaration_1_0_0_0_0 declaredModifiers+=N4Modifier*) | declaredModifiers+=N4Modifier+)? 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         (body=Block | body=Block)?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_N4GetterDeclaration(ISerializationContext context, N4GetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_N4GetterDeclaration(ISerializationContext context, N4GetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3530,19 +3527,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         annotationList=AnnotatedN4MemberDeclaration_N4SetterDeclaration_1_1_0_0_0 
 	 *         declaredModifiers+=N4Modifier* 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         fpar=FormalParameter 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_LiteralOrComputedPropertyName(ISerializationContext context, N4SetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3554,19 +3544,17 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((annotationList=AnnotatedN4MemberDeclaration_N4SetterDeclaration_1_1_0_0_0 declaredModifiers+=N4Modifier*) | declaredModifiers+=N4Modifier+)? 
 	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         ((fpar=FormalParameter body=Block?) | (fpar=FormalParameter body=Block?))
+	 *             annotationList=AnnotatedN4MemberDeclaration_N4SetterDeclaration_1_1_0_0_0 
+	 *             declaredModifiers+=N4Modifier* 
+	 *             declaredName=LiteralOrComputedPropertyName 
+	 *             fpar=FormalParameter 
+	 *             body=Block?
+	 *         ) | 
+	 *         (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block?)
 	 *     )
 	 */
-	protected void sequence_AnnotatedN4MemberDeclaration_LiteralOrComputedPropertyName_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedN4MemberDeclaration_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3580,19 +3568,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyGetterDeclaration_1_1_0_0_0 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         body=Block
 	 *     )
 	 */
-	protected void sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3606,19 +3587,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyGetterDeclaration_1_1_0_0_0? 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         (body=Block | body=Block)
 	 *     )
 	 */
-	protected void sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_PropertyGetterDeclaration(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedPropertyAssignment_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_PropertyGetterDeclaration(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3632,27 +3606,24 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         (
 	 *             (
-	 *                 annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0? 
-	 *                 typeVars+=TypeVariable 
-	 *                 typeVars+=TypeVariable* 
-	 *                 ((returnTypeRef=TypeRefWithModifiers? generator?='*'?) | (returnTypeRef=TypeRefWithModifiers? generator?='*'?))
+	 *                 (annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0 typeVars+=TypeVariable typeVars+=TypeVariable*) 
+	 *                 returnTypeRef=TypeRefWithModifiers? 
+	 *                 ((generator?='*' declaredName=LiteralOrComputedPropertyName) | declaredName=LiteralOrComputedPropertyName)
 	 *             ) | 
-	 *             (annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0? returnTypeRef=TypeRefWithModifiers? generator?='*'?) | 
-	 *             (returnTypeRef=TypeRefWithModifiers? generator?='*'?)
-	 *         ) 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
+	 *             (
+	 *                 (
+	 *                     annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0 | 
+	 *                     (annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0 typeVars+=TypeVariable typeVars+=TypeVariable*)
+	 *                 )? 
+	 *                 returnTypeRef=TypeRefWithModifiers? 
+	 *                 ((generator?='*' declaredName=LiteralOrComputedPropertyName) | declaredName=LiteralOrComputedPropertyName)
+	 *             )
 	 *         ) 
 	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
+	protected void sequence_AnnotatedPropertyAssignment_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3667,20 +3638,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyMethodDeclaration_1_3_0_0_0 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
 	 *         returnTypeRef=TypeRefWithModifiers? 
-	 *         generator?='*'? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         ((generator?='*' declaredName=LiteralOrComputedPropertyName) | declaredName=LiteralOrComputedPropertyName) 
 	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_MethodParamsAndBody_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
+	protected void sequence_AnnotatedPropertyAssignment_MethodParamsAndBody_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3694,94 +3657,11 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyNameValuePair_1_0_0_0_0 
 	 *         declaredTypeRef=TypeRefWithModifiers? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         expression=AssignmentExpression
 	 *     )
 	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName(ISerializationContext context, PropertyNameValuePair semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PropertyAssignment<Yield> returns PropertyNameValuePair
-	 *     PropertyAssignment returns PropertyNameValuePair
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             (annotationList=AnnotatedPropertyAssignment_PropertyNameValuePair_1_0_0_0_0 declaredTypeRef=TypeRefWithModifiers?) | 
-	 *             declaredTypeRef=TypeRefWithModifiers
-	 *         )? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         (expression=AssignmentExpression | expression=AssignmentExpression)
-	 *     )
-	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AnnotatedPropertyAssignment<Yield> returns PropertySetterDeclaration
-	 *     AnnotatedPropertyAssignment returns PropertySetterDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         fpar=FormalParameter 
-	 *         body=Block
-	 *     )
-	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName(ISerializationContext context, PropertySetterDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PropertyAssignment<Yield> returns PropertySetterDeclaration
-	 *     PropertyAssignment returns PropertySetterDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         ((fpar=FormalParameter body=Block) | (fpar=FormalParameter body=Block))
-	 *     )
-	 */
-	protected void sequence_AnnotatedPropertyAssignment_LiteralOrComputedPropertyName_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
+	protected void sequence_AnnotatedPropertyAssignment(ISerializationContext context, PropertyNameValuePair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -3821,6 +3701,81 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     )
 	 */
 	protected void sequence_AnnotatedPropertyAssignment_PropertyNameValuePairSingleName(ISerializationContext context, PropertyNameValuePairSingleName semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PropertyAssignment<Yield> returns PropertyNameValuePair
+	 *     PropertyAssignment returns PropertyNameValuePair
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotationList=AnnotatedPropertyAssignment_PropertyNameValuePair_1_0_0_0_0 
+	 *             declaredTypeRef=TypeRefWithModifiers? 
+	 *             declaredName=LiteralOrComputedPropertyName 
+	 *             expression=AssignmentExpression
+	 *         ) | 
+	 *         (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName expression=AssignmentExpression)
+	 *     )
+	 */
+	protected void sequence_AnnotatedPropertyAssignment_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AnnotatedPropertyAssignment<Yield> returns PropertySetterDeclaration
+	 *     AnnotatedPropertyAssignment returns PropertySetterDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0 
+	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         fpar=FormalParameter 
+	 *         body=Block
+	 *     )
+	 */
+	protected void sequence_AnnotatedPropertyAssignment(ISerializationContext context, PropertySetterDeclaration semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.ANNOTABLE_PROPERTY_ASSIGNMENT__ANNOTATION_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.ANNOTABLE_PROPERTY_ASSIGNMENT__ANNOTATION_LIST));
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME));
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR));
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getPropertySetterDeclarationAnnotationListAction_1_2_0_0_0(), semanticObject.getAnnotationList());
+		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2_0(), semanticObject.getDeclaredName());
+		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparFormalParameterParserRuleCall_1_2_2_0(), semanticObject.getFpar());
+		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyBlockParserRuleCall_1_2_4_0(), semanticObject.getBody());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PropertyAssignment<Yield> returns PropertySetterDeclaration
+	 *     PropertyAssignment returns PropertySetterDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0 
+	 *             declaredName=LiteralOrComputedPropertyName 
+	 *             fpar=FormalParameter 
+	 *             body=Block
+	 *         ) | 
+	 *         (declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block)
+	 *     )
+	 */
+	protected void sequence_AnnotatedPropertyAssignment_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -6320,21 +6275,13 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (declaredAsync?='async' | generator?='*')? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
+	 *         ((declaredAsync?='async'? declaredName=LiteralOrComputedPropertyName) | (generator?='*' declaredName=LiteralOrComputedPropertyName)) 
 	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
 	 *         returnTypeRef=TypeRef? 
 	 *         body=Block?
 	 *     )
 	 */
-	protected void sequence_AsyncNoTrailingLineBreak_BogusTypeRefFragment_LiteralOrComputedPropertyName_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
+	protected void sequence_AsyncNoTrailingLineBreak_BogusTypeRefFragment_MethodParamsReturnAndBody_N4MethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, N4MethodDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -7058,15 +7005,9 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     BindingProperty returns BindingProperty
 	 *
 	 * Constraint:
-	 *     (
-	 *         value=SingleNameBinding | 
-	 *         (
-	 *             (declaredName=IdentifierName | declaredName=STRING | declaredName=NumericLiteralAsString | declaredName=SymbolLiteralComputedName | declaredName=STRING) 
-	 *             value=BindingElement
-	 *         )
-	 *     )
+	 *     ((declaredName=LiteralOrComputedPropertyName value=BindingElement) | value=SingleNameBinding)
 	 */
-	protected void sequence_BindingProperty_LiteralBindingPropertyName(ISerializationContext context, BindingProperty semanticObject) {
+	protected void sequence_BindingProperty(ISerializationContext context, BindingProperty semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -7337,12 +7278,12 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (name=IdentifierName | name=STRING | name=NumericLiteralAsString | name=SymbolLiteralComputedName | name=StringLiteralAsName) 
+	 *         declaredName=LiteralOrComputedPropertyName 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
 	 */
-	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_LiteralPropertyName_N4FieldDeclaration(ISerializationContext context, N4FieldDeclaration semanticObject) {
+	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_FieldDeclarationImpl_N4FieldDeclaration(ISerializationContext context, N4FieldDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -7353,22 +7294,9 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     N4GetterDeclaration returns N4GetterDeclaration
 	 *
 	 * Constraint:
-	 *     (
-	 *         declaredModifiers+=N4Modifier* 
-	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         declaredTypeRef=TypeRef? 
-	 *         body=Block?
-	 *     )
+	 *     (declaredModifiers+=N4Modifier* bogusTypeRef=BogusTypeRef? declaredName=LiteralOrComputedPropertyName declaredTypeRef=TypeRef? body=Block?)
 	 */
-	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_N4GetterDeclaration(ISerializationContext context, N4GetterDeclaration semanticObject) {
+	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_N4GetterDeclaration(ISerializationContext context, N4GetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -7379,21 +7307,9 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     PropertyGetterDeclaration returns PropertyGetterDeclaration
 	 *
 	 * Constraint:
-	 *     (
-	 *         bogusTypeRef=BogusTypeRef? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         declaredTypeRef=TypeRef? 
-	 *         body=Block
-	 *     )
+	 *     (bogusTypeRef=BogusTypeRef? declaredName=LiteralOrComputedPropertyName declaredTypeRef=TypeRef? body=Block)
 	 */
-	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_LiteralOrComputedPropertyName_PropertyGetterDeclaration(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
+	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_PropertyGetterDeclaration(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -14439,100 +14355,13 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     PropertyMethodDeclaration<Yield> returns PropertyMethodDeclaration
-	 *     PropertyMethodDeclaration returns PropertyMethodDeclaration
+	 *     LiteralOrComputedPropertyName<Yield> returns LiteralOrComputedPropertyName
+	 *     LiteralOrComputedPropertyName returns LiteralOrComputedPropertyName
 	 *
 	 * Constraint:
-	 *     (
-	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
-	 *         returnTypeRef=TypeRefWithModifiers? 
-	 *         generator?='*'? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
-	 *         body=Block?
-	 *     )
+	 *     (literalName=IdentifierName | literalName=STRING | literalName=NumericLiteralAsString | expression=AssignmentExpression)
 	 */
-	protected void sequence_LiteralOrComputedPropertyName_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     N4SetterDeclaration<Yield> returns N4SetterDeclaration
-	 *     N4SetterDeclaration returns N4SetterDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         declaredModifiers+=N4Modifier* 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         fpar=FormalParameter 
-	 *         body=Block?
-	 *     )
-	 */
-	protected void sequence_LiteralOrComputedPropertyName_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PropertyNameValuePair<Yield> returns PropertyNameValuePair
-	 *     PropertyNameValuePair returns PropertyNameValuePair
-	 *
-	 * Constraint:
-	 *     (
-	 *         declaredTypeRef=TypeRefWithModifiers? 
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         expression=AssignmentExpression
-	 *     )
-	 */
-	protected void sequence_LiteralOrComputedPropertyName_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PropertySetterDeclaration<Yield> returns PropertySetterDeclaration
-	 *     PropertySetterDeclaration returns PropertySetterDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             name=IdentifierName | 
-	 *             name=STRING | 
-	 *             name=NumericLiteralAsString | 
-	 *             name=SymbolLiteralComputedName | 
-	 *             name=StringLiteralAsName | 
-	 *             computeNameFrom=AssignmentExpression
-	 *         ) 
-	 *         fpar=FormalParameter 
-	 *         body=Block
-	 *     )
-	 */
-	protected void sequence_LiteralOrComputedPropertyName_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
+	protected void sequence_LiteralOrComputedPropertyName(ISerializationContext context, LiteralOrComputedPropertyName semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -15745,6 +15574,25 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     PropertyMethodDeclaration<Yield> returns PropertyMethodDeclaration
+	 *     PropertyMethodDeclaration returns PropertyMethodDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
+	 *         returnTypeRef=TypeRefWithModifiers? 
+	 *         ((generator?='*' declaredName=LiteralOrComputedPropertyName) | declaredName=LiteralOrComputedPropertyName) 
+	 *         (fpars+=FormalParameter fpars+=FormalParameter*)? 
+	 *         body=Block?
+	 *     )
+	 */
+	protected void sequence_MethodParamsAndBody_PropertyMethodDeclaration_StrictFormalParameters_TypeVariables(ISerializationContext context, PropertyMethodDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     N4CallableConstructorDeclaration<Yield> returns N4MethodDeclaration
 	 *     N4CallableConstructorDeclaration returns N4MethodDeclaration
 	 *
@@ -16144,6 +15992,19 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     annotations+=Annotation+
 	 */
 	protected void sequence_N4MemberAnnotationList(ISerializationContext context, N4MemberAnnotationList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     N4SetterDeclaration<Yield> returns N4SetterDeclaration
+	 *     N4SetterDeclaration returns N4SetterDeclaration
+	 *
+	 * Constraint:
+	 *     (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block?)
+	 */
+	protected void sequence_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -19067,6 +18928,44 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_PropertyNameValuePairSingleName(ISerializationContext context, PropertyNameValuePairSingleName semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PropertyNameValuePair<Yield> returns PropertyNameValuePair
+	 *     PropertyNameValuePair returns PropertyNameValuePair
+	 *
+	 * Constraint:
+	 *     (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName expression=AssignmentExpression)
+	 */
+	protected void sequence_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PropertySetterDeclaration<Yield> returns PropertySetterDeclaration
+	 *     PropertySetterDeclaration returns PropertySetterDeclaration
+	 *
+	 * Constraint:
+	 *     (declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block)
+	 */
+	protected void sequence_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME));
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR));
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0(), semanticObject.getDeclaredName());
+		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getFparFormalParameterParserRuleCall_2_0(), semanticObject.getFpar());
+		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getBodyBlockParserRuleCall_4_0(), semanticObject.getBody());
+		feeder.finish();
 	}
 	
 	

@@ -10,6 +10,10 @@ class B<T,S> {
 	public y : S;
 }
 
+/* XPECT warnings ---
+	"Type variable T not used in parameters or return type." at "T"
+	"Type variable S not used in parameters or return type." at "S"
+--- */
 function <T,S> g0 () {}
 function <T,S> g1 (t : T, s : S) {}
 function g1a (t : number, s : string) {}

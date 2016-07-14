@@ -138,7 +138,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 			if (annodef.hasAnnotation(memberDecl)) {
 				if (JavaScriptVariant.getVariant(memberDecl) != JavaScriptVariant.external) {
 					val msg = getMessageForCLF_EXT_PROVIDES_IMPL_ONLY_IN_DEFFILES(annodef.name, typeName);
-					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_EXT_PROVIDES_IMPL_ONLY_IN_DEFFILES);
 					return;
 				}
@@ -147,14 +147,14 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 
 				if (! (metaType.isInstance(owner))) {
 					val msg = getMessageForCLF_EXT_PROVIDES_IMPL_ONLY_IN_INTERFACE_MEMBERS(annodef.name, typeName);
-					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_EXT_PROVIDES_IMPL_ONLY_IN_INTERFACE_MEMBERS);
 					return;
 				}
 
 				if (! AnnotationDefinition.N4JS.hasAnnotation(owner)) {
 					val msg = getMessageForCLF_EXT_PROVIDES_IMPL_ONLY_IN_N4JS_INTERFACES(annodef.name, typeName);
-					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_EXT_PROVIDES_IMPL_ONLY_IN_N4JS_INTERFACES);
 					return;
 
@@ -340,7 +340,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 		for (member : declaration.ownedMembers.filter[AnnotationDefinition.OBSERVABLE.hasAnnotation(it)]) {
 			val message = getMessageForCLF_EXT_METHOD_NO_ANNO(member.keyword.toFirstUpper + "s",
 				classesOrRolesOrInterface, "Observable")
-			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, CLF_EXT_METHOD_NO_ANNO)
+			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_EXT_METHOD_NO_ANNO)
 		}
 	}
 
@@ -348,14 +348,14 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 		for (member : declaration.ownedMembers.filter[AnnotationDefinition.NFON.hasAnnotation(it)]) {
 			val message = getMessageForCLF_EXT_METHOD_NO_ANNO(member.keyword.toFirstUpper + "s",
 				classesOrRolesOrInterface, "Nfon")
-			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, CLF_EXT_METHOD_NO_ANNO)
+			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_EXT_METHOD_NO_ANNO)
 		}
 	}
 
 	private def validateNoFieldExpression(N4ClassifierDeclaration declaration, String classesOrRolesOrInterface) {
 		for (member : declaration.ownedFields.filter[expression !== null]) {
 			val message = getMessageForCLF_EXT_NO_FIELD_EXPR(classesOrRolesOrInterface)
-			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, CLF_EXT_NO_FIELD_EXPR)
+			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_EXT_NO_FIELD_EXPR)
 		}
 	}
 
@@ -365,7 +365,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 		]) {
 			val message = getMessageForCLF_EXT_NO_METHOD_BODY(member.keyword.toFirstUpper + "s",
 				classesOrRolesOrInterface)
-			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, CLF_EXT_NO_METHOD_BODY)
+			addIssue(message, member, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_EXT_NO_METHOD_BODY)
 		}
 	}
 

@@ -776,6 +776,12 @@ public class N4JSSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME: {
+				LiteralOrComputedPropertyName literalOrComputedPropertyName = (LiteralOrComputedPropertyName)theEObject;
+				T result = caseLiteralOrComputedPropertyName(literalOrComputedPropertyName);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case N4JSPackage.ANNOTABLE_PROPERTY_ASSIGNMENT: {
 				AnnotablePropertyAssignment annotablePropertyAssignment = (AnnotablePropertyAssignment)theEObject;
 				T result = caseAnnotablePropertyAssignment(annotablePropertyAssignment);
@@ -1555,18 +1561,18 @@ public class N4JSSwitch<T> extends Switch<T> {
 			case N4JSPackage.N4_FIELD_ACCESSOR: {
 				N4FieldAccessor n4FieldAccessor = (N4FieldAccessor)theEObject;
 				T result = caseN4FieldAccessor(n4FieldAccessor);
-				if (result == null) result = caseFieldAccessor(n4FieldAccessor);
 				if (result == null) result = caseAnnotableN4MemberDeclaration(n4FieldAccessor);
+				if (result == null) result = caseFieldAccessor(n4FieldAccessor);
+				if (result == null) result = caseN4MemberDeclaration(n4FieldAccessor);
 				if (result == null) result = caseFunctionOrFieldAccessor(n4FieldAccessor);
 				if (result == null) result = casePropertyNameOwner(n4FieldAccessor);
-				if (result == null) result = caseN4MemberDeclaration(n4FieldAccessor);
 				if (result == null) result = caseAnnotableElement(n4FieldAccessor);
+				if (result == null) result = caseModifiableElement(n4FieldAccessor);
+				if (result == null) result = caseTypeProvidingElement(n4FieldAccessor);
+				if (result == null) result = caseTypableElement(n4FieldAccessor);
+				if (result == null) result = caseNamedElement(n4FieldAccessor);
 				if (result == null) result = caseVariableEnvironmentElement(n4FieldAccessor);
 				if (result == null) result = caseThisArgProvider(n4FieldAccessor);
-				if (result == null) result = caseTypableElement(n4FieldAccessor);
-				if (result == null) result = caseTypeProvidingElement(n4FieldAccessor);
-				if (result == null) result = caseNamedElement(n4FieldAccessor);
-				if (result == null) result = caseModifiableElement(n4FieldAccessor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1634,6 +1640,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 			case N4JSPackage.BINDING_PROPERTY: {
 				BindingProperty bindingProperty = (BindingProperty)theEObject;
 				T result = caseBindingProperty(bindingProperty);
+				if (result == null) result = casePropertyNameOwner(bindingProperty);
 				if (result == null) result = caseNamedElement(bindingProperty);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -2845,6 +2852,21 @@ public class N4JSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePropertyNameOwner(PropertyNameOwner object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Literal Or Computed Property Name</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Literal Or Computed Property Name</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLiteralOrComputedPropertyName(LiteralOrComputedPropertyName object) {
 		return null;
 	}
 

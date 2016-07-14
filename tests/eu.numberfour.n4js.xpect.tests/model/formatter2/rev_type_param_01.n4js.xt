@@ -23,12 +23,12 @@ class C
 
 /* */
 /* XPECT formattedLines 4 ---
-function <S, T> foo() {};
+function <S, T> foo(s: S, t: T) {};
 --- */
 
 function <   S
       ,
 T> foo
-() {}
+(s:S,t:T) {}
 
 

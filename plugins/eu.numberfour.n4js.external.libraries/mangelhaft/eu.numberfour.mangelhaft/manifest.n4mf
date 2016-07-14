@@ -13,22 +13,20 @@ VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft"
 VendorName: "NumberFour AG"
 ProjectType: library
-ProjectVersion: 0.3.2
+ProjectVersion: 0.3.3
 Output: "src-gen"
 
 ProjectDependencies {
     n4js.lang
     ,eu.numberfour.mangelhaft.assert
-    ,eu.numberfour.mangelhaft.mangeltypes
 }
 
 RequiredRuntimeLibraries {
     n4js-runtime-n4
 	,n4js-runtime-v8
 	,n4js-runtime-es2015
-    ,n4js-node-mangelhaft
 } 
-    
+  
 Sources {
     source {
         "src/n4js"

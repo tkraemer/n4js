@@ -262,7 +262,6 @@ public class TokenTypeRewriter implements PseudoTokens {
 		ImmutableSet<AbstractRule> identifierRules = ImmutableSet.of(
 				ga.getBindingIdentifierRule(),
 				ga.getIdentifierNameRule(),
-				ga.getSymbolLiteralComputedNameRule(),
 				ga.getIDENTIFIERRule());
 		for (ParserRule rule : GrammarUtil.allParserRules(ga.getGrammar())) {
 			for (EObject obj : EcoreUtil2.eAllContents(rule.getAlternatives())) {

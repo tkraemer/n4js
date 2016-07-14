@@ -74,6 +74,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
@@ -85,6 +86,7 @@ import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
@@ -183,6 +185,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 			constraints_59_NonOverride(mm);
 			constraints_42_AbstractMember(mm);
+			unusedGenericTypeVariable(mm);
 
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
@@ -203,15 +206,15 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_NON_EXISTENT(keywordProvider.keyword(member),
 								member.getName());
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_NON_EXISTENT);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
 					} else if (AccessModifiers.fixed(m) == MemberAccessModifier.PRIVATE) {
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_PRIVATE(
 								validatorMessageHelper.description(member),
 								validatorMessageHelper.description(m));
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_PRIVATE);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_PRIVATE);
 					}
 				}
 			}
@@ -446,7 +449,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		// 2. meta type
-		boolean metaTypeCompatible = MemberRedefinitionUtils.metaTypeCompatible(m, s);
+		boolean metaTypeCompatible = MemberRedefinitionUtils.isMetaTypeCompatible(m, s);
 		if (!metaTypeCompatible) {
 			if (!consumptionConflict) { // avoid consequential errors
 				messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
@@ -595,6 +598,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
+	 * GH-234 add warning for unused type variables in function and method declarations (unless the method overrides any
+	 * other method).
+	 */
+	private void unusedGenericTypeVariable(MemberMatrix mm) {
+		for (TMember member : mm.owned()) {
+			if (member instanceof TMethod) {
+				TMethod method = (TMethod) member;
+				if (!mm.hasInherited() && !mm.hasImplemented()) {
+					// We need the method declaration from the AST in order to pass it to the internal
+					// validation function. This is necessary because we want to attach the warning to the actual unused
+					// type variable in the method declaration, and the type variable in the type model is not identical
+					// to the one in the AST which we actually need.
+					// Since method is owned by the type being validated, we can safely navigate back from the type
+					// model to the AST without triggering another parse.
+
+					MethodDeclaration methodDeclaration = (MethodDeclaration) method.getAstElement();
+					internalCheckNoUnusedTypeParameters(methodDeclaration);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Constraints 41 (Abstract Class)
 	 */
 	private boolean constraints_41_AbstractClass(TClassifier classifier, MemberCube memberCube) {
@@ -653,7 +679,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private void messageMissingOverrideAnnotation(MemberMatrix mm,
 			Collection<TMember> missingOverrideAnnotationMembers) {
 		if (mm.hasOwned() && missingOverrideAnnotationMembers.size() > 0) {
-			Iterable<TMember> overriddenMembers = Iterables.concat(mm.inherited(), mm.implemented());
+			Iterable<TMember> overriddenMembers = Iterables.concat(mm.implemented(), mm.inherited());
 
 			for (TMember overriding : mm.owned()) {
 				// skip members with proper annotation
@@ -676,7 +702,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						redefinitionVerb,
 						validatorMessageHelper.descriptions(filteredOverriddenMembers));
 
-				addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+				addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_OVERRIDE_ANNOTATION);
 			}
 		}
@@ -688,7 +714,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			String message = getMessageForCLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR(
 					validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
 					validatorMessageHelper.descriptionDifferentFrom(overridden, overriding), missingAccessor);
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					CLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR);
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
@@ -854,7 +880,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		TClassifier currentClassifier = getCurrentClassifier();
 		if (overriding.getContainingType() == currentClassifier) {
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, issueCode,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+					issueCode,
 					issueData);
 		} else {
 			MemberCollector memberCollector = containerTypesHelper.fromContext(getCurrentClassifierDefinition());

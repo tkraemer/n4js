@@ -33,7 +33,7 @@ public class MemberRedefinitionUtils {
 	 */
 	public static Iterable<TMember> getMetatypeCompatibleOverriddenMembers(TMember overridingMember,
 			Iterable<TMember> overriddenMembers) {
-		return Iterables.filter(overriddenMembers, member -> metaTypeCompatible(overridingMember, member));
+		return Iterables.filter(overriddenMembers, member -> isMetaTypeCompatible(overridingMember, member));
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class MemberRedefinitionUtils {
 	 * @param m2
 	 *            The second member
 	 */
-	public static boolean metaTypeCompatible(TMember m1, TMember m2) {
+	public static boolean isMetaTypeCompatible(TMember m1, TMember m2) {
 		boolean result = m1.getMemberType() == m2.getMemberType();
 
 		if (!result) {

@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.resource.DefaultLocationInFileProvider
 import org.eclipse.xtext.resource.ILocationInFileProviderExtension
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
+import eu.numberfour.n4js.n4JS.PropertyNameOwner
+import eu.numberfour.n4js.n4JS.N4JSPackage
 
 /**
  */
@@ -90,4 +92,10 @@ class N4JSLocationInFileProvider extends DefaultLocationInFileProvider {
 		}
 	}
 
+	override protected EStructuralFeature getIdentifierFeature(EObject obj) {
+		if(obj instanceof PropertyNameOwner) {
+			return N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName;
+		}
+		return super.getIdentifierFeature(obj);
+	}
 }

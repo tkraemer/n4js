@@ -7,7 +7,7 @@
  *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
- *
+ * 
  * 3rd Party Code used here:
  * - [node-deep-equal](https://github.com/substack/node-deep-equal), [MIT](https://raw.githubusercontent.com/substack/node-deep-equal/master/LICENSE)
  * - [Node.js Assert Library](https://raw.githubusercontent.com/nodejs/node/master/lib/assert.js), [MIT like](https://raw.githubusercontent.com/nodejs/node/master/lib/assert.js)
@@ -149,7 +149,7 @@ function  _deepEqual(actual: any, expected: any, ignorePrototype: boolean?):bool
 
 
 
-function expectedException(actual: any, expected: union{ErrorPrimitiveType, type{Object}, string,Object}) {
+function expectedException(actual: any, expected: union{type{Error}, RegExp, string}) {
     if (typeof expected === "string") {
         return ((typeof actual) === expected as string);
     }
@@ -197,7 +197,7 @@ export public class Assert {
                         , operator: string?
                         , stackStartFunction: Function?
     ) {
-
+        
         let error = new AssertionError({
             string message: message,
             any actual: actual,
@@ -436,7 +436,7 @@ export public class Assert {
      * @param  error        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static throws (testFunction: {function()}, error: union{ErrorPrimitiveType, type{Object}}?, message: string?): any {
+    public static throws (testFunction: {function()}, error: union{ErrorPrimitiveType, type{Error}}?, message: string?): any {
         let actual: any+
           , threw = false;
         try {
@@ -477,7 +477,7 @@ export public class Assert {
      * @param  expectedErrorType        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static async throwsAsync (testFunction: {function()}, expectedErrorType: union{ErrorPrimitiveType, type{Object}}?, message: string?): any {
+    public static async throwsAsync (testFunction: {function()}, expectedErrorType: union{ErrorPrimitiveType, constructor{? extends Error}}?, message: string?): any {
         let actual: any+
           , threw = false
         ;
@@ -556,12 +556,22 @@ export public class Assert {
         });
     }
 
-    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Object},Object}?, message: string?, operator: string?, stackStartFunction: Function?): any {
+    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Error}}?, message: string?, operator: string?, stackStartFunction: Function?): any {
         this.rethrowIfSpecialError(actual, expected);
-        // TODO seems odd: type of expected should be error in the first place
-        message = (expected && (expected as Error).name ? ' (' + (expected as Error).name + ').': '.') +
-        (message ? ' ' + message: '.');
-
+        
+        let msg = ".";
+        if (expected) { // prepend ctor name
+            let ctorFn = ((expected as any) as Error);
+            if (ctorFn.name) {
+                msg = ` (${ctorFn.name}).`;
+            }
+        }
+        if (message) {
+            msg += ` ${message}`;
+        } else {
+            msg += ".";
+        }
+        
 //        if (shouldThrow && actual) {
 //            this.fail_(actual, expected, 'Missing expected exception' + message, operator, stackStartFunction);
 //        }

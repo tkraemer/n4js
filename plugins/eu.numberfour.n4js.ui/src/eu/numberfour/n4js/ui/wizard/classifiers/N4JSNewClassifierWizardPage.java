@@ -53,7 +53,7 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 	/** Component for the access modifier buttons with the bindings. */
 	protected AccessModifierComponent accessModifierComponent;
 
-	/** Component for the other modifier, such as @N4JS or @Internal. */
+	/** Component for the other modifier, such as @N4JS */
 	protected OtherClassifierModifiersComponent otherClassifierModifiersComponent;
 
 	@Override

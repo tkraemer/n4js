@@ -36,7 +36,6 @@ public class N4jscTestersTest extends AbstractN4jscTest {
 	private static Collection<String> REQUIRED_LIBS = ImmutableSet.<String> builder()
 			.add("eu.numberfour.mangelhaft")
 			.add("eu.numberfour.mangelhaft.assert")
-			.add("eu.numberfour.mangelhaft.mangeltypes")
 			.add("n4js-runtime-n4")
 			.add("n4js-runtime-v8")
 			.add("n4js-runtime-es2015")

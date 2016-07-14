@@ -3,13 +3,13 @@
 class A {
 	
 	m2() : any {
-		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,ThisT):U}." at "s => { console.log(s); ; }"
+		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,Array<string>):U}." at "s => { console.log(s); ; }"
         var arrayOfVoid = ["a", "b"].map(s => { console.log(s); ; })  
 		return arrayOfVoid
 	}
 
 	m3() : void {
-		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,ThisT):U}." at "s => { console.log(s); return; }"
+		// FIXME(IDE-1287) consider improving error message XPECT errors ---> "{function(any):void} is not a subtype of {function(string,number,Array<string>):U}." at "s => { console.log(s); return; }"
 		["a", "b"].map(s => { console.log(s); return; })  
 	}
 

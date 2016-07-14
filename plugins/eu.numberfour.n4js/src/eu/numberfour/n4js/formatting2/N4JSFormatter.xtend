@@ -115,6 +115,7 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.splitting.simpleExpression
 
 import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
+import eu.numberfour.n4js.n4JS.ThrowStatement
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
@@ -306,7 +307,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(N4FieldDeclaration field, extension IFormattableDocument document) {
 		field.configureAnnotations(document);
 		field.configureModifiers(document);
-		field.insertSpaceInfrontOfPropertyNames(document);
 		
 		field.indentExcludingAnnotations(document);
 
@@ -335,7 +335,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(FunctionExpression funE, extension IFormattableDocument document) {
 		funE.configureAnnotations(document);
 		funE.configureModifiers(document);
-		funE.insertSpaceInfrontOfPropertyNames(document);
 		if (funE.isArrowFunction) {
 			throw new IllegalStateException("Arrow functions should be formated differently.")
 		}
@@ -766,11 +765,28 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		if( arrowF.isHasBracesAroundBody ) {
 			// format body as block. NOTE: this block differs from other blocks, since the curly braces are defined in the ArrowExpression.
-			arrowF.body.format;
-			// special handling of indentation in inside the braces. 
-			if( arrowF.hasBracesAroundBody ) {
-				val bracesPair = arrowF.regionFor.keywordPairs("{","}").head;
-				bracesPair.interior[indent];				
+			// special handling of indentation in inside the braces.
+			val bracesPair = arrowF.regionFor.keywordPairs("{","}").head;
+			bracesPair.interior[indent];
+			if( bracesPair.key.lineRegions.last.contains( bracesPair.value) // one line '{ do; stuff; }' 
+				|| bracesPair.key.lineRegions.last.contains( bracesPair.key.nextSemanticRegion ) // no line-break after braces e.g. '{ do; \n stuff; }'
+			) {
+				// one line
+				arrowF.body?.statements.forEach[ it,idx|
+					format; if( idx !==0 ) {it.prepend[oneSpace; autowrap; newLines=0;]}
+				];
+				bracesPair.key.append[oneSpace]; // do not autowrap after "{" to keep wrap-semantic
+				bracesPair.value.prepend[oneSpace];
+			} else {
+				// multi-line
+				if( arrowF.body !== null && !arrowF.body.statements.empty ) {
+					arrowF.body?.statements.head.prepend[newLines=1;];
+					arrowF.body?.statements.forEach[format;append[newLines=1]];
+				} else {
+					// empty block, squash interior.
+					bracesPair.key.append[noSpace;newLines=1;]; 
+					bracesPair.value.prepend[noSpace;newLines=1];
+				}
 			}
 		} else {
 			// no braces Around the implicit return statement.
@@ -975,9 +991,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	
+	def dispatch void format(ThrowStatement thrStmt, extension IFormattableDocument document) {
+		thrStmt.expression.prepend[setNewLines(0, 0, 0); oneSpace; autowrap];
+		thrStmt.expression.format;
+	}
 	
 
-	/** */
 	def dispatch void format(CatchBlock ctch, extension IFormattableDocument document) {
 		ctch.prepend[setNewLines(0, 0, 0); oneSpace];
 		ctch.catchVariable.format;
@@ -987,18 +1006,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	def dispatch void format(FinallyBlock finlly, extension IFormattableDocument document) {
 		finlly.previousHiddenRegion.set[newLines = 0; oneSpace];
 		finlly.block.format;
-	}
-
-	/** Elements implementing PropertyNameOwner may have symbols or computed names given in brackets. 
-	 * Inserts a space in front of the opening bracket.*/
-	private def void insertSpaceInfrontOfPropertyNames(EObject field, extension IFormattableDocument document) {
-		// Space in front of name, esp. for names like "[@name]"
-		val nameRegion = field.regionFor.feature(
-			N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME);
-		if (nameRegion === null) return;
-
-		val precBracket = nameRegion.immediatelyPreceding.keyword("[");
-		precBracket.prepend[oneSpace];
 	}
 
 	/** Insert one space in front of first '{' in the direct content of the element. 
