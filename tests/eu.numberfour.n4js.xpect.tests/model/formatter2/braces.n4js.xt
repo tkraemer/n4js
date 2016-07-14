@@ -3,14 +3,16 @@
 
 /* no spaces inside braces of import statements */
 /* XPECT formattedLines 1 ---
-	import {Class1} from  "formatter2/MultipleClasses";
+import {Class1} from "formatter2/MultipleClasses";
 --- */
 import  {  Class1  }  from  "formatter2/MultipleClasses"
 
 
-/* keep single-line formatting */
+/* single-line block formatting into multiple lines.*/
 /* XPECT formattedLines 1 ---
-	{ var x = 1 }
+{
+	var x = 1
+}
 --- */
 {  var x = 1  }
 
@@ -28,9 +30,13 @@ var y = 1;
 
 /* keep multi-line formatting with multiple braces */
 /* XPECT formattedLines 5 ---
-{{var y =[
-	7
-];}}
+{
+	{
+		var y = [
+				7
+			];
+	}
+}
 --- */
 { { var y = [ 
 7
@@ -41,14 +47,62 @@ var y = 1;
 
 /* keep single-line formatting with multiple braces */
 /* XPECT formattedLines 1 ---
-{{var y =[ 7 ];}}
+{
+	{
+		var y = [ 7 ];
+	}
+}
 --- */
 { { var y = [ 7 ]; } }
 
 
+/* indent blocks */
+/* XPECT formattedLines 1 ---
+{
+	{
+		{
+			var y = [ 8 ];
+		}
+	}
+}
+--- */
+{ { { var y = [ 8 ]; } } }
+
+
+/* indent blocks */
+/* XPECT formattedLines 1 ---
+{
+	{
+		{
+			var y = [ 9 ];
+			let z = [ 10 ];
+			let z2 = [ 11 ];
+		}
+	}
+}
+--- */
+{ { { var y = [ 9 ]; let z = [ 10 ]; let z2 = [ 11 ]; } } }
+
+
+/* keep single-line formatting with multiple braces */
+/* XPECT formattedLines 1 ---
+{
+	{
+		{
+			var y = 9;
+			let z = 10;
+		}
+	}
+}
+--- */
+{ { { var y =  9 ; let z =  10 ; } } }
+
+
 /* keep single-line formatting with comma */
 /* XPECT formattedLines 1 ---
-	{var x1 =[ 1, 2, 3 ]}
+{
+	var x1 = [1, 2, 3]
+}
 --- */
 {  var x1 = [1,2,3]  }
 
@@ -56,14 +110,34 @@ var y = 1;
 /* keep multi-line formatting */
 /* XPECT formattedLines 4 ---
 {
-	var y1 =[
-		1,
-		2,
-		3
-	];
+	var y1 = [1, 2, 3
+		];
 }
 --- */
 {  
 var y1 = [1,2,3
 ];
 }
+
+
+/* keep multi-line formatting 2 */
+/* XPECT formattedLines 7 ---
+{
+	var y2 = [
+			1,
+			2,
+			3
+		];
+}
+--- */
+{  
+var y2 = [
+1    		,
+	    				2,    
+		    3
+];
+}
+
+
+
+

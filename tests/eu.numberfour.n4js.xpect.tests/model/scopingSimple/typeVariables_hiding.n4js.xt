@@ -20,18 +20,31 @@ class A3<I> {}
 
 class B<T> {
 	
-	// XPECT warnings --> "The type parameter T hides type variable T." at "T"
+	/* XPECT warnings ---
+		"The type parameter T hides type variable T." at "T"
+		"Type variable T not used in parameters or return type." at "T"
+	--- */
 	<T> m1() : void {}
 	
 	m2() : void {
-		// XPECT warnings --> "The type parameter T hides type variable T." at "T"
+		/* XPECT warnings ---
+			"The type parameter T hides type variable T." at "T"
+			"Type variable T not used in parameters or return type." at "T"
+		--- */
 		var f = function <T> () {};
 		
 		// XPECT errors --> "Unsupported feature: class expressions." at "class"
 		var c = class {
-			// XPECT warnings --> "The type parameter T hides type variable T." at "T"
+			/* XPECT warnings ---
+				"The type parameter T hides type variable T." at "T"
+				"Type variable T not used in parameters or return type." at "T"
+			--- */
 			f = function <T> () {};
-			// XPECT warnings --> "The type parameter T hides type variable T." at "T"
+
+			/* XPECT warnings ---
+				"The type parameter T hides type variable T." at "T"
+				"Type variable T not used in parameters or return type." at "T"
+			--- */
 			<T> mInner() : void {}
 		};
 		
@@ -39,14 +52,18 @@ class B<T> {
 	
 	// ok:
 	
+	// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 	static <T> m3() : void {}
 	
 	static m4() : void {
+		// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 		var f = function <T> () {};
 		
 		// XPECT errors --> "Unsupported feature: class expressions." at "class"
 		var c = class {
+			// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 			f = function <T> () {};
+			// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 			<T> mInner() : void {}
 		};
 	}

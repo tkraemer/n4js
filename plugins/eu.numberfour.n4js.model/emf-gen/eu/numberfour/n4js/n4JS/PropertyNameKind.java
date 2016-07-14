@@ -54,24 +54,14 @@ public enum PropertyNameKind implements Enumerator {
 	NUMBER(0, "number", "number"),
 
 	/**
-	 * The '<em><b>Computed From Identifier Expr</b></em>' literal object.
+	 * The '<em><b>Computed</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #COMPUTED_FROM_IDENTIFIER_EXPR_VALUE
+	 * @see #COMPUTED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	COMPUTED_FROM_IDENTIFIER_EXPR(0, "computedFromIdentifierExpr", "computedFromIdentifierExpr"),
-
-	/**
-	 * The '<em><b>Computed From String Literal</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #COMPUTED_FROM_STRING_LITERAL_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	COMPUTED_FROM_STRING_LITERAL(0, "computedFromStringLiteral", "computedFromStringLiteral");
+	COMPUTED(0, "computed", "computed");
 
 	/**
 	 * The '<em><b>Identifier</b></em>' literal value.
@@ -119,34 +109,19 @@ public enum PropertyNameKind implements Enumerator {
 	public static final int NUMBER_VALUE = 0;
 
 	/**
-	 * The '<em><b>Computed From Identifier Expr</b></em>' literal value.
+	 * The '<em><b>Computed</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The name is assigned from a object literal property with
-	 * a number as the concrete syntax for the name. This variant is discouraged.
+	 * a computed property name expression as the concrete syntax for the name. This variant is discouraged.
 	 * <!-- end-model-doc -->
-	 * @see #COMPUTED_FROM_IDENTIFIER_EXPR
-	 * @model name="computedFromIdentifierExpr"
+	 * @see #COMPUTED
+	 * @model name="computed"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COMPUTED_FROM_IDENTIFIER_EXPR_VALUE = 0;
-
-	/**
-	 * The '<em><b>Computed From String Literal</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The name is assigned from a object literal property with
-	 * a number as the concrete syntax for the name. This variant is discouraged.
-	 * <!-- end-model-doc -->
-	 * @see #COMPUTED_FROM_STRING_LITERAL
-	 * @model name="computedFromStringLiteral"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int COMPUTED_FROM_STRING_LITERAL_VALUE = 0;
+	public static final int COMPUTED_VALUE = 0;
 
 	/**
 	 * An array of all the '<em><b>Property Name Kind</b></em>' enumerators.
@@ -159,8 +134,7 @@ public enum PropertyNameKind implements Enumerator {
 			IDENTIFIER,
 			STRING,
 			NUMBER,
-			COMPUTED_FROM_IDENTIFIER_EXPR,
-			COMPUTED_FROM_STRING_LITERAL,
+			COMPUTED,
 		};
 
 	/**

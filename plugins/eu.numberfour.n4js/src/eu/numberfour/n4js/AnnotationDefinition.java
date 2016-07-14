@@ -173,11 +173,6 @@ public final class AnnotationDefinition {
 	 */
 	public final static AnnotationDefinition N4JS = define("N4JS").targets(N4_CLASS_DECLARATION, EXPORT_DECLARATION)
 			.retention(RetentionPolicy.TYPE).end();
-	/**
-	 * 11.1.3. Implementation of External Declarations
-	 */
-	public final static AnnotationDefinition IMPLEMENTED_BY = define("ImplementedBy")
-			.targets(SCRIPT, EXPORT_DECLARATION, EXPORTABLE_ELEMENT).args(STRING_LITERAL).end();
 
 	/**
 	 * 11.1.3. Implementation of External Declarations

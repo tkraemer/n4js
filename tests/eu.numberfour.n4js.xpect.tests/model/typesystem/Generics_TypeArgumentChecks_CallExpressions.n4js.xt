@@ -12,6 +12,8 @@ class C extends B {}
 //
 
 function f() {}
+
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 function <T extends B> fg() {}
 
 // XPECT noerrors -->
@@ -38,6 +40,8 @@ fg();
 
 // XPECT noerrors -->
 var fe = function():void{};
+
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 var feg = function<T extends B>():void{};
 
 // XPECT noerrors -->
@@ -63,6 +67,8 @@ feg();
 //
 
 var fte : {function():void};
+
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 var fteg : {function<T extends B>():void};
 
 // XPECT noerrors -->

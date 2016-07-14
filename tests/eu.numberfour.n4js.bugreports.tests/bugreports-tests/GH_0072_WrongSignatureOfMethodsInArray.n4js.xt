@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+var arr = ["yup"];
+
+// XPECT type of 'p3' --> Array<string>
+arr.every((p1,p2,p3)=>{return null;});
+
+// XPECT type of 'p3' --> Array<string>
+arr.some((p1,p2,p3)=>{return null;});
+
+// XPECT type of 'p3' --> Array<string>
+arr.forEach((p1,p2,p3)=>{return null;});
+
+// XPECT type of 'p3' --> Array<string>
+arr.map((p1,p2,p3)=>{return null;});
+
+// XPECT type of 'p3' --> Array<string>
+arr.filter((p1,p2,p3)=>{return null;});
+
+// XPECT type of 'p4' --> Array<string>
+arr.reduce((p1,p2,p3,p4)=>{return null;});
+
+// XPECT type of 'p4' --> Array<string>
+arr.reduceRight((p1,p2,p3,p4)=>{return null;});
+

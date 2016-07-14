@@ -472,8 +472,8 @@
 				$makeClass(N4Injector, Object, [], {
 					create: {
 						value: function create___n4(ctor) {
-							var cachedInstances = new Map();
-							return this.internalCreate((ctor), this, cachedInstances);
+							let cachedInstances = new Map();
+							return this.internalCreate(ctor, this, cachedInstances);
 						}
 					},
 					internalCreate: {
@@ -481,32 +481,33 @@
 							if (!ctor) {
 								throw new DIConfigurationError('Requested injection of undefined or null ctor.');
 							}
-							var fqn = ctor.n4type.fqn;
+							let fqn = ctor.n4type.fqn;
 							if (!fqn) {
 								throw new DIConfigurationError('Cannot resolve FQN for ' + ctor + '.');
 							}
 							if (fqn === N4Type.of(this).fqn) {
-								return this;
+								let that = this;
+								return that;
 							}
 							if (fqn === N4Provider.n4type.fqn) {
-								var pMeta = Object.create(null);
+								let pMeta = Object.create(null);
 								pMeta.type = ctor;
 								return this.createAnonymousProvider(pMeta);
 							}
-							var pairInjectorBinding = this.findBinding(ctor);
+							let pairInjectorBinding = this.findBinding(ctor);
 							if (pairInjectorBinding) {
-								var $destruct0 = $sliceToArrayForDestruct((pairInjectorBinding), 2), injector = $destruct0[0], binder = $destruct0[1];
+								let $destruct0 = $sliceToArrayForDestruct((pairInjectorBinding), 2), injector = $destruct0[0], binder = $destruct0[1];
 								if (binder && injector) {
 									return injector.createFromBinder(ctor, binder, delegate, cachedInstances);
 								}
 								throw new DIConfigurationError("Cannot obtain Injector->Binder pair");
 							}
 							if (this.declaredSingleton(ctor)) {
-								var isBindingTarget = this.checkOwnBindingTargets(ctor);
+								let isBindingTarget = this.checkOwnBindingTargets(ctor);
 								if (isBindingTarget) {
 									return this.createNewInjected(ctor, delegate, cachedInstances);
 								}
-								var scopedInstance = this.findScopedInstanceInParentChain(ctor);
+								let scopedInstance = this.findScopedInstanceInParentChain(ctor);
 								if (scopedInstance) {
 									return scopedInstance;
 								}
@@ -520,8 +521,8 @@
 							if (!this.explicitBindings.size) {
 								return false;
 							}
-							for(var bx of this.explicitBindings.values()) {
-								var binderMeta = getBinderMeta(bx.constructor);
+							for(let bx of this.explicitBindings.values()) {
+								let binderMeta = getBinderMeta(bx.constructor);
 								if (binderMeta.bindings.some((function(b) {
 									return b.to === ctor;
 								}).bind(this)) || binderMeta.methodBindings.some((function(m) {
@@ -535,7 +536,7 @@
 					},
 					findScopedInstanceInParentChain: {
 						value: function findScopedInstanceInParentChain___n4(ctor) {
-							var key = getOFQN(ctor);
+							let key = getOFQN(ctor);
 							if (this.scopedInstances.has(key)) {
 								return this.scopedInstances.get(key);
 							}
@@ -568,8 +569,7 @@
 					},
 					createNewNotInjected: {
 						value: function createNewNotInjected___n4(ctor) {
-							var typeInstance = undefined;
-							typeInstance = this.createNew(ctor, []);
+							let typeInstance = this.createNew(ctor, []);
 							if (!typeInstance) {
 								throw new DIConfigurationError('Could not create valid instance for ' + getOFQN(ctor) + '.');
 							}
@@ -586,7 +586,7 @@
 					},
 					findBinding: {
 						value: function findBinding___n4(ctor) {
-							var key = getOFQN(ctor);
+							let key = getOFQN(ctor);
 							if (this.explicitBindings.has(key)) {
 								return [
 									this,
@@ -600,15 +600,15 @@
 					},
 					createFromBinder: {
 						value: function createFromBinder___n4(ctor, binder, delegate, cachedInstances) {
-							var bm = getBinderMeta(binder.constructor);
-							var annotationMappings = bm.bindings.filter((function(k) {
+							let bm = getBinderMeta(binder.constructor);
+							let annotationMappings = bm.bindings.filter((function(k) {
 								return k.from === ctor;
 							}).bind(this));
 							if (annotationMappings.length > 1) {
 								throw new Error("too many mappings for" + ctor);
 							}
 							if (annotationMappings.length === 1) {
-								var target = annotationMappings[0].to;
+								let target = annotationMappings[0].to;
 								if (this === delegate) {
 									if (this.scopedInstances.has(getOFQN(target))) {
 										return this.scopedInstances.get(getOFQN(target));
@@ -619,7 +619,7 @@
 								}
 								return delegate.internalCreate(target, delegate, cachedInstances);
 							}
-							var methodMappings = bm.methodBindings.filter((function(k) {
+							let methodMappings = bm.methodBindings.filter((function(k) {
 								return k.to === ctor;
 							}).bind(this));
 							if (methodMappings.length > 1) {
@@ -649,10 +649,7 @@
 									throw new DIConfigurationError("Tried to create instance from enum" + getOFQN(ctor));
 								}
 							}
-							var args = parameters.slice();
-							args.unshift(null);
-							ctor = Function.prototype.bind.apply(ctor, args);
-							return new ctor();
+							return Reflect.construct(ctor, parameters);
 						}
 					},
 					createFromInjectedTypeMeta: {
@@ -662,7 +659,7 @@
 							}
 							if (meta.type.n4type.fqn === N4Provider.n4type.fqn) {
 								if (!meta.typeVar) {
-									throw new DIConfigurationError('Cannot create provider ' + meta.type + " typeVar is " + meta.typeVar);
+									throw new DIConfigurationError('Cannot create provider ' + meta.type + " typelet is " + meta.typeVar);
 								}
 								return this.createAnonymousProvider(meta.typeVar);
 							}
@@ -671,17 +668,17 @@
 					},
 					createNewInjected: {
 						value: function createNewInjected___n4(ctor, delegate, cachedInstances) {
-							var ofqn = getOFQN(ctor);
+							let ofqn = getOFQN(ctor);
 							if (cachedInstances.has(ofqn)) {
 								return cachedInstances.get(ofqn);
 							}
 							if (this.scopedInstances.has(ofqn)) {
 								return this.scopedInstances.get(ofqn);
 							}
-							var ctorParams = this.getInjectorParams(ctor).map((function(fp) {
+							let ctorParams = this.getInjectorParams(ctor).map((function(fp) {
 								return delegate.createFromInjectedTypeMeta(fp, delegate, new Map(cachedInstances));
 							}).bind(this));
-							var instance = this.createNew(ctor, ctorParams);
+							let instance = this.createNew(ctor, ctorParams);
 							cachedInstances.set(ofqn, instance);
 							delegate.injectDataFields(instance, ctor, new Set(), delegate, cachedInstances);
 							if (this.declaredSingleton(ctor)) {
@@ -693,7 +690,7 @@
 					getInjectorParams: {
 						value: function getInjectorParams___n4(type) {
 							if (hasDIMeta(type)) {
-								var meta = getInjectedClassMeta(type);
+								let meta = getInjectedClassMeta(type);
 								if (meta.injectCtorParams) {
 									return meta.injectCtorParams;
 								}
@@ -707,7 +704,7 @@
 					injectDataFields: {
 						value: function injectDataFields___n4(instance, type, usedNames, delegate, cachedInstances) {
 							if (hasDIMeta(type)) {
-								var meta = getInjectedClassMeta(type);
+								let meta = getInjectedClassMeta(type);
 								meta.fieldsInjectedTypes.forEach((function(f) {
 									if (!usedNames.has(f.name)) {
 										usedNames.add(f.name);
@@ -722,7 +719,7 @@
 					},
 					createProvided: {
 						value: function createProvided___n4(binder, info, delegate, cachedInstances) {
-							var params = info.args.map((function(e) {
+							let params = info.args.map((function(e) {
 								return this.createFromInjectedTypeMeta(e, delegate, cachedInstances);
 							}).bind(this));
 							return ((binder)[info.name]).apply(binder, params);
@@ -730,15 +727,15 @@
 					},
 					createAnonymousProvider: {
 						value: function createAnonymousProvider___n4(meta) {
-							var injector = this;
-							var f;
+							let injector = this;
+							let f;
 							if (!meta.typeVar) {
 								f = function() {
 									return injector.internalCreate(meta.type, injector, new Map());
 								};
 							} else {
 								f = (function() {
-									var p = injector.createAnonymousProvider(meta.typeVar);
+									let p = injector.createAnonymousProvider(meta.typeVar);
 									return function() {
 										return p;
 									};
@@ -762,7 +759,7 @@
 							if (!hasDIMeta(dic)) {
 								return false;
 							}
-							var expectedParent = getDIComponentMeta(dic).parent;
+							let expectedParent = getDIComponentMeta(dic).parent;
 							return expectedParent ? this.isCompatibleWith(expectedParent) : false;
 						}
 					},
@@ -785,15 +782,15 @@
 				}, {
 					prepareBindingsMap: {
 						value: function prepareBindingsMap___n4(providedBinders, expectedBindersTypes) {
-							var bindings = [];
+							let bindings = [];
 							if (expectedBindersTypes) {
-								var expectedBindersMap = new Map();
+								let expectedBindersMap = new Map();
 								expectedBindersTypes.forEach((function(eb) {
 									return expectedBindersMap.set(getOFQN(eb), eb);
 								}).bind(this));
 								providedBinders.forEach((function(bi) {
 									if (bi) {
-										var biType = bi.constructor;
+										let biType = bi.constructor;
 										if (!expectedBindersMap.has(getOFQN(biType))) {
 											throw new DIConfigurationError("provided Binder instance is not of any expected type");
 										}
@@ -802,15 +799,15 @@
 									}
 								}).bind(this));
 								expectedBindersMap.forEach((function(bt) {
-									var _b = new (bt)();
+									let _b = Reflect.construct(bt, []);
 									bindings.push(_b);
 								}).bind(this));
 							}
-							var bindingsMap = new Map();
+							let bindingsMap = new Map();
 							bindings.forEach((function(binder) {
-								var binderType = binder.constructor;
+								let binderType = binder.constructor;
 								if (hasDIMeta(binderType)) {
-									var meta = getBinderMeta(binderType);
+									let meta = getBinderMeta(binderType);
 									meta.bindings.forEach((function(b) {
 										return bindingsMap.set(getOFQN(b.from), binder);
 									}).bind(this));
@@ -824,7 +821,7 @@
 					},
 					expectedParent: {
 						value: function expectedParent___n4(ctorDIC) {
-							var parent = getDIComponentMeta(ctorDIC).parent;
+							let parent = getDIComponentMeta(ctorDIC).parent;
 							if (!parent) {
 								return void (0);
 							}
@@ -833,7 +830,7 @@
 					},
 					checkParent: {
 						value: function checkParent___n4(dic, parent) {
-							var expectedParent = getDIComponentMeta(dic).parent;
+							let expectedParent = getDIComponentMeta(dic).parent;
 							if (parent) {
 								if (!expectedParent) {
 									throw new DIConfigurationError('Injector of ' + getOFQN(dic) + ' expects no parent, but was given ' + parent.dicInfo + '.');
@@ -862,16 +859,16 @@
 					of: {
 						value: function of___n4(type, parent) {
 							var providedBinders = Array.prototype.slice.call(arguments, 2);
-							var dicMeta = N4Injector.getMetaData(type);
+							let dicMeta = N4Injector.getMetaData(type);
 							N4Injector.checkParent(type, parent);
-							var bindings = N4Injector.prepareBindingsMap(providedBinders, dicMeta.binders);
+							let bindings = N4Injector.prepareBindingsMap(providedBinders, dicMeta.binders);
 							return new N4Injector(getOFQN(type), bindings, parent);
 						}
 					},
 					isParentCompatible: {
 						value: function isParentCompatible___n4(injector, dic) {
 							if (injector.parent) {
-								var inj = injector.parent;
+								let inj = injector.parent;
 								return inj.isInjectorOf(dic) || N4Injector.isParentCompatible(inj, dic);
 							}
 							return false;

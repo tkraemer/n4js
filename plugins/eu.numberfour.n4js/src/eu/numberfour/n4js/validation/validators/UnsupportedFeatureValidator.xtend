@@ -20,12 +20,9 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
-import eu.numberfour.n4js.n4JS.N4FieldAccessor
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
-import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
@@ -213,11 +210,7 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private Expression getComputedNameFrom(PropertyNameOwner eobj) {
-		return switch(eobj) {
-			PropertyAssignment: eobj.computeNameFrom
-			N4FieldAccessor: eobj.computeNameFrom
-			N4MethodDeclaration: eobj.computeNameFrom
-		};
+		return eobj?.declaredName?.expression;
 	}
 
 	def private EStructuralFeature getNameFeature(EObject eobj) {

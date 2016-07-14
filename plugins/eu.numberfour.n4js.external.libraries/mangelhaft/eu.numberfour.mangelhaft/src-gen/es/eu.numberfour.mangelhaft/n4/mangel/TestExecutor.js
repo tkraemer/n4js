@@ -2,10 +2,10 @@
 	'use strict';
 	System.register([
 		'eu.numberfour.mangelhaft.assert/n4/mangel/assert/AssertionError',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroup',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ResultGroups',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestResult',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ResultGroup',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ResultGroups',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestResult',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy',
 		'eu.numberfour.mangelhaft.assert/n4/mangel/precondition/PreconditionNotMet'
 	], function($n4Export) {
 		var AssertionError, ResultGroup, ResultGroups, TestResult, TestSpy, PreconditionNotMet, TestExecutor;
@@ -19,17 +19,17 @@
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fassert_u002fAssertionError) {
 					AssertionError = $_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fassert_u002fAssertionError.AssertionError;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroup) {
-					ResultGroup = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroup.ResultGroup;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroup) {
+					ResultGroup = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroup.ResultGroup;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroups) {
-					ResultGroups = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fResultGroups.ResultGroups;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroups) {
+					ResultGroups = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fResultGroups.ResultGroups;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestResult) {
-					TestResult = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestResult.TestResult;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestResult) {
+					TestResult = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestResult.TestResult;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
 				},
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet) {
 					PreconditionNotMet = $_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet.PreconditionNotMet;
@@ -117,99 +117,114 @@
 							}.apply(this, arguments));
 						}
 					},
+					runGroup: {
+						value: function runGroup___n4(iTest) {
+							return $spawn(function*() {
+								let rg, testObject, testRes, testResults = [], beforeAlls = this.getAncestorTestMethods(iTest, "beforeAlls"), befores = this.getAncestorTestMethods(iTest, "befores"), afters = this.getAncestorTestMethods(iTest, "afters").reverse(), afterAlls = this.getAncestorTestMethods(iTest, "afterAlls").reverse(), numTests, ii, start, end;
+								;
+								(yield this.spy.groupStarted.dispatch([
+									iTest
+								]));
+								if (iTest.error) {
+									testResults = (yield this.errorTests(iTest, iTest.error));
+								} else {
+									try {
+										(yield this.callAll(iTest, beforeAlls));
+										numTests = iTest.tests.length;
+										for(ii = 0;ii < numTests;++ii) {
+											testObject = iTest.tests[ii];
+											try {
+												(yield this.spy.testStarted.dispatch([
+													iTest,
+													testObject
+												]));
+												start = new Date().getTime();
+												if (testObject.ignore) {
+													testRes = new TestResult({
+														testStatus: 'SKIPPED_IGNORE',
+														message: testObject.ignoreReason,
+														description: testObject.name
+													});
+												} else {
+													(yield this.callAll(iTest, befores));
+													(yield this.callAll(iTest, [
+														testObject
+													]));
+													testRes = new TestResult({
+														testStatus: 'PASSED',
+														description: testObject.name
+													});
+													(yield this.callAll(iTest, afters));
+												}
+												end = new Date().getTime();
+											} catch(er) {
+												let err = er;
+												end = new Date().getTime();
+												testRes = TestExecutor.generateFailureTestResult(err, testObject.name);
+											}
+											testRes.elapsedTime = end - start;
+											testRes = this.handleFixme(testObject, testRes);
+											(yield this.spy.testFinished.dispatch([
+												iTest,
+												testObject,
+												testRes,
+												(function() {
+													return $spawn(function*() {
+														let allTests = iTest.tests;
+														;
+														iTest.tests = [
+															testObject
+														];
+														try {
+															(yield this.runTestsAsync([
+																iTest
+															]));
+														} finally {
+															iTest.tests = allTests;
+														}
+													}.apply(this, arguments));
+												}).bind(this)
+											]));
+											testResults.push(testRes);
+										}
+										(yield this.callAll(iTest, afterAlls));
+									} catch(error) {
+										let results = (yield this.errorTests(iTest, error));
+										testResults = testResults.concat(results);
+									}
+								}
+								rg = new ResultGroup(testResults, ("" + iTest.name + ""));
+								(yield this.spy.groupFinished.dispatch([
+									iTest,
+									rg
+								]));
+								return rg;
+							}.apply(this, arguments));
+						}
+					},
 					runTestsAsync: {
 						value: function runTestsAsync___n4(instrumentedTests) {
 							return $spawn(function*() {
-								let totalSuccesses = 0, totalFailures = 0, rgs, that = this, ranTestGroups;
-								;
-								var runGroup = function runGroup(iTest) {
-									return $spawn(function*() {
-										let rg, testObject, testRes, testResults = [], beforeAlls = that.getAncestorTestMethods(iTest, "beforeAlls"), befores = that.getAncestorTestMethods(iTest, "befores"), afters = that.getAncestorTestMethods(iTest, "afters").reverse(), afterAlls = that.getAncestorTestMethods(iTest, "afterAlls").reverse(), numTests, ii, start, end;
-										;
-										(yield that.spy.groupStarted.dispatch([
-											iTest
-										]));
-										if (iTest.error) {
-											testResults = (yield that.errorTests(iTest, iTest.error));
-										} else {
-											try {
-												(yield that.callAll(iTest, beforeAlls));
-												numTests = iTest.tests.length;
-												for(ii = 0;ii < numTests;++ii) {
-													testObject = iTest.tests[ii];
-													try {
-														(yield that.spy.testStarted.dispatch([
-															iTest,
-															testObject
-														]));
-														start = new Date().getTime();
-														if (testObject.ignore) {
-															testRes = new TestResult({
-																testStatus: 'SKIPPED_IGNORE',
-																message: testObject.ignoreReason,
-																description: testObject.name
-															});
-														} else {
-															(yield that.callAll(iTest, befores));
-															(yield that.callAll(iTest, [
-																testObject
-															]));
-															testRes = new TestResult({
-																testStatus: 'PASSED',
-																description: testObject.name
-															});
-															(yield that.callAll(iTest, afters));
-														}
-														end = new Date().getTime();
-													} catch(er) {
-														let err = er;
-														end = new Date().getTime();
-														testRes = TestExecutor.generateFailureTestResult(err, testObject.name);
-													}
-													testRes.elapsedTime = end - start;
-													testRes = that.handleFixme(testObject, testRes);
-													(yield that.spy.testFinished.dispatch([
-														iTest,
-														testObject,
-														testRes,
-														(function() {
-															return $spawn(function*() {
-																let allTests = iTest.tests;
-																;
-																iTest.tests = [
-																	testObject
-																];
-																try {
-																	(yield that.runTestsAsync([
-																		iTest
-																	]));
-																} finally {
-																	iTest.tests = allTests;
-																}
-															}.apply(this, arguments));
-														}).bind(this)
-													]));
-													testResults.push(testRes);
-												}
-												(yield that.callAll(iTest, afterAlls));
-											} catch(error) {
-												let results = (yield that.errorTests(iTest, error));
-												testResults = testResults.concat(results);
-											}
-										}
-										rg = new ResultGroup(testResults, iTest.name);
-										(yield that.spy.groupFinished.dispatch([
-											iTest,
-											rg
-										]));
-										return rg;
-									}.apply(this, arguments));
-								};
 								let results = [];
 								for(let test of instrumentedTests) {
 									if (test) {
-										let testRes = (yield runGroup(test));
-										results.push(testRes);
+										if (test.hasParameterizedTests) {
+											let pResults = [];
+											(yield this.spy.parameterizedGroupsStarted.dispatch([
+												test
+											]));
+											for(let ptest of test.parameterizedTests) {
+												let testRes = (yield this.runGroup(ptest));
+												pResults.push(testRes);
+												results.push(testRes);
+											}
+											(yield this.spy.parameterizedGroupsFinished.dispatch([
+												new ResultGroups(pResults)
+											]));
+										} else {
+											let testRes = (yield this.runGroup(test));
+											results.push(testRes);
+										}
 									}
 								}
 								let resultGroups = new ResultGroups(results);
@@ -368,6 +383,12 @@
 								name: 'runTestAsync',
 								isStatic: false,
 								jsFunction: instanceProto['runTestAsync'],
+								annotations: []
+							}),
+							new N4Method({
+								name: 'runGroup',
+								isStatic: false,
+								jsFunction: instanceProto['runGroup'],
 								annotations: []
 							}),
 							new N4Method({

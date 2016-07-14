@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   ResourceSet {
+		ThisFile {}
+		File "input.n4js" {}
+	}   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 10 ---
+import {B as X} from "formatter2/input";
+
+
+X;
+--- */
+import {
+
+
+    B
+
+
+
+    as             
+               X
+} from "formatter2/input";
+
+
+X;

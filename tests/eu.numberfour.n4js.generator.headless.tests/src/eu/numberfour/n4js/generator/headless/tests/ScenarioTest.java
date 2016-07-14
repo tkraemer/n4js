@@ -34,8 +34,8 @@ import com.google.common.base.Splitter;
 
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 import eu.numberfour.n4js.utils.io.FileDeleter;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
  * Test data is organized in txt-files (content concatenated) under "/testdata".

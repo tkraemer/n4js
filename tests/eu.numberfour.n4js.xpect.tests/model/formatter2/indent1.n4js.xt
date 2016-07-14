@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   
+   
+   
+   
+   END_SETUP
+ */
+
+
+/* indent missing indentation */
+/* XPECT formattedLines 5 ---
+interface A {
+	get a()
+	set a(s)
+	m1()
+}
+--- */
+interface A {
+get a()
+set a(s)
+m1()
+}
+
+
+
+/* indent missing indentation, input in single line */
+/* XPECT formattedLines 1 ---
+interface A2 {
+	get a2()
+	set a2(s)
+	m2()
+}
+--- */
+interface A2 { get a2() set a2(s) m2() }
+

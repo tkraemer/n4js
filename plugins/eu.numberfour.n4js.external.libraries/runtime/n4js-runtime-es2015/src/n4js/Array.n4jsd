@@ -24,7 +24,7 @@ export public interface ~ArrayIterator<T> extends Iterator<T> {}
     public findIndex(predicate: {function(T, int, this)}, thisArg: Object?): int;
     public find(predicate: {function(T, int, this)}, thisArg: Object?): T;
 
-    public entries(): IteratorExt<Array<any>>;
+    public entries(): IteratorExt<Iterable2<int, T>>;
     public keys(): IteratorExt<int>;
 }
 

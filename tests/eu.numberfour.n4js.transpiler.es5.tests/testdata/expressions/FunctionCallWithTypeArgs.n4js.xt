@@ -12,6 +12,7 @@ method called
 stderr:
 ==>
 --- */
+// XPECT warnings --> "Type variable U not used in parameters or return type." at "U"
 function <T,U> func(p1 : T, p2 : T): void {
 	console.log(p1, p2)
 }
@@ -20,9 +21,11 @@ class A<X,Y> {
 	constructor(p1 : any, p2 : any) {
 		console.log(p1, p2)
 	}
+	// XPECT warnings --> "Type variable U not used in parameters or return type." at "U"
 	static <T,U> smethod(p1 : T, p2 : T) : void {
 		console.log(p1, p2)
 	}
+	// XPECT warnings --> "Type variable U not used in parameters or return type." at "U"
 	<T,U> method(p1 : T, p2 : T) : void {
 		console.log(p1, p2)
 	}

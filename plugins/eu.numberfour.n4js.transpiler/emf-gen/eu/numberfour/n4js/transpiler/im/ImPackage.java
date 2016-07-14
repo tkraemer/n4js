@@ -709,6 +709,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION_IM__PROPERTY = N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY;
 
 	/**
+	 * The feature id for the '<em><b>Property As Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION_IM__PROPERTY_AS_TEXT = N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY_AS_TEXT;
+
+	/**
 	 * The feature id for the '<em><b>Rewired Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1794,22 +1803,13 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION__LOK = N4JSPackage.N4_GETTER_DECLARATION__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELEGATING_GETTER_DECLARATION__KIND = N4JSPackage.N4_GETTER_DECLARATION__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_GETTER_DECLARATION__NAME = N4JSPackage.N4_GETTER_DECLARATION__NAME;
+	int DELEGATING_GETTER_DECLARATION__DECLARED_NAME = N4JSPackage.N4_GETTER_DECLARATION__DECLARED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
@@ -1864,15 +1864,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_GETTER_DECLARATION__ANNOTATION_LIST = N4JSPackage.N4_GETTER_DECLARATION__ANNOTATION_LIST;
-
-	/**
-	 * The feature id for the '<em><b>Compute Name From</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_GETTER_DECLARATION__COMPUTE_NAME_FROM = N4JSPackage.N4_GETTER_DECLARATION__COMPUTE_NAME_FROM;
 
 	/**
 	 * The feature id for the '<em><b>Delegation Base Type</b></em>' reference.
@@ -2037,15 +2028,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION___GET_ANNOTATIONS = N4JSPackage.N4_GETTER_DECLARATION___GET_ANNOTATIONS;
 
 	/**
-	 * The operation id for the '<em>Get Defined Member</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_GETTER_DECLARATION___GET_DEFINED_MEMBER = N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_MEMBER;
-
-	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2110,22 +2092,13 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_SETTER_DECLARATION__LOK = N4JSPackage.N4_SETTER_DECLARATION__LOK;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELEGATING_SETTER_DECLARATION__KIND = N4JSPackage.N4_SETTER_DECLARATION__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_SETTER_DECLARATION__NAME = N4JSPackage.N4_SETTER_DECLARATION__NAME;
+	int DELEGATING_SETTER_DECLARATION__DECLARED_NAME = N4JSPackage.N4_SETTER_DECLARATION__DECLARED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Defined Setter</b></em>' reference.
@@ -2171,15 +2144,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION__ANNOTATION_LIST = N4JSPackage.N4_SETTER_DECLARATION__ANNOTATION_LIST;
-
-	/**
-	 * The feature id for the '<em><b>Compute Name From</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_SETTER_DECLARATION__COMPUTE_NAME_FROM = N4JSPackage.N4_SETTER_DECLARATION__COMPUTE_NAME_FROM;
 
 	/**
 	 * The feature id for the '<em><b>Delegation Base Type</b></em>' reference.
@@ -2342,15 +2306,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION___GET_ANNOTATIONS = N4JSPackage.N4_SETTER_DECLARATION___GET_ANNOTATIONS;
-
-	/**
-	 * The operation id for the '<em>Get Defined Member</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_SETTER_DECLARATION___GET_DEFINED_MEMBER = N4JSPackage.N4_SETTER_DECLARATION___GET_DEFINED_MEMBER;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -2516,31 +2471,13 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION__BOGUS_TYPE_REF = N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF;
 
 	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * The feature id for the '<em><b>Declared Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELEGATING_METHOD_DECLARATION__KIND = N4JSPackage.N4_METHOD_DECLARATION__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION__NAME = N4JSPackage.N4_METHOD_DECLARATION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Compute Name From</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION__COMPUTE_NAME_FROM = N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM;
+	int DELEGATING_METHOD_DECLARATION__DECLARED_NAME = N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Delegation Base Type</b></em>' reference.
@@ -2642,15 +2579,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = N4JSPackage.N4_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
 
 	/**
-	 * The operation id for the '<em>Get Name</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION___GET_NAME = N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
-
-	/**
 	 * The operation id for the '<em>Get Local Arguments Variable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2669,13 +2597,13 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION___IS_ASYNC = N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC;
 
 	/**
-	 * The operation id for the '<em>Get Defined Member</em>' operation.
+	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELEGATING_METHOD_DECLARATION___GET_DEFINED_MEMBER = N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_MEMBER;
+	int DELEGATING_METHOD_DECLARATION___GET_NAME = N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.

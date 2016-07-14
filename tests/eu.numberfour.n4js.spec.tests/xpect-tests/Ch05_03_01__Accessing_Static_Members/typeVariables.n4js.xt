@@ -84,7 +84,10 @@ class C<T> {
 
 	// but not:
 	
-	// XPECT errors --> "The type variable T cannot be accessed from a static context." at "T"
+	/* XPECT issues ---
+		"The type variable T cannot be accessed from a static context." at "T"
+		"Type variable U not used in parameters or return type." at "U"
+	--- */
 	static <U> m6(t : T) : void {}
 
 
