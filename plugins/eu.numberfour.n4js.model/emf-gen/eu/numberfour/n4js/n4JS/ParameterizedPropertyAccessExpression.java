@@ -20,6 +20,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression#getTarget <em>Target</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression#getProperty <em>Property</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression#getPropertyAsText <em>Property As Text</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.n4JS.N4JSPackage#getParameterizedPropertyAccessExpression()
@@ -78,6 +79,32 @@ public interface ParameterizedPropertyAccessExpression extends Expression, Param
 	 * @generated
 	 */
 	void setProperty(IdentifiableElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Property As Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Property As Text</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Property As Text</em>' attribute.
+	 * @see #setPropertyAsText(String)
+	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getParameterizedPropertyAccessExpression_PropertyAsText()
+	 * @model unique="false" transient="true"
+	 * @generated
+	 */
+	String getPropertyAsText();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression#getPropertyAsText <em>Property As Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Property As Text</em>' attribute.
+	 * @see #getPropertyAsText()
+	 * @generated
+	 */
+	void setPropertyAsText(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

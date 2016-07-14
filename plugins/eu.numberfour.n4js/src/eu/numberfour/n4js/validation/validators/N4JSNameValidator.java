@@ -35,7 +35,6 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRU
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.DISCOURAGED_CHARACTERS;
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.FUTURE_RESERVED_WORDS;
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.GETTER_SETTER;
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.KEYWORDS;
 
 import java.util.Collection;
 
@@ -56,6 +55,7 @@ import eu.numberfour.n4js.n4JS.Variable;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.N4JSLanguageHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
 
@@ -63,6 +63,9 @@ import eu.numberfour.n4js.validation.JavaScriptVariant;
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
  */
 public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
+
+	@Inject
+	private N4JSLanguageHelper languageHelper;
 
 	@Inject
 	private N4JSTypeSystem ts;
@@ -91,12 +94,12 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (Character.isUpperCase(n4TypeDeclaration.getName().charAt(0))) {
 			return;
 		}
-
-		if (holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword", KEYWORDS) //
-				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "getter/setter", GETTER_SETTER) //
+		if (holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "getter/setter", GETTER_SETTER) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "access modifier", ACCESS_MODIFIERS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "boolean literal", BOOLEAN_LITERALS) //
 				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "base type", BASE_TYPES) //
+				&& holdsTypeNameNotIndistinguishable(n4TypeDeclaration, "keyword",
+						languageHelper.getECMAKeywords())
 				&& holdsDoesNotStartWithLowerCaseLetter(n4TypeDeclaration)) {
 			// error messages are created with in constraint validation
 		}

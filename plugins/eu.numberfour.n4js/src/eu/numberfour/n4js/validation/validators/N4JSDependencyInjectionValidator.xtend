@@ -203,7 +203,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 					val currentName = currentType.name;
 					val superName = injectedParentInjectors.get(0)?.containingType?.name;
 					addIssue(getMessageForDI_CTOR_BREAKS_INJECTION_CHAIN(superName, currentName),
-						ctor, PROPERTY_NAME_OWNER__NAME, DI_CTOR_BREAKS_INJECTION_CHAIN
+						ctor, PROPERTY_NAME_OWNER__DECLARED_NAME, DI_CTOR_BREAKS_INJECTION_CHAIN
 					)
 					return false;
 				}
@@ -729,7 +729,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 			val isVoidOrOptional = TypeUtils.isVoid(retTR) || TypeUtils.isOptional(retTR)
 			if(isVoidOrOptional) {
 				addIssue(messageForDI_ANN_PROVIDES_METHOD_MUST_RETURN_VALUE,
-					methodDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, DI_ANN_PROVIDES_METHOD_MUST_RETURN_VALUE);
+					methodDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, DI_ANN_PROVIDES_METHOD_MUST_RETURN_VALUE);
 				return false;
 			}
 			return ann.holdsIsInjectableType(tMethod.returnTypeRef)

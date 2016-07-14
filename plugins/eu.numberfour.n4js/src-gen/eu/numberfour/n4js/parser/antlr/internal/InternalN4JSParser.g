@@ -14300,7 +14300,11 @@ rulePropertyAssignment returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?ruleLiteralOrComputedPropertyName[null]
+)?(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>
     { 
@@ -14546,10 +14550,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleLiteralOrComputedPropertyName[null]
+    |((
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>
     { 
@@ -14598,7 +14610,11 @@ norm1_PropertyAssignment returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?norm1_LiteralOrComputedPropertyName[null]
+)?(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>
     { 
@@ -14844,10 +14860,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(norm1_LiteralOrComputedPropertyName[null]
+    |((
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>
     { 
@@ -14903,7 +14927,11 @@ ruleAnnotatedPropertyAssignment returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?ruleLiteralOrComputedPropertyName[null]
+)?(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>((
     {
@@ -14929,19 +14957,25 @@ Colon
 	    }
 
 )
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_3=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_3.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2_0()); 
+	    }
+		lv_declaredName_3_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_3_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_4=Colon
     {
     	newLeafNode(otherlv_4, grammarAccess.getAnnotatedPropertyAssignmentAccess().getColonKeyword_1_0_0_0_3());
@@ -15347,17 +15381,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_11=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_11.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2_0()); 
+	    }
+		lv_declaredName_11_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_11_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_12=LeftParenthesis
     {
@@ -15420,10 +15460,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleLiteralOrComputedPropertyName[null]
+    |((
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -15477,19 +15525,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_0_1_0()); 
+	    }
+		lv_declaredName_20_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_20_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_20=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_20.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -15504,19 +15558,25 @@ LeftParenthesis
         afterParserOrEnumRuleCall();
     }
 ))
-    |(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_1_0()); 
-    }
-    this_LiteralOrComputedPropertyName_22=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_22.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+    |((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_1_0_0()); 
+	    }
+		lv_declaredName_22_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_22_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -15628,7 +15688,11 @@ norm1_AnnotatedPropertyAssignment returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?norm1_LiteralOrComputedPropertyName[null]
+)?(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>((
     {
@@ -15654,19 +15718,25 @@ Colon
 	    }
 
 )
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_3=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_3.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_0_0_0_2_0()); 
+	    }
+		lv_declaredName_3_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_3_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_4=Colon
     {
     	newLeafNode(otherlv_4, grammarAccess.getAnnotatedPropertyAssignmentAccess().getColonKeyword_1_0_0_0_3());
@@ -16072,17 +16142,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_11=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_11.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2_0()); 
+	    }
+		lv_declaredName_11_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_11_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_12=LeftParenthesis
     {
@@ -16145,10 +16221,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(norm1_LiteralOrComputedPropertyName[null]
+    |((
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -16202,19 +16286,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_0_1_0()); 
+	    }
+		lv_declaredName_20_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_20_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_20=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_20.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -16229,19 +16319,25 @@ LeftParenthesis
         afterParserOrEnumRuleCall();
     }
 ))
-    |(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedPropertyAssignmentRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_1_0()); 
-    }
-    this_LiteralOrComputedPropertyName_22=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_22.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+    |((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_3_0_0_3_1_0_0()); 
+	    }
+		lv_declaredName_22_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedPropertyAssignmentRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_22_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -16359,10 +16455,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleLiteralOrComputedPropertyName[null]
+    |((
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -16416,19 +16520,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0_1_0()); 
+	    }
+		lv_declaredName_4_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyMethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_4_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyMethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_4=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_4.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -16443,19 +16553,25 @@ LeftParenthesis
         afterParserOrEnumRuleCall();
     }
 ))
-    |(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyMethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3_1_0()); 
-    }
-    this_LiteralOrComputedPropertyName_6=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_6.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+    |((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_1_0_0()); 
+	    }
+		lv_declaredName_6_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyMethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_6_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -16499,10 +16615,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(norm1_LiteralOrComputedPropertyName[null]
+    |((
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -16556,19 +16680,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0_1_0()); 
+	    }
+		lv_declaredName_4_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyMethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_4_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyMethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_4=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_4.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -16583,19 +16713,25 @@ LeftParenthesis
         afterParserOrEnumRuleCall();
     }
 ))
-    |(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyMethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3_1_0()); 
-    }
-    this_LiteralOrComputedPropertyName_6=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_6.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+    |((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyMethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_1_0_0()); 
+	    }
+		lv_declaredName_6_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyMethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_6_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -16640,7 +16776,11 @@ rulePropertyNameValuePair returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?ruleLiteralOrComputedPropertyName[null]
+)?(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>((
     {
@@ -16666,19 +16806,25 @@ Colon
 	    }
 
 )
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyNameValuePairRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyNameValuePairAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyNameValuePairAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_declaredName_2_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyNameValuePairRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_3=Colon
     {
     	newLeafNode(otherlv_3, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_3());
@@ -16719,7 +16865,11 @@ norm1_PropertyNameValuePair returns [EObject current=null]
 (
 ruleTypeRefWithModifiers
 )
-)?norm1_LiteralOrComputedPropertyName[null]
+)?(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 Colon
 ))=>((
     {
@@ -16745,19 +16895,25 @@ Colon
 	    }
 
 )
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertyNameValuePairRule());
-		}
-        newCompositeNode(grammarAccess.getPropertyNameValuePairAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertyNameValuePairAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_declaredName_2_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertyNameValuePairRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_3=Colon
     {
     	newLeafNode(otherlv_3, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_3());
@@ -17408,17 +17564,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertySetterDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertySetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertySetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_declaredName_2_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertySetterDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_3=LeftParenthesis
     {
@@ -17822,17 +17984,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getPropertySetterDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getPropertySetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPropertySetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0()); 
+	    }
+		lv_declaredName_2_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPropertySetterDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_3=LeftParenthesis
     {
@@ -27504,98 +27672,6 @@ ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
-// Entry rule entryRuleSymbolLiteralComputedName
-entryRuleSymbolLiteralComputedName returns [String current=null] 
-:
-	{ newCompositeNode(grammarAccess.getSymbolLiteralComputedNameRule()); } 
-	 iv_ruleSymbolLiteralComputedName=ruleSymbolLiteralComputedName 
-	 { $current=$iv_ruleSymbolLiteralComputedName.current.getText(); }  
-	 EOF 
-;
-
-// Rule SymbolLiteralComputedName
-ruleSymbolLiteralComputedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule();
-    }:
-(
-    { 
-        newCompositeNode(grammarAccess.getSymbolLiteralComputedNameAccess().getBindingIdentifierParserRuleCall_0()); 
-    }
-    this_BindingIdentifier_0=ruleBindingIdentifier    {
-		$current.merge(this_BindingIdentifier_0);
-    }
-
-    { 
-        afterParserOrEnumRuleCall();
-    }
-(
-	kw=FullStop 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSymbolLiteralComputedNameAccess().getFullStopKeyword_1_0()); 
-    }
-
-    { 
-        newCompositeNode(grammarAccess.getSymbolLiteralComputedNameAccess().getIdentifierNameParserRuleCall_1_1()); 
-    }
-    this_IdentifierName_2=ruleIdentifierName    {
-		$current.merge(this_IdentifierName_2);
-    }
-
-    { 
-        afterParserOrEnumRuleCall();
-    }
-)?)
-    ;
-
-
-
-
-
-
-// Rule SymbolLiteralComputedName
-norm1_SymbolLiteralComputedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule();
-    }:
-(
-    { 
-        newCompositeNode(grammarAccess.getSymbolLiteralComputedNameAccess().getBindingIdentifierParserRuleCall_0()); 
-    }
-    this_BindingIdentifier_0=norm1_BindingIdentifier    {
-		$current.merge(this_BindingIdentifier_0);
-    }
-
-    { 
-        afterParserOrEnumRuleCall();
-    }
-(
-	kw=FullStop 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSymbolLiteralComputedNameAccess().getFullStopKeyword_1_0()); 
-    }
-
-    { 
-        newCompositeNode(grammarAccess.getSymbolLiteralComputedNameAccess().getIdentifierNameParserRuleCall_1_1()); 
-    }
-    this_IdentifierName_2=ruleIdentifierName    {
-		$current.merge(this_IdentifierName_2);
-    }
-
-    { 
-        afterParserOrEnumRuleCall();
-    }
-)?)
-    ;
-
-
-
-
-
 // Entry rule entryRuleREGEX_LITERAL
 entryRuleREGEX_LITERAL returns [String current=null] 
 :
@@ -29665,10 +29741,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]ruleLiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>
     { 
@@ -29964,10 +30048,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]norm1_LiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>
     { 
@@ -30459,17 +30551,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3()); 
-    }
-    this_LiteralOrComputedPropertyName_9=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_9.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3_0()); 
+	    }
+		lv_declaredName_9_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_9_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_10=LeftParenthesis
     {
@@ -30537,10 +30635,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]ruleLiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -30606,19 +30712,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_0_1_0()); 
+	    }
+		lv_declaredName_20_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_20_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_20=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_20.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -30645,19 +30757,25 @@ LeftParenthesis
         $current = $this_AsyncNoTrailingLineBreak_22.current;
         afterParserOrEnumRuleCall();
     }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_1_1_0()); 
+	    }
+		lv_declaredName_23_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_23_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_1_1()); 
-    }
-    this_LiteralOrComputedPropertyName_23=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_23.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -31148,17 +31266,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3()); 
-    }
-    this_LiteralOrComputedPropertyName_9=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_9.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_1_0_0_3_0()); 
+	    }
+		lv_declaredName_9_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_9_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_10=LeftParenthesis
     {
@@ -31226,10 +31350,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]norm1_LiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -31295,19 +31427,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_0_1_0()); 
+	    }
+		lv_declaredName_20_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_20_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_20=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_20.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -31334,19 +31472,25 @@ LeftParenthesis
         $current = $this_AsyncNoTrailingLineBreak_22.current;
         afterParserOrEnumRuleCall();
     }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_1_1_0()); 
+	    }
+		lv_declaredName_23_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAnnotatedN4MemberDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_23_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getAnnotatedN4MemberDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_4_1_1()); 
-    }
-    this_LiteralOrComputedPropertyName_23=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_23.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -31392,573 +31536,6 @@ LeftParenthesis
 
 
 
-// Rule LiteralOrComputedPropertyName
-ruleLiteralOrComputedPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_name_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_name_1_0=RULE_STRING
-		{
-			newLeafNode(lv_name_1_0, grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((((((
-(
-ruleSymbolLiteralComputedName
-)
-)
-    |(
-(
-ruleStringLiteralAsName
-)
-))
-RightSquareBracket
-))=>(((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0_0_0_0()); 
-	    }
-		lv_name_4_0=ruleSymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameStringLiteralAsNameParserRuleCall_3_1_0_0_0_1_0()); 
-	    }
-		lv_name_5_0=ruleStringLiteralAsName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_5_0, 
-        		"eu.numberfour.n4js.N4JS.StringLiteralAsName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_1_0_0_1());
-    }
-))
-    |((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getComputeNameFromAssignmentExpressionParserRuleCall_3_1_1_0_0()); 
-	    }
-		lv_computeNameFrom_7_0=norm1_AssignmentExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"computeNameFrom",
-        		lv_computeNameFrom_7_0, 
-        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-	otherlv_8=RightSquareBracket
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_1_1_1());
-    }
-))))
-;
-
-
-
-
-
-
-// Rule LiteralOrComputedPropertyName
-norm1_LiteralOrComputedPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_name_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_name_1_0=RULE_STRING
-		{
-			newLeafNode(lv_name_1_0, grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((((((
-(
-norm1_SymbolLiteralComputedName
-)
-)
-    |(
-(
-ruleStringLiteralAsName
-)
-))
-RightSquareBracket
-))=>(((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0_0_0_0()); 
-	    }
-		lv_name_4_0=norm1_SymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getNameStringLiteralAsNameParserRuleCall_3_1_0_0_0_1_0()); 
-	    }
-		lv_name_5_0=ruleStringLiteralAsName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_5_0, 
-        		"eu.numberfour.n4js.N4JS.StringLiteralAsName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_1_0_0_1());
-    }
-))
-    |((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getComputeNameFromAssignmentExpressionParserRuleCall_3_1_1_0_0()); 
-	    }
-		lv_computeNameFrom_7_0=norm3_AssignmentExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"computeNameFrom",
-        		lv_computeNameFrom_7_0, 
-        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-	otherlv_8=RightSquareBracket
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_1_1_1());
-    }
-))))
-;
-
-
-
-
-
-
-// Rule LiteralPropertyName
-ruleLiteralPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_name_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_name_1_0=RULE_STRING
-		{
-			newLeafNode(lv_name_1_0, grammarAccess.getLiteralPropertyNameAccess().getNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0()); 
-	    }
-		lv_name_4_0=ruleSymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameStringLiteralAsNameParserRuleCall_3_1_1_0()); 
-	    }
-		lv_name_5_0=ruleStringLiteralAsName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_5_0, 
-        		"eu.numberfour.n4js.N4JS.StringLiteralAsName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralPropertyNameAccess().getRightSquareBracketKeyword_3_2());
-    }
-))
-;
-
-
-
-
-
-
-// Rule LiteralPropertyName
-norm1_LiteralPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_name_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_name_1_0=RULE_STRING
-		{
-			newLeafNode(lv_name_1_0, grammarAccess.getLiteralPropertyNameAccess().getNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_name_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0()); 
-	    }
-		lv_name_4_0=norm1_SymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralPropertyNameAccess().getNameStringLiteralAsNameParserRuleCall_3_1_1_0()); 
-	    }
-		lv_name_5_0=ruleStringLiteralAsName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"name",
-        		lv_name_5_0, 
-        		"eu.numberfour.n4js.N4JS.StringLiteralAsName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralPropertyNameAccess().getRightSquareBracketKeyword_3_2());
-    }
-))
-;
-
-
-
-
-
-// Entry rule entryRuleStringLiteralAsName
-entryRuleStringLiteralAsName returns [String current=null] 
-:
-	{ newCompositeNode(grammarAccess.getStringLiteralAsNameRule()); } 
-	 iv_ruleStringLiteralAsName=ruleStringLiteralAsName 
-	 { $current=$iv_ruleStringLiteralAsName.current.getText(); }  
-	 EOF 
-;
-
-// Rule StringLiteralAsName
-ruleStringLiteralAsName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule();
-    }:
-    this_STRING_0=RULE_STRING    {
-		$current.merge(this_STRING_0);
-    }
-
-    { 
-    newLeafNode(this_STRING_0, grammarAccess.getStringLiteralAsNameAccess().getSTRINGTerminalRuleCall()); 
-    }
-
-    ;
-
-
-
-
-
-
 // Rule FieldDeclarationImpl
 ruleFieldDeclarationImpl [EObject in_current] returns [EObject current=in_current] 
     @init { enterRule(); 
@@ -31994,19 +31571,25 @@ ruleFieldDeclarationImpl [EObject in_current] returns [EObject current=in_curren
         $current = $this_BogusTypeRefFragment_1.current;
         afterParserOrEnumRuleCall();
     }
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getFieldDeclarationImplRule());
-		}
-        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getLiteralPropertyNameParserRuleCall_2()); 
-    }
-    this_LiteralPropertyName_2=ruleLiteralPropertyName[$current]
-    {
-        $current = $this_LiteralPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
 (
+		{ 
+	        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_2_0()); 
+	    }
+		lv_declaredName_2_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFieldDeclarationImplRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
     { 
 		if ($current==null) {
 			$current = createModelElement(grammarAccess.getFieldDeclarationImplRule());
@@ -32092,19 +31675,25 @@ norm1_FieldDeclarationImpl [EObject in_current] returns [EObject current=in_curr
         $current = $this_BogusTypeRefFragment_1.current;
         afterParserOrEnumRuleCall();
     }
-)?
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getFieldDeclarationImplRule());
-		}
-        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getLiteralPropertyNameParserRuleCall_2()); 
-    }
-    this_LiteralPropertyName_2=norm1_LiteralPropertyName[$current]
-    {
-        $current = $this_LiteralPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+)?(
 (
+		{ 
+	        newCompositeNode(grammarAccess.getFieldDeclarationImplAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_2_0()); 
+	    }
+		lv_declaredName_2_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFieldDeclarationImplRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
     { 
 		if ($current==null) {
 			$current = createModelElement(grammarAccess.getFieldDeclarationImplRule());
@@ -32250,10 +31839,18 @@ Asterisk
 
 
 )
-)ruleLiteralOrComputedPropertyName[null]
+)(
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]ruleLiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -32319,19 +31916,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_4_0_1_0()); 
+	    }
+		lv_declaredName_5_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4MethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_5_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4MethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_4_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_5=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_5.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -32358,19 +31961,25 @@ LeftParenthesis
         $current = $this_AsyncNoTrailingLineBreak_7.current;
         afterParserOrEnumRuleCall();
     }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_4_1_1_0()); 
+	    }
+		lv_declaredName_8_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4MethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_8_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4MethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_4_1_1()); 
-    }
-    this_LiteralOrComputedPropertyName_8=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_8.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -32414,10 +32023,18 @@ Asterisk
 
 
 )
-)norm1_LiteralOrComputedPropertyName[null]
+)(
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 )
-    |(ruleAsyncNoTrailingLineBreak[null]norm1_LiteralOrComputedPropertyName[null]
+    |(ruleAsyncNoTrailingLineBreak[null](
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 LeftParenthesis
 ))))=>((
     {
@@ -32483,19 +32100,25 @@ LeftParenthesis
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_4_0_1_0()); 
+	    }
+		lv_declaredName_5_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4MethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_5_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4MethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_4_0_1()); 
-    }
-    this_LiteralOrComputedPropertyName_5=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_5.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)((
 LeftParenthesis
 )=>
     { 
@@ -32522,19 +32145,25 @@ LeftParenthesis
         $current = $this_AsyncNoTrailingLineBreak_7.current;
         afterParserOrEnumRuleCall();
     }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_4_1_1_0()); 
+	    }
+		lv_declaredName_8_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4MethodDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_8_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4MethodDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4MethodDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_4_1_1()); 
-    }
-    this_LiteralOrComputedPropertyName_8=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_8.current;
-        afterParserOrEnumRuleCall();
-    }
-((
+)
+)((
 LeftParenthesis
 )=>
     { 
@@ -33178,17 +32807,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getGetterHeaderRule());
-		}
-        newCompositeNode(grammarAccess.getGetterHeaderAccess().getLiteralOrComputedPropertyNameParserRuleCall_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getGetterHeaderAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_2_0()); 
+	    }
+		lv_declaredName_2_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getGetterHeaderRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )
 	otherlv_3=LeftParenthesis
     {
@@ -33370,17 +33005,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getGetterHeaderRule());
-		}
-        newCompositeNode(grammarAccess.getGetterHeaderAccess().getLiteralOrComputedPropertyNameParserRuleCall_2()); 
-    }
-    this_LiteralOrComputedPropertyName_2=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_2.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getGetterHeaderAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_2_0()); 
+	    }
+		lv_declaredName_2_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getGetterHeaderRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_2_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )
 	otherlv_3=LeftParenthesis
     {
@@ -33787,17 +33428,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4SetterDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4SetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3()); 
-    }
-    this_LiteralOrComputedPropertyName_3=ruleLiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_3.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4SetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0()); 
+	    }
+		lv_declaredName_3_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4SetterDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_3_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_4=LeftParenthesis
     {
@@ -34228,17 +33875,23 @@ Out
  | 
 LeftSquareBracket
  | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getN4SetterDeclarationRule());
-		}
-        newCompositeNode(grammarAccess.getN4SetterDeclarationAccess().getLiteralOrComputedPropertyNameParserRuleCall_0_0_3()); 
-    }
-    this_LiteralOrComputedPropertyName_3=norm1_LiteralOrComputedPropertyName[$current]
-    {
-        $current = $this_LiteralOrComputedPropertyName_3.current;
-        afterParserOrEnumRuleCall();
-    }
+(
+		{ 
+	        newCompositeNode(grammarAccess.getN4SetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_3_0()); 
+	    }
+		lv_declaredName_3_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getN4SetterDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_3_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 )))
 	otherlv_4=LeftParenthesis
     {
@@ -34800,21 +34453,31 @@ ruleBindingProperty returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(((((ruleLiteralBindingPropertyName[null]
+((((((
+(
+ruleLiteralOrComputedPropertyName
+)
+)
 Colon
-))=>(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getBindingPropertyRule());
-		}
-        newCompositeNode(grammarAccess.getBindingPropertyAccess().getLiteralBindingPropertyNameParserRuleCall_0_0_0_0()); 
-    }
-    this_LiteralBindingPropertyName_0=ruleLiteralBindingPropertyName[$current]
-    {
-        $current = $this_LiteralBindingPropertyName_0.current;
-        afterParserOrEnumRuleCall();
-    }
+))=>((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getBindingPropertyAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_0_0_0()); 
+	    }
+		lv_declaredName_0_0=ruleLiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBindingPropertyRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_0_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_1=Colon
     {
     	newLeafNode(otherlv_1, grammarAccess.getBindingPropertyAccess().getColonKeyword_0_0_0_1());
@@ -34869,21 +34532,31 @@ norm1_BindingProperty returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(((((norm1_LiteralBindingPropertyName[null]
+((((((
+(
+norm1_LiteralOrComputedPropertyName
+)
+)
 Colon
-))=>(
-    { 
-		if ($current==null) {
-			$current = createModelElement(grammarAccess.getBindingPropertyRule());
-		}
-        newCompositeNode(grammarAccess.getBindingPropertyAccess().getLiteralBindingPropertyNameParserRuleCall_0_0_0_0()); 
-    }
-    this_LiteralBindingPropertyName_0=norm1_LiteralBindingPropertyName[$current]
-    {
-        $current = $this_LiteralBindingPropertyName_0.current;
-        afterParserOrEnumRuleCall();
-    }
+))=>((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getBindingPropertyAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_0_0_0()); 
+	    }
+		lv_declaredName_0_0=norm1_LiteralOrComputedPropertyName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBindingPropertyRule());
+	        }
+       		set(
+       			$current, 
+       			"declaredName",
+        		lv_declaredName_0_0, 
+        		"eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
+	        afterParserOrEnumRuleCall();
+	    }
 
+)
+)
 	otherlv_1=Colon
     {
     	newLeafNode(otherlv_1, grammarAccess.getBindingPropertyAccess().getColonKeyword_0_0_0_1());
@@ -34931,240 +34604,6 @@ Colon
 
 
 
-
-
-
-
-
-
-// Rule LiteralBindingPropertyName
-ruleLiteralBindingPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_declaredName_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_declaredName_1_0=RULE_STRING
-		{
-			newLeafNode(lv_declaredName_1_0, grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_declaredName_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralBindingPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0()); 
-	    }
-		lv_declaredName_4_0=ruleSymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_declaredName_5_0=RULE_STRING
-		{
-			newLeafNode(lv_declaredName_5_0, grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSTRINGTerminalRuleCall_3_1_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_5_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralBindingPropertyNameAccess().getRightSquareBracketKeyword_3_2());
-    }
-))
-;
-
-
-
-
-
-
-// Rule LiteralBindingPropertyName
-norm1_LiteralBindingPropertyName [EObject in_current] returns [EObject current=in_current] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameIdentifierNameParserRuleCall_0_0()); 
-	    }
-		lv_declaredName_0_0=ruleIdentifierName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_0_0, 
-        		"eu.numberfour.n4js.N4JS.IdentifierName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_declaredName_1_0=RULE_STRING
-		{
-			newLeafNode(lv_declaredName_1_0, grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_1_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-)
-    |(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameNumericLiteralAsStringParserRuleCall_2_0()); 
-	    }
-		lv_declaredName_2_0=ruleNumericLiteralAsString		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_2_0, 
-        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-	otherlv_3=LeftSquareBracket
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLiteralBindingPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
-    }
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSymbolLiteralComputedNameParserRuleCall_3_1_0_0()); 
-	    }
-		lv_declaredName_4_0=norm1_SymbolLiteralComputedName		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		set(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_4_0, 
-        		"eu.numberfour.n4js.N4JS.SymbolLiteralComputedName");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)
-    |(
-(
-		lv_declaredName_5_0=RULE_STRING
-		{
-			newLeafNode(lv_declaredName_5_0, grammarAccess.getLiteralBindingPropertyNameAccess().getDeclaredNameSTRINGTerminalRuleCall_3_1_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLiteralBindingPropertyNameRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"declaredName",
-        		lv_declaredName_5_0, 
-        		"eu.numberfour.n4js.N4JS.STRING");
-	    }
-
-)
-))
-	otherlv_6=RightSquareBracket
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLiteralBindingPropertyNameAccess().getRightSquareBracketKeyword_3_2());
-    }
-))
-;
 
 
 
@@ -36083,6 +35522,210 @@ ruleIdentifierName
     	newLeafNode(otherlv_5, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3());
     }
 )
+;
+
+
+
+
+
+// Entry rule entryRuleLiteralOrComputedPropertyName
+entryRuleLiteralOrComputedPropertyName returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameRule()); }
+	 iv_ruleLiteralOrComputedPropertyName=ruleLiteralOrComputedPropertyName 
+	 { $current=$iv_ruleLiteralOrComputedPropertyName.current; } 
+	 EOF 
+;
+
+// Rule LiteralOrComputedPropertyName
+ruleLiteralOrComputedPropertyName returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameIdentifierNameParserRuleCall_0_0()); 
+	    }
+		lv_literalName_0_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"literalName",
+        		lv_literalName_0_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+(
+		lv_literalName_1_0=RULE_STRING
+		{
+			newLeafNode(lv_literalName_1_0, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"literalName",
+        		lv_literalName_1_0, 
+        		"eu.numberfour.n4js.N4JS.STRING");
+	    }
+
+)
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameNumericLiteralAsStringParserRuleCall_2_0()); 
+	    }
+		lv_literalName_2_0=ruleNumericLiteralAsString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"literalName",
+        		lv_literalName_2_0, 
+        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+	otherlv_3=LeftSquareBracket
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getExpressionAssignmentExpressionParserRuleCall_3_1_0()); 
+	    }
+		lv_expression_4_0=norm1_AssignmentExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_4_0, 
+        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_5=RightSquareBracket
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_2());
+    }
+))
+;
+
+
+
+
+
+
+// Rule LiteralOrComputedPropertyName
+norm1_LiteralOrComputedPropertyName returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameIdentifierNameParserRuleCall_0_0()); 
+	    }
+		lv_literalName_0_0=ruleIdentifierName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"literalName",
+        		lv_literalName_0_0, 
+        		"eu.numberfour.n4js.N4JS.IdentifierName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+(
+		lv_literalName_1_0=RULE_STRING
+		{
+			newLeafNode(lv_literalName_1_0, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"literalName",
+        		lv_literalName_1_0, 
+        		"eu.numberfour.n4js.N4JS.STRING");
+	    }
+
+)
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getLiteralNameNumericLiteralAsStringParserRuleCall_2_0()); 
+	    }
+		lv_literalName_2_0=ruleNumericLiteralAsString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"literalName",
+        		lv_literalName_2_0, 
+        		"eu.numberfour.n4js.N4JS.NumericLiteralAsString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+	otherlv_3=LeftSquareBracket
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getLiteralOrComputedPropertyNameAccess().getLeftSquareBracketKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLiteralOrComputedPropertyNameAccess().getExpressionAssignmentExpressionParserRuleCall_3_1_0()); 
+	    }
+		lv_expression_4_0=norm3_AssignmentExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLiteralOrComputedPropertyNameRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_4_0, 
+        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_5=RightSquareBracket
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getLiteralOrComputedPropertyNameAccess().getRightSquareBracketKeyword_3_2());
+    }
+))
 ;
 
 

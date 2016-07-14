@@ -13,6 +13,8 @@ class C extends B {}
 
 class X {
 	m() : void {};
+
+	// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 	<T extends B> mg() : void {};
 }
 var x : X;

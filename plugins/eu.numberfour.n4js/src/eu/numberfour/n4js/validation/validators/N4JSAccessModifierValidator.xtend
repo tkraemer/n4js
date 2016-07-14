@@ -183,15 +183,15 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	def checkFieldConstFinalValidCombinations(N4FieldDeclaration n4field) {
 		if(n4field.const && n4field.declaredStatic) {
 			val msg = getMessageForCLF_FIELD_CONST_STATIC;
-			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_Name, CLF_FIELD_CONST_STATIC);
+			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_STATIC);
 		}
 		else if(n4field.const && n4field.final) {
 			val msg = getMessageForCLF_FIELD_CONST_FINAL;
-			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_Name, CLF_FIELD_CONST_FINAL);
+			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_FINAL);
 		}
 		else if(n4field.final && n4field.declaredStatic) {
 			val msg = getMessageForCLF_FIELD_FINAL_STATIC;
-			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_Name, CLF_FIELD_FINAL_STATIC);
+			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_FINAL_STATIC);
 		}
 	}
 
@@ -203,7 +203,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 		if(n4field.const && n4field.expression===null) {
 			val msg = getMessageForCLF_FIELD_CONST_MISSING_INIT(n4field.name);
-			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_Name, CLF_FIELD_CONST_MISSING_INIT);
+			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_MISSING_INIT);
 		}
 	}
 
@@ -236,12 +236,12 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 		if( replacedByPolyfill ) {
 			finalFieldsWithoutInit.forEach[
 				val msg = getMessageForCLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL(it.name);
-				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_Name,CLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL)
+				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName,CLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL)
 			]
 		} else {
 			finalFieldsWithoutInit.forEach[
 				val msg = getMessageForCLF_FIELD_FINAL_MISSING_INIT(it.name);
-				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_Name,CLF_FIELD_FINAL_MISSING_INIT)
+				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName,CLF_FIELD_FINAL_MISSING_INIT)
 			]
 		}
 	}

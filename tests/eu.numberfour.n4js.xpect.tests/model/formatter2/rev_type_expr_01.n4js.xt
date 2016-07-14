@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 20 ---
+class LooooooooooongC {
+
+	looooooooooooooooongField: LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC
+		& LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC;
+
+	shortField: ~Object with {looooooooooooooooongMember0;
+			looooooooooooooooongMember1; looooooooooooooooongMember2; looooooooooooooooongMember3;};
+
+}
+--- */
+class LooooooooooongC {
+
+    looooooooooooooooongField:
+LooooooooooongC |
+             LooooooooooongC 
+&                        LooooooooooongC |           LooooooooooongC      &
+
+
+LooooooooooongC 
+
+
+                        | LooooooooooongC                   & LooooooooooongC | LooooooooooongC;
+
+
+    shortField:
+~
+
+        Object        
+with { 
+
+    looooooooooooooooongMember0;
+looooooooooooooooongMember1; 
+
+
+looooooooooooooooongMember2;
+                        looooooooooooooooongMember3;
+};
+
+
+}
+

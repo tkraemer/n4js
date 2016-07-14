@@ -10,7 +10,7 @@ package eu.numberfour.n4js.n4JS.impl;
 import com.google.common.base.Objects;
 
 import eu.numberfour.n4js.n4JS.AnnotableElement;
-import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.PropertyAssignment;
@@ -43,63 +43,21 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentAnnotationListImpl#getKind <em>Kind</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentAnnotationListImpl#getName <em>Name</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentAnnotationListImpl#getComputeNameFrom <em>Compute Name From</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyAssignmentAnnotationListImpl#getDeclaredName <em>Declared Name</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationListImpl implements PropertyAssignmentAnnotationList {
 	/**
-	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getKind()
+	 * @see #getDeclaredName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final PropertyNameKind KIND_EDEFAULT = PropertyNameKind.IDENTIFIER;
-
-	/**
-	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKind()
-	 * @generated
-	 * @ordered
-	 */
-	protected PropertyNameKind kind = KIND_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getComputeNameFrom() <em>Compute Name From</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getComputeNameFrom()
-	 * @generated
-	 * @ordered
-	 */
-	protected Expression computeNameFrom;
+	protected LiteralOrComputedPropertyName declaredName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,8 +83,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PropertyNameKind getKind() {
-		return kind;
+	public LiteralOrComputedPropertyName getDeclaredName() {
+		return declaredName;
 	}
 
 	/**
@@ -134,53 +92,11 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setKind(PropertyNameKind newKind) {
-		PropertyNameKind oldKind = kind;
-		kind = newKind == null ? KIND_EDEFAULT : newKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND, oldKind, kind));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Expression getComputeNameFrom() {
-		return computeNameFrom;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComputeNameFrom(Expression newComputeNameFrom, NotificationChain msgs) {
-		Expression oldComputeNameFrom = computeNameFrom;
-		computeNameFrom = newComputeNameFrom;
+	public NotificationChain basicSetDeclaredName(LiteralOrComputedPropertyName newDeclaredName, NotificationChain msgs) {
+		LiteralOrComputedPropertyName oldDeclaredName = declaredName;
+		declaredName = newDeclaredName;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM, oldComputeNameFrom, newComputeNameFrom);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME, oldDeclaredName, newDeclaredName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -191,18 +107,18 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComputeNameFrom(Expression newComputeNameFrom) {
-		if (newComputeNameFrom != computeNameFrom) {
+	public void setDeclaredName(LiteralOrComputedPropertyName newDeclaredName) {
+		if (newDeclaredName != declaredName) {
 			NotificationChain msgs = null;
-			if (computeNameFrom != null)
-				msgs = ((InternalEObject)computeNameFrom).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM, null, msgs);
-			if (newComputeNameFrom != null)
-				msgs = ((InternalEObject)newComputeNameFrom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM, null, msgs);
-			msgs = basicSetComputeNameFrom(newComputeNameFrom, msgs);
+			if (declaredName != null)
+				msgs = ((InternalEObject)declaredName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME, null, msgs);
+			if (newDeclaredName != null)
+				msgs = ((InternalEObject)newDeclaredName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME, null, msgs);
+			msgs = basicSetDeclaredName(newDeclaredName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM, newComputeNameFrom, newComputeNameFrom));
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME, newDeclaredName, newDeclaredName));
 	}
 
 	/**
@@ -229,10 +145,38 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		if (_equals) {
 			return false;
 		}
-		if ((Objects.equal("constructor", this.getName()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
+		boolean _and = false;
+		String _name_1 = this.getName();
+		boolean _equals_1 = Objects.equal("constructor", _name_1);
+		if (!_equals_1) {
+			_and = false;
+		} else {
+			LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+			PropertyNameKind _kind = null;
+			if (_declaredName!=null) {
+				_kind=_declaredName.getKind();
+			}
+			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED);
+			_and = _tripleNotEquals;
+		}
+		if (_and) {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+		String _name = null;
+		if (_declaredName!=null) {
+			_name=_declaredName.getName();
+		}
+		return _name;
 	}
 
 	/**
@@ -252,8 +196,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM:
-				return basicSetComputeNameFrom(null, msgs);
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME:
+				return basicSetDeclaredName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -266,12 +210,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND:
-				return getKind();
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME:
-				return getName();
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM:
-				return getComputeNameFrom();
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME:
+				return getDeclaredName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -284,14 +224,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND:
-				setKind((PropertyNameKind)newValue);
-				return;
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME:
-				setName((String)newValue);
-				return;
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)newValue);
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -305,14 +239,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND:
-				setKind(KIND_EDEFAULT);
-				return;
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)null);
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -326,12 +254,8 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND:
-				return kind != KIND_EDEFAULT;
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM:
-				return computeNameFrom != null;
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME:
+				return declaredName != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -360,8 +284,7 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND: return N4JSPackage.PROPERTY_NAME_OWNER__KIND;
-				case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME: return N4JSPackage.PROPERTY_NAME_OWNER__NAME;
+				case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME: return N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -372,7 +295,6 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == PropertyAssignment.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM: return N4JSPackage.PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}
@@ -403,8 +325,7 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__KIND;
-				case N4JSPackage.PROPERTY_NAME_OWNER__NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -415,7 +336,6 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == PropertyAssignment.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.PROPERTY_ASSIGNMENT__COMPUTE_NAME_FROM: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST__COMPUTE_NAME_FROM;
 				default: return -1;
 			}
 		}
@@ -449,7 +369,7 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER;
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -481,28 +401,12 @@ public class PropertyAssignmentAnnotationListImpl extends AbstractAnnotationList
 				return getDefinedMember();
 			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME:
 				return isValidName();
+			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_NAME:
+				return getName();
 			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (kind: ");
-		result.append(kind);
-		result.append(", name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } //PropertyAssignmentAnnotationListImpl

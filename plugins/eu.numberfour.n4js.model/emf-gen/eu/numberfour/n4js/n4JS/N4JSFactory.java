@@ -522,6 +522,15 @@ public interface N4JSFactory extends EFactory {
 	ObjectLiteral createObjectLiteral();
 
 	/**
+	 * Returns a new object of class '<em>Literal Or Computed Property Name</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Literal Or Computed Property Name</em>'.
+	 * @generated
+	 */
+	LiteralOrComputedPropertyName createLiteralOrComputedPropertyName();
+
+	/**
 	 * Returns a new object of class '<em>Property Assignment Annotation List</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

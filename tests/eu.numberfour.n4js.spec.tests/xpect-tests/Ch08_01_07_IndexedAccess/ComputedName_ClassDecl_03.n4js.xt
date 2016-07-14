@@ -13,7 +13,7 @@ console.log(
 
 interface I extends Iterable<string> {
 	@Override
-	public [System.iterator]() : Iterator<string> { console.log("iterator called"); return null }
+	public [Symbol.iterator]() : Iterator<string> { console.log("iterator called"); return null }
 }
 
 class A implements I {}

@@ -46,7 +46,7 @@ public class N4jscJarUtils {
 	 */
 	public static final String DEFAULT_N4JSC_JAR = "target/n4jsc.jar";
 
-	private static final long PROCESS_TIMEOUT_IN_MINUTES = 30L;
+	private static final long PROCESS_TIMEOUT_IN_MINUTES = 60L;
 
 	/**
 	 * Returns with the absolute file resource representing the location of the {@code n4jsc.jar}. If no location is
@@ -100,6 +100,7 @@ public class N4jscJarUtils {
 		final List<String> cmdline = new ArrayList<>();
 		cmdline.addAll(Arrays.asList(
 				"java",
+				"-Xmx2000m", // TODO make this configurable
 				"-jar", getAbsoluteRunnableN4jsc().getAbsolutePath(),
 				// "--debug", "-v", // generate more output
 				"-t", "allprojects"));

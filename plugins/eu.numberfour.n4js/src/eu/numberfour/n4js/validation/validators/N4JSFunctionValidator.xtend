@@ -42,11 +42,13 @@ import eu.numberfour.n4js.ts.types.TStructSetter
 import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.utils.N4JSLanguageHelper
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
@@ -77,6 +79,9 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	
 	@Inject
 	private HiddenLeafAccess hla;
+	
+	@Inject
+	private N4JSLanguageHelper languageHelper;
 	
 
 	/**
@@ -355,7 +360,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		// at least one leaking control-flow path out of Method w/o returning anything:
 		val highlightFeature = switch accessor {
 			FunctionDeclaration: N4JSPackage.Literals.FUNCTION_DECLARATION__NAME
-			N4MethodDeclaration: N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME
+			N4MethodDeclaration: N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME
 			FunctionExpression: N4JSPackage.Literals.FUNCTION_EXPRESSION__NAME
 			GetterDeclaration: N4JSPackage.Literals.GETTER_DECLARATION__DEFINED_GETTER
 			default: null
@@ -395,7 +400,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "future reserved word")
 				}
 
-				if ('yield' != name && KEYWORDS.contains(name)) {
+				if (N4JSLanguageConstants.YIELD_KEYWORD != name && languageHelper.getECMAKeywords.contains(name)) {
 					errorMessage = getMessageForFUN_NAME_RESERVED(desc, "keyword")
 				}
 			}
@@ -404,7 +409,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!errorMessage.nullOrEmpty) {
 			var feature = switch (definition) {
 				FunctionDeclaration: FUNCTION_DECLARATION__NAME
-				N4MethodDeclaration: PROPERTY_NAME_OWNER__NAME
+				N4MethodDeclaration: PROPERTY_NAME_OWNER__DECLARED_NAME
 				FunctionExpression: FUNCTION_EXPRESSION__NAME
 				default: null
 			}
@@ -740,6 +745,28 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckNotInStaticPolyfillModule(functionDeclaration, this)
 	}
 	
+	/**
+	 * GH-234 add warning for unused type variables in function declarations.
+	 */
+	@Check
+	def checkNoUnusedTypeParameters(FunctionDeclaration functionDeclaration) {
+		internalCheckNoUnusedTypeParameters(functionDeclaration);
+	}
 	
+	/**
+	 * GH-234 add warning for unused type variables in function expressions.
+	 */
+	@Check
+	def checkNoUnusedTypeParameters(FunctionExpression functionExpression) {
+		internalCheckNoUnusedTypeParameters(functionExpression);
+	}
 
+	
+	/**
+	 * GH-234 add warning for unused type variables in function type expressions.
+	 */
+	@Check
+	def checkNoUnusedTypeParameters(FunctionTypeExpression functionTypeExp) {
+		internalCheckNoUnusedTypeParameters(functionTypeExp);
+	}
 }

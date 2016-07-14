@@ -402,7 +402,7 @@ public class PolyfillValidatorFragment {
 
 			// Issue on filled Member-name declaration:
 			String msg = IssueCodes.getMessageForCLF_POLYFILL_MULTIPOLYFILLS_MEMBER_CONFLICT(uris, memberAxis);
-			state.host.addIssue(msg, myMember.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			state.host.addIssue(msg, myMember.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					IssueCodes.CLF_POLYFILL_MULTIPOLYFILLS_MEMBER_CONFLICT);
 		}
 

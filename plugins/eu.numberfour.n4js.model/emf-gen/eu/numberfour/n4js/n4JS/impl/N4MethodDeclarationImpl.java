@@ -19,6 +19,7 @@ import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.GenericDeclaration;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
@@ -27,6 +28,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4Modifier;
+import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
@@ -89,9 +91,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getKind <em>Kind</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getName <em>Name</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getComputeNameFrom <em>Compute Name From</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl#getDeclaredName <em>Declared Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -218,54 +218,14 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	protected TypeRef bogusTypeRef;
 
 	/**
-	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * The cached value of the '{@link #getDeclaredName() <em>Declared Name</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getKind()
+	 * @see #getDeclaredName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final PropertyNameKind KIND_EDEFAULT = PropertyNameKind.IDENTIFIER;
-
-	/**
-	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKind()
-	 * @generated
-	 * @ordered
-	 */
-	protected PropertyNameKind kind = KIND_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getComputeNameFrom() <em>Compute Name From</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getComputeNameFrom()
-	 * @generated
-	 * @ordered
-	 */
-	protected Expression computeNameFrom;
+	protected LiteralOrComputedPropertyName declaredName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -610,8 +570,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PropertyNameKind getKind() {
-		return kind;
+	public LiteralOrComputedPropertyName getDeclaredName() {
+		return declaredName;
 	}
 
 	/**
@@ -619,53 +579,11 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setKind(PropertyNameKind newKind) {
-		PropertyNameKind oldKind = kind;
-		kind = newKind == null ? KIND_EDEFAULT : newKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__KIND, oldKind, kind));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Expression getComputeNameFrom() {
-		return computeNameFrom;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComputeNameFrom(Expression newComputeNameFrom, NotificationChain msgs) {
-		Expression oldComputeNameFrom = computeNameFrom;
-		computeNameFrom = newComputeNameFrom;
+	public NotificationChain basicSetDeclaredName(LiteralOrComputedPropertyName newDeclaredName, NotificationChain msgs) {
+		LiteralOrComputedPropertyName oldDeclaredName = declaredName;
+		declaredName = newDeclaredName;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM, oldComputeNameFrom, newComputeNameFrom);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME, oldDeclaredName, newDeclaredName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -676,18 +594,18 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComputeNameFrom(Expression newComputeNameFrom) {
-		if (newComputeNameFrom != computeNameFrom) {
+	public void setDeclaredName(LiteralOrComputedPropertyName newDeclaredName) {
+		if (newDeclaredName != declaredName) {
 			NotificationChain msgs = null;
-			if (computeNameFrom != null)
-				msgs = ((InternalEObject)computeNameFrom).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			if (newComputeNameFrom != null)
-				msgs = ((InternalEObject)newComputeNameFrom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM, null, msgs);
-			msgs = basicSetComputeNameFrom(newComputeNameFrom, msgs);
+			if (declaredName != null)
+				msgs = ((InternalEObject)declaredName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME, null, msgs);
+			if (newDeclaredName != null)
+				msgs = ((InternalEObject)newDeclaredName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME, null, msgs);
+			msgs = basicSetDeclaredName(newDeclaredName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM, newComputeNameFrom, newComputeNameFrom));
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME, newDeclaredName, newDeclaredName));
 	}
 
 	/**
@@ -720,7 +638,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isCallableConstructor() {
-		return ((null == this.getName()) && (null == this.getComputeNameFrom()));
+		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+		return (_declaredName == null);
 	}
 
 	/**
@@ -744,7 +663,19 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (_equals) {
 			return false;
 		}
-		if (((Objects.equal("constructor", this.getName()) && this.isGenerator()) && (this.getKind() != PropertyNameKind.COMPUTED_FROM_STRING_LITERAL))) {
+		boolean _and = false;
+		if (!(Objects.equal("constructor", this.getName()) && this.isGenerator())) {
+			_and = false;
+		} else {
+			LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+			PropertyNameKind _kind = null;
+			if (_declaredName!=null) {
+				_kind=_declaredName.getKind();
+			}
+			boolean _tripleNotEquals = (_kind != PropertyNameKind.COMPUTED);
+			_and = _tripleNotEquals;
+		}
+		if (_and) {
 			return false;
 		}
 		return true;
@@ -809,6 +740,20 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
+		String _name = null;
+		if (_declaredName!=null) {
+			_name=_declaredName.getName();
+		}
+		return _name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAsync() {
 		return this.isDeclaredAsync();
 	}
@@ -865,8 +810,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return basicSetDeclaredTypeRef(null, msgs);
 			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				return basicSetBogusTypeRef(null, msgs);
-			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
-				return basicSetComputeNameFrom(null, msgs);
+			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME:
+				return basicSetDeclaredName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -900,12 +845,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return getDeclaredTypeRef();
 			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				return getBogusTypeRef();
-			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
-				return getKind();
-			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
-				return getName();
-			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
-				return getComputeNameFrom();
+			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME:
+				return getDeclaredName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -951,14 +892,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				setBogusTypeRef((TypeRef)newValue);
 				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
-				setKind((PropertyNameKind)newValue);
-				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
-				setName((String)newValue);
-				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)newValue);
+			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1002,14 +937,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				setBogusTypeRef((TypeRef)null);
 				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
-				setKind(KIND_EDEFAULT);
-				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
-				setComputeNameFrom((Expression)null);
+			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME:
+				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1043,12 +972,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return declaredTypeRef != null;
 			case N4JSPackage.N4_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				return bogusTypeRef != null;
-			case N4JSPackage.N4_METHOD_DECLARATION__KIND:
-				return kind != KIND_EDEFAULT;
-			case N4JSPackage.N4_METHOD_DECLARATION__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case N4JSPackage.N4_METHOD_DECLARATION__COMPUTE_NAME_FROM:
-				return computeNameFrom != null;
+			case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME:
+				return declaredName != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1107,8 +1032,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (derivedFeatureID) {
-				case N4JSPackage.N4_METHOD_DECLARATION__KIND: return N4JSPackage.PROPERTY_NAME_OWNER__KIND;
-				case N4JSPackage.N4_METHOD_DECLARATION__NAME: return N4JSPackage.PROPERTY_NAME_OWNER__NAME;
+				case N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME: return N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -1174,8 +1098,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseFeatureID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER__KIND: return N4JSPackage.N4_METHOD_DECLARATION__KIND;
-				case N4JSPackage.PROPERTY_NAME_OWNER__NAME: return N4JSPackage.N4_METHOD_DECLARATION__NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER__DECLARED_NAME: return N4JSPackage.N4_METHOD_DECLARATION__DECLARED_NAME;
 				default: return -1;
 			}
 		}
@@ -1194,12 +1117,19 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (baseOperationID) {
+				case N4JSPackage.NAMED_ELEMENT___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
 		if (baseClass == N4MemberDeclaration.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.N4_MEMBER_DECLARATION___GET_DEFINED_TYPE_ELEMENT: return N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT;
 				case N4JSPackage.N4_MEMBER_DECLARATION___IS_STATIC: return N4JSPackage.N4_METHOD_DECLARATION___IS_STATIC;
 				case N4JSPackage.N4_MEMBER_DECLARATION___IS_CONSTRUCTOR: return N4JSPackage.N4_METHOD_DECLARATION___IS_CONSTRUCTOR;
 				case N4JSPackage.N4_MEMBER_DECLARATION___IS_CALLABLE_CONSTRUCTOR: return N4JSPackage.N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR;
+				case N4JSPackage.N4_MEMBER_DECLARATION___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -1245,7 +1175,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		}
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_MEMBER;
+				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_METHOD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -1283,6 +1213,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return existsExplicitSuperCall();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT:
 				return getDefinedTypeElement();
+			case N4JSPackage.N4_METHOD_DECLARATION___GET_NAME:
+				return getName();
 			case N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE:
@@ -1307,10 +1239,6 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		result.append(generator);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);
-		result.append(", kind: ");
-		result.append(kind);
-		result.append(", name: ");
-		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

@@ -30,6 +30,8 @@ import org.xpect.xtext.lib.util.XtextOffsetAdapter.ICrossEReferenceAndEObject;
 
 import com.google.common.base.Joiner;
 
+import eu.numberfour.n4js.n4JS.NamedElement;
+
 /**
  */
 @SuppressWarnings("restriction")
@@ -67,6 +69,10 @@ public class LinkingXpectMethod extends LinkingTest {
 				Object obj = targetObject.eGet(nameFeature);
 				if (obj instanceof String) {
 					segments.push((String) obj);
+				}
+			} else {
+				if (targetObject instanceof NamedElement) {
+					segments.push(((NamedElement) targetObject).getName());
 				}
 			}
 			targetObject = targetObject.eContainer();

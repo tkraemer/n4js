@@ -1,0 +1,44 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+/* */
+/* XPECT formattedLines 300 ---
+var a: ~Object with
+		{fieldA: string?, set bsetter(f: number), set csetter(number), get bgetter(): number, get cgetter(), methodA(), methodB(): ~Object
+			with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [void]};
+class X {
+
+	constructor(@Spec spec: ~i~this with
+				{fieldA: string?, set bsetter(f: number), set csetter(number), get bgetter(): number, get cgetter(), methodA(), methodB(): ~Object
+						with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [void]
+		}) {
+		// ctor body   
+	}
+}
+--- */
+var a: ~Object with {
+    fieldA: string?,
+    set bsetter(f:number),
+    set csetter(number),
+    get bgetter():number,
+    get cgetter(),
+    methodA(),
+    methodB():~Object with { x:string?,y:string?, obj:~i~Object with{sdfljsdf:any}},
+    methodC(...string):[void]
+}
+
+class X {
+    
+    constructor(@Spec spec:~i~this with {
+    fieldA: string?,
+    set bsetter(f:number),
+    set csetter(number),
+    get bgetter():number,
+    get cgetter(),
+    methodA(),
+    methodB():~Object with { x:string?,y:string?, obj:~i~Object with{sdfljsdf:any}},
+    methodC(...string):[void]
+} ){
+     // ctor body   
+    }
+}

@@ -67,8 +67,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
-import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.CONSTRUCTOR
+import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import org.eclipse.xtext.naming.QualifiedName
+import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
@@ -88,7 +90,6 @@ class N4JSLanguageUtils {
 	 * See {@link ComputedPropertyNameValueConverter#SYMBOL_IDENTIFIER_PREFIX}.
 	 */
 	public static final String SYMBOL_IDENTIFIER_PREFIX = ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX;
-
 
 	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
@@ -504,6 +505,47 @@ class N4JSLanguageUtils {
 		if( isDefaultExport(qualifiedName) ) return  qualifiedName.getSegment(qualifiedName.getSegmentCount() - 2)
 		return qualifiedName.getLastSegment();
 	}
+	/**
+	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier start.
+	 * 
+	 * Moved from {@link IdentifierValueConverter}.
+	 */
+	public def static boolean isValidIdentifierStart(char c) {
+		return CharTypes.isLetter(c) || c.isChar('_') || c.isChar('$');
+	}
 	
+	/**
+	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier part.
+	 * 
+	 * Moved from {@link IdentifierValueConverter}.
+	 */
+	public def static boolean isValidIdentifierPart(char c) {
+		return N4JSLanguageUtils.isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
+				|| CharTypes.isCombiningMark(c) || c.isChar('\u200C') || c.isChar('\u200D');
+	}
+	
+	/** 
+	 * Returns <code>true</code> if the given identifier is a valid N4JS identifier.  
+	 */
+	public def static boolean isValidIdentifier(String identifier) {
+		val characters = identifier.chars.toArray;
+		for (i : 0..<characters.length) {
+			val c = characters.get(i) as char;
+			if (i==0) {
+				if (!isValidIdentifierStart(c))
+					return false;
+			} else {
+				if (!isValidIdentifierPart(c))
+					return false;
+			}	
+		}
+		return true;
+	}
+	/**
+	 * Helper method to overcome missing xtend support for character literals
+	 */
+	private def static boolean isChar(char c1, String c2) {
+		c1 == c2.charAt(0);
+	}
 	
 }

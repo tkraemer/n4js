@@ -18,6 +18,7 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProviderExtension;
 import org.eclipse.xtext.documentation.impl.AbstractMultiLineCommentProvider;
 import org.eclipse.xtext.findReferences.IReferenceFinder;
 import org.eclipse.xtext.findReferences.TargetURICollector;
+import org.eclipse.xtext.formatting2.FormatterPreferences;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.linking.impl.ImportedNamesAdapter;
@@ -28,6 +29,7 @@ import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.parser.antlr.IReferableElementsUnloader;
 import org.eclipse.xtext.parser.antlr.SyntaxErrorMessageProvider;
 import org.eclipse.xtext.parsetree.reconstr.IHiddenTokenHelper;
+import org.eclipse.xtext.preferences.IPreferenceValuesProvider;
 import org.eclipse.xtext.resource.DescriptionUtils;
 import org.eclipse.xtext.resource.IDerivedStateComputer;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -53,6 +55,7 @@ import eu.numberfour.n4js.documentation.N4JSDocumentationProvider;
 import eu.numberfour.n4js.external.HeadlessTargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.findReferences.InferredElementsTargetURICollector;
+import eu.numberfour.n4js.formatting2.N4JSSimpleFormattingPreferenceProvider;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
 import eu.numberfour.n4js.internal.N4JSRuntimeCore;
@@ -504,5 +507,14 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	 */
 	public Class<? extends CancelIndicatorBaseExtractor> bindCancelIndicatorExtractor() {
 		return CancelIndicatorBaseExtractor.class;
+	}
+
+	/** Configures the formatter preference value provider */
+	@Override
+	public void configureFormatterPreferences(Binder binder) {
+		binder
+				.bind(IPreferenceValuesProvider.class)
+				.annotatedWith(FormatterPreferences.class)
+				.to(N4JSSimpleFormattingPreferenceProvider.class);
 	}
 }

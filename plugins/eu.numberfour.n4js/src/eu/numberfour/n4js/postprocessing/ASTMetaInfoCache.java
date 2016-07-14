@@ -83,7 +83,7 @@ public final class ASTMetaInfoCache {
 	public Result<TypeRef> getType(TypableElement astNode) {
 		final Result<TypeRef> result = getTypeFailSafe(astNode);
 		if (result == null) {
-			if (cancelIndicator.isCanceled()) {
+			if (isCanceled()) {
 				return new Result<>(TypeRefsFactory.eINSTANCE.createUnknownTypeRef());
 			} else {
 				throw UtilN4.reportError(new IllegalStateException(

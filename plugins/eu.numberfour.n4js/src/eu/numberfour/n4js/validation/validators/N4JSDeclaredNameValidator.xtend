@@ -63,8 +63,8 @@ import java.util.List
 import java.util.ListIterator
 import java.util.Set
 import java.util.stream.Collectors
-import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
@@ -73,7 +73,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  */
@@ -252,17 +253,14 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 					//appearance order
 					lstEO.sort(
 						[EObject e1, EObject e2|
-							try {
-								Integer.valueOf(NodeModelUtils.getNode(e1).getOffset()).compareTo(
-									Integer.valueOf(
-										NodeModelUtils.getNode(e2).getOffset()
-									))
-							} catch (NullPointerException npe) {
-
-								//NPE will happen when artificially enriched AST,
-								//for example instance of {@link LocalArgumentsVariable}
-								0;
-							}]); val ListIterator<EObject> iter = lstEO.listIterator(); val EObject baseEO = iter.next();
+							val n1=NodeModelUtils.getNode(e1);
+							val n2=NodeModelUtils.getNode(e2);
+							// null-node will happen if artificially enriched AST,
+							// for example instance of {@link LocalArgumentsVariable} is encountered.
+							return if( n1===null || n2===null ) { 0 } else { n1.getOffset() - n2.getOffset() };
+						]); 
+					val ListIterator<EObject> iter = lstEO.listIterator(); 
+					val EObject baseEO = iter.next();
 					iter.forEachRemaining(
 						[ dupeEO |
 							{
@@ -627,7 +625,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	 * returns attribute holding name for given EObject. Throws error if provided EObject does not define name
 	 * attribute.
 	 */
-	def private EAttribute findNameEAttribute(EObject eo) {
+	def private EStructuralFeature findNameEAttribute(EObject eo) {
 		if (eo instanceof N4TypeDeclaration) {
 			return N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME;
 		}
@@ -664,7 +662,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		if (eo instanceof PropertyAssignment) {
-			return N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME;
+			return N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME;
 		}
 
 		throw new RuntimeException("cannot obtain name attribute for " + eo);
