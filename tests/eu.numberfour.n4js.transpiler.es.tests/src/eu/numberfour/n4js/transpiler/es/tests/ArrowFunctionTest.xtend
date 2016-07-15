@@ -183,7 +183,7 @@ class ArrowFunctionTest extends AbstractTranspilerTest {
 						}, {}, function(instanceProto, staticProto) {
 							var metaClass = new N4Class({
 								name: 'C',
-								origin: 'testproject',
+								origin: 'test',
 								fqn: 'A.C',
 								n4superType: N4Object.n4type,
 								allImplementedInterfaces: [],
