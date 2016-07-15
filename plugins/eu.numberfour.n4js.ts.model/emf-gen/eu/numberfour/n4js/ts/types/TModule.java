@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getVendorID <em>Vendor ID</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getProjectName <em>Project Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId <em>Project Artifact Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getModuleLoader <em>Module Loader</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isStaticPolyfillModule <em>Static Polyfill Module</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isStaticPolyfillAware <em>Static Polyfill Aware</em>}</li>
@@ -96,30 +96,30 @@ public interface TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	void setVendorID(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Project Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Project Artifact Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
 	 * The artifactId of the project containing this module.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Project Name</em>' attribute.
-	 * @see #setProjectName(String)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTModule_ProjectName()
+	 * @return the value of the '<em>Project Artifact Id</em>' attribute.
+	 * @see #setProjectArtifactId(String)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTModule_ProjectArtifactId()
 	 * @model unique="false"
 	 * @generated
 	 */
-	String getProjectName();
+	String getProjectArtifactId();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TModule#getProjectName <em>Project Name</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId <em>Project Artifact Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Project Name</em>' attribute.
-	 * @see #getProjectName()
+	 * @param value the new value of the '<em>Project Artifact Id</em>' attribute.
+	 * @see #getProjectArtifactId()
 	 * @generated
 	 */
-	void setProjectName(String value);
+	void setProjectArtifactId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Module Loader</b></em>' attribute.

@@ -34,8 +34,8 @@ class N4_02_1_1_IdentifierNamesAndIdentifiersTest extends AbstractParserTest {
 
 	private def withVendorAndProject(Script script, String vendorID, String projectName) {
 		script.eResource.contents.get(1) as TModule => [
+			it.projectArtifactId = projectName
 			it.vendorID = vendorID
-			it.projectName = projectName
 		]
 		return script
 	}

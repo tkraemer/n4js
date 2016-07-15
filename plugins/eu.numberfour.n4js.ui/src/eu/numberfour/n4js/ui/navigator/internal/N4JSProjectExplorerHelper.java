@@ -186,7 +186,7 @@ public class N4JSProjectExplorerHelper {
 					for (IN4JSProject providedLib : from(p.getProvidedRuntimeLibraries()).filter(IN4JSProject.class)) {
 						if (libs.contains(providedLib)) {
 							envs.add(p);
-							String extndedRuntimeEnvName = p.getExtendedRuntimeEnvironmentName().orNull();
+							String extndedRuntimeEnvName = p.getExtendedRuntimeEnvironmentId().orNull();
 							if (null != extndedRuntimeEnvName) {
 								final IN4JSProject extension = builtInRuntimeEnvironments.get(extndedRuntimeEnvName);
 								if (null != extension) {

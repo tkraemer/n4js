@@ -95,11 +95,11 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	ImmutableList<? extends IN4JSSourceContainerAware> getProvidedRuntimeLibraries();
 
 	/**
-	 * Returns artifactId of the extended runtime , if any.
+	 * Returns artifactId of the extended runtime, if any.
 	 *
 	 * @return optional but not null string
 	 */
-	Optional<String> getExtendedRuntimeEnvironmentName(); // FIXME rename!!!
+	Optional<String> getExtendedRuntimeEnvironmentId();
 
 	/**
 	 * Returns with the extended runtime environment of the project. If not specified returns with an absent instance.
@@ -108,10 +108,13 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	 */
 	Optional<IN4JSSourceContainerAware> getExtendedRuntimeEnvironment();
 
-	// /**
-	// * The project name. Also available if the project does not exist.
-	// */
-	// String getProjectName();
+	/**
+	 * <b>!!! Do not use the project name !!!</b> In almost all cases, the artifactId should be used when referring to a
+	 * project (even for things like error messages, logging, etc.).
+	 * <p>
+	 * The project name. It is not available, if the project does not exist.
+	 */
+	String getProjectName();
 
 	/**
 	 * The vendor ID. It is not available, if the project does not exist.

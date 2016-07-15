@@ -39,8 +39,8 @@ class AT_556_MemberAccessTest {
 
 	private def withVendorAndProject(Script script, String vendorID, String projectName) {
 		script.eResource.contents.get(1) as TModule => [
+			it.projectArtifactId = projectName
 			it.vendorID = vendorID
-			it.projectName = projectName
 		]
 		return script
 	}

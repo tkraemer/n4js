@@ -226,7 +226,7 @@ public class RunnerHelper {
 			// if RLs extend each other but are from independent REs, that is and error?
 			project.getProvidedRuntimeLibraries().forEach(rl -> addHere.add(extractProject(rl)));
 
-			Optional<String> ep = project.getExtendedRuntimeEnvironmentName();
+			Optional<String> ep = project.getExtendedRuntimeEnvironmentId();
 			Optional<IN4JSProject> extendedRE = Optional.absent();
 			if (ep.isPresent()) {
 				extendedRE = findRuntimeEnvironemtnWithName(ep.get());

@@ -196,13 +196,13 @@ public interface TypesPackage extends EPackage {
 	int TMODULE__VENDOR_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Project Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Project Artifact Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMODULE__PROJECT_NAME = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 3;
+	int TMODULE__PROJECT_ARTIFACT_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Module Loader</b></em>' attribute.
@@ -10541,15 +10541,15 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTModule_VendorID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getProjectName <em>Project Name</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId <em>Project Artifact Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Project Name</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TModule#getProjectName()
+	 * @return the meta object for the attribute '<em>Project Artifact Id</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId()
 	 * @see #getTModule()
 	 * @generated
 	 */
-	EAttribute getTModule_ProjectName();
+	EAttribute getTModule_ProjectArtifactId();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getModuleLoader <em>Module Loader</em>}'.
@@ -13081,12 +13081,12 @@ public interface TypesPackage extends EPackage {
 		EAttribute TMODULE__VENDOR_ID = eINSTANCE.getTModule_VendorID();
 
 		/**
-		 * The meta object literal for the '<em><b>Project Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Project Artifact Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TMODULE__PROJECT_NAME = eINSTANCE.getTModule_ProjectName();
+		EAttribute TMODULE__PROJECT_ARTIFACT_ID = eINSTANCE.getTModule_ProjectArtifactId();
 
 		/**
 		 * The meta object literal for the '<em><b>Module Loader</b></em>' attribute feature.

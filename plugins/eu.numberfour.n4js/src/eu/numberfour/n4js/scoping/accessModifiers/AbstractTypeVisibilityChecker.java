@@ -113,7 +113,7 @@ public abstract class AbstractTypeVisibilityChecker<T extends IdentifiableElemen
 				return elementModule == null
 						|| elementModule == contextModule
 						|| ( //
-						Strings.equal(contextModule.getProjectName(), elementModule.getProjectName())
+						Strings.equal(contextModule.getProjectArtifactId(), elementModule.getProjectArtifactId())
 								&& Strings.equal(contextModule.getVendorID(), elementModule.getVendorID()) //
 						)
 						|| isTestedProjectOf(contextModule, elementModule);

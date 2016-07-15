@@ -197,7 +197,7 @@ public class RuntimeEnvironmentsHelper {
 	}
 
 	private void recursiveCollectRlFromChain(IN4JSProject runtimeEnvironment, Collection<IN4JSProject> collection) {
-		Optional<String> extended = runtimeEnvironment.getExtendedRuntimeEnvironmentName();
+		Optional<String> extended = runtimeEnvironment.getExtendedRuntimeEnvironmentId();
 		if (extended.isPresent()) {
 			String id = extended.get();
 			List<IN4JSProject> extendedRE = from(getAllProjects()).filter(p -> id.equals(p.getArtifactId()))
@@ -365,7 +365,7 @@ public class RuntimeEnvironmentsHelper {
 		IN4JSProject project = (extractProject(sourceContainer));
 
 		if (predicate.test(project)) {
-			com.google.common.base.Optional<String> oExtendedProjectId = project.getExtendedRuntimeEnvironmentName();
+			com.google.common.base.Optional<String> oExtendedProjectId = project.getExtendedRuntimeEnvironmentId();
 
 			if (!oExtendedProjectId.isPresent()) {
 				return;

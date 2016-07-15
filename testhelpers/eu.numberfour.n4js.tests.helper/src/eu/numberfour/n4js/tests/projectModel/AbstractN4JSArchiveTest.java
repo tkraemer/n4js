@@ -47,7 +47,7 @@ public abstract class AbstractN4JSArchiveTest extends AbstractProjectModelTest {
 	@Test
 	public void testGetArchiveName() {
 		IN4JSArchive archive = getArchive();
-		assertEquals(archiveArtifactId + ".nfar", archive.getArchiveName());
+		assertEquals(archiveArtifactId + ".nfar", archive.getFileName());
 	}
 
 	@SuppressWarnings("javadoc")

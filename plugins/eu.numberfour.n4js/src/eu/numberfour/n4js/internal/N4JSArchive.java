@@ -52,17 +52,17 @@ public class N4JSArchive implements IN4JSArchive {
 		return getModel().getSourceContainers(this);
 	}
 
-	// @Override
-	// public String getLibraryName() {
-	// ProjectDescription pd = getModel().getProjectDescription(getLocation());
-	// if (pd == null) {
-	// return null;
-	// }
-	// return pd.getArtifactId();
-	// }
+	@Override
+	public String getLibraryName() {
+		ProjectDescription pd = getModel().getProjectDescription(getLocation());
+		if (pd == null) {
+			return null;
+		}
+		return pd.getArtifactId();
+	}
 
 	@Override
-	public String getArchiveName() {
+	public String getFileName() {
 		return archiveLocation.lastSegment();
 	}
 

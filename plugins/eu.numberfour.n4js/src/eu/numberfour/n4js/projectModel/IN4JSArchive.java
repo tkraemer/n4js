@@ -34,15 +34,15 @@ public interface IN4JSArchive extends IN4JSSourceContainerAware {
 	 */
 	IN4JSProject getProject();
 
-	// /**
-	// * The name of the project that is packed in the archive.
-	// */
-	// String getLibraryName();
+	/**
+	 * The name of the project that is packed in the archive.
+	 */
+	String getLibraryName();
 
 	/**
 	 * The archive file name, including the suffix '.nfar'
 	 */
-	String getArchiveName();
+	String getFileName();
 
 	/**
 	 * The location of the archive that can be used to inspect its content.
