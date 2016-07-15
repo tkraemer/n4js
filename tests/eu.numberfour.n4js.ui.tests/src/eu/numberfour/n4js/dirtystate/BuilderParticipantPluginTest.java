@@ -76,7 +76,6 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		waitForAutoBuild();
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'Class1'.
-		// Couldn't resolve reference to TModule 'pr0_0pa0.Class1'.
 		// Couldn't resolve reference to Type 'Class1'.
 		// Import of Class1 cannot be resolved.
 		assertMarkers("File1 should have four errors", file1, 4);

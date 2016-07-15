@@ -57,7 +57,6 @@ class StaticPolyfill_inheriting_from_filled_type__PluginTest extends AbstractSta
 		assertMarkers("filling file should have X errors", cFilling, 5);
 
 		// line 1: Cannot resolve import target :: resolving simple module import : found no matching modules
-		// line 1: Couldn't resolve reference to TModule 'A'.
 		// line 1: Couldn't resolve reference to IdentifiableElement 'Poly'.
 		// line 11: Couldn't resolve reference to Type 'Poly'.
 		// line 3: Couldn't resolve reference to Type 'Poly'.

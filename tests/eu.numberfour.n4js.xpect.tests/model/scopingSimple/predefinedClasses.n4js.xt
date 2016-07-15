@@ -33,7 +33,7 @@ class MyClassX {
 	}
 }
 
-/* XPECT scope at '|myBooleanVar : boolean' ---
+/* XPECT scope at 'myBooleanVar : |boolean' ---
 	 Array, Boolean, Date, Error, EvalError, Function,
 	 JSON, Math, N4Object, Number, Object,  RangeError,
 	ReferenceError, RegExp, String, SyntaxError, TypeError,  URIError,

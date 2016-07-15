@@ -137,8 +137,8 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 					class C extends D {}
 				'''
 			);
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
 		assertMarkers("file should have four errors", c, 4);
@@ -162,8 +162,8 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		createTestFile(src2, "D", "export public class D {}");
 		assertMarkers("file should have no errors", c, 0, errorMarkerPredicate);
 		removeDependency
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
 		assertMarkers("file should have four errors", c, 4);
