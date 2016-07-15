@@ -34,7 +34,7 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 
 		if (candidate.manifest) {
 			// Contains only those project IDs that were changed via its N4 manifest.
-			val changedProjectIds = deltas.map[uri].filter[isManifest].map[projectNameFromManifestUri].toSet;
+			val changedProjectIds = deltas.map[uri].filter[isManifest].map[artifactIdFromManifestUri].toSet;
 
 			// Collect all referenced project IDs of the candidate.
 			val referencedProjectIds = newLinkedList;
@@ -66,7 +66,7 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 	}
 
 	/**
-	 * Returns with the name of an N4JS project by appending the second segment from the end of a N4 manifest URI argument.
+	 * Returns with the artifactId of an N4JS project by appending the second segment from the end of a N4 manifest URI argument.
 	 * This method only works for N4 manifest URIs and throws {@link IllegalArgumentException} for all other URIs.
 	 * Since this method accepts only N4 manifest URIs it is guaranteed to get the container project name as the second URI
 	 * segment from the end. We cannot simply grab and return with the first segment as the project name, because external
@@ -76,7 +76,7 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 	 * the artifact ID of the project but due to plug-in dependency issues N4JS core service is not available from here.
 	 * 
 	 */
-	private def getProjectNameFromManifestUri(URI it) {
+	private def getArtifactIdFromManifestUri(URI it) {
 		checkArgument(isManifest, '''Expected only URI that has «N4MF_MANIFEST» as last segment. Was: «it»''');
 		return segment(segmentCount - 2);
 	}

@@ -82,9 +82,9 @@ public abstract class AbstractN4jscIT {
 	 * workspace directory. This can be used to change the test data by removing selected projects at the beginning of a
 	 * test method.
 	 */
-	protected void deleteProject(String projectName) throws IOException {
+	protected void deleteProject(String artifactId) throws IOException {
 		File wsp = new File(TARGET, WSP);
-		File project = new File(wsp, projectName);
+		File project = new File(wsp, artifactId);
 		FileDeleter.delete(project.toPath());
 	}
 

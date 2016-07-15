@@ -90,7 +90,7 @@ public class ProjectUtils {
 	/**
 	 * Formats descriptor in form of
 	 * <pre>
-	 * ProjectName
+	 * artifactId
 	 *  + sep1 + Project.declaredVersion.getMajor
 	 *  + sep2 + Project.declaredVersion.getMinor
 	 *  + sep2 + Project.declaredVersion.getMinor

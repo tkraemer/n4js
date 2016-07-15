@@ -22,10 +22,10 @@ public interface PackageManager {
 	 * Returns the location where the given project can be found now or in the future. This call may trigger async
 	 * actions, e.g. downloads etc.
 	 *
-	 * @param projectName
+	 * @param artifactId
 	 *            the name of the project to be located
 	 * @return the location or null.
 	 */
-	URI getLocation(String projectName);
+	URI getLocation(String artifactId);
 
 }

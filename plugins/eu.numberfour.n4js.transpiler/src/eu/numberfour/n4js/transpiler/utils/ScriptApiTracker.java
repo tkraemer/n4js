@@ -553,7 +553,7 @@ public class ScriptApiTracker {
 	}
 
 	/**
-	 * Compares ProjectName and VendorId
+	 * Compares artifactId and vendorId
 	 */
 	boolean isSameProject(TModule m1, TModule m2) {
 		return m1 != null && m1.getProjectArtifactId().equals(m2.getProjectArtifactId())
@@ -824,7 +824,7 @@ public class ScriptApiTracker {
 				(/) (x) --> all fine
 				(/) (m) --> need to create virtual accessor tuple with setter only
 				(/) (/) --> all fine nothing to be done.
-			
+
 			 */
 
 			List<ProjectComparisonEntry> getSetList;

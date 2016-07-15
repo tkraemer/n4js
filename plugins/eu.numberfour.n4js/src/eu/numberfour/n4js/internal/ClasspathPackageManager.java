@@ -37,8 +37,8 @@ public class ClasspathPackageManager implements PackageManager {
 	}
 
 	@Override
-	public URI getLocation(String projectName) {
-		URL resource = classLoader.getResource("env/" + projectName + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT);
+	public URI getLocation(String artifactId) {
+		URL resource = classLoader.getResource("env/" + artifactId + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT);
 		if (resource != null) {
 			return URI.createURI(resource.toString());
 		}

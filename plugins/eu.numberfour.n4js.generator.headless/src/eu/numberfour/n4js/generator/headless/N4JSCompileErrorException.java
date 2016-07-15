@@ -15,37 +15,36 @@ package eu.numberfour.n4js.generator.headless;
  */
 public class N4JSCompileErrorException extends N4JSCompileException implements N4ProgressStateRecorder.IProgressState {
 
-	private final String projectname;
+	private final String artifactId;
 
 	/**
 	 * @param message
 	 *            user-message
-	 * @param projectname
+	 * @param artifactId
 	 *            erroneous project
 	 */
-	public N4JSCompileErrorException(String message, String projectname) {
+	public N4JSCompileErrorException(String message, String artifactId) {
 		super(message);
-		this.projectname = projectname;
+		this.artifactId = artifactId;
 	}
 
 	/**
 	 * @param message
 	 *            user-message
-	 * @param projectname
+	 * @param artifactId
 	 *            erroneous project
 	 * @param t
 	 *            nested cause
 	 */
-	public N4JSCompileErrorException(String message, String projectname, Throwable t) {
+	public N4JSCompileErrorException(String message, String artifactId, Throwable t) {
 		super(message, t);
-		this.projectname = projectname;
+		this.artifactId = artifactId;
 	}
 
 	/**
 	 * @return name of erroneous project
 	 */
-	public String getProjectname() {
-		return projectname;
+	public String getArtifactId() {
+		return artifactId;
 	}
-
 }

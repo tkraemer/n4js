@@ -40,9 +40,9 @@ class AT_084_Test {
 	@Inject
 	Provider<XtextResourceSet> resourceSetProvider;
 
-	private def withVendorAndProject(Script script, String vendorID, String projectName) {
+	private def withVendorAndProject(Script script, String vendorID, String artifactId) {
 		script.eResource.contents.get(1) as TModule => [
-			it.projectArtifactId = projectName
+			it.projectArtifactId = artifactId
 			it.vendorID = vendorID
 		]
 		return script
