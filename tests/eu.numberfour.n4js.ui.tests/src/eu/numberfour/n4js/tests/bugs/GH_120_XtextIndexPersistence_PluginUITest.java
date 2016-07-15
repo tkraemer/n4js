@@ -167,14 +167,13 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'Assert'.
 		// Couldn't resolve reference to TExportableElement 'Assert'.
-		// Couldn't resolve reference to TModule 'n4.mangel.assert.Assert'.
 		// Import of Assert cannot be resolved.
 
 		// Manifest issues:
 		// Project does not exist with artifact ID: eu.numberfour.mangelhaft.
 		// Project does not exist with artifact ID: eu.numberfour.mangelhaft.assert.
 		// Project with test fragment should depend on eu.numberfour.mangelhaft.
-		assertMarkers("Expected exactly 8 issues.", project, 8);
+		assertMarkers("Expected exactly 7 issues.", project, 7);
 
 		loadBuiltIns();
 		IResourcesSetupUtil.fullBuild();
