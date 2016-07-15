@@ -570,6 +570,7 @@ public class TestResultsView extends ViewPart {
 				TesterUiActivator.getImageDescriptor(TesterUiActivator.ICON_STOP),
 				this::performStop);
 		// Disable stop action for now since testing framework doesn't support stopping yet.
+		// TODO re-enable stop action (also see to-do in method #refreshActions(), below!)
 		actionStop.setEnabled(false);
 
 		actionShowHistory = new ShowHistoryAction(this);
@@ -617,6 +618,7 @@ public class TestResultsView extends ViewPart {
 		actionRelaunch.setEnabled(null != currentRoot && !currentRoot.isRunning());
 		actionRelaunchFailed.setEnabled(false);
 		// actionStop.setEnabled(currentRoot != null && currentRoot.isRunning());
+		// TODO
 		actionShowHistory.setEnabled(true);
 		actionClearTerminated.setEnabled(containsTerminated());
 	}
