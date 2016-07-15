@@ -42,14 +42,12 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	private String stringRuleName;
 	private String identifierRuleName;
 	private String numberRuleName;
-	private String assignmentExpressionRuleName;
 
 	@Inject
 	private void readRuleNames(N4JSGrammarAccess grammarAccess, RuleNames ruleNames) {
 		stringRuleName = ruleNames.getQualifiedName(grammarAccess.getSTRINGRule());
 		identifierRuleName = ruleNames.getQualifiedName(grammarAccess.getIdentifierNameRule());
 		numberRuleName = ruleNames.getQualifiedName(grammarAccess.getNumericLiteralAsStringRule());
-		assignmentExpressionRuleName = ruleNames.getQualifiedName(grammarAccess.getAssignmentExpressionRule());
 	}
 
 	/**
@@ -105,18 +103,20 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	}
 
 	private void setPropertyNameKind(EObject object, String feature, String ruleName) {
-		if ("literalName".equals(feature) && object instanceof LiteralOrComputedPropertyName) {
+		if (object instanceof LiteralOrComputedPropertyName) {
 			final LiteralOrComputedPropertyName nameDecl = (LiteralOrComputedPropertyName) object;
-			if (identifierRuleName.equals(ruleName)) {
-				nameDecl.setKind(PropertyNameKind.IDENTIFIER);
-			} else if (stringRuleName.equals(ruleName)) {
-				nameDecl.setKind(PropertyNameKind.STRING);
-			} else if (numberRuleName.equals(ruleName)) {
-				nameDecl.setKind(PropertyNameKind.NUMBER);
-			} else if (assignmentExpressionRuleName.equals(ruleName)) {
+			if ("literalName".equals(feature)) {
+				if (identifierRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.IDENTIFIER);
+				} else if (stringRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.STRING);
+				} else if (numberRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.NUMBER);
+				} else {
+					throw new IllegalArgumentException(ruleName);
+				}
+			} else if ("expression".equals(feature)) {
 				nameDecl.setKind(PropertyNameKind.COMPUTED);
-			} else {
-				throw new IllegalArgumentException(ruleName);
 			}
 		}
 	}

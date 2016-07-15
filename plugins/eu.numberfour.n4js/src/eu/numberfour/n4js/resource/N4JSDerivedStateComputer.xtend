@@ -11,11 +11,9 @@
 package eu.numberfour.n4js.resource;
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder
 import eu.numberfour.n4js.utils.Log
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 import org.eclipse.xtext.resource.IDerivedStateComputer
 
@@ -27,7 +25,6 @@ import org.eclipse.xtext.resource.IDerivedStateComputer
 public class N4JSDerivedStateComputer implements IDerivedStateComputer {
 
 	@Inject extension N4JSUnloader
-	@Inject private N4JSPreProcessor preProcessor;
 	@Inject private N4JSTypesBuilder typesBuilder;
 
 
@@ -38,17 +35,7 @@ public class N4JSDerivedStateComputer implements IDerivedStateComputer {
 		if (resource.contents.nullOrEmpty) {
 			throw new IllegalStateException
 		} else if (! resource.contents.empty) {
-			performPreProcessing(resource, preLinkingPhase);
 			typesBuilder.createTModuleFromSource(resource, preLinkingPhase);
-		}
-	}
-
-	def private void performPreProcessing(Resource resource, boolean preLinkingPhase) {
-		if (resource instanceof N4JSResource) {
-			val builtInTypes = BuiltInTypeScope.get(resource.resourceSet);
-			for (node : resource.script.eAllContents.toIterable) {
-				preProcessor.process(node, resource, builtInTypes);
-			}
 		}
 	}
 

@@ -76,6 +76,9 @@ public class N4JSLinker extends LazyLinker {
 	@Inject
 	private ASTStructureValidator structureValidator;
 
+	@Inject
+	private N4JSPreProcessor preProcessor;
+
 	/**
 	 * Clears the list of encoded URIs in {@link N4JSResource}, installs proxies for all cross references inside the
 	 * parsed model. If validation is enabled finally the {@link ASTStructureValidator} is triggered, that checks the
@@ -88,6 +91,7 @@ public class N4JSLinker extends LazyLinker {
 
 			@Override
 			public void process(N4JSResource resource) throws Exception {
+				// actual linking
 				resource.clearLazyProxyInformation();
 				clearReferences(model);
 				installProxies(resource, model, producer);
@@ -97,6 +101,9 @@ public class N4JSLinker extends LazyLinker {
 					clearReferences(eObject);
 					installProxies(resource, eObject, producer);
 				}
+				// pre-processing of AST
+				preProcessor.process(resource.getScript(), resource);
+				// AST structure validation
 				if (!resource.isValidationDisabled())
 					getStructureValidator().validate(model, consumer);
 			}
