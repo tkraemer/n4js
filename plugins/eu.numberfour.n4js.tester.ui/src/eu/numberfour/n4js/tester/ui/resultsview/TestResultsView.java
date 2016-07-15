@@ -566,7 +566,7 @@ public class TestResultsView extends ViewPart {
 		actionStop = createAction(
 				"Stop", IAction.AS_PUSH_BUTTON,
 				/* "Stop currently running test session.", */
-				"Stopping the running test session is currently not supported. You can use the Console to terminate it. ",
+				"Stopping the running test session is currently not supported.",
 				TesterUiActivator.getImageDescriptor(TesterUiActivator.ICON_STOP),
 				this::performStop);
 		// Disable stop action for now since testing framework doesn't support stopping yet.
@@ -655,7 +655,7 @@ public class TestResultsView extends ViewPart {
 	 * Invoked when user performs {@link #actionStop}.
 	 */
 	protected void performStop() {
-		System.out.println("Stop!");
+		// TODO
 	}
 
 	/**
