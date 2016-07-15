@@ -119,6 +119,7 @@ public class N4JSFactoryImpl extends EFactoryImpl implements N4JSFactory {
 			case N4JSPackage.ARRAY_ELEMENT: return createArrayElement();
 			case N4JSPackage.ARRAY_PADDING: return createArrayPadding();
 			case N4JSPackage.OBJECT_LITERAL: return createObjectLiteral();
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME: return createLiteralOrComputedPropertyName();
 			case N4JSPackage.PROPERTY_ASSIGNMENT_ANNOTATION_LIST: return createPropertyAssignmentAnnotationList();
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR: return createPropertyNameValuePair();
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME: return createPropertyNameValuePairSingleName();
@@ -818,6 +819,16 @@ public class N4JSFactoryImpl extends EFactoryImpl implements N4JSFactory {
 	public ObjectLiteral createObjectLiteral() {
 		ObjectLiteralImpl objectLiteral = new ObjectLiteralImpl();
 		return objectLiteral;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LiteralOrComputedPropertyName createLiteralOrComputedPropertyName() {
+		LiteralOrComputedPropertyNameImpl literalOrComputedPropertyName = new LiteralOrComputedPropertyNameImpl();
+		return literalOrComputedPropertyName;
 	}
 
 	/**

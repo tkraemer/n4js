@@ -49,11 +49,11 @@ class C4 implements I5, I6 {
 }
 
 class C5 {
+	// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 	<T extends I5> m() : void {}
 }
 class C6 extends C5 {
 	@Override
-	// XPECT noerrors -->
 	<V extends I5> m() : void {}
 }
 class C7 extends C5 {
@@ -68,14 +68,15 @@ class C8 extends C5 {
 }
 
 interface I7 {
+	// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 	<T extends I7> m() : void
 }
 interface I8<T extends I7> {
+	// XPECT warnings --> "Type variable V not used in parameters or return type." at "V"
 	<V extends T> m() : void
 }
 class C9 implements I7, I8<I7> {
 	@Override
-	// XPECT noerrors -->
 	<T extends I7> m() : void {}
 }
 class C10 implements I7, I8<C9> {
@@ -90,6 +91,7 @@ class C11 implements I7, I8<C9> {
 }
 
 interface I9 {
+	// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 	<T extends I9> m() : void
 }
 class C12 implements I7, I9 {

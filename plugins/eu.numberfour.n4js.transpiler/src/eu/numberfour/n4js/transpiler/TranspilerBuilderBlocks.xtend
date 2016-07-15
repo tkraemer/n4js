@@ -400,7 +400,7 @@ public class TranspilerBuilderBlocks
 
 	public static def PropertyNameValuePair _PropertyNameValuePair(String name, Expression value) {
 		val result = N4JSFactory.eINSTANCE.createPropertyNameValuePair;
-		result.name = name;
+		result.declaredName = _LiteralOrComputedPropertyName(name);
 		result.expression = value;
 		return result;
 	}
@@ -487,7 +487,7 @@ public class TranspilerBuilderBlocks
 			default: throw new IllegalArgumentException("unsupported subtype of TMember: " + template.eClass.name)
 		};
 		// basic properties
-		result.name = template.name;
+		result.declaredName = _LiteralOrComputedPropertyName(template.name);
 		// body
 		if(result instanceof FunctionOrFieldAccessor) {
 			result.body = _Block(statements.filterNull);
@@ -534,7 +534,7 @@ public class TranspilerBuilderBlocks
 
 	public static def N4MethodDeclaration _N4MethodDecl(String name, Statement... statements) {
 		val result = N4JSFactory.eINSTANCE.createN4MethodDeclaration;
-		result.name = name;
+		result.declaredName = _LiteralOrComputedPropertyName(name);
 		result.body = _Block(statements.filterNull);
 		return result;
 	}
@@ -691,6 +691,12 @@ public class TranspilerBuilderBlocks
 	public static def _N4InterfaceDeclaration(String name){
 		val result = N4JSFactory.eINSTANCE.createN4InterfaceDeclaration;
 		result.name = name;
+		return result;
+	}
+
+	public static def _LiteralOrComputedPropertyName(String name) {
+		val result = N4JSFactory.eINSTANCE.createLiteralOrComputedPropertyName;
+		result.literalName = name;
 		return result;
 	}
 

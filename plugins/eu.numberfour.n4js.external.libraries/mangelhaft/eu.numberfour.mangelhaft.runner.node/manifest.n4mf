@@ -13,7 +13,7 @@ VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.runner.node"
 VendorName: "NumberFour AG"
 ProjectType: library
-ProjectVersion: 0.3.4
+ProjectVersion: 0.3.7
 Output: "src-gen"
 Sources {
     source {
@@ -24,8 +24,7 @@ Sources {
 RequiredRuntimeLibraries {
     n4js-runtime-fetch,
     n4js-runtime-es2015,
-    n4js-runtime-node,
-    eu.numberfour.mangelhaft.mangeltypes
+    n4js-runtime-node
 }
 
 ProjectDependencies {
@@ -35,5 +34,6 @@ ProjectDependencies {
     eu.numberfour.mangelhaft.reporter.xunit,
     nomnom-patched,
     n4js-cli,
-    n4mf-parser
+    n4mf-parser,
+    cli-color
 }

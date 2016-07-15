@@ -6,6 +6,7 @@
 // (see ASTProcessor, TypeProcessor)
 
 
+// XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
 function <T> foo() {}
 
 // XPECT errors --> "Incorrect number of arguments: expected 0, got 1." at "foo( function(p){} )"

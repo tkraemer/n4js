@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -111,8 +111,9 @@ export public class TestExecutor {
         return testRes;
     }
 
-    private async callAll(instrumentedTest: InstrumentedTest,
-                                      testMethodDescriptors: Array<? extends TestMethodDescriptor>): Array<TestResult> {
+    private async callAll(instrumentedTest: IInstrumentedTest, 
+        testMethodDescriptors: Array<? extends TestMethodDescriptor>
+    ): Array<TestResult> {
         let results: Array<TestResult> = [];
         async function runTest(testMethodDescriptor: TestMethodDescriptor):TestResult {
             let timeoutId: number, testResult: TestResult;
@@ -139,13 +140,12 @@ export public class TestExecutor {
             return testResult;
         }
         if (testMethodDescriptors) {
-             results = ((await Promise.all(testMethodDescriptors
-                                            .<any,Array<TestMethodDescriptor>>map(runTest))) as Object) as Array<TestResult>;
+             results = ((await Promise.all(testMethodDescriptors.<any,Array<TestMethodDescriptor>>map(runTest))) as Object) as Array<TestResult>;
         }
         return results;
     }
 
-    private getAncestorTestMethods(iTest: InstrumentedTest, testMethodName): Array<TestMethodDescriptor> {
+    private getAncestorTestMethods(iTest: IInstrumentedTest, testMethodName): Array<TestMethodDescriptor> {
         let testMethods: Array<TestMethodDescriptor> = []
           , nodeTestMethods: Array<TestMethodDescriptor>
           , node: IInstrumentedTest = iTest
@@ -156,7 +156,6 @@ export public class TestExecutor {
         }
         // get all of the methods top down.
         do {
-
             nodeTestMethods = (node as Object)[testMethodName] as Array<TestMethodDescriptor>
             if (nodeTestMethods && nodeTestMethods.length) {
                 testMethods = testMethods.concat( nodeTestMethods);
@@ -169,125 +168,107 @@ export public class TestExecutor {
     public async runTestAsync(instrumentedTest: InstrumentedTest): ResultGroups {
         return await this.runTestsAsync([instrumentedTest]);
     }
-
-    public async runTestsAsync(instrumentedTests: Array<InstrumentedTest>): ResultGroups {
-        let totalSuccesses = 0
-        ,totalFailures = 0
-        ,rgs: ResultGroups
-        ,that = this
-        ,ranTestGroups: Array<ResultGroup>
+    private async runGroup(iTest: IInstrumentedTest): ResultGroup {
+        let rg: ResultGroup
+          , testObject: TestMethodDescriptor
+          , testRes: TestResult
+          , testResults: Array<TestResult> = []
+          , beforeAlls: Array<TestMethodDescriptor> = this.getAncestorTestMethods(iTest, "beforeAlls")
+          , befores: Array<TestMethodDescriptor> = this.getAncestorTestMethods(iTest, "befores")
+          , afters: Array<TestMethodDescriptor> = this.getAncestorTestMethods(iTest, "afters").reverse()
+          , afterAlls: Array<TestMethodDescriptor> = this.getAncestorTestMethods(iTest, "afterAlls").reverse()
+          , numTests: number, ii: number
+          , start: number, end: number
         ;
-        async function runGroup(iTest: InstrumentedTest): ResultGroup {
-            let rg: ResultGroup
-              , testResults: Array<TestResult> = []
-              , beforeAlls: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "beforeAlls")
-              , befores: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "befores")
-              , afters: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "afters").reverse()
-              , afterAlls: Array<TestMethodDescriptor> = that.getAncestorTestMethods(iTest, "afterAlls").reverse()
-              , numTests: number, ii: number
-              , start: number, end: number
-            ;
-            await that.spy.groupStarted.dispatch([iTest]);
-            if (iTest.error) {
-                testResults = await that.errorTests(iTest, iTest.error);
-            } else {
-                try {
-                    await that.callAll(iTest, beforeAlls);
-                    numTests = iTest.tests.length;
-                    for (ii = 0; ii < numTests; ++ii) {
-                        let testObject: TestMethodDescriptor = iTest.tests[ii]
-                        , testRes: TestResult;
-                        try {
-                            await that.spy.testStarted.dispatch([iTest, testObject]);
-                            start = new Date().getTime();
-                            if (testObject.ignore) {
-                                testRes = new TestResult({
-                                    testStatus: TestStatus.skipped_ignore
-                                    , message: testObject.ignoreReason
-                                    , description: testObject.name
-                                });
-                            } else {
-                                await that.callAll(iTest, befores);
-                                await that.callAll(iTest, [testObject]);
-
-                                testRes = new TestResult({testStatus: TestStatus.passed
-                                    , description: testObject.name
-                                });
-                                await that.callAll(iTest, afters);
-                            }
-                            end = new Date().getTime();
-                        } catch (er) {
-                            let err: any = er;
-                            end = new Date().getTime();
-
-                            testRes = TestExecutor.generateFailureTestResult(
-                                err,
-                                testObject.name
-                            );
+        await this.spy.groupStarted.dispatch([iTest]);
+        if (iTest.error) {
+            testResults = await this.errorTests(iTest, iTest.error);
+        } else {
+            try {
+                await this.callAll(iTest, beforeAlls);
+                numTests = iTest.tests.length;
+                for (ii = 0; ii < numTests; ++ii) {
+                    testObject = iTest.tests[ii];
+                    try {
+                        await this.spy.testStarted.dispatch([iTest, testObject]);
+                        start = new Date().getTime();
+                        if (testObject.ignore) {
+                            testRes = new TestResult({
+                                testStatus: TestStatus.skipped_ignore
+                                , message: testObject.ignoreReason
+                                , description: testObject.name
+                            });
+                        } else {
+                            await this.callAll(iTest, befores);
+                            await this.callAll(iTest, [testObject]);
+    
+                            testRes = new TestResult({testStatus: TestStatus.passed
+                                , description: testObject.name
+                            });
+                            await this.callAll(iTest, afters);
                         }
-                        testRes.elapsedTime = end - start;
-                        testRes = that.handleFixme(testObject, testRes);
-                        await that.spy.testFinished.dispatch(
-                            [iTest, testObject, testRes,  async ()=>{
-                                let allTests = iTest.tests
-                                ;
-                                iTest.tests = [testObject];
-                                try {
-                                    await that.runTestsAsync([iTest]);
-                                } finally {
-                                    iTest.tests = allTests;
-                                }
-                            }]
+                        end = new Date().getTime();
+                    } catch (er) {
+                        let err: any = er;
+                        end = new Date().getTime();
+    
+                        testRes = TestExecutor.generateFailureTestResult(
+                            err,
+                            testObject.name
                         );
-                        testResults.push(testRes);
                     }
-                    await that.callAll(iTest, afterAlls);
-                } catch (error) {
-                    let results = await that.errorTests(iTest, error);
-                    testResults = testResults.concat(results);
+                    testRes.elapsedTime = end - start;
+                    testRes = this.handleFixme(testObject, testRes);
+                    await this.spy.testFinished.dispatch(
+                        [iTest, testObject, testRes,  async ()=>{
+                            let allTests = iTest.tests
+                            ;
+                            iTest.tests = [testObject];
+                            try {
+                                await this.runTestsAsync([iTest]);
+                            } finally {
+                                iTest.tests = allTests;
+                            }
+                        }]
+                    );
+                    testResults.push(testRes);
                 }
+                await this.callAll(iTest, afterAlls);
+            } catch (error) {
+                let results = await this.errorTests(iTest, error);
+                testResults = testResults.concat(results);
             }
-            let successes: number = testResults.reduce(function(successes, testResult){
-                if (testResult.testStatus === TestStatus.passed) {
-                    successes = successes + 1;
-                }
-                return successes;
-            }, 0)
-            , failures = testResults.length - successes
-            ;
-
-            rg = new ResultGroup({  testResults:testResults
-                                    , description:iTest.name
-                                    , failures: failures
-                                    , successes: successes
-            })
-            await that.spy.groupFinished.dispatch([iTest, rg]);
-            return rg;
         }
-        let result: Array<ResultGroup> = [];
+    
+        rg = new ResultGroup(testResults, `${iTest.name}`);
+        await this.spy.groupFinished.dispatch([iTest, rg]);
+        return rg;
+        
+    }
+    public async runTestsAsync(instrumentedTests: Array<? extends IInstrumentedTest>): ResultGroups {
+        let results: Array<ResultGroup> = [];
 
         for (let test of instrumentedTests) {
             if (test) {
-                let testRes = await runGroup(test);
-                result.push(testRes)
+                if (test.hasParameterizedTests) {
+                    let pResults: Array<ResultGroup> = [];
+                    await this.spy.parameterizedGroupsStarted.dispatch([test]);
+                    for (let ptest of test.parameterizedTests) {
+                        let testRes = await this.runGroup(ptest);
+                        pResults.push(testRes);
+                        results.push(testRes);
+                    }
+                    await this.spy.parameterizedGroupsFinished.dispatch([new ResultGroups(pResults)]);
+                } else {
+                    let testRes = await this.runGroup(test);
+                    results.push(testRes);
+                }
             }
         }
-
-        let ranResultGroups: Array<ResultGroup> = result
-            , successes: number  = ranResultGroups.reduce(function(successes, resultGroup){
-                    successes = successes + resultGroup.successes;
-                    return successes;
-            }, 0)
-            , failures: number = ranResultGroups.reduce(function(failures, resultGroup){
-                    failures = failures + resultGroup.failures;
-                    return failures;
-            }, 0)
-            , results: ResultGroups = new ResultGroups(
-                {results:ranResultGroups, failures: failures, successes: successes}
-            )
-       return results;
+        let resultGroups = new ResultGroups(results);
+        return resultGroups;
     }
-    public async errorTests(instrumentedTest: InstrumentedTest, error: any): Array<TestResult> {
+    public async errorTests(instrumentedTest: IInstrumentedTest, error: any): Array<TestResult> {
         let len = instrumentedTest.tests.length
           , testResult: TestResult
           , testResults: Array<TestResult> = []

@@ -80,7 +80,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.types.TypesPackage
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
+import eu.numberfour.n4js.utils.N4JSLanguageHelper
 import java.util.Set
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
@@ -91,6 +91,8 @@ import org.eclipse.xtext.diagnostics.DiagnosticMessage
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer
 import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+
+import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 
 import static extension eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter.*
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringAssignment
@@ -108,7 +110,8 @@ class ASTStructureValidator {
 	private N4JSGrammarAccess grammarAccess;
 
 	@Inject
-	private ValidatorMessageHelper messageHelper;
+	private N4JSLanguageHelper languageHelper;
+
 	@ToString
 	protected static class Constraints {
 		static val STRICT = 1
@@ -537,22 +540,6 @@ class ASTStructureValidator {
 		}
 	}
 
-	static val reservedWordInStrictMode = newImmutableSet(
-		// implements, interface, let, package, private, protected, public, static
-		'implements',
-		'interface',
-		'let',
-		'package',
-		'private',
-		'protected',
-		'public',
-		'static',
-		'yield'
-	)
-
-	static val arguments = 'arguments'
-	static val eval = 'eval'
-
 	def dispatch void validateASTStructure(
 		IdentifierRef model,
 		ASTStructureDiagnosticProducer producer,
@@ -561,7 +548,7 @@ class ASTStructureValidator {
 	) {
 		val name = model.idAsText
 		if (name !== null) {
-			if (constraints.isStrict && (reservedWordInStrictMode.contains(name))) {
+			if (constraints.isStrict && (RESERVED_WORDS_IN_STRICT_MODE.contains(name))) {
 				issueNameDiagnostic(model, producer, name, N4JSPackage.Literals.IDENTIFIER_REF__ID, Severity.ERROR)
 			}
 		}
@@ -581,15 +568,15 @@ class ASTStructureValidator {
 	) {
 		val name = model.name
 		if (name !== null) {
-			if (arguments == name && !(model instanceof LocalArgumentsVariable)) {
+			if (name == LOCAL_ARGUMENTS_VARIABLE_NAME && !(model instanceof LocalArgumentsVariable)) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else {
-				if (name != 'yield' && (N4JSLanguageConstants.KEYWORDS.contains(name)
+				if (name != YIELD_KEYWORD && (languageHelper.getECMAKeywords.contains(name)
 					|| 'enum'.equals(name) || 'await'.equals(name) || 'let'.equals(name)
 					|| 'true'.equals(name) || 'false'.equals(name) || 'null'.equals(name))) {
 					issueNameDiagnostic(model, producer, name)
 				} else if (constraints.isStrict) {
-					if (reservedWordInStrictMode.contains(name) || eval == name) {
+					if (RESERVED_WORDS_IN_STRICT_MODE.contains(name) || name == EVAL_NAME) {
 						issueNameDiagnostic(model, producer, name)
 					}
 				}
@@ -635,7 +622,7 @@ class ASTStructureValidator {
 	) {
 		val name = model.name
 		if (name !== null) {
-			if (constraints.isStrict && (reservedWordInStrictMode.contains(name))) {
+			if (constraints.isStrict && (RESERVED_WORDS_IN_STRICT_MODE.contains(name))) {
 				issueNameDiagnostic(model, producer, name)
 			}
 		}
@@ -1010,10 +997,10 @@ class ASTStructureValidator {
 	) {
 		val name = model.name
 		if (name !== null) {
-			if (arguments == name) {
+			if (name == LOCAL_ARGUMENTS_VARIABLE_NAME) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else if (constraints.isStrict()) {
-				if (reservedWordInStrictMode.contains(name) || eval == name) {
+				if (RESERVED_WORDS_IN_STRICT_MODE.contains(name) || name == EVAL_NAME) {
 					issueNameDiagnostic(model, producer, name)
 				}
 			}
@@ -1024,19 +1011,6 @@ class ASTStructureValidator {
 			Sets.newHashSetWithExpectedSize(2),
 			constraints.allowNestedFunctions(true).allowReturn(true).allowBreak(false).allowContinue(false)
 		)
-	}
-
-	private def issueArgumentsError(EObject model, String name, boolean strict, ASTStructureDiagnosticProducer producer) {
-		val nodes = NodeModelUtils.findNodesForFeature(model, model.eClass.getEStructuralFeature('name'))
-		val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
-		producer.node = target
-		if(target !== null) {
-			producer.addDiagnostic(
-				new DiagnosticMessage(IssueCodes.getMessageForAST_IMPL_PARAM_SHADOW_ERR(
-						StringExtensions.toFirstUpper(messageHelper.description(model, name))),
-					if (strict) Severity.ERROR else Severity.WARNING,
-					IssueCodes.AST_IMPL_PARAM_SHADOW_ERR))
-		}
 	}
 
 	def void validateFunctionDefinition(
@@ -1057,10 +1031,10 @@ class ASTStructureValidator {
 				new DiagnosticMessage(IssueCodes.getMessageForAST_STR_FUN_NOT_NESTED(),
 					IssueCodes.getDefaultSeverity(IssueCodes.AST_STR_FUN_NOT_NESTED), IssueCodes.AST_STR_FUN_NOT_NESTED))
 		} else if (name !== null) {
-			if (arguments == name) {
+			if (name == LOCAL_ARGUMENTS_VARIABLE_NAME) {
 				issueArgumentsError(model, name, constraints.isStrict, producer)
 			} else if (constraints.isStrict()) {
-				if (reservedWordInStrictMode.contains(name) || eval == name) {
+				if (RESERVED_WORDS_IN_STRICT_MODE.contains(name) || name == EVAL_NAME) {
 					issueNameDiagnostic(model, producer, name)
 				}
 			}
@@ -1080,23 +1054,27 @@ class ASTStructureValidator {
 				issueNameDiagnostic(model, producer, name)
 			} else {
 				if (constraints.isN4JS) {
-					if (reservedWordInStrictMode.contains(name)) {
+					if (RESERVED_WORDS_IN_STRICT_MODE.contains(name)) {
 						issueNameDiagnostic(model, producer, name)
 					}
 				} else if (constraints.isStrict) {
-					if (reservedWordInStrictMode.contains(name)) {
-						issueNameDiagnostic(model, producer, name, model.eClass.getEStructuralFeature('name'), Severity.WARNING)
+					if (RESERVED_WORDS_IN_STRICT_MODE.contains(name)) {
+						issueNameDiagnostic(model, producer, name, getNameFeature(model), Severity.WARNING)
 					}
 				}
 			}
 		}
 	}
 
-	private def issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name) {
-		issueNameDiagnostic(model, producer, name, model.eClass.getEStructuralFeature('name'), IssueCodes.getDefaultSeverity(IssueCodes.AST_RESERVED_IDENTIFIER))
+	private def void issueArgumentsError(EObject model, String name, boolean strict, ASTStructureDiagnosticProducer producer) {
+		issueNameDiagnostic(model, producer, name, getNameFeature(model), if (strict) Severity.ERROR else Severity.WARNING);
 	}
 
-	private def issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name, EStructuralFeature feature, Severity severity) {
+	private def void issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name) {
+		issueNameDiagnostic(model, producer, name, getNameFeature(model), IssueCodes.getDefaultSeverity(IssueCodes.AST_RESERVED_IDENTIFIER))
+	}
+
+	private def void issueNameDiagnostic(EObject model, ASTStructureDiagnosticProducer producer, String name, EStructuralFeature feature, Severity severity) {
 		val nodes = NodeModelUtils.findNodesForFeature(model, feature)
 		val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
 		producer.node = target
@@ -1106,6 +1084,10 @@ class ASTStructureValidator {
 					severity,
 					IssueCodes.AST_RESERVED_IDENTIFIER))
 		}
+	}
+
+	private def EStructuralFeature getNameFeature(EObject model) {
+		return model.eClass.getEStructuralFeature('name') ?: model.eClass.getEStructuralFeature('declaredName');
 	}
 
 	def dispatch void validateASTStructure(

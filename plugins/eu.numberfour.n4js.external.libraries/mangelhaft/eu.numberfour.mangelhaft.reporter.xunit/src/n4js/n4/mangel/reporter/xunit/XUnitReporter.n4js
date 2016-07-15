@@ -15,10 +15,17 @@ import { TestMethodDescriptor } from "n4/mangel/mangeltypes/TestMethodDescriptor
 import {TestResult} from "n4/mangel/mangeltypes/TestResult"
 import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
 import { TestStatus } from "n4/mangel/mangeltypes/TestStatus"
+import * as lib_path from "path"
 import * as lib_fs from "fs"
 import * as os from "os"
-//import * as xmlbuilder from "xmlbuilder" jakub TODO
-const xmlBuilder: any+ = System._nodeRequire("xmlbuilder");
+import * as xmlbuilder+ from "xmlbuilder"
+
+export public async function mkdirp(path: string, mode: int?): void {
+    if (!(await lib_fs.exists(path))) {
+        await mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode);
+        await lib_fs.mkdir(path, mode);
+    }
+}
 
 function isOK(testResult: TestResult): boolean {
     var status = testResult.testStatus;
@@ -47,6 +54,7 @@ export public class XUnitReporter implements ITestReporter {
     @Override public spy: TestSpy;
 
     public spec = {} as XUnitReportSpec;
+    public output: string;
 
     private startTime: Date;
     private resultsMap = new Map<string, TestResult>();
@@ -56,13 +64,17 @@ export public class XUnitReporter implements ITestReporter {
     }
 
     private testFinished(group: IInstrumentedTest, test: TestMethodDescriptor, testResult: TestResult) {
-        this.resultsMap.set(group.name + "#" + test.name, testResult);
+        let testIdentifier = `${group.name}#${test.name}`;
+        if (group.parameterizedName) {
+            testIdentifier += `!${group.parameterizedName}`
+        }
+        this.resultsMap.set(testIdentifier, testResult);
     }
 
     private async testingFinished(resultGroups: ResultGroups): void {
         let spec = this.spec,
             endTime = Date.now(),
-            xml = xmlBuilder.create("testsuites"),
+            xml = xmlbuilder.create("testsuites"),
             suite = xml.ele("testsuite", {
                 name: spec.xunitReportName,
                 package: spec.xunitReportPackage,
@@ -111,8 +123,13 @@ export public class XUnitReporter implements ITestReporter {
         suite.att("failures", failures);
         suite.att("time", (endTime - this.startTime.getTime()) / 1000);
 
+        this.output = xml.end({ pretty: true });
+
         if (spec.xunitReportFile) {
-            await lib_fs.writeFile(this.spec.xunitReportFile, xml.end({ pretty: true }), { encoding: "UTF-8" });
+            let dir = this.spec.xunitReportFile;
+            dir = dir.substring(0, dir.lastIndexOf(lib_path.sep));
+            await mkdirp(dir);
+            await lib_fs.writeFile(this.spec.xunitReportFile, this.output, { encoding: "UTF-8" });
         }
     }
     

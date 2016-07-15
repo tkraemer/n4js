@@ -13,18 +13,17 @@ VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.reporter.console"
 VendorName: "NumberFour AG"
 ProjectType: library
-ProjectVersion: 0.3.1
+ProjectVersion: 0.3.3
 Output: "src-gen"
 
 RequiredRuntimeLibraries {
     n4js-runtime-n4,
     n4js-runtime-v8,
-	n4js-runtime-es2015,
-	eu.numberfour.mangelhaft.mangeltypes
-} 
+	n4js-runtime-es2015
+}
 
 ProjectDependencies {
-    cli-color
+    eu.numberfour.mangelhaft
 }
 
 Sources {

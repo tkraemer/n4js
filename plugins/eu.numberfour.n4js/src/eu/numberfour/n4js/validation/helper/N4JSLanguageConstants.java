@@ -18,9 +18,12 @@ import static java.util.Collections.unmodifiableCollection;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 
+import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.N4JSASTUtils;
 import eu.numberfour.n4js.n4mf.ModuleLoader;
 
@@ -28,6 +31,8 @@ import eu.numberfour.n4js.n4mf.ModuleLoader;
  * Contains constants for the N4JS language.
  */
 public abstract class N4JSLanguageConstants {
+
+	/** Use {@link LanguageConstantsHelper} for a full list of keywords. */
 
 	//@formatter:off
 
@@ -38,21 +43,8 @@ public abstract class N4JSLanguageConstants {
 	public static final String EXPORT_KEYWORD = "export";
 	/** Direct access to the external keyword */
 	public static final String EXTERNAL_KEYWORD = "external";
-
-
-
-	/** <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-keywords">ECMAScript ver. [6 11.6.2.1] Keywords</a>.*/
-	public static final Collection<String> KEYWORDS = unmodifiableCollection(newHashSet(
-			"break",	"do",			"in",			"typeof",
-			"case",		"else",			"instanceof",	"var",
-			"catch",	EXPORT_KEYWORD,	"new",			"void",
-			"class",	"extends",		"return",		"while",
-			"const",	"finally",		"super",		"with",
-			"continue",	"for",			"switch",		"yield",
-			"debugger",	"function",		"this",
-			"default",	"if",			"throw",
-			"delete",	"import",		"try"
-			));
+	/** Direct access to the yield keyword */
+	public static final String YIELD_KEYWORD = "yield";
 
 	//@formatter:on
 
@@ -95,6 +87,26 @@ public abstract class N4JSLanguageConstants {
 	 */
 	public static final Map<String, String> DISCOURAGED_CHARACTERS = ImmutableMap.of(
 			"$", "dollar sign");
+
+	/**
+	 * Identifiers that are reserved words (only) in strict mode.
+	 */
+	public static final Set<String> RESERVED_WORDS_IN_STRICT_MODE = ImmutableSet.of(
+			"implements",
+			"interface",
+			"let",
+			"package",
+			"private",
+			"protected",
+			"public",
+			"static",
+			"yield");
+
+	/** Name of the {@link LocalArgumentsVariable}. */
+	public static final String LOCAL_ARGUMENTS_VARIABLE_NAME = "arguments";
+
+	/** Name of built-in function 'eval'. */
+	public static final String EVAL_NAME = "eval";
 
 	/**
 	 * Suffix used in method compilation for the local function name as reported in error stack traces. Value:

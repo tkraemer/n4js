@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 6 ---
+class C <S, T> {}
+        
+--- */
+class C
+
+
+    <
+
+           S       ,
+
+  T
+        > {}
+        
+ 
+
+
+/* */
+/* XPECT formattedLines 4 ---
+function <S, T> foo(s: S, t: T) {};
+--- */
+
+function <   S
+      ,
+T> foo
+(s:S,t:T) {}
+
+

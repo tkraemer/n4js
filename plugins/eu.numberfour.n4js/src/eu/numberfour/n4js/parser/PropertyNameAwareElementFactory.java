@@ -22,10 +22,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.conversion.N4JSValueConverterException;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyAssignment;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
-import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
 import eu.numberfour.n4js.validation.IssueCodes;
@@ -42,16 +42,12 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	private String stringRuleName;
 	private String identifierRuleName;
 	private String numberRuleName;
-	private String computedFromExpressionRuleName;
-	private String computedFromStringRuleName;
 
 	@Inject
 	private void readRuleNames(N4JSGrammarAccess grammarAccess, RuleNames ruleNames) {
 		stringRuleName = ruleNames.getQualifiedName(grammarAccess.getSTRINGRule());
 		identifierRuleName = ruleNames.getQualifiedName(grammarAccess.getIdentifierNameRule());
 		numberRuleName = ruleNames.getQualifiedName(grammarAccess.getNumericLiteralAsStringRule());
-		computedFromExpressionRuleName = ruleNames.getQualifiedName(grammarAccess.getSymbolLiteralComputedNameRule());
-		computedFromStringRuleName = ruleNames.getQualifiedName(grammarAccess.getStringLiteralAsNameRule());
 	}
 
 	/**
@@ -107,20 +103,20 @@ public class PropertyNameAwareElementFactory extends DefaultEcoreElementFactory 
 	}
 
 	private void setPropertyNameKind(EObject object, String feature, String ruleName) {
-		if ("name".equals(feature) && object instanceof PropertyNameOwner) {
-			final PropertyNameOwner nameOwner = (PropertyNameOwner) object;
-			if (identifierRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.IDENTIFIER);
-			} else if (stringRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.STRING);
-			} else if (numberRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.NUMBER);
-			} else if (computedFromStringRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.COMPUTED_FROM_STRING_LITERAL);
-			} else if (computedFromExpressionRuleName.equals(ruleName)) {
-				nameOwner.setKind(PropertyNameKind.COMPUTED_FROM_IDENTIFIER_EXPR);
-			} else {
-				throw new IllegalArgumentException(ruleName);
+		if (object instanceof LiteralOrComputedPropertyName) {
+			final LiteralOrComputedPropertyName nameDecl = (LiteralOrComputedPropertyName) object;
+			if ("literalName".equals(feature)) {
+				if (identifierRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.IDENTIFIER);
+				} else if (stringRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.STRING);
+				} else if (numberRuleName.equals(ruleName)) {
+					nameDecl.setKind(PropertyNameKind.NUMBER);
+				} else {
+					throw new IllegalArgumentException(ruleName);
+				}
+			} else if ("expression".equals(feature)) {
+				nameDecl.setKind(PropertyNameKind.COMPUTED);
 			}
 		}
 	}

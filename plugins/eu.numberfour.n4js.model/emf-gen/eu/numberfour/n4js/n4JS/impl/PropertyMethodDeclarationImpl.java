@@ -23,7 +23,6 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.PropertyAssignment;
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration;
-import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.Statement;
 import eu.numberfour.n4js.n4JS.SuperLiteral;
 import eu.numberfour.n4js.n4JS.ThisArgProvider;
@@ -1013,12 +1012,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
-		if (baseClass == PropertyNameOwner.class) {
-			switch (baseOperationID) {
-				case N4JSPackage.PROPERTY_NAME_OWNER___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_MEMBER;
-				default: return super.eDerivedOperationID(baseOperationID, baseClass);
-			}
-		}
 		if (baseClass == PropertyAssignment.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_MEMBER;

@@ -19,6 +19,8 @@ import eu.numberfour.n4js.n4JS.DebuggerStatement
 import eu.numberfour.n4js.n4JS.DoStatement
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.IfStatement
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4JSFeatureUtils
@@ -43,6 +45,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
@@ -51,6 +54,7 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.UtilN4
@@ -67,6 +71,8 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator.State
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import org.eclipse.emf.common.util.EList
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 
 /**
  * Common base class for all N4JS validators. Provides some convenience methods and
@@ -259,6 +265,78 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 //		}
 	}
 
+	/**
+	 * Check whether every type parameter of a generic function or method declaration is actually used by that
+	 * declaration.
+	 * 
+	 * @param genericFunctionDeclaration the generic function or method declaration to check.
+	 */
+	protected def <T extends GenericDeclaration & FunctionDefinition> internalCheckNoUnusedTypeParameters(T genericFunctionOrMethod) {
+		if (genericFunctionOrMethod.definedType === null)
+			return;
+			
+		val TFunction functionType = genericFunctionOrMethod.definedType as TFunction;
+		internalCheckNoUnusedTypeParameters(genericFunctionOrMethod, genericFunctionOrMethod.typeVars, functionType.typeVars);
+	}
+	
+	/**
+	 * Check whether every type parameter of a generic function type expression is actually used by the
+	 * declared function type.
+	 * 
+	 * @param functionTypeExp the generic function type to check.
+	 */
+	protected def internalCheckNoUnusedTypeParameters(FunctionTypeExpression functionTypeExp) {
+		if (functionTypeExp.declaredType === null)
+			return;
+		
+		val TFunction declaredType = functionTypeExp.declaredType;
+		internalCheckNoUnusedTypeParameters(functionTypeExp, functionTypeExp.ownedTypeVars, declaredType.typeVars);
+	}
+	
+	/**
+	 * Check whether every type variable that is present in two lists is references anywhere in a subtree.
+	 * Thereby the first list contains the AST nodes for the type variables whereas the second list contains
+	 * the corresponding elements from the type model. The AST nodes are required for attaching the generated
+	 * issues to the correct nodes, whereas the type model elements are needed for the actual usage check.
+	 *  
+	 * We assume that each pair of an actual type variable (AST node) and a declared type variable (type model
+	 * element) that share an index in both lists have the same name. If the lists are not of equal length,
+	 * then this assumption only applies to the elements up to, but not including, the length of the shorter
+	 * list. In other words, we assume that one of the two given lists is a prefix of the other (given that
+	 * we consider actual and declared type variables to be equal if they have the same name), and we only
+	 * check this prefix.
+	 * 
+	 * Finally we add an issue for each type variable that is found to be unreferenced.
+	 * 
+	 * @param root the root of the subtree to search for references to the given type variables
+	 * @param actualTypeVars the actual type variables from the AST
+	 * @param declaredTypeVars the declared type variables from the type model
+	 */
+	private def internalCheckNoUnusedTypeParameters(EObject root, EList<TypeVariable> actualTypeVars, EList<TypeVariable> declaredTypeVars) {
+		val int typeVarCount = Math.min(actualTypeVars.size, declaredTypeVars.size)
+		if (typeVarCount == 1) {
+			// Since this is a very common case, we want it to be as fast as possible. Therefore we don't
+			// build a set of all reference type variables and do the check once directly.
+			val TypeVariable actualTypeVar = actualTypeVars.get(0)
+			val TypeVariable declaredTypeVar = declaredTypeVars.get(0)
+			if (!TypeUtils.isOrContainsRefToTypeVar(root, declaredTypeVar)) {
+				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(actualTypeVar.name), actualTypeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+			}
+		} else if (typeVarCount > 1) {
+			// In this case, we avoid repeatedly traversing the tree with the given root by getting a set of
+			// all type variables it references up front and using that to perform our check.
+			val referencedTypeVars = TypeUtils.getReferencedTypeVars(root);
+			for (var int i = 0; i < typeVarCount; i++) {
+				val TypeVariable actualTypeVar = actualTypeVars.get(i)
+				val TypeVariable declaredTypeVar = declaredTypeVars.get(i)
+				
+				if (!referencedTypeVars.contains(declaredTypeVar)) {
+					addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(actualTypeVar.name), actualTypeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Finds first inheritance cycle in the inheritance hierarchy above 'classifier'. Consequential errors are
 	 * omitted, that is, if a class X extends A, and if A extends B and B extends A, then no error is reported

@@ -444,7 +444,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.16
 	 */
-	public <ThisT extends Object> every(callback: {function(value: T, index: number, traversedObject: ThisT)}, thisObject: ThisT?): boolean
+	public <ThisT extends Object> every(callback: {function(value: T, index: number, traversedObject: Array<T>)}, thisObject: ThisT?): boolean
 		/**
 	 * callbackfn  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
 	 * Boolean value true or false. some calls callbackfn once for each element present in the array, in ascending
@@ -465,7 +465,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.17
 	 */
-	public <ThisT extends Object> some(callback: {function(value: T, index: number, traversedObject: ThisT) : boolean}, thisObject: ThisT?): boolean
+	public <ThisT extends Object> some(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT?): boolean
 	/**
 	 * callbackfn should be a function that accepts three arguments. forEach calls callbackfn once for each element
 	 * present in the array, in ascending order. callbackfn is called only for elements of the array which actually exist;
@@ -483,7 +483,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.18
 	 */
-	public <ThisT extends Object> forEach(callback: {function(value: T, index: number, traversedObject: ThisT) : void}, thisObject: ThisT?): void
+	public <ThisT extends Object> forEach(callback: {function(value: T, index: number, traversedObject: Array<T>) : void}, thisObject: ThisT?): void
 	/**
 	 * callbackfn should be a function that accepts three arguments. map calls callbackfn once for each element in the
 	 * array, in ascending order, and constructs a new Array from the results. callbackfn is called only for elements of
@@ -501,8 +501,8 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.19
 	 */
-	public <U, ThisT extends Object> map(callback: {function(value: T, index: number, traversedObject: ThisT) : U}, thisObject: ThisT?): Array<U>
-	
+	public <U, ThisT extends Object> map(callback: {function(value: T, index: number, traversedObject: Array<T>) : U}, thisObject: ThisT?): Array<U>
+
 	/**
 	 * callbackfn  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
 	 * Boolean value true or false. filter calls callbackfn once for each element in the array, in ascending order,
@@ -521,7 +521,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.20
 	 */
-	public <ThisT extends Object> filter(callback: {function(value: T, index: number, traversedObject: ThisT) : boolean}, thisObject: ThisT?): Array<T>
+	public <ThisT extends Object> filter(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT?): Array<T>
 	// since ECMAScript 5
 
 	/**
@@ -543,7 +543,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
 	 * @see ES5, 15.4.4.21
 	 */
-	public <MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Object) : MemoT}, initialValue: MemoT?): MemoT
+	public <MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT?): MemoT
 	/**
 	 * callbackfn  should  be  a  function  that  takes  four  arguments.  reduceRight calls  the  callback,  as  a  function,
 	 * once for each element present in the array, in descending order.
@@ -564,7 +564,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
 	 * @see ES5, 15.4.4.22
 	 */
-	public <MemoT> reduceRight(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Object) : MemoT}, initialValue: MemoT?): MemoT
+	public <MemoT> reduceRight(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT?): MemoT
 	
 	/**
 	 * The length property of this Array object is a data property whose value is always numerically greater than

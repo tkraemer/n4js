@@ -78,7 +78,7 @@ class DelegationAssistant extends TransformationAssistant {
 			TMethod: ImFactory.eINSTANCE.createDelegatingMethodDeclaration
 		};
 		// set simple properties
-		result.name = target.name;
+		result.declaredName = _LiteralOrComputedPropertyName(target.name);
 		result.delegationTarget = getSymbolTableEntryOriginal(target, true);
 		if(target.static) {
 			result.declaredModifiers += N4Modifier.STATIC;

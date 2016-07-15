@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+ 
+
+// format with trailing comma.
+/* XPECT formattedLines 3 ---
+let y: any = {
+		"name": "value",
+	};
+--- */
+let y: any = {
+    "name": "value",
+};
+

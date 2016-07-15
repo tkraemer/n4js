@@ -9,21 +9,11 @@
 		'@@cjs/n4mf-parser/index',
 		'@@cjs/n4js-cli/index'
 	], function($n4Export) {
-		var NodeTestCLI, child_process, lib_fs, os, lib_path, n4mf_parser, n4js_cli, requireResolve, MANIFEST_N4MF, mkdirp, count, createTempDir, detectProjectDir, coreLibs, rtLibs, NodeTestAPI;
-		mkdirp = function mkdirp(path, mode) {
-			return $spawn(function*() {
-				if (!((yield $n4promisifyFunction(lib_fs.exists, [
-					path
-				], false, true)))) {
-					(yield mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode));
-					(yield $n4promisifyFunction(lib_fs.mkdir, [
-						path,
-						mode
-					], false, false));
-				}
-			}.apply(this, arguments));
+		var NodeTestCLI, child_process, lib_fs, os, lib_path, n4mf_parser, n4js_cli, MANIFEST_N4MF, requireResolve, count, createTempDir, detectProjectDir, coreLibs, rtLibs, NodeTestAPI;
+		requireResolve = function requireResolve(id) {
+			return (System._nodeRequire)["resolve"](id);
 		};
-		$n4Export('mkdirp', mkdirp);
+		$n4Export('requireResolve', requireResolve);
 		createTempDir = function createTempDir() {
 			return $spawn(function*() {
 				let tempDir = lib_path.join(os.tmpdir(), "n4js-mangelhaft-" + count++);
@@ -35,7 +25,7 @@
 		};
 		$n4Export('createTempDir', createTempDir);
 		detectProjectDir = function detectProjectDir(npm) {
-			let p = requireResolve(('' + npm + '/package.json'));
+			let p = requireResolve(("" + npm + "/package.json"));
 			return p.substring(0, p.lastIndexOf(lib_path.sep));
 		};
 		NodeTestAPI = function NodeTestAPI() {};
@@ -65,7 +55,6 @@
 				}
 			],
 			execute: function() {
-				requireResolve = (System._nodeRequire)["resolve"];
 				MANIFEST_N4MF = "manifest.n4mf";
 				count = Date.now();
 				coreLibs = [
@@ -121,9 +110,7 @@
 									if (options.testCatalog.startsWith("http://")) {
 										options.testCatalog = lib_path.join((yield createTempDir()), "catalog.json");
 									}
-									if (options.targetPlatformInstallLocation) {
-										(yield mkdirp(options.targetPlatformInstallLocation));
-									} else {
+									if (!options.targetPlatformInstallLocation) {
 										options.targetPlatformInstallLocation = (yield createTempDir());
 									}
 									let projects = Array.from(prjToManifest.keys()).concat(rtLibs.filter((function(id) {
@@ -141,7 +128,7 @@
 								}
 								let nodePath = [];
 								for(let $destructStep$0 of prjToManifest) {
-									var $destruct0 = $sliceToArrayForDestruct(($destructStep$0), 2), dir = $destruct0[0], manifest = $destruct0[1];
+									let $destruct0 = $sliceToArrayForDestruct(($destructStep$0), 2), dir = $destruct0[0], manifest = $destruct0[1];
 									let out = manifest["Output"];
 									if (out) {
 										nodePath.push(lib_path.join(dir, manifest["Output"], "es"));

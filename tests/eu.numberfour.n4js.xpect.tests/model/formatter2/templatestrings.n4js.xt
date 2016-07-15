@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+var a = 5;
+var b = 10;
+
+
+// Wrap and format.
+/* XPECT formattedLines 3 ---
+console.log(`Hello ${ a + b } world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b
+		} world ${ a * b } world ${ a * b } world ${ a * b }`);
+--- */
+console.log(`Hello ${a+b} world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b } world ${ a * b } world ${a
+     *b
+}`);
+
+

@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* */
+/* XPECT formattedLines 6 ---
+var midSizedVariableName;
+
+class C {
+
+	field = midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName +
+		midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName;
+}
+--- */
+var midSizedVariableName;
+
+class C {
+
+    field = midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName + midSizedVariableName;
+}
+

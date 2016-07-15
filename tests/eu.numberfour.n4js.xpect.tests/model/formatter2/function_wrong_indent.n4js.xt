@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+//   Preference "indentation" "    " {}
+   
+   
+   END_SETUP
+ */
+
+
+
+/* XPECT formattedLines 5 ---
+function f(): any {
+	return 24;
+}
+
+let x = 4; // catch the last semi-inseration
+
+--- */
+function f() :any {
+    return 24
+}
+
+
+
+let x = 4; // catch the last semi-inseration

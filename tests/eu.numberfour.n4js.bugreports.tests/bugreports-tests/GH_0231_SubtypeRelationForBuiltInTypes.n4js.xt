@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+var e: Error;
+var re: RangeError;
+// XPECT noerrors --> "RangeError is not a subtype of Error."
+e = re;
+
+
+// original bug report:
+
+var ce: type{Error};
+var cre: type{RangeError};
+// XPECT noerrors --> "type{RangeError} is not a subtype of type{Error}."
+ce = cre;
+

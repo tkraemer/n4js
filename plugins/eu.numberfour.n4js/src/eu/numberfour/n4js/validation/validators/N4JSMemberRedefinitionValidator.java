@@ -10,9 +10,6 @@
  */
 package eu.numberfour.n4js.validation.validators;
 
-import static eu.numberfour.n4js.ts.types.MemberType.FIELD;
-import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
-import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_INHERITED_MEMBER_UNSOLVABLE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_MEMBER_SOLVABLE_CONFLICT;
@@ -55,6 +52,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,6 +74,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
@@ -86,8 +85,8 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
-import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
@@ -104,6 +103,7 @@ import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
+import eu.numberfour.n4js.validation.validators.utils.MemberRedefinitionUtils;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -165,20 +165,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		MemberCube memberCube = createMemberValidationList();
 
-		if (tClassifier instanceof TClass) {
-			constraints_60_MemberOverride(memberCube);
-		}
+		boolean isClass = tClassifier instanceof TClass;
+
 		for (Entry<NameStaticPair, MemberMatrix> entry : memberCube.entrySet()) {
 			MemberMatrix mm = entry.getValue();
+
+			// Set to collect all owned members that are lacking an override annotation.
+			Collection<TMember> membersMissingOverrideAnnotation = new HashSet<>();
+
+			if (isClass) {
+				constraints_60_MemberOverride_checkEntry(mm, membersMissingOverrideAnnotation);
+			}
 			if (mm.hasImplemented()) {
 				// first mix in
 				if (holdConstraints_61_Consumption(mm)) {
 					// then check if everything is implemented
-					constraints_62_Implementation(mm);
+					constraints_62_Implementation(mm, membersMissingOverrideAnnotation);
 				}
 			}
 			constraints_59_NonOverride(mm);
 			constraints_42_AbstractMember(mm);
+			unusedGenericTypeVariable(mm);
+
+			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
 		constraints_41_AbstractClass(tClassifier, memberCube);
 
@@ -197,15 +206,15 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_NON_EXISTENT(keywordProvider.keyword(member),
 								member.getName());
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_NON_EXISTENT);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
 					} else if (AccessModifiers.fixed(m) == MemberAccessModifier.PRIVATE) {
 						bFoundWronglyDeclaredMember = true;
 						String message = getMessageForCLF_OVERRIDE_PRIVATE(
 								validatorMessageHelper.description(member),
 								validatorMessageHelper.description(m));
-						addIssue(message, member.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-								CLF_OVERRIDE_PRIVATE);
+						addIssue(message, member.getAstElement(),
+								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_PRIVATE);
 					}
 				}
 			}
@@ -217,16 +226,14 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	/**
 	 * Constraints 60 (Override Compatible) Constraints defined in 5.4.1 Overriding of Members
+	 *
+	 * Check constraints wrt member overrides.
+	 *
+	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
+	 * given collection.
 	 */
-	private void constraints_60_MemberOverride(MemberCube memberCube) {
-		for (Entry<NameStaticPair, MemberMatrix> entry : memberCube.entrySet()) {
-			MemberMatrix mm = entry.getValue();
-			constraints_60_MemberOverride_checkEntry(mm);
-
-		}
-	}
-
-	private void constraints_60_MemberOverride_checkEntry(MemberMatrix mm) {
+	private void constraints_60_MemberOverride_checkEntry(MemberMatrix mm,
+			Collection<TMember> membersMissingOverrideAnnotation) {
 		for (TMember m : mm.owned()) {
 			for (TMember s : mm.inherited()) {
 				// 1. override compatible
@@ -243,7 +250,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					}
 					// 3. declared overridden
 					if (!m.isDeclaredOverride()) {
-						messageMissingOverrideAnnotation(m, s);
+						membersMissingOverrideAnnotation.add(m);
 					}
 				}
 			}
@@ -321,15 +328,18 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	/**
 	 * Constraints 62: Implementation compatible
+	 *
+	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
+	 * given collection.
 	 */
-	private void constraints_62_Implementation(MemberMatrix mm) {
+	private void constraints_62_Implementation(MemberMatrix mm,
+			Collection<TMember> membersMissingOverrideAnnotation) {
 
 		String missingAccessor = null;
 		List<TMember> missingAccessors = new MemberList<>();
 		List<TMember> conflictingMembers = new MemberList<>();
 
 		TClassifier currentClassifier = getCurrentClassifier();
-		boolean bMissingOverrideIssued = false;
 		Set<TMember> ownedErroneousMembers = null; // avoid multiple errors on a single element (but not on
 		// getter/setter pairs
 
@@ -388,10 +398,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					}
 
 					// 1 & 2 declared overridden
-					if (!bMissingOverrideIssued && !m_.isDeclaredOverride()
+					if (!m_.isDeclaredOverride()
 							&& m_.getContainingType() == currentClassifier) {
-						bMissingOverrideIssued = true;
-						messageMissingImplementAnnotation(m_, mm.implemented());
+						membersMissingOverrideAnnotation.add(m_);
 					}
 				}
 			}
@@ -440,25 +449,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		// 2. meta type
-		boolean metaTypeMatches = s.getMemberType() == m.getMemberType();
-		if (!metaTypeMatches) {
-			switch (s.getMemberType()) {
-			case METHOD:
-				break; // initial test covers this case
-			case FIELD:
-				metaTypeMatches = m.getMemberType() == GETTER || m.getMemberType() == SETTER;
-				break;
-			case SETTER:
-			case GETTER:
-				metaTypeMatches = m.getMemberType() == FIELD;
-				break;
+		boolean metaTypeCompatible = MemberRedefinitionUtils.isMetaTypeCompatible(m, s);
+		if (!metaTypeCompatible) {
+			if (!consumptionConflict) { // avoid consequential errors
+				messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
 			}
-			if (!metaTypeMatches) {
-				if (!consumptionConflict) { // avoid consequential errors
-					messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
-				}
-				return OverrideCompatibilityResult.ERROR;
-			}
+			return OverrideCompatibilityResult.ERROR;
 		}
 
 		// 3. s not final
@@ -602,6 +598,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
+	 * GH-234 add warning for unused type variables in function and method declarations (unless the method overrides any
+	 * other method).
+	 */
+	private void unusedGenericTypeVariable(MemberMatrix mm) {
+		for (TMember member : mm.owned()) {
+			if (member instanceof TMethod) {
+				TMethod method = (TMethod) member;
+				if (!mm.hasInherited() && !mm.hasImplemented()) {
+					// We need the method declaration from the AST in order to pass it to the internal
+					// validation function. This is necessary because we want to attach the warning to the actual unused
+					// type variable in the method declaration, and the type variable in the type model is not identical
+					// to the one in the AST which we actually need.
+					// Since method is owned by the type being validated, we can safely navigate back from the type
+					// model to the AST without triggering another parse.
+
+					MethodDeclaration methodDeclaration = (MethodDeclaration) method.getAstElement();
+					internalCheckNoUnusedTypeParameters(methodDeclaration);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Constraints 41 (Abstract Class)
 	 */
 	private boolean constraints_41_AbstractClass(TClassifier classifier, MemberCube memberCube) {
@@ -648,27 +667,55 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		addIssue(message, classifier, nameFeature, issueCode);
 	}
 
+	/**
+	 * Adds a missing override issue with the fitting verb for all members in the given collection.
+	 *
+	 * @param mm
+	 *            The current member matrix
+	 * @param missingOverrideAnnotationMembers
+	 *            A collection of overridden members
+	 *
+	 */
+	private void messageMissingOverrideAnnotation(MemberMatrix mm,
+			Collection<TMember> missingOverrideAnnotationMembers) {
+		if (mm.hasOwned() && missingOverrideAnnotationMembers.size() > 0) {
+			Iterable<TMember> overriddenMembers = Iterables.concat(mm.inherited(), mm.implemented());
+
+			for (TMember overriding : mm.owned()) {
+				// skip members with proper annotation
+				if (!missingOverrideAnnotationMembers.contains(overriding)) {
+					continue;
+				}
+				/*
+				 * Filter overridden members to only contain metatype compatible members to prevent the generation of
+				 * confusing error message
+				 */
+				Iterable<TMember> filteredOverriddenMembers = MemberRedefinitionUtils
+						.getMetatypeCompatibleOverriddenMembers(overriding, overriddenMembers);
+
+				// choose redefinition verb based on the origin of the overridden members
+				String redefinitionVerb = MemberRedefinitionUtils.getRedefinitionVerb(filteredOverriddenMembers,
+						getCurrentClassifier());
+
+				String message = getMessageForCLF_OVERRIDE_ANNOTATION(
+						validatorMessageHelper.descriptionDifferentFrom(overriding, overriddenMembers),
+						redefinitionVerb,
+						validatorMessageHelper.descriptions(filteredOverriddenMembers));
+
+				addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+						CLF_OVERRIDE_ANNOTATION);
+			}
+		}
+	}
+
 	private void messageFieldOverrideNeedsAccessorPair(TMember overriding, TMember overridden) {
 		if (overriding.getContainingType() == getCurrentClassifier()) {
 			String missingAccessor = overriding.isGetter() ? "setter" : "getter";
 			String message = getMessageForCLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR(
 					validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
 					validatorMessageHelper.descriptionDifferentFrom(overridden, overriding), missingAccessor);
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 					CLF_OVERRIDE_FIELD_REQUIRES_ACCESSOR_PAIR);
-		} else {
-			throw new IllegalStateException("must not happen as member is not consumed");
-		}
-	}
-
-	private void messageMissingOverrideAnnotation(TMember overriding, TMember overridden) {
-		if (overriding.getContainingType() == getCurrentClassifier()) {
-			String message = getMessageForCLF_OVERRIDE_ANNOTATION(
-					validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
-					"overriding",
-					validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-					CLF_OVERRIDE_ANNOTATION);
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
 		}
@@ -814,21 +861,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		addIssue(message, CLF_CONSUMED_MEMBER_SOLVABLE_CONFLICT);
 	}
 
-	private void messageMissingImplementAnnotation(TMember overriding, Iterable<TMember> implementedMembers) {
-		if (overriding.getContainingType() == getCurrentClassifier()) {
-			String redefinitionVerb = getCurrentClassifier() instanceof TInterface ? "overriding" : "implementing";
-
-			String message = getMessageForCLF_OVERRIDE_ANNOTATION(
-					validatorMessageHelper.description(overriding),
-					redefinitionVerb,
-					validatorMessageHelper.descriptions(implementedMembers));
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME,
-					CLF_OVERRIDE_ANNOTATION);
-		} else {
-			throw new IllegalStateException("must not happen as member is not consumed");
-		}
-	}
-
 	private void messageMissingAccessor(String missingAccessor, List<? extends TMember> conflictingMembers) {
 		// CLF_IMPLEMENT_MIXIN_MISSING_ACCESSOR
 		String message = getMessageForCLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE(
@@ -848,7 +880,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		TClassifier currentClassifier = getCurrentClassifier();
 		if (overriding.getContainingType() == currentClassifier) {
-			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__NAME, issueCode,
+			addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+					issueCode,
 					issueData);
 		} else {
 			MemberCollector memberCollector = containerTypesHelper.fromContext(getCurrentClassifierDefinition());

@@ -1,12 +1,28 @@
 (function(System) {
 	'use strict';
 	System.register([
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/ITestReporter',
-		'eu.numberfour.mangelhaft.mangeltypes/n4/mangel/mangeltypes/TestSpy',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ITestReporter',
+		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy',
+		'@node/path',
 		'@node/fs',
-		'@node/os'
+		'@node/os',
+		'@@cjs/xmlbuilder/lib/index'
 	], function($n4Export) {
-		var ITestReporter, TestSpy, lib_fs, os, xmlBuilder, isOK, XUnitReportSpec, XUnitReporter;
+		var ITestReporter, TestSpy, lib_path, lib_fs, os, xmlbuilder, mkdirp, isOK, XUnitReportSpec, XUnitReporter;
+		mkdirp = function mkdirp(path, mode) {
+			return $spawn(function*() {
+				if (!((yield $n4promisifyFunction(lib_fs.exists, [
+					path
+				], false, true)))) {
+					(yield mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode));
+					(yield $n4promisifyFunction(lib_fs.mkdir, [
+						path,
+						mode
+					], false, false));
+				}
+			}.apply(this, arguments));
+		};
+		$n4Export('mkdirp', mkdirp);
 		isOK = function isOK(testResult) {
 			var status = testResult.testStatus;
 			return status === 'PASSED' || status.startsWith('SKIPPED');
@@ -20,11 +36,13 @@
 		XUnitReporter = function XUnitReporter() {
 			this.spy = undefined;
 			this.spec = {};
+			this.output = undefined;
 			this.startTime = undefined;
 			this.resultsMap = new Map();
 			ITestReporter.$fieldInit(this, undefined, {
 				spy: undefined,
 				spec: undefined,
+				output: undefined,
 				startTime: undefined,
 				resultsMap: undefined
 			});
@@ -32,21 +50,26 @@
 		$n4Export('XUnitReporter', XUnitReporter);
 		return {
 			setters: [
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
-					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter) {
+					ITestReporter = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fITestReporter.ITestReporter;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
-					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_u002emangeltypes_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				function($_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy) {
+					TestSpy = $_import_eu_u002enumberfour_u002emangelhaft_n4_u002fmangel_u002fmangeltypes_u002fTestSpy.TestSpy;
+				},
+				function($_import_n4js_u002druntime_u002dnode_path) {
+					lib_path = $_import_n4js_u002druntime_u002dnode_path;
 				},
 				function($_import_n4js_u002druntime_u002dnode_fs) {
 					lib_fs = $_import_n4js_u002druntime_u002dnode_fs;
 				},
 				function($_import_n4js_u002druntime_u002dnode_os) {
 					os = $_import_n4js_u002druntime_u002dnode_os;
+				},
+				function($_import_xmlbuilder_lib_u002findex) {
+					xmlbuilder = $_import_xmlbuilder_lib_u002findex;
 				}
 			],
 			execute: function() {
-				xmlBuilder = System._nodeRequire("xmlbuilder");
 				$makeClass(XUnitReportSpec, Object, [], {
 					xunitReportFile: {
 						value: undefined,
@@ -99,13 +122,17 @@
 					},
 					testFinished: {
 						value: function testFinished___n4(group, test, testResult) {
-							this.resultsMap.set(group.name + "#" + test.name, testResult);
+							let testIdentifier = ("" + group.name + "#" + test.name + "");
+							if (group.parameterizedName) {
+								testIdentifier += ("!" + group.parameterizedName + "");
+							}
+							this.resultsMap.set(testIdentifier, testResult);
 						}
 					},
 					testingFinished: {
 						value: function testingFinished___n4(resultGroups) {
 							return $spawn(function*() {
-								let spec = this.spec, endTime = Date.now(), xml = xmlBuilder.create("testsuites"), suite = xml.ele("testsuite", {
+								let spec = this.spec, endTime = Date.now(), xml = xmlbuilder.create("testsuites"), suite = xml.ele("testsuite", {
 									name: spec.xunitReportName,
 									package: spec.xunitReportPackage,
 									timestamp: this.startTime.toISOString().substring(0, 19),
@@ -149,12 +176,16 @@
 								suite.att("skipped", skipped);
 								suite.att("failures", failures);
 								suite.att("time", (endTime - this.startTime.getTime()) / 1000);
+								this.output = xml.end({
+									pretty: true
+								});
 								if (spec.xunitReportFile) {
+									let dir = this.spec.xunitReportFile;
+									dir = dir.substring(0, dir.lastIndexOf(lib_path.sep));
+									(yield mkdirp(dir));
 									(yield $n4promisifyFunction(lib_fs.writeFile, [
 										this.spec.xunitReportFile,
-										xml.end({
-											pretty: true
-										}),
+										this.output,
 										{
 											encoding: "UTF-8"
 										}
@@ -178,6 +209,10 @@
 						writable: true
 					},
 					spec: {
+						value: undefined,
+						writable: true
+					},
+					output: {
 						value: undefined,
 						writable: true
 					},
@@ -211,6 +246,11 @@
 							}),
 							new N4DataField({
 								name: 'spec',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'output',
 								isStatic: false,
 								annotations: []
 							}),

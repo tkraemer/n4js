@@ -12,6 +12,7 @@ class X {}
 // case 1.a
 
 class Cls {
+	// XPECT warnings --> "Type variable T2 not used in parameters or return type." at "T2"
 	<T1, T2 extends T1> m() {}
 }
 
@@ -64,6 +65,7 @@ class G7<T>
 // ------------------------------------------------------------------------
 // case 1.d
 
+// XPECT warnings --> "Type variable T2 not used in parameters or return type." at "T2"
 function <T1, T2 extends T1> foo() {}
 
 // XPECT noerrors -->

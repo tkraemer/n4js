@@ -12,7 +12,7 @@
 //-- CD
 class C1{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	m(arguments){}
 }
@@ -20,7 +20,7 @@ class C1{
 class C2{
 	m(){
 	/* XPECT errors ---
-		"Variable arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 		var arguments;
 	}
@@ -28,7 +28,7 @@ class C2{
 
 class C3{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	f = function(arguments){};
 }
@@ -36,7 +36,7 @@ class C3{
 class C4{
 	f = function(){
 		/* XPECT errors ---
-			"Variable arguments shadows implicit function parameter." at "arguments"
+			"arguments is a reserved identifier." at "arguments"
 		--- */
 		var arguments;
 	};
@@ -47,7 +47,7 @@ class C4{
 // XPECT errors --> "Unsupported feature: class expressions." at "class"
 var ce1 = class {
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	m(arguments){}
 }
@@ -56,7 +56,7 @@ var ce1 = class {
 var ce2 = class {
 	m(){
 		/* XPECT errors ---
-			"Variable arguments shadows implicit function parameter." at "arguments"
+			"arguments is a reserved identifier." at "arguments"
 		--- */
 		var arguments;
 	}
@@ -65,7 +65,7 @@ var ce2 = class {
 // XPECT errors --> "Unsupported feature: class expressions." at "class"
 var ce3 = class {
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	f = function(arguments){};
 }
@@ -74,7 +74,7 @@ var ce3 = class {
 var ce4 = class {
 	f = function(){
 		/* XPECT errors ---
-			"Variable arguments shadows implicit function parameter." at "arguments"
+			"arguments is a reserved identifier." at "arguments"
 		--- */
 		var arguments;
 	};
@@ -83,7 +83,7 @@ var ce4 = class {
 //-- RD
 interface R1{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	m(arguments){}
 }
@@ -91,7 +91,7 @@ interface R1{
 interface R2{
 	m(){
 		/* XPECT errors ---
-			"Variable arguments shadows implicit function parameter." at "arguments"
+			"arguments is a reserved identifier." at "arguments"
 		--- */
 		var arguments;
 	}
@@ -99,7 +99,7 @@ interface R2{
 
 interface R3{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	f = function(arguments){};
 }
@@ -107,7 +107,7 @@ interface R3{
 interface R4{
 	f = function(){
 		/*XPECT errors ---
-			"Variable arguments shadows implicit function parameter." at "arguments"
+			"arguments is a reserved identifier." at "arguments"
 		--- */
 		var arguments;
 	};
@@ -115,7 +115,7 @@ interface R4{
 //-- ID
 interface I1{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	m(arguments)
 }
@@ -123,7 +123,7 @@ interface I1{
 
 interface I3{
 	/* XPECT errors ---
-		"Parameter arguments shadows implicit function parameter." at "arguments"
+		"arguments is a reserved identifier." at "arguments"
 	--- */
 	f = function(arguments){};
 }

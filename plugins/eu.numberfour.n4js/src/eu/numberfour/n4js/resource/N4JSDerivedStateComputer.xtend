@@ -11,8 +11,6 @@
 package eu.numberfour.n4js.resource;
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder
 import eu.numberfour.n4js.utils.Log
@@ -27,7 +25,7 @@ import org.eclipse.xtext.resource.IDerivedStateComputer
 public class N4JSDerivedStateComputer implements IDerivedStateComputer {
 
 	@Inject extension N4JSUnloader
-	@Inject protected N4JSTypesBuilder typesBuilder;
+	@Inject private N4JSTypesBuilder typesBuilder;
 
 
 	/**
@@ -37,19 +35,7 @@ public class N4JSDerivedStateComputer implements IDerivedStateComputer {
 		if (resource.contents.nullOrEmpty) {
 			throw new IllegalStateException
 		} else if (! resource.contents.empty) {
-			resource.initArrayTypes(preLinkingPhase)
 			typesBuilder.createTModuleFromSource(resource, preLinkingPhase);
-		}
-	}
-	
-	def private void initArrayTypes(DerivedStateAwareResource resource, boolean preLinkingPhase) {
-		val builtin = BuiltInTypeScope.get(resource.resourceSet)
-		for (n : resource.contents.head.eAllContents.toIterable) {
-			switch (n) {
-				ParameterizedTypeRef case n.isArrayTypeLiteral: {
-					n.declaredType = builtin.arrayType
-				}
-			}
 		}
 	}
 

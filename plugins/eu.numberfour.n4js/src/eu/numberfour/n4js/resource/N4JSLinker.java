@@ -49,6 +49,7 @@ import eu.numberfour.n4js.conversion.N4JSValueConverterWithValueException;
 import eu.numberfour.n4js.n4JS.IdentifierRef;
 import eu.numberfour.n4js.n4JS.ImportSpecifier;
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier;
+import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.scoping.members.UnionMemberScope;
 import eu.numberfour.n4js.validation.ASTStructureValidator;
@@ -75,6 +76,9 @@ public class N4JSLinker extends LazyLinker {
 	@Inject
 	private ASTStructureValidator structureValidator;
 
+	@Inject
+	private N4JSPreProcessor preProcessor;
+
 	/**
 	 * Clears the list of encoded URIs in {@link N4JSResource}, installs proxies for all cross references inside the
 	 * parsed model. If validation is enabled finally the {@link ASTStructureValidator} is triggered, that checks the
@@ -87,6 +91,7 @@ public class N4JSLinker extends LazyLinker {
 
 			@Override
 			public void process(N4JSResource resource) throws Exception {
+				// actual linking
 				resource.clearLazyProxyInformation();
 				clearReferences(model);
 				installProxies(resource, model, producer);
@@ -96,6 +101,9 @@ public class N4JSLinker extends LazyLinker {
 					clearReferences(eObject);
 					installProxies(resource, eObject, producer);
 				}
+				// pre-processing of AST
+				preProcessor.process(resource.getScript(), resource);
+				// AST structure validation
 				if (!resource.isValidationDisabled())
 					getStructureValidator().validate(model, consumer);
 			}
@@ -260,6 +268,8 @@ public class N4JSLinker extends LazyLinker {
 			Object value = valueConverterService.toValue(tokenText, rule.getName(), node);
 			if (obj instanceof IdentifierRef && value instanceof String) {
 				((IdentifierRef) obj).setIdAsText((String) value);
+			} else if (obj instanceof ParameterizedPropertyAccessExpression && value instanceof String) {
+				((ParameterizedPropertyAccessExpression) obj).setPropertyAsText((String) value);
 			} else if (obj instanceof NamedImportSpecifier && value instanceof String) {
 				((NamedImportSpecifier) obj).setImportedElementAsText((String) value);
 			}
@@ -284,10 +294,12 @@ public class N4JSLinker extends LazyLinker {
 		} else if (obj instanceof ImportSpecifier) {
 			ImportSpecifier specifier = (ImportSpecifier) obj;
 			specifier.setFlaggedUsedInCode(false); // clear transient
-		} else if (obj instanceof IdentifierRef) {
-			((IdentifierRef) obj).setIdAsText(null);
 		} else if (obj instanceof NamedImportSpecifier) {
 			((NamedImportSpecifier) obj).setImportedElementAsText(null);
+		} else if (obj instanceof IdentifierRef) {
+			((IdentifierRef) obj).setIdAsText(null);
+		} else if (obj instanceof ParameterizedPropertyAccessExpression) {
+			((ParameterizedPropertyAccessExpression) obj).setPropertyAsText(null);
 		}
 	}
 
