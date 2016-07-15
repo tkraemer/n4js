@@ -10,32 +10,11 @@
  */
 package eu.numberfour.n4js;
 
-import org.eclipse.xtext.validation.DiagnosticConverterImpl;
-import org.eclipse.xtext.validation.IResourceValidator;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-/**
- * A runtime module which combines {@link N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject} and
- * additionally binds {@link N4JSInjectorProviderWithIssueSuppression.FilteringDiagnosticConverter} to
- * {@link IResourceValidator}.
- */
+/** */
 public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInjectorProvider {
-	@Override
-	protected Injector internalCreateInjector() {
-		return new N4JSStandaloneSetup() {
-			@Override
-			public Injector createInjector() {
-				return Guice.createInjector(
-						new N4JSInjectorProviderWithMockProject.N4JSTestRuntimeModuleWithMockProject() {
-							/** */
-							@SuppressWarnings("unused")
-							public Class<? extends DiagnosticConverterImpl> bindDiagnosticConverter() {
-								return N4JSInjectorProviderWithIssueSuppression.FilteringDiagnosticConverter.class;
-							}
-						});
-			}
-		}.createInjectorAndDoEMFRegistration();
+	/** */
+	public N4JSInjectorProviderMockProjectSuppressedValidator() {
+		super(new N4JSInjectorProviderWithMockProject.MockProjectModule(),
+				new N4JSInjectorProviderWithIssueSuppression.IssueSuppressionModule());
 	}
 }
