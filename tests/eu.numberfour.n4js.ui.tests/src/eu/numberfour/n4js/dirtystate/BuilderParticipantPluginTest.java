@@ -82,7 +82,7 @@ public class BuilderParticipantPluginTest extends AbstractBuilderParticipantTest
 		// Couldn't resolve reference to Type 'Class1'.
 		// Import of Class1 cannot be resolved.
 		// As before: The value of the local variable dummy is not used
-		assertMarkers("File1 should have 6 markers", file1, 6);
+		assertMarkers("File1 should have 6 markers", file1, 5);
 
 		IFile file2 = createTestFile(pr0_0pa0, "Class1", TestFiles.class1());
 		waitForAutoBuild();

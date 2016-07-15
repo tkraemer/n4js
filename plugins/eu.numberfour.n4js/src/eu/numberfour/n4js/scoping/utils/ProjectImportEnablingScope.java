@@ -31,6 +31,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.n4JS.ImportDeclaration;
+import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -179,9 +180,10 @@ public class ProjectImportEnablingScope implements IScope {
 			}
 		}
 
-		return new InvalidImportTargetModuleDescription(EObjectDescription.create("impDecl", this.importDeclaration),
+		final EObject originalProxy = (EObject) this.importDeclaration
+				.eGet(N4JSPackage.eINSTANCE.getImportDeclaration_Module(), false);
+		return new InvalidImportTargetModuleDescription(EObjectDescription.create("impDecl", originalProxy),
 				sbErrrorMessage.toString(), IssueCodes.IMP_UNRESOLVED);
-
 	}
 
 	@Override

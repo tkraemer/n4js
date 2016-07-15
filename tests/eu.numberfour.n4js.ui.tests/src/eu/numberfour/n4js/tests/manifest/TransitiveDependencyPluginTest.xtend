@@ -98,18 +98,16 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'B'.
 		// Couldn't resolve reference to IdentifiableElement 'n'.
-		// Couldn't resolve reference to TModule 'B'.
 		// Couldn't resolve reference to Type 'B'.
 		// Import of B cannot be resolved.
-		assertMarkers("file should have errors", c, 6);
+		assertMarkers("file should have errors", c, 5);
 
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'A'.
 		// Couldn't resolve reference to IdentifiableElement 'm'.
-		// Couldn't resolve reference to TModule 'A'.
 		// Couldn't resolve reference to Type 'A'.
 		// Import of A cannot be resolved.
-		assertMarkers("file should have errors", b, 6);
+		assertMarkers("file should have errors", b, 5);
 		assertMarkers("file should have no errors", a, 0);
 		bProjectUnderTest.dependsOn = aProjectUnderTest
 		cProjectUnderTest.dependsOn = bProjectUnderTest
@@ -147,17 +145,15 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'B'.
 		// Couldn't resolve reference to IdentifiableElement 'm'.
-		// Couldn't resolve reference to TModule 'B'.
 		// Couldn't resolve reference to Type 'B'.
 		// Import of B cannot be resolved.
-		assertMarkers("file should have errors", c, 6);
+		assertMarkers("file should have errors", c, 5);
 
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'A'.
-		// Couldn't resolve reference to TModule 'A'.
 		// Couldn't resolve reference to Type 'A'.
 		// Import of A cannot be resolved.
-		assertMarkers("file should have errors", b, 5);
+		assertMarkers("file should have errors", b, 4);
 		assertMarkers("file should have no errors", a, 0);
 		cProjectUnderTest.dependsOn = bProjectUnderTest
 		bProjectUnderTest.dependsOn = aProjectUnderTest
@@ -195,17 +191,15 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'B'.
 		// Couldn't resolve reference to IdentifiableElement 'm'.
-		// Couldn't resolve reference to TModule 'B'.
 		// Couldn't resolve reference to Type 'B'.
 		// Import of B cannot be resolved.
-		assertMarkers("file should have errors", c, 6);
+		assertMarkers("file should have errors", c, 5);
 
 		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'A'.
-		// Couldn't resolve reference to TModule 'A'.
 		// Couldn't resolve reference to Type 'A'.
 		// Import of A cannot be resolved.
-		assertMarkers("file should have errors", b, 5);
+		assertMarkers("file should have errors", b, 4);
 		assertMarkers("file should have no errors", a, 0);
 		bProjectUnderTest.dependsOn = aProjectUnderTest
 		cProjectUnderTest.dependsOn = bProjectUnderTest
