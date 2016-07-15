@@ -105,27 +105,27 @@ public class ProjectUtils {
 	def public final static String formatDescriptor(IN4JSProject project, String unitPath, String sep1, String sep2,
 		String sep3, boolean includeProjectVersion) {
 		return if(includeProjectVersion) {
-					project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath;
+					project.artifactId + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath;
 				} else {
-					project.projectName + sep3 + unitPath;
+					project.artifactId + sep3 + unitPath;
 				};
 	}
 	def public final static formatDescriptor(ProjectDescription project, String unitPath, String sep1, String sep2,
 		String sep3) {
-		return project.projectName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath;
+		return project.artifactId + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath;
 	}
 
 	def public final formatDescriptorAsIdentifier(IN4JSProject project, String unitPath, String sep1, String sep2,
 		String sep3, boolean includeProjectVersion) {
 		return if(includeProjectVersion) {
-					project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath.getValidUnitPath;
+					project.artifactId.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.version, sep2) + sep3 + unitPath.getValidUnitPath;
 				} else {
-					project.projectName.getValidJavascriptIdentifierName + sep3 + unitPath.getValidUnitPath;
+					project.artifactId.getValidJavascriptIdentifierName + sep3 + unitPath.getValidUnitPath;
 				}
 	}
 	def public final formatDescriptorAsModuleParameterName(ProjectDescription project, String unitPath, String sep1, String sep2,
 		String sep3) {
-		return project.projectName.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath.getValidUnitPath;
+		return project.artifactId.getValidJavascriptIdentifierName + sep1 + projectVersionToStringWithoutQualifier(project.projectVersion, sep2) + sep3 + unitPath.getValidUnitPath;
 	}
 
 	public def String getValidUnitPath(String unitPath) {
@@ -165,7 +165,7 @@ public class ProjectUtils {
 			val project = n4jsCore.findProject(uri).orNull;
 			var details = '';
 			if (null !== project && !project.exists) {
-				details = ''' Does project '«project.projectName»' exists and opened in the workspace? ''';
+				details = ''' Does project '«project.artifactId»' exists and opened in the workspace? ''';
 			}
 			throw new RuntimeException('''Cannot locate source container for module «uri.lastSegment».«details»''');
 		}

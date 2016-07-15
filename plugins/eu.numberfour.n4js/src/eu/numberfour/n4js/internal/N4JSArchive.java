@@ -14,10 +14,10 @@ import org.eclipse.emf.common.util.URI;
 
 import com.google.common.collect.ImmutableList;
 
+import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.projectModel.IN4JSArchive;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainerAware;
-import eu.numberfour.n4js.n4mf.ProjectDescription;
 
 /**
  */
@@ -52,14 +52,14 @@ public class N4JSArchive implements IN4JSArchive {
 		return getModel().getSourceContainers(this);
 	}
 
-	@Override
-	public String getLibraryName() {
-		ProjectDescription pd = getModel().getProjectDescription(getLocation());
-		if (pd == null) {
-			return null;
-		}
-		return pd.getArtifactId();
-	}
+	// @Override
+	// public String getLibraryName() {
+	// ProjectDescription pd = getModel().getProjectDescription(getLocation());
+	// if (pd == null) {
+	// return null;
+	// }
+	// return pd.getArtifactId();
+	// }
 
 	@Override
 	public String getArchiveName() {

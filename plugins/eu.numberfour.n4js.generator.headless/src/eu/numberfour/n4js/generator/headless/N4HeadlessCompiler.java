@@ -610,7 +610,7 @@ public class N4HeadlessCompiler {
 				String message = "Cannot load resource=" + res.getURI();
 				if (!keepOnCompiling) {
 					throw new N4JSCompileErrorException(message,
-							markedProject.project.getProjectName(), e);
+							markedProject.project.getArtifactId(), e);
 				}
 				warn(message);
 			}
@@ -662,7 +662,7 @@ public class N4HeadlessCompiler {
 
 		// Projects should not compile if there are severe errors:
 		if (!keepOnCompiling) {
-			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectName());
+			failOnErrors(allErrorsAndWarnings, markedProject.project.getArtifactId());
 		}
 	}
 
@@ -782,7 +782,7 @@ public class N4HeadlessCompiler {
 					try {
 						rec.markStartCompile(input);
 						if (verbose)
-							info("compiling " + markedProject.project.getProjectName() + ": " + input.getURI());
+							info("compiling " + markedProject.project.getArtifactId() + ": " + input.getURI());
 						compositeGenerator.doGenerate(input, fsa);
 						rec.markEndCompile(input);
 					} catch (GeneratorException e) {
@@ -790,11 +790,11 @@ public class N4HeadlessCompiler {
 
 						if (keepOnCompiling) {
 							if (collectedErrors == null) {
-								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project"
-										+ markedProject.project.getProjectName() + ".");
+								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project "
+										+ markedProject.project.getArtifactId() + ".");
 							}
 							collectedErrors.add(new N4JSCompileErrorException(e.getMessage(), markedProject.project
-									.getProjectName(), e));
+									.getArtifactId(), e));
 							if (verbose) {
 								error(e.getMessage());
 							}

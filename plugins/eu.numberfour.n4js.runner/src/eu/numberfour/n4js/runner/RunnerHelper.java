@@ -286,8 +286,8 @@ public class RunnerHelper {
 	private Optional<IN4JSProject> getCustomRuntimeEnvironmentProject(RuntimeEnvironment runEnv) {
 		// final RuntimeEnvironment reOfRunner = runnerRegistry.getDescriptor(runnerId).getEnvironment();
 		if (runEnv != null) {
-			final String projectName = runEnv.getArtifactId();
-			return findRuntimeEnvironemtnWithName(projectName);
+			final String artifactId = runEnv.getArtifactId();
+			return findRuntimeEnvironemtnWithName(artifactId);
 		}
 		return Optional.absent();
 	}
@@ -295,14 +295,14 @@ public class RunnerHelper {
 	/**
 	 * Looks up all runtime environment with provided name.
 	 *
-	 * @param projectName
-	 *            of the desired environment
-	 * @return optional with project if found, empty optional otherwise
+	 * @param artifactId
+	 *            of the project that servers as the desired environment.
+	 * @return optional with project if found, empty optional otherwise.
 	 */
-	private Optional<IN4JSProject> findRuntimeEnvironemtnWithName(final String projectName) {
+	private Optional<IN4JSProject> findRuntimeEnvironemtnWithName(final String artifactId) {
 		for (IN4JSProject project : n4jsCore.findAllProjects()) {
 			if (project.getProjectType() == ProjectType.RUNTIME_ENVIRONMENT
-					&& project.getProjectName().equals(projectName)) {
+					&& project.getArtifactId().equals(artifactId)) {
 				return Optional.of(project);
 			}
 		}

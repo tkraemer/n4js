@@ -101,7 +101,7 @@ public interface TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * The name of the module's project.
+	 * The artifactId of the project containing this module.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Project Name</em>' attribute.
 	 * @see #setProjectName(String)

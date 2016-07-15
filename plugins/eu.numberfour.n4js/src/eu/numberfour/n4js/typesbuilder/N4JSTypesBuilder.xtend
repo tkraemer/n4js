@@ -106,7 +106,7 @@ public class N4JSTypesBuilder {
 			val optionalProject = n4jscore.findProject(resource.URI);
 			if (optionalProject.present) {
 				val project = optionalProject.get;
-				result.projectName = project.projectName;
+				result.projectName = project.artifactId;
 				result.vendorID = project.vendorID;
 				result.moduleLoader = project.moduleLoader?.literal;
 

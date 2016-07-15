@@ -95,11 +95,11 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	ImmutableList<? extends IN4JSSourceContainerAware> getProvidedRuntimeLibraries();
 
 	/**
-	 * Returns raw name of the extended runtime , if any.
+	 * Returns artifactId of the extended runtime , if any.
 	 *
 	 * @return optional but not null string
 	 */
-	Optional<String> getExtendedRuntimeEnvironmentName();
+	Optional<String> getExtendedRuntimeEnvironmentName(); // FIXME rename!!!
 
 	/**
 	 * Returns with the extended runtime environment of the project. If not specified returns with an absent instance.
@@ -108,10 +108,10 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	 */
 	Optional<IN4JSSourceContainerAware> getExtendedRuntimeEnvironment();
 
-	/**
-	 * The project name. Also available if the project does not exist.
-	 */
-	String getProjectName();
+	// /**
+	// * The project name. Also available if the project does not exist.
+	// */
+	// String getProjectName();
 
 	/**
 	 * The vendor ID. It is not available, if the project does not exist.

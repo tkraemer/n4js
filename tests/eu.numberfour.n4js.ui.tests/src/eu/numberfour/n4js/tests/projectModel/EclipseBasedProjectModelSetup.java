@@ -59,8 +59,8 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 	@Override
 	protected void createTempProjects() {
 		try {
-			host.setMyProjectURI(createTempProject(host.myProjectName));
-			createManifest(host.myProjectName, "ArtifactId: " + host.myProjectName + "\n" +
+			host.setMyProjectURI(createTempProject(host.myArtifactId));
+			createManifest(host.myArtifactId, "ArtifactId: " + host.myArtifactId + "\n" +
 					"VendorId: eu.numberfour\n" +
 					"ProjectName: \"N4JS Tests\"\n" +
 					"VendorName: \"NumberFour AG\"\n" +
@@ -73,10 +73,10 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"		\"src\"\n" +
 					"	}\n" +
 					"}\n" +
-					"ProjectDependencies { " + host.libProjectName + ", " + host.archiveProjectName + " } \n");
-			createArchive(host.myProjectName);
-			host.setLibProjectURI(createTempProject(host.libProjectName));
-			createManifest(host.libProjectName, "ArtifactId: " + host.libProjectName + "\n" +
+					"ProjectDependencies { " + host.libArtifactId + ", " + host.archiveArtifactId + " } \n");
+			createArchive(host.myArtifactId);
+			host.setLibProjectURI(createTempProject(host.libArtifactId));
+			createManifest(host.libArtifactId, "ArtifactId: " + host.libArtifactId + "\n" +
 					"VendorId: eu.numberfour\n" +
 					"ProjectName: \"N4JS Tests\"\n" +
 					"VendorName: \"NumberFour AG\"\n" +
@@ -102,7 +102,7 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 		IFolder libFolder = project.getFolder(LIB_FOLDER_NAME);
 		libFolder.create(false, true, null);
 
-		IFile archiveFile = libFolder.getFile(host.archiveProjectName + ".nfar");
+		IFile archiveFile = libFolder.getFile(host.archiveArtifactId + ".nfar");
 		ByteArrayOutputStream byteArrayOutputSteam = new ByteArrayOutputStream();
 		final ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputSteam);
 		zipOutputStream.putNextEntry(new ZipEntry("src/A.js"));
@@ -113,7 +113,7 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 
 		zipOutputStream.putNextEntry(new ZipEntry(IN4JSProject.N4MF_MANIFEST));
 		// this will close the stream
-		CharStreams.write("ArtifactId: " + host.archiveProjectName + "\n" +
+		CharStreams.write("ArtifactId: " + host.archiveArtifactId + "\n" +
 				"VendorId: eu.numberfour\n" +
 				"ProjectName: \"N4JS Tests\"\n" +
 				"VendorName: \"NumberFour AG\"\n" +

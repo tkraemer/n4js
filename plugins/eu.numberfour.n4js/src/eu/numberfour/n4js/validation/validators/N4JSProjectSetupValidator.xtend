@@ -168,9 +168,9 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 
 						// inside NFAR
 						// TODO vendorID of a NFAR-library
-						qname(null, srcCont.getLibrary.libraryName)
+						qname(null, srcCont.getLibrary.artifactId)
 					} else {
-						qname(srcCont.project.vendorID, srcCont.project.projectName)
+						qname(srcCont.project.vendorID, srcCont.project.artifactId)
 					}
 				val dependency = mQName2rtDep.get(depQName)
 				if (dependency === null ) {
@@ -373,16 +373,8 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			] !== null
 	}
 
-	private def dispatch calculateName(IN4JSSourceContainerAware it) {
-		it.toString;
-	}
-
-	private def dispatch calculateName(IN4JSProject it) {
-		projectName;
-	}
-
-	private def dispatch calculateName(IN4JSArchive it) {
-		libraryName;
+	private def String calculateName(IN4JSSourceContainerAware it) {
+		it.artifactId;
 	}
 
 	/**
@@ -664,7 +656,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 				if (allProjects.containsKey(id)) {
 					project = allProjects.get(id);
 				} else {
-					val currentProject = allProjects.get(desc.projectName);
+					val currentProject = allProjects.get(desc.artifactId);
 					project = currentProject?.libraryDependencies?.get(id);
 				}
 
@@ -783,8 +775,8 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		it?.project?.artifactId;
 	}
 
-	private def getExistingProjectIds(EObject it) {
-		return findAllProjects.filter[exists].map[projectName -> it].toMap;
+	private def Map<String, IN4JSProject> getExistingProjectIds(EObject it) {
+		return findAllProjects.filter[exists].map[artifactId -> it].toMap;
 	}
 
 	private def <K, V> toMap(Iterable<Pair<K, V>> it) {
@@ -800,7 +792,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			return emptyMap;
 		}
 		val map = <String, IN4JSProject>newHashMap();
-		allDirectDependencies.filter(IN4JSArchive).map[libraryName -> getProject]
+		allDirectDependencies.filter(IN4JSArchive).map[artifactId -> getProject]
 			.forEach[map.put(key, value)];
 		return unmodifiableMap(map);
 	}

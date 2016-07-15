@@ -62,9 +62,9 @@ class TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 */
 	String vendorID
 	/**
-	 * The name of the module's project.
+	 * The artifactId of the project containing this module.
 	 */
-	String projectName
+	String projectName // FIXME rename to projectArtifactId
 	/**
 	 * The module loader supported by this module as defined in the containing project's manifest.
 	 * Value will be an EMF enum literal, i.e. something like <code>eu.numberfour.n4js.n4mf.ModuleLoader.COMMONJS.getLiteral()</code>.
