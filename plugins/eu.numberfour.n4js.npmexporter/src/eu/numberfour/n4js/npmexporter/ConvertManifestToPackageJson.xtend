@@ -27,7 +27,7 @@ class ConvertManifestToPackageJson {
 	{
 		 val data = new PackageJsonData();
 //	TODO	val pDescription = project.projectName  /
-		data.name = project.artifactId;
+		data.name = project.projectId;
 		// TODO data.author = // map to project.vendorId ??
 		data.version = project.versionAsSemverString;
 		val depIn4jsprojects = project.getDependencies; // TODO includes requiered RT-Libs, OK?
@@ -40,12 +40,12 @@ class ConvertManifestToPackageJson {
 				data.devDependencies
 			} else {
 				data.dependencies
-			}).put( depX.artifactId, "*" );
+			}).put( depX.projectId, "*" );
 		}
 
 		// add tested projects to dependencies
 		for(tp : project.testedProjects) {
-			data.dependencies.put( tp.artifactId, "*" );
+			data.dependencies.put( tp.projectId, "*" );
 		}
 
 		// add extended runtime environment to dependencies
@@ -53,7 +53,7 @@ class ConvertManifestToPackageJson {
 		if(extRE!==null) {
 			// note: inconsistency in return type between getExtendedRuntimeEnvironment() and getDependencies()
 			if(extRE instanceof IN4JSProject) {
-				data.dependencies.put(extRE.artifactId, "*");
+				data.dependencies.put(extRE.projectId, "*");
 			} else {
 				throw new IllegalStateException("expected an IN4JSProject but got: " + extRE.class.name);
 			}

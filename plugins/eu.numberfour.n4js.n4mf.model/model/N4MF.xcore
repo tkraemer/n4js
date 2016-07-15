@@ -42,7 +42,6 @@ package eu.numberfour.n4js.n4mf
  * - check if file is in root folder
  */
 class ProjectDescription extends SimpleProjectDescription {
-	String projectName
 	String vendorName
 	contains DeclaredVersion projectVersion
 	ProjectType projectType
@@ -176,7 +175,7 @@ class SimpleProjectDescription {
 	/**
 	 * will be mapped to Maven pom's artifactId, cf. Eclipse's manifest symbolic name
 	 */
-	String artifactId
+	String projectId
 	op String getVendorId() {
 		return if (declaredVendorId != null) declaredVendorId else (eContainer?.eContainer?.eContainer as ProjectDescription)?.declaredVendorId;
 	}

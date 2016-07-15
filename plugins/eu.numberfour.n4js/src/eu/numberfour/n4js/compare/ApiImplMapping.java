@@ -120,13 +120,13 @@ public class ApiImplMapping {
 	 */
 	public ApiImplMapping enhance(Iterable<IN4JSProject> apiProjects, Iterable<IN4JSProject> implProjects) {
 		final Set<String> apiProjectsIds = StreamSupport.stream(apiProjects.spliterator(), false)
-				.map(p -> p.getArtifactId()).collect(Collectors.toSet());
+				.map(p -> p.getProjectId()).collect(Collectors.toSet());
 
 		for (IN4JSProject pImpl : implProjects) {
 			for (IN4JSProject pApi : pImpl.getImplementedProjects()) {
 				// note: #getImplementedProjects() will return implemented projects from entire workspace,
 				// so we here have to make sure pApi is contained in apiProjects
-				if (apiProjectsIds.contains(pApi.getArtifactId()))
+				if (apiProjectsIds.contains(pApi.getProjectId()))
 					this.put(pApi, pImpl);
 			}
 		}
@@ -137,7 +137,7 @@ public class ApiImplMapping {
 	 * Add a single API -> implementation association to the receiving mapping (if it is not present already).
 	 */
 	public void put(IN4JSProject api, IN4JSProject impl) {
-		final String apiId = api.getArtifactId();
+		final String apiId = api.getProjectId();
 		if (apiId == null)
 			return; // just ignore (complaining about this problem is not our business)
 		final String implId = impl.getImplementationId().orNull();
@@ -187,14 +187,14 @@ public class ApiImplMapping {
 	public List<String> getErrorMessages() {
 		final List<String> msgs = new ArrayList<>();
 		for (IN4JSProject p : projectsWithUndefImplIds) {
-			msgs.add("project '" + p.getArtifactId() + "' does not define an ImplementationId in its manifest");
+			msgs.add("project '" + p.getProjectId() + "' does not define an ImplementationId in its manifest");
 		}
 		for (Map.Entry<Pair<String, String>, Set<IN4JSProject>> currConflict : conflicts.entrySet()) {
 			final String apiId = currConflict.getKey().getKey();
 			final String implId = currConflict.getKey().getValue();
 			final Set<IN4JSProject> culprits = currConflict.getValue();
 			final String culpritsStr = " - "
-					+ culprits.stream().map(c -> c.getArtifactId()).collect(Collectors.joining("\n - "));
+					+ culprits.stream().map(c -> c.getProjectId()).collect(Collectors.joining("\n - "));
 			msgs.add("several projects define an implementation for API project '" + apiId
 					+ "' with implementation ID '" + implId + "':\n" + culpritsStr);
 		}

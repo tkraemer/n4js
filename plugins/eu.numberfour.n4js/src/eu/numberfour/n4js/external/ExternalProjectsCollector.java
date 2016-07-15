@@ -154,7 +154,7 @@ public class ExternalProjectsCollector {
 		return from(n4Project.getAllDirectDependencies())
 				.filter(IN4JSProject.class)
 				.filter(p -> p.exists() && p.isExternal())
-				.transform(p -> p.getArtifactId());
+				.transform(p -> p.getProjectId());
 	}
 
 	private void hookUpReferencedBuildConfigs(final Map<String, N4JSExternalProject> visitedProjects) {

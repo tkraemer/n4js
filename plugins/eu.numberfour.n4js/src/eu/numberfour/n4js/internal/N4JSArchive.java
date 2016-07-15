@@ -58,7 +58,7 @@ public class N4JSArchive implements IN4JSArchive {
 		if (pd == null) {
 			return null;
 		}
-		return pd.getArtifactId();
+		return pd.getProjectId();
 	}
 
 	@Override
@@ -72,14 +72,14 @@ public class N4JSArchive implements IN4JSArchive {
 	}
 
 	@Override
-	public String getArtifactId() {
+	public String getProjectId() {
 		// note: currently returns artifact ID of containing project
 		// TODO change method to return the artifact ID of the project inside the archive! (similar for other methods)
 		ProjectDescription pd = getModel().getProjectDescription(getLocation());
 		if (pd == null) {
 			return null;
 		}
-		return pd.getArtifactId();
+		return pd.getProjectId();
 	}
 
 	protected N4JSModel getModel() {

@@ -171,7 +171,7 @@ class NpmExporter {
 
 	/** Creates project-corresponding folder inside of baseFolder */
 	def static File toProjectFolderIn(IN4JSProject project, File baseFolder) {
-		val pname = project.artifactId;
+		val pname = project.projectId;
 		return new File( baseFolder,pname );
 	}
 
@@ -184,7 +184,7 @@ class NpmExporter {
 
 	/** Export a single project */
 	def void tarAndZip(IN4JSProject project, File baseFolder) throws IOException , CompressorException , ArchiveException {
-		val archiveFile = new File(baseFolder, project.artifactId+".tgz");
+		val archiveFile = new File(baseFolder, project.projectId+".tgz");
 
 		val tempFile = File.createTempFile("tmp",".tgz",baseFolder);
 		tempFile.delete(); // make sure we just captured the name.
@@ -306,7 +306,7 @@ class NpmExporter {
 
 	/** Ensures npm-module-naming conventions. */
 	def boolean holdsConsistentArtifactID(IN4JSProject project,  IssueConsumer issueSink ) {
-		return holdsConsistentArtifactID( project.artifactId, issueSink );
+		return holdsConsistentArtifactID( project.projectId, issueSink );
 	}
 
 	/** Ensures npm-module-naming conventions. */

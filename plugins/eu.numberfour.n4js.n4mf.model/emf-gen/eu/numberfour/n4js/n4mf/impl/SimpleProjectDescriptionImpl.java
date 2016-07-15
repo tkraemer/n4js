@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4mf.impl.SimpleProjectDescriptionImpl#getDeclaredVendorId <em>Declared Vendor Id</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4mf.impl.SimpleProjectDescriptionImpl#getArtifactId <em>Artifact Id</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4mf.impl.SimpleProjectDescriptionImpl#getProjectId <em>Project Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,24 +61,24 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 	protected String declaredVendorId = DECLARED_VENDOR_ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getArtifactId() <em>Artifact Id</em>}' attribute.
+	 * The default value of the '{@link #getProjectId() <em>Project Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getArtifactId()
+	 * @see #getProjectId()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ARTIFACT_ID_EDEFAULT = null;
+	protected static final String PROJECT_ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getArtifactId() <em>Artifact Id</em>}' attribute.
+	 * The cached value of the '{@link #getProjectId() <em>Project Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getArtifactId()
+	 * @see #getProjectId()
 	 * @generated
 	 * @ordered
 	 */
-	protected String artifactId = ARTIFACT_ID_EDEFAULT;
+	protected String projectId = PROJECT_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,8 +125,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getArtifactId() {
-		return artifactId;
+	public String getProjectId() {
+		return projectId;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setArtifactId(String newArtifactId) {
-		String oldArtifactId = artifactId;
-		artifactId = newArtifactId;
+	public void setProjectId(String newProjectId) {
+		String oldProjectId = projectId;
+		projectId = newProjectId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID, oldArtifactId, artifactId));
+			eNotify(new ENotificationImpl(this, Notification.SET, N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID, oldProjectId, projectId));
 	}
 
 	/**
@@ -182,8 +182,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 		switch (featureID) {
 			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID:
 				return getDeclaredVendorId();
-			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID:
-				return getArtifactId();
+			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID:
+				return getProjectId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -199,8 +199,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID:
 				setDeclaredVendorId((String)newValue);
 				return;
-			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID:
-				setArtifactId((String)newValue);
+			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID:
+				setProjectId((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -217,8 +217,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID:
 				setDeclaredVendorId(DECLARED_VENDOR_ID_EDEFAULT);
 				return;
-			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID:
-				setArtifactId(ARTIFACT_ID_EDEFAULT);
+			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID:
+				setProjectId(PROJECT_ID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -234,8 +234,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 		switch (featureID) {
 			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID:
 				return DECLARED_VENDOR_ID_EDEFAULT == null ? declaredVendorId != null : !DECLARED_VENDOR_ID_EDEFAULT.equals(declaredVendorId);
-			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID:
-				return ARTIFACT_ID_EDEFAULT == null ? artifactId != null : !ARTIFACT_ID_EDEFAULT.equals(artifactId);
+			case N4mfPackage.SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID:
+				return PROJECT_ID_EDEFAULT == null ? projectId != null : !PROJECT_ID_EDEFAULT.equals(projectId);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -266,8 +266,8 @@ public class SimpleProjectDescriptionImpl extends MinimalEObjectImpl.Container i
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (declaredVendorId: ");
 		result.append(declaredVendorId);
-		result.append(", artifactId: ");
-		result.append(artifactId);
+		result.append(", projectId: ");
+		result.append(projectId);
 		result.append(')');
 		return result.toString();
 	}

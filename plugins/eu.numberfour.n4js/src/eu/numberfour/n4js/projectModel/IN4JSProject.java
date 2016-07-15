@@ -109,14 +109,6 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	Optional<IN4JSSourceContainerAware> getExtendedRuntimeEnvironment();
 
 	/**
-	 * <b>!!! Do not use the project name !!!</b> In almost all cases, the artifactId should be used when referring to a
-	 * project (even for things like error messages, logging, etc.).
-	 * <p>
-	 * The project name. It is not available, if the project does not exist.
-	 */
-	String getProjectName();
-
-	/**
 	 * The vendor ID. It is not available, if the project does not exist.
 	 */
 	String getVendorID();

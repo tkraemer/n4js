@@ -68,7 +68,7 @@ import eu.numberfour.n4js.utils.resources.ExternalProject;
 	 */
 	Iterable<String> getAllDirectDependencyIds() {
 		return from(externalPackage.getAllDirectDependencies()).filter(IN4JSProject.class).filter(p -> p.exists())
-				.transform(p -> p.getArtifactId()).toSet();
+				.transform(p -> p.getProjectId()).toSet();
 	}
 
 }

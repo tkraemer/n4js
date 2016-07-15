@@ -41,7 +41,7 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_01() {
 		ProjectDescription description = getWorkspace().getProjectDescription(myProjectURI);
 		assertNotNull(description);
-		assertEquals(myArtifactId, description.getArtifactId());
+		assertEquals(myArtifactId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")
@@ -49,7 +49,7 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_02() {
 		ProjectDescription description = getWorkspace().getProjectDescription(libProjectURI);
 		assertNotNull(description);
-		assertEquals(libArtifactId, description.getArtifactId());
+		assertEquals(libArtifactId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")
@@ -57,7 +57,7 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_03() {
 		ProjectDescription description = getWorkspace().getProjectDescription(archiveFileURI);
 		assertNotNull(description);
-		assertEquals(archiveArtifactId, description.getArtifactId());
+		assertEquals(archiveArtifactId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")

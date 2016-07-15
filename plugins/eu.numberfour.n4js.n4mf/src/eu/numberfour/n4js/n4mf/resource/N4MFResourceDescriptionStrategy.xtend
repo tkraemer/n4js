@@ -115,7 +115,7 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 	private dispatch def getUserData(ProjectDescription it) {
 		val builder = ImmutableMap.builder;
 		builder.put(PROJECT_TYPE_KEY, '''«projectType»''');
-		builder.put(PROJECT_ID_KEY, artifactId.nullToEmpty);
+		builder.put(PROJECT_ID_KEY, projectId.nullToEmpty);
 		builder.put(IMPLEMENTATION_ID_KEY, implementationId.nullToEmpty);
 
 		val testedProjects = allTestedProjects;
@@ -152,7 +152,7 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 	}
 	
 	private def asString(Iterable<? extends ProjectReference> it) {
-		map[project].filterNull.map[artifactId].filterNull.join(SEPARATOR)
+		map[project].filterNull.map[projectId].filterNull.join(SEPARATOR)
 	}
 
 	/**

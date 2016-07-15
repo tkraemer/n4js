@@ -293,7 +293,7 @@ public class RunConfiguration {
 	public void setApiImplProjectMappingFromProjects(Map<IN4JSProject, IN4JSProject> apiImplProjectMapping) {
 		this.apiImplProjectMapping.clear();
 		apiImplProjectMapping.entrySet().forEach(
-				e -> this.apiImplProjectMapping.put(e.getKey().getArtifactId(), e.getValue().getArtifactId()));
+				e -> this.apiImplProjectMapping.put(e.getKey().getProjectId(), e.getValue().getProjectId()));
 	}
 
 	/**

@@ -302,7 +302,7 @@ public class RunnerHelper {
 	private Optional<IN4JSProject> findRuntimeEnvironemtnWithName(final String artifactId) {
 		for (IN4JSProject project : n4jsCore.findAllProjects()) {
 			if (project.getProjectType() == ProjectType.RUNTIME_ENVIRONMENT
-					&& project.getArtifactId().equals(artifactId)) {
+					&& project.getProjectId().equals(artifactId)) {
 				return Optional.of(project);
 			}
 		}
@@ -424,7 +424,7 @@ public class RunnerHelper {
 		final List<String> missing = new ArrayList<>(); // artifactIds of projects without an implementation
 		for (IN4JSProject dep : deps) {
 			if (dep != null) {
-				final String depId = dep.getArtifactId();
+				final String depId = dep.getProjectId();
 				if (depId != null && apiImplMapping.isApi(depId)) {
 					// so: dep is an API project ...
 					final IN4JSProject impl = apiImplMapping.getImpl(depId, implementationId);
@@ -474,7 +474,7 @@ public class RunnerHelper {
 			apiImplMapping.enhance(batchedPivotNewDepList, n4jsCore.findAllProjects());
 			// go over new dependencies and decide:
 			for (IN4JSProject pivNewDep : batchedPivotNewDepList) {
-				final String depId = pivNewDep.getArtifactId();
+				final String depId = pivNewDep.getProjectId();
 				if (apiImplMapping.isApi(depId)) {
 					// API-mapping
 					if (joinedApiImplProjectMapping.containsKey(pivNewDep)) {

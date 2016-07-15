@@ -246,7 +246,7 @@ public class ProjectCompareHelper {
 
 			// TODO replace with central instance
 			final ApiImplMapping mapping = ApiImplMapping.of(n4jsCore);
-			implProject = mapping.getImpl(project.getArtifactId(), implementationID);
+			implProject = mapping.getImpl(project.getProjectId(), implementationID);
 			if (implProject == null) {
 				return null; // no implementation found.
 			}

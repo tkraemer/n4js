@@ -264,7 +264,7 @@ public class ProjectImportEnablingScope implements IScope {
 
 	/**
 	 * This method asks {@link #delegate} for elements matching provided <code>moduleSpecifier</code>. Returned results
-	 * are filtered by expected {@link IN4JSProject#getArtifactId()}.
+	 * are filtered by expected {@link IN4JSProject#getProjectId()}.
 	 */
 	private Collection<IEObjectDescription> getElementsWithDesiredProjectID(QualifiedName moduleSpecifier,
 			String projectArtifactId) {
@@ -276,7 +276,7 @@ public class ProjectImportEnablingScope implements IScope {
 		final Map<String, IEObjectDescription> result = new HashMap<>();
 		for (IEObjectDescription desc : moduleSpecifierMatchesWithPossibleDuplicates) {
 			final IN4JSProject containingProject = n4jsCore.findProject(desc.getEObjectURI()).orNull();
-			if (projectArtifactId.equals(containingProject.getArtifactId())) {
+			if (projectArtifactId.equals(containingProject.getProjectId())) {
 				result.put(desc.getEObjectURI().toString(), desc);
 			}
 		}
@@ -284,11 +284,11 @@ public class ProjectImportEnablingScope implements IScope {
 	}
 
 	private IN4JSProject findProject(String artifactId, IN4JSProject project) {
-		if (Objects.equals(project.getArtifactId(), artifactId)) {
+		if (Objects.equals(project.getProjectId(), artifactId)) {
 			return project;
 		}
 		for (IN4JSProject p : project.getDependencies()) {
-			if (Objects.equals(p.getArtifactId(), artifactId)) {
+			if (Objects.equals(p.getProjectId(), artifactId)) {
 				return p;
 			}
 		}

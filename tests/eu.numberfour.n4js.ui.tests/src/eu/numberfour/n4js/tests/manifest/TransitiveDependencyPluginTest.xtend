@@ -59,7 +59,7 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		val dependency = N4mfFactory.eINSTANCE.createProjectDependency
 		val otherProject = N4mfFactory.eINSTANCE.createSimpleProjectDescription
 		pd.projectDependencies = N4mfFactory.eINSTANCE.createProjectDependencies
-		otherProject.setArtifactId(artifactId)
+		otherProject.setProjectId(artifactId)
 		dependency.setProject(otherProject)
 		pd.projectDependencies.projectDependencies.add(dependency)
 		resource.save(null)

@@ -38,9 +38,8 @@ public class MockWorkspace extends InternalN4JSWorkspace {
 	public MockWorkspace() {
 		projectDescription = N4mfFactory.eINSTANCE.createProjectDescription();
 		projectDescription.setVendorName("tester");
-		projectDescription.setArtifactId(TEST_PROJECT__ARTIFACT_ID);
+		projectDescription.setProjectId(TEST_PROJECT__ARTIFACT_ID);
 		projectDescription.setDeclaredVendorId(TEST_PROJECT__VENDOR_ID);
-		projectDescription.setProjectName("test project");
 		projectDescription.setProjectType(ProjectType.APPLICATION);
 		DeclaredVersion declaredVersion = N4mfFactory.eINSTANCE.createDeclaredVersion();
 		declaredVersion.setMajor(1);

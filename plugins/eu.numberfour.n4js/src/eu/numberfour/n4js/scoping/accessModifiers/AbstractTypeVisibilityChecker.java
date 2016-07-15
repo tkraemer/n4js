@@ -147,7 +147,7 @@ public abstract class AbstractTypeVisibilityChecker<T extends IdentifiableElemen
 					final URI resourceUri = eResource.getURI();
 					final IN4JSProject elementProject = core.findProject(resourceUri).orNull();
 					if (null != elementProject) {
-						if (emptyIfNull(elementProject.getArtifactId()).equals(testedProject.getArtifactId())) {
+						if (emptyIfNull(elementProject.getProjectId()).equals(testedProject.getProjectId())) {
 							return true;
 						}
 					}

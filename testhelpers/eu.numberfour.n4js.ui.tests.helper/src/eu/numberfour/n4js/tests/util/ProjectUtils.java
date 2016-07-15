@@ -169,7 +169,7 @@ public class ProjectUtils {
 	/**
 	 * Creates a new N4JS project with the given name and project type. The source and output folders will be named as
 	 * {@code src} and {@code src-gen}. The Xtext project nature will be already configured on the N4JS project.
-	 * 
+	 *
 	 * @param projectName
 	 *            the name of the project.
 	 * @param type
@@ -218,8 +218,7 @@ public class ProjectUtils {
 		projectDesc.setProjectDependencies(N4mfFactory.eINSTANCE.createProjectDependencies());
 		projectDesc.setDeclaredVendorId("eu.numberfour");
 		projectDesc.setVendorName("NumberFour AG");
-		projectDesc.setArtifactId(project.getName());
-		projectDesc.setProjectName(project.getName());
+		projectDesc.setProjectId(project.getName());
 		projectDesc.setProjectType(ProjectType.LIBRARY);
 		DeclaredVersion projectVersion = N4mfFactory.eINSTANCE.createDeclaredVersion();
 		projectVersion.setMajor(0);

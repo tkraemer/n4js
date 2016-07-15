@@ -204,18 +204,7 @@ public class N4JSProject implements IN4JSProject {
 	}
 
 	@Override
-	public String getProjectName() {
-		if (!exists())
-			return null;
-		ProjectDescription pd = model.getProjectDescription(getLocation());
-		if (pd == null) {
-			return null;
-		}
-		return pd.getProjectName();
-	}
-
-	@Override
-	public String getArtifactId() {
+	public String getProjectId() {
 		// because the artifactId must be available even if the project does not exist, we do not read from the
 		// ProjectDescription, here, but instead use the last segment of the location URI (equality between the two is
 		// ensured by an n4mf validation)
@@ -403,7 +392,7 @@ public class N4JSProject implements IN4JSProject {
 
 	@Override
 	public String toString() {
-		return "Project '" + getArtifactId() + "' "
+		return "Project '" + getProjectId() + "' "
 				+ (exists() ? " type=" + getProjectType() + " " : " -doesn't exist!- ");
 	}
 
@@ -411,5 +400,4 @@ public class N4JSProject implements IN4JSProject {
 	public boolean isExternal() {
 		return external;
 	}
-
 }

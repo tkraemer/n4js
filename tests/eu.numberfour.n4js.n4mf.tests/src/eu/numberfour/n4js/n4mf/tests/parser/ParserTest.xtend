@@ -48,9 +48,8 @@ class ParserTest {
 		val errors = project.eResource.errors
 		assertTrue(errors.toString, errors.empty)
 
-		assertEquals(project.artifactId, "MyArtifactID")
+		assertEquals(project.projectId, "MyArtifactID")
 		assertEquals(project.vendorId, "MyVendorID")
-		assertEquals(project.projectName, "My Project Name")
 		assertEquals(project.vendorName, "My Vendor Name")
 		assertEquals(project.projectType, ProjectType.LIBRARY)
 		val projectVersion = project.projectVersion
@@ -128,7 +127,7 @@ class ParserTest {
 
 		assertEquals(project.allProjectDependencies.size, 2)
 		assertEquals("eu.numberfour", project.allProjectDependencies.head.project.vendorId)
-		assertEquals("my.project.one", project.allProjectDependencies.head.project.artifactId)
+		assertEquals("my.project.one", project.allProjectDependencies.head.project.projectId)
 
 		assertEquals(true, project.allProjectDependencies.head.versionConstraint.exclLowerBound)
 		assertEquals(0, project.allProjectDependencies.head.versionConstraint.lowerVersion.major)

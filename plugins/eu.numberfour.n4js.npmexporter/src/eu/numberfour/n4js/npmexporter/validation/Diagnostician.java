@@ -121,7 +121,7 @@ public class Diagnostician implements IssueConsumer {
 		StringBuffer sb = new StringBuffer();
 
 		projectsWithEntries().stream().forEachOrdered(p -> {
-			sb.append(p.getArtifactId()).append("\n\t");
+			sb.append(p.getProjectId()).append("\n\t");
 			sb.append(Joiner.on("\n\t").join(project2issues.get(p)));
 			sb.append("\n");
 		});

@@ -141,7 +141,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		ensureInitialized();
 		if (PROJECT.equals(expectedN4JSSourceContainerType)) {
 
-			final String name = reference.getProject().getArtifactId();
+			final String name = reference.getProject().getProjectId();
 			final ExternalProject project = getProjectMapping().get(name);
 
 			if (null == project) {
