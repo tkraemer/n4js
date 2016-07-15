@@ -50,7 +50,9 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 		this(new DefaultTestModule());
 	}
 
-	/** Creates a new injector combining all of the given runtime modules */
+	/**
+	 * Creates a new injector combining all of the given runtime modules
+	 */
 	public N4JSInjectorProvider(Module... modules) {
 		this.runtimeModule = Modules.override(runtimeModule).with(Arrays.asList(modules));
 	}

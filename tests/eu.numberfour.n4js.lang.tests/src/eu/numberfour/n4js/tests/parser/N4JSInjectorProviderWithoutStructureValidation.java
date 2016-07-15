@@ -18,7 +18,8 @@ import eu.numberfour.n4js.N4JSInjectorProvider;
 import eu.numberfour.n4js.validation.ASTStructureValidator;
 
 /**
- * Disables the structure validation to allow testing the semicolon injection with minimal overhead
+ * An injector provider which disables the AST structure validation to allow testing the semicolon injection with
+ * minimal overhead
  */
 public class N4JSInjectorProviderWithoutStructureValidation extends N4JSInjectorProvider {
 

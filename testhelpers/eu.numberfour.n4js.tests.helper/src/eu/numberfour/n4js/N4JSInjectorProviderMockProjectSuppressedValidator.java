@@ -10,7 +10,10 @@
  */
 package eu.numberfour.n4js;
 
-/** */
+/**
+ * An injector provider which combines {@link N4JSInjectorProviderWithMockProject} and
+ * {@link N4JSInjectorProviderWithIssueSuppression}
+ */
 public class N4JSInjectorProviderMockProjectSuppressedValidator extends N4JSInjectorProvider {
 	/** */
 	public N4JSInjectorProviderMockProjectSuppressedValidator() {

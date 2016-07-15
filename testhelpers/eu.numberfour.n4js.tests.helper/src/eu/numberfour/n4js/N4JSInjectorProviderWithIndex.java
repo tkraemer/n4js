@@ -13,7 +13,9 @@ package eu.numberfour.n4js;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.service.AbstractGenericModule;
 
-/***/
+/**
+ * An injector provider which binds {@link EagerResourceSetBasedResourceDescriptions}.
+ */
 public class N4JSInjectorProviderWithIndex extends N4JSInjectorProvider {
 	/** */
 	public N4JSInjectorProviderWithIndex() {

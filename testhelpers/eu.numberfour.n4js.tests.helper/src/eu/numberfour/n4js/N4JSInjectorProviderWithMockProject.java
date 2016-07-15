@@ -17,6 +17,7 @@ import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 
 /**
+ * An injector provider which binds a mock N4JS workspace implementation.
  */
 public class N4JSInjectorProviderWithMockProject extends N4JSInjectorProvider {
 	/** */
