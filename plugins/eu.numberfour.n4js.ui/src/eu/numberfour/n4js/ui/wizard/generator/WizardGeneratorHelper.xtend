@@ -270,11 +270,11 @@ class WizardGeneratorHelper {
 	 */
 	public def Collection<IAtomicChange> manifestChanges(Resource manifest, WorkspaceWizardModel model, Collection<IN4JSProject> referencedProjects, URI moduleURI) {
 		// Remove the containing project from the dependencies
-		referencedProjects.removeIf[ it.artifactId.equals(model.project.lastSegment) ];
+		val referencedProjectsExceptContainer = referencedProjects.filter[ !it.artifactId.equals(model.project.lastSegment) ];
 		
 		//Remove duplicates
 		val referencedProjectsSet = new HashSet<IN4JSProject>();
-		referencedProjectsSet.addAll(referencedProjects);
+		referencedProjectsSet.addAll(referencedProjectsExceptContainer);
 		
 		var List<IAtomicChange> manifestChanges = new ArrayList<IAtomicChange>();
 		
