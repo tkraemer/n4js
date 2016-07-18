@@ -1,6 +1,5 @@
 ProjectId: eu.numberfour.stdlib.model.common
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.stdlib.model.common"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

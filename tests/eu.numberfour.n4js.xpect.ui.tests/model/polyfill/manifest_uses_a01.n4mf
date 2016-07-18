@@ -1,6 +1,5 @@
 ProjectId: P_USERTL_A01
 VendorId: eu.numberfour
-ProjectName: "P_USERTL_A01"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

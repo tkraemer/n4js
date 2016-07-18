@@ -1,6 +1,5 @@
 ProjectId: SysProjectA
 VendorId: eu.numberfour
-ProjectName: "SysProjectA"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

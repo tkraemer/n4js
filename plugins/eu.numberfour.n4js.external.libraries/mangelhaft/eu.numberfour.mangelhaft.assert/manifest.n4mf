@@ -10,7 +10,6 @@
  */
 ProjectId: eu.numberfour.mangelhaft.assert
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.mangelhaft.assert"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.3.1

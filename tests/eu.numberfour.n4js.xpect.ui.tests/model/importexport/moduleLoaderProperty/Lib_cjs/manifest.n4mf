@@ -1,7 +1,6 @@
 ProjectId: Lib_cjs
 VendorId: eu.numberfour
 VendorName: "NumberFour AG"
-ProjectName: "Lib_cjs"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"

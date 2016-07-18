@@ -10,7 +10,6 @@
  */
 ProjectId: n4js-runtime-v8
 VendorId: eu.numberfour
-ProjectName: "n4js-runtime-v8"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
 ProjectVersion: 0.3.0

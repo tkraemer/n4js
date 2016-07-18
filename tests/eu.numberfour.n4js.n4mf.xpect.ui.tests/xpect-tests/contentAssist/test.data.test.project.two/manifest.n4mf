@@ -1,6 +1,5 @@
 ProjectId: test.data.test.project.one
 VendorId: eu.numberfour
-ProjectName: "test.data.test.project.one"
 VendorName: "NumberFour AG"
 ProjectType: test
 ProjectVersion: 0.0.1-SNAPSHOT

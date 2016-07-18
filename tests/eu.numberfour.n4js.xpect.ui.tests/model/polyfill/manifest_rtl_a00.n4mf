@@ -1,6 +1,5 @@
 ProjectId: P_RTL_A00
 VendorId: eu.numberfour
-ProjectName: "P_RTL_A00"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT

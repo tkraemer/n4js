@@ -1,6 +1,5 @@
 ProjectId: PC
 VendorId: eu.numberfour
-ProjectName: "PC"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

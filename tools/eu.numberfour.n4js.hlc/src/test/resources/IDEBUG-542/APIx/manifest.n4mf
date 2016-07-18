@@ -1,6 +1,5 @@
 ProjectId: APIx
 VendorId: eu.numberfour
-ProjectName: "APIx"
 VendorName: "NumberFour AG"
 ProjectType: API
 ProjectVersion: 0.0.1-SNAPSHOT

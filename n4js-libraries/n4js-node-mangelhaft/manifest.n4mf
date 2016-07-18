@@ -10,7 +10,6 @@
  */
 ProjectId: n4js-node-mangelhaft
 VendorId: eu.numberfour
-ProjectName: "n4js-node-mangelhaft"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
 ProjectVersion: 0.3.2

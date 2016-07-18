@@ -1,6 +1,5 @@
 ProjectId: test.data.api.project.two
 VendorId: eu.numberfour
-ProjectName: "test.data.api.project.two"
 VendorName: "NumberFour AG"
 ProjectType: API
 ProjectVersion: 0.0.1-SNAPSHOT

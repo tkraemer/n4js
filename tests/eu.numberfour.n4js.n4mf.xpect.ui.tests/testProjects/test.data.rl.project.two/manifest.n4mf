@@ -1,6 +1,5 @@
 ProjectId: test.data.rl.project.two
 VendorId: eu.numberfour
-ProjectName: "test.data.rl.project.two"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT

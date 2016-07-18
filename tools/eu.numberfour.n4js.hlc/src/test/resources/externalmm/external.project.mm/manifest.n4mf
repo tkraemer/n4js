@@ -1,6 +1,5 @@
 ProjectId: external.project.mm
 VendorId: eu.numberfour
-ProjectName: "external.project.mm"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

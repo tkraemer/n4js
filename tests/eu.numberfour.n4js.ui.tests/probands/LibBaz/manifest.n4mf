@@ -1,6 +1,5 @@
 ProjectId: LibBaz
 VendorId: eu.numberfour
-ProjectName: "LibBaz"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -10,7 +10,6 @@
  */
 ProjectId: n4js.lang
 VendorId: eu.numberfour
-ProjectName: "n4js.lang"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.3.1

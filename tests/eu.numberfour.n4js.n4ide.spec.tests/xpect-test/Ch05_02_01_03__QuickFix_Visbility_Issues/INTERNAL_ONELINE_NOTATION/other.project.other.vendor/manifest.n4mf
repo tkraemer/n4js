@@ -1,6 +1,5 @@
 ProjectId: other.project.other.vendor
 VendorId: eu.numberfour1
-ProjectName: "other.project.other.vendor"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

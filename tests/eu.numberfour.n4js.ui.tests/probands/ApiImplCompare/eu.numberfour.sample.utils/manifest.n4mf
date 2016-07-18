@@ -1,6 +1,5 @@
 ProjectId: eu.numberfour.sample.utils
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.sample.utils"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -1,6 +1,5 @@
 ProjectId: test.data.re.project
 VendorId: eu.numberfour
-ProjectName: "test.data.re.project"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
 ProjectVersion: 0.0.1-SNAPSHOT

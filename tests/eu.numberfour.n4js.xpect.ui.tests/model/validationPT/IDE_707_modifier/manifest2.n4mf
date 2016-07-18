@@ -1,6 +1,5 @@
 ProjectId: java_project
 VendorId: eu.numberfour
-ProjectName: "Project2"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -1,6 +1,5 @@
 ProjectId: Collections
 VendorId: eu.numberfour
-ProjectName: "List Base"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

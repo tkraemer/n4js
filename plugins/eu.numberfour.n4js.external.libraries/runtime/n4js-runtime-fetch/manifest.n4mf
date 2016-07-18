@@ -10,7 +10,6 @@
  */
 ProjectId: n4js-runtime-fetch
 VendorId: eu.numberfour
-ProjectName: "n4js-runtime-fetch"
 VendorName: "NumberFour AG"
 ProjectType: runtimeLibrary
 ProjectVersion: 0.3.0

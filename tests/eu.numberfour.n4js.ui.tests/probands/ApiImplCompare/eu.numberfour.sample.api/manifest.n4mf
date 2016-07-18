@@ -1,6 +1,5 @@
 ProjectId: eu.numberfour.sample.api
 VendorId: eu.numberfour
-ProjectName: "stdlib API"
 VendorName: "NumberFour AG"
 ProjectType: API
 ProjectVersion: 0.0.1-SNAPSHOT

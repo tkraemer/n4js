@@ -10,7 +10,6 @@
  */
 ProjectId: TestPrj
 VendorId: eu.numberfour
-ProjectName: "TestPrj"
 VendorName: "NumberFour AG"
 ProjectType: test
 ProjectVersion: 0.0.1

@@ -10,7 +10,6 @@
  */
 ProjectId: eu.numberfour.mangelhaft.runner.ide
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.mangelhaft.runner.ide"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.3.2

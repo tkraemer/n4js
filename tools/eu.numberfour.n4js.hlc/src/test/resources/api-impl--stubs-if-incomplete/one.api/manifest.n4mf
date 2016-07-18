@@ -1,6 +1,5 @@
 ProjectId: one.api
 VendorId: eu.numberfour
-ProjectName: "one.api"
 VendorName: "NumberFour AG"
 ProjectType: API
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -10,7 +10,6 @@
  */
 ProjectId: eu.numberfour.mangelhaft.reporter.console
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.mangelhaft.reporter.console"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.3.3
