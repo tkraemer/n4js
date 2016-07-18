@@ -73,8 +73,8 @@ public class N4JSArchive implements IN4JSArchive {
 
 	@Override
 	public String getProjectId() {
-		// note: currently returns artifact ID of containing project
-		// TODO change method to return the artifact ID of the project inside the archive! (similar for other methods)
+		// note: currently returns project ID of containing project
+		// TODO change method to return the project ID of the project inside the archive! (similar for other methods)
 		ProjectDescription pd = getModel().getProjectDescription(getLocation());
 		if (pd == null) {
 			return null;

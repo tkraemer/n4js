@@ -18,12 +18,11 @@
    
    END_SETUP
  */
-ArtifactId: test.12
-VendorId: eu.numberfour
-ProjectName: "test.12"
-VendorName: "NumberFour AG"
+ProjectId: test.12
 ProjectType: API
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
 	source { 

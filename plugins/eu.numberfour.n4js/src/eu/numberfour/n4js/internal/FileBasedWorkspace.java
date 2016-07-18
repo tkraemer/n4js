@@ -157,11 +157,11 @@ public class FileBasedWorkspace extends InternalN4JSWorkspace {
 	@Override
 	public URI getLocation(URI projectURI, ProjectReference projectReference,
 			N4JSSourceContainerType expectedN4JSSourceContainerType) {
-		String artifactID = projectReference.getProject().getProjectId();
+		String projectId = projectReference.getProject().getProjectId();
 		if (expectedN4JSSourceContainerType == N4JSSourceContainerType.ARCHIVE) {
 			LazyProjectDescriptionHandle baseHandle = projectElementHandles.get(projectURI);
 			if (!baseHandle.isArchive()) {
-				String archiveFileName = artifactID + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT;
+				String archiveFileName = projectId + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT;
 				for (String libraryPath : baseHandle.createProjectElementHandle().getLibraryPaths()) {
 					URI archiveURI = projectURI.appendSegments(new String[] { libraryPath, archiveFileName });
 					if (projectElementHandles.containsKey(archiveURI)) {
@@ -169,7 +169,7 @@ public class FileBasedWorkspace extends InternalN4JSWorkspace {
 					}
 				}
 			} else {
-				String archiveFileName = artifactID + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT;
+				String archiveFileName = projectId + IN4JSArchive.NFAR_FILE_EXTENSION_WITH_DOT;
 				for (URI location : projectElementHandles.keySet()) {
 					if (location.lastSegment().equals(archiveFileName)) {
 						LazyProjectDescriptionHandle lazyHandle = projectElementHandles.get(location);
@@ -179,7 +179,7 @@ public class FileBasedWorkspace extends InternalN4JSWorkspace {
 					}
 				}
 			}
-			URI location = packageManager.getLocation(artifactID);
+			URI location = packageManager.getLocation(projectId);
 			if (location != null) {
 				if (projectElementHandles.containsKey(location)) {
 					return location;
@@ -189,7 +189,7 @@ public class FileBasedWorkspace extends InternalN4JSWorkspace {
 			}
 		} else {
 			for (URI location : projectElementHandles.keySet()) {
-				if (location.lastSegment().equals(artifactID)) {
+				if (location.lastSegment().equals(projectId)) {
 					LazyProjectDescriptionHandle lazyHandle = projectElementHandles.get(location);
 					if (lazyHandle != null) {
 						return lazyHandle.getLocation();

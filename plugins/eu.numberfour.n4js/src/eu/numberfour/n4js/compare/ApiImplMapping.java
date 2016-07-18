@@ -209,7 +209,7 @@ public class ApiImplMapping {
 	}
 
 	/**
-	 * Returns the artifact IDs of all API projects.
+	 * Returns the project IDs of all API projects.
 	 */
 	public List<String> getApiIds() {
 		final List<String> allApiIds = new ArrayList<>(assocs.keySet());
@@ -221,7 +221,7 @@ public class ApiImplMapping {
 	 * Returns all implementation IDs contained in the receiving ApiImplMapping, i.e. all IDs for which at least one
 	 * implementation project exists in the receiving ApiImplMapping.
 	 * <p>
-	 * This does *not* return the artifact IDs of implementation projects, but their implementation IDs (i.e. the IDs
+	 * This does *not* return the project IDs of implementation projects, but their implementation IDs (i.e. the IDs
 	 * defined via property 'ImplementationId' in the manifest of implementation projects).
 	 */
 	public List<String> getAllImplIds() {

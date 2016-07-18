@@ -40,7 +40,7 @@ import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
- * Normally we import from a module by only supplying the module specifier without the artifact ID of the containing
+ * Normally we import from a module by only supplying the module specifier without the project ID of the containing
  * project:
  *
  * <pre>
@@ -59,15 +59,15 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  * import * as N from "projectId"
  * </pre>
  *
- * In both cases, <code>projectId</code>> stands for the artifact ID of the project containing the module to import
- * from. The last case is only allowed if the containing project has defined the <code>MainModule</code> property in its
+ * In both cases, <code>projectId</code>> stands for the project ID of the project containing the module to import from.
+ * The last case is only allowed if the containing project has defined the <code>MainModule</code> property in its
  * manifest and means that this main module will then be imported.
  *
  *
  * Since there may exist multiple <code>MainModule</code> instances in the workspace with the same name (but not in one
- * project!) this scope uses two external sources of elements. In case of imports not specifying target project
- * artifactID we use provided <code>parent</code> as source of elements in scope. In case of imports specifying target
- * project artefactID we use <code>delegate</code> scope as source of elements. That distinction is necessary as
+ * project!) this scope uses two external sources of elements. In case of imports not specifying target project project
+ * ID we use provided <code>parent</code> as source of elements in scope. In case of imports specifying target project
+ * artefactID we use <code>delegate</code> scope as source of elements. That distinction is necessary as
  * {@link IScope#getElements(EObject)} surprisingly performs filtering of elements with the same name. We assume that
  * provided <code>delegate</code> is not doing that, at least not for the main modules.
  */

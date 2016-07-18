@@ -31,12 +31,11 @@
    END_SETUP
  */
 // XPECT errors --> "The project configuration contains a dependency cycle of projects [test.03] -> [test.03]." at "test.03"
-ArtifactId: test.03
-VendorId: eu.numberfour
-ProjectName: "test.03"
-VendorName: "NumberFour AG"
+ProjectId: test.03
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
 	source { 
@@ -56,7 +55,7 @@ RequiredRuntimeLibraries {
 	test.data.system.project.one,
 	// XPECT warnings --> "Project test.data.re.project type of runtime environment cannot be declared among the required runtime libraries." at "test.data.re.project"
 	test.data.re.project,
-	// XPECT errors -->	"Project does not exist with artifact ID: xxx.yyy.zzz." at "xxx.yyy.zzz"
+	// XPECT errors -->	"Project does not exist with project ID: xxx.yyy.zzz." at "xxx.yyy.zzz"
 	xxx.yyy.zzz,
 	// XPECT errors -->	"Project cannot reference itself. " at "test.03"
 	test.03,

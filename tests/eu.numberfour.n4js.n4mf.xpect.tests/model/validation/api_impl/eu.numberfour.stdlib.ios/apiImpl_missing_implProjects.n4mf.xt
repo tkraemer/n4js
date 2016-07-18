@@ -1,10 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationTest END_SETUP */
-ArtifactId: eu.numberfour.stdlib.ios
-VendorId: eu.numberfour
-ProjectName: "stdlib implementation for iOS"
-VendorName: "NumberFour AG"
+ProjectId: eu.numberfour.stdlib.ios
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
 	source { 

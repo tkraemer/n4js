@@ -59,7 +59,7 @@ public class ExternalProjectsCollector {
 	 * On demand collects and returns with all {@link ExternalProject external project} instances based on the
 	 * configured external library locations. This method visits the configured external library locations in a priority
 	 * order, checks the existence of the projects and collects those. If an external project is already collected when
-	 * an other external project is being visited with the same artifact ID, then the latter visited one will be ignored
+	 * an other external project is being visited with the same project ID, then the latter visited one will be ignored
 	 * at all.
 	 *
 	 * @return an iterable of all external projects that can be resolved from the configured external library paths.
@@ -138,7 +138,7 @@ public class ExternalProjectsCollector {
 	}
 
 	/**
-	 * Returns with all external project dependency artifact ID for a particular non-external, accessible project.
+	 * Returns with all external project dependency project ID for a particular non-external, accessible project.
 	 */
 	private Iterable<String> getDirectExternalDependencyIds(final IProject project) {
 

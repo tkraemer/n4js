@@ -26,12 +26,11 @@
  */
 
 // XPECT noerrors --> "Contradicting defintion in this library will be reported in the files or if the project is used."
-ArtifactId: P_RTL_A01
-VendorId: eu.numberfour
-ProjectName: "P_RTL_A01"
-VendorName: "NumberFour AG"
+ProjectId: P_RTL_A01
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 RequiredRuntimeLibraries { P_RTL_A00 }
 Output: "src-gen"
 Sources { 

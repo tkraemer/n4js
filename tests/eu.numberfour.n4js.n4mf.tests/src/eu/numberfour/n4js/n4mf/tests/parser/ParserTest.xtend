@@ -36,9 +36,9 @@ class ParserTest {
 
 	@Inject extension ParseHelper<ProjectDescription>
 
-	@Test def void testArtifactID() {
+	@Test def void testProjectId() {
 		val project = '''
-			ProjectId: MyArtifactID
+			ProjectId: MyProjectID
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
 			VendorId: MyVendorID
@@ -47,7 +47,7 @@ class ParserTest {
 		val errors = project.eResource.errors
 		assertTrue(errors.toString, errors.empty)
 
-		assertEquals(project.projectId, "MyArtifactID")
+		assertEquals(project.projectId, "MyProjectID")
 		assertEquals(project.vendorId, "MyVendorID")
 		assertEquals(project.vendorName, "My Vendor Name")
 		assertEquals(project.projectType, ProjectType.LIBRARY)

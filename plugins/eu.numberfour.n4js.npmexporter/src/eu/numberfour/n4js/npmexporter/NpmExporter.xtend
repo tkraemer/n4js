@@ -294,7 +294,7 @@ class NpmExporter {
 
 	/** quick-check if we can throw it out */
 	def boolean isExportable(IN4JSProject project, IssueConsumer issueSink) {
-		return holdsConsistentArtifactID(project, issueSink)
+		return holdsConsistentProjectId(project, issueSink)
 			&& holdsNonClashingPackageJson(project, issueSink);
 	}
 
@@ -305,12 +305,12 @@ class NpmExporter {
 	}
 
 	/** Ensures npm-module-naming conventions. */
-	def boolean holdsConsistentArtifactID(IN4JSProject project,  IssueConsumer issueSink ) {
-		return holdsConsistentArtifactID( project.projectId, issueSink );
+	def boolean holdsConsistentProjectId(IN4JSProject project,  IssueConsumer issueSink ) {
+		return holdsConsistentProjectId( project.projectId, issueSink );
 	}
 
 	/** Ensures npm-module-naming conventions. */
-	def boolean holdsConsistentArtifactID(String projectId, IssueConsumer issueSink) {
+	def boolean holdsConsistentProjectId(String projectId, IssueConsumer issueSink) {
 		/*-
 			Some rules:
 

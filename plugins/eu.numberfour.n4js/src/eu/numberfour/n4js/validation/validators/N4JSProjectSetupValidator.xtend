@@ -308,7 +308,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 
 	/** Calculate qualified name for ProjectDescription */
 	def private static String qname(String vendorId, String projectId) {
-		return projectId; // TODO vendorId of NFAR: as long as not queryable use only artifactID:
+		return projectId; // TODO vendorId of NFAR: as long as not queryable use only project ID:
 
 	//		if( vendorId === null ) return projectId
 	//		return vendorId+":"+projectId

@@ -65,7 +65,7 @@ public class N4JSProjectExplorerHelper {
 	 * <ul>
 	 * <li>the {@code project} argument is {@code null} or</li>
 	 * <li>no {@link IN4JSProject#exists() existing} {@link IN4JSProject N4JS project} project can be found with the
-	 * desired artifact ID.</li>
+	 * desired project ID.</li>
 	 * </ul>
 	 *
 	 * @param project

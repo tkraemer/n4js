@@ -103,7 +103,7 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteModuleSpecifier() {
-		assertEquals(MockWorkspace.TEST_PROJECT__ARTIFACT_ID + "/p/C", qnc.getCompleteModuleSpecifier(module));
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "/p/C", qnc.getCompleteModuleSpecifier(module));
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteModuleSpecifierAsIdentifier() {
-		assertEquals(MockWorkspace.TEST_PROJECT__ARTIFACT_ID + "_p_u002fC",
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "_p_u002fC",
 				qnc.getCompleteModuleSpecifierAsIdentifier(module));
 	}
 
@@ -124,6 +124,6 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteTypeSpecifier() {
-		assertEquals(MockWorkspace.TEST_PROJECT__ARTIFACT_ID + "/p/C/C", qnc.getCompleteTypeSpecifier(type));
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "/p/C/C", qnc.getCompleteTypeSpecifier(type));
 	}
 }

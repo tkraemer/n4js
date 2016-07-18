@@ -214,7 +214,7 @@ class N4MFProposalProvider extends AbstractN4MFProposalProvider {
 		if (null !== desc.eResource) {
 			desc.allProjectDescriptions.map[
 				val descriptionMini = new ProjectDescriptionMini(it);
-				// TODO: Consider offering project artifact IDs loaded from the libraries.
+				// TODO: Consider offering project project IDs loaded from the libraries.
 				if (!descriptionMini.canBeReferenced
 					|| !predicate.apply(descriptionMini)
 					|| ownerId == descriptionMini.id
@@ -278,7 +278,7 @@ class N4MFProposalProvider extends AbstractN4MFProposalProvider {
 			implementationId = getUserData(IMPLEMENTATION_ID_KEY).nullToEmpty;
 		}
 
-		/** {@code true} if project type can be referenced and the project artifact ID is neither {@code null} nor empty string. */
+		/** {@code true} if project type can be referenced and the project project ID is neither {@code null} nor empty string. */
 		private def canBeReferenced() {
 			return !id.nullOrEmpty && null !== type;
 		}

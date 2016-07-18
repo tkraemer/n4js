@@ -1,11 +1,10 @@
 /* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationTest END_SETUP */
 // XPECT errors --> "There is no output folder defined, so compilation isn't possible." at "duplicates"
-ArtifactId: duplicates
-VendorId: MyVendorID
-ProjectName: "My Project Name"
-VendorName: "My Vendor Name"
+ProjectId: duplicates
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: MyVendorID
+VendorName: "My Vendor Name"
 Sources {
 	source { 
 // XPECT warnings --> "Duplicate path, has been already defined in EXTERNAL." at "\"src\""

@@ -28,7 +28,7 @@ import eu.numberfour.n4js.n4mf.ProjectType;
 public class MockWorkspace extends InternalN4JSWorkspace {
 
 	/** Default {@code projectId} used for the {@link MockProject}s in {@link MockWorkspace}. */
-	public static final String TEST_PROJECT__ARTIFACT_ID = "test";
+	public static final String TEST_PROJECT__PROJECT_ID = "test";
 	/** Default {@code vendorId} used for the {@link MockProject}s in {@link MockWorkspace}. */
 	public static final String TEST_PROJECT__VENDOR_ID = "tester.id";
 
@@ -38,7 +38,7 @@ public class MockWorkspace extends InternalN4JSWorkspace {
 	public MockWorkspace() {
 		projectDescription = N4mfFactory.eINSTANCE.createProjectDescription();
 		projectDescription.setVendorName("tester");
-		projectDescription.setProjectId(TEST_PROJECT__ARTIFACT_ID);
+		projectDescription.setProjectId(TEST_PROJECT__PROJECT_ID);
 		projectDescription.setDeclaredVendorId(TEST_PROJECT__VENDOR_ID);
 		projectDescription.setProjectType(ProjectType.APPLICATION);
 		DeclaredVersion declaredVersion = N4mfFactory.eINSTANCE.createDeclaredVersion();

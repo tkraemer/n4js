@@ -170,8 +170,8 @@ public class GH_120_XtextIndexPersistence_PluginUITest extends AbstractIDEBUG_Te
 		// Import of Assert cannot be resolved.
 
 		// Manifest issues:
-		// Project does not exist with artifact ID: eu.numberfour.mangelhaft.
-		// Project does not exist with artifact ID: eu.numberfour.mangelhaft.assert.
+		// Project does not exist with project ID: eu.numberfour.mangelhaft.
+		// Project does not exist with project ID: eu.numberfour.mangelhaft.assert.
 		// Project with test fragment should depend on eu.numberfour.mangelhaft.
 		assertMarkers("Expected exactly 7 issues.", project, 7);
 

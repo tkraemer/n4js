@@ -38,7 +38,7 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 	/** The key of the user data for retrieving the project type as a string. */
 	public static val PROJECT_TYPE_KEY = 'prjectType';
 
-	/** The key of the user data for retrieving the artifact ID. */
+	/** The key of the user data for retrieving the project ID. */
 	public static val PROJECT_ID_KEY = 'prjectId';
 
 	/** The key of the user data for retrieving the library dependencies for a particular project. */
@@ -170,7 +170,7 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 	}
 
 	/**
-	 * Optionally returns with the project artifact ID extracted from the user data of the given EObject description argument.
+	 * Optionally returns with the project project ID extracted from the user data of the given EObject description argument.
 	 */
 	static def getProjectId(IEObjectDescription it) {
 		if (it === null) {
