@@ -22,15 +22,16 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.n4mf.N4MF.ProjectDescription");
 		private final UnorderedGroup cUnorderedGroup = (UnorderedGroup)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cUnorderedGroup.eContents().get(0);
-		private final Keyword cArtifactIdKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
+		private final Keyword cArtifactIdKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
+		private final Keyword cProjectIdKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
 		private final Keyword cColonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cArtifactIdAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cArtifactIdN4mfIdentifierParserRuleCall_0_2_0 = (RuleCall)cArtifactIdAssignment_0_2.eContents().get(0);
+		private final Assignment cProjectIdAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cProjectIdN4mfIdentifierParserRuleCall_0_2_0 = (RuleCall)cProjectIdAssignment_0_2.eContents().get(0);
 		private final Group cGroup_1 = (Group)cUnorderedGroup.eContents().get(1);
 		private final Keyword cProjectNameKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cProjectNameAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cProjectNameSTRINGTerminalRuleCall_1_2_0 = (RuleCall)cProjectNameAssignment_1_2.eContents().get(0);
+		private final RuleCall cSTRINGTerminalRuleCall_1_2 = (RuleCall)cGroup_1.eContents().get(2);
 		private final Group cGroup_2 = (Group)cUnorderedGroup.eContents().get(2);
 		private final Keyword cProjectTypeKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Keyword cColonKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
@@ -121,7 +122,7 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModuleLoaderModuleLoaderEnumRuleCall_21_2_0 = (RuleCall)cModuleLoaderAssignment_21_2.eContents().get(0);
 		
 		//ProjectDescription:
-		//	'ArtifactId' ':' artifactId=N4mfIdentifier & ('ProjectName' ':' projectName=STRING)?
+		//	('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier & ('ProjectName' ':' STRING)? // TODO GH-107 remove manifest property 'ProjectName'
 		//	& 'ProjectType' ':' projectType=ProjectType & 'ProjectVersion' ':' projectVersion=DeclaredVersion & 'VendorId' ':'
 		//	declaredVendorId=N4mfIdentifier & ('VendorName' ':' vendorName=STRING)?
 		//	& ('MainModule' ':' mainModule=STRING)?
@@ -149,8 +150,8 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//	& ('ModuleLoader' ':' moduleLoader=ModuleLoader)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'ArtifactId' ':' artifactId=N4mfIdentifier & ('ProjectName' ':' projectName=STRING)? & 'ProjectType' ':'
-		//projectType=ProjectType & 'ProjectVersion' ':' projectVersion=DeclaredVersion & 'VendorId' ':'
+		//('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier & ('ProjectName' ':' STRING)? // TODO GH-107 remove manifest property 'ProjectName'
+		//& 'ProjectType' ':' projectType=ProjectType & 'ProjectVersion' ':' projectVersion=DeclaredVersion & 'VendorId' ':'
 		//declaredVendorId=N4mfIdentifier & ('VendorName' ':' vendorName=STRING)? & ('MainModule' ':' mainModule=STRING)? // only available for runtime environments
 		//& extendedRuntimeEnvironment=ExtendedRuntimeEnvironment? // only in case of runtime libraries or runtime environment:
 		//& providedRuntimeLibraries=ProvidedRuntimeLibraries? // not available in runtime environments:
@@ -164,22 +165,28 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//moduleFilters+=ModuleFilter+ '}')? & testedProjects=TestedProjects? & ('ModuleLoader' ':' moduleLoader=ModuleLoader)?
 		public UnorderedGroup getUnorderedGroup() { return cUnorderedGroup; }
 
-		//'ArtifactId' ':' artifactId=N4mfIdentifier
+		//('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
 		public Group getGroup_0() { return cGroup_0; }
 
+		//('ArtifactId' | 'ProjectId')
+		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
+
 		//'ArtifactId'
-		public Keyword getArtifactIdKeyword_0_0() { return cArtifactIdKeyword_0_0; }
+		public Keyword getArtifactIdKeyword_0_0_0() { return cArtifactIdKeyword_0_0_0; }
+
+		//'ProjectId'
+		public Keyword getProjectIdKeyword_0_0_1() { return cProjectIdKeyword_0_0_1; }
 
 		//':'
 		public Keyword getColonKeyword_0_1() { return cColonKeyword_0_1; }
 
-		//artifactId=N4mfIdentifier
-		public Assignment getArtifactIdAssignment_0_2() { return cArtifactIdAssignment_0_2; }
+		//projectId=N4mfIdentifier
+		public Assignment getProjectIdAssignment_0_2() { return cProjectIdAssignment_0_2; }
 
 		//N4mfIdentifier
-		public RuleCall getArtifactIdN4mfIdentifierParserRuleCall_0_2_0() { return cArtifactIdN4mfIdentifierParserRuleCall_0_2_0; }
+		public RuleCall getProjectIdN4mfIdentifierParserRuleCall_0_2_0() { return cProjectIdN4mfIdentifierParserRuleCall_0_2_0; }
 
-		//('ProjectName' ':' projectName=STRING)?
+		//('ProjectName' ':' STRING)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//'ProjectName'
@@ -188,11 +195,8 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
 
-		//projectName=STRING
-		public Assignment getProjectNameAssignment_1_2() { return cProjectNameAssignment_1_2; }
-
 		//STRING
-		public RuleCall getProjectNameSTRINGTerminalRuleCall_1_2_0() { return cProjectNameSTRINGTerminalRuleCall_1_2_0; }
+		public RuleCall getSTRINGTerminalRuleCall_1_2() { return cSTRINGTerminalRuleCall_1_2; }
 
 		//'ProjectType' ':' projectType=ProjectType
 		public Group getGroup_2() { return cGroup_2; }
@@ -1240,16 +1244,16 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDeclaredVendorIdAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
 		private final RuleCall cDeclaredVendorIdN4mfIdentifierParserRuleCall_0_0_0 = (RuleCall)cDeclaredVendorIdAssignment_0_0.eContents().get(0);
 		private final Keyword cColonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cArtifactIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cArtifactIdN4mfIdentifierParserRuleCall_1_0 = (RuleCall)cArtifactIdAssignment_1.eContents().get(0);
+		private final Assignment cProjectIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cProjectIdN4mfIdentifierParserRuleCall_1_0 = (RuleCall)cProjectIdAssignment_1.eContents().get(0);
 		
 		/// *
 		// * vendorN4mfIdentifier is optional, if it is not specified, vendor id of current project is used.
 		// * / SimpleProjectDescription:
-		//	(declaredVendorId=N4mfIdentifier ':')? artifactId=N4mfIdentifier;
+		//	(declaredVendorId=N4mfIdentifier ':')? projectId=N4mfIdentifier;
 		@Override public ParserRule getRule() { return rule; }
 
-		//(declaredVendorId=N4mfIdentifier ':')? artifactId=N4mfIdentifier
+		//(declaredVendorId=N4mfIdentifier ':')? projectId=N4mfIdentifier
 		public Group getGroup() { return cGroup; }
 
 		//(declaredVendorId=N4mfIdentifier ':')?
@@ -1264,11 +1268,11 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_0_1() { return cColonKeyword_0_1; }
 
-		//artifactId=N4mfIdentifier
-		public Assignment getArtifactIdAssignment_1() { return cArtifactIdAssignment_1; }
+		//projectId=N4mfIdentifier
+		public Assignment getProjectIdAssignment_1() { return cProjectIdAssignment_1; }
 
 		//N4mfIdentifier
-		public RuleCall getArtifactIdN4mfIdentifierParserRuleCall_1_0() { return cArtifactIdN4mfIdentifierParserRuleCall_1_0; }
+		public RuleCall getProjectIdN4mfIdentifierParserRuleCall_1_0() { return cProjectIdN4mfIdentifierParserRuleCall_1_0; }
 	}
 
 	public class VersionConstraintElements extends AbstractParserRuleElementFinder {
@@ -1369,33 +1373,35 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final Keyword cArtifactIdKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cVendorIdKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cProjectNameKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cVendorNameKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cProjectTypeKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cProjectVersionKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cOutputKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
-		private final Keyword cLibrariesKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
-		private final Keyword cResourcesKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
-		private final Keyword cSourcesKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
-		private final Keyword cModuleFiltersKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
-		private final Group cGroup_12 = (Group)cAlternatives.eContents().get(12);
-		private final Keyword cProjectDependenciesKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
-		private final Keyword cSystemKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
-		private final Keyword cAPIKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
-		private final Keyword cUserKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
-		private final Keyword cApplicationKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
-		private final Group cGroup_16 = (Group)cAlternatives.eContents().get(16);
-		private final Keyword cProcessorKeyword_16_0 = (Keyword)cGroup_16.eContents().get(0);
-		private final Keyword cSourceKeyword_16_1 = (Keyword)cGroup_16.eContents().get(1);
-		private final Keyword cContentKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
-		private final Keyword cTestKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
+		private final Keyword cProjectIdKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cVendorIdKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cProjectNameKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cVendorNameKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cProjectTypeKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cProjectVersionKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cOutputKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cLibrariesKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cResourcesKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cSourcesKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cModuleFiltersKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Group cGroup_13 = (Group)cAlternatives.eContents().get(13);
+		private final Keyword cProjectDependenciesKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final Keyword cSystemKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
+		private final Keyword cAPIKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cUserKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cApplicationKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
+		private final Group cGroup_17 = (Group)cAlternatives.eContents().get(17);
+		private final Keyword cProcessorKeyword_17_0 = (Keyword)cGroup_17.eContents().get(0);
+		private final Keyword cSourceKeyword_17_1 = (Keyword)cGroup_17.eContents().get(1);
+		private final Keyword cContentKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
+		private final Keyword cTestKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
 		
 		//N4mfIdentifier:
 		//	ID |
 		//	'ArtifactId' |
+		//	'ProjectId' |
 		//	'VendorId' |
-		//	'ProjectName' |
+		//	'ProjectName' | // TODO GH-107 remove this
 		//	'VendorName' |
 		//	'ProjectType' |
 		//	'ProjectVersion' |
@@ -1415,9 +1421,9 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//	'test';
 		@Override public ParserRule getRule() { return rule; }
 
-		//ID | 'ArtifactId' | 'VendorId' | 'ProjectName' | 'VendorName' | 'ProjectType' | 'ProjectVersion' | 'Output' |
-		//'Libraries' | 'Resources' | 'Sources' | 'ModuleFilters' | 'ProjectDependencies' 'system' | 'API' | 'user' |
-		//'application' | 'processor' 'source' | 'content' | 'test'
+		//ID | 'ArtifactId' | 'ProjectId' | 'VendorId' | 'ProjectName' | // TODO GH-107 remove this
+		//'VendorName' | 'ProjectType' | 'ProjectVersion' | 'Output' | 'Libraries' | 'Resources' | 'Sources' | 'ModuleFilters' |
+		//'ProjectDependencies' 'system' | 'API' | 'user' | 'application' | 'processor' 'source' | 'content' | 'test'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ID
@@ -1426,68 +1432,72 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 		//'ArtifactId'
 		public Keyword getArtifactIdKeyword_1() { return cArtifactIdKeyword_1; }
 
+		//'ProjectId'
+		public Keyword getProjectIdKeyword_2() { return cProjectIdKeyword_2; }
+
 		//'VendorId'
-		public Keyword getVendorIdKeyword_2() { return cVendorIdKeyword_2; }
+		public Keyword getVendorIdKeyword_3() { return cVendorIdKeyword_3; }
 
 		//'ProjectName'
-		public Keyword getProjectNameKeyword_3() { return cProjectNameKeyword_3; }
+		public Keyword getProjectNameKeyword_4() { return cProjectNameKeyword_4; }
 
+		//// TODO GH-107 remove this
 		//'VendorName'
-		public Keyword getVendorNameKeyword_4() { return cVendorNameKeyword_4; }
+		public Keyword getVendorNameKeyword_5() { return cVendorNameKeyword_5; }
 
 		//'ProjectType'
-		public Keyword getProjectTypeKeyword_5() { return cProjectTypeKeyword_5; }
+		public Keyword getProjectTypeKeyword_6() { return cProjectTypeKeyword_6; }
 
 		//'ProjectVersion'
-		public Keyword getProjectVersionKeyword_6() { return cProjectVersionKeyword_6; }
+		public Keyword getProjectVersionKeyword_7() { return cProjectVersionKeyword_7; }
 
 		//'Output'
-		public Keyword getOutputKeyword_7() { return cOutputKeyword_7; }
+		public Keyword getOutputKeyword_8() { return cOutputKeyword_8; }
 
 		//'Libraries'
-		public Keyword getLibrariesKeyword_8() { return cLibrariesKeyword_8; }
+		public Keyword getLibrariesKeyword_9() { return cLibrariesKeyword_9; }
 
 		//'Resources'
-		public Keyword getResourcesKeyword_9() { return cResourcesKeyword_9; }
+		public Keyword getResourcesKeyword_10() { return cResourcesKeyword_10; }
 
 		//'Sources'
-		public Keyword getSourcesKeyword_10() { return cSourcesKeyword_10; }
+		public Keyword getSourcesKeyword_11() { return cSourcesKeyword_11; }
 
 		//'ModuleFilters'
-		public Keyword getModuleFiltersKeyword_11() { return cModuleFiltersKeyword_11; }
+		public Keyword getModuleFiltersKeyword_12() { return cModuleFiltersKeyword_12; }
 
 		//'ProjectDependencies' 'system'
-		public Group getGroup_12() { return cGroup_12; }
+		public Group getGroup_13() { return cGroup_13; }
 
 		//'ProjectDependencies'
-		public Keyword getProjectDependenciesKeyword_12_0() { return cProjectDependenciesKeyword_12_0; }
+		public Keyword getProjectDependenciesKeyword_13_0() { return cProjectDependenciesKeyword_13_0; }
 
 		//'system'
-		public Keyword getSystemKeyword_12_1() { return cSystemKeyword_12_1; }
+		public Keyword getSystemKeyword_13_1() { return cSystemKeyword_13_1; }
 
 		//'API'
-		public Keyword getAPIKeyword_13() { return cAPIKeyword_13; }
+		public Keyword getAPIKeyword_14() { return cAPIKeyword_14; }
 
 		//'user'
-		public Keyword getUserKeyword_14() { return cUserKeyword_14; }
+		public Keyword getUserKeyword_15() { return cUserKeyword_15; }
 
 		//'application'
-		public Keyword getApplicationKeyword_15() { return cApplicationKeyword_15; }
+		public Keyword getApplicationKeyword_16() { return cApplicationKeyword_16; }
 
 		//'processor' 'source'
-		public Group getGroup_16() { return cGroup_16; }
+		public Group getGroup_17() { return cGroup_17; }
 
 		//'processor'
-		public Keyword getProcessorKeyword_16_0() { return cProcessorKeyword_16_0; }
+		public Keyword getProcessorKeyword_17_0() { return cProcessorKeyword_17_0; }
 
 		//'source'
-		public Keyword getSourceKeyword_16_1() { return cSourceKeyword_16_1; }
+		public Keyword getSourceKeyword_17_1() { return cSourceKeyword_17_1; }
 
 		//'content'
-		public Keyword getContentKeyword_17() { return cContentKeyword_17; }
+		public Keyword getContentKeyword_18() { return cContentKeyword_18; }
 
 		//'test'
-		public Keyword getTestKeyword_18() { return cTestKeyword_18; }
+		public Keyword getTestKeyword_19() { return cTestKeyword_19; }
 	}
 	
 	
@@ -1792,7 +1802,7 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//ProjectDescription:
-	//	'ArtifactId' ':' artifactId=N4mfIdentifier & ('ProjectName' ':' projectName=STRING)?
+	//	('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier & ('ProjectName' ':' STRING)? // TODO GH-107 remove manifest property 'ProjectName'
 	//	& 'ProjectType' ':' projectType=ProjectType & 'ProjectVersion' ':' projectVersion=DeclaredVersion & 'VendorId' ':'
 	//	declaredVendorId=N4mfIdentifier & ('VendorName' ':' vendorName=STRING)?
 	//	& ('MainModule' ':' mainModule=STRING)?
@@ -2068,7 +2078,7 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * vendorN4mfIdentifier is optional, if it is not specified, vendor id of current project is used.
 	// * / SimpleProjectDescription:
-	//	(declaredVendorId=N4mfIdentifier ':')? artifactId=N4mfIdentifier;
+	//	(declaredVendorId=N4mfIdentifier ':')? projectId=N4mfIdentifier;
 	public SimpleProjectDescriptionElements getSimpleProjectDescriptionAccess() {
 		return pSimpleProjectDescription;
 	}
@@ -2115,8 +2125,9 @@ public class N4MFGrammarAccess extends AbstractGrammarElementFinder {
 	//N4mfIdentifier:
 	//	ID |
 	//	'ArtifactId' |
+	//	'ProjectId' |
 	//	'VendorId' |
-	//	'ProjectName' |
+	//	'ProjectName' | // TODO GH-107 remove this
 	//	'VendorName' |
 	//	'ProjectType' |
 	//	'ProjectVersion' |

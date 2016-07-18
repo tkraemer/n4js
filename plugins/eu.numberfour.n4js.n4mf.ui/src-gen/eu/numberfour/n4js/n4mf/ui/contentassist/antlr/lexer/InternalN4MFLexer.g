@@ -64,6 +64,8 @@ NoValidate : 'noValidate';
 
 Libraries : 'Libraries';
 
+ProjectId : 'ProjectId';
+
 Resources : 'Resources';
 
 Processor : 'processor';

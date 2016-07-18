@@ -6,7 +6,10 @@ grammar DebugInternalN4MF ;
 // Rule ProjectDescription
 ruleProjectDescription :
 	(
-		'ArtifactId' ':' ruleN4mfIdentifier |
+		(
+			'ArtifactId' |
+			'ProjectId'
+		) ':' ruleN4mfIdentifier |
 		(
 			'ProjectName' ':' RULE_STRING
 		)? |
@@ -212,6 +215,7 @@ ruleVersionConstraint :
 ruleN4mfIdentifier :
 	RULE_ID |
 	'ArtifactId' |
+	'ProjectId' |
 	'VendorId' |
 	'ProjectName' |
 	'VendorName' |

@@ -37,6 +37,7 @@ public class N4MFParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getProjectDescriptionAccess().getAlternatives_0_0(), "rule__ProjectDescription__Alternatives_0_0");
 					put(grammarAccess.getVersionConstraintAccess().getAlternatives(), "rule__VersionConstraint__Alternatives");
 					put(grammarAccess.getVersionConstraintAccess().getAlternatives_0_0(), "rule__VersionConstraint__Alternatives_0_0");
 					put(grammarAccess.getVersionConstraintAccess().getAlternatives_0_2(), "rule__VersionConstraint__Alternatives_0_2");
@@ -100,10 +101,9 @@ public class N4MFParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimpleProjectDescriptionAccess().getGroup_0(), "rule__SimpleProjectDescription__Group_0__0");
 					put(grammarAccess.getVersionConstraintAccess().getGroup_0(), "rule__VersionConstraint__Group_0__0");
 					put(grammarAccess.getVersionConstraintAccess().getGroup_0_2_0(), "rule__VersionConstraint__Group_0_2_0__0");
-					put(grammarAccess.getN4mfIdentifierAccess().getGroup_12(), "rule__N4mfIdentifier__Group_12__0");
-					put(grammarAccess.getN4mfIdentifierAccess().getGroup_16(), "rule__N4mfIdentifier__Group_16__0");
-					put(grammarAccess.getProjectDescriptionAccess().getArtifactIdAssignment_0_2(), "rule__ProjectDescription__ArtifactIdAssignment_0_2");
-					put(grammarAccess.getProjectDescriptionAccess().getProjectNameAssignment_1_2(), "rule__ProjectDescription__ProjectNameAssignment_1_2");
+					put(grammarAccess.getN4mfIdentifierAccess().getGroup_13(), "rule__N4mfIdentifier__Group_13__0");
+					put(grammarAccess.getN4mfIdentifierAccess().getGroup_17(), "rule__N4mfIdentifier__Group_17__0");
+					put(grammarAccess.getProjectDescriptionAccess().getProjectIdAssignment_0_2(), "rule__ProjectDescription__ProjectIdAssignment_0_2");
 					put(grammarAccess.getProjectDescriptionAccess().getProjectTypeAssignment_2_2(), "rule__ProjectDescription__ProjectTypeAssignment_2_2");
 					put(grammarAccess.getProjectDescriptionAccess().getProjectVersionAssignment_3_2(), "rule__ProjectDescription__ProjectVersionAssignment_3_2");
 					put(grammarAccess.getProjectDescriptionAccess().getDeclaredVendorIdAssignment_4_2(), "rule__ProjectDescription__DeclaredVendorIdAssignment_4_2");
@@ -162,7 +162,7 @@ public class N4MFParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProjectDependencyAccess().getVersionConstraintAssignment_1(), "rule__ProjectDependency__VersionConstraintAssignment_1");
 					put(grammarAccess.getProjectDependencyAccess().getDeclaredScopeAssignment_2(), "rule__ProjectDependency__DeclaredScopeAssignment_2");
 					put(grammarAccess.getSimpleProjectDescriptionAccess().getDeclaredVendorIdAssignment_0_0(), "rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0");
-					put(grammarAccess.getSimpleProjectDescriptionAccess().getArtifactIdAssignment_1(), "rule__SimpleProjectDescription__ArtifactIdAssignment_1");
+					put(grammarAccess.getSimpleProjectDescriptionAccess().getProjectIdAssignment_1(), "rule__SimpleProjectDescription__ProjectIdAssignment_1");
 					put(grammarAccess.getVersionConstraintAccess().getExclLowerBoundAssignment_0_0_0(), "rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0");
 					put(grammarAccess.getVersionConstraintAccess().getLowerVersionAssignment_0_1(), "rule__VersionConstraint__LowerVersionAssignment_0_1");
 					put(grammarAccess.getVersionConstraintAccess().getUpperVersionAssignment_0_2_0_1(), "rule__VersionConstraint__UpperVersionAssignment_0_2_0_1");

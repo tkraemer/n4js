@@ -211,8 +211,9 @@ enum ModuleLoader:
 N4mfIdentifier :
 	ID |
 	'ArtifactId' |
+	'ProjectId' |
 	'VendorId' |
-	'ProjectName' |
+	'ProjectName' | // TODO GH-107 remove this
 	'VendorName' |
 	'ProjectType' |
 	'ProjectVersion' |
