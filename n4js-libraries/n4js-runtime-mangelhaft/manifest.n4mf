@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: n4js-runtime-mangelhaft
+ProjectId: n4js-runtime-mangelhaft
 VendorId: eu.numberfour
 ProjectName: "n4js-runtime-mangelhaft"
 VendorName: "NumberFour AG"

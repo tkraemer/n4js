@@ -25,12 +25,11 @@ class N4JSNpmManifestContentProvider {
 	 */
 	def String getContent(String artifactId, String outputFolder, String externalFolder, String main)
 	'''
-		ArtifactId: «artifactId»
-		VendorId: npm
-		ProjectName: "«artifactId»"
-		VendorName: "npm"
+		ProjectId: «artifactId»
 		ProjectType: library
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: npm
+		VendorName: "npm"
 		Output: "«outputFolder»"
 		MainModule:"«main»"
 		ModuleLoader: commonjs

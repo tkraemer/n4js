@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: n4js-runtime-fetch
+ProjectId: n4js-runtime-fetch
 VendorId: eu.numberfour
 ProjectName: "n4js-runtime-fetch"
 VendorName: "NumberFour AG"

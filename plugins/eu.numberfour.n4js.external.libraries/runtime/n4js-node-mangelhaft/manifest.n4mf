@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: n4js-node-mangelhaft
+ProjectId: n4js-node-mangelhaft
 VendorId: eu.numberfour
 ProjectName: "n4js-node-mangelhaft"
 VendorName: "NumberFour AG"

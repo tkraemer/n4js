@@ -1,4 +1,4 @@
-ArtifactId: eu.numberfour.sample.polite
+ProjectId: eu.numberfour.sample.polite
 VendorId: eu.numberfour
 ProjectName: "polite implementation of sample"
 VendorName: "NumberFour AG"

@@ -1,4 +1,4 @@
-ArtifactId: external.project
+ProjectId: external.project
 VendorId: eu.numberfour
 ProjectName: "external.project"
 VendorName: "NumberFour AG"

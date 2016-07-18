@@ -1,4 +1,4 @@
-ArtifactId: eu.numberfour.sample.api
+ProjectId: eu.numberfour.sample.api
 VendorId: eu.numberfour
 ProjectName: "stdlib API"
 VendorName: "NumberFour AG"

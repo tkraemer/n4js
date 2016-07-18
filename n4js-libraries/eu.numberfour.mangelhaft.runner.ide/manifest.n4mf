@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: eu.numberfour.mangelhaft.runner.ide
+ProjectId: eu.numberfour.mangelhaft.runner.ide
 VendorId: eu.numberfour
 ProjectName: "eu.numberfour.mangelhaft.runner.ide"
 VendorName: "NumberFour AG"

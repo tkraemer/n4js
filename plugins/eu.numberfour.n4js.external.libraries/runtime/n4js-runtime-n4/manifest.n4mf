@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: n4js-runtime-n4
+ProjectId: n4js-runtime-n4
 VendorId: eu.numberfour
 ProjectName: "n4js-runtime-n4"
 VendorName: "NumberFour AG"

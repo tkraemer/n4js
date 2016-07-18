@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-ArtifactId: n4js.lang
+ProjectId: n4js.lang
 VendorId: eu.numberfour
 ProjectName: "n4js.lang"
 VendorName: "NumberFour AG"

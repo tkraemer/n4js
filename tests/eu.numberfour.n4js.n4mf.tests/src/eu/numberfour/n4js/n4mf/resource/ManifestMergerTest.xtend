@@ -102,8 +102,8 @@ class ManifestMergerTest extends Assert {
 
 	@Test
 	def void testUpdateAttribute() {
-		val from = parseHelper.parse('''ArtifactId: from.id''');
-		val to = parseHelper.parse('''ArtifactId: to.id''');
+		val from = parseHelper.parse('''ProjectId: from.id''');
+		val to = parseHelper.parse('''ProjectId: to.id''');
 		val result = merger.mergeContent(from.eResource, to.eResource);
 		assertTrue('Expected to.id artifact ID. Was ' + result.projectId + '.instead.', result.projectId.equals('from.id'));
 

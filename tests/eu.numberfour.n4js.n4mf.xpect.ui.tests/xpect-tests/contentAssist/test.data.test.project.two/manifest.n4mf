@@ -1,4 +1,4 @@
-ArtifactId: test.data.test.project.one
+ProjectId: test.data.test.project.one
 VendorId: eu.numberfour
 ProjectName: "test.data.test.project.one"
 VendorName: "NumberFour AG"

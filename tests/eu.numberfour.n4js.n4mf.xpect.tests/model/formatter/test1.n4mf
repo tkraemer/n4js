@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFFormatterTest END_SETUP */
 
 /* XPECT formatted --- 
-ArtifactId: formatter
+ProjectId: formatter
 VendorId: eu.numberfour
 ProjectName: "My Project One"
 VendorName: "NumberFour AG"

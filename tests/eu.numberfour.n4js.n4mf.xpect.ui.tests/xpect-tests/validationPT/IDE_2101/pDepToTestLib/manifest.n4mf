@@ -1,4 +1,4 @@
-ArtifactId: pDepToTestLib
+ProjectId: pDepToTestLib
 VendorId: MyVendorID
 ProjectName: "pDepToTestLib"
 VendorName: "My Vendor Name"

@@ -60,12 +60,11 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 	protected void createTempProjects() {
 		try {
 			host.setMyProjectURI(createTempProject(host.myArtifactId));
-			createManifest(host.myArtifactId, "ArtifactId: " + host.myArtifactId + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+			createManifest(host.myArtifactId, "ProjectId: " + host.myArtifactId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"" +
 					"Sources {\n" +
@@ -76,12 +75,11 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"ProjectDependencies { " + host.libArtifactId + ", " + host.archiveArtifactId + " } \n");
 			createArchive(host.myArtifactId);
 			host.setLibProjectURI(createTempProject(host.libArtifactId));
-			createManifest(host.libArtifactId, "ArtifactId: " + host.libArtifactId + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+			createManifest(host.libArtifactId, "ProjectId: " + host.libArtifactId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Output: \"src-gen\"" +
 					"Sources {\n" +
 					"	source { " +
@@ -113,12 +111,11 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 
 		zipOutputStream.putNextEntry(new ZipEntry(IN4JSProject.N4MF_MANIFEST));
 		// this will close the stream
-		CharStreams.write("ArtifactId: " + host.archiveArtifactId + "\n" +
-				"VendorId: eu.numberfour\n" +
-				"ProjectName: \"N4JS Tests\"\n" +
-				"VendorName: \"NumberFour AG\"\n" +
+		CharStreams.write("ProjectId: " + host.archiveArtifactId + "\n" +
 				"ProjectType: library\n" +
 				"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+				"VendorId: eu.numberfour\n" +
+				"VendorName: \"NumberFour AG\"\n" +
 				"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 				"Output: \"src-gen\"" +
 				"Sources {\n" +

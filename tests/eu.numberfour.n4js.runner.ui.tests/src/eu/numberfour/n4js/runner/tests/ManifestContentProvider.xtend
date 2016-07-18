@@ -33,16 +33,15 @@ class ManifestContentProvider {
 	 * @param requiredRL an iterable of required runtime libraries.
 	 * @return the N4 manifest content as a string.
 	 */
-	def String getContent(String artifactId, ProjectType type, Optional<RuntimeEnvironment> extendedRE,
+	def String getContent(String projectId, ProjectType type, Optional<RuntimeEnvironment> extendedRE,
 		Iterable<String> projectDependencies, Iterable<String> providedRL, Iterable<String> requiredRL,
 		Optional<String> implementationId, Iterable<String> implementedProjects
 	) '''
-		ArtifactId: «artifactId»
-		VendorId: eu.numberfour
-		ProjectName: "«artifactId»"
-		VendorName: "NumberFour AG"
+		ProjectId: «projectId»
 		ProjectType: «IF API == type»«API»«ELSE»«UPPER_UNDERSCORE.to(LOWER_CAMEL, valueOf(type))»«ENDIF»
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: eu.numberfour
+		VendorName: "NumberFour AG"
 		«'''ProvidedRuntimeLibraries'''.getEnumeration(providedRL)»
 		«'''ProjectDependencies'''.getEnumeration(projectDependencies)»
 		«'''RequiredRuntimeLibraries'''.getEnumeration(requiredRL)»
