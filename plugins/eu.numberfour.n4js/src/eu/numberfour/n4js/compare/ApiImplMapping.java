@@ -234,15 +234,15 @@ public class ApiImplMapping {
 
 	/**
 	 * Returns <code>true</code> iff this mapping contains an API -> implementation association p1 -> p2 with p1 having
-	 * an artifactId equal to the given ID.
+	 * an projectId equal to the given ID.
 	 */
-	public boolean isApi(String artifactId) {
-		return assocs.containsKey(artifactId);
+	public boolean isApi(String projectId) {
+		return assocs.containsKey(projectId);
 	}
 
 	/**
-	 * Returns the API project with the given artifactId or <code>null</code> if this mapping does not contain any API
-	 * -> implementation associations for an API project with the given artifactId.
+	 * Returns the API project with the given projectId or <code>null</code> if this mapping does not contain any API ->
+	 * implementation associations for an API project with the given projectId.
 	 */
 	public IN4JSProject getApi(String apiId) {
 		final ApiImplMapping.ApiImplAssociation assoc = assocs.get(apiId);
@@ -250,7 +250,7 @@ public class ApiImplMapping {
 	}
 
 	/**
-	 * Returns all implementation projects for the API project with the given artifactId registered in this mapping.
+	 * Returns all implementation projects for the API project with the given projectId registered in this mapping.
 	 */
 	public Collection<IN4JSProject> getImpls(String apiId) {
 		final ApiImplMapping.ApiImplAssociation pair = assocs.get(apiId);
@@ -267,12 +267,12 @@ public class ApiImplMapping {
 	}
 
 	/**
-	 * Returns the implementation project for the API project with artifactId <code>apiId</code> for implementation ID
+	 * Returns the implementation project for the API project with projectId <code>apiId</code> for implementation ID
 	 * <code>implId</code>.
 	 * <p>
-	 * Note that <code>apiId</code> is an artifactId (i.e. manifest property <code>ArtifactId</code>) whereas
+	 * Note that <code>apiId</code> is an projectId (i.e. manifest property <code>ProjectId</code>) whereas
 	 * <code>implId</code> is an implementation ID (i.e. manifest property <code>ImplementationId</code> and <b>not</b>
-	 * <code>ArtifactId</code>).
+	 * <code>ProjectId</code>).
 	 */
 	public IN4JSProject getImpl(String apiId, String implId) {
 		final ApiImplMapping.ApiImplAssociation pair = assocs.get(apiId);

@@ -180,7 +180,7 @@ public class RunnerFrontEnd {
 	public void computeDerivedValues(RunConfiguration config) {
 
 		// 1) for all API projects among the direct and indirect dependencies we have to provide a mapping
-		// from the artifactId of the API project to the artifactId of the implementation project to be used
+		// from the projectId of the API project to the projectId of the implementation project to be used
 		final ApiUsage apiUsage = runnerHelper
 				.getProjectExtendedDepsAndApiImplMapping(config.getRuntimeEnvironment(),
 						config.getUserSelection(), config.getImplementationId(), true);

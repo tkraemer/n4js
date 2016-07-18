@@ -373,16 +373,16 @@ public class NpmPackageToProjectAdapter {
 	private void generateManifestContent(File projectFolder, PackageJson packageJSON, File manifest)
 			throws IOException {
 
-		String artifactId = packageJSON.getName();
+		String projectId = packageJSON.getName();
 		String manifestMain = computeMainModule(projectFolder);
 
-		if (!projectFolder.getName().equals(artifactId)) {
+		if (!projectFolder.getName().equals(projectId)) {
 			LOGGER.warn("project folder and project name are different : " + projectFolder.getName() + " <> + "
 					+ packageJSON.getName());
 		}
 
 		try (FileWriter fw = new FileWriter(manifest)) {
-			fw.write(manifestContentProvider.getContent(artifactId, ".", ".", manifestMain));
+			fw.write(manifestContentProvider.getContent(projectId, ".", ".", manifestMain));
 		}
 	}
 

@@ -50,16 +50,16 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  * By using this wrapping scope, we obtain support for two additional forms of import (called "project imports"):
  *
  * <pre>
- * import * as N from "artifactId/some/path/to/Module"
+ * import * as N from "projectId/some/path/to/Module"
  * </pre>
  *
  * and
  *
  * <pre>
- * import * as N from "artifactId"
+ * import * as N from "projectId"
  * </pre>
  *
- * In both cases, <code>artifactId</code>> stands for the artifact ID of the project containing the module to import
+ * In both cases, <code>projectId</code>> stands for the artifact ID of the project containing the module to import
  * from. The last case is only allowed if the containing project has defined the <code>MainModule</code> property in its
  * manifest and means that this main module will then be imported.
  *
@@ -267,7 +267,7 @@ public class ProjectImportEnablingScope implements IScope {
 	 * are filtered by expected {@link IN4JSProject#getProjectId()}.
 	 */
 	private Collection<IEObjectDescription> getElementsWithDesiredProjectID(QualifiedName moduleSpecifier,
-			String projectArtifactId) {
+			String projectId) {
 		final Iterable<IEObjectDescription> moduleSpecifierMatchesWithPossibleDuplicates = delegate
 				.getElements(moduleSpecifier);
 
@@ -276,19 +276,19 @@ public class ProjectImportEnablingScope implements IScope {
 		final Map<String, IEObjectDescription> result = new HashMap<>();
 		for (IEObjectDescription desc : moduleSpecifierMatchesWithPossibleDuplicates) {
 			final IN4JSProject containingProject = n4jsCore.findProject(desc.getEObjectURI()).orNull();
-			if (projectArtifactId.equals(containingProject.getProjectId())) {
+			if (projectId.equals(containingProject.getProjectId())) {
 				result.put(desc.getEObjectURI().toString(), desc);
 			}
 		}
 		return result.values();
 	}
 
-	private IN4JSProject findProject(String artifactId, IN4JSProject project) {
-		if (Objects.equals(project.getProjectId(), artifactId)) {
+	private IN4JSProject findProject(String projectId, IN4JSProject project) {
+		if (Objects.equals(project.getProjectId(), projectId)) {
 			return project;
 		}
 		for (IN4JSProject p : project.getDependencies()) {
-			if (Objects.equals(p.getProjectId(), artifactId)) {
+			if (Objects.equals(p.getProjectId(), projectId)) {
 				return p;
 			}
 		}

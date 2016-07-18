@@ -846,12 +846,12 @@ public class N4HeadlessCompiler {
 	 *
 	 * @param allErrorsAndWarnings
 	 *            list of issues and warnings
-	 * @param artifactId
-	 *            artifactId of the bad project.
+	 * @param projectId
+	 *            projectId of the bad project.
 	 * @throws N4JSCompileErrorException
 	 *             in case of any issues of type Severity.ERROR
 	 */
-	private void failOnErrors(ArrayList<Issue> allErrorsAndWarnings, String artifactId)
+	private void failOnErrors(ArrayList<Issue> allErrorsAndWarnings, String projectId)
 			throws N4JSCompileErrorException {
 
 		ArrayList<Issue> errors = new ArrayList<>();
@@ -863,11 +863,11 @@ public class N4HeadlessCompiler {
 					.stream()
 					.filter(e -> e.getSeverity() != Severity.ERROR)
 					.forEach(i -> System.out.println(issueLine(i)));
-			String msg = "ERROR: cannot compile project " + artifactId + " due to " + errors.size() + " errors.";
+			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
 			}
-			throw new N4JSCompileErrorException(msg, artifactId);
+			throw new N4JSCompileErrorException(msg, projectId);
 		}
 
 	}

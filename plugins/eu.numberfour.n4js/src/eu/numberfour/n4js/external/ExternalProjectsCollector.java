@@ -159,9 +159,9 @@ public class ExternalProjectsCollector {
 
 	private void hookUpReferencedBuildConfigs(final Map<String, N4JSExternalProject> visitedProjects) {
 		for (final N4JSExternalProject project : visitedProjects.values()) {
-			final Iterable<String> artifactIds = project.getAllDirectDependencyIds();
-			for (final String artifactId : artifactIds) {
-				final N4JSExternalProject referencedProject = visitedProjects.get(artifactId);
+			final Iterable<String> projectIds = project.getAllDirectDependencyIds();
+			for (final String projectId : projectIds) {
+				final N4JSExternalProject referencedProject = visitedProjects.get(projectId);
 				if (null != referencedProject) {
 					project.add(new BuildConfiguration(referencedProject));
 				}

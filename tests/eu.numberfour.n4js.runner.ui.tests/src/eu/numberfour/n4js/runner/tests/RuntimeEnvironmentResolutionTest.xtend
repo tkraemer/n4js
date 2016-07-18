@@ -629,12 +629,12 @@ class RuntimeEnvironmentResolutionTest {
 	 * This method creates a new project in the workspace then generates a N4 manifest file in the brand new project's root
 	 * with the given content.
 	 *
-	 * @param artifactId the unique artifactId of the new project.
+	 * @param projectId the unique projectId of the new project.
 	 * @param manifestContent the content of the new manifest file.
 	 * @return returns with the URI referencing the brand new project.
 	 */
-	protected def createProjectWithManifest(String artifactId, String manifestContent) {
-		val projectFolder = createProjectFolder(artifactId)
+	protected def createProjectWithManifest(String projectId, String manifestContent) {
+		val projectFolder = createProjectFolder(projectId)
 		writeManifestContent(createManifestFile(projectFolder), manifestContent)
 		toUri(projectFolder);
 	}
@@ -649,18 +649,18 @@ class RuntimeEnvironmentResolutionTest {
 	}
 
 	private def IN4JSProject createProject(ManifestBuilder builder, RuntimeEnvironment re) {
-		createProject(builder, '''«re.getArtifactId»''')
+		createProject(builder, '''«re.getProjectId»''')
 	}
 
-	private def IN4JSProject createProject(ManifestBuilder builder, String artifactId) {
-		val content = builder.build(artifactId)
+	private def IN4JSProject createProject(ManifestBuilder builder, String projectId) {
+		val content = builder.build(projectId)
 		if (LOGGER.debugEnabled) {
 			LOGGER.debug('------------------------NEW PROJECT------------------------')
-			LOGGER.debug('''New project: «artifactId»''')
+			LOGGER.debug('''New project: «projectId»''')
 			LOGGER.debug('''Manifest:«'\n'»«content»''')
 			LOGGER.debug('--------------------END OF NEW PROJECT---------------------')
 		}
-		val uri = createProjectWithManifest(artifactId, content)
+		val uri = createProjectWithManifest(projectId, content)
 		val project = core.create(uri)
 		assertTrue(project.exists)
 		core.findProject(uri) // Registers the project.

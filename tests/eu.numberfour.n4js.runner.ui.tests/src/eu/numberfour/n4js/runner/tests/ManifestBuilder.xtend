@@ -44,11 +44,11 @@ class ManifestBuilder {
 
 	/**
 	 * Builds the N4 manifest with the given project name.
-	 * @param artifactId the name of the project. Cannot be {@code null}.
+	 * @param projectId the name of the project. Cannot be {@code null}.
 	 * @return the N4 manifest content as a string.
 	 */
-	def build(String artifactId) {
-		checkNotNull(artifactId).getContent(type, fromNullable(extendedRE), projectDependencies, providedRLs, requiredRLs, fromNullable(implementationId), implementedProjects)
+	def build(String projectId) {
+		checkNotNull(projectId).getContent(type, fromNullable(extendedRE), projectDependencies, providedRLs, requiredRLs, fromNullable(implementationId), implementedProjects)
 	}
 
 	/**

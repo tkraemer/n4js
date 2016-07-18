@@ -39,8 +39,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getQualifiedName <em>Qualified Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getProjectId <em>Project Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getVendorID <em>Vendor ID</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getProjectArtifactId <em>Project Artifact Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#getModuleLoader <em>Module Loader</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#isStaticPolyfillModule <em>Static Polyfill Module</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TModuleImpl#isStaticPolyfillAware <em>Static Polyfill Aware</em>}</li>
@@ -87,6 +87,26 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 	protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getProjectId() <em>Project Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProjectId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PROJECT_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getProjectId() <em>Project Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProjectId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String projectId = PROJECT_ID_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #getVendorID() <em>Vendor ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,26 +125,6 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 	 * @ordered
 	 */
 	protected String vendorID = VENDOR_ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getProjectArtifactId() <em>Project Artifact Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProjectArtifactId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PROJECT_ARTIFACT_ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getProjectArtifactId() <em>Project Artifact Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProjectArtifactId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String projectArtifactId = PROJECT_ARTIFACT_ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getModuleLoader() <em>Module Loader</em>}' attribute.
@@ -333,6 +333,27 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getProjectId() {
+		return projectId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProjectId(String newProjectId) {
+		String oldProjectId = projectId;
+		projectId = newProjectId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMODULE__PROJECT_ID, oldProjectId, projectId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVendorID() {
 		return vendorID;
 	}
@@ -347,27 +368,6 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 		vendorID = newVendorID;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMODULE__VENDOR_ID, oldVendorID, vendorID));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getProjectArtifactId() {
-		return projectArtifactId;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProjectArtifactId(String newProjectArtifactId) {
-		String oldProjectArtifactId = projectArtifactId;
-		projectArtifactId = newProjectArtifactId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMODULE__PROJECT_ARTIFACT_ID, oldProjectArtifactId, projectArtifactId));
 	}
 
 	/**
@@ -566,10 +566,10 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 				return getAnnotations();
 			case TypesPackage.TMODULE__QUALIFIED_NAME:
 				return getQualifiedName();
+			case TypesPackage.TMODULE__PROJECT_ID:
+				return getProjectId();
 			case TypesPackage.TMODULE__VENDOR_ID:
 				return getVendorID();
-			case TypesPackage.TMODULE__PROJECT_ARTIFACT_ID:
-				return getProjectArtifactId();
 			case TypesPackage.TMODULE__MODULE_LOADER:
 				return getModuleLoader();
 			case TypesPackage.TMODULE__STATIC_POLYFILL_MODULE:
@@ -610,11 +610,11 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 			case TypesPackage.TMODULE__QUALIFIED_NAME:
 				setQualifiedName((String)newValue);
 				return;
+			case TypesPackage.TMODULE__PROJECT_ID:
+				setProjectId((String)newValue);
+				return;
 			case TypesPackage.TMODULE__VENDOR_ID:
 				setVendorID((String)newValue);
-				return;
-			case TypesPackage.TMODULE__PROJECT_ARTIFACT_ID:
-				setProjectArtifactId((String)newValue);
 				return;
 			case TypesPackage.TMODULE__MODULE_LOADER:
 				setModuleLoader((String)newValue);
@@ -665,11 +665,11 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 			case TypesPackage.TMODULE__QUALIFIED_NAME:
 				setQualifiedName(QUALIFIED_NAME_EDEFAULT);
 				return;
+			case TypesPackage.TMODULE__PROJECT_ID:
+				setProjectId(PROJECT_ID_EDEFAULT);
+				return;
 			case TypesPackage.TMODULE__VENDOR_ID:
 				setVendorID(VENDOR_ID_EDEFAULT);
-				return;
-			case TypesPackage.TMODULE__PROJECT_ARTIFACT_ID:
-				setProjectArtifactId(PROJECT_ARTIFACT_ID_EDEFAULT);
 				return;
 			case TypesPackage.TMODULE__MODULE_LOADER:
 				setModuleLoader(MODULE_LOADER_EDEFAULT);
@@ -714,10 +714,10 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 				return annotations != null && !annotations.isEmpty();
 			case TypesPackage.TMODULE__QUALIFIED_NAME:
 				return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
+			case TypesPackage.TMODULE__PROJECT_ID:
+				return PROJECT_ID_EDEFAULT == null ? projectId != null : !PROJECT_ID_EDEFAULT.equals(projectId);
 			case TypesPackage.TMODULE__VENDOR_ID:
 				return VENDOR_ID_EDEFAULT == null ? vendorID != null : !VENDOR_ID_EDEFAULT.equals(vendorID);
-			case TypesPackage.TMODULE__PROJECT_ARTIFACT_ID:
-				return PROJECT_ARTIFACT_ID_EDEFAULT == null ? projectArtifactId != null : !PROJECT_ARTIFACT_ID_EDEFAULT.equals(projectArtifactId);
 			case TypesPackage.TMODULE__MODULE_LOADER:
 				return MODULE_LOADER_EDEFAULT == null ? moduleLoader != null : !MODULE_LOADER_EDEFAULT.equals(moduleLoader);
 			case TypesPackage.TMODULE__STATIC_POLYFILL_MODULE:
@@ -786,10 +786,10 @@ public class TModuleImpl extends SyntaxRelatedTElementImpl implements TModule {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (qualifiedName: ");
 		result.append(qualifiedName);
+		result.append(", projectId: ");
+		result.append(projectId);
 		result.append(", vendorID: ");
 		result.append(vendorID);
-		result.append(", projectArtifactId: ");
-		result.append(projectArtifactId);
 		result.append(", moduleLoader: ");
 		result.append(moduleLoader);
 		result.append(", staticPolyfillModule: ");

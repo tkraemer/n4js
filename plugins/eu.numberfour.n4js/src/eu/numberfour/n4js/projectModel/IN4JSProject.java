@@ -95,7 +95,7 @@ public interface IN4JSProject extends IN4JSSourceContainerAware {
 	ImmutableList<? extends IN4JSSourceContainerAware> getProvidedRuntimeLibraries();
 
 	/**
-	 * Returns artifactId of the extended runtime, if any.
+	 * Returns projectId of the extended runtime, if any.
 	 *
 	 * @return optional but not null string
 	 */

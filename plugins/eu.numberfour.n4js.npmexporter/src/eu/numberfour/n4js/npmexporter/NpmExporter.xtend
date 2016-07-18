@@ -310,7 +310,7 @@ class NpmExporter {
 	}
 
 	/** Ensures npm-module-naming conventions. */
-	def boolean holdsConsistentArtifactID(String artifactId, IssueConsumer issueSink) {
+	def boolean holdsConsistentArtifactID(String projectId, IssueConsumer issueSink) {
 		/*-
 			Some rules:
 
@@ -322,7 +322,7 @@ class NpmExporter {
 		*/
 
 		// check §1
-		if( artifactId.length > 214 ){
+		if( projectId.length > 214 ){
 			// name is to long, will be rejected by npm
 			val msg = messageForNPM_PROJECT_NAME_EXCEEDS_CHAR_COUNT;
 			issueSink.accept(NPM_PROJECT_NAME_EXCEEDS_CHAR_COUNT, msg);
@@ -330,26 +330,26 @@ class NpmExporter {
 		}
 
 		// check §2
-		if( artifactId.startsWith(".") || artifactId.startsWith("_") ) {
+		if( projectId.startsWith(".") || projectId.startsWith("_") ) {
 			// illegal first character.
-			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_START_WITH_DASH_OR_DOT(artifactId);
+			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_START_WITH_DASH_OR_DOT(projectId);
 			issueSink.accept(NPM_PROJECT_NAME_MUST_NOT_START_WITH_DASH_OR_DOT,msg);
 			return false;
 		}
 
 		// check §3
-		if( artifactId.toLowerCase != artifactId ) {
+		if( projectId.toLowerCase != projectId ) {
 			// contains upper case letters which will be rejected on npm-publish.
-			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_CONTAIN_UPPER_CASE_LETTERS(artifactId);
+			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_CONTAIN_UPPER_CASE_LETTERS(projectId);
 			issueSink.accept(NPM_PROJECT_NAME_MUST_NOT_CONTAIN_UPPER_CASE_LETTERS,msg);
 			return false;
 		}
 
 		// check §4
-		val urlEscapedArtifactId = UrlEscapers.urlFormParameterEscaper.escape(artifactId);
-		if( urlEscapedArtifactId != artifactId ) {
+		val urlEscapedProjectId = UrlEscapers.urlFormParameterEscaper.escape(projectId);
+		if( urlEscapedProjectId != projectId ) {
 			// contains invalid characters.
-			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_CONTAIN_URL_EXOTIC_CHARACTERS(artifactId);
+			val msg = getMessageForNPM_PROJECT_NAME_MUST_NOT_CONTAIN_URL_EXOTIC_CHARACTERS(projectId);
 			issueSink.accept(NPM_PROJECT_NAME_MUST_NOT_CONTAIN_URL_EXOTIC_CHARACTERS,msg);
 			return false;
 		}

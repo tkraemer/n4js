@@ -27,7 +27,7 @@ import eu.numberfour.n4js.n4mf.ProjectType;
  */
 public class MockWorkspace extends InternalN4JSWorkspace {
 
-	/** Default {@code artifactId} used for the {@link MockProject}s in {@link MockWorkspace}. */
+	/** Default {@code projectId} used for the {@link MockProject}s in {@link MockWorkspace}. */
 	public static final String TEST_PROJECT__ARTIFACT_ID = "test";
 	/** Default {@code vendorId} used for the {@link MockProject}s in {@link MockWorkspace}. */
 	public static final String TEST_PROJECT__VENDOR_ID = "tester.id";

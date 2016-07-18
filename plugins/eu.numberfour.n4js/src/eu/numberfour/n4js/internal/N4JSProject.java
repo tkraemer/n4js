@@ -205,7 +205,7 @@ public class N4JSProject implements IN4JSProject {
 
 	@Override
 	public String getProjectId() {
-		// because the artifactId must be available even if the project does not exist, we do not read from the
+		// because the projectId must be available even if the project does not exist, we do not read from the
 		// ProjectDescription, here, but instead use the last segment of the location URI (equality between the two is
 		// ensured by an n4mf validation)
 		return location.lastSegment();

@@ -63,7 +63,7 @@ class ConvertManifestToPackageJson {
 		// (note: this is not defined in the manifest; we assume (for now) that all npm packages are intended to
 		// be run on node.js)
 		if(project.projectType!==ProjectType.RUNTIME_ENVIRONMENT && project.projectType!==ProjectType.RUNTIME_LIBRARY) {
-			data.dependencies.put(RuntimeEnvironment.NODEJS.artifactId, "*");
+			data.dependencies.put(RuntimeEnvironment.NODEJS.projectId, "*");
 		}
 
 		val outputPathCompleteAsFile = outputPathComplete.toFile;

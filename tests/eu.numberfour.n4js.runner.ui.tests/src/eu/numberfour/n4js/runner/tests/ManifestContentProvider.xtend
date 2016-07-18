@@ -25,7 +25,7 @@ class ManifestContentProvider {
 
 	/**
 	 * Creates and returns with the N4 manifest content based on the given arguments.
-	 * @param artifactId the artifactId of the project.
+	 * @param projectId the projectId of the project.
 	 * @param type the type of the N4 project.
 	 * @param extendedRE the optional extended runtime environment.
 	 * @param projectDependencies an iterable of direct project dependnencies for the N4 project.
@@ -45,7 +45,7 @@ class ManifestContentProvider {
 		«'''ProvidedRuntimeLibraries'''.getEnumeration(providedRL)»
 		«'''ProjectDependencies'''.getEnumeration(projectDependencies)»
 		«'''RequiredRuntimeLibraries'''.getEnumeration(requiredRL)»
-		«IF extendedRE.present»ExtendedRuntimeEnvironment : «extendedRE.get.getArtifactId»«ENDIF»
+		«IF extendedRE.present»ExtendedRuntimeEnvironment : «extendedRE.get.getProjectId»«ENDIF»
 		«IF implementationId.isPresent»ImplementationId: «implementationId.get»«ENDIF»
 		«'''ImplementedProjects'''.getEnumeration(implementedProjects)»
 		Output: "src-gen"

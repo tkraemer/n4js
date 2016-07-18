@@ -197,8 +197,8 @@ class N4MFProposalProvider extends AbstractN4MFProposalProvider {
 		return null;
 	}
 
-	private def getProjectType(EObject anyObjectInTheResource, String artifactId) {
-		val desc = anyObjectInTheResource.allProjectDescriptions.findFirst[artifactId == getUserData(PROJECT_ID_KEY)];
+	private def getProjectType(EObject anyObjectInTheResource, String projectId) {
+		val desc = anyObjectInTheResource.allProjectDescriptions.findFirst[projectId == getUserData(PROJECT_ID_KEY)];
 		return ProjectType.get(desc?.getUserData(PROJECT_TYPE_KEY))
 	}
 

@@ -75,12 +75,12 @@ public class EclipseTesterDescriptor implements ITesterDescriptor { // TODO move
 			throw new IllegalArgumentException(
 					"extension attribute '" + ATTR_ENVIRONMENT + "' may not be null or empty");
 		}
-		this.environment = RuntimeEnvironment.fromArtifactId(environmentRaw);
+		this.environment = RuntimeEnvironment.fromProjectId(environmentRaw);
 		if (this.environment == null) {
 			throw new IllegalArgumentException("unknown runtime environment: "
 					+ environmentRaw
 					+ " (valid values are: "
-					+ Stream.of(RuntimeEnvironment.values()).map(re -> re.getArtifactId())
+					+ Stream.of(RuntimeEnvironment.values()).map(re -> re.getProjectId())
 							.collect(Collectors.joining(", "))
 					+ ")");
 		}

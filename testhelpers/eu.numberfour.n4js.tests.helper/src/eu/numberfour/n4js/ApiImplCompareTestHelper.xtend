@@ -98,9 +98,9 @@ class ApiImplCompareTestHelper {
 		projectCompareHelper.compareApiImpl(entry,0).description
 	}
 
-	public def ProjectReference createProjectReference(String artifactIdOfTargetProject) {
+	public def ProjectReference createProjectReference(String projectIdOfTargetProject) {
 		val desc = N4mfFactory.eINSTANCE.createSimpleProjectDescription;
-		desc.projectId = artifactIdOfTargetProject;
+		desc.projectId = projectIdOfTargetProject;
 		val pref = N4mfFactory.eINSTANCE.createProjectReference;
 		pref.project = desc;
 		return pref;

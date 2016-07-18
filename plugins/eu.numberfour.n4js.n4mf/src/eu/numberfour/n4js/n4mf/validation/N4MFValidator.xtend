@@ -418,18 +418,18 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 	}
 
 	@Check
-	def checkForArtifactIdProjectFolderNameMismatch(ProjectDescription projectDescription) {
-		val artifactId = projectDescription.projectId
+	def checkForProjectIdProjectFolderNameMismatch(ProjectDescription projectDescription) {
+		val projectId = projectDescription.projectId
 		val folderName = projectDescription.eResource.URI.trimSegments(1).lastSegment
-		if (folderName != artifactId) {
-			addIssue(getMessageForPROJECT_NAME_MISMATCH(artifactId, folderName), projectDescription,
+		if (folderName != projectId) {
+			addIssue(getMessageForPROJECT_NAME_MISMATCH(projectId, folderName), projectDescription,
 				SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID, PROJECT_NAME_MISMATCH)
 		}
 	}
 
 	@Check
-	def checkForArtifactIdEclipseProjectNameMismatch(ProjectDescription projectDescription) {
-		val artifactId = projectDescription.projectId
+	def checkForProjectIdEclipseProjectNameMismatch(ProjectDescription projectDescription) {
+		val projectId = projectDescription.projectId
 		if (Platform.isRunning) {
 			val root = ResourcesPlugin.getWorkspace.root;
 			val manifestUri = projectDescription.eResource.URI;
@@ -445,8 +445,8 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 					new File(manifestUri.toFileString).parentFile.name
 				}
 
-			if (eclipseFolderName != artifactId) {
-				addIssue(getMessageForPROJECT_NAME_ECLIPSE_MISMATCH(artifactId, eclipseFolderName),
+			if (eclipseFolderName != projectId) {
+				addIssue(getMessageForPROJECT_NAME_ECLIPSE_MISMATCH(projectId, eclipseFolderName),
 					projectDescription, SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID,
 					PROJECT_NAME_ECLIPSE_MISMATCH)
 			}

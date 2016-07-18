@@ -286,8 +286,8 @@ public class RunnerHelper {
 	private Optional<IN4JSProject> getCustomRuntimeEnvironmentProject(RuntimeEnvironment runEnv) {
 		// final RuntimeEnvironment reOfRunner = runnerRegistry.getDescriptor(runnerId).getEnvironment();
 		if (runEnv != null) {
-			final String artifactId = runEnv.getArtifactId();
-			return findRuntimeEnvironemtnWithName(artifactId);
+			final String projectId = runEnv.getProjectId();
+			return findRuntimeEnvironemtnWithName(projectId);
 		}
 		return Optional.absent();
 	}
@@ -295,14 +295,14 @@ public class RunnerHelper {
 	/**
 	 * Looks up all runtime environment with provided name.
 	 *
-	 * @param artifactId
+	 * @param projectId
 	 *            of the project that servers as the desired environment.
 	 * @return optional with project if found, empty optional otherwise.
 	 */
-	private Optional<IN4JSProject> findRuntimeEnvironemtnWithName(final String artifactId) {
+	private Optional<IN4JSProject> findRuntimeEnvironemtnWithName(final String projectId) {
 		for (IN4JSProject project : n4jsCore.findAllProjects()) {
 			if (project.getProjectType() == ProjectType.RUNTIME_ENVIRONMENT
-					&& project.getProjectId().equals(artifactId)) {
+					&& project.getProjectId().equals(projectId)) {
 				return Optional.of(project);
 			}
 		}
@@ -421,7 +421,7 @@ public class RunnerHelper {
 		}
 
 		final Map<IN4JSProject, IN4JSProject> apiImplProjectMapping = new LinkedHashMap<>();
-		final List<String> missing = new ArrayList<>(); // artifactIds of projects without an implementation
+		final List<String> missing = new ArrayList<>(); // projectIds of projects without an implementation
 		for (IN4JSProject dep : deps) {
 			if (dep != null) {
 				final String depId = dep.getProjectId();

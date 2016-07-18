@@ -187,22 +187,22 @@ public interface TypesPackage extends EPackage {
 	int TMODULE__QUALIFIED_NAME = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMODULE__PROJECT_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Vendor ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMODULE__VENDOR_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Project Artifact Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TMODULE__PROJECT_ARTIFACT_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 3;
+	int TMODULE__VENDOR_ID = SYNTAX_RELATED_TELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Module Loader</b></em>' attribute.
@@ -10530,6 +10530,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTModule_QualifiedName();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getProjectId <em>Project Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Project Id</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TModule#getProjectId()
+	 * @see #getTModule()
+	 * @generated
+	 */
+	EAttribute getTModule_ProjectId();
+
+	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getVendorID <em>Vendor ID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10539,17 +10550,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTModule_VendorID();
-
-	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId <em>Project Artifact Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Project Artifact Id</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TModule#getProjectArtifactId()
-	 * @see #getTModule()
-	 * @generated
-	 */
-	EAttribute getTModule_ProjectArtifactId();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TModule#getModuleLoader <em>Module Loader</em>}'.
@@ -13073,20 +13073,20 @@ public interface TypesPackage extends EPackage {
 		EAttribute TMODULE__QUALIFIED_NAME = eINSTANCE.getTModule_QualifiedName();
 
 		/**
+		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TMODULE__PROJECT_ID = eINSTANCE.getTModule_ProjectId();
+
+		/**
 		 * The meta object literal for the '<em><b>Vendor ID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute TMODULE__VENDOR_ID = eINSTANCE.getTModule_VendorID();
-
-		/**
-		 * The meta object literal for the '<em><b>Project Artifact Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TMODULE__PROJECT_ARTIFACT_ID = eINSTANCE.getTModule_ProjectArtifactId();
 
 		/**
 		 * The meta object literal for the '<em><b>Module Loader</b></em>' attribute feature.

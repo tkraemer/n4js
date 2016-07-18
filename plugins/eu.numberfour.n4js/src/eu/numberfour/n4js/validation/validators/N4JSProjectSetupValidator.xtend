@@ -307,11 +307,11 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/** Calculate qualified name for ProjectDescription */
-	def private static String qname(String vendorId, String artifactId) {
-		return artifactId; // TODO vendorId of NFAR: as long as not queryable use only artifactID:
+	def private static String qname(String vendorId, String projectId) {
+		return projectId; // TODO vendorId of NFAR: as long as not queryable use only artifactID:
 
-	//		if( vendorId === null ) return artifactId
-	//		return vendorId+":"+artifactId
+	//		if( vendorId === null ) return projectId
+	//		return vendorId+":"+projectId
 	}
 
 	/** IDEBUG-266 issue error warning on cyclic dependencies*/
@@ -757,14 +757,14 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		addIssue(messageForPROJECT_REFERENCES_ITSELF, eObject, feature, index, PROJECT_REFERENCES_ITSELF);
 	}
 
-	private def addInvalidProjectTypeIssue(EObject eObject, String artifactId, ProjectType type, EStructuralFeature feature, int index) {
-		addIssue(getMessageForINVALID_PROJECT_TYPE_REF(artifactId, type.label, feature.label),
+	private def addInvalidProjectTypeIssue(EObject eObject, String projectId, ProjectType type, EStructuralFeature feature, int index) {
+		addIssue(getMessageForINVALID_PROJECT_TYPE_REF(projectId, type.label, feature.label),
 			eObject, feature, index, INVALID_PROJECT_TYPE_REF
 		);
 	}
 
-	private def addNonExistingProjectIssue(EObject eObject, String artifactId, EStructuralFeature feature, int index) {
-		addIssue(getMessageForNON_EXISTING_PROJECT(artifactId), eObject, feature, index, NON_EXISTING_PROJECT);
+	private def addNonExistingProjectIssue(EObject eObject, String projectId, EStructuralFeature feature, int index) {
+		addIssue(getMessageForNON_EXISTING_PROJECT(projectId), eObject, feature, index, NON_EXISTING_PROJECT);
 	}
 
 	private def addDuplicateProjectReferenceIssue(EObject eObject, EStructuralFeature feature, int index) {

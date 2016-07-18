@@ -41,7 +41,7 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_01() {
 		ProjectDescription description = getWorkspace().getProjectDescription(myProjectURI);
 		assertNotNull(description);
-		assertEquals(myArtifactId, description.getProjectId());
+		assertEquals(myProjectId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")
@@ -49,7 +49,7 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_02() {
 		ProjectDescription description = getWorkspace().getProjectDescription(libProjectURI);
 		assertNotNull(description);
-		assertEquals(libArtifactId, description.getProjectId());
+		assertEquals(libProjectId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")
@@ -57,13 +57,13 @@ public abstract class AbstractInternalWorkspaceTest extends AbstractProjectModel
 	public void testGetProjectDescription_03() {
 		ProjectDescription description = getWorkspace().getProjectDescription(archiveFileURI);
 		assertNotNull(description);
-		assertEquals(archiveArtifactId, description.getProjectId());
+		assertEquals(archiveProjectId, description.getProjectId());
 	}
 
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testGetProjectDescription_04() {
-		final URI doesNotExist = URI.createURI(myArtifactId + "doesNotExist");
+		final URI doesNotExist = URI.createURI(myProjectId + "doesNotExist");
 		final ProjectDescription description = getWorkspace().getProjectDescription(doesNotExist);
 		assertNull("Expecting null project description for non-existing project. Was: " + description, description);
 	}
