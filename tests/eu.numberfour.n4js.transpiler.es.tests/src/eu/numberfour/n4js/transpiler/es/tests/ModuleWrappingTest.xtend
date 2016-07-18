@@ -249,14 +249,14 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 			'use strict';
-			System.register(['testproject/ExportedStuff'],
+			System.register(['test/ExportedStuff'],
 			function ($n4Export ){
 			   var C2 ,
 			       c2
 			   ;
 			   return {
-			            setters  : [function ($_import_testproject_ExportedStuff ){
-			                          C2 = $_import_testproject_ExportedStuff.C2;
+			            setters  : [function ($_import_test_ExportedStuff ){
+			                          C2 = $_import_test_ExportedStuff.C2;
 			                        }                                                    ],
 			            execute  : function (){
 			            			 c2 = new C2();
@@ -298,15 +298,15 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 		'use strict';
-		System.register(['testproject/ExportedStuff'],
+		System.register(['test/ExportedStuff'],
 		function ($n4Export ){
 		   var C1 ,
 		       C2
 		   ;
 		   return {
-		            setters  : [function ($_import_testproject_ExportedStuff ){
-		                          C1 = $_import_testproject_ExportedStuff.C1;
-		                          C2 = $_import_testproject_ExportedStuff.C2;
+		            setters  : [function ($_import_test_ExportedStuff ){
+		                          C1 = $_import_test_ExportedStuff.C1;
+		                          C2 = $_import_test_ExportedStuff.C2;
 		                        }                                                    ],
 		            execute  : function (){
 		                         console.log(C1);
@@ -340,19 +340,19 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 		'use strict';
-		System.register(['testproject/ExportedStuff', 'testproject/OtherExportedStuff'],
+		System.register(['test/ExportedStuff', 'test/OtherExportedStuff'],
 		function ($n4Export ){
 		   var C1 ,
 		       XX ,
 		       C2
 		   ;
 		   return {
-		            setters  : [function ($_import_testproject_ExportedStuff ){
-		                          C1 = $_import_testproject_ExportedStuff.C1;
-		                          XX = $_import_testproject_ExportedStuff.C2;
+		            setters  : [function ($_import_test_ExportedStuff ){
+		                          C1 = $_import_test_ExportedStuff.C1;
+		                          XX = $_import_test_ExportedStuff.C2;
 		                        }
-		                        , function ($_import_testproject_OtherExportedStuff ){
-								  C2 = $_import_testproject_OtherExportedStuff.C2;
+		                        , function ($_import_test_OtherExportedStuff ){
+								  C2 = $_import_test_OtherExportedStuff.C2;
 								}],
 		            execute  : function (){
 		                         console.log(C1);
@@ -386,17 +386,17 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 		'use strict';
-		System.register(['testproject/OtherExportedStuff', 'testproject/ExportedStuff'],
+		System.register(['test/OtherExportedStuff', 'test/ExportedStuff'],
 		function ($n4Export ){
 		   var C2 ,
 		       Namespace
 		   ;
 		   return {
-		            setters  : [function ($_import_testproject_OtherExportedStuff ){
-		                          C2 = $_import_testproject_OtherExportedStuff.C2;
+		            setters  : [function ($_import_test_OtherExportedStuff ){
+		                          C2 = $_import_test_OtherExportedStuff.C2;
 		                        }
-								 , function ($_import_testproject_ExportedStuff ){
-								  Namespace = $_import_testproject_ExportedStuff;
+								 , function ($_import_test_ExportedStuff ){
+								  Namespace = $_import_test_ExportedStuff;
 								}],
 		            execute  : function (){
 		                         console.log(Namespace.C1);
@@ -458,7 +458,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 			'use strict';
-			System.register(['testproject/ExportedStuff'],
+			System.register(['test/ExportedStuff'],
 			function ($n4Export ){
 			    var C1 ,
 			        A
@@ -472,8 +472,8 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 				$n4Export('A', A);
 
 			    return {
-			             setters  : [function ($_import_testproject_ExportedStuff ){
-			                           C1 = $_import_testproject_ExportedStuff.C1;
+			             setters  : [function ($_import_test_ExportedStuff ){
+			                           C1 = $_import_test_ExportedStuff.C1;
 			                         }                                                      ],
 			             execute  : function (){
 			                          $makeClass(A, Object, [], {
@@ -494,7 +494,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 
 			                                              var metaClass  = new N4Class({
 			                                                             name  : 'A',
-			                                                             origin  : 'testproject',
+			                                                             origin  : 'test',
 			                                                             fqn  : 'A.A',
 			                                                             n4superType  : N4Object.n4type,
 			                                                             allImplementedInterfaces  : [],
@@ -554,7 +554,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
    		val moduleWrapped =
    		'''
 			'use strict';
-			System.register(['testproject/ExportedStuff'],
+			System.register(['test/ExportedStuff'],
 			function ($n4Export ){
 			    var C1 ,
 			        A
@@ -566,8 +566,8 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 				$n4Export('A', A);
 
 			    return {
-			             setters  : [function ($_import_testproject_ExportedStuff ){
-			                           C1 = $_import_testproject_ExportedStuff.C1;
+			             setters  : [function ($_import_test_ExportedStuff ){
+			                           C1 = $_import_test_ExportedStuff.C1;
 			                         }                                                      ],
 			             execute  : function (){
 			                          $makeClass(A, Object, [], {
@@ -587,7 +587,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 
 												         var metaClass  = new N4Class({
 												                                 name  : 'A',
-												                                 origin  : 'testproject',
+												                                 origin  : 'test',
 												                                 fqn  : 'A.A',
 												                                 n4superType  : N4Object.n4type,
 												                                 allImplementedInterfaces  : [],
@@ -652,7 +652,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 
 		//		(function(global) { var System = (typeof module !== 'undefined' && module.exports ? require('runtime-env.nodejs/node-n4js').System(module) : global.System);
 
-		//			System.register(["testproject/ExportedStuff"],
+		//			System.register(["test/ExportedStuff"],
 		//			function ($n4Export ){
 		//			    var C1 ,
 		//			        A
@@ -663,8 +663,8 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 		//				$n4Export("A", A);
 		//
 		//			    return {
-		//			             setters  : [function ($_import_testproject_ExportedStuff ){
-		//			                           C1 = $_import_testproject_ExportedStuff.C1;
+		//			             setters  : [function ($_import_test_ExportedStuff ){
+		//			                           C1 = $_import_test_ExportedStuff.C1;
 		//			                         }                                                      ],
 		//			             execute  : function (){
 		//			                          $makeClass(A, Object, {

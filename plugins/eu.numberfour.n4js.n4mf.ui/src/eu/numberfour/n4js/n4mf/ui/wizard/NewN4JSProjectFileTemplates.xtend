@@ -64,15 +64,14 @@ class NewN4JSProjectFileTemplates {
 		//right click this module and select "Run As -> Test in Node.js" to see the test results
 	'''
 
-	private static def simpleManifestContents(String projectName, String projectTypeForManifest, List<String> sources,
+	private static def simpleManifestContents(String projectId, String projectTypeForManifest, List<String> sources,
 		List<String> externals, List<String> tests, String outputFolder
 	)	'''
-		ArtifactId: «projectName»
-		VendorId: eu.numberfour
-		ProjectName: "«projectName»"
-		VendorName: "NumberFour AG"
+		ProjectId: «projectId»
 		ProjectType: «projectTypeForManifest»
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: eu.numberfour
+		VendorName: "NumberFour AG"
 		//output folder (e.g. compiled files, etc.)
 		Output: "«outputFolder»"
 		//define project source folders

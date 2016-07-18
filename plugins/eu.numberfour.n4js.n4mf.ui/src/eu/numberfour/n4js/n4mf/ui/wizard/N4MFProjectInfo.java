@@ -226,7 +226,7 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	/**
 	 * Returns with a list of API projects IDs to implement.
 	 *
-	 * @return a list of API project artifact IDs.
+	 * @return a list of API project project IDs.
 	 */
 	public List<String> getImplementedProjects() {
 		return implementedProjects;

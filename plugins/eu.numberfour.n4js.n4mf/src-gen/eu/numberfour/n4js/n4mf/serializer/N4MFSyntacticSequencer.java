@@ -11,6 +11,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -21,23 +22,42 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class N4MFSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected N4MFGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_ProjectDescription___RightCurlyBracketKeyword_18_3_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q;
-	protected AbstractElementAlias match_ProjectDescription___RightCurlyBracketKeyword_19_3_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q;
+	protected AbstractElementAlias match_ProjectDescription_ArtifactIdKeyword_0_0_0_or_ProjectIdKeyword_0_0_1;
+	protected AbstractElementAlias match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a;
+	protected AbstractElementAlias match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__p;
+	protected AbstractElementAlias match_ProjectDescription___RightCurlyBracketKeyword_18_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q;
+	protected AbstractElementAlias match_ProjectDescription___RightCurlyBracketKeyword_19_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q;
 	protected AbstractElementAlias match_VersionConstraint_RightParenthesisKeyword_0_2_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (N4MFGrammarAccess) access;
-		match_ProjectDescription___RightCurlyBracketKeyword_18_3_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_18_3()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSourcesKeyword_18_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_18_1()));
-		match_ProjectDescription___RightCurlyBracketKeyword_19_3_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_19_3()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getModuleFiltersKeyword_19_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_19_1()));
+		match_ProjectDescription_ArtifactIdKeyword_0_0_0_or_ProjectIdKeyword_0_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getProjectIdKeyword_0_0_1()));
+		match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2()));
+		match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2()));
+		match_ProjectDescription___RightCurlyBracketKeyword_18_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_18_3()), new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2())), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSourcesKeyword_18_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_18_1()));
+		match_ProjectDescription___RightCurlyBracketKeyword_19_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_19_3()), new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2())), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getModuleFiltersKeyword_19_0()), new TokenAlias(false, false, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_19_1()));
 		match_VersionConstraint_RightParenthesisKeyword_0_2_1_q = new TokenAlias(false, true, grammarAccess.getVersionConstraintAccess().getRightParenthesisKeyword_0_2_1());
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (ruleCall.getRule() == grammarAccess.getSTRINGRule())
+			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * terminal STRING	: 
+	 * 			'"' ( '\\' .  | !('\\'|'"') )* '"' |
+	 * 			"'" ( '\\' .  | !('\\'|"'") )* "'"
+	 * 		;
+	 */
+	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "\"\"";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -45,10 +65,16 @@ public class N4MFSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_ProjectDescription___RightCurlyBracketKeyword_18_3_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q.equals(syntax))
-				emit_ProjectDescription___RightCurlyBracketKeyword_18_3_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ProjectDescription___RightCurlyBracketKeyword_19_3_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q.equals(syntax))
-				emit_ProjectDescription___RightCurlyBracketKeyword_19_3_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_ProjectDescription_ArtifactIdKeyword_0_0_0_or_ProjectIdKeyword_0_0_1.equals(syntax))
+				emit_ProjectDescription_ArtifactIdKeyword_0_0_0_or_ProjectIdKeyword_0_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a.equals(syntax))
+				emit_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__p.equals(syntax))
+				emit_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ProjectDescription___RightCurlyBracketKeyword_18_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q.equals(syntax))
+				emit_ProjectDescription___RightCurlyBracketKeyword_18_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ProjectDescription___RightCurlyBracketKeyword_19_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q.equals(syntax))
+				emit_ProjectDescription___RightCurlyBracketKeyword_19_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_VersionConstraint_RightParenthesisKeyword_0_2_1_q.equals(syntax))
 				emit_VersionConstraint_RightParenthesisKeyword_0_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -57,23 +83,558 @@ public class N4MFSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Ambiguous syntax:
-	 *     ('}' 'Sources' '{')?
+	 *     'ArtifactId' | 'ProjectId'
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     sourceFragment+=SourceFragment (ambiguity) sourceFragment+=SourceFragment
+	 *     (rule start) ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     declaredVendorId=N4mfIdentifier ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     execModule=ExecModule ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     implementationId=N4mfIdentifier ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     implementedProjects=ImplementedProjects ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     initModules=InitModules ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     libraryPaths+=STRING '}' ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     mainModule=STRING ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     moduleFilters+=ModuleFilter '}' ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     moduleLoader=ModuleLoader ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     outputPath=STRING ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     projectDependencies=ProjectDependencies ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     projectId=N4mfIdentifier ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     projectType=ProjectType ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     projectVersion=DeclaredVersion ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     resourcePaths+=STRING '}' ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     sourceFragment+=SourceFragment '}' ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     testedProjects=TestedProjects ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
+	 *     vendorName=STRING ('ProjectName' ':' STRING)* (ambiguity) ':' projectId=N4mfIdentifier
 	 */
-	protected void emit_ProjectDescription___RightCurlyBracketKeyword_18_3_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ProjectDescription_ArtifactIdKeyword_0_0_0_or_ProjectIdKeyword_0_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('}' 'ModuleFilters' '{')?
+	 *     ('ProjectName' ':' STRING)*
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     (rule start) (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     (rule start) (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     (rule start) (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     (rule start) (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     (rule start) (ambiguity) 'Output' ':' outputPath=STRING
+	 *     (rule start) (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     (rule start) (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     (rule start) (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     (rule start) (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     (rule start) (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     (rule start) (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     (rule start) (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     (rule start) (ambiguity) (rule start)
+	 *     (rule start) (ambiguity) execModule=ExecModule
+	 *     (rule start) (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     (rule start) (ambiguity) implementedProjects=ImplementedProjects
+	 *     (rule start) (ambiguity) initModules=InitModules
+	 *     (rule start) (ambiguity) projectDependencies=ProjectDependencies
+	 *     (rule start) (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     (rule start) (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     (rule start) (ambiguity) testedProjects=TestedProjects
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'Output' ':' outputPath=STRING
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) (rule end)
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) execModule=ExecModule
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) implementedProjects=ImplementedProjects
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) initModules=InitModules
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) projectDependencies=ProjectDependencies
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     declaredVendorId=N4mfIdentifier (ambiguity) testedProjects=TestedProjects
+	 *     execModule=ExecModule (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     execModule=ExecModule (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     execModule=ExecModule (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     execModule=ExecModule (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     execModule=ExecModule (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     execModule=ExecModule (ambiguity) 'Output' ':' outputPath=STRING
+	 *     execModule=ExecModule (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     execModule=ExecModule (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     execModule=ExecModule (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     execModule=ExecModule (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     execModule=ExecModule (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     execModule=ExecModule (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     execModule=ExecModule (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     execModule=ExecModule (ambiguity) (rule end)
+	 *     execModule=ExecModule (ambiguity) execModule=ExecModule
+	 *     execModule=ExecModule (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     execModule=ExecModule (ambiguity) implementedProjects=ImplementedProjects
+	 *     execModule=ExecModule (ambiguity) initModules=InitModules
+	 *     execModule=ExecModule (ambiguity) projectDependencies=ProjectDependencies
+	 *     execModule=ExecModule (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     execModule=ExecModule (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     execModule=ExecModule (ambiguity) testedProjects=TestedProjects
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'Output' ':' outputPath=STRING
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) (rule end)
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) execModule=ExecModule
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) implementedProjects=ImplementedProjects
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) initModules=InitModules
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) projectDependencies=ProjectDependencies
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     extendedRuntimeEnvironment=ExtendedRuntimeEnvironment (ambiguity) testedProjects=TestedProjects
+	 *     implementationId=N4mfIdentifier (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     implementationId=N4mfIdentifier (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     implementationId=N4mfIdentifier (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     implementationId=N4mfIdentifier (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     implementationId=N4mfIdentifier (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     implementationId=N4mfIdentifier (ambiguity) 'Output' ':' outputPath=STRING
+	 *     implementationId=N4mfIdentifier (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     implementationId=N4mfIdentifier (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     implementationId=N4mfIdentifier (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     implementationId=N4mfIdentifier (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     implementationId=N4mfIdentifier (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     implementationId=N4mfIdentifier (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     implementationId=N4mfIdentifier (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     implementationId=N4mfIdentifier (ambiguity) (rule end)
+	 *     implementationId=N4mfIdentifier (ambiguity) execModule=ExecModule
+	 *     implementationId=N4mfIdentifier (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     implementationId=N4mfIdentifier (ambiguity) implementedProjects=ImplementedProjects
+	 *     implementationId=N4mfIdentifier (ambiguity) initModules=InitModules
+	 *     implementationId=N4mfIdentifier (ambiguity) projectDependencies=ProjectDependencies
+	 *     implementationId=N4mfIdentifier (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     implementationId=N4mfIdentifier (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     implementationId=N4mfIdentifier (ambiguity) testedProjects=TestedProjects
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'Output' ':' outputPath=STRING
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     implementedProjects=ImplementedProjects (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     implementedProjects=ImplementedProjects (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     implementedProjects=ImplementedProjects (ambiguity) (rule end)
+	 *     implementedProjects=ImplementedProjects (ambiguity) execModule=ExecModule
+	 *     implementedProjects=ImplementedProjects (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     implementedProjects=ImplementedProjects (ambiguity) implementedProjects=ImplementedProjects
+	 *     implementedProjects=ImplementedProjects (ambiguity) initModules=InitModules
+	 *     implementedProjects=ImplementedProjects (ambiguity) projectDependencies=ProjectDependencies
+	 *     implementedProjects=ImplementedProjects (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     implementedProjects=ImplementedProjects (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     implementedProjects=ImplementedProjects (ambiguity) testedProjects=TestedProjects
+	 *     initModules=InitModules (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     initModules=InitModules (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     initModules=InitModules (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     initModules=InitModules (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     initModules=InitModules (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     initModules=InitModules (ambiguity) 'Output' ':' outputPath=STRING
+	 *     initModules=InitModules (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     initModules=InitModules (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     initModules=InitModules (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     initModules=InitModules (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     initModules=InitModules (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     initModules=InitModules (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     initModules=InitModules (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     initModules=InitModules (ambiguity) (rule end)
+	 *     initModules=InitModules (ambiguity) execModule=ExecModule
+	 *     initModules=InitModules (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     initModules=InitModules (ambiguity) implementedProjects=ImplementedProjects
+	 *     initModules=InitModules (ambiguity) initModules=InitModules
+	 *     initModules=InitModules (ambiguity) projectDependencies=ProjectDependencies
+	 *     initModules=InitModules (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     initModules=InitModules (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     initModules=InitModules (ambiguity) testedProjects=TestedProjects
+	 *     libraryPaths+=STRING '}' (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     libraryPaths+=STRING '}' (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     libraryPaths+=STRING '}' (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     libraryPaths+=STRING '}' (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     libraryPaths+=STRING '}' (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     libraryPaths+=STRING '}' (ambiguity) 'Output' ':' outputPath=STRING
+	 *     libraryPaths+=STRING '}' (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     libraryPaths+=STRING '}' (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     libraryPaths+=STRING '}' (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     libraryPaths+=STRING '}' (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     libraryPaths+=STRING '}' (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     libraryPaths+=STRING '}' (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     libraryPaths+=STRING '}' (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     libraryPaths+=STRING '}' (ambiguity) (rule end)
+	 *     libraryPaths+=STRING '}' (ambiguity) execModule=ExecModule
+	 *     libraryPaths+=STRING '}' (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     libraryPaths+=STRING '}' (ambiguity) implementedProjects=ImplementedProjects
+	 *     libraryPaths+=STRING '}' (ambiguity) initModules=InitModules
+	 *     libraryPaths+=STRING '}' (ambiguity) projectDependencies=ProjectDependencies
+	 *     libraryPaths+=STRING '}' (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     libraryPaths+=STRING '}' (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     libraryPaths+=STRING '}' (ambiguity) testedProjects=TestedProjects
+	 *     mainModule=STRING (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     mainModule=STRING (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     mainModule=STRING (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     mainModule=STRING (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     mainModule=STRING (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     mainModule=STRING (ambiguity) 'Output' ':' outputPath=STRING
+	 *     mainModule=STRING (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     mainModule=STRING (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     mainModule=STRING (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     mainModule=STRING (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     mainModule=STRING (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     mainModule=STRING (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     mainModule=STRING (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     mainModule=STRING (ambiguity) (rule end)
+	 *     mainModule=STRING (ambiguity) execModule=ExecModule
+	 *     mainModule=STRING (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     mainModule=STRING (ambiguity) implementedProjects=ImplementedProjects
+	 *     mainModule=STRING (ambiguity) initModules=InitModules
+	 *     mainModule=STRING (ambiguity) projectDependencies=ProjectDependencies
+	 *     mainModule=STRING (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     mainModule=STRING (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     mainModule=STRING (ambiguity) testedProjects=TestedProjects
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'Output' ':' outputPath=STRING
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) (rule end)
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) execModule=ExecModule
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) implementedProjects=ImplementedProjects
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) initModules=InitModules
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) projectDependencies=ProjectDependencies
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     moduleFilters+=ModuleFilter '}' (ambiguity) testedProjects=TestedProjects
+	 *     moduleLoader=ModuleLoader (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     moduleLoader=ModuleLoader (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     moduleLoader=ModuleLoader (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     moduleLoader=ModuleLoader (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     moduleLoader=ModuleLoader (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     moduleLoader=ModuleLoader (ambiguity) 'Output' ':' outputPath=STRING
+	 *     moduleLoader=ModuleLoader (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     moduleLoader=ModuleLoader (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     moduleLoader=ModuleLoader (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     moduleLoader=ModuleLoader (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     moduleLoader=ModuleLoader (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     moduleLoader=ModuleLoader (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     moduleLoader=ModuleLoader (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     moduleLoader=ModuleLoader (ambiguity) (rule end)
+	 *     moduleLoader=ModuleLoader (ambiguity) execModule=ExecModule
+	 *     moduleLoader=ModuleLoader (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     moduleLoader=ModuleLoader (ambiguity) implementedProjects=ImplementedProjects
+	 *     moduleLoader=ModuleLoader (ambiguity) initModules=InitModules
+	 *     moduleLoader=ModuleLoader (ambiguity) projectDependencies=ProjectDependencies
+	 *     moduleLoader=ModuleLoader (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     moduleLoader=ModuleLoader (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     moduleLoader=ModuleLoader (ambiguity) testedProjects=TestedProjects
+	 *     outputPath=STRING (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     outputPath=STRING (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     outputPath=STRING (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     outputPath=STRING (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     outputPath=STRING (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     outputPath=STRING (ambiguity) 'Output' ':' outputPath=STRING
+	 *     outputPath=STRING (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     outputPath=STRING (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     outputPath=STRING (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     outputPath=STRING (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     outputPath=STRING (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     outputPath=STRING (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     outputPath=STRING (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     outputPath=STRING (ambiguity) (rule end)
+	 *     outputPath=STRING (ambiguity) execModule=ExecModule
+	 *     outputPath=STRING (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     outputPath=STRING (ambiguity) implementedProjects=ImplementedProjects
+	 *     outputPath=STRING (ambiguity) initModules=InitModules
+	 *     outputPath=STRING (ambiguity) projectDependencies=ProjectDependencies
+	 *     outputPath=STRING (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     outputPath=STRING (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     outputPath=STRING (ambiguity) testedProjects=TestedProjects
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'Output' ':' outputPath=STRING
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     projectDependencies=ProjectDependencies (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     projectDependencies=ProjectDependencies (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     projectDependencies=ProjectDependencies (ambiguity) (rule end)
+	 *     projectDependencies=ProjectDependencies (ambiguity) execModule=ExecModule
+	 *     projectDependencies=ProjectDependencies (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     projectDependencies=ProjectDependencies (ambiguity) implementedProjects=ImplementedProjects
+	 *     projectDependencies=ProjectDependencies (ambiguity) initModules=InitModules
+	 *     projectDependencies=ProjectDependencies (ambiguity) projectDependencies=ProjectDependencies
+	 *     projectDependencies=ProjectDependencies (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     projectDependencies=ProjectDependencies (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     projectDependencies=ProjectDependencies (ambiguity) testedProjects=TestedProjects
+	 *     projectId=N4mfIdentifier (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     projectId=N4mfIdentifier (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     projectId=N4mfIdentifier (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     projectId=N4mfIdentifier (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     projectId=N4mfIdentifier (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     projectId=N4mfIdentifier (ambiguity) 'Output' ':' outputPath=STRING
+	 *     projectId=N4mfIdentifier (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     projectId=N4mfIdentifier (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     projectId=N4mfIdentifier (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     projectId=N4mfIdentifier (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     projectId=N4mfIdentifier (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     projectId=N4mfIdentifier (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     projectId=N4mfIdentifier (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     projectId=N4mfIdentifier (ambiguity) (rule end)
+	 *     projectId=N4mfIdentifier (ambiguity) execModule=ExecModule
+	 *     projectId=N4mfIdentifier (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     projectId=N4mfIdentifier (ambiguity) implementedProjects=ImplementedProjects
+	 *     projectId=N4mfIdentifier (ambiguity) initModules=InitModules
+	 *     projectId=N4mfIdentifier (ambiguity) projectDependencies=ProjectDependencies
+	 *     projectId=N4mfIdentifier (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     projectId=N4mfIdentifier (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     projectId=N4mfIdentifier (ambiguity) testedProjects=TestedProjects
+	 *     projectType=ProjectType (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     projectType=ProjectType (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     projectType=ProjectType (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     projectType=ProjectType (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     projectType=ProjectType (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     projectType=ProjectType (ambiguity) 'Output' ':' outputPath=STRING
+	 *     projectType=ProjectType (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     projectType=ProjectType (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     projectType=ProjectType (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     projectType=ProjectType (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     projectType=ProjectType (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     projectType=ProjectType (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     projectType=ProjectType (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     projectType=ProjectType (ambiguity) (rule end)
+	 *     projectType=ProjectType (ambiguity) execModule=ExecModule
+	 *     projectType=ProjectType (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     projectType=ProjectType (ambiguity) implementedProjects=ImplementedProjects
+	 *     projectType=ProjectType (ambiguity) initModules=InitModules
+	 *     projectType=ProjectType (ambiguity) projectDependencies=ProjectDependencies
+	 *     projectType=ProjectType (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     projectType=ProjectType (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     projectType=ProjectType (ambiguity) testedProjects=TestedProjects
+	 *     projectVersion=DeclaredVersion (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     projectVersion=DeclaredVersion (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     projectVersion=DeclaredVersion (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     projectVersion=DeclaredVersion (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     projectVersion=DeclaredVersion (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     projectVersion=DeclaredVersion (ambiguity) 'Output' ':' outputPath=STRING
+	 *     projectVersion=DeclaredVersion (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     projectVersion=DeclaredVersion (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     projectVersion=DeclaredVersion (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     projectVersion=DeclaredVersion (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     projectVersion=DeclaredVersion (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     projectVersion=DeclaredVersion (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     projectVersion=DeclaredVersion (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     projectVersion=DeclaredVersion (ambiguity) (rule end)
+	 *     projectVersion=DeclaredVersion (ambiguity) execModule=ExecModule
+	 *     projectVersion=DeclaredVersion (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     projectVersion=DeclaredVersion (ambiguity) implementedProjects=ImplementedProjects
+	 *     projectVersion=DeclaredVersion (ambiguity) initModules=InitModules
+	 *     projectVersion=DeclaredVersion (ambiguity) projectDependencies=ProjectDependencies
+	 *     projectVersion=DeclaredVersion (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     projectVersion=DeclaredVersion (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     projectVersion=DeclaredVersion (ambiguity) testedProjects=TestedProjects
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'Output' ':' outputPath=STRING
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) (rule end)
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) execModule=ExecModule
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) implementedProjects=ImplementedProjects
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) initModules=InitModules
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) projectDependencies=ProjectDependencies
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     providedRuntimeLibraries=ProvidedRuntimeLibraries (ambiguity) testedProjects=TestedProjects
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'Output' ':' outputPath=STRING
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) (rule end)
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) execModule=ExecModule
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) implementedProjects=ImplementedProjects
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) initModules=InitModules
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) projectDependencies=ProjectDependencies
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     requiredRuntimeLibraries=RequiredRuntimeLibraries (ambiguity) testedProjects=TestedProjects
+	 *     resourcePaths+=STRING '}' (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     resourcePaths+=STRING '}' (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     resourcePaths+=STRING '}' (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     resourcePaths+=STRING '}' (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     resourcePaths+=STRING '}' (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     resourcePaths+=STRING '}' (ambiguity) 'Output' ':' outputPath=STRING
+	 *     resourcePaths+=STRING '}' (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     resourcePaths+=STRING '}' (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     resourcePaths+=STRING '}' (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     resourcePaths+=STRING '}' (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     resourcePaths+=STRING '}' (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     resourcePaths+=STRING '}' (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     resourcePaths+=STRING '}' (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     resourcePaths+=STRING '}' (ambiguity) (rule end)
+	 *     resourcePaths+=STRING '}' (ambiguity) execModule=ExecModule
+	 *     resourcePaths+=STRING '}' (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     resourcePaths+=STRING '}' (ambiguity) implementedProjects=ImplementedProjects
+	 *     resourcePaths+=STRING '}' (ambiguity) initModules=InitModules
+	 *     resourcePaths+=STRING '}' (ambiguity) projectDependencies=ProjectDependencies
+	 *     resourcePaths+=STRING '}' (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     resourcePaths+=STRING '}' (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     resourcePaths+=STRING '}' (ambiguity) testedProjects=TestedProjects
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'Output' ':' outputPath=STRING
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) (rule end)
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) execModule=ExecModule
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) implementedProjects=ImplementedProjects
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) initModules=InitModules
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) projectDependencies=ProjectDependencies
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     sourceFragment+=SourceFragment '}' (ambiguity) testedProjects=TestedProjects
+	 *     testedProjects=TestedProjects (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     testedProjects=TestedProjects (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     testedProjects=TestedProjects (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     testedProjects=TestedProjects (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     testedProjects=TestedProjects (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     testedProjects=TestedProjects (ambiguity) 'Output' ':' outputPath=STRING
+	 *     testedProjects=TestedProjects (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     testedProjects=TestedProjects (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     testedProjects=TestedProjects (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     testedProjects=TestedProjects (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     testedProjects=TestedProjects (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     testedProjects=TestedProjects (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     testedProjects=TestedProjects (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     testedProjects=TestedProjects (ambiguity) (rule end)
+	 *     testedProjects=TestedProjects (ambiguity) execModule=ExecModule
+	 *     testedProjects=TestedProjects (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     testedProjects=TestedProjects (ambiguity) implementedProjects=ImplementedProjects
+	 *     testedProjects=TestedProjects (ambiguity) initModules=InitModules
+	 *     testedProjects=TestedProjects (ambiguity) projectDependencies=ProjectDependencies
+	 *     testedProjects=TestedProjects (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     testedProjects=TestedProjects (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     testedProjects=TestedProjects (ambiguity) testedProjects=TestedProjects
+	 *     vendorName=STRING (ambiguity) 'ImplementationId' ':' implementationId=N4mfIdentifier
+	 *     vendorName=STRING (ambiguity) 'Libraries' '{' libraryPaths+=STRING
+	 *     vendorName=STRING (ambiguity) 'MainModule' ':' mainModule=STRING
+	 *     vendorName=STRING (ambiguity) 'ModuleFilters' '{' moduleFilters+=ModuleFilter
+	 *     vendorName=STRING (ambiguity) 'ModuleLoader' ':' moduleLoader=ModuleLoader
+	 *     vendorName=STRING (ambiguity) 'Output' ':' outputPath=STRING
+	 *     vendorName=STRING (ambiguity) 'ProjectType' ':' projectType=ProjectType
+	 *     vendorName=STRING (ambiguity) 'ProjectVersion' ':' projectVersion=DeclaredVersion
+	 *     vendorName=STRING (ambiguity) 'Resources' '{' resourcePaths+=STRING
+	 *     vendorName=STRING (ambiguity) 'Sources' '{' sourceFragment+=SourceFragment
+	 *     vendorName=STRING (ambiguity) 'VendorId' ':' declaredVendorId=N4mfIdentifier
+	 *     vendorName=STRING (ambiguity) 'VendorName' ':' vendorName=STRING
+	 *     vendorName=STRING (ambiguity) ('ArtifactId' | 'ProjectId') ':' projectId=N4mfIdentifier
+	 *     vendorName=STRING (ambiguity) (rule end)
+	 *     vendorName=STRING (ambiguity) execModule=ExecModule
+	 *     vendorName=STRING (ambiguity) extendedRuntimeEnvironment=ExtendedRuntimeEnvironment
+	 *     vendorName=STRING (ambiguity) implementedProjects=ImplementedProjects
+	 *     vendorName=STRING (ambiguity) initModules=InitModules
+	 *     vendorName=STRING (ambiguity) projectDependencies=ProjectDependencies
+	 *     vendorName=STRING (ambiguity) providedRuntimeLibraries=ProvidedRuntimeLibraries
+	 *     vendorName=STRING (ambiguity) requiredRuntimeLibraries=RequiredRuntimeLibraries
+	 *     vendorName=STRING (ambiguity) testedProjects=TestedProjects
+	 */
+	protected void emit_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('ProjectName' ':' STRING)+
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_ProjectDescription___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('}' ('ProjectName' ':' STRING)* 'Sources' '{')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     sourceFragment+=SourceFragment (ambiguity) sourceFragment+=SourceFragment
+	 */
+	protected void emit_ProjectDescription___RightCurlyBracketKeyword_18_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_SourcesKeyword_18_0_LeftCurlyBracketKeyword_18_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('}' ('ProjectName' ':' STRING)* 'ModuleFilters' '{')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     moduleFilters+=ModuleFilter (ambiguity) moduleFilters+=ModuleFilter
 	 */
-	protected void emit_ProjectDescription___RightCurlyBracketKeyword_19_3_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ProjectDescription___RightCurlyBracketKeyword_19_3___ProjectNameKeyword_1_0_ColonKeyword_1_1_STRINGTerminalRuleCall_1_2__a_ModuleFiltersKeyword_19_0_LeftCurlyBracketKeyword_19_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

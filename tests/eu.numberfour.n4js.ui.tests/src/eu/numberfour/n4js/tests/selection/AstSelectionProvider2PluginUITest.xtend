@@ -229,12 +229,11 @@ class AstSelectionProvider2PluginUITest extends AbstractEditorTest {
 	}
 
 	def private getMFFileContent() '''
-		ArtifactId: «PROJECT_NAME»
-		VendorId: eu.numberfour
-		ProjectName: 'test'
-		VendorName: 'NumberFour AG'
+		ProjectId: «PROJECT_NAME»
 		ProjectType: library
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: eu.numberfour
+		VendorName: 'NumberFour AG'
 		Output: 'src-gen'
 		Sources {
 			source {

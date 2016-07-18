@@ -46,12 +46,11 @@
    END_SETUP
 */
 
-ArtifactId: test.02
-VendorId: eu.numberfour
-ProjectName: "test.02"
-VendorName: "NumberFour AG"
+ProjectId: test.02
 ProjectType: runtimeEnvironment
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
 	source { 

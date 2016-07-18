@@ -1,6 +1,5 @@
-ArtifactId: ConsumerOfAB
+ProjectId: ConsumerOfAB
 VendorId: eu.numberfour
-ProjectName: "Consumer of main modules from A and B"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -63,8 +63,8 @@ class RuntimeEnvironmentResolutionPluginUITest extends RuntimeEnvironmentResolut
 	}
 
 	@Override
-	override protected createProjectWithManifest(String projectName, String manifestContent) {
-		val project = workspace.root.getProject(projectName)
+	override protected createProjectWithManifest(String projectId, String manifestContent) {
+		val project = workspace.root.getProject(projectId)
 		assertFalse(project.exists)
 		try {
 			project.create(null)
@@ -96,7 +96,7 @@ class RuntimeEnvironmentResolutionPluginUITest extends RuntimeEnvironmentResolut
 			is = new ByteArrayInputStream(manifestContent.bytes)
 			manifest.create(is, true, null)
 		} catch (Exception e) {
-			LOGGER.error('''Error while creating manifest file for project: '«projectName»'.''')
+			LOGGER.error('''Error while creating manifest file for project: '«projectId»'.''')
 			throw propagate(e)
 		} finally {
 			if (null !== is) {

@@ -312,7 +312,7 @@ public class ExternalLibraryBuilderHelper {
 			final org.eclipse.emf.common.util.URI uri = createPlatformResourceURI(project.getName(), true);
 			final IN4JSProject n4Project = core.findProject(uri).get();
 			if (null != n4Project) {
-				n4Project.getArtifactId(); // This will trigger dynamic project reference update.
+				n4Project.getProjectId(); // This will trigger dynamic project reference update.
 			}
 		}
 	}

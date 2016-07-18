@@ -610,7 +610,7 @@ public class N4HeadlessCompiler {
 				String message = "Cannot load resource=" + res.getURI();
 				if (!keepOnCompiling) {
 					throw new N4JSCompileErrorException(message,
-							markedProject.project.getProjectName(), e);
+							markedProject.project.getProjectId(), e);
 				}
 				warn(message);
 			}
@@ -662,7 +662,7 @@ public class N4HeadlessCompiler {
 
 		// Projects should not compile if there are severe errors:
 		if (!keepOnCompiling) {
-			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectName());
+			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
 		}
 	}
 
@@ -782,7 +782,7 @@ public class N4HeadlessCompiler {
 					try {
 						rec.markStartCompile(input);
 						if (verbose)
-							info("compiling " + markedProject.project.getProjectName() + ": " + input.getURI());
+							info("compiling " + markedProject.project.getProjectId() + ": " + input.getURI());
 						compositeGenerator.doGenerate(input, fsa);
 						rec.markEndCompile(input);
 					} catch (GeneratorException e) {
@@ -790,11 +790,11 @@ public class N4HeadlessCompiler {
 
 						if (keepOnCompiling) {
 							if (collectedErrors == null) {
-								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project"
-										+ markedProject.project.getProjectName() + ".");
+								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project "
+										+ markedProject.project.getProjectId() + ".");
 							}
 							collectedErrors.add(new N4JSCompileErrorException(e.getMessage(), markedProject.project
-									.getProjectName(), e));
+									.getProjectId(), e));
 							if (verbose) {
 								error(e.getMessage());
 							}
@@ -846,10 +846,12 @@ public class N4HeadlessCompiler {
 	 *
 	 * @param allErrorsAndWarnings
 	 *            list of issues and warnings
+	 * @param projectId
+	 *            projectId of the bad project.
 	 * @throws N4JSCompileErrorException
 	 *             in case of any issues of type Severity.ERROR
 	 */
-	private void failOnErrors(ArrayList<Issue> allErrorsAndWarnings, String projectname)
+	private void failOnErrors(ArrayList<Issue> allErrorsAndWarnings, String projectId)
 			throws N4JSCompileErrorException {
 
 		ArrayList<Issue> errors = new ArrayList<>();
@@ -861,11 +863,11 @@ public class N4HeadlessCompiler {
 					.stream()
 					.filter(e -> e.getSeverity() != Severity.ERROR)
 					.forEach(i -> System.out.println(issueLine(i)));
-			String msg = "ERROR: Cannot compile Project " + projectname + " due to " + errors.size() + " errors.";
+			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
 			}
-			throw new N4JSCompileErrorException(msg, projectname);
+			throw new N4JSCompileErrorException(msg, projectId);
 		}
 
 	}

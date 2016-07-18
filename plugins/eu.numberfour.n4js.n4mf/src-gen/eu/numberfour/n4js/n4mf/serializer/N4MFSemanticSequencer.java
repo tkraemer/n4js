@@ -258,28 +258,29 @@ public class N4MFSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         artifactId=N4mfIdentifier | 
-	 *         projectName=STRING | 
-	 *         projectType=ProjectType | 
-	 *         projectVersion=DeclaredVersion | 
-	 *         declaredVendorId=N4mfIdentifier | 
-	 *         vendorName=STRING | 
-	 *         mainModule=STRING | 
-	 *         extendedRuntimeEnvironment=ExtendedRuntimeEnvironment | 
-	 *         providedRuntimeLibraries=ProvidedRuntimeLibraries | 
-	 *         requiredRuntimeLibraries=RequiredRuntimeLibraries | 
-	 *         projectDependencies=ProjectDependencies | 
-	 *         implementationId=N4mfIdentifier | 
-	 *         implementedProjects=ImplementedProjects | 
-	 *         initModules=InitModules | 
-	 *         execModule=ExecModule | 
-	 *         outputPath=STRING | 
-	 *         (libraryPaths+=STRING libraryPaths+=STRING*) | 
-	 *         (resourcePaths+=STRING resourcePaths+=STRING*) | 
-	 *         sourceFragment+=SourceFragment | 
-	 *         moduleFilters+=ModuleFilter | 
-	 *         testedProjects=TestedProjects | 
-	 *         moduleLoader=ModuleLoader
+	 *         (
+	 *             projectId=N4mfIdentifier | 
+	 *             projectType=ProjectType | 
+	 *             projectVersion=DeclaredVersion | 
+	 *             declaredVendorId=N4mfIdentifier | 
+	 *             vendorName=STRING | 
+	 *             mainModule=STRING | 
+	 *             extendedRuntimeEnvironment=ExtendedRuntimeEnvironment | 
+	 *             providedRuntimeLibraries=ProvidedRuntimeLibraries | 
+	 *             requiredRuntimeLibraries=RequiredRuntimeLibraries | 
+	 *             projectDependencies=ProjectDependencies | 
+	 *             implementationId=N4mfIdentifier | 
+	 *             implementedProjects=ImplementedProjects | 
+	 *             initModules=InitModules | 
+	 *             execModule=ExecModule | 
+	 *             outputPath=STRING | 
+	 *             sourceFragment+=SourceFragment | 
+	 *             moduleFilters+=ModuleFilter | 
+	 *             testedProjects=TestedProjects | 
+	 *             moduleLoader=ModuleLoader
+	 *         )? 
+	 *         (libraryPaths+=STRING libraryPaths+=STRING*)? 
+	 *         (resourcePaths+=STRING resourcePaths+=STRING*)?
 	 *     )+
 	 */
 	protected void sequence_ProjectDescription(ISerializationContext context, ProjectDescription semanticObject) {
@@ -370,7 +371,7 @@ public class N4MFSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     SimpleProjectDescription returns SimpleProjectDescription
 	 *
 	 * Constraint:
-	 *     (declaredVendorId=N4mfIdentifier? artifactId=N4mfIdentifier)
+	 *     (declaredVendorId=N4mfIdentifier? projectId=N4mfIdentifier)
 	 */
 	protected void sequence_SimpleProjectDescription(ISerializationContext context, SimpleProjectDescription semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

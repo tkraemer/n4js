@@ -1,6 +1,5 @@
-ArtifactId: IDEBUG-695
+ProjectId: IDEBUG-695
 VendorId: eu.numberfour
-ProjectName: "IDEBUG-695"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

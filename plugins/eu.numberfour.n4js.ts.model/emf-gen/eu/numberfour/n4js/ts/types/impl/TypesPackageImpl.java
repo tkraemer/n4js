@@ -632,7 +632,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTModule_VendorID() {
+	public EAttribute getTModule_ProjectId() {
 		return (EAttribute)tModuleEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -641,7 +641,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTModule_ProjectName() {
+	public EAttribute getTModule_VendorID() {
 		return (EAttribute)tModuleEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2820,8 +2820,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tModuleEClass = createEClass(TMODULE);
 		createEAttribute(tModuleEClass, TMODULE__QUALIFIED_NAME);
+		createEAttribute(tModuleEClass, TMODULE__PROJECT_ID);
 		createEAttribute(tModuleEClass, TMODULE__VENDOR_ID);
-		createEAttribute(tModuleEClass, TMODULE__PROJECT_NAME);
 		createEAttribute(tModuleEClass, TMODULE__MODULE_LOADER);
 		createEAttribute(tModuleEClass, TMODULE__STATIC_POLYFILL_MODULE);
 		createEAttribute(tModuleEClass, TMODULE__STATIC_POLYFILL_AWARE);
@@ -3240,8 +3240,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tModuleEClass, TModule.class, "TModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTModule_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTModule_ProjectId(), theEcorePackage.getEString(), "projectId", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTModule_VendorID(), theEcorePackage.getEString(), "vendorID", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTModule_ProjectName(), theEcorePackage.getEString(), "projectName", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTModule_ModuleLoader(), theEcorePackage.getEString(), "moduleLoader", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTModule_StaticPolyfillModule(), theEcorePackage.getEBoolean(), "staticPolyfillModule", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTModule_StaticPolyfillAware(), theEcorePackage.getEBoolean(), "staticPolyfillAware", null, 0, 1, TModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

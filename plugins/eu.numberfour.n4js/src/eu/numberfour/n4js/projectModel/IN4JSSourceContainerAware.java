@@ -50,7 +50,7 @@ public interface IN4JSSourceContainerAware {
 	URI getLocation();
 
 	/**
-	 * @return the receiving project's artifact ID.
+	 * @return the receiving project's ID. Also available if the project does not exist.
 	 */
-	String getArtifactId();
+	String getProjectId();
 }

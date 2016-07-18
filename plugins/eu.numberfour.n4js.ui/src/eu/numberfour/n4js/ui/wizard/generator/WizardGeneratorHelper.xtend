@@ -270,11 +270,11 @@ class WizardGeneratorHelper {
 	 */
 	public def Collection<IAtomicChange> manifestChanges(Resource manifest, WorkspaceWizardModel model, Collection<IN4JSProject> referencedProjects, URI moduleURI) {
 		// Remove the containing project from the dependencies
-		referencedProjects.removeIf[ it.artifactId.equals(model.project.lastSegment) ];
+		val referencedProjectsExceptContainer = referencedProjects.filter[ !it.projectId.equals(model.project.lastSegment) ];
 		
 		//Remove duplicates
 		val referencedProjectsSet = new HashSet<IN4JSProject>();
-		referencedProjectsSet.addAll(referencedProjects);
+		referencedProjectsSet.addAll(referencedProjectsExceptContainer);
 		
 		var List<IAtomicChange> manifestChanges = new ArrayList<IAtomicChange>();
 		
@@ -282,11 +282,11 @@ class WizardGeneratorHelper {
 		
 		//Add project dependency changes
 		val dependencyChange = ManifestChangeProvider.insertProjectDependencies(manifest, 
-																				referencedProjectsSet.filter[projectType != ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
+																				referencedProjectsSet.filter[projectType != ProjectType.RUNTIME_LIBRARY].map[projectId].toList,
 																				projectDescription)
 		//Add required runtime library changes
 		val runtimeLibraryChange = ManifestChangeProvider.insertRequiredRuntimeLibraries(manifest, 
-																				referencedProjectsSet.filter[projectType == ProjectType.RUNTIME_LIBRARY].map[artifactId].toList,
+																				referencedProjectsSet.filter[projectType == ProjectType.RUNTIME_LIBRARY].map[projectId].toList,
 																				projectDescription)
 		if (dependencyChange !== null) {
 			manifestChanges.add(dependencyChange);

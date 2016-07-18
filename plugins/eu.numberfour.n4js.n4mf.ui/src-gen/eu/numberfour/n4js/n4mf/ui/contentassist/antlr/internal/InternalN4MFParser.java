@@ -25,66 +25,67 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ExtendedRuntimeEnvironment", "ProvidedRuntimeLibraries", "RequiredRuntimeLibraries", "ImplementedProjects", "ProjectDependencies", "RuntimeEnvironment", "ImplementationId", "ProjectVersion", "TestedProjects", "RuntimeLibrary", "ModuleFilters", "ModuleLoader", "NoModuleWrap", "Node_builtin", "InitModules", "ProjectName", "ProjectType", "Application", "ArtifactId", "ExecModule", "MainModule", "VendorName", "NoValidate", "Libraries", "Resources", "Processor", "VendorId", "Commonjs", "External", "Sources", "Compile", "Content", "Library", "Output", "Source", "KW_System", "N4js", "Test", "User", "API", "In", "LeftParenthesis", "RightParenthesis", "Comma", "HyphenMinus", "FullStop", "Colon", "LeftSquareBracket", "RightSquareBracket", "LeftCurlyBracket", "RightCurlyBracket", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ExtendedRuntimeEnvironment", "ProvidedRuntimeLibraries", "RequiredRuntimeLibraries", "ImplementedProjects", "ProjectDependencies", "RuntimeEnvironment", "ImplementationId", "ProjectVersion", "TestedProjects", "RuntimeLibrary", "ModuleFilters", "ModuleLoader", "NoModuleWrap", "Node_builtin", "InitModules", "ProjectName", "ProjectType", "Application", "ArtifactId", "ExecModule", "MainModule", "VendorName", "NoValidate", "Libraries", "ProjectId", "Resources", "Processor", "VendorId", "Commonjs", "External", "Sources", "Compile", "Content", "Library", "Output", "Source", "KW_System", "N4js", "Test", "User", "API", "In", "LeftParenthesis", "RightParenthesis", "Comma", "HyphenMinus", "FullStop", "Colon", "LeftSquareBracket", "RightSquareBracket", "LeftCurlyBracket", "RightCurlyBracket", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
     };
     public static final int ArtifactId=22;
     public static final int TestedProjects=12;
-    public static final int KW_System=39;
+    public static final int KW_System=40;
     public static final int ProjectDependencies=8;
     public static final int ExecModule=23;
-    public static final int LeftParenthesis=45;
-    public static final int Test=41;
+    public static final int LeftParenthesis=46;
+    public static final int Test=42;
     public static final int ProjectVersion=11;
     public static final int Libraries=27;
     public static final int ModuleFilters=14;
-    public static final int RightSquareBracket=52;
+    public static final int RightSquareBracket=53;
     public static final int VendorName=25;
     public static final int RuntimeEnvironment=9;
-    public static final int RULE_ID=55;
+    public static final int RULE_ID=56;
     public static final int NoValidate=26;
     public static final int NoModuleWrap=16;
-    public static final int RightParenthesis=46;
-    public static final int Sources=33;
-    public static final int Content=35;
-    public static final int RULE_INT=56;
+    public static final int RightParenthesis=47;
+    public static final int Sources=34;
+    public static final int Content=36;
+    public static final int RULE_INT=57;
     public static final int ProjectType=20;
-    public static final int External=32;
-    public static final int RULE_ML_COMMENT=58;
-    public static final int LeftSquareBracket=51;
-    public static final int Resources=28;
-    public static final int Library=36;
+    public static final int External=33;
+    public static final int RULE_ML_COMMENT=59;
+    public static final int LeftSquareBracket=52;
+    public static final int Resources=29;
+    public static final int Library=37;
     public static final int Application=21;
     public static final int ImplementedProjects=7;
-    public static final int Processor=29;
-    public static final int User=42;
+    public static final int Processor=30;
+    public static final int User=43;
     public static final int ProjectName=19;
-    public static final int In=44;
-    public static final int VendorId=30;
-    public static final int RULE_STRING=57;
+    public static final int In=45;
+    public static final int VendorId=31;
+    public static final int RULE_STRING=58;
     public static final int Node_builtin=17;
-    public static final int N4js=40;
-    public static final int Compile=34;
-    public static final int Source=38;
-    public static final int RULE_SL_COMMENT=59;
+    public static final int N4js=41;
+    public static final int Compile=35;
+    public static final int Source=39;
+    public static final int RULE_SL_COMMENT=60;
     public static final int ImplementationId=10;
-    public static final int Comma=47;
-    public static final int HyphenMinus=48;
-    public static final int Output=37;
+    public static final int Comma=48;
+    public static final int HyphenMinus=49;
+    public static final int Output=38;
     public static final int MainModule=24;
-    public static final int Colon=50;
-    public static final int RightCurlyBracket=54;
+    public static final int Colon=51;
+    public static final int RightCurlyBracket=55;
     public static final int EOF=-1;
     public static final int ExtendedRuntimeEnvironment=4;
-    public static final int FullStop=49;
+    public static final int FullStop=50;
     public static final int ModuleLoader=15;
-    public static final int Commonjs=31;
-    public static final int RULE_WS=60;
-    public static final int LeftCurlyBracket=53;
+    public static final int Commonjs=32;
+    public static final int RULE_WS=61;
+    public static final int ProjectId=28;
+    public static final int LeftCurlyBracket=54;
     public static final int ProvidedRuntimeLibraries=5;
-    public static final int RULE_ANY_OTHER=61;
+    public static final int RULE_ANY_OTHER=62;
     public static final int RequiredRuntimeLibraries=6;
     public static final int InitModules=18;
-    public static final int API=43;
+    public static final int API=44;
     public static final int RuntimeLibrary=13;
 
     // delegates
@@ -136,6 +137,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     		tokenNameToValue.put("Commonjs", "'commonjs'");
     		tokenNameToValue.put("External", "'external'");
     		tokenNameToValue.put("Libraries", "'Libraries'");
+    		tokenNameToValue.put("ProjectId", "'ProjectId'");
     		tokenNameToValue.put("Resources", "'Resources'");
     		tokenNameToValue.put("Processor", "'processor'");
     		tokenNameToValue.put("ArtifactId", "'ArtifactId'");
@@ -183,11 +185,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProjectDescription"
-    // InternalN4MFParser.g:114:1: entryRuleProjectDescription : ruleProjectDescription EOF ;
+    // InternalN4MFParser.g:115:1: entryRuleProjectDescription : ruleProjectDescription EOF ;
     public final void entryRuleProjectDescription() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:115:1: ( ruleProjectDescription EOF )
-            // InternalN4MFParser.g:116:1: ruleProjectDescription EOF
+            // InternalN4MFParser.g:116:1: ( ruleProjectDescription EOF )
+            // InternalN4MFParser.g:117:1: ruleProjectDescription EOF
             {
              before(grammarAccess.getProjectDescriptionRule()); 
             pushFollow(FOLLOW_1);
@@ -213,21 +215,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectDescription"
-    // InternalN4MFParser.g:123:1: ruleProjectDescription : ( ( rule__ProjectDescription__UnorderedGroup ) ) ;
+    // InternalN4MFParser.g:124:1: ruleProjectDescription : ( ( rule__ProjectDescription__UnorderedGroup ) ) ;
     public final void ruleProjectDescription() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:127:5: ( ( ( rule__ProjectDescription__UnorderedGroup ) ) )
-            // InternalN4MFParser.g:128:1: ( ( rule__ProjectDescription__UnorderedGroup ) )
+            // InternalN4MFParser.g:128:5: ( ( ( rule__ProjectDescription__UnorderedGroup ) ) )
+            // InternalN4MFParser.g:129:1: ( ( rule__ProjectDescription__UnorderedGroup ) )
             {
-            // InternalN4MFParser.g:128:1: ( ( rule__ProjectDescription__UnorderedGroup ) )
-            // InternalN4MFParser.g:129:1: ( rule__ProjectDescription__UnorderedGroup )
+            // InternalN4MFParser.g:129:1: ( ( rule__ProjectDescription__UnorderedGroup ) )
+            // InternalN4MFParser.g:130:1: ( rule__ProjectDescription__UnorderedGroup )
             {
              before(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup()); 
-            // InternalN4MFParser.g:130:1: ( rule__ProjectDescription__UnorderedGroup )
-            // InternalN4MFParser.g:130:2: rule__ProjectDescription__UnorderedGroup
+            // InternalN4MFParser.g:131:1: ( rule__ProjectDescription__UnorderedGroup )
+            // InternalN4MFParser.g:131:2: rule__ProjectDescription__UnorderedGroup
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__UnorderedGroup();
@@ -260,11 +262,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleExecModule"
-    // InternalN4MFParser.g:142:1: entryRuleExecModule : ruleExecModule EOF ;
+    // InternalN4MFParser.g:143:1: entryRuleExecModule : ruleExecModule EOF ;
     public final void entryRuleExecModule() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:143:1: ( ruleExecModule EOF )
-            // InternalN4MFParser.g:144:1: ruleExecModule EOF
+            // InternalN4MFParser.g:144:1: ( ruleExecModule EOF )
+            // InternalN4MFParser.g:145:1: ruleExecModule EOF
             {
              before(grammarAccess.getExecModuleRule()); 
             pushFollow(FOLLOW_1);
@@ -290,21 +292,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleExecModule"
-    // InternalN4MFParser.g:151:1: ruleExecModule : ( ( rule__ExecModule__Group__0 ) ) ;
+    // InternalN4MFParser.g:152:1: ruleExecModule : ( ( rule__ExecModule__Group__0 ) ) ;
     public final void ruleExecModule() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:155:5: ( ( ( rule__ExecModule__Group__0 ) ) )
-            // InternalN4MFParser.g:156:1: ( ( rule__ExecModule__Group__0 ) )
+            // InternalN4MFParser.g:156:5: ( ( ( rule__ExecModule__Group__0 ) ) )
+            // InternalN4MFParser.g:157:1: ( ( rule__ExecModule__Group__0 ) )
             {
-            // InternalN4MFParser.g:156:1: ( ( rule__ExecModule__Group__0 ) )
-            // InternalN4MFParser.g:157:1: ( rule__ExecModule__Group__0 )
+            // InternalN4MFParser.g:157:1: ( ( rule__ExecModule__Group__0 ) )
+            // InternalN4MFParser.g:158:1: ( rule__ExecModule__Group__0 )
             {
              before(grammarAccess.getExecModuleAccess().getGroup()); 
-            // InternalN4MFParser.g:158:1: ( rule__ExecModule__Group__0 )
-            // InternalN4MFParser.g:158:2: rule__ExecModule__Group__0
+            // InternalN4MFParser.g:159:1: ( rule__ExecModule__Group__0 )
+            // InternalN4MFParser.g:159:2: rule__ExecModule__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ExecModule__Group__0();
@@ -337,11 +339,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleTestedProjects"
-    // InternalN4MFParser.g:170:1: entryRuleTestedProjects : ruleTestedProjects EOF ;
+    // InternalN4MFParser.g:171:1: entryRuleTestedProjects : ruleTestedProjects EOF ;
     public final void entryRuleTestedProjects() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:171:1: ( ruleTestedProjects EOF )
-            // InternalN4MFParser.g:172:1: ruleTestedProjects EOF
+            // InternalN4MFParser.g:172:1: ( ruleTestedProjects EOF )
+            // InternalN4MFParser.g:173:1: ruleTestedProjects EOF
             {
              before(grammarAccess.getTestedProjectsRule()); 
             pushFollow(FOLLOW_1);
@@ -367,21 +369,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleTestedProjects"
-    // InternalN4MFParser.g:179:1: ruleTestedProjects : ( ( rule__TestedProjects__Group__0 ) ) ;
+    // InternalN4MFParser.g:180:1: ruleTestedProjects : ( ( rule__TestedProjects__Group__0 ) ) ;
     public final void ruleTestedProjects() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:183:5: ( ( ( rule__TestedProjects__Group__0 ) ) )
-            // InternalN4MFParser.g:184:1: ( ( rule__TestedProjects__Group__0 ) )
+            // InternalN4MFParser.g:184:5: ( ( ( rule__TestedProjects__Group__0 ) ) )
+            // InternalN4MFParser.g:185:1: ( ( rule__TestedProjects__Group__0 ) )
             {
-            // InternalN4MFParser.g:184:1: ( ( rule__TestedProjects__Group__0 ) )
-            // InternalN4MFParser.g:185:1: ( rule__TestedProjects__Group__0 )
+            // InternalN4MFParser.g:185:1: ( ( rule__TestedProjects__Group__0 ) )
+            // InternalN4MFParser.g:186:1: ( rule__TestedProjects__Group__0 )
             {
              before(grammarAccess.getTestedProjectsAccess().getGroup()); 
-            // InternalN4MFParser.g:186:1: ( rule__TestedProjects__Group__0 )
-            // InternalN4MFParser.g:186:2: rule__TestedProjects__Group__0
+            // InternalN4MFParser.g:187:1: ( rule__TestedProjects__Group__0 )
+            // InternalN4MFParser.g:187:2: rule__TestedProjects__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__Group__0();
@@ -414,11 +416,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleInitModules"
-    // InternalN4MFParser.g:198:1: entryRuleInitModules : ruleInitModules EOF ;
+    // InternalN4MFParser.g:199:1: entryRuleInitModules : ruleInitModules EOF ;
     public final void entryRuleInitModules() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:199:1: ( ruleInitModules EOF )
-            // InternalN4MFParser.g:200:1: ruleInitModules EOF
+            // InternalN4MFParser.g:200:1: ( ruleInitModules EOF )
+            // InternalN4MFParser.g:201:1: ruleInitModules EOF
             {
              before(grammarAccess.getInitModulesRule()); 
             pushFollow(FOLLOW_1);
@@ -444,21 +446,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleInitModules"
-    // InternalN4MFParser.g:207:1: ruleInitModules : ( ( rule__InitModules__Group__0 ) ) ;
+    // InternalN4MFParser.g:208:1: ruleInitModules : ( ( rule__InitModules__Group__0 ) ) ;
     public final void ruleInitModules() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:211:5: ( ( ( rule__InitModules__Group__0 ) ) )
-            // InternalN4MFParser.g:212:1: ( ( rule__InitModules__Group__0 ) )
+            // InternalN4MFParser.g:212:5: ( ( ( rule__InitModules__Group__0 ) ) )
+            // InternalN4MFParser.g:213:1: ( ( rule__InitModules__Group__0 ) )
             {
-            // InternalN4MFParser.g:212:1: ( ( rule__InitModules__Group__0 ) )
-            // InternalN4MFParser.g:213:1: ( rule__InitModules__Group__0 )
+            // InternalN4MFParser.g:213:1: ( ( rule__InitModules__Group__0 ) )
+            // InternalN4MFParser.g:214:1: ( rule__InitModules__Group__0 )
             {
              before(grammarAccess.getInitModulesAccess().getGroup()); 
-            // InternalN4MFParser.g:214:1: ( rule__InitModules__Group__0 )
-            // InternalN4MFParser.g:214:2: rule__InitModules__Group__0
+            // InternalN4MFParser.g:215:1: ( rule__InitModules__Group__0 )
+            // InternalN4MFParser.g:215:2: rule__InitModules__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__Group__0();
@@ -491,11 +493,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleImplementedProjects"
-    // InternalN4MFParser.g:226:1: entryRuleImplementedProjects : ruleImplementedProjects EOF ;
+    // InternalN4MFParser.g:227:1: entryRuleImplementedProjects : ruleImplementedProjects EOF ;
     public final void entryRuleImplementedProjects() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:227:1: ( ruleImplementedProjects EOF )
-            // InternalN4MFParser.g:228:1: ruleImplementedProjects EOF
+            // InternalN4MFParser.g:228:1: ( ruleImplementedProjects EOF )
+            // InternalN4MFParser.g:229:1: ruleImplementedProjects EOF
             {
              before(grammarAccess.getImplementedProjectsRule()); 
             pushFollow(FOLLOW_1);
@@ -521,21 +523,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleImplementedProjects"
-    // InternalN4MFParser.g:235:1: ruleImplementedProjects : ( ( rule__ImplementedProjects__Group__0 ) ) ;
+    // InternalN4MFParser.g:236:1: ruleImplementedProjects : ( ( rule__ImplementedProjects__Group__0 ) ) ;
     public final void ruleImplementedProjects() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:239:5: ( ( ( rule__ImplementedProjects__Group__0 ) ) )
-            // InternalN4MFParser.g:240:1: ( ( rule__ImplementedProjects__Group__0 ) )
+            // InternalN4MFParser.g:240:5: ( ( ( rule__ImplementedProjects__Group__0 ) ) )
+            // InternalN4MFParser.g:241:1: ( ( rule__ImplementedProjects__Group__0 ) )
             {
-            // InternalN4MFParser.g:240:1: ( ( rule__ImplementedProjects__Group__0 ) )
-            // InternalN4MFParser.g:241:1: ( rule__ImplementedProjects__Group__0 )
+            // InternalN4MFParser.g:241:1: ( ( rule__ImplementedProjects__Group__0 ) )
+            // InternalN4MFParser.g:242:1: ( rule__ImplementedProjects__Group__0 )
             {
              before(grammarAccess.getImplementedProjectsAccess().getGroup()); 
-            // InternalN4MFParser.g:242:1: ( rule__ImplementedProjects__Group__0 )
-            // InternalN4MFParser.g:242:2: rule__ImplementedProjects__Group__0
+            // InternalN4MFParser.g:243:1: ( rule__ImplementedProjects__Group__0 )
+            // InternalN4MFParser.g:243:2: rule__ImplementedProjects__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__Group__0();
@@ -568,11 +570,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProjectDependencies"
-    // InternalN4MFParser.g:254:1: entryRuleProjectDependencies : ruleProjectDependencies EOF ;
+    // InternalN4MFParser.g:255:1: entryRuleProjectDependencies : ruleProjectDependencies EOF ;
     public final void entryRuleProjectDependencies() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:255:1: ( ruleProjectDependencies EOF )
-            // InternalN4MFParser.g:256:1: ruleProjectDependencies EOF
+            // InternalN4MFParser.g:256:1: ( ruleProjectDependencies EOF )
+            // InternalN4MFParser.g:257:1: ruleProjectDependencies EOF
             {
              before(grammarAccess.getProjectDependenciesRule()); 
             pushFollow(FOLLOW_1);
@@ -598,21 +600,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectDependencies"
-    // InternalN4MFParser.g:263:1: ruleProjectDependencies : ( ( rule__ProjectDependencies__Group__0 ) ) ;
+    // InternalN4MFParser.g:264:1: ruleProjectDependencies : ( ( rule__ProjectDependencies__Group__0 ) ) ;
     public final void ruleProjectDependencies() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:267:5: ( ( ( rule__ProjectDependencies__Group__0 ) ) )
-            // InternalN4MFParser.g:268:1: ( ( rule__ProjectDependencies__Group__0 ) )
+            // InternalN4MFParser.g:268:5: ( ( ( rule__ProjectDependencies__Group__0 ) ) )
+            // InternalN4MFParser.g:269:1: ( ( rule__ProjectDependencies__Group__0 ) )
             {
-            // InternalN4MFParser.g:268:1: ( ( rule__ProjectDependencies__Group__0 ) )
-            // InternalN4MFParser.g:269:1: ( rule__ProjectDependencies__Group__0 )
+            // InternalN4MFParser.g:269:1: ( ( rule__ProjectDependencies__Group__0 ) )
+            // InternalN4MFParser.g:270:1: ( rule__ProjectDependencies__Group__0 )
             {
              before(grammarAccess.getProjectDependenciesAccess().getGroup()); 
-            // InternalN4MFParser.g:270:1: ( rule__ProjectDependencies__Group__0 )
-            // InternalN4MFParser.g:270:2: rule__ProjectDependencies__Group__0
+            // InternalN4MFParser.g:271:1: ( rule__ProjectDependencies__Group__0 )
+            // InternalN4MFParser.g:271:2: rule__ProjectDependencies__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__Group__0();
@@ -645,11 +647,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProvidedRuntimeLibraries"
-    // InternalN4MFParser.g:282:1: entryRuleProvidedRuntimeLibraries : ruleProvidedRuntimeLibraries EOF ;
+    // InternalN4MFParser.g:283:1: entryRuleProvidedRuntimeLibraries : ruleProvidedRuntimeLibraries EOF ;
     public final void entryRuleProvidedRuntimeLibraries() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:283:1: ( ruleProvidedRuntimeLibraries EOF )
-            // InternalN4MFParser.g:284:1: ruleProvidedRuntimeLibraries EOF
+            // InternalN4MFParser.g:284:1: ( ruleProvidedRuntimeLibraries EOF )
+            // InternalN4MFParser.g:285:1: ruleProvidedRuntimeLibraries EOF
             {
              before(grammarAccess.getProvidedRuntimeLibrariesRule()); 
             pushFollow(FOLLOW_1);
@@ -675,21 +677,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProvidedRuntimeLibraries"
-    // InternalN4MFParser.g:291:1: ruleProvidedRuntimeLibraries : ( ( rule__ProvidedRuntimeLibraries__Group__0 ) ) ;
+    // InternalN4MFParser.g:292:1: ruleProvidedRuntimeLibraries : ( ( rule__ProvidedRuntimeLibraries__Group__0 ) ) ;
     public final void ruleProvidedRuntimeLibraries() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:295:5: ( ( ( rule__ProvidedRuntimeLibraries__Group__0 ) ) )
-            // InternalN4MFParser.g:296:1: ( ( rule__ProvidedRuntimeLibraries__Group__0 ) )
+            // InternalN4MFParser.g:296:5: ( ( ( rule__ProvidedRuntimeLibraries__Group__0 ) ) )
+            // InternalN4MFParser.g:297:1: ( ( rule__ProvidedRuntimeLibraries__Group__0 ) )
             {
-            // InternalN4MFParser.g:296:1: ( ( rule__ProvidedRuntimeLibraries__Group__0 ) )
-            // InternalN4MFParser.g:297:1: ( rule__ProvidedRuntimeLibraries__Group__0 )
+            // InternalN4MFParser.g:297:1: ( ( rule__ProvidedRuntimeLibraries__Group__0 ) )
+            // InternalN4MFParser.g:298:1: ( rule__ProvidedRuntimeLibraries__Group__0 )
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getGroup()); 
-            // InternalN4MFParser.g:298:1: ( rule__ProvidedRuntimeLibraries__Group__0 )
-            // InternalN4MFParser.g:298:2: rule__ProvidedRuntimeLibraries__Group__0
+            // InternalN4MFParser.g:299:1: ( rule__ProvidedRuntimeLibraries__Group__0 )
+            // InternalN4MFParser.g:299:2: rule__ProvidedRuntimeLibraries__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__Group__0();
@@ -722,11 +724,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleRequiredRuntimeLibraries"
-    // InternalN4MFParser.g:310:1: entryRuleRequiredRuntimeLibraries : ruleRequiredRuntimeLibraries EOF ;
+    // InternalN4MFParser.g:311:1: entryRuleRequiredRuntimeLibraries : ruleRequiredRuntimeLibraries EOF ;
     public final void entryRuleRequiredRuntimeLibraries() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:311:1: ( ruleRequiredRuntimeLibraries EOF )
-            // InternalN4MFParser.g:312:1: ruleRequiredRuntimeLibraries EOF
+            // InternalN4MFParser.g:312:1: ( ruleRequiredRuntimeLibraries EOF )
+            // InternalN4MFParser.g:313:1: ruleRequiredRuntimeLibraries EOF
             {
              before(grammarAccess.getRequiredRuntimeLibrariesRule()); 
             pushFollow(FOLLOW_1);
@@ -752,21 +754,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleRequiredRuntimeLibraries"
-    // InternalN4MFParser.g:319:1: ruleRequiredRuntimeLibraries : ( ( rule__RequiredRuntimeLibraries__Group__0 ) ) ;
+    // InternalN4MFParser.g:320:1: ruleRequiredRuntimeLibraries : ( ( rule__RequiredRuntimeLibraries__Group__0 ) ) ;
     public final void ruleRequiredRuntimeLibraries() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:323:5: ( ( ( rule__RequiredRuntimeLibraries__Group__0 ) ) )
-            // InternalN4MFParser.g:324:1: ( ( rule__RequiredRuntimeLibraries__Group__0 ) )
+            // InternalN4MFParser.g:324:5: ( ( ( rule__RequiredRuntimeLibraries__Group__0 ) ) )
+            // InternalN4MFParser.g:325:1: ( ( rule__RequiredRuntimeLibraries__Group__0 ) )
             {
-            // InternalN4MFParser.g:324:1: ( ( rule__RequiredRuntimeLibraries__Group__0 ) )
-            // InternalN4MFParser.g:325:1: ( rule__RequiredRuntimeLibraries__Group__0 )
+            // InternalN4MFParser.g:325:1: ( ( rule__RequiredRuntimeLibraries__Group__0 ) )
+            // InternalN4MFParser.g:326:1: ( rule__RequiredRuntimeLibraries__Group__0 )
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getGroup()); 
-            // InternalN4MFParser.g:326:1: ( rule__RequiredRuntimeLibraries__Group__0 )
-            // InternalN4MFParser.g:326:2: rule__RequiredRuntimeLibraries__Group__0
+            // InternalN4MFParser.g:327:1: ( rule__RequiredRuntimeLibraries__Group__0 )
+            // InternalN4MFParser.g:327:2: rule__RequiredRuntimeLibraries__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__Group__0();
@@ -799,11 +801,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleExtendedRuntimeEnvironment"
-    // InternalN4MFParser.g:338:1: entryRuleExtendedRuntimeEnvironment : ruleExtendedRuntimeEnvironment EOF ;
+    // InternalN4MFParser.g:339:1: entryRuleExtendedRuntimeEnvironment : ruleExtendedRuntimeEnvironment EOF ;
     public final void entryRuleExtendedRuntimeEnvironment() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:339:1: ( ruleExtendedRuntimeEnvironment EOF )
-            // InternalN4MFParser.g:340:1: ruleExtendedRuntimeEnvironment EOF
+            // InternalN4MFParser.g:340:1: ( ruleExtendedRuntimeEnvironment EOF )
+            // InternalN4MFParser.g:341:1: ruleExtendedRuntimeEnvironment EOF
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentRule()); 
             pushFollow(FOLLOW_1);
@@ -829,21 +831,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleExtendedRuntimeEnvironment"
-    // InternalN4MFParser.g:347:1: ruleExtendedRuntimeEnvironment : ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) ) ;
+    // InternalN4MFParser.g:348:1: ruleExtendedRuntimeEnvironment : ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) ) ;
     public final void ruleExtendedRuntimeEnvironment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:351:5: ( ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) ) )
-            // InternalN4MFParser.g:352:1: ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) )
+            // InternalN4MFParser.g:352:5: ( ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) ) )
+            // InternalN4MFParser.g:353:1: ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) )
             {
-            // InternalN4MFParser.g:352:1: ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) )
-            // InternalN4MFParser.g:353:1: ( rule__ExtendedRuntimeEnvironment__Group__0 )
+            // InternalN4MFParser.g:353:1: ( ( rule__ExtendedRuntimeEnvironment__Group__0 ) )
+            // InternalN4MFParser.g:354:1: ( rule__ExtendedRuntimeEnvironment__Group__0 )
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getGroup()); 
-            // InternalN4MFParser.g:354:1: ( rule__ExtendedRuntimeEnvironment__Group__0 )
-            // InternalN4MFParser.g:354:2: rule__ExtendedRuntimeEnvironment__Group__0
+            // InternalN4MFParser.g:355:1: ( rule__ExtendedRuntimeEnvironment__Group__0 )
+            // InternalN4MFParser.g:355:2: rule__ExtendedRuntimeEnvironment__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ExtendedRuntimeEnvironment__Group__0();
@@ -876,11 +878,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleDeclaredVersion"
-    // InternalN4MFParser.g:366:1: entryRuleDeclaredVersion : ruleDeclaredVersion EOF ;
+    // InternalN4MFParser.g:367:1: entryRuleDeclaredVersion : ruleDeclaredVersion EOF ;
     public final void entryRuleDeclaredVersion() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:367:1: ( ruleDeclaredVersion EOF )
-            // InternalN4MFParser.g:368:1: ruleDeclaredVersion EOF
+            // InternalN4MFParser.g:368:1: ( ruleDeclaredVersion EOF )
+            // InternalN4MFParser.g:369:1: ruleDeclaredVersion EOF
             {
              before(grammarAccess.getDeclaredVersionRule()); 
             pushFollow(FOLLOW_1);
@@ -906,21 +908,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleDeclaredVersion"
-    // InternalN4MFParser.g:375:1: ruleDeclaredVersion : ( ( rule__DeclaredVersion__Group__0 ) ) ;
+    // InternalN4MFParser.g:376:1: ruleDeclaredVersion : ( ( rule__DeclaredVersion__Group__0 ) ) ;
     public final void ruleDeclaredVersion() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:379:5: ( ( ( rule__DeclaredVersion__Group__0 ) ) )
-            // InternalN4MFParser.g:380:1: ( ( rule__DeclaredVersion__Group__0 ) )
+            // InternalN4MFParser.g:380:5: ( ( ( rule__DeclaredVersion__Group__0 ) ) )
+            // InternalN4MFParser.g:381:1: ( ( rule__DeclaredVersion__Group__0 ) )
             {
-            // InternalN4MFParser.g:380:1: ( ( rule__DeclaredVersion__Group__0 ) )
-            // InternalN4MFParser.g:381:1: ( rule__DeclaredVersion__Group__0 )
+            // InternalN4MFParser.g:381:1: ( ( rule__DeclaredVersion__Group__0 ) )
+            // InternalN4MFParser.g:382:1: ( rule__DeclaredVersion__Group__0 )
             {
              before(grammarAccess.getDeclaredVersionAccess().getGroup()); 
-            // InternalN4MFParser.g:382:1: ( rule__DeclaredVersion__Group__0 )
-            // InternalN4MFParser.g:382:2: rule__DeclaredVersion__Group__0
+            // InternalN4MFParser.g:383:1: ( rule__DeclaredVersion__Group__0 )
+            // InternalN4MFParser.g:383:2: rule__DeclaredVersion__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__Group__0();
@@ -953,11 +955,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleSourceFragment"
-    // InternalN4MFParser.g:394:1: entryRuleSourceFragment : ruleSourceFragment EOF ;
+    // InternalN4MFParser.g:395:1: entryRuleSourceFragment : ruleSourceFragment EOF ;
     public final void entryRuleSourceFragment() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:395:1: ( ruleSourceFragment EOF )
-            // InternalN4MFParser.g:396:1: ruleSourceFragment EOF
+            // InternalN4MFParser.g:396:1: ( ruleSourceFragment EOF )
+            // InternalN4MFParser.g:397:1: ruleSourceFragment EOF
             {
              before(grammarAccess.getSourceFragmentRule()); 
             pushFollow(FOLLOW_1);
@@ -983,21 +985,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSourceFragment"
-    // InternalN4MFParser.g:403:1: ruleSourceFragment : ( ( rule__SourceFragment__Group__0 ) ) ;
+    // InternalN4MFParser.g:404:1: ruleSourceFragment : ( ( rule__SourceFragment__Group__0 ) ) ;
     public final void ruleSourceFragment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:407:5: ( ( ( rule__SourceFragment__Group__0 ) ) )
-            // InternalN4MFParser.g:408:1: ( ( rule__SourceFragment__Group__0 ) )
+            // InternalN4MFParser.g:408:5: ( ( ( rule__SourceFragment__Group__0 ) ) )
+            // InternalN4MFParser.g:409:1: ( ( rule__SourceFragment__Group__0 ) )
             {
-            // InternalN4MFParser.g:408:1: ( ( rule__SourceFragment__Group__0 ) )
-            // InternalN4MFParser.g:409:1: ( rule__SourceFragment__Group__0 )
+            // InternalN4MFParser.g:409:1: ( ( rule__SourceFragment__Group__0 ) )
+            // InternalN4MFParser.g:410:1: ( rule__SourceFragment__Group__0 )
             {
              before(grammarAccess.getSourceFragmentAccess().getGroup()); 
-            // InternalN4MFParser.g:410:1: ( rule__SourceFragment__Group__0 )
-            // InternalN4MFParser.g:410:2: rule__SourceFragment__Group__0
+            // InternalN4MFParser.g:411:1: ( rule__SourceFragment__Group__0 )
+            // InternalN4MFParser.g:411:2: rule__SourceFragment__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__Group__0();
@@ -1030,11 +1032,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleModuleFilter"
-    // InternalN4MFParser.g:422:1: entryRuleModuleFilter : ruleModuleFilter EOF ;
+    // InternalN4MFParser.g:423:1: entryRuleModuleFilter : ruleModuleFilter EOF ;
     public final void entryRuleModuleFilter() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:423:1: ( ruleModuleFilter EOF )
-            // InternalN4MFParser.g:424:1: ruleModuleFilter EOF
+            // InternalN4MFParser.g:424:1: ( ruleModuleFilter EOF )
+            // InternalN4MFParser.g:425:1: ruleModuleFilter EOF
             {
              before(grammarAccess.getModuleFilterRule()); 
             pushFollow(FOLLOW_1);
@@ -1060,21 +1062,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModuleFilter"
-    // InternalN4MFParser.g:431:1: ruleModuleFilter : ( ( rule__ModuleFilter__Group__0 ) ) ;
+    // InternalN4MFParser.g:432:1: ruleModuleFilter : ( ( rule__ModuleFilter__Group__0 ) ) ;
     public final void ruleModuleFilter() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:435:5: ( ( ( rule__ModuleFilter__Group__0 ) ) )
-            // InternalN4MFParser.g:436:1: ( ( rule__ModuleFilter__Group__0 ) )
+            // InternalN4MFParser.g:436:5: ( ( ( rule__ModuleFilter__Group__0 ) ) )
+            // InternalN4MFParser.g:437:1: ( ( rule__ModuleFilter__Group__0 ) )
             {
-            // InternalN4MFParser.g:436:1: ( ( rule__ModuleFilter__Group__0 ) )
-            // InternalN4MFParser.g:437:1: ( rule__ModuleFilter__Group__0 )
+            // InternalN4MFParser.g:437:1: ( ( rule__ModuleFilter__Group__0 ) )
+            // InternalN4MFParser.g:438:1: ( rule__ModuleFilter__Group__0 )
             {
              before(grammarAccess.getModuleFilterAccess().getGroup()); 
-            // InternalN4MFParser.g:438:1: ( rule__ModuleFilter__Group__0 )
-            // InternalN4MFParser.g:438:2: rule__ModuleFilter__Group__0
+            // InternalN4MFParser.g:439:1: ( rule__ModuleFilter__Group__0 )
+            // InternalN4MFParser.g:439:2: rule__ModuleFilter__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__Group__0();
@@ -1107,11 +1109,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleBootstrapModule"
-    // InternalN4MFParser.g:450:1: entryRuleBootstrapModule : ruleBootstrapModule EOF ;
+    // InternalN4MFParser.g:451:1: entryRuleBootstrapModule : ruleBootstrapModule EOF ;
     public final void entryRuleBootstrapModule() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:451:1: ( ruleBootstrapModule EOF )
-            // InternalN4MFParser.g:452:1: ruleBootstrapModule EOF
+            // InternalN4MFParser.g:452:1: ( ruleBootstrapModule EOF )
+            // InternalN4MFParser.g:453:1: ruleBootstrapModule EOF
             {
              before(grammarAccess.getBootstrapModuleRule()); 
             pushFollow(FOLLOW_1);
@@ -1137,21 +1139,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleBootstrapModule"
-    // InternalN4MFParser.g:459:1: ruleBootstrapModule : ( ( rule__BootstrapModule__Group__0 ) ) ;
+    // InternalN4MFParser.g:460:1: ruleBootstrapModule : ( ( rule__BootstrapModule__Group__0 ) ) ;
     public final void ruleBootstrapModule() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:463:5: ( ( ( rule__BootstrapModule__Group__0 ) ) )
-            // InternalN4MFParser.g:464:1: ( ( rule__BootstrapModule__Group__0 ) )
+            // InternalN4MFParser.g:464:5: ( ( ( rule__BootstrapModule__Group__0 ) ) )
+            // InternalN4MFParser.g:465:1: ( ( rule__BootstrapModule__Group__0 ) )
             {
-            // InternalN4MFParser.g:464:1: ( ( rule__BootstrapModule__Group__0 ) )
-            // InternalN4MFParser.g:465:1: ( rule__BootstrapModule__Group__0 )
+            // InternalN4MFParser.g:465:1: ( ( rule__BootstrapModule__Group__0 ) )
+            // InternalN4MFParser.g:466:1: ( rule__BootstrapModule__Group__0 )
             {
              before(grammarAccess.getBootstrapModuleAccess().getGroup()); 
-            // InternalN4MFParser.g:466:1: ( rule__BootstrapModule__Group__0 )
-            // InternalN4MFParser.g:466:2: rule__BootstrapModule__Group__0
+            // InternalN4MFParser.g:467:1: ( rule__BootstrapModule__Group__0 )
+            // InternalN4MFParser.g:467:2: rule__BootstrapModule__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__BootstrapModule__Group__0();
@@ -1184,11 +1186,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleModuleFilterSpecifier"
-    // InternalN4MFParser.g:478:1: entryRuleModuleFilterSpecifier : ruleModuleFilterSpecifier EOF ;
+    // InternalN4MFParser.g:479:1: entryRuleModuleFilterSpecifier : ruleModuleFilterSpecifier EOF ;
     public final void entryRuleModuleFilterSpecifier() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:479:1: ( ruleModuleFilterSpecifier EOF )
-            // InternalN4MFParser.g:480:1: ruleModuleFilterSpecifier EOF
+            // InternalN4MFParser.g:480:1: ( ruleModuleFilterSpecifier EOF )
+            // InternalN4MFParser.g:481:1: ruleModuleFilterSpecifier EOF
             {
              before(grammarAccess.getModuleFilterSpecifierRule()); 
             pushFollow(FOLLOW_1);
@@ -1214,21 +1216,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModuleFilterSpecifier"
-    // InternalN4MFParser.g:487:1: ruleModuleFilterSpecifier : ( ( rule__ModuleFilterSpecifier__Group__0 ) ) ;
+    // InternalN4MFParser.g:488:1: ruleModuleFilterSpecifier : ( ( rule__ModuleFilterSpecifier__Group__0 ) ) ;
     public final void ruleModuleFilterSpecifier() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:491:5: ( ( ( rule__ModuleFilterSpecifier__Group__0 ) ) )
-            // InternalN4MFParser.g:492:1: ( ( rule__ModuleFilterSpecifier__Group__0 ) )
+            // InternalN4MFParser.g:492:5: ( ( ( rule__ModuleFilterSpecifier__Group__0 ) ) )
+            // InternalN4MFParser.g:493:1: ( ( rule__ModuleFilterSpecifier__Group__0 ) )
             {
-            // InternalN4MFParser.g:492:1: ( ( rule__ModuleFilterSpecifier__Group__0 ) )
-            // InternalN4MFParser.g:493:1: ( rule__ModuleFilterSpecifier__Group__0 )
+            // InternalN4MFParser.g:493:1: ( ( rule__ModuleFilterSpecifier__Group__0 ) )
+            // InternalN4MFParser.g:494:1: ( rule__ModuleFilterSpecifier__Group__0 )
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getGroup()); 
-            // InternalN4MFParser.g:494:1: ( rule__ModuleFilterSpecifier__Group__0 )
-            // InternalN4MFParser.g:494:2: rule__ModuleFilterSpecifier__Group__0
+            // InternalN4MFParser.g:495:1: ( rule__ModuleFilterSpecifier__Group__0 )
+            // InternalN4MFParser.g:495:2: rule__ModuleFilterSpecifier__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterSpecifier__Group__0();
@@ -1261,11 +1263,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProvidedRuntimeLibraryDependency"
-    // InternalN4MFParser.g:506:1: entryRuleProvidedRuntimeLibraryDependency : ruleProvidedRuntimeLibraryDependency EOF ;
+    // InternalN4MFParser.g:507:1: entryRuleProvidedRuntimeLibraryDependency : ruleProvidedRuntimeLibraryDependency EOF ;
     public final void entryRuleProvidedRuntimeLibraryDependency() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:507:1: ( ruleProvidedRuntimeLibraryDependency EOF )
-            // InternalN4MFParser.g:508:1: ruleProvidedRuntimeLibraryDependency EOF
+            // InternalN4MFParser.g:508:1: ( ruleProvidedRuntimeLibraryDependency EOF )
+            // InternalN4MFParser.g:509:1: ruleProvidedRuntimeLibraryDependency EOF
             {
              before(grammarAccess.getProvidedRuntimeLibraryDependencyRule()); 
             pushFollow(FOLLOW_1);
@@ -1291,21 +1293,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProvidedRuntimeLibraryDependency"
-    // InternalN4MFParser.g:515:1: ruleProvidedRuntimeLibraryDependency : ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) ) ;
+    // InternalN4MFParser.g:516:1: ruleProvidedRuntimeLibraryDependency : ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) ) ;
     public final void ruleProvidedRuntimeLibraryDependency() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:519:5: ( ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) ) )
-            // InternalN4MFParser.g:520:1: ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) )
+            // InternalN4MFParser.g:520:5: ( ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) ) )
+            // InternalN4MFParser.g:521:1: ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) )
             {
-            // InternalN4MFParser.g:520:1: ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) )
-            // InternalN4MFParser.g:521:1: ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment )
+            // InternalN4MFParser.g:521:1: ( ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment ) )
+            // InternalN4MFParser.g:522:1: ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment )
             {
              before(grammarAccess.getProvidedRuntimeLibraryDependencyAccess().getProjectAssignment()); 
-            // InternalN4MFParser.g:522:1: ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment )
-            // InternalN4MFParser.g:522:2: rule__ProvidedRuntimeLibraryDependency__ProjectAssignment
+            // InternalN4MFParser.g:523:1: ( rule__ProvidedRuntimeLibraryDependency__ProjectAssignment )
+            // InternalN4MFParser.g:523:2: rule__ProvidedRuntimeLibraryDependency__ProjectAssignment
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraryDependency__ProjectAssignment();
@@ -1338,11 +1340,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleRequiredRuntimeLibraryDependency"
-    // InternalN4MFParser.g:534:1: entryRuleRequiredRuntimeLibraryDependency : ruleRequiredRuntimeLibraryDependency EOF ;
+    // InternalN4MFParser.g:535:1: entryRuleRequiredRuntimeLibraryDependency : ruleRequiredRuntimeLibraryDependency EOF ;
     public final void entryRuleRequiredRuntimeLibraryDependency() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:535:1: ( ruleRequiredRuntimeLibraryDependency EOF )
-            // InternalN4MFParser.g:536:1: ruleRequiredRuntimeLibraryDependency EOF
+            // InternalN4MFParser.g:536:1: ( ruleRequiredRuntimeLibraryDependency EOF )
+            // InternalN4MFParser.g:537:1: ruleRequiredRuntimeLibraryDependency EOF
             {
              before(grammarAccess.getRequiredRuntimeLibraryDependencyRule()); 
             pushFollow(FOLLOW_1);
@@ -1368,21 +1370,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleRequiredRuntimeLibraryDependency"
-    // InternalN4MFParser.g:543:1: ruleRequiredRuntimeLibraryDependency : ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) ) ;
+    // InternalN4MFParser.g:544:1: ruleRequiredRuntimeLibraryDependency : ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) ) ;
     public final void ruleRequiredRuntimeLibraryDependency() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:547:5: ( ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) ) )
-            // InternalN4MFParser.g:548:1: ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) )
+            // InternalN4MFParser.g:548:5: ( ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) ) )
+            // InternalN4MFParser.g:549:1: ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) )
             {
-            // InternalN4MFParser.g:548:1: ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) )
-            // InternalN4MFParser.g:549:1: ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment )
+            // InternalN4MFParser.g:549:1: ( ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment ) )
+            // InternalN4MFParser.g:550:1: ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment )
             {
              before(grammarAccess.getRequiredRuntimeLibraryDependencyAccess().getProjectAssignment()); 
-            // InternalN4MFParser.g:550:1: ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment )
-            // InternalN4MFParser.g:550:2: rule__RequiredRuntimeLibraryDependency__ProjectAssignment
+            // InternalN4MFParser.g:551:1: ( rule__RequiredRuntimeLibraryDependency__ProjectAssignment )
+            // InternalN4MFParser.g:551:2: rule__RequiredRuntimeLibraryDependency__ProjectAssignment
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraryDependency__ProjectAssignment();
@@ -1415,11 +1417,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleTestedProject"
-    // InternalN4MFParser.g:562:1: entryRuleTestedProject : ruleTestedProject EOF ;
+    // InternalN4MFParser.g:563:1: entryRuleTestedProject : ruleTestedProject EOF ;
     public final void entryRuleTestedProject() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:563:1: ( ruleTestedProject EOF )
-            // InternalN4MFParser.g:564:1: ruleTestedProject EOF
+            // InternalN4MFParser.g:564:1: ( ruleTestedProject EOF )
+            // InternalN4MFParser.g:565:1: ruleTestedProject EOF
             {
              before(grammarAccess.getTestedProjectRule()); 
             pushFollow(FOLLOW_1);
@@ -1445,21 +1447,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleTestedProject"
-    // InternalN4MFParser.g:571:1: ruleTestedProject : ( ( rule__TestedProject__ProjectAssignment ) ) ;
+    // InternalN4MFParser.g:572:1: ruleTestedProject : ( ( rule__TestedProject__ProjectAssignment ) ) ;
     public final void ruleTestedProject() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:575:5: ( ( ( rule__TestedProject__ProjectAssignment ) ) )
-            // InternalN4MFParser.g:576:1: ( ( rule__TestedProject__ProjectAssignment ) )
+            // InternalN4MFParser.g:576:5: ( ( ( rule__TestedProject__ProjectAssignment ) ) )
+            // InternalN4MFParser.g:577:1: ( ( rule__TestedProject__ProjectAssignment ) )
             {
-            // InternalN4MFParser.g:576:1: ( ( rule__TestedProject__ProjectAssignment ) )
-            // InternalN4MFParser.g:577:1: ( rule__TestedProject__ProjectAssignment )
+            // InternalN4MFParser.g:577:1: ( ( rule__TestedProject__ProjectAssignment ) )
+            // InternalN4MFParser.g:578:1: ( rule__TestedProject__ProjectAssignment )
             {
              before(grammarAccess.getTestedProjectAccess().getProjectAssignment()); 
-            // InternalN4MFParser.g:578:1: ( rule__TestedProject__ProjectAssignment )
-            // InternalN4MFParser.g:578:2: rule__TestedProject__ProjectAssignment
+            // InternalN4MFParser.g:579:1: ( rule__TestedProject__ProjectAssignment )
+            // InternalN4MFParser.g:579:2: rule__TestedProject__ProjectAssignment
             {
             pushFollow(FOLLOW_2);
             rule__TestedProject__ProjectAssignment();
@@ -1492,11 +1494,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProjectReference"
-    // InternalN4MFParser.g:590:1: entryRuleProjectReference : ruleProjectReference EOF ;
+    // InternalN4MFParser.g:591:1: entryRuleProjectReference : ruleProjectReference EOF ;
     public final void entryRuleProjectReference() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:591:1: ( ruleProjectReference EOF )
-            // InternalN4MFParser.g:592:1: ruleProjectReference EOF
+            // InternalN4MFParser.g:592:1: ( ruleProjectReference EOF )
+            // InternalN4MFParser.g:593:1: ruleProjectReference EOF
             {
              before(grammarAccess.getProjectReferenceRule()); 
             pushFollow(FOLLOW_1);
@@ -1522,21 +1524,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectReference"
-    // InternalN4MFParser.g:599:1: ruleProjectReference : ( ( rule__ProjectReference__ProjectAssignment ) ) ;
+    // InternalN4MFParser.g:600:1: ruleProjectReference : ( ( rule__ProjectReference__ProjectAssignment ) ) ;
     public final void ruleProjectReference() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:603:5: ( ( ( rule__ProjectReference__ProjectAssignment ) ) )
-            // InternalN4MFParser.g:604:1: ( ( rule__ProjectReference__ProjectAssignment ) )
+            // InternalN4MFParser.g:604:5: ( ( ( rule__ProjectReference__ProjectAssignment ) ) )
+            // InternalN4MFParser.g:605:1: ( ( rule__ProjectReference__ProjectAssignment ) )
             {
-            // InternalN4MFParser.g:604:1: ( ( rule__ProjectReference__ProjectAssignment ) )
-            // InternalN4MFParser.g:605:1: ( rule__ProjectReference__ProjectAssignment )
+            // InternalN4MFParser.g:605:1: ( ( rule__ProjectReference__ProjectAssignment ) )
+            // InternalN4MFParser.g:606:1: ( rule__ProjectReference__ProjectAssignment )
             {
              before(grammarAccess.getProjectReferenceAccess().getProjectAssignment()); 
-            // InternalN4MFParser.g:606:1: ( rule__ProjectReference__ProjectAssignment )
-            // InternalN4MFParser.g:606:2: rule__ProjectReference__ProjectAssignment
+            // InternalN4MFParser.g:607:1: ( rule__ProjectReference__ProjectAssignment )
+            // InternalN4MFParser.g:607:2: rule__ProjectReference__ProjectAssignment
             {
             pushFollow(FOLLOW_2);
             rule__ProjectReference__ProjectAssignment();
@@ -1569,11 +1571,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleProjectDependency"
-    // InternalN4MFParser.g:618:1: entryRuleProjectDependency : ruleProjectDependency EOF ;
+    // InternalN4MFParser.g:619:1: entryRuleProjectDependency : ruleProjectDependency EOF ;
     public final void entryRuleProjectDependency() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:619:1: ( ruleProjectDependency EOF )
-            // InternalN4MFParser.g:620:1: ruleProjectDependency EOF
+            // InternalN4MFParser.g:620:1: ( ruleProjectDependency EOF )
+            // InternalN4MFParser.g:621:1: ruleProjectDependency EOF
             {
              before(grammarAccess.getProjectDependencyRule()); 
             pushFollow(FOLLOW_1);
@@ -1599,21 +1601,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectDependency"
-    // InternalN4MFParser.g:627:1: ruleProjectDependency : ( ( rule__ProjectDependency__Group__0 ) ) ;
+    // InternalN4MFParser.g:628:1: ruleProjectDependency : ( ( rule__ProjectDependency__Group__0 ) ) ;
     public final void ruleProjectDependency() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:631:5: ( ( ( rule__ProjectDependency__Group__0 ) ) )
-            // InternalN4MFParser.g:632:1: ( ( rule__ProjectDependency__Group__0 ) )
+            // InternalN4MFParser.g:632:5: ( ( ( rule__ProjectDependency__Group__0 ) ) )
+            // InternalN4MFParser.g:633:1: ( ( rule__ProjectDependency__Group__0 ) )
             {
-            // InternalN4MFParser.g:632:1: ( ( rule__ProjectDependency__Group__0 ) )
-            // InternalN4MFParser.g:633:1: ( rule__ProjectDependency__Group__0 )
+            // InternalN4MFParser.g:633:1: ( ( rule__ProjectDependency__Group__0 ) )
+            // InternalN4MFParser.g:634:1: ( rule__ProjectDependency__Group__0 )
             {
              before(grammarAccess.getProjectDependencyAccess().getGroup()); 
-            // InternalN4MFParser.g:634:1: ( rule__ProjectDependency__Group__0 )
-            // InternalN4MFParser.g:634:2: rule__ProjectDependency__Group__0
+            // InternalN4MFParser.g:635:1: ( rule__ProjectDependency__Group__0 )
+            // InternalN4MFParser.g:635:2: rule__ProjectDependency__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependency__Group__0();
@@ -1646,11 +1648,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleSimpleProjectDescription"
-    // InternalN4MFParser.g:646:1: entryRuleSimpleProjectDescription : ruleSimpleProjectDescription EOF ;
+    // InternalN4MFParser.g:647:1: entryRuleSimpleProjectDescription : ruleSimpleProjectDescription EOF ;
     public final void entryRuleSimpleProjectDescription() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:647:1: ( ruleSimpleProjectDescription EOF )
-            // InternalN4MFParser.g:648:1: ruleSimpleProjectDescription EOF
+            // InternalN4MFParser.g:648:1: ( ruleSimpleProjectDescription EOF )
+            // InternalN4MFParser.g:649:1: ruleSimpleProjectDescription EOF
             {
              before(grammarAccess.getSimpleProjectDescriptionRule()); 
             pushFollow(FOLLOW_1);
@@ -1676,21 +1678,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSimpleProjectDescription"
-    // InternalN4MFParser.g:655:1: ruleSimpleProjectDescription : ( ( rule__SimpleProjectDescription__Group__0 ) ) ;
+    // InternalN4MFParser.g:656:1: ruleSimpleProjectDescription : ( ( rule__SimpleProjectDescription__Group__0 ) ) ;
     public final void ruleSimpleProjectDescription() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:659:5: ( ( ( rule__SimpleProjectDescription__Group__0 ) ) )
-            // InternalN4MFParser.g:660:1: ( ( rule__SimpleProjectDescription__Group__0 ) )
+            // InternalN4MFParser.g:660:5: ( ( ( rule__SimpleProjectDescription__Group__0 ) ) )
+            // InternalN4MFParser.g:661:1: ( ( rule__SimpleProjectDescription__Group__0 ) )
             {
-            // InternalN4MFParser.g:660:1: ( ( rule__SimpleProjectDescription__Group__0 ) )
-            // InternalN4MFParser.g:661:1: ( rule__SimpleProjectDescription__Group__0 )
+            // InternalN4MFParser.g:661:1: ( ( rule__SimpleProjectDescription__Group__0 ) )
+            // InternalN4MFParser.g:662:1: ( rule__SimpleProjectDescription__Group__0 )
             {
              before(grammarAccess.getSimpleProjectDescriptionAccess().getGroup()); 
-            // InternalN4MFParser.g:662:1: ( rule__SimpleProjectDescription__Group__0 )
-            // InternalN4MFParser.g:662:2: rule__SimpleProjectDescription__Group__0
+            // InternalN4MFParser.g:663:1: ( rule__SimpleProjectDescription__Group__0 )
+            // InternalN4MFParser.g:663:2: rule__SimpleProjectDescription__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__SimpleProjectDescription__Group__0();
@@ -1723,11 +1725,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleVersionConstraint"
-    // InternalN4MFParser.g:674:1: entryRuleVersionConstraint : ruleVersionConstraint EOF ;
+    // InternalN4MFParser.g:675:1: entryRuleVersionConstraint : ruleVersionConstraint EOF ;
     public final void entryRuleVersionConstraint() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:675:1: ( ruleVersionConstraint EOF )
-            // InternalN4MFParser.g:676:1: ruleVersionConstraint EOF
+            // InternalN4MFParser.g:676:1: ( ruleVersionConstraint EOF )
+            // InternalN4MFParser.g:677:1: ruleVersionConstraint EOF
             {
              before(grammarAccess.getVersionConstraintRule()); 
             pushFollow(FOLLOW_1);
@@ -1753,21 +1755,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleVersionConstraint"
-    // InternalN4MFParser.g:683:1: ruleVersionConstraint : ( ( rule__VersionConstraint__Alternatives ) ) ;
+    // InternalN4MFParser.g:684:1: ruleVersionConstraint : ( ( rule__VersionConstraint__Alternatives ) ) ;
     public final void ruleVersionConstraint() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:687:5: ( ( ( rule__VersionConstraint__Alternatives ) ) )
-            // InternalN4MFParser.g:688:1: ( ( rule__VersionConstraint__Alternatives ) )
+            // InternalN4MFParser.g:688:5: ( ( ( rule__VersionConstraint__Alternatives ) ) )
+            // InternalN4MFParser.g:689:1: ( ( rule__VersionConstraint__Alternatives ) )
             {
-            // InternalN4MFParser.g:688:1: ( ( rule__VersionConstraint__Alternatives ) )
-            // InternalN4MFParser.g:689:1: ( rule__VersionConstraint__Alternatives )
+            // InternalN4MFParser.g:689:1: ( ( rule__VersionConstraint__Alternatives ) )
+            // InternalN4MFParser.g:690:1: ( rule__VersionConstraint__Alternatives )
             {
              before(grammarAccess.getVersionConstraintAccess().getAlternatives()); 
-            // InternalN4MFParser.g:690:1: ( rule__VersionConstraint__Alternatives )
-            // InternalN4MFParser.g:690:2: rule__VersionConstraint__Alternatives
+            // InternalN4MFParser.g:691:1: ( rule__VersionConstraint__Alternatives )
+            // InternalN4MFParser.g:691:2: rule__VersionConstraint__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Alternatives();
@@ -1800,11 +1802,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleN4mfIdentifier"
-    // InternalN4MFParser.g:702:1: entryRuleN4mfIdentifier : ruleN4mfIdentifier EOF ;
+    // InternalN4MFParser.g:703:1: entryRuleN4mfIdentifier : ruleN4mfIdentifier EOF ;
     public final void entryRuleN4mfIdentifier() throws RecognitionException {
         try {
-            // InternalN4MFParser.g:703:1: ( ruleN4mfIdentifier EOF )
-            // InternalN4MFParser.g:704:1: ruleN4mfIdentifier EOF
+            // InternalN4MFParser.g:704:1: ( ruleN4mfIdentifier EOF )
+            // InternalN4MFParser.g:705:1: ruleN4mfIdentifier EOF
             {
              before(grammarAccess.getN4mfIdentifierRule()); 
             pushFollow(FOLLOW_1);
@@ -1830,21 +1832,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleN4mfIdentifier"
-    // InternalN4MFParser.g:711:1: ruleN4mfIdentifier : ( ( rule__N4mfIdentifier__Alternatives ) ) ;
+    // InternalN4MFParser.g:712:1: ruleN4mfIdentifier : ( ( rule__N4mfIdentifier__Alternatives ) ) ;
     public final void ruleN4mfIdentifier() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:715:5: ( ( ( rule__N4mfIdentifier__Alternatives ) ) )
-            // InternalN4MFParser.g:716:1: ( ( rule__N4mfIdentifier__Alternatives ) )
+            // InternalN4MFParser.g:716:5: ( ( ( rule__N4mfIdentifier__Alternatives ) ) )
+            // InternalN4MFParser.g:717:1: ( ( rule__N4mfIdentifier__Alternatives ) )
             {
-            // InternalN4MFParser.g:716:1: ( ( rule__N4mfIdentifier__Alternatives ) )
-            // InternalN4MFParser.g:717:1: ( rule__N4mfIdentifier__Alternatives )
+            // InternalN4MFParser.g:717:1: ( ( rule__N4mfIdentifier__Alternatives ) )
+            // InternalN4MFParser.g:718:1: ( rule__N4mfIdentifier__Alternatives )
             {
              before(grammarAccess.getN4mfIdentifierAccess().getAlternatives()); 
-            // InternalN4MFParser.g:718:1: ( rule__N4mfIdentifier__Alternatives )
-            // InternalN4MFParser.g:718:2: rule__N4mfIdentifier__Alternatives
+            // InternalN4MFParser.g:719:1: ( rule__N4mfIdentifier__Alternatives )
+            // InternalN4MFParser.g:719:2: rule__N4mfIdentifier__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__N4mfIdentifier__Alternatives();
@@ -1877,21 +1879,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectType"
-    // InternalN4MFParser.g:731:1: ruleProjectType : ( ( rule__ProjectType__Alternatives ) ) ;
+    // InternalN4MFParser.g:732:1: ruleProjectType : ( ( rule__ProjectType__Alternatives ) ) ;
     public final void ruleProjectType() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:735:1: ( ( ( rule__ProjectType__Alternatives ) ) )
-            // InternalN4MFParser.g:736:1: ( ( rule__ProjectType__Alternatives ) )
+            // InternalN4MFParser.g:736:1: ( ( ( rule__ProjectType__Alternatives ) ) )
+            // InternalN4MFParser.g:737:1: ( ( rule__ProjectType__Alternatives ) )
             {
-            // InternalN4MFParser.g:736:1: ( ( rule__ProjectType__Alternatives ) )
-            // InternalN4MFParser.g:737:1: ( rule__ProjectType__Alternatives )
+            // InternalN4MFParser.g:737:1: ( ( rule__ProjectType__Alternatives ) )
+            // InternalN4MFParser.g:738:1: ( rule__ProjectType__Alternatives )
             {
              before(grammarAccess.getProjectTypeAccess().getAlternatives()); 
-            // InternalN4MFParser.g:738:1: ( rule__ProjectType__Alternatives )
-            // InternalN4MFParser.g:738:2: rule__ProjectType__Alternatives
+            // InternalN4MFParser.g:739:1: ( rule__ProjectType__Alternatives )
+            // InternalN4MFParser.g:739:2: rule__ProjectType__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__ProjectType__Alternatives();
@@ -1924,21 +1926,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSourceFragmentType"
-    // InternalN4MFParser.g:750:1: ruleSourceFragmentType : ( ( rule__SourceFragmentType__Alternatives ) ) ;
+    // InternalN4MFParser.g:751:1: ruleSourceFragmentType : ( ( rule__SourceFragmentType__Alternatives ) ) ;
     public final void ruleSourceFragmentType() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:754:1: ( ( ( rule__SourceFragmentType__Alternatives ) ) )
-            // InternalN4MFParser.g:755:1: ( ( rule__SourceFragmentType__Alternatives ) )
+            // InternalN4MFParser.g:755:1: ( ( ( rule__SourceFragmentType__Alternatives ) ) )
+            // InternalN4MFParser.g:756:1: ( ( rule__SourceFragmentType__Alternatives ) )
             {
-            // InternalN4MFParser.g:755:1: ( ( rule__SourceFragmentType__Alternatives ) )
-            // InternalN4MFParser.g:756:1: ( rule__SourceFragmentType__Alternatives )
+            // InternalN4MFParser.g:756:1: ( ( rule__SourceFragmentType__Alternatives ) )
+            // InternalN4MFParser.g:757:1: ( rule__SourceFragmentType__Alternatives )
             {
              before(grammarAccess.getSourceFragmentTypeAccess().getAlternatives()); 
-            // InternalN4MFParser.g:757:1: ( rule__SourceFragmentType__Alternatives )
-            // InternalN4MFParser.g:757:2: rule__SourceFragmentType__Alternatives
+            // InternalN4MFParser.g:758:1: ( rule__SourceFragmentType__Alternatives )
+            // InternalN4MFParser.g:758:2: rule__SourceFragmentType__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragmentType__Alternatives();
@@ -1971,21 +1973,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModuleFilterType"
-    // InternalN4MFParser.g:769:1: ruleModuleFilterType : ( ( rule__ModuleFilterType__Alternatives ) ) ;
+    // InternalN4MFParser.g:770:1: ruleModuleFilterType : ( ( rule__ModuleFilterType__Alternatives ) ) ;
     public final void ruleModuleFilterType() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:773:1: ( ( ( rule__ModuleFilterType__Alternatives ) ) )
-            // InternalN4MFParser.g:774:1: ( ( rule__ModuleFilterType__Alternatives ) )
+            // InternalN4MFParser.g:774:1: ( ( ( rule__ModuleFilterType__Alternatives ) ) )
+            // InternalN4MFParser.g:775:1: ( ( rule__ModuleFilterType__Alternatives ) )
             {
-            // InternalN4MFParser.g:774:1: ( ( rule__ModuleFilterType__Alternatives ) )
-            // InternalN4MFParser.g:775:1: ( rule__ModuleFilterType__Alternatives )
+            // InternalN4MFParser.g:775:1: ( ( rule__ModuleFilterType__Alternatives ) )
+            // InternalN4MFParser.g:776:1: ( rule__ModuleFilterType__Alternatives )
             {
              before(grammarAccess.getModuleFilterTypeAccess().getAlternatives()); 
-            // InternalN4MFParser.g:776:1: ( rule__ModuleFilterType__Alternatives )
-            // InternalN4MFParser.g:776:2: rule__ModuleFilterType__Alternatives
+            // InternalN4MFParser.g:777:1: ( rule__ModuleFilterType__Alternatives )
+            // InternalN4MFParser.g:777:2: rule__ModuleFilterType__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterType__Alternatives();
@@ -2018,21 +2020,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleProjectDependencyScope"
-    // InternalN4MFParser.g:788:1: ruleProjectDependencyScope : ( ( rule__ProjectDependencyScope__Alternatives ) ) ;
+    // InternalN4MFParser.g:789:1: ruleProjectDependencyScope : ( ( rule__ProjectDependencyScope__Alternatives ) ) ;
     public final void ruleProjectDependencyScope() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:792:1: ( ( ( rule__ProjectDependencyScope__Alternatives ) ) )
-            // InternalN4MFParser.g:793:1: ( ( rule__ProjectDependencyScope__Alternatives ) )
+            // InternalN4MFParser.g:793:1: ( ( ( rule__ProjectDependencyScope__Alternatives ) ) )
+            // InternalN4MFParser.g:794:1: ( ( rule__ProjectDependencyScope__Alternatives ) )
             {
-            // InternalN4MFParser.g:793:1: ( ( rule__ProjectDependencyScope__Alternatives ) )
-            // InternalN4MFParser.g:794:1: ( rule__ProjectDependencyScope__Alternatives )
+            // InternalN4MFParser.g:794:1: ( ( rule__ProjectDependencyScope__Alternatives ) )
+            // InternalN4MFParser.g:795:1: ( rule__ProjectDependencyScope__Alternatives )
             {
              before(grammarAccess.getProjectDependencyScopeAccess().getAlternatives()); 
-            // InternalN4MFParser.g:795:1: ( rule__ProjectDependencyScope__Alternatives )
-            // InternalN4MFParser.g:795:2: rule__ProjectDependencyScope__Alternatives
+            // InternalN4MFParser.g:796:1: ( rule__ProjectDependencyScope__Alternatives )
+            // InternalN4MFParser.g:796:2: rule__ProjectDependencyScope__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencyScope__Alternatives();
@@ -2065,21 +2067,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModuleLoader"
-    // InternalN4MFParser.g:807:1: ruleModuleLoader : ( ( rule__ModuleLoader__Alternatives ) ) ;
+    // InternalN4MFParser.g:808:1: ruleModuleLoader : ( ( rule__ModuleLoader__Alternatives ) ) ;
     public final void ruleModuleLoader() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:811:1: ( ( ( rule__ModuleLoader__Alternatives ) ) )
-            // InternalN4MFParser.g:812:1: ( ( rule__ModuleLoader__Alternatives ) )
+            // InternalN4MFParser.g:812:1: ( ( ( rule__ModuleLoader__Alternatives ) ) )
+            // InternalN4MFParser.g:813:1: ( ( rule__ModuleLoader__Alternatives ) )
             {
-            // InternalN4MFParser.g:812:1: ( ( rule__ModuleLoader__Alternatives ) )
-            // InternalN4MFParser.g:813:1: ( rule__ModuleLoader__Alternatives )
+            // InternalN4MFParser.g:813:1: ( ( rule__ModuleLoader__Alternatives ) )
+            // InternalN4MFParser.g:814:1: ( rule__ModuleLoader__Alternatives )
             {
              before(grammarAccess.getModuleLoaderAccess().getAlternatives()); 
-            // InternalN4MFParser.g:814:1: ( rule__ModuleLoader__Alternatives )
-            // InternalN4MFParser.g:814:2: rule__ModuleLoader__Alternatives
+            // InternalN4MFParser.g:815:1: ( rule__ModuleLoader__Alternatives )
+            // InternalN4MFParser.g:815:2: rule__ModuleLoader__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__ModuleLoader__Alternatives();
@@ -2111,21 +2113,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleModuleLoader"
 
 
-    // $ANTLR start "rule__VersionConstraint__Alternatives"
-    // InternalN4MFParser.g:825:1: rule__VersionConstraint__Alternatives : ( ( ( rule__VersionConstraint__Group_0__0 ) ) | ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) ) );
-    public final void rule__VersionConstraint__Alternatives() throws RecognitionException {
+    // $ANTLR start "rule__ProjectDescription__Alternatives_0_0"
+    // InternalN4MFParser.g:826:1: rule__ProjectDescription__Alternatives_0_0 : ( ( ArtifactId ) | ( ProjectId ) );
+    public final void rule__ProjectDescription__Alternatives_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:829:1: ( ( ( rule__VersionConstraint__Group_0__0 ) ) | ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) ) )
+            // InternalN4MFParser.g:830:1: ( ( ArtifactId ) | ( ProjectId ) )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
-            if ( (LA1_0==LeftParenthesis||LA1_0==LeftSquareBracket) ) {
+            if ( (LA1_0==ArtifactId) ) {
                 alt1=1;
             }
-            else if ( (LA1_0==RULE_INT) ) {
+            else if ( (LA1_0==ProjectId) ) {
                 alt1=2;
             }
             else {
@@ -2136,14 +2138,85 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalN4MFParser.g:830:1: ( ( rule__VersionConstraint__Group_0__0 ) )
+                    // InternalN4MFParser.g:831:1: ( ArtifactId )
                     {
-                    // InternalN4MFParser.g:830:1: ( ( rule__VersionConstraint__Group_0__0 ) )
-                    // InternalN4MFParser.g:831:1: ( rule__VersionConstraint__Group_0__0 )
+                    // InternalN4MFParser.g:831:1: ( ArtifactId )
+                    // InternalN4MFParser.g:832:1: ArtifactId
+                    {
+                     before(grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0_0()); 
+                    match(input,ArtifactId,FOLLOW_2); 
+                     after(grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0_0()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalN4MFParser.g:839:6: ( ProjectId )
+                    {
+                    // InternalN4MFParser.g:839:6: ( ProjectId )
+                    // InternalN4MFParser.g:840:1: ProjectId
+                    {
+                     before(grammarAccess.getProjectDescriptionAccess().getProjectIdKeyword_0_0_1()); 
+                    match(input,ProjectId,FOLLOW_2); 
+                     after(grammarAccess.getProjectDescriptionAccess().getProjectIdKeyword_0_0_1()); 
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ProjectDescription__Alternatives_0_0"
+
+
+    // $ANTLR start "rule__VersionConstraint__Alternatives"
+    // InternalN4MFParser.g:852:1: rule__VersionConstraint__Alternatives : ( ( ( rule__VersionConstraint__Group_0__0 ) ) | ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) ) );
+    public final void rule__VersionConstraint__Alternatives() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalN4MFParser.g:856:1: ( ( ( rule__VersionConstraint__Group_0__0 ) ) | ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) ) )
+            int alt2=2;
+            int LA2_0 = input.LA(1);
+
+            if ( (LA2_0==LeftParenthesis||LA2_0==LeftSquareBracket) ) {
+                alt2=1;
+            }
+            else if ( (LA2_0==RULE_INT) ) {
+                alt2=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 2, 0, input);
+
+                throw nvae;
+            }
+            switch (alt2) {
+                case 1 :
+                    // InternalN4MFParser.g:857:1: ( ( rule__VersionConstraint__Group_0__0 ) )
+                    {
+                    // InternalN4MFParser.g:857:1: ( ( rule__VersionConstraint__Group_0__0 ) )
+                    // InternalN4MFParser.g:858:1: ( rule__VersionConstraint__Group_0__0 )
                     {
                      before(grammarAccess.getVersionConstraintAccess().getGroup_0()); 
-                    // InternalN4MFParser.g:832:1: ( rule__VersionConstraint__Group_0__0 )
-                    // InternalN4MFParser.g:832:2: rule__VersionConstraint__Group_0__0
+                    // InternalN4MFParser.g:859:1: ( rule__VersionConstraint__Group_0__0 )
+                    // InternalN4MFParser.g:859:2: rule__VersionConstraint__Group_0__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__VersionConstraint__Group_0__0();
@@ -2161,14 +2234,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:836:6: ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) )
+                    // InternalN4MFParser.g:863:6: ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) )
                     {
-                    // InternalN4MFParser.g:836:6: ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) )
-                    // InternalN4MFParser.g:837:1: ( rule__VersionConstraint__LowerVersionAssignment_1 )
+                    // InternalN4MFParser.g:863:6: ( ( rule__VersionConstraint__LowerVersionAssignment_1 ) )
+                    // InternalN4MFParser.g:864:1: ( rule__VersionConstraint__LowerVersionAssignment_1 )
                     {
                      before(grammarAccess.getVersionConstraintAccess().getLowerVersionAssignment_1()); 
-                    // InternalN4MFParser.g:838:1: ( rule__VersionConstraint__LowerVersionAssignment_1 )
-                    // InternalN4MFParser.g:838:2: rule__VersionConstraint__LowerVersionAssignment_1
+                    // InternalN4MFParser.g:865:1: ( rule__VersionConstraint__LowerVersionAssignment_1 )
+                    // InternalN4MFParser.g:865:2: rule__VersionConstraint__LowerVersionAssignment_1
                     {
                     pushFollow(FOLLOW_2);
                     rule__VersionConstraint__LowerVersionAssignment_1();
@@ -2203,38 +2276,38 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Alternatives_0_0"
-    // InternalN4MFParser.g:847:1: rule__VersionConstraint__Alternatives_0_0 : ( ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) ) | ( LeftSquareBracket ) );
+    // InternalN4MFParser.g:874:1: rule__VersionConstraint__Alternatives_0_0 : ( ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) ) | ( LeftSquareBracket ) );
     public final void rule__VersionConstraint__Alternatives_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:851:1: ( ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) ) | ( LeftSquareBracket ) )
-            int alt2=2;
-            int LA2_0 = input.LA(1);
+            // InternalN4MFParser.g:878:1: ( ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) ) | ( LeftSquareBracket ) )
+            int alt3=2;
+            int LA3_0 = input.LA(1);
 
-            if ( (LA2_0==LeftParenthesis) ) {
-                alt2=1;
+            if ( (LA3_0==LeftParenthesis) ) {
+                alt3=1;
             }
-            else if ( (LA2_0==LeftSquareBracket) ) {
-                alt2=2;
+            else if ( (LA3_0==LeftSquareBracket) ) {
+                alt3=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 2, 0, input);
+                    new NoViableAltException("", 3, 0, input);
 
                 throw nvae;
             }
-            switch (alt2) {
+            switch (alt3) {
                 case 1 :
-                    // InternalN4MFParser.g:852:1: ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) )
+                    // InternalN4MFParser.g:879:1: ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) )
                     {
-                    // InternalN4MFParser.g:852:1: ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) )
-                    // InternalN4MFParser.g:853:1: ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 )
+                    // InternalN4MFParser.g:879:1: ( ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 ) )
+                    // InternalN4MFParser.g:880:1: ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 )
                     {
                      before(grammarAccess.getVersionConstraintAccess().getExclLowerBoundAssignment_0_0_0()); 
-                    // InternalN4MFParser.g:854:1: ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 )
-                    // InternalN4MFParser.g:854:2: rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0
+                    // InternalN4MFParser.g:881:1: ( rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 )
+                    // InternalN4MFParser.g:881:2: rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0();
@@ -2252,10 +2325,10 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:858:6: ( LeftSquareBracket )
+                    // InternalN4MFParser.g:885:6: ( LeftSquareBracket )
                     {
-                    // InternalN4MFParser.g:858:6: ( LeftSquareBracket )
-                    // InternalN4MFParser.g:859:1: LeftSquareBracket
+                    // InternalN4MFParser.g:885:6: ( LeftSquareBracket )
+                    // InternalN4MFParser.g:886:1: LeftSquareBracket
                     {
                      before(grammarAccess.getVersionConstraintAccess().getLeftSquareBracketKeyword_0_0_1()); 
                     match(input,LeftSquareBracket,FOLLOW_2); 
@@ -2284,50 +2357,50 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Alternatives_0_2"
-    // InternalN4MFParser.g:871:1: rule__VersionConstraint__Alternatives_0_2 : ( ( ( rule__VersionConstraint__Group_0_2_0__0 )? ) | ( RightParenthesis ) );
+    // InternalN4MFParser.g:898:1: rule__VersionConstraint__Alternatives_0_2 : ( ( ( rule__VersionConstraint__Group_0_2_0__0 )? ) | ( RightParenthesis ) );
     public final void rule__VersionConstraint__Alternatives_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:875:1: ( ( ( rule__VersionConstraint__Group_0_2_0__0 )? ) | ( RightParenthesis ) )
-            int alt4=2;
-            int LA4_0 = input.LA(1);
+            // InternalN4MFParser.g:902:1: ( ( ( rule__VersionConstraint__Group_0_2_0__0 )? ) | ( RightParenthesis ) )
+            int alt5=2;
+            int LA5_0 = input.LA(1);
 
-            if ( (LA4_0==EOF||LA4_0==Compile||LA4_0==Test||LA4_0==Comma||LA4_0==RightCurlyBracket) ) {
-                alt4=1;
+            if ( (LA5_0==EOF||LA5_0==Compile||LA5_0==Test||LA5_0==Comma||LA5_0==RightCurlyBracket) ) {
+                alt5=1;
             }
-            else if ( (LA4_0==RightParenthesis) ) {
-                alt4=2;
+            else if ( (LA5_0==RightParenthesis) ) {
+                alt5=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 4, 0, input);
+                    new NoViableAltException("", 5, 0, input);
 
                 throw nvae;
             }
-            switch (alt4) {
+            switch (alt5) {
                 case 1 :
-                    // InternalN4MFParser.g:876:1: ( ( rule__VersionConstraint__Group_0_2_0__0 )? )
+                    // InternalN4MFParser.g:903:1: ( ( rule__VersionConstraint__Group_0_2_0__0 )? )
                     {
-                    // InternalN4MFParser.g:876:1: ( ( rule__VersionConstraint__Group_0_2_0__0 )? )
-                    // InternalN4MFParser.g:877:1: ( rule__VersionConstraint__Group_0_2_0__0 )?
+                    // InternalN4MFParser.g:903:1: ( ( rule__VersionConstraint__Group_0_2_0__0 )? )
+                    // InternalN4MFParser.g:904:1: ( rule__VersionConstraint__Group_0_2_0__0 )?
                     {
                      before(grammarAccess.getVersionConstraintAccess().getGroup_0_2_0()); 
-                    // InternalN4MFParser.g:878:1: ( rule__VersionConstraint__Group_0_2_0__0 )?
-                    int alt3=2;
-                    int LA3_0 = input.LA(1);
+                    // InternalN4MFParser.g:905:1: ( rule__VersionConstraint__Group_0_2_0__0 )?
+                    int alt4=2;
+                    int LA4_0 = input.LA(1);
 
-                    if ( (LA3_0==Comma) ) {
-                        int LA3_1 = input.LA(2);
+                    if ( (LA4_0==Comma) ) {
+                        int LA4_1 = input.LA(2);
 
-                        if ( (LA3_1==RULE_INT) ) {
-                            alt3=1;
+                        if ( (LA4_1==RULE_INT) ) {
+                            alt4=1;
                         }
                     }
-                    switch (alt3) {
+                    switch (alt4) {
                         case 1 :
-                            // InternalN4MFParser.g:878:2: rule__VersionConstraint__Group_0_2_0__0
+                            // InternalN4MFParser.g:905:2: rule__VersionConstraint__Group_0_2_0__0
                             {
                             pushFollow(FOLLOW_2);
                             rule__VersionConstraint__Group_0_2_0__0();
@@ -2348,10 +2421,10 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:882:6: ( RightParenthesis )
+                    // InternalN4MFParser.g:909:6: ( RightParenthesis )
                     {
-                    // InternalN4MFParser.g:882:6: ( RightParenthesis )
-                    // InternalN4MFParser.g:883:1: RightParenthesis
+                    // InternalN4MFParser.g:909:6: ( RightParenthesis )
+                    // InternalN4MFParser.g:910:1: RightParenthesis
                     {
                      before(grammarAccess.getVersionConstraintAccess().getRightParenthesisKeyword_0_2_1()); 
                     match(input,RightParenthesis,FOLLOW_2); 
@@ -2380,38 +2453,38 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Alternatives_0_2_0_2"
-    // InternalN4MFParser.g:895:1: rule__VersionConstraint__Alternatives_0_2_0_2 : ( ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) ) | ( RightSquareBracket ) );
+    // InternalN4MFParser.g:922:1: rule__VersionConstraint__Alternatives_0_2_0_2 : ( ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) ) | ( RightSquareBracket ) );
     public final void rule__VersionConstraint__Alternatives_0_2_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:899:1: ( ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) ) | ( RightSquareBracket ) )
-            int alt5=2;
-            int LA5_0 = input.LA(1);
+            // InternalN4MFParser.g:926:1: ( ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) ) | ( RightSquareBracket ) )
+            int alt6=2;
+            int LA6_0 = input.LA(1);
 
-            if ( (LA5_0==RightParenthesis) ) {
-                alt5=1;
+            if ( (LA6_0==RightParenthesis) ) {
+                alt6=1;
             }
-            else if ( (LA5_0==RightSquareBracket) ) {
-                alt5=2;
+            else if ( (LA6_0==RightSquareBracket) ) {
+                alt6=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 5, 0, input);
+                    new NoViableAltException("", 6, 0, input);
 
                 throw nvae;
             }
-            switch (alt5) {
+            switch (alt6) {
                 case 1 :
-                    // InternalN4MFParser.g:900:1: ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) )
+                    // InternalN4MFParser.g:927:1: ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) )
                     {
-                    // InternalN4MFParser.g:900:1: ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) )
-                    // InternalN4MFParser.g:901:1: ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 )
+                    // InternalN4MFParser.g:927:1: ( ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 ) )
+                    // InternalN4MFParser.g:928:1: ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 )
                     {
                      before(grammarAccess.getVersionConstraintAccess().getExclUpperBoundAssignment_0_2_0_2_0()); 
-                    // InternalN4MFParser.g:902:1: ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 )
-                    // InternalN4MFParser.g:902:2: rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0
+                    // InternalN4MFParser.g:929:1: ( rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 )
+                    // InternalN4MFParser.g:929:2: rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0();
@@ -2429,10 +2502,10 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:906:6: ( RightSquareBracket )
+                    // InternalN4MFParser.g:933:6: ( RightSquareBracket )
                     {
-                    // InternalN4MFParser.g:906:6: ( RightSquareBracket )
-                    // InternalN4MFParser.g:907:1: RightSquareBracket
+                    // InternalN4MFParser.g:933:6: ( RightSquareBracket )
+                    // InternalN4MFParser.g:934:1: RightSquareBracket
                     {
                      before(grammarAccess.getVersionConstraintAccess().getRightSquareBracketKeyword_0_2_0_2_1()); 
                     match(input,RightSquareBracket,FOLLOW_2); 
@@ -2461,123 +2534,128 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__N4mfIdentifier__Alternatives"
-    // InternalN4MFParser.g:919:1: rule__N4mfIdentifier__Alternatives : ( ( RULE_ID ) | ( ArtifactId ) | ( VendorId ) | ( ProjectName ) | ( VendorName ) | ( ProjectType ) | ( ProjectVersion ) | ( Output ) | ( Libraries ) | ( Resources ) | ( Sources ) | ( ModuleFilters ) | ( ( rule__N4mfIdentifier__Group_12__0 ) ) | ( API ) | ( User ) | ( Application ) | ( ( rule__N4mfIdentifier__Group_16__0 ) ) | ( Content ) | ( Test ) );
+    // InternalN4MFParser.g:946:1: rule__N4mfIdentifier__Alternatives : ( ( RULE_ID ) | ( ArtifactId ) | ( ProjectId ) | ( VendorId ) | ( ProjectName ) | ( VendorName ) | ( ProjectType ) | ( ProjectVersion ) | ( Output ) | ( Libraries ) | ( Resources ) | ( Sources ) | ( ModuleFilters ) | ( ( rule__N4mfIdentifier__Group_13__0 ) ) | ( API ) | ( User ) | ( Application ) | ( ( rule__N4mfIdentifier__Group_17__0 ) ) | ( Content ) | ( Test ) );
     public final void rule__N4mfIdentifier__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:923:1: ( ( RULE_ID ) | ( ArtifactId ) | ( VendorId ) | ( ProjectName ) | ( VendorName ) | ( ProjectType ) | ( ProjectVersion ) | ( Output ) | ( Libraries ) | ( Resources ) | ( Sources ) | ( ModuleFilters ) | ( ( rule__N4mfIdentifier__Group_12__0 ) ) | ( API ) | ( User ) | ( Application ) | ( ( rule__N4mfIdentifier__Group_16__0 ) ) | ( Content ) | ( Test ) )
-            int alt6=19;
+            // InternalN4MFParser.g:950:1: ( ( RULE_ID ) | ( ArtifactId ) | ( ProjectId ) | ( VendorId ) | ( ProjectName ) | ( VendorName ) | ( ProjectType ) | ( ProjectVersion ) | ( Output ) | ( Libraries ) | ( Resources ) | ( Sources ) | ( ModuleFilters ) | ( ( rule__N4mfIdentifier__Group_13__0 ) ) | ( API ) | ( User ) | ( Application ) | ( ( rule__N4mfIdentifier__Group_17__0 ) ) | ( Content ) | ( Test ) )
+            int alt7=20;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt6=1;
+                alt7=1;
                 }
                 break;
             case ArtifactId:
                 {
-                alt6=2;
+                alt7=2;
+                }
+                break;
+            case ProjectId:
+                {
+                alt7=3;
                 }
                 break;
             case VendorId:
                 {
-                alt6=3;
+                alt7=4;
                 }
                 break;
             case ProjectName:
                 {
-                alt6=4;
+                alt7=5;
                 }
                 break;
             case VendorName:
                 {
-                alt6=5;
+                alt7=6;
                 }
                 break;
             case ProjectType:
                 {
-                alt6=6;
+                alt7=7;
                 }
                 break;
             case ProjectVersion:
                 {
-                alt6=7;
+                alt7=8;
                 }
                 break;
             case Output:
                 {
-                alt6=8;
+                alt7=9;
                 }
                 break;
             case Libraries:
                 {
-                alt6=9;
+                alt7=10;
                 }
                 break;
             case Resources:
                 {
-                alt6=10;
+                alt7=11;
                 }
                 break;
             case Sources:
                 {
-                alt6=11;
+                alt7=12;
                 }
                 break;
             case ModuleFilters:
                 {
-                alt6=12;
+                alt7=13;
                 }
                 break;
             case ProjectDependencies:
                 {
-                alt6=13;
+                alt7=14;
                 }
                 break;
             case API:
                 {
-                alt6=14;
+                alt7=15;
                 }
                 break;
             case User:
                 {
-                alt6=15;
+                alt7=16;
                 }
                 break;
             case Application:
                 {
-                alt6=16;
+                alt7=17;
                 }
                 break;
             case Processor:
                 {
-                alt6=17;
+                alt7=18;
                 }
                 break;
             case Content:
                 {
-                alt6=18;
+                alt7=19;
                 }
                 break;
             case Test:
                 {
-                alt6=19;
+                alt7=20;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 6, 0, input);
+                    new NoViableAltException("", 7, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt6) {
+            switch (alt7) {
                 case 1 :
-                    // InternalN4MFParser.g:924:1: ( RULE_ID )
+                    // InternalN4MFParser.g:951:1: ( RULE_ID )
                     {
-                    // InternalN4MFParser.g:924:1: ( RULE_ID )
-                    // InternalN4MFParser.g:925:1: RULE_ID
+                    // InternalN4MFParser.g:951:1: ( RULE_ID )
+                    // InternalN4MFParser.g:952:1: RULE_ID
                     {
                      before(grammarAccess.getN4mfIdentifierAccess().getIDTerminalRuleCall_0()); 
                     match(input,RULE_ID,FOLLOW_2); 
@@ -2589,10 +2667,10 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:930:6: ( ArtifactId )
+                    // InternalN4MFParser.g:957:6: ( ArtifactId )
                     {
-                    // InternalN4MFParser.g:930:6: ( ArtifactId )
-                    // InternalN4MFParser.g:931:1: ArtifactId
+                    // InternalN4MFParser.g:957:6: ( ArtifactId )
+                    // InternalN4MFParser.g:958:1: ArtifactId
                     {
                      before(grammarAccess.getN4mfIdentifierAccess().getArtifactIdKeyword_1()); 
                     match(input,ArtifactId,FOLLOW_2); 
@@ -2604,14 +2682,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:938:6: ( VendorId )
+                    // InternalN4MFParser.g:965:6: ( ProjectId )
                     {
-                    // InternalN4MFParser.g:938:6: ( VendorId )
-                    // InternalN4MFParser.g:939:1: VendorId
+                    // InternalN4MFParser.g:965:6: ( ProjectId )
+                    // InternalN4MFParser.g:966:1: ProjectId
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_2()); 
-                    match(input,VendorId,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_2()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getProjectIdKeyword_2()); 
+                    match(input,ProjectId,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getProjectIdKeyword_2()); 
 
                     }
 
@@ -2619,14 +2697,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalN4MFParser.g:946:6: ( ProjectName )
+                    // InternalN4MFParser.g:973:6: ( VendorId )
                     {
-                    // InternalN4MFParser.g:946:6: ( ProjectName )
-                    // InternalN4MFParser.g:947:1: ProjectName
+                    // InternalN4MFParser.g:973:6: ( VendorId )
+                    // InternalN4MFParser.g:974:1: VendorId
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getProjectNameKeyword_3()); 
-                    match(input,ProjectName,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getProjectNameKeyword_3()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_3()); 
+                    match(input,VendorId,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_3()); 
 
                     }
 
@@ -2634,14 +2712,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalN4MFParser.g:954:6: ( VendorName )
+                    // InternalN4MFParser.g:981:6: ( ProjectName )
                     {
-                    // InternalN4MFParser.g:954:6: ( VendorName )
-                    // InternalN4MFParser.g:955:1: VendorName
+                    // InternalN4MFParser.g:981:6: ( ProjectName )
+                    // InternalN4MFParser.g:982:1: ProjectName
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getVendorNameKeyword_4()); 
-                    match(input,VendorName,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getVendorNameKeyword_4()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getProjectNameKeyword_4()); 
+                    match(input,ProjectName,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getProjectNameKeyword_4()); 
 
                     }
 
@@ -2649,14 +2727,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalN4MFParser.g:962:6: ( ProjectType )
+                    // InternalN4MFParser.g:989:6: ( VendorName )
                     {
-                    // InternalN4MFParser.g:962:6: ( ProjectType )
-                    // InternalN4MFParser.g:963:1: ProjectType
+                    // InternalN4MFParser.g:989:6: ( VendorName )
+                    // InternalN4MFParser.g:990:1: VendorName
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_5()); 
-                    match(input,ProjectType,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_5()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getVendorNameKeyword_5()); 
+                    match(input,VendorName,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getVendorNameKeyword_5()); 
 
                     }
 
@@ -2664,14 +2742,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 7 :
-                    // InternalN4MFParser.g:970:6: ( ProjectVersion )
+                    // InternalN4MFParser.g:997:6: ( ProjectType )
                     {
-                    // InternalN4MFParser.g:970:6: ( ProjectVersion )
-                    // InternalN4MFParser.g:971:1: ProjectVersion
+                    // InternalN4MFParser.g:997:6: ( ProjectType )
+                    // InternalN4MFParser.g:998:1: ProjectType
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_6()); 
-                    match(input,ProjectVersion,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_6()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_6()); 
+                    match(input,ProjectType,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_6()); 
 
                     }
 
@@ -2679,14 +2757,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 8 :
-                    // InternalN4MFParser.g:978:6: ( Output )
+                    // InternalN4MFParser.g:1005:6: ( ProjectVersion )
                     {
-                    // InternalN4MFParser.g:978:6: ( Output )
-                    // InternalN4MFParser.g:979:1: Output
+                    // InternalN4MFParser.g:1005:6: ( ProjectVersion )
+                    // InternalN4MFParser.g:1006:1: ProjectVersion
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_7()); 
-                    match(input,Output,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_7()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_7()); 
+                    match(input,ProjectVersion,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_7()); 
 
                     }
 
@@ -2694,14 +2772,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 9 :
-                    // InternalN4MFParser.g:986:6: ( Libraries )
+                    // InternalN4MFParser.g:1013:6: ( Output )
                     {
-                    // InternalN4MFParser.g:986:6: ( Libraries )
-                    // InternalN4MFParser.g:987:1: Libraries
+                    // InternalN4MFParser.g:1013:6: ( Output )
+                    // InternalN4MFParser.g:1014:1: Output
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_8()); 
-                    match(input,Libraries,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_8()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_8()); 
+                    match(input,Output,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_8()); 
 
                     }
 
@@ -2709,14 +2787,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 10 :
-                    // InternalN4MFParser.g:994:6: ( Resources )
+                    // InternalN4MFParser.g:1021:6: ( Libraries )
                     {
-                    // InternalN4MFParser.g:994:6: ( Resources )
-                    // InternalN4MFParser.g:995:1: Resources
+                    // InternalN4MFParser.g:1021:6: ( Libraries )
+                    // InternalN4MFParser.g:1022:1: Libraries
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_9()); 
-                    match(input,Resources,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_9()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_9()); 
+                    match(input,Libraries,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_9()); 
 
                     }
 
@@ -2724,14 +2802,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 11 :
-                    // InternalN4MFParser.g:1002:6: ( Sources )
+                    // InternalN4MFParser.g:1029:6: ( Resources )
                     {
-                    // InternalN4MFParser.g:1002:6: ( Sources )
-                    // InternalN4MFParser.g:1003:1: Sources
+                    // InternalN4MFParser.g:1029:6: ( Resources )
+                    // InternalN4MFParser.g:1030:1: Resources
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_10()); 
-                    match(input,Sources,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_10()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_10()); 
+                    match(input,Resources,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_10()); 
 
                     }
 
@@ -2739,14 +2817,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 12 :
-                    // InternalN4MFParser.g:1010:6: ( ModuleFilters )
+                    // InternalN4MFParser.g:1037:6: ( Sources )
                     {
-                    // InternalN4MFParser.g:1010:6: ( ModuleFilters )
-                    // InternalN4MFParser.g:1011:1: ModuleFilters
+                    // InternalN4MFParser.g:1037:6: ( Sources )
+                    // InternalN4MFParser.g:1038:1: Sources
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_11()); 
-                    match(input,ModuleFilters,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_11()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_11()); 
+                    match(input,Sources,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_11()); 
 
                     }
 
@@ -2754,24 +2832,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 13 :
-                    // InternalN4MFParser.g:1018:6: ( ( rule__N4mfIdentifier__Group_12__0 ) )
+                    // InternalN4MFParser.g:1045:6: ( ModuleFilters )
                     {
-                    // InternalN4MFParser.g:1018:6: ( ( rule__N4mfIdentifier__Group_12__0 ) )
-                    // InternalN4MFParser.g:1019:1: ( rule__N4mfIdentifier__Group_12__0 )
+                    // InternalN4MFParser.g:1045:6: ( ModuleFilters )
+                    // InternalN4MFParser.g:1046:1: ModuleFilters
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getGroup_12()); 
-                    // InternalN4MFParser.g:1020:1: ( rule__N4mfIdentifier__Group_12__0 )
-                    // InternalN4MFParser.g:1020:2: rule__N4mfIdentifier__Group_12__0
-                    {
-                    pushFollow(FOLLOW_2);
-                    rule__N4mfIdentifier__Group_12__0();
-
-                    state._fsp--;
-
-
-                    }
-
-                     after(grammarAccess.getN4mfIdentifierAccess().getGroup_12()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_12()); 
+                    match(input,ModuleFilters,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_12()); 
 
                     }
 
@@ -2779,14 +2847,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 14 :
-                    // InternalN4MFParser.g:1024:6: ( API )
+                    // InternalN4MFParser.g:1053:6: ( ( rule__N4mfIdentifier__Group_13__0 ) )
                     {
-                    // InternalN4MFParser.g:1024:6: ( API )
-                    // InternalN4MFParser.g:1025:1: API
+                    // InternalN4MFParser.g:1053:6: ( ( rule__N4mfIdentifier__Group_13__0 ) )
+                    // InternalN4MFParser.g:1054:1: ( rule__N4mfIdentifier__Group_13__0 )
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_13()); 
-                    match(input,API,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_13()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getGroup_13()); 
+                    // InternalN4MFParser.g:1055:1: ( rule__N4mfIdentifier__Group_13__0 )
+                    // InternalN4MFParser.g:1055:2: rule__N4mfIdentifier__Group_13__0
+                    {
+                    pushFollow(FOLLOW_2);
+                    rule__N4mfIdentifier__Group_13__0();
+
+                    state._fsp--;
+
+
+                    }
+
+                     after(grammarAccess.getN4mfIdentifierAccess().getGroup_13()); 
 
                     }
 
@@ -2794,14 +2872,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 15 :
-                    // InternalN4MFParser.g:1032:6: ( User )
+                    // InternalN4MFParser.g:1059:6: ( API )
                     {
-                    // InternalN4MFParser.g:1032:6: ( User )
-                    // InternalN4MFParser.g:1033:1: User
+                    // InternalN4MFParser.g:1059:6: ( API )
+                    // InternalN4MFParser.g:1060:1: API
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getUserKeyword_14()); 
-                    match(input,User,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getUserKeyword_14()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_14()); 
+                    match(input,API,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_14()); 
 
                     }
 
@@ -2809,14 +2887,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 16 :
-                    // InternalN4MFParser.g:1040:6: ( Application )
+                    // InternalN4MFParser.g:1067:6: ( User )
                     {
-                    // InternalN4MFParser.g:1040:6: ( Application )
-                    // InternalN4MFParser.g:1041:1: Application
+                    // InternalN4MFParser.g:1067:6: ( User )
+                    // InternalN4MFParser.g:1068:1: User
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_15()); 
-                    match(input,Application,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_15()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getUserKeyword_15()); 
+                    match(input,User,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getUserKeyword_15()); 
 
                     }
 
@@ -2824,24 +2902,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 17 :
-                    // InternalN4MFParser.g:1048:6: ( ( rule__N4mfIdentifier__Group_16__0 ) )
+                    // InternalN4MFParser.g:1075:6: ( Application )
                     {
-                    // InternalN4MFParser.g:1048:6: ( ( rule__N4mfIdentifier__Group_16__0 ) )
-                    // InternalN4MFParser.g:1049:1: ( rule__N4mfIdentifier__Group_16__0 )
+                    // InternalN4MFParser.g:1075:6: ( Application )
+                    // InternalN4MFParser.g:1076:1: Application
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getGroup_16()); 
-                    // InternalN4MFParser.g:1050:1: ( rule__N4mfIdentifier__Group_16__0 )
-                    // InternalN4MFParser.g:1050:2: rule__N4mfIdentifier__Group_16__0
-                    {
-                    pushFollow(FOLLOW_2);
-                    rule__N4mfIdentifier__Group_16__0();
-
-                    state._fsp--;
-
-
-                    }
-
-                     after(grammarAccess.getN4mfIdentifierAccess().getGroup_16()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_16()); 
+                    match(input,Application,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_16()); 
 
                     }
 
@@ -2849,14 +2917,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 18 :
-                    // InternalN4MFParser.g:1054:6: ( Content )
+                    // InternalN4MFParser.g:1083:6: ( ( rule__N4mfIdentifier__Group_17__0 ) )
                     {
-                    // InternalN4MFParser.g:1054:6: ( Content )
-                    // InternalN4MFParser.g:1055:1: Content
+                    // InternalN4MFParser.g:1083:6: ( ( rule__N4mfIdentifier__Group_17__0 ) )
+                    // InternalN4MFParser.g:1084:1: ( rule__N4mfIdentifier__Group_17__0 )
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getContentKeyword_17()); 
-                    match(input,Content,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getContentKeyword_17()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getGroup_17()); 
+                    // InternalN4MFParser.g:1085:1: ( rule__N4mfIdentifier__Group_17__0 )
+                    // InternalN4MFParser.g:1085:2: rule__N4mfIdentifier__Group_17__0
+                    {
+                    pushFollow(FOLLOW_2);
+                    rule__N4mfIdentifier__Group_17__0();
+
+                    state._fsp--;
+
+
+                    }
+
+                     after(grammarAccess.getN4mfIdentifierAccess().getGroup_17()); 
 
                     }
 
@@ -2864,14 +2942,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 19 :
-                    // InternalN4MFParser.g:1062:6: ( Test )
+                    // InternalN4MFParser.g:1089:6: ( Content )
                     {
-                    // InternalN4MFParser.g:1062:6: ( Test )
-                    // InternalN4MFParser.g:1063:1: Test
+                    // InternalN4MFParser.g:1089:6: ( Content )
+                    // InternalN4MFParser.g:1090:1: Content
                     {
-                     before(grammarAccess.getN4mfIdentifierAccess().getTestKeyword_18()); 
+                     before(grammarAccess.getN4mfIdentifierAccess().getContentKeyword_18()); 
+                    match(input,Content,FOLLOW_2); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getContentKeyword_18()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 20 :
+                    // InternalN4MFParser.g:1097:6: ( Test )
+                    {
+                    // InternalN4MFParser.g:1097:6: ( Test )
+                    // InternalN4MFParser.g:1098:1: Test
+                    {
+                     before(grammarAccess.getN4mfIdentifierAccess().getTestKeyword_19()); 
                     match(input,Test,FOLLOW_2); 
-                     after(grammarAccess.getN4mfIdentifierAccess().getTestKeyword_18()); 
+                     after(grammarAccess.getN4mfIdentifierAccess().getTestKeyword_19()); 
 
                     }
 
@@ -2896,67 +2989,67 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectType__Alternatives"
-    // InternalN4MFParser.g:1075:1: rule__ProjectType__Alternatives : ( ( ( Application ) ) | ( ( Processor ) ) | ( ( Library ) ) | ( ( API ) ) | ( ( RuntimeEnvironment ) ) | ( ( RuntimeLibrary ) ) | ( ( Test ) ) );
+    // InternalN4MFParser.g:1110:1: rule__ProjectType__Alternatives : ( ( ( Application ) ) | ( ( Processor ) ) | ( ( Library ) ) | ( ( API ) ) | ( ( RuntimeEnvironment ) ) | ( ( RuntimeLibrary ) ) | ( ( Test ) ) );
     public final void rule__ProjectType__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1079:1: ( ( ( Application ) ) | ( ( Processor ) ) | ( ( Library ) ) | ( ( API ) ) | ( ( RuntimeEnvironment ) ) | ( ( RuntimeLibrary ) ) | ( ( Test ) ) )
-            int alt7=7;
+            // InternalN4MFParser.g:1114:1: ( ( ( Application ) ) | ( ( Processor ) ) | ( ( Library ) ) | ( ( API ) ) | ( ( RuntimeEnvironment ) ) | ( ( RuntimeLibrary ) ) | ( ( Test ) ) )
+            int alt8=7;
             switch ( input.LA(1) ) {
             case Application:
                 {
-                alt7=1;
+                alt8=1;
                 }
                 break;
             case Processor:
                 {
-                alt7=2;
+                alt8=2;
                 }
                 break;
             case Library:
                 {
-                alt7=3;
+                alt8=3;
                 }
                 break;
             case API:
                 {
-                alt7=4;
+                alt8=4;
                 }
                 break;
             case RuntimeEnvironment:
                 {
-                alt7=5;
+                alt8=5;
                 }
                 break;
             case RuntimeLibrary:
                 {
-                alt7=6;
+                alt8=6;
                 }
                 break;
             case Test:
                 {
-                alt7=7;
+                alt8=7;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 7, 0, input);
+                    new NoViableAltException("", 8, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt7) {
+            switch (alt8) {
                 case 1 :
-                    // InternalN4MFParser.g:1080:1: ( ( Application ) )
+                    // InternalN4MFParser.g:1115:1: ( ( Application ) )
                     {
-                    // InternalN4MFParser.g:1080:1: ( ( Application ) )
-                    // InternalN4MFParser.g:1081:1: ( Application )
+                    // InternalN4MFParser.g:1115:1: ( ( Application ) )
+                    // InternalN4MFParser.g:1116:1: ( Application )
                     {
                      before(grammarAccess.getProjectTypeAccess().getAPPLICATIONEnumLiteralDeclaration_0()); 
-                    // InternalN4MFParser.g:1082:1: ( Application )
-                    // InternalN4MFParser.g:1082:3: Application
+                    // InternalN4MFParser.g:1117:1: ( Application )
+                    // InternalN4MFParser.g:1117:3: Application
                     {
                     match(input,Application,FOLLOW_2); 
 
@@ -2970,14 +3063,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:1087:6: ( ( Processor ) )
+                    // InternalN4MFParser.g:1122:6: ( ( Processor ) )
                     {
-                    // InternalN4MFParser.g:1087:6: ( ( Processor ) )
-                    // InternalN4MFParser.g:1088:1: ( Processor )
+                    // InternalN4MFParser.g:1122:6: ( ( Processor ) )
+                    // InternalN4MFParser.g:1123:1: ( Processor )
                     {
                      before(grammarAccess.getProjectTypeAccess().getPROCESSOREnumLiteralDeclaration_1()); 
-                    // InternalN4MFParser.g:1089:1: ( Processor )
-                    // InternalN4MFParser.g:1089:3: Processor
+                    // InternalN4MFParser.g:1124:1: ( Processor )
+                    // InternalN4MFParser.g:1124:3: Processor
                     {
                     match(input,Processor,FOLLOW_2); 
 
@@ -2991,14 +3084,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:1094:6: ( ( Library ) )
+                    // InternalN4MFParser.g:1129:6: ( ( Library ) )
                     {
-                    // InternalN4MFParser.g:1094:6: ( ( Library ) )
-                    // InternalN4MFParser.g:1095:1: ( Library )
+                    // InternalN4MFParser.g:1129:6: ( ( Library ) )
+                    // InternalN4MFParser.g:1130:1: ( Library )
                     {
                      before(grammarAccess.getProjectTypeAccess().getLIBRARYEnumLiteralDeclaration_2()); 
-                    // InternalN4MFParser.g:1096:1: ( Library )
-                    // InternalN4MFParser.g:1096:3: Library
+                    // InternalN4MFParser.g:1131:1: ( Library )
+                    // InternalN4MFParser.g:1131:3: Library
                     {
                     match(input,Library,FOLLOW_2); 
 
@@ -3012,14 +3105,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalN4MFParser.g:1101:6: ( ( API ) )
+                    // InternalN4MFParser.g:1136:6: ( ( API ) )
                     {
-                    // InternalN4MFParser.g:1101:6: ( ( API ) )
-                    // InternalN4MFParser.g:1102:1: ( API )
+                    // InternalN4MFParser.g:1136:6: ( ( API ) )
+                    // InternalN4MFParser.g:1137:1: ( API )
                     {
                      before(grammarAccess.getProjectTypeAccess().getAPIEnumLiteralDeclaration_3()); 
-                    // InternalN4MFParser.g:1103:1: ( API )
-                    // InternalN4MFParser.g:1103:3: API
+                    // InternalN4MFParser.g:1138:1: ( API )
+                    // InternalN4MFParser.g:1138:3: API
                     {
                     match(input,API,FOLLOW_2); 
 
@@ -3033,14 +3126,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalN4MFParser.g:1108:6: ( ( RuntimeEnvironment ) )
+                    // InternalN4MFParser.g:1143:6: ( ( RuntimeEnvironment ) )
                     {
-                    // InternalN4MFParser.g:1108:6: ( ( RuntimeEnvironment ) )
-                    // InternalN4MFParser.g:1109:1: ( RuntimeEnvironment )
+                    // InternalN4MFParser.g:1143:6: ( ( RuntimeEnvironment ) )
+                    // InternalN4MFParser.g:1144:1: ( RuntimeEnvironment )
                     {
                      before(grammarAccess.getProjectTypeAccess().getRUNTIME_ENVIRONMENTEnumLiteralDeclaration_4()); 
-                    // InternalN4MFParser.g:1110:1: ( RuntimeEnvironment )
-                    // InternalN4MFParser.g:1110:3: RuntimeEnvironment
+                    // InternalN4MFParser.g:1145:1: ( RuntimeEnvironment )
+                    // InternalN4MFParser.g:1145:3: RuntimeEnvironment
                     {
                     match(input,RuntimeEnvironment,FOLLOW_2); 
 
@@ -3054,14 +3147,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalN4MFParser.g:1115:6: ( ( RuntimeLibrary ) )
+                    // InternalN4MFParser.g:1150:6: ( ( RuntimeLibrary ) )
                     {
-                    // InternalN4MFParser.g:1115:6: ( ( RuntimeLibrary ) )
-                    // InternalN4MFParser.g:1116:1: ( RuntimeLibrary )
+                    // InternalN4MFParser.g:1150:6: ( ( RuntimeLibrary ) )
+                    // InternalN4MFParser.g:1151:1: ( RuntimeLibrary )
                     {
                      before(grammarAccess.getProjectTypeAccess().getRUNTIME_LIBRARYEnumLiteralDeclaration_5()); 
-                    // InternalN4MFParser.g:1117:1: ( RuntimeLibrary )
-                    // InternalN4MFParser.g:1117:3: RuntimeLibrary
+                    // InternalN4MFParser.g:1152:1: ( RuntimeLibrary )
+                    // InternalN4MFParser.g:1152:3: RuntimeLibrary
                     {
                     match(input,RuntimeLibrary,FOLLOW_2); 
 
@@ -3075,14 +3168,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 7 :
-                    // InternalN4MFParser.g:1122:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1157:6: ( ( Test ) )
                     {
-                    // InternalN4MFParser.g:1122:6: ( ( Test ) )
-                    // InternalN4MFParser.g:1123:1: ( Test )
+                    // InternalN4MFParser.g:1157:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1158:1: ( Test )
                     {
                      before(grammarAccess.getProjectTypeAccess().getTESTEnumLiteralDeclaration_6()); 
-                    // InternalN4MFParser.g:1124:1: ( Test )
-                    // InternalN4MFParser.g:1124:3: Test
+                    // InternalN4MFParser.g:1159:1: ( Test )
+                    // InternalN4MFParser.g:1159:3: Test
                     {
                     match(input,Test,FOLLOW_2); 
 
@@ -3113,47 +3206,47 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragmentType__Alternatives"
-    // InternalN4MFParser.g:1134:1: rule__SourceFragmentType__Alternatives : ( ( ( Source ) ) | ( ( External ) ) | ( ( Test ) ) );
+    // InternalN4MFParser.g:1169:1: rule__SourceFragmentType__Alternatives : ( ( ( Source ) ) | ( ( External ) ) | ( ( Test ) ) );
     public final void rule__SourceFragmentType__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1138:1: ( ( ( Source ) ) | ( ( External ) ) | ( ( Test ) ) )
-            int alt8=3;
+            // InternalN4MFParser.g:1173:1: ( ( ( Source ) ) | ( ( External ) ) | ( ( Test ) ) )
+            int alt9=3;
             switch ( input.LA(1) ) {
             case Source:
                 {
-                alt8=1;
+                alt9=1;
                 }
                 break;
             case External:
                 {
-                alt8=2;
+                alt9=2;
                 }
                 break;
             case Test:
                 {
-                alt8=3;
+                alt9=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 8, 0, input);
+                    new NoViableAltException("", 9, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt8) {
+            switch (alt9) {
                 case 1 :
-                    // InternalN4MFParser.g:1139:1: ( ( Source ) )
+                    // InternalN4MFParser.g:1174:1: ( ( Source ) )
                     {
-                    // InternalN4MFParser.g:1139:1: ( ( Source ) )
-                    // InternalN4MFParser.g:1140:1: ( Source )
+                    // InternalN4MFParser.g:1174:1: ( ( Source ) )
+                    // InternalN4MFParser.g:1175:1: ( Source )
                     {
                      before(grammarAccess.getSourceFragmentTypeAccess().getSOURCEEnumLiteralDeclaration_0()); 
-                    // InternalN4MFParser.g:1141:1: ( Source )
-                    // InternalN4MFParser.g:1141:3: Source
+                    // InternalN4MFParser.g:1176:1: ( Source )
+                    // InternalN4MFParser.g:1176:3: Source
                     {
                     match(input,Source,FOLLOW_2); 
 
@@ -3167,14 +3260,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:1146:6: ( ( External ) )
+                    // InternalN4MFParser.g:1181:6: ( ( External ) )
                     {
-                    // InternalN4MFParser.g:1146:6: ( ( External ) )
-                    // InternalN4MFParser.g:1147:1: ( External )
+                    // InternalN4MFParser.g:1181:6: ( ( External ) )
+                    // InternalN4MFParser.g:1182:1: ( External )
                     {
                      before(grammarAccess.getSourceFragmentTypeAccess().getEXTERNALEnumLiteralDeclaration_1()); 
-                    // InternalN4MFParser.g:1148:1: ( External )
-                    // InternalN4MFParser.g:1148:3: External
+                    // InternalN4MFParser.g:1183:1: ( External )
+                    // InternalN4MFParser.g:1183:3: External
                     {
                     match(input,External,FOLLOW_2); 
 
@@ -3188,14 +3281,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:1153:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1188:6: ( ( Test ) )
                     {
-                    // InternalN4MFParser.g:1153:6: ( ( Test ) )
-                    // InternalN4MFParser.g:1154:1: ( Test )
+                    // InternalN4MFParser.g:1188:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1189:1: ( Test )
                     {
                      before(grammarAccess.getSourceFragmentTypeAccess().getTESTEnumLiteralDeclaration_2()); 
-                    // InternalN4MFParser.g:1155:1: ( Test )
-                    // InternalN4MFParser.g:1155:3: Test
+                    // InternalN4MFParser.g:1190:1: ( Test )
+                    // InternalN4MFParser.g:1190:3: Test
                     {
                     match(input,Test,FOLLOW_2); 
 
@@ -3226,38 +3319,38 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterType__Alternatives"
-    // InternalN4MFParser.g:1165:1: rule__ModuleFilterType__Alternatives : ( ( ( NoValidate ) ) | ( ( NoModuleWrap ) ) );
+    // InternalN4MFParser.g:1200:1: rule__ModuleFilterType__Alternatives : ( ( ( NoValidate ) ) | ( ( NoModuleWrap ) ) );
     public final void rule__ModuleFilterType__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1169:1: ( ( ( NoValidate ) ) | ( ( NoModuleWrap ) ) )
-            int alt9=2;
-            int LA9_0 = input.LA(1);
+            // InternalN4MFParser.g:1204:1: ( ( ( NoValidate ) ) | ( ( NoModuleWrap ) ) )
+            int alt10=2;
+            int LA10_0 = input.LA(1);
 
-            if ( (LA9_0==NoValidate) ) {
-                alt9=1;
+            if ( (LA10_0==NoValidate) ) {
+                alt10=1;
             }
-            else if ( (LA9_0==NoModuleWrap) ) {
-                alt9=2;
+            else if ( (LA10_0==NoModuleWrap) ) {
+                alt10=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 9, 0, input);
+                    new NoViableAltException("", 10, 0, input);
 
                 throw nvae;
             }
-            switch (alt9) {
+            switch (alt10) {
                 case 1 :
-                    // InternalN4MFParser.g:1170:1: ( ( NoValidate ) )
+                    // InternalN4MFParser.g:1205:1: ( ( NoValidate ) )
                     {
-                    // InternalN4MFParser.g:1170:1: ( ( NoValidate ) )
-                    // InternalN4MFParser.g:1171:1: ( NoValidate )
+                    // InternalN4MFParser.g:1205:1: ( ( NoValidate ) )
+                    // InternalN4MFParser.g:1206:1: ( NoValidate )
                     {
                      before(grammarAccess.getModuleFilterTypeAccess().getNO_VALIDATEEnumLiteralDeclaration_0()); 
-                    // InternalN4MFParser.g:1172:1: ( NoValidate )
-                    // InternalN4MFParser.g:1172:3: NoValidate
+                    // InternalN4MFParser.g:1207:1: ( NoValidate )
+                    // InternalN4MFParser.g:1207:3: NoValidate
                     {
                     match(input,NoValidate,FOLLOW_2); 
 
@@ -3271,14 +3364,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:1177:6: ( ( NoModuleWrap ) )
+                    // InternalN4MFParser.g:1212:6: ( ( NoModuleWrap ) )
                     {
-                    // InternalN4MFParser.g:1177:6: ( ( NoModuleWrap ) )
-                    // InternalN4MFParser.g:1178:1: ( NoModuleWrap )
+                    // InternalN4MFParser.g:1212:6: ( ( NoModuleWrap ) )
+                    // InternalN4MFParser.g:1213:1: ( NoModuleWrap )
                     {
                      before(grammarAccess.getModuleFilterTypeAccess().getNO_MODULE_WRAPPINGEnumLiteralDeclaration_1()); 
-                    // InternalN4MFParser.g:1179:1: ( NoModuleWrap )
-                    // InternalN4MFParser.g:1179:3: NoModuleWrap
+                    // InternalN4MFParser.g:1214:1: ( NoModuleWrap )
+                    // InternalN4MFParser.g:1214:3: NoModuleWrap
                     {
                     match(input,NoModuleWrap,FOLLOW_2); 
 
@@ -3309,38 +3402,38 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencyScope__Alternatives"
-    // InternalN4MFParser.g:1189:1: rule__ProjectDependencyScope__Alternatives : ( ( ( Compile ) ) | ( ( Test ) ) );
+    // InternalN4MFParser.g:1224:1: rule__ProjectDependencyScope__Alternatives : ( ( ( Compile ) ) | ( ( Test ) ) );
     public final void rule__ProjectDependencyScope__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1193:1: ( ( ( Compile ) ) | ( ( Test ) ) )
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // InternalN4MFParser.g:1228:1: ( ( ( Compile ) ) | ( ( Test ) ) )
+            int alt11=2;
+            int LA11_0 = input.LA(1);
 
-            if ( (LA10_0==Compile) ) {
-                alt10=1;
+            if ( (LA11_0==Compile) ) {
+                alt11=1;
             }
-            else if ( (LA10_0==Test) ) {
-                alt10=2;
+            else if ( (LA11_0==Test) ) {
+                alt11=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 10, 0, input);
+                    new NoViableAltException("", 11, 0, input);
 
                 throw nvae;
             }
-            switch (alt10) {
+            switch (alt11) {
                 case 1 :
-                    // InternalN4MFParser.g:1194:1: ( ( Compile ) )
+                    // InternalN4MFParser.g:1229:1: ( ( Compile ) )
                     {
-                    // InternalN4MFParser.g:1194:1: ( ( Compile ) )
-                    // InternalN4MFParser.g:1195:1: ( Compile )
+                    // InternalN4MFParser.g:1229:1: ( ( Compile ) )
+                    // InternalN4MFParser.g:1230:1: ( Compile )
                     {
                      before(grammarAccess.getProjectDependencyScopeAccess().getCOMPILEEnumLiteralDeclaration_0()); 
-                    // InternalN4MFParser.g:1196:1: ( Compile )
-                    // InternalN4MFParser.g:1196:3: Compile
+                    // InternalN4MFParser.g:1231:1: ( Compile )
+                    // InternalN4MFParser.g:1231:3: Compile
                     {
                     match(input,Compile,FOLLOW_2); 
 
@@ -3354,14 +3447,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:1201:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1236:6: ( ( Test ) )
                     {
-                    // InternalN4MFParser.g:1201:6: ( ( Test ) )
-                    // InternalN4MFParser.g:1202:1: ( Test )
+                    // InternalN4MFParser.g:1236:6: ( ( Test ) )
+                    // InternalN4MFParser.g:1237:1: ( Test )
                     {
                      before(grammarAccess.getProjectDependencyScopeAccess().getTESTEnumLiteralDeclaration_1()); 
-                    // InternalN4MFParser.g:1203:1: ( Test )
-                    // InternalN4MFParser.g:1203:3: Test
+                    // InternalN4MFParser.g:1238:1: ( Test )
+                    // InternalN4MFParser.g:1238:3: Test
                     {
                     match(input,Test,FOLLOW_2); 
 
@@ -3392,47 +3485,47 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleLoader__Alternatives"
-    // InternalN4MFParser.g:1213:1: rule__ModuleLoader__Alternatives : ( ( ( N4js ) ) | ( ( Commonjs ) ) | ( ( Node_builtin ) ) );
+    // InternalN4MFParser.g:1248:1: rule__ModuleLoader__Alternatives : ( ( ( N4js ) ) | ( ( Commonjs ) ) | ( ( Node_builtin ) ) );
     public final void rule__ModuleLoader__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1217:1: ( ( ( N4js ) ) | ( ( Commonjs ) ) | ( ( Node_builtin ) ) )
-            int alt11=3;
+            // InternalN4MFParser.g:1252:1: ( ( ( N4js ) ) | ( ( Commonjs ) ) | ( ( Node_builtin ) ) )
+            int alt12=3;
             switch ( input.LA(1) ) {
             case N4js:
                 {
-                alt11=1;
+                alt12=1;
                 }
                 break;
             case Commonjs:
                 {
-                alt11=2;
+                alt12=2;
                 }
                 break;
             case Node_builtin:
                 {
-                alt11=3;
+                alt12=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 11, 0, input);
+                    new NoViableAltException("", 12, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt11) {
+            switch (alt12) {
                 case 1 :
-                    // InternalN4MFParser.g:1218:1: ( ( N4js ) )
+                    // InternalN4MFParser.g:1253:1: ( ( N4js ) )
                     {
-                    // InternalN4MFParser.g:1218:1: ( ( N4js ) )
-                    // InternalN4MFParser.g:1219:1: ( N4js )
+                    // InternalN4MFParser.g:1253:1: ( ( N4js ) )
+                    // InternalN4MFParser.g:1254:1: ( N4js )
                     {
                      before(grammarAccess.getModuleLoaderAccess().getN4JSEnumLiteralDeclaration_0()); 
-                    // InternalN4MFParser.g:1220:1: ( N4js )
-                    // InternalN4MFParser.g:1220:3: N4js
+                    // InternalN4MFParser.g:1255:1: ( N4js )
+                    // InternalN4MFParser.g:1255:3: N4js
                     {
                     match(input,N4js,FOLLOW_2); 
 
@@ -3446,14 +3539,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:1225:6: ( ( Commonjs ) )
+                    // InternalN4MFParser.g:1260:6: ( ( Commonjs ) )
                     {
-                    // InternalN4MFParser.g:1225:6: ( ( Commonjs ) )
-                    // InternalN4MFParser.g:1226:1: ( Commonjs )
+                    // InternalN4MFParser.g:1260:6: ( ( Commonjs ) )
+                    // InternalN4MFParser.g:1261:1: ( Commonjs )
                     {
                      before(grammarAccess.getModuleLoaderAccess().getCOMMONJSEnumLiteralDeclaration_1()); 
-                    // InternalN4MFParser.g:1227:1: ( Commonjs )
-                    // InternalN4MFParser.g:1227:3: Commonjs
+                    // InternalN4MFParser.g:1262:1: ( Commonjs )
+                    // InternalN4MFParser.g:1262:3: Commonjs
                     {
                     match(input,Commonjs,FOLLOW_2); 
 
@@ -3467,14 +3560,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:1232:6: ( ( Node_builtin ) )
+                    // InternalN4MFParser.g:1267:6: ( ( Node_builtin ) )
                     {
-                    // InternalN4MFParser.g:1232:6: ( ( Node_builtin ) )
-                    // InternalN4MFParser.g:1233:1: ( Node_builtin )
+                    // InternalN4MFParser.g:1267:6: ( ( Node_builtin ) )
+                    // InternalN4MFParser.g:1268:1: ( Node_builtin )
                     {
                      before(grammarAccess.getModuleLoaderAccess().getNODE_BUILTINEnumLiteralDeclaration_2()); 
-                    // InternalN4MFParser.g:1234:1: ( Node_builtin )
-                    // InternalN4MFParser.g:1234:3: Node_builtin
+                    // InternalN4MFParser.g:1269:1: ( Node_builtin )
+                    // InternalN4MFParser.g:1269:3: Node_builtin
                     {
                     match(input,Node_builtin,FOLLOW_2); 
 
@@ -3505,14 +3598,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__0"
-    // InternalN4MFParser.g:1246:1: rule__ProjectDescription__Group_0__0 : rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1 ;
+    // InternalN4MFParser.g:1281:1: rule__ProjectDescription__Group_0__0 : rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1 ;
     public final void rule__ProjectDescription__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1250:1: ( rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1 )
-            // InternalN4MFParser.g:1251:2: rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1
+            // InternalN4MFParser.g:1285:1: ( rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1 )
+            // InternalN4MFParser.g:1286:2: rule__ProjectDescription__Group_0__0__Impl rule__ProjectDescription__Group_0__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_0__0__Impl();
@@ -3543,21 +3636,31 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__0__Impl"
-    // InternalN4MFParser.g:1258:1: rule__ProjectDescription__Group_0__0__Impl : ( ArtifactId ) ;
+    // InternalN4MFParser.g:1293:1: rule__ProjectDescription__Group_0__0__Impl : ( ( rule__ProjectDescription__Alternatives_0_0 ) ) ;
     public final void rule__ProjectDescription__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1262:1: ( ( ArtifactId ) )
-            // InternalN4MFParser.g:1263:1: ( ArtifactId )
+            // InternalN4MFParser.g:1297:1: ( ( ( rule__ProjectDescription__Alternatives_0_0 ) ) )
+            // InternalN4MFParser.g:1298:1: ( ( rule__ProjectDescription__Alternatives_0_0 ) )
             {
-            // InternalN4MFParser.g:1263:1: ( ArtifactId )
-            // InternalN4MFParser.g:1264:1: ArtifactId
+            // InternalN4MFParser.g:1298:1: ( ( rule__ProjectDescription__Alternatives_0_0 ) )
+            // InternalN4MFParser.g:1299:1: ( rule__ProjectDescription__Alternatives_0_0 )
             {
-             before(grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0()); 
-            match(input,ArtifactId,FOLLOW_2); 
-             after(grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0()); 
+             before(grammarAccess.getProjectDescriptionAccess().getAlternatives_0_0()); 
+            // InternalN4MFParser.g:1300:1: ( rule__ProjectDescription__Alternatives_0_0 )
+            // InternalN4MFParser.g:1300:2: rule__ProjectDescription__Alternatives_0_0
+            {
+            pushFollow(FOLLOW_2);
+            rule__ProjectDescription__Alternatives_0_0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getProjectDescriptionAccess().getAlternatives_0_0()); 
 
             }
 
@@ -3580,14 +3683,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__1"
-    // InternalN4MFParser.g:1277:1: rule__ProjectDescription__Group_0__1 : rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2 ;
+    // InternalN4MFParser.g:1310:1: rule__ProjectDescription__Group_0__1 : rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2 ;
     public final void rule__ProjectDescription__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1281:1: ( rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2 )
-            // InternalN4MFParser.g:1282:2: rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2
+            // InternalN4MFParser.g:1314:1: ( rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2 )
+            // InternalN4MFParser.g:1315:2: rule__ProjectDescription__Group_0__1__Impl rule__ProjectDescription__Group_0__2
             {
             pushFollow(FOLLOW_4);
             rule__ProjectDescription__Group_0__1__Impl();
@@ -3618,17 +3721,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__1__Impl"
-    // InternalN4MFParser.g:1289:1: rule__ProjectDescription__Group_0__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1322:1: rule__ProjectDescription__Group_0__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1293:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1294:1: ( Colon )
+            // InternalN4MFParser.g:1326:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1327:1: ( Colon )
             {
-            // InternalN4MFParser.g:1294:1: ( Colon )
-            // InternalN4MFParser.g:1295:1: Colon
+            // InternalN4MFParser.g:1327:1: ( Colon )
+            // InternalN4MFParser.g:1328:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_0_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -3655,14 +3758,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__2"
-    // InternalN4MFParser.g:1308:1: rule__ProjectDescription__Group_0__2 : rule__ProjectDescription__Group_0__2__Impl ;
+    // InternalN4MFParser.g:1341:1: rule__ProjectDescription__Group_0__2 : rule__ProjectDescription__Group_0__2__Impl ;
     public final void rule__ProjectDescription__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1312:1: ( rule__ProjectDescription__Group_0__2__Impl )
-            // InternalN4MFParser.g:1313:2: rule__ProjectDescription__Group_0__2__Impl
+            // InternalN4MFParser.g:1345:1: ( rule__ProjectDescription__Group_0__2__Impl )
+            // InternalN4MFParser.g:1346:2: rule__ProjectDescription__Group_0__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_0__2__Impl();
@@ -3688,31 +3791,31 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_0__2__Impl"
-    // InternalN4MFParser.g:1319:1: rule__ProjectDescription__Group_0__2__Impl : ( ( rule__ProjectDescription__ArtifactIdAssignment_0_2 ) ) ;
+    // InternalN4MFParser.g:1352:1: rule__ProjectDescription__Group_0__2__Impl : ( ( rule__ProjectDescription__ProjectIdAssignment_0_2 ) ) ;
     public final void rule__ProjectDescription__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1323:1: ( ( ( rule__ProjectDescription__ArtifactIdAssignment_0_2 ) ) )
-            // InternalN4MFParser.g:1324:1: ( ( rule__ProjectDescription__ArtifactIdAssignment_0_2 ) )
+            // InternalN4MFParser.g:1356:1: ( ( ( rule__ProjectDescription__ProjectIdAssignment_0_2 ) ) )
+            // InternalN4MFParser.g:1357:1: ( ( rule__ProjectDescription__ProjectIdAssignment_0_2 ) )
             {
-            // InternalN4MFParser.g:1324:1: ( ( rule__ProjectDescription__ArtifactIdAssignment_0_2 ) )
-            // InternalN4MFParser.g:1325:1: ( rule__ProjectDescription__ArtifactIdAssignment_0_2 )
+            // InternalN4MFParser.g:1357:1: ( ( rule__ProjectDescription__ProjectIdAssignment_0_2 ) )
+            // InternalN4MFParser.g:1358:1: ( rule__ProjectDescription__ProjectIdAssignment_0_2 )
             {
-             before(grammarAccess.getProjectDescriptionAccess().getArtifactIdAssignment_0_2()); 
-            // InternalN4MFParser.g:1326:1: ( rule__ProjectDescription__ArtifactIdAssignment_0_2 )
-            // InternalN4MFParser.g:1326:2: rule__ProjectDescription__ArtifactIdAssignment_0_2
+             before(grammarAccess.getProjectDescriptionAccess().getProjectIdAssignment_0_2()); 
+            // InternalN4MFParser.g:1359:1: ( rule__ProjectDescription__ProjectIdAssignment_0_2 )
+            // InternalN4MFParser.g:1359:2: rule__ProjectDescription__ProjectIdAssignment_0_2
             {
             pushFollow(FOLLOW_2);
-            rule__ProjectDescription__ArtifactIdAssignment_0_2();
+            rule__ProjectDescription__ProjectIdAssignment_0_2();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getProjectDescriptionAccess().getArtifactIdAssignment_0_2()); 
+             after(grammarAccess.getProjectDescriptionAccess().getProjectIdAssignment_0_2()); 
 
             }
 
@@ -3735,14 +3838,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__0"
-    // InternalN4MFParser.g:1342:1: rule__ProjectDescription__Group_1__0 : rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1 ;
+    // InternalN4MFParser.g:1375:1: rule__ProjectDescription__Group_1__0 : rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1 ;
     public final void rule__ProjectDescription__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1346:1: ( rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1 )
-            // InternalN4MFParser.g:1347:2: rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1
+            // InternalN4MFParser.g:1379:1: ( rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1 )
+            // InternalN4MFParser.g:1380:2: rule__ProjectDescription__Group_1__0__Impl rule__ProjectDescription__Group_1__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_1__0__Impl();
@@ -3773,17 +3876,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__0__Impl"
-    // InternalN4MFParser.g:1354:1: rule__ProjectDescription__Group_1__0__Impl : ( ProjectName ) ;
+    // InternalN4MFParser.g:1387:1: rule__ProjectDescription__Group_1__0__Impl : ( ProjectName ) ;
     public final void rule__ProjectDescription__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1358:1: ( ( ProjectName ) )
-            // InternalN4MFParser.g:1359:1: ( ProjectName )
+            // InternalN4MFParser.g:1391:1: ( ( ProjectName ) )
+            // InternalN4MFParser.g:1392:1: ( ProjectName )
             {
-            // InternalN4MFParser.g:1359:1: ( ProjectName )
-            // InternalN4MFParser.g:1360:1: ProjectName
+            // InternalN4MFParser.g:1392:1: ( ProjectName )
+            // InternalN4MFParser.g:1393:1: ProjectName
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0()); 
             match(input,ProjectName,FOLLOW_2); 
@@ -3810,14 +3913,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__1"
-    // InternalN4MFParser.g:1373:1: rule__ProjectDescription__Group_1__1 : rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2 ;
+    // InternalN4MFParser.g:1406:1: rule__ProjectDescription__Group_1__1 : rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2 ;
     public final void rule__ProjectDescription__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1377:1: ( rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2 )
-            // InternalN4MFParser.g:1378:2: rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2
+            // InternalN4MFParser.g:1410:1: ( rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2 )
+            // InternalN4MFParser.g:1411:2: rule__ProjectDescription__Group_1__1__Impl rule__ProjectDescription__Group_1__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_1__1__Impl();
@@ -3848,17 +3951,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__1__Impl"
-    // InternalN4MFParser.g:1385:1: rule__ProjectDescription__Group_1__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1418:1: rule__ProjectDescription__Group_1__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1389:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1390:1: ( Colon )
+            // InternalN4MFParser.g:1422:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1423:1: ( Colon )
             {
-            // InternalN4MFParser.g:1390:1: ( Colon )
-            // InternalN4MFParser.g:1391:1: Colon
+            // InternalN4MFParser.g:1423:1: ( Colon )
+            // InternalN4MFParser.g:1424:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -3885,14 +3988,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__2"
-    // InternalN4MFParser.g:1404:1: rule__ProjectDescription__Group_1__2 : rule__ProjectDescription__Group_1__2__Impl ;
+    // InternalN4MFParser.g:1437:1: rule__ProjectDescription__Group_1__2 : rule__ProjectDescription__Group_1__2__Impl ;
     public final void rule__ProjectDescription__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1408:1: ( rule__ProjectDescription__Group_1__2__Impl )
-            // InternalN4MFParser.g:1409:2: rule__ProjectDescription__Group_1__2__Impl
+            // InternalN4MFParser.g:1441:1: ( rule__ProjectDescription__Group_1__2__Impl )
+            // InternalN4MFParser.g:1442:2: rule__ProjectDescription__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_1__2__Impl();
@@ -3918,31 +4021,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_1__2__Impl"
-    // InternalN4MFParser.g:1415:1: rule__ProjectDescription__Group_1__2__Impl : ( ( rule__ProjectDescription__ProjectNameAssignment_1_2 ) ) ;
+    // InternalN4MFParser.g:1448:1: rule__ProjectDescription__Group_1__2__Impl : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1419:1: ( ( ( rule__ProjectDescription__ProjectNameAssignment_1_2 ) ) )
-            // InternalN4MFParser.g:1420:1: ( ( rule__ProjectDescription__ProjectNameAssignment_1_2 ) )
+            // InternalN4MFParser.g:1452:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:1453:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:1420:1: ( ( rule__ProjectDescription__ProjectNameAssignment_1_2 ) )
-            // InternalN4MFParser.g:1421:1: ( rule__ProjectDescription__ProjectNameAssignment_1_2 )
+            // InternalN4MFParser.g:1453:1: ( RULE_STRING )
+            // InternalN4MFParser.g:1454:1: RULE_STRING
             {
-             before(grammarAccess.getProjectDescriptionAccess().getProjectNameAssignment_1_2()); 
-            // InternalN4MFParser.g:1422:1: ( rule__ProjectDescription__ProjectNameAssignment_1_2 )
-            // InternalN4MFParser.g:1422:2: rule__ProjectDescription__ProjectNameAssignment_1_2
-            {
-            pushFollow(FOLLOW_2);
-            rule__ProjectDescription__ProjectNameAssignment_1_2();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getProjectDescriptionAccess().getProjectNameAssignment_1_2()); 
+             before(grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2()); 
+            match(input,RULE_STRING,FOLLOW_2); 
+             after(grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2()); 
 
             }
 
@@ -3965,14 +4058,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__0"
-    // InternalN4MFParser.g:1438:1: rule__ProjectDescription__Group_2__0 : rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1 ;
+    // InternalN4MFParser.g:1471:1: rule__ProjectDescription__Group_2__0 : rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1 ;
     public final void rule__ProjectDescription__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1442:1: ( rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1 )
-            // InternalN4MFParser.g:1443:2: rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1
+            // InternalN4MFParser.g:1475:1: ( rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1 )
+            // InternalN4MFParser.g:1476:2: rule__ProjectDescription__Group_2__0__Impl rule__ProjectDescription__Group_2__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_2__0__Impl();
@@ -4003,17 +4096,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__0__Impl"
-    // InternalN4MFParser.g:1450:1: rule__ProjectDescription__Group_2__0__Impl : ( ProjectType ) ;
+    // InternalN4MFParser.g:1483:1: rule__ProjectDescription__Group_2__0__Impl : ( ProjectType ) ;
     public final void rule__ProjectDescription__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1454:1: ( ( ProjectType ) )
-            // InternalN4MFParser.g:1455:1: ( ProjectType )
+            // InternalN4MFParser.g:1487:1: ( ( ProjectType ) )
+            // InternalN4MFParser.g:1488:1: ( ProjectType )
             {
-            // InternalN4MFParser.g:1455:1: ( ProjectType )
-            // InternalN4MFParser.g:1456:1: ProjectType
+            // InternalN4MFParser.g:1488:1: ( ProjectType )
+            // InternalN4MFParser.g:1489:1: ProjectType
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectTypeKeyword_2_0()); 
             match(input,ProjectType,FOLLOW_2); 
@@ -4040,14 +4133,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__1"
-    // InternalN4MFParser.g:1469:1: rule__ProjectDescription__Group_2__1 : rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2 ;
+    // InternalN4MFParser.g:1502:1: rule__ProjectDescription__Group_2__1 : rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2 ;
     public final void rule__ProjectDescription__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1473:1: ( rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2 )
-            // InternalN4MFParser.g:1474:2: rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2
+            // InternalN4MFParser.g:1506:1: ( rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2 )
+            // InternalN4MFParser.g:1507:2: rule__ProjectDescription__Group_2__1__Impl rule__ProjectDescription__Group_2__2
             {
             pushFollow(FOLLOW_6);
             rule__ProjectDescription__Group_2__1__Impl();
@@ -4078,17 +4171,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__1__Impl"
-    // InternalN4MFParser.g:1481:1: rule__ProjectDescription__Group_2__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1514:1: rule__ProjectDescription__Group_2__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1485:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1486:1: ( Colon )
+            // InternalN4MFParser.g:1518:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1519:1: ( Colon )
             {
-            // InternalN4MFParser.g:1486:1: ( Colon )
-            // InternalN4MFParser.g:1487:1: Colon
+            // InternalN4MFParser.g:1519:1: ( Colon )
+            // InternalN4MFParser.g:1520:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_2_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -4115,14 +4208,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__2"
-    // InternalN4MFParser.g:1500:1: rule__ProjectDescription__Group_2__2 : rule__ProjectDescription__Group_2__2__Impl ;
+    // InternalN4MFParser.g:1533:1: rule__ProjectDescription__Group_2__2 : rule__ProjectDescription__Group_2__2__Impl ;
     public final void rule__ProjectDescription__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1504:1: ( rule__ProjectDescription__Group_2__2__Impl )
-            // InternalN4MFParser.g:1505:2: rule__ProjectDescription__Group_2__2__Impl
+            // InternalN4MFParser.g:1537:1: ( rule__ProjectDescription__Group_2__2__Impl )
+            // InternalN4MFParser.g:1538:2: rule__ProjectDescription__Group_2__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_2__2__Impl();
@@ -4148,21 +4241,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_2__2__Impl"
-    // InternalN4MFParser.g:1511:1: rule__ProjectDescription__Group_2__2__Impl : ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) ) ;
+    // InternalN4MFParser.g:1544:1: rule__ProjectDescription__Group_2__2__Impl : ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) ) ;
     public final void rule__ProjectDescription__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1515:1: ( ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) ) )
-            // InternalN4MFParser.g:1516:1: ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) )
+            // InternalN4MFParser.g:1548:1: ( ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) ) )
+            // InternalN4MFParser.g:1549:1: ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) )
             {
-            // InternalN4MFParser.g:1516:1: ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) )
-            // InternalN4MFParser.g:1517:1: ( rule__ProjectDescription__ProjectTypeAssignment_2_2 )
+            // InternalN4MFParser.g:1549:1: ( ( rule__ProjectDescription__ProjectTypeAssignment_2_2 ) )
+            // InternalN4MFParser.g:1550:1: ( rule__ProjectDescription__ProjectTypeAssignment_2_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectTypeAssignment_2_2()); 
-            // InternalN4MFParser.g:1518:1: ( rule__ProjectDescription__ProjectTypeAssignment_2_2 )
-            // InternalN4MFParser.g:1518:2: rule__ProjectDescription__ProjectTypeAssignment_2_2
+            // InternalN4MFParser.g:1551:1: ( rule__ProjectDescription__ProjectTypeAssignment_2_2 )
+            // InternalN4MFParser.g:1551:2: rule__ProjectDescription__ProjectTypeAssignment_2_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ProjectTypeAssignment_2_2();
@@ -4195,14 +4288,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__0"
-    // InternalN4MFParser.g:1534:1: rule__ProjectDescription__Group_3__0 : rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1 ;
+    // InternalN4MFParser.g:1567:1: rule__ProjectDescription__Group_3__0 : rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1 ;
     public final void rule__ProjectDescription__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1538:1: ( rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1 )
-            // InternalN4MFParser.g:1539:2: rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1
+            // InternalN4MFParser.g:1571:1: ( rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1 )
+            // InternalN4MFParser.g:1572:2: rule__ProjectDescription__Group_3__0__Impl rule__ProjectDescription__Group_3__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_3__0__Impl();
@@ -4233,17 +4326,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__0__Impl"
-    // InternalN4MFParser.g:1546:1: rule__ProjectDescription__Group_3__0__Impl : ( ProjectVersion ) ;
+    // InternalN4MFParser.g:1579:1: rule__ProjectDescription__Group_3__0__Impl : ( ProjectVersion ) ;
     public final void rule__ProjectDescription__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1550:1: ( ( ProjectVersion ) )
-            // InternalN4MFParser.g:1551:1: ( ProjectVersion )
+            // InternalN4MFParser.g:1583:1: ( ( ProjectVersion ) )
+            // InternalN4MFParser.g:1584:1: ( ProjectVersion )
             {
-            // InternalN4MFParser.g:1551:1: ( ProjectVersion )
-            // InternalN4MFParser.g:1552:1: ProjectVersion
+            // InternalN4MFParser.g:1584:1: ( ProjectVersion )
+            // InternalN4MFParser.g:1585:1: ProjectVersion
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectVersionKeyword_3_0()); 
             match(input,ProjectVersion,FOLLOW_2); 
@@ -4270,14 +4363,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__1"
-    // InternalN4MFParser.g:1565:1: rule__ProjectDescription__Group_3__1 : rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2 ;
+    // InternalN4MFParser.g:1598:1: rule__ProjectDescription__Group_3__1 : rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2 ;
     public final void rule__ProjectDescription__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1569:1: ( rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2 )
-            // InternalN4MFParser.g:1570:2: rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2
+            // InternalN4MFParser.g:1602:1: ( rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2 )
+            // InternalN4MFParser.g:1603:2: rule__ProjectDescription__Group_3__1__Impl rule__ProjectDescription__Group_3__2
             {
             pushFollow(FOLLOW_7);
             rule__ProjectDescription__Group_3__1__Impl();
@@ -4308,17 +4401,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__1__Impl"
-    // InternalN4MFParser.g:1577:1: rule__ProjectDescription__Group_3__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1610:1: rule__ProjectDescription__Group_3__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1581:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1582:1: ( Colon )
+            // InternalN4MFParser.g:1614:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1615:1: ( Colon )
             {
-            // InternalN4MFParser.g:1582:1: ( Colon )
-            // InternalN4MFParser.g:1583:1: Colon
+            // InternalN4MFParser.g:1615:1: ( Colon )
+            // InternalN4MFParser.g:1616:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_3_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -4345,14 +4438,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__2"
-    // InternalN4MFParser.g:1596:1: rule__ProjectDescription__Group_3__2 : rule__ProjectDescription__Group_3__2__Impl ;
+    // InternalN4MFParser.g:1629:1: rule__ProjectDescription__Group_3__2 : rule__ProjectDescription__Group_3__2__Impl ;
     public final void rule__ProjectDescription__Group_3__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1600:1: ( rule__ProjectDescription__Group_3__2__Impl )
-            // InternalN4MFParser.g:1601:2: rule__ProjectDescription__Group_3__2__Impl
+            // InternalN4MFParser.g:1633:1: ( rule__ProjectDescription__Group_3__2__Impl )
+            // InternalN4MFParser.g:1634:2: rule__ProjectDescription__Group_3__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_3__2__Impl();
@@ -4378,21 +4471,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_3__2__Impl"
-    // InternalN4MFParser.g:1607:1: rule__ProjectDescription__Group_3__2__Impl : ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) ) ;
+    // InternalN4MFParser.g:1640:1: rule__ProjectDescription__Group_3__2__Impl : ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) ) ;
     public final void rule__ProjectDescription__Group_3__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1611:1: ( ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) ) )
-            // InternalN4MFParser.g:1612:1: ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) )
+            // InternalN4MFParser.g:1644:1: ( ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) ) )
+            // InternalN4MFParser.g:1645:1: ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) )
             {
-            // InternalN4MFParser.g:1612:1: ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) )
-            // InternalN4MFParser.g:1613:1: ( rule__ProjectDescription__ProjectVersionAssignment_3_2 )
+            // InternalN4MFParser.g:1645:1: ( ( rule__ProjectDescription__ProjectVersionAssignment_3_2 ) )
+            // InternalN4MFParser.g:1646:1: ( rule__ProjectDescription__ProjectVersionAssignment_3_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectVersionAssignment_3_2()); 
-            // InternalN4MFParser.g:1614:1: ( rule__ProjectDescription__ProjectVersionAssignment_3_2 )
-            // InternalN4MFParser.g:1614:2: rule__ProjectDescription__ProjectVersionAssignment_3_2
+            // InternalN4MFParser.g:1647:1: ( rule__ProjectDescription__ProjectVersionAssignment_3_2 )
+            // InternalN4MFParser.g:1647:2: rule__ProjectDescription__ProjectVersionAssignment_3_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ProjectVersionAssignment_3_2();
@@ -4425,14 +4518,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__0"
-    // InternalN4MFParser.g:1630:1: rule__ProjectDescription__Group_4__0 : rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1 ;
+    // InternalN4MFParser.g:1663:1: rule__ProjectDescription__Group_4__0 : rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1 ;
     public final void rule__ProjectDescription__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1634:1: ( rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1 )
-            // InternalN4MFParser.g:1635:2: rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1
+            // InternalN4MFParser.g:1667:1: ( rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1 )
+            // InternalN4MFParser.g:1668:2: rule__ProjectDescription__Group_4__0__Impl rule__ProjectDescription__Group_4__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_4__0__Impl();
@@ -4463,17 +4556,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__0__Impl"
-    // InternalN4MFParser.g:1642:1: rule__ProjectDescription__Group_4__0__Impl : ( VendorId ) ;
+    // InternalN4MFParser.g:1675:1: rule__ProjectDescription__Group_4__0__Impl : ( VendorId ) ;
     public final void rule__ProjectDescription__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1646:1: ( ( VendorId ) )
-            // InternalN4MFParser.g:1647:1: ( VendorId )
+            // InternalN4MFParser.g:1679:1: ( ( VendorId ) )
+            // InternalN4MFParser.g:1680:1: ( VendorId )
             {
-            // InternalN4MFParser.g:1647:1: ( VendorId )
-            // InternalN4MFParser.g:1648:1: VendorId
+            // InternalN4MFParser.g:1680:1: ( VendorId )
+            // InternalN4MFParser.g:1681:1: VendorId
             {
              before(grammarAccess.getProjectDescriptionAccess().getVendorIdKeyword_4_0()); 
             match(input,VendorId,FOLLOW_2); 
@@ -4500,14 +4593,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__1"
-    // InternalN4MFParser.g:1661:1: rule__ProjectDescription__Group_4__1 : rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2 ;
+    // InternalN4MFParser.g:1694:1: rule__ProjectDescription__Group_4__1 : rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2 ;
     public final void rule__ProjectDescription__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1665:1: ( rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2 )
-            // InternalN4MFParser.g:1666:2: rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2
+            // InternalN4MFParser.g:1698:1: ( rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2 )
+            // InternalN4MFParser.g:1699:2: rule__ProjectDescription__Group_4__1__Impl rule__ProjectDescription__Group_4__2
             {
             pushFollow(FOLLOW_4);
             rule__ProjectDescription__Group_4__1__Impl();
@@ -4538,17 +4631,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__1__Impl"
-    // InternalN4MFParser.g:1673:1: rule__ProjectDescription__Group_4__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1706:1: rule__ProjectDescription__Group_4__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1677:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1678:1: ( Colon )
+            // InternalN4MFParser.g:1710:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1711:1: ( Colon )
             {
-            // InternalN4MFParser.g:1678:1: ( Colon )
-            // InternalN4MFParser.g:1679:1: Colon
+            // InternalN4MFParser.g:1711:1: ( Colon )
+            // InternalN4MFParser.g:1712:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_4_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -4575,14 +4668,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__2"
-    // InternalN4MFParser.g:1692:1: rule__ProjectDescription__Group_4__2 : rule__ProjectDescription__Group_4__2__Impl ;
+    // InternalN4MFParser.g:1725:1: rule__ProjectDescription__Group_4__2 : rule__ProjectDescription__Group_4__2__Impl ;
     public final void rule__ProjectDescription__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1696:1: ( rule__ProjectDescription__Group_4__2__Impl )
-            // InternalN4MFParser.g:1697:2: rule__ProjectDescription__Group_4__2__Impl
+            // InternalN4MFParser.g:1729:1: ( rule__ProjectDescription__Group_4__2__Impl )
+            // InternalN4MFParser.g:1730:2: rule__ProjectDescription__Group_4__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_4__2__Impl();
@@ -4608,21 +4701,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_4__2__Impl"
-    // InternalN4MFParser.g:1703:1: rule__ProjectDescription__Group_4__2__Impl : ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) ) ;
+    // InternalN4MFParser.g:1736:1: rule__ProjectDescription__Group_4__2__Impl : ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) ) ;
     public final void rule__ProjectDescription__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1707:1: ( ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) ) )
-            // InternalN4MFParser.g:1708:1: ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) )
+            // InternalN4MFParser.g:1740:1: ( ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) ) )
+            // InternalN4MFParser.g:1741:1: ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) )
             {
-            // InternalN4MFParser.g:1708:1: ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) )
-            // InternalN4MFParser.g:1709:1: ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 )
+            // InternalN4MFParser.g:1741:1: ( ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 ) )
+            // InternalN4MFParser.g:1742:1: ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getDeclaredVendorIdAssignment_4_2()); 
-            // InternalN4MFParser.g:1710:1: ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 )
-            // InternalN4MFParser.g:1710:2: rule__ProjectDescription__DeclaredVendorIdAssignment_4_2
+            // InternalN4MFParser.g:1743:1: ( rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 )
+            // InternalN4MFParser.g:1743:2: rule__ProjectDescription__DeclaredVendorIdAssignment_4_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__DeclaredVendorIdAssignment_4_2();
@@ -4655,14 +4748,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__0"
-    // InternalN4MFParser.g:1726:1: rule__ProjectDescription__Group_5__0 : rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1 ;
+    // InternalN4MFParser.g:1759:1: rule__ProjectDescription__Group_5__0 : rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1 ;
     public final void rule__ProjectDescription__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1730:1: ( rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1 )
-            // InternalN4MFParser.g:1731:2: rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1
+            // InternalN4MFParser.g:1763:1: ( rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1 )
+            // InternalN4MFParser.g:1764:2: rule__ProjectDescription__Group_5__0__Impl rule__ProjectDescription__Group_5__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_5__0__Impl();
@@ -4693,17 +4786,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__0__Impl"
-    // InternalN4MFParser.g:1738:1: rule__ProjectDescription__Group_5__0__Impl : ( VendorName ) ;
+    // InternalN4MFParser.g:1771:1: rule__ProjectDescription__Group_5__0__Impl : ( VendorName ) ;
     public final void rule__ProjectDescription__Group_5__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1742:1: ( ( VendorName ) )
-            // InternalN4MFParser.g:1743:1: ( VendorName )
+            // InternalN4MFParser.g:1775:1: ( ( VendorName ) )
+            // InternalN4MFParser.g:1776:1: ( VendorName )
             {
-            // InternalN4MFParser.g:1743:1: ( VendorName )
-            // InternalN4MFParser.g:1744:1: VendorName
+            // InternalN4MFParser.g:1776:1: ( VendorName )
+            // InternalN4MFParser.g:1777:1: VendorName
             {
              before(grammarAccess.getProjectDescriptionAccess().getVendorNameKeyword_5_0()); 
             match(input,VendorName,FOLLOW_2); 
@@ -4730,14 +4823,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__1"
-    // InternalN4MFParser.g:1757:1: rule__ProjectDescription__Group_5__1 : rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2 ;
+    // InternalN4MFParser.g:1790:1: rule__ProjectDescription__Group_5__1 : rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2 ;
     public final void rule__ProjectDescription__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1761:1: ( rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2 )
-            // InternalN4MFParser.g:1762:2: rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2
+            // InternalN4MFParser.g:1794:1: ( rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2 )
+            // InternalN4MFParser.g:1795:2: rule__ProjectDescription__Group_5__1__Impl rule__ProjectDescription__Group_5__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_5__1__Impl();
@@ -4768,17 +4861,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__1__Impl"
-    // InternalN4MFParser.g:1769:1: rule__ProjectDescription__Group_5__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1802:1: rule__ProjectDescription__Group_5__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_5__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1773:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1774:1: ( Colon )
+            // InternalN4MFParser.g:1806:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1807:1: ( Colon )
             {
-            // InternalN4MFParser.g:1774:1: ( Colon )
-            // InternalN4MFParser.g:1775:1: Colon
+            // InternalN4MFParser.g:1807:1: ( Colon )
+            // InternalN4MFParser.g:1808:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_5_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -4805,14 +4898,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__2"
-    // InternalN4MFParser.g:1788:1: rule__ProjectDescription__Group_5__2 : rule__ProjectDescription__Group_5__2__Impl ;
+    // InternalN4MFParser.g:1821:1: rule__ProjectDescription__Group_5__2 : rule__ProjectDescription__Group_5__2__Impl ;
     public final void rule__ProjectDescription__Group_5__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1792:1: ( rule__ProjectDescription__Group_5__2__Impl )
-            // InternalN4MFParser.g:1793:2: rule__ProjectDescription__Group_5__2__Impl
+            // InternalN4MFParser.g:1825:1: ( rule__ProjectDescription__Group_5__2__Impl )
+            // InternalN4MFParser.g:1826:2: rule__ProjectDescription__Group_5__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_5__2__Impl();
@@ -4838,21 +4931,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_5__2__Impl"
-    // InternalN4MFParser.g:1799:1: rule__ProjectDescription__Group_5__2__Impl : ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) ) ;
+    // InternalN4MFParser.g:1832:1: rule__ProjectDescription__Group_5__2__Impl : ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) ) ;
     public final void rule__ProjectDescription__Group_5__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1803:1: ( ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) ) )
-            // InternalN4MFParser.g:1804:1: ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) )
+            // InternalN4MFParser.g:1836:1: ( ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) ) )
+            // InternalN4MFParser.g:1837:1: ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) )
             {
-            // InternalN4MFParser.g:1804:1: ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) )
-            // InternalN4MFParser.g:1805:1: ( rule__ProjectDescription__VendorNameAssignment_5_2 )
+            // InternalN4MFParser.g:1837:1: ( ( rule__ProjectDescription__VendorNameAssignment_5_2 ) )
+            // InternalN4MFParser.g:1838:1: ( rule__ProjectDescription__VendorNameAssignment_5_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getVendorNameAssignment_5_2()); 
-            // InternalN4MFParser.g:1806:1: ( rule__ProjectDescription__VendorNameAssignment_5_2 )
-            // InternalN4MFParser.g:1806:2: rule__ProjectDescription__VendorNameAssignment_5_2
+            // InternalN4MFParser.g:1839:1: ( rule__ProjectDescription__VendorNameAssignment_5_2 )
+            // InternalN4MFParser.g:1839:2: rule__ProjectDescription__VendorNameAssignment_5_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__VendorNameAssignment_5_2();
@@ -4885,14 +4978,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__0"
-    // InternalN4MFParser.g:1822:1: rule__ProjectDescription__Group_6__0 : rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1 ;
+    // InternalN4MFParser.g:1855:1: rule__ProjectDescription__Group_6__0 : rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1 ;
     public final void rule__ProjectDescription__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1826:1: ( rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1 )
-            // InternalN4MFParser.g:1827:2: rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1
+            // InternalN4MFParser.g:1859:1: ( rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1 )
+            // InternalN4MFParser.g:1860:2: rule__ProjectDescription__Group_6__0__Impl rule__ProjectDescription__Group_6__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_6__0__Impl();
@@ -4923,17 +5016,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__0__Impl"
-    // InternalN4MFParser.g:1834:1: rule__ProjectDescription__Group_6__0__Impl : ( MainModule ) ;
+    // InternalN4MFParser.g:1867:1: rule__ProjectDescription__Group_6__0__Impl : ( MainModule ) ;
     public final void rule__ProjectDescription__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1838:1: ( ( MainModule ) )
-            // InternalN4MFParser.g:1839:1: ( MainModule )
+            // InternalN4MFParser.g:1871:1: ( ( MainModule ) )
+            // InternalN4MFParser.g:1872:1: ( MainModule )
             {
-            // InternalN4MFParser.g:1839:1: ( MainModule )
-            // InternalN4MFParser.g:1840:1: MainModule
+            // InternalN4MFParser.g:1872:1: ( MainModule )
+            // InternalN4MFParser.g:1873:1: MainModule
             {
              before(grammarAccess.getProjectDescriptionAccess().getMainModuleKeyword_6_0()); 
             match(input,MainModule,FOLLOW_2); 
@@ -4960,14 +5053,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__1"
-    // InternalN4MFParser.g:1853:1: rule__ProjectDescription__Group_6__1 : rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2 ;
+    // InternalN4MFParser.g:1886:1: rule__ProjectDescription__Group_6__1 : rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2 ;
     public final void rule__ProjectDescription__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1857:1: ( rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2 )
-            // InternalN4MFParser.g:1858:2: rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2
+            // InternalN4MFParser.g:1890:1: ( rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2 )
+            // InternalN4MFParser.g:1891:2: rule__ProjectDescription__Group_6__1__Impl rule__ProjectDescription__Group_6__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_6__1__Impl();
@@ -4998,17 +5091,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__1__Impl"
-    // InternalN4MFParser.g:1865:1: rule__ProjectDescription__Group_6__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1898:1: rule__ProjectDescription__Group_6__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1869:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1870:1: ( Colon )
+            // InternalN4MFParser.g:1902:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1903:1: ( Colon )
             {
-            // InternalN4MFParser.g:1870:1: ( Colon )
-            // InternalN4MFParser.g:1871:1: Colon
+            // InternalN4MFParser.g:1903:1: ( Colon )
+            // InternalN4MFParser.g:1904:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_6_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -5035,14 +5128,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__2"
-    // InternalN4MFParser.g:1884:1: rule__ProjectDescription__Group_6__2 : rule__ProjectDescription__Group_6__2__Impl ;
+    // InternalN4MFParser.g:1917:1: rule__ProjectDescription__Group_6__2 : rule__ProjectDescription__Group_6__2__Impl ;
     public final void rule__ProjectDescription__Group_6__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1888:1: ( rule__ProjectDescription__Group_6__2__Impl )
-            // InternalN4MFParser.g:1889:2: rule__ProjectDescription__Group_6__2__Impl
+            // InternalN4MFParser.g:1921:1: ( rule__ProjectDescription__Group_6__2__Impl )
+            // InternalN4MFParser.g:1922:2: rule__ProjectDescription__Group_6__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_6__2__Impl();
@@ -5068,21 +5161,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_6__2__Impl"
-    // InternalN4MFParser.g:1895:1: rule__ProjectDescription__Group_6__2__Impl : ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) ) ;
+    // InternalN4MFParser.g:1928:1: rule__ProjectDescription__Group_6__2__Impl : ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) ) ;
     public final void rule__ProjectDescription__Group_6__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1899:1: ( ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) ) )
-            // InternalN4MFParser.g:1900:1: ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) )
+            // InternalN4MFParser.g:1932:1: ( ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) ) )
+            // InternalN4MFParser.g:1933:1: ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) )
             {
-            // InternalN4MFParser.g:1900:1: ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) )
-            // InternalN4MFParser.g:1901:1: ( rule__ProjectDescription__MainModuleAssignment_6_2 )
+            // InternalN4MFParser.g:1933:1: ( ( rule__ProjectDescription__MainModuleAssignment_6_2 ) )
+            // InternalN4MFParser.g:1934:1: ( rule__ProjectDescription__MainModuleAssignment_6_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getMainModuleAssignment_6_2()); 
-            // InternalN4MFParser.g:1902:1: ( rule__ProjectDescription__MainModuleAssignment_6_2 )
-            // InternalN4MFParser.g:1902:2: rule__ProjectDescription__MainModuleAssignment_6_2
+            // InternalN4MFParser.g:1935:1: ( rule__ProjectDescription__MainModuleAssignment_6_2 )
+            // InternalN4MFParser.g:1935:2: rule__ProjectDescription__MainModuleAssignment_6_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__MainModuleAssignment_6_2();
@@ -5115,14 +5208,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__0"
-    // InternalN4MFParser.g:1918:1: rule__ProjectDescription__Group_11__0 : rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1 ;
+    // InternalN4MFParser.g:1951:1: rule__ProjectDescription__Group_11__0 : rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1 ;
     public final void rule__ProjectDescription__Group_11__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1922:1: ( rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1 )
-            // InternalN4MFParser.g:1923:2: rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1
+            // InternalN4MFParser.g:1955:1: ( rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1 )
+            // InternalN4MFParser.g:1956:2: rule__ProjectDescription__Group_11__0__Impl rule__ProjectDescription__Group_11__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_11__0__Impl();
@@ -5153,17 +5246,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__0__Impl"
-    // InternalN4MFParser.g:1930:1: rule__ProjectDescription__Group_11__0__Impl : ( ImplementationId ) ;
+    // InternalN4MFParser.g:1963:1: rule__ProjectDescription__Group_11__0__Impl : ( ImplementationId ) ;
     public final void rule__ProjectDescription__Group_11__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1934:1: ( ( ImplementationId ) )
-            // InternalN4MFParser.g:1935:1: ( ImplementationId )
+            // InternalN4MFParser.g:1967:1: ( ( ImplementationId ) )
+            // InternalN4MFParser.g:1968:1: ( ImplementationId )
             {
-            // InternalN4MFParser.g:1935:1: ( ImplementationId )
-            // InternalN4MFParser.g:1936:1: ImplementationId
+            // InternalN4MFParser.g:1968:1: ( ImplementationId )
+            // InternalN4MFParser.g:1969:1: ImplementationId
             {
              before(grammarAccess.getProjectDescriptionAccess().getImplementationIdKeyword_11_0()); 
             match(input,ImplementationId,FOLLOW_2); 
@@ -5190,14 +5283,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__1"
-    // InternalN4MFParser.g:1949:1: rule__ProjectDescription__Group_11__1 : rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2 ;
+    // InternalN4MFParser.g:1982:1: rule__ProjectDescription__Group_11__1 : rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2 ;
     public final void rule__ProjectDescription__Group_11__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1953:1: ( rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2 )
-            // InternalN4MFParser.g:1954:2: rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2
+            // InternalN4MFParser.g:1986:1: ( rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2 )
+            // InternalN4MFParser.g:1987:2: rule__ProjectDescription__Group_11__1__Impl rule__ProjectDescription__Group_11__2
             {
             pushFollow(FOLLOW_4);
             rule__ProjectDescription__Group_11__1__Impl();
@@ -5228,17 +5321,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__1__Impl"
-    // InternalN4MFParser.g:1961:1: rule__ProjectDescription__Group_11__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:1994:1: rule__ProjectDescription__Group_11__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_11__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1965:1: ( ( Colon ) )
-            // InternalN4MFParser.g:1966:1: ( Colon )
+            // InternalN4MFParser.g:1998:1: ( ( Colon ) )
+            // InternalN4MFParser.g:1999:1: ( Colon )
             {
-            // InternalN4MFParser.g:1966:1: ( Colon )
-            // InternalN4MFParser.g:1967:1: Colon
+            // InternalN4MFParser.g:1999:1: ( Colon )
+            // InternalN4MFParser.g:2000:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_11_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -5265,14 +5358,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__2"
-    // InternalN4MFParser.g:1980:1: rule__ProjectDescription__Group_11__2 : rule__ProjectDescription__Group_11__2__Impl ;
+    // InternalN4MFParser.g:2013:1: rule__ProjectDescription__Group_11__2 : rule__ProjectDescription__Group_11__2__Impl ;
     public final void rule__ProjectDescription__Group_11__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1984:1: ( rule__ProjectDescription__Group_11__2__Impl )
-            // InternalN4MFParser.g:1985:2: rule__ProjectDescription__Group_11__2__Impl
+            // InternalN4MFParser.g:2017:1: ( rule__ProjectDescription__Group_11__2__Impl )
+            // InternalN4MFParser.g:2018:2: rule__ProjectDescription__Group_11__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_11__2__Impl();
@@ -5298,21 +5391,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_11__2__Impl"
-    // InternalN4MFParser.g:1991:1: rule__ProjectDescription__Group_11__2__Impl : ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) ) ;
+    // InternalN4MFParser.g:2024:1: rule__ProjectDescription__Group_11__2__Impl : ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) ) ;
     public final void rule__ProjectDescription__Group_11__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:1995:1: ( ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) ) )
-            // InternalN4MFParser.g:1996:1: ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) )
+            // InternalN4MFParser.g:2028:1: ( ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) ) )
+            // InternalN4MFParser.g:2029:1: ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) )
             {
-            // InternalN4MFParser.g:1996:1: ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) )
-            // InternalN4MFParser.g:1997:1: ( rule__ProjectDescription__ImplementationIdAssignment_11_2 )
+            // InternalN4MFParser.g:2029:1: ( ( rule__ProjectDescription__ImplementationIdAssignment_11_2 ) )
+            // InternalN4MFParser.g:2030:1: ( rule__ProjectDescription__ImplementationIdAssignment_11_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getImplementationIdAssignment_11_2()); 
-            // InternalN4MFParser.g:1998:1: ( rule__ProjectDescription__ImplementationIdAssignment_11_2 )
-            // InternalN4MFParser.g:1998:2: rule__ProjectDescription__ImplementationIdAssignment_11_2
+            // InternalN4MFParser.g:2031:1: ( rule__ProjectDescription__ImplementationIdAssignment_11_2 )
+            // InternalN4MFParser.g:2031:2: rule__ProjectDescription__ImplementationIdAssignment_11_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ImplementationIdAssignment_11_2();
@@ -5345,14 +5438,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__0"
-    // InternalN4MFParser.g:2014:1: rule__ProjectDescription__Group_15__0 : rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1 ;
+    // InternalN4MFParser.g:2047:1: rule__ProjectDescription__Group_15__0 : rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1 ;
     public final void rule__ProjectDescription__Group_15__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2018:1: ( rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1 )
-            // InternalN4MFParser.g:2019:2: rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1
+            // InternalN4MFParser.g:2051:1: ( rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1 )
+            // InternalN4MFParser.g:2052:2: rule__ProjectDescription__Group_15__0__Impl rule__ProjectDescription__Group_15__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_15__0__Impl();
@@ -5383,17 +5476,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__0__Impl"
-    // InternalN4MFParser.g:2026:1: rule__ProjectDescription__Group_15__0__Impl : ( Output ) ;
+    // InternalN4MFParser.g:2059:1: rule__ProjectDescription__Group_15__0__Impl : ( Output ) ;
     public final void rule__ProjectDescription__Group_15__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2030:1: ( ( Output ) )
-            // InternalN4MFParser.g:2031:1: ( Output )
+            // InternalN4MFParser.g:2063:1: ( ( Output ) )
+            // InternalN4MFParser.g:2064:1: ( Output )
             {
-            // InternalN4MFParser.g:2031:1: ( Output )
-            // InternalN4MFParser.g:2032:1: Output
+            // InternalN4MFParser.g:2064:1: ( Output )
+            // InternalN4MFParser.g:2065:1: Output
             {
              before(grammarAccess.getProjectDescriptionAccess().getOutputKeyword_15_0()); 
             match(input,Output,FOLLOW_2); 
@@ -5420,14 +5513,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__1"
-    // InternalN4MFParser.g:2045:1: rule__ProjectDescription__Group_15__1 : rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2 ;
+    // InternalN4MFParser.g:2078:1: rule__ProjectDescription__Group_15__1 : rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2 ;
     public final void rule__ProjectDescription__Group_15__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2049:1: ( rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2 )
-            // InternalN4MFParser.g:2050:2: rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2
+            // InternalN4MFParser.g:2082:1: ( rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2 )
+            // InternalN4MFParser.g:2083:2: rule__ProjectDescription__Group_15__1__Impl rule__ProjectDescription__Group_15__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_15__1__Impl();
@@ -5458,17 +5551,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__1__Impl"
-    // InternalN4MFParser.g:2057:1: rule__ProjectDescription__Group_15__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:2090:1: rule__ProjectDescription__Group_15__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_15__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2061:1: ( ( Colon ) )
-            // InternalN4MFParser.g:2062:1: ( Colon )
+            // InternalN4MFParser.g:2094:1: ( ( Colon ) )
+            // InternalN4MFParser.g:2095:1: ( Colon )
             {
-            // InternalN4MFParser.g:2062:1: ( Colon )
-            // InternalN4MFParser.g:2063:1: Colon
+            // InternalN4MFParser.g:2095:1: ( Colon )
+            // InternalN4MFParser.g:2096:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_15_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -5495,14 +5588,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__2"
-    // InternalN4MFParser.g:2076:1: rule__ProjectDescription__Group_15__2 : rule__ProjectDescription__Group_15__2__Impl ;
+    // InternalN4MFParser.g:2109:1: rule__ProjectDescription__Group_15__2 : rule__ProjectDescription__Group_15__2__Impl ;
     public final void rule__ProjectDescription__Group_15__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2080:1: ( rule__ProjectDescription__Group_15__2__Impl )
-            // InternalN4MFParser.g:2081:2: rule__ProjectDescription__Group_15__2__Impl
+            // InternalN4MFParser.g:2113:1: ( rule__ProjectDescription__Group_15__2__Impl )
+            // InternalN4MFParser.g:2114:2: rule__ProjectDescription__Group_15__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_15__2__Impl();
@@ -5528,21 +5621,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_15__2__Impl"
-    // InternalN4MFParser.g:2087:1: rule__ProjectDescription__Group_15__2__Impl : ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) ) ;
+    // InternalN4MFParser.g:2120:1: rule__ProjectDescription__Group_15__2__Impl : ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) ) ;
     public final void rule__ProjectDescription__Group_15__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2091:1: ( ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) ) )
-            // InternalN4MFParser.g:2092:1: ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) )
+            // InternalN4MFParser.g:2124:1: ( ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) ) )
+            // InternalN4MFParser.g:2125:1: ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) )
             {
-            // InternalN4MFParser.g:2092:1: ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) )
-            // InternalN4MFParser.g:2093:1: ( rule__ProjectDescription__OutputPathAssignment_15_2 )
+            // InternalN4MFParser.g:2125:1: ( ( rule__ProjectDescription__OutputPathAssignment_15_2 ) )
+            // InternalN4MFParser.g:2126:1: ( rule__ProjectDescription__OutputPathAssignment_15_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getOutputPathAssignment_15_2()); 
-            // InternalN4MFParser.g:2094:1: ( rule__ProjectDescription__OutputPathAssignment_15_2 )
-            // InternalN4MFParser.g:2094:2: rule__ProjectDescription__OutputPathAssignment_15_2
+            // InternalN4MFParser.g:2127:1: ( rule__ProjectDescription__OutputPathAssignment_15_2 )
+            // InternalN4MFParser.g:2127:2: rule__ProjectDescription__OutputPathAssignment_15_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__OutputPathAssignment_15_2();
@@ -5575,14 +5668,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__0"
-    // InternalN4MFParser.g:2110:1: rule__ProjectDescription__Group_16__0 : rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1 ;
+    // InternalN4MFParser.g:2143:1: rule__ProjectDescription__Group_16__0 : rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1 ;
     public final void rule__ProjectDescription__Group_16__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2114:1: ( rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1 )
-            // InternalN4MFParser.g:2115:2: rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1
+            // InternalN4MFParser.g:2147:1: ( rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1 )
+            // InternalN4MFParser.g:2148:2: rule__ProjectDescription__Group_16__0__Impl rule__ProjectDescription__Group_16__1
             {
             pushFollow(FOLLOW_8);
             rule__ProjectDescription__Group_16__0__Impl();
@@ -5613,17 +5706,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__0__Impl"
-    // InternalN4MFParser.g:2122:1: rule__ProjectDescription__Group_16__0__Impl : ( Libraries ) ;
+    // InternalN4MFParser.g:2155:1: rule__ProjectDescription__Group_16__0__Impl : ( Libraries ) ;
     public final void rule__ProjectDescription__Group_16__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2126:1: ( ( Libraries ) )
-            // InternalN4MFParser.g:2127:1: ( Libraries )
+            // InternalN4MFParser.g:2159:1: ( ( Libraries ) )
+            // InternalN4MFParser.g:2160:1: ( Libraries )
             {
-            // InternalN4MFParser.g:2127:1: ( Libraries )
-            // InternalN4MFParser.g:2128:1: Libraries
+            // InternalN4MFParser.g:2160:1: ( Libraries )
+            // InternalN4MFParser.g:2161:1: Libraries
             {
              before(grammarAccess.getProjectDescriptionAccess().getLibrariesKeyword_16_0()); 
             match(input,Libraries,FOLLOW_2); 
@@ -5650,14 +5743,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__1"
-    // InternalN4MFParser.g:2141:1: rule__ProjectDescription__Group_16__1 : rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2 ;
+    // InternalN4MFParser.g:2174:1: rule__ProjectDescription__Group_16__1 : rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2 ;
     public final void rule__ProjectDescription__Group_16__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2145:1: ( rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2 )
-            // InternalN4MFParser.g:2146:2: rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2
+            // InternalN4MFParser.g:2178:1: ( rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2 )
+            // InternalN4MFParser.g:2179:2: rule__ProjectDescription__Group_16__1__Impl rule__ProjectDescription__Group_16__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_16__1__Impl();
@@ -5688,17 +5781,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__1__Impl"
-    // InternalN4MFParser.g:2153:1: rule__ProjectDescription__Group_16__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:2186:1: rule__ProjectDescription__Group_16__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_16__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2157:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:2158:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2190:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:2191:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:2158:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:2159:1: LeftCurlyBracket
+            // InternalN4MFParser.g:2191:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2192:1: LeftCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_16_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -5725,14 +5818,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__2"
-    // InternalN4MFParser.g:2172:1: rule__ProjectDescription__Group_16__2 : rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3 ;
+    // InternalN4MFParser.g:2205:1: rule__ProjectDescription__Group_16__2 : rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3 ;
     public final void rule__ProjectDescription__Group_16__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2176:1: ( rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3 )
-            // InternalN4MFParser.g:2177:2: rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3
+            // InternalN4MFParser.g:2209:1: ( rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3 )
+            // InternalN4MFParser.g:2210:2: rule__ProjectDescription__Group_16__2__Impl rule__ProjectDescription__Group_16__3
             {
             pushFollow(FOLLOW_9);
             rule__ProjectDescription__Group_16__2__Impl();
@@ -5763,21 +5856,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__2__Impl"
-    // InternalN4MFParser.g:2184:1: rule__ProjectDescription__Group_16__2__Impl : ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) ) ;
+    // InternalN4MFParser.g:2217:1: rule__ProjectDescription__Group_16__2__Impl : ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) ) ;
     public final void rule__ProjectDescription__Group_16__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2188:1: ( ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) ) )
-            // InternalN4MFParser.g:2189:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) )
+            // InternalN4MFParser.g:2221:1: ( ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) ) )
+            // InternalN4MFParser.g:2222:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) )
             {
-            // InternalN4MFParser.g:2189:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) )
-            // InternalN4MFParser.g:2190:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_2 )
+            // InternalN4MFParser.g:2222:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_2 ) )
+            // InternalN4MFParser.g:2223:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getLibraryPathsAssignment_16_2()); 
-            // InternalN4MFParser.g:2191:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_2 )
-            // InternalN4MFParser.g:2191:2: rule__ProjectDescription__LibraryPathsAssignment_16_2
+            // InternalN4MFParser.g:2224:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_2 )
+            // InternalN4MFParser.g:2224:2: rule__ProjectDescription__LibraryPathsAssignment_16_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__LibraryPathsAssignment_16_2();
@@ -5810,14 +5903,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__3"
-    // InternalN4MFParser.g:2201:1: rule__ProjectDescription__Group_16__3 : rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4 ;
+    // InternalN4MFParser.g:2234:1: rule__ProjectDescription__Group_16__3 : rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4 ;
     public final void rule__ProjectDescription__Group_16__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2205:1: ( rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4 )
-            // InternalN4MFParser.g:2206:2: rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4
+            // InternalN4MFParser.g:2238:1: ( rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4 )
+            // InternalN4MFParser.g:2239:2: rule__ProjectDescription__Group_16__3__Impl rule__ProjectDescription__Group_16__4
             {
             pushFollow(FOLLOW_9);
             rule__ProjectDescription__Group_16__3__Impl();
@@ -5848,33 +5941,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__3__Impl"
-    // InternalN4MFParser.g:2213:1: rule__ProjectDescription__Group_16__3__Impl : ( ( rule__ProjectDescription__Group_16_3__0 )* ) ;
+    // InternalN4MFParser.g:2246:1: rule__ProjectDescription__Group_16__3__Impl : ( ( rule__ProjectDescription__Group_16_3__0 )* ) ;
     public final void rule__ProjectDescription__Group_16__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2217:1: ( ( ( rule__ProjectDescription__Group_16_3__0 )* ) )
-            // InternalN4MFParser.g:2218:1: ( ( rule__ProjectDescription__Group_16_3__0 )* )
+            // InternalN4MFParser.g:2250:1: ( ( ( rule__ProjectDescription__Group_16_3__0 )* ) )
+            // InternalN4MFParser.g:2251:1: ( ( rule__ProjectDescription__Group_16_3__0 )* )
             {
-            // InternalN4MFParser.g:2218:1: ( ( rule__ProjectDescription__Group_16_3__0 )* )
-            // InternalN4MFParser.g:2219:1: ( rule__ProjectDescription__Group_16_3__0 )*
+            // InternalN4MFParser.g:2251:1: ( ( rule__ProjectDescription__Group_16_3__0 )* )
+            // InternalN4MFParser.g:2252:1: ( rule__ProjectDescription__Group_16_3__0 )*
             {
              before(grammarAccess.getProjectDescriptionAccess().getGroup_16_3()); 
-            // InternalN4MFParser.g:2220:1: ( rule__ProjectDescription__Group_16_3__0 )*
-            loop12:
+            // InternalN4MFParser.g:2253:1: ( rule__ProjectDescription__Group_16_3__0 )*
+            loop13:
             do {
-                int alt12=2;
-                int LA12_0 = input.LA(1);
+                int alt13=2;
+                int LA13_0 = input.LA(1);
 
-                if ( (LA12_0==Comma) ) {
-                    alt12=1;
+                if ( (LA13_0==Comma) ) {
+                    alt13=1;
                 }
 
 
-                switch (alt12) {
+                switch (alt13) {
             	case 1 :
-            	    // InternalN4MFParser.g:2220:2: rule__ProjectDescription__Group_16_3__0
+            	    // InternalN4MFParser.g:2253:2: rule__ProjectDescription__Group_16_3__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ProjectDescription__Group_16_3__0();
@@ -5886,7 +5979,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop12;
+            	    break loop13;
                 }
             } while (true);
 
@@ -5913,14 +6006,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__4"
-    // InternalN4MFParser.g:2230:1: rule__ProjectDescription__Group_16__4 : rule__ProjectDescription__Group_16__4__Impl ;
+    // InternalN4MFParser.g:2263:1: rule__ProjectDescription__Group_16__4 : rule__ProjectDescription__Group_16__4__Impl ;
     public final void rule__ProjectDescription__Group_16__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2234:1: ( rule__ProjectDescription__Group_16__4__Impl )
-            // InternalN4MFParser.g:2235:2: rule__ProjectDescription__Group_16__4__Impl
+            // InternalN4MFParser.g:2267:1: ( rule__ProjectDescription__Group_16__4__Impl )
+            // InternalN4MFParser.g:2268:2: rule__ProjectDescription__Group_16__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_16__4__Impl();
@@ -5946,17 +6039,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16__4__Impl"
-    // InternalN4MFParser.g:2241:1: rule__ProjectDescription__Group_16__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:2274:1: rule__ProjectDescription__Group_16__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_16__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2245:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:2246:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2278:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:2279:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:2246:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:2247:1: RightCurlyBracket
+            // InternalN4MFParser.g:2279:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2280:1: RightCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_16_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -5983,14 +6076,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16_3__0"
-    // InternalN4MFParser.g:2270:1: rule__ProjectDescription__Group_16_3__0 : rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1 ;
+    // InternalN4MFParser.g:2303:1: rule__ProjectDescription__Group_16_3__0 : rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1 ;
     public final void rule__ProjectDescription__Group_16_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2274:1: ( rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1 )
-            // InternalN4MFParser.g:2275:2: rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1
+            // InternalN4MFParser.g:2307:1: ( rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1 )
+            // InternalN4MFParser.g:2308:2: rule__ProjectDescription__Group_16_3__0__Impl rule__ProjectDescription__Group_16_3__1
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_16_3__0__Impl();
@@ -6021,17 +6114,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16_3__0__Impl"
-    // InternalN4MFParser.g:2282:1: rule__ProjectDescription__Group_16_3__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:2315:1: rule__ProjectDescription__Group_16_3__0__Impl : ( Comma ) ;
     public final void rule__ProjectDescription__Group_16_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2286:1: ( ( Comma ) )
-            // InternalN4MFParser.g:2287:1: ( Comma )
+            // InternalN4MFParser.g:2319:1: ( ( Comma ) )
+            // InternalN4MFParser.g:2320:1: ( Comma )
             {
-            // InternalN4MFParser.g:2287:1: ( Comma )
-            // InternalN4MFParser.g:2288:1: Comma
+            // InternalN4MFParser.g:2320:1: ( Comma )
+            // InternalN4MFParser.g:2321:1: Comma
             {
              before(grammarAccess.getProjectDescriptionAccess().getCommaKeyword_16_3_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -6058,14 +6151,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16_3__1"
-    // InternalN4MFParser.g:2301:1: rule__ProjectDescription__Group_16_3__1 : rule__ProjectDescription__Group_16_3__1__Impl ;
+    // InternalN4MFParser.g:2334:1: rule__ProjectDescription__Group_16_3__1 : rule__ProjectDescription__Group_16_3__1__Impl ;
     public final void rule__ProjectDescription__Group_16_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2305:1: ( rule__ProjectDescription__Group_16_3__1__Impl )
-            // InternalN4MFParser.g:2306:2: rule__ProjectDescription__Group_16_3__1__Impl
+            // InternalN4MFParser.g:2338:1: ( rule__ProjectDescription__Group_16_3__1__Impl )
+            // InternalN4MFParser.g:2339:2: rule__ProjectDescription__Group_16_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_16_3__1__Impl();
@@ -6091,21 +6184,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_16_3__1__Impl"
-    // InternalN4MFParser.g:2312:1: rule__ProjectDescription__Group_16_3__1__Impl : ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) ) ;
+    // InternalN4MFParser.g:2345:1: rule__ProjectDescription__Group_16_3__1__Impl : ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) ) ;
     public final void rule__ProjectDescription__Group_16_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2316:1: ( ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) ) )
-            // InternalN4MFParser.g:2317:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) )
+            // InternalN4MFParser.g:2349:1: ( ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) ) )
+            // InternalN4MFParser.g:2350:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) )
             {
-            // InternalN4MFParser.g:2317:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) )
-            // InternalN4MFParser.g:2318:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 )
+            // InternalN4MFParser.g:2350:1: ( ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 ) )
+            // InternalN4MFParser.g:2351:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getLibraryPathsAssignment_16_3_1()); 
-            // InternalN4MFParser.g:2319:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 )
-            // InternalN4MFParser.g:2319:2: rule__ProjectDescription__LibraryPathsAssignment_16_3_1
+            // InternalN4MFParser.g:2352:1: ( rule__ProjectDescription__LibraryPathsAssignment_16_3_1 )
+            // InternalN4MFParser.g:2352:2: rule__ProjectDescription__LibraryPathsAssignment_16_3_1
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__LibraryPathsAssignment_16_3_1();
@@ -6138,14 +6231,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__0"
-    // InternalN4MFParser.g:2333:1: rule__ProjectDescription__Group_17__0 : rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1 ;
+    // InternalN4MFParser.g:2366:1: rule__ProjectDescription__Group_17__0 : rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1 ;
     public final void rule__ProjectDescription__Group_17__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2337:1: ( rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1 )
-            // InternalN4MFParser.g:2338:2: rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1
+            // InternalN4MFParser.g:2370:1: ( rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1 )
+            // InternalN4MFParser.g:2371:2: rule__ProjectDescription__Group_17__0__Impl rule__ProjectDescription__Group_17__1
             {
             pushFollow(FOLLOW_8);
             rule__ProjectDescription__Group_17__0__Impl();
@@ -6176,17 +6269,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__0__Impl"
-    // InternalN4MFParser.g:2345:1: rule__ProjectDescription__Group_17__0__Impl : ( Resources ) ;
+    // InternalN4MFParser.g:2378:1: rule__ProjectDescription__Group_17__0__Impl : ( Resources ) ;
     public final void rule__ProjectDescription__Group_17__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2349:1: ( ( Resources ) )
-            // InternalN4MFParser.g:2350:1: ( Resources )
+            // InternalN4MFParser.g:2382:1: ( ( Resources ) )
+            // InternalN4MFParser.g:2383:1: ( Resources )
             {
-            // InternalN4MFParser.g:2350:1: ( Resources )
-            // InternalN4MFParser.g:2351:1: Resources
+            // InternalN4MFParser.g:2383:1: ( Resources )
+            // InternalN4MFParser.g:2384:1: Resources
             {
              before(grammarAccess.getProjectDescriptionAccess().getResourcesKeyword_17_0()); 
             match(input,Resources,FOLLOW_2); 
@@ -6213,14 +6306,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__1"
-    // InternalN4MFParser.g:2364:1: rule__ProjectDescription__Group_17__1 : rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2 ;
+    // InternalN4MFParser.g:2397:1: rule__ProjectDescription__Group_17__1 : rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2 ;
     public final void rule__ProjectDescription__Group_17__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2368:1: ( rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2 )
-            // InternalN4MFParser.g:2369:2: rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2
+            // InternalN4MFParser.g:2401:1: ( rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2 )
+            // InternalN4MFParser.g:2402:2: rule__ProjectDescription__Group_17__1__Impl rule__ProjectDescription__Group_17__2
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_17__1__Impl();
@@ -6251,17 +6344,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__1__Impl"
-    // InternalN4MFParser.g:2376:1: rule__ProjectDescription__Group_17__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:2409:1: rule__ProjectDescription__Group_17__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_17__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2380:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:2381:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2413:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:2414:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:2381:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:2382:1: LeftCurlyBracket
+            // InternalN4MFParser.g:2414:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2415:1: LeftCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_17_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -6288,14 +6381,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__2"
-    // InternalN4MFParser.g:2395:1: rule__ProjectDescription__Group_17__2 : rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3 ;
+    // InternalN4MFParser.g:2428:1: rule__ProjectDescription__Group_17__2 : rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3 ;
     public final void rule__ProjectDescription__Group_17__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2399:1: ( rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3 )
-            // InternalN4MFParser.g:2400:2: rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3
+            // InternalN4MFParser.g:2432:1: ( rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3 )
+            // InternalN4MFParser.g:2433:2: rule__ProjectDescription__Group_17__2__Impl rule__ProjectDescription__Group_17__3
             {
             pushFollow(FOLLOW_9);
             rule__ProjectDescription__Group_17__2__Impl();
@@ -6326,21 +6419,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__2__Impl"
-    // InternalN4MFParser.g:2407:1: rule__ProjectDescription__Group_17__2__Impl : ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) ) ;
+    // InternalN4MFParser.g:2440:1: rule__ProjectDescription__Group_17__2__Impl : ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) ) ;
     public final void rule__ProjectDescription__Group_17__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2411:1: ( ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) ) )
-            // InternalN4MFParser.g:2412:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) )
+            // InternalN4MFParser.g:2444:1: ( ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) ) )
+            // InternalN4MFParser.g:2445:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) )
             {
-            // InternalN4MFParser.g:2412:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) )
-            // InternalN4MFParser.g:2413:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_2 )
+            // InternalN4MFParser.g:2445:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_2 ) )
+            // InternalN4MFParser.g:2446:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getResourcePathsAssignment_17_2()); 
-            // InternalN4MFParser.g:2414:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_2 )
-            // InternalN4MFParser.g:2414:2: rule__ProjectDescription__ResourcePathsAssignment_17_2
+            // InternalN4MFParser.g:2447:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_2 )
+            // InternalN4MFParser.g:2447:2: rule__ProjectDescription__ResourcePathsAssignment_17_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ResourcePathsAssignment_17_2();
@@ -6373,14 +6466,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__3"
-    // InternalN4MFParser.g:2424:1: rule__ProjectDescription__Group_17__3 : rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4 ;
+    // InternalN4MFParser.g:2457:1: rule__ProjectDescription__Group_17__3 : rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4 ;
     public final void rule__ProjectDescription__Group_17__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2428:1: ( rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4 )
-            // InternalN4MFParser.g:2429:2: rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4
+            // InternalN4MFParser.g:2461:1: ( rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4 )
+            // InternalN4MFParser.g:2462:2: rule__ProjectDescription__Group_17__3__Impl rule__ProjectDescription__Group_17__4
             {
             pushFollow(FOLLOW_9);
             rule__ProjectDescription__Group_17__3__Impl();
@@ -6411,33 +6504,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__3__Impl"
-    // InternalN4MFParser.g:2436:1: rule__ProjectDescription__Group_17__3__Impl : ( ( rule__ProjectDescription__Group_17_3__0 )* ) ;
+    // InternalN4MFParser.g:2469:1: rule__ProjectDescription__Group_17__3__Impl : ( ( rule__ProjectDescription__Group_17_3__0 )* ) ;
     public final void rule__ProjectDescription__Group_17__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2440:1: ( ( ( rule__ProjectDescription__Group_17_3__0 )* ) )
-            // InternalN4MFParser.g:2441:1: ( ( rule__ProjectDescription__Group_17_3__0 )* )
+            // InternalN4MFParser.g:2473:1: ( ( ( rule__ProjectDescription__Group_17_3__0 )* ) )
+            // InternalN4MFParser.g:2474:1: ( ( rule__ProjectDescription__Group_17_3__0 )* )
             {
-            // InternalN4MFParser.g:2441:1: ( ( rule__ProjectDescription__Group_17_3__0 )* )
-            // InternalN4MFParser.g:2442:1: ( rule__ProjectDescription__Group_17_3__0 )*
+            // InternalN4MFParser.g:2474:1: ( ( rule__ProjectDescription__Group_17_3__0 )* )
+            // InternalN4MFParser.g:2475:1: ( rule__ProjectDescription__Group_17_3__0 )*
             {
              before(grammarAccess.getProjectDescriptionAccess().getGroup_17_3()); 
-            // InternalN4MFParser.g:2443:1: ( rule__ProjectDescription__Group_17_3__0 )*
-            loop13:
+            // InternalN4MFParser.g:2476:1: ( rule__ProjectDescription__Group_17_3__0 )*
+            loop14:
             do {
-                int alt13=2;
-                int LA13_0 = input.LA(1);
+                int alt14=2;
+                int LA14_0 = input.LA(1);
 
-                if ( (LA13_0==Comma) ) {
-                    alt13=1;
+                if ( (LA14_0==Comma) ) {
+                    alt14=1;
                 }
 
 
-                switch (alt13) {
+                switch (alt14) {
             	case 1 :
-            	    // InternalN4MFParser.g:2443:2: rule__ProjectDescription__Group_17_3__0
+            	    // InternalN4MFParser.g:2476:2: rule__ProjectDescription__Group_17_3__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ProjectDescription__Group_17_3__0();
@@ -6449,7 +6542,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop13;
+            	    break loop14;
                 }
             } while (true);
 
@@ -6476,14 +6569,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__4"
-    // InternalN4MFParser.g:2453:1: rule__ProjectDescription__Group_17__4 : rule__ProjectDescription__Group_17__4__Impl ;
+    // InternalN4MFParser.g:2486:1: rule__ProjectDescription__Group_17__4 : rule__ProjectDescription__Group_17__4__Impl ;
     public final void rule__ProjectDescription__Group_17__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2457:1: ( rule__ProjectDescription__Group_17__4__Impl )
-            // InternalN4MFParser.g:2458:2: rule__ProjectDescription__Group_17__4__Impl
+            // InternalN4MFParser.g:2490:1: ( rule__ProjectDescription__Group_17__4__Impl )
+            // InternalN4MFParser.g:2491:2: rule__ProjectDescription__Group_17__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_17__4__Impl();
@@ -6509,17 +6602,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17__4__Impl"
-    // InternalN4MFParser.g:2464:1: rule__ProjectDescription__Group_17__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:2497:1: rule__ProjectDescription__Group_17__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_17__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2468:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:2469:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2501:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:2502:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:2469:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:2470:1: RightCurlyBracket
+            // InternalN4MFParser.g:2502:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2503:1: RightCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_17_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -6546,14 +6639,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17_3__0"
-    // InternalN4MFParser.g:2493:1: rule__ProjectDescription__Group_17_3__0 : rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1 ;
+    // InternalN4MFParser.g:2526:1: rule__ProjectDescription__Group_17_3__0 : rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1 ;
     public final void rule__ProjectDescription__Group_17_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2497:1: ( rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1 )
-            // InternalN4MFParser.g:2498:2: rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1
+            // InternalN4MFParser.g:2530:1: ( rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1 )
+            // InternalN4MFParser.g:2531:2: rule__ProjectDescription__Group_17_3__0__Impl rule__ProjectDescription__Group_17_3__1
             {
             pushFollow(FOLLOW_5);
             rule__ProjectDescription__Group_17_3__0__Impl();
@@ -6584,17 +6677,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17_3__0__Impl"
-    // InternalN4MFParser.g:2505:1: rule__ProjectDescription__Group_17_3__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:2538:1: rule__ProjectDescription__Group_17_3__0__Impl : ( Comma ) ;
     public final void rule__ProjectDescription__Group_17_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2509:1: ( ( Comma ) )
-            // InternalN4MFParser.g:2510:1: ( Comma )
+            // InternalN4MFParser.g:2542:1: ( ( Comma ) )
+            // InternalN4MFParser.g:2543:1: ( Comma )
             {
-            // InternalN4MFParser.g:2510:1: ( Comma )
-            // InternalN4MFParser.g:2511:1: Comma
+            // InternalN4MFParser.g:2543:1: ( Comma )
+            // InternalN4MFParser.g:2544:1: Comma
             {
              before(grammarAccess.getProjectDescriptionAccess().getCommaKeyword_17_3_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -6621,14 +6714,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17_3__1"
-    // InternalN4MFParser.g:2524:1: rule__ProjectDescription__Group_17_3__1 : rule__ProjectDescription__Group_17_3__1__Impl ;
+    // InternalN4MFParser.g:2557:1: rule__ProjectDescription__Group_17_3__1 : rule__ProjectDescription__Group_17_3__1__Impl ;
     public final void rule__ProjectDescription__Group_17_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2528:1: ( rule__ProjectDescription__Group_17_3__1__Impl )
-            // InternalN4MFParser.g:2529:2: rule__ProjectDescription__Group_17_3__1__Impl
+            // InternalN4MFParser.g:2561:1: ( rule__ProjectDescription__Group_17_3__1__Impl )
+            // InternalN4MFParser.g:2562:2: rule__ProjectDescription__Group_17_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_17_3__1__Impl();
@@ -6654,21 +6747,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_17_3__1__Impl"
-    // InternalN4MFParser.g:2535:1: rule__ProjectDescription__Group_17_3__1__Impl : ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) ) ;
+    // InternalN4MFParser.g:2568:1: rule__ProjectDescription__Group_17_3__1__Impl : ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) ) ;
     public final void rule__ProjectDescription__Group_17_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2539:1: ( ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) ) )
-            // InternalN4MFParser.g:2540:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) )
+            // InternalN4MFParser.g:2572:1: ( ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) ) )
+            // InternalN4MFParser.g:2573:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) )
             {
-            // InternalN4MFParser.g:2540:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) )
-            // InternalN4MFParser.g:2541:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 )
+            // InternalN4MFParser.g:2573:1: ( ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 ) )
+            // InternalN4MFParser.g:2574:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getResourcePathsAssignment_17_3_1()); 
-            // InternalN4MFParser.g:2542:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 )
-            // InternalN4MFParser.g:2542:2: rule__ProjectDescription__ResourcePathsAssignment_17_3_1
+            // InternalN4MFParser.g:2575:1: ( rule__ProjectDescription__ResourcePathsAssignment_17_3_1 )
+            // InternalN4MFParser.g:2575:2: rule__ProjectDescription__ResourcePathsAssignment_17_3_1
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ResourcePathsAssignment_17_3_1();
@@ -6701,14 +6794,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__0"
-    // InternalN4MFParser.g:2556:1: rule__ProjectDescription__Group_18__0 : rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1 ;
+    // InternalN4MFParser.g:2589:1: rule__ProjectDescription__Group_18__0 : rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1 ;
     public final void rule__ProjectDescription__Group_18__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2560:1: ( rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1 )
-            // InternalN4MFParser.g:2561:2: rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1
+            // InternalN4MFParser.g:2593:1: ( rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1 )
+            // InternalN4MFParser.g:2594:2: rule__ProjectDescription__Group_18__0__Impl rule__ProjectDescription__Group_18__1
             {
             pushFollow(FOLLOW_8);
             rule__ProjectDescription__Group_18__0__Impl();
@@ -6739,17 +6832,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__0__Impl"
-    // InternalN4MFParser.g:2568:1: rule__ProjectDescription__Group_18__0__Impl : ( Sources ) ;
+    // InternalN4MFParser.g:2601:1: rule__ProjectDescription__Group_18__0__Impl : ( Sources ) ;
     public final void rule__ProjectDescription__Group_18__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2572:1: ( ( Sources ) )
-            // InternalN4MFParser.g:2573:1: ( Sources )
+            // InternalN4MFParser.g:2605:1: ( ( Sources ) )
+            // InternalN4MFParser.g:2606:1: ( Sources )
             {
-            // InternalN4MFParser.g:2573:1: ( Sources )
-            // InternalN4MFParser.g:2574:1: Sources
+            // InternalN4MFParser.g:2606:1: ( Sources )
+            // InternalN4MFParser.g:2607:1: Sources
             {
              before(grammarAccess.getProjectDescriptionAccess().getSourcesKeyword_18_0()); 
             match(input,Sources,FOLLOW_2); 
@@ -6776,14 +6869,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__1"
-    // InternalN4MFParser.g:2587:1: rule__ProjectDescription__Group_18__1 : rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2 ;
+    // InternalN4MFParser.g:2620:1: rule__ProjectDescription__Group_18__1 : rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2 ;
     public final void rule__ProjectDescription__Group_18__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2591:1: ( rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2 )
-            // InternalN4MFParser.g:2592:2: rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2
+            // InternalN4MFParser.g:2624:1: ( rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2 )
+            // InternalN4MFParser.g:2625:2: rule__ProjectDescription__Group_18__1__Impl rule__ProjectDescription__Group_18__2
             {
             pushFollow(FOLLOW_11);
             rule__ProjectDescription__Group_18__1__Impl();
@@ -6814,17 +6907,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__1__Impl"
-    // InternalN4MFParser.g:2599:1: rule__ProjectDescription__Group_18__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:2632:1: rule__ProjectDescription__Group_18__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_18__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2603:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:2604:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2636:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:2637:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:2604:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:2605:1: LeftCurlyBracket
+            // InternalN4MFParser.g:2637:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2638:1: LeftCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_18_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -6851,14 +6944,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__2"
-    // InternalN4MFParser.g:2618:1: rule__ProjectDescription__Group_18__2 : rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3 ;
+    // InternalN4MFParser.g:2651:1: rule__ProjectDescription__Group_18__2 : rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3 ;
     public final void rule__ProjectDescription__Group_18__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2622:1: ( rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3 )
-            // InternalN4MFParser.g:2623:2: rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3
+            // InternalN4MFParser.g:2655:1: ( rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3 )
+            // InternalN4MFParser.g:2656:2: rule__ProjectDescription__Group_18__2__Impl rule__ProjectDescription__Group_18__3
             {
             pushFollow(FOLLOW_12);
             rule__ProjectDescription__Group_18__2__Impl();
@@ -6889,24 +6982,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__2__Impl"
-    // InternalN4MFParser.g:2630:1: rule__ProjectDescription__Group_18__2__Impl : ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) ) ;
+    // InternalN4MFParser.g:2663:1: rule__ProjectDescription__Group_18__2__Impl : ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) ) ;
     public final void rule__ProjectDescription__Group_18__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2634:1: ( ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) ) )
-            // InternalN4MFParser.g:2635:1: ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) )
+            // InternalN4MFParser.g:2667:1: ( ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) ) )
+            // InternalN4MFParser.g:2668:1: ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) )
             {
-            // InternalN4MFParser.g:2635:1: ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) )
-            // InternalN4MFParser.g:2636:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* )
+            // InternalN4MFParser.g:2668:1: ( ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* ) )
+            // InternalN4MFParser.g:2669:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) ) ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* )
             {
-            // InternalN4MFParser.g:2636:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) )
-            // InternalN4MFParser.g:2637:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )
+            // InternalN4MFParser.g:2669:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 ) )
+            // InternalN4MFParser.g:2670:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getSourceFragmentAssignment_18_2()); 
-            // InternalN4MFParser.g:2638:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )
-            // InternalN4MFParser.g:2638:2: rule__ProjectDescription__SourceFragmentAssignment_18_2
+            // InternalN4MFParser.g:2671:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )
+            // InternalN4MFParser.g:2671:2: rule__ProjectDescription__SourceFragmentAssignment_18_2
             {
             pushFollow(FOLLOW_13);
             rule__ProjectDescription__SourceFragmentAssignment_18_2();
@@ -6920,24 +7013,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalN4MFParser.g:2641:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* )
-            // InternalN4MFParser.g:2642:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )*
+            // InternalN4MFParser.g:2674:1: ( ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )* )
+            // InternalN4MFParser.g:2675:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )*
             {
              before(grammarAccess.getProjectDescriptionAccess().getSourceFragmentAssignment_18_2()); 
-            // InternalN4MFParser.g:2643:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )*
-            loop14:
+            // InternalN4MFParser.g:2676:1: ( rule__ProjectDescription__SourceFragmentAssignment_18_2 )*
+            loop15:
             do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
+                int alt15=2;
+                int LA15_0 = input.LA(1);
 
-                if ( (LA14_0==External||LA14_0==Source||LA14_0==Test) ) {
-                    alt14=1;
+                if ( (LA15_0==External||LA15_0==Source||LA15_0==Test) ) {
+                    alt15=1;
                 }
 
 
-                switch (alt14) {
+                switch (alt15) {
             	case 1 :
-            	    // InternalN4MFParser.g:2643:2: rule__ProjectDescription__SourceFragmentAssignment_18_2
+            	    // InternalN4MFParser.g:2676:2: rule__ProjectDescription__SourceFragmentAssignment_18_2
             	    {
             	    pushFollow(FOLLOW_13);
             	    rule__ProjectDescription__SourceFragmentAssignment_18_2();
@@ -6949,7 +7042,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop14;
+            	    break loop15;
                 }
             } while (true);
 
@@ -6979,14 +7072,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__3"
-    // InternalN4MFParser.g:2654:1: rule__ProjectDescription__Group_18__3 : rule__ProjectDescription__Group_18__3__Impl ;
+    // InternalN4MFParser.g:2687:1: rule__ProjectDescription__Group_18__3 : rule__ProjectDescription__Group_18__3__Impl ;
     public final void rule__ProjectDescription__Group_18__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2658:1: ( rule__ProjectDescription__Group_18__3__Impl )
-            // InternalN4MFParser.g:2659:2: rule__ProjectDescription__Group_18__3__Impl
+            // InternalN4MFParser.g:2691:1: ( rule__ProjectDescription__Group_18__3__Impl )
+            // InternalN4MFParser.g:2692:2: rule__ProjectDescription__Group_18__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_18__3__Impl();
@@ -7012,17 +7105,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_18__3__Impl"
-    // InternalN4MFParser.g:2665:1: rule__ProjectDescription__Group_18__3__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:2698:1: rule__ProjectDescription__Group_18__3__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_18__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2669:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:2670:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2702:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:2703:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:2670:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:2671:1: RightCurlyBracket
+            // InternalN4MFParser.g:2703:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2704:1: RightCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_18_3()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -7049,14 +7142,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__0"
-    // InternalN4MFParser.g:2692:1: rule__ProjectDescription__Group_19__0 : rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1 ;
+    // InternalN4MFParser.g:2725:1: rule__ProjectDescription__Group_19__0 : rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1 ;
     public final void rule__ProjectDescription__Group_19__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2696:1: ( rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1 )
-            // InternalN4MFParser.g:2697:2: rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1
+            // InternalN4MFParser.g:2729:1: ( rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1 )
+            // InternalN4MFParser.g:2730:2: rule__ProjectDescription__Group_19__0__Impl rule__ProjectDescription__Group_19__1
             {
             pushFollow(FOLLOW_8);
             rule__ProjectDescription__Group_19__0__Impl();
@@ -7087,17 +7180,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__0__Impl"
-    // InternalN4MFParser.g:2704:1: rule__ProjectDescription__Group_19__0__Impl : ( ModuleFilters ) ;
+    // InternalN4MFParser.g:2737:1: rule__ProjectDescription__Group_19__0__Impl : ( ModuleFilters ) ;
     public final void rule__ProjectDescription__Group_19__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2708:1: ( ( ModuleFilters ) )
-            // InternalN4MFParser.g:2709:1: ( ModuleFilters )
+            // InternalN4MFParser.g:2741:1: ( ( ModuleFilters ) )
+            // InternalN4MFParser.g:2742:1: ( ModuleFilters )
             {
-            // InternalN4MFParser.g:2709:1: ( ModuleFilters )
-            // InternalN4MFParser.g:2710:1: ModuleFilters
+            // InternalN4MFParser.g:2742:1: ( ModuleFilters )
+            // InternalN4MFParser.g:2743:1: ModuleFilters
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleFiltersKeyword_19_0()); 
             match(input,ModuleFilters,FOLLOW_2); 
@@ -7124,14 +7217,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__1"
-    // InternalN4MFParser.g:2723:1: rule__ProjectDescription__Group_19__1 : rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2 ;
+    // InternalN4MFParser.g:2756:1: rule__ProjectDescription__Group_19__1 : rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2 ;
     public final void rule__ProjectDescription__Group_19__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2727:1: ( rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2 )
-            // InternalN4MFParser.g:2728:2: rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2
+            // InternalN4MFParser.g:2760:1: ( rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2 )
+            // InternalN4MFParser.g:2761:2: rule__ProjectDescription__Group_19__1__Impl rule__ProjectDescription__Group_19__2
             {
             pushFollow(FOLLOW_14);
             rule__ProjectDescription__Group_19__1__Impl();
@@ -7162,17 +7255,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__1__Impl"
-    // InternalN4MFParser.g:2735:1: rule__ProjectDescription__Group_19__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:2768:1: rule__ProjectDescription__Group_19__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_19__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2739:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:2740:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2772:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:2773:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:2740:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:2741:1: LeftCurlyBracket
+            // InternalN4MFParser.g:2773:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:2774:1: LeftCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_19_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -7199,14 +7292,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__2"
-    // InternalN4MFParser.g:2754:1: rule__ProjectDescription__Group_19__2 : rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3 ;
+    // InternalN4MFParser.g:2787:1: rule__ProjectDescription__Group_19__2 : rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3 ;
     public final void rule__ProjectDescription__Group_19__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2758:1: ( rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3 )
-            // InternalN4MFParser.g:2759:2: rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3
+            // InternalN4MFParser.g:2791:1: ( rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3 )
+            // InternalN4MFParser.g:2792:2: rule__ProjectDescription__Group_19__2__Impl rule__ProjectDescription__Group_19__3
             {
             pushFollow(FOLLOW_12);
             rule__ProjectDescription__Group_19__2__Impl();
@@ -7237,24 +7330,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__2__Impl"
-    // InternalN4MFParser.g:2766:1: rule__ProjectDescription__Group_19__2__Impl : ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) ) ;
+    // InternalN4MFParser.g:2799:1: rule__ProjectDescription__Group_19__2__Impl : ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) ) ;
     public final void rule__ProjectDescription__Group_19__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2770:1: ( ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) ) )
-            // InternalN4MFParser.g:2771:1: ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) )
+            // InternalN4MFParser.g:2803:1: ( ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) ) )
+            // InternalN4MFParser.g:2804:1: ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) )
             {
-            // InternalN4MFParser.g:2771:1: ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) )
-            // InternalN4MFParser.g:2772:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* )
+            // InternalN4MFParser.g:2804:1: ( ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* ) )
+            // InternalN4MFParser.g:2805:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) ) ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* )
             {
-            // InternalN4MFParser.g:2772:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) )
-            // InternalN4MFParser.g:2773:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )
+            // InternalN4MFParser.g:2805:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 ) )
+            // InternalN4MFParser.g:2806:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleFiltersAssignment_19_2()); 
-            // InternalN4MFParser.g:2774:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )
-            // InternalN4MFParser.g:2774:2: rule__ProjectDescription__ModuleFiltersAssignment_19_2
+            // InternalN4MFParser.g:2807:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )
+            // InternalN4MFParser.g:2807:2: rule__ProjectDescription__ModuleFiltersAssignment_19_2
             {
             pushFollow(FOLLOW_15);
             rule__ProjectDescription__ModuleFiltersAssignment_19_2();
@@ -7268,24 +7361,24 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalN4MFParser.g:2777:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* )
-            // InternalN4MFParser.g:2778:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )*
+            // InternalN4MFParser.g:2810:1: ( ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )* )
+            // InternalN4MFParser.g:2811:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )*
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleFiltersAssignment_19_2()); 
-            // InternalN4MFParser.g:2779:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )*
-            loop15:
+            // InternalN4MFParser.g:2812:1: ( rule__ProjectDescription__ModuleFiltersAssignment_19_2 )*
+            loop16:
             do {
-                int alt15=2;
-                int LA15_0 = input.LA(1);
+                int alt16=2;
+                int LA16_0 = input.LA(1);
 
-                if ( (LA15_0==NoModuleWrap||LA15_0==NoValidate) ) {
-                    alt15=1;
+                if ( (LA16_0==NoModuleWrap||LA16_0==NoValidate) ) {
+                    alt16=1;
                 }
 
 
-                switch (alt15) {
+                switch (alt16) {
             	case 1 :
-            	    // InternalN4MFParser.g:2779:2: rule__ProjectDescription__ModuleFiltersAssignment_19_2
+            	    // InternalN4MFParser.g:2812:2: rule__ProjectDescription__ModuleFiltersAssignment_19_2
             	    {
             	    pushFollow(FOLLOW_15);
             	    rule__ProjectDescription__ModuleFiltersAssignment_19_2();
@@ -7297,7 +7390,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop15;
+            	    break loop16;
                 }
             } while (true);
 
@@ -7327,14 +7420,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__3"
-    // InternalN4MFParser.g:2790:1: rule__ProjectDescription__Group_19__3 : rule__ProjectDescription__Group_19__3__Impl ;
+    // InternalN4MFParser.g:2823:1: rule__ProjectDescription__Group_19__3 : rule__ProjectDescription__Group_19__3__Impl ;
     public final void rule__ProjectDescription__Group_19__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2794:1: ( rule__ProjectDescription__Group_19__3__Impl )
-            // InternalN4MFParser.g:2795:2: rule__ProjectDescription__Group_19__3__Impl
+            // InternalN4MFParser.g:2827:1: ( rule__ProjectDescription__Group_19__3__Impl )
+            // InternalN4MFParser.g:2828:2: rule__ProjectDescription__Group_19__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_19__3__Impl();
@@ -7360,17 +7453,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_19__3__Impl"
-    // InternalN4MFParser.g:2801:1: rule__ProjectDescription__Group_19__3__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:2834:1: rule__ProjectDescription__Group_19__3__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProjectDescription__Group_19__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2805:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:2806:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2838:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:2839:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:2806:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:2807:1: RightCurlyBracket
+            // InternalN4MFParser.g:2839:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:2840:1: RightCurlyBracket
             {
              before(grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_19_3()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -7397,14 +7490,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__0"
-    // InternalN4MFParser.g:2828:1: rule__ProjectDescription__Group_21__0 : rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1 ;
+    // InternalN4MFParser.g:2861:1: rule__ProjectDescription__Group_21__0 : rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1 ;
     public final void rule__ProjectDescription__Group_21__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2832:1: ( rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1 )
-            // InternalN4MFParser.g:2833:2: rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1
+            // InternalN4MFParser.g:2865:1: ( rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1 )
+            // InternalN4MFParser.g:2866:2: rule__ProjectDescription__Group_21__0__Impl rule__ProjectDescription__Group_21__1
             {
             pushFollow(FOLLOW_3);
             rule__ProjectDescription__Group_21__0__Impl();
@@ -7435,17 +7528,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__0__Impl"
-    // InternalN4MFParser.g:2840:1: rule__ProjectDescription__Group_21__0__Impl : ( ModuleLoader ) ;
+    // InternalN4MFParser.g:2873:1: rule__ProjectDescription__Group_21__0__Impl : ( ModuleLoader ) ;
     public final void rule__ProjectDescription__Group_21__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2844:1: ( ( ModuleLoader ) )
-            // InternalN4MFParser.g:2845:1: ( ModuleLoader )
+            // InternalN4MFParser.g:2877:1: ( ( ModuleLoader ) )
+            // InternalN4MFParser.g:2878:1: ( ModuleLoader )
             {
-            // InternalN4MFParser.g:2845:1: ( ModuleLoader )
-            // InternalN4MFParser.g:2846:1: ModuleLoader
+            // InternalN4MFParser.g:2878:1: ( ModuleLoader )
+            // InternalN4MFParser.g:2879:1: ModuleLoader
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleLoaderKeyword_21_0()); 
             match(input,ModuleLoader,FOLLOW_2); 
@@ -7472,14 +7565,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__1"
-    // InternalN4MFParser.g:2859:1: rule__ProjectDescription__Group_21__1 : rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2 ;
+    // InternalN4MFParser.g:2892:1: rule__ProjectDescription__Group_21__1 : rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2 ;
     public final void rule__ProjectDescription__Group_21__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2863:1: ( rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2 )
-            // InternalN4MFParser.g:2864:2: rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2
+            // InternalN4MFParser.g:2896:1: ( rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2 )
+            // InternalN4MFParser.g:2897:2: rule__ProjectDescription__Group_21__1__Impl rule__ProjectDescription__Group_21__2
             {
             pushFollow(FOLLOW_16);
             rule__ProjectDescription__Group_21__1__Impl();
@@ -7510,17 +7603,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__1__Impl"
-    // InternalN4MFParser.g:2871:1: rule__ProjectDescription__Group_21__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:2904:1: rule__ProjectDescription__Group_21__1__Impl : ( Colon ) ;
     public final void rule__ProjectDescription__Group_21__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2875:1: ( ( Colon ) )
-            // InternalN4MFParser.g:2876:1: ( Colon )
+            // InternalN4MFParser.g:2908:1: ( ( Colon ) )
+            // InternalN4MFParser.g:2909:1: ( Colon )
             {
-            // InternalN4MFParser.g:2876:1: ( Colon )
-            // InternalN4MFParser.g:2877:1: Colon
+            // InternalN4MFParser.g:2909:1: ( Colon )
+            // InternalN4MFParser.g:2910:1: Colon
             {
              before(grammarAccess.getProjectDescriptionAccess().getColonKeyword_21_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -7547,14 +7640,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__2"
-    // InternalN4MFParser.g:2890:1: rule__ProjectDescription__Group_21__2 : rule__ProjectDescription__Group_21__2__Impl ;
+    // InternalN4MFParser.g:2923:1: rule__ProjectDescription__Group_21__2 : rule__ProjectDescription__Group_21__2__Impl ;
     public final void rule__ProjectDescription__Group_21__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2894:1: ( rule__ProjectDescription__Group_21__2__Impl )
-            // InternalN4MFParser.g:2895:2: rule__ProjectDescription__Group_21__2__Impl
+            // InternalN4MFParser.g:2927:1: ( rule__ProjectDescription__Group_21__2__Impl )
+            // InternalN4MFParser.g:2928:2: rule__ProjectDescription__Group_21__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__Group_21__2__Impl();
@@ -7580,21 +7673,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__Group_21__2__Impl"
-    // InternalN4MFParser.g:2901:1: rule__ProjectDescription__Group_21__2__Impl : ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) ) ;
+    // InternalN4MFParser.g:2934:1: rule__ProjectDescription__Group_21__2__Impl : ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) ) ;
     public final void rule__ProjectDescription__Group_21__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2905:1: ( ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) ) )
-            // InternalN4MFParser.g:2906:1: ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) )
+            // InternalN4MFParser.g:2938:1: ( ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) ) )
+            // InternalN4MFParser.g:2939:1: ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) )
             {
-            // InternalN4MFParser.g:2906:1: ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) )
-            // InternalN4MFParser.g:2907:1: ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 )
+            // InternalN4MFParser.g:2939:1: ( ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 ) )
+            // InternalN4MFParser.g:2940:1: ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 )
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleLoaderAssignment_21_2()); 
-            // InternalN4MFParser.g:2908:1: ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 )
-            // InternalN4MFParser.g:2908:2: rule__ProjectDescription__ModuleLoaderAssignment_21_2
+            // InternalN4MFParser.g:2941:1: ( rule__ProjectDescription__ModuleLoaderAssignment_21_2 )
+            // InternalN4MFParser.g:2941:2: rule__ProjectDescription__ModuleLoaderAssignment_21_2
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__ModuleLoaderAssignment_21_2();
@@ -7627,14 +7720,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__0"
-    // InternalN4MFParser.g:2924:1: rule__ExecModule__Group__0 : rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1 ;
+    // InternalN4MFParser.g:2957:1: rule__ExecModule__Group__0 : rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1 ;
     public final void rule__ExecModule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2928:1: ( rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1 )
-            // InternalN4MFParser.g:2929:2: rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1
+            // InternalN4MFParser.g:2961:1: ( rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1 )
+            // InternalN4MFParser.g:2962:2: rule__ExecModule__Group__0__Impl rule__ExecModule__Group__1
             {
             pushFollow(FOLLOW_17);
             rule__ExecModule__Group__0__Impl();
@@ -7665,21 +7758,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__0__Impl"
-    // InternalN4MFParser.g:2936:1: rule__ExecModule__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:2969:1: rule__ExecModule__Group__0__Impl : ( () ) ;
     public final void rule__ExecModule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2940:1: ( ( () ) )
-            // InternalN4MFParser.g:2941:1: ( () )
+            // InternalN4MFParser.g:2973:1: ( ( () ) )
+            // InternalN4MFParser.g:2974:1: ( () )
             {
-            // InternalN4MFParser.g:2941:1: ( () )
-            // InternalN4MFParser.g:2942:1: ()
+            // InternalN4MFParser.g:2974:1: ( () )
+            // InternalN4MFParser.g:2975:1: ()
             {
              before(grammarAccess.getExecModuleAccess().getExecModuleAction_0()); 
-            // InternalN4MFParser.g:2943:1: ()
-            // InternalN4MFParser.g:2945:1: 
+            // InternalN4MFParser.g:2976:1: ()
+            // InternalN4MFParser.g:2978:1: 
             {
             }
 
@@ -7702,14 +7795,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__1"
-    // InternalN4MFParser.g:2955:1: rule__ExecModule__Group__1 : rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2 ;
+    // InternalN4MFParser.g:2988:1: rule__ExecModule__Group__1 : rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2 ;
     public final void rule__ExecModule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2959:1: ( rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2 )
-            // InternalN4MFParser.g:2960:2: rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2
+            // InternalN4MFParser.g:2992:1: ( rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2 )
+            // InternalN4MFParser.g:2993:2: rule__ExecModule__Group__1__Impl rule__ExecModule__Group__2
             {
             pushFollow(FOLLOW_3);
             rule__ExecModule__Group__1__Impl();
@@ -7740,17 +7833,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__1__Impl"
-    // InternalN4MFParser.g:2967:1: rule__ExecModule__Group__1__Impl : ( ExecModule ) ;
+    // InternalN4MFParser.g:3000:1: rule__ExecModule__Group__1__Impl : ( ExecModule ) ;
     public final void rule__ExecModule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2971:1: ( ( ExecModule ) )
-            // InternalN4MFParser.g:2972:1: ( ExecModule )
+            // InternalN4MFParser.g:3004:1: ( ( ExecModule ) )
+            // InternalN4MFParser.g:3005:1: ( ExecModule )
             {
-            // InternalN4MFParser.g:2972:1: ( ExecModule )
-            // InternalN4MFParser.g:2973:1: ExecModule
+            // InternalN4MFParser.g:3005:1: ( ExecModule )
+            // InternalN4MFParser.g:3006:1: ExecModule
             {
              before(grammarAccess.getExecModuleAccess().getExecModuleKeyword_1()); 
             match(input,ExecModule,FOLLOW_2); 
@@ -7777,14 +7870,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__2"
-    // InternalN4MFParser.g:2986:1: rule__ExecModule__Group__2 : rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3 ;
+    // InternalN4MFParser.g:3019:1: rule__ExecModule__Group__2 : rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3 ;
     public final void rule__ExecModule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:2990:1: ( rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3 )
-            // InternalN4MFParser.g:2991:2: rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3
+            // InternalN4MFParser.g:3023:1: ( rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3 )
+            // InternalN4MFParser.g:3024:2: rule__ExecModule__Group__2__Impl rule__ExecModule__Group__3
             {
             pushFollow(FOLLOW_5);
             rule__ExecModule__Group__2__Impl();
@@ -7815,17 +7908,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__2__Impl"
-    // InternalN4MFParser.g:2998:1: rule__ExecModule__Group__2__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:3031:1: rule__ExecModule__Group__2__Impl : ( Colon ) ;
     public final void rule__ExecModule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3002:1: ( ( Colon ) )
-            // InternalN4MFParser.g:3003:1: ( Colon )
+            // InternalN4MFParser.g:3035:1: ( ( Colon ) )
+            // InternalN4MFParser.g:3036:1: ( Colon )
             {
-            // InternalN4MFParser.g:3003:1: ( Colon )
-            // InternalN4MFParser.g:3004:1: Colon
+            // InternalN4MFParser.g:3036:1: ( Colon )
+            // InternalN4MFParser.g:3037:1: Colon
             {
              before(grammarAccess.getExecModuleAccess().getColonKeyword_2()); 
             match(input,Colon,FOLLOW_2); 
@@ -7852,14 +7945,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__3"
-    // InternalN4MFParser.g:3017:1: rule__ExecModule__Group__3 : rule__ExecModule__Group__3__Impl ;
+    // InternalN4MFParser.g:3050:1: rule__ExecModule__Group__3 : rule__ExecModule__Group__3__Impl ;
     public final void rule__ExecModule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3021:1: ( rule__ExecModule__Group__3__Impl )
-            // InternalN4MFParser.g:3022:2: rule__ExecModule__Group__3__Impl
+            // InternalN4MFParser.g:3054:1: ( rule__ExecModule__Group__3__Impl )
+            // InternalN4MFParser.g:3055:2: rule__ExecModule__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ExecModule__Group__3__Impl();
@@ -7885,21 +7978,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__Group__3__Impl"
-    // InternalN4MFParser.g:3028:1: rule__ExecModule__Group__3__Impl : ( ( rule__ExecModule__ExecModuleAssignment_3 ) ) ;
+    // InternalN4MFParser.g:3061:1: rule__ExecModule__Group__3__Impl : ( ( rule__ExecModule__ExecModuleAssignment_3 ) ) ;
     public final void rule__ExecModule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3032:1: ( ( ( rule__ExecModule__ExecModuleAssignment_3 ) ) )
-            // InternalN4MFParser.g:3033:1: ( ( rule__ExecModule__ExecModuleAssignment_3 ) )
+            // InternalN4MFParser.g:3065:1: ( ( ( rule__ExecModule__ExecModuleAssignment_3 ) ) )
+            // InternalN4MFParser.g:3066:1: ( ( rule__ExecModule__ExecModuleAssignment_3 ) )
             {
-            // InternalN4MFParser.g:3033:1: ( ( rule__ExecModule__ExecModuleAssignment_3 ) )
-            // InternalN4MFParser.g:3034:1: ( rule__ExecModule__ExecModuleAssignment_3 )
+            // InternalN4MFParser.g:3066:1: ( ( rule__ExecModule__ExecModuleAssignment_3 ) )
+            // InternalN4MFParser.g:3067:1: ( rule__ExecModule__ExecModuleAssignment_3 )
             {
              before(grammarAccess.getExecModuleAccess().getExecModuleAssignment_3()); 
-            // InternalN4MFParser.g:3035:1: ( rule__ExecModule__ExecModuleAssignment_3 )
-            // InternalN4MFParser.g:3035:2: rule__ExecModule__ExecModuleAssignment_3
+            // InternalN4MFParser.g:3068:1: ( rule__ExecModule__ExecModuleAssignment_3 )
+            // InternalN4MFParser.g:3068:2: rule__ExecModule__ExecModuleAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__ExecModule__ExecModuleAssignment_3();
@@ -7932,14 +8025,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__0"
-    // InternalN4MFParser.g:3053:1: rule__TestedProjects__Group__0 : rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1 ;
+    // InternalN4MFParser.g:3086:1: rule__TestedProjects__Group__0 : rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1 ;
     public final void rule__TestedProjects__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3057:1: ( rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1 )
-            // InternalN4MFParser.g:3058:2: rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1
+            // InternalN4MFParser.g:3090:1: ( rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1 )
+            // InternalN4MFParser.g:3091:2: rule__TestedProjects__Group__0__Impl rule__TestedProjects__Group__1
             {
             pushFollow(FOLLOW_18);
             rule__TestedProjects__Group__0__Impl();
@@ -7970,21 +8063,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__0__Impl"
-    // InternalN4MFParser.g:3065:1: rule__TestedProjects__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:3098:1: rule__TestedProjects__Group__0__Impl : ( () ) ;
     public final void rule__TestedProjects__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3069:1: ( ( () ) )
-            // InternalN4MFParser.g:3070:1: ( () )
+            // InternalN4MFParser.g:3102:1: ( ( () ) )
+            // InternalN4MFParser.g:3103:1: ( () )
             {
-            // InternalN4MFParser.g:3070:1: ( () )
-            // InternalN4MFParser.g:3071:1: ()
+            // InternalN4MFParser.g:3103:1: ( () )
+            // InternalN4MFParser.g:3104:1: ()
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsAction_0()); 
-            // InternalN4MFParser.g:3072:1: ()
-            // InternalN4MFParser.g:3074:1: 
+            // InternalN4MFParser.g:3105:1: ()
+            // InternalN4MFParser.g:3107:1: 
             {
             }
 
@@ -8007,14 +8100,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__1"
-    // InternalN4MFParser.g:3084:1: rule__TestedProjects__Group__1 : rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2 ;
+    // InternalN4MFParser.g:3117:1: rule__TestedProjects__Group__1 : rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2 ;
     public final void rule__TestedProjects__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3088:1: ( rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2 )
-            // InternalN4MFParser.g:3089:2: rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2
+            // InternalN4MFParser.g:3121:1: ( rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2 )
+            // InternalN4MFParser.g:3122:2: rule__TestedProjects__Group__1__Impl rule__TestedProjects__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__TestedProjects__Group__1__Impl();
@@ -8045,17 +8138,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__1__Impl"
-    // InternalN4MFParser.g:3096:1: rule__TestedProjects__Group__1__Impl : ( TestedProjects ) ;
+    // InternalN4MFParser.g:3129:1: rule__TestedProjects__Group__1__Impl : ( TestedProjects ) ;
     public final void rule__TestedProjects__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3100:1: ( ( TestedProjects ) )
-            // InternalN4MFParser.g:3101:1: ( TestedProjects )
+            // InternalN4MFParser.g:3133:1: ( ( TestedProjects ) )
+            // InternalN4MFParser.g:3134:1: ( TestedProjects )
             {
-            // InternalN4MFParser.g:3101:1: ( TestedProjects )
-            // InternalN4MFParser.g:3102:1: TestedProjects
+            // InternalN4MFParser.g:3134:1: ( TestedProjects )
+            // InternalN4MFParser.g:3135:1: TestedProjects
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsKeyword_1()); 
             match(input,TestedProjects,FOLLOW_2); 
@@ -8082,14 +8175,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__2"
-    // InternalN4MFParser.g:3115:1: rule__TestedProjects__Group__2 : rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3 ;
+    // InternalN4MFParser.g:3148:1: rule__TestedProjects__Group__2 : rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3 ;
     public final void rule__TestedProjects__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3119:1: ( rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3 )
-            // InternalN4MFParser.g:3120:2: rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3
+            // InternalN4MFParser.g:3152:1: ( rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3 )
+            // InternalN4MFParser.g:3153:2: rule__TestedProjects__Group__2__Impl rule__TestedProjects__Group__3
             {
             pushFollow(FOLLOW_19);
             rule__TestedProjects__Group__2__Impl();
@@ -8120,17 +8213,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__2__Impl"
-    // InternalN4MFParser.g:3127:1: rule__TestedProjects__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:3160:1: rule__TestedProjects__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__TestedProjects__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3131:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:3132:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3164:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:3165:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:3132:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:3133:1: LeftCurlyBracket
+            // InternalN4MFParser.g:3165:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3166:1: LeftCurlyBracket
             {
              before(grammarAccess.getTestedProjectsAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -8157,14 +8250,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__3"
-    // InternalN4MFParser.g:3146:1: rule__TestedProjects__Group__3 : rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4 ;
+    // InternalN4MFParser.g:3179:1: rule__TestedProjects__Group__3 : rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4 ;
     public final void rule__TestedProjects__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3150:1: ( rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4 )
-            // InternalN4MFParser.g:3151:2: rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4
+            // InternalN4MFParser.g:3183:1: ( rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4 )
+            // InternalN4MFParser.g:3184:2: rule__TestedProjects__Group__3__Impl rule__TestedProjects__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__TestedProjects__Group__3__Impl();
@@ -8195,29 +8288,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__3__Impl"
-    // InternalN4MFParser.g:3158:1: rule__TestedProjects__Group__3__Impl : ( ( rule__TestedProjects__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:3191:1: rule__TestedProjects__Group__3__Impl : ( ( rule__TestedProjects__Group_3__0 )? ) ;
     public final void rule__TestedProjects__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3162:1: ( ( ( rule__TestedProjects__Group_3__0 )? ) )
-            // InternalN4MFParser.g:3163:1: ( ( rule__TestedProjects__Group_3__0 )? )
+            // InternalN4MFParser.g:3195:1: ( ( ( rule__TestedProjects__Group_3__0 )? ) )
+            // InternalN4MFParser.g:3196:1: ( ( rule__TestedProjects__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:3163:1: ( ( rule__TestedProjects__Group_3__0 )? )
-            // InternalN4MFParser.g:3164:1: ( rule__TestedProjects__Group_3__0 )?
+            // InternalN4MFParser.g:3196:1: ( ( rule__TestedProjects__Group_3__0 )? )
+            // InternalN4MFParser.g:3197:1: ( rule__TestedProjects__Group_3__0 )?
             {
              before(grammarAccess.getTestedProjectsAccess().getGroup_3()); 
-            // InternalN4MFParser.g:3165:1: ( rule__TestedProjects__Group_3__0 )?
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // InternalN4MFParser.g:3198:1: ( rule__TestedProjects__Group_3__0 )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( (LA16_0==ProjectDependencies||LA16_0==ProjectVersion||LA16_0==ModuleFilters||(LA16_0>=ProjectName && LA16_0<=ArtifactId)||LA16_0==VendorName||(LA16_0>=Libraries && LA16_0<=VendorId)||LA16_0==Sources||LA16_0==Content||LA16_0==Output||(LA16_0>=Test && LA16_0<=API)||LA16_0==RULE_ID) ) {
-                alt16=1;
+            if ( (LA17_0==ProjectDependencies||LA17_0==ProjectVersion||LA17_0==ModuleFilters||(LA17_0>=ProjectName && LA17_0<=ArtifactId)||LA17_0==VendorName||(LA17_0>=Libraries && LA17_0<=VendorId)||LA17_0==Sources||LA17_0==Content||LA17_0==Output||(LA17_0>=Test && LA17_0<=API)||LA17_0==RULE_ID) ) {
+                alt17=1;
             }
-            switch (alt16) {
+            switch (alt17) {
                 case 1 :
-                    // InternalN4MFParser.g:3165:2: rule__TestedProjects__Group_3__0
+                    // InternalN4MFParser.g:3198:2: rule__TestedProjects__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__TestedProjects__Group_3__0();
@@ -8253,14 +8346,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__4"
-    // InternalN4MFParser.g:3175:1: rule__TestedProjects__Group__4 : rule__TestedProjects__Group__4__Impl ;
+    // InternalN4MFParser.g:3208:1: rule__TestedProjects__Group__4 : rule__TestedProjects__Group__4__Impl ;
     public final void rule__TestedProjects__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3179:1: ( rule__TestedProjects__Group__4__Impl )
-            // InternalN4MFParser.g:3180:2: rule__TestedProjects__Group__4__Impl
+            // InternalN4MFParser.g:3212:1: ( rule__TestedProjects__Group__4__Impl )
+            // InternalN4MFParser.g:3213:2: rule__TestedProjects__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__Group__4__Impl();
@@ -8286,17 +8379,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group__4__Impl"
-    // InternalN4MFParser.g:3186:1: rule__TestedProjects__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:3219:1: rule__TestedProjects__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__TestedProjects__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3190:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:3191:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3223:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:3224:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:3191:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:3192:1: RightCurlyBracket
+            // InternalN4MFParser.g:3224:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3225:1: RightCurlyBracket
             {
              before(grammarAccess.getTestedProjectsAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -8323,14 +8416,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3__0"
-    // InternalN4MFParser.g:3215:1: rule__TestedProjects__Group_3__0 : rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1 ;
+    // InternalN4MFParser.g:3248:1: rule__TestedProjects__Group_3__0 : rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1 ;
     public final void rule__TestedProjects__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3219:1: ( rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1 )
-            // InternalN4MFParser.g:3220:2: rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1
+            // InternalN4MFParser.g:3252:1: ( rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1 )
+            // InternalN4MFParser.g:3253:2: rule__TestedProjects__Group_3__0__Impl rule__TestedProjects__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__TestedProjects__Group_3__0__Impl();
@@ -8361,21 +8454,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3__0__Impl"
-    // InternalN4MFParser.g:3227:1: rule__TestedProjects__Group_3__0__Impl : ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:3260:1: rule__TestedProjects__Group_3__0__Impl : ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) ) ;
     public final void rule__TestedProjects__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3231:1: ( ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:3232:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) )
+            // InternalN4MFParser.g:3264:1: ( ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:3265:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:3232:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) )
-            // InternalN4MFParser.g:3233:1: ( rule__TestedProjects__TestedProjectsAssignment_3_0 )
+            // InternalN4MFParser.g:3265:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_0 ) )
+            // InternalN4MFParser.g:3266:1: ( rule__TestedProjects__TestedProjectsAssignment_3_0 )
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsAssignment_3_0()); 
-            // InternalN4MFParser.g:3234:1: ( rule__TestedProjects__TestedProjectsAssignment_3_0 )
-            // InternalN4MFParser.g:3234:2: rule__TestedProjects__TestedProjectsAssignment_3_0
+            // InternalN4MFParser.g:3267:1: ( rule__TestedProjects__TestedProjectsAssignment_3_0 )
+            // InternalN4MFParser.g:3267:2: rule__TestedProjects__TestedProjectsAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__TestedProjectsAssignment_3_0();
@@ -8408,14 +8501,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3__1"
-    // InternalN4MFParser.g:3244:1: rule__TestedProjects__Group_3__1 : rule__TestedProjects__Group_3__1__Impl ;
+    // InternalN4MFParser.g:3277:1: rule__TestedProjects__Group_3__1 : rule__TestedProjects__Group_3__1__Impl ;
     public final void rule__TestedProjects__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3248:1: ( rule__TestedProjects__Group_3__1__Impl )
-            // InternalN4MFParser.g:3249:2: rule__TestedProjects__Group_3__1__Impl
+            // InternalN4MFParser.g:3281:1: ( rule__TestedProjects__Group_3__1__Impl )
+            // InternalN4MFParser.g:3282:2: rule__TestedProjects__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__Group_3__1__Impl();
@@ -8441,33 +8534,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3__1__Impl"
-    // InternalN4MFParser.g:3255:1: rule__TestedProjects__Group_3__1__Impl : ( ( rule__TestedProjects__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:3288:1: rule__TestedProjects__Group_3__1__Impl : ( ( rule__TestedProjects__Group_3_1__0 )* ) ;
     public final void rule__TestedProjects__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3259:1: ( ( ( rule__TestedProjects__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:3260:1: ( ( rule__TestedProjects__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3292:1: ( ( ( rule__TestedProjects__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:3293:1: ( ( rule__TestedProjects__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:3260:1: ( ( rule__TestedProjects__Group_3_1__0 )* )
-            // InternalN4MFParser.g:3261:1: ( rule__TestedProjects__Group_3_1__0 )*
+            // InternalN4MFParser.g:3293:1: ( ( rule__TestedProjects__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3294:1: ( rule__TestedProjects__Group_3_1__0 )*
             {
              before(grammarAccess.getTestedProjectsAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:3262:1: ( rule__TestedProjects__Group_3_1__0 )*
-            loop17:
+            // InternalN4MFParser.g:3295:1: ( rule__TestedProjects__Group_3_1__0 )*
+            loop18:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt18=2;
+                int LA18_0 = input.LA(1);
 
-                if ( (LA17_0==Comma) ) {
-                    alt17=1;
+                if ( (LA18_0==Comma) ) {
+                    alt18=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt18) {
             	case 1 :
-            	    // InternalN4MFParser.g:3262:2: rule__TestedProjects__Group_3_1__0
+            	    // InternalN4MFParser.g:3295:2: rule__TestedProjects__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__TestedProjects__Group_3_1__0();
@@ -8479,7 +8572,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop17;
+            	    break loop18;
                 }
             } while (true);
 
@@ -8506,14 +8599,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3_1__0"
-    // InternalN4MFParser.g:3276:1: rule__TestedProjects__Group_3_1__0 : rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1 ;
+    // InternalN4MFParser.g:3309:1: rule__TestedProjects__Group_3_1__0 : rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1 ;
     public final void rule__TestedProjects__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3280:1: ( rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1 )
-            // InternalN4MFParser.g:3281:2: rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1
+            // InternalN4MFParser.g:3313:1: ( rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1 )
+            // InternalN4MFParser.g:3314:2: rule__TestedProjects__Group_3_1__0__Impl rule__TestedProjects__Group_3_1__1
             {
             pushFollow(FOLLOW_4);
             rule__TestedProjects__Group_3_1__0__Impl();
@@ -8544,17 +8637,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:3288:1: rule__TestedProjects__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:3321:1: rule__TestedProjects__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__TestedProjects__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3292:1: ( ( Comma ) )
-            // InternalN4MFParser.g:3293:1: ( Comma )
+            // InternalN4MFParser.g:3325:1: ( ( Comma ) )
+            // InternalN4MFParser.g:3326:1: ( Comma )
             {
-            // InternalN4MFParser.g:3293:1: ( Comma )
-            // InternalN4MFParser.g:3294:1: Comma
+            // InternalN4MFParser.g:3326:1: ( Comma )
+            // InternalN4MFParser.g:3327:1: Comma
             {
              before(grammarAccess.getTestedProjectsAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -8581,14 +8674,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3_1__1"
-    // InternalN4MFParser.g:3307:1: rule__TestedProjects__Group_3_1__1 : rule__TestedProjects__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:3340:1: rule__TestedProjects__Group_3_1__1 : rule__TestedProjects__Group_3_1__1__Impl ;
     public final void rule__TestedProjects__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3311:1: ( rule__TestedProjects__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:3312:2: rule__TestedProjects__Group_3_1__1__Impl
+            // InternalN4MFParser.g:3344:1: ( rule__TestedProjects__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:3345:2: rule__TestedProjects__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__Group_3_1__1__Impl();
@@ -8614,21 +8707,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:3318:1: rule__TestedProjects__Group_3_1__1__Impl : ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:3351:1: rule__TestedProjects__Group_3_1__1__Impl : ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) ) ;
     public final void rule__TestedProjects__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3322:1: ( ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:3323:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3355:1: ( ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:3356:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:3323:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:3324:1: ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 )
+            // InternalN4MFParser.g:3356:1: ( ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3357:1: ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 )
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsAssignment_3_1_1()); 
-            // InternalN4MFParser.g:3325:1: ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 )
-            // InternalN4MFParser.g:3325:2: rule__TestedProjects__TestedProjectsAssignment_3_1_1
+            // InternalN4MFParser.g:3358:1: ( rule__TestedProjects__TestedProjectsAssignment_3_1_1 )
+            // InternalN4MFParser.g:3358:2: rule__TestedProjects__TestedProjectsAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__TestedProjects__TestedProjectsAssignment_3_1_1();
@@ -8661,14 +8754,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__0"
-    // InternalN4MFParser.g:3339:1: rule__InitModules__Group__0 : rule__InitModules__Group__0__Impl rule__InitModules__Group__1 ;
+    // InternalN4MFParser.g:3372:1: rule__InitModules__Group__0 : rule__InitModules__Group__0__Impl rule__InitModules__Group__1 ;
     public final void rule__InitModules__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3343:1: ( rule__InitModules__Group__0__Impl rule__InitModules__Group__1 )
-            // InternalN4MFParser.g:3344:2: rule__InitModules__Group__0__Impl rule__InitModules__Group__1
+            // InternalN4MFParser.g:3376:1: ( rule__InitModules__Group__0__Impl rule__InitModules__Group__1 )
+            // InternalN4MFParser.g:3377:2: rule__InitModules__Group__0__Impl rule__InitModules__Group__1
             {
             pushFollow(FOLLOW_21);
             rule__InitModules__Group__0__Impl();
@@ -8699,21 +8792,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__0__Impl"
-    // InternalN4MFParser.g:3351:1: rule__InitModules__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:3384:1: rule__InitModules__Group__0__Impl : ( () ) ;
     public final void rule__InitModules__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3355:1: ( ( () ) )
-            // InternalN4MFParser.g:3356:1: ( () )
+            // InternalN4MFParser.g:3388:1: ( ( () ) )
+            // InternalN4MFParser.g:3389:1: ( () )
             {
-            // InternalN4MFParser.g:3356:1: ( () )
-            // InternalN4MFParser.g:3357:1: ()
+            // InternalN4MFParser.g:3389:1: ( () )
+            // InternalN4MFParser.g:3390:1: ()
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesAction_0()); 
-            // InternalN4MFParser.g:3358:1: ()
-            // InternalN4MFParser.g:3360:1: 
+            // InternalN4MFParser.g:3391:1: ()
+            // InternalN4MFParser.g:3393:1: 
             {
             }
 
@@ -8736,14 +8829,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__1"
-    // InternalN4MFParser.g:3370:1: rule__InitModules__Group__1 : rule__InitModules__Group__1__Impl rule__InitModules__Group__2 ;
+    // InternalN4MFParser.g:3403:1: rule__InitModules__Group__1 : rule__InitModules__Group__1__Impl rule__InitModules__Group__2 ;
     public final void rule__InitModules__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3374:1: ( rule__InitModules__Group__1__Impl rule__InitModules__Group__2 )
-            // InternalN4MFParser.g:3375:2: rule__InitModules__Group__1__Impl rule__InitModules__Group__2
+            // InternalN4MFParser.g:3407:1: ( rule__InitModules__Group__1__Impl rule__InitModules__Group__2 )
+            // InternalN4MFParser.g:3408:2: rule__InitModules__Group__1__Impl rule__InitModules__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__InitModules__Group__1__Impl();
@@ -8774,17 +8867,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__1__Impl"
-    // InternalN4MFParser.g:3382:1: rule__InitModules__Group__1__Impl : ( InitModules ) ;
+    // InternalN4MFParser.g:3415:1: rule__InitModules__Group__1__Impl : ( InitModules ) ;
     public final void rule__InitModules__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3386:1: ( ( InitModules ) )
-            // InternalN4MFParser.g:3387:1: ( InitModules )
+            // InternalN4MFParser.g:3419:1: ( ( InitModules ) )
+            // InternalN4MFParser.g:3420:1: ( InitModules )
             {
-            // InternalN4MFParser.g:3387:1: ( InitModules )
-            // InternalN4MFParser.g:3388:1: InitModules
+            // InternalN4MFParser.g:3420:1: ( InitModules )
+            // InternalN4MFParser.g:3421:1: InitModules
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesKeyword_1()); 
             match(input,InitModules,FOLLOW_2); 
@@ -8811,14 +8904,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__2"
-    // InternalN4MFParser.g:3401:1: rule__InitModules__Group__2 : rule__InitModules__Group__2__Impl rule__InitModules__Group__3 ;
+    // InternalN4MFParser.g:3434:1: rule__InitModules__Group__2 : rule__InitModules__Group__2__Impl rule__InitModules__Group__3 ;
     public final void rule__InitModules__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3405:1: ( rule__InitModules__Group__2__Impl rule__InitModules__Group__3 )
-            // InternalN4MFParser.g:3406:2: rule__InitModules__Group__2__Impl rule__InitModules__Group__3
+            // InternalN4MFParser.g:3438:1: ( rule__InitModules__Group__2__Impl rule__InitModules__Group__3 )
+            // InternalN4MFParser.g:3439:2: rule__InitModules__Group__2__Impl rule__InitModules__Group__3
             {
             pushFollow(FOLLOW_22);
             rule__InitModules__Group__2__Impl();
@@ -8849,17 +8942,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__2__Impl"
-    // InternalN4MFParser.g:3413:1: rule__InitModules__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:3446:1: rule__InitModules__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__InitModules__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3417:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:3418:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3450:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:3451:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:3418:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:3419:1: LeftCurlyBracket
+            // InternalN4MFParser.g:3451:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3452:1: LeftCurlyBracket
             {
              before(grammarAccess.getInitModulesAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -8886,14 +8979,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__3"
-    // InternalN4MFParser.g:3432:1: rule__InitModules__Group__3 : rule__InitModules__Group__3__Impl rule__InitModules__Group__4 ;
+    // InternalN4MFParser.g:3465:1: rule__InitModules__Group__3 : rule__InitModules__Group__3__Impl rule__InitModules__Group__4 ;
     public final void rule__InitModules__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3436:1: ( rule__InitModules__Group__3__Impl rule__InitModules__Group__4 )
-            // InternalN4MFParser.g:3437:2: rule__InitModules__Group__3__Impl rule__InitModules__Group__4
+            // InternalN4MFParser.g:3469:1: ( rule__InitModules__Group__3__Impl rule__InitModules__Group__4 )
+            // InternalN4MFParser.g:3470:2: rule__InitModules__Group__3__Impl rule__InitModules__Group__4
             {
             pushFollow(FOLLOW_22);
             rule__InitModules__Group__3__Impl();
@@ -8924,29 +9017,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__3__Impl"
-    // InternalN4MFParser.g:3444:1: rule__InitModules__Group__3__Impl : ( ( rule__InitModules__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:3477:1: rule__InitModules__Group__3__Impl : ( ( rule__InitModules__Group_3__0 )? ) ;
     public final void rule__InitModules__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3448:1: ( ( ( rule__InitModules__Group_3__0 )? ) )
-            // InternalN4MFParser.g:3449:1: ( ( rule__InitModules__Group_3__0 )? )
+            // InternalN4MFParser.g:3481:1: ( ( ( rule__InitModules__Group_3__0 )? ) )
+            // InternalN4MFParser.g:3482:1: ( ( rule__InitModules__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:3449:1: ( ( rule__InitModules__Group_3__0 )? )
-            // InternalN4MFParser.g:3450:1: ( rule__InitModules__Group_3__0 )?
+            // InternalN4MFParser.g:3482:1: ( ( rule__InitModules__Group_3__0 )? )
+            // InternalN4MFParser.g:3483:1: ( rule__InitModules__Group_3__0 )?
             {
              before(grammarAccess.getInitModulesAccess().getGroup_3()); 
-            // InternalN4MFParser.g:3451:1: ( rule__InitModules__Group_3__0 )?
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // InternalN4MFParser.g:3484:1: ( rule__InitModules__Group_3__0 )?
+            int alt19=2;
+            int LA19_0 = input.LA(1);
 
-            if ( (LA18_0==RULE_STRING) ) {
-                alt18=1;
+            if ( (LA19_0==RULE_STRING) ) {
+                alt19=1;
             }
-            switch (alt18) {
+            switch (alt19) {
                 case 1 :
-                    // InternalN4MFParser.g:3451:2: rule__InitModules__Group_3__0
+                    // InternalN4MFParser.g:3484:2: rule__InitModules__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__InitModules__Group_3__0();
@@ -8982,14 +9075,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__4"
-    // InternalN4MFParser.g:3461:1: rule__InitModules__Group__4 : rule__InitModules__Group__4__Impl ;
+    // InternalN4MFParser.g:3494:1: rule__InitModules__Group__4 : rule__InitModules__Group__4__Impl ;
     public final void rule__InitModules__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3465:1: ( rule__InitModules__Group__4__Impl )
-            // InternalN4MFParser.g:3466:2: rule__InitModules__Group__4__Impl
+            // InternalN4MFParser.g:3498:1: ( rule__InitModules__Group__4__Impl )
+            // InternalN4MFParser.g:3499:2: rule__InitModules__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__Group__4__Impl();
@@ -9015,17 +9108,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group__4__Impl"
-    // InternalN4MFParser.g:3472:1: rule__InitModules__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:3505:1: rule__InitModules__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__InitModules__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3476:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:3477:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3509:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:3510:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:3477:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:3478:1: RightCurlyBracket
+            // InternalN4MFParser.g:3510:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3511:1: RightCurlyBracket
             {
              before(grammarAccess.getInitModulesAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -9052,14 +9145,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3__0"
-    // InternalN4MFParser.g:3501:1: rule__InitModules__Group_3__0 : rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1 ;
+    // InternalN4MFParser.g:3534:1: rule__InitModules__Group_3__0 : rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1 ;
     public final void rule__InitModules__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3505:1: ( rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1 )
-            // InternalN4MFParser.g:3506:2: rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1
+            // InternalN4MFParser.g:3538:1: ( rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1 )
+            // InternalN4MFParser.g:3539:2: rule__InitModules__Group_3__0__Impl rule__InitModules__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__InitModules__Group_3__0__Impl();
@@ -9090,21 +9183,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3__0__Impl"
-    // InternalN4MFParser.g:3513:1: rule__InitModules__Group_3__0__Impl : ( ( rule__InitModules__InitModulesAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:3546:1: rule__InitModules__Group_3__0__Impl : ( ( rule__InitModules__InitModulesAssignment_3_0 ) ) ;
     public final void rule__InitModules__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3517:1: ( ( ( rule__InitModules__InitModulesAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:3518:1: ( ( rule__InitModules__InitModulesAssignment_3_0 ) )
+            // InternalN4MFParser.g:3550:1: ( ( ( rule__InitModules__InitModulesAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:3551:1: ( ( rule__InitModules__InitModulesAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:3518:1: ( ( rule__InitModules__InitModulesAssignment_3_0 ) )
-            // InternalN4MFParser.g:3519:1: ( rule__InitModules__InitModulesAssignment_3_0 )
+            // InternalN4MFParser.g:3551:1: ( ( rule__InitModules__InitModulesAssignment_3_0 ) )
+            // InternalN4MFParser.g:3552:1: ( rule__InitModules__InitModulesAssignment_3_0 )
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesAssignment_3_0()); 
-            // InternalN4MFParser.g:3520:1: ( rule__InitModules__InitModulesAssignment_3_0 )
-            // InternalN4MFParser.g:3520:2: rule__InitModules__InitModulesAssignment_3_0
+            // InternalN4MFParser.g:3553:1: ( rule__InitModules__InitModulesAssignment_3_0 )
+            // InternalN4MFParser.g:3553:2: rule__InitModules__InitModulesAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__InitModulesAssignment_3_0();
@@ -9137,14 +9230,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3__1"
-    // InternalN4MFParser.g:3530:1: rule__InitModules__Group_3__1 : rule__InitModules__Group_3__1__Impl ;
+    // InternalN4MFParser.g:3563:1: rule__InitModules__Group_3__1 : rule__InitModules__Group_3__1__Impl ;
     public final void rule__InitModules__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3534:1: ( rule__InitModules__Group_3__1__Impl )
-            // InternalN4MFParser.g:3535:2: rule__InitModules__Group_3__1__Impl
+            // InternalN4MFParser.g:3567:1: ( rule__InitModules__Group_3__1__Impl )
+            // InternalN4MFParser.g:3568:2: rule__InitModules__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__Group_3__1__Impl();
@@ -9170,33 +9263,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3__1__Impl"
-    // InternalN4MFParser.g:3541:1: rule__InitModules__Group_3__1__Impl : ( ( rule__InitModules__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:3574:1: rule__InitModules__Group_3__1__Impl : ( ( rule__InitModules__Group_3_1__0 )* ) ;
     public final void rule__InitModules__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3545:1: ( ( ( rule__InitModules__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:3546:1: ( ( rule__InitModules__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3578:1: ( ( ( rule__InitModules__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:3579:1: ( ( rule__InitModules__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:3546:1: ( ( rule__InitModules__Group_3_1__0 )* )
-            // InternalN4MFParser.g:3547:1: ( rule__InitModules__Group_3_1__0 )*
+            // InternalN4MFParser.g:3579:1: ( ( rule__InitModules__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3580:1: ( rule__InitModules__Group_3_1__0 )*
             {
              before(grammarAccess.getInitModulesAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:3548:1: ( rule__InitModules__Group_3_1__0 )*
-            loop19:
+            // InternalN4MFParser.g:3581:1: ( rule__InitModules__Group_3_1__0 )*
+            loop20:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt20=2;
+                int LA20_0 = input.LA(1);
 
-                if ( (LA19_0==Comma) ) {
-                    alt19=1;
+                if ( (LA20_0==Comma) ) {
+                    alt20=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt20) {
             	case 1 :
-            	    // InternalN4MFParser.g:3548:2: rule__InitModules__Group_3_1__0
+            	    // InternalN4MFParser.g:3581:2: rule__InitModules__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__InitModules__Group_3_1__0();
@@ -9208,7 +9301,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop19;
+            	    break loop20;
                 }
             } while (true);
 
@@ -9235,14 +9328,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3_1__0"
-    // InternalN4MFParser.g:3562:1: rule__InitModules__Group_3_1__0 : rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1 ;
+    // InternalN4MFParser.g:3595:1: rule__InitModules__Group_3_1__0 : rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1 ;
     public final void rule__InitModules__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3566:1: ( rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1 )
-            // InternalN4MFParser.g:3567:2: rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1
+            // InternalN4MFParser.g:3599:1: ( rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1 )
+            // InternalN4MFParser.g:3600:2: rule__InitModules__Group_3_1__0__Impl rule__InitModules__Group_3_1__1
             {
             pushFollow(FOLLOW_5);
             rule__InitModules__Group_3_1__0__Impl();
@@ -9273,17 +9366,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:3574:1: rule__InitModules__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:3607:1: rule__InitModules__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__InitModules__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3578:1: ( ( Comma ) )
-            // InternalN4MFParser.g:3579:1: ( Comma )
+            // InternalN4MFParser.g:3611:1: ( ( Comma ) )
+            // InternalN4MFParser.g:3612:1: ( Comma )
             {
-            // InternalN4MFParser.g:3579:1: ( Comma )
-            // InternalN4MFParser.g:3580:1: Comma
+            // InternalN4MFParser.g:3612:1: ( Comma )
+            // InternalN4MFParser.g:3613:1: Comma
             {
              before(grammarAccess.getInitModulesAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -9310,14 +9403,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3_1__1"
-    // InternalN4MFParser.g:3593:1: rule__InitModules__Group_3_1__1 : rule__InitModules__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:3626:1: rule__InitModules__Group_3_1__1 : rule__InitModules__Group_3_1__1__Impl ;
     public final void rule__InitModules__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3597:1: ( rule__InitModules__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:3598:2: rule__InitModules__Group_3_1__1__Impl
+            // InternalN4MFParser.g:3630:1: ( rule__InitModules__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:3631:2: rule__InitModules__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__Group_3_1__1__Impl();
@@ -9343,21 +9436,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:3604:1: rule__InitModules__Group_3_1__1__Impl : ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:3637:1: rule__InitModules__Group_3_1__1__Impl : ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) ) ;
     public final void rule__InitModules__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3608:1: ( ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:3609:1: ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3641:1: ( ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:3642:1: ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:3609:1: ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:3610:1: ( rule__InitModules__InitModulesAssignment_3_1_1 )
+            // InternalN4MFParser.g:3642:1: ( ( rule__InitModules__InitModulesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3643:1: ( rule__InitModules__InitModulesAssignment_3_1_1 )
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesAssignment_3_1_1()); 
-            // InternalN4MFParser.g:3611:1: ( rule__InitModules__InitModulesAssignment_3_1_1 )
-            // InternalN4MFParser.g:3611:2: rule__InitModules__InitModulesAssignment_3_1_1
+            // InternalN4MFParser.g:3644:1: ( rule__InitModules__InitModulesAssignment_3_1_1 )
+            // InternalN4MFParser.g:3644:2: rule__InitModules__InitModulesAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__InitModules__InitModulesAssignment_3_1_1();
@@ -9390,14 +9483,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__0"
-    // InternalN4MFParser.g:3625:1: rule__ImplementedProjects__Group__0 : rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1 ;
+    // InternalN4MFParser.g:3658:1: rule__ImplementedProjects__Group__0 : rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1 ;
     public final void rule__ImplementedProjects__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3629:1: ( rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1 )
-            // InternalN4MFParser.g:3630:2: rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1
+            // InternalN4MFParser.g:3662:1: ( rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1 )
+            // InternalN4MFParser.g:3663:2: rule__ImplementedProjects__Group__0__Impl rule__ImplementedProjects__Group__1
             {
             pushFollow(FOLLOW_23);
             rule__ImplementedProjects__Group__0__Impl();
@@ -9428,21 +9521,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__0__Impl"
-    // InternalN4MFParser.g:3637:1: rule__ImplementedProjects__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:3670:1: rule__ImplementedProjects__Group__0__Impl : ( () ) ;
     public final void rule__ImplementedProjects__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3641:1: ( ( () ) )
-            // InternalN4MFParser.g:3642:1: ( () )
+            // InternalN4MFParser.g:3674:1: ( ( () ) )
+            // InternalN4MFParser.g:3675:1: ( () )
             {
-            // InternalN4MFParser.g:3642:1: ( () )
-            // InternalN4MFParser.g:3643:1: ()
+            // InternalN4MFParser.g:3675:1: ( () )
+            // InternalN4MFParser.g:3676:1: ()
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsAction_0()); 
-            // InternalN4MFParser.g:3644:1: ()
-            // InternalN4MFParser.g:3646:1: 
+            // InternalN4MFParser.g:3677:1: ()
+            // InternalN4MFParser.g:3679:1: 
             {
             }
 
@@ -9465,14 +9558,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__1"
-    // InternalN4MFParser.g:3656:1: rule__ImplementedProjects__Group__1 : rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2 ;
+    // InternalN4MFParser.g:3689:1: rule__ImplementedProjects__Group__1 : rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2 ;
     public final void rule__ImplementedProjects__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3660:1: ( rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2 )
-            // InternalN4MFParser.g:3661:2: rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2
+            // InternalN4MFParser.g:3693:1: ( rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2 )
+            // InternalN4MFParser.g:3694:2: rule__ImplementedProjects__Group__1__Impl rule__ImplementedProjects__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__ImplementedProjects__Group__1__Impl();
@@ -9503,17 +9596,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__1__Impl"
-    // InternalN4MFParser.g:3668:1: rule__ImplementedProjects__Group__1__Impl : ( ImplementedProjects ) ;
+    // InternalN4MFParser.g:3701:1: rule__ImplementedProjects__Group__1__Impl : ( ImplementedProjects ) ;
     public final void rule__ImplementedProjects__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3672:1: ( ( ImplementedProjects ) )
-            // InternalN4MFParser.g:3673:1: ( ImplementedProjects )
+            // InternalN4MFParser.g:3705:1: ( ( ImplementedProjects ) )
+            // InternalN4MFParser.g:3706:1: ( ImplementedProjects )
             {
-            // InternalN4MFParser.g:3673:1: ( ImplementedProjects )
-            // InternalN4MFParser.g:3674:1: ImplementedProjects
+            // InternalN4MFParser.g:3706:1: ( ImplementedProjects )
+            // InternalN4MFParser.g:3707:1: ImplementedProjects
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsKeyword_1()); 
             match(input,ImplementedProjects,FOLLOW_2); 
@@ -9540,14 +9633,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__2"
-    // InternalN4MFParser.g:3687:1: rule__ImplementedProjects__Group__2 : rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3 ;
+    // InternalN4MFParser.g:3720:1: rule__ImplementedProjects__Group__2 : rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3 ;
     public final void rule__ImplementedProjects__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3691:1: ( rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3 )
-            // InternalN4MFParser.g:3692:2: rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3
+            // InternalN4MFParser.g:3724:1: ( rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3 )
+            // InternalN4MFParser.g:3725:2: rule__ImplementedProjects__Group__2__Impl rule__ImplementedProjects__Group__3
             {
             pushFollow(FOLLOW_19);
             rule__ImplementedProjects__Group__2__Impl();
@@ -9578,17 +9671,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__2__Impl"
-    // InternalN4MFParser.g:3699:1: rule__ImplementedProjects__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:3732:1: rule__ImplementedProjects__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ImplementedProjects__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3703:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:3704:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3736:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:3737:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:3704:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:3705:1: LeftCurlyBracket
+            // InternalN4MFParser.g:3737:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:3738:1: LeftCurlyBracket
             {
              before(grammarAccess.getImplementedProjectsAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -9615,14 +9708,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__3"
-    // InternalN4MFParser.g:3718:1: rule__ImplementedProjects__Group__3 : rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4 ;
+    // InternalN4MFParser.g:3751:1: rule__ImplementedProjects__Group__3 : rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4 ;
     public final void rule__ImplementedProjects__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3722:1: ( rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4 )
-            // InternalN4MFParser.g:3723:2: rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4
+            // InternalN4MFParser.g:3755:1: ( rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4 )
+            // InternalN4MFParser.g:3756:2: rule__ImplementedProjects__Group__3__Impl rule__ImplementedProjects__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__ImplementedProjects__Group__3__Impl();
@@ -9653,29 +9746,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__3__Impl"
-    // InternalN4MFParser.g:3730:1: rule__ImplementedProjects__Group__3__Impl : ( ( rule__ImplementedProjects__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:3763:1: rule__ImplementedProjects__Group__3__Impl : ( ( rule__ImplementedProjects__Group_3__0 )? ) ;
     public final void rule__ImplementedProjects__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3734:1: ( ( ( rule__ImplementedProjects__Group_3__0 )? ) )
-            // InternalN4MFParser.g:3735:1: ( ( rule__ImplementedProjects__Group_3__0 )? )
+            // InternalN4MFParser.g:3767:1: ( ( ( rule__ImplementedProjects__Group_3__0 )? ) )
+            // InternalN4MFParser.g:3768:1: ( ( rule__ImplementedProjects__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:3735:1: ( ( rule__ImplementedProjects__Group_3__0 )? )
-            // InternalN4MFParser.g:3736:1: ( rule__ImplementedProjects__Group_3__0 )?
+            // InternalN4MFParser.g:3768:1: ( ( rule__ImplementedProjects__Group_3__0 )? )
+            // InternalN4MFParser.g:3769:1: ( rule__ImplementedProjects__Group_3__0 )?
             {
              before(grammarAccess.getImplementedProjectsAccess().getGroup_3()); 
-            // InternalN4MFParser.g:3737:1: ( rule__ImplementedProjects__Group_3__0 )?
-            int alt20=2;
-            int LA20_0 = input.LA(1);
+            // InternalN4MFParser.g:3770:1: ( rule__ImplementedProjects__Group_3__0 )?
+            int alt21=2;
+            int LA21_0 = input.LA(1);
 
-            if ( (LA20_0==ProjectDependencies||LA20_0==ProjectVersion||LA20_0==ModuleFilters||(LA20_0>=ProjectName && LA20_0<=ArtifactId)||LA20_0==VendorName||(LA20_0>=Libraries && LA20_0<=VendorId)||LA20_0==Sources||LA20_0==Content||LA20_0==Output||(LA20_0>=Test && LA20_0<=API)||LA20_0==RULE_ID) ) {
-                alt20=1;
+            if ( (LA21_0==ProjectDependencies||LA21_0==ProjectVersion||LA21_0==ModuleFilters||(LA21_0>=ProjectName && LA21_0<=ArtifactId)||LA21_0==VendorName||(LA21_0>=Libraries && LA21_0<=VendorId)||LA21_0==Sources||LA21_0==Content||LA21_0==Output||(LA21_0>=Test && LA21_0<=API)||LA21_0==RULE_ID) ) {
+                alt21=1;
             }
-            switch (alt20) {
+            switch (alt21) {
                 case 1 :
-                    // InternalN4MFParser.g:3737:2: rule__ImplementedProjects__Group_3__0
+                    // InternalN4MFParser.g:3770:2: rule__ImplementedProjects__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ImplementedProjects__Group_3__0();
@@ -9711,14 +9804,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__4"
-    // InternalN4MFParser.g:3747:1: rule__ImplementedProjects__Group__4 : rule__ImplementedProjects__Group__4__Impl ;
+    // InternalN4MFParser.g:3780:1: rule__ImplementedProjects__Group__4 : rule__ImplementedProjects__Group__4__Impl ;
     public final void rule__ImplementedProjects__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3751:1: ( rule__ImplementedProjects__Group__4__Impl )
-            // InternalN4MFParser.g:3752:2: rule__ImplementedProjects__Group__4__Impl
+            // InternalN4MFParser.g:3784:1: ( rule__ImplementedProjects__Group__4__Impl )
+            // InternalN4MFParser.g:3785:2: rule__ImplementedProjects__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__Group__4__Impl();
@@ -9744,17 +9837,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group__4__Impl"
-    // InternalN4MFParser.g:3758:1: rule__ImplementedProjects__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:3791:1: rule__ImplementedProjects__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ImplementedProjects__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3762:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:3763:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3795:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:3796:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:3763:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:3764:1: RightCurlyBracket
+            // InternalN4MFParser.g:3796:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:3797:1: RightCurlyBracket
             {
              before(grammarAccess.getImplementedProjectsAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -9781,14 +9874,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3__0"
-    // InternalN4MFParser.g:3787:1: rule__ImplementedProjects__Group_3__0 : rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1 ;
+    // InternalN4MFParser.g:3820:1: rule__ImplementedProjects__Group_3__0 : rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1 ;
     public final void rule__ImplementedProjects__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3791:1: ( rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1 )
-            // InternalN4MFParser.g:3792:2: rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1
+            // InternalN4MFParser.g:3824:1: ( rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1 )
+            // InternalN4MFParser.g:3825:2: rule__ImplementedProjects__Group_3__0__Impl rule__ImplementedProjects__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__ImplementedProjects__Group_3__0__Impl();
@@ -9819,21 +9912,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3__0__Impl"
-    // InternalN4MFParser.g:3799:1: rule__ImplementedProjects__Group_3__0__Impl : ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:3832:1: rule__ImplementedProjects__Group_3__0__Impl : ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) ) ;
     public final void rule__ImplementedProjects__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3803:1: ( ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:3804:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) )
+            // InternalN4MFParser.g:3836:1: ( ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:3837:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:3804:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) )
-            // InternalN4MFParser.g:3805:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 )
+            // InternalN4MFParser.g:3837:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 ) )
+            // InternalN4MFParser.g:3838:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 )
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsAssignment_3_0()); 
-            // InternalN4MFParser.g:3806:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 )
-            // InternalN4MFParser.g:3806:2: rule__ImplementedProjects__ImplementedProjectsAssignment_3_0
+            // InternalN4MFParser.g:3839:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 )
+            // InternalN4MFParser.g:3839:2: rule__ImplementedProjects__ImplementedProjectsAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__ImplementedProjectsAssignment_3_0();
@@ -9866,14 +9959,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3__1"
-    // InternalN4MFParser.g:3816:1: rule__ImplementedProjects__Group_3__1 : rule__ImplementedProjects__Group_3__1__Impl ;
+    // InternalN4MFParser.g:3849:1: rule__ImplementedProjects__Group_3__1 : rule__ImplementedProjects__Group_3__1__Impl ;
     public final void rule__ImplementedProjects__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3820:1: ( rule__ImplementedProjects__Group_3__1__Impl )
-            // InternalN4MFParser.g:3821:2: rule__ImplementedProjects__Group_3__1__Impl
+            // InternalN4MFParser.g:3853:1: ( rule__ImplementedProjects__Group_3__1__Impl )
+            // InternalN4MFParser.g:3854:2: rule__ImplementedProjects__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__Group_3__1__Impl();
@@ -9899,33 +9992,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3__1__Impl"
-    // InternalN4MFParser.g:3827:1: rule__ImplementedProjects__Group_3__1__Impl : ( ( rule__ImplementedProjects__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:3860:1: rule__ImplementedProjects__Group_3__1__Impl : ( ( rule__ImplementedProjects__Group_3_1__0 )* ) ;
     public final void rule__ImplementedProjects__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3831:1: ( ( ( rule__ImplementedProjects__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:3832:1: ( ( rule__ImplementedProjects__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3864:1: ( ( ( rule__ImplementedProjects__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:3865:1: ( ( rule__ImplementedProjects__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:3832:1: ( ( rule__ImplementedProjects__Group_3_1__0 )* )
-            // InternalN4MFParser.g:3833:1: ( rule__ImplementedProjects__Group_3_1__0 )*
+            // InternalN4MFParser.g:3865:1: ( ( rule__ImplementedProjects__Group_3_1__0 )* )
+            // InternalN4MFParser.g:3866:1: ( rule__ImplementedProjects__Group_3_1__0 )*
             {
              before(grammarAccess.getImplementedProjectsAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:3834:1: ( rule__ImplementedProjects__Group_3_1__0 )*
-            loop21:
+            // InternalN4MFParser.g:3867:1: ( rule__ImplementedProjects__Group_3_1__0 )*
+            loop22:
             do {
-                int alt21=2;
-                int LA21_0 = input.LA(1);
+                int alt22=2;
+                int LA22_0 = input.LA(1);
 
-                if ( (LA21_0==Comma) ) {
-                    alt21=1;
+                if ( (LA22_0==Comma) ) {
+                    alt22=1;
                 }
 
 
-                switch (alt21) {
+                switch (alt22) {
             	case 1 :
-            	    // InternalN4MFParser.g:3834:2: rule__ImplementedProjects__Group_3_1__0
+            	    // InternalN4MFParser.g:3867:2: rule__ImplementedProjects__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ImplementedProjects__Group_3_1__0();
@@ -9937,7 +10030,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop21;
+            	    break loop22;
                 }
             } while (true);
 
@@ -9964,14 +10057,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3_1__0"
-    // InternalN4MFParser.g:3848:1: rule__ImplementedProjects__Group_3_1__0 : rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1 ;
+    // InternalN4MFParser.g:3881:1: rule__ImplementedProjects__Group_3_1__0 : rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1 ;
     public final void rule__ImplementedProjects__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3852:1: ( rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1 )
-            // InternalN4MFParser.g:3853:2: rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1
+            // InternalN4MFParser.g:3885:1: ( rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1 )
+            // InternalN4MFParser.g:3886:2: rule__ImplementedProjects__Group_3_1__0__Impl rule__ImplementedProjects__Group_3_1__1
             {
             pushFollow(FOLLOW_4);
             rule__ImplementedProjects__Group_3_1__0__Impl();
@@ -10002,17 +10095,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:3860:1: rule__ImplementedProjects__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:3893:1: rule__ImplementedProjects__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__ImplementedProjects__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3864:1: ( ( Comma ) )
-            // InternalN4MFParser.g:3865:1: ( Comma )
+            // InternalN4MFParser.g:3897:1: ( ( Comma ) )
+            // InternalN4MFParser.g:3898:1: ( Comma )
             {
-            // InternalN4MFParser.g:3865:1: ( Comma )
-            // InternalN4MFParser.g:3866:1: Comma
+            // InternalN4MFParser.g:3898:1: ( Comma )
+            // InternalN4MFParser.g:3899:1: Comma
             {
              before(grammarAccess.getImplementedProjectsAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -10039,14 +10132,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3_1__1"
-    // InternalN4MFParser.g:3879:1: rule__ImplementedProjects__Group_3_1__1 : rule__ImplementedProjects__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:3912:1: rule__ImplementedProjects__Group_3_1__1 : rule__ImplementedProjects__Group_3_1__1__Impl ;
     public final void rule__ImplementedProjects__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3883:1: ( rule__ImplementedProjects__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:3884:2: rule__ImplementedProjects__Group_3_1__1__Impl
+            // InternalN4MFParser.g:3916:1: ( rule__ImplementedProjects__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:3917:2: rule__ImplementedProjects__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__Group_3_1__1__Impl();
@@ -10072,21 +10165,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:3890:1: rule__ImplementedProjects__Group_3_1__1__Impl : ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:3923:1: rule__ImplementedProjects__Group_3_1__1__Impl : ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) ) ;
     public final void rule__ImplementedProjects__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3894:1: ( ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:3895:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3927:1: ( ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:3928:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:3895:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:3896:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 )
+            // InternalN4MFParser.g:3928:1: ( ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:3929:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 )
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsAssignment_3_1_1()); 
-            // InternalN4MFParser.g:3897:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 )
-            // InternalN4MFParser.g:3897:2: rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1
+            // InternalN4MFParser.g:3930:1: ( rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 )
+            // InternalN4MFParser.g:3930:2: rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1();
@@ -10119,14 +10212,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__0"
-    // InternalN4MFParser.g:3911:1: rule__ProjectDependencies__Group__0 : rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1 ;
+    // InternalN4MFParser.g:3944:1: rule__ProjectDependencies__Group__0 : rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1 ;
     public final void rule__ProjectDependencies__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3915:1: ( rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1 )
-            // InternalN4MFParser.g:3916:2: rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1
+            // InternalN4MFParser.g:3948:1: ( rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1 )
+            // InternalN4MFParser.g:3949:2: rule__ProjectDependencies__Group__0__Impl rule__ProjectDependencies__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__ProjectDependencies__Group__0__Impl();
@@ -10157,21 +10250,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__0__Impl"
-    // InternalN4MFParser.g:3923:1: rule__ProjectDependencies__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:3956:1: rule__ProjectDependencies__Group__0__Impl : ( () ) ;
     public final void rule__ProjectDependencies__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3927:1: ( ( () ) )
-            // InternalN4MFParser.g:3928:1: ( () )
+            // InternalN4MFParser.g:3960:1: ( ( () ) )
+            // InternalN4MFParser.g:3961:1: ( () )
             {
-            // InternalN4MFParser.g:3928:1: ( () )
-            // InternalN4MFParser.g:3929:1: ()
+            // InternalN4MFParser.g:3961:1: ( () )
+            // InternalN4MFParser.g:3962:1: ()
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesAction_0()); 
-            // InternalN4MFParser.g:3930:1: ()
-            // InternalN4MFParser.g:3932:1: 
+            // InternalN4MFParser.g:3963:1: ()
+            // InternalN4MFParser.g:3965:1: 
             {
             }
 
@@ -10194,14 +10287,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__1"
-    // InternalN4MFParser.g:3942:1: rule__ProjectDependencies__Group__1 : rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2 ;
+    // InternalN4MFParser.g:3975:1: rule__ProjectDependencies__Group__1 : rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2 ;
     public final void rule__ProjectDependencies__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3946:1: ( rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2 )
-            // InternalN4MFParser.g:3947:2: rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2
+            // InternalN4MFParser.g:3979:1: ( rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2 )
+            // InternalN4MFParser.g:3980:2: rule__ProjectDependencies__Group__1__Impl rule__ProjectDependencies__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__ProjectDependencies__Group__1__Impl();
@@ -10232,17 +10325,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__1__Impl"
-    // InternalN4MFParser.g:3954:1: rule__ProjectDependencies__Group__1__Impl : ( ProjectDependencies ) ;
+    // InternalN4MFParser.g:3987:1: rule__ProjectDependencies__Group__1__Impl : ( ProjectDependencies ) ;
     public final void rule__ProjectDependencies__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3958:1: ( ( ProjectDependencies ) )
-            // InternalN4MFParser.g:3959:1: ( ProjectDependencies )
+            // InternalN4MFParser.g:3991:1: ( ( ProjectDependencies ) )
+            // InternalN4MFParser.g:3992:1: ( ProjectDependencies )
             {
-            // InternalN4MFParser.g:3959:1: ( ProjectDependencies )
-            // InternalN4MFParser.g:3960:1: ProjectDependencies
+            // InternalN4MFParser.g:3992:1: ( ProjectDependencies )
+            // InternalN4MFParser.g:3993:1: ProjectDependencies
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesKeyword_1()); 
             match(input,ProjectDependencies,FOLLOW_2); 
@@ -10269,14 +10362,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__2"
-    // InternalN4MFParser.g:3973:1: rule__ProjectDependencies__Group__2 : rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3 ;
+    // InternalN4MFParser.g:4006:1: rule__ProjectDependencies__Group__2 : rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3 ;
     public final void rule__ProjectDependencies__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3977:1: ( rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3 )
-            // InternalN4MFParser.g:3978:2: rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3
+            // InternalN4MFParser.g:4010:1: ( rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3 )
+            // InternalN4MFParser.g:4011:2: rule__ProjectDependencies__Group__2__Impl rule__ProjectDependencies__Group__3
             {
             pushFollow(FOLLOW_19);
             rule__ProjectDependencies__Group__2__Impl();
@@ -10307,17 +10400,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__2__Impl"
-    // InternalN4MFParser.g:3985:1: rule__ProjectDependencies__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:4018:1: rule__ProjectDependencies__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProjectDependencies__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:3989:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:3990:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4022:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:4023:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:3990:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:3991:1: LeftCurlyBracket
+            // InternalN4MFParser.g:4023:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4024:1: LeftCurlyBracket
             {
              before(grammarAccess.getProjectDependenciesAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -10344,14 +10437,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__3"
-    // InternalN4MFParser.g:4004:1: rule__ProjectDependencies__Group__3 : rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4 ;
+    // InternalN4MFParser.g:4037:1: rule__ProjectDependencies__Group__3 : rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4 ;
     public final void rule__ProjectDependencies__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4008:1: ( rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4 )
-            // InternalN4MFParser.g:4009:2: rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4
+            // InternalN4MFParser.g:4041:1: ( rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4 )
+            // InternalN4MFParser.g:4042:2: rule__ProjectDependencies__Group__3__Impl rule__ProjectDependencies__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__ProjectDependencies__Group__3__Impl();
@@ -10382,29 +10475,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__3__Impl"
-    // InternalN4MFParser.g:4016:1: rule__ProjectDependencies__Group__3__Impl : ( ( rule__ProjectDependencies__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:4049:1: rule__ProjectDependencies__Group__3__Impl : ( ( rule__ProjectDependencies__Group_3__0 )? ) ;
     public final void rule__ProjectDependencies__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4020:1: ( ( ( rule__ProjectDependencies__Group_3__0 )? ) )
-            // InternalN4MFParser.g:4021:1: ( ( rule__ProjectDependencies__Group_3__0 )? )
+            // InternalN4MFParser.g:4053:1: ( ( ( rule__ProjectDependencies__Group_3__0 )? ) )
+            // InternalN4MFParser.g:4054:1: ( ( rule__ProjectDependencies__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:4021:1: ( ( rule__ProjectDependencies__Group_3__0 )? )
-            // InternalN4MFParser.g:4022:1: ( rule__ProjectDependencies__Group_3__0 )?
+            // InternalN4MFParser.g:4054:1: ( ( rule__ProjectDependencies__Group_3__0 )? )
+            // InternalN4MFParser.g:4055:1: ( rule__ProjectDependencies__Group_3__0 )?
             {
              before(grammarAccess.getProjectDependenciesAccess().getGroup_3()); 
-            // InternalN4MFParser.g:4023:1: ( rule__ProjectDependencies__Group_3__0 )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // InternalN4MFParser.g:4056:1: ( rule__ProjectDependencies__Group_3__0 )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
-            if ( (LA22_0==ProjectDependencies||LA22_0==ProjectVersion||LA22_0==ModuleFilters||(LA22_0>=ProjectName && LA22_0<=ArtifactId)||LA22_0==VendorName||(LA22_0>=Libraries && LA22_0<=VendorId)||LA22_0==Sources||LA22_0==Content||LA22_0==Output||(LA22_0>=Test && LA22_0<=API)||LA22_0==RULE_ID) ) {
-                alt22=1;
+            if ( (LA23_0==ProjectDependencies||LA23_0==ProjectVersion||LA23_0==ModuleFilters||(LA23_0>=ProjectName && LA23_0<=ArtifactId)||LA23_0==VendorName||(LA23_0>=Libraries && LA23_0<=VendorId)||LA23_0==Sources||LA23_0==Content||LA23_0==Output||(LA23_0>=Test && LA23_0<=API)||LA23_0==RULE_ID) ) {
+                alt23=1;
             }
-            switch (alt22) {
+            switch (alt23) {
                 case 1 :
-                    // InternalN4MFParser.g:4023:2: rule__ProjectDependencies__Group_3__0
+                    // InternalN4MFParser.g:4056:2: rule__ProjectDependencies__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDependencies__Group_3__0();
@@ -10440,14 +10533,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__4"
-    // InternalN4MFParser.g:4033:1: rule__ProjectDependencies__Group__4 : rule__ProjectDependencies__Group__4__Impl ;
+    // InternalN4MFParser.g:4066:1: rule__ProjectDependencies__Group__4 : rule__ProjectDependencies__Group__4__Impl ;
     public final void rule__ProjectDependencies__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4037:1: ( rule__ProjectDependencies__Group__4__Impl )
-            // InternalN4MFParser.g:4038:2: rule__ProjectDependencies__Group__4__Impl
+            // InternalN4MFParser.g:4070:1: ( rule__ProjectDependencies__Group__4__Impl )
+            // InternalN4MFParser.g:4071:2: rule__ProjectDependencies__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__Group__4__Impl();
@@ -10473,17 +10566,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group__4__Impl"
-    // InternalN4MFParser.g:4044:1: rule__ProjectDependencies__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:4077:1: rule__ProjectDependencies__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProjectDependencies__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4048:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:4049:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4081:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:4082:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:4049:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:4050:1: RightCurlyBracket
+            // InternalN4MFParser.g:4082:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4083:1: RightCurlyBracket
             {
              before(grammarAccess.getProjectDependenciesAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -10510,14 +10603,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3__0"
-    // InternalN4MFParser.g:4073:1: rule__ProjectDependencies__Group_3__0 : rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1 ;
+    // InternalN4MFParser.g:4106:1: rule__ProjectDependencies__Group_3__0 : rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1 ;
     public final void rule__ProjectDependencies__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4077:1: ( rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1 )
-            // InternalN4MFParser.g:4078:2: rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1
+            // InternalN4MFParser.g:4110:1: ( rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1 )
+            // InternalN4MFParser.g:4111:2: rule__ProjectDependencies__Group_3__0__Impl rule__ProjectDependencies__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__ProjectDependencies__Group_3__0__Impl();
@@ -10548,21 +10641,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3__0__Impl"
-    // InternalN4MFParser.g:4085:1: rule__ProjectDependencies__Group_3__0__Impl : ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:4118:1: rule__ProjectDependencies__Group_3__0__Impl : ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) ) ;
     public final void rule__ProjectDependencies__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4089:1: ( ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:4090:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4122:1: ( ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:4123:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:4090:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) )
-            // InternalN4MFParser.g:4091:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 )
+            // InternalN4MFParser.g:4123:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4124:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 )
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesAssignment_3_0()); 
-            // InternalN4MFParser.g:4092:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 )
-            // InternalN4MFParser.g:4092:2: rule__ProjectDependencies__ProjectDependenciesAssignment_3_0
+            // InternalN4MFParser.g:4125:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 )
+            // InternalN4MFParser.g:4125:2: rule__ProjectDependencies__ProjectDependenciesAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__ProjectDependenciesAssignment_3_0();
@@ -10595,14 +10688,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3__1"
-    // InternalN4MFParser.g:4102:1: rule__ProjectDependencies__Group_3__1 : rule__ProjectDependencies__Group_3__1__Impl ;
+    // InternalN4MFParser.g:4135:1: rule__ProjectDependencies__Group_3__1 : rule__ProjectDependencies__Group_3__1__Impl ;
     public final void rule__ProjectDependencies__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4106:1: ( rule__ProjectDependencies__Group_3__1__Impl )
-            // InternalN4MFParser.g:4107:2: rule__ProjectDependencies__Group_3__1__Impl
+            // InternalN4MFParser.g:4139:1: ( rule__ProjectDependencies__Group_3__1__Impl )
+            // InternalN4MFParser.g:4140:2: rule__ProjectDependencies__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__Group_3__1__Impl();
@@ -10628,33 +10721,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3__1__Impl"
-    // InternalN4MFParser.g:4113:1: rule__ProjectDependencies__Group_3__1__Impl : ( ( rule__ProjectDependencies__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:4146:1: rule__ProjectDependencies__Group_3__1__Impl : ( ( rule__ProjectDependencies__Group_3_1__0 )* ) ;
     public final void rule__ProjectDependencies__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4117:1: ( ( ( rule__ProjectDependencies__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:4118:1: ( ( rule__ProjectDependencies__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4150:1: ( ( ( rule__ProjectDependencies__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:4151:1: ( ( rule__ProjectDependencies__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:4118:1: ( ( rule__ProjectDependencies__Group_3_1__0 )* )
-            // InternalN4MFParser.g:4119:1: ( rule__ProjectDependencies__Group_3_1__0 )*
+            // InternalN4MFParser.g:4151:1: ( ( rule__ProjectDependencies__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4152:1: ( rule__ProjectDependencies__Group_3_1__0 )*
             {
              before(grammarAccess.getProjectDependenciesAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:4120:1: ( rule__ProjectDependencies__Group_3_1__0 )*
-            loop23:
+            // InternalN4MFParser.g:4153:1: ( rule__ProjectDependencies__Group_3_1__0 )*
+            loop24:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( (LA23_0==Comma) ) {
-                    alt23=1;
+                if ( (LA24_0==Comma) ) {
+                    alt24=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt24) {
             	case 1 :
-            	    // InternalN4MFParser.g:4120:2: rule__ProjectDependencies__Group_3_1__0
+            	    // InternalN4MFParser.g:4153:2: rule__ProjectDependencies__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ProjectDependencies__Group_3_1__0();
@@ -10666,7 +10759,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop24;
                 }
             } while (true);
 
@@ -10693,14 +10786,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3_1__0"
-    // InternalN4MFParser.g:4134:1: rule__ProjectDependencies__Group_3_1__0 : rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1 ;
+    // InternalN4MFParser.g:4167:1: rule__ProjectDependencies__Group_3_1__0 : rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1 ;
     public final void rule__ProjectDependencies__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4138:1: ( rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1 )
-            // InternalN4MFParser.g:4139:2: rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1
+            // InternalN4MFParser.g:4171:1: ( rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1 )
+            // InternalN4MFParser.g:4172:2: rule__ProjectDependencies__Group_3_1__0__Impl rule__ProjectDependencies__Group_3_1__1
             {
             pushFollow(FOLLOW_4);
             rule__ProjectDependencies__Group_3_1__0__Impl();
@@ -10731,17 +10824,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:4146:1: rule__ProjectDependencies__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:4179:1: rule__ProjectDependencies__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__ProjectDependencies__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4150:1: ( ( Comma ) )
-            // InternalN4MFParser.g:4151:1: ( Comma )
+            // InternalN4MFParser.g:4183:1: ( ( Comma ) )
+            // InternalN4MFParser.g:4184:1: ( Comma )
             {
-            // InternalN4MFParser.g:4151:1: ( Comma )
-            // InternalN4MFParser.g:4152:1: Comma
+            // InternalN4MFParser.g:4184:1: ( Comma )
+            // InternalN4MFParser.g:4185:1: Comma
             {
              before(grammarAccess.getProjectDependenciesAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -10768,14 +10861,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3_1__1"
-    // InternalN4MFParser.g:4165:1: rule__ProjectDependencies__Group_3_1__1 : rule__ProjectDependencies__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:4198:1: rule__ProjectDependencies__Group_3_1__1 : rule__ProjectDependencies__Group_3_1__1__Impl ;
     public final void rule__ProjectDependencies__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4169:1: ( rule__ProjectDependencies__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:4170:2: rule__ProjectDependencies__Group_3_1__1__Impl
+            // InternalN4MFParser.g:4202:1: ( rule__ProjectDependencies__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:4203:2: rule__ProjectDependencies__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__Group_3_1__1__Impl();
@@ -10801,21 +10894,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:4176:1: rule__ProjectDependencies__Group_3_1__1__Impl : ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:4209:1: rule__ProjectDependencies__Group_3_1__1__Impl : ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) ) ;
     public final void rule__ProjectDependencies__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4180:1: ( ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:4181:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4213:1: ( ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:4214:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:4181:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:4182:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4214:1: ( ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4215:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 )
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesAssignment_3_1_1()); 
-            // InternalN4MFParser.g:4183:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 )
-            // InternalN4MFParser.g:4183:2: rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1
+            // InternalN4MFParser.g:4216:1: ( rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4216:2: rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1();
@@ -10848,14 +10941,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__0"
-    // InternalN4MFParser.g:4197:1: rule__ProvidedRuntimeLibraries__Group__0 : rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1 ;
+    // InternalN4MFParser.g:4230:1: rule__ProvidedRuntimeLibraries__Group__0 : rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1 ;
     public final void rule__ProvidedRuntimeLibraries__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4201:1: ( rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1 )
-            // InternalN4MFParser.g:4202:2: rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1
+            // InternalN4MFParser.g:4234:1: ( rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1 )
+            // InternalN4MFParser.g:4235:2: rule__ProvidedRuntimeLibraries__Group__0__Impl rule__ProvidedRuntimeLibraries__Group__1
             {
             pushFollow(FOLLOW_25);
             rule__ProvidedRuntimeLibraries__Group__0__Impl();
@@ -10886,21 +10979,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__0__Impl"
-    // InternalN4MFParser.g:4209:1: rule__ProvidedRuntimeLibraries__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:4242:1: rule__ProvidedRuntimeLibraries__Group__0__Impl : ( () ) ;
     public final void rule__ProvidedRuntimeLibraries__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4213:1: ( ( () ) )
-            // InternalN4MFParser.g:4214:1: ( () )
+            // InternalN4MFParser.g:4246:1: ( ( () ) )
+            // InternalN4MFParser.g:4247:1: ( () )
             {
-            // InternalN4MFParser.g:4214:1: ( () )
-            // InternalN4MFParser.g:4215:1: ()
+            // InternalN4MFParser.g:4247:1: ( () )
+            // InternalN4MFParser.g:4248:1: ()
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesAction_0()); 
-            // InternalN4MFParser.g:4216:1: ()
-            // InternalN4MFParser.g:4218:1: 
+            // InternalN4MFParser.g:4249:1: ()
+            // InternalN4MFParser.g:4251:1: 
             {
             }
 
@@ -10923,14 +11016,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__1"
-    // InternalN4MFParser.g:4228:1: rule__ProvidedRuntimeLibraries__Group__1 : rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2 ;
+    // InternalN4MFParser.g:4261:1: rule__ProvidedRuntimeLibraries__Group__1 : rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2 ;
     public final void rule__ProvidedRuntimeLibraries__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4232:1: ( rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2 )
-            // InternalN4MFParser.g:4233:2: rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2
+            // InternalN4MFParser.g:4265:1: ( rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2 )
+            // InternalN4MFParser.g:4266:2: rule__ProvidedRuntimeLibraries__Group__1__Impl rule__ProvidedRuntimeLibraries__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__ProvidedRuntimeLibraries__Group__1__Impl();
@@ -10961,17 +11054,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__1__Impl"
-    // InternalN4MFParser.g:4240:1: rule__ProvidedRuntimeLibraries__Group__1__Impl : ( ProvidedRuntimeLibraries ) ;
+    // InternalN4MFParser.g:4273:1: rule__ProvidedRuntimeLibraries__Group__1__Impl : ( ProvidedRuntimeLibraries ) ;
     public final void rule__ProvidedRuntimeLibraries__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4244:1: ( ( ProvidedRuntimeLibraries ) )
-            // InternalN4MFParser.g:4245:1: ( ProvidedRuntimeLibraries )
+            // InternalN4MFParser.g:4277:1: ( ( ProvidedRuntimeLibraries ) )
+            // InternalN4MFParser.g:4278:1: ( ProvidedRuntimeLibraries )
             {
-            // InternalN4MFParser.g:4245:1: ( ProvidedRuntimeLibraries )
-            // InternalN4MFParser.g:4246:1: ProvidedRuntimeLibraries
+            // InternalN4MFParser.g:4278:1: ( ProvidedRuntimeLibraries )
+            // InternalN4MFParser.g:4279:1: ProvidedRuntimeLibraries
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesKeyword_1()); 
             match(input,ProvidedRuntimeLibraries,FOLLOW_2); 
@@ -10998,14 +11091,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__2"
-    // InternalN4MFParser.g:4259:1: rule__ProvidedRuntimeLibraries__Group__2 : rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3 ;
+    // InternalN4MFParser.g:4292:1: rule__ProvidedRuntimeLibraries__Group__2 : rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3 ;
     public final void rule__ProvidedRuntimeLibraries__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4263:1: ( rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3 )
-            // InternalN4MFParser.g:4264:2: rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3
+            // InternalN4MFParser.g:4296:1: ( rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3 )
+            // InternalN4MFParser.g:4297:2: rule__ProvidedRuntimeLibraries__Group__2__Impl rule__ProvidedRuntimeLibraries__Group__3
             {
             pushFollow(FOLLOW_19);
             rule__ProvidedRuntimeLibraries__Group__2__Impl();
@@ -11036,17 +11129,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__2__Impl"
-    // InternalN4MFParser.g:4271:1: rule__ProvidedRuntimeLibraries__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:4304:1: rule__ProvidedRuntimeLibraries__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ProvidedRuntimeLibraries__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4275:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:4276:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4308:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:4309:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:4276:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:4277:1: LeftCurlyBracket
+            // InternalN4MFParser.g:4309:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4310:1: LeftCurlyBracket
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -11073,14 +11166,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__3"
-    // InternalN4MFParser.g:4290:1: rule__ProvidedRuntimeLibraries__Group__3 : rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4 ;
+    // InternalN4MFParser.g:4323:1: rule__ProvidedRuntimeLibraries__Group__3 : rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4 ;
     public final void rule__ProvidedRuntimeLibraries__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4294:1: ( rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4 )
-            // InternalN4MFParser.g:4295:2: rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4
+            // InternalN4MFParser.g:4327:1: ( rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4 )
+            // InternalN4MFParser.g:4328:2: rule__ProvidedRuntimeLibraries__Group__3__Impl rule__ProvidedRuntimeLibraries__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__ProvidedRuntimeLibraries__Group__3__Impl();
@@ -11111,29 +11204,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__3__Impl"
-    // InternalN4MFParser.g:4302:1: rule__ProvidedRuntimeLibraries__Group__3__Impl : ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:4335:1: rule__ProvidedRuntimeLibraries__Group__3__Impl : ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? ) ;
     public final void rule__ProvidedRuntimeLibraries__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4306:1: ( ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? ) )
-            // InternalN4MFParser.g:4307:1: ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? )
+            // InternalN4MFParser.g:4339:1: ( ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? ) )
+            // InternalN4MFParser.g:4340:1: ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:4307:1: ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? )
-            // InternalN4MFParser.g:4308:1: ( rule__ProvidedRuntimeLibraries__Group_3__0 )?
+            // InternalN4MFParser.g:4340:1: ( ( rule__ProvidedRuntimeLibraries__Group_3__0 )? )
+            // InternalN4MFParser.g:4341:1: ( rule__ProvidedRuntimeLibraries__Group_3__0 )?
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getGroup_3()); 
-            // InternalN4MFParser.g:4309:1: ( rule__ProvidedRuntimeLibraries__Group_3__0 )?
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // InternalN4MFParser.g:4342:1: ( rule__ProvidedRuntimeLibraries__Group_3__0 )?
+            int alt25=2;
+            int LA25_0 = input.LA(1);
 
-            if ( (LA24_0==ProjectDependencies||LA24_0==ProjectVersion||LA24_0==ModuleFilters||(LA24_0>=ProjectName && LA24_0<=ArtifactId)||LA24_0==VendorName||(LA24_0>=Libraries && LA24_0<=VendorId)||LA24_0==Sources||LA24_0==Content||LA24_0==Output||(LA24_0>=Test && LA24_0<=API)||LA24_0==RULE_ID) ) {
-                alt24=1;
+            if ( (LA25_0==ProjectDependencies||LA25_0==ProjectVersion||LA25_0==ModuleFilters||(LA25_0>=ProjectName && LA25_0<=ArtifactId)||LA25_0==VendorName||(LA25_0>=Libraries && LA25_0<=VendorId)||LA25_0==Sources||LA25_0==Content||LA25_0==Output||(LA25_0>=Test && LA25_0<=API)||LA25_0==RULE_ID) ) {
+                alt25=1;
             }
-            switch (alt24) {
+            switch (alt25) {
                 case 1 :
-                    // InternalN4MFParser.g:4309:2: rule__ProvidedRuntimeLibraries__Group_3__0
+                    // InternalN4MFParser.g:4342:2: rule__ProvidedRuntimeLibraries__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProvidedRuntimeLibraries__Group_3__0();
@@ -11169,14 +11262,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__4"
-    // InternalN4MFParser.g:4319:1: rule__ProvidedRuntimeLibraries__Group__4 : rule__ProvidedRuntimeLibraries__Group__4__Impl ;
+    // InternalN4MFParser.g:4352:1: rule__ProvidedRuntimeLibraries__Group__4 : rule__ProvidedRuntimeLibraries__Group__4__Impl ;
     public final void rule__ProvidedRuntimeLibraries__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4323:1: ( rule__ProvidedRuntimeLibraries__Group__4__Impl )
-            // InternalN4MFParser.g:4324:2: rule__ProvidedRuntimeLibraries__Group__4__Impl
+            // InternalN4MFParser.g:4356:1: ( rule__ProvidedRuntimeLibraries__Group__4__Impl )
+            // InternalN4MFParser.g:4357:2: rule__ProvidedRuntimeLibraries__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__Group__4__Impl();
@@ -11202,17 +11295,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group__4__Impl"
-    // InternalN4MFParser.g:4330:1: rule__ProvidedRuntimeLibraries__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:4363:1: rule__ProvidedRuntimeLibraries__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ProvidedRuntimeLibraries__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4334:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:4335:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4367:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:4368:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:4335:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:4336:1: RightCurlyBracket
+            // InternalN4MFParser.g:4368:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4369:1: RightCurlyBracket
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -11239,14 +11332,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3__0"
-    // InternalN4MFParser.g:4359:1: rule__ProvidedRuntimeLibraries__Group_3__0 : rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1 ;
+    // InternalN4MFParser.g:4392:1: rule__ProvidedRuntimeLibraries__Group_3__0 : rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1 ;
     public final void rule__ProvidedRuntimeLibraries__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4363:1: ( rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1 )
-            // InternalN4MFParser.g:4364:2: rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1
+            // InternalN4MFParser.g:4396:1: ( rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1 )
+            // InternalN4MFParser.g:4397:2: rule__ProvidedRuntimeLibraries__Group_3__0__Impl rule__ProvidedRuntimeLibraries__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__ProvidedRuntimeLibraries__Group_3__0__Impl();
@@ -11277,21 +11370,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3__0__Impl"
-    // InternalN4MFParser.g:4371:1: rule__ProvidedRuntimeLibraries__Group_3__0__Impl : ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:4404:1: rule__ProvidedRuntimeLibraries__Group_3__0__Impl : ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) ) ;
     public final void rule__ProvidedRuntimeLibraries__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4375:1: ( ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:4376:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4408:1: ( ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:4409:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:4376:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) )
-            // InternalN4MFParser.g:4377:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 )
+            // InternalN4MFParser.g:4409:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4410:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 )
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesAssignment_3_0()); 
-            // InternalN4MFParser.g:4378:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 )
-            // InternalN4MFParser.g:4378:2: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0
+            // InternalN4MFParser.g:4411:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 )
+            // InternalN4MFParser.g:4411:2: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0();
@@ -11324,14 +11417,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3__1"
-    // InternalN4MFParser.g:4388:1: rule__ProvidedRuntimeLibraries__Group_3__1 : rule__ProvidedRuntimeLibraries__Group_3__1__Impl ;
+    // InternalN4MFParser.g:4421:1: rule__ProvidedRuntimeLibraries__Group_3__1 : rule__ProvidedRuntimeLibraries__Group_3__1__Impl ;
     public final void rule__ProvidedRuntimeLibraries__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4392:1: ( rule__ProvidedRuntimeLibraries__Group_3__1__Impl )
-            // InternalN4MFParser.g:4393:2: rule__ProvidedRuntimeLibraries__Group_3__1__Impl
+            // InternalN4MFParser.g:4425:1: ( rule__ProvidedRuntimeLibraries__Group_3__1__Impl )
+            // InternalN4MFParser.g:4426:2: rule__ProvidedRuntimeLibraries__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__Group_3__1__Impl();
@@ -11357,33 +11450,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3__1__Impl"
-    // InternalN4MFParser.g:4399:1: rule__ProvidedRuntimeLibraries__Group_3__1__Impl : ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:4432:1: rule__ProvidedRuntimeLibraries__Group_3__1__Impl : ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* ) ;
     public final void rule__ProvidedRuntimeLibraries__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4403:1: ( ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:4404:1: ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4436:1: ( ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:4437:1: ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:4404:1: ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* )
-            // InternalN4MFParser.g:4405:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )*
+            // InternalN4MFParser.g:4437:1: ( ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4438:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )*
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:4406:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )*
-            loop25:
+            // InternalN4MFParser.g:4439:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0 )*
+            loop26:
             do {
-                int alt25=2;
-                int LA25_0 = input.LA(1);
+                int alt26=2;
+                int LA26_0 = input.LA(1);
 
-                if ( (LA25_0==Comma) ) {
-                    alt25=1;
+                if ( (LA26_0==Comma) ) {
+                    alt26=1;
                 }
 
 
-                switch (alt25) {
+                switch (alt26) {
             	case 1 :
-            	    // InternalN4MFParser.g:4406:2: rule__ProvidedRuntimeLibraries__Group_3_1__0
+            	    // InternalN4MFParser.g:4439:2: rule__ProvidedRuntimeLibraries__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ProvidedRuntimeLibraries__Group_3_1__0();
@@ -11395,7 +11488,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop25;
+            	    break loop26;
                 }
             } while (true);
 
@@ -11422,14 +11515,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3_1__0"
-    // InternalN4MFParser.g:4420:1: rule__ProvidedRuntimeLibraries__Group_3_1__0 : rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1 ;
+    // InternalN4MFParser.g:4453:1: rule__ProvidedRuntimeLibraries__Group_3_1__0 : rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1 ;
     public final void rule__ProvidedRuntimeLibraries__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4424:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1 )
-            // InternalN4MFParser.g:4425:2: rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1
+            // InternalN4MFParser.g:4457:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1 )
+            // InternalN4MFParser.g:4458:2: rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl rule__ProvidedRuntimeLibraries__Group_3_1__1
             {
             pushFollow(FOLLOW_4);
             rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl();
@@ -11460,17 +11553,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:4432:1: rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:4465:1: rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__ProvidedRuntimeLibraries__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4436:1: ( ( Comma ) )
-            // InternalN4MFParser.g:4437:1: ( Comma )
+            // InternalN4MFParser.g:4469:1: ( ( Comma ) )
+            // InternalN4MFParser.g:4470:1: ( Comma )
             {
-            // InternalN4MFParser.g:4437:1: ( Comma )
-            // InternalN4MFParser.g:4438:1: Comma
+            // InternalN4MFParser.g:4470:1: ( Comma )
+            // InternalN4MFParser.g:4471:1: Comma
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -11497,14 +11590,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3_1__1"
-    // InternalN4MFParser.g:4451:1: rule__ProvidedRuntimeLibraries__Group_3_1__1 : rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:4484:1: rule__ProvidedRuntimeLibraries__Group_3_1__1 : rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl ;
     public final void rule__ProvidedRuntimeLibraries__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4455:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:4456:2: rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl
+            // InternalN4MFParser.g:4488:1: ( rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:4489:2: rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl();
@@ -11530,21 +11623,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:4462:1: rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl : ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:4495:1: rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl : ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) ) ;
     public final void rule__ProvidedRuntimeLibraries__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4466:1: ( ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:4467:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4499:1: ( ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:4500:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:4467:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:4468:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4500:1: ( ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4501:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 )
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesAssignment_3_1_1()); 
-            // InternalN4MFParser.g:4469:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 )
-            // InternalN4MFParser.g:4469:2: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1
+            // InternalN4MFParser.g:4502:1: ( rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4502:2: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1();
@@ -11577,14 +11670,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__0"
-    // InternalN4MFParser.g:4483:1: rule__RequiredRuntimeLibraries__Group__0 : rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1 ;
+    // InternalN4MFParser.g:4516:1: rule__RequiredRuntimeLibraries__Group__0 : rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1 ;
     public final void rule__RequiredRuntimeLibraries__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4487:1: ( rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1 )
-            // InternalN4MFParser.g:4488:2: rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1
+            // InternalN4MFParser.g:4520:1: ( rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1 )
+            // InternalN4MFParser.g:4521:2: rule__RequiredRuntimeLibraries__Group__0__Impl rule__RequiredRuntimeLibraries__Group__1
             {
             pushFollow(FOLLOW_26);
             rule__RequiredRuntimeLibraries__Group__0__Impl();
@@ -11615,21 +11708,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__0__Impl"
-    // InternalN4MFParser.g:4495:1: rule__RequiredRuntimeLibraries__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:4528:1: rule__RequiredRuntimeLibraries__Group__0__Impl : ( () ) ;
     public final void rule__RequiredRuntimeLibraries__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4499:1: ( ( () ) )
-            // InternalN4MFParser.g:4500:1: ( () )
+            // InternalN4MFParser.g:4532:1: ( ( () ) )
+            // InternalN4MFParser.g:4533:1: ( () )
             {
-            // InternalN4MFParser.g:4500:1: ( () )
-            // InternalN4MFParser.g:4501:1: ()
+            // InternalN4MFParser.g:4533:1: ( () )
+            // InternalN4MFParser.g:4534:1: ()
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesAction_0()); 
-            // InternalN4MFParser.g:4502:1: ()
-            // InternalN4MFParser.g:4504:1: 
+            // InternalN4MFParser.g:4535:1: ()
+            // InternalN4MFParser.g:4537:1: 
             {
             }
 
@@ -11652,14 +11745,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__1"
-    // InternalN4MFParser.g:4514:1: rule__RequiredRuntimeLibraries__Group__1 : rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2 ;
+    // InternalN4MFParser.g:4547:1: rule__RequiredRuntimeLibraries__Group__1 : rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2 ;
     public final void rule__RequiredRuntimeLibraries__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4518:1: ( rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2 )
-            // InternalN4MFParser.g:4519:2: rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2
+            // InternalN4MFParser.g:4551:1: ( rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2 )
+            // InternalN4MFParser.g:4552:2: rule__RequiredRuntimeLibraries__Group__1__Impl rule__RequiredRuntimeLibraries__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__RequiredRuntimeLibraries__Group__1__Impl();
@@ -11690,17 +11783,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__1__Impl"
-    // InternalN4MFParser.g:4526:1: rule__RequiredRuntimeLibraries__Group__1__Impl : ( RequiredRuntimeLibraries ) ;
+    // InternalN4MFParser.g:4559:1: rule__RequiredRuntimeLibraries__Group__1__Impl : ( RequiredRuntimeLibraries ) ;
     public final void rule__RequiredRuntimeLibraries__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4530:1: ( ( RequiredRuntimeLibraries ) )
-            // InternalN4MFParser.g:4531:1: ( RequiredRuntimeLibraries )
+            // InternalN4MFParser.g:4563:1: ( ( RequiredRuntimeLibraries ) )
+            // InternalN4MFParser.g:4564:1: ( RequiredRuntimeLibraries )
             {
-            // InternalN4MFParser.g:4531:1: ( RequiredRuntimeLibraries )
-            // InternalN4MFParser.g:4532:1: RequiredRuntimeLibraries
+            // InternalN4MFParser.g:4564:1: ( RequiredRuntimeLibraries )
+            // InternalN4MFParser.g:4565:1: RequiredRuntimeLibraries
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesKeyword_1()); 
             match(input,RequiredRuntimeLibraries,FOLLOW_2); 
@@ -11727,14 +11820,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__2"
-    // InternalN4MFParser.g:4545:1: rule__RequiredRuntimeLibraries__Group__2 : rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3 ;
+    // InternalN4MFParser.g:4578:1: rule__RequiredRuntimeLibraries__Group__2 : rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3 ;
     public final void rule__RequiredRuntimeLibraries__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4549:1: ( rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3 )
-            // InternalN4MFParser.g:4550:2: rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3
+            // InternalN4MFParser.g:4582:1: ( rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3 )
+            // InternalN4MFParser.g:4583:2: rule__RequiredRuntimeLibraries__Group__2__Impl rule__RequiredRuntimeLibraries__Group__3
             {
             pushFollow(FOLLOW_19);
             rule__RequiredRuntimeLibraries__Group__2__Impl();
@@ -11765,17 +11858,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__2__Impl"
-    // InternalN4MFParser.g:4557:1: rule__RequiredRuntimeLibraries__Group__2__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:4590:1: rule__RequiredRuntimeLibraries__Group__2__Impl : ( LeftCurlyBracket ) ;
     public final void rule__RequiredRuntimeLibraries__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4561:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:4562:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4594:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:4595:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:4562:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:4563:1: LeftCurlyBracket
+            // InternalN4MFParser.g:4595:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:4596:1: LeftCurlyBracket
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getLeftCurlyBracketKeyword_2()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -11802,14 +11895,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__3"
-    // InternalN4MFParser.g:4576:1: rule__RequiredRuntimeLibraries__Group__3 : rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4 ;
+    // InternalN4MFParser.g:4609:1: rule__RequiredRuntimeLibraries__Group__3 : rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4 ;
     public final void rule__RequiredRuntimeLibraries__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4580:1: ( rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4 )
-            // InternalN4MFParser.g:4581:2: rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4
+            // InternalN4MFParser.g:4613:1: ( rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4 )
+            // InternalN4MFParser.g:4614:2: rule__RequiredRuntimeLibraries__Group__3__Impl rule__RequiredRuntimeLibraries__Group__4
             {
             pushFollow(FOLLOW_19);
             rule__RequiredRuntimeLibraries__Group__3__Impl();
@@ -11840,29 +11933,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__3__Impl"
-    // InternalN4MFParser.g:4588:1: rule__RequiredRuntimeLibraries__Group__3__Impl : ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? ) ;
+    // InternalN4MFParser.g:4621:1: rule__RequiredRuntimeLibraries__Group__3__Impl : ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? ) ;
     public final void rule__RequiredRuntimeLibraries__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4592:1: ( ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? ) )
-            // InternalN4MFParser.g:4593:1: ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? )
+            // InternalN4MFParser.g:4625:1: ( ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? ) )
+            // InternalN4MFParser.g:4626:1: ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? )
             {
-            // InternalN4MFParser.g:4593:1: ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? )
-            // InternalN4MFParser.g:4594:1: ( rule__RequiredRuntimeLibraries__Group_3__0 )?
+            // InternalN4MFParser.g:4626:1: ( ( rule__RequiredRuntimeLibraries__Group_3__0 )? )
+            // InternalN4MFParser.g:4627:1: ( rule__RequiredRuntimeLibraries__Group_3__0 )?
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getGroup_3()); 
-            // InternalN4MFParser.g:4595:1: ( rule__RequiredRuntimeLibraries__Group_3__0 )?
-            int alt26=2;
-            int LA26_0 = input.LA(1);
+            // InternalN4MFParser.g:4628:1: ( rule__RequiredRuntimeLibraries__Group_3__0 )?
+            int alt27=2;
+            int LA27_0 = input.LA(1);
 
-            if ( (LA26_0==ProjectDependencies||LA26_0==ProjectVersion||LA26_0==ModuleFilters||(LA26_0>=ProjectName && LA26_0<=ArtifactId)||LA26_0==VendorName||(LA26_0>=Libraries && LA26_0<=VendorId)||LA26_0==Sources||LA26_0==Content||LA26_0==Output||(LA26_0>=Test && LA26_0<=API)||LA26_0==RULE_ID) ) {
-                alt26=1;
+            if ( (LA27_0==ProjectDependencies||LA27_0==ProjectVersion||LA27_0==ModuleFilters||(LA27_0>=ProjectName && LA27_0<=ArtifactId)||LA27_0==VendorName||(LA27_0>=Libraries && LA27_0<=VendorId)||LA27_0==Sources||LA27_0==Content||LA27_0==Output||(LA27_0>=Test && LA27_0<=API)||LA27_0==RULE_ID) ) {
+                alt27=1;
             }
-            switch (alt26) {
+            switch (alt27) {
                 case 1 :
-                    // InternalN4MFParser.g:4595:2: rule__RequiredRuntimeLibraries__Group_3__0
+                    // InternalN4MFParser.g:4628:2: rule__RequiredRuntimeLibraries__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__RequiredRuntimeLibraries__Group_3__0();
@@ -11898,14 +11991,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__4"
-    // InternalN4MFParser.g:4605:1: rule__RequiredRuntimeLibraries__Group__4 : rule__RequiredRuntimeLibraries__Group__4__Impl ;
+    // InternalN4MFParser.g:4638:1: rule__RequiredRuntimeLibraries__Group__4 : rule__RequiredRuntimeLibraries__Group__4__Impl ;
     public final void rule__RequiredRuntimeLibraries__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4609:1: ( rule__RequiredRuntimeLibraries__Group__4__Impl )
-            // InternalN4MFParser.g:4610:2: rule__RequiredRuntimeLibraries__Group__4__Impl
+            // InternalN4MFParser.g:4642:1: ( rule__RequiredRuntimeLibraries__Group__4__Impl )
+            // InternalN4MFParser.g:4643:2: rule__RequiredRuntimeLibraries__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__Group__4__Impl();
@@ -11931,17 +12024,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group__4__Impl"
-    // InternalN4MFParser.g:4616:1: rule__RequiredRuntimeLibraries__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:4649:1: rule__RequiredRuntimeLibraries__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__RequiredRuntimeLibraries__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4620:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:4621:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4653:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:4654:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:4621:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:4622:1: RightCurlyBracket
+            // InternalN4MFParser.g:4654:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:4655:1: RightCurlyBracket
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -11968,14 +12061,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3__0"
-    // InternalN4MFParser.g:4645:1: rule__RequiredRuntimeLibraries__Group_3__0 : rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1 ;
+    // InternalN4MFParser.g:4678:1: rule__RequiredRuntimeLibraries__Group_3__0 : rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1 ;
     public final void rule__RequiredRuntimeLibraries__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4649:1: ( rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1 )
-            // InternalN4MFParser.g:4650:2: rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1
+            // InternalN4MFParser.g:4682:1: ( rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1 )
+            // InternalN4MFParser.g:4683:2: rule__RequiredRuntimeLibraries__Group_3__0__Impl rule__RequiredRuntimeLibraries__Group_3__1
             {
             pushFollow(FOLLOW_20);
             rule__RequiredRuntimeLibraries__Group_3__0__Impl();
@@ -12006,21 +12099,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3__0__Impl"
-    // InternalN4MFParser.g:4657:1: rule__RequiredRuntimeLibraries__Group_3__0__Impl : ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) ) ;
+    // InternalN4MFParser.g:4690:1: rule__RequiredRuntimeLibraries__Group_3__0__Impl : ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) ) ;
     public final void rule__RequiredRuntimeLibraries__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4661:1: ( ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) ) )
-            // InternalN4MFParser.g:4662:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4694:1: ( ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) ) )
+            // InternalN4MFParser.g:4695:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) )
             {
-            // InternalN4MFParser.g:4662:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) )
-            // InternalN4MFParser.g:4663:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 )
+            // InternalN4MFParser.g:4695:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 ) )
+            // InternalN4MFParser.g:4696:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 )
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesAssignment_3_0()); 
-            // InternalN4MFParser.g:4664:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 )
-            // InternalN4MFParser.g:4664:2: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0
+            // InternalN4MFParser.g:4697:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 )
+            // InternalN4MFParser.g:4697:2: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0();
@@ -12053,14 +12146,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3__1"
-    // InternalN4MFParser.g:4674:1: rule__RequiredRuntimeLibraries__Group_3__1 : rule__RequiredRuntimeLibraries__Group_3__1__Impl ;
+    // InternalN4MFParser.g:4707:1: rule__RequiredRuntimeLibraries__Group_3__1 : rule__RequiredRuntimeLibraries__Group_3__1__Impl ;
     public final void rule__RequiredRuntimeLibraries__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4678:1: ( rule__RequiredRuntimeLibraries__Group_3__1__Impl )
-            // InternalN4MFParser.g:4679:2: rule__RequiredRuntimeLibraries__Group_3__1__Impl
+            // InternalN4MFParser.g:4711:1: ( rule__RequiredRuntimeLibraries__Group_3__1__Impl )
+            // InternalN4MFParser.g:4712:2: rule__RequiredRuntimeLibraries__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__Group_3__1__Impl();
@@ -12086,33 +12179,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3__1__Impl"
-    // InternalN4MFParser.g:4685:1: rule__RequiredRuntimeLibraries__Group_3__1__Impl : ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* ) ;
+    // InternalN4MFParser.g:4718:1: rule__RequiredRuntimeLibraries__Group_3__1__Impl : ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* ) ;
     public final void rule__RequiredRuntimeLibraries__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4689:1: ( ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* ) )
-            // InternalN4MFParser.g:4690:1: ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4722:1: ( ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* ) )
+            // InternalN4MFParser.g:4723:1: ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* )
             {
-            // InternalN4MFParser.g:4690:1: ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* )
-            // InternalN4MFParser.g:4691:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0 )*
+            // InternalN4MFParser.g:4723:1: ( ( rule__RequiredRuntimeLibraries__Group_3_1__0 )* )
+            // InternalN4MFParser.g:4724:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0 )*
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getGroup_3_1()); 
-            // InternalN4MFParser.g:4692:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0 )*
-            loop27:
+            // InternalN4MFParser.g:4725:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0 )*
+            loop28:
             do {
-                int alt27=2;
-                int LA27_0 = input.LA(1);
+                int alt28=2;
+                int LA28_0 = input.LA(1);
 
-                if ( (LA27_0==Comma) ) {
-                    alt27=1;
+                if ( (LA28_0==Comma) ) {
+                    alt28=1;
                 }
 
 
-                switch (alt27) {
+                switch (alt28) {
             	case 1 :
-            	    // InternalN4MFParser.g:4692:2: rule__RequiredRuntimeLibraries__Group_3_1__0
+            	    // InternalN4MFParser.g:4725:2: rule__RequiredRuntimeLibraries__Group_3_1__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__RequiredRuntimeLibraries__Group_3_1__0();
@@ -12124,7 +12217,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop27;
+            	    break loop28;
                 }
             } while (true);
 
@@ -12151,14 +12244,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3_1__0"
-    // InternalN4MFParser.g:4706:1: rule__RequiredRuntimeLibraries__Group_3_1__0 : rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1 ;
+    // InternalN4MFParser.g:4739:1: rule__RequiredRuntimeLibraries__Group_3_1__0 : rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1 ;
     public final void rule__RequiredRuntimeLibraries__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4710:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1 )
-            // InternalN4MFParser.g:4711:2: rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1
+            // InternalN4MFParser.g:4743:1: ( rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1 )
+            // InternalN4MFParser.g:4744:2: rule__RequiredRuntimeLibraries__Group_3_1__0__Impl rule__RequiredRuntimeLibraries__Group_3_1__1
             {
             pushFollow(FOLLOW_4);
             rule__RequiredRuntimeLibraries__Group_3_1__0__Impl();
@@ -12189,17 +12282,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3_1__0__Impl"
-    // InternalN4MFParser.g:4718:1: rule__RequiredRuntimeLibraries__Group_3_1__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:4751:1: rule__RequiredRuntimeLibraries__Group_3_1__0__Impl : ( Comma ) ;
     public final void rule__RequiredRuntimeLibraries__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4722:1: ( ( Comma ) )
-            // InternalN4MFParser.g:4723:1: ( Comma )
+            // InternalN4MFParser.g:4755:1: ( ( Comma ) )
+            // InternalN4MFParser.g:4756:1: ( Comma )
             {
-            // InternalN4MFParser.g:4723:1: ( Comma )
-            // InternalN4MFParser.g:4724:1: Comma
+            // InternalN4MFParser.g:4756:1: ( Comma )
+            // InternalN4MFParser.g:4757:1: Comma
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getCommaKeyword_3_1_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -12226,14 +12319,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3_1__1"
-    // InternalN4MFParser.g:4737:1: rule__RequiredRuntimeLibraries__Group_3_1__1 : rule__RequiredRuntimeLibraries__Group_3_1__1__Impl ;
+    // InternalN4MFParser.g:4770:1: rule__RequiredRuntimeLibraries__Group_3_1__1 : rule__RequiredRuntimeLibraries__Group_3_1__1__Impl ;
     public final void rule__RequiredRuntimeLibraries__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4741:1: ( rule__RequiredRuntimeLibraries__Group_3_1__1__Impl )
-            // InternalN4MFParser.g:4742:2: rule__RequiredRuntimeLibraries__Group_3_1__1__Impl
+            // InternalN4MFParser.g:4774:1: ( rule__RequiredRuntimeLibraries__Group_3_1__1__Impl )
+            // InternalN4MFParser.g:4775:2: rule__RequiredRuntimeLibraries__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__Group_3_1__1__Impl();
@@ -12259,21 +12352,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__Group_3_1__1__Impl"
-    // InternalN4MFParser.g:4748:1: rule__RequiredRuntimeLibraries__Group_3_1__1__Impl : ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) ) ;
+    // InternalN4MFParser.g:4781:1: rule__RequiredRuntimeLibraries__Group_3_1__1__Impl : ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) ) ;
     public final void rule__RequiredRuntimeLibraries__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4752:1: ( ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) ) )
-            // InternalN4MFParser.g:4753:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4785:1: ( ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) ) )
+            // InternalN4MFParser.g:4786:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) )
             {
-            // InternalN4MFParser.g:4753:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) )
-            // InternalN4MFParser.g:4754:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4786:1: ( ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 ) )
+            // InternalN4MFParser.g:4787:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 )
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesAssignment_3_1_1()); 
-            // InternalN4MFParser.g:4755:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 )
-            // InternalN4MFParser.g:4755:2: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1
+            // InternalN4MFParser.g:4788:1: ( rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 )
+            // InternalN4MFParser.g:4788:2: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
             rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1();
@@ -12306,14 +12399,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__0"
-    // InternalN4MFParser.g:4769:1: rule__ExtendedRuntimeEnvironment__Group__0 : rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1 ;
+    // InternalN4MFParser.g:4802:1: rule__ExtendedRuntimeEnvironment__Group__0 : rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1 ;
     public final void rule__ExtendedRuntimeEnvironment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4773:1: ( rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1 )
-            // InternalN4MFParser.g:4774:2: rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1
+            // InternalN4MFParser.g:4806:1: ( rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1 )
+            // InternalN4MFParser.g:4807:2: rule__ExtendedRuntimeEnvironment__Group__0__Impl rule__ExtendedRuntimeEnvironment__Group__1
             {
             pushFollow(FOLLOW_27);
             rule__ExtendedRuntimeEnvironment__Group__0__Impl();
@@ -12344,21 +12437,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__0__Impl"
-    // InternalN4MFParser.g:4781:1: rule__ExtendedRuntimeEnvironment__Group__0__Impl : ( () ) ;
+    // InternalN4MFParser.g:4814:1: rule__ExtendedRuntimeEnvironment__Group__0__Impl : ( () ) ;
     public final void rule__ExtendedRuntimeEnvironment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4785:1: ( ( () ) )
-            // InternalN4MFParser.g:4786:1: ( () )
+            // InternalN4MFParser.g:4818:1: ( ( () ) )
+            // InternalN4MFParser.g:4819:1: ( () )
             {
-            // InternalN4MFParser.g:4786:1: ( () )
-            // InternalN4MFParser.g:4787:1: ()
+            // InternalN4MFParser.g:4819:1: ( () )
+            // InternalN4MFParser.g:4820:1: ()
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getExtendedRuntimeEnvironmentAction_0()); 
-            // InternalN4MFParser.g:4788:1: ()
-            // InternalN4MFParser.g:4790:1: 
+            // InternalN4MFParser.g:4821:1: ()
+            // InternalN4MFParser.g:4823:1: 
             {
             }
 
@@ -12381,14 +12474,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__1"
-    // InternalN4MFParser.g:4800:1: rule__ExtendedRuntimeEnvironment__Group__1 : rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2 ;
+    // InternalN4MFParser.g:4833:1: rule__ExtendedRuntimeEnvironment__Group__1 : rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2 ;
     public final void rule__ExtendedRuntimeEnvironment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4804:1: ( rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2 )
-            // InternalN4MFParser.g:4805:2: rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2
+            // InternalN4MFParser.g:4837:1: ( rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2 )
+            // InternalN4MFParser.g:4838:2: rule__ExtendedRuntimeEnvironment__Group__1__Impl rule__ExtendedRuntimeEnvironment__Group__2
             {
             pushFollow(FOLLOW_3);
             rule__ExtendedRuntimeEnvironment__Group__1__Impl();
@@ -12419,17 +12512,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__1__Impl"
-    // InternalN4MFParser.g:4812:1: rule__ExtendedRuntimeEnvironment__Group__1__Impl : ( ExtendedRuntimeEnvironment ) ;
+    // InternalN4MFParser.g:4845:1: rule__ExtendedRuntimeEnvironment__Group__1__Impl : ( ExtendedRuntimeEnvironment ) ;
     public final void rule__ExtendedRuntimeEnvironment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4816:1: ( ( ExtendedRuntimeEnvironment ) )
-            // InternalN4MFParser.g:4817:1: ( ExtendedRuntimeEnvironment )
+            // InternalN4MFParser.g:4849:1: ( ( ExtendedRuntimeEnvironment ) )
+            // InternalN4MFParser.g:4850:1: ( ExtendedRuntimeEnvironment )
             {
-            // InternalN4MFParser.g:4817:1: ( ExtendedRuntimeEnvironment )
-            // InternalN4MFParser.g:4818:1: ExtendedRuntimeEnvironment
+            // InternalN4MFParser.g:4850:1: ( ExtendedRuntimeEnvironment )
+            // InternalN4MFParser.g:4851:1: ExtendedRuntimeEnvironment
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getExtendedRuntimeEnvironmentKeyword_1()); 
             match(input,ExtendedRuntimeEnvironment,FOLLOW_2); 
@@ -12456,14 +12549,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__2"
-    // InternalN4MFParser.g:4831:1: rule__ExtendedRuntimeEnvironment__Group__2 : rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3 ;
+    // InternalN4MFParser.g:4864:1: rule__ExtendedRuntimeEnvironment__Group__2 : rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3 ;
     public final void rule__ExtendedRuntimeEnvironment__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4835:1: ( rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3 )
-            // InternalN4MFParser.g:4836:2: rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3
+            // InternalN4MFParser.g:4868:1: ( rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3 )
+            // InternalN4MFParser.g:4869:2: rule__ExtendedRuntimeEnvironment__Group__2__Impl rule__ExtendedRuntimeEnvironment__Group__3
             {
             pushFollow(FOLLOW_4);
             rule__ExtendedRuntimeEnvironment__Group__2__Impl();
@@ -12494,17 +12587,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__2__Impl"
-    // InternalN4MFParser.g:4843:1: rule__ExtendedRuntimeEnvironment__Group__2__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:4876:1: rule__ExtendedRuntimeEnvironment__Group__2__Impl : ( Colon ) ;
     public final void rule__ExtendedRuntimeEnvironment__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4847:1: ( ( Colon ) )
-            // InternalN4MFParser.g:4848:1: ( Colon )
+            // InternalN4MFParser.g:4880:1: ( ( Colon ) )
+            // InternalN4MFParser.g:4881:1: ( Colon )
             {
-            // InternalN4MFParser.g:4848:1: ( Colon )
-            // InternalN4MFParser.g:4849:1: Colon
+            // InternalN4MFParser.g:4881:1: ( Colon )
+            // InternalN4MFParser.g:4882:1: Colon
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getColonKeyword_2()); 
             match(input,Colon,FOLLOW_2); 
@@ -12531,14 +12624,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__3"
-    // InternalN4MFParser.g:4862:1: rule__ExtendedRuntimeEnvironment__Group__3 : rule__ExtendedRuntimeEnvironment__Group__3__Impl ;
+    // InternalN4MFParser.g:4895:1: rule__ExtendedRuntimeEnvironment__Group__3 : rule__ExtendedRuntimeEnvironment__Group__3__Impl ;
     public final void rule__ExtendedRuntimeEnvironment__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4866:1: ( rule__ExtendedRuntimeEnvironment__Group__3__Impl )
-            // InternalN4MFParser.g:4867:2: rule__ExtendedRuntimeEnvironment__Group__3__Impl
+            // InternalN4MFParser.g:4899:1: ( rule__ExtendedRuntimeEnvironment__Group__3__Impl )
+            // InternalN4MFParser.g:4900:2: rule__ExtendedRuntimeEnvironment__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ExtendedRuntimeEnvironment__Group__3__Impl();
@@ -12564,21 +12657,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__Group__3__Impl"
-    // InternalN4MFParser.g:4873:1: rule__ExtendedRuntimeEnvironment__Group__3__Impl : ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) ) ;
+    // InternalN4MFParser.g:4906:1: rule__ExtendedRuntimeEnvironment__Group__3__Impl : ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) ) ;
     public final void rule__ExtendedRuntimeEnvironment__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4877:1: ( ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) ) )
-            // InternalN4MFParser.g:4878:1: ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) )
+            // InternalN4MFParser.g:4910:1: ( ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) ) )
+            // InternalN4MFParser.g:4911:1: ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) )
             {
-            // InternalN4MFParser.g:4878:1: ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) )
-            // InternalN4MFParser.g:4879:1: ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 )
+            // InternalN4MFParser.g:4911:1: ( ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 ) )
+            // InternalN4MFParser.g:4912:1: ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 )
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getExtendedRuntimeEnvironmentAssignment_3()); 
-            // InternalN4MFParser.g:4880:1: ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 )
-            // InternalN4MFParser.g:4880:2: rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3
+            // InternalN4MFParser.g:4913:1: ( rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 )
+            // InternalN4MFParser.g:4913:2: rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3();
@@ -12611,14 +12704,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__0"
-    // InternalN4MFParser.g:4898:1: rule__DeclaredVersion__Group__0 : rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1 ;
+    // InternalN4MFParser.g:4931:1: rule__DeclaredVersion__Group__0 : rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1 ;
     public final void rule__DeclaredVersion__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4902:1: ( rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1 )
-            // InternalN4MFParser.g:4903:2: rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1
+            // InternalN4MFParser.g:4935:1: ( rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1 )
+            // InternalN4MFParser.g:4936:2: rule__DeclaredVersion__Group__0__Impl rule__DeclaredVersion__Group__1
             {
             pushFollow(FOLLOW_28);
             rule__DeclaredVersion__Group__0__Impl();
@@ -12649,21 +12742,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__0__Impl"
-    // InternalN4MFParser.g:4910:1: rule__DeclaredVersion__Group__0__Impl : ( ( rule__DeclaredVersion__MajorAssignment_0 ) ) ;
+    // InternalN4MFParser.g:4943:1: rule__DeclaredVersion__Group__0__Impl : ( ( rule__DeclaredVersion__MajorAssignment_0 ) ) ;
     public final void rule__DeclaredVersion__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4914:1: ( ( ( rule__DeclaredVersion__MajorAssignment_0 ) ) )
-            // InternalN4MFParser.g:4915:1: ( ( rule__DeclaredVersion__MajorAssignment_0 ) )
+            // InternalN4MFParser.g:4947:1: ( ( ( rule__DeclaredVersion__MajorAssignment_0 ) ) )
+            // InternalN4MFParser.g:4948:1: ( ( rule__DeclaredVersion__MajorAssignment_0 ) )
             {
-            // InternalN4MFParser.g:4915:1: ( ( rule__DeclaredVersion__MajorAssignment_0 ) )
-            // InternalN4MFParser.g:4916:1: ( rule__DeclaredVersion__MajorAssignment_0 )
+            // InternalN4MFParser.g:4948:1: ( ( rule__DeclaredVersion__MajorAssignment_0 ) )
+            // InternalN4MFParser.g:4949:1: ( rule__DeclaredVersion__MajorAssignment_0 )
             {
              before(grammarAccess.getDeclaredVersionAccess().getMajorAssignment_0()); 
-            // InternalN4MFParser.g:4917:1: ( rule__DeclaredVersion__MajorAssignment_0 )
-            // InternalN4MFParser.g:4917:2: rule__DeclaredVersion__MajorAssignment_0
+            // InternalN4MFParser.g:4950:1: ( rule__DeclaredVersion__MajorAssignment_0 )
+            // InternalN4MFParser.g:4950:2: rule__DeclaredVersion__MajorAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__MajorAssignment_0();
@@ -12696,14 +12789,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__1"
-    // InternalN4MFParser.g:4927:1: rule__DeclaredVersion__Group__1 : rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2 ;
+    // InternalN4MFParser.g:4960:1: rule__DeclaredVersion__Group__1 : rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2 ;
     public final void rule__DeclaredVersion__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4931:1: ( rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2 )
-            // InternalN4MFParser.g:4932:2: rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2
+            // InternalN4MFParser.g:4964:1: ( rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2 )
+            // InternalN4MFParser.g:4965:2: rule__DeclaredVersion__Group__1__Impl rule__DeclaredVersion__Group__2
             {
             pushFollow(FOLLOW_28);
             rule__DeclaredVersion__Group__1__Impl();
@@ -12734,29 +12827,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__1__Impl"
-    // InternalN4MFParser.g:4939:1: rule__DeclaredVersion__Group__1__Impl : ( ( rule__DeclaredVersion__Group_1__0 )? ) ;
+    // InternalN4MFParser.g:4972:1: rule__DeclaredVersion__Group__1__Impl : ( ( rule__DeclaredVersion__Group_1__0 )? ) ;
     public final void rule__DeclaredVersion__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4943:1: ( ( ( rule__DeclaredVersion__Group_1__0 )? ) )
-            // InternalN4MFParser.g:4944:1: ( ( rule__DeclaredVersion__Group_1__0 )? )
+            // InternalN4MFParser.g:4976:1: ( ( ( rule__DeclaredVersion__Group_1__0 )? ) )
+            // InternalN4MFParser.g:4977:1: ( ( rule__DeclaredVersion__Group_1__0 )? )
             {
-            // InternalN4MFParser.g:4944:1: ( ( rule__DeclaredVersion__Group_1__0 )? )
-            // InternalN4MFParser.g:4945:1: ( rule__DeclaredVersion__Group_1__0 )?
+            // InternalN4MFParser.g:4977:1: ( ( rule__DeclaredVersion__Group_1__0 )? )
+            // InternalN4MFParser.g:4978:1: ( rule__DeclaredVersion__Group_1__0 )?
             {
              before(grammarAccess.getDeclaredVersionAccess().getGroup_1()); 
-            // InternalN4MFParser.g:4946:1: ( rule__DeclaredVersion__Group_1__0 )?
-            int alt28=2;
-            int LA28_0 = input.LA(1);
+            // InternalN4MFParser.g:4979:1: ( rule__DeclaredVersion__Group_1__0 )?
+            int alt29=2;
+            int LA29_0 = input.LA(1);
 
-            if ( (LA28_0==FullStop) ) {
-                alt28=1;
+            if ( (LA29_0==FullStop) ) {
+                alt29=1;
             }
-            switch (alt28) {
+            switch (alt29) {
                 case 1 :
-                    // InternalN4MFParser.g:4946:2: rule__DeclaredVersion__Group_1__0
+                    // InternalN4MFParser.g:4979:2: rule__DeclaredVersion__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__DeclaredVersion__Group_1__0();
@@ -12792,14 +12885,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__2"
-    // InternalN4MFParser.g:4956:1: rule__DeclaredVersion__Group__2 : rule__DeclaredVersion__Group__2__Impl ;
+    // InternalN4MFParser.g:4989:1: rule__DeclaredVersion__Group__2 : rule__DeclaredVersion__Group__2__Impl ;
     public final void rule__DeclaredVersion__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4960:1: ( rule__DeclaredVersion__Group__2__Impl )
-            // InternalN4MFParser.g:4961:2: rule__DeclaredVersion__Group__2__Impl
+            // InternalN4MFParser.g:4993:1: ( rule__DeclaredVersion__Group__2__Impl )
+            // InternalN4MFParser.g:4994:2: rule__DeclaredVersion__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__Group__2__Impl();
@@ -12825,29 +12918,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group__2__Impl"
-    // InternalN4MFParser.g:4967:1: rule__DeclaredVersion__Group__2__Impl : ( ( rule__DeclaredVersion__Group_2__0 )? ) ;
+    // InternalN4MFParser.g:5000:1: rule__DeclaredVersion__Group__2__Impl : ( ( rule__DeclaredVersion__Group_2__0 )? ) ;
     public final void rule__DeclaredVersion__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4971:1: ( ( ( rule__DeclaredVersion__Group_2__0 )? ) )
-            // InternalN4MFParser.g:4972:1: ( ( rule__DeclaredVersion__Group_2__0 )? )
+            // InternalN4MFParser.g:5004:1: ( ( ( rule__DeclaredVersion__Group_2__0 )? ) )
+            // InternalN4MFParser.g:5005:1: ( ( rule__DeclaredVersion__Group_2__0 )? )
             {
-            // InternalN4MFParser.g:4972:1: ( ( rule__DeclaredVersion__Group_2__0 )? )
-            // InternalN4MFParser.g:4973:1: ( rule__DeclaredVersion__Group_2__0 )?
+            // InternalN4MFParser.g:5005:1: ( ( rule__DeclaredVersion__Group_2__0 )? )
+            // InternalN4MFParser.g:5006:1: ( rule__DeclaredVersion__Group_2__0 )?
             {
              before(grammarAccess.getDeclaredVersionAccess().getGroup_2()); 
-            // InternalN4MFParser.g:4974:1: ( rule__DeclaredVersion__Group_2__0 )?
-            int alt29=2;
-            int LA29_0 = input.LA(1);
+            // InternalN4MFParser.g:5007:1: ( rule__DeclaredVersion__Group_2__0 )?
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
-            if ( (LA29_0==HyphenMinus) ) {
-                alt29=1;
+            if ( (LA30_0==HyphenMinus) ) {
+                alt30=1;
             }
-            switch (alt29) {
+            switch (alt30) {
                 case 1 :
-                    // InternalN4MFParser.g:4974:2: rule__DeclaredVersion__Group_2__0
+                    // InternalN4MFParser.g:5007:2: rule__DeclaredVersion__Group_2__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__DeclaredVersion__Group_2__0();
@@ -12883,14 +12976,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__0"
-    // InternalN4MFParser.g:4990:1: rule__DeclaredVersion__Group_1__0 : rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1 ;
+    // InternalN4MFParser.g:5023:1: rule__DeclaredVersion__Group_1__0 : rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1 ;
     public final void rule__DeclaredVersion__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:4994:1: ( rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1 )
-            // InternalN4MFParser.g:4995:2: rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1
+            // InternalN4MFParser.g:5027:1: ( rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1 )
+            // InternalN4MFParser.g:5028:2: rule__DeclaredVersion__Group_1__0__Impl rule__DeclaredVersion__Group_1__1
             {
             pushFollow(FOLLOW_7);
             rule__DeclaredVersion__Group_1__0__Impl();
@@ -12921,17 +13014,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__0__Impl"
-    // InternalN4MFParser.g:5002:1: rule__DeclaredVersion__Group_1__0__Impl : ( FullStop ) ;
+    // InternalN4MFParser.g:5035:1: rule__DeclaredVersion__Group_1__0__Impl : ( FullStop ) ;
     public final void rule__DeclaredVersion__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5006:1: ( ( FullStop ) )
-            // InternalN4MFParser.g:5007:1: ( FullStop )
+            // InternalN4MFParser.g:5039:1: ( ( FullStop ) )
+            // InternalN4MFParser.g:5040:1: ( FullStop )
             {
-            // InternalN4MFParser.g:5007:1: ( FullStop )
-            // InternalN4MFParser.g:5008:1: FullStop
+            // InternalN4MFParser.g:5040:1: ( FullStop )
+            // InternalN4MFParser.g:5041:1: FullStop
             {
              before(grammarAccess.getDeclaredVersionAccess().getFullStopKeyword_1_0()); 
             match(input,FullStop,FOLLOW_2); 
@@ -12958,14 +13051,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__1"
-    // InternalN4MFParser.g:5021:1: rule__DeclaredVersion__Group_1__1 : rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2 ;
+    // InternalN4MFParser.g:5054:1: rule__DeclaredVersion__Group_1__1 : rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2 ;
     public final void rule__DeclaredVersion__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5025:1: ( rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2 )
-            // InternalN4MFParser.g:5026:2: rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2
+            // InternalN4MFParser.g:5058:1: ( rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2 )
+            // InternalN4MFParser.g:5059:2: rule__DeclaredVersion__Group_1__1__Impl rule__DeclaredVersion__Group_1__2
             {
             pushFollow(FOLLOW_29);
             rule__DeclaredVersion__Group_1__1__Impl();
@@ -12996,21 +13089,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__1__Impl"
-    // InternalN4MFParser.g:5033:1: rule__DeclaredVersion__Group_1__1__Impl : ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) ) ;
+    // InternalN4MFParser.g:5066:1: rule__DeclaredVersion__Group_1__1__Impl : ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) ) ;
     public final void rule__DeclaredVersion__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5037:1: ( ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) ) )
-            // InternalN4MFParser.g:5038:1: ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) )
+            // InternalN4MFParser.g:5070:1: ( ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) ) )
+            // InternalN4MFParser.g:5071:1: ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) )
             {
-            // InternalN4MFParser.g:5038:1: ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) )
-            // InternalN4MFParser.g:5039:1: ( rule__DeclaredVersion__MinorAssignment_1_1 )
+            // InternalN4MFParser.g:5071:1: ( ( rule__DeclaredVersion__MinorAssignment_1_1 ) )
+            // InternalN4MFParser.g:5072:1: ( rule__DeclaredVersion__MinorAssignment_1_1 )
             {
              before(grammarAccess.getDeclaredVersionAccess().getMinorAssignment_1_1()); 
-            // InternalN4MFParser.g:5040:1: ( rule__DeclaredVersion__MinorAssignment_1_1 )
-            // InternalN4MFParser.g:5040:2: rule__DeclaredVersion__MinorAssignment_1_1
+            // InternalN4MFParser.g:5073:1: ( rule__DeclaredVersion__MinorAssignment_1_1 )
+            // InternalN4MFParser.g:5073:2: rule__DeclaredVersion__MinorAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__MinorAssignment_1_1();
@@ -13043,14 +13136,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__2"
-    // InternalN4MFParser.g:5050:1: rule__DeclaredVersion__Group_1__2 : rule__DeclaredVersion__Group_1__2__Impl ;
+    // InternalN4MFParser.g:5083:1: rule__DeclaredVersion__Group_1__2 : rule__DeclaredVersion__Group_1__2__Impl ;
     public final void rule__DeclaredVersion__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5054:1: ( rule__DeclaredVersion__Group_1__2__Impl )
-            // InternalN4MFParser.g:5055:2: rule__DeclaredVersion__Group_1__2__Impl
+            // InternalN4MFParser.g:5087:1: ( rule__DeclaredVersion__Group_1__2__Impl )
+            // InternalN4MFParser.g:5088:2: rule__DeclaredVersion__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__Group_1__2__Impl();
@@ -13076,29 +13169,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1__2__Impl"
-    // InternalN4MFParser.g:5061:1: rule__DeclaredVersion__Group_1__2__Impl : ( ( rule__DeclaredVersion__Group_1_2__0 )? ) ;
+    // InternalN4MFParser.g:5094:1: rule__DeclaredVersion__Group_1__2__Impl : ( ( rule__DeclaredVersion__Group_1_2__0 )? ) ;
     public final void rule__DeclaredVersion__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5065:1: ( ( ( rule__DeclaredVersion__Group_1_2__0 )? ) )
-            // InternalN4MFParser.g:5066:1: ( ( rule__DeclaredVersion__Group_1_2__0 )? )
+            // InternalN4MFParser.g:5098:1: ( ( ( rule__DeclaredVersion__Group_1_2__0 )? ) )
+            // InternalN4MFParser.g:5099:1: ( ( rule__DeclaredVersion__Group_1_2__0 )? )
             {
-            // InternalN4MFParser.g:5066:1: ( ( rule__DeclaredVersion__Group_1_2__0 )? )
-            // InternalN4MFParser.g:5067:1: ( rule__DeclaredVersion__Group_1_2__0 )?
+            // InternalN4MFParser.g:5099:1: ( ( rule__DeclaredVersion__Group_1_2__0 )? )
+            // InternalN4MFParser.g:5100:1: ( rule__DeclaredVersion__Group_1_2__0 )?
             {
              before(grammarAccess.getDeclaredVersionAccess().getGroup_1_2()); 
-            // InternalN4MFParser.g:5068:1: ( rule__DeclaredVersion__Group_1_2__0 )?
-            int alt30=2;
-            int LA30_0 = input.LA(1);
+            // InternalN4MFParser.g:5101:1: ( rule__DeclaredVersion__Group_1_2__0 )?
+            int alt31=2;
+            int LA31_0 = input.LA(1);
 
-            if ( (LA30_0==FullStop) ) {
-                alt30=1;
+            if ( (LA31_0==FullStop) ) {
+                alt31=1;
             }
-            switch (alt30) {
+            switch (alt31) {
                 case 1 :
-                    // InternalN4MFParser.g:5068:2: rule__DeclaredVersion__Group_1_2__0
+                    // InternalN4MFParser.g:5101:2: rule__DeclaredVersion__Group_1_2__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__DeclaredVersion__Group_1_2__0();
@@ -13134,14 +13227,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1_2__0"
-    // InternalN4MFParser.g:5084:1: rule__DeclaredVersion__Group_1_2__0 : rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1 ;
+    // InternalN4MFParser.g:5117:1: rule__DeclaredVersion__Group_1_2__0 : rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1 ;
     public final void rule__DeclaredVersion__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5088:1: ( rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1 )
-            // InternalN4MFParser.g:5089:2: rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1
+            // InternalN4MFParser.g:5121:1: ( rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1 )
+            // InternalN4MFParser.g:5122:2: rule__DeclaredVersion__Group_1_2__0__Impl rule__DeclaredVersion__Group_1_2__1
             {
             pushFollow(FOLLOW_7);
             rule__DeclaredVersion__Group_1_2__0__Impl();
@@ -13172,17 +13265,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1_2__0__Impl"
-    // InternalN4MFParser.g:5096:1: rule__DeclaredVersion__Group_1_2__0__Impl : ( FullStop ) ;
+    // InternalN4MFParser.g:5129:1: rule__DeclaredVersion__Group_1_2__0__Impl : ( FullStop ) ;
     public final void rule__DeclaredVersion__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5100:1: ( ( FullStop ) )
-            // InternalN4MFParser.g:5101:1: ( FullStop )
+            // InternalN4MFParser.g:5133:1: ( ( FullStop ) )
+            // InternalN4MFParser.g:5134:1: ( FullStop )
             {
-            // InternalN4MFParser.g:5101:1: ( FullStop )
-            // InternalN4MFParser.g:5102:1: FullStop
+            // InternalN4MFParser.g:5134:1: ( FullStop )
+            // InternalN4MFParser.g:5135:1: FullStop
             {
              before(grammarAccess.getDeclaredVersionAccess().getFullStopKeyword_1_2_0()); 
             match(input,FullStop,FOLLOW_2); 
@@ -13209,14 +13302,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1_2__1"
-    // InternalN4MFParser.g:5115:1: rule__DeclaredVersion__Group_1_2__1 : rule__DeclaredVersion__Group_1_2__1__Impl ;
+    // InternalN4MFParser.g:5148:1: rule__DeclaredVersion__Group_1_2__1 : rule__DeclaredVersion__Group_1_2__1__Impl ;
     public final void rule__DeclaredVersion__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5119:1: ( rule__DeclaredVersion__Group_1_2__1__Impl )
-            // InternalN4MFParser.g:5120:2: rule__DeclaredVersion__Group_1_2__1__Impl
+            // InternalN4MFParser.g:5152:1: ( rule__DeclaredVersion__Group_1_2__1__Impl )
+            // InternalN4MFParser.g:5153:2: rule__DeclaredVersion__Group_1_2__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__Group_1_2__1__Impl();
@@ -13242,21 +13335,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_1_2__1__Impl"
-    // InternalN4MFParser.g:5126:1: rule__DeclaredVersion__Group_1_2__1__Impl : ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) ) ;
+    // InternalN4MFParser.g:5159:1: rule__DeclaredVersion__Group_1_2__1__Impl : ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) ) ;
     public final void rule__DeclaredVersion__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5130:1: ( ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) ) )
-            // InternalN4MFParser.g:5131:1: ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) )
+            // InternalN4MFParser.g:5163:1: ( ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) ) )
+            // InternalN4MFParser.g:5164:1: ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) )
             {
-            // InternalN4MFParser.g:5131:1: ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) )
-            // InternalN4MFParser.g:5132:1: ( rule__DeclaredVersion__MicroAssignment_1_2_1 )
+            // InternalN4MFParser.g:5164:1: ( ( rule__DeclaredVersion__MicroAssignment_1_2_1 ) )
+            // InternalN4MFParser.g:5165:1: ( rule__DeclaredVersion__MicroAssignment_1_2_1 )
             {
              before(grammarAccess.getDeclaredVersionAccess().getMicroAssignment_1_2_1()); 
-            // InternalN4MFParser.g:5133:1: ( rule__DeclaredVersion__MicroAssignment_1_2_1 )
-            // InternalN4MFParser.g:5133:2: rule__DeclaredVersion__MicroAssignment_1_2_1
+            // InternalN4MFParser.g:5166:1: ( rule__DeclaredVersion__MicroAssignment_1_2_1 )
+            // InternalN4MFParser.g:5166:2: rule__DeclaredVersion__MicroAssignment_1_2_1
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__MicroAssignment_1_2_1();
@@ -13289,14 +13382,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_2__0"
-    // InternalN4MFParser.g:5147:1: rule__DeclaredVersion__Group_2__0 : rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1 ;
+    // InternalN4MFParser.g:5180:1: rule__DeclaredVersion__Group_2__0 : rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1 ;
     public final void rule__DeclaredVersion__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5151:1: ( rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1 )
-            // InternalN4MFParser.g:5152:2: rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1
+            // InternalN4MFParser.g:5184:1: ( rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1 )
+            // InternalN4MFParser.g:5185:2: rule__DeclaredVersion__Group_2__0__Impl rule__DeclaredVersion__Group_2__1
             {
             pushFollow(FOLLOW_4);
             rule__DeclaredVersion__Group_2__0__Impl();
@@ -13327,17 +13420,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_2__0__Impl"
-    // InternalN4MFParser.g:5159:1: rule__DeclaredVersion__Group_2__0__Impl : ( HyphenMinus ) ;
+    // InternalN4MFParser.g:5192:1: rule__DeclaredVersion__Group_2__0__Impl : ( HyphenMinus ) ;
     public final void rule__DeclaredVersion__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5163:1: ( ( HyphenMinus ) )
-            // InternalN4MFParser.g:5164:1: ( HyphenMinus )
+            // InternalN4MFParser.g:5196:1: ( ( HyphenMinus ) )
+            // InternalN4MFParser.g:5197:1: ( HyphenMinus )
             {
-            // InternalN4MFParser.g:5164:1: ( HyphenMinus )
-            // InternalN4MFParser.g:5165:1: HyphenMinus
+            // InternalN4MFParser.g:5197:1: ( HyphenMinus )
+            // InternalN4MFParser.g:5198:1: HyphenMinus
             {
              before(grammarAccess.getDeclaredVersionAccess().getHyphenMinusKeyword_2_0()); 
             match(input,HyphenMinus,FOLLOW_2); 
@@ -13364,14 +13457,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_2__1"
-    // InternalN4MFParser.g:5178:1: rule__DeclaredVersion__Group_2__1 : rule__DeclaredVersion__Group_2__1__Impl ;
+    // InternalN4MFParser.g:5211:1: rule__DeclaredVersion__Group_2__1 : rule__DeclaredVersion__Group_2__1__Impl ;
     public final void rule__DeclaredVersion__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5182:1: ( rule__DeclaredVersion__Group_2__1__Impl )
-            // InternalN4MFParser.g:5183:2: rule__DeclaredVersion__Group_2__1__Impl
+            // InternalN4MFParser.g:5215:1: ( rule__DeclaredVersion__Group_2__1__Impl )
+            // InternalN4MFParser.g:5216:2: rule__DeclaredVersion__Group_2__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__Group_2__1__Impl();
@@ -13397,21 +13490,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__Group_2__1__Impl"
-    // InternalN4MFParser.g:5189:1: rule__DeclaredVersion__Group_2__1__Impl : ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) ) ;
+    // InternalN4MFParser.g:5222:1: rule__DeclaredVersion__Group_2__1__Impl : ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) ) ;
     public final void rule__DeclaredVersion__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5193:1: ( ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) ) )
-            // InternalN4MFParser.g:5194:1: ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) )
+            // InternalN4MFParser.g:5226:1: ( ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) ) )
+            // InternalN4MFParser.g:5227:1: ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) )
             {
-            // InternalN4MFParser.g:5194:1: ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) )
-            // InternalN4MFParser.g:5195:1: ( rule__DeclaredVersion__QualifierAssignment_2_1 )
+            // InternalN4MFParser.g:5227:1: ( ( rule__DeclaredVersion__QualifierAssignment_2_1 ) )
+            // InternalN4MFParser.g:5228:1: ( rule__DeclaredVersion__QualifierAssignment_2_1 )
             {
              before(grammarAccess.getDeclaredVersionAccess().getQualifierAssignment_2_1()); 
-            // InternalN4MFParser.g:5196:1: ( rule__DeclaredVersion__QualifierAssignment_2_1 )
-            // InternalN4MFParser.g:5196:2: rule__DeclaredVersion__QualifierAssignment_2_1
+            // InternalN4MFParser.g:5229:1: ( rule__DeclaredVersion__QualifierAssignment_2_1 )
+            // InternalN4MFParser.g:5229:2: rule__DeclaredVersion__QualifierAssignment_2_1
             {
             pushFollow(FOLLOW_2);
             rule__DeclaredVersion__QualifierAssignment_2_1();
@@ -13444,14 +13537,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__0"
-    // InternalN4MFParser.g:5210:1: rule__SourceFragment__Group__0 : rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1 ;
+    // InternalN4MFParser.g:5243:1: rule__SourceFragment__Group__0 : rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1 ;
     public final void rule__SourceFragment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5214:1: ( rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1 )
-            // InternalN4MFParser.g:5215:2: rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1
+            // InternalN4MFParser.g:5247:1: ( rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1 )
+            // InternalN4MFParser.g:5248:2: rule__SourceFragment__Group__0__Impl rule__SourceFragment__Group__1
             {
             pushFollow(FOLLOW_8);
             rule__SourceFragment__Group__0__Impl();
@@ -13482,21 +13575,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__0__Impl"
-    // InternalN4MFParser.g:5222:1: rule__SourceFragment__Group__0__Impl : ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) ) ;
+    // InternalN4MFParser.g:5255:1: rule__SourceFragment__Group__0__Impl : ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) ) ;
     public final void rule__SourceFragment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5226:1: ( ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) ) )
-            // InternalN4MFParser.g:5227:1: ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) )
+            // InternalN4MFParser.g:5259:1: ( ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) ) )
+            // InternalN4MFParser.g:5260:1: ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) )
             {
-            // InternalN4MFParser.g:5227:1: ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) )
-            // InternalN4MFParser.g:5228:1: ( rule__SourceFragment__SourceFragmentTypeAssignment_0 )
+            // InternalN4MFParser.g:5260:1: ( ( rule__SourceFragment__SourceFragmentTypeAssignment_0 ) )
+            // InternalN4MFParser.g:5261:1: ( rule__SourceFragment__SourceFragmentTypeAssignment_0 )
             {
              before(grammarAccess.getSourceFragmentAccess().getSourceFragmentTypeAssignment_0()); 
-            // InternalN4MFParser.g:5229:1: ( rule__SourceFragment__SourceFragmentTypeAssignment_0 )
-            // InternalN4MFParser.g:5229:2: rule__SourceFragment__SourceFragmentTypeAssignment_0
+            // InternalN4MFParser.g:5262:1: ( rule__SourceFragment__SourceFragmentTypeAssignment_0 )
+            // InternalN4MFParser.g:5262:2: rule__SourceFragment__SourceFragmentTypeAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__SourceFragmentTypeAssignment_0();
@@ -13529,14 +13622,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__1"
-    // InternalN4MFParser.g:5239:1: rule__SourceFragment__Group__1 : rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2 ;
+    // InternalN4MFParser.g:5272:1: rule__SourceFragment__Group__1 : rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2 ;
     public final void rule__SourceFragment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5243:1: ( rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2 )
-            // InternalN4MFParser.g:5244:2: rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2
+            // InternalN4MFParser.g:5276:1: ( rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2 )
+            // InternalN4MFParser.g:5277:2: rule__SourceFragment__Group__1__Impl rule__SourceFragment__Group__2
             {
             pushFollow(FOLLOW_5);
             rule__SourceFragment__Group__1__Impl();
@@ -13567,17 +13660,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__1__Impl"
-    // InternalN4MFParser.g:5251:1: rule__SourceFragment__Group__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:5284:1: rule__SourceFragment__Group__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__SourceFragment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5255:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:5256:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:5288:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:5289:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:5256:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:5257:1: LeftCurlyBracket
+            // InternalN4MFParser.g:5289:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:5290:1: LeftCurlyBracket
             {
              before(grammarAccess.getSourceFragmentAccess().getLeftCurlyBracketKeyword_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -13604,14 +13697,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__2"
-    // InternalN4MFParser.g:5270:1: rule__SourceFragment__Group__2 : rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3 ;
+    // InternalN4MFParser.g:5303:1: rule__SourceFragment__Group__2 : rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3 ;
     public final void rule__SourceFragment__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5274:1: ( rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3 )
-            // InternalN4MFParser.g:5275:2: rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3
+            // InternalN4MFParser.g:5307:1: ( rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3 )
+            // InternalN4MFParser.g:5308:2: rule__SourceFragment__Group__2__Impl rule__SourceFragment__Group__3
             {
             pushFollow(FOLLOW_9);
             rule__SourceFragment__Group__2__Impl();
@@ -13642,21 +13735,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__2__Impl"
-    // InternalN4MFParser.g:5282:1: rule__SourceFragment__Group__2__Impl : ( ( rule__SourceFragment__PathsAssignment_2 ) ) ;
+    // InternalN4MFParser.g:5315:1: rule__SourceFragment__Group__2__Impl : ( ( rule__SourceFragment__PathsAssignment_2 ) ) ;
     public final void rule__SourceFragment__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5286:1: ( ( ( rule__SourceFragment__PathsAssignment_2 ) ) )
-            // InternalN4MFParser.g:5287:1: ( ( rule__SourceFragment__PathsAssignment_2 ) )
+            // InternalN4MFParser.g:5319:1: ( ( ( rule__SourceFragment__PathsAssignment_2 ) ) )
+            // InternalN4MFParser.g:5320:1: ( ( rule__SourceFragment__PathsAssignment_2 ) )
             {
-            // InternalN4MFParser.g:5287:1: ( ( rule__SourceFragment__PathsAssignment_2 ) )
-            // InternalN4MFParser.g:5288:1: ( rule__SourceFragment__PathsAssignment_2 )
+            // InternalN4MFParser.g:5320:1: ( ( rule__SourceFragment__PathsAssignment_2 ) )
+            // InternalN4MFParser.g:5321:1: ( rule__SourceFragment__PathsAssignment_2 )
             {
              before(grammarAccess.getSourceFragmentAccess().getPathsAssignment_2()); 
-            // InternalN4MFParser.g:5289:1: ( rule__SourceFragment__PathsAssignment_2 )
-            // InternalN4MFParser.g:5289:2: rule__SourceFragment__PathsAssignment_2
+            // InternalN4MFParser.g:5322:1: ( rule__SourceFragment__PathsAssignment_2 )
+            // InternalN4MFParser.g:5322:2: rule__SourceFragment__PathsAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__PathsAssignment_2();
@@ -13689,14 +13782,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__3"
-    // InternalN4MFParser.g:5299:1: rule__SourceFragment__Group__3 : rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4 ;
+    // InternalN4MFParser.g:5332:1: rule__SourceFragment__Group__3 : rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4 ;
     public final void rule__SourceFragment__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5303:1: ( rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4 )
-            // InternalN4MFParser.g:5304:2: rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4
+            // InternalN4MFParser.g:5336:1: ( rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4 )
+            // InternalN4MFParser.g:5337:2: rule__SourceFragment__Group__3__Impl rule__SourceFragment__Group__4
             {
             pushFollow(FOLLOW_9);
             rule__SourceFragment__Group__3__Impl();
@@ -13727,33 +13820,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__3__Impl"
-    // InternalN4MFParser.g:5311:1: rule__SourceFragment__Group__3__Impl : ( ( rule__SourceFragment__Group_3__0 )* ) ;
+    // InternalN4MFParser.g:5344:1: rule__SourceFragment__Group__3__Impl : ( ( rule__SourceFragment__Group_3__0 )* ) ;
     public final void rule__SourceFragment__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5315:1: ( ( ( rule__SourceFragment__Group_3__0 )* ) )
-            // InternalN4MFParser.g:5316:1: ( ( rule__SourceFragment__Group_3__0 )* )
+            // InternalN4MFParser.g:5348:1: ( ( ( rule__SourceFragment__Group_3__0 )* ) )
+            // InternalN4MFParser.g:5349:1: ( ( rule__SourceFragment__Group_3__0 )* )
             {
-            // InternalN4MFParser.g:5316:1: ( ( rule__SourceFragment__Group_3__0 )* )
-            // InternalN4MFParser.g:5317:1: ( rule__SourceFragment__Group_3__0 )*
+            // InternalN4MFParser.g:5349:1: ( ( rule__SourceFragment__Group_3__0 )* )
+            // InternalN4MFParser.g:5350:1: ( rule__SourceFragment__Group_3__0 )*
             {
              before(grammarAccess.getSourceFragmentAccess().getGroup_3()); 
-            // InternalN4MFParser.g:5318:1: ( rule__SourceFragment__Group_3__0 )*
-            loop31:
+            // InternalN4MFParser.g:5351:1: ( rule__SourceFragment__Group_3__0 )*
+            loop32:
             do {
-                int alt31=2;
-                int LA31_0 = input.LA(1);
+                int alt32=2;
+                int LA32_0 = input.LA(1);
 
-                if ( (LA31_0==Comma) ) {
-                    alt31=1;
+                if ( (LA32_0==Comma) ) {
+                    alt32=1;
                 }
 
 
-                switch (alt31) {
+                switch (alt32) {
             	case 1 :
-            	    // InternalN4MFParser.g:5318:2: rule__SourceFragment__Group_3__0
+            	    // InternalN4MFParser.g:5351:2: rule__SourceFragment__Group_3__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__SourceFragment__Group_3__0();
@@ -13765,7 +13858,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop31;
+            	    break loop32;
                 }
             } while (true);
 
@@ -13792,14 +13885,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__4"
-    // InternalN4MFParser.g:5328:1: rule__SourceFragment__Group__4 : rule__SourceFragment__Group__4__Impl ;
+    // InternalN4MFParser.g:5361:1: rule__SourceFragment__Group__4 : rule__SourceFragment__Group__4__Impl ;
     public final void rule__SourceFragment__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5332:1: ( rule__SourceFragment__Group__4__Impl )
-            // InternalN4MFParser.g:5333:2: rule__SourceFragment__Group__4__Impl
+            // InternalN4MFParser.g:5365:1: ( rule__SourceFragment__Group__4__Impl )
+            // InternalN4MFParser.g:5366:2: rule__SourceFragment__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__Group__4__Impl();
@@ -13825,17 +13918,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group__4__Impl"
-    // InternalN4MFParser.g:5339:1: rule__SourceFragment__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:5372:1: rule__SourceFragment__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__SourceFragment__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5343:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:5344:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:5376:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:5377:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:5344:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:5345:1: RightCurlyBracket
+            // InternalN4MFParser.g:5377:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:5378:1: RightCurlyBracket
             {
              before(grammarAccess.getSourceFragmentAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -13862,14 +13955,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group_3__0"
-    // InternalN4MFParser.g:5368:1: rule__SourceFragment__Group_3__0 : rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1 ;
+    // InternalN4MFParser.g:5401:1: rule__SourceFragment__Group_3__0 : rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1 ;
     public final void rule__SourceFragment__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5372:1: ( rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1 )
-            // InternalN4MFParser.g:5373:2: rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1
+            // InternalN4MFParser.g:5405:1: ( rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1 )
+            // InternalN4MFParser.g:5406:2: rule__SourceFragment__Group_3__0__Impl rule__SourceFragment__Group_3__1
             {
             pushFollow(FOLLOW_5);
             rule__SourceFragment__Group_3__0__Impl();
@@ -13900,17 +13993,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group_3__0__Impl"
-    // InternalN4MFParser.g:5380:1: rule__SourceFragment__Group_3__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:5413:1: rule__SourceFragment__Group_3__0__Impl : ( Comma ) ;
     public final void rule__SourceFragment__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5384:1: ( ( Comma ) )
-            // InternalN4MFParser.g:5385:1: ( Comma )
+            // InternalN4MFParser.g:5417:1: ( ( Comma ) )
+            // InternalN4MFParser.g:5418:1: ( Comma )
             {
-            // InternalN4MFParser.g:5385:1: ( Comma )
-            // InternalN4MFParser.g:5386:1: Comma
+            // InternalN4MFParser.g:5418:1: ( Comma )
+            // InternalN4MFParser.g:5419:1: Comma
             {
              before(grammarAccess.getSourceFragmentAccess().getCommaKeyword_3_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -13937,14 +14030,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group_3__1"
-    // InternalN4MFParser.g:5399:1: rule__SourceFragment__Group_3__1 : rule__SourceFragment__Group_3__1__Impl ;
+    // InternalN4MFParser.g:5432:1: rule__SourceFragment__Group_3__1 : rule__SourceFragment__Group_3__1__Impl ;
     public final void rule__SourceFragment__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5403:1: ( rule__SourceFragment__Group_3__1__Impl )
-            // InternalN4MFParser.g:5404:2: rule__SourceFragment__Group_3__1__Impl
+            // InternalN4MFParser.g:5436:1: ( rule__SourceFragment__Group_3__1__Impl )
+            // InternalN4MFParser.g:5437:2: rule__SourceFragment__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__Group_3__1__Impl();
@@ -13970,21 +14063,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__Group_3__1__Impl"
-    // InternalN4MFParser.g:5410:1: rule__SourceFragment__Group_3__1__Impl : ( ( rule__SourceFragment__PathsAssignment_3_1 ) ) ;
+    // InternalN4MFParser.g:5443:1: rule__SourceFragment__Group_3__1__Impl : ( ( rule__SourceFragment__PathsAssignment_3_1 ) ) ;
     public final void rule__SourceFragment__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5414:1: ( ( ( rule__SourceFragment__PathsAssignment_3_1 ) ) )
-            // InternalN4MFParser.g:5415:1: ( ( rule__SourceFragment__PathsAssignment_3_1 ) )
+            // InternalN4MFParser.g:5447:1: ( ( ( rule__SourceFragment__PathsAssignment_3_1 ) ) )
+            // InternalN4MFParser.g:5448:1: ( ( rule__SourceFragment__PathsAssignment_3_1 ) )
             {
-            // InternalN4MFParser.g:5415:1: ( ( rule__SourceFragment__PathsAssignment_3_1 ) )
-            // InternalN4MFParser.g:5416:1: ( rule__SourceFragment__PathsAssignment_3_1 )
+            // InternalN4MFParser.g:5448:1: ( ( rule__SourceFragment__PathsAssignment_3_1 ) )
+            // InternalN4MFParser.g:5449:1: ( rule__SourceFragment__PathsAssignment_3_1 )
             {
              before(grammarAccess.getSourceFragmentAccess().getPathsAssignment_3_1()); 
-            // InternalN4MFParser.g:5417:1: ( rule__SourceFragment__PathsAssignment_3_1 )
-            // InternalN4MFParser.g:5417:2: rule__SourceFragment__PathsAssignment_3_1
+            // InternalN4MFParser.g:5450:1: ( rule__SourceFragment__PathsAssignment_3_1 )
+            // InternalN4MFParser.g:5450:2: rule__SourceFragment__PathsAssignment_3_1
             {
             pushFollow(FOLLOW_2);
             rule__SourceFragment__PathsAssignment_3_1();
@@ -14017,14 +14110,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__0"
-    // InternalN4MFParser.g:5431:1: rule__ModuleFilter__Group__0 : rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1 ;
+    // InternalN4MFParser.g:5464:1: rule__ModuleFilter__Group__0 : rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1 ;
     public final void rule__ModuleFilter__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5435:1: ( rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1 )
-            // InternalN4MFParser.g:5436:2: rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1
+            // InternalN4MFParser.g:5468:1: ( rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1 )
+            // InternalN4MFParser.g:5469:2: rule__ModuleFilter__Group__0__Impl rule__ModuleFilter__Group__1
             {
             pushFollow(FOLLOW_8);
             rule__ModuleFilter__Group__0__Impl();
@@ -14055,21 +14148,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__0__Impl"
-    // InternalN4MFParser.g:5443:1: rule__ModuleFilter__Group__0__Impl : ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) ) ;
+    // InternalN4MFParser.g:5476:1: rule__ModuleFilter__Group__0__Impl : ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) ) ;
     public final void rule__ModuleFilter__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5447:1: ( ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) ) )
-            // InternalN4MFParser.g:5448:1: ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) )
+            // InternalN4MFParser.g:5480:1: ( ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) ) )
+            // InternalN4MFParser.g:5481:1: ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) )
             {
-            // InternalN4MFParser.g:5448:1: ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) )
-            // InternalN4MFParser.g:5449:1: ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 )
+            // InternalN4MFParser.g:5481:1: ( ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 ) )
+            // InternalN4MFParser.g:5482:1: ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 )
             {
              before(grammarAccess.getModuleFilterAccess().getModuleFilterTypeAssignment_0()); 
-            // InternalN4MFParser.g:5450:1: ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 )
-            // InternalN4MFParser.g:5450:2: rule__ModuleFilter__ModuleFilterTypeAssignment_0
+            // InternalN4MFParser.g:5483:1: ( rule__ModuleFilter__ModuleFilterTypeAssignment_0 )
+            // InternalN4MFParser.g:5483:2: rule__ModuleFilter__ModuleFilterTypeAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__ModuleFilterTypeAssignment_0();
@@ -14102,14 +14195,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__1"
-    // InternalN4MFParser.g:5460:1: rule__ModuleFilter__Group__1 : rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2 ;
+    // InternalN4MFParser.g:5493:1: rule__ModuleFilter__Group__1 : rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2 ;
     public final void rule__ModuleFilter__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5464:1: ( rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2 )
-            // InternalN4MFParser.g:5465:2: rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2
+            // InternalN4MFParser.g:5497:1: ( rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2 )
+            // InternalN4MFParser.g:5498:2: rule__ModuleFilter__Group__1__Impl rule__ModuleFilter__Group__2
             {
             pushFollow(FOLLOW_5);
             rule__ModuleFilter__Group__1__Impl();
@@ -14140,17 +14233,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__1__Impl"
-    // InternalN4MFParser.g:5472:1: rule__ModuleFilter__Group__1__Impl : ( LeftCurlyBracket ) ;
+    // InternalN4MFParser.g:5505:1: rule__ModuleFilter__Group__1__Impl : ( LeftCurlyBracket ) ;
     public final void rule__ModuleFilter__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5476:1: ( ( LeftCurlyBracket ) )
-            // InternalN4MFParser.g:5477:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:5509:1: ( ( LeftCurlyBracket ) )
+            // InternalN4MFParser.g:5510:1: ( LeftCurlyBracket )
             {
-            // InternalN4MFParser.g:5477:1: ( LeftCurlyBracket )
-            // InternalN4MFParser.g:5478:1: LeftCurlyBracket
+            // InternalN4MFParser.g:5510:1: ( LeftCurlyBracket )
+            // InternalN4MFParser.g:5511:1: LeftCurlyBracket
             {
              before(grammarAccess.getModuleFilterAccess().getLeftCurlyBracketKeyword_1()); 
             match(input,LeftCurlyBracket,FOLLOW_2); 
@@ -14177,14 +14270,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__2"
-    // InternalN4MFParser.g:5491:1: rule__ModuleFilter__Group__2 : rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3 ;
+    // InternalN4MFParser.g:5524:1: rule__ModuleFilter__Group__2 : rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3 ;
     public final void rule__ModuleFilter__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5495:1: ( rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3 )
-            // InternalN4MFParser.g:5496:2: rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3
+            // InternalN4MFParser.g:5528:1: ( rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3 )
+            // InternalN4MFParser.g:5529:2: rule__ModuleFilter__Group__2__Impl rule__ModuleFilter__Group__3
             {
             pushFollow(FOLLOW_9);
             rule__ModuleFilter__Group__2__Impl();
@@ -14215,21 +14308,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__2__Impl"
-    // InternalN4MFParser.g:5503:1: rule__ModuleFilter__Group__2__Impl : ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) ) ;
+    // InternalN4MFParser.g:5536:1: rule__ModuleFilter__Group__2__Impl : ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) ) ;
     public final void rule__ModuleFilter__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5507:1: ( ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) ) )
-            // InternalN4MFParser.g:5508:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) )
+            // InternalN4MFParser.g:5540:1: ( ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) ) )
+            // InternalN4MFParser.g:5541:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) )
             {
-            // InternalN4MFParser.g:5508:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) )
-            // InternalN4MFParser.g:5509:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 )
+            // InternalN4MFParser.g:5541:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 ) )
+            // InternalN4MFParser.g:5542:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 )
             {
              before(grammarAccess.getModuleFilterAccess().getModuleSpecifiersAssignment_2()); 
-            // InternalN4MFParser.g:5510:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 )
-            // InternalN4MFParser.g:5510:2: rule__ModuleFilter__ModuleSpecifiersAssignment_2
+            // InternalN4MFParser.g:5543:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_2 )
+            // InternalN4MFParser.g:5543:2: rule__ModuleFilter__ModuleSpecifiersAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__ModuleSpecifiersAssignment_2();
@@ -14262,14 +14355,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__3"
-    // InternalN4MFParser.g:5520:1: rule__ModuleFilter__Group__3 : rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4 ;
+    // InternalN4MFParser.g:5553:1: rule__ModuleFilter__Group__3 : rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4 ;
     public final void rule__ModuleFilter__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5524:1: ( rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4 )
-            // InternalN4MFParser.g:5525:2: rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4
+            // InternalN4MFParser.g:5557:1: ( rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4 )
+            // InternalN4MFParser.g:5558:2: rule__ModuleFilter__Group__3__Impl rule__ModuleFilter__Group__4
             {
             pushFollow(FOLLOW_9);
             rule__ModuleFilter__Group__3__Impl();
@@ -14300,33 +14393,33 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__3__Impl"
-    // InternalN4MFParser.g:5532:1: rule__ModuleFilter__Group__3__Impl : ( ( rule__ModuleFilter__Group_3__0 )* ) ;
+    // InternalN4MFParser.g:5565:1: rule__ModuleFilter__Group__3__Impl : ( ( rule__ModuleFilter__Group_3__0 )* ) ;
     public final void rule__ModuleFilter__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5536:1: ( ( ( rule__ModuleFilter__Group_3__0 )* ) )
-            // InternalN4MFParser.g:5537:1: ( ( rule__ModuleFilter__Group_3__0 )* )
+            // InternalN4MFParser.g:5569:1: ( ( ( rule__ModuleFilter__Group_3__0 )* ) )
+            // InternalN4MFParser.g:5570:1: ( ( rule__ModuleFilter__Group_3__0 )* )
             {
-            // InternalN4MFParser.g:5537:1: ( ( rule__ModuleFilter__Group_3__0 )* )
-            // InternalN4MFParser.g:5538:1: ( rule__ModuleFilter__Group_3__0 )*
+            // InternalN4MFParser.g:5570:1: ( ( rule__ModuleFilter__Group_3__0 )* )
+            // InternalN4MFParser.g:5571:1: ( rule__ModuleFilter__Group_3__0 )*
             {
              before(grammarAccess.getModuleFilterAccess().getGroup_3()); 
-            // InternalN4MFParser.g:5539:1: ( rule__ModuleFilter__Group_3__0 )*
-            loop32:
+            // InternalN4MFParser.g:5572:1: ( rule__ModuleFilter__Group_3__0 )*
+            loop33:
             do {
-                int alt32=2;
-                int LA32_0 = input.LA(1);
+                int alt33=2;
+                int LA33_0 = input.LA(1);
 
-                if ( (LA32_0==Comma) ) {
-                    alt32=1;
+                if ( (LA33_0==Comma) ) {
+                    alt33=1;
                 }
 
 
-                switch (alt32) {
+                switch (alt33) {
             	case 1 :
-            	    // InternalN4MFParser.g:5539:2: rule__ModuleFilter__Group_3__0
+            	    // InternalN4MFParser.g:5572:2: rule__ModuleFilter__Group_3__0
             	    {
             	    pushFollow(FOLLOW_10);
             	    rule__ModuleFilter__Group_3__0();
@@ -14338,7 +14431,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop32;
+            	    break loop33;
                 }
             } while (true);
 
@@ -14365,14 +14458,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__4"
-    // InternalN4MFParser.g:5549:1: rule__ModuleFilter__Group__4 : rule__ModuleFilter__Group__4__Impl ;
+    // InternalN4MFParser.g:5582:1: rule__ModuleFilter__Group__4 : rule__ModuleFilter__Group__4__Impl ;
     public final void rule__ModuleFilter__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5553:1: ( rule__ModuleFilter__Group__4__Impl )
-            // InternalN4MFParser.g:5554:2: rule__ModuleFilter__Group__4__Impl
+            // InternalN4MFParser.g:5586:1: ( rule__ModuleFilter__Group__4__Impl )
+            // InternalN4MFParser.g:5587:2: rule__ModuleFilter__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__Group__4__Impl();
@@ -14398,17 +14491,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group__4__Impl"
-    // InternalN4MFParser.g:5560:1: rule__ModuleFilter__Group__4__Impl : ( RightCurlyBracket ) ;
+    // InternalN4MFParser.g:5593:1: rule__ModuleFilter__Group__4__Impl : ( RightCurlyBracket ) ;
     public final void rule__ModuleFilter__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5564:1: ( ( RightCurlyBracket ) )
-            // InternalN4MFParser.g:5565:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:5597:1: ( ( RightCurlyBracket ) )
+            // InternalN4MFParser.g:5598:1: ( RightCurlyBracket )
             {
-            // InternalN4MFParser.g:5565:1: ( RightCurlyBracket )
-            // InternalN4MFParser.g:5566:1: RightCurlyBracket
+            // InternalN4MFParser.g:5598:1: ( RightCurlyBracket )
+            // InternalN4MFParser.g:5599:1: RightCurlyBracket
             {
              before(grammarAccess.getModuleFilterAccess().getRightCurlyBracketKeyword_4()); 
             match(input,RightCurlyBracket,FOLLOW_2); 
@@ -14435,14 +14528,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group_3__0"
-    // InternalN4MFParser.g:5589:1: rule__ModuleFilter__Group_3__0 : rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1 ;
+    // InternalN4MFParser.g:5622:1: rule__ModuleFilter__Group_3__0 : rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1 ;
     public final void rule__ModuleFilter__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5593:1: ( rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1 )
-            // InternalN4MFParser.g:5594:2: rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1
+            // InternalN4MFParser.g:5626:1: ( rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1 )
+            // InternalN4MFParser.g:5627:2: rule__ModuleFilter__Group_3__0__Impl rule__ModuleFilter__Group_3__1
             {
             pushFollow(FOLLOW_5);
             rule__ModuleFilter__Group_3__0__Impl();
@@ -14473,17 +14566,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group_3__0__Impl"
-    // InternalN4MFParser.g:5601:1: rule__ModuleFilter__Group_3__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:5634:1: rule__ModuleFilter__Group_3__0__Impl : ( Comma ) ;
     public final void rule__ModuleFilter__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5605:1: ( ( Comma ) )
-            // InternalN4MFParser.g:5606:1: ( Comma )
+            // InternalN4MFParser.g:5638:1: ( ( Comma ) )
+            // InternalN4MFParser.g:5639:1: ( Comma )
             {
-            // InternalN4MFParser.g:5606:1: ( Comma )
-            // InternalN4MFParser.g:5607:1: Comma
+            // InternalN4MFParser.g:5639:1: ( Comma )
+            // InternalN4MFParser.g:5640:1: Comma
             {
              before(grammarAccess.getModuleFilterAccess().getCommaKeyword_3_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -14510,14 +14603,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group_3__1"
-    // InternalN4MFParser.g:5620:1: rule__ModuleFilter__Group_3__1 : rule__ModuleFilter__Group_3__1__Impl ;
+    // InternalN4MFParser.g:5653:1: rule__ModuleFilter__Group_3__1 : rule__ModuleFilter__Group_3__1__Impl ;
     public final void rule__ModuleFilter__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5624:1: ( rule__ModuleFilter__Group_3__1__Impl )
-            // InternalN4MFParser.g:5625:2: rule__ModuleFilter__Group_3__1__Impl
+            // InternalN4MFParser.g:5657:1: ( rule__ModuleFilter__Group_3__1__Impl )
+            // InternalN4MFParser.g:5658:2: rule__ModuleFilter__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__Group_3__1__Impl();
@@ -14543,21 +14636,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__Group_3__1__Impl"
-    // InternalN4MFParser.g:5631:1: rule__ModuleFilter__Group_3__1__Impl : ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) ) ;
+    // InternalN4MFParser.g:5664:1: rule__ModuleFilter__Group_3__1__Impl : ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) ) ;
     public final void rule__ModuleFilter__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5635:1: ( ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) ) )
-            // InternalN4MFParser.g:5636:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) )
+            // InternalN4MFParser.g:5668:1: ( ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) ) )
+            // InternalN4MFParser.g:5669:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) )
             {
-            // InternalN4MFParser.g:5636:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) )
-            // InternalN4MFParser.g:5637:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 )
+            // InternalN4MFParser.g:5669:1: ( ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 ) )
+            // InternalN4MFParser.g:5670:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 )
             {
              before(grammarAccess.getModuleFilterAccess().getModuleSpecifiersAssignment_3_1()); 
-            // InternalN4MFParser.g:5638:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 )
-            // InternalN4MFParser.g:5638:2: rule__ModuleFilter__ModuleSpecifiersAssignment_3_1
+            // InternalN4MFParser.g:5671:1: ( rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 )
+            // InternalN4MFParser.g:5671:2: rule__ModuleFilter__ModuleSpecifiersAssignment_3_1
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilter__ModuleSpecifiersAssignment_3_1();
@@ -14590,14 +14683,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group__0"
-    // InternalN4MFParser.g:5652:1: rule__BootstrapModule__Group__0 : rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1 ;
+    // InternalN4MFParser.g:5685:1: rule__BootstrapModule__Group__0 : rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1 ;
     public final void rule__BootstrapModule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5656:1: ( rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1 )
-            // InternalN4MFParser.g:5657:2: rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1
+            // InternalN4MFParser.g:5689:1: ( rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1 )
+            // InternalN4MFParser.g:5690:2: rule__BootstrapModule__Group__0__Impl rule__BootstrapModule__Group__1
             {
             pushFollow(FOLLOW_30);
             rule__BootstrapModule__Group__0__Impl();
@@ -14628,21 +14721,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group__0__Impl"
-    // InternalN4MFParser.g:5664:1: rule__BootstrapModule__Group__0__Impl : ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) ) ;
+    // InternalN4MFParser.g:5697:1: rule__BootstrapModule__Group__0__Impl : ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) ) ;
     public final void rule__BootstrapModule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5668:1: ( ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) ) )
-            // InternalN4MFParser.g:5669:1: ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) )
+            // InternalN4MFParser.g:5701:1: ( ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) ) )
+            // InternalN4MFParser.g:5702:1: ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) )
             {
-            // InternalN4MFParser.g:5669:1: ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) )
-            // InternalN4MFParser.g:5670:1: ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 )
+            // InternalN4MFParser.g:5702:1: ( ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 ) )
+            // InternalN4MFParser.g:5703:1: ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 )
             {
              before(grammarAccess.getBootstrapModuleAccess().getModuleSpecifierWithWildcardAssignment_0()); 
-            // InternalN4MFParser.g:5671:1: ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 )
-            // InternalN4MFParser.g:5671:2: rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0
+            // InternalN4MFParser.g:5704:1: ( rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 )
+            // InternalN4MFParser.g:5704:2: rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0();
@@ -14675,14 +14768,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group__1"
-    // InternalN4MFParser.g:5681:1: rule__BootstrapModule__Group__1 : rule__BootstrapModule__Group__1__Impl ;
+    // InternalN4MFParser.g:5714:1: rule__BootstrapModule__Group__1 : rule__BootstrapModule__Group__1__Impl ;
     public final void rule__BootstrapModule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5685:1: ( rule__BootstrapModule__Group__1__Impl )
-            // InternalN4MFParser.g:5686:2: rule__BootstrapModule__Group__1__Impl
+            // InternalN4MFParser.g:5718:1: ( rule__BootstrapModule__Group__1__Impl )
+            // InternalN4MFParser.g:5719:2: rule__BootstrapModule__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__BootstrapModule__Group__1__Impl();
@@ -14708,29 +14801,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group__1__Impl"
-    // InternalN4MFParser.g:5692:1: rule__BootstrapModule__Group__1__Impl : ( ( rule__BootstrapModule__Group_1__0 )? ) ;
+    // InternalN4MFParser.g:5725:1: rule__BootstrapModule__Group__1__Impl : ( ( rule__BootstrapModule__Group_1__0 )? ) ;
     public final void rule__BootstrapModule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5696:1: ( ( ( rule__BootstrapModule__Group_1__0 )? ) )
-            // InternalN4MFParser.g:5697:1: ( ( rule__BootstrapModule__Group_1__0 )? )
+            // InternalN4MFParser.g:5729:1: ( ( ( rule__BootstrapModule__Group_1__0 )? ) )
+            // InternalN4MFParser.g:5730:1: ( ( rule__BootstrapModule__Group_1__0 )? )
             {
-            // InternalN4MFParser.g:5697:1: ( ( rule__BootstrapModule__Group_1__0 )? )
-            // InternalN4MFParser.g:5698:1: ( rule__BootstrapModule__Group_1__0 )?
+            // InternalN4MFParser.g:5730:1: ( ( rule__BootstrapModule__Group_1__0 )? )
+            // InternalN4MFParser.g:5731:1: ( rule__BootstrapModule__Group_1__0 )?
             {
              before(grammarAccess.getBootstrapModuleAccess().getGroup_1()); 
-            // InternalN4MFParser.g:5699:1: ( rule__BootstrapModule__Group_1__0 )?
-            int alt33=2;
-            int LA33_0 = input.LA(1);
+            // InternalN4MFParser.g:5732:1: ( rule__BootstrapModule__Group_1__0 )?
+            int alt34=2;
+            int LA34_0 = input.LA(1);
 
-            if ( (LA33_0==In) ) {
-                alt33=1;
+            if ( (LA34_0==In) ) {
+                alt34=1;
             }
-            switch (alt33) {
+            switch (alt34) {
                 case 1 :
-                    // InternalN4MFParser.g:5699:2: rule__BootstrapModule__Group_1__0
+                    // InternalN4MFParser.g:5732:2: rule__BootstrapModule__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__BootstrapModule__Group_1__0();
@@ -14766,14 +14859,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group_1__0"
-    // InternalN4MFParser.g:5713:1: rule__BootstrapModule__Group_1__0 : rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1 ;
+    // InternalN4MFParser.g:5746:1: rule__BootstrapModule__Group_1__0 : rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1 ;
     public final void rule__BootstrapModule__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5717:1: ( rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1 )
-            // InternalN4MFParser.g:5718:2: rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1
+            // InternalN4MFParser.g:5750:1: ( rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1 )
+            // InternalN4MFParser.g:5751:2: rule__BootstrapModule__Group_1__0__Impl rule__BootstrapModule__Group_1__1
             {
             pushFollow(FOLLOW_5);
             rule__BootstrapModule__Group_1__0__Impl();
@@ -14804,17 +14897,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group_1__0__Impl"
-    // InternalN4MFParser.g:5725:1: rule__BootstrapModule__Group_1__0__Impl : ( In ) ;
+    // InternalN4MFParser.g:5758:1: rule__BootstrapModule__Group_1__0__Impl : ( In ) ;
     public final void rule__BootstrapModule__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5729:1: ( ( In ) )
-            // InternalN4MFParser.g:5730:1: ( In )
+            // InternalN4MFParser.g:5762:1: ( ( In ) )
+            // InternalN4MFParser.g:5763:1: ( In )
             {
-            // InternalN4MFParser.g:5730:1: ( In )
-            // InternalN4MFParser.g:5731:1: In
+            // InternalN4MFParser.g:5763:1: ( In )
+            // InternalN4MFParser.g:5764:1: In
             {
              before(grammarAccess.getBootstrapModuleAccess().getInKeyword_1_0()); 
             match(input,In,FOLLOW_2); 
@@ -14841,14 +14934,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group_1__1"
-    // InternalN4MFParser.g:5744:1: rule__BootstrapModule__Group_1__1 : rule__BootstrapModule__Group_1__1__Impl ;
+    // InternalN4MFParser.g:5777:1: rule__BootstrapModule__Group_1__1 : rule__BootstrapModule__Group_1__1__Impl ;
     public final void rule__BootstrapModule__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5748:1: ( rule__BootstrapModule__Group_1__1__Impl )
-            // InternalN4MFParser.g:5749:2: rule__BootstrapModule__Group_1__1__Impl
+            // InternalN4MFParser.g:5781:1: ( rule__BootstrapModule__Group_1__1__Impl )
+            // InternalN4MFParser.g:5782:2: rule__BootstrapModule__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__BootstrapModule__Group_1__1__Impl();
@@ -14874,21 +14967,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__Group_1__1__Impl"
-    // InternalN4MFParser.g:5755:1: rule__BootstrapModule__Group_1__1__Impl : ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) ) ;
+    // InternalN4MFParser.g:5788:1: rule__BootstrapModule__Group_1__1__Impl : ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) ) ;
     public final void rule__BootstrapModule__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5759:1: ( ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) ) )
-            // InternalN4MFParser.g:5760:1: ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) )
+            // InternalN4MFParser.g:5792:1: ( ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) ) )
+            // InternalN4MFParser.g:5793:1: ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) )
             {
-            // InternalN4MFParser.g:5760:1: ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) )
-            // InternalN4MFParser.g:5761:1: ( rule__BootstrapModule__SourcePathAssignment_1_1 )
+            // InternalN4MFParser.g:5793:1: ( ( rule__BootstrapModule__SourcePathAssignment_1_1 ) )
+            // InternalN4MFParser.g:5794:1: ( rule__BootstrapModule__SourcePathAssignment_1_1 )
             {
              before(grammarAccess.getBootstrapModuleAccess().getSourcePathAssignment_1_1()); 
-            // InternalN4MFParser.g:5762:1: ( rule__BootstrapModule__SourcePathAssignment_1_1 )
-            // InternalN4MFParser.g:5762:2: rule__BootstrapModule__SourcePathAssignment_1_1
+            // InternalN4MFParser.g:5795:1: ( rule__BootstrapModule__SourcePathAssignment_1_1 )
+            // InternalN4MFParser.g:5795:2: rule__BootstrapModule__SourcePathAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__BootstrapModule__SourcePathAssignment_1_1();
@@ -14921,14 +15014,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group__0"
-    // InternalN4MFParser.g:5776:1: rule__ModuleFilterSpecifier__Group__0 : rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1 ;
+    // InternalN4MFParser.g:5809:1: rule__ModuleFilterSpecifier__Group__0 : rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1 ;
     public final void rule__ModuleFilterSpecifier__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5780:1: ( rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1 )
-            // InternalN4MFParser.g:5781:2: rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1
+            // InternalN4MFParser.g:5813:1: ( rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1 )
+            // InternalN4MFParser.g:5814:2: rule__ModuleFilterSpecifier__Group__0__Impl rule__ModuleFilterSpecifier__Group__1
             {
             pushFollow(FOLLOW_30);
             rule__ModuleFilterSpecifier__Group__0__Impl();
@@ -14959,21 +15052,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group__0__Impl"
-    // InternalN4MFParser.g:5788:1: rule__ModuleFilterSpecifier__Group__0__Impl : ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) ) ;
+    // InternalN4MFParser.g:5821:1: rule__ModuleFilterSpecifier__Group__0__Impl : ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) ) ;
     public final void rule__ModuleFilterSpecifier__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5792:1: ( ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) ) )
-            // InternalN4MFParser.g:5793:1: ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) )
+            // InternalN4MFParser.g:5825:1: ( ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) ) )
+            // InternalN4MFParser.g:5826:1: ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) )
             {
-            // InternalN4MFParser.g:5793:1: ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) )
-            // InternalN4MFParser.g:5794:1: ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 )
+            // InternalN4MFParser.g:5826:1: ( ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 ) )
+            // InternalN4MFParser.g:5827:1: ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 )
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getModuleSpecifierWithWildcardAssignment_0()); 
-            // InternalN4MFParser.g:5795:1: ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 )
-            // InternalN4MFParser.g:5795:2: rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0
+            // InternalN4MFParser.g:5828:1: ( rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 )
+            // InternalN4MFParser.g:5828:2: rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0();
@@ -15006,14 +15099,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group__1"
-    // InternalN4MFParser.g:5805:1: rule__ModuleFilterSpecifier__Group__1 : rule__ModuleFilterSpecifier__Group__1__Impl ;
+    // InternalN4MFParser.g:5838:1: rule__ModuleFilterSpecifier__Group__1 : rule__ModuleFilterSpecifier__Group__1__Impl ;
     public final void rule__ModuleFilterSpecifier__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5809:1: ( rule__ModuleFilterSpecifier__Group__1__Impl )
-            // InternalN4MFParser.g:5810:2: rule__ModuleFilterSpecifier__Group__1__Impl
+            // InternalN4MFParser.g:5842:1: ( rule__ModuleFilterSpecifier__Group__1__Impl )
+            // InternalN4MFParser.g:5843:2: rule__ModuleFilterSpecifier__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterSpecifier__Group__1__Impl();
@@ -15039,29 +15132,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group__1__Impl"
-    // InternalN4MFParser.g:5816:1: rule__ModuleFilterSpecifier__Group__1__Impl : ( ( rule__ModuleFilterSpecifier__Group_1__0 )? ) ;
+    // InternalN4MFParser.g:5849:1: rule__ModuleFilterSpecifier__Group__1__Impl : ( ( rule__ModuleFilterSpecifier__Group_1__0 )? ) ;
     public final void rule__ModuleFilterSpecifier__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5820:1: ( ( ( rule__ModuleFilterSpecifier__Group_1__0 )? ) )
-            // InternalN4MFParser.g:5821:1: ( ( rule__ModuleFilterSpecifier__Group_1__0 )? )
+            // InternalN4MFParser.g:5853:1: ( ( ( rule__ModuleFilterSpecifier__Group_1__0 )? ) )
+            // InternalN4MFParser.g:5854:1: ( ( rule__ModuleFilterSpecifier__Group_1__0 )? )
             {
-            // InternalN4MFParser.g:5821:1: ( ( rule__ModuleFilterSpecifier__Group_1__0 )? )
-            // InternalN4MFParser.g:5822:1: ( rule__ModuleFilterSpecifier__Group_1__0 )?
+            // InternalN4MFParser.g:5854:1: ( ( rule__ModuleFilterSpecifier__Group_1__0 )? )
+            // InternalN4MFParser.g:5855:1: ( rule__ModuleFilterSpecifier__Group_1__0 )?
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getGroup_1()); 
-            // InternalN4MFParser.g:5823:1: ( rule__ModuleFilterSpecifier__Group_1__0 )?
-            int alt34=2;
-            int LA34_0 = input.LA(1);
+            // InternalN4MFParser.g:5856:1: ( rule__ModuleFilterSpecifier__Group_1__0 )?
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA34_0==In) ) {
-                alt34=1;
+            if ( (LA35_0==In) ) {
+                alt35=1;
             }
-            switch (alt34) {
+            switch (alt35) {
                 case 1 :
-                    // InternalN4MFParser.g:5823:2: rule__ModuleFilterSpecifier__Group_1__0
+                    // InternalN4MFParser.g:5856:2: rule__ModuleFilterSpecifier__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ModuleFilterSpecifier__Group_1__0();
@@ -15097,14 +15190,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group_1__0"
-    // InternalN4MFParser.g:5837:1: rule__ModuleFilterSpecifier__Group_1__0 : rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1 ;
+    // InternalN4MFParser.g:5870:1: rule__ModuleFilterSpecifier__Group_1__0 : rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1 ;
     public final void rule__ModuleFilterSpecifier__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5841:1: ( rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1 )
-            // InternalN4MFParser.g:5842:2: rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1
+            // InternalN4MFParser.g:5874:1: ( rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1 )
+            // InternalN4MFParser.g:5875:2: rule__ModuleFilterSpecifier__Group_1__0__Impl rule__ModuleFilterSpecifier__Group_1__1
             {
             pushFollow(FOLLOW_5);
             rule__ModuleFilterSpecifier__Group_1__0__Impl();
@@ -15135,17 +15228,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group_1__0__Impl"
-    // InternalN4MFParser.g:5849:1: rule__ModuleFilterSpecifier__Group_1__0__Impl : ( In ) ;
+    // InternalN4MFParser.g:5882:1: rule__ModuleFilterSpecifier__Group_1__0__Impl : ( In ) ;
     public final void rule__ModuleFilterSpecifier__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5853:1: ( ( In ) )
-            // InternalN4MFParser.g:5854:1: ( In )
+            // InternalN4MFParser.g:5886:1: ( ( In ) )
+            // InternalN4MFParser.g:5887:1: ( In )
             {
-            // InternalN4MFParser.g:5854:1: ( In )
-            // InternalN4MFParser.g:5855:1: In
+            // InternalN4MFParser.g:5887:1: ( In )
+            // InternalN4MFParser.g:5888:1: In
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getInKeyword_1_0()); 
             match(input,In,FOLLOW_2); 
@@ -15172,14 +15265,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group_1__1"
-    // InternalN4MFParser.g:5868:1: rule__ModuleFilterSpecifier__Group_1__1 : rule__ModuleFilterSpecifier__Group_1__1__Impl ;
+    // InternalN4MFParser.g:5901:1: rule__ModuleFilterSpecifier__Group_1__1 : rule__ModuleFilterSpecifier__Group_1__1__Impl ;
     public final void rule__ModuleFilterSpecifier__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5872:1: ( rule__ModuleFilterSpecifier__Group_1__1__Impl )
-            // InternalN4MFParser.g:5873:2: rule__ModuleFilterSpecifier__Group_1__1__Impl
+            // InternalN4MFParser.g:5905:1: ( rule__ModuleFilterSpecifier__Group_1__1__Impl )
+            // InternalN4MFParser.g:5906:2: rule__ModuleFilterSpecifier__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterSpecifier__Group_1__1__Impl();
@@ -15205,21 +15298,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__Group_1__1__Impl"
-    // InternalN4MFParser.g:5879:1: rule__ModuleFilterSpecifier__Group_1__1__Impl : ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) ) ;
+    // InternalN4MFParser.g:5912:1: rule__ModuleFilterSpecifier__Group_1__1__Impl : ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) ) ;
     public final void rule__ModuleFilterSpecifier__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5883:1: ( ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) ) )
-            // InternalN4MFParser.g:5884:1: ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) )
+            // InternalN4MFParser.g:5916:1: ( ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) ) )
+            // InternalN4MFParser.g:5917:1: ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) )
             {
-            // InternalN4MFParser.g:5884:1: ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) )
-            // InternalN4MFParser.g:5885:1: ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 )
+            // InternalN4MFParser.g:5917:1: ( ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 ) )
+            // InternalN4MFParser.g:5918:1: ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 )
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getSourcePathAssignment_1_1()); 
-            // InternalN4MFParser.g:5886:1: ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 )
-            // InternalN4MFParser.g:5886:2: rule__ModuleFilterSpecifier__SourcePathAssignment_1_1
+            // InternalN4MFParser.g:5919:1: ( rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 )
+            // InternalN4MFParser.g:5919:2: rule__ModuleFilterSpecifier__SourcePathAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__ModuleFilterSpecifier__SourcePathAssignment_1_1();
@@ -15252,14 +15345,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__0"
-    // InternalN4MFParser.g:5900:1: rule__ProjectDependency__Group__0 : rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1 ;
+    // InternalN4MFParser.g:5933:1: rule__ProjectDependency__Group__0 : rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1 ;
     public final void rule__ProjectDependency__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5904:1: ( rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1 )
-            // InternalN4MFParser.g:5905:2: rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1
+            // InternalN4MFParser.g:5937:1: ( rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1 )
+            // InternalN4MFParser.g:5938:2: rule__ProjectDependency__Group__0__Impl rule__ProjectDependency__Group__1
             {
             pushFollow(FOLLOW_31);
             rule__ProjectDependency__Group__0__Impl();
@@ -15290,21 +15383,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__0__Impl"
-    // InternalN4MFParser.g:5912:1: rule__ProjectDependency__Group__0__Impl : ( ( rule__ProjectDependency__ProjectAssignment_0 ) ) ;
+    // InternalN4MFParser.g:5945:1: rule__ProjectDependency__Group__0__Impl : ( ( rule__ProjectDependency__ProjectAssignment_0 ) ) ;
     public final void rule__ProjectDependency__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5916:1: ( ( ( rule__ProjectDependency__ProjectAssignment_0 ) ) )
-            // InternalN4MFParser.g:5917:1: ( ( rule__ProjectDependency__ProjectAssignment_0 ) )
+            // InternalN4MFParser.g:5949:1: ( ( ( rule__ProjectDependency__ProjectAssignment_0 ) ) )
+            // InternalN4MFParser.g:5950:1: ( ( rule__ProjectDependency__ProjectAssignment_0 ) )
             {
-            // InternalN4MFParser.g:5917:1: ( ( rule__ProjectDependency__ProjectAssignment_0 ) )
-            // InternalN4MFParser.g:5918:1: ( rule__ProjectDependency__ProjectAssignment_0 )
+            // InternalN4MFParser.g:5950:1: ( ( rule__ProjectDependency__ProjectAssignment_0 ) )
+            // InternalN4MFParser.g:5951:1: ( rule__ProjectDependency__ProjectAssignment_0 )
             {
              before(grammarAccess.getProjectDependencyAccess().getProjectAssignment_0()); 
-            // InternalN4MFParser.g:5919:1: ( rule__ProjectDependency__ProjectAssignment_0 )
-            // InternalN4MFParser.g:5919:2: rule__ProjectDependency__ProjectAssignment_0
+            // InternalN4MFParser.g:5952:1: ( rule__ProjectDependency__ProjectAssignment_0 )
+            // InternalN4MFParser.g:5952:2: rule__ProjectDependency__ProjectAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependency__ProjectAssignment_0();
@@ -15337,14 +15430,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__1"
-    // InternalN4MFParser.g:5929:1: rule__ProjectDependency__Group__1 : rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2 ;
+    // InternalN4MFParser.g:5962:1: rule__ProjectDependency__Group__1 : rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2 ;
     public final void rule__ProjectDependency__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5933:1: ( rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2 )
-            // InternalN4MFParser.g:5934:2: rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2
+            // InternalN4MFParser.g:5966:1: ( rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2 )
+            // InternalN4MFParser.g:5967:2: rule__ProjectDependency__Group__1__Impl rule__ProjectDependency__Group__2
             {
             pushFollow(FOLLOW_31);
             rule__ProjectDependency__Group__1__Impl();
@@ -15375,29 +15468,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__1__Impl"
-    // InternalN4MFParser.g:5941:1: rule__ProjectDependency__Group__1__Impl : ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? ) ;
+    // InternalN4MFParser.g:5974:1: rule__ProjectDependency__Group__1__Impl : ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? ) ;
     public final void rule__ProjectDependency__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5945:1: ( ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? ) )
-            // InternalN4MFParser.g:5946:1: ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? )
+            // InternalN4MFParser.g:5978:1: ( ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? ) )
+            // InternalN4MFParser.g:5979:1: ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? )
             {
-            // InternalN4MFParser.g:5946:1: ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? )
-            // InternalN4MFParser.g:5947:1: ( rule__ProjectDependency__VersionConstraintAssignment_1 )?
+            // InternalN4MFParser.g:5979:1: ( ( rule__ProjectDependency__VersionConstraintAssignment_1 )? )
+            // InternalN4MFParser.g:5980:1: ( rule__ProjectDependency__VersionConstraintAssignment_1 )?
             {
              before(grammarAccess.getProjectDependencyAccess().getVersionConstraintAssignment_1()); 
-            // InternalN4MFParser.g:5948:1: ( rule__ProjectDependency__VersionConstraintAssignment_1 )?
-            int alt35=2;
-            int LA35_0 = input.LA(1);
+            // InternalN4MFParser.g:5981:1: ( rule__ProjectDependency__VersionConstraintAssignment_1 )?
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA35_0==LeftParenthesis||LA35_0==LeftSquareBracket||LA35_0==RULE_INT) ) {
-                alt35=1;
+            if ( (LA36_0==LeftParenthesis||LA36_0==LeftSquareBracket||LA36_0==RULE_INT) ) {
+                alt36=1;
             }
-            switch (alt35) {
+            switch (alt36) {
                 case 1 :
-                    // InternalN4MFParser.g:5948:2: rule__ProjectDependency__VersionConstraintAssignment_1
+                    // InternalN4MFParser.g:5981:2: rule__ProjectDependency__VersionConstraintAssignment_1
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDependency__VersionConstraintAssignment_1();
@@ -15433,14 +15526,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__2"
-    // InternalN4MFParser.g:5958:1: rule__ProjectDependency__Group__2 : rule__ProjectDependency__Group__2__Impl ;
+    // InternalN4MFParser.g:5991:1: rule__ProjectDependency__Group__2 : rule__ProjectDependency__Group__2__Impl ;
     public final void rule__ProjectDependency__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5962:1: ( rule__ProjectDependency__Group__2__Impl )
-            // InternalN4MFParser.g:5963:2: rule__ProjectDependency__Group__2__Impl
+            // InternalN4MFParser.g:5995:1: ( rule__ProjectDependency__Group__2__Impl )
+            // InternalN4MFParser.g:5996:2: rule__ProjectDependency__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDependency__Group__2__Impl();
@@ -15466,29 +15559,29 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__Group__2__Impl"
-    // InternalN4MFParser.g:5969:1: rule__ProjectDependency__Group__2__Impl : ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? ) ;
+    // InternalN4MFParser.g:6002:1: rule__ProjectDependency__Group__2__Impl : ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? ) ;
     public final void rule__ProjectDependency__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5973:1: ( ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? ) )
-            // InternalN4MFParser.g:5974:1: ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? )
+            // InternalN4MFParser.g:6006:1: ( ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? ) )
+            // InternalN4MFParser.g:6007:1: ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? )
             {
-            // InternalN4MFParser.g:5974:1: ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? )
-            // InternalN4MFParser.g:5975:1: ( rule__ProjectDependency__DeclaredScopeAssignment_2 )?
+            // InternalN4MFParser.g:6007:1: ( ( rule__ProjectDependency__DeclaredScopeAssignment_2 )? )
+            // InternalN4MFParser.g:6008:1: ( rule__ProjectDependency__DeclaredScopeAssignment_2 )?
             {
              before(grammarAccess.getProjectDependencyAccess().getDeclaredScopeAssignment_2()); 
-            // InternalN4MFParser.g:5976:1: ( rule__ProjectDependency__DeclaredScopeAssignment_2 )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // InternalN4MFParser.g:6009:1: ( rule__ProjectDependency__DeclaredScopeAssignment_2 )?
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-            if ( (LA36_0==Compile||LA36_0==Test) ) {
-                alt36=1;
+            if ( (LA37_0==Compile||LA37_0==Test) ) {
+                alt37=1;
             }
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
-                    // InternalN4MFParser.g:5976:2: rule__ProjectDependency__DeclaredScopeAssignment_2
+                    // InternalN4MFParser.g:6009:2: rule__ProjectDependency__DeclaredScopeAssignment_2
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDependency__DeclaredScopeAssignment_2();
@@ -15524,14 +15617,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group__0"
-    // InternalN4MFParser.g:5992:1: rule__SimpleProjectDescription__Group__0 : rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1 ;
+    // InternalN4MFParser.g:6025:1: rule__SimpleProjectDescription__Group__0 : rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1 ;
     public final void rule__SimpleProjectDescription__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:5996:1: ( rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1 )
-            // InternalN4MFParser.g:5997:2: rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1
+            // InternalN4MFParser.g:6029:1: ( rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1 )
+            // InternalN4MFParser.g:6030:2: rule__SimpleProjectDescription__Group__0__Impl rule__SimpleProjectDescription__Group__1
             {
             pushFollow(FOLLOW_4);
             rule__SimpleProjectDescription__Group__0__Impl();
@@ -15562,25 +15655,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group__0__Impl"
-    // InternalN4MFParser.g:6004:1: rule__SimpleProjectDescription__Group__0__Impl : ( ( rule__SimpleProjectDescription__Group_0__0 )? ) ;
+    // InternalN4MFParser.g:6037:1: rule__SimpleProjectDescription__Group__0__Impl : ( ( rule__SimpleProjectDescription__Group_0__0 )? ) ;
     public final void rule__SimpleProjectDescription__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6008:1: ( ( ( rule__SimpleProjectDescription__Group_0__0 )? ) )
-            // InternalN4MFParser.g:6009:1: ( ( rule__SimpleProjectDescription__Group_0__0 )? )
+            // InternalN4MFParser.g:6041:1: ( ( ( rule__SimpleProjectDescription__Group_0__0 )? ) )
+            // InternalN4MFParser.g:6042:1: ( ( rule__SimpleProjectDescription__Group_0__0 )? )
             {
-            // InternalN4MFParser.g:6009:1: ( ( rule__SimpleProjectDescription__Group_0__0 )? )
-            // InternalN4MFParser.g:6010:1: ( rule__SimpleProjectDescription__Group_0__0 )?
+            // InternalN4MFParser.g:6042:1: ( ( rule__SimpleProjectDescription__Group_0__0 )? )
+            // InternalN4MFParser.g:6043:1: ( rule__SimpleProjectDescription__Group_0__0 )?
             {
              before(grammarAccess.getSimpleProjectDescriptionAccess().getGroup_0()); 
-            // InternalN4MFParser.g:6011:1: ( rule__SimpleProjectDescription__Group_0__0 )?
-            int alt37=2;
-            alt37 = dfa37.predict(input);
-            switch (alt37) {
+            // InternalN4MFParser.g:6044:1: ( rule__SimpleProjectDescription__Group_0__0 )?
+            int alt38=2;
+            alt38 = dfa38.predict(input);
+            switch (alt38) {
                 case 1 :
-                    // InternalN4MFParser.g:6011:2: rule__SimpleProjectDescription__Group_0__0
+                    // InternalN4MFParser.g:6044:2: rule__SimpleProjectDescription__Group_0__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__SimpleProjectDescription__Group_0__0();
@@ -15616,14 +15709,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group__1"
-    // InternalN4MFParser.g:6021:1: rule__SimpleProjectDescription__Group__1 : rule__SimpleProjectDescription__Group__1__Impl ;
+    // InternalN4MFParser.g:6054:1: rule__SimpleProjectDescription__Group__1 : rule__SimpleProjectDescription__Group__1__Impl ;
     public final void rule__SimpleProjectDescription__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6025:1: ( rule__SimpleProjectDescription__Group__1__Impl )
-            // InternalN4MFParser.g:6026:2: rule__SimpleProjectDescription__Group__1__Impl
+            // InternalN4MFParser.g:6058:1: ( rule__SimpleProjectDescription__Group__1__Impl )
+            // InternalN4MFParser.g:6059:2: rule__SimpleProjectDescription__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SimpleProjectDescription__Group__1__Impl();
@@ -15649,31 +15742,31 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group__1__Impl"
-    // InternalN4MFParser.g:6032:1: rule__SimpleProjectDescription__Group__1__Impl : ( ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 ) ) ;
+    // InternalN4MFParser.g:6065:1: rule__SimpleProjectDescription__Group__1__Impl : ( ( rule__SimpleProjectDescription__ProjectIdAssignment_1 ) ) ;
     public final void rule__SimpleProjectDescription__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6036:1: ( ( ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 ) ) )
-            // InternalN4MFParser.g:6037:1: ( ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 ) )
+            // InternalN4MFParser.g:6069:1: ( ( ( rule__SimpleProjectDescription__ProjectIdAssignment_1 ) ) )
+            // InternalN4MFParser.g:6070:1: ( ( rule__SimpleProjectDescription__ProjectIdAssignment_1 ) )
             {
-            // InternalN4MFParser.g:6037:1: ( ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 ) )
-            // InternalN4MFParser.g:6038:1: ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 )
+            // InternalN4MFParser.g:6070:1: ( ( rule__SimpleProjectDescription__ProjectIdAssignment_1 ) )
+            // InternalN4MFParser.g:6071:1: ( rule__SimpleProjectDescription__ProjectIdAssignment_1 )
             {
-             before(grammarAccess.getSimpleProjectDescriptionAccess().getArtifactIdAssignment_1()); 
-            // InternalN4MFParser.g:6039:1: ( rule__SimpleProjectDescription__ArtifactIdAssignment_1 )
-            // InternalN4MFParser.g:6039:2: rule__SimpleProjectDescription__ArtifactIdAssignment_1
+             before(grammarAccess.getSimpleProjectDescriptionAccess().getProjectIdAssignment_1()); 
+            // InternalN4MFParser.g:6072:1: ( rule__SimpleProjectDescription__ProjectIdAssignment_1 )
+            // InternalN4MFParser.g:6072:2: rule__SimpleProjectDescription__ProjectIdAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__SimpleProjectDescription__ArtifactIdAssignment_1();
+            rule__SimpleProjectDescription__ProjectIdAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSimpleProjectDescriptionAccess().getArtifactIdAssignment_1()); 
+             after(grammarAccess.getSimpleProjectDescriptionAccess().getProjectIdAssignment_1()); 
 
             }
 
@@ -15696,14 +15789,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group_0__0"
-    // InternalN4MFParser.g:6053:1: rule__SimpleProjectDescription__Group_0__0 : rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1 ;
+    // InternalN4MFParser.g:6086:1: rule__SimpleProjectDescription__Group_0__0 : rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1 ;
     public final void rule__SimpleProjectDescription__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6057:1: ( rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1 )
-            // InternalN4MFParser.g:6058:2: rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1
+            // InternalN4MFParser.g:6090:1: ( rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1 )
+            // InternalN4MFParser.g:6091:2: rule__SimpleProjectDescription__Group_0__0__Impl rule__SimpleProjectDescription__Group_0__1
             {
             pushFollow(FOLLOW_3);
             rule__SimpleProjectDescription__Group_0__0__Impl();
@@ -15734,21 +15827,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group_0__0__Impl"
-    // InternalN4MFParser.g:6065:1: rule__SimpleProjectDescription__Group_0__0__Impl : ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) ) ;
+    // InternalN4MFParser.g:6098:1: rule__SimpleProjectDescription__Group_0__0__Impl : ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) ) ;
     public final void rule__SimpleProjectDescription__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6069:1: ( ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) ) )
-            // InternalN4MFParser.g:6070:1: ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) )
+            // InternalN4MFParser.g:6102:1: ( ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) ) )
+            // InternalN4MFParser.g:6103:1: ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) )
             {
-            // InternalN4MFParser.g:6070:1: ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) )
-            // InternalN4MFParser.g:6071:1: ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 )
+            // InternalN4MFParser.g:6103:1: ( ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 ) )
+            // InternalN4MFParser.g:6104:1: ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 )
             {
              before(grammarAccess.getSimpleProjectDescriptionAccess().getDeclaredVendorIdAssignment_0_0()); 
-            // InternalN4MFParser.g:6072:1: ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 )
-            // InternalN4MFParser.g:6072:2: rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0
+            // InternalN4MFParser.g:6105:1: ( rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 )
+            // InternalN4MFParser.g:6105:2: rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0
             {
             pushFollow(FOLLOW_2);
             rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0();
@@ -15781,14 +15874,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group_0__1"
-    // InternalN4MFParser.g:6082:1: rule__SimpleProjectDescription__Group_0__1 : rule__SimpleProjectDescription__Group_0__1__Impl ;
+    // InternalN4MFParser.g:6115:1: rule__SimpleProjectDescription__Group_0__1 : rule__SimpleProjectDescription__Group_0__1__Impl ;
     public final void rule__SimpleProjectDescription__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6086:1: ( rule__SimpleProjectDescription__Group_0__1__Impl )
-            // InternalN4MFParser.g:6087:2: rule__SimpleProjectDescription__Group_0__1__Impl
+            // InternalN4MFParser.g:6119:1: ( rule__SimpleProjectDescription__Group_0__1__Impl )
+            // InternalN4MFParser.g:6120:2: rule__SimpleProjectDescription__Group_0__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SimpleProjectDescription__Group_0__1__Impl();
@@ -15814,17 +15907,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__Group_0__1__Impl"
-    // InternalN4MFParser.g:6093:1: rule__SimpleProjectDescription__Group_0__1__Impl : ( Colon ) ;
+    // InternalN4MFParser.g:6126:1: rule__SimpleProjectDescription__Group_0__1__Impl : ( Colon ) ;
     public final void rule__SimpleProjectDescription__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6097:1: ( ( Colon ) )
-            // InternalN4MFParser.g:6098:1: ( Colon )
+            // InternalN4MFParser.g:6130:1: ( ( Colon ) )
+            // InternalN4MFParser.g:6131:1: ( Colon )
             {
-            // InternalN4MFParser.g:6098:1: ( Colon )
-            // InternalN4MFParser.g:6099:1: Colon
+            // InternalN4MFParser.g:6131:1: ( Colon )
+            // InternalN4MFParser.g:6132:1: Colon
             {
              before(grammarAccess.getSimpleProjectDescriptionAccess().getColonKeyword_0_1()); 
             match(input,Colon,FOLLOW_2); 
@@ -15851,14 +15944,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__0"
-    // InternalN4MFParser.g:6116:1: rule__VersionConstraint__Group_0__0 : rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1 ;
+    // InternalN4MFParser.g:6149:1: rule__VersionConstraint__Group_0__0 : rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1 ;
     public final void rule__VersionConstraint__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6120:1: ( rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1 )
-            // InternalN4MFParser.g:6121:2: rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1
+            // InternalN4MFParser.g:6153:1: ( rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1 )
+            // InternalN4MFParser.g:6154:2: rule__VersionConstraint__Group_0__0__Impl rule__VersionConstraint__Group_0__1
             {
             pushFollow(FOLLOW_7);
             rule__VersionConstraint__Group_0__0__Impl();
@@ -15889,21 +15982,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__0__Impl"
-    // InternalN4MFParser.g:6128:1: rule__VersionConstraint__Group_0__0__Impl : ( ( rule__VersionConstraint__Alternatives_0_0 ) ) ;
+    // InternalN4MFParser.g:6161:1: rule__VersionConstraint__Group_0__0__Impl : ( ( rule__VersionConstraint__Alternatives_0_0 ) ) ;
     public final void rule__VersionConstraint__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6132:1: ( ( ( rule__VersionConstraint__Alternatives_0_0 ) ) )
-            // InternalN4MFParser.g:6133:1: ( ( rule__VersionConstraint__Alternatives_0_0 ) )
+            // InternalN4MFParser.g:6165:1: ( ( ( rule__VersionConstraint__Alternatives_0_0 ) ) )
+            // InternalN4MFParser.g:6166:1: ( ( rule__VersionConstraint__Alternatives_0_0 ) )
             {
-            // InternalN4MFParser.g:6133:1: ( ( rule__VersionConstraint__Alternatives_0_0 ) )
-            // InternalN4MFParser.g:6134:1: ( rule__VersionConstraint__Alternatives_0_0 )
+            // InternalN4MFParser.g:6166:1: ( ( rule__VersionConstraint__Alternatives_0_0 ) )
+            // InternalN4MFParser.g:6167:1: ( rule__VersionConstraint__Alternatives_0_0 )
             {
              before(grammarAccess.getVersionConstraintAccess().getAlternatives_0_0()); 
-            // InternalN4MFParser.g:6135:1: ( rule__VersionConstraint__Alternatives_0_0 )
-            // InternalN4MFParser.g:6135:2: rule__VersionConstraint__Alternatives_0_0
+            // InternalN4MFParser.g:6168:1: ( rule__VersionConstraint__Alternatives_0_0 )
+            // InternalN4MFParser.g:6168:2: rule__VersionConstraint__Alternatives_0_0
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Alternatives_0_0();
@@ -15936,14 +16029,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__1"
-    // InternalN4MFParser.g:6145:1: rule__VersionConstraint__Group_0__1 : rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2 ;
+    // InternalN4MFParser.g:6178:1: rule__VersionConstraint__Group_0__1 : rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2 ;
     public final void rule__VersionConstraint__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6149:1: ( rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2 )
-            // InternalN4MFParser.g:6150:2: rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2
+            // InternalN4MFParser.g:6182:1: ( rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2 )
+            // InternalN4MFParser.g:6183:2: rule__VersionConstraint__Group_0__1__Impl rule__VersionConstraint__Group_0__2
             {
             pushFollow(FOLLOW_32);
             rule__VersionConstraint__Group_0__1__Impl();
@@ -15974,21 +16067,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__1__Impl"
-    // InternalN4MFParser.g:6157:1: rule__VersionConstraint__Group_0__1__Impl : ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) ) ;
+    // InternalN4MFParser.g:6190:1: rule__VersionConstraint__Group_0__1__Impl : ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) ) ;
     public final void rule__VersionConstraint__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6161:1: ( ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) ) )
-            // InternalN4MFParser.g:6162:1: ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) )
+            // InternalN4MFParser.g:6194:1: ( ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) ) )
+            // InternalN4MFParser.g:6195:1: ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) )
             {
-            // InternalN4MFParser.g:6162:1: ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) )
-            // InternalN4MFParser.g:6163:1: ( rule__VersionConstraint__LowerVersionAssignment_0_1 )
+            // InternalN4MFParser.g:6195:1: ( ( rule__VersionConstraint__LowerVersionAssignment_0_1 ) )
+            // InternalN4MFParser.g:6196:1: ( rule__VersionConstraint__LowerVersionAssignment_0_1 )
             {
              before(grammarAccess.getVersionConstraintAccess().getLowerVersionAssignment_0_1()); 
-            // InternalN4MFParser.g:6164:1: ( rule__VersionConstraint__LowerVersionAssignment_0_1 )
-            // InternalN4MFParser.g:6164:2: rule__VersionConstraint__LowerVersionAssignment_0_1
+            // InternalN4MFParser.g:6197:1: ( rule__VersionConstraint__LowerVersionAssignment_0_1 )
+            // InternalN4MFParser.g:6197:2: rule__VersionConstraint__LowerVersionAssignment_0_1
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__LowerVersionAssignment_0_1();
@@ -16021,14 +16114,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__2"
-    // InternalN4MFParser.g:6174:1: rule__VersionConstraint__Group_0__2 : rule__VersionConstraint__Group_0__2__Impl ;
+    // InternalN4MFParser.g:6207:1: rule__VersionConstraint__Group_0__2 : rule__VersionConstraint__Group_0__2__Impl ;
     public final void rule__VersionConstraint__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6178:1: ( rule__VersionConstraint__Group_0__2__Impl )
-            // InternalN4MFParser.g:6179:2: rule__VersionConstraint__Group_0__2__Impl
+            // InternalN4MFParser.g:6211:1: ( rule__VersionConstraint__Group_0__2__Impl )
+            // InternalN4MFParser.g:6212:2: rule__VersionConstraint__Group_0__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Group_0__2__Impl();
@@ -16054,21 +16147,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0__2__Impl"
-    // InternalN4MFParser.g:6185:1: rule__VersionConstraint__Group_0__2__Impl : ( ( rule__VersionConstraint__Alternatives_0_2 ) ) ;
+    // InternalN4MFParser.g:6218:1: rule__VersionConstraint__Group_0__2__Impl : ( ( rule__VersionConstraint__Alternatives_0_2 ) ) ;
     public final void rule__VersionConstraint__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6189:1: ( ( ( rule__VersionConstraint__Alternatives_0_2 ) ) )
-            // InternalN4MFParser.g:6190:1: ( ( rule__VersionConstraint__Alternatives_0_2 ) )
+            // InternalN4MFParser.g:6222:1: ( ( ( rule__VersionConstraint__Alternatives_0_2 ) ) )
+            // InternalN4MFParser.g:6223:1: ( ( rule__VersionConstraint__Alternatives_0_2 ) )
             {
-            // InternalN4MFParser.g:6190:1: ( ( rule__VersionConstraint__Alternatives_0_2 ) )
-            // InternalN4MFParser.g:6191:1: ( rule__VersionConstraint__Alternatives_0_2 )
+            // InternalN4MFParser.g:6223:1: ( ( rule__VersionConstraint__Alternatives_0_2 ) )
+            // InternalN4MFParser.g:6224:1: ( rule__VersionConstraint__Alternatives_0_2 )
             {
              before(grammarAccess.getVersionConstraintAccess().getAlternatives_0_2()); 
-            // InternalN4MFParser.g:6192:1: ( rule__VersionConstraint__Alternatives_0_2 )
-            // InternalN4MFParser.g:6192:2: rule__VersionConstraint__Alternatives_0_2
+            // InternalN4MFParser.g:6225:1: ( rule__VersionConstraint__Alternatives_0_2 )
+            // InternalN4MFParser.g:6225:2: rule__VersionConstraint__Alternatives_0_2
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Alternatives_0_2();
@@ -16101,14 +16194,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__0"
-    // InternalN4MFParser.g:6208:1: rule__VersionConstraint__Group_0_2_0__0 : rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1 ;
+    // InternalN4MFParser.g:6241:1: rule__VersionConstraint__Group_0_2_0__0 : rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1 ;
     public final void rule__VersionConstraint__Group_0_2_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6212:1: ( rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1 )
-            // InternalN4MFParser.g:6213:2: rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1
+            // InternalN4MFParser.g:6245:1: ( rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1 )
+            // InternalN4MFParser.g:6246:2: rule__VersionConstraint__Group_0_2_0__0__Impl rule__VersionConstraint__Group_0_2_0__1
             {
             pushFollow(FOLLOW_7);
             rule__VersionConstraint__Group_0_2_0__0__Impl();
@@ -16139,17 +16232,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__0__Impl"
-    // InternalN4MFParser.g:6220:1: rule__VersionConstraint__Group_0_2_0__0__Impl : ( Comma ) ;
+    // InternalN4MFParser.g:6253:1: rule__VersionConstraint__Group_0_2_0__0__Impl : ( Comma ) ;
     public final void rule__VersionConstraint__Group_0_2_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6224:1: ( ( Comma ) )
-            // InternalN4MFParser.g:6225:1: ( Comma )
+            // InternalN4MFParser.g:6257:1: ( ( Comma ) )
+            // InternalN4MFParser.g:6258:1: ( Comma )
             {
-            // InternalN4MFParser.g:6225:1: ( Comma )
-            // InternalN4MFParser.g:6226:1: Comma
+            // InternalN4MFParser.g:6258:1: ( Comma )
+            // InternalN4MFParser.g:6259:1: Comma
             {
              before(grammarAccess.getVersionConstraintAccess().getCommaKeyword_0_2_0_0()); 
             match(input,Comma,FOLLOW_2); 
@@ -16176,14 +16269,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__1"
-    // InternalN4MFParser.g:6239:1: rule__VersionConstraint__Group_0_2_0__1 : rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2 ;
+    // InternalN4MFParser.g:6272:1: rule__VersionConstraint__Group_0_2_0__1 : rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2 ;
     public final void rule__VersionConstraint__Group_0_2_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6243:1: ( rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2 )
-            // InternalN4MFParser.g:6244:2: rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2
+            // InternalN4MFParser.g:6276:1: ( rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2 )
+            // InternalN4MFParser.g:6277:2: rule__VersionConstraint__Group_0_2_0__1__Impl rule__VersionConstraint__Group_0_2_0__2
             {
             pushFollow(FOLLOW_33);
             rule__VersionConstraint__Group_0_2_0__1__Impl();
@@ -16214,21 +16307,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__1__Impl"
-    // InternalN4MFParser.g:6251:1: rule__VersionConstraint__Group_0_2_0__1__Impl : ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) ) ;
+    // InternalN4MFParser.g:6284:1: rule__VersionConstraint__Group_0_2_0__1__Impl : ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) ) ;
     public final void rule__VersionConstraint__Group_0_2_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6255:1: ( ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) ) )
-            // InternalN4MFParser.g:6256:1: ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) )
+            // InternalN4MFParser.g:6288:1: ( ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) ) )
+            // InternalN4MFParser.g:6289:1: ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) )
             {
-            // InternalN4MFParser.g:6256:1: ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) )
-            // InternalN4MFParser.g:6257:1: ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 )
+            // InternalN4MFParser.g:6289:1: ( ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 ) )
+            // InternalN4MFParser.g:6290:1: ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 )
             {
              before(grammarAccess.getVersionConstraintAccess().getUpperVersionAssignment_0_2_0_1()); 
-            // InternalN4MFParser.g:6258:1: ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 )
-            // InternalN4MFParser.g:6258:2: rule__VersionConstraint__UpperVersionAssignment_0_2_0_1
+            // InternalN4MFParser.g:6291:1: ( rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 )
+            // InternalN4MFParser.g:6291:2: rule__VersionConstraint__UpperVersionAssignment_0_2_0_1
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__UpperVersionAssignment_0_2_0_1();
@@ -16261,14 +16354,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__2"
-    // InternalN4MFParser.g:6268:1: rule__VersionConstraint__Group_0_2_0__2 : rule__VersionConstraint__Group_0_2_0__2__Impl ;
+    // InternalN4MFParser.g:6301:1: rule__VersionConstraint__Group_0_2_0__2 : rule__VersionConstraint__Group_0_2_0__2__Impl ;
     public final void rule__VersionConstraint__Group_0_2_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6272:1: ( rule__VersionConstraint__Group_0_2_0__2__Impl )
-            // InternalN4MFParser.g:6273:2: rule__VersionConstraint__Group_0_2_0__2__Impl
+            // InternalN4MFParser.g:6305:1: ( rule__VersionConstraint__Group_0_2_0__2__Impl )
+            // InternalN4MFParser.g:6306:2: rule__VersionConstraint__Group_0_2_0__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Group_0_2_0__2__Impl();
@@ -16294,21 +16387,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__Group_0_2_0__2__Impl"
-    // InternalN4MFParser.g:6279:1: rule__VersionConstraint__Group_0_2_0__2__Impl : ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) ) ;
+    // InternalN4MFParser.g:6312:1: rule__VersionConstraint__Group_0_2_0__2__Impl : ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) ) ;
     public final void rule__VersionConstraint__Group_0_2_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6283:1: ( ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) ) )
-            // InternalN4MFParser.g:6284:1: ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) )
+            // InternalN4MFParser.g:6316:1: ( ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) ) )
+            // InternalN4MFParser.g:6317:1: ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) )
             {
-            // InternalN4MFParser.g:6284:1: ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) )
-            // InternalN4MFParser.g:6285:1: ( rule__VersionConstraint__Alternatives_0_2_0_2 )
+            // InternalN4MFParser.g:6317:1: ( ( rule__VersionConstraint__Alternatives_0_2_0_2 ) )
+            // InternalN4MFParser.g:6318:1: ( rule__VersionConstraint__Alternatives_0_2_0_2 )
             {
              before(grammarAccess.getVersionConstraintAccess().getAlternatives_0_2_0_2()); 
-            // InternalN4MFParser.g:6286:1: ( rule__VersionConstraint__Alternatives_0_2_0_2 )
-            // InternalN4MFParser.g:6286:2: rule__VersionConstraint__Alternatives_0_2_0_2
+            // InternalN4MFParser.g:6319:1: ( rule__VersionConstraint__Alternatives_0_2_0_2 )
+            // InternalN4MFParser.g:6319:2: rule__VersionConstraint__Alternatives_0_2_0_2
             {
             pushFollow(FOLLOW_2);
             rule__VersionConstraint__Alternatives_0_2_0_2();
@@ -16340,23 +16433,23 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__VersionConstraint__Group_0_2_0__2__Impl"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_12__0"
-    // InternalN4MFParser.g:6302:1: rule__N4mfIdentifier__Group_12__0 : rule__N4mfIdentifier__Group_12__0__Impl rule__N4mfIdentifier__Group_12__1 ;
-    public final void rule__N4mfIdentifier__Group_12__0() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_13__0"
+    // InternalN4MFParser.g:6335:1: rule__N4mfIdentifier__Group_13__0 : rule__N4mfIdentifier__Group_13__0__Impl rule__N4mfIdentifier__Group_13__1 ;
+    public final void rule__N4mfIdentifier__Group_13__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6306:1: ( rule__N4mfIdentifier__Group_12__0__Impl rule__N4mfIdentifier__Group_12__1 )
-            // InternalN4MFParser.g:6307:2: rule__N4mfIdentifier__Group_12__0__Impl rule__N4mfIdentifier__Group_12__1
+            // InternalN4MFParser.g:6339:1: ( rule__N4mfIdentifier__Group_13__0__Impl rule__N4mfIdentifier__Group_13__1 )
+            // InternalN4MFParser.g:6340:2: rule__N4mfIdentifier__Group_13__0__Impl rule__N4mfIdentifier__Group_13__1
             {
             pushFollow(FOLLOW_34);
-            rule__N4mfIdentifier__Group_12__0__Impl();
+            rule__N4mfIdentifier__Group_13__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__N4mfIdentifier__Group_12__1();
+            rule__N4mfIdentifier__Group_13__1();
 
             state._fsp--;
 
@@ -16375,25 +16468,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_12__0"
+    // $ANTLR end "rule__N4mfIdentifier__Group_13__0"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_12__0__Impl"
-    // InternalN4MFParser.g:6314:1: rule__N4mfIdentifier__Group_12__0__Impl : ( ProjectDependencies ) ;
-    public final void rule__N4mfIdentifier__Group_12__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_13__0__Impl"
+    // InternalN4MFParser.g:6347:1: rule__N4mfIdentifier__Group_13__0__Impl : ( ProjectDependencies ) ;
+    public final void rule__N4mfIdentifier__Group_13__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6318:1: ( ( ProjectDependencies ) )
-            // InternalN4MFParser.g:6319:1: ( ProjectDependencies )
+            // InternalN4MFParser.g:6351:1: ( ( ProjectDependencies ) )
+            // InternalN4MFParser.g:6352:1: ( ProjectDependencies )
             {
-            // InternalN4MFParser.g:6319:1: ( ProjectDependencies )
-            // InternalN4MFParser.g:6320:1: ProjectDependencies
+            // InternalN4MFParser.g:6352:1: ( ProjectDependencies )
+            // InternalN4MFParser.g:6353:1: ProjectDependencies
             {
-             before(grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_12_0()); 
+             before(grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_13_0()); 
             match(input,ProjectDependencies,FOLLOW_2); 
-             after(grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_12_0()); 
+             after(grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_13_0()); 
 
             }
 
@@ -16412,21 +16505,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_12__0__Impl"
+    // $ANTLR end "rule__N4mfIdentifier__Group_13__0__Impl"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_12__1"
-    // InternalN4MFParser.g:6333:1: rule__N4mfIdentifier__Group_12__1 : rule__N4mfIdentifier__Group_12__1__Impl ;
-    public final void rule__N4mfIdentifier__Group_12__1() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_13__1"
+    // InternalN4MFParser.g:6366:1: rule__N4mfIdentifier__Group_13__1 : rule__N4mfIdentifier__Group_13__1__Impl ;
+    public final void rule__N4mfIdentifier__Group_13__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6337:1: ( rule__N4mfIdentifier__Group_12__1__Impl )
-            // InternalN4MFParser.g:6338:2: rule__N4mfIdentifier__Group_12__1__Impl
+            // InternalN4MFParser.g:6370:1: ( rule__N4mfIdentifier__Group_13__1__Impl )
+            // InternalN4MFParser.g:6371:2: rule__N4mfIdentifier__Group_13__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4mfIdentifier__Group_12__1__Impl();
+            rule__N4mfIdentifier__Group_13__1__Impl();
 
             state._fsp--;
 
@@ -16445,25 +16538,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_12__1"
+    // $ANTLR end "rule__N4mfIdentifier__Group_13__1"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_12__1__Impl"
-    // InternalN4MFParser.g:6344:1: rule__N4mfIdentifier__Group_12__1__Impl : ( KW_System ) ;
-    public final void rule__N4mfIdentifier__Group_12__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_13__1__Impl"
+    // InternalN4MFParser.g:6377:1: rule__N4mfIdentifier__Group_13__1__Impl : ( KW_System ) ;
+    public final void rule__N4mfIdentifier__Group_13__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6348:1: ( ( KW_System ) )
-            // InternalN4MFParser.g:6349:1: ( KW_System )
+            // InternalN4MFParser.g:6381:1: ( ( KW_System ) )
+            // InternalN4MFParser.g:6382:1: ( KW_System )
             {
-            // InternalN4MFParser.g:6349:1: ( KW_System )
-            // InternalN4MFParser.g:6350:1: KW_System
+            // InternalN4MFParser.g:6382:1: ( KW_System )
+            // InternalN4MFParser.g:6383:1: KW_System
             {
-             before(grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_12_1()); 
+             before(grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_13_1()); 
             match(input,KW_System,FOLLOW_2); 
-             after(grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_12_1()); 
+             after(grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_13_1()); 
 
             }
 
@@ -16482,26 +16575,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_12__1__Impl"
+    // $ANTLR end "rule__N4mfIdentifier__Group_13__1__Impl"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_16__0"
-    // InternalN4MFParser.g:6367:1: rule__N4mfIdentifier__Group_16__0 : rule__N4mfIdentifier__Group_16__0__Impl rule__N4mfIdentifier__Group_16__1 ;
-    public final void rule__N4mfIdentifier__Group_16__0() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_17__0"
+    // InternalN4MFParser.g:6400:1: rule__N4mfIdentifier__Group_17__0 : rule__N4mfIdentifier__Group_17__0__Impl rule__N4mfIdentifier__Group_17__1 ;
+    public final void rule__N4mfIdentifier__Group_17__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6371:1: ( rule__N4mfIdentifier__Group_16__0__Impl rule__N4mfIdentifier__Group_16__1 )
-            // InternalN4MFParser.g:6372:2: rule__N4mfIdentifier__Group_16__0__Impl rule__N4mfIdentifier__Group_16__1
+            // InternalN4MFParser.g:6404:1: ( rule__N4mfIdentifier__Group_17__0__Impl rule__N4mfIdentifier__Group_17__1 )
+            // InternalN4MFParser.g:6405:2: rule__N4mfIdentifier__Group_17__0__Impl rule__N4mfIdentifier__Group_17__1
             {
             pushFollow(FOLLOW_35);
-            rule__N4mfIdentifier__Group_16__0__Impl();
+            rule__N4mfIdentifier__Group_17__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__N4mfIdentifier__Group_16__1();
+            rule__N4mfIdentifier__Group_17__1();
 
             state._fsp--;
 
@@ -16520,25 +16613,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_16__0"
+    // $ANTLR end "rule__N4mfIdentifier__Group_17__0"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_16__0__Impl"
-    // InternalN4MFParser.g:6379:1: rule__N4mfIdentifier__Group_16__0__Impl : ( Processor ) ;
-    public final void rule__N4mfIdentifier__Group_16__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_17__0__Impl"
+    // InternalN4MFParser.g:6412:1: rule__N4mfIdentifier__Group_17__0__Impl : ( Processor ) ;
+    public final void rule__N4mfIdentifier__Group_17__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6383:1: ( ( Processor ) )
-            // InternalN4MFParser.g:6384:1: ( Processor )
+            // InternalN4MFParser.g:6416:1: ( ( Processor ) )
+            // InternalN4MFParser.g:6417:1: ( Processor )
             {
-            // InternalN4MFParser.g:6384:1: ( Processor )
-            // InternalN4MFParser.g:6385:1: Processor
+            // InternalN4MFParser.g:6417:1: ( Processor )
+            // InternalN4MFParser.g:6418:1: Processor
             {
-             before(grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_16_0()); 
+             before(grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_17_0()); 
             match(input,Processor,FOLLOW_2); 
-             after(grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_16_0()); 
+             after(grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_17_0()); 
 
             }
 
@@ -16557,21 +16650,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_16__0__Impl"
+    // $ANTLR end "rule__N4mfIdentifier__Group_17__0__Impl"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_16__1"
-    // InternalN4MFParser.g:6398:1: rule__N4mfIdentifier__Group_16__1 : rule__N4mfIdentifier__Group_16__1__Impl ;
-    public final void rule__N4mfIdentifier__Group_16__1() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_17__1"
+    // InternalN4MFParser.g:6431:1: rule__N4mfIdentifier__Group_17__1 : rule__N4mfIdentifier__Group_17__1__Impl ;
+    public final void rule__N4mfIdentifier__Group_17__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6402:1: ( rule__N4mfIdentifier__Group_16__1__Impl )
-            // InternalN4MFParser.g:6403:2: rule__N4mfIdentifier__Group_16__1__Impl
+            // InternalN4MFParser.g:6435:1: ( rule__N4mfIdentifier__Group_17__1__Impl )
+            // InternalN4MFParser.g:6436:2: rule__N4mfIdentifier__Group_17__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__N4mfIdentifier__Group_16__1__Impl();
+            rule__N4mfIdentifier__Group_17__1__Impl();
 
             state._fsp--;
 
@@ -16590,25 +16683,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_16__1"
+    // $ANTLR end "rule__N4mfIdentifier__Group_17__1"
 
 
-    // $ANTLR start "rule__N4mfIdentifier__Group_16__1__Impl"
-    // InternalN4MFParser.g:6409:1: rule__N4mfIdentifier__Group_16__1__Impl : ( Source ) ;
-    public final void rule__N4mfIdentifier__Group_16__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__N4mfIdentifier__Group_17__1__Impl"
+    // InternalN4MFParser.g:6442:1: rule__N4mfIdentifier__Group_17__1__Impl : ( Source ) ;
+    public final void rule__N4mfIdentifier__Group_17__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6413:1: ( ( Source ) )
-            // InternalN4MFParser.g:6414:1: ( Source )
+            // InternalN4MFParser.g:6446:1: ( ( Source ) )
+            // InternalN4MFParser.g:6447:1: ( Source )
             {
-            // InternalN4MFParser.g:6414:1: ( Source )
-            // InternalN4MFParser.g:6415:1: Source
+            // InternalN4MFParser.g:6447:1: ( Source )
+            // InternalN4MFParser.g:6448:1: Source
             {
-             before(grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_16_1()); 
+             before(grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_17_1()); 
             match(input,Source,FOLLOW_2); 
-             after(grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_16_1()); 
+             after(grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_17_1()); 
 
             }
 
@@ -16627,19 +16720,19 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__N4mfIdentifier__Group_16__1__Impl"
+    // $ANTLR end "rule__N4mfIdentifier__Group_17__1__Impl"
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup"
-    // InternalN4MFParser.g:6433:1: rule__ProjectDescription__UnorderedGroup : rule__ProjectDescription__UnorderedGroup__0 {...}?;
+    // InternalN4MFParser.g:6466:1: rule__ProjectDescription__UnorderedGroup : rule__ProjectDescription__UnorderedGroup__0 {...}?;
     public final void rule__ProjectDescription__UnorderedGroup() throws RecognitionException {
 
             	int stackSize = keepStackSize();
         		getUnorderedGroupHelper().enter(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
             
         try {
-            // InternalN4MFParser.g:6438:1: ( rule__ProjectDescription__UnorderedGroup__0 {...}?)
-            // InternalN4MFParser.g:6439:2: rule__ProjectDescription__UnorderedGroup__0 {...}?
+            // InternalN4MFParser.g:6471:1: ( rule__ProjectDescription__UnorderedGroup__0 {...}?)
+            // InternalN4MFParser.g:6472:2: rule__ProjectDescription__UnorderedGroup__0 {...}?
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__UnorderedGroup__0();
@@ -16669,31 +16762,31 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__Impl"
-    // InternalN4MFParser.g:6450:1: rule__ProjectDescription__UnorderedGroup__Impl : ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) ) ;
+    // InternalN4MFParser.g:6483:1: rule__ProjectDescription__UnorderedGroup__Impl : ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) ) ;
     public final void rule__ProjectDescription__UnorderedGroup__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         		boolean selected = false;
             
         try {
-            // InternalN4MFParser.g:6455:1: ( ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) ) )
-            // InternalN4MFParser.g:6456:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )
+            // InternalN4MFParser.g:6488:1: ( ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) ) )
+            // InternalN4MFParser.g:6489:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )
             {
-            // InternalN4MFParser.g:6456:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )
-            int alt38=22;
-            alt38 = dfa38.predict(input);
-            switch (alt38) {
+            // InternalN4MFParser.g:6489:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )
+            int alt39=22;
+            alt39 = dfa39.predict(input);
+            switch (alt39) {
                 case 1 :
-                    // InternalN4MFParser.g:6458:4: ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) )
+                    // InternalN4MFParser.g:6491:4: ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6458:4: ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) )
-                    // InternalN4MFParser.g:6459:5: {...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) )
+                    // InternalN4MFParser.g:6491:4: ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) )
+                    // InternalN4MFParser.g:6492:5: {...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0)");
                     }
-                    // InternalN4MFParser.g:6459:113: ( ( ( rule__ProjectDescription__Group_0__0 ) ) )
-                    // InternalN4MFParser.g:6460:6: ( ( rule__ProjectDescription__Group_0__0 ) )
+                    // InternalN4MFParser.g:6492:113: ( ( ( rule__ProjectDescription__Group_0__0 ) ) )
+                    // InternalN4MFParser.g:6493:6: ( ( rule__ProjectDescription__Group_0__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0);
@@ -16701,12 +16794,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6466:6: ( ( rule__ProjectDescription__Group_0__0 ) )
-                    // InternalN4MFParser.g:6468:7: ( rule__ProjectDescription__Group_0__0 )
+                    // InternalN4MFParser.g:6499:6: ( ( rule__ProjectDescription__Group_0__0 ) )
+                    // InternalN4MFParser.g:6501:7: ( rule__ProjectDescription__Group_0__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_0()); 
-                    // InternalN4MFParser.g:6469:7: ( rule__ProjectDescription__Group_0__0 )
-                    // InternalN4MFParser.g:6469:8: rule__ProjectDescription__Group_0__0
+                    // InternalN4MFParser.g:6502:7: ( rule__ProjectDescription__Group_0__0 )
+                    // InternalN4MFParser.g:6502:8: rule__ProjectDescription__Group_0__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_0__0();
@@ -16730,16 +16823,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFParser.g:6475:4: ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) )
+                    // InternalN4MFParser.g:6508:4: ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6475:4: ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) )
-                    // InternalN4MFParser.g:6476:5: {...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) )
+                    // InternalN4MFParser.g:6508:4: ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) )
+                    // InternalN4MFParser.g:6509:5: {...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1)");
                     }
-                    // InternalN4MFParser.g:6476:113: ( ( ( rule__ProjectDescription__Group_1__0 ) ) )
-                    // InternalN4MFParser.g:6477:6: ( ( rule__ProjectDescription__Group_1__0 ) )
+                    // InternalN4MFParser.g:6509:113: ( ( ( rule__ProjectDescription__Group_1__0 ) ) )
+                    // InternalN4MFParser.g:6510:6: ( ( rule__ProjectDescription__Group_1__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1);
@@ -16747,12 +16840,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6483:6: ( ( rule__ProjectDescription__Group_1__0 ) )
-                    // InternalN4MFParser.g:6485:7: ( rule__ProjectDescription__Group_1__0 )
+                    // InternalN4MFParser.g:6516:6: ( ( rule__ProjectDescription__Group_1__0 ) )
+                    // InternalN4MFParser.g:6518:7: ( rule__ProjectDescription__Group_1__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_1()); 
-                    // InternalN4MFParser.g:6486:7: ( rule__ProjectDescription__Group_1__0 )
-                    // InternalN4MFParser.g:6486:8: rule__ProjectDescription__Group_1__0
+                    // InternalN4MFParser.g:6519:7: ( rule__ProjectDescription__Group_1__0 )
+                    // InternalN4MFParser.g:6519:8: rule__ProjectDescription__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_1__0();
@@ -16776,16 +16869,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalN4MFParser.g:6492:4: ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) )
+                    // InternalN4MFParser.g:6525:4: ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6492:4: ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) )
-                    // InternalN4MFParser.g:6493:5: {...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) )
+                    // InternalN4MFParser.g:6525:4: ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) )
+                    // InternalN4MFParser.g:6526:5: {...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2)");
                     }
-                    // InternalN4MFParser.g:6493:113: ( ( ( rule__ProjectDescription__Group_2__0 ) ) )
-                    // InternalN4MFParser.g:6494:6: ( ( rule__ProjectDescription__Group_2__0 ) )
+                    // InternalN4MFParser.g:6526:113: ( ( ( rule__ProjectDescription__Group_2__0 ) ) )
+                    // InternalN4MFParser.g:6527:6: ( ( rule__ProjectDescription__Group_2__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2);
@@ -16793,12 +16886,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6500:6: ( ( rule__ProjectDescription__Group_2__0 ) )
-                    // InternalN4MFParser.g:6502:7: ( rule__ProjectDescription__Group_2__0 )
+                    // InternalN4MFParser.g:6533:6: ( ( rule__ProjectDescription__Group_2__0 ) )
+                    // InternalN4MFParser.g:6535:7: ( rule__ProjectDescription__Group_2__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_2()); 
-                    // InternalN4MFParser.g:6503:7: ( rule__ProjectDescription__Group_2__0 )
-                    // InternalN4MFParser.g:6503:8: rule__ProjectDescription__Group_2__0
+                    // InternalN4MFParser.g:6536:7: ( rule__ProjectDescription__Group_2__0 )
+                    // InternalN4MFParser.g:6536:8: rule__ProjectDescription__Group_2__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_2__0();
@@ -16822,16 +16915,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalN4MFParser.g:6509:4: ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) )
+                    // InternalN4MFParser.g:6542:4: ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6509:4: ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) )
-                    // InternalN4MFParser.g:6510:5: {...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) )
+                    // InternalN4MFParser.g:6542:4: ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) )
+                    // InternalN4MFParser.g:6543:5: {...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3)");
                     }
-                    // InternalN4MFParser.g:6510:113: ( ( ( rule__ProjectDescription__Group_3__0 ) ) )
-                    // InternalN4MFParser.g:6511:6: ( ( rule__ProjectDescription__Group_3__0 ) )
+                    // InternalN4MFParser.g:6543:113: ( ( ( rule__ProjectDescription__Group_3__0 ) ) )
+                    // InternalN4MFParser.g:6544:6: ( ( rule__ProjectDescription__Group_3__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3);
@@ -16839,12 +16932,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6517:6: ( ( rule__ProjectDescription__Group_3__0 ) )
-                    // InternalN4MFParser.g:6519:7: ( rule__ProjectDescription__Group_3__0 )
+                    // InternalN4MFParser.g:6550:6: ( ( rule__ProjectDescription__Group_3__0 ) )
+                    // InternalN4MFParser.g:6552:7: ( rule__ProjectDescription__Group_3__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_3()); 
-                    // InternalN4MFParser.g:6520:7: ( rule__ProjectDescription__Group_3__0 )
-                    // InternalN4MFParser.g:6520:8: rule__ProjectDescription__Group_3__0
+                    // InternalN4MFParser.g:6553:7: ( rule__ProjectDescription__Group_3__0 )
+                    // InternalN4MFParser.g:6553:8: rule__ProjectDescription__Group_3__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_3__0();
@@ -16868,16 +16961,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalN4MFParser.g:6526:4: ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) )
+                    // InternalN4MFParser.g:6559:4: ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6526:4: ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) )
-                    // InternalN4MFParser.g:6527:5: {...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) )
+                    // InternalN4MFParser.g:6559:4: ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) )
+                    // InternalN4MFParser.g:6560:5: {...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4)");
                     }
-                    // InternalN4MFParser.g:6527:113: ( ( ( rule__ProjectDescription__Group_4__0 ) ) )
-                    // InternalN4MFParser.g:6528:6: ( ( rule__ProjectDescription__Group_4__0 ) )
+                    // InternalN4MFParser.g:6560:113: ( ( ( rule__ProjectDescription__Group_4__0 ) ) )
+                    // InternalN4MFParser.g:6561:6: ( ( rule__ProjectDescription__Group_4__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4);
@@ -16885,12 +16978,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6534:6: ( ( rule__ProjectDescription__Group_4__0 ) )
-                    // InternalN4MFParser.g:6536:7: ( rule__ProjectDescription__Group_4__0 )
+                    // InternalN4MFParser.g:6567:6: ( ( rule__ProjectDescription__Group_4__0 ) )
+                    // InternalN4MFParser.g:6569:7: ( rule__ProjectDescription__Group_4__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_4()); 
-                    // InternalN4MFParser.g:6537:7: ( rule__ProjectDescription__Group_4__0 )
-                    // InternalN4MFParser.g:6537:8: rule__ProjectDescription__Group_4__0
+                    // InternalN4MFParser.g:6570:7: ( rule__ProjectDescription__Group_4__0 )
+                    // InternalN4MFParser.g:6570:8: rule__ProjectDescription__Group_4__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_4__0();
@@ -16914,16 +17007,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalN4MFParser.g:6543:4: ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) )
+                    // InternalN4MFParser.g:6576:4: ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6543:4: ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) )
-                    // InternalN4MFParser.g:6544:5: {...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) )
+                    // InternalN4MFParser.g:6576:4: ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) )
+                    // InternalN4MFParser.g:6577:5: {...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5)");
                     }
-                    // InternalN4MFParser.g:6544:113: ( ( ( rule__ProjectDescription__Group_5__0 ) ) )
-                    // InternalN4MFParser.g:6545:6: ( ( rule__ProjectDescription__Group_5__0 ) )
+                    // InternalN4MFParser.g:6577:113: ( ( ( rule__ProjectDescription__Group_5__0 ) ) )
+                    // InternalN4MFParser.g:6578:6: ( ( rule__ProjectDescription__Group_5__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5);
@@ -16931,12 +17024,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6551:6: ( ( rule__ProjectDescription__Group_5__0 ) )
-                    // InternalN4MFParser.g:6553:7: ( rule__ProjectDescription__Group_5__0 )
+                    // InternalN4MFParser.g:6584:6: ( ( rule__ProjectDescription__Group_5__0 ) )
+                    // InternalN4MFParser.g:6586:7: ( rule__ProjectDescription__Group_5__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_5()); 
-                    // InternalN4MFParser.g:6554:7: ( rule__ProjectDescription__Group_5__0 )
-                    // InternalN4MFParser.g:6554:8: rule__ProjectDescription__Group_5__0
+                    // InternalN4MFParser.g:6587:7: ( rule__ProjectDescription__Group_5__0 )
+                    // InternalN4MFParser.g:6587:8: rule__ProjectDescription__Group_5__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_5__0();
@@ -16960,16 +17053,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 7 :
-                    // InternalN4MFParser.g:6560:4: ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) )
+                    // InternalN4MFParser.g:6593:4: ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6560:4: ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) )
-                    // InternalN4MFParser.g:6561:5: {...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) )
+                    // InternalN4MFParser.g:6593:4: ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) )
+                    // InternalN4MFParser.g:6594:5: {...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6)");
                     }
-                    // InternalN4MFParser.g:6561:113: ( ( ( rule__ProjectDescription__Group_6__0 ) ) )
-                    // InternalN4MFParser.g:6562:6: ( ( rule__ProjectDescription__Group_6__0 ) )
+                    // InternalN4MFParser.g:6594:113: ( ( ( rule__ProjectDescription__Group_6__0 ) ) )
+                    // InternalN4MFParser.g:6595:6: ( ( rule__ProjectDescription__Group_6__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6);
@@ -16977,12 +17070,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6568:6: ( ( rule__ProjectDescription__Group_6__0 ) )
-                    // InternalN4MFParser.g:6570:7: ( rule__ProjectDescription__Group_6__0 )
+                    // InternalN4MFParser.g:6601:6: ( ( rule__ProjectDescription__Group_6__0 ) )
+                    // InternalN4MFParser.g:6603:7: ( rule__ProjectDescription__Group_6__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_6()); 
-                    // InternalN4MFParser.g:6571:7: ( rule__ProjectDescription__Group_6__0 )
-                    // InternalN4MFParser.g:6571:8: rule__ProjectDescription__Group_6__0
+                    // InternalN4MFParser.g:6604:7: ( rule__ProjectDescription__Group_6__0 )
+                    // InternalN4MFParser.g:6604:8: rule__ProjectDescription__Group_6__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_6__0();
@@ -17006,16 +17099,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 8 :
-                    // InternalN4MFParser.g:6577:4: ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) )
+                    // InternalN4MFParser.g:6610:4: ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6577:4: ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) )
-                    // InternalN4MFParser.g:6578:5: {...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) )
+                    // InternalN4MFParser.g:6610:4: ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) )
+                    // InternalN4MFParser.g:6611:5: {...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 7) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 7)");
                     }
-                    // InternalN4MFParser.g:6578:113: ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) )
-                    // InternalN4MFParser.g:6579:6: ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) )
+                    // InternalN4MFParser.g:6611:113: ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) )
+                    // InternalN4MFParser.g:6612:6: ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 7);
@@ -17023,12 +17116,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6585:6: ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) )
-                    // InternalN4MFParser.g:6587:7: ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 )
+                    // InternalN4MFParser.g:6618:6: ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) )
+                    // InternalN4MFParser.g:6620:7: ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getExtendedRuntimeEnvironmentAssignment_7()); 
-                    // InternalN4MFParser.g:6588:7: ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 )
-                    // InternalN4MFParser.g:6588:8: rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7
+                    // InternalN4MFParser.g:6621:7: ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 )
+                    // InternalN4MFParser.g:6621:8: rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7();
@@ -17052,16 +17145,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 9 :
-                    // InternalN4MFParser.g:6594:4: ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) )
+                    // InternalN4MFParser.g:6627:4: ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6594:4: ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) )
-                    // InternalN4MFParser.g:6595:5: {...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) )
+                    // InternalN4MFParser.g:6627:4: ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) )
+                    // InternalN4MFParser.g:6628:5: {...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 8) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 8)");
                     }
-                    // InternalN4MFParser.g:6595:113: ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) )
-                    // InternalN4MFParser.g:6596:6: ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) )
+                    // InternalN4MFParser.g:6628:113: ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) )
+                    // InternalN4MFParser.g:6629:6: ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 8);
@@ -17069,12 +17162,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6602:6: ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) )
-                    // InternalN4MFParser.g:6604:7: ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 )
+                    // InternalN4MFParser.g:6635:6: ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) )
+                    // InternalN4MFParser.g:6637:7: ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getProvidedRuntimeLibrariesAssignment_8()); 
-                    // InternalN4MFParser.g:6605:7: ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 )
-                    // InternalN4MFParser.g:6605:8: rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8
+                    // InternalN4MFParser.g:6638:7: ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 )
+                    // InternalN4MFParser.g:6638:8: rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8();
@@ -17098,16 +17191,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 10 :
-                    // InternalN4MFParser.g:6611:4: ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) )
+                    // InternalN4MFParser.g:6644:4: ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6611:4: ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) )
-                    // InternalN4MFParser.g:6612:5: {...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) )
+                    // InternalN4MFParser.g:6644:4: ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) )
+                    // InternalN4MFParser.g:6645:5: {...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 9) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 9)");
                     }
-                    // InternalN4MFParser.g:6612:113: ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) )
-                    // InternalN4MFParser.g:6613:6: ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) )
+                    // InternalN4MFParser.g:6645:113: ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) )
+                    // InternalN4MFParser.g:6646:6: ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 9);
@@ -17115,12 +17208,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6619:6: ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) )
-                    // InternalN4MFParser.g:6621:7: ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 )
+                    // InternalN4MFParser.g:6652:6: ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) )
+                    // InternalN4MFParser.g:6654:7: ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getRequiredRuntimeLibrariesAssignment_9()); 
-                    // InternalN4MFParser.g:6622:7: ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 )
-                    // InternalN4MFParser.g:6622:8: rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9
+                    // InternalN4MFParser.g:6655:7: ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 )
+                    // InternalN4MFParser.g:6655:8: rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9();
@@ -17144,16 +17237,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 11 :
-                    // InternalN4MFParser.g:6628:4: ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) )
+                    // InternalN4MFParser.g:6661:4: ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6628:4: ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) )
-                    // InternalN4MFParser.g:6629:5: {...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) )
+                    // InternalN4MFParser.g:6661:4: ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) )
+                    // InternalN4MFParser.g:6662:5: {...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10)");
                     }
-                    // InternalN4MFParser.g:6629:114: ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) )
-                    // InternalN4MFParser.g:6630:6: ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) )
+                    // InternalN4MFParser.g:6662:114: ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) )
+                    // InternalN4MFParser.g:6663:6: ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10);
@@ -17161,12 +17254,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6636:6: ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) )
-                    // InternalN4MFParser.g:6638:7: ( rule__ProjectDescription__ProjectDependenciesAssignment_10 )
+                    // InternalN4MFParser.g:6669:6: ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) )
+                    // InternalN4MFParser.g:6671:7: ( rule__ProjectDescription__ProjectDependenciesAssignment_10 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getProjectDependenciesAssignment_10()); 
-                    // InternalN4MFParser.g:6639:7: ( rule__ProjectDescription__ProjectDependenciesAssignment_10 )
-                    // InternalN4MFParser.g:6639:8: rule__ProjectDescription__ProjectDependenciesAssignment_10
+                    // InternalN4MFParser.g:6672:7: ( rule__ProjectDescription__ProjectDependenciesAssignment_10 )
+                    // InternalN4MFParser.g:6672:8: rule__ProjectDescription__ProjectDependenciesAssignment_10
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__ProjectDependenciesAssignment_10();
@@ -17190,16 +17283,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 12 :
-                    // InternalN4MFParser.g:6645:4: ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) )
+                    // InternalN4MFParser.g:6678:4: ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6645:4: ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) )
-                    // InternalN4MFParser.g:6646:5: {...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) )
+                    // InternalN4MFParser.g:6678:4: ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) )
+                    // InternalN4MFParser.g:6679:5: {...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11)");
                     }
-                    // InternalN4MFParser.g:6646:114: ( ( ( rule__ProjectDescription__Group_11__0 ) ) )
-                    // InternalN4MFParser.g:6647:6: ( ( rule__ProjectDescription__Group_11__0 ) )
+                    // InternalN4MFParser.g:6679:114: ( ( ( rule__ProjectDescription__Group_11__0 ) ) )
+                    // InternalN4MFParser.g:6680:6: ( ( rule__ProjectDescription__Group_11__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11);
@@ -17207,12 +17300,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6653:6: ( ( rule__ProjectDescription__Group_11__0 ) )
-                    // InternalN4MFParser.g:6655:7: ( rule__ProjectDescription__Group_11__0 )
+                    // InternalN4MFParser.g:6686:6: ( ( rule__ProjectDescription__Group_11__0 ) )
+                    // InternalN4MFParser.g:6688:7: ( rule__ProjectDescription__Group_11__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_11()); 
-                    // InternalN4MFParser.g:6656:7: ( rule__ProjectDescription__Group_11__0 )
-                    // InternalN4MFParser.g:6656:8: rule__ProjectDescription__Group_11__0
+                    // InternalN4MFParser.g:6689:7: ( rule__ProjectDescription__Group_11__0 )
+                    // InternalN4MFParser.g:6689:8: rule__ProjectDescription__Group_11__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_11__0();
@@ -17236,16 +17329,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 13 :
-                    // InternalN4MFParser.g:6662:4: ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) )
+                    // InternalN4MFParser.g:6695:4: ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6662:4: ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) )
-                    // InternalN4MFParser.g:6663:5: {...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) )
+                    // InternalN4MFParser.g:6695:4: ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) )
+                    // InternalN4MFParser.g:6696:5: {...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 12) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 12)");
                     }
-                    // InternalN4MFParser.g:6663:114: ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) )
-                    // InternalN4MFParser.g:6664:6: ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) )
+                    // InternalN4MFParser.g:6696:114: ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) )
+                    // InternalN4MFParser.g:6697:6: ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 12);
@@ -17253,12 +17346,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6670:6: ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) )
-                    // InternalN4MFParser.g:6672:7: ( rule__ProjectDescription__ImplementedProjectsAssignment_12 )
+                    // InternalN4MFParser.g:6703:6: ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) )
+                    // InternalN4MFParser.g:6705:7: ( rule__ProjectDescription__ImplementedProjectsAssignment_12 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getImplementedProjectsAssignment_12()); 
-                    // InternalN4MFParser.g:6673:7: ( rule__ProjectDescription__ImplementedProjectsAssignment_12 )
-                    // InternalN4MFParser.g:6673:8: rule__ProjectDescription__ImplementedProjectsAssignment_12
+                    // InternalN4MFParser.g:6706:7: ( rule__ProjectDescription__ImplementedProjectsAssignment_12 )
+                    // InternalN4MFParser.g:6706:8: rule__ProjectDescription__ImplementedProjectsAssignment_12
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__ImplementedProjectsAssignment_12();
@@ -17282,16 +17375,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 14 :
-                    // InternalN4MFParser.g:6679:4: ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) )
+                    // InternalN4MFParser.g:6712:4: ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6679:4: ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) )
-                    // InternalN4MFParser.g:6680:5: {...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) )
+                    // InternalN4MFParser.g:6712:4: ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) )
+                    // InternalN4MFParser.g:6713:5: {...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 13) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 13)");
                     }
-                    // InternalN4MFParser.g:6680:114: ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) )
-                    // InternalN4MFParser.g:6681:6: ( ( rule__ProjectDescription__InitModulesAssignment_13 ) )
+                    // InternalN4MFParser.g:6713:114: ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) )
+                    // InternalN4MFParser.g:6714:6: ( ( rule__ProjectDescription__InitModulesAssignment_13 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 13);
@@ -17299,12 +17392,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6687:6: ( ( rule__ProjectDescription__InitModulesAssignment_13 ) )
-                    // InternalN4MFParser.g:6689:7: ( rule__ProjectDescription__InitModulesAssignment_13 )
+                    // InternalN4MFParser.g:6720:6: ( ( rule__ProjectDescription__InitModulesAssignment_13 ) )
+                    // InternalN4MFParser.g:6722:7: ( rule__ProjectDescription__InitModulesAssignment_13 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getInitModulesAssignment_13()); 
-                    // InternalN4MFParser.g:6690:7: ( rule__ProjectDescription__InitModulesAssignment_13 )
-                    // InternalN4MFParser.g:6690:8: rule__ProjectDescription__InitModulesAssignment_13
+                    // InternalN4MFParser.g:6723:7: ( rule__ProjectDescription__InitModulesAssignment_13 )
+                    // InternalN4MFParser.g:6723:8: rule__ProjectDescription__InitModulesAssignment_13
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__InitModulesAssignment_13();
@@ -17328,16 +17421,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 15 :
-                    // InternalN4MFParser.g:6696:4: ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) )
+                    // InternalN4MFParser.g:6729:4: ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6696:4: ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) )
-                    // InternalN4MFParser.g:6697:5: {...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) )
+                    // InternalN4MFParser.g:6729:4: ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) )
+                    // InternalN4MFParser.g:6730:5: {...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14)");
                     }
-                    // InternalN4MFParser.g:6697:114: ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) )
-                    // InternalN4MFParser.g:6698:6: ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) )
+                    // InternalN4MFParser.g:6730:114: ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) )
+                    // InternalN4MFParser.g:6731:6: ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14);
@@ -17345,12 +17438,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6704:6: ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) )
-                    // InternalN4MFParser.g:6706:7: ( rule__ProjectDescription__ExecModuleAssignment_14 )
+                    // InternalN4MFParser.g:6737:6: ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) )
+                    // InternalN4MFParser.g:6739:7: ( rule__ProjectDescription__ExecModuleAssignment_14 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getExecModuleAssignment_14()); 
-                    // InternalN4MFParser.g:6707:7: ( rule__ProjectDescription__ExecModuleAssignment_14 )
-                    // InternalN4MFParser.g:6707:8: rule__ProjectDescription__ExecModuleAssignment_14
+                    // InternalN4MFParser.g:6740:7: ( rule__ProjectDescription__ExecModuleAssignment_14 )
+                    // InternalN4MFParser.g:6740:8: rule__ProjectDescription__ExecModuleAssignment_14
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__ExecModuleAssignment_14();
@@ -17374,16 +17467,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 16 :
-                    // InternalN4MFParser.g:6713:4: ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) )
+                    // InternalN4MFParser.g:6746:4: ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6713:4: ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) )
-                    // InternalN4MFParser.g:6714:5: {...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) )
+                    // InternalN4MFParser.g:6746:4: ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) )
+                    // InternalN4MFParser.g:6747:5: {...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15)");
                     }
-                    // InternalN4MFParser.g:6714:114: ( ( ( rule__ProjectDescription__Group_15__0 ) ) )
-                    // InternalN4MFParser.g:6715:6: ( ( rule__ProjectDescription__Group_15__0 ) )
+                    // InternalN4MFParser.g:6747:114: ( ( ( rule__ProjectDescription__Group_15__0 ) ) )
+                    // InternalN4MFParser.g:6748:6: ( ( rule__ProjectDescription__Group_15__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15);
@@ -17391,12 +17484,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6721:6: ( ( rule__ProjectDescription__Group_15__0 ) )
-                    // InternalN4MFParser.g:6723:7: ( rule__ProjectDescription__Group_15__0 )
+                    // InternalN4MFParser.g:6754:6: ( ( rule__ProjectDescription__Group_15__0 ) )
+                    // InternalN4MFParser.g:6756:7: ( rule__ProjectDescription__Group_15__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_15()); 
-                    // InternalN4MFParser.g:6724:7: ( rule__ProjectDescription__Group_15__0 )
-                    // InternalN4MFParser.g:6724:8: rule__ProjectDescription__Group_15__0
+                    // InternalN4MFParser.g:6757:7: ( rule__ProjectDescription__Group_15__0 )
+                    // InternalN4MFParser.g:6757:8: rule__ProjectDescription__Group_15__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_15__0();
@@ -17420,16 +17513,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 17 :
-                    // InternalN4MFParser.g:6730:4: ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) )
+                    // InternalN4MFParser.g:6763:4: ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6730:4: ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) )
-                    // InternalN4MFParser.g:6731:5: {...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) )
+                    // InternalN4MFParser.g:6763:4: ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) )
+                    // InternalN4MFParser.g:6764:5: {...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16)");
                     }
-                    // InternalN4MFParser.g:6731:114: ( ( ( rule__ProjectDescription__Group_16__0 ) ) )
-                    // InternalN4MFParser.g:6732:6: ( ( rule__ProjectDescription__Group_16__0 ) )
+                    // InternalN4MFParser.g:6764:114: ( ( ( rule__ProjectDescription__Group_16__0 ) ) )
+                    // InternalN4MFParser.g:6765:6: ( ( rule__ProjectDescription__Group_16__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16);
@@ -17437,12 +17530,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6738:6: ( ( rule__ProjectDescription__Group_16__0 ) )
-                    // InternalN4MFParser.g:6740:7: ( rule__ProjectDescription__Group_16__0 )
+                    // InternalN4MFParser.g:6771:6: ( ( rule__ProjectDescription__Group_16__0 ) )
+                    // InternalN4MFParser.g:6773:7: ( rule__ProjectDescription__Group_16__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_16()); 
-                    // InternalN4MFParser.g:6741:7: ( rule__ProjectDescription__Group_16__0 )
-                    // InternalN4MFParser.g:6741:8: rule__ProjectDescription__Group_16__0
+                    // InternalN4MFParser.g:6774:7: ( rule__ProjectDescription__Group_16__0 )
+                    // InternalN4MFParser.g:6774:8: rule__ProjectDescription__Group_16__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_16__0();
@@ -17466,16 +17559,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 18 :
-                    // InternalN4MFParser.g:6747:4: ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) )
+                    // InternalN4MFParser.g:6780:4: ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6747:4: ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) )
-                    // InternalN4MFParser.g:6748:5: {...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) )
+                    // InternalN4MFParser.g:6780:4: ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) )
+                    // InternalN4MFParser.g:6781:5: {...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17)");
                     }
-                    // InternalN4MFParser.g:6748:114: ( ( ( rule__ProjectDescription__Group_17__0 ) ) )
-                    // InternalN4MFParser.g:6749:6: ( ( rule__ProjectDescription__Group_17__0 ) )
+                    // InternalN4MFParser.g:6781:114: ( ( ( rule__ProjectDescription__Group_17__0 ) ) )
+                    // InternalN4MFParser.g:6782:6: ( ( rule__ProjectDescription__Group_17__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17);
@@ -17483,12 +17576,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6755:6: ( ( rule__ProjectDescription__Group_17__0 ) )
-                    // InternalN4MFParser.g:6757:7: ( rule__ProjectDescription__Group_17__0 )
+                    // InternalN4MFParser.g:6788:6: ( ( rule__ProjectDescription__Group_17__0 ) )
+                    // InternalN4MFParser.g:6790:7: ( rule__ProjectDescription__Group_17__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_17()); 
-                    // InternalN4MFParser.g:6758:7: ( rule__ProjectDescription__Group_17__0 )
-                    // InternalN4MFParser.g:6758:8: rule__ProjectDescription__Group_17__0
+                    // InternalN4MFParser.g:6791:7: ( rule__ProjectDescription__Group_17__0 )
+                    // InternalN4MFParser.g:6791:8: rule__ProjectDescription__Group_17__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_17__0();
@@ -17512,16 +17605,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 19 :
-                    // InternalN4MFParser.g:6764:4: ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) )
+                    // InternalN4MFParser.g:6797:4: ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6764:4: ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) )
-                    // InternalN4MFParser.g:6765:5: {...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) )
+                    // InternalN4MFParser.g:6797:4: ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) )
+                    // InternalN4MFParser.g:6798:5: {...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18)");
                     }
-                    // InternalN4MFParser.g:6765:114: ( ( ( rule__ProjectDescription__Group_18__0 ) ) )
-                    // InternalN4MFParser.g:6766:6: ( ( rule__ProjectDescription__Group_18__0 ) )
+                    // InternalN4MFParser.g:6798:114: ( ( ( rule__ProjectDescription__Group_18__0 ) ) )
+                    // InternalN4MFParser.g:6799:6: ( ( rule__ProjectDescription__Group_18__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18);
@@ -17529,12 +17622,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6772:6: ( ( rule__ProjectDescription__Group_18__0 ) )
-                    // InternalN4MFParser.g:6774:7: ( rule__ProjectDescription__Group_18__0 )
+                    // InternalN4MFParser.g:6805:6: ( ( rule__ProjectDescription__Group_18__0 ) )
+                    // InternalN4MFParser.g:6807:7: ( rule__ProjectDescription__Group_18__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_18()); 
-                    // InternalN4MFParser.g:6775:7: ( rule__ProjectDescription__Group_18__0 )
-                    // InternalN4MFParser.g:6775:8: rule__ProjectDescription__Group_18__0
+                    // InternalN4MFParser.g:6808:7: ( rule__ProjectDescription__Group_18__0 )
+                    // InternalN4MFParser.g:6808:8: rule__ProjectDescription__Group_18__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_18__0();
@@ -17558,16 +17651,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 20 :
-                    // InternalN4MFParser.g:6781:4: ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) )
+                    // InternalN4MFParser.g:6814:4: ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6781:4: ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) )
-                    // InternalN4MFParser.g:6782:5: {...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) )
+                    // InternalN4MFParser.g:6814:4: ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) )
+                    // InternalN4MFParser.g:6815:5: {...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19)");
                     }
-                    // InternalN4MFParser.g:6782:114: ( ( ( rule__ProjectDescription__Group_19__0 ) ) )
-                    // InternalN4MFParser.g:6783:6: ( ( rule__ProjectDescription__Group_19__0 ) )
+                    // InternalN4MFParser.g:6815:114: ( ( ( rule__ProjectDescription__Group_19__0 ) ) )
+                    // InternalN4MFParser.g:6816:6: ( ( rule__ProjectDescription__Group_19__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19);
@@ -17575,12 +17668,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6789:6: ( ( rule__ProjectDescription__Group_19__0 ) )
-                    // InternalN4MFParser.g:6791:7: ( rule__ProjectDescription__Group_19__0 )
+                    // InternalN4MFParser.g:6822:6: ( ( rule__ProjectDescription__Group_19__0 ) )
+                    // InternalN4MFParser.g:6824:7: ( rule__ProjectDescription__Group_19__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_19()); 
-                    // InternalN4MFParser.g:6792:7: ( rule__ProjectDescription__Group_19__0 )
-                    // InternalN4MFParser.g:6792:8: rule__ProjectDescription__Group_19__0
+                    // InternalN4MFParser.g:6825:7: ( rule__ProjectDescription__Group_19__0 )
+                    // InternalN4MFParser.g:6825:8: rule__ProjectDescription__Group_19__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_19__0();
@@ -17604,16 +17697,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 21 :
-                    // InternalN4MFParser.g:6798:4: ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) )
+                    // InternalN4MFParser.g:6831:4: ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6798:4: ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) )
-                    // InternalN4MFParser.g:6799:5: {...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) )
+                    // InternalN4MFParser.g:6831:4: ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) )
+                    // InternalN4MFParser.g:6832:5: {...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20)");
                     }
-                    // InternalN4MFParser.g:6799:114: ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) )
-                    // InternalN4MFParser.g:6800:6: ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) )
+                    // InternalN4MFParser.g:6832:114: ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) )
+                    // InternalN4MFParser.g:6833:6: ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20);
@@ -17621,12 +17714,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6806:6: ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) )
-                    // InternalN4MFParser.g:6808:7: ( rule__ProjectDescription__TestedProjectsAssignment_20 )
+                    // InternalN4MFParser.g:6839:6: ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) )
+                    // InternalN4MFParser.g:6841:7: ( rule__ProjectDescription__TestedProjectsAssignment_20 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getTestedProjectsAssignment_20()); 
-                    // InternalN4MFParser.g:6809:7: ( rule__ProjectDescription__TestedProjectsAssignment_20 )
-                    // InternalN4MFParser.g:6809:8: rule__ProjectDescription__TestedProjectsAssignment_20
+                    // InternalN4MFParser.g:6842:7: ( rule__ProjectDescription__TestedProjectsAssignment_20 )
+                    // InternalN4MFParser.g:6842:8: rule__ProjectDescription__TestedProjectsAssignment_20
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__TestedProjectsAssignment_20();
@@ -17650,16 +17743,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 22 :
-                    // InternalN4MFParser.g:6815:4: ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) )
+                    // InternalN4MFParser.g:6848:4: ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) )
                     {
-                    // InternalN4MFParser.g:6815:4: ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) )
-                    // InternalN4MFParser.g:6816:5: {...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) )
+                    // InternalN4MFParser.g:6848:4: ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) )
+                    // InternalN4MFParser.g:6849:5: {...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) )
                     {
                     if ( ! getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21) ) {
                         throw new FailedPredicateException(input, "rule__ProjectDescription__UnorderedGroup__Impl", "getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21)");
                     }
-                    // InternalN4MFParser.g:6816:114: ( ( ( rule__ProjectDescription__Group_21__0 ) ) )
-                    // InternalN4MFParser.g:6817:6: ( ( rule__ProjectDescription__Group_21__0 ) )
+                    // InternalN4MFParser.g:6849:114: ( ( ( rule__ProjectDescription__Group_21__0 ) ) )
+                    // InternalN4MFParser.g:6850:6: ( ( rule__ProjectDescription__Group_21__0 ) )
                     {
                      
                     	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21);
@@ -17667,12 +17760,12 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                     	 				  selected = true;
                     	 				
-                    // InternalN4MFParser.g:6823:6: ( ( rule__ProjectDescription__Group_21__0 ) )
-                    // InternalN4MFParser.g:6825:7: ( rule__ProjectDescription__Group_21__0 )
+                    // InternalN4MFParser.g:6856:6: ( ( rule__ProjectDescription__Group_21__0 ) )
+                    // InternalN4MFParser.g:6858:7: ( rule__ProjectDescription__Group_21__0 )
                     {
                      before(grammarAccess.getProjectDescriptionAccess().getGroup_21()); 
-                    // InternalN4MFParser.g:6826:7: ( rule__ProjectDescription__Group_21__0 )
-                    // InternalN4MFParser.g:6826:8: rule__ProjectDescription__Group_21__0
+                    // InternalN4MFParser.g:6859:7: ( rule__ProjectDescription__Group_21__0 )
+                    // InternalN4MFParser.g:6859:8: rule__ProjectDescription__Group_21__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__Group_21__0();
@@ -17719,26 +17812,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__0"
-    // InternalN4MFParser.g:6841:1: rule__ProjectDescription__UnorderedGroup__0 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )? ;
+    // InternalN4MFParser.g:6874:1: rule__ProjectDescription__UnorderedGroup__0 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6845:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )? )
-            // InternalN4MFParser.g:6846:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )?
+            // InternalN4MFParser.g:6878:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )? )
+            // InternalN4MFParser.g:6879:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__1 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6847:2: ( rule__ProjectDescription__UnorderedGroup__1 )?
-            int alt39=2;
-            alt39 = dfa39.predict(input);
-            switch (alt39) {
+            // InternalN4MFParser.g:6880:2: ( rule__ProjectDescription__UnorderedGroup__1 )?
+            int alt40=2;
+            alt40 = dfa40.predict(input);
+            switch (alt40) {
                 case 1 :
-                    // InternalN4MFParser.g:6847:2: rule__ProjectDescription__UnorderedGroup__1
+                    // InternalN4MFParser.g:6880:2: rule__ProjectDescription__UnorderedGroup__1
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__1();
@@ -17770,26 +17863,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__1"
-    // InternalN4MFParser.g:6854:1: rule__ProjectDescription__UnorderedGroup__1 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )? ;
+    // InternalN4MFParser.g:6887:1: rule__ProjectDescription__UnorderedGroup__1 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6858:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )? )
-            // InternalN4MFParser.g:6859:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )?
+            // InternalN4MFParser.g:6891:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )? )
+            // InternalN4MFParser.g:6892:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__2 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6860:2: ( rule__ProjectDescription__UnorderedGroup__2 )?
-            int alt40=2;
-            alt40 = dfa40.predict(input);
-            switch (alt40) {
+            // InternalN4MFParser.g:6893:2: ( rule__ProjectDescription__UnorderedGroup__2 )?
+            int alt41=2;
+            alt41 = dfa41.predict(input);
+            switch (alt41) {
                 case 1 :
-                    // InternalN4MFParser.g:6860:2: rule__ProjectDescription__UnorderedGroup__2
+                    // InternalN4MFParser.g:6893:2: rule__ProjectDescription__UnorderedGroup__2
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__2();
@@ -17821,26 +17914,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__2"
-    // InternalN4MFParser.g:6867:1: rule__ProjectDescription__UnorderedGroup__2 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )? ;
+    // InternalN4MFParser.g:6900:1: rule__ProjectDescription__UnorderedGroup__2 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6871:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )? )
-            // InternalN4MFParser.g:6872:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )?
+            // InternalN4MFParser.g:6904:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )? )
+            // InternalN4MFParser.g:6905:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__3 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6873:2: ( rule__ProjectDescription__UnorderedGroup__3 )?
-            int alt41=2;
-            alt41 = dfa41.predict(input);
-            switch (alt41) {
+            // InternalN4MFParser.g:6906:2: ( rule__ProjectDescription__UnorderedGroup__3 )?
+            int alt42=2;
+            alt42 = dfa42.predict(input);
+            switch (alt42) {
                 case 1 :
-                    // InternalN4MFParser.g:6873:2: rule__ProjectDescription__UnorderedGroup__3
+                    // InternalN4MFParser.g:6906:2: rule__ProjectDescription__UnorderedGroup__3
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__3();
@@ -17872,26 +17965,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__3"
-    // InternalN4MFParser.g:6880:1: rule__ProjectDescription__UnorderedGroup__3 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )? ;
+    // InternalN4MFParser.g:6913:1: rule__ProjectDescription__UnorderedGroup__3 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6884:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )? )
-            // InternalN4MFParser.g:6885:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )?
+            // InternalN4MFParser.g:6917:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )? )
+            // InternalN4MFParser.g:6918:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__4 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6886:2: ( rule__ProjectDescription__UnorderedGroup__4 )?
-            int alt42=2;
-            alt42 = dfa42.predict(input);
-            switch (alt42) {
+            // InternalN4MFParser.g:6919:2: ( rule__ProjectDescription__UnorderedGroup__4 )?
+            int alt43=2;
+            alt43 = dfa43.predict(input);
+            switch (alt43) {
                 case 1 :
-                    // InternalN4MFParser.g:6886:2: rule__ProjectDescription__UnorderedGroup__4
+                    // InternalN4MFParser.g:6919:2: rule__ProjectDescription__UnorderedGroup__4
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__4();
@@ -17923,26 +18016,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__4"
-    // InternalN4MFParser.g:6893:1: rule__ProjectDescription__UnorderedGroup__4 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )? ;
+    // InternalN4MFParser.g:6926:1: rule__ProjectDescription__UnorderedGroup__4 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6897:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )? )
-            // InternalN4MFParser.g:6898:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )?
+            // InternalN4MFParser.g:6930:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )? )
+            // InternalN4MFParser.g:6931:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__5 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6899:2: ( rule__ProjectDescription__UnorderedGroup__5 )?
-            int alt43=2;
-            alt43 = dfa43.predict(input);
-            switch (alt43) {
+            // InternalN4MFParser.g:6932:2: ( rule__ProjectDescription__UnorderedGroup__5 )?
+            int alt44=2;
+            alt44 = dfa44.predict(input);
+            switch (alt44) {
                 case 1 :
-                    // InternalN4MFParser.g:6899:2: rule__ProjectDescription__UnorderedGroup__5
+                    // InternalN4MFParser.g:6932:2: rule__ProjectDescription__UnorderedGroup__5
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__5();
@@ -17974,26 +18067,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__5"
-    // InternalN4MFParser.g:6906:1: rule__ProjectDescription__UnorderedGroup__5 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )? ;
+    // InternalN4MFParser.g:6939:1: rule__ProjectDescription__UnorderedGroup__5 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6910:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )? )
-            // InternalN4MFParser.g:6911:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )?
+            // InternalN4MFParser.g:6943:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )? )
+            // InternalN4MFParser.g:6944:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__6 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6912:2: ( rule__ProjectDescription__UnorderedGroup__6 )?
-            int alt44=2;
-            alt44 = dfa44.predict(input);
-            switch (alt44) {
+            // InternalN4MFParser.g:6945:2: ( rule__ProjectDescription__UnorderedGroup__6 )?
+            int alt45=2;
+            alt45 = dfa45.predict(input);
+            switch (alt45) {
                 case 1 :
-                    // InternalN4MFParser.g:6912:2: rule__ProjectDescription__UnorderedGroup__6
+                    // InternalN4MFParser.g:6945:2: rule__ProjectDescription__UnorderedGroup__6
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__6();
@@ -18025,26 +18118,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__6"
-    // InternalN4MFParser.g:6919:1: rule__ProjectDescription__UnorderedGroup__6 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )? ;
+    // InternalN4MFParser.g:6952:1: rule__ProjectDescription__UnorderedGroup__6 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6923:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )? )
-            // InternalN4MFParser.g:6924:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )?
+            // InternalN4MFParser.g:6956:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )? )
+            // InternalN4MFParser.g:6957:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__7 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6925:2: ( rule__ProjectDescription__UnorderedGroup__7 )?
-            int alt45=2;
-            alt45 = dfa45.predict(input);
-            switch (alt45) {
+            // InternalN4MFParser.g:6958:2: ( rule__ProjectDescription__UnorderedGroup__7 )?
+            int alt46=2;
+            alt46 = dfa46.predict(input);
+            switch (alt46) {
                 case 1 :
-                    // InternalN4MFParser.g:6925:2: rule__ProjectDescription__UnorderedGroup__7
+                    // InternalN4MFParser.g:6958:2: rule__ProjectDescription__UnorderedGroup__7
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__7();
@@ -18076,26 +18169,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__7"
-    // InternalN4MFParser.g:6932:1: rule__ProjectDescription__UnorderedGroup__7 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )? ;
+    // InternalN4MFParser.g:6965:1: rule__ProjectDescription__UnorderedGroup__7 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6936:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )? )
-            // InternalN4MFParser.g:6937:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )?
+            // InternalN4MFParser.g:6969:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )? )
+            // InternalN4MFParser.g:6970:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__8 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6938:2: ( rule__ProjectDescription__UnorderedGroup__8 )?
-            int alt46=2;
-            alt46 = dfa46.predict(input);
-            switch (alt46) {
+            // InternalN4MFParser.g:6971:2: ( rule__ProjectDescription__UnorderedGroup__8 )?
+            int alt47=2;
+            alt47 = dfa47.predict(input);
+            switch (alt47) {
                 case 1 :
-                    // InternalN4MFParser.g:6938:2: rule__ProjectDescription__UnorderedGroup__8
+                    // InternalN4MFParser.g:6971:2: rule__ProjectDescription__UnorderedGroup__8
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__8();
@@ -18127,26 +18220,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__8"
-    // InternalN4MFParser.g:6945:1: rule__ProjectDescription__UnorderedGroup__8 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )? ;
+    // InternalN4MFParser.g:6978:1: rule__ProjectDescription__UnorderedGroup__8 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6949:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )? )
-            // InternalN4MFParser.g:6950:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )?
+            // InternalN4MFParser.g:6982:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )? )
+            // InternalN4MFParser.g:6983:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__9 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6951:2: ( rule__ProjectDescription__UnorderedGroup__9 )?
-            int alt47=2;
-            alt47 = dfa47.predict(input);
-            switch (alt47) {
+            // InternalN4MFParser.g:6984:2: ( rule__ProjectDescription__UnorderedGroup__9 )?
+            int alt48=2;
+            alt48 = dfa48.predict(input);
+            switch (alt48) {
                 case 1 :
-                    // InternalN4MFParser.g:6951:2: rule__ProjectDescription__UnorderedGroup__9
+                    // InternalN4MFParser.g:6984:2: rule__ProjectDescription__UnorderedGroup__9
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__9();
@@ -18178,26 +18271,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__9"
-    // InternalN4MFParser.g:6958:1: rule__ProjectDescription__UnorderedGroup__9 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )? ;
+    // InternalN4MFParser.g:6991:1: rule__ProjectDescription__UnorderedGroup__9 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6962:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )? )
-            // InternalN4MFParser.g:6963:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )?
+            // InternalN4MFParser.g:6995:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )? )
+            // InternalN4MFParser.g:6996:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__10 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6964:2: ( rule__ProjectDescription__UnorderedGroup__10 )?
-            int alt48=2;
-            alt48 = dfa48.predict(input);
-            switch (alt48) {
+            // InternalN4MFParser.g:6997:2: ( rule__ProjectDescription__UnorderedGroup__10 )?
+            int alt49=2;
+            alt49 = dfa49.predict(input);
+            switch (alt49) {
                 case 1 :
-                    // InternalN4MFParser.g:6964:2: rule__ProjectDescription__UnorderedGroup__10
+                    // InternalN4MFParser.g:6997:2: rule__ProjectDescription__UnorderedGroup__10
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__10();
@@ -18229,26 +18322,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__10"
-    // InternalN4MFParser.g:6971:1: rule__ProjectDescription__UnorderedGroup__10 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )? ;
+    // InternalN4MFParser.g:7004:1: rule__ProjectDescription__UnorderedGroup__10 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6975:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )? )
-            // InternalN4MFParser.g:6976:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )?
+            // InternalN4MFParser.g:7008:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )? )
+            // InternalN4MFParser.g:7009:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__11 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6977:2: ( rule__ProjectDescription__UnorderedGroup__11 )?
-            int alt49=2;
-            alt49 = dfa49.predict(input);
-            switch (alt49) {
+            // InternalN4MFParser.g:7010:2: ( rule__ProjectDescription__UnorderedGroup__11 )?
+            int alt50=2;
+            alt50 = dfa50.predict(input);
+            switch (alt50) {
                 case 1 :
-                    // InternalN4MFParser.g:6977:2: rule__ProjectDescription__UnorderedGroup__11
+                    // InternalN4MFParser.g:7010:2: rule__ProjectDescription__UnorderedGroup__11
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__11();
@@ -18280,26 +18373,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__11"
-    // InternalN4MFParser.g:6984:1: rule__ProjectDescription__UnorderedGroup__11 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )? ;
+    // InternalN4MFParser.g:7017:1: rule__ProjectDescription__UnorderedGroup__11 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__11() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:6988:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )? )
-            // InternalN4MFParser.g:6989:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )?
+            // InternalN4MFParser.g:7021:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )? )
+            // InternalN4MFParser.g:7022:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__12 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:6990:2: ( rule__ProjectDescription__UnorderedGroup__12 )?
-            int alt50=2;
-            alt50 = dfa50.predict(input);
-            switch (alt50) {
+            // InternalN4MFParser.g:7023:2: ( rule__ProjectDescription__UnorderedGroup__12 )?
+            int alt51=2;
+            alt51 = dfa51.predict(input);
+            switch (alt51) {
                 case 1 :
-                    // InternalN4MFParser.g:6990:2: rule__ProjectDescription__UnorderedGroup__12
+                    // InternalN4MFParser.g:7023:2: rule__ProjectDescription__UnorderedGroup__12
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__12();
@@ -18331,26 +18424,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__12"
-    // InternalN4MFParser.g:6997:1: rule__ProjectDescription__UnorderedGroup__12 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )? ;
+    // InternalN4MFParser.g:7030:1: rule__ProjectDescription__UnorderedGroup__12 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__12() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7001:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )? )
-            // InternalN4MFParser.g:7002:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )?
+            // InternalN4MFParser.g:7034:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )? )
+            // InternalN4MFParser.g:7035:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__13 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7003:2: ( rule__ProjectDescription__UnorderedGroup__13 )?
-            int alt51=2;
-            alt51 = dfa51.predict(input);
-            switch (alt51) {
+            // InternalN4MFParser.g:7036:2: ( rule__ProjectDescription__UnorderedGroup__13 )?
+            int alt52=2;
+            alt52 = dfa52.predict(input);
+            switch (alt52) {
                 case 1 :
-                    // InternalN4MFParser.g:7003:2: rule__ProjectDescription__UnorderedGroup__13
+                    // InternalN4MFParser.g:7036:2: rule__ProjectDescription__UnorderedGroup__13
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__13();
@@ -18382,26 +18475,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__13"
-    // InternalN4MFParser.g:7010:1: rule__ProjectDescription__UnorderedGroup__13 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )? ;
+    // InternalN4MFParser.g:7043:1: rule__ProjectDescription__UnorderedGroup__13 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__13() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7014:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )? )
-            // InternalN4MFParser.g:7015:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )?
+            // InternalN4MFParser.g:7047:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )? )
+            // InternalN4MFParser.g:7048:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__14 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7016:2: ( rule__ProjectDescription__UnorderedGroup__14 )?
-            int alt52=2;
-            alt52 = dfa52.predict(input);
-            switch (alt52) {
+            // InternalN4MFParser.g:7049:2: ( rule__ProjectDescription__UnorderedGroup__14 )?
+            int alt53=2;
+            alt53 = dfa53.predict(input);
+            switch (alt53) {
                 case 1 :
-                    // InternalN4MFParser.g:7016:2: rule__ProjectDescription__UnorderedGroup__14
+                    // InternalN4MFParser.g:7049:2: rule__ProjectDescription__UnorderedGroup__14
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__14();
@@ -18433,26 +18526,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__14"
-    // InternalN4MFParser.g:7023:1: rule__ProjectDescription__UnorderedGroup__14 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )? ;
+    // InternalN4MFParser.g:7056:1: rule__ProjectDescription__UnorderedGroup__14 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__14() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7027:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )? )
-            // InternalN4MFParser.g:7028:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )?
+            // InternalN4MFParser.g:7060:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )? )
+            // InternalN4MFParser.g:7061:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__15 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7029:2: ( rule__ProjectDescription__UnorderedGroup__15 )?
-            int alt53=2;
-            alt53 = dfa53.predict(input);
-            switch (alt53) {
+            // InternalN4MFParser.g:7062:2: ( rule__ProjectDescription__UnorderedGroup__15 )?
+            int alt54=2;
+            alt54 = dfa54.predict(input);
+            switch (alt54) {
                 case 1 :
-                    // InternalN4MFParser.g:7029:2: rule__ProjectDescription__UnorderedGroup__15
+                    // InternalN4MFParser.g:7062:2: rule__ProjectDescription__UnorderedGroup__15
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__15();
@@ -18484,26 +18577,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__15"
-    // InternalN4MFParser.g:7036:1: rule__ProjectDescription__UnorderedGroup__15 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )? ;
+    // InternalN4MFParser.g:7069:1: rule__ProjectDescription__UnorderedGroup__15 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__15() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7040:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )? )
-            // InternalN4MFParser.g:7041:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )?
+            // InternalN4MFParser.g:7073:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )? )
+            // InternalN4MFParser.g:7074:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__16 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7042:2: ( rule__ProjectDescription__UnorderedGroup__16 )?
-            int alt54=2;
-            alt54 = dfa54.predict(input);
-            switch (alt54) {
+            // InternalN4MFParser.g:7075:2: ( rule__ProjectDescription__UnorderedGroup__16 )?
+            int alt55=2;
+            alt55 = dfa55.predict(input);
+            switch (alt55) {
                 case 1 :
-                    // InternalN4MFParser.g:7042:2: rule__ProjectDescription__UnorderedGroup__16
+                    // InternalN4MFParser.g:7075:2: rule__ProjectDescription__UnorderedGroup__16
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__16();
@@ -18535,26 +18628,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__16"
-    // InternalN4MFParser.g:7049:1: rule__ProjectDescription__UnorderedGroup__16 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )? ;
+    // InternalN4MFParser.g:7082:1: rule__ProjectDescription__UnorderedGroup__16 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__16() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7053:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )? )
-            // InternalN4MFParser.g:7054:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )?
+            // InternalN4MFParser.g:7086:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )? )
+            // InternalN4MFParser.g:7087:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__17 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7055:2: ( rule__ProjectDescription__UnorderedGroup__17 )?
-            int alt55=2;
-            alt55 = dfa55.predict(input);
-            switch (alt55) {
+            // InternalN4MFParser.g:7088:2: ( rule__ProjectDescription__UnorderedGroup__17 )?
+            int alt56=2;
+            alt56 = dfa56.predict(input);
+            switch (alt56) {
                 case 1 :
-                    // InternalN4MFParser.g:7055:2: rule__ProjectDescription__UnorderedGroup__17
+                    // InternalN4MFParser.g:7088:2: rule__ProjectDescription__UnorderedGroup__17
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__17();
@@ -18586,26 +18679,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__17"
-    // InternalN4MFParser.g:7062:1: rule__ProjectDescription__UnorderedGroup__17 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )? ;
+    // InternalN4MFParser.g:7095:1: rule__ProjectDescription__UnorderedGroup__17 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__17() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7066:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )? )
-            // InternalN4MFParser.g:7067:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )?
+            // InternalN4MFParser.g:7099:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )? )
+            // InternalN4MFParser.g:7100:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__18 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7068:2: ( rule__ProjectDescription__UnorderedGroup__18 )?
-            int alt56=2;
-            alt56 = dfa56.predict(input);
-            switch (alt56) {
+            // InternalN4MFParser.g:7101:2: ( rule__ProjectDescription__UnorderedGroup__18 )?
+            int alt57=2;
+            alt57 = dfa57.predict(input);
+            switch (alt57) {
                 case 1 :
-                    // InternalN4MFParser.g:7068:2: rule__ProjectDescription__UnorderedGroup__18
+                    // InternalN4MFParser.g:7101:2: rule__ProjectDescription__UnorderedGroup__18
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__18();
@@ -18637,26 +18730,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__18"
-    // InternalN4MFParser.g:7075:1: rule__ProjectDescription__UnorderedGroup__18 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )? ;
+    // InternalN4MFParser.g:7108:1: rule__ProjectDescription__UnorderedGroup__18 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__18() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7079:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )? )
-            // InternalN4MFParser.g:7080:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )?
+            // InternalN4MFParser.g:7112:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )? )
+            // InternalN4MFParser.g:7113:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__19 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7081:2: ( rule__ProjectDescription__UnorderedGroup__19 )?
-            int alt57=2;
-            alt57 = dfa57.predict(input);
-            switch (alt57) {
+            // InternalN4MFParser.g:7114:2: ( rule__ProjectDescription__UnorderedGroup__19 )?
+            int alt58=2;
+            alt58 = dfa58.predict(input);
+            switch (alt58) {
                 case 1 :
-                    // InternalN4MFParser.g:7081:2: rule__ProjectDescription__UnorderedGroup__19
+                    // InternalN4MFParser.g:7114:2: rule__ProjectDescription__UnorderedGroup__19
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__19();
@@ -18688,26 +18781,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__19"
-    // InternalN4MFParser.g:7088:1: rule__ProjectDescription__UnorderedGroup__19 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )? ;
+    // InternalN4MFParser.g:7121:1: rule__ProjectDescription__UnorderedGroup__19 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__19() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7092:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )? )
-            // InternalN4MFParser.g:7093:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )?
+            // InternalN4MFParser.g:7125:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )? )
+            // InternalN4MFParser.g:7126:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__20 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7094:2: ( rule__ProjectDescription__UnorderedGroup__20 )?
-            int alt58=2;
-            alt58 = dfa58.predict(input);
-            switch (alt58) {
+            // InternalN4MFParser.g:7127:2: ( rule__ProjectDescription__UnorderedGroup__20 )?
+            int alt59=2;
+            alt59 = dfa59.predict(input);
+            switch (alt59) {
                 case 1 :
-                    // InternalN4MFParser.g:7094:2: rule__ProjectDescription__UnorderedGroup__20
+                    // InternalN4MFParser.g:7127:2: rule__ProjectDescription__UnorderedGroup__20
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__20();
@@ -18739,26 +18832,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__20"
-    // InternalN4MFParser.g:7101:1: rule__ProjectDescription__UnorderedGroup__20 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )? ;
+    // InternalN4MFParser.g:7134:1: rule__ProjectDescription__UnorderedGroup__20 : rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )? ;
     public final void rule__ProjectDescription__UnorderedGroup__20() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7105:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )? )
-            // InternalN4MFParser.g:7106:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )?
+            // InternalN4MFParser.g:7138:1: ( rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )? )
+            // InternalN4MFParser.g:7139:2: rule__ProjectDescription__UnorderedGroup__Impl ( rule__ProjectDescription__UnorderedGroup__21 )?
             {
             pushFollow(FOLLOW_36);
             rule__ProjectDescription__UnorderedGroup__Impl();
 
             state._fsp--;
 
-            // InternalN4MFParser.g:7107:2: ( rule__ProjectDescription__UnorderedGroup__21 )?
-            int alt59=2;
-            alt59 = dfa59.predict(input);
-            switch (alt59) {
+            // InternalN4MFParser.g:7140:2: ( rule__ProjectDescription__UnorderedGroup__21 )?
+            int alt60=2;
+            alt60 = dfa60.predict(input);
+            switch (alt60) {
                 case 1 :
-                    // InternalN4MFParser.g:7107:2: rule__ProjectDescription__UnorderedGroup__21
+                    // InternalN4MFParser.g:7140:2: rule__ProjectDescription__UnorderedGroup__21
                     {
                     pushFollow(FOLLOW_2);
                     rule__ProjectDescription__UnorderedGroup__21();
@@ -18790,14 +18883,14 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__UnorderedGroup__21"
-    // InternalN4MFParser.g:7114:1: rule__ProjectDescription__UnorderedGroup__21 : rule__ProjectDescription__UnorderedGroup__Impl ;
+    // InternalN4MFParser.g:7147:1: rule__ProjectDescription__UnorderedGroup__21 : rule__ProjectDescription__UnorderedGroup__Impl ;
     public final void rule__ProjectDescription__UnorderedGroup__21() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7118:1: ( rule__ProjectDescription__UnorderedGroup__Impl )
-            // InternalN4MFParser.g:7119:2: rule__ProjectDescription__UnorderedGroup__Impl
+            // InternalN4MFParser.g:7151:1: ( rule__ProjectDescription__UnorderedGroup__Impl )
+            // InternalN4MFParser.g:7152:2: rule__ProjectDescription__UnorderedGroup__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ProjectDescription__UnorderedGroup__Impl();
@@ -18822,26 +18915,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ProjectDescription__UnorderedGroup__21"
 
 
-    // $ANTLR start "rule__ProjectDescription__ArtifactIdAssignment_0_2"
-    // InternalN4MFParser.g:7170:1: rule__ProjectDescription__ArtifactIdAssignment_0_2 : ( ruleN4mfIdentifier ) ;
-    public final void rule__ProjectDescription__ArtifactIdAssignment_0_2() throws RecognitionException {
+    // $ANTLR start "rule__ProjectDescription__ProjectIdAssignment_0_2"
+    // InternalN4MFParser.g:7203:1: rule__ProjectDescription__ProjectIdAssignment_0_2 : ( ruleN4mfIdentifier ) ;
+    public final void rule__ProjectDescription__ProjectIdAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7174:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:7175:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7207:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:7208:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:7175:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:7176:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:7208:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7209:1: ruleN4mfIdentifier
             {
-             before(grammarAccess.getProjectDescriptionAccess().getArtifactIdN4mfIdentifierParserRuleCall_0_2_0()); 
+             before(grammarAccess.getProjectDescriptionAccess().getProjectIdN4mfIdentifierParserRuleCall_0_2_0()); 
             pushFollow(FOLLOW_2);
             ruleN4mfIdentifier();
 
             state._fsp--;
 
-             after(grammarAccess.getProjectDescriptionAccess().getArtifactIdN4mfIdentifierParserRuleCall_0_2_0()); 
+             after(grammarAccess.getProjectDescriptionAccess().getProjectIdN4mfIdentifierParserRuleCall_0_2_0()); 
 
             }
 
@@ -18860,58 +18953,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ProjectDescription__ArtifactIdAssignment_0_2"
-
-
-    // $ANTLR start "rule__ProjectDescription__ProjectNameAssignment_1_2"
-    // InternalN4MFParser.g:7185:1: rule__ProjectDescription__ProjectNameAssignment_1_2 : ( RULE_STRING ) ;
-    public final void rule__ProjectDescription__ProjectNameAssignment_1_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalN4MFParser.g:7189:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7190:1: ( RULE_STRING )
-            {
-            // InternalN4MFParser.g:7190:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7191:1: RULE_STRING
-            {
-             before(grammarAccess.getProjectDescriptionAccess().getProjectNameSTRINGTerminalRuleCall_1_2_0()); 
-            match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getProjectDescriptionAccess().getProjectNameSTRINGTerminalRuleCall_1_2_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ProjectDescription__ProjectNameAssignment_1_2"
+    // $ANTLR end "rule__ProjectDescription__ProjectIdAssignment_0_2"
 
 
     // $ANTLR start "rule__ProjectDescription__ProjectTypeAssignment_2_2"
-    // InternalN4MFParser.g:7200:1: rule__ProjectDescription__ProjectTypeAssignment_2_2 : ( ruleProjectType ) ;
+    // InternalN4MFParser.g:7218:1: rule__ProjectDescription__ProjectTypeAssignment_2_2 : ( ruleProjectType ) ;
     public final void rule__ProjectDescription__ProjectTypeAssignment_2_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7204:1: ( ( ruleProjectType ) )
-            // InternalN4MFParser.g:7205:1: ( ruleProjectType )
+            // InternalN4MFParser.g:7222:1: ( ( ruleProjectType ) )
+            // InternalN4MFParser.g:7223:1: ( ruleProjectType )
             {
-            // InternalN4MFParser.g:7205:1: ( ruleProjectType )
-            // InternalN4MFParser.g:7206:1: ruleProjectType
+            // InternalN4MFParser.g:7223:1: ( ruleProjectType )
+            // InternalN4MFParser.g:7224:1: ruleProjectType
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectTypeProjectTypeEnumRuleCall_2_2_0()); 
             pushFollow(FOLLOW_2);
@@ -18942,17 +18998,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ProjectVersionAssignment_3_2"
-    // InternalN4MFParser.g:7215:1: rule__ProjectDescription__ProjectVersionAssignment_3_2 : ( ruleDeclaredVersion ) ;
+    // InternalN4MFParser.g:7233:1: rule__ProjectDescription__ProjectVersionAssignment_3_2 : ( ruleDeclaredVersion ) ;
     public final void rule__ProjectDescription__ProjectVersionAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7219:1: ( ( ruleDeclaredVersion ) )
-            // InternalN4MFParser.g:7220:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:7237:1: ( ( ruleDeclaredVersion ) )
+            // InternalN4MFParser.g:7238:1: ( ruleDeclaredVersion )
             {
-            // InternalN4MFParser.g:7220:1: ( ruleDeclaredVersion )
-            // InternalN4MFParser.g:7221:1: ruleDeclaredVersion
+            // InternalN4MFParser.g:7238:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:7239:1: ruleDeclaredVersion
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectVersionDeclaredVersionParserRuleCall_3_2_0()); 
             pushFollow(FOLLOW_2);
@@ -18983,17 +19039,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__DeclaredVendorIdAssignment_4_2"
-    // InternalN4MFParser.g:7230:1: rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 : ( ruleN4mfIdentifier ) ;
+    // InternalN4MFParser.g:7248:1: rule__ProjectDescription__DeclaredVendorIdAssignment_4_2 : ( ruleN4mfIdentifier ) ;
     public final void rule__ProjectDescription__DeclaredVendorIdAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7234:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:7235:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7252:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:7253:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:7235:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:7236:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:7253:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7254:1: ruleN4mfIdentifier
             {
              before(grammarAccess.getProjectDescriptionAccess().getDeclaredVendorIdN4mfIdentifierParserRuleCall_4_2_0()); 
             pushFollow(FOLLOW_2);
@@ -19024,17 +19080,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__VendorNameAssignment_5_2"
-    // InternalN4MFParser.g:7245:1: rule__ProjectDescription__VendorNameAssignment_5_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7263:1: rule__ProjectDescription__VendorNameAssignment_5_2 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__VendorNameAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7249:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7250:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7267:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7268:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7250:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7251:1: RULE_STRING
+            // InternalN4MFParser.g:7268:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7269:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getVendorNameSTRINGTerminalRuleCall_5_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19061,17 +19117,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__MainModuleAssignment_6_2"
-    // InternalN4MFParser.g:7260:1: rule__ProjectDescription__MainModuleAssignment_6_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7278:1: rule__ProjectDescription__MainModuleAssignment_6_2 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__MainModuleAssignment_6_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7264:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7265:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7282:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7283:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7265:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7266:1: RULE_STRING
+            // InternalN4MFParser.g:7283:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7284:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getMainModuleSTRINGTerminalRuleCall_6_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19098,17 +19154,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7"
-    // InternalN4MFParser.g:7275:1: rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 : ( ruleExtendedRuntimeEnvironment ) ;
+    // InternalN4MFParser.g:7293:1: rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 : ( ruleExtendedRuntimeEnvironment ) ;
     public final void rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7279:1: ( ( ruleExtendedRuntimeEnvironment ) )
-            // InternalN4MFParser.g:7280:1: ( ruleExtendedRuntimeEnvironment )
+            // InternalN4MFParser.g:7297:1: ( ( ruleExtendedRuntimeEnvironment ) )
+            // InternalN4MFParser.g:7298:1: ( ruleExtendedRuntimeEnvironment )
             {
-            // InternalN4MFParser.g:7280:1: ( ruleExtendedRuntimeEnvironment )
-            // InternalN4MFParser.g:7281:1: ruleExtendedRuntimeEnvironment
+            // InternalN4MFParser.g:7298:1: ( ruleExtendedRuntimeEnvironment )
+            // InternalN4MFParser.g:7299:1: ruleExtendedRuntimeEnvironment
             {
              before(grammarAccess.getProjectDescriptionAccess().getExtendedRuntimeEnvironmentExtendedRuntimeEnvironmentParserRuleCall_7_0()); 
             pushFollow(FOLLOW_2);
@@ -19139,17 +19195,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8"
-    // InternalN4MFParser.g:7290:1: rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 : ( ruleProvidedRuntimeLibraries ) ;
+    // InternalN4MFParser.g:7308:1: rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 : ( ruleProvidedRuntimeLibraries ) ;
     public final void rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7294:1: ( ( ruleProvidedRuntimeLibraries ) )
-            // InternalN4MFParser.g:7295:1: ( ruleProvidedRuntimeLibraries )
+            // InternalN4MFParser.g:7312:1: ( ( ruleProvidedRuntimeLibraries ) )
+            // InternalN4MFParser.g:7313:1: ( ruleProvidedRuntimeLibraries )
             {
-            // InternalN4MFParser.g:7295:1: ( ruleProvidedRuntimeLibraries )
-            // InternalN4MFParser.g:7296:1: ruleProvidedRuntimeLibraries
+            // InternalN4MFParser.g:7313:1: ( ruleProvidedRuntimeLibraries )
+            // InternalN4MFParser.g:7314:1: ruleProvidedRuntimeLibraries
             {
              before(grammarAccess.getProjectDescriptionAccess().getProvidedRuntimeLibrariesProvidedRuntimeLibrariesParserRuleCall_8_0()); 
             pushFollow(FOLLOW_2);
@@ -19180,17 +19236,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9"
-    // InternalN4MFParser.g:7305:1: rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 : ( ruleRequiredRuntimeLibraries ) ;
+    // InternalN4MFParser.g:7323:1: rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 : ( ruleRequiredRuntimeLibraries ) ;
     public final void rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7309:1: ( ( ruleRequiredRuntimeLibraries ) )
-            // InternalN4MFParser.g:7310:1: ( ruleRequiredRuntimeLibraries )
+            // InternalN4MFParser.g:7327:1: ( ( ruleRequiredRuntimeLibraries ) )
+            // InternalN4MFParser.g:7328:1: ( ruleRequiredRuntimeLibraries )
             {
-            // InternalN4MFParser.g:7310:1: ( ruleRequiredRuntimeLibraries )
-            // InternalN4MFParser.g:7311:1: ruleRequiredRuntimeLibraries
+            // InternalN4MFParser.g:7328:1: ( ruleRequiredRuntimeLibraries )
+            // InternalN4MFParser.g:7329:1: ruleRequiredRuntimeLibraries
             {
              before(grammarAccess.getProjectDescriptionAccess().getRequiredRuntimeLibrariesRequiredRuntimeLibrariesParserRuleCall_9_0()); 
             pushFollow(FOLLOW_2);
@@ -19221,17 +19277,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ProjectDependenciesAssignment_10"
-    // InternalN4MFParser.g:7320:1: rule__ProjectDescription__ProjectDependenciesAssignment_10 : ( ruleProjectDependencies ) ;
+    // InternalN4MFParser.g:7338:1: rule__ProjectDescription__ProjectDependenciesAssignment_10 : ( ruleProjectDependencies ) ;
     public final void rule__ProjectDescription__ProjectDependenciesAssignment_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7324:1: ( ( ruleProjectDependencies ) )
-            // InternalN4MFParser.g:7325:1: ( ruleProjectDependencies )
+            // InternalN4MFParser.g:7342:1: ( ( ruleProjectDependencies ) )
+            // InternalN4MFParser.g:7343:1: ( ruleProjectDependencies )
             {
-            // InternalN4MFParser.g:7325:1: ( ruleProjectDependencies )
-            // InternalN4MFParser.g:7326:1: ruleProjectDependencies
+            // InternalN4MFParser.g:7343:1: ( ruleProjectDependencies )
+            // InternalN4MFParser.g:7344:1: ruleProjectDependencies
             {
              before(grammarAccess.getProjectDescriptionAccess().getProjectDependenciesProjectDependenciesParserRuleCall_10_0()); 
             pushFollow(FOLLOW_2);
@@ -19262,17 +19318,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ImplementationIdAssignment_11_2"
-    // InternalN4MFParser.g:7335:1: rule__ProjectDescription__ImplementationIdAssignment_11_2 : ( ruleN4mfIdentifier ) ;
+    // InternalN4MFParser.g:7353:1: rule__ProjectDescription__ImplementationIdAssignment_11_2 : ( ruleN4mfIdentifier ) ;
     public final void rule__ProjectDescription__ImplementationIdAssignment_11_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7339:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:7340:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7357:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:7358:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:7340:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:7341:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:7358:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7359:1: ruleN4mfIdentifier
             {
              before(grammarAccess.getProjectDescriptionAccess().getImplementationIdN4mfIdentifierParserRuleCall_11_2_0()); 
             pushFollow(FOLLOW_2);
@@ -19303,17 +19359,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ImplementedProjectsAssignment_12"
-    // InternalN4MFParser.g:7350:1: rule__ProjectDescription__ImplementedProjectsAssignment_12 : ( ruleImplementedProjects ) ;
+    // InternalN4MFParser.g:7368:1: rule__ProjectDescription__ImplementedProjectsAssignment_12 : ( ruleImplementedProjects ) ;
     public final void rule__ProjectDescription__ImplementedProjectsAssignment_12() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7354:1: ( ( ruleImplementedProjects ) )
-            // InternalN4MFParser.g:7355:1: ( ruleImplementedProjects )
+            // InternalN4MFParser.g:7372:1: ( ( ruleImplementedProjects ) )
+            // InternalN4MFParser.g:7373:1: ( ruleImplementedProjects )
             {
-            // InternalN4MFParser.g:7355:1: ( ruleImplementedProjects )
-            // InternalN4MFParser.g:7356:1: ruleImplementedProjects
+            // InternalN4MFParser.g:7373:1: ( ruleImplementedProjects )
+            // InternalN4MFParser.g:7374:1: ruleImplementedProjects
             {
              before(grammarAccess.getProjectDescriptionAccess().getImplementedProjectsImplementedProjectsParserRuleCall_12_0()); 
             pushFollow(FOLLOW_2);
@@ -19344,17 +19400,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__InitModulesAssignment_13"
-    // InternalN4MFParser.g:7365:1: rule__ProjectDescription__InitModulesAssignment_13 : ( ruleInitModules ) ;
+    // InternalN4MFParser.g:7383:1: rule__ProjectDescription__InitModulesAssignment_13 : ( ruleInitModules ) ;
     public final void rule__ProjectDescription__InitModulesAssignment_13() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7369:1: ( ( ruleInitModules ) )
-            // InternalN4MFParser.g:7370:1: ( ruleInitModules )
+            // InternalN4MFParser.g:7387:1: ( ( ruleInitModules ) )
+            // InternalN4MFParser.g:7388:1: ( ruleInitModules )
             {
-            // InternalN4MFParser.g:7370:1: ( ruleInitModules )
-            // InternalN4MFParser.g:7371:1: ruleInitModules
+            // InternalN4MFParser.g:7388:1: ( ruleInitModules )
+            // InternalN4MFParser.g:7389:1: ruleInitModules
             {
              before(grammarAccess.getProjectDescriptionAccess().getInitModulesInitModulesParserRuleCall_13_0()); 
             pushFollow(FOLLOW_2);
@@ -19385,17 +19441,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ExecModuleAssignment_14"
-    // InternalN4MFParser.g:7380:1: rule__ProjectDescription__ExecModuleAssignment_14 : ( ruleExecModule ) ;
+    // InternalN4MFParser.g:7398:1: rule__ProjectDescription__ExecModuleAssignment_14 : ( ruleExecModule ) ;
     public final void rule__ProjectDescription__ExecModuleAssignment_14() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7384:1: ( ( ruleExecModule ) )
-            // InternalN4MFParser.g:7385:1: ( ruleExecModule )
+            // InternalN4MFParser.g:7402:1: ( ( ruleExecModule ) )
+            // InternalN4MFParser.g:7403:1: ( ruleExecModule )
             {
-            // InternalN4MFParser.g:7385:1: ( ruleExecModule )
-            // InternalN4MFParser.g:7386:1: ruleExecModule
+            // InternalN4MFParser.g:7403:1: ( ruleExecModule )
+            // InternalN4MFParser.g:7404:1: ruleExecModule
             {
              before(grammarAccess.getProjectDescriptionAccess().getExecModuleExecModuleParserRuleCall_14_0()); 
             pushFollow(FOLLOW_2);
@@ -19426,17 +19482,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__OutputPathAssignment_15_2"
-    // InternalN4MFParser.g:7395:1: rule__ProjectDescription__OutputPathAssignment_15_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7413:1: rule__ProjectDescription__OutputPathAssignment_15_2 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__OutputPathAssignment_15_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7399:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7400:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7417:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7418:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7400:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7401:1: RULE_STRING
+            // InternalN4MFParser.g:7418:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7419:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getOutputPathSTRINGTerminalRuleCall_15_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19463,17 +19519,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__LibraryPathsAssignment_16_2"
-    // InternalN4MFParser.g:7410:1: rule__ProjectDescription__LibraryPathsAssignment_16_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7428:1: rule__ProjectDescription__LibraryPathsAssignment_16_2 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__LibraryPathsAssignment_16_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7414:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7415:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7432:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7433:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7415:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7416:1: RULE_STRING
+            // InternalN4MFParser.g:7433:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7434:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_16_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19500,17 +19556,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__LibraryPathsAssignment_16_3_1"
-    // InternalN4MFParser.g:7425:1: rule__ProjectDescription__LibraryPathsAssignment_16_3_1 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7443:1: rule__ProjectDescription__LibraryPathsAssignment_16_3_1 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__LibraryPathsAssignment_16_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7429:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7430:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7447:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7448:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7430:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7431:1: RULE_STRING
+            // InternalN4MFParser.g:7448:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7449:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_16_3_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19537,17 +19593,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ResourcePathsAssignment_17_2"
-    // InternalN4MFParser.g:7440:1: rule__ProjectDescription__ResourcePathsAssignment_17_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7458:1: rule__ProjectDescription__ResourcePathsAssignment_17_2 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__ResourcePathsAssignment_17_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7444:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7445:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7462:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7463:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7445:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7446:1: RULE_STRING
+            // InternalN4MFParser.g:7463:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7464:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_17_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19574,17 +19630,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ResourcePathsAssignment_17_3_1"
-    // InternalN4MFParser.g:7455:1: rule__ProjectDescription__ResourcePathsAssignment_17_3_1 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7473:1: rule__ProjectDescription__ResourcePathsAssignment_17_3_1 : ( RULE_STRING ) ;
     public final void rule__ProjectDescription__ResourcePathsAssignment_17_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7459:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7460:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7477:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7478:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7460:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7461:1: RULE_STRING
+            // InternalN4MFParser.g:7478:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7479:1: RULE_STRING
             {
              before(grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_17_3_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -19611,17 +19667,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__SourceFragmentAssignment_18_2"
-    // InternalN4MFParser.g:7470:1: rule__ProjectDescription__SourceFragmentAssignment_18_2 : ( ruleSourceFragment ) ;
+    // InternalN4MFParser.g:7488:1: rule__ProjectDescription__SourceFragmentAssignment_18_2 : ( ruleSourceFragment ) ;
     public final void rule__ProjectDescription__SourceFragmentAssignment_18_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7474:1: ( ( ruleSourceFragment ) )
-            // InternalN4MFParser.g:7475:1: ( ruleSourceFragment )
+            // InternalN4MFParser.g:7492:1: ( ( ruleSourceFragment ) )
+            // InternalN4MFParser.g:7493:1: ( ruleSourceFragment )
             {
-            // InternalN4MFParser.g:7475:1: ( ruleSourceFragment )
-            // InternalN4MFParser.g:7476:1: ruleSourceFragment
+            // InternalN4MFParser.g:7493:1: ( ruleSourceFragment )
+            // InternalN4MFParser.g:7494:1: ruleSourceFragment
             {
              before(grammarAccess.getProjectDescriptionAccess().getSourceFragmentSourceFragmentParserRuleCall_18_2_0()); 
             pushFollow(FOLLOW_2);
@@ -19652,17 +19708,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ModuleFiltersAssignment_19_2"
-    // InternalN4MFParser.g:7485:1: rule__ProjectDescription__ModuleFiltersAssignment_19_2 : ( ruleModuleFilter ) ;
+    // InternalN4MFParser.g:7503:1: rule__ProjectDescription__ModuleFiltersAssignment_19_2 : ( ruleModuleFilter ) ;
     public final void rule__ProjectDescription__ModuleFiltersAssignment_19_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7489:1: ( ( ruleModuleFilter ) )
-            // InternalN4MFParser.g:7490:1: ( ruleModuleFilter )
+            // InternalN4MFParser.g:7507:1: ( ( ruleModuleFilter ) )
+            // InternalN4MFParser.g:7508:1: ( ruleModuleFilter )
             {
-            // InternalN4MFParser.g:7490:1: ( ruleModuleFilter )
-            // InternalN4MFParser.g:7491:1: ruleModuleFilter
+            // InternalN4MFParser.g:7508:1: ( ruleModuleFilter )
+            // InternalN4MFParser.g:7509:1: ruleModuleFilter
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleFiltersModuleFilterParserRuleCall_19_2_0()); 
             pushFollow(FOLLOW_2);
@@ -19693,17 +19749,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__TestedProjectsAssignment_20"
-    // InternalN4MFParser.g:7500:1: rule__ProjectDescription__TestedProjectsAssignment_20 : ( ruleTestedProjects ) ;
+    // InternalN4MFParser.g:7518:1: rule__ProjectDescription__TestedProjectsAssignment_20 : ( ruleTestedProjects ) ;
     public final void rule__ProjectDescription__TestedProjectsAssignment_20() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7504:1: ( ( ruleTestedProjects ) )
-            // InternalN4MFParser.g:7505:1: ( ruleTestedProjects )
+            // InternalN4MFParser.g:7522:1: ( ( ruleTestedProjects ) )
+            // InternalN4MFParser.g:7523:1: ( ruleTestedProjects )
             {
-            // InternalN4MFParser.g:7505:1: ( ruleTestedProjects )
-            // InternalN4MFParser.g:7506:1: ruleTestedProjects
+            // InternalN4MFParser.g:7523:1: ( ruleTestedProjects )
+            // InternalN4MFParser.g:7524:1: ruleTestedProjects
             {
              before(grammarAccess.getProjectDescriptionAccess().getTestedProjectsTestedProjectsParserRuleCall_20_0()); 
             pushFollow(FOLLOW_2);
@@ -19734,17 +19790,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDescription__ModuleLoaderAssignment_21_2"
-    // InternalN4MFParser.g:7515:1: rule__ProjectDescription__ModuleLoaderAssignment_21_2 : ( ruleModuleLoader ) ;
+    // InternalN4MFParser.g:7533:1: rule__ProjectDescription__ModuleLoaderAssignment_21_2 : ( ruleModuleLoader ) ;
     public final void rule__ProjectDescription__ModuleLoaderAssignment_21_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7519:1: ( ( ruleModuleLoader ) )
-            // InternalN4MFParser.g:7520:1: ( ruleModuleLoader )
+            // InternalN4MFParser.g:7537:1: ( ( ruleModuleLoader ) )
+            // InternalN4MFParser.g:7538:1: ( ruleModuleLoader )
             {
-            // InternalN4MFParser.g:7520:1: ( ruleModuleLoader )
-            // InternalN4MFParser.g:7521:1: ruleModuleLoader
+            // InternalN4MFParser.g:7538:1: ( ruleModuleLoader )
+            // InternalN4MFParser.g:7539:1: ruleModuleLoader
             {
              before(grammarAccess.getProjectDescriptionAccess().getModuleLoaderModuleLoaderEnumRuleCall_21_2_0()); 
             pushFollow(FOLLOW_2);
@@ -19775,17 +19831,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExecModule__ExecModuleAssignment_3"
-    // InternalN4MFParser.g:7530:1: rule__ExecModule__ExecModuleAssignment_3 : ( ruleBootstrapModule ) ;
+    // InternalN4MFParser.g:7548:1: rule__ExecModule__ExecModuleAssignment_3 : ( ruleBootstrapModule ) ;
     public final void rule__ExecModule__ExecModuleAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7534:1: ( ( ruleBootstrapModule ) )
-            // InternalN4MFParser.g:7535:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7552:1: ( ( ruleBootstrapModule ) )
+            // InternalN4MFParser.g:7553:1: ( ruleBootstrapModule )
             {
-            // InternalN4MFParser.g:7535:1: ( ruleBootstrapModule )
-            // InternalN4MFParser.g:7536:1: ruleBootstrapModule
+            // InternalN4MFParser.g:7553:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7554:1: ruleBootstrapModule
             {
              before(grammarAccess.getExecModuleAccess().getExecModuleBootstrapModuleParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -19816,17 +19872,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__TestedProjectsAssignment_3_0"
-    // InternalN4MFParser.g:7545:1: rule__TestedProjects__TestedProjectsAssignment_3_0 : ( ruleTestedProject ) ;
+    // InternalN4MFParser.g:7563:1: rule__TestedProjects__TestedProjectsAssignment_3_0 : ( ruleTestedProject ) ;
     public final void rule__TestedProjects__TestedProjectsAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7549:1: ( ( ruleTestedProject ) )
-            // InternalN4MFParser.g:7550:1: ( ruleTestedProject )
+            // InternalN4MFParser.g:7567:1: ( ( ruleTestedProject ) )
+            // InternalN4MFParser.g:7568:1: ( ruleTestedProject )
             {
-            // InternalN4MFParser.g:7550:1: ( ruleTestedProject )
-            // InternalN4MFParser.g:7551:1: ruleTestedProject
+            // InternalN4MFParser.g:7568:1: ( ruleTestedProject )
+            // InternalN4MFParser.g:7569:1: ruleTestedProject
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsTestedProjectParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -19857,17 +19913,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProjects__TestedProjectsAssignment_3_1_1"
-    // InternalN4MFParser.g:7560:1: rule__TestedProjects__TestedProjectsAssignment_3_1_1 : ( ruleTestedProject ) ;
+    // InternalN4MFParser.g:7578:1: rule__TestedProjects__TestedProjectsAssignment_3_1_1 : ( ruleTestedProject ) ;
     public final void rule__TestedProjects__TestedProjectsAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7564:1: ( ( ruleTestedProject ) )
-            // InternalN4MFParser.g:7565:1: ( ruleTestedProject )
+            // InternalN4MFParser.g:7582:1: ( ( ruleTestedProject ) )
+            // InternalN4MFParser.g:7583:1: ( ruleTestedProject )
             {
-            // InternalN4MFParser.g:7565:1: ( ruleTestedProject )
-            // InternalN4MFParser.g:7566:1: ruleTestedProject
+            // InternalN4MFParser.g:7583:1: ( ruleTestedProject )
+            // InternalN4MFParser.g:7584:1: ruleTestedProject
             {
              before(grammarAccess.getTestedProjectsAccess().getTestedProjectsTestedProjectParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -19898,17 +19954,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__InitModulesAssignment_3_0"
-    // InternalN4MFParser.g:7575:1: rule__InitModules__InitModulesAssignment_3_0 : ( ruleBootstrapModule ) ;
+    // InternalN4MFParser.g:7593:1: rule__InitModules__InitModulesAssignment_3_0 : ( ruleBootstrapModule ) ;
     public final void rule__InitModules__InitModulesAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7579:1: ( ( ruleBootstrapModule ) )
-            // InternalN4MFParser.g:7580:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7597:1: ( ( ruleBootstrapModule ) )
+            // InternalN4MFParser.g:7598:1: ( ruleBootstrapModule )
             {
-            // InternalN4MFParser.g:7580:1: ( ruleBootstrapModule )
-            // InternalN4MFParser.g:7581:1: ruleBootstrapModule
+            // InternalN4MFParser.g:7598:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7599:1: ruleBootstrapModule
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesBootstrapModuleParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -19939,17 +19995,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__InitModules__InitModulesAssignment_3_1_1"
-    // InternalN4MFParser.g:7590:1: rule__InitModules__InitModulesAssignment_3_1_1 : ( ruleBootstrapModule ) ;
+    // InternalN4MFParser.g:7608:1: rule__InitModules__InitModulesAssignment_3_1_1 : ( ruleBootstrapModule ) ;
     public final void rule__InitModules__InitModulesAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7594:1: ( ( ruleBootstrapModule ) )
-            // InternalN4MFParser.g:7595:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7612:1: ( ( ruleBootstrapModule ) )
+            // InternalN4MFParser.g:7613:1: ( ruleBootstrapModule )
             {
-            // InternalN4MFParser.g:7595:1: ( ruleBootstrapModule )
-            // InternalN4MFParser.g:7596:1: ruleBootstrapModule
+            // InternalN4MFParser.g:7613:1: ( ruleBootstrapModule )
+            // InternalN4MFParser.g:7614:1: ruleBootstrapModule
             {
              before(grammarAccess.getInitModulesAccess().getInitModulesBootstrapModuleParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -19980,17 +20036,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__ImplementedProjectsAssignment_3_0"
-    // InternalN4MFParser.g:7605:1: rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 : ( ruleProjectReference ) ;
+    // InternalN4MFParser.g:7623:1: rule__ImplementedProjects__ImplementedProjectsAssignment_3_0 : ( ruleProjectReference ) ;
     public final void rule__ImplementedProjects__ImplementedProjectsAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7609:1: ( ( ruleProjectReference ) )
-            // InternalN4MFParser.g:7610:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7627:1: ( ( ruleProjectReference ) )
+            // InternalN4MFParser.g:7628:1: ( ruleProjectReference )
             {
-            // InternalN4MFParser.g:7610:1: ( ruleProjectReference )
-            // InternalN4MFParser.g:7611:1: ruleProjectReference
+            // InternalN4MFParser.g:7628:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7629:1: ruleProjectReference
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsProjectReferenceParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20021,17 +20077,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1"
-    // InternalN4MFParser.g:7620:1: rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 : ( ruleProjectReference ) ;
+    // InternalN4MFParser.g:7638:1: rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1 : ( ruleProjectReference ) ;
     public final void rule__ImplementedProjects__ImplementedProjectsAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7624:1: ( ( ruleProjectReference ) )
-            // InternalN4MFParser.g:7625:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7642:1: ( ( ruleProjectReference ) )
+            // InternalN4MFParser.g:7643:1: ( ruleProjectReference )
             {
-            // InternalN4MFParser.g:7625:1: ( ruleProjectReference )
-            // InternalN4MFParser.g:7626:1: ruleProjectReference
+            // InternalN4MFParser.g:7643:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7644:1: ruleProjectReference
             {
              before(grammarAccess.getImplementedProjectsAccess().getImplementedProjectsProjectReferenceParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20062,17 +20118,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__ProjectDependenciesAssignment_3_0"
-    // InternalN4MFParser.g:7635:1: rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 : ( ruleProjectDependency ) ;
+    // InternalN4MFParser.g:7653:1: rule__ProjectDependencies__ProjectDependenciesAssignment_3_0 : ( ruleProjectDependency ) ;
     public final void rule__ProjectDependencies__ProjectDependenciesAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7639:1: ( ( ruleProjectDependency ) )
-            // InternalN4MFParser.g:7640:1: ( ruleProjectDependency )
+            // InternalN4MFParser.g:7657:1: ( ( ruleProjectDependency ) )
+            // InternalN4MFParser.g:7658:1: ( ruleProjectDependency )
             {
-            // InternalN4MFParser.g:7640:1: ( ruleProjectDependency )
-            // InternalN4MFParser.g:7641:1: ruleProjectDependency
+            // InternalN4MFParser.g:7658:1: ( ruleProjectDependency )
+            // InternalN4MFParser.g:7659:1: ruleProjectDependency
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesProjectDependencyParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20103,17 +20159,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1"
-    // InternalN4MFParser.g:7650:1: rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 : ( ruleProjectDependency ) ;
+    // InternalN4MFParser.g:7668:1: rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1 : ( ruleProjectDependency ) ;
     public final void rule__ProjectDependencies__ProjectDependenciesAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7654:1: ( ( ruleProjectDependency ) )
-            // InternalN4MFParser.g:7655:1: ( ruleProjectDependency )
+            // InternalN4MFParser.g:7672:1: ( ( ruleProjectDependency ) )
+            // InternalN4MFParser.g:7673:1: ( ruleProjectDependency )
             {
-            // InternalN4MFParser.g:7655:1: ( ruleProjectDependency )
-            // InternalN4MFParser.g:7656:1: ruleProjectDependency
+            // InternalN4MFParser.g:7673:1: ( ruleProjectDependency )
+            // InternalN4MFParser.g:7674:1: ruleProjectDependency
             {
              before(grammarAccess.getProjectDependenciesAccess().getProjectDependenciesProjectDependencyParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20144,17 +20200,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0"
-    // InternalN4MFParser.g:7665:1: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 : ( ruleProvidedRuntimeLibraryDependency ) ;
+    // InternalN4MFParser.g:7683:1: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0 : ( ruleProvidedRuntimeLibraryDependency ) ;
     public final void rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7669:1: ( ( ruleProvidedRuntimeLibraryDependency ) )
-            // InternalN4MFParser.g:7670:1: ( ruleProvidedRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7687:1: ( ( ruleProvidedRuntimeLibraryDependency ) )
+            // InternalN4MFParser.g:7688:1: ( ruleProvidedRuntimeLibraryDependency )
             {
-            // InternalN4MFParser.g:7670:1: ( ruleProvidedRuntimeLibraryDependency )
-            // InternalN4MFParser.g:7671:1: ruleProvidedRuntimeLibraryDependency
+            // InternalN4MFParser.g:7688:1: ( ruleProvidedRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7689:1: ruleProvidedRuntimeLibraryDependency
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesProvidedRuntimeLibraryDependencyParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20185,17 +20241,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1"
-    // InternalN4MFParser.g:7680:1: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 : ( ruleProvidedRuntimeLibraryDependency ) ;
+    // InternalN4MFParser.g:7698:1: rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1 : ( ruleProvidedRuntimeLibraryDependency ) ;
     public final void rule__ProvidedRuntimeLibraries__ProvidedRuntimeLibrariesAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7684:1: ( ( ruleProvidedRuntimeLibraryDependency ) )
-            // InternalN4MFParser.g:7685:1: ( ruleProvidedRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7702:1: ( ( ruleProvidedRuntimeLibraryDependency ) )
+            // InternalN4MFParser.g:7703:1: ( ruleProvidedRuntimeLibraryDependency )
             {
-            // InternalN4MFParser.g:7685:1: ( ruleProvidedRuntimeLibraryDependency )
-            // InternalN4MFParser.g:7686:1: ruleProvidedRuntimeLibraryDependency
+            // InternalN4MFParser.g:7703:1: ( ruleProvidedRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7704:1: ruleProvidedRuntimeLibraryDependency
             {
              before(grammarAccess.getProvidedRuntimeLibrariesAccess().getProvidedRuntimeLibrariesProvidedRuntimeLibraryDependencyParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20226,17 +20282,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0"
-    // InternalN4MFParser.g:7695:1: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 : ( ruleRequiredRuntimeLibraryDependency ) ;
+    // InternalN4MFParser.g:7713:1: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0 : ( ruleRequiredRuntimeLibraryDependency ) ;
     public final void rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7699:1: ( ( ruleRequiredRuntimeLibraryDependency ) )
-            // InternalN4MFParser.g:7700:1: ( ruleRequiredRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7717:1: ( ( ruleRequiredRuntimeLibraryDependency ) )
+            // InternalN4MFParser.g:7718:1: ( ruleRequiredRuntimeLibraryDependency )
             {
-            // InternalN4MFParser.g:7700:1: ( ruleRequiredRuntimeLibraryDependency )
-            // InternalN4MFParser.g:7701:1: ruleRequiredRuntimeLibraryDependency
+            // InternalN4MFParser.g:7718:1: ( ruleRequiredRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7719:1: ruleRequiredRuntimeLibraryDependency
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesRequiredRuntimeLibraryDependencyParserRuleCall_3_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20267,17 +20323,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1"
-    // InternalN4MFParser.g:7710:1: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 : ( ruleRequiredRuntimeLibraryDependency ) ;
+    // InternalN4MFParser.g:7728:1: rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1 : ( ruleRequiredRuntimeLibraryDependency ) ;
     public final void rule__RequiredRuntimeLibraries__RequiredRuntimeLibrariesAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7714:1: ( ( ruleRequiredRuntimeLibraryDependency ) )
-            // InternalN4MFParser.g:7715:1: ( ruleRequiredRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7732:1: ( ( ruleRequiredRuntimeLibraryDependency ) )
+            // InternalN4MFParser.g:7733:1: ( ruleRequiredRuntimeLibraryDependency )
             {
-            // InternalN4MFParser.g:7715:1: ( ruleRequiredRuntimeLibraryDependency )
-            // InternalN4MFParser.g:7716:1: ruleRequiredRuntimeLibraryDependency
+            // InternalN4MFParser.g:7733:1: ( ruleRequiredRuntimeLibraryDependency )
+            // InternalN4MFParser.g:7734:1: ruleRequiredRuntimeLibraryDependency
             {
              before(grammarAccess.getRequiredRuntimeLibrariesAccess().getRequiredRuntimeLibrariesRequiredRuntimeLibraryDependencyParserRuleCall_3_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20308,17 +20364,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3"
-    // InternalN4MFParser.g:7725:1: rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 : ( ruleProjectReference ) ;
+    // InternalN4MFParser.g:7743:1: rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3 : ( ruleProjectReference ) ;
     public final void rule__ExtendedRuntimeEnvironment__ExtendedRuntimeEnvironmentAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7729:1: ( ( ruleProjectReference ) )
-            // InternalN4MFParser.g:7730:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7747:1: ( ( ruleProjectReference ) )
+            // InternalN4MFParser.g:7748:1: ( ruleProjectReference )
             {
-            // InternalN4MFParser.g:7730:1: ( ruleProjectReference )
-            // InternalN4MFParser.g:7731:1: ruleProjectReference
+            // InternalN4MFParser.g:7748:1: ( ruleProjectReference )
+            // InternalN4MFParser.g:7749:1: ruleProjectReference
             {
              before(grammarAccess.getExtendedRuntimeEnvironmentAccess().getExtendedRuntimeEnvironmentProjectReferenceParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -20349,17 +20405,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__MajorAssignment_0"
-    // InternalN4MFParser.g:7740:1: rule__DeclaredVersion__MajorAssignment_0 : ( RULE_INT ) ;
+    // InternalN4MFParser.g:7758:1: rule__DeclaredVersion__MajorAssignment_0 : ( RULE_INT ) ;
     public final void rule__DeclaredVersion__MajorAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7744:1: ( ( RULE_INT ) )
-            // InternalN4MFParser.g:7745:1: ( RULE_INT )
+            // InternalN4MFParser.g:7762:1: ( ( RULE_INT ) )
+            // InternalN4MFParser.g:7763:1: ( RULE_INT )
             {
-            // InternalN4MFParser.g:7745:1: ( RULE_INT )
-            // InternalN4MFParser.g:7746:1: RULE_INT
+            // InternalN4MFParser.g:7763:1: ( RULE_INT )
+            // InternalN4MFParser.g:7764:1: RULE_INT
             {
              before(grammarAccess.getDeclaredVersionAccess().getMajorINTTerminalRuleCall_0_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -20386,17 +20442,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__MinorAssignment_1_1"
-    // InternalN4MFParser.g:7755:1: rule__DeclaredVersion__MinorAssignment_1_1 : ( RULE_INT ) ;
+    // InternalN4MFParser.g:7773:1: rule__DeclaredVersion__MinorAssignment_1_1 : ( RULE_INT ) ;
     public final void rule__DeclaredVersion__MinorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7759:1: ( ( RULE_INT ) )
-            // InternalN4MFParser.g:7760:1: ( RULE_INT )
+            // InternalN4MFParser.g:7777:1: ( ( RULE_INT ) )
+            // InternalN4MFParser.g:7778:1: ( RULE_INT )
             {
-            // InternalN4MFParser.g:7760:1: ( RULE_INT )
-            // InternalN4MFParser.g:7761:1: RULE_INT
+            // InternalN4MFParser.g:7778:1: ( RULE_INT )
+            // InternalN4MFParser.g:7779:1: RULE_INT
             {
              before(grammarAccess.getDeclaredVersionAccess().getMinorINTTerminalRuleCall_1_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -20423,17 +20479,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__MicroAssignment_1_2_1"
-    // InternalN4MFParser.g:7770:1: rule__DeclaredVersion__MicroAssignment_1_2_1 : ( RULE_INT ) ;
+    // InternalN4MFParser.g:7788:1: rule__DeclaredVersion__MicroAssignment_1_2_1 : ( RULE_INT ) ;
     public final void rule__DeclaredVersion__MicroAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7774:1: ( ( RULE_INT ) )
-            // InternalN4MFParser.g:7775:1: ( RULE_INT )
+            // InternalN4MFParser.g:7792:1: ( ( RULE_INT ) )
+            // InternalN4MFParser.g:7793:1: ( RULE_INT )
             {
-            // InternalN4MFParser.g:7775:1: ( RULE_INT )
-            // InternalN4MFParser.g:7776:1: RULE_INT
+            // InternalN4MFParser.g:7793:1: ( RULE_INT )
+            // InternalN4MFParser.g:7794:1: RULE_INT
             {
              before(grammarAccess.getDeclaredVersionAccess().getMicroINTTerminalRuleCall_1_2_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -20460,17 +20516,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DeclaredVersion__QualifierAssignment_2_1"
-    // InternalN4MFParser.g:7785:1: rule__DeclaredVersion__QualifierAssignment_2_1 : ( ruleN4mfIdentifier ) ;
+    // InternalN4MFParser.g:7803:1: rule__DeclaredVersion__QualifierAssignment_2_1 : ( ruleN4mfIdentifier ) ;
     public final void rule__DeclaredVersion__QualifierAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7789:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:7790:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7807:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:7808:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:7790:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:7791:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:7808:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:7809:1: ruleN4mfIdentifier
             {
              before(grammarAccess.getDeclaredVersionAccess().getQualifierN4mfIdentifierParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20501,17 +20557,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__SourceFragmentTypeAssignment_0"
-    // InternalN4MFParser.g:7800:1: rule__SourceFragment__SourceFragmentTypeAssignment_0 : ( ruleSourceFragmentType ) ;
+    // InternalN4MFParser.g:7818:1: rule__SourceFragment__SourceFragmentTypeAssignment_0 : ( ruleSourceFragmentType ) ;
     public final void rule__SourceFragment__SourceFragmentTypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7804:1: ( ( ruleSourceFragmentType ) )
-            // InternalN4MFParser.g:7805:1: ( ruleSourceFragmentType )
+            // InternalN4MFParser.g:7822:1: ( ( ruleSourceFragmentType ) )
+            // InternalN4MFParser.g:7823:1: ( ruleSourceFragmentType )
             {
-            // InternalN4MFParser.g:7805:1: ( ruleSourceFragmentType )
-            // InternalN4MFParser.g:7806:1: ruleSourceFragmentType
+            // InternalN4MFParser.g:7823:1: ( ruleSourceFragmentType )
+            // InternalN4MFParser.g:7824:1: ruleSourceFragmentType
             {
              before(grammarAccess.getSourceFragmentAccess().getSourceFragmentTypeSourceFragmentTypeEnumRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20542,17 +20598,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__PathsAssignment_2"
-    // InternalN4MFParser.g:7815:1: rule__SourceFragment__PathsAssignment_2 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7833:1: rule__SourceFragment__PathsAssignment_2 : ( RULE_STRING ) ;
     public final void rule__SourceFragment__PathsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7819:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7820:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7837:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7838:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7820:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7821:1: RULE_STRING
+            // InternalN4MFParser.g:7838:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7839:1: RULE_STRING
             {
              before(grammarAccess.getSourceFragmentAccess().getPathsSTRINGTerminalRuleCall_2_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20579,17 +20635,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SourceFragment__PathsAssignment_3_1"
-    // InternalN4MFParser.g:7830:1: rule__SourceFragment__PathsAssignment_3_1 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7848:1: rule__SourceFragment__PathsAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__SourceFragment__PathsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7834:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7835:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7852:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7853:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7835:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7836:1: RULE_STRING
+            // InternalN4MFParser.g:7853:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7854:1: RULE_STRING
             {
              before(grammarAccess.getSourceFragmentAccess().getPathsSTRINGTerminalRuleCall_3_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20616,17 +20672,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__ModuleFilterTypeAssignment_0"
-    // InternalN4MFParser.g:7845:1: rule__ModuleFilter__ModuleFilterTypeAssignment_0 : ( ruleModuleFilterType ) ;
+    // InternalN4MFParser.g:7863:1: rule__ModuleFilter__ModuleFilterTypeAssignment_0 : ( ruleModuleFilterType ) ;
     public final void rule__ModuleFilter__ModuleFilterTypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7849:1: ( ( ruleModuleFilterType ) )
-            // InternalN4MFParser.g:7850:1: ( ruleModuleFilterType )
+            // InternalN4MFParser.g:7867:1: ( ( ruleModuleFilterType ) )
+            // InternalN4MFParser.g:7868:1: ( ruleModuleFilterType )
             {
-            // InternalN4MFParser.g:7850:1: ( ruleModuleFilterType )
-            // InternalN4MFParser.g:7851:1: ruleModuleFilterType
+            // InternalN4MFParser.g:7868:1: ( ruleModuleFilterType )
+            // InternalN4MFParser.g:7869:1: ruleModuleFilterType
             {
              before(grammarAccess.getModuleFilterAccess().getModuleFilterTypeModuleFilterTypeEnumRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -20657,17 +20713,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__ModuleSpecifiersAssignment_2"
-    // InternalN4MFParser.g:7860:1: rule__ModuleFilter__ModuleSpecifiersAssignment_2 : ( ruleModuleFilterSpecifier ) ;
+    // InternalN4MFParser.g:7878:1: rule__ModuleFilter__ModuleSpecifiersAssignment_2 : ( ruleModuleFilterSpecifier ) ;
     public final void rule__ModuleFilter__ModuleSpecifiersAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7864:1: ( ( ruleModuleFilterSpecifier ) )
-            // InternalN4MFParser.g:7865:1: ( ruleModuleFilterSpecifier )
+            // InternalN4MFParser.g:7882:1: ( ( ruleModuleFilterSpecifier ) )
+            // InternalN4MFParser.g:7883:1: ( ruleModuleFilterSpecifier )
             {
-            // InternalN4MFParser.g:7865:1: ( ruleModuleFilterSpecifier )
-            // InternalN4MFParser.g:7866:1: ruleModuleFilterSpecifier
+            // InternalN4MFParser.g:7883:1: ( ruleModuleFilterSpecifier )
+            // InternalN4MFParser.g:7884:1: ruleModuleFilterSpecifier
             {
              before(grammarAccess.getModuleFilterAccess().getModuleSpecifiersModuleFilterSpecifierParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -20698,17 +20754,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilter__ModuleSpecifiersAssignment_3_1"
-    // InternalN4MFParser.g:7875:1: rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 : ( ruleModuleFilterSpecifier ) ;
+    // InternalN4MFParser.g:7893:1: rule__ModuleFilter__ModuleSpecifiersAssignment_3_1 : ( ruleModuleFilterSpecifier ) ;
     public final void rule__ModuleFilter__ModuleSpecifiersAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7879:1: ( ( ruleModuleFilterSpecifier ) )
-            // InternalN4MFParser.g:7880:1: ( ruleModuleFilterSpecifier )
+            // InternalN4MFParser.g:7897:1: ( ( ruleModuleFilterSpecifier ) )
+            // InternalN4MFParser.g:7898:1: ( ruleModuleFilterSpecifier )
             {
-            // InternalN4MFParser.g:7880:1: ( ruleModuleFilterSpecifier )
-            // InternalN4MFParser.g:7881:1: ruleModuleFilterSpecifier
+            // InternalN4MFParser.g:7898:1: ( ruleModuleFilterSpecifier )
+            // InternalN4MFParser.g:7899:1: ruleModuleFilterSpecifier
             {
              before(grammarAccess.getModuleFilterAccess().getModuleSpecifiersModuleFilterSpecifierParserRuleCall_3_1_0()); 
             pushFollow(FOLLOW_2);
@@ -20739,17 +20795,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0"
-    // InternalN4MFParser.g:7890:1: rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7908:1: rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0 : ( RULE_STRING ) ;
     public final void rule__BootstrapModule__ModuleSpecifierWithWildcardAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7894:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7895:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7912:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7913:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7895:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7896:1: RULE_STRING
+            // InternalN4MFParser.g:7913:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7914:1: RULE_STRING
             {
              before(grammarAccess.getBootstrapModuleAccess().getModuleSpecifierWithWildcardSTRINGTerminalRuleCall_0_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20776,17 +20832,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BootstrapModule__SourcePathAssignment_1_1"
-    // InternalN4MFParser.g:7905:1: rule__BootstrapModule__SourcePathAssignment_1_1 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7923:1: rule__BootstrapModule__SourcePathAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__BootstrapModule__SourcePathAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7909:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7910:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7927:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7928:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7910:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7911:1: RULE_STRING
+            // InternalN4MFParser.g:7928:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7929:1: RULE_STRING
             {
              before(grammarAccess.getBootstrapModuleAccess().getSourcePathSTRINGTerminalRuleCall_1_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20813,17 +20869,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0"
-    // InternalN4MFParser.g:7920:1: rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7938:1: rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0 : ( RULE_STRING ) ;
     public final void rule__ModuleFilterSpecifier__ModuleSpecifierWithWildcardAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7924:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7925:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7942:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7943:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7925:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7926:1: RULE_STRING
+            // InternalN4MFParser.g:7943:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7944:1: RULE_STRING
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getModuleSpecifierWithWildcardSTRINGTerminalRuleCall_0_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20850,17 +20906,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModuleFilterSpecifier__SourcePathAssignment_1_1"
-    // InternalN4MFParser.g:7935:1: rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 : ( RULE_STRING ) ;
+    // InternalN4MFParser.g:7953:1: rule__ModuleFilterSpecifier__SourcePathAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__ModuleFilterSpecifier__SourcePathAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7939:1: ( ( RULE_STRING ) )
-            // InternalN4MFParser.g:7940:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7957:1: ( ( RULE_STRING ) )
+            // InternalN4MFParser.g:7958:1: ( RULE_STRING )
             {
-            // InternalN4MFParser.g:7940:1: ( RULE_STRING )
-            // InternalN4MFParser.g:7941:1: RULE_STRING
+            // InternalN4MFParser.g:7958:1: ( RULE_STRING )
+            // InternalN4MFParser.g:7959:1: RULE_STRING
             {
              before(grammarAccess.getModuleFilterSpecifierAccess().getSourcePathSTRINGTerminalRuleCall_1_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -20887,17 +20943,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProvidedRuntimeLibraryDependency__ProjectAssignment"
-    // InternalN4MFParser.g:7950:1: rule__ProvidedRuntimeLibraryDependency__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
+    // InternalN4MFParser.g:7968:1: rule__ProvidedRuntimeLibraryDependency__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
     public final void rule__ProvidedRuntimeLibraryDependency__ProjectAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7954:1: ( ( ruleSimpleProjectDescription ) )
-            // InternalN4MFParser.g:7955:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:7972:1: ( ( ruleSimpleProjectDescription ) )
+            // InternalN4MFParser.g:7973:1: ( ruleSimpleProjectDescription )
             {
-            // InternalN4MFParser.g:7955:1: ( ruleSimpleProjectDescription )
-            // InternalN4MFParser.g:7956:1: ruleSimpleProjectDescription
+            // InternalN4MFParser.g:7973:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:7974:1: ruleSimpleProjectDescription
             {
              before(grammarAccess.getProvidedRuntimeLibraryDependencyAccess().getProjectSimpleProjectDescriptionParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -20928,17 +20984,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RequiredRuntimeLibraryDependency__ProjectAssignment"
-    // InternalN4MFParser.g:7965:1: rule__RequiredRuntimeLibraryDependency__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
+    // InternalN4MFParser.g:7983:1: rule__RequiredRuntimeLibraryDependency__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
     public final void rule__RequiredRuntimeLibraryDependency__ProjectAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7969:1: ( ( ruleSimpleProjectDescription ) )
-            // InternalN4MFParser.g:7970:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:7987:1: ( ( ruleSimpleProjectDescription ) )
+            // InternalN4MFParser.g:7988:1: ( ruleSimpleProjectDescription )
             {
-            // InternalN4MFParser.g:7970:1: ( ruleSimpleProjectDescription )
-            // InternalN4MFParser.g:7971:1: ruleSimpleProjectDescription
+            // InternalN4MFParser.g:7988:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:7989:1: ruleSimpleProjectDescription
             {
              before(grammarAccess.getRequiredRuntimeLibraryDependencyAccess().getProjectSimpleProjectDescriptionParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -20969,17 +21025,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestedProject__ProjectAssignment"
-    // InternalN4MFParser.g:7980:1: rule__TestedProject__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
+    // InternalN4MFParser.g:7998:1: rule__TestedProject__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
     public final void rule__TestedProject__ProjectAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7984:1: ( ( ruleSimpleProjectDescription ) )
-            // InternalN4MFParser.g:7985:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8002:1: ( ( ruleSimpleProjectDescription ) )
+            // InternalN4MFParser.g:8003:1: ( ruleSimpleProjectDescription )
             {
-            // InternalN4MFParser.g:7985:1: ( ruleSimpleProjectDescription )
-            // InternalN4MFParser.g:7986:1: ruleSimpleProjectDescription
+            // InternalN4MFParser.g:8003:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8004:1: ruleSimpleProjectDescription
             {
              before(grammarAccess.getTestedProjectAccess().getProjectSimpleProjectDescriptionParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -21010,17 +21066,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectReference__ProjectAssignment"
-    // InternalN4MFParser.g:7995:1: rule__ProjectReference__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
+    // InternalN4MFParser.g:8013:1: rule__ProjectReference__ProjectAssignment : ( ruleSimpleProjectDescription ) ;
     public final void rule__ProjectReference__ProjectAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:7999:1: ( ( ruleSimpleProjectDescription ) )
-            // InternalN4MFParser.g:8000:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8017:1: ( ( ruleSimpleProjectDescription ) )
+            // InternalN4MFParser.g:8018:1: ( ruleSimpleProjectDescription )
             {
-            // InternalN4MFParser.g:8000:1: ( ruleSimpleProjectDescription )
-            // InternalN4MFParser.g:8001:1: ruleSimpleProjectDescription
+            // InternalN4MFParser.g:8018:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8019:1: ruleSimpleProjectDescription
             {
              before(grammarAccess.getProjectReferenceAccess().getProjectSimpleProjectDescriptionParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -21051,17 +21107,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__ProjectAssignment_0"
-    // InternalN4MFParser.g:8010:1: rule__ProjectDependency__ProjectAssignment_0 : ( ruleSimpleProjectDescription ) ;
+    // InternalN4MFParser.g:8028:1: rule__ProjectDependency__ProjectAssignment_0 : ( ruleSimpleProjectDescription ) ;
     public final void rule__ProjectDependency__ProjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8014:1: ( ( ruleSimpleProjectDescription ) )
-            // InternalN4MFParser.g:8015:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8032:1: ( ( ruleSimpleProjectDescription ) )
+            // InternalN4MFParser.g:8033:1: ( ruleSimpleProjectDescription )
             {
-            // InternalN4MFParser.g:8015:1: ( ruleSimpleProjectDescription )
-            // InternalN4MFParser.g:8016:1: ruleSimpleProjectDescription
+            // InternalN4MFParser.g:8033:1: ( ruleSimpleProjectDescription )
+            // InternalN4MFParser.g:8034:1: ruleSimpleProjectDescription
             {
              before(grammarAccess.getProjectDependencyAccess().getProjectSimpleProjectDescriptionParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -21092,17 +21148,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__VersionConstraintAssignment_1"
-    // InternalN4MFParser.g:8025:1: rule__ProjectDependency__VersionConstraintAssignment_1 : ( ruleVersionConstraint ) ;
+    // InternalN4MFParser.g:8043:1: rule__ProjectDependency__VersionConstraintAssignment_1 : ( ruleVersionConstraint ) ;
     public final void rule__ProjectDependency__VersionConstraintAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8029:1: ( ( ruleVersionConstraint ) )
-            // InternalN4MFParser.g:8030:1: ( ruleVersionConstraint )
+            // InternalN4MFParser.g:8047:1: ( ( ruleVersionConstraint ) )
+            // InternalN4MFParser.g:8048:1: ( ruleVersionConstraint )
             {
-            // InternalN4MFParser.g:8030:1: ( ruleVersionConstraint )
-            // InternalN4MFParser.g:8031:1: ruleVersionConstraint
+            // InternalN4MFParser.g:8048:1: ( ruleVersionConstraint )
+            // InternalN4MFParser.g:8049:1: ruleVersionConstraint
             {
              before(grammarAccess.getProjectDependencyAccess().getVersionConstraintVersionConstraintParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21133,17 +21189,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProjectDependency__DeclaredScopeAssignment_2"
-    // InternalN4MFParser.g:8040:1: rule__ProjectDependency__DeclaredScopeAssignment_2 : ( ruleProjectDependencyScope ) ;
+    // InternalN4MFParser.g:8058:1: rule__ProjectDependency__DeclaredScopeAssignment_2 : ( ruleProjectDependencyScope ) ;
     public final void rule__ProjectDependency__DeclaredScopeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8044:1: ( ( ruleProjectDependencyScope ) )
-            // InternalN4MFParser.g:8045:1: ( ruleProjectDependencyScope )
+            // InternalN4MFParser.g:8062:1: ( ( ruleProjectDependencyScope ) )
+            // InternalN4MFParser.g:8063:1: ( ruleProjectDependencyScope )
             {
-            // InternalN4MFParser.g:8045:1: ( ruleProjectDependencyScope )
-            // InternalN4MFParser.g:8046:1: ruleProjectDependencyScope
+            // InternalN4MFParser.g:8063:1: ( ruleProjectDependencyScope )
+            // InternalN4MFParser.g:8064:1: ruleProjectDependencyScope
             {
              before(grammarAccess.getProjectDependencyAccess().getDeclaredScopeProjectDependencyScopeEnumRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -21174,17 +21230,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0"
-    // InternalN4MFParser.g:8055:1: rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 : ( ruleN4mfIdentifier ) ;
+    // InternalN4MFParser.g:8073:1: rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0 : ( ruleN4mfIdentifier ) ;
     public final void rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8059:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:8060:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:8077:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:8078:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:8060:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:8061:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:8078:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:8079:1: ruleN4mfIdentifier
             {
              before(grammarAccess.getSimpleProjectDescriptionAccess().getDeclaredVendorIdN4mfIdentifierParserRuleCall_0_0_0()); 
             pushFollow(FOLLOW_2);
@@ -21214,26 +21270,26 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__SimpleProjectDescription__DeclaredVendorIdAssignment_0_0"
 
 
-    // $ANTLR start "rule__SimpleProjectDescription__ArtifactIdAssignment_1"
-    // InternalN4MFParser.g:8070:1: rule__SimpleProjectDescription__ArtifactIdAssignment_1 : ( ruleN4mfIdentifier ) ;
-    public final void rule__SimpleProjectDescription__ArtifactIdAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__SimpleProjectDescription__ProjectIdAssignment_1"
+    // InternalN4MFParser.g:8088:1: rule__SimpleProjectDescription__ProjectIdAssignment_1 : ( ruleN4mfIdentifier ) ;
+    public final void rule__SimpleProjectDescription__ProjectIdAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8074:1: ( ( ruleN4mfIdentifier ) )
-            // InternalN4MFParser.g:8075:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:8092:1: ( ( ruleN4mfIdentifier ) )
+            // InternalN4MFParser.g:8093:1: ( ruleN4mfIdentifier )
             {
-            // InternalN4MFParser.g:8075:1: ( ruleN4mfIdentifier )
-            // InternalN4MFParser.g:8076:1: ruleN4mfIdentifier
+            // InternalN4MFParser.g:8093:1: ( ruleN4mfIdentifier )
+            // InternalN4MFParser.g:8094:1: ruleN4mfIdentifier
             {
-             before(grammarAccess.getSimpleProjectDescriptionAccess().getArtifactIdN4mfIdentifierParserRuleCall_1_0()); 
+             before(grammarAccess.getSimpleProjectDescriptionAccess().getProjectIdN4mfIdentifierParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
             ruleN4mfIdentifier();
 
             state._fsp--;
 
-             after(grammarAccess.getSimpleProjectDescriptionAccess().getArtifactIdN4mfIdentifierParserRuleCall_1_0()); 
+             after(grammarAccess.getSimpleProjectDescriptionAccess().getProjectIdN4mfIdentifierParserRuleCall_1_0()); 
 
             }
 
@@ -21252,25 +21308,25 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SimpleProjectDescription__ArtifactIdAssignment_1"
+    // $ANTLR end "rule__SimpleProjectDescription__ProjectIdAssignment_1"
 
 
     // $ANTLR start "rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0"
-    // InternalN4MFParser.g:8085:1: rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 : ( ( LeftParenthesis ) ) ;
+    // InternalN4MFParser.g:8103:1: rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0 : ( ( LeftParenthesis ) ) ;
     public final void rule__VersionConstraint__ExclLowerBoundAssignment_0_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8089:1: ( ( ( LeftParenthesis ) ) )
-            // InternalN4MFParser.g:8090:1: ( ( LeftParenthesis ) )
+            // InternalN4MFParser.g:8107:1: ( ( ( LeftParenthesis ) ) )
+            // InternalN4MFParser.g:8108:1: ( ( LeftParenthesis ) )
             {
-            // InternalN4MFParser.g:8090:1: ( ( LeftParenthesis ) )
-            // InternalN4MFParser.g:8091:1: ( LeftParenthesis )
+            // InternalN4MFParser.g:8108:1: ( ( LeftParenthesis ) )
+            // InternalN4MFParser.g:8109:1: ( LeftParenthesis )
             {
              before(grammarAccess.getVersionConstraintAccess().getExclLowerBoundLeftParenthesisKeyword_0_0_0_0()); 
-            // InternalN4MFParser.g:8092:1: ( LeftParenthesis )
-            // InternalN4MFParser.g:8093:1: LeftParenthesis
+            // InternalN4MFParser.g:8110:1: ( LeftParenthesis )
+            // InternalN4MFParser.g:8111:1: LeftParenthesis
             {
              before(grammarAccess.getVersionConstraintAccess().getExclLowerBoundLeftParenthesisKeyword_0_0_0_0()); 
             match(input,LeftParenthesis,FOLLOW_2); 
@@ -21301,17 +21357,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__LowerVersionAssignment_0_1"
-    // InternalN4MFParser.g:8108:1: rule__VersionConstraint__LowerVersionAssignment_0_1 : ( ruleDeclaredVersion ) ;
+    // InternalN4MFParser.g:8126:1: rule__VersionConstraint__LowerVersionAssignment_0_1 : ( ruleDeclaredVersion ) ;
     public final void rule__VersionConstraint__LowerVersionAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8112:1: ( ( ruleDeclaredVersion ) )
-            // InternalN4MFParser.g:8113:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8130:1: ( ( ruleDeclaredVersion ) )
+            // InternalN4MFParser.g:8131:1: ( ruleDeclaredVersion )
             {
-            // InternalN4MFParser.g:8113:1: ( ruleDeclaredVersion )
-            // InternalN4MFParser.g:8114:1: ruleDeclaredVersion
+            // InternalN4MFParser.g:8131:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8132:1: ruleDeclaredVersion
             {
              before(grammarAccess.getVersionConstraintAccess().getLowerVersionDeclaredVersionParserRuleCall_0_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21342,17 +21398,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__UpperVersionAssignment_0_2_0_1"
-    // InternalN4MFParser.g:8123:1: rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 : ( ruleDeclaredVersion ) ;
+    // InternalN4MFParser.g:8141:1: rule__VersionConstraint__UpperVersionAssignment_0_2_0_1 : ( ruleDeclaredVersion ) ;
     public final void rule__VersionConstraint__UpperVersionAssignment_0_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8127:1: ( ( ruleDeclaredVersion ) )
-            // InternalN4MFParser.g:8128:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8145:1: ( ( ruleDeclaredVersion ) )
+            // InternalN4MFParser.g:8146:1: ( ruleDeclaredVersion )
             {
-            // InternalN4MFParser.g:8128:1: ( ruleDeclaredVersion )
-            // InternalN4MFParser.g:8129:1: ruleDeclaredVersion
+            // InternalN4MFParser.g:8146:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8147:1: ruleDeclaredVersion
             {
              before(grammarAccess.getVersionConstraintAccess().getUpperVersionDeclaredVersionParserRuleCall_0_2_0_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21383,21 +21439,21 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0"
-    // InternalN4MFParser.g:8138:1: rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 : ( ( RightParenthesis ) ) ;
+    // InternalN4MFParser.g:8156:1: rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0 : ( ( RightParenthesis ) ) ;
     public final void rule__VersionConstraint__ExclUpperBoundAssignment_0_2_0_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8142:1: ( ( ( RightParenthesis ) ) )
-            // InternalN4MFParser.g:8143:1: ( ( RightParenthesis ) )
+            // InternalN4MFParser.g:8160:1: ( ( ( RightParenthesis ) ) )
+            // InternalN4MFParser.g:8161:1: ( ( RightParenthesis ) )
             {
-            // InternalN4MFParser.g:8143:1: ( ( RightParenthesis ) )
-            // InternalN4MFParser.g:8144:1: ( RightParenthesis )
+            // InternalN4MFParser.g:8161:1: ( ( RightParenthesis ) )
+            // InternalN4MFParser.g:8162:1: ( RightParenthesis )
             {
              before(grammarAccess.getVersionConstraintAccess().getExclUpperBoundRightParenthesisKeyword_0_2_0_2_0_0()); 
-            // InternalN4MFParser.g:8145:1: ( RightParenthesis )
-            // InternalN4MFParser.g:8146:1: RightParenthesis
+            // InternalN4MFParser.g:8163:1: ( RightParenthesis )
+            // InternalN4MFParser.g:8164:1: RightParenthesis
             {
              before(grammarAccess.getVersionConstraintAccess().getExclUpperBoundRightParenthesisKeyword_0_2_0_2_0_0()); 
             match(input,RightParenthesis,FOLLOW_2); 
@@ -21428,17 +21484,17 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VersionConstraint__LowerVersionAssignment_1"
-    // InternalN4MFParser.g:8161:1: rule__VersionConstraint__LowerVersionAssignment_1 : ( ruleDeclaredVersion ) ;
+    // InternalN4MFParser.g:8179:1: rule__VersionConstraint__LowerVersionAssignment_1 : ( ruleDeclaredVersion ) ;
     public final void rule__VersionConstraint__LowerVersionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalN4MFParser.g:8165:1: ( ( ruleDeclaredVersion ) )
-            // InternalN4MFParser.g:8166:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8183:1: ( ( ruleDeclaredVersion ) )
+            // InternalN4MFParser.g:8184:1: ( ruleDeclaredVersion )
             {
-            // InternalN4MFParser.g:8166:1: ( ruleDeclaredVersion )
-            // InternalN4MFParser.g:8167:1: ruleDeclaredVersion
+            // InternalN4MFParser.g:8184:1: ( ruleDeclaredVersion )
+            // InternalN4MFParser.g:8185:1: ruleDeclaredVersion
             {
              before(grammarAccess.getVersionConstraintAccess().getLowerVersionDeclaredVersionParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21470,7 +21526,6 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     // Delegated rules
 
 
-    protected DFA37 dfa37 = new DFA37(this);
     protected DFA38 dfa38 = new DFA38(this);
     protected DFA39 dfa39 = new DFA39(this);
     protected DFA40 dfa40 = new DFA40(this);
@@ -21493,37 +21548,39 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     protected DFA57 dfa57 = new DFA57(this);
     protected DFA58 dfa58 = new DFA58(this);
     protected DFA59 dfa59 = new DFA59(this);
-    static final String dfa_1s = "\30\uffff";
-    static final String dfa_2s = "\1\uffff\14\24\1\uffff\3\24\1\uffff\2\24\2\uffff\2\24";
-    static final String dfa_3s = "\1\10\14\4\1\47\3\4\1\46\2\4\2\uffff\2\4";
-    static final String dfa_4s = "\1\67\14\70\1\47\3\70\1\46\2\70\2\uffff\2\70";
-    static final String dfa_5s = "\24\uffff\1\2\1\1\2\uffff";
-    static final String dfa_6s = "\30\uffff}>";
+    protected DFA60 dfa60 = new DFA60(this);
+    static final String dfa_1s = "\31\uffff";
+    static final String dfa_2s = "\1\uffff\15\25\1\uffff\3\25\1\uffff\2\25\2\uffff\2\25";
+    static final String dfa_3s = "\1\10\15\4\1\50\3\4\1\47\2\4\2\uffff\2\4";
+    static final String dfa_4s = "\1\70\15\71\1\50\3\71\1\47\2\71\2\uffff\2\71";
+    static final String dfa_5s = "\25\uffff\1\2\1\1\2\uffff";
+    static final String dfa_6s = "\31\uffff}>";
     static final String[] dfa_7s = {
-            "\1\15\2\uffff\1\7\2\uffff\1\14\4\uffff\1\4\1\6\1\20\1\2\2\uffff\1\5\1\uffff\1\11\1\12\1\21\1\3\2\uffff\1\13\1\uffff\1\22\1\uffff\1\10\3\uffff\1\23\1\17\1\16\13\uffff\1\1",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\1\26",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
+            "\1\16\2\uffff\1\10\2\uffff\1\15\4\uffff\1\5\1\7\1\21\1\2\2\uffff\1\6\1\uffff\1\12\1\3\1\13\1\22\1\4\2\uffff\1\14\1\uffff\1\23\1\uffff\1\11\3\uffff\1\24\1\20\1\17\13\uffff\1\1",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
             "\1\27",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\1\30",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
             "",
             "",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24",
-            "\5\24\1\uffff\3\24\1\uffff\2\24\2\uffff\3\24\1\uffff\4\24\1\uffff\2\24\1\uffff\1\24\2\uffff\2\24\2\uffff\1\24\3\uffff\1\24\3\uffff\1\24\1\uffff\1\24\2\uffff\1\25\1\24\2\uffff\1\24\1\uffff\1\24"
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25",
+            "\5\25\1\uffff\3\25\1\uffff\2\25\2\uffff\3\25\1\uffff\4\25\1\uffff\3\25\1\uffff\1\25\2\uffff\2\25\2\uffff\1\25\3\uffff\1\25\3\uffff\1\25\1\uffff\1\25\2\uffff\1\26\1\25\2\uffff\1\25\1\uffff\1\25"
     };
 
     static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
@@ -21534,11 +21591,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_6 = DFA.unpackEncodedString(dfa_6s);
     static final short[][] dfa_7 = unpackEncodedStringArray(dfa_7s);
 
-    class DFA37 extends DFA {
+    class DFA38 extends DFA {
 
-        public DFA37(BaseRecognizer recognizer) {
+        public DFA38(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 37;
+            this.decisionNumber = 38;
             this.eot = dfa_1;
             this.eof = dfa_2;
             this.min = dfa_3;
@@ -21548,16 +21605,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_7;
         }
         public String getDescription() {
-            return "6011:1: ( rule__SimpleProjectDescription__Group_0__0 )?";
+            return "6044:1: ( rule__SimpleProjectDescription__Group_0__0 )?";
         }
     }
     static final String dfa_8s = "\27\uffff";
     static final String dfa_9s = "\1\4\26\uffff";
-    static final String dfa_10s = "\1\45\26\uffff";
+    static final String dfa_10s = "\1\46\26\uffff";
     static final String dfa_11s = "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26";
     static final String dfa_12s = "\1\0\26\uffff}>";
     static final String[] dfa_13s = {
-            "\1\10\1\11\1\12\1\15\1\13\1\uffff\1\14\1\4\1\25\1\uffff\1\24\1\26\2\uffff\1\16\1\2\1\3\1\uffff\1\1\1\17\1\7\1\6\1\uffff\1\21\1\22\1\uffff\1\5\2\uffff\1\23\3\uffff\1\20",
+            "\1\10\1\11\1\12\1\15\1\13\1\uffff\1\14\1\4\1\25\1\uffff\1\24\1\26\2\uffff\1\16\1\2\1\3\1\uffff\1\1\1\17\1\7\1\6\1\uffff\1\21\1\1\1\22\1\uffff\1\5\2\uffff\1\23\3\uffff\1\20",
             "",
             "",
             "",
@@ -21589,11 +21646,11 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_12 = DFA.unpackEncodedString(dfa_12s);
     static final short[][] dfa_13 = unpackEncodedStringArray(dfa_13s);
 
-    class DFA38 extends DFA {
+    class DFA39 extends DFA {
 
-        public DFA38(BaseRecognizer recognizer) {
+        public DFA39(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 38;
+            this.decisionNumber = 39;
             this.eot = dfa_8;
             this.eof = dfa_8;
             this.min = dfa_9;
@@ -21603,127 +21660,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_13;
         }
         public String getDescription() {
-            return "6456:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )";
-        }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
-            TokenStream input = (TokenStream)_input;
-        	int _s = s;
-            switch ( s ) {
-                    case 0 : 
-                        int LA38_0 = input.LA(1);
-
-                         
-                        int index38_0 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( LA38_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
-
-                        else if ( LA38_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
-
-                        else if ( LA38_0 == ProjectType && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2) ) {s = 3;}
-
-                        else if ( LA38_0 == ProjectVersion && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3) ) {s = 4;}
-
-                        else if ( LA38_0 == VendorId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4) ) {s = 5;}
-
-                        else if ( LA38_0 == VendorName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5) ) {s = 6;}
-
-                        else if ( LA38_0 == MainModule && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6) ) {s = 7;}
-
-                        else if ( LA38_0 == ExtendedRuntimeEnvironment && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 7) ) {s = 8;}
-
-                        else if ( LA38_0 == ProvidedRuntimeLibraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 8) ) {s = 9;}
-
-                        else if ( LA38_0 == RequiredRuntimeLibraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 9) ) {s = 10;}
-
-                        else if ( LA38_0 == ProjectDependencies && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10) ) {s = 11;}
-
-                        else if ( LA38_0 == ImplementationId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11) ) {s = 12;}
-
-                        else if ( LA38_0 == ImplementedProjects && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 12) ) {s = 13;}
-
-                        else if ( LA38_0 == InitModules && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 13) ) {s = 14;}
-
-                        else if ( LA38_0 == ExecModule && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14) ) {s = 15;}
-
-                        else if ( LA38_0 == Output && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15) ) {s = 16;}
-
-                        else if ( LA38_0 == Libraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16) ) {s = 17;}
-
-                        else if ( LA38_0 == Resources && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17) ) {s = 18;}
-
-                        else if ( LA38_0 == Sources && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18) ) {s = 19;}
-
-                        else if ( LA38_0 == ModuleFilters && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19) ) {s = 20;}
-
-                        else if ( LA38_0 == TestedProjects && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20) ) {s = 21;}
-
-                        else if ( LA38_0 == ModuleLoader && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21) ) {s = 22;}
-
-                         
-                        input.seek(index38_0);
-                        if ( s>=0 ) return s;
-                        break;
-            }
-            NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 38, _s, input);
-            error(nvae);
-            throw nvae;
-        }
-    }
-    static final String dfa_14s = "\1\27\27\uffff";
-    static final String dfa_15s = "\1\4\27\uffff";
-    static final String dfa_16s = "\1\45\27\uffff";
-    static final String dfa_17s = "\1\uffff\26\1\1\2";
-    static final String dfa_18s = "\1\0\27\uffff}>";
-    static final String[] dfa_19s = {
-            "\1\10\1\11\1\12\1\15\1\13\1\uffff\1\14\1\4\1\25\1\uffff\1\24\1\26\2\uffff\1\16\1\2\1\3\1\uffff\1\1\1\17\1\7\1\6\1\uffff\1\21\1\22\1\uffff\1\5\2\uffff\1\23\3\uffff\1\20",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-    };
-    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
-    static final char[] dfa_15 = DFA.unpackEncodedStringToUnsignedChars(dfa_15s);
-    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
-    static final short[] dfa_17 = DFA.unpackEncodedString(dfa_17s);
-    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
-    static final short[][] dfa_19 = unpackEncodedStringArray(dfa_19s);
-
-    class DFA39 extends DFA {
-
-        public DFA39(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 39;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
-        }
-        public String getDescription() {
-            return "6847:2: ( rule__ProjectDescription__UnorderedGroup__1 )?";
+            return "6489:3: ( ({...}? => ( ( ( rule__ProjectDescription__Group_0__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_1__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_2__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_3__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_4__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_5__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_6__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExtendedRuntimeEnvironmentAssignment_7 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProvidedRuntimeLibrariesAssignment_8 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__RequiredRuntimeLibrariesAssignment_9 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ProjectDependenciesAssignment_10 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_11__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ImplementedProjectsAssignment_12 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__InitModulesAssignment_13 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__ExecModuleAssignment_14 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_15__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_16__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_17__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_18__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_19__0 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__TestedProjectsAssignment_20 ) ) ) ) | ({...}? => ( ( ( rule__ProjectDescription__Group_21__0 ) ) ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -21736,7 +21673,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index39_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA39_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA39_0 == ArtifactId || LA39_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA39_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -21780,8 +21717,6 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
 
                         else if ( LA39_0 == ModuleLoader && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21) ) {s = 22;}
 
-                        else if ( (LA39_0==EOF) ) {s = 23;}
-
                          
                         input.seek(index39_0);
                         if ( s>=0 ) return s;
@@ -21793,22 +21728,62 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+    static final String dfa_14s = "\30\uffff";
+    static final String dfa_15s = "\1\27\27\uffff";
+    static final String dfa_16s = "\1\4\27\uffff";
+    static final String dfa_17s = "\1\46\27\uffff";
+    static final String dfa_18s = "\1\uffff\26\1\1\2";
+    static final String dfa_19s = "\1\0\27\uffff}>";
+    static final String[] dfa_20s = {
+            "\1\10\1\11\1\12\1\15\1\13\1\uffff\1\14\1\4\1\25\1\uffff\1\24\1\26\2\uffff\1\16\1\2\1\3\1\uffff\1\1\1\17\1\7\1\6\1\uffff\1\21\1\1\1\22\1\uffff\1\5\2\uffff\1\23\3\uffff\1\20",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+    };
+
+    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
+    static final short[] dfa_15 = DFA.unpackEncodedString(dfa_15s);
+    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
+    static final char[] dfa_17 = DFA.unpackEncodedStringToUnsignedChars(dfa_17s);
+    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
+    static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
+    static final short[][] dfa_20 = unpackEncodedStringArray(dfa_20s);
 
     class DFA40 extends DFA {
 
         public DFA40(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 40;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6860:2: ( rule__ProjectDescription__UnorderedGroup__2 )?";
+            return "6880:2: ( rule__ProjectDescription__UnorderedGroup__1 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -21821,7 +21796,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index40_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA40_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA40_0 == ArtifactId || LA40_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA40_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -21884,16 +21859,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA41(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 41;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6873:2: ( rule__ProjectDescription__UnorderedGroup__3 )?";
+            return "6893:2: ( rule__ProjectDescription__UnorderedGroup__2 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -21906,7 +21881,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index41_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA41_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA41_0 == ArtifactId || LA41_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA41_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -21969,16 +21944,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA42(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 42;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6886:2: ( rule__ProjectDescription__UnorderedGroup__4 )?";
+            return "6906:2: ( rule__ProjectDescription__UnorderedGroup__3 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -21991,7 +21966,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index42_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA42_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA42_0 == ArtifactId || LA42_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA42_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22054,16 +22029,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA43(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 43;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6899:2: ( rule__ProjectDescription__UnorderedGroup__5 )?";
+            return "6919:2: ( rule__ProjectDescription__UnorderedGroup__4 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22076,7 +22051,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index43_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA43_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA43_0 == ArtifactId || LA43_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA43_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22139,16 +22114,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA44(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 44;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6912:2: ( rule__ProjectDescription__UnorderedGroup__6 )?";
+            return "6932:2: ( rule__ProjectDescription__UnorderedGroup__5 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22161,7 +22136,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index44_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA44_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA44_0 == ArtifactId || LA44_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA44_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22224,16 +22199,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA45(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 45;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6925:2: ( rule__ProjectDescription__UnorderedGroup__7 )?";
+            return "6945:2: ( rule__ProjectDescription__UnorderedGroup__6 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22246,7 +22221,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index45_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA45_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA45_0 == ArtifactId || LA45_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA45_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22309,16 +22284,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA46(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 46;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6938:2: ( rule__ProjectDescription__UnorderedGroup__8 )?";
+            return "6958:2: ( rule__ProjectDescription__UnorderedGroup__7 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22331,7 +22306,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index46_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA46_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA46_0 == ArtifactId || LA46_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA46_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22394,16 +22369,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA47(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 47;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6951:2: ( rule__ProjectDescription__UnorderedGroup__9 )?";
+            return "6971:2: ( rule__ProjectDescription__UnorderedGroup__8 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22416,7 +22391,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index47_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA47_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA47_0 == ArtifactId || LA47_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA47_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22479,16 +22454,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA48(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 48;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6964:2: ( rule__ProjectDescription__UnorderedGroup__10 )?";
+            return "6984:2: ( rule__ProjectDescription__UnorderedGroup__9 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22501,7 +22476,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index48_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA48_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA48_0 == ArtifactId || LA48_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA48_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22564,16 +22539,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA49(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 49;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6977:2: ( rule__ProjectDescription__UnorderedGroup__11 )?";
+            return "6997:2: ( rule__ProjectDescription__UnorderedGroup__10 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22586,7 +22561,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index49_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA49_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA49_0 == ArtifactId || LA49_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA49_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22649,16 +22624,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA50(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 50;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "6990:2: ( rule__ProjectDescription__UnorderedGroup__12 )?";
+            return "7010:2: ( rule__ProjectDescription__UnorderedGroup__11 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22671,7 +22646,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index50_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA50_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA50_0 == ArtifactId || LA50_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA50_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22734,16 +22709,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA51(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 51;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7003:2: ( rule__ProjectDescription__UnorderedGroup__13 )?";
+            return "7023:2: ( rule__ProjectDescription__UnorderedGroup__12 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22756,7 +22731,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index51_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA51_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA51_0 == ArtifactId || LA51_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA51_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22819,16 +22794,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA52(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 52;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7016:2: ( rule__ProjectDescription__UnorderedGroup__14 )?";
+            return "7036:2: ( rule__ProjectDescription__UnorderedGroup__13 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22841,7 +22816,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index52_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA52_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA52_0 == ArtifactId || LA52_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA52_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22904,16 +22879,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA53(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 53;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7029:2: ( rule__ProjectDescription__UnorderedGroup__15 )?";
+            return "7049:2: ( rule__ProjectDescription__UnorderedGroup__14 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -22926,7 +22901,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index53_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA53_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA53_0 == ArtifactId || LA53_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA53_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -22989,16 +22964,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA54(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 54;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7042:2: ( rule__ProjectDescription__UnorderedGroup__16 )?";
+            return "7062:2: ( rule__ProjectDescription__UnorderedGroup__15 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23011,7 +22986,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index54_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA54_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA54_0 == ArtifactId || LA54_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA54_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23074,16 +23049,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA55(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 55;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7055:2: ( rule__ProjectDescription__UnorderedGroup__17 )?";
+            return "7075:2: ( rule__ProjectDescription__UnorderedGroup__16 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23096,7 +23071,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index55_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA55_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA55_0 == ArtifactId || LA55_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA55_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23159,16 +23134,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA56(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 56;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7068:2: ( rule__ProjectDescription__UnorderedGroup__18 )?";
+            return "7088:2: ( rule__ProjectDescription__UnorderedGroup__17 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23181,7 +23156,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index56_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA56_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA56_0 == ArtifactId || LA56_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA56_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23244,16 +23219,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA57(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 57;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7081:2: ( rule__ProjectDescription__UnorderedGroup__19 )?";
+            return "7101:2: ( rule__ProjectDescription__UnorderedGroup__18 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23266,7 +23241,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index57_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA57_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA57_0 == ArtifactId || LA57_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA57_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23329,16 +23304,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA58(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 58;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7094:2: ( rule__ProjectDescription__UnorderedGroup__20 )?";
+            return "7114:2: ( rule__ProjectDescription__UnorderedGroup__19 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23351,7 +23326,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index58_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA58_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA58_0 == ArtifactId || LA58_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA58_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23414,16 +23389,16 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
         public DFA59(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 59;
-            this.eot = dfa_1;
-            this.eof = dfa_14;
-            this.min = dfa_15;
-            this.max = dfa_16;
-            this.accept = dfa_17;
-            this.special = dfa_18;
-            this.transition = dfa_19;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
         }
         public String getDescription() {
-            return "7107:2: ( rule__ProjectDescription__UnorderedGroup__21 )?";
+            return "7127:2: ( rule__ProjectDescription__UnorderedGroup__20 )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -23436,7 +23411,7 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
                         int index59_0 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( LA59_0 == ArtifactId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+                        if ( ( LA59_0 == ArtifactId || LA59_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
 
                         else if ( LA59_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
 
@@ -23493,43 +23468,128 @@ public class InternalN4MFParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+
+    class DFA60 extends DFA {
+
+        public DFA60(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 60;
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
+        }
+        public String getDescription() {
+            return "7140:2: ( rule__ProjectDescription__UnorderedGroup__21 )?";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA60_0 = input.LA(1);
+
+                         
+                        int index60_0 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( ( LA60_0 == ArtifactId || LA60_0 == ProjectId ) && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0) ) {s = 1;}
+
+                        else if ( LA60_0 == ProjectName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1) ) {s = 2;}
+
+                        else if ( LA60_0 == ProjectType && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2) ) {s = 3;}
+
+                        else if ( LA60_0 == ProjectVersion && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3) ) {s = 4;}
+
+                        else if ( LA60_0 == VendorId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4) ) {s = 5;}
+
+                        else if ( LA60_0 == VendorName && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5) ) {s = 6;}
+
+                        else if ( LA60_0 == MainModule && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6) ) {s = 7;}
+
+                        else if ( LA60_0 == ExtendedRuntimeEnvironment && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 7) ) {s = 8;}
+
+                        else if ( LA60_0 == ProvidedRuntimeLibraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 8) ) {s = 9;}
+
+                        else if ( LA60_0 == RequiredRuntimeLibraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 9) ) {s = 10;}
+
+                        else if ( LA60_0 == ProjectDependencies && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10) ) {s = 11;}
+
+                        else if ( LA60_0 == ImplementationId && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11) ) {s = 12;}
+
+                        else if ( LA60_0 == ImplementedProjects && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 12) ) {s = 13;}
+
+                        else if ( LA60_0 == InitModules && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 13) ) {s = 14;}
+
+                        else if ( LA60_0 == ExecModule && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14) ) {s = 15;}
+
+                        else if ( LA60_0 == Output && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15) ) {s = 16;}
+
+                        else if ( LA60_0 == Libraries && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16) ) {s = 17;}
+
+                        else if ( LA60_0 == Resources && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17) ) {s = 18;}
+
+                        else if ( LA60_0 == Sources && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18) ) {s = 19;}
+
+                        else if ( LA60_0 == ModuleFilters && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19) ) {s = 20;}
+
+                        else if ( LA60_0 == TestedProjects && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20) ) {s = 21;}
+
+                        else if ( LA60_0 == ModuleLoader && getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21) ) {s = 22;}
+
+                        else if ( (LA60_0==EOF) ) {s = 23;}
+
+                         
+                        input.seek(index60_0);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 60, _s, input);
+            error(nvae);
+            throw nvae;
+        }
+    }
  
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00800E2A7A784900L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x00000A1020202200L});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0020000000000000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0040800000000000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000800000000002L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000024100000000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000024100000002L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x01001C54FA784900L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0400000000000000L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000142040202200L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0040000000000000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0081000000000000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000048200000000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000048200000002L});
     public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000004010000L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000004010002L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000010080020000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000020100020000L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000800000L});
     public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x00C00E2A7A784900L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x01801C54FA784900L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0001000000000000L});
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0240000000000000L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0480000000000000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000100L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0003000000000000L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0108220400000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000C00000000000L});
-    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0010400000000000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000004000000000L});
-    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x000000225BDCDDF2L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0006000000000000L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0210440800000000L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0001800000000000L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000010000000000L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x00000044BBDCDDF2L});
 
 }

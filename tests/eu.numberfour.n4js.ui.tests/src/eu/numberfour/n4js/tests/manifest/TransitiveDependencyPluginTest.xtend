@@ -51,7 +51,7 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		dependendProject.addProjectToDependencies(dependsOn.project.name)
 	}
 
-	def void addProjectToDependencies(IProject dependendProject, String artifactId) {
+	def void addProjectToDependencies(IProject dependendProject, String projectId) {
 		val uri = URI.createPlatformResourceURI(dependendProject.project.getFile("manifest.n4mf").fullPath.toString, true);
 		val rs = getResourceSet(dependendProject.project);
 		val resource = rs.getResource(uri, true);
@@ -59,7 +59,7 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		val dependency = N4mfFactory.eINSTANCE.createProjectDependency
 		val otherProject = N4mfFactory.eINSTANCE.createSimpleProjectDescription
 		pd.projectDependencies = N4mfFactory.eINSTANCE.createProjectDependencies
-		otherProject.setArtifactId(artifactId)
+		otherProject.setProjectId(projectId)
 		dependency.setProject(otherProject)
 		pd.projectDependencies.projectDependencies.add(dependency)
 		resource.save(null)
