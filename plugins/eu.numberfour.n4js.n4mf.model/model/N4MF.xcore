@@ -23,8 +23,8 @@
 package eu.numberfour.n4js.n4mf
 
 /**
- * Describes a project by making it identifiable by vendor id, artifact id and
- * declared version. projectName and vendorName contain the more meaningful names.
+ * Describes a project by making it identifiable by projectId, vendorId and
+ * declared version.
  *
  * The project type defines how a project should be bundled.
  *
@@ -163,9 +163,7 @@ class RequiredRuntimeLibraries {
 
 /**
  * Properties that makes a project unique among other projects (without considering the version).
- * The vendor id identifies the vendor of this project, a more meaningful name is provided in
- * Project.vendorName. The artifact id identifies the project, a more meaningful name is provided
- * in Project.projectName.
+ * The vendorId identifies the vendor of this project. The projectId identifies the project.
  */
 class SimpleProjectDescription {
 	/**
@@ -173,7 +171,7 @@ class SimpleProjectDescription {
 	 */
 	String declaredVendorId
 	/**
-	 * will be mapped to Maven pom's artifactId, cf. Eclipse's manifest symbolic name
+	 * will be mapped to Maven pom's projectId, cf. Eclipse's manifest symbolic name
 	 */
 	String projectId
 	op String getVendorId() {
@@ -332,8 +330,8 @@ class ProvidedRuntimeLibraryDependency extends RuntimeProjectDependency {
 
 
 /**
- * Defines a unique project dependency by identifying a project by vendorId
- * and artifactId. The allowed version can be defined either in a range by
+ * Defines a unique project dependency by identifying a project by
+ * projectId. The allowed version can be defined either in a range by
  * stating lower and upper version bound or by stating only one version.
  * So lowerVersionBound and upperVersionBound should be null if exactVersion
  * is and vice versa. The project dependency scope defines whether the

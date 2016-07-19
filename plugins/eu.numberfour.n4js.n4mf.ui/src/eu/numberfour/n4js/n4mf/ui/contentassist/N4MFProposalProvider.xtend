@@ -168,11 +168,11 @@ class N4MFProposalProvider extends AbstractN4MFProposalProvider {
 			}
 			val assignment = ruleCall?.eContainer as Assignment;
 			switch(assignment.feature) {
-				case projectDescriptionAccess.extendedRuntimeEnvironmentAssignment_7.feature: {
+				case projectDescriptionAccess.extendedRuntimeEnvironmentAssignment_6.feature: {
 					val currentExtendedREId = desc?.extendedRuntimeEnvironment?.extendedRuntimeEnvironment?.projectId;
 					completeProposal(desc, ctx, acceptor, RE_TYPE.forDescriptionMinis, singleton(currentExtendedREId));
 				}
-				case projectDescriptionAccess.implementedProjectsAssignment_12.feature: {
+				case projectDescriptionAccess.implementedProjectsAssignment_11.feature: {
 					val ignoredIds = desc.allImplementedProjects.map[projectId];
 					val predicate = if (TEST == projectType) not(RE_OR_RL_TYPE) else not(or(RE_OR_RL_TYPE, TEST_TYPE));
 					completeProposal(desc, ctx, acceptor, predicate.forDescriptionMinis, ignoredIds);
