@@ -15,8 +15,8 @@ package eu.numberfour.n4js.n4mf;
  *
  * <!-- begin-model-doc -->
  * *
- * Defines a unique project dependency by identifying a project by vendorId
- * and artifactId. The allowed version can be defined either in a range by
+ * Defines a unique project dependency by identifying a project by
+ * projectId. The allowed version can be defined either in a range by
  * stating lower and upper version bound or by stating only one version.
  * So lowerVersionBound and upperVersionBound should be null if exactVersion
  * is and vice versa. The project dependency scope defines whether the

@@ -16,8 +16,8 @@ import org.eclipse.emf.common.util.EList;
  *
  * <!-- begin-model-doc -->
  * *
- * Describes a project by making it identifiable by vendor id, artifact id and
- * declared version. projectName and vendorName contain the more meaningful names.
+ * Describes a project by making it identifiable by projectId, vendorId and
+ * declared version.
  *  * The project type defines how a project should be bundled.
  *  * Project paths decide about which resources should be bundled and be visible
  * to other projects that list this project as dependency. So e.g. the files

@@ -86,35 +86,29 @@ ruleProjectDescription returns [EObject current=null]
 					{ 
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 0);
 	 				}
-					({true}?=>((
-	otherlv_1=ArtifactId
+					({true}?=>(
+	otherlv_1=ProjectId
     {
-    	newLeafNode(otherlv_1, grammarAccess.getProjectDescriptionAccess().getArtifactIdKeyword_0_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getProjectDescriptionAccess().getProjectIdKeyword_0_0());
     }
 
-    |
-	otherlv_2=ProjectId
+	otherlv_2=Colon
     {
-    	newLeafNode(otherlv_2, grammarAccess.getProjectDescriptionAccess().getProjectIdKeyword_0_0_1());
-    }
-)
-	otherlv_3=Colon
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getProjectDescriptionAccess().getColonKeyword_0_1());
+    	newLeafNode(otherlv_2, grammarAccess.getProjectDescriptionAccess().getColonKeyword_0_1());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectIdN4mfIdentifierParserRuleCall_0_2_0()); 
 	    }
-		lv_projectId_4_0=ruleN4mfIdentifier		{
+		lv_projectId_3_0=ruleN4mfIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
        			"projectId",
-        		lv_projectId_4_0, 
+        		lv_projectId_3_0, 
         		"eu.numberfour.n4js.n4mf.N4MF.N4mfIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -133,20 +127,34 @@ ruleProjectDescription returns [EObject current=null]
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 1);
 	 				}
 					({true}?=>(
-	otherlv_5=ProjectName
+	otherlv_4=ProjectType
     {
-    	newLeafNode(otherlv_5, grammarAccess.getProjectDescriptionAccess().getProjectNameKeyword_1_0());
+    	newLeafNode(otherlv_4, grammarAccess.getProjectDescriptionAccess().getProjectTypeKeyword_1_0());
     }
 
-	otherlv_6=Colon
+	otherlv_5=Colon
     {
-    	newLeafNode(otherlv_6, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1());
+    	newLeafNode(otherlv_5, grammarAccess.getProjectDescriptionAccess().getColonKeyword_1_1());
     }
-this_STRING_7=RULE_STRING
-    { 
-    newLeafNode(this_STRING_7, grammarAccess.getProjectDescriptionAccess().getSTRINGTerminalRuleCall_1_2()); 
-    }
-))
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectTypeProjectTypeEnumRuleCall_1_2_0()); 
+	    }
+		lv_projectType_6_0=ruleProjectType		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
+	        }
+       		set(
+       			$current, 
+       			"projectType",
+        		lv_projectType_6_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ProjectType");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
 					{ 
 	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
 	 				}
@@ -159,29 +167,29 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 2);
 	 				}
 					({true}?=>(
-	otherlv_8=ProjectType
+	otherlv_7=ProjectVersion
     {
-    	newLeafNode(otherlv_8, grammarAccess.getProjectDescriptionAccess().getProjectTypeKeyword_2_0());
+    	newLeafNode(otherlv_7, grammarAccess.getProjectDescriptionAccess().getProjectVersionKeyword_2_0());
     }
 
-	otherlv_9=Colon
+	otherlv_8=Colon
     {
-    	newLeafNode(otherlv_9, grammarAccess.getProjectDescriptionAccess().getColonKeyword_2_1());
+    	newLeafNode(otherlv_8, grammarAccess.getProjectDescriptionAccess().getColonKeyword_2_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectTypeProjectTypeEnumRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectVersionDeclaredVersionParserRuleCall_2_2_0()); 
 	    }
-		lv_projectType_10_0=ruleProjectType		{
+		lv_projectVersion_9_0=ruleDeclaredVersion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"projectType",
-        		lv_projectType_10_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ProjectType");
+       			"projectVersion",
+        		lv_projectVersion_9_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.DeclaredVersion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -199,29 +207,29 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 3);
 	 				}
 					({true}?=>(
-	otherlv_11=ProjectVersion
+	otherlv_10=VendorId
     {
-    	newLeafNode(otherlv_11, grammarAccess.getProjectDescriptionAccess().getProjectVersionKeyword_3_0());
+    	newLeafNode(otherlv_10, grammarAccess.getProjectDescriptionAccess().getVendorIdKeyword_3_0());
     }
 
-	otherlv_12=Colon
+	otherlv_11=Colon
     {
-    	newLeafNode(otherlv_12, grammarAccess.getProjectDescriptionAccess().getColonKeyword_3_1());
+    	newLeafNode(otherlv_11, grammarAccess.getProjectDescriptionAccess().getColonKeyword_3_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectVersionDeclaredVersionParserRuleCall_3_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getDeclaredVendorIdN4mfIdentifierParserRuleCall_3_2_0()); 
 	    }
-		lv_projectVersion_13_0=ruleDeclaredVersion		{
+		lv_declaredVendorId_12_0=ruleN4mfIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"projectVersion",
-        		lv_projectVersion_13_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.DeclaredVersion");
+       			"declaredVendorId",
+        		lv_declaredVendorId_12_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.N4mfIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -239,30 +247,30 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 4);
 	 				}
 					({true}?=>(
-	otherlv_14=VendorId
+	otherlv_13=VendorName
     {
-    	newLeafNode(otherlv_14, grammarAccess.getProjectDescriptionAccess().getVendorIdKeyword_4_0());
+    	newLeafNode(otherlv_13, grammarAccess.getProjectDescriptionAccess().getVendorNameKeyword_4_0());
     }
 
-	otherlv_15=Colon
+	otherlv_14=Colon
     {
-    	newLeafNode(otherlv_15, grammarAccess.getProjectDescriptionAccess().getColonKeyword_4_1());
+    	newLeafNode(otherlv_14, grammarAccess.getProjectDescriptionAccess().getColonKeyword_4_1());
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getDeclaredVendorIdN4mfIdentifierParserRuleCall_4_2_0()); 
-	    }
-		lv_declaredVendorId_16_0=ruleN4mfIdentifier		{
+		lv_vendorName_15_0=RULE_STRING
+		{
+			newLeafNode(lv_vendorName_15_0, grammarAccess.getProjectDescriptionAccess().getVendorNameSTRINGTerminalRuleCall_4_2_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
+	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
-       			"declaredVendorId",
-        		lv_declaredVendorId_16_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.N4mfIdentifier");
-	        afterParserOrEnumRuleCall();
+       			"vendorName",
+        		lv_vendorName_15_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -279,20 +287,20 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 5);
 	 				}
 					({true}?=>(
-	otherlv_17=VendorName
+	otherlv_16=MainModule
     {
-    	newLeafNode(otherlv_17, grammarAccess.getProjectDescriptionAccess().getVendorNameKeyword_5_0());
+    	newLeafNode(otherlv_16, grammarAccess.getProjectDescriptionAccess().getMainModuleKeyword_5_0());
     }
 
-	otherlv_18=Colon
+	otherlv_17=Colon
     {
-    	newLeafNode(otherlv_18, grammarAccess.getProjectDescriptionAccess().getColonKeyword_5_1());
+    	newLeafNode(otherlv_17, grammarAccess.getProjectDescriptionAccess().getColonKeyword_5_1());
     }
 (
 (
-		lv_vendorName_19_0=RULE_STRING
+		lv_mainModule_18_0=RULE_STRING
 		{
-			newLeafNode(lv_vendorName_19_0, grammarAccess.getProjectDescriptionAccess().getVendorNameSTRINGTerminalRuleCall_5_2_0()); 
+			newLeafNode(lv_mainModule_18_0, grammarAccess.getProjectDescriptionAccess().getMainModuleSTRINGTerminalRuleCall_5_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -300,8 +308,8 @@ this_STRING_7=RULE_STRING
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"vendorName",
-        		lv_vendorName_19_0, 
+       			"mainModule",
+        		lv_mainModule_18_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
@@ -319,34 +327,24 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 6);
 	 				}
 					({true}?=>(
-	otherlv_20=MainModule
-    {
-    	newLeafNode(otherlv_20, grammarAccess.getProjectDescriptionAccess().getMainModuleKeyword_6_0());
-    }
-
-	otherlv_21=Colon
-    {
-    	newLeafNode(otherlv_21, grammarAccess.getProjectDescriptionAccess().getColonKeyword_6_1());
-    }
 (
-(
-		lv_mainModule_22_0=RULE_STRING
-		{
-			newLeafNode(lv_mainModule_22_0, grammarAccess.getProjectDescriptionAccess().getMainModuleSTRINGTerminalRuleCall_6_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getExtendedRuntimeEnvironmentExtendedRuntimeEnvironmentParserRuleCall_6_0()); 
+	    }
+		lv_extendedRuntimeEnvironment_19_0=ruleExtendedRuntimeEnvironment		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
+	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
-       			"mainModule",
-        		lv_mainModule_22_0, 
-        		"org.eclipse.xtext.common.Terminals.STRING");
+       			"extendedRuntimeEnvironment",
+        		lv_extendedRuntimeEnvironment_19_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ExtendedRuntimeEnvironment");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)))
+))
 					{ 
 	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
 	 				}
@@ -361,17 +359,17 @@ this_STRING_7=RULE_STRING
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getExtendedRuntimeEnvironmentExtendedRuntimeEnvironmentParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProvidedRuntimeLibrariesProvidedRuntimeLibrariesParserRuleCall_7_0()); 
 	    }
-		lv_extendedRuntimeEnvironment_23_0=ruleExtendedRuntimeEnvironment		{
+		lv_providedRuntimeLibraries_20_0=ruleProvidedRuntimeLibraries		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"extendedRuntimeEnvironment",
-        		lv_extendedRuntimeEnvironment_23_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ExtendedRuntimeEnvironment");
+       			"providedRuntimeLibraries",
+        		lv_providedRuntimeLibraries_20_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ProvidedRuntimeLibraries");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -391,17 +389,17 @@ this_STRING_7=RULE_STRING
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProvidedRuntimeLibrariesProvidedRuntimeLibrariesParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getRequiredRuntimeLibrariesRequiredRuntimeLibrariesParserRuleCall_8_0()); 
 	    }
-		lv_providedRuntimeLibraries_24_0=ruleProvidedRuntimeLibraries		{
+		lv_requiredRuntimeLibraries_21_0=ruleRequiredRuntimeLibraries		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"providedRuntimeLibraries",
-        		lv_providedRuntimeLibraries_24_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ProvidedRuntimeLibraries");
+       			"requiredRuntimeLibraries",
+        		lv_requiredRuntimeLibraries_21_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.RequiredRuntimeLibraries");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -421,17 +419,17 @@ this_STRING_7=RULE_STRING
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getRequiredRuntimeLibrariesRequiredRuntimeLibrariesParserRuleCall_9_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectDependenciesProjectDependenciesParserRuleCall_9_0()); 
 	    }
-		lv_requiredRuntimeLibraries_25_0=ruleRequiredRuntimeLibraries		{
+		lv_projectDependencies_22_0=ruleProjectDependencies		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"requiredRuntimeLibraries",
-        		lv_requiredRuntimeLibraries_25_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.RequiredRuntimeLibraries");
+       			"projectDependencies",
+        		lv_projectDependencies_22_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ProjectDependencies");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -449,24 +447,34 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 10);
 	 				}
 					({true}?=>(
+	otherlv_23=ImplementationId
+    {
+    	newLeafNode(otherlv_23, grammarAccess.getProjectDescriptionAccess().getImplementationIdKeyword_10_0());
+    }
+
+	otherlv_24=Colon
+    {
+    	newLeafNode(otherlv_24, grammarAccess.getProjectDescriptionAccess().getColonKeyword_10_1());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getProjectDependenciesProjectDependenciesParserRuleCall_10_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getImplementationIdN4mfIdentifierParserRuleCall_10_2_0()); 
 	    }
-		lv_projectDependencies_26_0=ruleProjectDependencies		{
+		lv_implementationId_25_0=ruleN4mfIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"projectDependencies",
-        		lv_projectDependencies_26_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ProjectDependencies");
+       			"implementationId",
+        		lv_implementationId_25_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.N4mfIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)))
 					{ 
 	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
 	 				}
@@ -479,34 +487,24 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 11);
 	 				}
 					({true}?=>(
-	otherlv_27=ImplementationId
-    {
-    	newLeafNode(otherlv_27, grammarAccess.getProjectDescriptionAccess().getImplementationIdKeyword_11_0());
-    }
-
-	otherlv_28=Colon
-    {
-    	newLeafNode(otherlv_28, grammarAccess.getProjectDescriptionAccess().getColonKeyword_11_1());
-    }
-(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getImplementationIdN4mfIdentifierParserRuleCall_11_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getImplementedProjectsImplementedProjectsParserRuleCall_11_0()); 
 	    }
-		lv_implementationId_29_0=ruleN4mfIdentifier		{
+		lv_implementedProjects_26_0=ruleImplementedProjects		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"implementationId",
-        		lv_implementationId_29_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.N4mfIdentifier");
+       			"implementedProjects",
+        		lv_implementedProjects_26_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ImplementedProjects");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)))
+))
 					{ 
 	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
 	 				}
@@ -521,17 +519,17 @@ this_STRING_7=RULE_STRING
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getImplementedProjectsImplementedProjectsParserRuleCall_12_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getInitModulesInitModulesParserRuleCall_12_0()); 
 	    }
-		lv_implementedProjects_30_0=ruleImplementedProjects		{
+		lv_initModules_27_0=ruleInitModules		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"implementedProjects",
-        		lv_implementedProjects_30_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ImplementedProjects");
+       			"initModules",
+        		lv_initModules_27_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.InitModules");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -551,17 +549,17 @@ this_STRING_7=RULE_STRING
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getInitModulesInitModulesParserRuleCall_13_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getExecModuleExecModuleParserRuleCall_13_0()); 
 	    }
-		lv_initModules_31_0=ruleInitModules		{
+		lv_execModule_28_0=ruleExecModule		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
-       			"initModules",
-        		lv_initModules_31_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.InitModules");
+       			"execModule",
+        		lv_execModule_28_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ExecModule");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -579,50 +577,20 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 14);
 	 				}
 					({true}?=>(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getExecModuleExecModuleParserRuleCall_14_0()); 
-	    }
-		lv_execModule_32_0=ruleExecModule		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
-	        }
-       		set(
-       			$current, 
-       			"execModule",
-        		lv_execModule_32_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ExecModule");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
-	 				}
- 				)
-			)  |
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15);
-	 				}
-					({true}?=>(
-	otherlv_33=Output
+	otherlv_29=Output
     {
-    	newLeafNode(otherlv_33, grammarAccess.getProjectDescriptionAccess().getOutputKeyword_15_0());
+    	newLeafNode(otherlv_29, grammarAccess.getProjectDescriptionAccess().getOutputKeyword_14_0());
     }
 
-	otherlv_34=Colon
+	otherlv_30=Colon
     {
-    	newLeafNode(otherlv_34, grammarAccess.getProjectDescriptionAccess().getColonKeyword_15_1());
+    	newLeafNode(otherlv_30, grammarAccess.getProjectDescriptionAccess().getColonKeyword_14_1());
     }
 (
 (
-		lv_outputPath_35_0=RULE_STRING
+		lv_outputPath_31_0=RULE_STRING
 		{
-			newLeafNode(lv_outputPath_35_0, grammarAccess.getProjectDescriptionAccess().getOutputPathSTRINGTerminalRuleCall_15_2_0()); 
+			newLeafNode(lv_outputPath_31_0, grammarAccess.getProjectDescriptionAccess().getOutputPathSTRINGTerminalRuleCall_14_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -631,7 +599,7 @@ this_STRING_7=RULE_STRING
        		setWithLastConsumed(
        			$current, 
        			"outputPath",
-        		lv_outputPath_35_0, 
+        		lv_outputPath_31_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
@@ -644,25 +612,25 @@ this_STRING_7=RULE_STRING
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 15);
 	 				}
 					({true}?=>(
-	otherlv_36=Libraries
+	otherlv_32=Libraries
     {
-    	newLeafNode(otherlv_36, grammarAccess.getProjectDescriptionAccess().getLibrariesKeyword_16_0());
+    	newLeafNode(otherlv_32, grammarAccess.getProjectDescriptionAccess().getLibrariesKeyword_15_0());
     }
 
-	otherlv_37=LeftCurlyBracket
+	otherlv_33=LeftCurlyBracket
     {
-    	newLeafNode(otherlv_37, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_16_1());
+    	newLeafNode(otherlv_33, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_15_1());
     }
 (
 (
-		lv_libraryPaths_38_0=RULE_STRING
+		lv_libraryPaths_34_0=RULE_STRING
 		{
-			newLeafNode(lv_libraryPaths_38_0, grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_16_2_0()); 
+			newLeafNode(lv_libraryPaths_34_0, grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_15_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -671,21 +639,21 @@ this_STRING_7=RULE_STRING
        		addWithLastConsumed(
        			$current, 
        			"libraryPaths",
-        		lv_libraryPaths_38_0, 
+        		lv_libraryPaths_34_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
 )(
-	otherlv_39=Comma
+	otherlv_35=Comma
     {
-    	newLeafNode(otherlv_39, grammarAccess.getProjectDescriptionAccess().getCommaKeyword_16_3_0());
+    	newLeafNode(otherlv_35, grammarAccess.getProjectDescriptionAccess().getCommaKeyword_15_3_0());
     }
 (
 (
-		lv_libraryPaths_40_0=RULE_STRING
+		lv_libraryPaths_36_0=RULE_STRING
 		{
-			newLeafNode(lv_libraryPaths_40_0, grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_16_3_1_0()); 
+			newLeafNode(lv_libraryPaths_36_0, grammarAccess.getProjectDescriptionAccess().getLibraryPathsSTRINGTerminalRuleCall_15_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -694,15 +662,83 @@ this_STRING_7=RULE_STRING
        		addWithLastConsumed(
        			$current, 
        			"libraryPaths",
-        		lv_libraryPaths_40_0, 
+        		lv_libraryPaths_36_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
 ))*
-	otherlv_41=RightCurlyBracket
+	otherlv_37=RightCurlyBracket
     {
-    	newLeafNode(otherlv_41, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_16_4());
+    	newLeafNode(otherlv_37, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_15_4());
+    }
+))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
+	 				}
+ 				)
+			)  |
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 16);
+	 				}
+					({true}?=>(
+	otherlv_38=Resources
+    {
+    	newLeafNode(otherlv_38, grammarAccess.getProjectDescriptionAccess().getResourcesKeyword_16_0());
+    }
+
+	otherlv_39=LeftCurlyBracket
+    {
+    	newLeafNode(otherlv_39, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_16_1());
+    }
+(
+(
+		lv_resourcePaths_40_0=RULE_STRING
+		{
+			newLeafNode(lv_resourcePaths_40_0, grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_16_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"resourcePaths",
+        		lv_resourcePaths_40_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+)(
+	otherlv_41=Comma
+    {
+    	newLeafNode(otherlv_41, grammarAccess.getProjectDescriptionAccess().getCommaKeyword_16_3_0());
+    }
+(
+(
+		lv_resourcePaths_42_0=RULE_STRING
+		{
+			newLeafNode(lv_resourcePaths_42_0, grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_16_3_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"resourcePaths",
+        		lv_resourcePaths_42_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))*
+	otherlv_43=RightCurlyBracket
+    {
+    	newLeafNode(otherlv_43, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_16_4());
     }
 ))
 					{ 
@@ -717,60 +753,37 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 17);
 	 				}
 					({true}?=>(
-	otherlv_42=Resources
+	otherlv_44=Sources
     {
-    	newLeafNode(otherlv_42, grammarAccess.getProjectDescriptionAccess().getResourcesKeyword_17_0());
+    	newLeafNode(otherlv_44, grammarAccess.getProjectDescriptionAccess().getSourcesKeyword_17_0());
     }
 
-	otherlv_43=LeftCurlyBracket
+	otherlv_45=LeftCurlyBracket
     {
-    	newLeafNode(otherlv_43, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_17_1());
+    	newLeafNode(otherlv_45, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_17_1());
     }
 (
 (
-		lv_resourcePaths_44_0=RULE_STRING
-		{
-			newLeafNode(lv_resourcePaths_44_0, grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_17_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getSourceFragmentSourceFragmentParserRuleCall_17_2_0()); 
+	    }
+		lv_sourceFragment_46_0=ruleSourceFragment		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
+	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
-       			"resourcePaths",
-        		lv_resourcePaths_44_0, 
-        		"org.eclipse.xtext.common.Terminals.STRING");
+       			"sourceFragment",
+        		lv_sourceFragment_46_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.SourceFragment");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
-	otherlv_45=Comma
-    {
-    	newLeafNode(otherlv_45, grammarAccess.getProjectDescriptionAccess().getCommaKeyword_17_3_0());
-    }
-(
-(
-		lv_resourcePaths_46_0=RULE_STRING
-		{
-			newLeafNode(lv_resourcePaths_46_0, grammarAccess.getProjectDescriptionAccess().getResourcePathsSTRINGTerminalRuleCall_17_3_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getProjectDescriptionRule());
-	        }
-       		addWithLastConsumed(
-       			$current, 
-       			"resourcePaths",
-        		lv_resourcePaths_46_0, 
-        		"org.eclipse.xtext.common.Terminals.STRING");
-	    }
-
-)
-))*
+)+
 	otherlv_47=RightCurlyBracket
     {
-    	newLeafNode(otherlv_47, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_17_4());
+    	newLeafNode(otherlv_47, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_17_3());
     }
 ))
 					{ 
@@ -785,9 +798,9 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 18);
 	 				}
 					({true}?=>(
-	otherlv_48=Sources
+	otherlv_48=ModuleFilters
     {
-    	newLeafNode(otherlv_48, grammarAccess.getProjectDescriptionAccess().getSourcesKeyword_18_0());
+    	newLeafNode(otherlv_48, grammarAccess.getProjectDescriptionAccess().getModuleFiltersKeyword_18_0());
     }
 
 	otherlv_49=LeftCurlyBracket
@@ -797,17 +810,17 @@ this_STRING_7=RULE_STRING
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getSourceFragmentSourceFragmentParserRuleCall_18_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getModuleFiltersModuleFilterParserRuleCall_18_2_0()); 
 	    }
-		lv_sourceFragment_50_0=ruleSourceFragment		{
+		lv_moduleFilters_50_0=ruleModuleFilter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		add(
        			$current, 
-       			"sourceFragment",
-        		lv_sourceFragment_50_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.SourceFragment");
+       			"moduleFilters",
+        		lv_moduleFilters_50_0, 
+        		"eu.numberfour.n4js.n4mf.N4MF.ModuleFilter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -830,63 +843,18 @@ this_STRING_7=RULE_STRING
 	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 19);
 	 				}
 					({true}?=>(
-	otherlv_52=ModuleFilters
-    {
-    	newLeafNode(otherlv_52, grammarAccess.getProjectDescriptionAccess().getModuleFiltersKeyword_19_0());
-    }
-
-	otherlv_53=LeftCurlyBracket
-    {
-    	newLeafNode(otherlv_53, grammarAccess.getProjectDescriptionAccess().getLeftCurlyBracketKeyword_19_1());
-    }
-(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getModuleFiltersModuleFilterParserRuleCall_19_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getTestedProjectsTestedProjectsParserRuleCall_19_0()); 
 	    }
-		lv_moduleFilters_54_0=ruleModuleFilter		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
-	        }
-       		add(
-       			$current, 
-       			"moduleFilters",
-        		lv_moduleFilters_54_0, 
-        		"eu.numberfour.n4js.n4mf.N4MF.ModuleFilter");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)+
-	otherlv_55=RightCurlyBracket
-    {
-    	newLeafNode(otherlv_55, grammarAccess.getProjectDescriptionAccess().getRightCurlyBracketKeyword_19_3());
-    }
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup());
-	 				}
- 				)
-			)  |
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20);
-	 				}
-					({true}?=>(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getTestedProjectsTestedProjectsParserRuleCall_20_0()); 
-	    }
-		lv_testedProjects_56_0=ruleTestedProjects		{
+		lv_testedProjects_52_0=ruleTestedProjects		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
        			"testedProjects",
-        		lv_testedProjects_56_0, 
+        		lv_testedProjects_52_0, 
         		"eu.numberfour.n4js.n4mf.N4MF.TestedProjects");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -900,33 +868,33 @@ this_STRING_7=RULE_STRING
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 21);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getProjectDescriptionAccess().getUnorderedGroup(), 20);
 	 				}
 					({true}?=>(
-	otherlv_57=ModuleLoader
+	otherlv_53=ModuleLoader
     {
-    	newLeafNode(otherlv_57, grammarAccess.getProjectDescriptionAccess().getModuleLoaderKeyword_21_0());
+    	newLeafNode(otherlv_53, grammarAccess.getProjectDescriptionAccess().getModuleLoaderKeyword_20_0());
     }
 
-	otherlv_58=Colon
+	otherlv_54=Colon
     {
-    	newLeafNode(otherlv_58, grammarAccess.getProjectDescriptionAccess().getColonKeyword_21_1());
+    	newLeafNode(otherlv_54, grammarAccess.getProjectDescriptionAccess().getColonKeyword_20_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getModuleLoaderModuleLoaderEnumRuleCall_21_2_0()); 
+	        newCompositeNode(grammarAccess.getProjectDescriptionAccess().getModuleLoaderModuleLoaderEnumRuleCall_20_2_0()); 
 	    }
-		lv_moduleLoader_59_0=ruleModuleLoader		{
+		lv_moduleLoader_55_0=ruleModuleLoader		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProjectDescriptionRule());
 	        }
        		set(
        			$current, 
        			"moduleLoader",
-        		lv_moduleLoader_59_0, 
+        		lv_moduleLoader_55_0, 
         		"eu.numberfour.n4js.n4mf.N4MF.ModuleLoader");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2422,31 +2390,31 @@ ruleN4mfIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRule
     }
 
     |
-	kw=ArtifactId 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getArtifactIdKeyword_1()); 
-    }
-
-    |
 	kw=ProjectId 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectIdKeyword_2()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectIdKeyword_1()); 
+    }
+
+    |
+	kw=ProjectType 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_2()); 
+    }
+
+    |
+	kw=ProjectVersion 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_3()); 
     }
 
     |
 	kw=VendorId 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_3()); 
-    }
-
-    |
-	kw=ProjectName 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectNameKeyword_4()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getVendorIdKeyword_4()); 
     }
 
     |
@@ -2457,113 +2425,99 @@ ruleN4mfIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRule
     }
 
     |
-	kw=ProjectType 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectTypeKeyword_6()); 
-    }
-
-    |
-	kw=ProjectVersion 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectVersionKeyword_7()); 
-    }
-
-    |
 	kw=Output 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_8()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getOutputKeyword_6()); 
     }
 
     |
 	kw=Libraries 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_9()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getLibrariesKeyword_7()); 
     }
 
     |
 	kw=Resources 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_10()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getResourcesKeyword_8()); 
     }
 
     |
 	kw=Sources 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_11()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSourcesKeyword_9()); 
     }
 
     |
 	kw=ModuleFilters 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_12()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getModuleFiltersKeyword_10()); 
     }
 
     |(
 	kw=ProjectDependencies 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_13_0()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProjectDependenciesKeyword_11_0()); 
     }
 
 	kw=KW_System 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_13_1()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSystemKeyword_11_1()); 
     }
 )
     |
 	kw=API 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_14()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getAPIKeyword_12()); 
     }
 
     |
 	kw=User 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getUserKeyword_15()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getUserKeyword_13()); 
     }
 
     |
 	kw=Application 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_16()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getApplicationKeyword_14()); 
     }
 
     |(
 	kw=Processor 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_17_0()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getProcessorKeyword_15_0()); 
     }
 
 	kw=Source 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_17_1()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getSourceKeyword_15_1()); 
     }
 )
     |
 	kw=Content 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getContentKeyword_18()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getContentKeyword_16()); 
     }
 
     |
 	kw=Test 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getTestKeyword_19()); 
+        newLeafNode(kw, grammarAccess.getN4mfIdentifierAccess().getTestKeyword_17()); 
     }
 )
     ;

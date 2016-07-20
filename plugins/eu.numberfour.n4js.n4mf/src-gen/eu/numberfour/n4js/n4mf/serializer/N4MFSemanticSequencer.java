@@ -258,29 +258,27 @@ public class N4MFSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             projectId=N4mfIdentifier | 
-	 *             projectType=ProjectType | 
-	 *             projectVersion=DeclaredVersion | 
-	 *             declaredVendorId=N4mfIdentifier | 
-	 *             vendorName=STRING | 
-	 *             mainModule=STRING | 
-	 *             extendedRuntimeEnvironment=ExtendedRuntimeEnvironment | 
-	 *             providedRuntimeLibraries=ProvidedRuntimeLibraries | 
-	 *             requiredRuntimeLibraries=RequiredRuntimeLibraries | 
-	 *             projectDependencies=ProjectDependencies | 
-	 *             implementationId=N4mfIdentifier | 
-	 *             implementedProjects=ImplementedProjects | 
-	 *             initModules=InitModules | 
-	 *             execModule=ExecModule | 
-	 *             outputPath=STRING | 
-	 *             sourceFragment+=SourceFragment | 
-	 *             moduleFilters+=ModuleFilter | 
-	 *             testedProjects=TestedProjects | 
-	 *             moduleLoader=ModuleLoader
-	 *         )? 
-	 *         (libraryPaths+=STRING libraryPaths+=STRING*)? 
-	 *         (resourcePaths+=STRING resourcePaths+=STRING*)?
+	 *         projectId=N4mfIdentifier | 
+	 *         projectType=ProjectType | 
+	 *         projectVersion=DeclaredVersion | 
+	 *         declaredVendorId=N4mfIdentifier | 
+	 *         vendorName=STRING | 
+	 *         mainModule=STRING | 
+	 *         extendedRuntimeEnvironment=ExtendedRuntimeEnvironment | 
+	 *         providedRuntimeLibraries=ProvidedRuntimeLibraries | 
+	 *         requiredRuntimeLibraries=RequiredRuntimeLibraries | 
+	 *         projectDependencies=ProjectDependencies | 
+	 *         implementationId=N4mfIdentifier | 
+	 *         implementedProjects=ImplementedProjects | 
+	 *         initModules=InitModules | 
+	 *         execModule=ExecModule | 
+	 *         outputPath=STRING | 
+	 *         (libraryPaths+=STRING libraryPaths+=STRING*) | 
+	 *         (resourcePaths+=STRING resourcePaths+=STRING*) | 
+	 *         sourceFragment+=SourceFragment | 
+	 *         moduleFilters+=ModuleFilter | 
+	 *         testedProjects=TestedProjects | 
+	 *         moduleLoader=ModuleLoader
 	 *     )+
 	 */
 	protected void sequence_ProjectDescription(ISerializationContext context, ProjectDescription semanticObject) {

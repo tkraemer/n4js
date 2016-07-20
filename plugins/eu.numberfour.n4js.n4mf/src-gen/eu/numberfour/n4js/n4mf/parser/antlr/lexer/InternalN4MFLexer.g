@@ -46,13 +46,9 @@ Node_builtin : 'node_builtin';
 
 InitModules : 'InitModules';
 
-ProjectName : 'ProjectName';
-
 ProjectType : 'ProjectType';
 
 Application : 'application';
-
-ArtifactId : 'ArtifactId';
 
 ExecModule : 'ExecModule';
 

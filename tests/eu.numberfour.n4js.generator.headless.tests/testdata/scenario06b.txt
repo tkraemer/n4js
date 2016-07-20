@@ -8,9 +8,8 @@ export public class A {
 }
 
 # wsp1/P1/manifest.n4mf
-ArtifactId: P1
+ProjectId: P1
 VendorId: eu.numberfour
-ProjectName: "P1"
 VendorName: "NumberFour AG"
 ProjectType: application
 ProjectVersion: 0.0.1-SNAPSHOT

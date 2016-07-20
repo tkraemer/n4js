@@ -10,9 +10,8 @@ export public class A {
 }
 
 # wsp1/A/manifest.n4mf
-ArtifactId: A
+ProjectId: A
 VendorId: eu.numberfour
-ProjectName: "A"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -39,9 +38,8 @@ export public class B2 {
 }
 
 # nest/wsp2/B/manifest.n4mf
-ArtifactId: B
+ProjectId: B
 VendorId: eu.numberfour
-ProjectName: "B"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -69,9 +67,8 @@ export public class D2 extends B {
 }
 
 # nest/wsp2/D/manifest.n4mf
-ArtifactId: D
+ProjectId: D
 VendorId: eu.numberfour
-ProjectName: "D"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

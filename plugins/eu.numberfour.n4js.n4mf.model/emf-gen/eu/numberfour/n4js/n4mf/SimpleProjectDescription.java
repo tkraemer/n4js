@@ -17,9 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * Properties that makes a project unique among other projects (without considering the version).
- * The vendor id identifies the vendor of this project, a more meaningful name is provided in
- * Project.vendorName. The artifact id identifies the project, a more meaningful name is provided
- * in Project.projectName.
+ * The vendorId identifies the vendor of this project. The projectId identifies the project.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -41,7 +39,7 @@ public interface SimpleProjectDescription extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will later be mapped to groupId in Maven pom
+	 * the vendor ID
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Declared Vendor Id</em>' attribute.
 	 * @see #setDeclaredVendorId(String)
@@ -67,7 +65,7 @@ public interface SimpleProjectDescription extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will be mapped to Maven pom's artifactId, cf. Eclipse's manifest symbolic name
+	 * the project ID
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Project Id</em>' attribute.
 	 * @see #setProjectId(String)
