@@ -39,7 +39,7 @@ public interface SimpleProjectDescription extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will later be mapped to groupId in Maven pom
+	 * the vendor ID
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Declared Vendor Id</em>' attribute.
 	 * @see #setDeclaredVendorId(String)
@@ -65,7 +65,7 @@ public interface SimpleProjectDescription extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will be mapped to Maven pom's projectId, cf. Eclipse's manifest symbolic name
+	 * the project ID
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Project Id</em>' attribute.
 	 * @see #setProjectId(String)
