@@ -1,6 +1,5 @@
-ArtifactId: one.api.execution
+ProjectId: one.api.execution
 VendorId: eu.numberfour
-ProjectName: "one.api.execution"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

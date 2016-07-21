@@ -1,6 +1,5 @@
-ArtifactId: test.data.system.project.two
+ProjectId: test.data.system.project.two
 VendorId: eu.numberfour
-ProjectName: "test.data.system.project.two"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -278,7 +278,7 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 	@Check
 	def checkForDuplicateRuntimeLibraries(ProjectDescription projectDescription) {
 		val rtLib = projectDescription.allRequiredRuntimeLibraries
-		val Map<String, List<RuntimeProjectDependency>>  grouped = rtLib.groupBy[it.project?.vendorId+":"+it.project?.artifactId]
+		val Map<String, List<RuntimeProjectDependency>>  grouped = rtLib.groupBy[it.project?.vendorId+":"+it.project?.projectId]
 		val duplicateRTLibs = grouped.entrySet.filter[value.size>1]
 		duplicateRTLibs.forEach [
 			val msg = getMessageForDUPLICATE_RUNTIME_LIBRARY(it.key)
@@ -418,18 +418,18 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 	}
 
 	@Check
-	def checkForArtifactIdProjectFolderNameMismatch(ProjectDescription projectDescription) {
-		val artifactId = projectDescription.artifactId
+	def checkForProjectIdProjectFolderNameMismatch(ProjectDescription projectDescription) {
+		val projectId = projectDescription.projectId
 		val folderName = projectDescription.eResource.URI.trimSegments(1).lastSegment
-		if (folderName != artifactId) {
-			addIssue(getMessageForPROJECT_NAME_MISMATCH(artifactId, folderName), projectDescription,
-				SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID, PROJECT_NAME_MISMATCH)
+		if (folderName != projectId) {
+			addIssue(getMessageForPROJECT_NAME_MISMATCH(projectId, folderName), projectDescription,
+				SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID, PROJECT_NAME_MISMATCH)
 		}
 	}
 
 	@Check
-	def checkForArtifactIdEclipseProjectNameMismatch(ProjectDescription projectDescription) {
-		val artifactId = projectDescription.artifactId
+	def checkForProjectIdEclipseProjectNameMismatch(ProjectDescription projectDescription) {
+		val projectId = projectDescription.projectId
 		if (Platform.isRunning) {
 			val root = ResourcesPlugin.getWorkspace.root;
 			val manifestUri = projectDescription.eResource.URI;
@@ -445,9 +445,9 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 					new File(manifestUri.toFileString).parentFile.name
 				}
 
-			if (eclipseFolderName != artifactId) {
-				addIssue(getMessageForPROJECT_NAME_ECLIPSE_MISMATCH(artifactId, eclipseFolderName),
-					projectDescription, SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID,
+			if (eclipseFolderName != projectId) {
+				addIssue(getMessageForPROJECT_NAME_ECLIPSE_MISMATCH(projectId, eclipseFolderName),
+					projectDescription, SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID,
 					PROJECT_NAME_ECLIPSE_MISMATCH)
 			}
 		}
@@ -508,7 +508,7 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 		if (projectDescription.outputPath === null) {
 			val message = getMessageForNO_OUTPUT_FOLDER
 			val issueCode = NO_OUTPUT_FOLDER
-			val feature = SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID
+			val feature = SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID
 			addIssue(message, projectDescription, feature, issueCode)
 		}
 	}
@@ -522,7 +522,7 @@ override   boolean validate(EDataType eDataType, Object value, DiagnosticChain d
 		val implProjects = projectDescription.allImplementedProjects;
 
 		for(pref : implProjects) {
-			if(pref?.project?.artifactId == projectDescription.artifactId) {
+			if(pref?.project?.projectId == projectDescription.projectId) {
 				// reflexive implementation
 				addIssue(
 					messageForAPIIMPL_REFLEXIVE,

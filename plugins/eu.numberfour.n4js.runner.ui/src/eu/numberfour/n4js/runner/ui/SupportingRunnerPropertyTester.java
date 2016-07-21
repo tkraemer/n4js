@@ -139,7 +139,7 @@ public class SupportingRunnerPropertyTester extends PropertyTester {
 
 		// TODO IDE-1393 connect testers with extension point
 		if (!compatibleRuntimeEnvironmets.isEmpty() &&
-				"RE_NodeJS_Mangelhaft".equals(compatibleRuntimeEnvironmets.get(0).getArtifactId())) {
+				"RE_NodeJS_Mangelhaft".equals(compatibleRuntimeEnvironmets.get(0).getProjectId())) {
 			return true;
 		}
 

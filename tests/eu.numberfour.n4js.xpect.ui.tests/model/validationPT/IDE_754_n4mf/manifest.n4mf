@@ -1,6 +1,5 @@
-ArtifactId: N4JSXPECTTests
+ProjectId: N4JSXPECTTests
 VendorId: MyVendorID
-ProjectName: "My Project Name"
 VendorName: "My Vendor Name"
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT

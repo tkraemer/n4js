@@ -19,18 +19,17 @@ class N4JSNpmManifestContentProvider {
 
 	/**
 	 * Creates and returns with the N4 manifest content based on the given arguments.
-	 * @param projectName the name of the project.
+	 * @param projectId the name of the project.
 	 * @param outputFolder the name of the folder with js files
 	 * @param externalFolder the name of the folder with n4js and n4jsd files
 	 */
-	def String getContent(String projectName, String outputFolder, String externalFolder, String main)
+	def String getContent(String projectId, String outputFolder, String externalFolder, String main)
 	'''
-		ArtifactId: «projectName»
-		VendorId: npm
-		ProjectName: "«projectName»"
-		VendorName: "npm"
+		ProjectId: «projectId»
 		ProjectType: library
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: npm
+		VendorName: "npm"
 		Output: "«outputFolder»"
 		MainModule:"«main»"
 		ModuleLoader: commonjs

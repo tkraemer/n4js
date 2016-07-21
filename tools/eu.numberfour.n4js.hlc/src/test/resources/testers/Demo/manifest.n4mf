@@ -1,6 +1,5 @@
-ArtifactId: Demo
+ProjectId: Demo
 VendorId: eu.numberfour
-ProjectName: "Demo"
 VendorName: "NumberFour AG"
 ProjectType: application
 ProjectVersion: 0.0.1-SNAPSHOT

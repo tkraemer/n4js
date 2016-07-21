@@ -1,7 +1,6 @@
-ArtifactId: Main
+ProjectId: Main
 VendorId: eu.numberfour
 VendorName: "NumberFour AG"
-ProjectName: "Main"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"

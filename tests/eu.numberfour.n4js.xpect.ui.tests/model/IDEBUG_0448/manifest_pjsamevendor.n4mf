@@ -1,6 +1,5 @@
-ArtifactId: PjSameVendor
+ProjectId: PjSameVendor
 VendorId: eu.numberfour
-ProjectName: "PjSameVendor"
 VendorName: "Other Vendor"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

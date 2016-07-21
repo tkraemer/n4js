@@ -44,20 +44,20 @@ public enum RuntimeEnvironment {
 		static Map<String, RuntimeEnvironment> data = new HashMap<>();
 	}
 
-	private final String artifactId;
+	private final String projectId;
 
-	private RuntimeEnvironment(String artifactId) {
-		this.artifactId = artifactId;
-		DataMap.data.put(artifactId, this);
+	private RuntimeEnvironment(String projectId) {
+		this.projectId = projectId;
+		DataMap.data.put(projectId, this);
 	}
 
 	/** @return {@link String} value */
-	public String getArtifactId() {
-		return this.artifactId;
+	public String getProjectId() {
+		return this.projectId;
 	}
 
 	/** @return instance corresponding to provided representation */
-	public static RuntimeEnvironment fromArtifactId(String representation) {
+	public static RuntimeEnvironment fromProjectId(String representation) {
 		return DataMap.data.get(representation);
 	}
 }

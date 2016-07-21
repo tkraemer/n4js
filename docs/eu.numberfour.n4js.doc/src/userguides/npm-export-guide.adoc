@@ -151,12 +151,11 @@ in the root of our fibonacci project:
 [source,n4js]
 .manifest.n4mf
 ----
-ArtifactId: fibonacci
-VendorId: eu.numberfour
-ProjectName: "fibonacci"
-VendorName: "NumberFour AG"
+ProjectId: fibonacci
 ProjectType: library
 ProjectVersion: 1.2.3
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
     source {

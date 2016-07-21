@@ -1,6 +1,5 @@
-ArtifactId: P2
+ProjectId: P2
 VendorId: eu.numberfour
-ProjectName: "P2"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -64,7 +64,7 @@ class ManifestChangeProvider {
 
 		// Remove all dependencies, that are already part of the list
 		if (description.projectDependencies !== null) {
-			dependencies.removeIf [ description.projectDependencies.projectDependencies.map[project.artifactId].contains(it) ]
+			dependencies.removeIf [ description.projectDependencies.projectDependencies.map[project.projectId].contains(it) ]
 		}
 
 		if (dependencies.length < 1) {
@@ -114,7 +114,7 @@ class ManifestChangeProvider {
 		
 		// Remove all dependencies, that are already part of the list
 		if (projectDescription.requiredRuntimeLibraries !== null) {
-			dependencies.removeIf [ projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.map[project.artifactId].contains(it)]
+			dependencies.removeIf [ projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.map[project.projectId].contains(it)]
 		}
 		
 		if (dependencies.length < 1) {

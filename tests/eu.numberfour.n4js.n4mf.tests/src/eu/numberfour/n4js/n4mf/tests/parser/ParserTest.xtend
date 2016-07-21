@@ -36,21 +36,19 @@ class ParserTest {
 
 	@Inject extension ParseHelper<ProjectDescription>
 
-	@Test def void testArtifactID() {
+	@Test def void testProjectId() {
 		val project = '''
-			ArtifactId: MyArtifactID
-			VendorId: MyVendorID
-			ProjectName: "My Project Name"
-			VendorName: "My Vendor Name"
+			ProjectId: MyProjectID
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: MyVendorID
+			VendorName: "My Vendor Name"
 		'''.parse
 		val errors = project.eResource.errors
 		assertTrue(errors.toString, errors.empty)
 
-		assertEquals(project.artifactId, "MyArtifactID")
+		assertEquals(project.projectId, "MyProjectID")
 		assertEquals(project.vendorId, "MyVendorID")
-		assertEquals(project.projectName, "My Project Name")
 		assertEquals(project.vendorName, "My Vendor Name")
 		assertEquals(project.projectType, ProjectType.LIBRARY)
 		val projectVersion = project.projectVersion
@@ -68,12 +66,11 @@ class ParserTest {
 	 */
 	@Test def void testCompleteExample() {
 		val project = '''
-			ArtifactId: my.project.one
-			VendorId: eu.numberfour
-			ProjectName: "My Project One"
-			VendorName: "NumberFour AG"
+			ProjectId: my.project.one
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: eu.numberfour
+			VendorName: "NumberFour AG"
 			Output: "output"
 			Libraries {
 				"lib"
@@ -128,7 +125,7 @@ class ParserTest {
 
 		assertEquals(project.allProjectDependencies.size, 2)
 		assertEquals("eu.numberfour", project.allProjectDependencies.head.project.vendorId)
-		assertEquals("my.project.one", project.allProjectDependencies.head.project.artifactId)
+		assertEquals("my.project.one", project.allProjectDependencies.head.project.projectId)
 
 		assertEquals(true, project.allProjectDependencies.head.versionConstraint.exclLowerBound)
 		assertEquals(0, project.allProjectDependencies.head.versionConstraint.lowerVersion.major)
@@ -150,12 +147,11 @@ class ParserTest {
 
 	@Test def void testProjectDependencyWithoutScope() {
 		val project = '''
-			ArtifactId: my.project.one
-			VendorId: eu.numberfour
-			ProjectName: "My Project One"
-			VendorName: "NumberFour AG"
+			ProjectId: my.project.one
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: eu.numberfour
+			VendorName: "NumberFour AG"
 			Output: "output"
 			Sources {
 				source {
@@ -174,12 +170,11 @@ class ParserTest {
 
 	@Test def void testProjectDependencyWithoutVersion() {
 		val project = '''
-			ArtifactId: my.project.one
-			VendorId: eu.numberfour
-			ProjectName: "My Project One"
-			VendorName: "NumberFour AG"
+			ProjectId: my.project.one
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: eu.numberfour
+			VendorName: "NumberFour AG"
 			Output: "output"
 			Sources {
 				source {
@@ -197,12 +192,11 @@ class ParserTest {
 
 	@Test def void testProjectDependencyWithoutVendor() {
 		val project = '''
-			ArtifactId: my.project.one
-			VendorId: eu.numberfour
-			ProjectName: "My Project One"
-			VendorName: "NumberFour AG"
+			ProjectId: my.project.one
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: eu.numberfour
+			VendorName: "NumberFour AG"
 			Output: "output"
 			Sources {
 				source {
@@ -221,12 +215,11 @@ class ParserTest {
 
 	@Test def void testProjectWithNoUpperBound() {
 		val project = '''
-			ArtifactId: my.project.one
-			VendorId: eu.numberfour
-			ProjectName: "My Project One"
-			VendorName: "NumberFour AG"
+			ProjectId: my.project.one
 			ProjectType: library
 			ProjectVersion: 0.0.1-SNAPSHOT
+			VendorId: eu.numberfour
+			VendorName: "NumberFour AG"
 			Output: "output"
 			Sources {
 				source {
@@ -266,8 +259,7 @@ class ParserTest {
 			ProjectDependencies {
 				my.project.one
 			}
-			ArtifactId: my.project.one
-			ProjectName: "My Project One"
+			ProjectId: my.project.one
 			ProjectType: library
 		'''.parse
 		val errors = project.eResource.errors

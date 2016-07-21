@@ -1,6 +1,5 @@
-ArtifactId: IDE_2051_clash
+ProjectId: IDE_2051_clash
 VendorId: eu.numberfour
-ProjectName: "IDE_2051_clash"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

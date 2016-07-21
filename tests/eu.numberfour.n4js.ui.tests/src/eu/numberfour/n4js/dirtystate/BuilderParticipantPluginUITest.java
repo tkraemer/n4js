@@ -147,7 +147,7 @@ public class BuilderParticipantPluginUITest extends AbstractBuilderParticipantTe
 		errors = getEditorErrors(file1XtextEditor);
 		// Consequential errors are omitted, so there is no error reported for unknown field, as the receiver is of
 		// unknown type
-		assertEquals("Content of editor 1 should be broken, because now linking to missing resource", 4, errors.size());
+		assertEquals("Content of editor 1 should be broken, because now linking to missing resource", 3, errors.size());
 
 		file2 = createTestFile(folder, "Class1", TestFiles.class1());
 		assertMarkers("File2 should have no errors", file2, 0);
@@ -208,7 +208,7 @@ public class BuilderParticipantPluginUITest extends AbstractBuilderParticipantTe
 		assertTrue("Parent2.n4js does exist", movedParentFile.exists());
 
 		errors = getEditorErrors(childFileXtextEditor);
-		assertEquals("Editor of child should have got error markers", 4, errors.size());
+		assertEquals("Editor of child should have got error markers", 3, errors.size());
 
 		movedParentFile.move(new Path("Parent" + F_EXT), true, true, monitor());
 		moduleFolder.refreshLocal(IResource.DEPTH_INFINITE, monitor());
@@ -262,7 +262,7 @@ public class BuilderParticipantPluginUITest extends AbstractBuilderParticipantTe
 		waitForUpdateEditorJob();
 		assertFalse("Parent.n4js doesn't exist anymore", moduleFolder.getFile(new Path("Parent" + F_EXT)).exists());
 		errors = getEditorErrors(childFileXtextEditor);
-		assertEquals("Editor of child should have error markers", 4, errors.size());
+		assertEquals("Editor of child should have error markers", 3, errors.size());
 
 		IFile recreatedParentFile = createTestFile(moduleFolder, "Parent", InheritanceTestFiles.Parent());
 		assertMarkers("File1 should have no errors", recreatedParentFile, 0);

@@ -322,7 +322,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			if (!TypeUtils.isOrContainsRefToTypeVar(root, declaredTypeVar)) {
 				addIssue(IssueCodes.getMessageForFUN_UNUSED_GENERIC_TYPE_PARAM(actualTypeVar.name), actualTypeVar, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME, IssueCodes.FUN_UNUSED_GENERIC_TYPE_PARAM);
 			}
-		} else {
+		} else if (typeVarCount > 1) {
 			// In this case, we avoid repeatedly traversing the tree with the given root by getting a set of
 			// all type variables it references up front and using that to perform our check.
 			val referencedTypeVars = TypeUtils.getReferencedTypeVars(root);

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * All elements of the declared version not set manually will be set automatically to 0.
- *  * To be later validated: The length of the micro, minor and micro numbers is
+ *  * To be later validated: The length of the major, minor and micro numbers is
  * additionally limited to four digits.
  * <!-- end-model-doc -->
  *

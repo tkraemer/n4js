@@ -43,7 +43,7 @@ import eu.numberfour.n4js.utils.Arrays2;
 	/* default */ BuiltInProjectNode(final Node parent, final IN4JSProject project) {
 		super(parent);
 		checkNotNull(project, "project");
-		checkArgument(project.exists(), "Project '" + project.getArtifactId() + "' does not exist.");
+		checkArgument(project.exists(), "Project '" + project.getProjectId() + "' does not exist.");
 		this.project = project;
 	}
 
@@ -54,7 +54,7 @@ import eu.numberfour.n4js.utils.Arrays2;
 
 	@Override
 	public String getText() {
-		return project.getArtifactId();
+		return project.getProjectId();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ import eu.numberfour.n4js.utils.Arrays2;
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((project.getArtifactId() == null) ? 0 : project.getArtifactId().hashCode());
+		result = prime * result + ((project.getProjectId() == null) ? 0 : project.getProjectId().hashCode());
 		return result;
 	}
 
@@ -108,11 +108,11 @@ import eu.numberfour.n4js.utils.Arrays2;
 			return false;
 		}
 		BuiltInProjectNode other = (BuiltInProjectNode) obj;
-		if (project.getArtifactId() == null) {
-			if (other.project.getArtifactId() != null) {
+		if (project.getProjectId() == null) {
+			if (other.project.getProjectId() != null) {
 				return false;
 			}
-		} else if (!project.getArtifactId().equals(other.project.getArtifactId())) {
+		} else if (!project.getProjectId().equals(other.project.getProjectId())) {
 			return false;
 		}
 		return true;

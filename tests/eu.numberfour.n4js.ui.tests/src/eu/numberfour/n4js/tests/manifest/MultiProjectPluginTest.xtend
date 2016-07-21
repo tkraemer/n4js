@@ -74,7 +74,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		addProjectToDependencies(secondProjectUnderTest.project.name)
 	}
 
-	private def void addProjectToDependencies(String artifactId) {
+	private def void addProjectToDependencies(String projectId) {
 		val uri = URI.createPlatformResourceURI(manifest.fullPath.toString, true);
 		val rs = getResourceSet(firstProjectUnderTest);
 		val resource = rs.getResource(uri, true);
@@ -82,7 +82,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		val dependency = N4mfFactory.eINSTANCE.createProjectDependency
 		val otherProject = N4mfFactory.eINSTANCE.createSimpleProjectDescription
 		pd.projectDependencies = N4mfFactory.eINSTANCE.createProjectDependencies
-		otherProject.setArtifactId(artifactId)
+		otherProject.setProjectId(projectId)
 		dependency.setProject(otherProject)
 		pd.projectDependencies.projectDependencies.add(dependency)
 		resource.save(null)
@@ -124,7 +124,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		val rs = getResourceSet(firstProjectUnderTest.project);
 		val resource = rs.getResource(uri, true);
 		val ProjectDescription pd = resource.contents.head as ProjectDescription
-		pd.setArtifactId(newName)
+		pd.setProjectId(newName)
 		resource.save(null)
 		waitForAutoBuild
 	}
@@ -137,14 +137,14 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 					class C extends D {}
 				'''
 			);
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src2, "D", "export public class D {}");
 		// Same as above, errors are not resolved by just exporting class, it should be added as a dependency.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		addSecondProjectToDependencies
 		assertMarkers("file should have no errors", c, 0, errorMarkerPredicate);
 	}
@@ -162,11 +162,11 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		createTestFile(src2, "D", "export public class D {}");
 		assertMarkers("file should have no errors", c, 0, errorMarkerPredicate);
 		removeDependency
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 	}
 
 	@Test
@@ -206,7 +206,7 @@ class MultiProjectPluginTest extends AbstractBuilderParticipantTest {
 		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", file, 5);
+		assertMarkers("file should have four errors", file, 4);
 		addSecondProjectToDependencies
 		assertMarkers("file should have no errors", file, 0, errorMarkerPredicate);
 	}

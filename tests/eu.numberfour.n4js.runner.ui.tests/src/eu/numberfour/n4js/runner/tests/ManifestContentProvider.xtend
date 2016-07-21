@@ -25,7 +25,7 @@ class ManifestContentProvider {
 
 	/**
 	 * Creates and returns with the N4 manifest content based on the given arguments.
-	 * @param projectName the name of the project.
+	 * @param projectId the projectId of the project.
 	 * @param type the type of the N4 project.
 	 * @param extendedRE the optional extended runtime environment.
 	 * @param projectDependencies an iterable of direct project dependnencies for the N4 project.
@@ -33,20 +33,19 @@ class ManifestContentProvider {
 	 * @param requiredRL an iterable of required runtime libraries.
 	 * @return the N4 manifest content as a string.
 	 */
-	def String getContent(String projectName, ProjectType type, Optional<RuntimeEnvironment> extendedRE,
+	def String getContent(String projectId, ProjectType type, Optional<RuntimeEnvironment> extendedRE,
 		Iterable<String> projectDependencies, Iterable<String> providedRL, Iterable<String> requiredRL,
 		Optional<String> implementationId, Iterable<String> implementedProjects
 	) '''
-		ArtifactId: «projectName»
-		VendorId: eu.numberfour
-		ProjectName: "«projectName»"
-		VendorName: "NumberFour AG"
+		ProjectId: «projectId»
 		ProjectType: «IF API == type»«API»«ELSE»«UPPER_UNDERSCORE.to(LOWER_CAMEL, valueOf(type))»«ENDIF»
 		ProjectVersion: 0.0.1-SNAPSHOT
+		VendorId: eu.numberfour
+		VendorName: "NumberFour AG"
 		«'''ProvidedRuntimeLibraries'''.getEnumeration(providedRL)»
 		«'''ProjectDependencies'''.getEnumeration(projectDependencies)»
 		«'''RequiredRuntimeLibraries'''.getEnumeration(requiredRL)»
-		«IF extendedRE.present»ExtendedRuntimeEnvironment : «extendedRE.get.getArtifactId»«ENDIF»
+		«IF extendedRE.present»ExtendedRuntimeEnvironment : «extendedRE.get.getProjectId»«ENDIF»
 		«IF implementationId.isPresent»ImplementationId: «implementationId.get»«ENDIF»
 		«'''ImplementedProjects'''.getEnumeration(implementedProjects)»
 		Output: "src-gen"

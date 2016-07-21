@@ -59,13 +59,12 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 	@Override
 	protected void createTempProjects() {
 		try {
-			host.setMyProjectURI(createTempProject(host.myProjectName));
-			createManifest(host.myProjectName, "ArtifactId: " + host.myProjectName + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+			host.setMyProjectURI(createTempProject(host.myProjectId));
+			createManifest(host.myProjectId, "ProjectId: " + host.myProjectId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"" +
 					"Sources {\n" +
@@ -73,15 +72,14 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"		\"src\"\n" +
 					"	}\n" +
 					"}\n" +
-					"ProjectDependencies { " + host.libProjectName + ", " + host.archiveProjectName + " } \n");
-			createArchive(host.myProjectName);
-			host.setLibProjectURI(createTempProject(host.libProjectName));
-			createManifest(host.libProjectName, "ArtifactId: " + host.libProjectName + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+					"ProjectDependencies { " + host.libProjectId + ", " + host.archiveProjectId + " } \n");
+			createArchive(host.myProjectId);
+			host.setLibProjectURI(createTempProject(host.libProjectId));
+			createManifest(host.libProjectId, "ProjectId: " + host.libProjectId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Output: \"src-gen\"" +
 					"Sources {\n" +
 					"	source { " +
@@ -102,7 +100,7 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 		IFolder libFolder = project.getFolder(LIB_FOLDER_NAME);
 		libFolder.create(false, true, null);
 
-		IFile archiveFile = libFolder.getFile(host.archiveProjectName + ".nfar");
+		IFile archiveFile = libFolder.getFile(host.archiveProjectId + ".nfar");
 		ByteArrayOutputStream byteArrayOutputSteam = new ByteArrayOutputStream();
 		final ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputSteam);
 		zipOutputStream.putNextEntry(new ZipEntry("src/A.js"));
@@ -113,12 +111,11 @@ public class EclipseBasedProjectModelSetup extends AbstractProjectModelSetup {
 
 		zipOutputStream.putNextEntry(new ZipEntry(IN4JSProject.N4MF_MANIFEST));
 		// this will close the stream
-		CharStreams.write("ArtifactId: " + host.archiveProjectName + "\n" +
-				"VendorId: eu.numberfour\n" +
-				"ProjectName: \"N4JS Tests\"\n" +
-				"VendorName: \"NumberFour AG\"\n" +
+		CharStreams.write("ProjectId: " + host.archiveProjectId + "\n" +
 				"ProjectType: library\n" +
 				"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+				"VendorId: eu.numberfour\n" +
+				"VendorName: \"NumberFour AG\"\n" +
 				"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 				"Output: \"src-gen\"" +
 				"Sources {\n" +

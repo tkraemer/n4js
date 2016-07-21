@@ -28,36 +28,36 @@ public class NpmNamingconventionTest {
 
 	@Test
 	def void namePatterns() {
-		assertTrue( "simple name", npmExporter.holdsConsistentArtifactID("abc", [] )  );
-//		assertTrue( "prefixed name", npmExporter.holdsConsistentArtifactID("@x/abc")  ); // allow ?
+		assertTrue( "simple name", npmExporter.holdsConsistentProjectId("abc", [] )  );
+//		assertTrue( "prefixed name", npmExporter.holdsConsistentProjectId("@x/abc")  ); // allow ?
 
-		assertFalse( "No uppercase",npmExporter.holdsConsistentArtifactID("Abc",[] ) );
-		assertFalse( "No uppercase", npmExporter.holdsConsistentArtifactID("abC",[] ) );
+		assertFalse( "No uppercase",npmExporter.holdsConsistentProjectId("Abc",[] ) );
+		assertFalse( "No uppercase", npmExporter.holdsConsistentProjectId("abC",[] ) );
 
-		assertFalse( "leading underscore",npmExporter.holdsConsistentArtifactID("_abc",[] ) );
-		assertFalse( "leading dot", npmExporter.holdsConsistentArtifactID(".abc",[] ) );
+		assertFalse( "leading underscore",npmExporter.holdsConsistentProjectId("_abc",[] ) );
+		assertFalse( "leading dot", npmExporter.holdsConsistentProjectId(".abc",[] ) );
 
-		assertFalse( "funny german letter",npmExporter.holdsConsistentArtifactID("abßc",[] ) );
-		assertFalse( "question mark upside-down",npmExporter.holdsConsistentArtifactID("ab¿c",[] ) );
+		assertFalse( "funny german letter",npmExporter.holdsConsistentProjectId("abßc",[] ) );
+		assertFalse( "question mark upside-down",npmExporter.holdsConsistentProjectId("ab¿c",[] ) );
 
-		assertFalse( "question mark", npmExporter.holdsConsistentArtifactID("ab?c",[] ) );
-//		assertFalse( "asterix",npmExporter.holdsConsistentArtifactID("ab*c",[] ) ); // allow ?
-		assertFalse( "slash",npmExporter.holdsConsistentArtifactID("ab/c",[] ) );
+		assertFalse( "question mark", npmExporter.holdsConsistentProjectId("ab?c",[] ) );
+//		assertFalse( "asterix",npmExporter.holdsConsistentProjectId("ab*c",[] ) ); // allow ?
+		assertFalse( "slash",npmExporter.holdsConsistentProjectId("ab/c",[] ) );
 
-		assertFalse( "tab",npmExporter.holdsConsistentArtifactID("ab\tc",[] ) );
-		assertFalse( "new line",npmExporter.holdsConsistentArtifactID("ab\nc",[] ) );
+		assertFalse( "tab",npmExporter.holdsConsistentProjectId("ab\tc",[] ) );
+		assertFalse( "new line",npmExporter.holdsConsistentProjectId("ab\nc",[] ) );
 
-		assertFalse( "hash mark",npmExporter.holdsConsistentArtifactID("ab#c",[] ) );
+		assertFalse( "hash mark",npmExporter.holdsConsistentProjectId("ab#c",[] ) );
 
-		assertTrue( npmExporter.holdsConsistentArtifactID("a23456789_",[] ) );
+		assertTrue( npmExporter.holdsConsistentProjectId("a23456789_",[] ) );
 
-		assertTrue( "length of 124 char",npmExporter.holdsConsistentArtifactID(
+		assertTrue( "length of 124 char",npmExporter.holdsConsistentProjectId(
 			"a23456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_"+ // 10x10
 			"123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_"+ // 10x10
 			"123456789_1234"
 		,[] ) );
 
-		assertFalse( "length of 125 char",npmExporter.holdsConsistentArtifactID(
+		assertFalse( "length of 125 char",npmExporter.holdsConsistentProjectId(
 			"a23456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_"+ // 10x10
 			"123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_"+ // 10x10
 			"123456789_12345"

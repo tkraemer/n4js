@@ -1,6 +1,5 @@
-ArtifactId: eu.numberfour.n4js.tests
+ProjectId: eu.numberfour.n4js.tests
 VendorId: eu.numberfour
-ProjectName: "N4JS Tests"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
 ProjectVersion: 0.0.1-SNAPSHOT

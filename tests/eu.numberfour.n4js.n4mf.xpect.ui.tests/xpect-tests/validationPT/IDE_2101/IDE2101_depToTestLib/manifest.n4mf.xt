@@ -17,12 +17,11 @@
 /* XPECT errors ---
 
 --- */
-ArtifactId: IDE2101_depToTestLib
-VendorId: MyVendorID
-ProjectName: "IDE2101_depToTestLib"
-VendorName: "My Vendor Name"
+ProjectId: IDE2101_depToTestLib
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: MyVendorID
+VendorName: "My Vendor Name"
 Output: "out"
 Sources {
 	test { 

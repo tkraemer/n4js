@@ -1,6 +1,5 @@
-ArtifactId: N4JSXPECTTests
+ProjectId: N4JSXPECTTests
 VendorId: eu.numberfour
-ProjectName: "P1"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

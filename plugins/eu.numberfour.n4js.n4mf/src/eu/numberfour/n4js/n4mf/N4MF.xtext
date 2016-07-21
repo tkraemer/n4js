@@ -14,8 +14,7 @@ import "http://www.numberfour.eu/ide/n4mf/N4MF"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ProjectDescription:
-		('ArtifactId' 		':' artifactId=N4mfIdentifier)
-	&	('ProjectName' 		':' projectName=STRING) ?
+		('ProjectId'		':' projectId=N4mfIdentifier)
 	&	('ProjectType' 		':' projectType=ProjectType)
 	&	('ProjectVersion'	':' projectVersion=DeclaredVersion)
 	&	('VendorId' 		':' declaredVendorId=N4mfIdentifier)
@@ -184,7 +183,7 @@ ProjectDependency :
  * vendorN4mfIdentifier is optional, if it is not specified, vendor id of current project is used.
  */
 SimpleProjectDescription :
-	(declaredVendorId=N4mfIdentifier ':')? artifactId=N4mfIdentifier
+	(declaredVendorId=N4mfIdentifier ':')? projectId=N4mfIdentifier
 ;
 
 /*
@@ -210,12 +209,11 @@ enum ModuleLoader:
 
 N4mfIdentifier :
 	ID |
-	'ArtifactId' |
-	'VendorId' |
-	'ProjectName' |
-	'VendorName' |
+	'ProjectId' |
 	'ProjectType' |
 	'ProjectVersion' |
+	'VendorId' |
+	'VendorName' |
 	'Output' |
 	'Libraries' |
 	'Resources' |

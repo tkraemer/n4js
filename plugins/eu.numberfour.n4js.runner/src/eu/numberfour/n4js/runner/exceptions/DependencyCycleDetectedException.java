@@ -12,6 +12,7 @@ package eu.numberfour.n4js.runner.exceptions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.text.MessageFormat.format;
+
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 
 /**
@@ -32,7 +33,6 @@ public class DependencyCycleDetectedException extends RuntimeException {
 	}
 
 	private static final String getMessage(final IN4JSProject project) {
-		return format(MSG_TEMPLATE, project.getProjectName());
+		return format(MSG_TEMPLATE, project.getProjectId());
 	}
-
 }

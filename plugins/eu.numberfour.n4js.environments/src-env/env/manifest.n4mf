@@ -1,4 +1,4 @@
-ArtifactId: default
+ProjectId: default
 VendorId: eu.numberfour
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment

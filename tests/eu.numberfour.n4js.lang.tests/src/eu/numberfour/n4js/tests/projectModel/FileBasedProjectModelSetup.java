@@ -79,14 +79,13 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 	protected void createTempProjects() {
 		try {
 			workspaceRoot = Files.createTempDir();
-			URI myProjectURI = createTempProject(host.myProjectName);
+			URI myProjectURI = createTempProject(host.myProjectId);
 			host.setMyProjectURI(myProjectURI);
-			createManifest(myProjectURI, "ArtifactId: " + host.myProjectName + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+			createManifest(myProjectURI, "ProjectId: " + host.myProjectId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"\n" +
 					"Sources {\n" +
@@ -94,16 +93,15 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 					"		\"src\"\n" +
 					"	}\n" +
 					"}" +
-					"ProjectDependencies { " + host.libProjectName + ", " + host.archiveProjectName + " }\n");
+					"ProjectDependencies { " + host.libProjectId + ", " + host.archiveProjectId + " }\n");
 			createArchive(myProjectURI);
-			URI libProjectURI = createTempProject(host.libProjectName);
+			URI libProjectURI = createTempProject(host.libProjectId);
 			host.setLibProjectURI(libProjectURI);
-			createManifest(libProjectURI, "ArtifactId: " + host.libProjectName + "\n" +
-					"VendorId: eu.numberfour\n" +
-					"ProjectName: \"N4JS Tests\"\n" +
-					"VendorName: \"NumberFour AG\"\n" +
+			createManifest(libProjectURI, "ProjectId: " + host.libProjectId + "\n" +
 					"ProjectType: library\n" +
 					"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+					"VendorId: eu.numberfour\n" +
+					"VendorName: \"NumberFour AG\"\n" +
 					"Libraries { \"" + LIB_FOLDER_NAME + "\"\n }\n" +
 					"Output: \"src-gen\"\n" +
 					"Sources {\n" +
@@ -122,7 +120,7 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 		File directory = new File(java.net.URI.create(baseDir.toString()));
 		File lib = new File(directory, "lib");
 		assertTrue(lib.mkdir());
-		File nfar = new File(lib, host.archiveProjectName + ".nfar");
+		File nfar = new File(lib, host.archiveProjectId + ".nfar");
 		final ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(nfar));
 		zipOutputStream.putNextEntry(new ZipEntry("src/A.js"));
 		zipOutputStream.putNextEntry(new ZipEntry("src/B.js"));
@@ -132,12 +130,11 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 
 		zipOutputStream.putNextEntry(new ZipEntry(IN4JSProject.N4MF_MANIFEST));
 		// this will close the stream
-		CharStreams.write("ArtifactId: " + host.archiveProjectName + "\n" +
-				"VendorId: eu.numberfour\n" +
-				"ProjectName: \"N4JS Tests\"\n" +
-				"VendorName: \"NumberFour AG\"\n" +
+		CharStreams.write("ProjectId: " + host.archiveProjectId + "\n" +
 				"ProjectType: library\n" +
 				"ProjectVersion: 0.0.1-SNAPSHOT\n" +
+				"VendorId: eu.numberfour\n" +
+				"VendorName: \"NumberFour AG\"\n" +
 				"Output: \"src-gen\"\n" +
 				"Sources {\n" +
 				"	source {" +
@@ -170,8 +167,8 @@ public class FileBasedProjectModelSetup extends AbstractProjectModelSetup {
 	}
 
 	/***/
-	protected URI createTempProject(String projectName) {
-		File myProjectDir = new File(workspaceRoot, projectName);
+	protected URI createTempProject(String projectId) {
+		File myProjectDir = new File(workspaceRoot, projectId);
 		if (!myProjectDir.mkdir()) {
 			throw new RuntimeException();
 		}

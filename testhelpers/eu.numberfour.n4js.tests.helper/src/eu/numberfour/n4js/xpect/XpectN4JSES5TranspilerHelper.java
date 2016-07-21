@@ -324,7 +324,7 @@ public class XpectN4JSES5TranspilerHelper {
 	 * is consumed from js-code.
 	 */
 	private String jsModulePathToRun(Script script) {
-		ArrayList<String> pathSegements = newArrayList(getProjectName(script));
+		ArrayList<String> pathSegements = newArrayList(getProjectId(script));
 		pathSegements.addAll(moduleQualifiedNameSegments(script));
 		String fileToRun = Joiner.on('/').join(pathSegements);
 		return fileToRun;
@@ -492,8 +492,8 @@ public class XpectN4JSES5TranspilerHelper {
 		// Compile script to get file content.
 		final String content = compile(script, replaceQuotes);
 
-		final String projectName = getProjectName(script);
-		Path parentPath = createDirectory(getTempFolder(), projectName); // TODO IDE-
+		final String projectId = getProjectId(script);
+		Path parentPath = createDirectory(getTempFolder(), projectId); // TODO IDE-
 
 		// Get folder structure from qualified names.
 		final LinkedList<String> segments = moduleQualifiedNameSegments(script);
@@ -524,7 +524,7 @@ public class XpectN4JSES5TranspilerHelper {
 		return newLinkedList(on(N4JSQualifiedNameConverter.DELIMITER).split(script.getModule().getQualifiedName()));
 	}
 
-	private String getProjectName(final Script script) {
-		return script.getModule().getProjectName();
+	private String getProjectId(final Script script) {
+		return script.getModule().getProjectId();
 	}
 }

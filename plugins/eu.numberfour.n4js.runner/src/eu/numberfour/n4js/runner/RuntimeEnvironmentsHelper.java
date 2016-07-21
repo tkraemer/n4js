@@ -56,7 +56,7 @@ public class RuntimeEnvironmentsHelper {
 	public Optional<IN4JSProject> findRuntimeEnvironmentProject(RuntimeEnvironment runtimeEnvironment) {
 		return from(getAllProjects())
 				.filter(p -> isRuntimeEnvironemnt(p))
-				.filter(p -> runtimeEnvironment.getArtifactId().equals(p.getArtifactId()))
+				.filter(p -> runtimeEnvironment.getProjectId().equals(p.getProjectId()))
 				.first();
 	}
 
@@ -93,7 +93,7 @@ public class RuntimeEnvironmentsHelper {
 				.filter(e -> e.getValue().containsAll(reqRuntiemLibraries))
 				.transform(e -> e.getKey())
 				.transformAndConcat(re -> getEnvironemntWithAncestors(re))
-				.transform(rRE -> RuntimeEnvironment.fromArtifactId(rRE.getProjectName()))
+				.transform(rRE -> RuntimeEnvironment.fromProjectId(rRE.getProjectId()))
 				.filter(rRE -> rRE != null)
 				.toSet();
 	}
@@ -197,10 +197,10 @@ public class RuntimeEnvironmentsHelper {
 	}
 
 	private void recursiveCollectRlFromChain(IN4JSProject runtimeEnvironment, Collection<IN4JSProject> collection) {
-		Optional<String> extended = runtimeEnvironment.getExtendedRuntimeEnvironmentName();
+		Optional<String> extended = runtimeEnvironment.getExtendedRuntimeEnvironmentId();
 		if (extended.isPresent()) {
-			String name = extended.get();
-			List<IN4JSProject> extendedRE = from(getAllProjects()).filter(p -> name.equals(p.getProjectName()))
+			String id = extended.get();
+			List<IN4JSProject> extendedRE = from(getAllProjects()).filter(p -> id.equals(p.getProjectId()))
 					.toList();
 
 			if (extendedRE.isEmpty()) {
@@ -208,7 +208,7 @@ public class RuntimeEnvironmentsHelper {
 			}
 
 			if (extendedRE.size() > 1) {
-				LOGGER.debug("multiple projects match name " + name);
+				LOGGER.debug("multiple projects match id " + id);
 				LOGGER.error(new RuntimeException("Cannot obtain transitive list of provided libraries"));
 				return;
 			}
@@ -314,15 +314,15 @@ public class RuntimeEnvironmentsHelper {
 		while (result && iterRuntimeEnvironment.hasNext()) {
 			RuntimeEnvironment re = iterRuntimeEnvironment.next();
 			List<IN4JSProject> listExtendedEnvironments = reExtendedEnvironments.keySet().stream()
-					.filter(p -> p.getProjectName().equals(re.getArtifactId())).collect(Collectors.toList());
+					.filter(p -> p.getProjectId().equals(re.getProjectId())).collect(Collectors.toList());
 
 			if (listExtendedEnvironments.size() != 1) {
 				LOGGER.debug("Multiple projects with name "
-						+ re.getArtifactId()
+						+ re.getProjectId()
 						+ " : "
-						+ listExtendedEnvironments.stream().map(p -> p.getProjectName())
+						+ listExtendedEnvironments.stream().map(p -> p.getProjectId())
 								.reduce(new String(), (String r, String e) -> r += ", " + e));
-				LOGGER.error("Cannot obtain project for name " + re.getArtifactId());
+				LOGGER.error("Cannot obtain project for name " + re.getProjectId());
 				return false;
 			}
 
@@ -330,7 +330,7 @@ public class RuntimeEnvironmentsHelper {
 			List<String> listExtendedEnvironemntsNames = reExtendedEnvironments.get(extendedRuntimeEnvironment);
 			result = result
 					&& requiredEnvironments.stream().map(bre -> {
-						return bre.getArtifactId();
+						return bre.getProjectId();
 					}).allMatch(breName -> listExtendedEnvironemntsNames.contains(breName));
 		}
 		return result;
@@ -365,21 +365,20 @@ public class RuntimeEnvironmentsHelper {
 		IN4JSProject project = (extractProject(sourceContainer));
 
 		if (predicate.test(project)) {
-			com.google.common.base.Optional<String> oEextendedProjectName = project.getExtendedRuntimeEnvironmentName();
+			com.google.common.base.Optional<String> oExtendedProjectId = project.getExtendedRuntimeEnvironmentId();
 
-			if (!oEextendedProjectName.isPresent()) {
+			if (!oExtendedProjectId.isPresent()) {
 				return;
 			}
 
-			String extendedProjectName = oEextendedProjectName.get();
-			collection.add(extendedProjectName);
+			String extendedProjectId = oExtendedProjectId.get();
+			collection.add(extendedProjectId);
 			allRuntimeEnv
 					.stream()
-					.filter(p -> p.getProjectName().equals(extendedProjectName))
+					.filter(p -> p.getProjectId().equals(extendedProjectId))
 					.findFirst()
-					.ifPresent(
-							exre -> recursiveCompatibleEnvironemntCollector(exre, collection, predicate,
-									allRuntimeEnv));
+					.ifPresent(exre -> recursiveCompatibleEnvironemntCollector(exre, collection, predicate,
+							allRuntimeEnv));
 
 		}
 	}

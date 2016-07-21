@@ -28,11 +28,6 @@ import org.eclipse.emf.common.util.URI;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
-import eu.numberfour.n4js.projectModel.IN4JSArchive;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainerAware;
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 import eu.numberfour.n4js.n4mf.BootstrapModule;
 import eu.numberfour.n4js.n4mf.DeclaredVersion;
 import eu.numberfour.n4js.n4mf.ExecModule;
@@ -41,6 +36,11 @@ import eu.numberfour.n4js.n4mf.ModuleFilterType;
 import eu.numberfour.n4js.n4mf.ModuleLoader;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.ProjectType;
+import eu.numberfour.n4js.projectModel.IN4JSArchive;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
+import eu.numberfour.n4js.projectModel.IN4JSSourceContainerAware;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
  */
@@ -204,21 +204,11 @@ public class N4JSProject implements IN4JSProject {
 	}
 
 	@Override
-	public String getProjectName() {
-		// project name equality should be ensured by n4mf validation
-		// return model.getProjectDescription(location).getProjectName();
+	public String getProjectId() {
+		// because the projectId must be available even if the project does not exist, we do not read from the
+		// ProjectDescription, here, but instead use the last segment of the location URI (equality between the two is
+		// ensured by an n4mf validation)
 		return location.lastSegment();
-	}
-
-	@Override
-	public String getArtifactId() {
-		if (!exists())
-			return null;
-		ProjectDescription pd = model.getProjectDescription(getLocation());
-		if (pd == null) {
-			return null;
-		}
-		return pd.getArtifactId();
 	}
 
 	@Override
@@ -372,7 +362,7 @@ public class N4JSProject implements IN4JSProject {
 	}
 
 	@Override
-	public Optional<String> getExtendedRuntimeEnvironmentName() {
+	public Optional<String> getExtendedRuntimeEnvironmentId() {
 		return fromNullable(model.getExtendedRuntimeEnvironmentName(this.location).orNull());
 	}
 
@@ -402,7 +392,7 @@ public class N4JSProject implements IN4JSProject {
 
 	@Override
 	public String toString() {
-		return "Project '" + getProjectName() + "' "
+		return "Project '" + getProjectId() + "' "
 				+ (exists() ? " type=" + getProjectType() + " " : " -doesn't exist!- ");
 	}
 
@@ -410,5 +400,4 @@ public class N4JSProject implements IN4JSProject {
 	public boolean isExternal() {
 		return external;
 	}
-
 }

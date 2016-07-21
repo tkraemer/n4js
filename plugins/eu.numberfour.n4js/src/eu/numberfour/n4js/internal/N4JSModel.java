@@ -41,10 +41,6 @@ import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
-import eu.numberfour.n4js.projectModel.IN4JSArchive;
-import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
-import eu.numberfour.n4js.projectModel.IN4JSSourceContainerAware;
 import eu.numberfour.n4js.n4mf.ExtendedRuntimeEnvironment;
 import eu.numberfour.n4js.n4mf.ImplementedProjects;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
@@ -55,6 +51,10 @@ import eu.numberfour.n4js.n4mf.SimpleProjectDescription;
 import eu.numberfour.n4js.n4mf.SourceFragment;
 import eu.numberfour.n4js.n4mf.SourceFragmentType;
 import eu.numberfour.n4js.n4mf.TestedProject;
+import eu.numberfour.n4js.projectModel.IN4JSArchive;
+import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
+import eu.numberfour.n4js.projectModel.IN4JSSourceContainerAware;
 
 /**
  */
@@ -435,7 +435,7 @@ public class N4JSModel {
 		if (null == project) {
 			return absent();
 		}
-		return fromNullable(project.getArtifactId());
+		return fromNullable(project.getProjectId());
 	}
 
 	public Collection<IN4JSProject> getTestedProjects(final N4JSProject project) {
