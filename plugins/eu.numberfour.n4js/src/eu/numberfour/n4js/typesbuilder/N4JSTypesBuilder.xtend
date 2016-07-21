@@ -42,7 +42,7 @@ import eu.numberfour.n4js.ts.types.TypesFactory
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * This class with its {@link N4JSTypesBuilder#createTModuleFromSource(DerivedStateAwareResource,boolean) createTModuleFromSource()}
@@ -94,7 +94,7 @@ public class N4JSTypesBuilder {
 		val parseResult = resource.getParseResult();
 		if (parseResult !== null) {
 
-//			UtilN4.takeSnapshotInGraphView("TB start (preLinking=="+preLinkingPhase+")",resource);
+//			UtilN4.takeSnapshotInGraphView("TB start (preLinking=="+preLinkingPhase+")",resource.resourceSet);
 
 			val script = parseResult.rootASTElement as Script;
 
@@ -137,7 +137,7 @@ public class N4JSTypesBuilder {
 			script.module = result;
 			(resource as N4JSResource).sneakyAddToContent(result);
 
-//			UtilN4.takeSnapshotInGraphView("TB end (preLinking=="+preLinkingPhase+")",resource);
+//			UtilN4.takeSnapshotInGraphView("TB end (preLinking=="+preLinkingPhase+")",resource.resourceSet);
 
 		} else {
 			throw new IllegalStateException(resource.URI + " has no parse result.");
