@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.MockWorkspace;
 import eu.numberfour.n4js.N4JSInjectorProviderWithMockProject;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.ts.types.TModule;
@@ -102,7 +103,7 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteModuleSpecifier() {
-		assertEquals("testproject/p/C", qnc.getCompleteModuleSpecifier(module));
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "/p/C", qnc.getCompleteModuleSpecifier(module));
 	}
 
 	/**
@@ -112,7 +113,8 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteModuleSpecifierAsIdentifier() {
-		assertEquals("testproject_p_u002fC", qnc.getCompleteModuleSpecifierAsIdentifier(module));
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "_p_u002fC",
+				qnc.getCompleteModuleSpecifierAsIdentifier(module));
 	}
 
 	/**
@@ -122,7 +124,6 @@ public class QualifiedNameComputerTest {
 	 */
 	@Test
 	public void testGetCompleteTypeSpecifier() {
-		assertEquals("testproject/p/C/C", qnc.getCompleteTypeSpecifier(type));
+		assertEquals(MockWorkspace.TEST_PROJECT__PROJECT_ID + "/p/C/C", qnc.getCompleteTypeSpecifier(type));
 	}
-
 }

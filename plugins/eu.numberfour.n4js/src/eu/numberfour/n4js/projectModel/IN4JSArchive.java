@@ -42,7 +42,7 @@ public interface IN4JSArchive extends IN4JSSourceContainerAware {
 	/**
 	 * The archive file name, including the suffix '.nfar'
 	 */
-	String getArchiveName();
+	String getFileName();
 
 	/**
 	 * The location of the archive that can be used to inspect its content.

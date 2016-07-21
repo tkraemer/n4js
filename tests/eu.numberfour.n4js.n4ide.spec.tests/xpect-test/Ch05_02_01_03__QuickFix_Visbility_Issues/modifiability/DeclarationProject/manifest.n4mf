@@ -1,6 +1,5 @@
-ArtifactId: DeclarationProject
+ProjectId: DeclarationProject
 VendorId: eu.numberfour
-ProjectName: "DeclarationProject"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

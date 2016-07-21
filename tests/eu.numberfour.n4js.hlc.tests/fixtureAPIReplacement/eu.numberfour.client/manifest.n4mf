@@ -1,6 +1,5 @@
-ArtifactId: eu.numberfour.client
+ProjectId: eu.numberfour.client
 VendorId: eu.numberfour
-ProjectName: "eu.numberfour.client"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

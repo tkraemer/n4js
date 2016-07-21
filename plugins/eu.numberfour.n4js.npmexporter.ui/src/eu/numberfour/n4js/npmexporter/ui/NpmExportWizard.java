@@ -386,7 +386,7 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 	private IN4JSEclipseProject map2In4js(IProject iProject) {
 		URI projectURI = URI.createPlatformResourceURI(iProject.getName(), true);
 		IN4JSEclipseProject project = n4JSCore.findProject(projectURI).orNull();
-		
+
 		// Additionally check for existence to only obtain visible N4JS workspace projects.
 		if (project.exists()) {
 			return project;
@@ -447,7 +447,7 @@ public class NpmExportWizard extends Wizard implements IExportWizard {
 								exportPage.setErrorMessage(
 										"Validation errors for projects: "
 												+ Joiner.on(", ").join(diag.projectsWithEntries().stream()
-														.map(p -> p.getArtifactId()).iterator()));
+														.map(p -> p.getProjectId()).iterator()));
 								String text = diag.asErrorText();
 
 								exportPage.setErrorText(text);

@@ -12,12 +12,11 @@
    
    END_SETUP
  */
-ArtifactId: test.07
-VendorId: eu.numberfour
-ProjectName: "test.07"
-VendorName: "NumberFour AG"
+ProjectId: test.07
 ProjectType: test
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
 	source { 

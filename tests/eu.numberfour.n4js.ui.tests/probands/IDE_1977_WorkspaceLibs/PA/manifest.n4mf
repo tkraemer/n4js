@@ -1,6 +1,5 @@
-ArtifactId: PA
+ProjectId: PA
 VendorId: eu.numberfour
-ProjectName: "PA"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

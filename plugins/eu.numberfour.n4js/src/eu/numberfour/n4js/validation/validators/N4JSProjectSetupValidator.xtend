@@ -136,7 +136,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		// Describing Self-Project as RuntimeDependency to handle clash with filled Members from current Project consistently.
 		val selfProject = N4mfFactory.eINSTANCE.createRequiredRuntimeLibraryDependency
 		selfProject.project = N4mfFactory.eINSTANCE.createSimpleProjectDescription
-		selfProject.project.artifactId = projectDescription.artifactId
+		selfProject.project.projectId = projectDescription.projectId
 		selfProject.project.declaredVendorId = projectDescription.declaredVendorId
 		val Optional<? extends IN4JSProject> optOwnProject = findProject(projectDescription.eResource.URI)
 		if (optOwnProject.present) {
@@ -168,9 +168,9 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 
 						// inside NFAR
 						// TODO vendorID of a NFAR-library
-						qname(null, srcCont.getLibrary.libraryName)
+						qname(null, srcCont.getLibrary.projectId)
 					} else {
-						qname(srcCont.project.vendorID, srcCont.project.projectName)
+						qname(srcCont.project.vendorID, srcCont.project.projectId)
 					}
 				val dependency = mQName2rtDep.get(depQName)
 				if (dependency === null ) {
@@ -303,15 +303,15 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 
 	/** Calculate qualified name for ProjectDescription */
 	def private static String qname(SimpleProjectDescription pdesc) {
-		return qname(pdesc.vendorId, pdesc.artifactId)
+		return qname(pdesc.vendorId, pdesc.projectId)
 	}
 
 	/** Calculate qualified name for ProjectDescription */
-	def private static String qname(String vendorId, String artifactId) {
-		return artifactId; // TODO vendorId of NFAR: as long as not queryable use only artifactID:
+	def private static String qname(String vendorId, String projectId) {
+		return projectId; // TODO vendorId of NFAR: as long as not queryable use only project ID:
 
-	//		if( vendorId === null ) return artifactId
-	//		return vendorId+":"+artifactId
+	//		if( vendorId === null ) return projectId
+	//		return vendorId+":"+projectId
 	}
 
 	/** IDEBUG-266 issue error warning on cyclic dependencies*/
@@ -324,7 +324,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 				addIssue(
 					getMessageForPROJECT_DEPENDENCY_CYCLE(result.prettyPrint([calculateName])),
 					projectDescription,
-					SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID,
+					SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID,
 					PROJECT_DEPENDENCY_CYCLE
 				);
 			}else{
@@ -353,7 +353,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(
 					getMessageForSRCTEST_NO_TESTLIB_DEP("eu.numberfour.mangelhaft"),
 					projectDescription,
-					SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID,
+					SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID,
 					PROJECT_DEPENDENCY_CYCLE
 				);
 		}
@@ -368,21 +368,13 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def boolean anyDependsOnTestLibrary(List<? extends IN4JSProject> projects) {
 		projects.findFirst[p|
-				p.dependencies.findFirst["eu.numberfour".equals(vendorID) && ("eu.numberfour.mangelhaft".equals(artifactId) || "eu.numberfour.mangelhaft.assert".equals(artifactId))] !== null
+				p.dependencies.findFirst["eu.numberfour".equals(vendorID) && ("eu.numberfour.mangelhaft".equals(projectId) || "eu.numberfour.mangelhaft.assert".equals(projectId))] !== null
 				|| anyDependsOnTestLibrary(p.dependencies)
 			] !== null
 	}
 
-	private def dispatch calculateName(IN4JSSourceContainerAware it) {
-		it.toString;
-	}
-
-	private def dispatch calculateName(IN4JSProject it) {
-		projectName;
-	}
-
-	private def dispatch calculateName(IN4JSArchive it) {
-		libraryName;
+	private def String calculateName(IN4JSSourceContainerAware it) {
+		it.projectId;
 	}
 
 	/**
@@ -433,8 +425,8 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			if (!projects.nullOrEmpty) {
 				val allProjects = existingProjectIds;
 				val head = projects.head;
-				val refProjectType = allProjects.get(head.project.artifactId)?.projectType
-				if (projects.exists[refProjectType != allProjects.get(project?.artifactId)?.projectType]) {
+				val refProjectType = allProjects.get(head.project.projectId)?.projectType
+				if (projects.exists[refProjectType != allProjects.get(project?.projectId)?.projectType]) {
 					addIssue(
 						messageForMISMATCHING_TESTED_PROJECT_TYPES,
 						it,
@@ -458,10 +450,10 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			if (!dependencies.nullOrEmpty) {
 				val allProjects = existingProjectIds;
 				dependencies.filterNull.forEach[
-					val actualImplementationId = allProjects.get(project?.artifactId)?.implementationId?.orNull;
+					val actualImplementationId = allProjects.get(project?.projectId)?.implementationId?.orNull;
 					if (!actualImplementationId.nullOrEmpty && actualImplementationId != expectedImplementationId) {
 						addIssue(
-							getMessageForMISMATCHING_IMPLEMENTATION_ID(expectedImplementationId, project.artifactId, actualImplementationId),
+							getMessageForMISMATCHING_IMPLEMENTATION_ID(expectedImplementationId, project.projectId, actualImplementationId),
 							it.eContainer,
 							PROJECT_DEPENDENCIES__PROJECT_DEPENDENCIES,
 							dependencies.indexOf(it),
@@ -481,12 +473,12 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 	def checkExternalProjectDoesNotReferenceeWorkspaceProject(ProjectDescription desc) {
 
 		// Probably it has a broken model state.
-		if (desc.artifactId.nullOrEmpty) {
+		if (desc.projectId.nullOrEmpty) {
 			return;
 		}
 
 		val allProjects = desc.existingProjectIds;
-		val currentProject = allProjects.get(desc.artifactId);
+		val currentProject = allProjects.get(desc.projectId);
 
 		// Nothing to do with non-existing, missing and/or external projects.
 		if (null === currentProject || !currentProject.exists || currentProject.external) {
@@ -500,7 +492,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		while (!stack.isEmpty) {
 
 			val actual = stack.pop;
-			val actualId = actual.artifactId;
+			val actualId = actual.projectId;
 			checkState(actual.external, '''Implementation error. Only external projects are expected: «actual».''');
 
 			if (!visitedProjectIds.add(actualId)) {
@@ -512,7 +504,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			// If external has any *NON* external dependency we should raise a warning.
 			val workspaceDependency = actualDirectDependencies.findFirst[!external];
 			if (null !== workspaceDependency) {
-				val workspaceDependencyId = workspaceDependency.artifactId;
+				val workspaceDependencyId = workspaceDependency.projectId;
 				val message = getMessageForEXTERNAL_PROJECT_REFERENCES_WORKSPACE_PROJECT(actualId, workspaceDependencyId);
 				addIssue(
 					message,
@@ -656,7 +648,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		// Check project existence.
 		references.filter(ProjectReference).forEach[
 
-			val id = toArtifactId;
+			val id = toProjectId;
 			// Assuming completely broken AST.
 			if (null !== id) {
 
@@ -664,7 +656,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 				if (allProjects.containsKey(id)) {
 					project = allProjects.get(id);
 				} else {
-					val currentProject = allProjects.get(desc.projectName);
+					val currentProject = allProjects.get(desc.projectId);
 					project = currentProject?.libraryDependencies?.get(id);
 				}
 
@@ -675,7 +667,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 				} else {
 					// Create only one single validation issue for a particular project reference.
 					var valid = true;
-					if (valid && desc?.artifactId == id) {
+					if (valid && desc?.projectId == id) {
 						addProjectReferencesItselfIssue(it.eContainer, features.last, references.indexOf(it));
 						valid = false;
 					}
@@ -765,26 +757,26 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 		addIssue(messageForPROJECT_REFERENCES_ITSELF, eObject, feature, index, PROJECT_REFERENCES_ITSELF);
 	}
 
-	private def addInvalidProjectTypeIssue(EObject eObject, String artifactId, ProjectType type, EStructuralFeature feature, int index) {
-		addIssue(getMessageForINVALID_PROJECT_TYPE_REF(artifactId, type.label, feature.label),
+	private def addInvalidProjectTypeIssue(EObject eObject, String projectId, ProjectType type, EStructuralFeature feature, int index) {
+		addIssue(getMessageForINVALID_PROJECT_TYPE_REF(projectId, type.label, feature.label),
 			eObject, feature, index, INVALID_PROJECT_TYPE_REF
 		);
 	}
 
-	private def addNonExistingProjectIssue(EObject eObject, String artifactId, EStructuralFeature feature, int index) {
-		addIssue(getMessageForNON_EXISTING_PROJECT(artifactId), eObject, feature, index, NON_EXISTING_PROJECT);
+	private def addNonExistingProjectIssue(EObject eObject, String projectId, EStructuralFeature feature, int index) {
+		addIssue(getMessageForNON_EXISTING_PROJECT(projectId), eObject, feature, index, NON_EXISTING_PROJECT);
 	}
 
 	private def addDuplicateProjectReferenceIssue(EObject eObject, EStructuralFeature feature, int index) {
 		addIssue(messageForDUPLICATE_PROJECT_REF, eObject, feature, index, DUPLICATE_PROJECT_REF);
 	}
 
-	private def toArtifactId(ProjectReference it) {
-		it?.project?.artifactId;
+	private def toProjectId(ProjectReference it) {
+		it?.project?.projectId;
 	}
 
-	private def getExistingProjectIds(EObject it) {
-		return findAllProjects.filter[exists].map[projectName -> it].toMap;
+	private def Map<String, IN4JSProject> getExistingProjectIds(EObject it) {
+		return findAllProjects.filter[exists].map[projectId -> it].toMap;
 	}
 
 	private def <K, V> toMap(Iterable<Pair<K, V>> it) {
@@ -800,7 +792,7 @@ class N4JSProjectSetupValidator extends AbstractN4JSDeclarativeValidator {
 			return emptyMap;
 		}
 		val map = <String, IN4JSProject>newHashMap();
-		allDirectDependencies.filter(IN4JSArchive).map[libraryName -> getProject]
+		allDirectDependencies.filter(IN4JSArchive).map[projectId -> getProject]
 			.forEach[map.put(key, value)];
 		return unmodifiableMap(map);
 	}

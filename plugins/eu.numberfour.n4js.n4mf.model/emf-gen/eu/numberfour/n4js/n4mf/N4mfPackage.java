@@ -94,13 +94,13 @@ public interface N4mfPackage extends EPackage {
 	int SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID = 0;
 
 	/**
-	 * The feature id for the '<em><b>Artifact Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID = 1;
+	int SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID = 1;
 
 	/**
 	 * The number of structural features of the '<em>Simple Project Description</em>' class.
@@ -149,22 +149,13 @@ public interface N4mfPackage extends EPackage {
 	int PROJECT_DESCRIPTION__DECLARED_VENDOR_ID = SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID;
 
 	/**
-	 * The feature id for the '<em><b>Artifact Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__ARTIFACT_ID = SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID;
-
-	/**
-	 * The feature id for the '<em><b>Project Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROJECT_DESCRIPTION__PROJECT_NAME = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 0;
+	int PROJECT_DESCRIPTION__PROJECT_ID = SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID;
 
 	/**
 	 * The feature id for the '<em><b>Vendor Name</b></em>' attribute.
@@ -173,7 +164,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__VENDOR_NAME = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 1;
+	int PROJECT_DESCRIPTION__VENDOR_NAME = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Project Version</b></em>' containment reference.
@@ -182,7 +173,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__PROJECT_VERSION = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 2;
+	int PROJECT_DESCRIPTION__PROJECT_VERSION = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Project Type</b></em>' attribute.
@@ -191,7 +182,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__PROJECT_TYPE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 3;
+	int PROJECT_DESCRIPTION__PROJECT_TYPE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Main Module</b></em>' attribute.
@@ -200,7 +191,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__MAIN_MODULE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 4;
+	int PROJECT_DESCRIPTION__MAIN_MODULE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Extended Runtime Environment</b></em>' containment reference.
@@ -209,7 +200,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__EXTENDED_RUNTIME_ENVIRONMENT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 5;
+	int PROJECT_DESCRIPTION__EXTENDED_RUNTIME_ENVIRONMENT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Provided Runtime Libraries</b></em>' containment reference.
@@ -218,7 +209,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__PROVIDED_RUNTIME_LIBRARIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 6;
+	int PROJECT_DESCRIPTION__PROVIDED_RUNTIME_LIBRARIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Required Runtime Libraries</b></em>' containment reference.
@@ -227,7 +218,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__REQUIRED_RUNTIME_LIBRARIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 7;
+	int PROJECT_DESCRIPTION__REQUIRED_RUNTIME_LIBRARIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Project Dependencies</b></em>' containment reference.
@@ -236,7 +227,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__PROJECT_DEPENDENCIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 8;
+	int PROJECT_DESCRIPTION__PROJECT_DEPENDENCIES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Implementation Id</b></em>' attribute.
@@ -245,7 +236,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__IMPLEMENTATION_ID = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 9;
+	int PROJECT_DESCRIPTION__IMPLEMENTATION_ID = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Implemented Projects</b></em>' containment reference.
@@ -254,7 +245,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__IMPLEMENTED_PROJECTS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 10;
+	int PROJECT_DESCRIPTION__IMPLEMENTED_PROJECTS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Init Modules</b></em>' containment reference.
@@ -263,7 +254,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__INIT_MODULES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 11;
+	int PROJECT_DESCRIPTION__INIT_MODULES = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Exec Module</b></em>' containment reference.
@@ -272,7 +263,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__EXEC_MODULE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 12;
+	int PROJECT_DESCRIPTION__EXEC_MODULE = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Output Path</b></em>' attribute.
@@ -281,7 +272,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__OUTPUT_PATH = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 13;
+	int PROJECT_DESCRIPTION__OUTPUT_PATH = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Library Paths</b></em>' attribute list.
@@ -290,7 +281,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__LIBRARY_PATHS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 14;
+	int PROJECT_DESCRIPTION__LIBRARY_PATHS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Resource Paths</b></em>' attribute list.
@@ -299,7 +290,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__RESOURCE_PATHS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 15;
+	int PROJECT_DESCRIPTION__RESOURCE_PATHS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Source Fragment</b></em>' containment reference list.
@@ -308,7 +299,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__SOURCE_FRAGMENT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 16;
+	int PROJECT_DESCRIPTION__SOURCE_FRAGMENT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Module Filters</b></em>' containment reference list.
@@ -317,7 +308,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__MODULE_FILTERS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 17;
+	int PROJECT_DESCRIPTION__MODULE_FILTERS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Tested Projects</b></em>' containment reference.
@@ -326,7 +317,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__TESTED_PROJECTS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 18;
+	int PROJECT_DESCRIPTION__TESTED_PROJECTS = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 17;
 
 	/**
 	 * The feature id for the '<em><b>Module Loader</b></em>' attribute.
@@ -335,7 +326,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION__MODULE_LOADER = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 19;
+	int PROJECT_DESCRIPTION__MODULE_LOADER = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 18;
 
 	/**
 	 * The number of structural features of the '<em>Project Description</em>' class.
@@ -344,7 +335,7 @@ public interface N4mfPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_DESCRIPTION_FEATURE_COUNT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 20;
+	int PROJECT_DESCRIPTION_FEATURE_COUNT = SIMPLE_PROJECT_DESCRIPTION_FEATURE_COUNT + 19;
 
 	/**
 	 * The operation id for the '<em>Get Vendor Id</em>' operation.
@@ -1446,17 +1437,6 @@ public interface N4mfPackage extends EPackage {
 	EClass getProjectDescription();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4mf.ProjectDescription#getProjectName <em>Project Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Project Name</em>'.
-	 * @see eu.numberfour.n4js.n4mf.ProjectDescription#getProjectName()
-	 * @see #getProjectDescription()
-	 * @generated
-	 */
-	EAttribute getProjectDescription_ProjectName();
-
-	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4mf.ProjectDescription#getVendorName <em>Vendor Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1894,15 +1874,15 @@ public interface N4mfPackage extends EPackage {
 	EAttribute getSimpleProjectDescription_DeclaredVendorId();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getArtifactId <em>Artifact Id</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getProjectId <em>Project Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Artifact Id</em>'.
-	 * @see eu.numberfour.n4js.n4mf.SimpleProjectDescription#getArtifactId()
+	 * @return the meta object for the attribute '<em>Project Id</em>'.
+	 * @see eu.numberfour.n4js.n4mf.SimpleProjectDescription#getProjectId()
 	 * @see #getSimpleProjectDescription()
 	 * @generated
 	 */
-	EAttribute getSimpleProjectDescription_ArtifactId();
+	EAttribute getSimpleProjectDescription_ProjectId();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getVendorId() <em>Get Vendor Id</em>}' operation.
@@ -2410,14 +2390,6 @@ public interface N4mfPackage extends EPackage {
 		EClass PROJECT_DESCRIPTION = eINSTANCE.getProjectDescription();
 
 		/**
-		 * The meta object literal for the '<em><b>Project Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PROJECT_DESCRIPTION__PROJECT_NAME = eINSTANCE.getProjectDescription_ProjectName();
-
-		/**
 		 * The meta object literal for the '<em><b>Vendor Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2762,12 +2734,12 @@ public interface N4mfPackage extends EPackage {
 		EAttribute SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID = eINSTANCE.getSimpleProjectDescription_DeclaredVendorId();
 
 		/**
-		 * The meta object literal for the '<em><b>Artifact Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID = eINSTANCE.getSimpleProjectDescription_ArtifactId();
+		EAttribute SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID = eINSTANCE.getSimpleProjectDescription_ProjectId();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Vendor Id</b></em>' operation.

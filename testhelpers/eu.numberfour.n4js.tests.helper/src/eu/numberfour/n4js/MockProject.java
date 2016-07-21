@@ -32,9 +32,8 @@ public final class MockProject extends N4JSProject {
 	}
 
 	@Override
-	public String getProjectName() {
+	public String getProjectId() {
 		return ((MockN4JSModel) getModel()).getInternalWorkspaceForMocks().getProjectDescription(MOCK_URI)
-				.getProjectName();
+				.getProjectId();
 	}
-
 }

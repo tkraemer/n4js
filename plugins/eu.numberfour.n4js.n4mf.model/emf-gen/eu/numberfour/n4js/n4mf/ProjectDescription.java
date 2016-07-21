@@ -16,8 +16,8 @@ import org.eclipse.emf.common.util.EList;
  *
  * <!-- begin-model-doc -->
  * *
- * Describes a project by making it identifiable by vendor id, artifact id and
- * declared version. projectName and vendorName contain the more meaningful names.
+ * Describes a project by making it identifiable by projectId, vendorId and
+ * declared version.
  *  * The project type defines how a project should be bundled.
  *  * Project paths decide about which resources should be bundled and be visible
  * to other projects that list this project as dependency. So e.g. the files
@@ -35,7 +35,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.n4mf.ProjectDescription#getProjectName <em>Project Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4mf.ProjectDescription#getVendorName <em>Vendor Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4mf.ProjectDescription#getProjectVersion <em>Project Version</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4mf.ProjectDescription#getProjectType <em>Project Type</em>}</li>
@@ -62,32 +61,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface ProjectDescription extends SimpleProjectDescription {
-	/**
-	 * Returns the value of the '<em><b>Project Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Project Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Project Name</em>' attribute.
-	 * @see #setProjectName(String)
-	 * @see eu.numberfour.n4js.n4mf.N4mfPackage#getProjectDescription_ProjectName()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getProjectName();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4mf.ProjectDescription#getProjectName <em>Project Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Project Name</em>' attribute.
-	 * @see #getProjectName()
-	 * @generated
-	 */
-	void setProjectName(String value);
-
 	/**
 	 * Returns the value of the '<em><b>Vendor Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

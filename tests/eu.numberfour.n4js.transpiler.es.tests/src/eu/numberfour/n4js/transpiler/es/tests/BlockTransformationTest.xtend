@@ -177,7 +177,7 @@ class BlockTransformationTest extends AbstractTranspilerTest {
 
 							var metaClass = new N4Class({
 								name: 'System2',
-								origin: 'testproject',
+								origin: 'test',
 								fqn: 'A.System2',
 								n4superType: N4Object.n4type,
 								allImplementedInterfaces: [],

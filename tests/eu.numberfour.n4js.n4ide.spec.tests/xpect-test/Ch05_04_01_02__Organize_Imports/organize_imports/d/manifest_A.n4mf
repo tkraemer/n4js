@@ -1,6 +1,5 @@
-ArtifactId: IDEBUG-314_A
+ProjectId: IDEBUG-314_A
 VendorId: eu.numberfour
-ProjectName: "IDEBUG-314_A"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

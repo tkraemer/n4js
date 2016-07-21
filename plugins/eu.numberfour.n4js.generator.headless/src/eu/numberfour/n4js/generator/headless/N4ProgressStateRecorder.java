@@ -136,7 +136,7 @@ public class N4ProgressStateRecorder {
 
 	/***/
 	public void markProcessing(IN4JSProject project) {
-		info("processing " + project.getProjectName());
+		info("processing " + project.getProjectId());
 		increaseIndent();
 	}
 
@@ -146,12 +146,12 @@ public class N4ProgressStateRecorder {
 	 */
 	public void markEndProcessing(IN4JSProject project) {
 		decreaseIndent();
-		info("processing of " + project.getProjectName() + " done ");
+		info("processing of " + project.getProjectId() + " done ");
 	}
 
 	/***/
 	public void markStartLoading(MarkedProject markedProject) {
-		info("start loading " + markedProject.project.getProjectName());
+		info("start loading " + markedProject.project.getProjectId());
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class N4ProgressStateRecorder {
 	 *            to compile
 	 */
 	public void markStartCompiling(MarkedProject markedProject) {
-		info("Project, compiling " + markedProject.project.getProjectName());
+		info("Project, compiling " + markedProject.project.getProjectId());
 		increaseIndent();
 	}
 
@@ -200,7 +200,7 @@ public class N4ProgressStateRecorder {
 	 */
 	public void markEndCompiling(MarkedProject markedProject) {
 		decreaseIndent();
-		info("Project, finished compiling of " + markedProject.project.getProjectName());
+		info("Project, finished compiling of " + markedProject.project.getProjectId());
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class N4ProgressStateRecorder {
 	 *            to unload
 	 */
 	public void markStartUnloading(MarkedProject markedProject) {
-		info("about to unload " + markedProject.project.getProjectName());
+		info("about to unload " + markedProject.project.getProjectId());
 		increaseIndent();
 	}
 
@@ -255,7 +255,7 @@ public class N4ProgressStateRecorder {
 	 */
 	public void markFinishedUnloading(MarkedProject markedProject) {
 		decreaseIndent();
-		info("finished unloading of " + markedProject.project.getProjectName());
+		info("finished unloading of " + markedProject.project.getProjectId());
 	}
 
 	/**

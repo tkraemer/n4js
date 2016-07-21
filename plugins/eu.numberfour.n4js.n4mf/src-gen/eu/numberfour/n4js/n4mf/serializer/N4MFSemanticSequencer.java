@@ -258,8 +258,7 @@ public class N4MFSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         artifactId=N4mfIdentifier | 
-	 *         projectName=STRING | 
+	 *         projectId=N4mfIdentifier | 
 	 *         projectType=ProjectType | 
 	 *         projectVersion=DeclaredVersion | 
 	 *         declaredVendorId=N4mfIdentifier | 
@@ -370,7 +369,7 @@ public class N4MFSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     SimpleProjectDescription returns SimpleProjectDescription
 	 *
 	 * Constraint:
-	 *     (declaredVendorId=N4mfIdentifier? artifactId=N4mfIdentifier)
+	 *     (declaredVendorId=N4mfIdentifier? projectId=N4mfIdentifier)
 	 */
 	protected void sequence_SimpleProjectDescription(ISerializationContext context, SimpleProjectDescription semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

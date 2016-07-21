@@ -1,7 +1,6 @@
-ArtifactId: Lib_default
+ProjectId: Lib_default
 VendorId: eu.numberfour
 VendorName: "NumberFour AG"
-ProjectName: "Lib_default"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
 Output: "src-gen"

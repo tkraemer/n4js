@@ -25,12 +25,11 @@
 // Testing cycle-detection IDEBUG-266
 
 // XPECT errors --> "The project configuration contains a dependency cycle of projects [B] -> A -> C -> [B]." at "B"
-ArtifactId: B
-VendorId: eu.numberfour
-ProjectName: "B"
-VendorName: "NumberFour AG"
+ProjectId: B
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 ProjectDependencies {A}
 Output: "src-gen"
 Sources {

@@ -553,10 +553,10 @@ public class ScriptApiTracker {
 	}
 
 	/**
-	 * Compares ProjectName and VendorId
+	 * Compares projectId and vendorId
 	 */
 	boolean isSameProject(TModule m1, TModule m2) {
-		return m1 != null && m1.getProjectName().equals(m2.getProjectName())
+		return m1 != null && m1.getProjectId().equals(m2.getProjectId())
 				&& m1.getVendorID().equals(m2.getVendorID());
 	}
 

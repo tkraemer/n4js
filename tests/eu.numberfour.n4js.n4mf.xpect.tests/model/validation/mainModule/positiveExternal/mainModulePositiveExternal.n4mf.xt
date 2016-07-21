@@ -1,11 +1,10 @@
 /* XPECT_SETUP eu.numberfour.n4js.n4mf.tests.N4MFXpectValidationTest END_SETUP */
 
-ArtifactId: positiveExternal
-VendorId: MyVendorID
-ProjectName: "My Project Name"
-VendorName: "My Vendor Name"
+ProjectId: positiveExternal
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: MyVendorID
+VendorName: "My Vendor Name"
 Output: "src-gen"
 Sources {
 	source {

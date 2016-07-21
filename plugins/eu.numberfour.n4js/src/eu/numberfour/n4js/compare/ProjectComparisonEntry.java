@@ -143,10 +143,8 @@ public class ProjectComparisonEntry {
 	public ProjectComparisonEntry getChildForElementAPI(@SuppressWarnings("hiding") EObject elementAPI) {
 		if (elementAPI == null)
 			throw new IllegalArgumentException("elementAPI may not be null");
-		for (ProjectComparisonEntry currE : getChildren())
-		{
-			if (currE.elementAPI != null && currE.elementAPI.equals(elementAPI))
-			{
+		for (ProjectComparisonEntry currE : getChildren()) {
+			if (currE.elementAPI != null && currE.elementAPI.equals(elementAPI)) {
 				return currE;
 			}
 		}
@@ -273,8 +271,7 @@ public class ProjectComparisonEntry {
 			if (api != null) {
 				// no project/element here but in API -> show "MISSING"
 				return LABEL_MISSING;
-			}
-			else {
+			} else {
 				// no project/element here nor in API -> show "-"
 				// (the entry was created due to a surplus element in another implementation)
 				return "-";
@@ -285,7 +282,7 @@ public class ProjectComparisonEntry {
 
 	private static String toText(Object element) {
 		if (element instanceof IN4JSProject)
-			return ((IN4JSProject) element).getArtifactId();
+			return ((IN4JSProject) element).getProjectId();
 		if (element instanceof TModule)
 			return ((TModule) element).getQualifiedName();
 		if (element instanceof TMember)

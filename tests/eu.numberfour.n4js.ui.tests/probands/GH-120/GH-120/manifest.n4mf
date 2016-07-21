@@ -1,6 +1,5 @@
-ArtifactId: GH-120
+ProjectId: GH-120
 VendorId: eu.numberfour
-ProjectName: "GH-120"
 VendorName: "NumberFour AG"
 ProjectType: test
 ProjectVersion: 0.0.1-SNAPSHOT
