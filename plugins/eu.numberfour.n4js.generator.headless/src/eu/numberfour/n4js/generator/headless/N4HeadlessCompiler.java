@@ -86,22 +86,23 @@ import eu.numberfour.n4js.utils.ResourceType;
  * <ol>
  * <li>compile "single file" takes a (list of) source-file(s) to compile and just compiles these if possible
  * {@link #compileSingleFile(File)}, {@link #compileSingleFiles(List)}, {@link #compileSingleFiles(List, List)}
- * <li>compile "projects" takes a list of porject-location and compiles exactly them. {@link #compileProjects(List)},
+ * <li>compile "projects" takes a list of project-location and compiles exactly them. {@link #compileProjects(List)},
  * {@link #compileProjects(List, List)}
  * <li>compile "all project" takes a list of folders and compiles each project found as direct content of one of the
  * folders. {@link #compileAllProjects(List)}
  * </ol>
  *
- * The way how the compiler behaves can be configures through flags like {@link #keepOnCompiling},
+ * The way how the compiler behaves can be configured through flags like {@link #keepOnCompiling},
  * {@link #processTestCode}, {@link #compileSourceCode}
  */
 public class N4HeadlessCompiler {
 
 	/** The Generator to compile with */
 	private final CompositeGenerator compositeGenerator;
-	/** Abstraction to the filesystem, used by the Generator */
 
+	/** Abstraction to the filesystem, used by the Generator */
 	private final JavaIoFileSystemAccess fsa;
+
 	/** N4JS-Implementation of a workspace without OSGI */
 	@Inject
 	private FileBasedWorkspace fbWorkspace;
