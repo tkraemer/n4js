@@ -522,7 +522,7 @@ from {
 	if (getter.declaredTypeRef!=null) {
 		T = getter.declaredTypeRef
 	} else {
-		if (getter.definedGetter.declaredTypeRef!=null) {
+		if (getter.definedGetter?.declaredTypeRef!==null) {
 			T = getter.definedGetter.declaredTypeRef
 		} else {
 			T = G.anyTypeRef
@@ -2152,6 +2152,7 @@ from {
 	// To recap, there's funDef.returnTypeRef (developer-provided type hint)
 	// and there's funDef.definedType (set afterwards by N4JSFunctionDefinitionTypesBuilder)
 	{
+		funDef !== null
 		!funDef.isAsync()
 		// in effect fType becomes funDef.definedType.ref, ie a TFunction
 		G2 |- funDef : var FunctionTypeExprOrRef fType

@@ -36,7 +36,12 @@ package final class N4JSPreProcessor {
 	 * cache clear" handler, see {@code OnChangeEvictingCache#execWithoutCacheClear(N4JSResource,IUnitOfWork)}.
 	 */
 	def public void process(Script script, N4JSResource resource) {
-		val builtInTypes = BuiltInTypeScope.get(resource.resourceSet);
+		val resourceSet = resource.resourceSet;
+		if( resourceSet === null ) {
+			// null-safe exit - required in smoke test where Resources detached from a ResourceSet are used.
+			return;
+		}
+		val builtInTypes = BuiltInTypeScope.get( resourceSet );
 		for (node : resource.script.eAllContents.toIterable) {
 			processNode(node, resource, builtInTypes);
 		}
