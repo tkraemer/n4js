@@ -77,19 +77,23 @@ public class OtherClassifierModifiersComponent extends WizardComponent {
 		// Final property binding
 
 		if (null != finalAnnotationBox) {
-			IObservableValue finalValue = BeanProperties
+			@SuppressWarnings("unchecked")
+			IObservableValue<Boolean> finalValue = BeanProperties
 					.value(N4JSClassWizardModel.class, N4JSClassWizardModel.FINAL_ANNOTATED_PROPERTY)
 					.observe(model);
-			IObservableValue finalUI = WidgetProperties.selection().observe(finalAnnotationBox);
+			@SuppressWarnings("unchecked")
+			IObservableValue<Boolean> finalUI = WidgetProperties.selection().observe(finalAnnotationBox);
 			getDataBindingContext().bindValue(finalUI, finalValue);
 		}
 
 		// n4js annotation property binding
 
-		IObservableValue n4jsValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> n4jsValue = BeanProperties
 				.value(N4JSClassWizardModel.class, N4JSClassifierWizardModel.N4JS_ANNOTATED_PROPERTY)
 				.observe(model);
-		IObservableValue n4jsUI = WidgetProperties.selection().observe(n4jsAnnotationBox);
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> n4jsUI = WidgetProperties.selection().observe(n4jsAnnotationBox);
 
 		getDataBindingContext().bindValue(n4jsUI, n4jsValue);
 	}

@@ -22,8 +22,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -125,7 +125,7 @@ public abstract class CustomElementSelectionDialog extends SelectionStatusDialog
 		this.treeViewer.setContentProvider(contentProvider);
 		this.treeViewer.setLabelProvider(labelProvider);
 
-		this.treeViewer.setSorter(new ViewerSorter());
+		this.treeViewer.setComparator(new ViewerComparator());
 
 		this.treeViewer.setAutoExpandLevel(this.getAutoExpandLevel());
 
