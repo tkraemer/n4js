@@ -33,12 +33,11 @@
    END_SETUP
  */
 
-ArtifactId: P_RTL_A02
-VendorId: eu.numberfour
-ProjectName: "P_RTL_A02"
-VendorName: "NumberFour AG"
+ProjectId: P_RTL_A02
 ProjectType: runtimeLibrary
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 // XPECT errors --> "Erroneous library P_RTL_A01 provides contradicting polyfills for "#.MObject#mi"." at "P_RTL_A01"
 RequiredRuntimeLibraries { P_RTL_A01 }
 Output: "src-gen"

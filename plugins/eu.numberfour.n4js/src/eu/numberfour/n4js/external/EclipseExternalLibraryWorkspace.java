@@ -141,7 +141,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		ensureInitialized();
 		if (PROJECT.equals(expectedN4JSSourceContainerType)) {
 
-			final String name = reference.getProject().getArtifactId();
+			final String name = reference.getProject().getProjectId();
 			final ExternalProject project = getProjectMapping().get(name);
 
 			if (null == project) {
@@ -431,7 +431,7 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 				}
 			}
 		});
-		final Map<String, ExternalProject> artifactIdProjectMap = newHashMap();
+		final Map<String, ExternalProject> projectIdProjectMap = newHashMap();
 		final Map<URI, Optional<Pair<ExternalProject, ProjectDescription>>> availableProjects = projectCache.asMap();
 		visitAllExternalProjects(locations, new Procedure<File>() {
 
@@ -443,14 +443,14 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 							.orNull();
 					if (null != pair) {
 						final ExternalProject project = pair.getFirst();
-						if (!artifactIdProjectMap.containsKey(project.getName())) {
-							artifactIdProjectMap.put(project.getName(), project);
+						if (!projectIdProjectMap.containsKey(project.getName())) {
+							projectIdProjectMap.put(project.getName(), project);
 						}
 					}
 				}
 			}
 		});
-		projectMapping = Collections.unmodifiableMap(artifactIdProjectMap);
+		projectMapping = Collections.unmodifiableMap(projectIdProjectMap);
 	}
 
 	private Iterable<IProject> getProjects(final Iterable<java.net.URI> rootLocations) {

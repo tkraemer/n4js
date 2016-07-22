@@ -27,7 +27,6 @@
 import * as NVM from "VisibleModule"
 /* XPECT errors ---
 "Cannot resolve import target :: resolving simple module import : found no matching modules" at ""NotVisibleModule""
-"Couldn't resolve reference to TModule 'NotVisibleModule'." at ""NotVisibleModule""
  --- */
 import * as NNVM from "NotVisibleModule"
 

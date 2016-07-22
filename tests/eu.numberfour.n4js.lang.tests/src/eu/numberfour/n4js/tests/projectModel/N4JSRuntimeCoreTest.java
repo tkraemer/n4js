@@ -70,5 +70,4 @@ public class N4JSRuntimeCoreTest extends AbstractN4JSCoreTest {
 		workspace = null;
 		testMe = null;
 	}
-
 }

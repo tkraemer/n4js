@@ -1,6 +1,5 @@
-ArtifactId: TestProject
+ProjectId: TestProject
 VendorId: eu.numberfour
-ProjectName: "TestProject"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

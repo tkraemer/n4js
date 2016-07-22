@@ -6,7 +6,7 @@
 // Ok, nameless function 
 var x = function() {
 	
-	//XPECT  errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+	//XPECT  errors --> "arguments is a reserved identifier." at "arguments"
 	var arguments : number = 15;
 	
 	// Ok, XPECT  errors -->"Couldn't resolve reference to IdentifiableElement 'length'." at "length"
@@ -15,7 +15,7 @@ var x = function() {
 }
 
 // argument shadows arguments
-// XPECT  errors --> "Parameter arguments shadows implicit function parameter." at "arguments"
+// XPECT  errors --> "arguments is a reserved identifier." at "arguments"
 function a1(arguments : string, b : number)  {
 	// arguments shadowed by variable called arguments XPECT errors --> "string is not a subtype of number." at "arguments"
 	var l : number = arguments;
@@ -24,7 +24,7 @@ function a1(arguments : string, b : number)  {
 // variable shadows arguments
 function a2(a : string, b : number)  {
 	
-	// arguments shadowed by variable called arguments XPECT  errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+	// arguments shadowed by variable called arguments XPECT  errors --> "arguments is a reserved identifier." at "arguments"
 	var arguments : string = "foo";
 	
 	// arguments shadowed by variable called arguments XPECT  errors --> "string is not a subtype of number." at "arguments"
@@ -38,7 +38,7 @@ function a3(a : string, b : number)  {
 	// arguments shadowed by variable called arguments XPECT  errors --> "string is not a subtype of number." at "arguments"
 	var l : number = arguments;
 	
-	// arguments shadowed by variable called arguments XPECT  errors --> "Variable arguments shadows implicit function parameter." at "arguments"
+	// arguments shadowed by variable called arguments XPECT  errors --> "arguments is a reserved identifier." at "arguments"
 	var arguments : string = "foo";
 }
 
@@ -50,7 +50,7 @@ function a4(a : string, b : number)  {
 	
 	// -- -- --- nesting
 	// nested, accept warning. 
-	// XPECT  errors -->"Function arguments shadows implicit function parameter." at "arguments"
+	// XPECT  errors --> "arguments is a reserved identifier." at "arguments"
 	function arguments(s : string, n : number) {
 	}
 }

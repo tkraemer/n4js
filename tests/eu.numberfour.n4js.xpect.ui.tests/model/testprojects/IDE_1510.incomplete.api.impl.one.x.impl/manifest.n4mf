@@ -1,6 +1,5 @@
-ArtifactId: IDE_1510.incomplete.api.impl.one.x.impl
+ProjectId: IDE_1510.incomplete.api.impl.one.x.impl
 VendorId: eu.numberfour
-ProjectName: "IDE_1510.incomplete.api.impl.one.x.impl"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

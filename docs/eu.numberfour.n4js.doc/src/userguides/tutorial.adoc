@@ -361,12 +361,11 @@ files created by the New Project wizard look like the following:
 [source, n4js]
 .manifest.n4mf
 ----
-ArtifactId: n4js.example.tasks
-VendorId: eu.numberfour
-ProjectName: "n4js.example.tasks"
-VendorName: "NumberFour AG"
+ProjectId: n4js.example.tasks
 ProjectType: library
 ProjectVersion: 0.0.1
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
 Output: "src-gen"
 Sources {
   source {

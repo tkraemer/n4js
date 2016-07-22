@@ -46,7 +46,7 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 
 		@Override
 		public String caseProjectDescription(ProjectDescription object) {
-			return object.getVendorId() + ":" + object.getArtifactId();
+			return object.getVendorId() + ":" + object.getProjectId();
 		}
 
 		@Override
@@ -78,7 +78,7 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 
 		@Override
 		public String caseSimpleProjectDescription(SimpleProjectDescription object) {
-			return object.getVendorId() + ":" + object.getArtifactId();
+			return object.getVendorId() + ":" + object.getProjectId();
 		}
 
 		@Override

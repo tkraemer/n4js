@@ -1,6 +1,5 @@
-ArtifactId: test.data.re.project.one
+ProjectId: test.data.re.project.one
 VendorId: eu.numberfour
-ProjectName: "test.data.re.project.one"
 VendorName: "NumberFour AG"
 ProjectType: runtimeEnvironment
 ProjectVersion: 0.0.1-SNAPSHOT

@@ -120,9 +120,9 @@ public class ManifestMerger extends EObjectFeatureMerger {
 	@Override
 	protected boolean contains(final Collection<? extends Object> toManyValue, final Object fromElement) {
 		if (fromElement instanceof ProjectReference) {
-			final String id = ((ProjectReference) fromElement).getProject().getArtifactId();
+			final String id = ((ProjectReference) fromElement).getProject().getProjectId();
 			return from(toManyValue).filter(ProjectReference.class)
-					.transform(ref -> ref.getProject().getArtifactId())
+					.transform(ref -> ref.getProject().getProjectId())
 					.contains(id);
 		}
 		return super.contains(toManyValue, fromElement);

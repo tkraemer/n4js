@@ -296,7 +296,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 				return new File((URI) element).getAbsolutePath();
 			} else if (element instanceof IN4JSProject) {
-				return ((IN4JSProject) element).getArtifactId();
+				return ((IN4JSProject) element).getProjectId();
 			}
 			return super.getText(element);
 		}

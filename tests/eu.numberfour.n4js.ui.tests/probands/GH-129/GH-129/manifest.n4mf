@@ -1,6 +1,5 @@
-ArtifactId: GH-129
+ProjectId: GH-129
 VendorId: eu.numberfour
-ProjectName: "GH-129"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

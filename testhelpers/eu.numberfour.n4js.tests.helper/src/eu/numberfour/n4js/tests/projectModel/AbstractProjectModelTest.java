@@ -26,17 +26,17 @@ public abstract class AbstractProjectModelTest {
 	protected abstract AbstractProjectModelSetup createSetup();
 
 	/***/
-	public final String myProjectName = "myProject";
+	public final String myProjectId = "myProject";
 	/***/
 	protected URI myProjectURI;
 
 	/***/
-	public final String libProjectName = "libProject";
+	public final String libProjectId = "libProject";
 	/***/
 	protected URI libProjectURI;
 
 	/***/
-	public final String archiveProjectName = "archive";
+	public final String archiveProjectId = "archive";
 	/***/
 	protected URI archiveFileURI;
 
@@ -88,9 +88,9 @@ public abstract class AbstractProjectModelTest {
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testSetup() {
-		assertEquals(myProjectName, myProjectURI.lastSegment());
-		assertEquals(libProjectName, libProjectURI.lastSegment());
-		assertEquals(archiveProjectName + ".nfar", archiveFileURI.lastSegment());
+		assertEquals(myProjectId, myProjectURI.lastSegment());
+		assertEquals(libProjectId, libProjectURI.lastSegment());
+		assertEquals(archiveProjectId + ".nfar", archiveFileURI.lastSegment());
 	}
 
 }

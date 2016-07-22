@@ -1,6 +1,5 @@
-ArtifactId: TwoModules_IDE743
+ProjectId: TwoModules_IDE743
 VendorId: eu.numberfour
-ProjectName: "TwoModules_IDE743"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

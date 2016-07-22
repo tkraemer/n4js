@@ -357,18 +357,22 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduceParameterizedTypeRef((ParameterizedTypeRef) left, (ParameterizedTypeRef) right, variance);
 		} else {
 			// different subtypes of TypeRef on left and right side
-			if (left instanceof ParameterizedTypeRef
-					&& left.getDeclaredType() == RuleEnvironmentExtensions.bottomType(G)) {
-				// a constraint like ⟨ undefined <: {function(number):α} ⟩
+			// --> this looks an awful lot like an inconsistency, we're almost ready to give up on the entire constraint
+			// system. However, there is one last hope: we might have a trivial constraint such as
+			//
+			// ⟨ undefined <: {function(number):α} ⟩
+			// ⟨ {function(number):α} <: any ⟩
+			//
+			// To easily identify those cases and to avoid code duplication with the subtype judgment in Xsemantics, we
+			// can use a small trick: we simply perform a subtype check on the non-proper type reference(s) (note: we
+			// know from above that 'left' or 'right' is non-proper); normally such a type check on unresolved inference
+			// variables does not make much sense, because it will fail most of the time, but here we are only looking
+			// for trivial constraints that are (almost) always true.
+			if (isSubtypeOf(left, right, variance)) {
 				return addBound(true);
-			} else if (right instanceof ParameterizedTypeRef
-					&& right.getDeclaredType() == RuleEnvironmentExtensions.topType(G)) {
-				// a constraint like ⟨ {function(number):α} <: any ⟩
-				return addBound(true);
-			} else {
-				// in all other cases
-				return giveUp(left, right, variance);
 			}
+			// in all other cases
+			return giveUp(left, right, variance);
 		}
 	}
 
@@ -403,26 +407,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	}
 
 	private boolean reduceProper(TypeRef left, TypeRef right, Variance variance) {
-		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		// recursion guard
-		final Pair<String, Pair<TypeRef, TypeRef>> key = Pair.of(RuleEnvironmentExtensions.GUARD_REDUCER_REDUCE_PROPER,
-				Pair.of(left, right));
-		if (G.get(key) != null) {
-			return true;
-		}
-		final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-		G2.add(key, Boolean.TRUE);
-		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-		switch (variance) {
-		case CO:
-			return addBound(ts.subtypeSucceeded(G2, left, right));
-		case CONTRA:
-			return addBound(ts.subtypeSucceeded(G2, right, left));
-		case INV:
-			return addBound(ts.equaltypeSucceeded(G2, left, right));
-		}
-		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns
+		return addBound(isSubtypeOf(left, right, variance));
 	}
 
 	private boolean reduceComposedTypeRef(TypeRef left, ComposedTypeRef right, Variance variance) {
@@ -680,6 +665,32 @@ import it.xsemantics.runtime.RuleEnvironment;
 			wasAdded |= reduce(constraint);
 		}
 		return wasAdded;
+	}
+
+	/**
+	 * Convenience method to perform subtype checks. Depending on the given variance, this will check
+	 * <code>left &lt;: right</code> OR <code>left >: right</code> OR both.
+	 */
+	private boolean isSubtypeOf(TypeRef left, TypeRef right, Variance variance) {
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// recursion guard
+		final Pair<String, Pair<TypeRef, TypeRef>> key = Pair.of(RuleEnvironmentExtensions.GUARD_REDUCER_IS_SUBTYPE_OF,
+				Pair.of(left, right));
+		if (G.get(key) != null) {
+			return true;
+		}
+		final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+		G2.add(key, Boolean.TRUE);
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		switch (variance) {
+		case CO:
+			return ts.subtypeSucceeded(G2, left, right);
+		case CONTRA:
+			return ts.subtypeSucceeded(G2, right, left);
+		case INV:
+			return ts.equaltypeSucceeded(G2, left, right);
+		}
+		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns
 	}
 
 	private boolean mightBeSubtypeOf(FunctionTypeExprOrRef left, FunctionTypeExprOrRef right) {

@@ -311,7 +311,7 @@ public class OpenTypeSelectionDialog extends FilteredItemsSelectionDialog {
 						final IN4JSEclipseProject project = core.findProject(uri).orNull();
 						if (null != project && project.exists()) {
 							sb.append(" [");
-							sb.append(project.getArtifactId());
+							sb.append(project.getProjectId());
 							sb.append("]");
 							if (project.isExternal()) {
 								final IProject resourceProject = project.getProject();

@@ -329,7 +329,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProjectDescription_ProjectName() {
+	public EAttribute getProjectDescription_VendorName() {
 		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -338,17 +338,8 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProjectDescription_VendorName() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getProjectDescription_ProjectVersion() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(2);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -357,7 +348,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_ProjectType() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -366,7 +357,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_MainModule() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -375,7 +366,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ExtendedRuntimeEnvironment() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(5);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -384,7 +375,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ProvidedRuntimeLibraries() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(6);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -393,7 +384,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_RequiredRuntimeLibraries() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(7);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -402,7 +393,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ProjectDependencies() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(8);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -411,7 +402,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_ImplementationId() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -420,7 +411,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ImplementedProjects() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(10);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -429,7 +420,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_InitModules() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(11);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -438,7 +429,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ExecModule() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(12);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -447,7 +438,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_OutputPath() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(13);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -456,7 +447,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_LibraryPaths() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(14);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -465,7 +456,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_ResourcePaths() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(15);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -474,7 +465,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_SourceFragment() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(16);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -483,7 +474,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_ModuleFilters() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(17);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(16);
 	}
 
 	/**
@@ -492,7 +483,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EReference getProjectDescription_TestedProjects() {
-		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(18);
+		return (EReference)projectDescriptionEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -501,7 +492,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * @generated
 	 */
 	public EAttribute getProjectDescription_ModuleLoader() {
-		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(19);
+		return (EAttribute)projectDescriptionEClass.getEStructuralFeatures().get(18);
 	}
 
 	/**
@@ -707,7 +698,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSimpleProjectDescription_ArtifactId() {
+	public EAttribute getSimpleProjectDescription_ProjectId() {
 		return (EAttribute)simpleProjectDescriptionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1145,7 +1136,6 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 
 		// Create classes and their features
 		projectDescriptionEClass = createEClass(PROJECT_DESCRIPTION);
-		createEAttribute(projectDescriptionEClass, PROJECT_DESCRIPTION__PROJECT_NAME);
 		createEAttribute(projectDescriptionEClass, PROJECT_DESCRIPTION__VENDOR_NAME);
 		createEReference(projectDescriptionEClass, PROJECT_DESCRIPTION__PROJECT_VERSION);
 		createEAttribute(projectDescriptionEClass, PROJECT_DESCRIPTION__PROJECT_TYPE);
@@ -1195,7 +1185,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 
 		simpleProjectDescriptionEClass = createEClass(SIMPLE_PROJECT_DESCRIPTION);
 		createEAttribute(simpleProjectDescriptionEClass, SIMPLE_PROJECT_DESCRIPTION__DECLARED_VENDOR_ID);
-		createEAttribute(simpleProjectDescriptionEClass, SIMPLE_PROJECT_DESCRIPTION__ARTIFACT_ID);
+		createEAttribute(simpleProjectDescriptionEClass, SIMPLE_PROJECT_DESCRIPTION__PROJECT_ID);
 		createEOperation(simpleProjectDescriptionEClass, SIMPLE_PROJECT_DESCRIPTION___GET_VENDOR_ID);
 
 		testedProjectEClass = createEClass(TESTED_PROJECT);
@@ -1300,7 +1290,6 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(projectDescriptionEClass, ProjectDescription.class, "ProjectDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getProjectDescription_ProjectName(), theEcorePackage.getEString(), "projectName", null, 0, 1, ProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProjectDescription_VendorName(), theEcorePackage.getEString(), "vendorName", null, 0, 1, ProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProjectDescription_ProjectVersion(), this.getDeclaredVersion(), null, "projectVersion", null, 0, 1, ProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProjectDescription_ProjectType(), this.getProjectType(), "projectType", null, 0, 1, ProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1356,7 +1345,7 @@ public class N4mfPackageImpl extends EPackageImpl implements N4mfPackage {
 
 		initEClass(simpleProjectDescriptionEClass, SimpleProjectDescription.class, "SimpleProjectDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSimpleProjectDescription_DeclaredVendorId(), theEcorePackage.getEString(), "declaredVendorId", null, 0, 1, SimpleProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSimpleProjectDescription_ArtifactId(), theEcorePackage.getEString(), "artifactId", null, 0, 1, SimpleProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSimpleProjectDescription_ProjectId(), theEcorePackage.getEString(), "projectId", null, 0, 1, SimpleProjectDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getSimpleProjectDescription__GetVendorId(), theEcorePackage.getEString(), "getVendorId", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

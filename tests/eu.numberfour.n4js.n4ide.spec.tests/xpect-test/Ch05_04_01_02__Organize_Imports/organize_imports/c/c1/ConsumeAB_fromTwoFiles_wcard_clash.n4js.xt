@@ -20,7 +20,6 @@ import * as N from "a/a2/A"
 /* XPECT issues ---
 "Cannot resolve import target :: resolving simple module import : found no matching modules" at ""b/b1/A""
 "Couldn't resolve reference to TExportableElement 'A'." at "A"
-"Couldn't resolve reference to TModule 'b/b1/A'." at ""b/b1/A""
 "Import of A cannot be resolved." at "A"
 --- */
 import { A } from "b/b1/A"

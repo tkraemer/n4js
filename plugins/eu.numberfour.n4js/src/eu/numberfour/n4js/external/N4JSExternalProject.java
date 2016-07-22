@@ -61,14 +61,14 @@ import eu.numberfour.n4js.utils.resources.ExternalProject;
 	}
 
 	/**
-	 * Returns with all direct dependency artifact IDs of the project extracted from the wrapped {@link IN4JSProject
+	 * Returns with all direct dependency project IDs of the project extracted from the wrapped {@link IN4JSProject
 	 * external package}.
 	 *
-	 * @return an iterable of direct dependency artifact IDs.
+	 * @return an iterable of direct dependency project IDs.
 	 */
 	Iterable<String> getAllDirectDependencyIds() {
 		return from(externalPackage.getAllDirectDependencies()).filter(IN4JSProject.class).filter(p -> p.exists())
-				.transform(p -> p.getArtifactId()).toSet();
+				.transform(p -> p.getProjectId()).toSet();
 	}
 
 }

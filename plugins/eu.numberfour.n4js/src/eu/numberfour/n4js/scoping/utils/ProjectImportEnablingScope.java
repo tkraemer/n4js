@@ -31,6 +31,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.n4JS.ImportDeclaration;
+import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -39,7 +40,7 @@ import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
- * Normally we import from a module by only supplying the module specifier without the artifact ID of the containing
+ * Normally we import from a module by only supplying the module specifier without the project ID of the containing
  * project:
  *
  * <pre>
@@ -49,24 +50,24 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  * By using this wrapping scope, we obtain support for two additional forms of import (called "project imports"):
  *
  * <pre>
- * import * as N from "artifactId/some/path/to/Module"
+ * import * as N from "projectId/some/path/to/Module"
  * </pre>
  *
  * and
  *
  * <pre>
- * import * as N from "artifactId"
+ * import * as N from "projectId"
  * </pre>
  *
- * In both cases, <code>artifactId</code>> stands for the artifact ID of the project containing the module to import
- * from. The last case is only allowed if the containing project has defined the <code>MainModule</code> property in its
+ * In both cases, <code>projectId</code>> stands for the project ID of the project containing the module to import from.
+ * The last case is only allowed if the containing project has defined the <code>MainModule</code> property in its
  * manifest and means that this main module will then be imported.
  *
  *
  * Since there may exist multiple <code>MainModule</code> instances in the workspace with the same name (but not in one
- * project!) this scope uses two external sources of elements. In case of imports not specifying target project
- * artifactID we use provided <code>parent</code> as source of elements in scope. In case of imports specifying target
- * project artefactID we use <code>delegate</code> scope as source of elements. That distinction is necessary as
+ * project!) this scope uses two external sources of elements. In case of imports not specifying target project project
+ * ID we use provided <code>parent</code> as source of elements in scope. In case of imports specifying target project
+ * artefactID we use <code>delegate</code> scope as source of elements. That distinction is necessary as
  * {@link IScope#getElements(EObject)} surprisingly performs filtering of elements with the same name. We assume that
  * provided <code>delegate</code> is not doing that, at least not for the main modules.
  */
@@ -179,9 +180,10 @@ public class ProjectImportEnablingScope implements IScope {
 			}
 		}
 
-		return new InvalidImportTargetModuleDescription(EObjectDescription.create("impDecl", this.importDeclaration),
+		final EObject originalProxy = (EObject) this.importDeclaration
+				.eGet(N4JSPackage.eINSTANCE.getImportDeclaration_Module(), false);
+		return new InvalidImportTargetModuleDescription(EObjectDescription.create("impDecl", originalProxy),
 				sbErrrorMessage.toString(), IssueCodes.IMP_UNRESOLVED);
-
 	}
 
 	@Override
@@ -262,10 +264,10 @@ public class ProjectImportEnablingScope implements IScope {
 
 	/**
 	 * This method asks {@link #delegate} for elements matching provided <code>moduleSpecifier</code>. Returned results
-	 * are filtered by expected {@link IN4JSProject#getArtifactId()}.
+	 * are filtered by expected {@link IN4JSProject#getProjectId()}.
 	 */
 	private Collection<IEObjectDescription> getElementsWithDesiredProjectID(QualifiedName moduleSpecifier,
-			String projectArtifactId) {
+			String projectId) {
 		final Iterable<IEObjectDescription> moduleSpecifierMatchesWithPossibleDuplicates = delegate
 				.getElements(moduleSpecifier);
 
@@ -274,19 +276,19 @@ public class ProjectImportEnablingScope implements IScope {
 		final Map<String, IEObjectDescription> result = new HashMap<>();
 		for (IEObjectDescription desc : moduleSpecifierMatchesWithPossibleDuplicates) {
 			final IN4JSProject containingProject = n4jsCore.findProject(desc.getEObjectURI()).orNull();
-			if (projectArtifactId.equals(containingProject.getArtifactId())) {
+			if (projectId.equals(containingProject.getProjectId())) {
 				result.put(desc.getEObjectURI().toString(), desc);
 			}
 		}
 		return result.values();
 	}
 
-	private IN4JSProject findProject(String artifactId, IN4JSProject project) {
-		if (Objects.equals(project.getArtifactId(), artifactId)) {
+	private IN4JSProject findProject(String projectId, IN4JSProject project) {
+		if (Objects.equals(project.getProjectId(), projectId)) {
 			return project;
 		}
 		for (IN4JSProject p : project.getDependencies()) {
-			if (Objects.equals(p.getArtifactId(), artifactId)) {
+			if (Objects.equals(p.getProjectId(), projectId)) {
 				return p;
 			}
 		}

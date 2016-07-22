@@ -10,13 +10,12 @@
  */
 
 /* XPECT errors ---
-"The artifactId "MyArtifactID" defined in N4 manifest doesn't match project folder name "OtherProjectName" used in file system." at "MyArtifactID"
-"The artifactId "MyArtifactID" defined in N4 manifest doesn't match project name "OtherProjectName" used in Eclipse workspace." at "MyArtifactID"
-"There is no output folder defined, so compilation isn't possible." at "MyArtifactID"
+"The projectId "MyProjectID" defined in N4 manifest doesn't match project folder name "OtherProjectName" used in file system." at "MyProjectID"
+"The projectId "MyProjectID" defined in N4 manifest doesn't match project name "OtherProjectName" used in Eclipse workspace." at "MyProjectID"
+"There is no output folder defined, so compilation isn't possible." at "MyProjectID"
 --- */
-ArtifactId: MyArtifactID
-VendorId: MyVendorID
-ProjectName: "My Project Name"
-VendorName: "My Vendor Name"
+ProjectId: MyProjectID
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
+VendorId: MyVendorID
+VendorName: "My Vendor Name"

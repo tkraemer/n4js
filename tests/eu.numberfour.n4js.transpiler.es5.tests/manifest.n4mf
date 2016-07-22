@@ -1,7 +1,6 @@
 // used by testdata projects
-ArtifactId: eu.numberfour.n4js.transpiler.es5.tests
+ProjectId: eu.numberfour.n4js.transpiler.es5.tests
 VendorId: eu.numberfour
-ProjectName: "TestMe"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

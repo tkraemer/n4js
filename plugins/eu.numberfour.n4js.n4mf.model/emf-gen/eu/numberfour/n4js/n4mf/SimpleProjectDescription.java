@@ -17,9 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * Properties that makes a project unique among other projects (without considering the version).
- * The vendor id identifies the vendor of this project, a more meaningful name is provided in
- * Project.vendorName. The artifact id identifies the project, a more meaningful name is provided
- * in Project.projectName.
+ * The vendorId identifies the vendor of this project. The projectId identifies the project.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -27,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getDeclaredVendorId <em>Declared Vendor Id</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getArtifactId <em>Artifact Id</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getProjectId <em>Project Id</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.n4mf.N4mfPackage#getSimpleProjectDescription()
@@ -41,7 +39,7 @@ public interface SimpleProjectDescription extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will later be mapped to groupId in Maven pom
+	 * the vendor ID
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Declared Vendor Id</em>' attribute.
 	 * @see #setDeclaredVendorId(String)
@@ -62,30 +60,30 @@ public interface SimpleProjectDescription extends EObject {
 	void setDeclaredVendorId(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Artifact Id</b></em>' attribute.
+	 * Returns the value of the '<em><b>Project Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * will be mapped to Maven pom's artifactId, cf. Eclipse's manifest symbolic name
+	 * the project ID
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Artifact Id</em>' attribute.
-	 * @see #setArtifactId(String)
-	 * @see eu.numberfour.n4js.n4mf.N4mfPackage#getSimpleProjectDescription_ArtifactId()
+	 * @return the value of the '<em>Project Id</em>' attribute.
+	 * @see #setProjectId(String)
+	 * @see eu.numberfour.n4js.n4mf.N4mfPackage#getSimpleProjectDescription_ProjectId()
 	 * @model unique="false"
 	 * @generated
 	 */
-	String getArtifactId();
+	String getProjectId();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getArtifactId <em>Artifact Id</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.n4mf.SimpleProjectDescription#getProjectId <em>Project Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Artifact Id</em>' attribute.
-	 * @see #getArtifactId()
+	 * @param value the new value of the '<em>Project Id</em>' attribute.
+	 * @see #getProjectId()
 	 * @generated
 	 */
-	void setArtifactId(String value);
+	void setProjectId(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

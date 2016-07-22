@@ -114,11 +114,11 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 				'''
 			);
 
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src, "D", "export class D {}");
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -132,14 +132,14 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 				'''
 			);
 
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		createTestFile(src2, "D", "export class D {}");
 		//Same as above, src2 folder is not set as source folder yet.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		addSrc2ToSources
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -198,11 +198,11 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		assertMarkers("file should have no errors", c, 0);
 		removeSrc2FromSource
 
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of  D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 	}
 
 	@Test
@@ -216,11 +216,11 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 			);
 		createTestFile(src2, "D", "export class D {}");
 
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'D'.
-		// Couldn't resolve reference to TModule 'D'.
 		// Couldn't resolve reference to Type 'D'.
 		// Import of  D cannot be resolved.
-		assertMarkers("file should have four errors", c, 5);
+		assertMarkers("file should have four errors", c, 4);
 		src2.rename("src3")
 		assertMarkers("file should have no errors", c, 0);
 	}
@@ -248,9 +248,9 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		waitForAutoBuild
 		d = mainSrc.findMember("a/d/c/" + d.name) as IFile
 
-		// Couldn't resolve reference to TModule 'a.b.c.C'.
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Import of * as C from module was a proxy cannot be resolved.
-		assertMarkers("file should have two errors", d, 3);
+		assertMarkers("file should have two errors", d, 2);
 	}
 
 	@Test
@@ -269,10 +269,10 @@ class SingleProjectPluginTest extends AbstractBuilderParticipantTest {
 		d = mainSrcX.findMember("a/b/c/" + d.name) as IFile
 		assertMarkers("file should have no errors", c, 0);
 
+		// Cannot resolve import target :: resolving simple module import : found no matching modules
 		// Couldn't resolve reference to IdentifiableElement 'C'.
-		// Couldn't resolve reference to TModule 'a.b.c.C'.
 		// Import of C cannot be resolved.
-		assertMarkers("file should have three errors", d, 4);
+		assertMarkers("file should have three errors", d, 3);
 	}
 
 	@Test
