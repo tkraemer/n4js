@@ -33,6 +33,8 @@ import eu.numberfour.n4js.validation.IssueCodes;
  */
 public abstract class N4JSLanguageConstants {
 
+	/** Use {@link LanguageConstantsHelper} for a full list of keywords. */
+
 	//@formatter:off
 
 	/** The reserved {@value} keyword. */
@@ -54,20 +56,6 @@ public abstract class N4JSLanguageConstants {
 	public static final Collection<String> DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS = unmodifiableCollection(newHashSet(
 			IssueCodes.AST_LOCAL_VAR_UNUSED
 	));
-
-
-	/** <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-keywords">ECMAScript ver. [6 11.6.2.1] Keywords</a>.*/
-	public static final Collection<String> KEYWORDS = unmodifiableCollection(newHashSet(
-			"break",	"do",			"in",			"typeof",
-			"case",		"else",			"instanceof",	"var",
-			"catch",	EXPORT_KEYWORD,	"new",			"void",
-			"class",	"extends",		"return",		"while",
-			"const",	"finally",		"super",		"with",
-			"continue",	"for",			"switch",		"yield",
-			"debugger",	"function",		"this",
-			"default",	"if",			"throw",
-			"delete",	"import",		"try"
-			));
 
 	//@formatter:on
 

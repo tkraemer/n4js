@@ -18,7 +18,7 @@ import org.eclipse.xtext.validation.Issue;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
- * A N4JSInjectorProvider which binds a custom {@link IDiagnosticConverter} which filters the diagnosed issues.
+ * An injector provider which binds a custom {@link IDiagnosticConverter} which filters the diagnosed issues.
  *
  * This can be used to suppress certain issues based on their issue codes. See
  * {@code N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTING} for configuration.
