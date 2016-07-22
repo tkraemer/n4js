@@ -11,7 +11,6 @@
 package eu.numberfour.n4js;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.xtext.service.AbstractGenericModule;
 import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.Issue;
@@ -32,8 +31,9 @@ public class N4JSInjectorProviderWithIssueSuppression extends N4JSInjectorProvid
 	}
 
 	/** */
-	public static class IssueSuppressionModule extends AbstractGenericModule {
+	public static class IssueSuppressionModule extends DefaultTestModule {
 		/** */
+		@Override
 		public Class<? extends IDiagnosticConverter> bindDiagnosticConverter() {
 			return FilteringDiagnosticConverter.class;
 		}
