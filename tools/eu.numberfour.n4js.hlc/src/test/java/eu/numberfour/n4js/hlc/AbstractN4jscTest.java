@@ -57,16 +57,20 @@ public class AbstractN4jscTest {
 
 	/**
 	 * Copy a fresh fixture to the workspace area. Deleting old leftovers from former tests.
+	 *
+	 * @returns file indicating the relative path to the copied data set
 	 */
-	protected static void setupWorkspace(String testDataSet) throws IOException {
-		setupWorkspace(testDataSet, Predicates.alwaysFalse());
+	protected static File setupWorkspace(String testDataSet) throws IOException {
+		return setupWorkspace(testDataSet, Predicates.alwaysFalse());
 	}
 
 	/**
 	 * Copy a fresh fixture to the workspace area. Deleting old leftovers from former tests. Also includes all N4JS
 	 * libraries from the {@code n4js} Git repository which name provides {@code true} value for the given predicate.
+	 *
+	 * @returns file indicating the relative path to the copied data set
 	 */
-	protected static void setupWorkspace(String testDataSet, Predicate<String> n4jsLibrariesPredicate)
+	protected static File setupWorkspace(String testDataSet, Predicate<String> n4jsLibrariesPredicate)
 			throws IOException {
 		File wsp = new File(TARGET, WSP);
 		File fixture = new File(FIXTURE, testDataSet);
@@ -97,6 +101,7 @@ public class AbstractN4jscTest {
 			}
 		}
 
+		return wsp;
 	}
 
 	/**

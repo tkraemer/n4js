@@ -868,7 +868,7 @@ public class N4HeadlessCompiler {
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
 			}
-			throw new N4JSCompileErrorException(msg, projectId);
+			throw new N4JSCompileErrorException(msg, projectId, errors);
 		}
 
 	}
