@@ -1858,9 +1858,12 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       T = _declaredTypeRef_1;
     } else {
       TGetter _definedGetter = getter.getDefinedGetter();
-      TypeRef _declaredTypeRef_2 = _definedGetter.getDeclaredTypeRef();
-      boolean _notEquals_1 = (!Objects.equal(_declaredTypeRef_2, null));
-      if (_notEquals_1) {
+      TypeRef _declaredTypeRef_2 = null;
+      if (_definedGetter!=null) {
+        _declaredTypeRef_2=_definedGetter.getDeclaredTypeRef();
+      }
+      boolean _tripleNotEquals = (_declaredTypeRef_2 != null);
+      if (_tripleNotEquals) {
         TGetter _definedGetter_1 = getter.getDefinedGetter();
         TypeRef _declaredTypeRef_3 = _definedGetter_1.getDeclaredTypeRef();
         T = _declaredTypeRef_3;
@@ -5832,10 +5835,14 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     myThisTypeRef = (TypeRef) result.getFirst();
     
     RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
-    /* { !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
+    /* { funDef !== null !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
     {
       RuleFailedException previousFailure = null;
       try {
+        /* funDef !== null */
+        if (!(funDef != null)) {
+          sneakyThrowRuleFailedException("funDef !== null");
+        }
         boolean _isAsync = funDef.isAsync();
         boolean _not = (!_isAsync);
         /* !funDef.isAsync() */

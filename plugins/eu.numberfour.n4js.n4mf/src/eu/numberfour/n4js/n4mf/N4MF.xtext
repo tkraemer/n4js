@@ -14,8 +14,7 @@ import "http://www.numberfour.eu/ide/n4mf/N4MF"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ProjectDescription:
-		(('ArtifactId' | 'ProjectId')	':' projectId=N4mfIdentifier) // TODO GH-107 remove manifest property 'ArtifactId'
-	&	('ProjectName' 		':' STRING)? // TODO GH-107 remove manifest property 'ProjectName'
+		('ProjectId'		':' projectId=N4mfIdentifier)
 	&	('ProjectType' 		':' projectType=ProjectType)
 	&	('ProjectVersion'	':' projectVersion=DeclaredVersion)
 	&	('VendorId' 		':' declaredVendorId=N4mfIdentifier)
@@ -210,13 +209,11 @@ enum ModuleLoader:
 
 N4mfIdentifier :
 	ID |
-	'ArtifactId' |
 	'ProjectId' |
-	'VendorId' |
-	'ProjectName' | // TODO GH-107 remove this
-	'VendorName' |
 	'ProjectType' |
 	'ProjectVersion' |
+	'VendorId' |
+	'VendorName' |
 	'Output' |
 	'Libraries' |
 	'Resources' |

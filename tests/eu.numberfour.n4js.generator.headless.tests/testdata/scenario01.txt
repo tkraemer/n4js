@@ -10,9 +10,8 @@ export public class A {
 }
 
 # wsp1/A/manifest.n4mf
-ArtifactId: A
+ProjectId: A
 VendorId: eu.numberfour
-ProjectName: "A"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -32,9 +31,8 @@ export public class B {
 }
 
 # nest/wsp2/B/manifest.n4mf
-ArtifactId: B
+ProjectId: B
 VendorId: eu.numberfour
-ProjectName: "B"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -54,9 +52,8 @@ export public class C extends B {
 }
 
 # wsp3/C/manifest.n4mf
-ArtifactId: C
+ProjectId: C
 VendorId: eu.numberfour
-ProjectName: "C"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -85,9 +82,8 @@ export public class D2 extends B {
 }
 
 # nest/wsp2/D/manifest.n4mf
-ArtifactId: D
+ProjectId: D
 VendorId: eu.numberfour
-ProjectName: "D"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -116,9 +112,8 @@ export public class E2 extends C {
 }
 
 # nest/nest/wsp4/E/manifest.n4mf
-ArtifactId: E
+ProjectId: E
 VendorId: eu.numberfour
-ProjectName: "E"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -139,9 +134,8 @@ export public class F extends D {
 }
 
 # nest/wsp5/F/manifest.n4mf
-ArtifactId: F
+ProjectId: F
 VendorId: eu.numberfour
-ProjectName: "F"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -162,9 +156,8 @@ export public class G extends F {
 }
 
 # wsp6/G/manifest.n4mf
-ArtifactId: G
+ProjectId: G
 VendorId: eu.numberfour
-ProjectName: "G"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
@@ -185,9 +178,8 @@ export public class H extends C {
 }
 
 # nest/nest/wsp4/H/manifest.n4mf
-ArtifactId: H
+ProjectId: H
 VendorId: eu.numberfour
-ProjectName: "H"
 VendorName: "NumberFour AG"
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT
