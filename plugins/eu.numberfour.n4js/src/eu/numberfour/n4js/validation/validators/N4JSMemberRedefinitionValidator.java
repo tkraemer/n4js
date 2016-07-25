@@ -25,6 +25,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FIELD_REQUIR
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_VISIBILITY;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
@@ -45,6 +46,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_VISIBILITY;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
@@ -214,10 +216,22 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					TMember m = mm.possibleOverrideCandidateOrError(member);
 					if (m == null) {
 						bFoundWronglyDeclaredMember = true;
-						String message = getMessageForCLF_OVERRIDE_NON_EXISTENT(keywordProvider.keyword(member),
-								member.getName());
-						addIssue(message, member.getAstElement(),
-								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
+						if (member.isStatic() && mm.hasNonImplemented() && !mm.hasInherited() && !mm.hasImplemented()) {
+							// special case of false @Override annotation: "overriding" a static member of an interface
+							final TMember other = mm.nonImplemented().iterator().next(); // FIXME
+							String message = getMessageForCLF_OVERRIDE_NON_EXISTENT_INTERFACE(
+									validatorMessageHelper.description(member),
+									validatorMessageHelper.description(other));
+							addIssue(message, member.getAstElement(),
+									N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+									CLF_OVERRIDE_NON_EXISTENT_INTERFACE);
+						} else {
+							// standard case of false @Override annotation
+							String message = getMessageForCLF_OVERRIDE_NON_EXISTENT(keywordProvider.keyword(member),
+									member.getName());
+							addIssue(message, member.getAstElement(),
+									N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
+						}
 					}
 				}
 			}
@@ -324,7 +338,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 			}
 		}
-		mm.addConsumed(consumedMembers);
+		mm.markConsumed(consumedMembers);
 		return true;
 	}
 
@@ -346,7 +360,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		// getter/setter pairs
 
 		for (TMember m : mm.implemented()) {
-			if (mm.consumed.contains(m)) { // m is mixed in, so it exits and we do not need other tests
+			if (mm.isConsumed(m)) { // m is mixed in, so it exits and we do not need other tests
 				continue;
 			}
 
