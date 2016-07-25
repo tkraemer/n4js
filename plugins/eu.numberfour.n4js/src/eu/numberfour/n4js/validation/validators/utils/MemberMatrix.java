@@ -21,13 +21,14 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterables;
 
-import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.UtilN4;
+import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 
 /**
  * Helper class for {@link N4JSMemberRedefinitionValidator} storing all members with same name and static modifier in a
@@ -152,7 +153,7 @@ public class MemberMatrix {
 					source = CONSUMED;
 					return consumed.iterator();
 				} // else
-				//$FALL-THROUGH$
+					// $FALL-THROUGH$
 			case CONSUMED: {
 				source = INHERITED;
 				return members(source).iterator();
@@ -361,7 +362,7 @@ public class MemberMatrix {
 	/**
 	 * Returns true if the given member stemming from the super class (not checked here) is actually inherited and not
 	 * overridden by owned or consumed members. In case of meta-type problems, the inherited member is not actually
-	 * inherited. Not that consumed members have not to be calculated upfront.
+	 * inherited. Note that consumed members have not to be calculated up-front.
 	 */
 	boolean isActuallyInherited(TMember m) {
 		if (hasOwned()) {
@@ -408,6 +409,11 @@ public class MemberMatrix {
 	 * Adds a member from the given source.
 	 */
 	public void add(int source, TMember member) {
+		if (source == IMPLEMENTED && member.isStatic() && member.getContainingType() instanceof TInterface) {
+			// no inheritance of static methods in interfaces
+			// -> ignore this member
+			return;
+		}
 		int row = member.getMemberType().getValue();
 		MemberList<TMember> list = memberMatrix[source][row];
 		if (list == null) {
@@ -458,8 +464,8 @@ public class MemberMatrix {
 			strb.append("consumed: ");
 			strb.append(
 					consumed.stream()
-					.map(m -> m != null ? m.getMemberType() + " " + m.getContainingType().getName() + "."
-							+ m.getName() : "null")
+							.map(m -> m != null ? m.getMemberType() + " " + m.getContainingType().getName() + "."
+									+ m.getName() : "null")
 							.collect(Collectors.joining(",")));
 		}
 
@@ -490,8 +496,8 @@ public class MemberMatrix {
 			strb.append(", consumed: ");
 			strb.append(
 					consumed.stream()
-					.map(m -> m != null ? m.getMemberType().getName().charAt(0) + " "
-							+ m.getContainingType().getName() : "null")
+							.map(m -> m != null ? m.getMemberType().getName().charAt(0) + " "
+									+ m.getContainingType().getName() : "null")
 							.collect(Collectors.joining(",")));
 		}
 		strb.append("]");

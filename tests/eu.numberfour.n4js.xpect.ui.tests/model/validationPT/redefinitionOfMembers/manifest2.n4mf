@@ -1,0 +1,11 @@
+ProjectId: Project2
+VendorId: org.some.other.vendor
+VendorName: "Some Other Vendor"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src"
+	}
+}

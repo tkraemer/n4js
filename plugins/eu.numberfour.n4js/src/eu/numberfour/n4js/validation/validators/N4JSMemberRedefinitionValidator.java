@@ -17,7 +17,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_CONSUMED_MEMBER_UNSOL
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_IMPLEMENT_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_MISSING_IMPLEMENTATION;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_MISSING_IMPLEMENTATION_EXT;
-import static eu.numberfour.n4js.validation.IssueCodes.CLF_NON_VISIBLE_ABSTRACT_MEMBERS;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_NON_ACCESSIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_ANNOTATION;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_CONST;
@@ -25,10 +25,10 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FIELD_REQUIR
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT;
-import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_PRIVATE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_VISIBILITY;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_TYPE_NOT_SAME_TYPE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_INHERITED_MEMBER_UNSOLVABLE_CONFLICT;
@@ -37,7 +37,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_IMPLEMENT_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_MISSING_IMPLEMENTATION;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_MISSING_IMPLEMENTATION_EXT;
-import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_NON_VISIBLE_ABSTRACT_MEMBERS;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_NON_ACCESSIBLE_ABSTRACT_MEMBERS;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_ANNOTATION;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_CONST;
@@ -45,10 +45,10 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_FINAL;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_MEMBERTYPE_INCOMPATIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT;
-import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_PRIVATE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_VISIBILITY;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE;
 
 import java.util.ArrayList;
@@ -76,6 +76,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
+import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
@@ -85,6 +86,7 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
+import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
@@ -165,7 +167,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		MemberCube memberCube = createMemberValidationList();
 
-		boolean isClass = tClassifier instanceof TClass;
+		final boolean isClass = tClassifier instanceof TClass;
+		final Map<ParameterizedTypeRef, MemberList<TMember>> nonAccessibleAbstractMembersBySuperTypeRef = new HashMap<>();
 
 		for (Entry<NameStaticPair, MemberMatrix> entry : memberCube.entrySet()) {
 			MemberMatrix mm = entry.getValue();
@@ -184,13 +187,20 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 			}
 			constraints_59_NonOverride(mm);
-			constraints_42_AbstractMember(mm);
+			constraints_42_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
 
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
-		constraints_41_AbstractClass(tClassifier, memberCube);
 
+		final boolean foundImpossibleExtendsImplements = !nonAccessibleAbstractMembersBySuperTypeRef.isEmpty();
+		if (foundImpossibleExtendsImplements) {
+			messageImpossibleExtendsImplements(n4ClassifierDefinition, nonAccessibleAbstractMembersBySuperTypeRef);
+		}
+
+		if (!foundImpossibleExtendsImplements) { // avoid consequential errors
+			constraints_41_AbstractClass(tClassifier, memberCube);
+		}
 	}
 
 	/**
@@ -208,18 +218,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 								member.getName());
 						addIssue(message, member.getAstElement(),
 								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_NON_EXISTENT);
-					} else if (AccessModifiers.fixed(m) == MemberAccessModifier.PRIVATE) {
-						bFoundWronglyDeclaredMember = true;
-						String message = getMessageForCLF_OVERRIDE_PRIVATE(
-								validatorMessageHelper.description(member),
-								validatorMessageHelper.description(m));
-						addIssue(message, member.getAstElement(),
-								N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_OVERRIDE_PRIVATE);
 					}
 				}
 			}
 			return bFoundWronglyDeclaredMember;
-
 		}
 		return true;
 	}
@@ -457,6 +459,17 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			return OverrideCompatibilityResult.ERROR;
 		}
 
+		// TODO. s is accessible
+		final TModule contextModule = m.getContainingModule();
+		final ContainerType<?> contextType = m.getContainingType();
+		if (contextModule != null && contextType != null
+				&& !memberVisibilityChecker.isVisibleWhenOverriding(contextModule, contextType, contextType, s)) {
+			if (!consumptionConflict) { // avoid consequential errors
+				messageOverrideNonAccessible(redefinitionType, m, s);
+			}
+			return OverrideCompatibilityResult.ERROR;
+		}
+
 		// 3. s not final
 		if (s.isFinal()) { // 2. final
 			if (!consumptionConflict) { // avoid consequential errors
@@ -527,7 +540,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		// 7.1 visibility
 		if (AccessModifiers.checkedLess(m, s)) { // fix modifiers in order to avoid strange behavior
 			if (!consumptionConflict) { // avoid consequential errors
-				messageOverrideVisibility(redefinitionType, m, s);
+				messageOverrideAccessibilityReduced(redefinitionType, m, s);
 			}
 			return OverrideCompatibilityResult.ERROR;
 		}
@@ -538,7 +551,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		if ((fixedLeft == MemberAccessModifier.PROTECTED && fixedRight == MemberAccessModifier.PUBLIC_INTERNAL) ||
 				(fixedLeft == MemberAccessModifier.PUBLIC_INTERNAL && fixedRight == MemberAccessModifier.PROTECTED)) {
-			messageOverrideVisibility(redefinitionType, m, s);
+			messageOverrideAccessibilityReduced(redefinitionType, m, s);
 			return OverrideCompatibilityResult.ERROR;
 		}
 
@@ -547,27 +560,25 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	/**
 	 * Constraints 42, 3 (Abstract Member)
+	 *
+	 * TODO adjust comment / method name (does not only apply to extended abstract classes, also implemented interfaces)
 	 */
-	private boolean constraints_42_AbstractMember(MemberMatrix mm) {
+	private boolean constraints_42_AbstractMember(MemberMatrix mm,
+			Map<ParameterizedTypeRef, MemberList<TMember>> nonAccessibleAbstractMembersBySuperTypeRef) {
 
 		N4ClassifierDefinition classifierDefinition = getCurrentClassifierDefinition();
 		TClassifier classifier = getCurrentClassifier();
 		TModule contextModule = EcoreUtil2.getContainerOfType(classifier, TModule.class);
 
-		Map<ParameterizedTypeRef, MemberList<TMember>> nonAccessibleAbstractMembersBySuperTypeRef = null;
-
-		for (SourceAwareIterator iter = mm.actuallyInheritedAndMixedMembers(); iter.hasNext();) {
+		for (SourceAwareIterator iter = mm.allMembers(); iter.hasNext();) {
 			TMember m = iter.next();
-			if (m.isAbstract()) {
+			if (!iter.isOwnedMember() && m.isAbstract()) {
 				if (!memberVisibilityChecker.isVisibleWhenOverriding(contextModule, classifier, classifier,
 						m)) {
-					ArrayList<ParameterizedTypeRef> superTypeRefs = FindClassifierInHierarchyUtils
+					Iterable<ParameterizedTypeRef> superTypeRefs = FindClassifierInHierarchyUtils
 							.findSuperTypesWithMember(
 									classifierDefinition, m);
 					for (ParameterizedTypeRef superTypeRef : superTypeRefs) {
-						if (nonAccessibleAbstractMembersBySuperTypeRef == null) {
-							nonAccessibleAbstractMembersBySuperTypeRef = new HashMap<>();
-						}
 						MemberList<TMember> nonAccessible = nonAccessibleAbstractMembersBySuperTypeRef
 								.get(superTypeRef);
 						if (nonAccessible == null) {
@@ -579,21 +590,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 			}
 		}
-
-		if (nonAccessibleAbstractMembersBySuperTypeRef != null) {
-			for (Entry<ParameterizedTypeRef, MemberList<TMember>> entry : nonAccessibleAbstractMembersBySuperTypeRef
-					.entrySet()) {
-				ParameterizedTypeRef superTypeRef = entry.getKey();
-				Type type = superTypeRef.getDeclaredType();
-				String message = getMessageForCLF_NON_VISIBLE_ABSTRACT_MEMBERS(
-						validatorMessageHelper.description(type),
-						validatorMessageHelper.descriptions(entry.getValue()));
-				addIssue(message, superTypeRef.eContainer(), superTypeRef.eContainingFeature(),
-						CLF_NON_VISIBLE_ABSTRACT_MEMBERS);
-			}
-			return false;// avoid too many errors
-		}
-
 		return true;
 	}
 
@@ -665,6 +661,22 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		N4ClassifierDefinition classifier = getCurrentClassifierDefinition();
 		EStructuralFeature nameFeature = classifier.eClass().getEStructuralFeature("name");
 		addIssue(message, classifier, nameFeature, issueCode);
+	}
+
+	private void messageImpossibleExtendsImplements(N4ClassifierDefinition n4ClassifierDefinition,
+			Map<ParameterizedTypeRef, MemberList<TMember>> nonAccessibleAbstractMembersBySuperTypeRef) {
+		for (Entry<ParameterizedTypeRef, MemberList<TMember>> entry : nonAccessibleAbstractMembersBySuperTypeRef
+				.entrySet()) {
+			final ParameterizedTypeRef superTypeRef = entry.getKey();
+			final Type type = superTypeRef.getDeclaredType();
+			final String mode = type instanceof TInterface
+					&& !(n4ClassifierDefinition instanceof N4InterfaceDeclaration) ? "implement" : "extend";
+			final String message = getMessageForCLF_NON_ACCESSIBLE_ABSTRACT_MEMBERS(mode,
+					validatorMessageHelper.description(type),
+					validatorMessageHelper.descriptions(entry.getValue()));
+			addIssue(message, superTypeRef.eContainer(), superTypeRef.eContainingFeature(),
+					CLF_NON_ACCESSIBLE_ABSTRACT_MEMBERS);
+		}
 	}
 
 	/**
@@ -777,7 +789,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				CLF_OVERRIDEN_CONCRETE_WITH_ABSTRACT);
 	}
 
-	private void messageOverrideVisibility(RedefinitionType redefinitionType, TMember overriding, TMember overridden) {
+	private void messageOverrideAccessibilityReduced(RedefinitionType redefinitionType, TMember overriding,
+			TMember overridden) {
 		String message = getMessageForCLF_OVERRIDE_VISIBILITY(
 				validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
 				validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
@@ -788,6 +801,15 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				IssueUserDataKeys.CLF_OVERRIDE_VISIBILITY.OVERRIDDEN_MEMBER_NAME, overridden.getName(),
 				IssueUserDataKeys.CLF_OVERRIDE_VISIBILITY.SUPER_CLASS_NAME, overridden.getContainingType().getName());
 
+	}
+
+	private void messageOverrideNonAccessible(@SuppressWarnings("unused") RedefinitionType redefinitionType,
+			TMember overriding, TMember overridden) {
+		String message = getMessageForCLF_REDEFINED_NON_ACCESSIBLE(
+				validatorMessageHelper.descriptionDifferentFrom(overriding, overridden),
+				validatorMessageHelper.descriptionDifferentFrom(overridden, overriding));
+		addIssue(message, overriding.getAstElement(), N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
+				CLF_REDEFINED_NON_ACCESSIBLE);
 	}
 
 	private void messageOverrideFinal(RedefinitionType redefinitionType, TMember overriding, TMember overridden) {
