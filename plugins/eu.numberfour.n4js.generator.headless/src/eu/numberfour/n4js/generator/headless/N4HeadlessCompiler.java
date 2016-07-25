@@ -80,16 +80,17 @@ import eu.numberfour.n4js.utils.ResourceType;
  * Entry for headless compilation.
  *
  * This class has three ways of operation which all map down to a single algorithm implemented in
- * {@link #compileProjects(List, List, List)}. All other compileXXXX methods call this algorithm providing the correct
- * content of the arguments.
+ * {@link #compileProjects(List, List, List, IssueAcceptor)}. All other compileXXXX methods call this algorithm
+ * providing the correct content of the arguments.
  *
  * <ol>
  * <li>compile "single file" takes a (list of) source-file(s) to compile and just compiles these if possible
- * {@link #compileSingleFile(File)}, {@link #compileSingleFiles(List)}, {@link #compileSingleFiles(List, List)}
- * <li>compile "projects" takes a list of project-location and compiles exactly them. {@link #compileProjects(List)},
- * {@link #compileProjects(List, List)}
+ * {@link #compileSingleFile(File)}, {@link #compileSingleFiles(List, IssueAcceptor)},
+ * {@link #compileSingleFiles(List, List, IssueAcceptor)}
+ * <li>compile "projects" takes a list of project-location and compiles exactly them.
+ * {@link #compileProjects(List, IssueAcceptor)}, {@link #compileProjects(List, List, IssueAcceptor)}
  * <li>compile "all project" takes a list of folders and compiles each project found as direct content of one of the
- * folders. {@link #compileAllProjects(List)}
+ * folders. {@link #compileAllProjects(List, IssueAcceptor)}
  * </ol>
  *
  * The way how the compiler behaves can be configured through flags like {@link #keepOnCompiling},
@@ -167,7 +168,26 @@ public class N4HeadlessCompiler {
 	public static void doMain(File modelFile, Properties properties) throws N4JSCompileException {
 
 		N4HeadlessCompiler hlc = injectAndSetup(properties);
-		hlc.compileSingleFile(modelFile);
+		hlc.compileSingleFile(modelFile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compiles a single n4js/js file
+	 *
+	 * @param modelFile
+	 *            source to compile
+	 * @param properties
+	 *            optional Project-Settings loaded into Properties.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in compile errors
+	 */
+	public static void doMain(File modelFile, Properties properties, IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+
+		N4HeadlessCompiler hlc = injectAndSetup(properties);
+		hlc.compileSingleFile(modelFile, issueAcceptor);
 	}
 
 	/**
@@ -208,7 +228,21 @@ public class N4HeadlessCompiler {
 	 *             due to compile errors
 	 */
 	public void compileSingleFile(File modelFile) throws N4JSCompileException {
-		compileSingleFiles(Arrays.asList(modelFile));
+		compileSingleFile(modelFile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a single File
+	 *
+	 * @param modelFile
+	 *            the source file to compile.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors
+	 */
+	public void compileSingleFile(File modelFile, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		compileSingleFiles(Arrays.asList(modelFile), issueAcceptor);
 	}
 
 	/**
@@ -220,7 +254,21 @@ public class N4HeadlessCompiler {
 	 *             due to compile errors.
 	 */
 	public void compileSingleFiles(List<File> modelFiles) throws N4JSCompileException {
-		compileSingleFiles(Collections.emptyList(), modelFiles);
+		compileSingleFiles(modelFiles, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile multiple Files
+	 *
+	 * @param modelFiles
+	 *            the source files to compile.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors.
+	 */
+	public void compileSingleFiles(List<File> modelFiles, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		compileSingleFiles(Collections.emptyList(), modelFiles, issueAcceptor);
 	}
 
 	/**
@@ -233,8 +281,26 @@ public class N4HeadlessCompiler {
 	 * @throws N4JSCompileException
 	 *             due to compile errors.
 	 */
-	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles) throws N4JSCompileException {
-		compileProjects(projectRoots, Collections.emptyList(), modelFiles);
+	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles)
+			throws N4JSCompileException {
+		compileProjects(projectRoots, modelFiles, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile multiple Files
+	 *
+	 * @param modelFiles
+	 *            the source files to compile.
+	 * @param projectRoots
+	 *            where to find dependencies.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors.
+	 */
+	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles, IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+		compileProjects(projectRoots, Collections.emptyList(), modelFiles, issueAcceptor);
 	}
 
 	/**
@@ -246,13 +312,27 @@ public class N4HeadlessCompiler {
 	 *             in case of errros.
 	 */
 	public void compileAllProjects(List<File> pProjectRoots) throws N4JSCompileException {
+		compileProjects(pProjectRoots, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Starting from the ProjectRoot all Available subdirectories denoting a N4js-Project should be compiled together.
+	 *
+	 * @param pProjectRoots
+	 *            base folders containing project at level 1
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in case of errros.
+	 */
+	public void compileAllProjects(List<File> pProjectRoots, IssueAcceptor issueAcceptor) throws N4JSCompileException {
 		// make absolute, since downstream URI conversion doesn't work if relative dir only.
 		List<File> absProjectRoots = HeadlessHelper.toAbsoluteFileList(pProjectRoots);
 
 		// Collect all Projects in first Level
 		ArrayList<File> pDir = HeadlessHelper.collectAllProjectPaths(absProjectRoots);
 
-		compileProjects(pProjectRoots, pDir, Collections.emptyList());
+		compileProjects(pProjectRoots, pDir, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
@@ -267,7 +347,25 @@ public class N4HeadlessCompiler {
 	 */
 	public void compileProjects(List<File> pProjectRoots, List<File> projectLocationsToCompile)
 			throws N4JSCompileException {
-		compileProjects(pProjectRoots, projectLocationsToCompile, Collections.emptyList());
+		compileProjects(pProjectRoots, projectLocationsToCompile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects.
+	 *
+	 * @param pProjectRoots
+	 *            common workspaces for all projects to compile
+	 * @param projectLocationsToCompile
+	 *            the projects to compile. usually the base folder of each project is provided.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             signals Compile-errors
+	 */
+	public void compileProjects(List<File> pProjectRoots, List<File> projectLocationsToCompile,
+			IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+		compileProjects(pProjectRoots, projectLocationsToCompile, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
@@ -281,9 +379,29 @@ public class N4HeadlessCompiler {
 	 *            if non-empty limit compilation to the sources files listed here
 	 *
 	 */
-	@SuppressWarnings({ "unused" })
 	public void compileProjects(List<File> projectLocations, List<File> projectLocationsToCompile,
 			List<File> singleSourcesToCompile)
+			throws N4JSCompileException {
+		compileProjects(projectLocations, projectLocationsToCompile, singleSourcesToCompile,
+				new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects. Main algorithm.
+	 *
+	 * @param projectLocations
+	 *            where to search for dependent projects.
+	 * @param projectLocationsToCompile
+	 *            the projects to compile. the base folder of each project must be provided.
+	 * @param singleSourcesToCompile
+	 *            if non-empty limit compilation to the sources files listed here
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 *
+	 */
+	@SuppressWarnings({ "unused" })
+	public void compileProjects(List<File> projectLocations, List<File> projectLocationsToCompile,
+			List<File> singleSourcesToCompile, IssueAcceptor issueAcceptor)
 			throws N4JSCompileException {
 		if (createDebugOutput) {
 			System.out.println("### compileProjects(List,List,List) ");
@@ -390,7 +508,7 @@ public class N4HeadlessCompiler {
 				configureFSA(mp.project);
 				try {
 					// load
-					doLoad(mp, resourceSet, rec);
+					doLoad(mp, resourceSet, rec, issueAcceptor);
 					loadedProjects.add(mp);
 					// compile only if it has itself as marker and non-external
 					if (mp.hasMarker(mp.project) && !mp.project.isExternal()) {
@@ -562,10 +680,13 @@ public class N4HeadlessCompiler {
 	 *            outer resource set
 	 * @param rec
 	 *            failure-recording
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
 	 * @throws N4JSCompileErrorException
 	 *             in case of compile-problems.
 	 */
-	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec)
+	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec,
+			IssueAcceptor issueAcceptor)
 			throws N4JSCompileErrorException {
 
 		rec.markStartLoading(markedProject);
@@ -654,6 +775,7 @@ public class N4HeadlessCompiler {
 					rec.markResourceIssues(resource, issues);
 					for (Issue issue : issues) {
 						allErrorsAndWarnings.add(issue);
+						issueAcceptor.accept(issue);
 					}
 				}
 			}
@@ -868,7 +990,7 @@ public class N4HeadlessCompiler {
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
 			}
-			throw new N4JSCompileErrorException(msg, projectId, errors);
+			throw new N4JSCompileErrorException(msg, projectId);
 		}
 
 	}
@@ -1095,7 +1217,23 @@ public class N4HeadlessCompiler {
 	public void compileProjects(List<File> projects) throws N4JSCompileException {
 
 		// use user.dir of caller as projects-root.
-		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList());
+		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects.
+	 *
+	 * @param projects
+	 *            the projects to compile. usually the base folder of the project is provided.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in case of compile problems
+	 */
+	public void compileProjects(List<File> projects, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+
+		// use user.dir of caller as projects-root.
+		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
