@@ -25,9 +25,10 @@ class Ca implements AllAccessMods{
 	// XPECT errors --> "The method Ca.projectM cannot reduce the visibility of method AllAccessMods.projectM." at "projectM"
 	private projectM(){}
 
-	@Override
-	// interface's method is at least project XPECT errors --> "The method Ca.privateM cannot override private method AllAccessMods.privateM." at "privateM"
-	private privateM(){}
+	// since private is module-relative (not type-relative), it can be implemented/overridden as usual
+	// XPECT noerrors -->
+	@Override private privateM(){}
+
 	@Override
 	// XPECT errors --> "The method Ca.defaultM cannot reduce the visibility of method AllAccessMods.defaultM." at "defaultM"
 	private defaultM(){}

@@ -11,7 +11,7 @@ class A {
 interface I {
 	m()
 }
-// XPECT errors --> "Class B must either be defined abstract or implement method I.m." at "B"
+// XPECT errors --> "Class B must either be declared abstract or implement method I.m." at "B"
 class B implements I {}
 
 
@@ -19,5 +19,5 @@ abstract class Ab{
 	abstract g();
 } 
 
-// XPECT errors --> "Class C must either be defined abstract or implement method Ab.g." at "C"
+// XPECT errors --> "Class C must either be declared abstract or implement method Ab.g." at "C"
 class C extends Ab {}
