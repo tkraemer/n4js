@@ -179,16 +179,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			Collection<TMember> membersMissingOverrideAnnotation = new HashSet<>();
 
 			if (isClass) {
-				constraints_60_MemberOverride_checkEntry(mm, membersMissingOverrideAnnotation);
+				constraints_67_MemberOverride_checkEntry(mm, membersMissingOverrideAnnotation);
 			}
 			if (mm.hasImplemented()) {
 				// first mix in
-				if (holdConstraints_61_Consumption(mm)) {
+				if (holdConstraints_68_Consumption(mm)) {
 					// then check if everything is implemented
-					constraints_62_Implementation(mm, membersMissingOverrideAnnotation);
+					constraints_69_Implementation(mm, membersMissingOverrideAnnotation);
 				}
 			}
-			constraints_59_NonOverride(mm);
+			constraints_66_NonOverride(mm);
 			constraints_42_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
 
@@ -206,9 +206,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 59: Non Override
+	 * Constraints 66: Non-Override Declaration
 	 */
-	private boolean constraints_59_NonOverride(MemberMatrix mm) {
+	private boolean constraints_66_NonOverride(MemberMatrix mm) {
 		if (mm.hasOwned()) {
 			boolean bFoundWronglyDeclaredMember = false;
 			for (TMember member : mm.owned()) {
@@ -218,7 +218,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 						bFoundWronglyDeclaredMember = true;
 						if (member.isStatic() && mm.hasNonImplemented() && !mm.hasInherited() && !mm.hasImplemented()) {
 							// special case of false @Override annotation: "overriding" a static member of an interface
-							final TMember other = mm.nonImplemented().iterator().next(); // FIXME
+							final TMember other = mm.nonImplemented().iterator().next(); // simply take the first one
 							String message = getMessageForCLF_OVERRIDE_NON_EXISTENT_INTERFACE(
 									validatorMessageHelper.description(member),
 									validatorMessageHelper.description(other));
@@ -241,19 +241,19 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 60 (Override Compatible) Constraints defined in 5.4.1 Overriding of Members
+	 * Constraints 67: Overriding Members (Section 5.4.1 Overriding of Members)
 	 *
 	 * Check constraints wrt member overrides.
 	 *
 	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
 	 * given collection.
 	 */
-	private void constraints_60_MemberOverride_checkEntry(MemberMatrix mm,
+	private void constraints_67_MemberOverride_checkEntry(MemberMatrix mm,
 			Collection<TMember> membersMissingOverrideAnnotation) {
 		for (TMember m : mm.owned()) {
 			for (TMember s : mm.inherited()) {
 				// 1. override compatible
-				if (overrideCompatible(RedefinitionType.overridden, m, s, false,
+				if (constraints_65_overrideCompatible(RedefinitionType.overridden, m, s, false,
 						mm) == OverrideCompatibilityResult.COMPATIBLE) {
 					// avoid consequential errors
 
@@ -274,10 +274,11 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 61 Consumption of interface members, returns false if an error occurred which is not solvable in
-	 * current classifier (i.e., incompatible meta types).
+	 * Constraints 68: Consumption of Interface Members
+	 *
+	 * Returns false if an error occurred which is not solvable in current classifier (i.e., incompatible meta types).
 	 */
-	private boolean holdConstraints_61_Consumption(MemberMatrix mm) {
+	private boolean holdConstraints_68_Consumption(MemberMatrix mm) {
 		TClassifier currentType = getCurrentClassifier();
 		MemberList<TMember> consumedMembers = new MemberList<>(2);
 		for (TMember m : mm.implemented()) {
@@ -343,12 +344,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 62: Implementation compatible
+	 * Constraints 69: Implementation of Interface Members
 	 *
 	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
 	 * given collection.
 	 */
-	private void constraints_62_Implementation(MemberMatrix mm,
+	private void constraints_69_Implementation(MemberMatrix mm,
 			Collection<TMember> membersMissingOverrideAnnotation) {
 
 		String missingAccessor = null;
@@ -382,7 +383,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 
 				// 1 & 2: is compatible
-				OverrideCompatibilityResult compatibility = overrideCompatible(RedefinitionType.implemented, m_, m,
+				OverrideCompatibilityResult compatibility = constraints_65_overrideCompatible(
+						RedefinitionType.implemented, m_, m,
 						!iter.isActualMember(), mm);
 				if (compatibility == OverrideCompatibilityResult.ACCESSOR_PAIR) {
 					continue;
@@ -442,7 +444,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 63 (Override Compatible) and relation overrideCompatible.
+	 * Constraints 65 (Override Compatible) and relation overrideCompatible.
 	 *
 	 * @param m
 	 *            the overriding member
@@ -456,8 +458,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	 * @return true if m is override compatible to s. Note that false does not necessarily means that an error occurred,
 	 *         since e.g., a getter does not effect a setter
 	 */
-	private OverrideCompatibilityResult overrideCompatible(RedefinitionType redefinitionType, TMember m, TMember s,
-			boolean consumptionConflict, MemberMatrix mm) {
+	private OverrideCompatibilityResult constraints_65_overrideCompatible(RedefinitionType redefinitionType, TMember m,
+			TMember s, boolean consumptionConflict, MemberMatrix mm) {
 		// 1. name and static modifier are always equal here, so we do not have to check that again
 
 		if (TypeUtils.isAccessorPair(m, s)) {
@@ -551,7 +553,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 		}
 
-		// 7.1 visibility
+		// 7.1 accessibility must not be reduced
 		if (AccessModifiers.checkedLess(m, s)) { // fix modifiers in order to avoid strange behavior
 			if (!consumptionConflict) { // avoid consequential errors
 				messageOverrideAccessibilityReduced(redefinitionType, m, s);
@@ -559,10 +561,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			return OverrideCompatibilityResult.ERROR;
 		}
 
-		// 7.2 Special visibility handling of public@Internal and protected as they reduce each other
+		// 7.2 special accessibility handling of public@Internal and protected as they reduce each other
 		MemberAccessModifier fixedLeft = AccessModifiers.fixed(m);
 		MemberAccessModifier fixedRight = AccessModifiers.fixed(s);
-
 		if ((fixedLeft == MemberAccessModifier.PROTECTED && fixedRight == MemberAccessModifier.PUBLIC_INTERNAL) ||
 				(fixedLeft == MemberAccessModifier.PUBLIC_INTERNAL && fixedRight == MemberAccessModifier.PROTECTED)) {
 			messageOverrideAccessibilityReduced(redefinitionType, m, s);
