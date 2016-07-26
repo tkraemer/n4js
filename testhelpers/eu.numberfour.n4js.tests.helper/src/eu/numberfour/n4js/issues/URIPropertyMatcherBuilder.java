@@ -55,7 +55,7 @@ public class URIPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 	 * @return the issue matcher
 	 */
 	public IssueMatcher endsWith(URI expectedSuffix) {
-		return addPropertyMatcher(URIPropertyMatcher.Mode.StartsWith, expectedSuffix);
+		return addPropertyMatcher(URIPropertyMatcher.Mode.EndsWith, expectedSuffix);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class URIPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 	 * @return the issue matcher
 	 */
 	public IssueMatcher equals(URI expectedValue) {
-		return addPropertyMatcher(URIPropertyMatcher.Mode.StartsWith, expectedValue);
+		return addPropertyMatcher(URIPropertyMatcher.Mode.Equals, expectedValue);
 	}
 
 	private IssueMatcher addPropertyMatcher(URIPropertyMatcher.Mode mode, URI expectedPattern) {

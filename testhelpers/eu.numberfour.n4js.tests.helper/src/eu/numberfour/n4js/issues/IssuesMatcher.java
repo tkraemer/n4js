@@ -17,10 +17,10 @@ import java.util.LinkedList;
 import org.eclipse.xtext.validation.Issue;
 
 /**
- *
+ * Matches a collection of {@link IssueMatcher}s against a collection of errors.
  */
 public class IssuesMatcher {
-	private Collection<IssueMatcher> issueMatchers;
+	private final Collection<IssueMatcher> issueMatchers = new LinkedList<>();
 
 	/**
 	 * Creates a new issue matcher and adds it to this matcher.

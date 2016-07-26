@@ -35,6 +35,7 @@ Import-Package: org.apache.log4j,
  org.slf4j
 Export-Package: eu.numberfour.n4js,
  eu.numberfour.n4js.analysis,
+ eu.numberfour.n4js.issues,
  eu.numberfour.n4js.tests.projectModel,
  eu.numberfour.n4js.xpect,
  eu.numberfour.n4js.xpect.config,

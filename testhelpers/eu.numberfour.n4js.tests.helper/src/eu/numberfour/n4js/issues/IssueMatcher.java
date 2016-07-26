@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.issues;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -24,7 +25,7 @@ import org.eclipse.xtext.validation.Issue;
  * syntax.
  */
 public class IssueMatcher {
-	private List<IssuePropertyMatcher> propertyMatchers;
+	private final List<IssuePropertyMatcher> propertyMatchers = new LinkedList<>();
 
 	/**
 	 * Adds an expectation an issue's severity.
@@ -172,6 +173,25 @@ public class IssueMatcher {
 	 */
 	public IssueMatcher at(URI expectedURISuffix, int expectedLineNumber, int expectedColumn) {
 		return lineNumber(expectedLineNumber).column(expectedColumn).uri().endsWith(expectedURISuffix);
+	}
+
+	/**
+	 * Adds an expectation for an issue's URI, line number and column.
+	 *
+	 * @see Issue#getUriToProblem()
+	 * @see Issue#getLineNumber()
+	 * @see Issue#getColumn()
+	 *
+	 * @param expectedURISuffix
+	 *            the expected suffix of the URI
+	 * @param expectedLineNumber
+	 *            the expected line number
+	 * @param expectedColumn
+	 *            the expected column
+	 * @return this issue matcher
+	 */
+	public IssueMatcher at(String expectedURISuffix, int expectedLineNumber, int expectedColumn) {
+		return at(URI.createFileURI(expectedURISuffix), expectedLineNumber, expectedColumn);
 	}
 
 	/**
