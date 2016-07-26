@@ -528,9 +528,9 @@ public class N4JSResource extends PostProcessingAwareResource {
 	protected void doUnload() {
 		aboutToBeUnloaded = false;
 		super.doUnload();
-		if (resourceSet != null) {
-			M2MUriUtil.convertAllProxiesToM2M(resourceSet, uri);
-		}
+		// if (resourceSet != null) {
+		// M2MUriUtil.convertAllProxiesToM2M(resourceSet, uri);
+		// }
 	}
 
 	/**
