@@ -252,19 +252,20 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			Collection<TMember> membersMissingOverrideAnnotation) {
 		for (TMember m : mm.owned()) {
 			for (TMember s : mm.inherited()) {
-				// 1. override compatible
-				if (constraints_65_overrideCompatible(RedefinitionType.overridden, m, s, false,
+				// 1. s must be accessible and
+				// 2. m must be override compatible to s
+				if (checkAccessibilityAndOverrideCompatibility(RedefinitionType.overridden, m, s, false,
 						mm) == OverrideCompatibilityResult.COMPATIBLE) {
 					// avoid consequential errors
 
-					// 2. accessor pair for fields
+					// 3. accessor pair for fields
 					if (s.isField() && m.isAccessor()) {
 						if (!mm.hasOwnedAccessorPair()) {
 							messageFieldOverrideNeedsAccessorPair(m, s);
 							continue; // avoid consequential errors
 						}
 					}
-					// 3. declared overridden
+					// 4. declared overridden
 					if (!m.isDeclaredOverride()) {
 						membersMissingOverrideAnnotation.add(m);
 					}
@@ -382,8 +383,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					continue; // we do not break since we want to find possible consumption problems
 				}
 
-				// 1 & 2: is compatible
-				OverrideCompatibilityResult compatibility = constraints_65_overrideCompatible(
+				// 1. m must be accessible and
+				// 2.a & 2.b: m_ must be implementation-compatible to m
+				OverrideCompatibilityResult compatibility = checkAccessibilityAndOverrideCompatibility(
 						RedefinitionType.implemented, m_, m,
 						!iter.isActualMember(), mm);
 				if (compatibility == OverrideCompatibilityResult.ACCESSOR_PAIR) {
@@ -443,6 +445,30 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	}
 
+	private OverrideCompatibilityResult checkAccessibilityAndOverrideCompatibility(RedefinitionType redefinitionType,
+			TMember m, TMember s, boolean consumptionConflict, MemberMatrix mm) {
+
+		// getter/setter combination not checked here
+		if (TypeUtils.isAccessorPair(m, s)) {
+			return OverrideCompatibilityResult.ACCESSOR_PAIR;
+		}
+
+		// Nr.1 of Constraints 67 (Overriding Members) and Constraints 69 (Implementation of Interface Members)
+		// --> s must be accessible
+		final TModule contextModule = m.getContainingModule();
+		final ContainerType<?> contextType = m.getContainingType();
+		if (contextModule != null && contextType != null
+				&& !memberVisibilityChecker.isVisibleWhenOverriding(contextModule, contextType, contextType, s)) {
+			if (!consumptionConflict) { // avoid consequential errors
+				messageOverrideNonAccessible(redefinitionType, m, s);
+			}
+			return OverrideCompatibilityResult.ERROR;
+		}
+
+		// continue checking Constraints 65
+		return constraints_65_overrideCompatible(redefinitionType, m, s, consumptionConflict, mm);
+	}
+
 	/**
 	 * Constraints 65 (Override Compatible) and relation overrideCompatible.
 	 *
@@ -462,26 +488,11 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			TMember s, boolean consumptionConflict, MemberMatrix mm) {
 		// 1. name and static modifier are always equal here, so we do not have to check that again
 
-		if (TypeUtils.isAccessorPair(m, s)) {
-			return OverrideCompatibilityResult.ACCESSOR_PAIR;
-		}
-
 		// 2. meta type
 		boolean metaTypeCompatible = MemberRedefinitionUtils.isMetaTypeCompatible(m, s);
 		if (!metaTypeCompatible) {
 			if (!consumptionConflict) { // avoid consequential errors
 				messageOverrideMetaTypeIncompatible(redefinitionType, m, s, mm);
-			}
-			return OverrideCompatibilityResult.ERROR;
-		}
-
-		// TODO. s is accessible
-		final TModule contextModule = m.getContainingModule();
-		final ContainerType<?> contextType = m.getContainingType();
-		if (contextModule != null && contextType != null
-				&& !memberVisibilityChecker.isVisibleWhenOverriding(contextModule, contextType, contextType, s)) {
-			if (!consumptionConflict) { // avoid consequential errors
-				messageOverrideNonAccessible(redefinitionType, m, s);
 			}
 			return OverrideCompatibilityResult.ERROR;
 		}
