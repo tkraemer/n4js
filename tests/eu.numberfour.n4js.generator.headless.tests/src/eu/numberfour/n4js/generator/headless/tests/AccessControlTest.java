@@ -39,8 +39,10 @@ public class AccessControlTest extends AbstractN4jscTest {
 	 */
 	@Test
 	public void testSameModuleExtendsOverrideProtectedFieldOfPublicClass() {
-		IssuesMatcher matcher = new IssuesMatcher();
-		compileAndAssert("SameModuleExtendsOverrideProtectedFieldOfPublicClass", matcher);
+		for (int i = 0; i < 1000; i++) {
+			IssuesMatcher matcher = new IssuesMatcher();
+			compileAndAssert("SameModuleExtendsOverrideProtectedFieldOfPublicClass", matcher);
+		}
 	}
 
 	/**
@@ -78,6 +80,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 	}
 
 	private static String FIXTURE_ROOT = "testdata/accesscontrol";
+	private static N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
 
 	private static void assertIssues(Collection<Issue> issues, IssuesMatcher matchers) {
 		assertTrue(matchers.matchesExactly(issues));
@@ -91,7 +94,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 			IssueCollector issueCollector = new IssueCollector();
 			try {
 				// compile
-				N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
+
 				hlc.compileAllProjects(projectRoots, issueCollector);
 			} catch (N4JSCompileException e) {
 				// nothing to do

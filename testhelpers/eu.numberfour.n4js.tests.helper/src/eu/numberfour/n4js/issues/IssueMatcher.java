@@ -28,7 +28,7 @@ public class IssueMatcher {
 	private final List<IssuePropertyMatcher> propertyMatchers = new LinkedList<>();
 
 	/**
-	 * Adds an expectation an issue's severity.
+	 * Adds an expectation for an issue's severity.
 	 *
 	 * @see Issue#getSeverity()
 	 * @see Severity
@@ -39,6 +39,42 @@ public class IssueMatcher {
 	 */
 	public IssueMatcher severity(Severity expectedSeverity) {
 		return addEqualsMatcher(expectedSeverity, (Issue issue) -> issue.getSeverity());
+	}
+
+	/**
+	 * Adds the expectation that an issue has severity {@link Severity#ERROR}.
+	 *
+	 * @see Issue#getSeverity()
+	 * @see Severity
+	 *
+	 * @return this issue matcher
+	 */
+	public IssueMatcher error() {
+		return severity(Severity.ERROR);
+	}
+
+	/**
+	 * Adds the expectation that an issue has severity {@link Severity#WARNING}.
+	 *
+	 * @see Issue#getSeverity()
+	 * @see Severity
+	 *
+	 * @return this issue matcher
+	 */
+	public IssueMatcher warning() {
+		return severity(Severity.WARNING);
+	}
+
+	/**
+	 * Adds the expectation that an issue has severity {@link Severity#INFO}.
+	 *
+	 * @see Issue#getSeverity()
+	 * @see Severity
+	 *
+	 * @return this issue matcher
+	 */
+	public IssueMatcher info() {
+		return severity(Severity.INFO);
 	}
 
 	/**
