@@ -50,9 +50,8 @@ export public interface IA {
 	
 	
 	// Static cases below
-	@Override	public static fieldStatic : IA;
-	@Override	public static someStaticProvidesDefaultIA() : IA { return new A(); }			
-	
+	public static fieldStatic : IA;
+	public static someStaticProvidesDefaultIA() : IA { return new A(); }			
 }
  
 export public enum E { a:" ", b, c  }; 

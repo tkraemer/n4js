@@ -12,7 +12,7 @@ interface I {
 abstract class C0 implements I {
 }
 
-// XPECT errors --> "Class C1 must either be defined abstract or implement getter I.x." at "C1"
+// XPECT errors --> "Class C1 must either be declared abstract or implement getter I.x." at "C1"
 class C1 implements I {
 }
 

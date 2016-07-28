@@ -24,11 +24,11 @@
 
 import * as OA from "a/OverrideAccess1"
 
-// XPECT errors --> "Cannot use interface R: Cannot override non-accessible abstract method R.foo." at "OA.R"
+// XPECT errors --> "Cannot extend interface R: cannot implement one or more non-accessible abstract members: method R.foo." at "OA.R"
 export public interface Other extends OA.R {
 	// foo.acc would be project, which would cause problems
 }
 
-// XPECT errors --> "Cannot use class C: Cannot override non-accessible abstract method C.foo." at "OA.C"
+// XPECT errors --> "Cannot extend class C: cannot implement one or more non-accessible abstract members: method C.foo." at "OA.C"
 export public abstract class D extends OA.C {
 }

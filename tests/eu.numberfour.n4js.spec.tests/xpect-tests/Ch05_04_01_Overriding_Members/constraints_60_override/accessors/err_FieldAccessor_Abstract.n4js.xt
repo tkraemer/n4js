@@ -10,8 +10,9 @@ class C {
 }
 
 class D extends C {
-	// XPECT errors --> "The setter D.xPrivate cannot override private setter C.xPrivate." at "xPrivate"
-	@Override private set xPrivate(p : any) { } // private is not overridden!
+	// since private is module-relative (not type-relative), private members can be overridden as usual
+	// XPECT noerrors -->
+	@Override private set xPrivate(p : any) { }
 	// ok, acc is greater
 	@Override public set xProject(p : any) { }
 	// ok acc is equal
@@ -28,7 +29,8 @@ class E {
 }
 
 class F extends E{
-	// XPECT errors --> "The getter F.xPrivate cannot override private getter E.xPrivate." at "xPrivate"
+	// since private is module-relative (not type-relative), private members can be overridden as usual
+	// XPECT noerrors -->
 	@Override private get xPrivate() : any { return null }
 	// ok, acc is greater
 	@Override get xProject() : any { return null }
