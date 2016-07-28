@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.issues;
+package eu.numberfour.n4js.tests.issues;
 
 import java.util.Collections;
 import java.util.List;

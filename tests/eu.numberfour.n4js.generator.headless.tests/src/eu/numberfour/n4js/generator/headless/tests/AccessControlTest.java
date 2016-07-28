@@ -26,7 +26,7 @@ import eu.numberfour.n4js.generator.headless.IssueCollector;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
 import eu.numberfour.n4js.hlc.AbstractN4jscTest;
-import eu.numberfour.n4js.issues.IssuesMatcher;
+import eu.numberfour.n4js.tests.issues.IssuesMatcher;
 
 /**
  * Prototypical test for access control testing. This test only covers some examples in order to explore how to connect
