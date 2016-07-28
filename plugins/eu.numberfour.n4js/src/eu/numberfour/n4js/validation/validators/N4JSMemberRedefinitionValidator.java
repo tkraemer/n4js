@@ -189,7 +189,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 			}
 			constraints_66_NonOverride(mm);
-			constraints_42_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
+			constraints_42_45_46_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
 
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
@@ -350,8 +350,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
 	 * given collection.
 	 */
-	private void constraints_69_Implementation(MemberMatrix mm,
-			Collection<TMember> membersMissingOverrideAnnotation) {
+	private void constraints_69_Implementation(MemberMatrix mm, Collection<TMember> membersMissingOverrideAnnotation) {
 
 		String missingAccessor = null;
 		List<TMember> missingAccessors = new MemberList<>();
@@ -445,6 +444,17 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	}
 
+	/**
+	 * @param m
+	 *            the overriding member
+	 * @param s
+	 *            the overridden or implemented member
+	 * @param consumptionConflict
+	 *            check override or implementation override, the latter usually stems from a consumption conflict (so
+	 *            that s did not get consumed in the first place)
+	 * @param mm
+	 *            member matrix, only to improve error message
+	 */
 	private OverrideCompatibilityResult checkAccessibilityAndOverrideCompatibility(RedefinitionType redefinitionType,
 			TMember m, TMember s, boolean consumptionConflict, MemberMatrix mm) {
 
@@ -585,11 +595,14 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	/**
-	 * Constraints 42, 3 (Abstract Member)
+	 * Constraints 42, 3 (Abstract Member)<br>
+	 * Constraints 45, 4 (Extending Interfaces)<br>
+	 * Constraints 46, 5 (Implementing Interfaces)
 	 *
-	 * TODO adjust comment / method name (does not only apply to extended abstract classes, also implemented interfaces)
+	 * This method doesn't add issues for missing override annotations but adds the missing-annotation-members to the
+	 * given collection.
 	 */
-	private boolean constraints_42_AbstractMember(MemberMatrix mm,
+	private void constraints_42_45_46_AbstractMember(MemberMatrix mm,
 			Map<ParameterizedTypeRef, MemberList<TMember>> nonAccessibleAbstractMembersBySuperTypeRef) {
 
 		N4ClassifierDefinition classifierDefinition = getCurrentClassifierDefinition();
@@ -599,11 +612,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		for (SourceAwareIterator iter = mm.allMembers(); iter.hasNext();) {
 			TMember m = iter.next();
 			if (!iter.isOwnedMember() && m.isAbstract()) {
-				if (!memberVisibilityChecker.isVisibleWhenOverriding(contextModule, classifier, classifier,
-						m)) {
+				if (!memberVisibilityChecker.isVisibleWhenOverriding(contextModule, classifier, classifier, m)) {
 					Iterable<ParameterizedTypeRef> superTypeRefs = FindClassifierInHierarchyUtils
-							.findSuperTypesWithMember(
-									classifierDefinition, m);
+							.findSuperTypesWithMember(classifierDefinition, m);
 					for (ParameterizedTypeRef superTypeRef : superTypeRefs) {
 						MemberList<TMember> nonAccessible = nonAccessibleAbstractMembersBySuperTypeRef
 								.get(superTypeRef);
@@ -616,7 +627,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				}
 			}
 		}
-		return true;
 	}
 
 	/**

@@ -144,24 +144,24 @@ interface I06 {
 }
 
 interface J06 extends I06 {
-	// XPECT warnings --> "The static field J06.field does not override or implement static field I06.field (no inheritance of static members in interfaces); remove annotation @Override." at "field"
+	// XPECT warnings --> "The static field J06.field does not override static field I06.field (no inheritance of static members in interfaces); remove annotation @Override." at "field"
 	@Override static field;
-	// XPECT warnings --> "The static getter J06.getter does not override or implement static getter I06.getter (no inheritance of static members in interfaces); remove annotation @Override." at "getter"
+	// XPECT warnings --> "The static getter J06.getter does not override static getter I06.getter (no inheritance of static members in interfaces); remove annotation @Override." at "getter"
 	@Override static get getter() {return null;}
-	// XPECT warnings --> "The static setter J06.setter does not override or implement static setter I06.setter (no inheritance of static members in interfaces); remove annotation @Override." at "setter"
+	// XPECT warnings --> "The static setter J06.setter does not override static setter I06.setter (no inheritance of static members in interfaces); remove annotation @Override." at "setter"
 	@Override static set setter(value) {}
-	// XPECT warnings --> "The static method J06.method does not override or implement static method I06.method (no inheritance of static members in interfaces); remove annotation @Override." at "method"
+	// XPECT warnings --> "The static method J06.method does not override static method I06.method (no inheritance of static members in interfaces); remove annotation @Override." at "method"
 	@Override static method() {}
 }
 
 class C06 implements I06 {
-	// XPECT warnings --> "The static field C06.field does not override or implement static field I06.field (no inheritance of static members in interfaces); remove annotation @Override." at "field"
+	// XPECT warnings --> "The static field C06.field does not override static field I06.field (no inheritance of static members in interfaces); remove annotation @Override." at "field"
 	@Override static field;
-	// XPECT warnings --> "The static getter C06.getter does not override or implement static getter I06.getter (no inheritance of static members in interfaces); remove annotation @Override." at "getter"
+	// XPECT warnings --> "The static getter C06.getter does not override static getter I06.getter (no inheritance of static members in interfaces); remove annotation @Override." at "getter"
 	@Override static get getter() {return null;}
-	// XPECT warnings --> "The static setter C06.setter does not override or implement static setter I06.setter (no inheritance of static members in interfaces); remove annotation @Override." at "setter"
+	// XPECT warnings --> "The static setter C06.setter does not override static setter I06.setter (no inheritance of static members in interfaces); remove annotation @Override." at "setter"
 	@Override static set setter(value) {}
-	// XPECT warnings --> "The static method C06.method does not override or implement static method I06.method (no inheritance of static members in interfaces); remove annotation @Override." at "method"
+	// XPECT warnings --> "The static method C06.method does not override static method I06.method (no inheritance of static members in interfaces); remove annotation @Override." at "method"
 	@Override static method() {}
 }
 

@@ -245,14 +245,14 @@ public class MemberVisibilityChecker {
 
 	/**
 	 * @param contextType
-	 *            not required for public visibility check, only context module is needed. Redeclared here to keep
-	 *            is*Visible methods similar.
-	 * @param member
-	 *            not required for public visibility check, only context module is needed. Redeclared here to keep
-	 *            is*Visible methods similar.
+	 *            not required for public visibility check, only context module and member are needed. Redeclared here
+	 *            to keep is*Visible methods similar.
+	 * @param declaredReceiverType
+	 *            not required for public visibility check, only context module and member are needed. Redeclared here
+	 *            to keep is*Visible methods similar.
 	 */
-	private boolean isPublicInternalVisible(Type contextType, TModule contextModule,
-			@SuppressWarnings("unused") Type declaredReceiverType, TMember member) {
+	private boolean isPublicInternalVisible(Type contextType, TModule contextModule, Type declaredReceiverType,
+			TMember member) {
 		TModule receiverModule = EcoreUtil2.getContainerOfType(member, TModule.class);
 		// receiverModule == null indicates either a follow-up problem or a built-in type
 		return receiverModule == null || receiverModule == contextModule

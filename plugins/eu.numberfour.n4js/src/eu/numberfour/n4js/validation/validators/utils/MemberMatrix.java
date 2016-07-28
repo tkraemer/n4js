@@ -72,7 +72,7 @@ public class MemberMatrix {
 	final static int MEMBER_TYPE_COUNT = MemberType.values().length; // number of rows
 
 	/**
-	 * List of actually consumed members, added in via {@link #markConsumed(MemberList)}.
+	 * Set of actually consumed members, added in via {@link #markConsumed(MemberList)}.
 	 */
 	private final Set<TMember> consumed;
 
