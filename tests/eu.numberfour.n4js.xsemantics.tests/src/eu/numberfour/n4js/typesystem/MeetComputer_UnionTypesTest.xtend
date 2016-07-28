@@ -11,11 +11,12 @@
 package eu.numberfour.n4js.typesystem
 
 import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.Before
 
 /*
  * Tests for {@link TypeSystemHelper#meet(RuleEnvironment, TypeRef...)} method.
@@ -32,10 +33,10 @@ class MeetComputer_UnionTypesTest extends AbstractTypeSystemHelperTests {
 	@Test
 	def void testMeetWithUnion() {
 
-		assertMeet("B", "A", "union{A,B}");
-		assertMeet("B", "B", "union{A,B}");
-		assertMeet("C", "A", "union{B,C}");
-		assertMeet("C", "C", "union{B,C}");
+		assertMeet(#[IssueCodes.UNI_UNNECESSARY_SUBTYPE], "B", "A", "union{A,B}");
+		assertMeet(#[IssueCodes.UNI_UNNECESSARY_SUBTYPE], "B", "B", "union{A,B}");
+		assertMeet(#[IssueCodes.UNI_UNNECESSARY_SUBTYPE], "C", "A", "union{B,C}");
+		assertMeet(#[IssueCodes.UNI_UNNECESSARY_SUBTYPE], "C", "C", "union{B,C}");
 	}
 
 }

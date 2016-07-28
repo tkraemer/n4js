@@ -10,9 +10,9 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import it.xsemantics.runtime.RuleEnvironment
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.validation.JavaScriptVariant
+import it.xsemantics.runtime.RuleEnvironment
 
 /**
  * Helper for type system tests, generating variables
@@ -30,26 +30,37 @@ import eu.numberfour.n4js.n4JS.Script
 class TypeRefsToVariablesAssembler extends AbstractScriptAssembler {
 
 	/**
+	 * Convenience method for method {@link #prepareScriptAndCreateRuleEnvironment(CharSequence, String...)}.
+	 */
+	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(String... typeExpressions) {
+		return prepareScriptAndCreateRuleEnvironment(#[], JavaScriptVariant.n4js, typeExpressions)
+	}
+	
+	/**
 	 * To be called by test for appending newly generated variable declarations with given types.
 	 * <p>
 	 * Usage remarks:<ul>
 	 * <li>If you want to create different type references for similar type expressions, then simply add comments of spaces to the type expressions.
 	 * <li>no new type variables are created for type expressions starting with "local", instead, they are retrieved from predefined script. These types are accessible directly via the variable name.
+	 * <li>If you expect warnings or errors to occur, you can pass the expected messages.
 	 * </ul>
 	 * This method uses the default n4js JavaScript variant.
 	 * @return the rule environment to be used when type system rules are called.
 	 */
-	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(String... typeExpressions) {
-		return prepareScriptAndCreateRuleEnvironment(JavaScriptVariant.n4js, typeExpressions)
+	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(String[] expectedMessages, String... typeExpressions) {
+		return prepareScriptAndCreateRuleEnvironment(expectedMessages, JavaScriptVariant.n4js, typeExpressions)
 	}
 
-	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(JavaScriptVariant variant, String... typeExpressions) {
-		return doPrepareScriptAndCreateRuleEnvironment(variant, typeExpressions).value
+	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(String[] expectedMessages, JavaScriptVariant variant, String... typeExpressions) {
+		return doPrepareScriptAndCreateRuleEnvironment(expectedMessages, variant, typeExpressions).value
 	}
 
 	def Pair<Script, RuleEnvironment> doPrepareScriptAndCreateRuleEnvironment(JavaScriptVariant variant, String... typeExpressions) {
+		doPrepareScriptAndCreateRuleEnvironment(#[], variant, typeExpressions);
+	}
+	def Pair<Script, RuleEnvironment> doPrepareScriptAndCreateRuleEnvironment(String[] expectedMessages, JavaScriptVariant variant, String... typeExpressions) {
 		val completeScript = getScriptPrefix() + "\n" + createVariables(typeExpressions)
-		val script = setupScript(completeScript, variant, 0)
+		val script = setupScript(completeScript, variant, expectedMessages)
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(script);
 		return Pair.of(script, G);
 	}

@@ -14,6 +14,7 @@ import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
@@ -39,12 +40,17 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 	 * {@link TypeRef#getTypeRefAsString()} is used.
 	 */
 	def void assertSimplify(String expectedType, String typeExpressionsToBeSimplified) {
-		val G = assembler.prepareScriptAndCreateRuleEnvironment(typeExpressionsToBeSimplified)
+		assertSimplify(expectedType, typeExpressionsToBeSimplified, #[]);
+	}
+	
+	def void assertSimplify(String expectedType, String typeExpressionsToBeSimplified, String[] expectedIssueMsg) {
+		val G = assembler.prepareScriptAndCreateRuleEnvironment(expectedIssueMsg, typeExpressionsToBeSimplified)
 		var typeRef = assembler.getTypeRef(typeExpressionsToBeSimplified)
 		assertTrue("Error in test setup, expected union type", typeRef instanceof UnionTypeExpression);
 		val simplified = TypeUtils.copy(tsh.simplify(G, typeRef as UnionTypeExpression));
 		assertEquals(expectedType, simplified.typeRefAsString);
 	}
+	
 
 	/*
 	 * Test some assumptions.
@@ -61,20 +67,20 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 	@Test
 	def void testSimplifyDuplicates() {
 		assertSimplify("A", "union{A}");
-		assertSimplify("union{A,B}", "union{A,B}");
-		assertSimplify("union{A,B}", "union{A,B,A}");
+		assertSimplify("union{A,B}", "union{A,B}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,B,A}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
 	}
 
 	@Test
 	def void testSimplifyNestedUnions() {
-		assertSimplify("union{A,B}", "union{A,B,union{A,B}}");
-		assertSimplify("union{A,B,C}", "union{A,B,union{B,C}}");
+		assertSimplify("union{A,B}", "union{A,B,union{A,B}}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B,C}", "union{A,B,union{B,C}}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
 	}
 
 	@Test
 	def void testSimplifyUndefinedAndNull() {
-		assertSimplify("union{A,B}", "union{A,B,undefined}");
-		assertSimplify("union{A,B}", "union{A,undefined,B}");
+		assertSimplify("union{A,B}", "union{A,B,undefined}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,undefined,B}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
 		assertSimplify("A", "union{A,undefined}");
 		assertSimplify("A", "union{undefined,A}");
 		assertSimplify("undefined", "union{undefined,undefined}");

@@ -36,6 +36,7 @@ class G<T extends A> {
 // this would cause problems above XPECT noerrors -->
 new G<D>().m(D);
 
+// XPECT warnings --> "The use of unnecessary subtypes is discouraged." at "B"
 let g: G<union{A,B}>;
 // XPECT errors --> "type{A} is not a subtype of constructor{union{A,B}}." at "A"
 g.m(A);
