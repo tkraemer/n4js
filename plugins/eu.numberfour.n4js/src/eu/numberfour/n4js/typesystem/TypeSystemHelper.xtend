@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import java.util.List
 
 /**
  * Utility methods used in the XSemantics type system. Must be injected.
@@ -127,6 +128,9 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 	def <T extends ComposedTypeRef> TypeRef simplify(RuleEnvironment G, T composedType) {
 		simplifyComputer.simplify(G,composedType)
+	}
+	def List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, ComposedTypeRef composedType) {
+		simplifyComputer.getSimplifiedTypeRefs(G,composedType)
 	}
 
 	/**

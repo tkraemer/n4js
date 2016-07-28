@@ -18,6 +18,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.LinkedList
+import java.util.List
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static extension java.util.Collections.*
@@ -76,6 +78,7 @@ class MeetComputer extends TypeSystemHelperStrategy {
 		ref.typeRefs;
 	}
 
+	
 	/**
 	 * Creates the intersection according to [N4JS, 4.13 Intersection Type], but does not check for uniqueness
 	 * of class in the typerefs of the intersection.
@@ -86,25 +89,50 @@ class MeetComputer extends TypeSystemHelperStrategy {
 	// TODO see IDE-142/IDE-385
 	@VisibleForTesting
 	def TypeRef intersectRelaxed(RuleEnvironment G, TypeRef... typeRefs) {
+		val List<TypeRef> intersectionTR = calcIntersectTypeRefs(G, typeRefs);
+		
+		if (intersectionTR.size() == 1) {
+			val tR = intersectionTR.remove(0)
+			return TypeUtils.copyIfContained(tR);
+		}
+		
+		val intersection = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
+		for (s : intersectionTR) {			
+			intersection.typeRefs.add(TypeUtils.copyIfContained((s)));			
+		}
+		return intersection
+	}
+	
+	def List<TypeRef> calcIntersectTypeRefs(RuleEnvironment G, TypeRef... typeRefs) {
+		val intersectTRs = new LinkedList<TypeRef>();
 		val flattenedTypeRefs = typeRefs.map[flattenIntersectionTypes].flatten;
 		val containedAny = flattenedTypeRefs.findFirst[it !== null && topType];
 		if (containedAny !== null) {
-			return containedAny
+			intersectTRs.add(containedAny);			
+			return intersectTRs;
 		}
-		val intersection = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
+		
 		for (s : flattenedTypeRefs) {
-			if (! intersection.typeRefs.exists[ts.subtypeSucceeded(G, it, s)]) {
-
-				// see https://code.google.com/p/guava-libraries/issues/detail?id=1596
-				// Iterables.removeIf(intersection.typeRefs, [ts.subtypeTypeRefSucceeded(G, s, it)]);
-				retainIf(intersection.typeRefs, [! ts.subtypeSucceeded(G, s, it)]);
-				intersection.typeRefs.add(TypeUtils.copyIfContained((s)));
+			if (! intersectTRs.exists[ts.subtypeSucceeded(G, it, s)]) {
+				retainIf(intersectTRs, [! ts.subtypeSucceeded(G, s, it)]);
+				intersectTRs.add(s)
 			}
 		}
-		if (intersection.typeRefs.size() == 1) {
-			return intersection.typeRefs.remove(0);
+		
+		return intersectTRs
+	}
+	
+	def List<TypeRef> calcUnionTypeRefs(RuleEnvironment G, TypeRef... typeRefs) {
+		val unionTRs = new LinkedList<TypeRef>();
+
+		for (s : typeRefs) {
+			if (! unionTRs.exists[ts.subtypeSucceeded(G, s, it)]) {
+				retainIf(unionTRs, [! ts.subtypeSucceeded(G, it, s)]);
+				unionTRs.add(s)
+			}
 		}
-		return intersection
+		
+		return unionTRs
 	}
 
 	private def Iterable<TypeRef> flattenIntersectionTypes(TypeRef typeRef) {

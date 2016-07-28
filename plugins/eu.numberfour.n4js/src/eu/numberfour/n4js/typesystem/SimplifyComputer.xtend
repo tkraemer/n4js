@@ -16,6 +16,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.utils.TypeCompareHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.LinkedList
+import java.util.List
 import java.util.Set
 import java.util.TreeSet
 import org.eclipse.emf.ecore.EClass
@@ -56,6 +58,34 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 	 * @see [N4JS Spec], 4.13 Intersection Type
 	 */
 	def <T extends ComposedTypeRef> TypeRef simplify(RuleEnvironment G, T composedType) {
+		val List<TypeRef> tRs = getSimplifiedTypeRefs(G, composedType, true);
+		val eClass = composedType.eClass
+		val simplified = EcoreUtil.create(eClass) as ComposedTypeRef
+		val typeRefs = simplified.typeRefs
+		typeRefs.addAll(tRs);
+
+		switch (typeRefs.size()) {
+			case 0:
+				return G.undefinedTypeRef
+			case 1:
+				return typeRefs.head
+			default: {
+				simplified.setNullModifier(composedType.nullModifier)
+				simplified.setUndefModifier(composedType.undefModifier)
+				return simplified;
+			}
+		}
+
+	}
+	
+	/**
+	 * Returns a simplified list of all TypeRefs of a composed type.
+	 */
+	def <T extends ComposedTypeRef> List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, T composedType) {
+		return getSimplifiedTypeRefs(G, composedType, false);
+	}
+	
+	def private <T extends ComposedTypeRef> List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, T composedType, boolean copyIfContained) {
 		if (composedType === null) {
 			return null;
 		}
@@ -75,34 +105,23 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 
 		// simplify singleton
 		if (set.size() == 1) {
-			return set.head
+			//return set.head
 		}
-
-		val simplified = EcoreUtil.create(eClass) as ComposedTypeRef
-
-		val typeRefs = simplified.typeRefs
-
+		
+		val List<TypeRef> typeRefs = new LinkedList<TypeRef>();
+		
 		val undefinedTypeRef = G.undefinedTypeRef
 		val nullTypeRef = G.nullTypeRef
 		for (e : set) {
 			if (compare(e, undefinedTypeRef) != 0 &&
 				compare(e, nullTypeRef) != 0) {
-				typeRefs.add(TypeUtils.copyIfContained(e));
+				var TypeRef cpy = e;
+				if (copyIfContained)
+					cpy = TypeUtils.copyIfContained(e);
+				typeRefs.add(cpy);
 			}
 		}
-
-		switch (typeRefs.size()) {
-			case 0:
-				return undefinedTypeRef
-			case 1:
-				return typeRefs.head
-			default: {
-				simplified.setNullModifier(composedType.nullModifier)
-				simplified.setUndefModifier(composedType.undefModifier)
-				return simplified;
-			}
-		}
-
+		return typeRefs;
 	}
 
 	private def Iterable<TypeRef> flattenComposedTypes(EClass eClass, TypeRef typeRef) {

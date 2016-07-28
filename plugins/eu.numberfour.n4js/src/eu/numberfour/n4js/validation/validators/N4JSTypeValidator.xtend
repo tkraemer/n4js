@@ -33,10 +33,12 @@ import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
@@ -52,6 +54,7 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.MeetComputer
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -61,6 +64,9 @@ import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
+import java.util.LinkedList
+import java.util.List
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.QualifiedName
@@ -72,6 +78,7 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 
 /**
  * Class for validating the N4JS types.
@@ -92,6 +99,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
 
+	@Inject 	
+	private MeetComputer meetComputer
 
 	/**
 	 * NEEEDED
@@ -495,4 +504,118 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		}
 		false;
 	}
+	
+	
+	/**
+	 * This validates a warning in chapter 4.10.1:<br/>
+	 * <i>The use of the any type in a union type produces a warning.</i>
+	 */
+	@Check
+	def void checkUnionTypeContainsNoAny(UnionTypeExpression ute) {
+		val G = ute.newRuleEnvironment;
+		val anyType = G.anyType;
+		val EList<TypeRef> typeRefs = ute.getTypeRefs();		
+		val List<TypeRef> anyTypeRefs = new LinkedList();
+				
+		for (TypeRef tR : typeRefs) {
+			val Type type = tR.getDeclaredType();
+			if (type===anyType) {	
+				anyTypeRefs.add(tR);
+			}
+		}	
+		
+		for (TypeRef anyTR : anyTypeRefs) {		
+			val message = messageForUNI_ANY_USED;
+			addIssue(message, anyTR, UNI_ANY_USED);
+		}			
+	}
+	
+	
+	/**
+	 * This validates a warning in chapter 4.10.1:<br/>
+	 * <i>The use of unnecessary subtypes in union types produces a warning.</i>
+	 */
+	@Check
+	def void checkUnionHasUnnecessarySubtype(UnionTypeExpression ute) {
+		val List<TypeRef> tRefs = extractAllTClasses(ute);
+		val G = ute.newRuleEnvironment;
+		val anyType = G.anyType;
+		tRefs.removeIf([it.getDeclaredType === anyType]);
+					
+		if (tRefs.size() > 1) {
+			val List<TypeRef> intersectionTR = meetComputer.calcUnionTypeRefs(G, tRefs);
+			tRefs.removeAll(intersectionTR);
+			
+			for (TypeRef tClassR : tRefs) {	
+				val message = messageForUNI_UNNECESSARY_SUBTYPE;
+				addIssue(message, tClassR, UNI_UNNECESSARY_SUBTYPE);
+			}					
+		}
+	}
+	
+	
+	/**
+	 * This validates constraint 25.2 ("Intersection Type") in chapter 4.10.2:<br/>
+	 * <i>Only one class must be contained in the intersection type.</i><br/><br/>
+	 * Currently, only a warning is displayed.
+	 */
+	@Check
+	def void checkIntersectionTypeContainsMaxOneClass(IntersectionTypeExpression ite) {
+		val List<TypeRef> tClassRefs = extractAllTClasses(ite);
+		
+		if (tClassRefs.size() > 1) {
+			val G = ite.newRuleEnvironment;
+			val List<TypeRef> intersectionTR = meetComputer.calcIntersectTypeRefs(G, tClassRefs);
+			
+			if (intersectionTR.size() > 1) {
+				for (TypeRef tClassR : intersectionTR) {		
+					val message = messageForINTER_ONLY_ONE_CLASS_ALLOWED;
+					addIssue(message, tClassR, INTER_ONLY_ONE_CLASS_ALLOWED);
+				}				
+			}
+		}
+	}
+	
+	
+	/**
+	 * This validates a warning in chapter 4.10.2:<br/>
+	 * <i>The use of unnecessary supertypes in intersection types produces a warning.</i>
+	 */
+	@Check
+	def void checkIntersectionHasUnnecessarySupertype(IntersectionTypeExpression ite) {
+		val List<TypeRef> tClassRefs = extractAllTClasses(ite);
+					
+		if (tClassRefs.size() > 1) {
+			val G = ite.newRuleEnvironment;
+			val List<TypeRef> intersectionTR = meetComputer.calcIntersectTypeRefs(G, tClassRefs);
+			tClassRefs.removeAll(intersectionTR);
+			
+			for (TypeRef tClassR : tClassRefs) {		
+				val message = messageForINTER_UNNECESSARY_SUPERTYPE;
+				addIssue(message, tClassR, INTER_UNNECESSARY_SUPERTYPE);
+			}					
+		}
+	}
+	
+	def private List<TypeRef> extractAllTClasses(ComposedTypeRef ctr) {
+		val List<TypeRef> tClassRefs = new LinkedList();
+		val G = ctr.newRuleEnvironment;
+		val List<TypeRef> tRefs = tsh.getSimplifiedTypeRefs(G, ctr);
+		
+		for (TypeRef tR : tRefs) {
+			val Type type = tR.getDeclaredType();
+			if (type instanceof TClass) {
+				var isStructural = tR.isDefSiteStructuralTyping() || tR.isUseSiteStructuralTyping();
+				if (!isStructural)
+					tClassRefs.add(tR);
+			}			
+		}
+		return tClassRefs;
+	}
+	
 }
+
+
+
+
+
