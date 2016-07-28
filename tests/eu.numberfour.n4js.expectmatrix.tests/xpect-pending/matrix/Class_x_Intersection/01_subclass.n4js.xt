@@ -24,5 +24,5 @@ var bc : intersection{A,C} = new D();
 // ---
 var bcd : intersection{B,C,D};
 
-// intersection may not contain Any XPECT FIXME errors --> "Any must not be an element of intersection type" at "{any,A}"
+// intersection may not contain Any XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
 var b : intersection{any,A};

@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface A {}
+interface B {}
+
+
+
+// XPECT nowarnings --> 
+var a1 : intersection{A, B};
+
+// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+var a2 : intersection{A, B, any};
+
+var a3 : intersection{A, B,
+	// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+	any,
+	// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+	any
+};
+
+
+
+// XPECT nowarnings --> 
+var b1 : intersection{A};
+
+// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+var b2 : intersection{any};
+
+
+
+// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+var c1 : intersection{A, intersection{B, any}};
+
+// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+var c2 : intersection{intersection{A, B}, any};
+
+
+// XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
+var d1 : union{A, intersection{B, any}};

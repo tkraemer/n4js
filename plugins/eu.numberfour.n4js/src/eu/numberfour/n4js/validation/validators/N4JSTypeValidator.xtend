@@ -512,9 +512,23 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkUnionTypeContainsNoAny(UnionTypeExpression ute) {
-		val G = ute.newRuleEnvironment;
+		checkComposedTypeRefContainsNoAny(ute, messageForUNI_ANY_USED, UNI_ANY_USED);		
+	}
+	
+	
+	/**
+	 * This validates a warning in chapter 4.10.2:<br/>
+	 * <i>The use of the any type in an intersection type produces a warning.</i>
+	 */
+	@Check
+	def void checkIntersectionTypeContainsNoAny(IntersectionTypeExpression ite) {
+		checkComposedTypeRefContainsNoAny(ite, messageForINTER_ANY_USED, INTER_ANY_USED);
+	}
+	
+	def private void checkComposedTypeRefContainsNoAny(ComposedTypeRef ctr, String msg, String issueCode) {
+		val G = ctr.newRuleEnvironment;
 		val anyType = G.anyType;
-		val EList<TypeRef> typeRefs = ute.getTypeRefs();		
+		val EList<TypeRef> typeRefs = ctr.getTypeRefs();		
 		val List<TypeRef> anyTypeRefs = new LinkedList();
 				
 		for (TypeRef tR : typeRefs) {
@@ -525,8 +539,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		}	
 		
 		for (TypeRef anyTR : anyTypeRefs) {		
-			val message = messageForUNI_ANY_USED;
-			addIssue(message, anyTR, UNI_ANY_USED);
+			addIssue(msg, anyTR, issueCode);
 		}			
 	}
 	
