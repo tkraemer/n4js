@@ -10,99 +10,203 @@
  */
 package eu.numberfour.n4js.generator.headless.tests;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
+import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.xtext.validation.Issue;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import eu.numberfour.n4js.generator.headless.IssueCollector;
-import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
-import eu.numberfour.n4js.generator.headless.N4JSCompileException;
 import eu.numberfour.n4js.hlc.AbstractN4jscTest;
-import eu.numberfour.n4js.tests.issues.IssuesMatcher;
+import eu.numberfour.n4js.tests.codegen.Class;
+import eu.numberfour.n4js.tests.codegen.Classifier;
+import eu.numberfour.n4js.tests.codegen.Field;
+import eu.numberfour.n4js.tests.codegen.Member;
+import eu.numberfour.n4js.tests.codegen.Module;
+import eu.numberfour.n4js.tests.codegen.Project;
 
 /**
- * Prototypical test for access control testing. This test only covers some examples in order to explore how to connect
- * test expectations with the actual compiler errors as reported by the headless compiler.
+ *
  */
+@RunWith(Parameterized.class)
 public class AccessControlTest extends AbstractN4jscTest {
+	private static enum Scenario {
+		EXTENSION
+	}
 
 	/**
-	 * Test overriding a protected field of a public class within a subclass in the same module. Expects no errors.
+	 * The location of the client attempting to access a member of the supplier.
+	 */
+	private static enum ClientLocation {
+		/**
+		 * Client and supplier are the same type.
+		 */
+		SAME_TYPE,
+		/**
+		 * Client and supplier are in the same module, but not in the same type.
+		 */
+		SAME_MODULE,
+		/**
+		 * Client and supplier are in the same project, but not in the same module.
+		 */
+		SAME_PROJECT,
+		/**
+		 * Client and supplier have the same vendor, but are in different projects.
+		 */
+		SAME_VENDOR,
+		/**
+		 * Client and supplier have different vendors and are thus in different projects.
+		 */
+		OTHER_VENDOR
+	}
+
+	private static class TestSpecification {
+		private final Scenario scenario;
+		private final ClientLocation clientLocation;
+		private final Classifier.Visibility supplierVisibility;
+		private final Member.Visibility memberVisibility;
+
+		/**
+		 * Creates a new instance with the given parameters.
+		 *
+		 * @param scenario
+		 *            the test scenario
+		 * @param clientLocation
+		 *            the location of the generated client in relation to the generated supplier
+		 * @param supplierVisibility
+		 *            the visibility of the generated supplier type
+		 * @param memberVisibility
+		 *            the visibility of the generated member the client is attempting to access
+		 */
+		public TestSpecification(Scenario scenario, ClientLocation clientLocation,
+				Classifier.Visibility supplierVisibility,
+				Member.Visibility memberVisibility) {
+			this.scenario = scenario;
+			this.clientLocation = clientLocation;
+			this.supplierVisibility = supplierVisibility;
+			this.memberVisibility = memberVisibility;
+		}
+
+		/**
+		 * Returns the scenario
+		 *
+		 * @return the scenario
+		 */
+		public Scenario getScenario() {
+			return scenario;
+		}
+
+		/**
+		 * Returns the location of the generated client in relation to the generated supplier.
+		 *
+		 * @return the client location
+		 */
+		public ClientLocation getClientLocation() {
+			return clientLocation;
+		}
+
+		/**
+		 * Returns the visibility of the generated supplier type.
+		 *
+		 * @return the supplier visibility
+		 */
+		public Classifier.Visibility getSupplierVisibility() {
+			return supplierVisibility;
+		}
+
+		/**
+		 * Returns the visibility of the generated member that the client is attempting to access.
+		 *
+		 * @return the member visibility
+		 */
+		public Member.Visibility getMemberVisibility() {
+			return memberVisibility;
+		}
+
+	}
+
+	/**
+	 * Returns the parameters for this test by parsing the appropriate CSV file.
+	 *
+	 * @return the parameters
+	 */
+	@Parameters
+	public static Iterable<? extends Object> data() {
+		List<TestSpecification> result = new LinkedList<>();
+
+		return result;
+	}
+
+	private final TestSpecification specification;
+
+	/**
+	 * Creates a new instance of this test that runs the given test specification.
+	 *
+	 * @param specification
+	 *            the specification to run
+	 */
+	public AccessControlTest(TestSpecification specification) {
+		this.specification = specification;
+	}
+
+	/**
+	 * Performs the actual test according to the specification.
 	 */
 	@Test
-	public void testSameModuleExtendsOverrideProtectedFieldOfPublicClass() {
-		for (int i = 0; i < 1000; i++) {
-			IssuesMatcher matcher = new IssuesMatcher();
-			compileAndAssert("SameModuleExtendsOverrideProtectedFieldOfPublicClass", matcher);
+	public void test() {
+
+	}
+
+	private void generateScenario() {
+		switch (specification.getScenario()) {
+		case EXTENSION:
+			generateExtensionScenario();
+			break;
+
+		default:
+			break;
 		}
 	}
 
-	/**
-	 * Test overriding a private field of a public class within a subclass in the same project. Expects an error.
-	 */
-	@Test
-	public void testSameProjectExtendsOverridePrivateFieldOfPublicClass() {
-		IssuesMatcher matcher = new IssuesMatcher();
-		matcher.add().message("The field B.field cannot override private field A.field.").at("B.n4js", 5, 10);
+	private static String FIXTURE_ROOT = "target";
 
-		compileAndAssert("SameProjectExtendsOverridePrivateFieldOfPublicClass", matcher);
-	}
+	private void generateExtensionScenario() {
+		Class classA = new Class("A").setVisibility(specification.getSupplierVisibility());
+		classA.addMember(new Field("field").setVisibility(specification.getMemberVisibility()));
 
-	/**
-	 * Test overriding a private field of a public class within a subclass of the same vendor. Expects an error.
-	 */
-	@Test
-	public void testSameVendorExtendsOverridePrivateFieldOfPublicClass() {
-		IssuesMatcher matcher = new IssuesMatcher();
-		matcher.add().message("The field B.field cannot override private field A.field.").at("B.n4js", 5, 10);
+		Class classB = new Class("B");
+		classB.addMember(new Field("field").setVisibility(specification.getMemberVisibility()));
 
-		compileAndAssert("SameVendorExtendsOverridePrivateFieldOfPublicClass", matcher);
-	}
+		Project project = new Project("supplier", "vendorA", "Vendor A");
+		Project.SourceFolder supplierSourceFolder = new Project.SourceFolder("src");
+		Module supplierModule = new Module("Supplier").addClassifier(classA);
 
-	/**
-	 * Test multiple issues.
-	 */
-	@Test
-	public void testMultipleIssues() {
-		IssuesMatcher matcher = new IssuesMatcher();
-		matcher.add().message("The field B.field cannot override private field A.field.").at("A.n4js", 8, 10);
-		matcher.add().message("The method B.m cannot override private method A.m.").at("A.n4js", 11, 10);
+		switch (specification.getClientLocation()) {
+		case SAME_TYPE:
+		case SAME_MODULE:
+			supplierModule.addClassifier(classB);
+			supplierSourceFolder.addModule(supplierModule);
+			project.addSourceFolder(supplierSourceFolder);
+			break;
+		case SAME_PROJECT:
+			Module clientModule = new Module("Client");
+			clientModule.addImport(classA, supplierModule);
+			clientModule.addClassifier(classB);
 
-		compileAndAssert("MultipleIssues", matcher);
-	}
-
-	private static String FIXTURE_ROOT = "testdata/accesscontrol";
-	private static N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
-
-	private static void assertIssues(Collection<Issue> issues, IssuesMatcher matchers) {
-		assertTrue(matchers.matchesExactly(issues));
-	}
-
-	private void compileAndAssert(String projectRoot, IssuesMatcher matcher) {
-		try {
-			File root = setupWorkspace(FIXTURE_ROOT, projectRoot);
-			List<File> projectRoots = Arrays.asList(root);
-
-			IssueCollector issueCollector = new IssueCollector();
-			try {
-				// compile
-
-				hlc.compileAllProjects(projectRoots, issueCollector);
-			} catch (N4JSCompileException e) {
-				// nothing to do
-			}
-
-			assertIssues(issueCollector.getCollectedIssues(), matcher);
-		} catch (IOException e) {
-			fail("Unable to setup workspace: " + projectRoot);
+			supplierSourceFolder.addModule(supplierModule);
+			supplierSourceFolder.addModule(clientModule);
+			project.addSourceFolder(supplierSourceFolder);
+			break;
+		case SAME_VENDOR:
+			break;
+		case OTHER_VENDOR:
+			break;
+		default:
+			break;
 		}
+
+		project.create(Paths.get(FIXTURE_ROOT, "SupplierProject"));
 	}
 }
