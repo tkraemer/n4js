@@ -94,9 +94,7 @@ class CSVParser {
 				if (c == NEWLINE)
 					return new Token(TokenType.ROW_SEPARATOR, curPos - 1, 1);
 
-				if (c == CARRIAGE_RETURN) {
-					curPos++;
-				} else {
+				if (c != CARRIAGE_RETURN) {
 					curPos--;
 					return readField();
 				}
@@ -106,19 +104,21 @@ class CSVParser {
 		}
 
 		private def Token readField() {
-			if (data.substring(curPos, curPos + 1) == "\"")
+			if (data.charAt(curPos) == DOUBLE_QUOTATION_MARK)
 				return readQuotedField();
 
 			val int startPos = curPos;
-			while (!eof()) {
-				val char c = data.charAt(curPos);
-				if (c == NEWLINE || c == COMMA) {
-					return new Token(TokenType.FIELD, startPos, curPos - startPos, data.substring(startPos, curPos))
-				}
-				curPos++
-			}
+			var char c = data.charAt(curPos);
+			while (c != CARRIAGE_RETURN && c != NEWLINE && c != COMMA && !eof()) {
+				curPos++;
+				if (!eof())
+					c = data.charAt(curPos);
+			} 
 
-			return new Token(TokenType.EOF, curPos, 0);
+			val Token result = new Token(TokenType.FIELD, startPos, curPos - startPos, data.substring(startPos, curPos));
+			if (c == CARRIAGE_RETURN)
+				curPos++;
+			return result;
 		}
 
 		private def Token readQuotedField() {
@@ -142,7 +142,11 @@ class CSVParser {
 		}
 
 		private def boolean eof() {
-			return curPos >= data.length;
+			return eof(curPos);
+		}
+
+		private def boolean eof(int pos) {
+			return pos >= data.length;
 		}
 
 		public def void pushToken(Token token) {
@@ -155,6 +159,7 @@ class CSVParser {
 	}
 
 	private CSVTokenizer tokenizer;
+	private ArrayList<ArrayList<String>> cachedData;
 
 	/**
 	 * Creates a new parser that parses the given string.
@@ -174,23 +179,110 @@ class CSVParser {
 	 * @throws IOException if the file cannot be found or cannot be opened
 	 */
 	public new(Path path, Charset encoding) throws IOException {
-		this(new String(Files.readAllBytes(path), encoding))
+		this(new String(Files.readAllBytes(path), encoding));
 	}
 
 	/**
-	 * Performs the parsing and returns the parsed rows. Note that the parse result is not cached,
-	 * so calling this method multiple times will always parse the data passed into the constructor again.
+	 * Returns all rows and columns and returns them as a nested array list.
 	 * 
 	 * @return the parsed rows
 	 */
-	public def ArrayList<ArrayList<String>> parse() {
+	public def ArrayList<ArrayList<String>> getData() {
+		if (cachedData === null)
+			cachedData = doParse();
+		return cachedData;
+	}
+
+	/**
+	 * Returns all columns of those rows starting at the given zero based index.
+	 * 
+	 * @param minRow the index of the first row to return
+	 * 
+	 * @return the parsed rows
+	 */
+	public def ArrayList<ArrayList<String>> getRowRange(int minRow) {
+		return getRowRange(minRow, -1);
+	}
+
+	/**
+	 * Returns all columns of those rows within the given zero based range.
+	 * 
+	 * @param minRow the index of the first row to return
+	 * @param rowCount the maximum number of rows to return, or -1 to indicate that all rows should be returned
+	 * 
+	 * @return the parsed rows
+	 */
+	public def ArrayList<ArrayList<String>> getRowRange(int minRow, int rowCount) {
+		return getRange(minRow, rowCount, 0, -1);
+	}
+
+	/**
+	 * Returns all rows, but only those columns starting at the given zero based index.
+	 * 
+	 * @param minColumn the index of the first column to return
+	 * 
+	 * @return the parsed rows
+	 */
+	public def ArrayList<ArrayList<String>> getColumnRange(int minColumn) {
+		return getColumnRange(minColumn, -1);
+	}
+
+	/**
+	 * Returns all rows, but only those columns within the given zero based  range.
+	 * 
+	 * @param minColumn the index of the first column to return
+	 * @param columnCount the number of columns to return, or -1 to indicate that all columns should be returned
+	 * 
+	 * @return the parsed rows
+	 */
+	public def ArrayList<ArrayList<String>> getColumnRange(int minColumn, int columnCount) {
+		return getRange(0, -1, minColumn, columnCount);
+	}
+
+	/**
+	 * Returns all rows and columns and returns only the rows with an index that is
+	 * greater or equal to the specified row index (zero based) and only those columns
+	 * with an index in the specified zero based  column range.
+	 * 
+	 * @param minRow the index of the first row to return
+	 * @param rowCount the maximum number of rows to return, or -1 to indicate that all rows should be returned
+	 * @param minColumn the index of the first column to return
+	 * @param columnCount the number of columns to return, or -1 to indicate that all columns should be returned
+	 * 
+	 * @return the parsed rows
+	 */
+	public def ArrayList<ArrayList<String>> getRange(int minRow, int rowCount, int minColumn, int columnCount) {
+		val ArrayList<ArrayList<String>> source = getData();
+		var ArrayList<ArrayList<String>> result = newArrayList();
+
+		for (var int rowIndex = minRow; rowIndex < source.size(); rowIndex++) {
+			if (isIndexInRange(rowIndex, minRow, rowCount)) {
+				val ArrayList<String> sourceRow = source.get(rowIndex);
+				var ArrayList<String> resultRow = newArrayList();
+				for (var int columnIndex = minColumn; columnIndex < sourceRow.size(); columnIndex++) {
+					if (isIndexInRange(columnIndex, minColumn, columnCount)) {
+						resultRow.add(sourceRow.get(columnIndex));
+					}
+				}
+				result.add(resultRow);
+			}
+		}
+
+		return result;
+	}
+
+	private static def boolean isIndexInRange(int index, int minIndex, int count) {
+		return index >= minIndex && (count < 0 || index < minIndex + count);
+	}
+
+	private def ArrayList<ArrayList<String>> doParse() {
 		var ArrayList<ArrayList<String>> result = newArrayList();
 		tokenizer.reset();
 
 		var Token token = tokenizer.nextToken();
 		while (token.type != TokenType.EOF) {
 			tokenizer.pushToken(token);
-			result.add(parseRow());
+			result.add(parseRow);
 			token = tokenizer.nextToken();
 		}
 
@@ -214,7 +306,8 @@ class CSVParser {
 		if (token.type == TokenType.FIELD)
 			return token.data;
 
-		if (token.type == TokenType.ROW_SEPARATOR || token.type == TokenType.FIELD_SEPARATOR) {
+		if (token.type == TokenType.ROW_SEPARATOR || token.type == TokenType.FIELD_SEPARATOR ||
+			token.type == TokenType.EOF) {
 			tokenizer.pushToken(token);
 			return "";
 		}

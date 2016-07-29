@@ -20,29 +20,56 @@ import static org.junit.Assert.*
 public class CSVParserTest {
 
 	@Test
+	public def void testWindowsLineEndings() {
+		assertEquals(#[
+			#["1", "2", "3"],
+			#["1", "2", "3"]
+		], 
+		new CSVParser("1,2,3\r\n1,2,3").data);
+
+		assertEquals(#[
+			#["1", "2", ""],
+			#["1", "2", "3"]
+		], 
+		new CSVParser("1,2,\r\n1,2,3").data);
+
+		assertEquals(#[
+			#["1", "2", ""],
+			#["", "2", "3"]
+		], 
+		new CSVParser("1,2,\r\n,2,3").data);
+
+		assertEquals(#[
+			#["", "", "Supplier", "Class","",""],
+			#["", "", "Subject of Access", "Field, Accessor, Method", "", "Static Field, Getter, Setter, Method", "", ""]
+		], 
+		new CSVParser(",,Supplier,Class,,\r\n,,Subject of Access,\"Field, Accessor, Method\",,\"Static Field, Getter, Setter, Method\",,\r\n").data);
+	}
+
+	@Test
 	public def void testEmptyString() {
 		var CSVParser parser = new CSVParser("");
 		
-		assertEquals(parser.parse(), #[]);
+		assertEquals(#[], parser.data);
 	}
 
 	@Test
 	public def void testOneEmptyField() {
 		var CSVParser parser = new CSVParser("\n");
 		
-		assertEquals(parser.parse(), #[
+		assertEquals(#[
 			#[""]
-		]);
+		], parser.data);
 	}
 
 	@Test
 	public def void testTwoRowsWithOneFieldEach() {
 		var CSVParser parser = new CSVParser("\n\n");
 		
-		assertEquals(parser.parse(), #[
+		assertEquals(#[
 			#[""],
 			#[""]
-		]);
+		], parser.data);
 	}
 	
 	@Test
@@ -51,9 +78,9 @@ public class CSVParserTest {
 		One,Two,Three
 		''');
 
-		assertEquals(parser.parse(), #[
+		assertEquals(#[
 			#["One", "Two", "Three"]
-		]);
+		], parser.data);
 	}
 	
 	@Test
@@ -62,167 +89,186 @@ public class CSVParserTest {
 		,,
 		''');
 
-		assertEquals(parser.parse(), #[
+		assertEquals(#[
 			#["", "", ""]
-		]);
+		], parser.data);
 	}
 	
 	@Test
 	public def void testOneRowWithSomeEmptyFields() {
-		assertEquals(new CSVParser('''
-		One,,,
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "", "", ""]
-		]);
+		],
+		new CSVParser('''
+		One,,,
+		''').data);
 
-		assertEquals(new CSVParser('''
-		,One,,
-		''').parse(), #[
+		assertEquals(#[
 			#["", "One", "", ""]
-		]);
+		],
+		new CSVParser('''
+		,One,,
+		''').data);
 
-		assertEquals(new CSVParser('''
-		,,One,
-		''').parse(), #[
+		assertEquals(#[
 			#["", "", "One", ""]
-		]);
+		],
+		new CSVParser('''
+		,,One,
+		''').data);
 
-		assertEquals(new CSVParser('''
-		,,,One
-		''').parse(), #[
+		assertEquals(#[
 			#["", "", "", "One"]
-		]);
+		], 
+		new CSVParser('''
+		,,,One
+		''').data);
 		
-		assertEquals(new CSVParser('''
-		One,,Two,
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "", "Two", ""]
-		]);
+		],
+		new CSVParser('''
+		One,,Two,
+		''').data);
 		
-		assertEquals(new CSVParser('''
-		One,,,Two
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "", "", "Two"]
-		]);
+		],
+		new CSVParser('''
+		One,,,Two
+		''').data);
 		
-		assertEquals(new CSVParser('''
+		assertEquals(#[
+			#["", "One", "Two", ""]
+		],
+		new CSVParser('''
 		,One,Two,
-		''').parse(), #[
-			#["", "One", "Two"]
-		]);
+		''').data);
 	}
 	
 	@Test
 	public def void testSeveralRowsOfSameLength() {
-		assertEquals(new CSVParser('''
-		One,Two,Three,Four
-		Five,Six,Seven,Eight
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "Two", "Three", "Four"],
 			#["Five", "Six", "Seven", "Eight"]
-		]);
+		],
+		new CSVParser('''
+		One,Two,Three,Four
+		Five,Six,Seven,Eight
+		''').data);
 
-		assertEquals(new CSVParser('''
+		assertEquals(#[
+			#["", "Two", "Three", ""],
+			#["", "Six", "Seven", ""]
+		],
+		new CSVParser('''
 		,Two,Three,
 		,Six,Seven,
-		''').parse(), #[
-			#["", "Two", "Three", ""],
-			#["", "Six", "Seven", "d"]
-		]);
+		''').data);
 
-		assertEquals(new CSVParser('''
-		One,Two,Three,Four
-		,,,
-		Five,Six,Seven,Eight
-		,,,
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "Two", "Three", "Four"],
 			#["", "", "", ""],
 			#["Five", "Six", "Seven", "Eight"],
 			#["", "", "", ""]
-		]);
+		],
+		new CSVParser('''
+		One,Two,Three,Four
+		,,,
+		Five,Six,Seven,Eight
+		,,,
+		''').data);
 	}
 	
 	@Test
 	public def void testSeveralRowsOfDifferingLengths() {
-		assertEquals(new CSVParser('''
-		One,Two,Three
-		Five,Six,Seven,Eight
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "Two", "Three"],
 			#["Five", "Six", "Seven", "Eight"]
-		]);
-
-		assertEquals(new CSVParser('''
-
+		],
+		new CSVParser('''
+		One,Two,Three
 		Five,Six,Seven,Eight
-		''').parse(), #[
+		''').data);
+
+		assertEquals(#[
 			#[""],
 			#["Five", "Six", "Seven", "Eight"]
-		]);
+		],
+		new CSVParser('''
 
-		assertEquals(new CSVParser('''
 		Five,Six,Seven,Eight
+		''').data);
 
-		''').parse(), #[
+		assertEquals(#[
 			#["Five", "Six", "Seven", "Eight"],
 			#[""]
-		]);
+		],
+		new CSVParser('''
+		Five,Six,Seven,Eight
 
-		assertEquals(new CSVParser('''
+		''').data);
+
+		assertEquals(#[
+			#["Five", "Six", "Seven", "Eight"],
+			#[""],
+			#["", "", ""]
+		],
+		new CSVParser('''
 		Five,Six,Seven,Eight
 
 		,,
-		''').parse(), #[
-			#["Five", "Six", "Seven", "Eight"],
-			#[""],
-			#["", ""]
-		]);
-		assertEquals(new CSVParser('''
-		One,Two,Three
+		''').data);
 		
-		,
-		
-		Five,Six,Seven,Eight
-		''').parse(), #[
+		assertEquals(#[
 			#["One", "Two", "Three"],
 			#[""],
 			#["", ""],
 			#[""],
 			#["Five", "Six", "Seven", "Eight"]
-		]);
+		],
+		new CSVParser('''
+		One,Two,Three
+		
+		,
+		
+		Five,Six,Seven,Eight
+		''').data);
 	}
 
 	
 	@Test
 	public def void testFieldsWithControlChars() {
-		assertEquals(new CSVParser('''
-		"One,Two, Three"
-		Five,Six,Seven,Eight
-		''').parse(), #[
+		assertEquals(#[
 			#["One,Two, Three"],
 			#["Five", "Six", "Seven", "Eight"]
-		]);
+		],
+		new CSVParser('''
+		"One,Two, Three"
+		Five,Six,Seven,Eight
+		''').data);
 
-		assertEquals(new CSVParser('''
+		assertEquals(#[
+			#["One,Two, \n\nThree"],
+			#["\n"],
+			#["Five", "Six", "Seven", "Eight"]
+		],
+		new CSVParser('''
 		"One,Two, 
 		
 		Three"
 		"
 		"
 		Five,Six,Seven,Eight
-		''').parse(), #[
-			#["One,Two, \n\nThree"],
-			#["\n"],
-			#["Five", "Six", "Seven", "Eight"]
-		]);
+		''').data);
 
-		assertEquals(new CSVParser('''
+		assertEquals(#[
+			#["\"This is a quote!\"", "This isn't", "This is not, either"],
+			#["Five", "Six", "Seven", "Eight"]
+		],
+		new CSVParser('''
 		"""This is a quote!""",This isn't,"This is not, either"
 		Five,Six,Seven,Eight
-		''').parse(), #[
-			#["\"This is a quote\"", "This isn't", "This is not, either"],
-			#["Five", "Six", "Seven", "Eight"]
-		]);
+		''').data);
 	}
 }
