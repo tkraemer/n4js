@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.generator.headless.tests
+package eu.numberfour.n4js.csv
 
 import java.io.IOException
 import java.nio.charset.Charset
@@ -17,56 +17,12 @@ import java.nio.file.Path
 import java.util.ArrayList
 import java.util.LinkedList
 import java.util.Objects
-import java.util.Collections
 
 /**
- * This is a simple CSV (comma-separated values) parser that, according to Torsten and Oliver, could have been 
- * written in three lines of Xtend, so I apologize in advance for this waste of characters ;-).
+ * This is a simple CSV (comma-separated values) parser that handles escaping of control characters in fields (commas and newlines)
+ * using double quotation marks and escaping double quotation marks as a sequence of two double quotation marks.
  */
 class CSVParser {
-	/**
-	 * A CSV row contains a list of fields. Each field is a string.
-	 */
-	public static class Row implements Iterable<String> {
-		private ArrayList<String> fields = newArrayList();
-
-		/**
-		 * Adds the given field to this row.
-		 * 
-		 * @param field the field to add
-		 */
-		private def void addField(String field) {
-			fields.add(Objects.requireNonNull(field));
-		}
-
-		/**
-		 * Returns the field value at the given index.
-		 * 
-		 * @param index the index of the field to return
-		 */
-		public def String get(int index) {
-			return fields.get(index);
-		}
-		
-		/**
-		 * Returns the length of this row.
-		 * 
-		 * @return the length of this row
-		 */
-		public def int length() {
-			return fields.size();
-		}
-
-		override iterator() {
-			return Collections.unmodifiableList(fields).iterator();
-		}
-
-		override public def String toString() {
-			return fields.toString() + " (" + fields.size() + " fields)";
-		}
-		
-	}
-
 	private static enum TokenType {
 		FIELD,
 		FIELD_SEPARATOR,
@@ -124,16 +80,21 @@ class CSVParser {
 			return readToken();
 		}
 
+		private static final char COMMA = ',';
+		private static final char NEWLINE = '\n';
+		private static final char CARRIAGE_RETURN = '\r';
+		private static final char DOUBLE_QUOTATION_MARK = '"';
+
 		private def Token readToken() {
 			while (curPos < data.length) {
-				val String c = data.substring(curPos, curPos + 1);
+				val char c = data.charAt(curPos);
 				curPos++;
-				if (c == ",")
+				if (c == COMMA)
 					return new Token(TokenType.FIELD_SEPARATOR, curPos - 1, 1);
-				if (c == "\n")
+				if (c == NEWLINE)
 					return new Token(TokenType.ROW_SEPARATOR, curPos - 1, 1);
 
-				if (c == "\r") {
+				if (c == CARRIAGE_RETURN) {
 					curPos++;
 				} else {
 					curPos--;
@@ -150,15 +111,11 @@ class CSVParser {
 
 			val int startPos = curPos;
 			while (!eof()) {
-				val String c = data.substring(curPos, curPos + 1);
-				switch (c) {
-					case "\r",
-					case "\n",
-					case ",":
-						return new Token(TokenType.FIELD, startPos, curPos - startPos, data.substring(startPos, curPos))
-					default:
-						curPos++
+				val char c = data.charAt(curPos);
+				if (c == NEWLINE || c == COMMA) {
+					return new Token(TokenType.FIELD, startPos, curPos - startPos, data.substring(startPos, curPos))
 				}
+				curPos++
 			}
 
 			return new Token(TokenType.EOF, curPos, 0);
@@ -171,10 +128,10 @@ class CSVParser {
 			var StringBuilder buf = new StringBuilder();
 
 			while (!eof()) {
-				val String c = data.substring(curPos, curPos + 1);
+				val char c = data.charAt(curPos);
 				curPos++;
-				if (c == "\"") {
-					if (eof() || data.substring(curPos, curPos + 1) != "\"")
+				if (c == DOUBLE_QUOTATION_MARK) {
+					if (eof() || data.charAt(curPos) != DOUBLE_QUOTATION_MARK)
 						return new Token(TokenType.FIELD, startPos, curPos - startPos - 2, buf.toString());
 					// next is also ", skip it
 					curPos++;
@@ -226,8 +183,8 @@ class CSVParser {
 	 * 
 	 * @return the parsed rows
 	 */
-	public def ArrayList<Row> parse() {
-		var ArrayList<Row> result = newArrayList();
+	public def ArrayList<ArrayList<String>> parse() {
+		var ArrayList<ArrayList<String>> result = newArrayList();
 		tokenizer.reset();
 
 		var Token token = tokenizer.nextToken();
@@ -240,15 +197,15 @@ class CSVParser {
 		return result;
 	}
 
-	private def Row parseRow() {
-		var Row result = new Row();
-		
+	private def ArrayList<String> parseRow() {
+		var ArrayList<String> result = new ArrayList<String>();
+
 		var Token token = null;
 		do {
-			result.addField(parseField());
+			result.add(parseField());
 			token = tokenizer.nextToken();
 		} while (token.type != TokenType.ROW_SEPARATOR && token.type != TokenType.EOF);
-		
+
 		return result;
 	}
 
@@ -256,11 +213,11 @@ class CSVParser {
 		var Token token = tokenizer.nextToken();
 		if (token.type == TokenType.FIELD)
 			return token.data;
-		
+
 		if (token.type == TokenType.ROW_SEPARATOR || token.type == TokenType.FIELD_SEPARATOR) {
 			tokenizer.pushToken(token);
 			return "";
-		}	
+		}
 
 		unexpectedToken(token);
 		return ""; // unreachable		
@@ -268,22 +225,5 @@ class CSVParser {
 
 	private def void unexpectedToken(Token token) {
 		throw new RuntimeException("Unexpected token type " + token.type + " at offset " + token.offset);
-	}
-
-	def static void main(String[] args) throws IOException {
-		var CSVParser parser = new CSVParser('''
-			"1,2,3","""","
-			
-			""
-			
-			",
-			First,Second,Third,Fourth
-			,,,
-			,Supplier,Class,
-			,
-			
-			,
-		''');
-		parser.parse();
 	}
 }
