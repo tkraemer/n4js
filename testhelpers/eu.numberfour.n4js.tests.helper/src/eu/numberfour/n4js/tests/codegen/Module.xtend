@@ -11,113 +11,17 @@ import java.util.Objects
  * Generates code for a module containing imports and classifiers.
  */
 class Module {
-	/**
-	 * A builder for instances of {@link Module}.
-	 */
-	static class Builder {
-		String name;
-		List<Classifier> classifiers = newLinkedList();
-		Map<String, List<String>> imports = newLinkedHashMap();
-
-		/**
-		 * Creates a new builder for a module with the given name.
-		 *
-		 * @param name the module name without extension
-		 */
-		public new(String name) {
-			this.name = name;
-		}
-
-		/**
-		 * Adds the classifier built by the given builder to the module built by this builder.
-		 *
-		 * @param classifierBuilder the builder for the classifier to be added
-		 *
-		 * @return this builder
-		 */
-		public def Builder addClassifier(Classifier.Builder classifierBuilder) {
-			return addClassifier(Objects.requireNonNull(classifierBuilder).build())
-		}
-
-		/**
-		 * Adds the given classifier to the module built by this builder.
-		 *
-		 * @param classifier the classifier to add
-		 *
-		 * @return this builder
-		 */
-		public def Builder addClassifier(Classifier classifier) {
-			classifiers.add(Objects.requireNonNull(classifier));
-			return this;
-		}
-
-		/**
-		 * Adds an import to the module built by this builder.
-		 *
-		 * @param importedType the name of the type to be imported
-		 * @param sourceModule the name of the module containing the imported type
-		 *
-		 * @return this builder
-		 */
-		public def Builder imports(String importedType, String sourceModule) {
-			var List<String> importedTypesForModule = imports.get(Objects.requireNonNull(sourceModule));
-			if (importedTypesForModule === null) {
-				importedTypesForModule = newLinkedList();
-				imports.put(sourceModule, importedTypesForModule);
-			}
-			importedTypesForModule.add(Objects.requireNonNull(importedType))
-			return this;
-		}
-
-		/**
-		 * Adds an import to the module built by this builder.
-		 *
-		 * @param importedType the name of the type to be imported
-		 * @param sourceModule the module containing the imported type
-		 *
-		 * @return this builder
-		 */
-		public def Builder imports(String importedType, Module sourceModule) {
-			return imports(importedType, sourceModule.name)
-		}
-
-		/**
-		 * Adds an import to the module built by this builder.
-		 *
-		 * @param importedType the classifier representing the type to be imported
-		 * @param sourceModule the module containing the imported type
-		 *
-		 * @return this builder
-		 */
-		public def Builder imports(Classifier importedType, Module sourceModule) {
-			return imports(importedType.name, sourceModule)
-		}
-
-		/**
-		 * Creates a new instance of {@link Module} with the previously configured parameters.
-		 *
-		 * @return the newly created module
-		 */
-		public def Module build() {
-			return new Module(name, classifiers, imports)
-		}
-	}
-
 	String name;
-	List<Classifier> classifiers;
+	List<Classifier<?>> classifiers;
 	Map<String, List<String>> imports;
 
 	/**
 	 * Creates a new instance with the given parameters.
 	 *
 	 * @param name the module name without extension
-	 * @param classifiers the classifiers defined in the module
-	 * @param imports the imports
 	 */
-	public new(String name, List<Classifier> classifiers, Map<String, List<String>> imports) {
+	public new(String name) {
 		this.name = Objects.requireNonNull(name);
-		this.classifiers = classifiers;
-		this.imports = imports
 	}
 
 	/**
@@ -127,6 +31,60 @@ class Module {
 	 */
 	public def String getName() {
 		return name
+	}
+
+
+	/**
+	 * Adds the given classifier to the module built by this builder.
+	 *
+	 * @param classifier the classifier to add
+	 */
+	public def Module addClassifier(Classifier<?> classifier) {
+		if (classifiers === null)
+			classifiers = newLinkedList();
+		classifiers.add(Objects.requireNonNull(classifier));
+		return this;
+	}
+
+	/**
+	 * Adds an import to the module built by this builder.
+	 *
+	 * @param importedType the name of the type to be imported
+	 * @param sourceModule the module containing the imported type
+	 */
+	public def Module addImport(String importedType, Module sourceModule) {
+		return addImport(importedType, sourceModule.name)
+	}
+
+	/**
+	 * Adds an import to the module built by this builder.
+	 *
+	 * @param importedType the classifier representing the type to be imported
+	 * @param sourceModule the module containing the imported type
+	 */
+	public def Module addImport(Classifier<?> importedType, Module sourceModule) {
+		return addImport(importedType.name, sourceModule)
+	}
+
+
+	/**
+	 * Adds an import to the module built by this builder.
+	 *
+	 * @param importedType the name of the type to be imported
+	 * @param sourceModule the name of the module containing the imported type
+	 */
+	public def Module addImport(String importedType, String sourceModule) {
+		if (imports === null)
+			imports = newHashMap();
+			
+		var List<String> importedTypesForModule = imports.get(Objects.requireNonNull(sourceModule));
+		if (importedTypesForModule === null) {
+			importedTypesForModule = newLinkedList();
+			imports.put(sourceModule, importedTypesForModule);
+		}
+		
+		importedTypesForModule.add(Objects.requireNonNull(importedType))
+		return this;
 	}
 
 	/**
