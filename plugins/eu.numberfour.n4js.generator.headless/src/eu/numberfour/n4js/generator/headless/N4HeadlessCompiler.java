@@ -316,17 +316,17 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Starting from the ProjectRoot all Available subdirectories denoting a N4js-Project should be compiled together.
+	 * Starting from the ProjectRoot all Available sub directories denoting a N4js-Project should be compiled together.
 	 *
 	 * @param pProjectRoots
 	 *            base folders containing project at level 1
 	 * @param issueAcceptor
 	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
 	 * @throws N4JSCompileException
-	 *             in case of errros.
+	 *             in case of errors.
 	 */
 	public void compileAllProjects(List<File> pProjectRoots, IssueAcceptor issueAcceptor) throws N4JSCompileException {
-		// make absolute, since downstream URI conversion doesn't work if relative dir only.
+		// make absolute, since downstream URI conversion doesn't work if relative directory only.
 		List<File> absProjectRoots = HeadlessHelper.toAbsoluteFileList(pProjectRoots);
 
 		// Collect all Projects in first Level
@@ -629,7 +629,7 @@ public class N4HeadlessCompiler {
 	private void configureFSA(IN4JSProject in4jsProject) {
 		File userdir = new File(".");
 		File prjdir = new File(in4jsProject.getLocation().toFileString());
-		// compute relative path, if project is not in a subdir of userdir an absolute
+		// compute relative path, if project is not in a sub directory of user directory an absolute
 		// path is computed.
 		java.net.URI relativize = userdir.toURI().relativize(prjdir.toURI());
 		final String relativePrjReference = relativize.getPath();
@@ -637,7 +637,7 @@ public class N4HeadlessCompiler {
 			// same directory, NTD
 			return;
 		}
-		// set different outputconfiguration.
+		// set different output configuration.
 		fsa.setOutputConfigurations(transformedOutputConfiguration(relativePrjReference));
 	}
 
@@ -661,7 +661,7 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Reset outputconfiguration to initial settings stored in {@link #outputs}.
+	 * Reset output configuration to initial settings stored in {@link #outputs}.
 	 *
 	 * @see #configureFSA(IN4JSProject) how to set to specific project.
 	 */
