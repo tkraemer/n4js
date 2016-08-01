@@ -4,7 +4,7 @@ interface R {
 	public abstract m() : string;
 }
 
-// XPECT errors --> "Class A must either be defined abstract or implement method R.m." at "A"
+// XPECT errors --> "Class A must either be declared abstract or implement method R.m." at "A"
 class A implements R {}
 
 // XPECT noerrors --> "B implements abstract method" at "B"

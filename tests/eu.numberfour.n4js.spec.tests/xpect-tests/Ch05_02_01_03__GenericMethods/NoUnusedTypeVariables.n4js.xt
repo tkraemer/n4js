@@ -200,8 +200,8 @@ interface J<S> extends I<S> {
 	// XPECT nowarnings -->
 	<T,X> m9(): void;
 
-	@Override
-    // XPECT nowarnings -->
+	// following warning required, because J#s2 is independent from I#s2 (no inheritance of static members in interfaces)
+    // XPECT warnings --> "Type variable S not used in parameters or return type." at "S"
     static <S> s2(): void {}
 }
 

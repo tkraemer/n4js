@@ -39,6 +39,7 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -54,6 +55,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -76,6 +78,9 @@ import eu.numberfour.n4js.n4mf.ui.internal.N4MFActivator;
 public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPage {
 
 	private final N4MFProjectInfo projectInfo;
+
+	// RegEx pattern for valid vendor IDs. See terminal ID rule in the N4MF grammar.
+	private static final Pattern VENDOR_ID_PATTERN = Pattern.compile("\\^?[A-Za-z\\_][A-Za-z_\\-\\.0-9]*");
 
 	/**
 	 * Creates a new wizard page to set up and create a new N4 project with the given project info model.
@@ -106,6 +111,8 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 
 		final DataBindingContext dbc = new DataBindingContext();
 		control.addDisposeListener(e -> dbc.dispose());
+
+		createVendorIdControls(dbc, control);
 
 		final ComboViewer projectType = new ComboViewer(control, READ_ONLY);
 		projectType.setLabelProvider(new ProjectTypeLabelProvider());
@@ -155,6 +162,28 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		dbc.updateTargets();
 
 		setControl(control);
+	}
+
+	private void createVendorIdControls(DataBindingContext dbc, Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NULL);
+		composite.setLayout(GridLayoutFactory.swtDefaults().numColumns(2).create());
+		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		final Label vendorIdLabel = new Label(composite, SWT.NONE);
+		vendorIdLabel.setText("Vendor id:");
+
+		final Text vendorIdText = new Text(composite, SWT.BORDER);
+		vendorIdText.setLayoutData(fillDefaults().align(FILL, FILL).grab(true, true).create());
+
+		projectInfo.addPropertyChangeListener(event -> {
+			if (event.getPropertyName().equals(N4MFProjectInfo.VENDOR_ID_PROP_NAME)) {
+				setPageComplete(validatePage());
+			}
+		});
+
+		dbc.bindValue(WidgetProperties.text(Modify).observe(vendorIdText),
+				BeanProperties.value(N4MFProjectInfo.class, N4MFProjectInfo.VENDOR_ID_PROP_NAME).observe(projectInfo));
+
 	}
 
 	private Composite initDefaultOptionsUI(DataBindingContext dbc, Composite parent) {
@@ -244,6 +273,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 
 			String errorMsg = null;
 			final String projectName = getProjectName();
+			final String vendorId = projectInfo.getVendorId();
 
 			if (LIBRARY.equals(projectInfo.getProjectType())) {
 
@@ -267,6 +297,13 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 								+ "from the Latin alphabet or with the underscore character.";
 					}
 				}
+			}
+
+			if (!VENDOR_ID_PATTERN.matcher(vendorId).matches()) {
+				errorMsg = "Invalid vendor id.";
+			}
+			if (isNullOrEmpty(vendorId)) {
+				errorMsg = "Vendor id must not be empty.";
 			}
 
 			if (isNullOrEmpty(projectName)) {

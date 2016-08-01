@@ -44,7 +44,7 @@ interface I {
 //interface are abstract by default, they don't have to implement abstract methods (responsibility is passed on consumer)
 interface R extends I {}
 
-// XPECT errors --> "Class F must either be defined abstract or implement method I.bar." at "F"
+// XPECT errors --> "Class F must either be declared abstract or implement method I.bar." at "F"
 class F implements R {
 }
 
