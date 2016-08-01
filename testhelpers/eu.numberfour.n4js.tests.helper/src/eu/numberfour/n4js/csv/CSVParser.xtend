@@ -14,6 +14,7 @@ import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 import java.util.ArrayList
 import java.util.LinkedList
 import java.util.Objects
@@ -168,6 +169,18 @@ class CSVParser {
 	 */
 	public new(String data) {
 		this.tokenizer = new CSVTokenizer(data);
+	}
+
+	/**
+	 * Creates a new parser that parses the file at the given location with the given encoding.
+	 * 
+	 * @param path the path to the file to be parsed
+	 * @param encoding the encoding of the file to be parsed
+	 * 
+	 * @throws IOException if the file cannot be found or cannot be opened
+	 */
+	public new(String path, Charset encoding) throws IOException {
+		this(Paths.get(path), encoding);
 	}
 
 	/**
