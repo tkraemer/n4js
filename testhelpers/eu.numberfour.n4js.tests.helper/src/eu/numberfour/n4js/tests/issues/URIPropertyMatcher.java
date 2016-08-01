@@ -23,7 +23,7 @@ import org.eclipse.xtext.validation.Issue;
  *
  * @see URI
  */
-public class URIPropertyMatcher implements IssuePropertyMatcher {
+public class URIPropertyMatcher extends IssuePropertyMatcherBase {
 
 	/**
 	 * The matching mode.
@@ -50,6 +50,8 @@ public class URIPropertyMatcher implements IssuePropertyMatcher {
 	/**
 	 * Creates a new URI property matcher.
 	 *
+	 * @param propertyName
+	 *            the name of the property
 	 * @param mode
 	 *            the matching mode
 	 * @param expectedPattern
@@ -57,7 +59,9 @@ public class URIPropertyMatcher implements IssuePropertyMatcher {
 	 * @param getActualValue
 	 *            a function to obtain the actual value of an URI property from an instance of {@link Issue}
 	 */
-	protected URIPropertyMatcher(Mode mode, URI expectedPattern, Function<Issue, URI> getActualValue) {
+	protected URIPropertyMatcher(String propertyName, Mode mode, URI expectedPattern,
+			Function<Issue, URI> getActualValue) {
+		super(propertyName);
 		this.mode = mode;
 		this.expectedPattern = Objects.requireNonNull(expectedPattern);
 		this.getActualValue = Objects.requireNonNull(getActualValue);
@@ -82,7 +86,41 @@ public class URIPropertyMatcher implements IssuePropertyMatcher {
 			return actualSegments.equals(expectedSegments);
 		}
 
-		throw new RuntimeException("Unhandled enum value: " + mode);
+		throw new IllegalStateException("Unknown URI property matching mode: " + mode);
 	}
 
+	@Override
+	protected String explainMismatch(Issue issue) {
+		URI actualValue = getActualValue.apply(issue);
+		if (actualValue == null)
+			return "Actual value is null";
+
+		switch (mode) {
+		case StartsWith:
+			return "'" + expectedPattern + "' is not a prefix of value '" + actualValue + "'";
+		case EndsWith:
+			return "'" + expectedPattern + "' is not a suffix of value '" + actualValue + "'";
+		case Equals:
+			return "Value '" + actualValue + "' is not equal to expected value'"
+					+ expectedPattern + "'";
+		}
+
+		throw new IllegalStateException("Unknown URI property matching mode: " + mode);
+	}
+
+	@Override
+	public String getDescription() {
+		switch (mode) {
+		case StartsWith:
+			return "'" + expectedPattern + "' is a prefix of property '" + getPropertyName() + "'";
+		case EndsWith:
+			return "'" + expectedPattern + "' is a suffix of property '" + getPropertyName() + "'";
+		case Equals:
+			return "Property '" + getPropertyName() + "' is equal to expected value'"
+					+ expectedPattern + "'";
+		}
+
+		// This should never happen lest we extended the enum without adding a case above!
+		throw new IllegalStateException("Unknown URI property matching mode: " + mode);
+	}
 }

@@ -24,4 +24,21 @@ public interface IssuePropertyMatcher {
 	 * @return <code>true</code> if this property matcher matches the given issue and <code>false</code> otherwise
 	 */
 	public boolean matches(Issue issue);
+
+	/**
+	 * Returns a message describing why this matcher failed, including the expected and actual values.
+	 *
+	 * @param issue
+	 *            the issue to match against
+	 *
+	 * @return a descriptive message
+	 */
+	public String getMessage(Issue issue);
+
+	/**
+	 * Returns a message describing what this matcher does.
+	 *
+	 * @return a descriptive message
+	 */
+	public String getDescription();
 }

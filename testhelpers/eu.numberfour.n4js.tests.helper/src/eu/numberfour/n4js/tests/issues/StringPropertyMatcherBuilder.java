@@ -27,11 +27,14 @@ public class StringPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 	 *
 	 * @param matcher
 	 *            the issue matcher to add the newly created string property matchers to
+	 * @param propertyName
+	 *            the name of the property
 	 * @param getActualValue
 	 *            a function to obtain the actual value of a string property of an instance of {@link Issue}
 	 */
-	public StringPropertyMatcherBuilder(IssueMatcher matcher, Function<Issue, String> getActualValue) {
-		super(matcher);
+	public StringPropertyMatcherBuilder(IssueMatcher matcher, String propertyName,
+			Function<Issue, String> getActualValue) {
+		super(matcher, propertyName);
 		this.getActualValue = Objects.requireNonNull(getActualValue);
 	}
 
@@ -73,6 +76,7 @@ public class StringPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 
 	private IssueMatcher addPropertyMatcher(StringPropertyMatcher.Mode mode, boolean ignoreCase,
 			String expectedPattern) {
-		return addPropertyMatcher(new StringPropertyMatcher(mode, ignoreCase, expectedPattern, getActualValue));
+		return addPropertyMatcher(
+				new StringPropertyMatcher(getPropertyName(), mode, ignoreCase, expectedPattern, getActualValue));
 	}
 }

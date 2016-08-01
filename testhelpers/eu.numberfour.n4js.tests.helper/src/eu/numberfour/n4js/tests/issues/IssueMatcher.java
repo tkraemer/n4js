@@ -20,9 +20,14 @@ import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.Issue;
 
+import com.google.common.base.Joiner;
+
 /**
  * Matches expectations against an instance of {@link Issue}. The expectations are specified using a simple builder
  * syntax.
+ */
+/**
+ *
  */
 public class IssueMatcher {
 	private final List<IssuePropertyMatcher> propertyMatchers = new LinkedList<>();
@@ -38,7 +43,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher severity(Severity expectedSeverity) {
-		return addEqualsMatcher(expectedSeverity, (Issue issue) -> issue.getSeverity());
+		return addEqualsMatcher("severity", expectedSeverity, (Issue issue) -> issue.getSeverity());
 	}
 
 	/**
@@ -85,7 +90,7 @@ public class IssueMatcher {
 	 * @return an instance of {@link StringPropertyMatcher} that can be used to specify the actual expectation
 	 */
 	public StringPropertyMatcherBuilder message() {
-		return new StringPropertyMatcherBuilder(this, (Issue issue) -> issue.getMessage());
+		return new StringPropertyMatcherBuilder(this, "message", (Issue issue) -> issue.getMessage());
 	}
 
 	/**
@@ -109,7 +114,7 @@ public class IssueMatcher {
 	 * @return an instance of {@link StringPropertyMatcher} that can be used to specify the actual expectation
 	 */
 	public StringPropertyMatcherBuilder code() {
-		return new StringPropertyMatcherBuilder(this, (Issue issue) -> issue.getCode());
+		return new StringPropertyMatcherBuilder(this, "code", (Issue issue) -> issue.getCode());
 	}
 
 	/**
@@ -136,7 +141,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher type(CheckType expectedType) {
-		return addEqualsMatcher(expectedType, (Issue issue) -> issue.getType());
+		return addEqualsMatcher("type", expectedType, (Issue issue) -> issue.getType());
 	}
 
 	/**
@@ -147,7 +152,7 @@ public class IssueMatcher {
 	 * @return an instance of {@link URIPropertyMatcher} that can be used to specify the actual expectation
 	 */
 	public URIPropertyMatcherBuilder uri() {
-		return new URIPropertyMatcherBuilder(this, (Issue issue) -> issue.getUriToProblem());
+		return new URIPropertyMatcherBuilder(this, "URI", (Issue issue) -> issue.getUriToProblem());
 	}
 
 	/**
@@ -160,7 +165,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher lineNumber(int expectedLineNumber) {
-		return addEqualsMatcher(expectedLineNumber, (Issue issue) -> issue.getLineNumber());
+		return addEqualsMatcher("line number", expectedLineNumber, (Issue issue) -> issue.getLineNumber());
 	}
 
 	/**
@@ -173,7 +178,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher column(int expectedColumn) {
-		return addEqualsMatcher(expectedColumn, (Issue issue) -> issue.getColumn());
+		return addEqualsMatcher("column", expectedColumn, (Issue issue) -> issue.getColumn());
 	}
 
 	/**
@@ -240,7 +245,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher offset(int expectedOffset) {
-		return addEqualsMatcher(expectedOffset, (Issue issue) -> issue.getOffset());
+		return addEqualsMatcher("offset", expectedOffset, (Issue issue) -> issue.getOffset());
 	}
 
 	/**
@@ -253,7 +258,7 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher length(int expectedLength) {
-		return addEqualsMatcher(expectedLength, (Issue issue) -> issue.getLength());
+		return addEqualsMatcher("length", expectedLength, (Issue issue) -> issue.getLength());
 	}
 
 	/**
@@ -266,11 +271,11 @@ public class IssueMatcher {
 	 * @return this issue matcher
 	 */
 	public IssueMatcher syntaxError(boolean syntaxError) {
-		return addEqualsMatcher(syntaxError, (Issue issue) -> issue.isSyntaxError());
+		return addEqualsMatcher("syntax error", syntaxError, (Issue issue) -> issue.isSyntaxError());
 	}
 
-	private <T> IssueMatcher addEqualsMatcher(T expectedValue, Function<Issue, T> getActualValue) {
-		return addPropertyMatcher(new IssuePropertyEqualsMatcher<>(expectedValue, getActualValue));
+	private <T> IssueMatcher addEqualsMatcher(String propertyName, T expectedValue, Function<Issue, T> getActualValue) {
+		return addPropertyMatcher(new IssuePropertyEqualsMatcher<>(propertyName, expectedValue, getActualValue));
 	}
 
 	IssueMatcher addPropertyMatcher(IssuePropertyMatcher propertyMatcher) {
@@ -293,5 +298,34 @@ public class IssueMatcher {
 				return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Returns a list of explanations for each mismatched property matcher for the given issue.
+	 *
+	 * @param issue
+	 *            the issue to match against
+	 * @return a list of explanations
+	 */
+	public List<String> explainMismatch(Issue issue) {
+		Objects.requireNonNull(issue);
+
+		List<String> result = new LinkedList<>();
+		for (IssuePropertyMatcher propertyMatcher : propertyMatchers) {
+			if (!propertyMatcher.matches(issue))
+				result.add(propertyMatcher.getMessage(issue));
+		}
+		return result;
+	}
+
+	/**
+	 * Returns a description of all property matchers in this issue matcher.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
+		return Joiner.on(", ")
+				.join(propertyMatchers.stream().map((IssuePropertyMatcher matcher) -> matcher.getDescription())
+						.iterator());
 	}
 }

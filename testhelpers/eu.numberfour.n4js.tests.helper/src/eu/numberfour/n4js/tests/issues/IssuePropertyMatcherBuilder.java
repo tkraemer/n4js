@@ -17,14 +17,18 @@ import java.util.Objects;
  */
 public class IssuePropertyMatcherBuilder {
 	private final IssueMatcher issueMatcher;
+	private final String propertyName;
 
 	/**
 	 * Creates a new property matcher builder that adds the created property matchers to the given issue matcher.
 	 *
 	 * @param issueMatcher
 	 *            the issue matcher to add the created property matchers to
+	 * @param propertyName
+	 *            the name of the property
 	 */
-	protected IssuePropertyMatcherBuilder(IssueMatcher issueMatcher) {
+	protected IssuePropertyMatcherBuilder(IssueMatcher issueMatcher, String propertyName) {
+		this.propertyName = Objects.requireNonNull(propertyName);
 		this.issueMatcher = Objects.requireNonNull(issueMatcher);
 	}
 
@@ -38,5 +42,14 @@ public class IssuePropertyMatcherBuilder {
 	protected IssueMatcher addPropertyMatcher(IssuePropertyMatcher propertyMatcher) {
 		issueMatcher.addPropertyMatcher(Objects.requireNonNull(propertyMatcher));
 		return issueMatcher;
+	}
+
+	/**
+	 * Return the name of the property.
+	 *
+	 * @return the name of the property
+	 */
+	protected String getPropertyName() {
+		return propertyName;
 	}
 }

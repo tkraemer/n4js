@@ -13,6 +13,7 @@ package eu.numberfour.n4js.tests.issues;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.xtext.validation.Issue;
 
@@ -38,14 +39,19 @@ public class IssuesMatcher {
 	 *
 	 * @param issues
 	 *            the issues to match the expectations against
+	 * @param messages
+	 *            if this parameter is not <code>null</code>, this method will add an explanatory message for each
+	 *            mismatch
 	 * @return <code>true</code> if and only if every expectation was matched against an issue and every issue in the
 	 *         given collection was matched by an expectation
 	 */
-	public boolean matchesExactly(Collection<Issue> issues) {
+	public boolean matchesExactly(Collection<Issue> issues, List<String> messages) {
 		Collection<Issue> issueCopy = new LinkedList<>(issues);
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
-		performMatching(issueCopy, matcherCopy);
+		performMatching(issueCopy, matcherCopy, messages);
+		explainUnmatchedIssues(issueCopy, messages);
+		explainUnmatchedExpectations(matcherCopy, messages);
 		return issueCopy.isEmpty() && matcherCopy.isEmpty();
 	}
 
@@ -54,13 +60,17 @@ public class IssuesMatcher {
 	 *
 	 * @param issues
 	 *            the issues to match the expectations against
+	 * @param messages
+	 *            if this parameter is not <code>null</code>, this method will add an explanatory message for each
+	 *            mismatch
 	 * @return <code>true</code> if and only if every expectation was matched against an issue
 	 */
-	public boolean matchesAllExpectations(Collection<Issue> issues) {
+	public boolean matchesAllExpectations(Collection<Issue> issues, List<String> messages) {
 		Collection<Issue> issueCopy = new LinkedList<>(issues);
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
-		performMatching(issueCopy, matcherCopy);
+		performMatching(issueCopy, matcherCopy, messages);
+		explainUnmatchedExpectations(matcherCopy, messages);
 		return matcherCopy.isEmpty();
 	}
 
@@ -69,17 +79,37 @@ public class IssuesMatcher {
 	 *
 	 * @param issues
 	 *            the issues to match the expectations against
+	 * @param messages
+	 *            if this parameter is not <code>null</code>, this method will add an explanatory message for each
+	 *            mismatch
 	 * @return <code>true</code> if and only if every issue in the given collection was matched by an expectation
 	 */
-	public boolean matchesAllIssues(Collection<Issue> issues) {
+	public boolean matchesAllIssues(Collection<Issue> issues, List<String> messages) {
 		Collection<Issue> issueCopy = new LinkedList<>(issues);
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
-		performMatching(issueCopy, matcherCopy);
+		performMatching(issueCopy, matcherCopy, messages);
+		explainUnmatchedIssues(issueCopy, messages);
 		return issueCopy.isEmpty();
 	}
 
-	private void performMatching(Collection<Issue> issues, Collection<IssueMatcher> matchers) {
+	private void explainUnmatchedIssues(Collection<Issue> unmatchedIssues, List<String> messages) {
+		if (messages != null) {
+			for (Issue issue : unmatchedIssues) {
+				messages.add("Unexpected issue: " + issue);
+			}
+		}
+	}
+
+	private void explainUnmatchedExpectations(Collection<IssueMatcher> unmatchedMatchers, List<String> messages) {
+		if (messages != null) {
+			for (IssueMatcher matcher : unmatchedMatchers) {
+				messages.add("Unmatched expectation: " + matcher.getDescription());
+			}
+		}
+	}
+
+	private void performMatching(Collection<Issue> issues, Collection<IssueMatcher> matchers, List<String> messages) {
 		Iterator<Issue> issueIt = issues.iterator();
 		while (issueIt.hasNext() && !matchers.isEmpty()) {
 			Issue issue = issueIt.next();
@@ -91,6 +121,8 @@ public class IssuesMatcher {
 					issueIt.remove();
 					matcherIt.remove();
 					break;
+				} else if (messages != null) {
+					messages.addAll(matcher.explainMismatch(issue));
 				}
 			}
 		}

@@ -28,11 +28,14 @@ public class URIPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 	 *
 	 * @param issueMatcher
 	 *            the issue matcher to add the newly created property matchers to
+	 * @param propertyName
+	 *            the name of the property
 	 * @param getActualValue
 	 *            the function to obtain the actual value of a property from an issue
 	 */
-	public URIPropertyMatcherBuilder(IssueMatcher issueMatcher, Function<Issue, URI> getActualValue) {
-		super(issueMatcher);
+	public URIPropertyMatcherBuilder(IssueMatcher issueMatcher, String propertyName,
+			Function<Issue, URI> getActualValue) {
+		super(issueMatcher, propertyName);
 		this.getActualValue = Objects.requireNonNull(getActualValue);
 	}
 
@@ -70,6 +73,6 @@ public class URIPropertyMatcherBuilder extends IssuePropertyMatcherBuilder {
 	}
 
 	private IssueMatcher addPropertyMatcher(URIPropertyMatcher.Mode mode, URI expectedPattern) {
-		return addPropertyMatcher(new URIPropertyMatcher(mode, expectedPattern, getActualValue));
+		return addPropertyMatcher(new URIPropertyMatcher(getPropertyName(), mode, expectedPattern, getActualValue));
 	}
 }
