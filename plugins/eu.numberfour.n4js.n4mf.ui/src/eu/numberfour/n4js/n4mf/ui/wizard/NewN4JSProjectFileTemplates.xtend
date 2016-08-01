@@ -65,13 +65,12 @@ class NewN4JSProjectFileTemplates {
 	'''
 
 	private static def simpleManifestContents(String projectId, String projectTypeForManifest, List<String> sources,
-		List<String> externals, List<String> tests, String outputFolder
+		List<String> externals, List<String> tests, String outputFolder, String vendorId
 	)	'''
 		ProjectId: «projectId»
 		ProjectType: «projectTypeForManifest»
-		ProjectVersion: 0.0.1-SNAPSHOT
-		VendorId: eu.numberfour
-		VendorName: "NumberFour AG"
+		ProjectVersion: 0.0.1
+		VendorId: «vendorId»
 		//output folder (e.g. compiled files, etc.)
 		Output: "«outputFolder»"
 		//define project source folders
@@ -125,7 +124,7 @@ class NewN4JSProjectFileTemplates {
 	static def getManifestContents(N4MFProjectInfo projectInfo)
 		'''
 		«simpleManifestContents(projectInfo.projectName, projectInfo.projectTypeForManifest, projectInfo.sourceFolders,
-								projectInfo.externalSourceFolders, projectInfo.testSourceFolders, projectInfo.outputFolder)»
+								projectInfo.externalSourceFolders, projectInfo.testSourceFolders, projectInfo.outputFolder, projectInfo.vendorId)»
 		«IF ProjectType.LIBRARY.equals(projectInfo.projectType)»
 		«	libraryManifestFragment(projectInfo.implementationId, projectInfo.implementedProjects)»
 		«ENDIF»

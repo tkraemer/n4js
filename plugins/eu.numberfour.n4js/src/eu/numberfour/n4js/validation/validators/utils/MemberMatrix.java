@@ -15,19 +15,22 @@ import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
 import static eu.numberfour.n4js.ts.types.MemberType.METHOD;
 import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterables;
 
-import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.util.MemberList;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.UtilN4;
+import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 
 /**
  * Helper class for {@link N4JSMemberRedefinitionValidator} storing all members with same name and static modifier in a
@@ -45,25 +48,42 @@ import eu.numberfour.n4js.utils.UtilN4;
  * FIELD:    |              |              |
  * METHOD:   |C             |              |I,J
  * </pre>
+ *
+ * In addition, this class holds some helper info:
+ * <ul>
+ * <li>members can be marked as consumed, see {@link #markConsumed(MemberList)}.
+ * <li>a list of "non-implemented" members is maintained, i.e. static members from interfaces which are ignored in the
+ * matrix, because there is no inheritance for static members of interfaces. See {@link #add(int, TMember)} for details.
+ * </ul>
  */
 public class MemberMatrix {
 
 	// columns (index 0)
 	final static String[] COLS = { "owned", "inherited", "implemented" };
+
 	final static int OWNED = 0;
 	final static int INHERITED = 1;
 	final static int IMPLEMENTED = 2;
 
 	final static int CONSUMED = 3;
 
+	/** Number of source kinds, *not* including {@link #CONSUMED}. */
+	final static int SOURCE_COUNT_WITHOUT_CONSUMED = 3; // number of columns (not considering CONSUMED)
+	final static int MEMBER_TYPE_COUNT = MemberType.values().length; // number of rows
+
 	/**
-	 * List of actually consumed members, added in via {@link #addConsumed(MemberList)}.
+	 * Set of actually consumed members, added in via {@link #markConsumed(MemberList)}.
 	 */
-	public final MemberList<TMember> consumed;
+	private final Set<TMember> consumed;
 
 	// rows (index 1) according to MemberType values
 
 	private final MemberList<TMember>[][] memberMatrix;
+
+	/**
+	 * List of members from interfaces that are not implemented, because they are static.
+	 */
+	private final MemberList<TMember> nonImplemented;
 
 	/**
 	 * Iterator which holds information about the source (owned, consumed, inherited, implemented) of the last returned
@@ -152,7 +172,7 @@ public class MemberMatrix {
 					source = CONSUMED;
 					return consumed.iterator();
 				} // else
-				//$FALL-THROUGH$
+					// $FALL-THROUGH$
 			case CONSUMED: {
 				source = INHERITED;
 				return members(source).iterator();
@@ -161,6 +181,8 @@ public class MemberMatrix {
 				source = IMPLEMENTED;
 				return members(source).iterator();
 			}
+			case IMPLEMENTED:
+				// $FALL-THROUGH$
 			default:
 				source = -1;
 				return null;
@@ -235,16 +257,24 @@ public class MemberMatrix {
 	 */
 	@SuppressWarnings("unchecked")
 	public MemberMatrix() {
-		memberMatrix = new MemberList[3][4];
-		consumed = new MemberList<>(2);
+		memberMatrix = new MemberList[SOURCE_COUNT_WITHOUT_CONSUMED][MEMBER_TYPE_COUNT];
+		consumed = new HashSet<>(2);
+		nonImplemented = new MemberList<>(2);
 	}
 
 	/**
 	 * @see N4JSMemberRedefinitionValidator#constraints_61_Consumption(MemberMatrix)
 	 */
 	@SuppressWarnings("javadoc")
-	public void addConsumed(MemberList<TMember> consumedMembers) {
+	public void markConsumed(MemberList<TMember> consumedMembers) {
 		consumed.addAll(consumedMembers);
+	}
+
+	/**
+	 * Tells if the given member is one of the "consumed members" added via method {@link #markConsumed(MemberList)}.
+	 */
+	public boolean isConsumed(TMember member) {
+		return consumed.contains(member);
 	}
 
 	/**
@@ -329,6 +359,14 @@ public class MemberMatrix {
 	}
 
 	/**
+	 * Returns the "non-implemented" members, i.e. static members from interfaces which are ignored in the matrix,
+	 * because there is no inheritance for static members of interfaces. See {@link #add(int, TMember)} for details.
+	 */
+	public Iterable<TMember> nonImplemented() {
+		return nonImplemented;
+	}
+
+	/**
 	 * Returns true if the matrix contains owned members.
 	 */
 	public boolean hasOwned() {
@@ -349,8 +387,17 @@ public class MemberMatrix {
 		return hasSource(IMPLEMENTED);
 	}
 
+	/**
+	 * Returns true iff there were "non-implemented" members, i.e. static members from interfaces which are ignored in
+	 * the matrix, because there is no inheritance for static members of interfaces. See {@link #add(int, TMember)} for
+	 * details.
+	 */
+	public boolean hasNonImplemented() {
+		return !nonImplemented.isEmpty();
+	}
+
 	private boolean hasSource(int source) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < MEMBER_TYPE_COUNT; i++) {
 			if (memberMatrix[source][i] != null) {
 				return true;
 			}
@@ -361,7 +408,7 @@ public class MemberMatrix {
 	/**
 	 * Returns true if the given member stemming from the super class (not checked here) is actually inherited and not
 	 * overridden by owned or consumed members. In case of meta-type problems, the inherited member is not actually
-	 * inherited. Not that consumed members have not to be calculated upfront.
+	 * inherited. Note that consumed members have not to be calculated up-front.
 	 */
 	boolean isActuallyInherited(TMember m) {
 		if (hasOwned()) {
@@ -408,6 +455,13 @@ public class MemberMatrix {
 	 * Adds a member from the given source.
 	 */
 	public void add(int source, TMember member) {
+		if (source == IMPLEMENTED && member.isStatic() && member.getContainingType() instanceof TInterface) {
+			// no inheritance of static methods in interfaces
+			// -> ignore this member in the matrix but keep it in helper field 'nonImplemented' to allow client code to
+			// retrieve these members for showing better error messages, etc.
+			nonImplemented.add(member);
+			return;
+		}
 		int row = member.getMemberType().getValue();
 		MemberList<TMember> list = memberMatrix[source][row];
 		if (list == null) {
@@ -432,7 +486,7 @@ public class MemberMatrix {
 		final int tab = 15;
 		StringBuilder row = new StringBuilder();
 		tab(row, 10);
-		for (int source = 0; source < 3; source++) {
+		for (int source = 0; source < SOURCE_COUNT_WITHOUT_CONSUMED; source++) {
 			row.append(COLS[source]);
 			if (source < 2) {
 				tab(row, 10 + (1 + source) * tab);
@@ -444,7 +498,7 @@ public class MemberMatrix {
 			row.setLength(0);
 			row.append(type.getName()).append(": ");
 			tab(row, 10);
-			for (int source = 0; source < 3; source++) {
+			for (int source = 0; source < SOURCE_COUNT_WITHOUT_CONSUMED; source++) {
 				row.append(members(source, type).stream().map(m -> m.getContainingType().getName())
 						.collect(Collectors.joining(",")));
 				if (source < 2) {
@@ -458,8 +512,8 @@ public class MemberMatrix {
 			strb.append("consumed: ");
 			strb.append(
 					consumed.stream()
-					.map(m -> m != null ? m.getMemberType() + " " + m.getContainingType().getName() + "."
-							+ m.getName() : "null")
+							.map(m -> m != null ? m.getMemberType() + " " + m.getContainingType().getName() + "."
+									+ m.getName() : "null")
 							.collect(Collectors.joining(",")));
 		}
 
@@ -480,7 +534,7 @@ public class MemberMatrix {
 		}
 		StringBuilder strb = new StringBuilder("[");
 		for (MemberType type : MemberType.values()) {
-			for (int source = 0; source < 3; source++) {
+			for (int source = 0; source < SOURCE_COUNT_WITHOUT_CONSUMED; source++) {
 				strb.append(members(source, type).stream()
 						.map(m -> m.getMemberType().getName().charAt(0) + " " + m.getContainingType().getName())
 						.collect(Collectors.joining(",")));
@@ -490,8 +544,8 @@ public class MemberMatrix {
 			strb.append(", consumed: ");
 			strb.append(
 					consumed.stream()
-					.map(m -> m != null ? m.getMemberType().getName().charAt(0) + " "
-							+ m.getContainingType().getName() : "null")
+							.map(m -> m != null ? m.getMemberType().getName().charAt(0) + " "
+									+ m.getContainingType().getName() : "null")
 							.collect(Collectors.joining(",")));
 		}
 		strb.append("]");

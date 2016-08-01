@@ -68,11 +68,11 @@
 	@Override public set missing_pureSet(i : IA) ;
 	
 	// Static cases below:
-	@Override	public static fieldStatic : IA;
-	@Override	public static missing_fieldStatic : IA;
+	public static fieldStatic : IA;
+	public static missing_fieldStatic : IA;
 	
-	@Override	public static someStaticProvidesDefaultIA()  : IA; 
-	@Override	public static missing_someStaticProvidesDefaultIA()  : IA; 
+	public static someStaticProvidesDefaultIA()  : IA; 
+	public static missing_someStaticProvidesDefaultIA()  : IA; 
 }
 
 
