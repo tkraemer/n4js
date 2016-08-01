@@ -37,6 +37,7 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 
 	private static final String DIALOG_SETTINGS_SECTION_KEY = "eu.numberfour.n4js.n4mf.ui.wizard.SimpleN4MFNewProjectWizard";
 	private static final String CREATE_GREETER_SETTINGS_KEY = "createGreeterFile";
+	private static final String VENDOR_ID_SETTINGS_KEY = "vendorId";
 
 	private final N4MFProjectInfo projectInfo;
 
@@ -78,6 +79,9 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 		if (null != dialogSettings.get(CREATE_GREETER_SETTINGS_KEY)) {
 			projectInfo.setCreateGreeterFile(dialogSettings.getBoolean(CREATE_GREETER_SETTINGS_KEY));
 		}
+		if (null != dialogSettings.get(VENDOR_ID_SETTINGS_KEY)) {
+			projectInfo.setVendorId(dialogSettings.get(VENDOR_ID_SETTINGS_KEY));
+		}
 	}
 
 	@Override
@@ -89,8 +93,9 @@ public class SimpleN4MFNewProjectWizard extends org.eclipse.xtext.ui.wizard.Xtex
 
 	@Override
 	public boolean performFinish() {
-		// Save the value for the create greeter file checkbox
+		// Save the value for the create greeter file checkbox and the vendor id
 		this.getDialogSettings().put(CREATE_GREETER_SETTINGS_KEY, projectInfo.getCreateGreeterFile());
+		this.getDialogSettings().put(VENDOR_ID_SETTINGS_KEY, projectInfo.getVendorId());
 		return super.performFinish();
 	}
 

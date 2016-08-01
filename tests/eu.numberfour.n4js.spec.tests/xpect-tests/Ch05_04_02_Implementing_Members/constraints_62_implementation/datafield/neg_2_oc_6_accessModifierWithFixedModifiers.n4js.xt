@@ -10,10 +10,11 @@ interface I {
 
 // XPECT noerrors --> "s is implemented by accessor pair"
 class A implements I {
-	// XPECT errors --> "The setter A.s cannot override private field I.s." at "s"
+
+	// since private is module-relative (not type-relative), it can be overridden as usual
+	// XPECT noerrors -->
 	@Override private set s(p : string) { console.log("A.set s")}
-	
-	// XPECT errors --> "The getter A.s cannot override private field I.s." at "s"
+	// XPECT noerrors -->
 	@Override private get s() : string { console.log("A.get s"); return "" }
 }
 

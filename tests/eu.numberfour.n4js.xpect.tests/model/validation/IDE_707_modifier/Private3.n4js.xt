@@ -44,9 +44,8 @@ class B extends A {
 
 	}
 	
-	@Override
-	// XPECT errors --> "The method B.a cannot override private method A.a." at "a"
-	private a() {
+	// XPECT noerrors --> "private methods can be overridden because private is module-relative, not type-relative"
+	@Override private a() {
 
 	}
 }
