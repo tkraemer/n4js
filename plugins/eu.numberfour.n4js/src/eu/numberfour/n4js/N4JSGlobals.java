@@ -16,6 +16,9 @@ import static java.util.Collections.unmodifiableCollection;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.EReference;
+
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
@@ -54,6 +57,13 @@ public final class N4JSGlobals {
 			N4JS_FILE_EXTENSION,
 			N4JSD_FILE_EXTENSION,
 			JS_FILE_EXTENSION)));
+
+	/**
+	 * Subtrees of the AST below these containment references will *not* be validated.
+	 */
+	public static final EReference[] AST_CONTAINMENT_REFERENCES_WITHOUT_VALIDATION = {
+			TypeRefsPackage.eINSTANCE.getComposedTypeRef_CachedComposedMembers()
+	};
 
 	/**
 	 * Fragment prefix for module-to-module URIs (a.k.a. m2m URIs). See {@link M2MUriUtil}.
