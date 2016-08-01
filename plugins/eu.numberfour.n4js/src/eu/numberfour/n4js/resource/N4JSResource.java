@@ -72,7 +72,8 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
-import eu.numberfour.n4js.utils.M2MUriUtil;
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+import eu.numberfour.n4js.utils.emf.ProxyResolvingResource;
 
 /**
  * Special resource that stores the N4JS AST in slot 0, and types exported by this module as containments of a
@@ -84,7 +85,7 @@ import eu.numberfour.n4js.utils.M2MUriUtil;
  * information), and thus it must be able to resolve this first element. This is transparently done in the custom
  * contents class {@link ModuleAwareContentsList}.
  */
-public class N4JSResource extends PostProcessingAwareResource {
+public class N4JSResource extends PostProcessingAwareResource implements ProxyResolvingResource {
 
 	/**
 	 * Special contents list which allows for the first slot to be a proxy in case the resource has been created by
@@ -526,6 +527,7 @@ public class N4JSResource extends PostProcessingAwareResource {
 
 	@Override
 	protected void doUnload() {
+		// System.out.println("########## unloading: " + getURI());
 		aboutToBeUnloaded = false;
 		super.doUnload();
 		// if (resourceSet != null) {
@@ -600,61 +602,66 @@ public class N4JSResource extends PostProcessingAwareResource {
 		}
 	}
 
-	@Override
-	@SuppressWarnings("restriction")
-	public EObject getEObject(String uriFragment) {
-		if (M2MUriUtil.isM2MUriFragment(uriFragment)) {
-			return getEObjectFromM2MUri(uriFragment, true);
-		}
-		return super.getEObject(uriFragment);
-	}
-
 	/**
-	 * Special handling when resolving proxies with module-to-module URIs (a.k.a. m2m URIs). For details, see
-	 * {@link M2MUriUtil}.
+	 * Invoked from {@link ProxyResolvingEObjectImpl#eResolveProxy(InternalEObject)} whenever an EMF proxy inside an
+	 * N4JSResource is being resolved.
+	 *
+	 * @param proxy
+	 *            the proxy to resolve.
+	 * @param objectContext
+	 *            the {@code EObject} contained in this resource that holds the given proxy.
 	 */
-	private EObject getEObjectFromM2MUri(String uriFragment, boolean loadOnDemand) {
-		final URI targetUri = M2MUriUtil.convertFromM2M(uriFragment);
-		final ResourceSet resSet = getResourceSet();
-		final URI targetResourceUri = targetUri.trimFragment();
-		final String fileExt = targetResourceUri.fileExtension();
-		if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(fileExt)
-				|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(fileExt)) {
-			final String targetFragment = targetUri.fragment();
-			final Resource targetResource = resSet.getResource(targetResourceUri, false);
-			// special handling #1:
-			// if targetResource is not loaded yet, try to load it from index first
-			if (targetResource == null) {
-				if (targetFragment != null && (targetFragment.equals("/1") || targetFragment.startsWith("/1/"))) {
-					// uri points to a TModule element in a resource not yet contained in our resource set
-					// --> try to load target resource from index
-					final IResourceDescriptions index = n4jsCore.getXtextIndex(resSet);
-					final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
-					if (resDesc != null) {
-						// next line will add the new resource to resSet.resources
-						n4jsCore.loadModuleFromIndex(resSet, resDesc, false);
+	@Override
+	public EObject doResolveProxy(InternalEObject proxy, EObject objectContext) {
+		final URI targetUri = proxy.eProxyURI();
+		final boolean isLazyLinkingProxy = getEncoder().isCrossLinkFragment(this, targetUri.fragment());
+		if (!isLazyLinkingProxy) {
+			// we have an ordinary EMF proxy (not one of Xtext's lazy linking proxies) ...
+			final ResourceSet resSet = getResourceSet();
+			final URI targetResourceUri = targetUri.trimFragment();
+			final String targetFileExt = targetResourceUri.fileExtension();
+			if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(targetFileExt)
+					|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(targetFileExt)) {
+				// proxy is pointing into an .n4js or .n4jsd file ...
+				final String targetFragment = targetUri.fragment();
+				final Resource targetResource = resSet.getResource(targetResourceUri, false);
+				// special handling #1:
+				// if targetResource is not loaded yet, try to load it from index first
+				if (targetResource == null) {
+					if (targetFragment != null && (targetFragment.equals("/1") || targetFragment.startsWith("/1/"))) {
+						// uri points to a TModule element in a resource not yet contained in our resource set
+						// --> try to load target resource from index
+						final IResourceDescriptions index = n4jsCore.getXtextIndex(resSet);
+						final IResourceDescription resDesc = index.getResourceDescription(targetResourceUri);
+						if (resDesc != null) {
+							// next line will add the new resource to resSet.resources
+							n4jsCore.loadModuleFromIndex(resSet, resDesc, false);
+						}
 					}
 				}
-			}
-			// standard behavior:
-			// obtain target EObject from targetResource in the usual way
-			// (might load targetResource from disk if it wasn't loaded from index above)
-			final EObject targetObject = resSet.getEObject(targetUri, loadOnDemand);
-			// special handling #2:
-			// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
-			// (only relevant in case targetResource wasn't loaded from index, because after loading from index it is
-			// always marked as fullyPostProcessed==true)
-			if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
-				final Resource targetResource2 = targetObject.eResource();
-				if (targetResource2 instanceof N4JSResource) {
-					((N4JSResource) targetResource2).performPostProcessing(); // no harm if already running/completed
+				// standard behavior:
+				// obtain target EObject from targetResource in the usual way
+				// (might load targetResource from disk if it wasn't loaded from index above)
+				final EObject targetObject = resSet.getEObject(targetUri, true);
+				// special handling #2:
+				// if targetResource exists, make sure it is post-processed *iff* this resource is post-processed
+				// (only relevant in case targetResource wasn't loaded from index, because after loading from index it
+				// is always marked as fullyPostProcessed==true)
+				if (targetObject != null && (this.isProcessing() || this.isFullyProcessed())) {
+					final Resource targetResource2 = targetObject.eResource();
+					if (targetResource2 instanceof N4JSResource) {
+						((N4JSResource) targetResource2)
+								.performPostProcessing(); // no harm done, if already running/completed
+					}
 				}
+				return targetObject;
 			}
-			return targetObject;
 		}
-		// we will get here, for example, if targetUri points to an n4ts resource
-		// --> above special handling not required, so just take the old-school route
-		return resSet.getEObject(targetUri, loadOnDemand);
+		// we will get here if
+		// a) we have an Xtext lazy linking proxy or
+		// b) targetUri points to an n4ts resource or some other, non-N4JS resource
+		// --> above special handling not required, so just apply EMF's default resolution behavior
+		return EcoreUtil.resolve(proxy, this);
 	}
 
 	/**

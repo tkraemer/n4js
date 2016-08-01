@@ -15,6 +15,8 @@ import eu.numberfour.n4js.n4JS.VariableDeclarationContainer;
 import eu.numberfour.n4js.n4JS.VariableDeclarationOrBinding;
 import eu.numberfour.n4js.n4JS.VariableStatementKeyword;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.Iterable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +33,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -54,7 +55,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
  *
  * @generated
  */
-public abstract class VariableDeclarationContainerImpl extends MinimalEObjectImpl.Container implements VariableDeclarationContainer {
+public abstract class VariableDeclarationContainerImpl extends ProxyResolvingEObjectImpl implements VariableDeclarationContainer {
 	/**
 	 * The cached value of the '{@link #getVarDeclsOrBindings() <em>Var Decls Or Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

@@ -221,11 +221,6 @@ public final class UserdataMapper {
 		}
 		final TModule module = (TModule) contents.get(0);
 		xres.getContents().clear();
-		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
-		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
-		// we need the entire, absolute original URI, including its fragment)
-		// TODO IDE-2250 discuss with Ed Merks if there is a better solution
-		// M2MUriUtil.convertAllProxiesToM2M(module, uri, null, false);
 		return module;
 	}
 }

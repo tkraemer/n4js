@@ -10,6 +10,8 @@ package eu.numberfour.n4js.ts.types.impl;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -17,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class SyntaxRelatedTElementImpl extends MinimalEObjectImpl.Container implements SyntaxRelatedTElement {
+public abstract class SyntaxRelatedTElementImpl extends ProxyResolvingEObjectImpl implements SyntaxRelatedTElement {
 	/**
 	 * The cached value of the '{@link #getAstElement() <em>Ast Element</em>}' reference.
 	 * <!-- begin-user-doc -->

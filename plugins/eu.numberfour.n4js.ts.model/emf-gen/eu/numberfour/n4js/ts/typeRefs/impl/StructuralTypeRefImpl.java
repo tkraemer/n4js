@@ -16,6 +16,8 @@ import eu.numberfour.n4js.ts.types.TStructuralType;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
@@ -30,7 +32,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -55,7 +56,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *
  * @generated
  */
-public abstract class StructuralTypeRefImpl extends MinimalEObjectImpl.Container implements StructuralTypeRef {
+public abstract class StructuralTypeRefImpl extends ProxyResolvingEObjectImpl implements StructuralTypeRef {
 	/**
 	 * The cached value of the '{@link #getAstStructuralMembers() <em>Ast Structural Members</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

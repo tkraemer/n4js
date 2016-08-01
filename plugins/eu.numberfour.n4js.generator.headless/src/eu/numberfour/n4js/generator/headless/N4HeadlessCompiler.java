@@ -835,7 +835,7 @@ public class N4HeadlessCompiler {
 		// Clean resourceSet ?
 		for (Resource res : markedProject.resources) {
 			rec.markUnloadingOf(res);
-			res.unload();
+			// res.unload();
 		}
 		rec.markFinishedUnloading(markedProject);
 

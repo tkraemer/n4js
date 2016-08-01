@@ -12,13 +12,14 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 
 import eu.numberfour.n4js.ts.types.TEnumLiteral;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class N4EnumLiteralImpl extends MinimalEObjectImpl.Container implements N4EnumLiteral {
+public class N4EnumLiteralImpl extends ProxyResolvingEObjectImpl implements N4EnumLiteral {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
