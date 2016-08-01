@@ -26,7 +26,7 @@ ctor.staticSetter;
 
 // Union with structural type and constructor
 
-// XPECT FIXME nowarnings -->
+// XPECT nowarnings -->
 var ctorUnion: constructor{A} | ~Object with { staticField:string; staticGetter:any }
 // XPECT noerrors --> 
 ctorUnion.staticField;
@@ -43,7 +43,7 @@ ctorUnion.constructor;
 
 // Union with structural type and classifier
 
-// XPECT FIXME nowarnings -->
+// XPECT nowarnings -->
 var classifierUnion: type{A} | ~Object with { staticField:string; staticGetter:any }
 // XPECT noerrors --> 
 classifierUnion.staticField;

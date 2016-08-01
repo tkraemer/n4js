@@ -22,8 +22,8 @@ f(dc);
 
 
 // XPECT warnings ---
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "D"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "E"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "D"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "E"
 // ---
 var de : intersection{D,E};
 // D <: B and E <: B XPECT noerrors -->

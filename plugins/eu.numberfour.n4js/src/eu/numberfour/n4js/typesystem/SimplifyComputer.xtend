@@ -102,14 +102,8 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 		} else {
 			set.addAll(composedType.typeRefs);
 		}
-
-		// simplify singleton
-		if (set.size() == 1) {
-			//return set.head
-		}
 		
 		val List<TypeRef> typeRefs = new LinkedList<TypeRef>();
-		
 		val undefinedTypeRef = G.undefinedTypeRef
 		val nullTypeRef = G.nullTypeRef
 		for (e : set) {

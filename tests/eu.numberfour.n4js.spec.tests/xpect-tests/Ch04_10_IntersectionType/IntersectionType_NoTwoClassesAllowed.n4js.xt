@@ -39,16 +39,16 @@ var a9 : union{A, intersection{B, I}};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "A"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "B"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "A"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "B"
 // ---
 var b1 : intersection{A, B};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "A"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "B"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "C"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "A"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "B"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "C"
 // ---
 var b2 : intersection{A, B, C};
 
@@ -62,8 +62,8 @@ var b3 : intersection{A, intersection{B, C}};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "A"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "C"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "A"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "C"
 // ---
 var b4 : intersection{A, intersection{I, C}};
 
@@ -71,49 +71,28 @@ var b4 : intersection{A, intersection{I, C}};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "A"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "B"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "A"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "B"
 // ---
 var c1 : intersection{A, B, J};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "B"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "C"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "B"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "C"
 // ---
 var c2 : intersection{B, I, C};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "G<A>"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "G<I>"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "G<A>"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "G<I>"
 // ---
 var c3 : intersection{G<A>, intersection{G<I>, I}};
 
 
 // XPECT warnings --- 
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "G<A>"
-// "An intersection type must not contain more than one class. Otherwise there cannot exist a value to such a type." at "GG<I>"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "G<A>"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "GG<I>"
 // ---
 var c4 : intersection{G<A>, intersection{GG<I>, I}};
-
-
-
-
-
-
-
-
-class T1 {
-	set s(param : A) {}
-}
-class T2 {
-}
-
-// XPECT FIXME noerrors -->
-var u : union{T1, ~T2 with {
-	set s(param : B)
-}}; 
-
-// XPECT FIXME errors --> "Member s not present in all types of union; missing from: "
-u.s = null;
