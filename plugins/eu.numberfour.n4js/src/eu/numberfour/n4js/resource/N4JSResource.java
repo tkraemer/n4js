@@ -527,12 +527,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 
 	@Override
 	protected void doUnload() {
-		// System.out.println("########## unloading: " + getURI());
 		aboutToBeUnloaded = false;
 		super.doUnload();
-		// if (resourceSet != null) {
-		// M2MUriUtil.convertAllProxiesToM2M(resourceSet, uri);
-		// }
 	}
 
 	/**
