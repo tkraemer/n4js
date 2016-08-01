@@ -163,6 +163,20 @@ public class Project {
 	}
 	
 	/**
+	 * Creates a source folder with the given name to this project.
+	 * 
+	 * @param name the name of the source folder to add
+	 * 
+	 * @return the added source folder
+	 */
+	public def SourceFolder createSourceFolder(String name) {
+		val SourceFolder result = new SourceFolder(name);
+		addSourceFolder(result);
+		return result;
+	}
+	
+	
+	/**
 	 * Adds a source folder to this project.
 	 * 
 	 * @param sourceFolder the source folder to add
@@ -216,22 +230,33 @@ public class Project {
 	/**
 	 * Creates this project in the given parent directory, which must exist.
 	 *
-	 * This method first clears the given parent directory. It then creates a manifest file 
-	 * by means of the {@link #generate} method, and finally it creates each source folder 
-	 * by calling its {@link SourceFolder#create(File)) method.
-	 *
+	 * This method first creates a directory with the same name as the {@link #projectId} within
+	 * the given parent directory. If there already exists a file or directory with that name
+	 * within the given parent directory, that file or directory will be (recursively) deleted.
+	 * 
+	 * Afterward, the manifest file and the source folders are created within the newly created
+	 * project directory.
+	 * 
 	 * @param parentDirectoryPath the path to the parent directory
+	 * 
+	 * @return the project directory
 	 */
 	public def create(Path parentDirectoryPath) {
 		var File parentDirectory = Objects.requireNonNull(parentDirectoryPath).toFile
-		if (parentDirectory.exists && !parentDirectory.directory)
+		if (!parentDirectory.exists)
+			throw new IOException("'" + parentDirectory + "' does not exist")
+		if (!parentDirectory.directory)
 			throw new IOException("'" + parentDirectory + "' is not a directory");
 
-		FileDeleter.delete(parentDirectory);
-		parentDirectory.mkdir();
+		val File projectDirectory = new File(parentDirectory, projectId);
+		if (projectDirectory.exists)
+			FileDeleter.delete(projectDirectory);
+		projectDirectory.mkdir();
 
-		createManifest(parentDirectory);
-		createModules(parentDirectory);
+		createManifest(projectDirectory);
+		createModules(projectDirectory);
+		
+		return projectDirectory;
 	}
 
 	private def createManifest(File parentDirectory) {

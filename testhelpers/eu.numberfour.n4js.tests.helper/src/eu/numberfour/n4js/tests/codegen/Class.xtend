@@ -62,6 +62,9 @@ class Class extends Classifier<Class> {
 
 	override protected def generateType() '''class '''
 
-	override protected def CharSequence generateTypeRelations() '''
-	«IF !superClass.nullOrEmpty» extends «superClass»«ENDIF»«FOR i : implementedInterfaces BEFORE ' implements ' SEPARATOR ', '»«i»«ENDFOR»'''
+	override protected def CharSequence generateTypeRelations() '''«generateSuperClass()»«generateImplementedInterfaces()»'''
+	
+	private def CharSequence generateSuperClass() '''«IF !superClass.nullOrEmpty» extends «superClass»«ENDIF»'''
+	
+	private def CharSequence generateImplementedInterfaces() '''«IF !implementedInterfaces.nullOrEmpty»«FOR i : implementedInterfaces BEFORE ' implements ' SEPARATOR ', '»«i»«ENDFOR»«ENDIF»'''
 }
