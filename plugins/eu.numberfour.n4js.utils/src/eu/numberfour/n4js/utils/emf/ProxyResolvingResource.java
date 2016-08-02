@@ -51,10 +51,14 @@ public interface ProxyResolvingResource extends Resource {
 	 *
 	 * but some special handling may be performed, instead.
 	 *
+	 * <b>IMPORTANT:</b> in case of unresolvable proxies, the EMF contract is to return the proxy, not
+	 * <code>null</code>!
+	 *
 	 * @param proxy
 	 *            the proxy to resolve.
 	 * @param objectContext
 	 *            the {@code EObject} contained in this resource that holds the given proxy.
+	 * @return the resolved target object or the given proxy itself iff it is unresolvable; never <code>null</code>.
 	 */
 	public EObject doResolveProxy(InternalEObject proxy, EObject objectContext);
 }

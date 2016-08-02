@@ -650,7 +650,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 								.performPostProcessing(); // no harm done, if already running/completed
 					}
 				}
-				return targetObject;
+				// return resolved target object
+				return targetObject != null ? targetObject : proxy; // important: return proxy itself if unresolvable!
 			}
 		}
 		// we will get here if
