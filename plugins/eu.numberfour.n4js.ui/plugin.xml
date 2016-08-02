@@ -896,48 +896,10 @@ Contributors:
 
  <!--
 
- Zoom in/out in text editor.
+ Open generated source in editor
 
  -->
-
-  <extension
-         point="org.eclipse.ui.commands">
-  <command
-       id="eu.numberfour.n4js.ui.TextZoomIn"
-       name="Text Zoom In">
-    </command>
-    <command
-       id="eu.numberfour.n4js.ui.TextZoomOut"
-       name="Text Zoom Out">
-    </command>
-      </extension>
-      <extension point="org.eclipse.ui.handlers">
-        <handler
-            class="eu.numberfour.n4js.ui.textzoom.TextZoomHandler"
-            commandId="eu.numberfour.n4js.ui.TextZoomIn">
-        </handler>
-        <handler
-            class="eu.numberfour.n4js.ui.textzoom.TextZoomHandler"
-            commandId="eu.numberfour.n4js.ui.TextZoomOut">
-        </handler>
-      </extension>
       <extension point="org.eclipse.ui.menus">
-        <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
-             <command
-                 commandId="eu.numberfour.n4js.ui.TextZoomIn"
-                 style="push"
-                 tooltip="Zoom In (Increase Font Size)">
-         </command>
-         </menuContribution>
-         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.edit">
-             <command
-                 commandId="eu.numberfour.n4js.ui.TextZoomOut"
-                 style="push"
-                 tooltip="Zoom Out (Decrease Font Size)">
-         </command>
-         </menuContribution>
          <menuContribution
                allPopups="false"
                locationURI="popup:#TextEditorContext?after=additions">
@@ -955,28 +917,6 @@ Contributors:
                </visibleWhen>
             </command>
          </menuContribution>
-      </extension>
-      <extension
-            point="org.eclipse.ui.bindings">
-         <key
-               commandId="eu.numberfour.n4js.ui.TextZoomIn"
-               contextId="eu.numberfour.n4js.ui.context"
-               locale="de"
-               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-               sequence="M1++">
-         </key>
-         <key
-               commandId="eu.numberfour.n4js.ui.TextZoomOut"
-               contextId="eu.numberfour.n4js.ui.context"
-               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-               sequence="M1+-">
-         </key>
-         <key
-               commandId="eu.numberfour.n4js.ui.TextZoomIn"
-               contextId="eu.numberfour.n4js.ui.context"
-               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-               sequence="M1+=">
-         </key>
       </extension>
       <extension
             point="org.eclipse.core.expressions.propertyTesters">

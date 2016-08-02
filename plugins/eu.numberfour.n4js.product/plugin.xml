@@ -920,7 +920,5 @@ Contributors:
             pattern=".*/org.eclipse.gef.zoom_out">
       </activityPatternBinding>
       
-      org.eclipse.gef.zoom_out
-      
    </extension>
 </plugin>
