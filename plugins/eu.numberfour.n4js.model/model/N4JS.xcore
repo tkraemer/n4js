@@ -11,6 +11,7 @@
 @Ecore(nsURI="http://www.numberfour.eu/ide/n4js/N4JS")
 @GenModel(fileExtensions="n4js",
 //	modelPluginID="eu.numberfour.n4js.model",
+	rootExtendsClass="eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl",
 	modelDirectory="/eu.numberfour.n4js.model/emf-gen",
 	forceOverwrite="true",
 	updateClasspath="false",

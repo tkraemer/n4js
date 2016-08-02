@@ -11,25 +11,38 @@
 package eu.numberfour.n4js.dirtystate
 
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.resource.UserdataMapper
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest
-import eu.numberfour.n4js.utils.M2MUriUtil
+import eu.numberfour.n4js.tests.resource.ModuleToModuleProxyPluginTest
+import eu.numberfour.n4js.utils.emf.ProxyResolvingResource
 import org.junit.Test
 
 /**
- *
+ * Tests a corner case of dependencies between resources. See also {@link ModuleToModuleProxyPluginTest}.
  */
 class ResourceLoadingCornerCasesPluginUITest extends AbstractBuilderParticipantTest {
 
-
 	/**
-	 * This tests the bug fix of IDE-2243.
+	 * This tests the bug fix of IDE-2243 / IDE-2299.
 	 * <p>
-	 * To reproduce the bug and to make the following test fail, comment out the creation of {@link M2MUriUtil m2m URIs}
-	 * in {@link UserdataMapper#getDeserializedModuleFromDescription(org.eclipse.xtext.resource.IEObjectDescription,
-	 * org.eclipse.emf.common.util.URI)} or {@link N4JSResource#doUnload()}.
+	 * To reproduce the bug and to make the following test fail, comment out the special handling in
+	 * {@link N4JSResource#doResolveProxy(InternalEObject, EObject)}.
 	 * <p>
-	 * For details, see {@link M2MUriUtil} and https://jira.numberfour.eu/browse/IDE-2243
+	 * NOTE: as of GH-141, in order to make this test fail, you also have to undo a bug fix in
+	 * Xsemantics rule 'subtypeConstructorTypeRef'. Replace this code:
+	 * <pre>
+	 * // we need the type of the two constructors (i.e. their signature)
+	 * // DO NOT USE "var leftCtorRef = TypeUtils.createTypeRef(leftCtor)", because this would by-pass the handling
+	 * // of forward references during AST traversal! Instead, obtain the type via the type judgment:
+	 * G |- leftCtor : var TypeRef leftCtorRef;
+	 * G |- rightCtor : var TypeRef rightCtorRef;
+	 * </pre>
+	 * with the following (old) code:
+	 * <pre>
+	 * val leftCtorRef = TypeUtils.createTypeRef(leftCtor);
+	 * val rightCtorRef = TypeUtils.createTypeRef(rightCtor);
+	 * </pre>
+	 * <p>
+	 * For further details, see {@link ProxyResolvingResource} and {@link ModuleToModuleProxyPluginTest}.
 	 */
 	@Test
 	def void testModule2ModuleReferencesBug() {

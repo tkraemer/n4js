@@ -10,9 +10,9 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ThisArgProvider;
 
-import org.eclipse.emf.ecore.EClass;
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class ThisArgProviderImpl extends MinimalEObjectImpl.Container implements ThisArgProvider {
+public abstract class ThisArgProviderImpl extends ProxyResolvingEObjectImpl implements ThisArgProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
