@@ -482,7 +482,7 @@ Contributors:
 			<id>mirrored-targetplatform</id>
 			<activation>
 				<property>
-					<name>mirrored-targetplatform</name>
+					<name>REMOVEME_mirrored-targetplatform</name>
 				</property>
 			</activation>
 			<properties>
@@ -558,7 +558,8 @@ Contributors:
 		<profile>
 					<id>noMirrored-targetplatform</id>
 				<activation>
-					<property><name>!mirrored-targetplatform</name></property>
+					<!-- TODO move the whole block to standard build-section. -->
+					<property><name>!REMOVEME_mirrored-targetplatform</name></property>
 				</activation>
 				<build>
 					<plugins>
@@ -698,7 +699,7 @@ Contributors:
 			<id>staging</id>
 			<activation>
 				<!--
-					ENABLE this if pre-releases are desired: 
+					ENABLE this if pre-releases are desired:
 					As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
 				<property>
 					<name>!noStaging</name>
