@@ -76,6 +76,6 @@ v31 = v32;
 // XPECT noerrors -->
 var v33 : {function<T>(T):void} = C.m2;
 // TODO see "temporary work-around case" in SubtypeComputer
-// XPECT FIXME errors --> "{function<S>(S):void} is not a subtype of {function<T>(T):T}." at "C.m2"
-//var {function<T>(T):T} v34 = C.m2;
+// XPECT FIXME issues --> "{function<S>(S):void} is not a subtype of {function<T>(T):T}." at "C.m2"
+var {function<T>(T):T} v34 = C.m2;
 
