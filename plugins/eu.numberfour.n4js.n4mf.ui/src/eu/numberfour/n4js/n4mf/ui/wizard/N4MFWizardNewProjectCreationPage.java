@@ -164,6 +164,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		setControl(control);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createVendorIdControls(DataBindingContext dbc, Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NULL);
 		composite.setLayout(GridLayoutFactory.swtDefaults().numColumns(2).create());
