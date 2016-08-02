@@ -16,7 +16,7 @@ This has two advantages:
 -->
 
 <!-- Features added to the target platform -->
-<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0  +(Xcore 1.3.2) , Xsemantics 1.10, XpectN4" sequenceNumber="96">
+<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0  +(Xcore 1.3.2) , Xsemantics 1.10, XpectN4" sequenceNumber="103">
 	<locations>
 		<!-- Main target platform, that is: Eclipse 4.5 Mars -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -142,8 +142,8 @@ This has two advantages:
 		</location>
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201506020812"/>
-			<repository location="https://numberfour.github.io/Xpect/updatesite/nightly/local/"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201608022255"/>
+			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 
 		<!-- only needed for Xpect development -->
@@ -198,8 +198,8 @@ This has two advantages:
 
 		<!-- JSON editor (Used by the web team)-->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="jsonedit-feature.feature.group" version="0.9.7"/>
-			<repository location="http://sourceforge.net/projects/eclipsejsonedit/files/update/"/>
+			<unit id="jsonedit-feature.feature.group" version="0.0.0"/>
+			<repository location="http://boothen.github.io/Json-Eclipse-Plugin/"/>
 		</location>
 
 		<!-- Path Tools -->
