@@ -10,52 +10,31 @@
  */
 package eu.numberfour.n4js.xpect;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
-import org.xpect.parameter.AbstractOffsetProvider;
-import org.xpect.parameter.IParameterParser.IParsedParameterProvider;
-import org.xpect.parameter.IParameterProvider;
-import org.xpect.parameter.XpectParameterAdapter;
-import org.xpect.state.StateContainer;
+import org.xpect.XpectImport;
+import org.xpect.XpectInvocation;
+import org.xpect.parameter.OffsetRegion;
+import org.xpect.setup.XpectSetupFactory;
+import org.xpect.state.Creates;
 import org.xpect.text.IRegion;
 import org.xpect.xtext.lib.setup.ThisResource;
-import org.xpect.xtext.lib.util.XtextOffsetAdapter;
+import org.xpect.xtext.lib.util.XtextOffsetAdapter.IEObjectOwner;
+
+import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.EObjectCoveringRegionProvider;
 
 /**
  * Extension of default parameter adapter providing support for {@link IEObjectCoveringRegion}, which basically is an
  * offset adapter taking the length of the location into account.
  *
- * This adapter needs to be added to a test via annotation {@link org.xpect.parameter.XpectParameterAdapter}, i.e.
- * {@code @XpectParameterAdapter(N4JSOffsetAdapter.class)}.
+ * This adapter needs to be added to a test via annotation {@link org.xpect.XpectImport}, i.e.
+ * {@code @XpectImport(N4JSOffsetAdapter.class)}.
  */
-@XpectParameterAdapter
-public class N4JSOffsetAdapter extends XtextOffsetAdapter {
-
-	@Override
-	public IParameterProvider adapt(IParameterProvider provider, Class<?> expectedType) {
-		if (provider instanceof AbstractOffsetProvider) {
-			AbstractOffsetProvider delegate = (AbstractOffsetProvider) provider;
-			if (expectedType == IEObjectCoveringRegion.class)
-				return new EObjectCoveringRegionProvider(delegate);
-		}
-		return super.adapt(provider, expectedType);
-	}
-
-	@Override
-	protected boolean canAdapt(Class<?> expectedType) {
-		return expectedType == IEObjectCoveringRegion.class ||
-				super.canAdapt(expectedType);
-	}
-
-	@Override
-	public boolean canAdapt(IParameterProvider provider, Class<?> expectedType) {
-		return provider instanceof AbstractOffsetProvider && canAdapt(expectedType);
-	}
+@XpectSetupFactory
+@XpectImport(EObjectCoveringRegionProvider.class)
+public class N4JSOffsetAdapter {
 
 	/**
 	 * Provides an AST element of type {@link EObject}, previously found in the AST via
@@ -90,36 +69,37 @@ public class N4JSOffsetAdapter extends XtextOffsetAdapter {
 	/**
 	 * Provides an {@link IEObjectCoveringRegion} parameter, activated by {@link N4JSOffsetAdapter}.
 	 */
-	public static class EObjectCoveringRegionProvider implements IParsedParameterProvider {
+	@XpectSetupFactory
+	public static class EObjectCoveringRegionProvider {
 
-		private final AbstractOffsetProvider delegate;
+		private final IRegion region;
+		private final @ThisResource XtextResource resource;
+		private final XpectInvocation invocation;
 
 		/***/
-		public EObjectCoveringRegionProvider(AbstractOffsetProvider delegate) {
-			this.delegate = delegate;
-		}
-
-		@Override
-		public boolean canProvide(Class<?> expectedType) {
-			return EObject.class.isAssignableFrom(IEObjectCoveringRegion.class);
-		}
-
-		@Override
-		@SuppressWarnings("unchecked")
-		public <T> T get(Class<T> expectedType, StateContainer context) {
-			XtextResource xtextResource = context.get(XtextResource.class, ThisResource.class).get();
-			EObject eObj = find(xtextResource);
-			return (T) new EObjectCoveringRegion(eObj);
+		public EObjectCoveringRegionProvider(@ThisResource XtextResource resource, XpectInvocation invocation,
+				OffsetRegion delegate) {
+			this.resource = resource;
+			this.region = delegate.getMatchedRegion();
+			this.invocation = invocation;
 		}
 
 		/***/
-		protected EObject find(XtextResource res) {
-			int offset = delegate.getOffset();
-			int length = (this.getSemanticRegions().isEmpty()) ? 0 : this.getSemanticRegions().get(0).getLength();
+		public EObjectCoveringRegionProvider(@ThisResource XtextResource resource, XpectInvocation invocation) {
+			this.resource = resource;
+			this.region = invocation.getExtendedRegion();
+			this.invocation = invocation;
+		}
+
+		/***/
+		@Creates
+		public IEObjectCoveringRegion IEObjectCoveringRegion() {
+			int offset = region.getOffset();
+			int length = region.getLength();
 			int endOffset = offset + length;
 			EObject semanticObject = null;
 
-			INode node = NodeModelUtils.findLeafNodeAtOffset(res.getParseResult().getRootNode(), offset);
+			INode node = NodeModelUtils.findLeafNodeAtOffset(resource.getParseResult().getRootNode(), offset);
 			while (node != null) {
 				EObject actualObject = NodeModelUtils.findActualSemanticObjectFor(node);
 				if (actualObject != null) {
@@ -133,28 +113,8 @@ public class N4JSOffsetAdapter extends XtextOffsetAdapter {
 				}
 				node = node.getParent();
 			}
-			return semanticObject;
-
+			return new EObjectCoveringRegion(semanticObject);
 		}
-
-		@Override
-		public IRegion getClaimedRegion() {
-			if (delegate instanceof IParsedParameterProvider) {
-				return ((IParsedParameterProvider) delegate).getClaimedRegion();
-			} else {
-				return null;
-			}
-		}
-
-		@Override
-		public List<IRegion> getSemanticRegions() {
-			if (delegate instanceof IParsedParameterProvider) {
-				return ((IParsedParameterProvider) delegate).getSemanticRegions();
-			} else {
-				return Collections.emptyList();
-			}
-		}
-
 	}
 
 }
