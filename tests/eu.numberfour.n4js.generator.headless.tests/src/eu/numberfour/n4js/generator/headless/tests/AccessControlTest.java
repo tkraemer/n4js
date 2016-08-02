@@ -11,17 +11,16 @@
 package eu.numberfour.n4js.generator.headless.tests;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.xtext.validation.Issue;
 import org.junit.Test;
@@ -31,7 +30,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 import com.google.common.base.Joiner;
 
+import eu.numberfour.n4js.csv.CSVData;
 import eu.numberfour.n4js.csv.CSVParser;
+import eu.numberfour.n4js.csv.CSVRecord;
 import eu.numberfour.n4js.generator.headless.IssueCollector;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
@@ -40,6 +41,7 @@ import eu.numberfour.n4js.tests.codegen.Class;
 import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Field;
 import eu.numberfour.n4js.tests.codegen.Getter;
+import eu.numberfour.n4js.tests.codegen.Interface;
 import eu.numberfour.n4js.tests.codegen.Member;
 import eu.numberfour.n4js.tests.codegen.Method;
 import eu.numberfour.n4js.tests.codegen.Module;
@@ -54,7 +56,20 @@ import eu.numberfour.n4js.utils.io.FileDeleter;
 @RunWith(Parameterized.class)
 public class AccessControlTest extends AbstractN4jscTest {
 	private static enum Scenario {
-		EXTENSION, REFERENCE
+		EXTENSION, IMPLEMENTATION, REFERENCE;
+
+		public static Scenario parse(String str) {
+			switch (str) {
+			case "extends":
+				return EXTENSION;
+			case "implements":
+				return IMPLEMENTATION;
+			case "references":
+				return REFERENCE;
+			default:
+				throw new IllegalArgumentException("Unexpected scenario: '" + str + "'");
+			}
+		}
 	}
 
 	/**
@@ -64,37 +79,39 @@ public class AccessControlTest extends AbstractN4jscTest {
 		/**
 		 * Client and supplier are the same type.
 		 */
-		SAME_TYPE(0),
+		SAME_TYPE,
 		/**
 		 * Client and supplier are in the same module, but not in the same type.
 		 */
-		SAME_MODULE(1),
+		SAME_MODULE,
 		/**
 		 * Client and supplier are in the same project, but not in the same module.
 		 */
-		SAME_PROJECT(2),
+		SAME_PROJECT,
 		/**
 		 * Client and supplier have the same vendor, but are in different projects.
 		 */
-		SAME_VENDOR(3),
+		SAME_VENDOR,
 		/**
 		 * Client and supplier have different vendors and are thus in different projects.
 		 */
-		OTHER_VENDOR(4);
+		OTHER_VENDOR;
 
-		private int rowIndex;
-
-		ClientLocation(int rowIndex) {
-			this.rowIndex = rowIndex;
-		}
-
-		/**
-		 * Returns the index of the row that corresponds to this client location in the access control matrix.
-		 *
-		 * @return the row index
-		 */
-		public int getRowIndex() {
-			return rowIndex;
+		public static ClientLocation parse(String str) {
+			switch (str) {
+			case "Same Type":
+				return SAME_TYPE;
+			case "Same Module":
+				return SAME_MODULE;
+			case "Same Project":
+				return SAME_PROJECT;
+			case "Same Vendor":
+				return SAME_VENDOR;
+			case "Other":
+				return OTHER_VENDOR;
+			default:
+				throw new IllegalArgumentException("Unexpected client location: '" + str + "'");
+			}
 		}
 	}
 
@@ -109,7 +126,18 @@ public class AccessControlTest extends AbstractN4jscTest {
 		/**
 		 * Client intends to override a member of the supplier.
 		 */
-		OVERRIDE
+		OVERRIDE;
+
+		public static UsageType parse(String str) {
+			switch (str) {
+			case "Access":
+				return ACCESS;
+			case "Override":
+				return OVERRIDE;
+			default:
+				throw new IllegalArgumentException("Unexpected usage type: '" + str + "'");
+			}
+		}
 	}
 
 	/**
@@ -119,12 +147,47 @@ public class AccessControlTest extends AbstractN4jscTest {
 		FIELD, GETTER, SETTER, METHOD;
 	}
 
+	private static enum ClassifierType {
+		CLASS, ABSTRACT_CLASS, INTERFACE, DEFAULT_INTERFACE;
+
+		public static ClassifierType parse(String str) {
+			switch (str) {
+			case "class":
+				return CLASS;
+			case "abstract class":
+				return ABSTRACT_CLASS;
+			case "interface":
+				return INTERFACE;
+			case "default interface":
+				return DEFAULT_INTERFACE;
+			default:
+				throw new IllegalArgumentException("Unexpected classifier type: '" + str + "'");
+			}
+		}
+	}
+
 	private static enum Expectation {
-		OK, FAIL, SKIP
+		OK, FAIL, SKIP;
+
+		public static Expectation parse(String str) {
+			switch (str) {
+			case "y":
+				return OK;
+			case "n":
+				return FAIL;
+			case "":
+			case "#":
+				return SKIP;
+			default:
+				throw new IllegalArgumentException("Unexpected expectation: '" + str + "'");
+			}
+		}
 	}
 
 	private static class TestSpecification {
 		private final Scenario scenario;
+		private final ClassifierType supplierType;
+		private final ClassifierType clientType;
 		private final ClientLocation clientLocation;
 		private final UsageType usageType;
 		private final MemberType memberType;
@@ -138,6 +201,10 @@ public class AccessControlTest extends AbstractN4jscTest {
 		 *
 		 * @param scenario
 		 *            the test scenario
+		 * @param supplierType
+		 *            the type of the supplier
+		 * @param clientType
+		 *            the type of the client
 		 * @param clientLocation
 		 *            the location of the generated client in relation to the generated supplier
 		 * @param usageType
@@ -153,11 +220,14 @@ public class AccessControlTest extends AbstractN4jscTest {
 		 * @param expectation
 		 *            the expected test result
 		 */
-		public TestSpecification(Scenario scenario, ClientLocation clientLocation, UsageType usageType,
+		public TestSpecification(Scenario scenario, ClassifierType supplierType, ClassifierType clientType,
+				ClientLocation clientLocation, UsageType usageType,
 				MemberType memberType,
 				Classifier.Visibility supplierVisibility,
 				Member.Visibility memberVisibility, Member.Static memberStatic, Expectation expectation) {
 			this.scenario = scenario;
+			this.supplierType = supplierType;
+			this.clientType = clientType;
 			this.clientLocation = clientLocation;
 			this.usageType = usageType;
 			this.memberType = memberType;
@@ -174,6 +244,24 @@ public class AccessControlTest extends AbstractN4jscTest {
 		 */
 		public Scenario getScenario() {
 			return scenario;
+		}
+
+		/**
+		 * Returns the type of the supplier.
+		 *
+		 * @return the type of the supplier
+		 */
+		public ClassifierType getSupplierType() {
+			return supplierType;
+		}
+
+		/**
+		 * Returns the type of the client.
+		 *
+		 * @return the type of the client
+		 */
+		public ClassifierType getClientType() {
+			return clientType;
 		}
 
 		/**
@@ -241,18 +329,13 @@ public class AccessControlTest extends AbstractN4jscTest {
 
 		@Override
 		public String toString() {
-			return scenario + " scenario with " + clientLocation + " client attempting to " + usageType + " a "
+			return scenario + " scenario with " + clientLocation + " client " + clientType + " attempting to "
+					+ usageType + " a "
 					+ memberVisibility + (memberStatic == Member.Static.YES ? " STATIC " : " INSTANCE ")
-					+ memberType + " of a " + supplierVisibility + " supplier";
+					+ memberType + " of a " + supplierVisibility + " supplier " + supplierType + " (expectation: "
+					+ expectation + ")";
 		}
 	}
-
-	private static int COL_COUNT = 4 * 6;
-	private static int ACCESS_COL_OFFSET = 3;
-	private static int OVERRIDE_COL_OFFSET = 3 + COL_COUNT;
-	private static int STATIC_OFFSET = 2 * COL_COUNT;
-	private static int VISIBILITY_ROW_OFFSET = 3;
-	private static int EXPECTATION_ROW_OFFSET = 6;
 
 	/**
 	 * Returns the parameters for this test by parsing the appropriate CSV file.
@@ -262,73 +345,73 @@ public class AccessControlTest extends AbstractN4jscTest {
 	@Parameters(name = "{0}")
 	public static Iterable<? extends Object> data() throws IOException {
 		CSVParser parser = new CSVParser("testdata/accesscontrol/ClassVisibility.csv", StandardCharsets.UTF_8);
+		CSVData csvData = parser.getData();
 
 		List<TestSpecification> result = new LinkedList<>();
-		// Extension scenario
-		addAccessTests(parser, 0, 0, Scenario.EXTENSION, Member.Static.NO, result);
-		addOverrideTests(parser, 0, 0, Scenario.EXTENSION, Member.Static.NO, result);
-		addAccessTests(parser, 0, STATIC_OFFSET, Scenario.EXTENSION, Member.Static.YES, result);
-		addOverrideTests(parser, 0, STATIC_OFFSET, Scenario.EXTENSION, Member.Static.YES, result);
 
-		// Reference scenario
-		addAccessTests(parser, 5, 0, Scenario.REFERENCE, Member.Static.NO, result);
-		addOverrideTests(parser, 5, 0, Scenario.REFERENCE, Member.Static.NO, result);
-		addAccessTests(parser, 5, STATIC_OFFSET, Scenario.REFERENCE, Member.Static.YES, result);
-		addOverrideTests(parser, 5, STATIC_OFFSET, Scenario.REFERENCE, Member.Static.YES, result);
+		CSVData accessSpec = csvData.getRange(0, 4, 4, -1);
+		CSVData scenarios = csvData.getRange(5, 0, -1, -1);
+
+		for (int row = 0; row < scenarios.getSize() / 5; row++) {
+			CSVData scenario = scenarios.getRange(row * 5, 0, 5, -1);
+			result.addAll(createScenario(accessSpec, scenario));
+		}
 
 		return result;
 	}
 
-	private static void addAccessTests(CSVParser parser, int rowOffset, int columnOffset, Scenario scenario,
-			Member.Static memberStatic,
-			List<TestSpecification> result) {
-		ArrayList<ArrayList<String>> visibilities = parser.getRange(VISIBILITY_ROW_OFFSET, 2,
-				columnOffset + ACCESS_COL_OFFSET,
-				COL_COUNT);
-		ArrayList<ArrayList<String>> expectations = parser.getRange(rowOffset + EXPECTATION_ROW_OFFSET, 5,
-				columnOffset + ACCESS_COL_OFFSET,
-				COL_COUNT);
-		addTests(visibilities, expectations, scenario, memberStatic, UsageType.ACCESS, result);
-	}
+	private static List<TestSpecification> createScenario(CSVData accessSpec, CSVData data) {
+		List<TestSpecification> result = new LinkedList<>();
 
-	private static void addOverrideTests(CSVParser parser, int rowOffset, int columnOffset, Scenario scenario,
-			Member.Static memberStatic,
-			List<TestSpecification> result) {
-		ArrayList<ArrayList<String>> visibilities = parser.getRange(VISIBILITY_ROW_OFFSET, 2,
-				columnOffset + OVERRIDE_COL_OFFSET,
-				COL_COUNT);
-		ArrayList<ArrayList<String>> expectations = parser.getRange(rowOffset + EXPECTATION_ROW_OFFSET, 5,
-				columnOffset + OVERRIDE_COL_OFFSET,
-				COL_COUNT);
-		addTests(visibilities, expectations, scenario, memberStatic, UsageType.OVERRIDE, result);
-	}
+		CSVData testSpec = data.getRange(0, 0, -1, 4);
 
-	private static void addTests(ArrayList<ArrayList<String>> visibilities, ArrayList<ArrayList<String>> expectations,
-			Scenario scenario,
-			Member.Static memberStatic,
-			UsageType usageType, List<TestSpecification> result) {
-		for (ClientLocation location : ClientLocation.values()) {
-			for (int col = 0; col < COL_COUNT; col++) {
-				final Expectation expectation = getExpectation(expectations, location.getRowIndex(), col);
-				if (expectation == Expectation.SKIP)
-					continue;
+		Scenario scenario = Scenario.parse(testSpec.get(0, 0));
+		ClassifierType supplierType = ClassifierType.parse(testSpec.get(0, 1));
+		ClassifierType clientType = ClassifierType.parse(testSpec.get(0, 2));
 
-				final Classifier.Visibility typeVisibility = getTypeVisibility(visibilities, col);
-				final Member.Visibility memberVisibility = getMemberVisibility(visibilities, col);
+		for (int row = 0; row < testSpec.getSize(); row++) {
+			ClientLocation clientLocation = ClientLocation.parse(testSpec.get(row, 3));
+			CSVRecord expectations = data.get(row).getRange(4, -1);
 
-				for (MemberType memberType : MemberType.values()) {
-					result.add(new TestSpecification(scenario, location, usageType, memberType,
-							typeVisibility,
-							memberVisibility, memberStatic, expectation));
+			for (int col = 0; col < expectations.getSize(); col++) {
+				Member.Static memberStatic = parseStatic(accessSpec.get(0, getFieldIndex(col, 2 * 4 * 6)));
+				UsageType usageType = UsageType.parse(accessSpec.get(1, getFieldIndex(col, 4 * 6)));
+				Classifier.Visibility supplierVisibility = parseClassifierVisibility(
+						accessSpec.get(2, getFieldIndex(col, 6)));
+				Member.Visibility memberVisibility = parseMemberVisibility(accessSpec.get(3, col));
+				Expectation expectation = Expectation.parse(expectations.get(col));
+
+				if (expectation != Expectation.SKIP) {
+					for (MemberType memberType : MemberType.values()) {
+						TestSpecification specification = new TestSpecification(scenario, supplierType, clientType,
+								clientLocation, usageType,
+								memberType, supplierVisibility, memberVisibility, memberStatic, expectation);
+						result.add(specification);
+					}
 				}
 			}
 		}
+
+		return result;
 	}
 
-	private static Classifier.Visibility getTypeVisibility(final ArrayList<ArrayList<String>> visibilities, int col) {
-		final int index = (col / 6) * 6;
-		final String name = visibilities.get(0).get(index);
-		switch (name) {
+	private static int getFieldIndex(int index, int colSpan) {
+		return (index / colSpan) * colSpan;
+	}
+
+	private static Member.Static parseStatic(String str) {
+		switch (str) {
+		case "Instance":
+			return Member.Static.NO;
+		case "Static":
+			return Member.Static.YES;
+		default:
+			throw new IllegalArgumentException("Unexpected member type: '" + str + "'");
+		}
+	}
+
+	private static Classifier.Visibility parseClassifierVisibility(String str) {
+		switch (str) {
 		case "pub":
 			return Classifier.Visibility.PUBLIC;
 		case "pub@":
@@ -338,20 +421,18 @@ public class AccessControlTest extends AbstractN4jscTest {
 		case "priv":
 			return Classifier.Visibility.PRIVATE;
 		default:
-			throw new IllegalArgumentException("Unknown type visibility name '" + name + "' at index " + index);
+			throw new IllegalArgumentException("Unexpected type visibility: '" + str + "'");
 		}
 	}
 
-	private static Member.Visibility getMemberVisibility(final ArrayList<ArrayList<String>> visibilities, int col) {
-		final int index = col;
-		final String name = visibilities.get(1).get(index);
-		switch (name) {
+	private static Member.Visibility parseMemberVisibility(String str) {
+		switch (str) {
 		case "pub":
 			return Member.Visibility.PUBLIC;
 		case "pub@":
 			return Member.Visibility.PUBLIC_INTERNAL;
 		case "prot":
-			return Member.Visibility.PROJECT;
+			return Member.Visibility.PROTECTED;
 		case "prot@":
 			return Member.Visibility.PROTECTED_INTERNAL;
 		case "proj":
@@ -359,22 +440,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 		case "priv":
 			return Member.Visibility.PRIVATE;
 		default:
-			throw new IllegalArgumentException("Unknown member visibility name '" + name + "' at index " + index);
-		}
-	}
-
-	private static Expectation getExpectation(final ArrayList<ArrayList<String>> expectations, int row, int col) {
-		final String name = expectations.get(row).get(col);
-		switch (name) {
-		case "y":
-			return Expectation.OK;
-		case "n":
-			return Expectation.FAIL;
-		case "#":
-			return Expectation.SKIP;
-		default:
-			throw new IllegalArgumentException(
-					"Unknown expectation name '" + name + "' at row " + row + " and column " + col);
+			throw new IllegalArgumentException("Unexpected member visibility: '" + str + "'");
 		}
 	}
 
@@ -408,188 +474,252 @@ public class AccessControlTest extends AbstractN4jscTest {
 	}
 
 	private List<File> generateScenario() {
+		List<File> result = new LinkedList<>();
+
+		ScenarioResult scenario = createScenario();
+		Classifier<?> supplier = scenario.supplier;
+		Classifier<?> client = scenario.client;
+		Class getSupplier = null;
+
+		supplier.addMember(createMember("member", specification.getMemberVisibility()));
+
 		switch (specification.getScenario()) {
 		case EXTENSION:
-			return generateExtensionScenario();
+		case IMPLEMENTATION: {
+			switch (specification.getUsageType()) {
+			case ACCESS:
+				switch (specification.getMemberStatic()) {
+				case YES:
+					client.addMember(createAccess("member", "S"));
+					break;
+				case NO:
+					client.addMember(createAccess("member", "this"));
+					break;
+				}
+				break;
+			case OVERRIDE:
+				client.addMember(createMember("member", specification.getMemberVisibility()).makeOverride());
+				break;
+			default:
+				throw new IllegalArgumentException("Unexpected usage type: " + specification.getUsageType());
+			}
+			break;
+		}
+		case REFERENCE: {
+			if (specification.getUsageType() == UsageType.OVERRIDE)
+				throw new IllegalArgumentException("Cannot override in reference scenario");
+			if (specification.getSupplierType() != ClassifierType.CLASS)
+				throw new IllegalArgumentException("Cannot use non-instantiable supplier type in reference scenario");
+
+			getSupplier = new Class("GetS").setVisibility(Classifier.Visibility.PUBLIC);
+			getSupplier.addMember(new Method("getS").setVisibility(Member.Visibility.PUBLIC).setReturnType("S")
+					.setBody("return new S();"));
+			client.addMember(createAccess("member", "new GetS().getS()"));
+			break;
+		}
+		}
+
+		switch (specification.getClientLocation()) {
+		case SAME_TYPE:
+		case SAME_MODULE: {
+			Module module = new Module("SameModule");
+			module.addClassifier(supplier);
+			if (getSupplier != null)
+				module.addClassifier(getSupplier);
+			module.addClassifier(client);
+
+			Project project = new Project("SameModule", "sameVendor", "SameVendor");
+			project.createSourceFolder("src").addModule(module);
+			result.add(project.create(Paths.get(FIXTURE_ROOT)));
+			break;
+		}
+		case SAME_PROJECT: {
+			Module supplierModule = new Module("SupplierModule");
+			supplierModule.addClassifier(supplier);
+			if (getSupplier != null)
+				supplierModule.addClassifier(getSupplier);
+
+			Module clientModule = new Module("ClientModule");
+			if (getSupplier != null)
+				clientModule.addImport(getSupplier, supplierModule);
+			else
+				clientModule.addImport(supplier, supplierModule);
+			clientModule.addClassifier(client);
+
+			Project project = new Project("SameProject", "sameVendor", "SameVendor");
+			project.createSourceFolder("src").addModule(supplierModule).addModule(clientModule);
+			result.add(project.create(Paths.get(FIXTURE_ROOT)));
+			break;
+		}
+		case SAME_VENDOR: {
+			Module supplierModule = new Module("SupplierModule");
+			supplierModule.addClassifier(supplier);
+			if (getSupplier != null)
+				supplierModule.addClassifier(getSupplier);
+
+			Module clientModule = new Module("ClientModule");
+			if (getSupplier != null)
+				clientModule.addImport(getSupplier, supplierModule);
+			else
+				clientModule.addImport(supplier, supplierModule);
+			clientModule.addClassifier(client);
+
+			Project supplierProject = new Project("SupplierProject", "sameVendor", "SameVendor");
+			supplierProject.createSourceFolder("src").addModule(supplierModule);
+			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
+
+			Project clientProject = new Project("ClientProject", "sameVendor", "SameVendor");
+			clientProject.addProjectDependency(supplierProject);
+			clientProject.createSourceFolder("src").addModule(clientModule);
+			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
+			break;
+		}
+		case OTHER_VENDOR: {
+			Module supplierModule = new Module("SupplierModule");
+			supplierModule.addClassifier(supplier);
+			if (getSupplier != null)
+				supplierModule.addClassifier(getSupplier);
+
+			Module clientModule = new Module("ClientModule");
+			if (getSupplier != null)
+				clientModule.addImport(getSupplier, supplierModule);
+			else
+				clientModule.addImport(supplier, supplierModule);
+			clientModule.addClassifier(client);
+
+			Project supplierProject = new Project("SupplierProject", "vendorA", "VendorA");
+			supplierProject.createSourceFolder("src").addModule(supplierModule);
+			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
+
+			Project clientProject = new Project("ClientProject", "vendorB", "VendorB");
+			clientProject.addProjectDependency(supplierProject);
+			clientProject.createSourceFolder("src").addModule(clientModule);
+			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
+			break;
+		}
+		default:
+			break;
+		}
+
+		return result;
+	}
+
+	private static class ScenarioResult {
+		public Classifier<?> supplier;
+		public Classifier<?> client;
+
+		public ScenarioResult(Classifier<?> supplier, Classifier<?> client) {
+			this.supplier = Objects.requireNonNull(supplier);
+			this.client = Objects.requireNonNull(client);
+		}
+	}
+
+	private ScenarioResult createScenario() {
+		switch (specification.getScenario()) {
+		case EXTENSION:
+			return createExtensionScenario();
+		case IMPLEMENTATION:
+			return createImplementationScenario();
 		case REFERENCE:
-			return generateReferenceScenario();
-		default:
-			fail("Unknown test scenario: " + specification.getScenario());
-			return null; // Can never happen
+			return createReferenceScenario();
 		}
+
+		throw new IllegalArgumentException("Unexpected scenario: " + specification.getScenario());
 	}
 
-	private List<File> generateExtensionScenario() {
-		List<File> result = new LinkedList<>();
-
-		Class classA = new Class("A").setVisibility(specification.getSupplierVisibility());
-		classA.addMember(createMember("member", specification.getMemberVisibility()));
-
-		Class classB = new Class("B");
-		classB.setSuperClass(classA);
-
-		switch (specification.getUsageType()) {
-		case ACCESS:
-			classB.addMember(createAccess("member", "this"));
-			break;
-		case OVERRIDE:
-			classB.addMember(createMember("member", specification.getMemberVisibility()).makeOverride());
-			break;
-		default:
-			throw new IllegalArgumentException("Unexpected usage type: " + specification.getUsageType());
-		}
-
-		switch (specification.getClientLocation()) {
-		case SAME_TYPE:
-		case SAME_MODULE: {
-			Module module = new Module("SameModule");
-			module.addClassifier(classA);
-			module.addClassifier(classB);
-
-			Project project = new Project("SameModule", "sameVendor", "SameVendor");
-			project.createSourceFolder("src").addModule(module);
-			result.add(project.create(Paths.get(FIXTURE_ROOT)));
+	private ScenarioResult createExtensionScenario() {
+		switch (specification.getSupplierType()) {
+		case CLASS: {
+			Class supplier = new Class("S").setVisibility(specification.getSupplierVisibility());
+			switch (specification.getClientType()) {
+			case CLASS:
+				return new ScenarioResult(supplier, new Class("C").setSuperClass(supplier));
+			case ABSTRACT_CLASS:
+				return new ScenarioResult(supplier, new Class("C").setSuperClass(supplier).makeAbstract());
+			case INTERFACE:
+			case DEFAULT_INTERFACE:
+				throw new IllegalArgumentException("Invalid Scenario: An interface cannot extend a class");
+			}
 			break;
 		}
-		case SAME_PROJECT: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(classA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project project = new Project("SameProject", "sameVendor", "SameVendor");
-			project.createSourceFolder("src").addModule(supplierModule).addModule(clientModule);
-			result.add(project.create(Paths.get(FIXTURE_ROOT)));
+		case ABSTRACT_CLASS: {
+			Class supplier = new Class("S").setVisibility(specification.getSupplierVisibility()).makeAbstract();
+			switch (specification.getClientType()) {
+			case CLASS:
+				return new ScenarioResult(supplier, new Class("C").setSuperClass(supplier));
+			case ABSTRACT_CLASS:
+				return new ScenarioResult(supplier, new Class("C").setSuperClass(supplier).makeAbstract());
+			case INTERFACE:
+			case DEFAULT_INTERFACE:
+				throw new IllegalArgumentException("Invalid Scenario: An interface cannot extend a class");
+			}
 			break;
 		}
-		case SAME_VENDOR: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(classA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project supplierProject = new Project("SupplierProject", "sameVendor", "SameVendor");
-			supplierProject.createSourceFolder("src").addModule(supplierModule);
-			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
-
-			Project clientProject = new Project("ClientProject", "sameVendor", "SameVendor");
-			clientProject.addProjectDependency(supplierProject);
-			clientProject.createSourceFolder("src").addModule(clientModule);
-			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
+		case INTERFACE:
+		case DEFAULT_INTERFACE: {
+			Interface supplier = new Interface("S").setVisibility(specification.getSupplierVisibility());
+			switch (specification.getClientType()) {
+			case CLASS:
+			case ABSTRACT_CLASS:
+				throw new IllegalArgumentException("Invalid Scenario: A class cannot extend an interface");
+			case INTERFACE:
+			case DEFAULT_INTERFACE:
+				return new ScenarioResult(supplier, new Interface("C").addSuperInterface(supplier));
+			}
 			break;
 		}
-		case OTHER_VENDOR: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(classA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project supplierProject = new Project("SupplierProject", "vendorA", "VendorA");
-			supplierProject.createSourceFolder("src").addModule(supplierModule);
-			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
-
-			Project clientProject = new Project("ClientProject", "vendorB", "VendorB");
-			clientProject.addProjectDependency(supplierProject);
-			clientProject.createSourceFolder("src").addModule(clientModule);
-			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
-			break;
-		}
-		default:
-			break;
 		}
 
-		return result;
+		throw new IllegalArgumentException("Unexpected supplier type: " + specification.getSupplierType());
 	}
 
-	private List<File> generateReferenceScenario() {
-		List<File> result = new LinkedList<>();
-
-		Class classA = new Class("A").setVisibility(specification.getSupplierVisibility());
-		classA.addMember(createMember("member", specification.getMemberVisibility()));
-
-		Class getA = new Class("GetA").setVisibility(Classifier.Visibility.PUBLIC);
-		getA.addMember(new Method("getA").setVisibility(Member.Visibility.PUBLIC).setReturnType("A")
-				.setBody("return new A();"));
-
-		Class classB = new Class("B");
-		classB.addMember(createAccess("member", "new GetA().getA()"));
-
-		switch (specification.getClientLocation()) {
-		case SAME_TYPE:
-		case SAME_MODULE: {
-			Module module = new Module("SameModule");
-			module.addClassifier(classA);
-			module.addClassifier(getA);
-			module.addClassifier(classB);
-
-			Project project = new Project("SameModule", "sameVendor", "SameVendor");
-			project.createSourceFolder("src").addModule(module);
-			result.add(project.create(Paths.get(FIXTURE_ROOT)));
+	private ScenarioResult createImplementationScenario() {
+		switch (specification.getSupplierType()) {
+		case CLASS:
+		case ABSTRACT_CLASS:
+			throw new IllegalArgumentException("Invalid Scenario: Classes cannot be implemented");
+		case INTERFACE:
+		case DEFAULT_INTERFACE: {
+			Interface supplier = new Interface("S").setVisibility(specification.getSupplierVisibility());
+			switch (specification.getClientType()) {
+			case CLASS:
+				return new ScenarioResult(supplier, new Class("C").addInterface(supplier));
+			case ABSTRACT_CLASS:
+				return new ScenarioResult(supplier, new Class("C").makeAbstract().addInterface(supplier));
+			case INTERFACE:
+			case DEFAULT_INTERFACE:
+				throw new IllegalArgumentException("Invalid Scenario: A class cannot extend an interface");
+			}
 			break;
 		}
-		case SAME_PROJECT: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-			supplierModule.addClassifier(getA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(getA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project project = new Project("SameProject", "sameVendor", "SameVendor");
-			project.createSourceFolder("src").addModule(supplierModule).addModule(clientModule);
-			result.add(project.create(Paths.get(FIXTURE_ROOT)));
-			break;
-		}
-		case SAME_VENDOR: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-			supplierModule.addClassifier(getA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(getA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project supplierProject = new Project("SupplierProject", "sameVendor", "SameVendor");
-			supplierProject.createSourceFolder("src").addModule(supplierModule);
-			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
-
-			Project clientProject = new Project("ClientProject", "sameVendor", "SameVendor");
-			clientProject.addProjectDependency(supplierProject);
-			clientProject.createSourceFolder("src").addModule(clientModule);
-			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
-			break;
-		}
-		case OTHER_VENDOR: {
-			Module supplierModule = new Module("SupplierModule");
-			supplierModule.addClassifier(classA);
-			supplierModule.addClassifier(getA);
-
-			Module clientModule = new Module("ClientModule");
-			clientModule.addImport(getA, supplierModule);
-			clientModule.addClassifier(classB);
-
-			Project supplierProject = new Project("SupplierProject", "vendorA", "VendorA");
-			supplierProject.createSourceFolder("src").addModule(supplierModule);
-			result.add(supplierProject.create(Paths.get(FIXTURE_ROOT)));
-
-			Project clientProject = new Project("ClientProject", "vendorB", "VendorB");
-			clientProject.addProjectDependency(supplierProject);
-			clientProject.createSourceFolder("src").addModule(clientModule);
-			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
-			break;
-		}
-		default:
-			break;
 		}
 
-		return result;
+		throw new IllegalArgumentException("Unexpected supplier type: " + specification.getSupplierType());
+	}
+
+	private ScenarioResult createReferenceScenario() {
+		switch (specification.getSupplierType()) {
+		case CLASS: {
+			Class supplier = new Class("S").setVisibility(specification.getSupplierVisibility());
+			switch (specification.getClientType()) {
+			case CLASS:
+				return new ScenarioResult(supplier, new Class("C"));
+			case ABSTRACT_CLASS:
+			case INTERFACE:
+			case DEFAULT_INTERFACE:
+				throw new IllegalArgumentException(
+						"Invalid Scenario: Cannot instantiate abstract classes or interfaces for reference scenario");
+			}
+			break;
+		}
+		case ABSTRACT_CLASS:
+			throw new IllegalArgumentException("Invalid Scenario: Abstract classes cannot be instantiated");
+		case INTERFACE:
+		case DEFAULT_INTERFACE:
+			throw new IllegalArgumentException("Invalid Scenario: Interfaces cannot be instantiated");
+		}
+
+		throw new IllegalArgumentException("Unexpected supplier type: " + specification.getSupplierType());
 	}
 
 	private Member<?> createMember(String name, Member.Visibility visibility) {

@@ -15,7 +15,6 @@ import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.ArrayList
 import java.util.LinkedList
 import java.util.Objects
 
@@ -160,7 +159,7 @@ class CSVParser {
 	}
 
 	private CSVTokenizer tokenizer;
-	private ArrayList<ArrayList<String>> cachedData;
+	private CSVData cachedData;
 
 	/**
 	 * Creates a new parser that parses the given string.
@@ -196,100 +195,18 @@ class CSVParser {
 	}
 
 	/**
-	 * Returns all rows and columns and returns them as a nested array list.
+	 * Returns all rows and columns.
 	 * 
 	 * @return the parsed rows
 	 */
-	public def ArrayList<ArrayList<String>> getData() {
+	public def CSVData getData() {
 		if (cachedData === null)
 			cachedData = doParse();
 		return cachedData;
 	}
 
-	/**
-	 * Returns all columns of those rows starting at the given zero based index.
-	 * 
-	 * @param minRow the index of the first row to return
-	 * 
-	 * @return the parsed rows
-	 */
-	public def ArrayList<ArrayList<String>> getRowRange(int minRow) {
-		return getRowRange(minRow, -1);
-	}
-
-	/**
-	 * Returns all columns of those rows within the given zero based range.
-	 * 
-	 * @param minRow the index of the first row to return
-	 * @param rowCount the maximum number of rows to return, or -1 to indicate that all rows should be returned
-	 * 
-	 * @return the parsed rows
-	 */
-	public def ArrayList<ArrayList<String>> getRowRange(int minRow, int rowCount) {
-		return getRange(minRow, rowCount, 0, -1);
-	}
-
-	/**
-	 * Returns all rows, but only those columns starting at the given zero based index.
-	 * 
-	 * @param minColumn the index of the first column to return
-	 * 
-	 * @return the parsed rows
-	 */
-	public def ArrayList<ArrayList<String>> getColumnRange(int minColumn) {
-		return getColumnRange(minColumn, -1);
-	}
-
-	/**
-	 * Returns all rows, but only those columns within the given zero based  range.
-	 * 
-	 * @param minColumn the index of the first column to return
-	 * @param columnCount the number of columns to return, or -1 to indicate that all columns should be returned
-	 * 
-	 * @return the parsed rows
-	 */
-	public def ArrayList<ArrayList<String>> getColumnRange(int minColumn, int columnCount) {
-		return getRange(0, -1, minColumn, columnCount);
-	}
-
-	/**
-	 * Returns all rows and columns and returns only the rows with an index that is
-	 * greater or equal to the specified row index (zero based) and only those columns
-	 * with an index in the specified zero based  column range.
-	 * 
-	 * @param minRow the index of the first row to return
-	 * @param rowCount the maximum number of rows to return, or -1 to indicate that all rows should be returned
-	 * @param minColumn the index of the first column to return
-	 * @param columnCount the number of columns to return, or -1 to indicate that all columns should be returned
-	 * 
-	 * @return the parsed rows
-	 */
-	public def ArrayList<ArrayList<String>> getRange(int minRow, int rowCount, int minColumn, int columnCount) {
-		val ArrayList<ArrayList<String>> source = getData();
-		var ArrayList<ArrayList<String>> result = newArrayList();
-
-		for (var int rowIndex = minRow; rowIndex < source.size(); rowIndex++) {
-			if (isIndexInRange(rowIndex, minRow, rowCount)) {
-				val ArrayList<String> sourceRow = source.get(rowIndex);
-				var ArrayList<String> resultRow = newArrayList();
-				for (var int columnIndex = minColumn; columnIndex < sourceRow.size(); columnIndex++) {
-					if (isIndexInRange(columnIndex, minColumn, columnCount)) {
-						resultRow.add(sourceRow.get(columnIndex));
-					}
-				}
-				result.add(resultRow);
-			}
-		}
-
-		return result;
-	}
-
-	private static def boolean isIndexInRange(int index, int minIndex, int count) {
-		return index >= minIndex && (count < 0 || index < minIndex + count);
-	}
-
-	private def ArrayList<ArrayList<String>> doParse() {
-		var ArrayList<ArrayList<String>> result = newArrayList();
+	private def CSVData doParse() {
+		var CSVData result = new CSVData();
 		tokenizer.reset();
 
 		var Token token = tokenizer.nextToken();
@@ -302,8 +219,8 @@ class CSVParser {
 		return result;
 	}
 
-	private def ArrayList<String> parseRow() {
-		var ArrayList<String> result = new ArrayList<String>();
+	private def CSVRecord parseRow() {
+		var CSVRecord result = new CSVRecord();
 
 		var Token token = null;
 		do {

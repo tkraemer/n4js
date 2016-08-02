@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.csv;
 
+import java.util.Iterator
+import java.util.List
 import org.junit.Test
 
 import static org.junit.Assert.*
@@ -19,27 +21,49 @@ import static org.junit.Assert.*
  */
 public class CSVParserTest {
 
+	private static def void assertResult(List<List<String>> expected, CSVData actual) {
+		var Iterator<List<String>> expectedIt = expected.iterator();
+		var Iterator<CSVRecord> actualIt = actual.iterator();
+		
+		while (expectedIt.hasNext() || actualIt.hasNext()) {
+			assertEquals(expectedIt.hasNext(), actualIt.hasNext());
+			val List<String> expectedRecord = expectedIt.next();
+			val CSVRecord actualRecord = actualIt.next();
+			assertRecords(expectedRecord, actualRecord);
+		}
+	}
+
+	private static def void assertRecords(Iterable<String> expected, Iterable<String> actual) {
+		var Iterator<String> expectedIt = expected.iterator();
+		var Iterator<String> actualIt = actual.iterator();
+		
+		while (expectedIt.hasNext() && actualIt.hasNext()) {
+			assertEquals(expectedIt.hasNext(), actualIt.hasNext());
+			assertEquals(expectedIt.next(), actualIt.next());
+		}
+	}
+
 	@Test
 	public def void testWindowsLineEndings() {
-		assertEquals(#[
+		assertResult(#[
 			#["1", "2", "3"],
 			#["1", "2", "3"]
 		], 
 		new CSVParser("1,2,3\r\n1,2,3").data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["1", "2", ""],
 			#["1", "2", "3"]
 		], 
 		new CSVParser("1,2,\r\n1,2,3").data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["1", "2", ""],
 			#["", "2", "3"]
 		], 
 		new CSVParser("1,2,\r\n,2,3").data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "", "Supplier", "Class","",""],
 			#["", "", "Subject of Access", "Field, Accessor, Method", "", "Static Field, Getter, Setter, Method", "", ""]
 		], 
@@ -50,14 +74,14 @@ public class CSVParserTest {
 	public def void testEmptyString() {
 		var CSVParser parser = new CSVParser("");
 		
-		assertEquals(#[], parser.data);
+		assertResult(#[], parser.data);
 	}
 
 	@Test
 	public def void testOneEmptyField() {
 		var CSVParser parser = new CSVParser("\n");
 		
-		assertEquals(#[
+		assertResult(#[
 			#[""]
 		], parser.data);
 	}
@@ -66,7 +90,7 @@ public class CSVParserTest {
 	public def void testTwoRowsWithOneFieldEach() {
 		var CSVParser parser = new CSVParser("\n\n");
 		
-		assertEquals(#[
+		assertResult(#[
 			#[""],
 			#[""]
 		], parser.data);
@@ -78,7 +102,7 @@ public class CSVParserTest {
 		One,Two,Three
 		''');
 
-		assertEquals(#[
+		assertResult(#[
 			#["One", "Two", "Three"]
 		], parser.data);
 	}
@@ -89,56 +113,56 @@ public class CSVParserTest {
 		,,
 		''');
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "", ""]
 		], parser.data);
 	}
 	
 	@Test
 	public def void testOneRowWithSomeEmptyFields() {
-		assertEquals(#[
+		assertResult(#[
 			#["One", "", "", ""]
 		],
 		new CSVParser('''
 		One,,,
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "One", "", ""]
 		],
 		new CSVParser('''
 		,One,,
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "", "One", ""]
 		],
 		new CSVParser('''
 		,,One,
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "", "", "One"]
 		], 
 		new CSVParser('''
 		,,,One
 		''').data);
 		
-		assertEquals(#[
+		assertResult(#[
 			#["One", "", "Two", ""]
 		],
 		new CSVParser('''
 		One,,Two,
 		''').data);
 		
-		assertEquals(#[
+		assertResult(#[
 			#["One", "", "", "Two"]
 		],
 		new CSVParser('''
 		One,,,Two
 		''').data);
 		
-		assertEquals(#[
+		assertResult(#[
 			#["", "One", "Two", ""]
 		],
 		new CSVParser('''
@@ -148,7 +172,7 @@ public class CSVParserTest {
 	
 	@Test
 	public def void testSeveralRowsOfSameLength() {
-		assertEquals(#[
+		assertResult(#[
 			#["One", "Two", "Three", "Four"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
@@ -157,7 +181,7 @@ public class CSVParserTest {
 		Five,Six,Seven,Eight
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["", "Two", "Three", ""],
 			#["", "Six", "Seven", ""]
 		],
@@ -166,7 +190,7 @@ public class CSVParserTest {
 		,Six,Seven,
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["One", "Two", "Three", "Four"],
 			#["", "", "", ""],
 			#["Five", "Six", "Seven", "Eight"],
@@ -182,7 +206,7 @@ public class CSVParserTest {
 	
 	@Test
 	public def void testSeveralRowsOfDifferingLengths() {
-		assertEquals(#[
+		assertResult(#[
 			#["One", "Two", "Three"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
@@ -191,7 +215,7 @@ public class CSVParserTest {
 		Five,Six,Seven,Eight
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#[""],
 			#["Five", "Six", "Seven", "Eight"]
 		],
@@ -200,7 +224,7 @@ public class CSVParserTest {
 		Five,Six,Seven,Eight
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["Five", "Six", "Seven", "Eight"],
 			#[""]
 		],
@@ -209,7 +233,7 @@ public class CSVParserTest {
 
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["Five", "Six", "Seven", "Eight"],
 			#[""],
 			#["", "", ""]
@@ -220,7 +244,7 @@ public class CSVParserTest {
 		,,
 		''').data);
 		
-		assertEquals(#[
+		assertResult(#[
 			#["One", "Two", "Three"],
 			#[""],
 			#["", ""],
@@ -239,7 +263,7 @@ public class CSVParserTest {
 	
 	@Test
 	public def void testFieldsWithControlChars() {
-		assertEquals(#[
+		assertResult(#[
 			#["One,Two, Three"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
@@ -248,7 +272,7 @@ public class CSVParserTest {
 		Five,Six,Seven,Eight
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["One,Two, \n\nThree"],
 			#["\n"],
 			#["Five", "Six", "Seven", "Eight"]
@@ -262,7 +286,7 @@ public class CSVParserTest {
 		Five,Six,Seven,Eight
 		''').data);
 
-		assertEquals(#[
+		assertResult(#[
 			#["\"This is a quote!\"", "This isn't", "This is not, either"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
