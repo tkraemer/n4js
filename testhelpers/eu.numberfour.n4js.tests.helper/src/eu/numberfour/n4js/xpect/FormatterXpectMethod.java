@@ -23,14 +23,15 @@ import org.eclipse.xtext.formatting2.regionaccess.TextRegionAccessBuilder;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.ExceptionAcceptor;
 import org.xpect.XpectImport;
+import org.xpect.XpectInvocation;
 import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
+import org.xpect.expectation.impl.TargetSyntaxSupport;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.setup.ISetupInitializer;
 import org.xpect.setup.XpectSetupFactory;
 import org.xpect.state.Creates;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
 
 import com.google.inject.Inject;
@@ -82,10 +83,11 @@ public class FormatterXpectMethod {
 	public void formattedLines(
 			@StringExpectation(whitespaceSensitive = true) IStringExpectation exp,
 			int lines, // arg1
-			@ThisOffset int o,
+			XpectInvocation inv,
+			TargetSyntaxSupport syntax,
 			ITextRegionAccess reg,
 			ISetupInitializer<Preferences> prefInit) {
-		ITextSegment region = getRegionForLines(reg, o, lines);
+		ITextSegment region = getRegionForLines(reg, syntax.findFirstSemanticCharAfterStatement(inv), lines);
 
 		Preferences prefs = new Preferences();
 		// First put some defaults

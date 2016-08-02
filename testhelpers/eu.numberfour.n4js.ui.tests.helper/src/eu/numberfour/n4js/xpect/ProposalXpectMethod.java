@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import junit.framework.AssertionFailedError;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -37,6 +35,7 @@ import org.xpect.expectation.CommaSeparatedValuesExpectation;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
 import org.xpect.expectation.IStringDiffExpectation;
 import org.xpect.expectation.StringDiffExpectation;
+import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
@@ -49,6 +48,7 @@ import eu.numberfour.n4js.ui.xpect.N4ContentAssistProcessorTestBuilder;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import junit.framework.AssertionFailedError;
 
 /**
  * Provides XPECT test methods for proposals
@@ -167,17 +167,17 @@ public class ProposalXpectMethod {
 	 *             some exception
 	 */
 	// @formatter:on
-	@ParameterParser2(syntax = "(arg3=STRING 'at' arg2=OFFSET)?")
+	@ParameterParser(syntax = "(arg3=STRING 'at' arg2=STRING)?")
 	@Xpect
 	public void proposalChange(@StringDiffExpectation IStringDiffExpectation expectation,
 			@ThisResource XtextResource resource, /* @ThisOffset int */RegionWithCursor arg2, String arg3)
-					throws Exception {
+			throws Exception {
 
 		// val int offset = arg2;
 		RegionWithCursor offset = arg2;
 		String text = arg3;
 
-		// println("proposal change with offset="+arg2+"  selection="+arg3)
+		// println("proposal change with offset="+arg2+" selection="+arg3)
 		N4ContentAssistProcessorTestBuilder fixture = n4ContentAssistProcessorTestBuilderHelper
 				.createTestBuilderForResource(resource);
 		ICompletionProposal proposal = exactlyMatchingProposal(offset, fixture, text);
@@ -198,7 +198,7 @@ public class ProposalXpectMethod {
 	 * Searches for the proposal matching to selected.
 	 *
 	 * Throws exception if there are more then one or no proposals matching 'selected' found.
-	 * */
+	 */
 	private ICompletionProposal exactlyMatchingProposal(RegionWithCursor offset,
 			N4ContentAssistProcessorTestBuilder fixture,
 			String selected) {

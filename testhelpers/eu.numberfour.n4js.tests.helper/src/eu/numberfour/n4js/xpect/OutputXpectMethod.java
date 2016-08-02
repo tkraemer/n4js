@@ -18,8 +18,9 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Assert;
-import org.xpect.expectation.AbstractExpectation;
 import org.xpect.expectation.IStringExpectation;
+import org.xpect.expectation.StringExpectation;
+import org.xpect.expectation.impl.AbstractExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.xtext.lib.setup.FileSetupContext;
@@ -62,7 +63,7 @@ public class OutputXpectMethod {
 	 */
 	@Xpect
 	@ParameterParser(syntax = "( 'with' arg4=ID )?")
-	public void output(@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation, // arg0
+	public void output(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation, // arg0
 			@ThisResource XtextResource resource, // arg1
 			org.xpect.setup.ISetupInitializer<Object> init, // arg2
 			FileSetupContext fileSetupContext, // arg3
@@ -106,7 +107,7 @@ public class OutputXpectMethod {
 	 */
 	@Xpect
 	@ParameterParser(syntax = "( 'with' arg4=ID )?")
-	public void outputRegex(@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation, // arg0
+	public void outputRegex(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation, // arg0
 			@ThisResource XtextResource resource, // arg1
 			org.xpect.setup.ISetupInitializer<Object> init, // arg2
 			FileSetupContext fileSetupContext, // arg3
@@ -142,7 +143,7 @@ public class OutputXpectMethod {
 	 */
 	@Deprecated
 	@Xpect
-	public void compileResult(@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation,
+	public void compileResult(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation,
 			@ThisResource XtextResource resource) {
 		final String compileResult = getCompileResult(resource, false);
 		expectation.assertEquals(compileResult);
@@ -155,7 +156,7 @@ public class OutputXpectMethod {
 	 */
 	@Xpect
 	public void compileResultContains(
-			@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation,
+			@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation,
 			@ThisResource XtextResource resource) {
 		final String compileResult = getCompileResult(resource, false);
 		assertExpectationContained(expectation, compileResult, "compile result");
