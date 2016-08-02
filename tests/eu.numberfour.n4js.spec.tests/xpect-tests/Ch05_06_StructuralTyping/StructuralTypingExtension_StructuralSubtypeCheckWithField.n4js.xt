@@ -21,7 +21,7 @@ aro = afs;
 aro = aro;
 // XPECT errors --> "~w~A is not a structural subtype of ~r~A: s failed: readable field requires a getter in subtype." at "awo"
 aro = awo;
-// XPECT errors --> 
+// XPECT noerrors
 aro = ai;
 
 // XPECT noerrors --> ""
