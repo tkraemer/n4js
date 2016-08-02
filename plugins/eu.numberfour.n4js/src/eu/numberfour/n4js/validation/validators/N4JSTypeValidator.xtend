@@ -558,8 +558,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			tRefs.removeAll(intersectionTR);
 			
 			for (TypeRef tClassR : tRefs) {
-				val message = messageForUNI_UNNECESSARY_SUBTYPE;
-				addIssue(message, tClassR, UNI_UNNECESSARY_SUBTYPE);
+				val message = messageForUNI_REDUNDANT_SUBTYPE;
+				addIssue(message, tClassR, UNI_REDUNDANT_SUBTYPE);
 			}
 		}
 	}
@@ -603,8 +603,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		tClassRefs.removeAll(intersectionTR);
 
 		for (TypeRef tClassR : tClassRefs) {
-			val message = messageForINTER_UNNECESSARY_SUPERTYPE;
-			addIssue(message, tClassR, INTER_UNNECESSARY_SUPERTYPE);
+			val message = messageForINTER_REDUNDANT_SUPERTYPE;
+			addIssue(message, tClassR, INTER_REDUNDANT_SUPERTYPE);
 		}
 	}
 

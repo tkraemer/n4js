@@ -67,20 +67,20 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 	@Test
 	def void testSimplifyDuplicates() {
 		assertSimplify("A", "union{A}");
-		assertSimplify("union{A,B}", "union{A,B}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
-		assertSimplify("union{A,B}", "union{A,B,A}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,B}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,B,A}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE]);
 	}
 
 	@Test
 	def void testSimplifyNestedUnions() {
-		assertSimplify("union{A,B}", "union{A,B,union{A,B}}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
-		assertSimplify("union{A,B,C}", "union{A,B,union{B,C}}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE, IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,B,union{A,B}}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE, IssueCodes.UNI_REDUNDANT_SUBTYPE]);
+		assertSimplify("union{A,B,C}", "union{A,B,union{B,C}}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE, IssueCodes.UNI_REDUNDANT_SUBTYPE, IssueCodes.UNI_REDUNDANT_SUBTYPE]);
 	}
 
 	@Test
 	def void testSimplifyUndefinedAndNull() {
-		assertSimplify("union{A,B}", "union{A,B,undefined}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
-		assertSimplify("union{A,B}", "union{A,undefined,B}", #[IssueCodes.UNI_UNNECESSARY_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,B,undefined}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE]);
+		assertSimplify("union{A,B}", "union{A,undefined,B}", #[IssueCodes.UNI_REDUNDANT_SUBTYPE]);
 		assertSimplify("A", "union{A,undefined}");
 		assertSimplify("A", "union{undefined,A}");
 		assertSimplify("undefined", "union{undefined,undefined}");

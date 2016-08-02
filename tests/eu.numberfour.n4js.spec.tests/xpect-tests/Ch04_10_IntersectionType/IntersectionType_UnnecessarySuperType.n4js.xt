@@ -26,19 +26,19 @@ var a5 : intersection{~A, AA, I};
 
 
 
-// XPECT warnings --> "The use of unnecessary supertypes is discouraged." at "A"
+// XPECT warnings --> "The use of redundant supertypes is discouraged." at "A"
 var b1 : intersection{A, AA};
 
 
-// XPECT warnings --> "The use of unnecessary supertypes is discouraged." at "A"
+// XPECT warnings --> "The use of redundant supertypes is discouraged." at "A"
 var b2 : intersection{A, I, AA};
 
 
-// XPECT warnings --> "The use of unnecessary supertypes is discouraged." at "A"
+// XPECT warnings --> "The use of redundant supertypes is discouraged." at "A"
 var b3 : intersection{A, intersection{AA, I}};
 
 
-// XPECT warnings --> "The use of unnecessary supertypes is discouraged." at "G<A>"
+// XPECT warnings --> "The use of redundant supertypes is discouraged." at "G<A>"
 var b4 : intersection{G<A>, intersection{GG<A>, I}};
 
 

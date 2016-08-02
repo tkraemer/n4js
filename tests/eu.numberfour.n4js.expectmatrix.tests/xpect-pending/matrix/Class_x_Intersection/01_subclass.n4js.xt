@@ -18,7 +18,7 @@ var bc : intersection{A,C} = new D();
 
 // intersection may only contain one class
 // XPECT warnings --- 
-// "The use of unnecessary supertypes is discouraged." at "B"
+// "The use of redundant supertypes is discouraged." at "B"
 // "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "C"
 // "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "D"
 // ---

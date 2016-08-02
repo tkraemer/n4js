@@ -45,11 +45,11 @@ class JoinComputer_IntersectionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Test
 	def void testJoinIntersectionWithElementFromIntersection() {
-		assertJoin(#[IssueCodes.INTER_UNNECESSARY_SUPERTYPE], "A", "A", "intersection{A,B}");
-		assertJoin(#[IssueCodes.INTER_UNNECESSARY_SUPERTYPE], "B", "B", "intersection{A,B}");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "A", "A", "intersection{A,B}");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "B", "B", "intersection{A,B}");
 		assertJoin("R1", "R1", "intersection{A,R1}");
 		assertJoin("N4Object", "D", "intersection{A,R1}", "A");
-		assertJoin(#[IssueCodes.INTER_UNNECESSARY_SUPERTYPE], "A", "B", "intersection{A,B}", "A");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "A", "B", "intersection{A,B}", "A");
 	}
 
 	@Test
@@ -57,7 +57,7 @@ class JoinComputer_IntersectionTypesTest extends AbstractTypeSystemHelperTests {
 		assertJoin("intersection{I1,R1}", "intersection{I1,R1}", "intersection{I1,R1}");
 		assertJoin("intersection{I1,R1}", "intersection{I1,R1,Q1}", "intersection{I1,R1}");
 		assertJoin("intersection{A,R1}", "intersection{A,R1}", "intersection{B,R1}");
-		assertJoin(#[IssueCodes.INTER_UNNECESSARY_SUPERTYPE,IssueCodes.INTER_UNNECESSARY_SUPERTYPE], "B", "intersection{A,B}", "intersection{A,B}");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE,IssueCodes.INTER_REDUNDANT_SUPERTYPE], "B", "intersection{A,B}", "intersection{A,B}");
 
 	}
 

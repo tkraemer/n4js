@@ -26,33 +26,33 @@ var a4 : union{~A, B};
 
 
 
-// XPECT warnings --> "The use of unnecessary subtypes is discouraged." at "AA"
+// XPECT warnings --> "The use of redundant subtypes is discouraged." at "AA"
 var b1 : union{A, AA};
 
 
 // XPECT warnings ---
-// "The use of unnecessary subtypes is discouraged." at "AA"
-// "The use of unnecessary subtypes is discouraged." at "AAA"
+// "The use of redundant subtypes is discouraged." at "AA"
+// "The use of redundant subtypes is discouraged." at "AAA"
 // ---
 var b2 : union{A, AA, AAA};
 
 
 // XPECT warnings ---
-// "The use of unnecessary subtypes is discouraged." at "AA"
-// "The use of unnecessary subtypes is discouraged." at "AB"
+// "The use of redundant subtypes is discouraged." at "AA"
+// "The use of redundant subtypes is discouraged." at "AB"
 // ---
 var b3 : union{A, AA, AB};
 
 
-// XPECT warnings --> "The use of unnecessary subtypes is discouraged." at "AA"
+// XPECT warnings --> "The use of redundant subtypes is discouraged." at "AA"
 var b4 : union{A, I, AA};
 
 
-// XPECT warnings --> "The use of unnecessary subtypes is discouraged." at "AA"
+// XPECT warnings --> "The use of redundant subtypes is discouraged." at "AA"
 var b5 : union{A, union{AA, I}};
 
 
-// XPECT warnings --> "The use of unnecessary subtypes is discouraged." at "GG<A>"
+// XPECT warnings --> "The use of redundant subtypes is discouraged." at "GG<A>"
 var b6 : union{G<A>, union{GG<A>, I}};
 
 
