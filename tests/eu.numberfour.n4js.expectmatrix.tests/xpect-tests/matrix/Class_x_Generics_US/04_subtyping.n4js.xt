@@ -36,10 +36,10 @@ gEx(new G<A>());
 // G<? extends B> <: G<? extends B> = true (with subtype) XPECT noerrors -->
 gExB(new G<C>());
 
-// G<? extends B> <: G<? extends B> = true (with supertype) XPECT errors --> "G<A> is not a subtype of G<? extends B>." at "new G<A>()"
+// G<? extends B> <: G<? extends B> = false (with supertype) XPECT errors --> "G<A> is not a subtype of G<? extends B>." at "new G<A>()"
 gExB(new G<A>());
 
-// G<? extends B> <: G<? extends B> = true (with any) XPECT errors --> "G<any> is not a subtype of G<? extends B>." at "new G<any>()"
+// G<? extends B> <: G<? extends B> = false (with any) XPECT errors --> "G<any> is not a subtype of G<? extends B>." at "new G<any>()"
 gExB(new G<any>());
 
 // G<? extends B> <: G<? extends B> = true (with undefined) XPECT noerrors -->
@@ -49,13 +49,13 @@ gExB(new G<undefined>());
 // G<? super B> <: G<? super B> = true (with supertype) XPECT noerrors -->
 gSupB(new G<A>());
 
-// G<? super B> <: G<? super B> = true (with subtype) XPECT errors --> "G<C> is not a subtype of G<? super B>." at "new G<C>()"
+// G<? super B> <: G<? super B> = false (with subtype) XPECT errors --> "G<C> is not a subtype of G<? super B>." at "new G<C>()"
 gSupB(new G<C>());
 
 // G<? super B> <: G<? super B> = true (with any) XPECT noerrors -->
 gSupB(new G<any>());
 
-// G<? super B> <: G<? super B> = true (with undefined) XPECT errors --> "G<undefined> is not a subtype of G<? super B>." at "new G<undefined>()"
+// G<? super B> <: G<? super B> = false (with undefined) XPECT errors --> "G<undefined> is not a subtype of G<? super B>." at "new G<undefined>()"
 gSupB(new G<undefined>());
 
 
