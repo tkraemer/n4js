@@ -29,11 +29,11 @@ var d = [ 7 ]/* foo */
 
 
 /* XPECT formattedLines 3 ---
-var d = [ 7 ];/\* 
+var e = [ 7 ];/\* 
    foo
  *\/
 --- */
-var d = [ 7 ]/* 
+var e = [ 7 ]/* 
    foo
  */
 
