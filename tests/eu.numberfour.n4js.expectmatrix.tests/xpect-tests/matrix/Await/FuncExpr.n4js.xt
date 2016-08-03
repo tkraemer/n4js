@@ -10,14 +10,14 @@ var h = async function () : string {
 async function f1 () : string {
 	var s = function (): string { return "A"; }
 	
-	// Await works with function expressions XPECT noerrors -->	
+	// await works with function expressions XPECT noerrors -->	
 	var t : string = await s();
 	
 	return t;
 }
 
 async function f2 () : string {
-	// Await annotation works with IIFE XPECT noerrors -->
+	// await works with IIFE XPECT noerrors -->
 	var s : string = await ( function (): string { return "hello"; })();
 	return s;
 }
