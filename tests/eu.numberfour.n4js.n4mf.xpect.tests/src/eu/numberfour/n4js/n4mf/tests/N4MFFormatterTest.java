@@ -70,7 +70,7 @@ public class N4MFFormatterTest {
 	 * @param to
 	 *            the optional to offset to which formatting should be applied
 	 */
-	@ParameterParser(syntax = "('from' offset=OFFSET 'to' to=OFFSET)?")
+	@ParameterParser(syntax = "('from' arg2=OFFSET 'to' arg3=OFFSET)?")
 	@Xpect
 	public void formatted(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation,
 			@ThisResource XtextResource resource, @ThisOffset int offset, @ThisOffset int to) {
