@@ -299,4 +299,8 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 	 * @return the generated code fragment
 	 */
 	protected abstract def CharSequence generateMember()
+
+	override public def String toString() {
+		return generate().toString();
+	}
 }

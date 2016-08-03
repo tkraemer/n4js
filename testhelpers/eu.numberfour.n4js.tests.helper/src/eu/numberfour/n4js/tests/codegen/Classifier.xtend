@@ -171,6 +171,10 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 	protected abstract def CharSequence generateTypeRelations()
 
 	private def boolean hasMembers() {
-		!members.empty
+		members !== null && !members.empty
+	}
+	
+	override public def String toString() {
+		return generate().toString();
 	}
 }

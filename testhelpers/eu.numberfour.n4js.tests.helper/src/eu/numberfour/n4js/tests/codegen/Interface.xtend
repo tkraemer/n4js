@@ -44,6 +44,6 @@ class Interface extends Classifier<Interface> {
 	override protected def generateType() '''interface '''
 
 	override protected def CharSequence generateTypeRelations() '''
-	«FOR i : extendedInterfaces BEFORE ' extends ' SEPARATOR ', '»«i»«ENDFOR»
+	«IF extendedInterfaces !== null»«FOR i : extendedInterfaces BEFORE ' extends ' SEPARATOR ', '»«i»«ENDFOR»«ENDIF»
 	'''
 }
