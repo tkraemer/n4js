@@ -4,8 +4,10 @@ class Beer implements Alcohol, IBeverage {}
 class Coors extends Beer {}
 
 //Proposal
+// found during IDE-1852: XPECT FIXME nowarnings
 // XPECT FIXME noerrors --> "implements in type argument if type is an interface" at "implements"
 var Array<? implements IBeverage> drinks = [new Beer()];
+// found during IDE-1852: XPECT FIXME nowarnings
 // XPECT FIXME noerrors --> "with in type argument if type is a interface" at "with"
 var Array<? with Alcohol> boozyDrinks = [new Beer()];
 // XPECT noerrors --> 
