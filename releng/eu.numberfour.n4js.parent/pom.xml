@@ -47,7 +47,7 @@ Contributors:
 		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 
-		<memoryArgs>-Xms256M -Xmx1424M -XX:+HeapDumpOnOutOfMemoryError</memoryArgs>
+		<memoryArgs>-Xms256M -Xmx1324M -XX:+HeapDumpOnOutOfMemoryError</memoryArgs>
 		<lowMemoryArgs>-Xms64M -Xmx320M -XX:+HeapDumpOnOutOfMemoryError</lowMemoryArgs>
 		<encodingArgs>-Dfile.encoding=${file.encoding}</encodingArgs>
 
