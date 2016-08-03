@@ -27,6 +27,9 @@ c_str_ol = ol_c_str;
 ol_c_str = c_str_ol; 
  
 
+var ol_c_str1 = { n: 10, foo() {} };
+// XPECT noerrors -->
+ol_c_str1 = c_str_ol; 
 
 
 // Remark: the following tests illustrates a contravariance problem, which is the foundation for the whole test suite:
