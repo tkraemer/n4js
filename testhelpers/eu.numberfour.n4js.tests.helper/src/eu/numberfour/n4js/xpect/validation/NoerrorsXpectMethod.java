@@ -17,5 +17,5 @@ package eu.numberfour.n4js.xpect.validation;
  * /eu.numberfour.n4js.xpect.ui/src/eu/numberfour/n4js/xpect/ui/xpectmethods/NoerrorsXpectMethod.java
  */
 public class NoerrorsXpectMethod {
-
+	// noop
 }

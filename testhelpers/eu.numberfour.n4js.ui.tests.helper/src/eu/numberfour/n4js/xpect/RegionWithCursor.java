@@ -40,25 +40,24 @@ public class RegionWithCursor extends DerivedRegion {
 		/***/
 		@Creates
 		public RegionWithCursor createRegionWithCursor() {
-			CursorMarkerHelper cmh = new CursorMarkerHelper();
 			String val = delegate.getRegionText();
 			StringBuffer sb = new StringBuffer(val);
 
 			@SuppressWarnings("unused")
-			boolean hasCursor = CursorMarkerHelper.exists(val, cmh.markerCursor);
-			boolean hasEndSelection = CursorMarkerHelper.exists(val, cmh.markerSelectionEnd);
-			boolean hasStartSelection = CursorMarkerHelper.exists(val, cmh.markerSelectionStart);
+			boolean hasCursor = CursorMarkerHelper.exists(val, CursorMarkerHelper.markerCursor);
+			boolean hasEndSelection = CursorMarkerHelper.exists(val, CursorMarkerHelper.markerSelectionEnd);
+			boolean hasStartSelection = CursorMarkerHelper.exists(val, CursorMarkerHelper.markerSelectionStart);
 
-			int cursorOffset = CursorMarkerHelper.deleteMarker(sb, cmh.markerCursor);
-			int selStartOffset = CursorMarkerHelper.deleteMarker(sb, cmh.markerSelectionStart);
-			int selEndOffset = CursorMarkerHelper.deleteMarker(sb, cmh.markerSelectionEnd);
+			int cursorOffset = CursorMarkerHelper.deleteMarker(sb, CursorMarkerHelper.markerCursor);
+			int selStartOffset = CursorMarkerHelper.deleteMarker(sb, CursorMarkerHelper.markerSelectionStart);
+			int selEndOffset = CursorMarkerHelper.deleteMarker(sb, CursorMarkerHelper.markerSelectionEnd);
 			val = sb.toString();
 
 			// reduce cursor offset if selection markers were inserted in front of.
 			if (hasStartSelection && selStartOffset < cursorOffset)
-				cursorOffset -= cmh.markerSelectionStart.length();
+				cursorOffset -= CursorMarkerHelper.markerSelectionStart.length();
 			if (hasEndSelection && selEndOffset < cursorOffset)
-				cursorOffset -= cmh.markerSelectionEnd.length();
+				cursorOffset -= CursorMarkerHelper.markerSelectionEnd.length();
 
 			XpectInvocation invocation = delegate.getStatement();
 
@@ -80,7 +79,7 @@ public class RegionWithCursor extends DerivedRegion {
 
 					if (selEndOffset < cursorOffset)
 						throw new RuntimeException("OFFSET '" + delegate + " has no selection start("
-								+ cmh.markerSelectionStart + ").");
+								+ CursorMarkerHelper.markerSelectionStart + ").");
 					else
 						return new RegionWithCursor(delegate, globalCursorOffset, selEndOffset - cursorOffset,
 								globalCursorOffset);
@@ -93,7 +92,7 @@ public class RegionWithCursor extends DerivedRegion {
 				} else {
 					// start but no end selection -> error
 					throw new RuntimeException("OFFSET '" + delegate + " has no end selection marker ("
-							+ cmh.markerSelectionEnd + ").");
+							+ CursorMarkerHelper.markerSelectionEnd + ").");
 				}
 			}
 		}

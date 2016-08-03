@@ -5,7 +5,7 @@
 // --- --- --- positive tests --- --- --- \\
 
 function a1(s1 : string, n2 : number) {
-	// OK XPECT ! noerrors
+	// OK XPECT noerrors
 	var l : number = arguments.length
 	var ls1 : string = arguments[0] as string;
 	var ln1 : number = arguments[1] as number;

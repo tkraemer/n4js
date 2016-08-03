@@ -35,6 +35,7 @@ import eu.numberfour.n4js.runner.SystemLoaderInfo;
  * Provides execution output xpect test methods. Provided resource compiled on the fly and executed, captured output is
  * compared against provided expectations.
  */
+@SuppressWarnings("restriction")
 public class OutputXpectMethod {
 
 	@Inject

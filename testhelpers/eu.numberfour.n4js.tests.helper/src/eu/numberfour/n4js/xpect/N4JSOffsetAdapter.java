@@ -74,6 +74,7 @@ public class N4JSOffsetAdapter {
 
 		private final IRegion region;
 		private final @ThisResource XtextResource resource;
+		@SuppressWarnings("unused")
 		private final XpectInvocation invocation;
 
 		/***/

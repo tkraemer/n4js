@@ -26,6 +26,7 @@ import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
 
 /**
  */
+@SuppressWarnings("restriction")
 class VarSubstExpectationCollection extends ExpectationCollection {
 
 	final static Pattern pVar = Pattern.compile("<\\$(\\p{Alpha}*)>");

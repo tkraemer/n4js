@@ -44,6 +44,7 @@ import com.google.common.collect.Sets;
  * @author Moritz Eysholdt - Initial contribution and API
  * @author Jörg Reichert, Jens von Pilgrim <jens.von.pilgrim@numberfour.eu> - N4JS adaptations
  */
+@SuppressWarnings("restriction")
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 public @interface N4JSCommaSeparatedValuesExpectation {
@@ -209,6 +210,7 @@ public @interface N4JSCommaSeparatedValuesExpectation {
 			return b.toString();
 		}
 
+		/***/
 		@Creates
 		public IN4JSCommaSeparatedValuesExpectation create() {
 			return this;
