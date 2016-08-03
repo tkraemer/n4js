@@ -148,14 +148,13 @@ public class ContentAssistXpectMethod {
 		} else if (changedLines.isEmpty()) {
 			throw new AssertionError("Nothing changed.");
 		}
-		String exp = changedLines.first().after;
+		String exp = changedLines.first().getAfter();
 
 		Point selection = proposal.getSelection(document);
 		if (selection != null) {
 			IExpectationRegion region = ((AbstractExpectation) expectation).getRegion();
-			int marker = region.getRegionText().indexOf(CursorMarkerHelper.markerCursor);
-			if (marker >= 0) {
-				int newPos = selection.x - region.getOffset();
+			if (CursorMarkerHelper.exists(region.getRegionText(), CursorMarkerHelper.markerCursor)) {
+				int newPos = selection.x - changedLines.first().getAfterOffset();
 				exp = new StringBuilder(exp).insert(newPos, CursorMarkerHelper.markerCursor).toString();
 			}
 		}
