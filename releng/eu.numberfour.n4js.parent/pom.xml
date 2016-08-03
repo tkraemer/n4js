@@ -47,7 +47,7 @@ Contributors:
 		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 
-		<memoryArgs>-Xms256M -Xmx1224M -XX:+HeapDumpOnOutOfMemoryError</memoryArgs>
+		<memoryArgs>-Xms256M -Xmx1424M -XX:+HeapDumpOnOutOfMemoryError</memoryArgs>
 		<lowMemoryArgs>-Xms64M -Xmx320M -XX:+HeapDumpOnOutOfMemoryError</lowMemoryArgs>
 		<encodingArgs>-Dfile.encoding=${file.encoding}</encodingArgs>
 
@@ -698,7 +698,7 @@ Contributors:
 			<id>staging</id>
 			<activation>
 				<!--
-					ENABLE this if pre-releases are desired: 
+					ENABLE this if pre-releases are desired:
 					As long as we depend on a unstable pre-release activate the staging unless -DnoStaging is given.
 				<property>
 					<name>!noStaging</name>
