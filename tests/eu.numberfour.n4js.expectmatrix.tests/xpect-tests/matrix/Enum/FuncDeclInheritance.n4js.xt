@@ -1,6 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
 
-// String based enum vs. N4Enum with function expressions
+// String based enum vs. N4Enum with function declarations
 
 @StringBased enum SBEnum {
 	a: "a",
@@ -12,17 +12,17 @@ enum NSBEnum { A, B }
 // Want N4Enum, got SBEnum //
 /////////////////////////////
 
-// IDEBUG-294 N4StringBasedEnum !<: N4Enum XPECT errors --> "SBEnum is not a subtype of N4Enum." at "s"
-var f = function (s : SBEnum) : N4Enum { return s; }
+// N4StringBasedEnum !<: N4Enum XPECT errors --> "SBEnum is not a subtype of N4Enum." at "s"
+function f(s : SBEnum) : N4Enum { return s; }
 
 
 
 // Want N4StringBasedEnum, got SBEnum //
 ////////////////////////////////////////
 
-var g = function (s : N4StringBasedEnum) : N4StringBasedEnum { return s; }
+function g(s : N4StringBasedEnum) : N4StringBasedEnum { return s; }
 
-// SBEnum is a N4StringBasedEnum XPECT noerrors -->
+// XPECT noerrors -->
 g(SBEnum.b);
 
 // N4StringBasedEnum is a string, too XPECT noerrors --> 
