@@ -13,6 +13,8 @@ import eu.numberfour.n4js.ts.types.AccessibleTypeElement;
 import eu.numberfour.n4js.ts.types.TypeAccessModifier;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -22,7 +24,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +39,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class AccessibleTypeElementImpl extends MinimalEObjectImpl.Container implements AccessibleTypeElement {
+public abstract class AccessibleTypeElementImpl extends ProxyResolvingEObjectImpl implements AccessibleTypeElement {
 	/**
 	 * The default value of the '{@link #getDeclaredTypeAccessModifier() <em>Declared Type Access Modifier</em>}' attribute.
 	 * <!-- begin-user-doc -->

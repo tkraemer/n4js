@@ -16,8 +16,6 @@ import static java.util.Collections.unmodifiableCollection;
 
 import java.util.Collection;
 
-import eu.numberfour.n4js.utils.M2MUriUtil;
-
 /**
  * Global hook for static information about the current setup.
  *
@@ -55,13 +53,7 @@ public final class N4JSGlobals {
 			N4JSD_FILE_EXTENSION,
 			JS_FILE_EXTENSION)));
 
-	/**
-	 * Fragment prefix for module-to-module URIs (a.k.a. m2m URIs). See {@link M2MUriUtil}.
-	 */
-	public static final String URI_FRAGMENT_PREFIX_M2M = "m2m!";
-
 	private N4JSGlobals() {
 		// private to prevent inheritance & instantiation.
 	}
-
 }

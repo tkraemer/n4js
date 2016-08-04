@@ -10,12 +10,13 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.StrictModeRelevant;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class StrictModeRelevantImpl extends MinimalEObjectImpl.Container implements StrictModeRelevant {
+public abstract class StrictModeRelevantImpl extends ProxyResolvingEObjectImpl implements StrictModeRelevant {
 	/**
 	 * The default value of the '{@link #isStrictMode() <em>Strict Mode</em>}' attribute.
 	 * <!-- begin-user-doc -->
