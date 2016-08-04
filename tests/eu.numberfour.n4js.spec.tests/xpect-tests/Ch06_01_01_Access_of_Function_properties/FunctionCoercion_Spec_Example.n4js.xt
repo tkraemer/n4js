@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 // function declaration
 var param : number = function(p_a,p_b){}.length // 2
 

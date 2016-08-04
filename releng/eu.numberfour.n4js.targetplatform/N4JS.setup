@@ -260,7 +260,7 @@
         name="org.xpect.sdk.feature.group"
         versionRange="[0.1.0,0.1.1)"/>
     <repository
-        url="https://numberfour.github.io/Xpect/updatesite/nightly/local"/>
+        url="http://www.xpect-tests.org/updatesite/nightly/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -702,7 +702,7 @@
         <repository
             url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
         <repository
-            url="https://numberfour.github.io/Xpect/updatesite/nightly/local"/>
+            url="http://www.xpect-tests.org/updatesite/nightly/"/>
       </repositoryList>
     </targlet>
   </setupTask>

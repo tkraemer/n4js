@@ -9,56 +9,56 @@
 
 
 /* XPECT formattedLines 1 ---
-var a, b, c, d, e;
+var a1, b1, c1, d1, e1;
 --- */
-var a,b,c,d,e;
+var a1,b1,c1,d1,e1;
 
 /* XPECT formattedLines 1 ---
-var a, b, c, d, e;
+var a2, b2, c2, d2, e2;
 --- */
-var 	  		a,		  		b,c,d		  	,e;
+var 	  		a2,		  		b2,c2,d2		  	,e2;
 
 
 /* XPECT formattedLines 1 ---
-var a = 1,
-	b, c,
-	d = 3,
-	e;
+var a3 = 1,
+	b3, c3,
+	d3 = 3,
+	e3;
 --- */
-var a=1,b,c,d  =   3  ,e;
+var a3=1,b3,c3,d3  =   3  ,e3;
 
 /* XPECT formattedLines 7 ---
 {
-	let a: int,
-		abc: int,
-		x: int, y: int,
-		c: int,
-		f = 3;
+	let a4: int,
+		abc4: int,
+		x4: int, y: int,
+		c4: int,
+		f4 = 3;
 }
 --- */
 {
-    let a: int,
-        abc: int,
-        x: int, y: int,
-        c: int,
-        f = 3;
+    let a4: int,
+        abc4: int,
+        x4: int, y: int,
+        c4: int,
+        f4 = 3;
 }
 /* XPECT formattedLines 8 ---
 function goo(bar: int, hoo: int) {
 	// leave the lines as they are, but fix base indentation 
-	let a: int,
-		abc: int,
-		x: int, y: int,
-		c: int,
-		f = 3;
+	let a5: int,
+		abc5: int,
+		x5: int, y: int,
+		c5: int,
+		f5 = 3;
 };
 --- */
 function goo(bar: int, hoo: int) {
     // leave the lines as they are, but fix base indentation 
-    let a: int,
-        abc: int,
-        x: int, y: int,
-        c: int,
-        f = 3;
+    let a5: int,
+        abc5: int,
+        x5: int, y: int,
+        c5: int,
+        f5 = 3;
 }
 

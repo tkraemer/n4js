@@ -22,6 +22,7 @@ import org.eclipse.xtext.validation.Issue
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolution
 import org.eclipse.jface.text.contentassist.ICompletionProposal
 import junit.framework.AssertionFailedError
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  */
@@ -191,6 +192,9 @@ public class QuickFixTestHelper {
 		val aLines = after.split(delim)
 
 		val ChangeInfo ci = new ChangeInfo()
+		
+		var bo = 0
+		var ao = 0
 
 		// assuming single line inserts and matching lines around them.
 		for (var int bi = 0, var ai = 0; bi < bLines.length && ai < aLines.length; bi++, ai++) {
@@ -202,21 +206,24 @@ public class QuickFixTestHelper {
 				if (ai + 1 < aLines.length && b.trim.equals(aLines.get(ai + 1).trim)) {
 
 					// match with next in a, newly inserted A
-					ci.add(bi, "", aLines.get(ai))
+					ci.add(bi, bo, "", ao, aLines.get(ai))
 					ai++
-				} else
-				// or this line is removed.
+					ao += aLines.get(ai).length + delim.length
+				} else // or this line is removed.
 				if (bi + 1 < bLines.length && bLines.get(bi + 1).trim.equals(a.trim)) {
-					ci.add(bi, bLines.get(bi), "")
+					ci.add(bi, bo, bLines.get(bi), ao, "")
 					bi++
+					bo += aLines.get(bi).length + delim.length
 				} else {
 
 					// a real difference
-					ci.add(bi, bLines.get(bi), aLines.get(ai))
+					ci.add(bi, bo, bLines.get(bi), ao, aLines.get(ai))
 				}
 			} else {
 				// match.
 			}
+			ao += aLines.get(ai).length + delim.length
+			bo += aLines.get(bi).length + delim.length
 		}
 		return ci
 	}
@@ -224,29 +231,26 @@ public class QuickFixTestHelper {
 	/**
 	 * Container to track changed lines in multiline strings.
 	 */
-	public static class ChangeInfo {
-		static class ChangedLine {
-			public final int lineNumber
-			public final String before
-			public final String after
+	static class ChangeInfo {
+		@Accessors static class ChangedLine {
+			val int lineNumber
+			val int beforeOffset
+			val String before
+			val int afterOffset
+			val String after
 
-			new(int n, String b, String a) {
-				lineNumber = n;
-				before = b;
-				after = a;
-			}
 			override toString() {
 			'''L:«lineNumber»[«before»|«after»]'''
 		}
 		}
 
-		List<ChangedLine> changes = newArrayList();
+		val List<ChangedLine> changes = newArrayList();
 
 		public new() {
 		}
 
-		def add(int n, String b, String a) {
-			changes += new ChangedLine(n, b, a)
+		def add(int n, int beforeOffset, String b, int afterOffset, String a) {
+			changes += new ChangedLine(n, beforeOffset, b, afterOffset, a)
 		}
 
 		def asString() {

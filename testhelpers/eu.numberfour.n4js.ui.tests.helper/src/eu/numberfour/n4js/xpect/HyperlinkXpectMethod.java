@@ -26,6 +26,7 @@ import org.eclipse.xtext.ui.editor.hyperlinking.XtextHyperlink;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.xpect.expectation.CommaSeparatedValuesExpectation;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
+import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.xtext.lib.setup.ThisResource;
 
@@ -58,7 +59,7 @@ public class HyperlinkXpectMethod {
 	 * @throws Exception
 	 *             some exceptions
 	 */
-	@ParameterParser2(syntax = "('at' arg2=OFFSET)?")
+	@ParameterParser(syntax = "('at' arg2=STRING)?")
 	@Xpect
 	public void hyperlinks(
 			@CommaSeparatedValuesExpectation ICommaSeparatedValuesExpectation expectation, // arg0

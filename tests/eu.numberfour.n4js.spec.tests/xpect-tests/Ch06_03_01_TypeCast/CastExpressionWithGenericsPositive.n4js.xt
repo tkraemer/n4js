@@ -11,11 +11,14 @@ class C extends A<string> {
 
 var as : A<string>;
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT type of 'a as B<string>' --> B<string> 
 a as B<string>;
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT type of 'a as C' --> C 
 a as C;
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT type of '(a as C).t' --> string 
 (a as C).t;

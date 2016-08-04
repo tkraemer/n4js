@@ -13,6 +13,7 @@ interface I {
 	// XPECT type of 'm3' --> {function():Promise<void, ?>}
 	m3() : Promise<void, ?> // no body
 	
+	// found during IDE-1852: XPECT FIXME noerrors
 	// XPECT type of 'm4' --> {function():Promise<void, ?>}
 	m4() : Promise<void, ?> {} // note: got a body in this case
 

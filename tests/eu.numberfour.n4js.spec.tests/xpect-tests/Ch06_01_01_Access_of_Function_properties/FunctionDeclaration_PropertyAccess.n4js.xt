@@ -2,11 +2,11 @@
 
 // Acceptance Test IDE-830
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 var param : number = function(aa,bb){}.length
 
 var func1 = function(m,l,b){/*...*/};
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 func1.length; // 3
 
 var func2 : {function()} = function(){/*...*/};
@@ -14,21 +14,21 @@ var obj = {};
 var ar : Array<?> = []
 
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 func2.call(obj);
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 func2.apply(null, ar);
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 func2.bind(null);
 
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 func2.toString();
 
 
 
 function a(x : number) { return x*x; }
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 a.length; // 1 
 

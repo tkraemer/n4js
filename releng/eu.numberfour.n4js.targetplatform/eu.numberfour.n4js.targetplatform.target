@@ -16,7 +16,7 @@ This has two advantages:
 -->
 
 <!-- Features added to the target platform -->
-<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0  +(Xcore 1.3.2) , Xsemantics 1.10, XpectN4" sequenceNumber="96">
+<target includeMode="feature" name="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0  +(Xcore 1.3.2) , Xsemantics 1.10, XpectN4" sequenceNumber="103">
 	<locations>
 		<!-- Main target platform, that is: Eclipse 4.5 Mars -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -72,7 +72,7 @@ This has two advantages:
 			<unit id="org.eclipse.ecf.filetransfer.ssl.feature.feature.group" version="1.1.0.v20151130-0157" />
 			<unit id="org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group" version="3.12.0.v20151130-0157" />
 			<unit id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group" version="1.1.0.v20151130-0157" />
-			
+
 			<repository location="http://download.eclipse.org/eclipse/updates/4.5/R-4.5.2-201602121500"/>
 		</location>
 
@@ -119,7 +119,7 @@ This has two advantages:
 			<unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
 		</location>
--->		
+-->
 
 		<!-- ANTLR parser generator (not runtime), used by Xtext during code generation -->
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -142,8 +142,8 @@ This has two advantages:
 		</location>
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201506020812"/>
-			<repository location="https://numberfour.github.io/Xpect/updatesite/nightly/local/"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201608041256"/>
+			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 
 		<!-- only needed for Xpect development -->
@@ -193,13 +193,20 @@ This has two advantages:
 			<unit id="javaewah" version="0.7.9.v201401101600" />
 			<unit id="javaewah.source" version="0.7.9.v201401101600" />
 
+			<unit id="ch.qos.logback.classic" version="1.0.7.v20121108-1250"/>
+			<unit id="ch.qos.logback.core" version="1.0.7.v20121108-1250"/>
+			<unit id="ch.qos.logback.core.source" version="1.0.7.v20121108-1250"/>
+			<unit id="ch.qos.logback.classic.source" version="1.0.7.v20121108-1250"/>
+			<unit id="ch.qos.logback.slf4j.source" version="1.0.7.v201505121915"/>
+			<unit id="ch.qos.logback.slf4j" version="1.0.7.v201505121915"/>
+
 			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
 		</location>
 
 		<!-- JSON editor (Used by the web team)-->
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="jsonedit-feature.feature.group" version="0.9.7"/>
-			<repository location="http://sourceforge.net/projects/eclipsejsonedit/files/update/"/>
+			<unit id="jsonedit-feature.feature.group" version="0.0.0"/>
+			<repository location="http://boothen.github.io/Json-Eclipse-Plugin/"/>
 		</location>
 
 		<!-- Path Tools -->

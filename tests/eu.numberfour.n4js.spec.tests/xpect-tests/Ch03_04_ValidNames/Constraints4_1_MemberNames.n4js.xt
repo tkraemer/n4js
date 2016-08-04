@@ -10,7 +10,7 @@ class C {
 	private;
 
 	//IDEBUG-304 allows js keywords as member names
-	// XPECT warnings --> 
+	// XPECT nowarnings
 	class;
 
 	// XPECT warnings --> "Field string is not of type string but of type any." at "string"
