@@ -1,8 +1,8 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
-class X {}
-class Y {}
+interface X {}
+interface Y {}
 
 
 class A {
