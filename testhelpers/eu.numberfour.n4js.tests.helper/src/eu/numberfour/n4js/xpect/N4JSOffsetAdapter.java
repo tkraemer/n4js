@@ -72,7 +72,8 @@ public class N4JSOffsetAdapter {
 	@XpectSetupFactory
 	public static class EObjectCoveringRegionProvider {
 
-		private final IRegion region;
+		private final IRegion region; // can be null, then the matchedOffset is given:
+		private final int matchedOffset; // matchedOffest if no region was specified
 		private final @ThisResource XtextResource resource;
 		@SuppressWarnings("unused")
 		private final XpectInvocation invocation;
@@ -83,6 +84,7 @@ public class N4JSOffsetAdapter {
 			this.resource = resource;
 			this.region = delegate.getMatchedRegion();
 			this.invocation = invocation;
+			this.matchedOffset = delegate.getMatchedOffset();
 		}
 
 		/***/
@@ -90,13 +92,16 @@ public class N4JSOffsetAdapter {
 			this.resource = resource;
 			this.region = invocation.getExtendedRegion();
 			this.invocation = invocation;
+			this.matchedOffset = region.getOffset();
 		}
 
 		/***/
 		@Creates
 		public IEObjectCoveringRegion IEObjectCoveringRegion() {
-			int offset = region.getOffset();
-			int length = region.getLength();
+			final boolean haveRegion = region != null;
+
+			int offset = haveRegion ? region.getOffset() : this.matchedOffset;
+			int length = haveRegion ? region.getLength() : 0;
 			int endOffset = offset + length;
 			EObject semanticObject = null;
 
@@ -104,12 +109,19 @@ public class N4JSOffsetAdapter {
 			while (node != null) {
 				EObject actualObject = NodeModelUtils.findActualSemanticObjectFor(node);
 				if (actualObject != null) {
-					int nodeEndOffset = node.getEndOffset();
-					if (nodeEndOffset <= endOffset || semanticObject == null) {
-						semanticObject = actualObject;
-					}
-					if (nodeEndOffset >= endOffset) {
-						break;
+					if (haveRegion) {
+						int nodeEndOffset = node.getEndOffset();
+						if (nodeEndOffset <= endOffset || semanticObject == null) {
+							semanticObject = actualObject;
+						}
+						if (nodeEndOffset >= endOffset) {
+							break;
+						}
+					} else { // no region given, just a matched offset
+						if (semanticObject == null) {
+							semanticObject = actualObject;
+							break;
+						}
 					}
 				}
 				node = node.getParent();
