@@ -24,7 +24,6 @@ import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectTestFiles;
 import org.xpect.runner.XpectTestFiles.FileRoot;
 import org.xpect.setup.XpectSetupFactory;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
 import org.xpect.xtext.lib.setup.XtextStandaloneSetup;
 import org.xpect.xtext.lib.setup.XtextValidatingSetup;
@@ -73,7 +72,7 @@ public class N4MFFormatterTest {
 	@ParameterParser(syntax = "('from' arg2=OFFSET 'to' arg3=OFFSET)?")
 	@Xpect
 	public void formatted(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation,
-			@ThisResource XtextResource resource, @ThisOffset int offset, @ThisOffset int to) {
+			@ThisResource XtextResource resource, int offset, int to) {
 		ICompositeNode rootNode = resource.getParseResult().getRootNode();
 		IFormattedRegion r = null;
 		if (offset >= 0 && to > offset) {

@@ -18,7 +18,6 @@ import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 
 import eu.numberfour.n4js.n4JS.ExportDeclaration;
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration;
@@ -35,11 +34,11 @@ import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.IEObjectCoveringRegion;
 public class AccessModifierAxpectMethod {
 
 	/***/
-	@ParameterParser(syntax = "('at' offset=OFFSET)?")
+	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	@Xpect
 	public void calculatedAccessModifier(
 			@StringExpectation IStringExpectation expectation,
-			@ThisOffset IEObjectCoveringRegion offset) {
+			IEObjectCoveringRegion offset) {
 
 		EObject context = offset.getEObject();
 		String actual = calculateActual(context);

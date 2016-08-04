@@ -37,7 +37,6 @@ import org.xpect.expectation.IStringDiffExpectation;
 import org.xpect.expectation.StringDiffExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
 
 import com.google.common.collect.Lists;
@@ -88,13 +87,15 @@ public class ProposalXpectMethod {
 	 * @throws Exception
 	 *             some exception
 	 */
+	@ParameterParser(syntax = "'at' arg2=STRING")
 	@Xpect
 	public void checkProposals(@CommaSeparatedValuesExpectation ICommaSeparatedValuesExpectation expectation,
-			@ThisResource XtextResource resource, @ThisOffset int offset) throws Exception {
+			@ThisResource XtextResource resource, RegionWithCursor offset) throws Exception {
 
 		N4ContentAssistProcessorTestBuilder fixture = n4ContentAssistProcessorTestBuilderHelper
 				.createTestBuilderForResource(resource);
-		ICompletionProposal[] computeCompletionProposals = fixture.computeCompletionProposals(offset);
+
+		ICompletionProposal[] computeCompletionProposals = allProposalsAt(offset, fixture);
 
 		List<String> proposalsWithError = Lists.newArrayList();
 		for (int proposal = 0; proposal < computeCompletionProposals.length; proposal++) {

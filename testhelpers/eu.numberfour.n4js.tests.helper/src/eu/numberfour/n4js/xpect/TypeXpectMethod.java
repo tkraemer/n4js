@@ -21,7 +21,6 @@ import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 
 import com.google.inject.Inject;
 
@@ -69,7 +68,7 @@ public class TypeXpectMethod {
 	@Xpect
 	public void type(
 			@StringExpectation IStringExpectation expectation,
-			@ThisOffset IEObjectCoveringRegion arg1) { // ICrossEReferenceAndEObject arg1) {
+			IEObjectCoveringRegion arg1) { // ICrossEReferenceAndEObject arg1) {
 		String actual = getTypeString(arg1, false);
 		if (expectation == null) {
 			throw new IllegalStateException("No expectation specified, add '--> Type'");
@@ -96,7 +95,7 @@ public class TypeXpectMethod {
 	@Xpect
 	public void expectedType(
 			@StringExpectation IStringExpectation expectation,
-			@ThisOffset IEObjectCoveringRegion arg1) { // ICrossEReferenceAndEObject arg1) {
+			IEObjectCoveringRegion arg1) { // ICrossEReferenceAndEObject arg1) {
 		String actual = getTypeString(arg1, true);
 		if (expectation == null) {
 			throw new IllegalStateException("No expectation specified, add '--> Type'");
@@ -165,7 +164,7 @@ public class TypeXpectMethod {
 	 */
 	@ParameterParser(syntax = "'of' arg1=OFFSET")
 	@Xpect
-	public void typeArgs(@StringExpectation IStringExpectation expectation, @ThisOffset IEObjectCoveringRegion arg1) {
+	public void typeArgs(@StringExpectation IStringExpectation expectation, IEObjectCoveringRegion arg1) {
 		final String actual = getTypeArgumentsString(arg1);
 		if (expectation == null) {
 			throw new IllegalStateException("no expectation specified, add '--> type arguments string'");
