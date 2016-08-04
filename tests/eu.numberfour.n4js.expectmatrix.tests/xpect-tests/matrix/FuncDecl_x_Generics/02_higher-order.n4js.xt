@@ -17,12 +17,12 @@ function <T,S> f2 (f : {function(B<T,S>):T}, t : T, s : S) {
 	return f(b);
 }
 
-// IDEBUG-166 higher-order function use XPECT noerrors -->
+// higher-order function use XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f2's arguments?
 f2(f1, 2, "S");
 
-// IDEBUG-166 higher-order function use (with parameters explicitly specified) XPECT noerrors -->
+// higher-order function use (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f2's parameterization?
 <number,string>f2(f1, 2, "S");
@@ -35,12 +35,12 @@ function <T,S> f3 (f : {function(B<T,S>):T}, t : T, s : S) {
 	return function () { return f(b); }; 
 }
 
-// IDEBUG-166 higher-order function use (returns a function) XPECT noerrors -->
+// higher-order function use (returns a function) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f3's arguments?
 f3(f1, 2, "s");
 
-// IDEBUG-166 higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
+// higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f3's parameterization?
 <number,string>f3(f1, 2, "s");
@@ -56,12 +56,12 @@ function <T,S> f4 (f : {function(B<T,S>):T}, t : T, s : S) {
 	return ff; 
 }
 
-// IDEBUG-166 higher-order function use (returns a function) XPECT noerrors -->
+// higher-order function use (returns a function) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f3's arguments?
 f4(f1, 2, "s");
 
-// IDEBUG-166 higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
+// higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 // would the binding of T & S not follow from f3's parameterization?
 <number,string>f4(f1, 2, "s");

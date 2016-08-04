@@ -30,7 +30,7 @@ h(g0);
 // argument with the expected parameters XPECT noerrors -->
 h(g1);
 
-// IDEBUG-166 argument with the expected parameters (parameters explicitly specified) XPECT noerrors -->
+// argument with the expected parameters (parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(T,S):void} is not a subtype of {function(number,string)}.  <-- Example 21, 10
 <number,string>h(g1);
 

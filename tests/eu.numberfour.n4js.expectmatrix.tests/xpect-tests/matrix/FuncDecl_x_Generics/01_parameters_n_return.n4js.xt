@@ -50,5 +50,3 @@ function g3 (a : A<string>) : string { return a.a; }
 var n3 : number;
 // generic class XPECT errors --> "string is not a subtype of number." at "g3(new A<string>())"
 n3 = g3(new A<string>());
-
-
