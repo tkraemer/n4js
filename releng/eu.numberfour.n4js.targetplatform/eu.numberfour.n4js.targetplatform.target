@@ -142,7 +142,7 @@ This has two advantages:
 		</location>
 
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201608022255"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201608041256"/>
 			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 
