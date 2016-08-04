@@ -23,7 +23,7 @@ import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.impl.TypeImpl
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseProject
-import eu.numberfour.n4js.utils.M2MUriUtil
+import eu.numberfour.n4js.utils.emf.ProxyResolvingResource
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -35,9 +35,10 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Tests module-to-module URIs, see {@link M2MUriUtil}.
+ * Tests resolution of module-to-module proxies, see {@link ProxyResolvingResource} and the special handling in
+ * {@link N4JSResource#doResolveProxy(InternalEObject, EObject)}.
  */
-class M2MUriPluginTest extends AbstractBuilderParticipantTest {
+class ModuleToModuleProxyPluginTest extends AbstractBuilderParticipantTest {
 
 	@Inject
 	private IN4JSCore n4jsCore;
@@ -110,8 +111,6 @@ class M2MUriPluginTest extends AbstractBuilderParticipantTest {
 		val classB = resourceB.module.topLevelTypes.head as TClass
 		val proxyToClassA = classB.superClassRef.declaredTypeNoResolve
 		assertTrue(proxyToClassA.eIsProxy)
-		val proxyToClassAUri = proxyToClassA.eProxyURI
-		assertTrue(M2MUriUtil.isM2MUri(proxyToClassAUri))
 
 		// (2) resolve the reference to A (this should load A.n4js from the index)
 		val classA = classB.superClassRef.declaredType as TClass
@@ -155,19 +154,8 @@ class M2MUriPluginTest extends AbstractBuilderParticipantTest {
 		// make sure the references in module of B and B2 pointing to A were properly proxified with a m2m URI
 		val proxyToClassA_fromB = classB.superClassRef.declaredTypeNoResolve
 		assertTrue(proxyToClassA_fromB.eIsProxy)
-		val proxyUriToClassA_fromB = proxyToClassA_fromB.eProxyURI
-		assertTrue(M2MUriUtil.isM2MUri(proxyUriToClassA_fromB))
 		val proxyToClassA_fromB2 = classB2.superClassRef.declaredTypeNoResolve
 		assertTrue(proxyToClassA_fromB2.eIsProxy)
-		val proxyUriToClassA_fromB2 = proxyToClassA_fromB2.eProxyURI
-		assertTrue(M2MUriUtil.isM2MUri(proxyUriToClassA_fromB2))
-
-		// make sure two distinct proxies were created in B and B2 for the reference to A
-		assertNotSame(proxyToClassA_fromB, proxyToClassA_fromB2)
-		assertNotEquals(proxyUriToClassA_fromB, proxyUriToClassA_fromB2)
-		assertEquals(uriB, proxyToClassA_fromB.eProxyURI.trimFragment)
-		assertEquals(uriB2, proxyToClassA_fromB2.eProxyURI.trimFragment)
-		assertEquals(proxyUriToClassA_fromB.fragment, proxyUriToClassA_fromB2.fragment)
 
 		// (4) resolve both proxies pointing to A thus loading A.n4js from index (again)
 		val classA_fromB = classB.superClassRef.declaredType as TClass

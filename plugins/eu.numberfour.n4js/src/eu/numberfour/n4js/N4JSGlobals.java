@@ -19,7 +19,6 @@ import java.util.Collection;
 import org.eclipse.emf.ecore.EReference;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
  * Global hook for static information about the current setup.
@@ -65,13 +64,7 @@ public final class N4JSGlobals {
 			TypeRefsPackage.eINSTANCE.getComposedTypeRef_CachedComposedMembers()
 	};
 
-	/**
-	 * Fragment prefix for module-to-module URIs (a.k.a. m2m URIs). See {@link M2MUriUtil}.
-	 */
-	public static final String URI_FRAGMENT_PREFIX_M2M = "m2m!";
-
 	private N4JSGlobals() {
 		// private to prevent inheritance & instantiation.
 	}
-
 }

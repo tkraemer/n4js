@@ -12,6 +12,8 @@ import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.AnnotationArgument;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
@@ -26,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -45,7 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class AnnotationImpl extends MinimalEObjectImpl.Container implements Annotation {
+public class AnnotationImpl extends ProxyResolvingEObjectImpl implements Annotation {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
