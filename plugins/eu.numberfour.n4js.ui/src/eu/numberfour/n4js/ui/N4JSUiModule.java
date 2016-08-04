@@ -532,6 +532,7 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 		return GeneratorMarkerSupport.class;
 	}
 
+	/** Performance workaround, see https://github.com/NumberFour/n4js/issues/246 */
 	public Class<? extends ContentFormatter> bindContentFormatter() {
 		return FixedContentFormatter.class;
 	}

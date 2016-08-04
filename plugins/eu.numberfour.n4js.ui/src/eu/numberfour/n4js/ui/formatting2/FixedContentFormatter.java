@@ -10,32 +10,31 @@
  */
 package eu.numberfour.n4js.ui.formatting2;
 
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.RewriteSessionEditProcessor;
+import java.util.List;
+
+import org.eclipse.text.edits.MultiTextEdit;
+import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
+import org.eclipse.xtext.formatting2.regionaccess.ITextRegionAccess;
+import org.eclipse.xtext.formatting2.regionaccess.ITextReplacement;
 import org.eclipse.xtext.ui.editor.formatting2.ContentFormatter;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 
 /**
- * wrap edits in a session for performance reasons
+ * Use a single {@link ReplaceEdit} instead of a {@link MultiTextEdit} for performance reasons.
  *
- * https://github.com/eclipse/xtext-core/issues/14
+ * See https://github.com/NumberFour/n4js/issues/246 for details.
+ *
  */
 @SuppressWarnings("restriction")
 public class FixedContentFormatter extends ContentFormatter {
+
 	@Override
-	public void format(IDocument document, IRegion region) {
-		IXtextDocument doc = (IXtextDocument) document;
-		TextEdit r = doc.priorityReadOnly(new FormattingUnitOfWork(doc, region));
-		int f = TextEdit.CREATE_UNDO | TextEdit.UPDATE_REGIONS;
-		// RewriteSessionEditProcessor ensures that all edits are applied in the same session aka transaction
-		RewriteSessionEditProcessor processor = new RewriteSessionEditProcessor(document, r, f);
-		try {
-			processor.performEdits();
-		} catch (BadLocationException e) {
-			throw new RuntimeException(e);
+	protected TextEdit createTextEdit(List<ITextReplacement> replacements) {
+		if (replacements.isEmpty()) {
+			return new ReplaceEdit(0, 0, "");
 		}
+		ITextRegionAccess regionAccess = replacements.get(0).getTextRegionAccess();
+		String newDocument = regionAccess.getRewriter().renderToString(replacements);
+		return new ReplaceEdit(0, regionAccess.regionForDocument().getLength(), newDocument);
 	}
 }
