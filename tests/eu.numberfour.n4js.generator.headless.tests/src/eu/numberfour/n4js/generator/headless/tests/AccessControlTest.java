@@ -36,7 +36,6 @@ import eu.numberfour.n4js.csv.CSVRecord;
 import eu.numberfour.n4js.generator.headless.IssueCollector;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
-import eu.numberfour.n4js.hlc.AbstractN4jscTest;
 import eu.numberfour.n4js.tests.codegen.Class;
 import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Field;
@@ -143,18 +142,40 @@ import eu.numberfour.n4js.utils.io.FileDeleter;
 // TODO: actually support the "Same Type" client location
 // @formatter:on
 @RunWith(Parameterized.class)
-public class AccessControlTest extends AbstractN4jscTest {
+public class AccessControlTest {
+	/**
+	 * Enumerates the different possible scenarios.
+	 */
 	private static enum Scenario {
-		EXTENSION, IMPLEMENTATION, REFERENCE;
+		/**
+		 * Extension scenario where the client extends the supplier.
+		 */
+		EXTENDS,
+		/**
+		 * Implementation scenario where the client implements the supplier, which must be an interface.
+		 */
+		IMPLEMENTS,
+		/**
+		 * Reference scenario where the client, which must be a concrete class, references the supplier.
+		 */
+		REFERENCES;
 
+		/**
+		 * Parses the given string representation of a scenario which is read from the input table.
+		 *
+		 * @param str
+		 *            the string to parse
+		 *
+		 * @return the enum value that corresponds to the given string
+		 */
 		public static Scenario parse(String str) {
-			switch (str) {
-			case "extends":
-				return EXTENSION;
-			case "implements":
-				return IMPLEMENTATION;
-			case "references":
-				return REFERENCE;
+			switch (Objects.requireNonNull(str)) {
+			case "Extends":
+				return EXTENDS;
+			case "Implements":
+				return IMPLEMENTS;
+			case "References":
+				return REFERENCES;
 			default:
 				throw new IllegalArgumentException("Unexpected scenario: '" + str + "'");
 			}
@@ -184,10 +205,18 @@ public class AccessControlTest extends AbstractN4jscTest {
 		/**
 		 * Client and supplier have different vendors and are thus in different projects.
 		 */
-		OTHER_VENDOR;
+		OTHER;
 
+		/**
+		 * Parses the given string representation of a client location, which is read from the input table.
+		 *
+		 * @param str
+		 *            the string to parse
+		 *
+		 * @return the enum value that corresponds to the given string.
+		 */
 		public static ClientLocation parse(String str) {
-			switch (str) {
+			switch (Objects.requireNonNull(str)) {
 			case "Same Type":
 				return SAME_TYPE;
 			case "Same Module":
@@ -197,7 +226,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 			case "Same Vendor":
 				return SAME_VENDOR;
 			case "Other":
-				return OTHER_VENDOR;
+				return OTHER;
 			default:
 				throw new IllegalArgumentException("Unexpected client location: '" + str + "'");
 			}
@@ -217,8 +246,16 @@ public class AccessControlTest extends AbstractN4jscTest {
 		 */
 		OVERRIDE;
 
+		/**
+		 * Parses the given string representation of the usage type, which was read from the input table.
+		 *
+		 * @param str
+		 *            the string to parse
+		 *
+		 * @return the enum value that corresponds to the given string
+		 */
 		public static UsageType parse(String str) {
-			switch (str) {
+			switch (Objects.requireNonNull(str)) {
 			case "Access":
 				return ACCESS;
 			case "Override":
@@ -236,18 +273,44 @@ public class AccessControlTest extends AbstractN4jscTest {
 		FIELD, GETTER, SETTER, METHOD;
 	}
 
+	/**
+	 * The type of classifier to be created for the supplier or client.
+	 */
 	private static enum ClassifierType {
-		CLASS, ABSTRACT_CLASS, INTERFACE, DEFAULT_INTERFACE;
+		/**
+		 * Concrete class that can be instantiated.
+		 */
+		CLASS,
+		/**
+		 * Abstract class where all generated members except for fields are abstract.
+		 */
+		ABSTRACT_CLASS,
+		/**
+		 * Interface with abstract members.
+		 */
+		INTERFACE,
+		/**
+		 * Interface where all generated members except for fields have default implementations.
+		 */
+		DEFAULT_INTERFACE;
 
+		/**
+		 * Returns the correct enum value for a given string representation which is read from the input table.
+		 *
+		 * @param str
+		 *            the string to parse
+		 *
+		 * @return the enum value that corresponds to the given string
+		 */
 		public static ClassifierType parse(String str) {
-			switch (str) {
-			case "class":
+			switch (Objects.requireNonNull(str)) {
+			case "Class":
 				return CLASS;
-			case "abstract class":
+			case "Abstract Class":
 				return ABSTRACT_CLASS;
-			case "interface":
+			case "Interface":
 				return INTERFACE;
-			case "default interface":
+			case "Default Interface":
 				return DEFAULT_INTERFACE;
 			default:
 				throw new IllegalArgumentException("Unexpected classifier type: '" + str + "'");
@@ -255,17 +318,51 @@ public class AccessControlTest extends AbstractN4jscTest {
 		}
 	}
 
+	/**
+	 * The different possible expectations for a test scenario.
+	 */
 	private static enum Expectation {
-		OK, FAIL, UNUSABLE, SKIP;
+		/**
+		 * Expect no errors or warnings.
+		 */
+		OK,
+		/**
+		 * Expect one error in the client module.
+		 */
+		FAIL,
+		/**
+		 * Expect one error in the client module at the client and one additional error in the client module.
+		 */
+		UNUSABLE,
+		/**
+		 * Same as {@link #SKIP}, this is used to denote scenarios which still have errors, but must be fixed later on.
+		 */
+		FIXME,
+		/**
+		 * Skip this test scenario.
+		 */
+		SKIP;
 
+		/**
+		 * Parses a string representation of an expectation that was read from the input table.
+		 *
+		 * @param str
+		 *            the string to parse
+		 *
+		 * @return the enum value that corresponds to the given string
+		 */
 		public static Expectation parse(String str) {
-			switch (str) {
+			switch (Objects.requireNonNull(str)) {
 			case "y":
 				return OK;
 			case "n":
 				return FAIL;
 			case "u":
 				return UNUSABLE;
+			case "y?":
+			case "n?":
+			case "u?":
+				return FIXME;
 			case "":
 			case "#":
 				return SKIP;
@@ -275,6 +372,9 @@ public class AccessControlTest extends AbstractN4jscTest {
 		}
 	}
 
+	/**
+	 * A specification of one test scenario that should be created and checked by this test case.
+	 */
 	private static class TestSpecification {
 		private final int row;
 		private final int column;
@@ -635,7 +735,7 @@ public class AccessControlTest extends AbstractN4jscTest {
     // @formatter:on
 	@Parameters(name = "{0}")
 	public static Iterable<? extends Object> data() throws IOException {
-		CSVParser parser = new CSVParser("testdata/accesscontrol/ClassVisibility.csv", StandardCharsets.UTF_8);
+		CSVParser parser = new CSVParser("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
 		CSVData csvData = parser.getData();
 
 		List<TestSpecification> result = new LinkedList<>();
@@ -645,13 +745,26 @@ public class AccessControlTest extends AbstractN4jscTest {
 
 		for (int row = 0; row < scenarios.getSize() / 5; row++) {
 			CSVData scenario = scenarios.getRange(row * 5, 0, 5, -1);
-			result.addAll(createScenario(accessSpec, scenario, row * 5, 0));
+			result.addAll(createScenarios(accessSpec, scenario, row * 5, 0));
 		}
 
 		return result;
 	}
 
-	private static List<TestSpecification> createScenario(CSVData accessSpec, CSVData data, int rowOffset,
+	/**
+	 * Creates the test specifications for the scenarios in the given portion of the CSV input table.
+	 *
+	 * @param accessSpec
+	 *            the portion of the CSV table that contains the access specifications (top four rows)
+	 * @param data
+	 *            the actual test data
+	 * @param rowOffset
+	 *            the current row offset
+	 * @param columnOffset
+	 *            the current column offset
+	 * @return a list of test specifications corresponding to the scenarios in the given portion of the table
+	 */
+	private static List<TestSpecification> createScenarios(CSVData accessSpec, CSVData data, int rowOffset,
 			int columnOffset) {
 		List<TestSpecification> result = new LinkedList<>();
 
@@ -688,10 +801,83 @@ public class AccessControlTest extends AbstractN4jscTest {
 		return result;
 	}
 
+	/**
+	 * Returns the index of a field in a row of multiple fields having a fixed column span. Consider the following
+	 * example.
+	 *
+	 * <br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>1</td>
+	 * <td>2</td>
+	 * <td>3</td>
+	 * <td>4</td>
+	 * <td>5</td>
+	 * <td>6</td>
+	 * <td>7</td>
+	 * <td>8</td>
+	 * <td>9</td>
+	 * </tr>
+	 * <tr>
+	 * <td colspan="3">field 1</td>
+	 * <td colspan="3">field 2</td>
+	 * <td colspan="3">field 3</td>
+	 * </tr>
+	 * </table>
+	 * <br />
+	 * The CSV representation of the table above looks as follows
+	 *
+	 * <br />
+	 * <br />
+	 * <code>1,2,3,4,5,6,7,8,9</code> <br />
+	 * <code>field 1,,,field 2,,,field 3,,</code> <br />
+	 * <br />
+	 *
+	 * In CVS, multi-column fields are not considered in any special way, so the second row would be stored as if there
+	 * were no multi-column fields. This method helps in calculcating the actual column index of the fields in CSV where
+	 * the multi-column fields are stored.
+	 *
+	 * In the example table, we could retrieve the actual index of the second multi-column field in the CSV data,
+	 * <i>field 2</i>>, by passing calling <code>getFieldIndex(1, 3)</code> (note that the first parameter is zero
+	 * based).
+	 *
+	 * @param index
+	 *            the zero based index of the field of interest
+	 * @param colSpan
+	 *            the number of columns that are spanned by the fields
+	 * @return the zero based index of the field of interest
+	 */
 	private static int getFieldIndex(int index, int colSpan) {
-		return (index / colSpan) * colSpan;
+		return getFieldIndex(index, colSpan, 0);
 	}
 
+	/**
+	 * Like {@link #getFieldIndex(int, int)}, this method retrieves the actual index of a multi-column field, but here,
+	 * the field can have an offset that should be ignored. This is useful for tables where a multi-column field is
+	 * prepended by fields with different column spans.
+	 *
+	 * @param index
+	 *            the zero based index of the field of interest
+	 * @param colSpan
+	 *            the number of columns that are spanned by the fields
+	 * @param colOffset
+	 *            the number of columns to ignore
+	 * @return the zero based index of the field of interest
+	 */
+	private static int getFieldIndex(int index, int colSpan, int colOffset) {
+		return ((index - colOffset) / colSpan) * colSpan + colOffset;
+	}
+
+	/**
+	 * Parses the given string that indicates whether or not a member should be static.
+	 *
+	 * @param str
+	 *            the string to parse
+	 *
+	 * @return the {@link eu.numberfour.n4js.tests.codegen.Member.Static} enum value that corresponds to the given
+	 *         string
+	 */
 	private static Member.Static parseStatic(String str) {
 		switch (str) {
 		case "Instance":
@@ -703,6 +889,14 @@ public class AccessControlTest extends AbstractN4jscTest {
 		}
 	}
 
+	/**
+	 * Parses the given string that represents the visibility of a classifier.
+	 *
+	 * @param str
+	 *            the string to parse
+	 * @return the {@link eu.numberfour.n4js.tests.codegen.Classifier.Visibility} enum value that corresponds to the
+	 *         given string
+	 */
 	private static Classifier.Visibility parseClassifierVisibility(String str) {
 		switch (str) {
 		case "pub":
@@ -718,6 +912,14 @@ public class AccessControlTest extends AbstractN4jscTest {
 		}
 	}
 
+	/**
+	 * Parses the given string that represents the visibility of a member.
+	 *
+	 * @param str
+	 *            the string to parse
+	 * @return the {@link eu.numberfour.n4js.tests.codegen.Member.Visibility} enum value that corresponds to the given
+	 *         string
+	 */
 	private static Member.Visibility parseMemberVisibility(String str) {
 		switch (str) {
 		case "pub":
@@ -737,6 +939,9 @@ public class AccessControlTest extends AbstractN4jscTest {
 		}
 	}
 
+	/**
+	 * The specification of the currently executed test scenario.
+	 */
 	private final TestSpecification specification;
 
 	/**
@@ -749,6 +954,9 @@ public class AccessControlTest extends AbstractN4jscTest {
 		this.specification = specification;
 	}
 
+	/**
+	 * The directory to store the test fixture (the generated projects) in.
+	 */
 	private static String FIXTURE_ROOT = "accesscontrol-tests-temp";
 
 	/**
@@ -797,8 +1005,8 @@ public class AccessControlTest extends AbstractN4jscTest {
 		// created. Depending on the scenario and the usage type, such a member may override the supplier's member
 		// or it may attempt to access it by reading or writing it or calling it if it is a method.
 		switch (specification.getScenario()) {
-		case EXTENSION:
-		case IMPLEMENTATION: {
+		case EXTENDS:
+		case IMPLEMENTS: {
 			switch (specification.getUsageType()) {
 			case ACCESS:
 				switch (specification.getMemberStatic()) {
@@ -822,7 +1030,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 			}
 			break;
 		}
-		case REFERENCE: {
+		case REFERENCES: {
 			if (specification.getUsageType() == UsageType.OVERRIDE)
 				throw new IllegalArgumentException("Cannot override in reference scenario");
 			switch (specification.getSupplierType()) {
@@ -879,7 +1087,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 			result.add(clientProject.create(Paths.get(FIXTURE_ROOT)));
 			break;
 		}
-		case OTHER_VENDOR: {
+		case OTHER: {
 			Module supplierModule = createSupplierModule(supplier, factory, implementer);
 			Module clientModule = createClientModule(client, supplier, factory, supplierModule);
 
@@ -899,7 +1107,7 @@ public class AccessControlTest extends AbstractN4jscTest {
 
 	/**
 	 * Represents the result of creating the required classifiers for a scenario. In the least, the result consists of a
-	 * supplier and a client classifier. For the {@link Scenario#REFERENCE} scenario, the result will also contain a
+	 * supplier and a client classifier. For the {@link Scenario#REFERENCES} scenario, the result will also contain a
 	 * factory class that creates an instance of the supplier and returns it via the method <code>getS()</code> and
 	 * optionally an implementer that extends or implements the supplier classifier if it is abstract or an interface.
 	 */
@@ -966,11 +1174,11 @@ public class AccessControlTest extends AbstractN4jscTest {
 	 */
 	private ScenarioResult createScenario() {
 		switch (specification.getScenario()) {
-		case EXTENSION:
+		case EXTENDS:
 			return createExtensionScenario();
-		case IMPLEMENTATION:
+		case IMPLEMENTS:
 			return createImplementationScenario();
-		case REFERENCE:
+		case REFERENCES:
 			return createReferenceScenario();
 		}
 
