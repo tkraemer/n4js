@@ -37,7 +37,6 @@ import com.google.common.collect.ImmutableMap;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
-import eu.numberfour.n4js.utils.M2MUriUtil;
 
 /**
  * The user data for exported modules contains a serialized representation of the module's content. This allows to
@@ -222,11 +221,6 @@ public final class UserdataMapper {
 		}
 		final TModule module = (TModule) contents.get(0);
 		xres.getContents().clear();
-		// convert proxy URIs to our special N4JS module-to-module URIs (a.k.a. "m2m URIs")
-		// (this cannot be done with URIConverter or URIHandler during (de-)serialization, because while converting
-		// we need the entire, absolute original URI, including its fragment)
-		// TODO IDE-2250 discuss with Ed Merks if there is a better solution
-		M2MUriUtil.convertAllProxiesToM2M(module, uri, null, false);
 		return module;
 	}
 }

@@ -100,7 +100,10 @@ abstract class AbstractTypeSystemHelperTests {
 	 * {@link TypeRef#getTypeRefAsString()} is used.
 	 */
 	def void assertJoin(String expectedType, String... typeExpressionsToBeJoined) {
-		val G = assembler.prepareScriptAndCreateRuleEnvironment(typeExpressionsToBeJoined)
+		assertJoin(#[], expectedType, typeExpressionsToBeJoined);
+	}
+	def void assertJoin(String[] expectedMessages, String expectedType, String... typeExpressionsToBeJoined) {
+		val G = assembler.prepareScriptAndCreateRuleEnvironment(expectedMessages, typeExpressionsToBeJoined)
 		var typeRefs = typeExpressionsToBeJoined.map[assembler.getTypeRef(it)]
 		val join = TypeUtils.copy(tsh.join(G, typeRefs));
 		join.sorted();
@@ -112,7 +115,10 @@ abstract class AbstractTypeSystemHelperTests {
 	 * {@link TypeRef#getTypeRefAsString()} is used.
 	 */
 	def void assertMeet(String expectedType, String... typeExpressionsToBeMeet) {
-		val G = assembler.prepareScriptAndCreateRuleEnvironment(typeExpressionsToBeMeet)
+		assertMeet(#[], expectedType, typeExpressionsToBeMeet);
+	}
+	def void assertMeet(String[] expectedMessages, String expectedType, String... typeExpressionsToBeMeet) {
+		val G = assembler.prepareScriptAndCreateRuleEnvironment(expectedMessages, typeExpressionsToBeMeet)
 		var typeRefs = typeExpressionsToBeMeet.map[assembler.getTypeRef(it)]
 		val meet = TypeUtils.copy(tsh.meet(G, typeRefs));
 		meet.sorted();
@@ -152,6 +158,7 @@ abstract class AbstractTypeSystemHelperTests {
 			interface I1 {}
 			interface I2 extends I1 {}
 			interface I3 extends I2 {}
+			interface Q1 {}
 			interface R1 {}
 			interface R2 extends R1 {}
 			interface R3 extends R2 {}

@@ -1,22 +1,26 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-class B {}
-class C extends B {};
-class D extends C {};
+interface B {}
+interface C extends B {};
+interface D extends C {};
 
-var c = new C();
+class CC implements C {};
+
+var c = new CC();
 var a: any;
 
-// XPECT errors --> "Cannot cast from C to intersection{int,string}" at "c as intersection{int,string}"
+// XPECT errors --> "Cannot cast from CC to intersection{int,string}" at "c as intersection{int,string}"
 c as intersection{int,string};
-// XPECT errors --> "Cannot cast from C to intersection{C,string}" at "c as intersection{C,string}"
+// XPECT errors --> "Cannot cast from CC to intersection{C,string}" at "c as intersection{C,string}"
 c as intersection{C,string};
-// XPECT warnings -->"Unnecessary cast from C to intersection{B,C}" at "c as intersection{B,C}"
-c as intersection{B,C};
-// XPECT noerrors -->
-c as intersection{C, D};
 
-// XPECT noerrors -->
+// XPECT warnings --> "Unnecessary cast from CC to intersection{B,C}" at "c as intersection{B,C}"
+c as intersection{B,C};
+
+
+// XPECT noerrors --> 
+c as intersection{C, D};
+// XPECT noerrors --> 
 a as intersection{C, D};
-// XPECT noerrors -->
+// XPECT noerrors --> 
 a as intersection{B, D};

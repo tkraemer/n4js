@@ -18,7 +18,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import it.xsemantics.runtime.RuleEnvironment
-import org.eclipse.xtext.xbase.lib.Functions.Function1
+import java.util.LinkedList
 
 import static extension java.util.Collections.*
 
@@ -76,6 +76,7 @@ class MeetComputer extends TypeSystemHelperStrategy {
 		ref.typeRefs;
 	}
 
+
 	/**
 	 * Creates the intersection according to [N4JS, 4.13 Intersection Type], but does not check for uniqueness
 	 * of class in the typerefs of the intersection.
@@ -86,42 +87,32 @@ class MeetComputer extends TypeSystemHelperStrategy {
 	// TODO see IDE-142/IDE-385
 	@VisibleForTesting
 	def TypeRef intersectRelaxed(RuleEnvironment G, TypeRef... typeRefs) {
+		val intersectTRs = new LinkedList<TypeRef>();
 		val flattenedTypeRefs = typeRefs.map[flattenIntersectionTypes].flatten;
 		val containedAny = flattenedTypeRefs.findFirst[it !== null && topType];
 		if (containedAny !== null) {
-			return containedAny
+			intersectTRs.add(containedAny);
+		} else {
+			intersectTRs.addAll(getSubtypesOnly(G, flattenedTypeRefs));
 		}
+		
+		if (intersectTRs.size() == 1) {
+			val tR = intersectTRs.get(0)
+			return TypeUtils.copyIfContained(tR);
+		}
+		
 		val intersection = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
-		for (s : flattenedTypeRefs) {
-			if (! intersection.typeRefs.exists[ts.subtypeSucceeded(G, it, s)]) {
-
-				// see https://code.google.com/p/guava-libraries/issues/detail?id=1596
-				// Iterables.removeIf(intersection.typeRefs, [ts.subtypeTypeRefSucceeded(G, s, it)]);
-				retainIf(intersection.typeRefs, [! ts.subtypeSucceeded(G, s, it)]);
-				intersection.typeRefs.add(TypeUtils.copyIfContained((s)));
-			}
-		}
-		if (intersection.typeRefs.size() == 1) {
-			return intersection.typeRefs.remove(0);
+		for (s : intersectTRs) {
+			intersection.typeRefs.add(TypeUtils.copyIfContained((s)));
 		}
 		return intersection
 	}
+
 
 	private def Iterable<TypeRef> flattenIntersectionTypes(TypeRef typeRef) {
 		switch typeRef {
 			IntersectionTypeExpression: typeRef.typeRefs.map[flattenIntersectionTypes(it)].flatten
 			default: typeRef.singleton()
 		};
-	}
-
-
-	private def static <T> void retainIf(Iterable<T> iterable, Function1<? super T, Boolean> predicate) {
-		val iter = iterable.iterator;
-		while (iter.hasNext()) {
-			val it = iter.next;
-			if (! predicate.apply(it)) {
-				iter.remove()
-			}
-		}
 	}
 }

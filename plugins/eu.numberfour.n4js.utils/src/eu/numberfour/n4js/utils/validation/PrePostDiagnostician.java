@@ -53,7 +53,7 @@ public class PrePostDiagnostician extends CancelableDiagnostician {
 	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		preValidate(eObject, diagnostics, context);
-		boolean result = super.validate(eObject.eClass(), eObject, diagnostics, context);
+		boolean result = super.validate(eObject, diagnostics, context);
 		postValidate(eObject, diagnostics, context);
 		return result;
 	}
@@ -78,5 +78,4 @@ public class PrePostDiagnostician extends CancelableDiagnostician {
 		}
 		return true;
 	}
-
 }

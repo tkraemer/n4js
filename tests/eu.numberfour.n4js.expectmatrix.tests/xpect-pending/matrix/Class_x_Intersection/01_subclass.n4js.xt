@@ -15,8 +15,14 @@ var ab : intersection{A,B} = new D();
 // because D !<: C XPECT errors --> "D is not a subtype of intersection{A,C}." at "new D()"
 var bc : intersection{A,C} = new D();
 
-// intersection may only contain one class XPECT FIXME errors --> "Only one class may be contained in the intersection type" at "{B,C,D}" 
+
+// intersection may only contain one class
+// XPECT warnings --- 
+// "The use of redundant supertypes is discouraged." at "B"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "C"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "D"
+// ---
 var bcd : intersection{B,C,D};
 
-// intersection may not contain Any XPECT FIXME errors --> "Any must not be an element of intersection type" at "{any,A}"
+// intersection may not contain Any XPECT warnings --> "The use of the any type in an intersection type is discouraged." at "any"
 var b : intersection{any,A};

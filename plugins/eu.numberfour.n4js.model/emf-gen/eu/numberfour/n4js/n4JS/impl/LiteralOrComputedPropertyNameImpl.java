@@ -12,6 +12,8 @@ import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.PropertyNameKind;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -23,7 +25,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,7 +42,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class LiteralOrComputedPropertyNameImpl extends MinimalEObjectImpl.Container implements LiteralOrComputedPropertyName {
+public class LiteralOrComputedPropertyNameImpl extends ProxyResolvingEObjectImpl implements LiteralOrComputedPropertyName {
 	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
 	 * <!-- begin-user-doc -->
