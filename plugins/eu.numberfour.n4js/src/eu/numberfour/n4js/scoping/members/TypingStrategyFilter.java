@@ -18,7 +18,6 @@ import com.google.common.base.Predicate;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
-import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
 /**
@@ -56,9 +55,6 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 				if (member instanceof TMethod) {
 					if (typingStrategy != TypingStrategy.STRUCTURAL) { // field structural typing
 						return false;
-					}
-					if ("constructor".equals(member.getName())) {
-						return member instanceof TStructMember; // only if explicitly mentioned
 					}
 				}
 			}

@@ -44,6 +44,9 @@ import eu.numberfour.n4js.ts.types.TObjectPrototype;
 import eu.numberfour.n4js.ts.types.TStructuralType;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.typesystem.TypeSystemHelper;
+import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * Implements the logic for accessibility checks for {@link TMember members} within a given context, e.g. for a concrete
@@ -53,6 +56,8 @@ public class MemberVisibilityChecker {
 
 	@Inject
 	private TypeVisibilityChecker typeVisibilityChecker;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	/**
 	 * Returns true if the given <i>enumType</i> is accessible in the given context
@@ -62,7 +67,7 @@ public class MemberVisibilityChecker {
 	 */
 	public boolean isEnumLiteralVisible(EObject context, TypeRef enumType) {
 		Resource contextResource = context.eResource();
-		Type declaredReceiverType = getActualDeclaredReceiverType(enumType, contextResource.getResourceSet());
+		Type declaredReceiverType = getActualDeclaredReceiverType(context, enumType, contextResource.getResourceSet());
 		if (typeVisibilityChecker.isVisible(contextResource, declaredReceiverType).visibility) {
 			return true; // literals are public (i.e. visible across modules) by definition
 		}
@@ -107,7 +112,8 @@ public class MemberVisibilityChecker {
 		if (typeDefiningContainer != null) {
 			contextType = typeDefiningContainer.getDefinedType();
 		}
-		Type declaredReceiverType = getActualDeclaredReceiverType(receiverType, contextResource.getResourceSet());
+		Type declaredReceiverType = getActualDeclaredReceiverType(context, receiverType,
+				contextResource.getResourceSet());
 		if (declaredReceiverType != null
 				&& typeVisibilityChecker.isVisible(contextResource, declaredReceiverType).visibility) {
 			// check for local usage of locally defined member
@@ -196,9 +202,10 @@ public class MemberVisibilityChecker {
 	 * case of classifier references, enums, or structural type references, the actual receiver may be differently
 	 * computed.
 	 */
-	private Type getActualDeclaredReceiverType(TypeRef receiverType, ResourceSet resourceSet) {
+	private Type getActualDeclaredReceiverType(EObject context, TypeRef receiverType, ResourceSet resourceSet) {
 		if (receiverType instanceof ClassifierTypeRef) {
-			return ((ClassifierTypeRef) receiverType).staticType();
+			final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(context);
+			return tsh.getStaticType(G, (ClassifierTypeRef) receiverType);
 		}
 		if (receiverType instanceof EnumTypeRef) {
 			return ((EnumTypeRef) receiverType).getEnumType();

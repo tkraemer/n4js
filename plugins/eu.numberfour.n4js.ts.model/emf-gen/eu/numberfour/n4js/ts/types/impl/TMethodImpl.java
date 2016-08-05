@@ -393,6 +393,15 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isConstructor() {
+		return (Objects.equal(this.getName(), "constructor") && (!this.isStatic()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getFunctionAsString() {
 		final StringBuilder strb = new StringBuilder();
 		boolean _isGeneric = this.isGeneric();
@@ -822,6 +831,8 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				return isAbstract();
 			case TypesPackage.TMETHOD___GET_MEMBER_TYPE:
 				return getMemberType();
+			case TypesPackage.TMETHOD___IS_CONSTRUCTOR:
+				return isConstructor();
 			case TypesPackage.TMETHOD___GET_FUNCTION_AS_STRING:
 				return getFunctionAsString();
 			case TypesPackage.TMETHOD___GET_MEMBER_AS_STRING:

@@ -763,20 +763,8 @@ class ClassifierTypeRef extends BaseTypeRef {
 		val refName = getTypeArg?.typeRefAsString
 		return "type{" + refName + "}" + getModifiersAsString();
 	}
-
-
-	/** Helper operation to extract the static type 'C' of 'type{C}' or 'type{this[C]}'
-	 * in cases of ParemterizedTypeRefs the declared type will be returned,
-	 * for bound this-type-refs the actualThisTyperef.declaredtype and
-	 * in all other cases null will be returned
-	 */
-	op Type staticType() {
-		switch(getTypeArg) {
-			ParameterizedTypeRef: (getTypeArg as ParameterizedTypeRef).declaredType
-			BoundThisTypeRef: (getTypeArg as BoundThisTypeRef).actualThisTypeRef?.declaredType
-			default: null
-		}
-	}
+	
+	// note: operation getStaticType moved to TypeSystemHelper#getStaticType()
 }
 
 /**

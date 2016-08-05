@@ -1931,9 +1931,7 @@ class N4MethodDeclaration extends AnnotableN4MemberDeclaration, MethodDeclaratio
 		) || declaredModifiers.contains(N4Modifier.ABSTRACT)
 	}
 	op boolean isConstructor() {
-		// TODO evaluate annotations?
-		// TODO validate static / abstract / return type
-		return 'constructor' == name && !isStatic
+		return name == 'constructor' && !isStatic
 	}
 	op boolean isCallableConstructor() {
 		return declaredName === null;

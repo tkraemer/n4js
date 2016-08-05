@@ -629,7 +629,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * @generated
 	 */
 	public boolean isConstructor() {
-		return (Objects.equal("constructor", this.getName()) && (!this.isStatic()));
+		return (Objects.equal(this.getName(), "constructor") && (!this.isStatic()));
 	}
 
 	/**

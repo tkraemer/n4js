@@ -4322,22 +4322,13 @@ public interface TypeRefsPackage extends EPackage {
 	int CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING = BASE_TYPE_REF_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Static Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___STATIC_TYPE = BASE_TYPE_REF_OPERATION_COUNT + 1;
-
-	/**
 	 * The number of operations of the '<em>Classifier Type Ref</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_TYPE_REF_OPERATION_COUNT = BASE_TYPE_REF_OPERATION_COUNT + 2;
+	int CLASSIFIER_TYPE_REF_OPERATION_COUNT = BASE_TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ConstructorTypeRefImpl <em>Constructor Type Ref</em>}' class.
@@ -4582,15 +4573,6 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONSTRUCTOR_TYPE_REF___GET_MODIFIERS_AS_STRING = CLASSIFIER_TYPE_REF___GET_MODIFIERS_AS_STRING;
-
-	/**
-	 * The operation id for the '<em>Static Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONSTRUCTOR_TYPE_REF___STATIC_TYPE = CLASSIFIER_TYPE_REF___STATIC_TYPE;
 
 	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
@@ -7352,16 +7334,6 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getClassifierTypeRef__GetTypeRefAsString();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#staticType() <em>Static Type</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Static Type</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#staticType()
-	 * @generated
-	 */
-	EOperation getClassifierTypeRef__StaticType();
-
-	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.EnumTypeRef <em>Enum Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8728,14 +8700,6 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING = eINSTANCE.getClassifierTypeRef__GetTypeRefAsString();
-
-		/**
-		 * The meta object literal for the '<em><b>Static Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation CLASSIFIER_TYPE_REF___STATIC_TYPE = eINSTANCE.getClassifierTypeRef__StaticType();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.EnumTypeRefImpl <em>Enum Type Ref</em>}' class.

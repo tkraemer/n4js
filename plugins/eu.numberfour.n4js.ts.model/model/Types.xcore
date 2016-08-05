@@ -1164,6 +1164,9 @@ class TMethod extends TFunction, TMemberWithAccessModifier {
 	op MemberType getMemberType() {
 		return MemberType.METHOD
 	}
+	op boolean isConstructor() {
+		return name == 'constructor' && !isStatic;
+	}
 	/**
 	 * Returns string representation of this function similar according to the N4JS syntax.
 	 * This includes formal parameters and return type (if declared), but excludes annotations.

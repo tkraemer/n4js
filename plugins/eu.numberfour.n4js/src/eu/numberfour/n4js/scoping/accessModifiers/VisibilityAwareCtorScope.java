@@ -15,10 +15,14 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 
 import eu.numberfour.n4js.n4JS.NewExpression;
+import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.types.TMethod;
+import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
+import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * Scope used to check accessibility of constructor in new-expressions.
@@ -28,6 +32,7 @@ public class VisibilityAwareCtorScope extends FilterWithErrorMarkerScope {
 	private final MemberVisibilityChecker checker;
 	private final NewExpression context;
 	private final ConstructorTypeRef receiverType;
+	private final Type staticType;
 
 	/**
 	 * @param parent
@@ -36,20 +41,24 @@ public class VisibilityAwareCtorScope extends FilterWithErrorMarkerScope {
 	 *            visibility rules for members.
 	 * @param receiverType
 	 *            Type which holds the constructor to call.
+	 * @param staticType
+	 *            the static type of 'receiverType' as returned by
+	 *            {@link TypeSystemHelper#getStaticType(RuleEnvironment, ClassifierTypeRef)}.
 	 * @param context
 	 *            new expression calling a constructor
 	 */
-	public VisibilityAwareCtorScope(IScope parent, MemberVisibilityChecker checker, ConstructorTypeRef receiverType,
-			NewExpression context) {
+	public VisibilityAwareCtorScope(IScope parent, MemberVisibilityChecker checker,
+			ConstructorTypeRef receiverType, Type staticType, NewExpression context) {
 		super(parent);
 		this.checker = checker;
 		this.receiverType = receiverType;
+		this.staticType = staticType;
 		this.context = context;
 	}
 
 	@Override
 	protected IEObjectDescriptionWithError wrapFilteredDescription(IEObjectDescription originalDescr) {
-		return new InvisibleCtorDescription(originalDescr, receiverType);
+		return new InvisibleCtorDescription(originalDescr, receiverType, staticType);
 	}
 
 	@Override

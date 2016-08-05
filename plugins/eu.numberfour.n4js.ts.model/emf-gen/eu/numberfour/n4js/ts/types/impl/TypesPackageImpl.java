@@ -2207,7 +2207,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMethod__GetFunctionAsString() {
+	public EOperation getTMethod__IsConstructor() {
 		return tMethodEClass.getEOperations().get(2);
 	}
 
@@ -2216,8 +2216,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMethod__GetMemberAsString() {
+	public EOperation getTMethod__GetFunctionAsString() {
 		return tMethodEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTMethod__GetMemberAsString() {
+		return tMethodEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -3029,6 +3038,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tMethodEClass, TMETHOD__LACKS_THIS_OR_SUPER_USAGE);
 		createEOperation(tMethodEClass, TMETHOD___IS_ABSTRACT);
 		createEOperation(tMethodEClass, TMETHOD___GET_MEMBER_TYPE);
+		createEOperation(tMethodEClass, TMETHOD___IS_CONSTRUCTOR);
 		createEOperation(tMethodEClass, TMETHOD___GET_FUNCTION_AS_STRING);
 		createEOperation(tMethodEClass, TMETHOD___GET_MEMBER_AS_STRING);
 
@@ -3554,6 +3564,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTMethod__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTMethod__GetMemberType(), this.getMemberType(), "getMemberType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTMethod__IsConstructor(), theEcorePackage.getEBoolean(), "isConstructor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTMethod__GetFunctionAsString(), theEcorePackage.getEString(), "getFunctionAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

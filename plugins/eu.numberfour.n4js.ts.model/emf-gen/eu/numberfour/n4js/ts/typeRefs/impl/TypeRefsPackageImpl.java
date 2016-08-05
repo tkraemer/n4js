@@ -1229,15 +1229,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getClassifierTypeRef__StaticType() {
-		return classifierTypeRefEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getEnumTypeRef() {
 		return enumTypeRefEClass;
 	}
@@ -1811,7 +1802,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		classifierTypeRefEClass = createEClass(CLASSIFIER_TYPE_REF);
 		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__TYPE_ARG);
 		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING);
-		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___STATIC_TYPE);
 
 		enumTypeRefEClass = createEClass(ENUM_TYPE_REF);
 		createEReference(enumTypeRefEClass, ENUM_TYPE_REF__ENUM_TYPE);
@@ -2120,8 +2110,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEReference(getClassifierTypeRef_TypeArg(), this.getTypeArgument(), null, "typeArg", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getClassifierTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getClassifierTypeRef__StaticType(), theTypesPackage.getType(), "staticType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(enumTypeRefEClass, EnumTypeRef.class, "EnumTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEnumTypeRef_EnumType(), theTypesPackage.getTEnum(), null, "enumType", null, 0, 1, EnumTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

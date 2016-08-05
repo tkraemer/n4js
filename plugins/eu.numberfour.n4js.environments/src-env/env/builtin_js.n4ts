@@ -26,6 +26,12 @@ public providedByRuntime object Object @Global {
 	(...args: any): Object
 
 	/**
+	 * The built-in ES5 property "__proto__", here modeled as a read-only property (i.e. no setter provided), because
+	 * changing an object's prototype after creation is strongly discouraged in todays Javascript engines.
+	 */
+	public get __proto__(): Object
+
+	/**
 	 * The initial value of Object.prototype is the standard built-in Object prototype object (15.2.4).
 	 * 
 	 * Remark: Modeled as getter to emulate const and to allow for overriding.

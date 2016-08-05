@@ -405,7 +405,7 @@ from  {
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
 		&& idref.eContainmentFeature===N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()) {
-		val callableCtorFunction = typeSystemHelper.getCallableClassConstructorFunction(T);
+		val callableCtorFunction = typeSystemHelper.getCallableClassConstructorFunction(G, T);
 		if(callableCtorFunction!==null) {
 			T = callableCtorFunction.ref;
 		}
@@ -710,19 +710,24 @@ from {
 			}
 		}
 
+		val prop = expr.property;
 		var TypeRef propTypeRef;
 
-		// cases "this.constructor" and "c.constructor" (but not "C.constructor", since this refers to Function.constructor and not C itself!)
-		if((receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef)
-				&& expr.property instanceof TMethod
-				&& expr.property.name == 'constructor') {
-
-			var Type receiverType = switch(receiverTypeRef) {
-				ClassifierTypeRef: receiverTypeRef.staticType
-				BoundThisTypeRef: receiverTypeRef.actualThisTypeRef?.declaredType
-				default: receiverTypeRef.declaredType
+		if(prop instanceof TMethod && (prop as TMethod).isConstructor) {
+			// accessing the built-in constructor property ...
+			val TypeArgument receiverType = switch(receiverTypeRef) {
+				ClassifierTypeRef: // case "C.constructor"
+					G.functionTypeRef
+				ParameterizedTypeRef: // case "c.constructor"
+					TypeUtils.createWildcardExtends(receiverTypeRef.declaredType?.ref)
+				BoundThisTypeRef: // case "this.constructor"
+					TypeUtils.createWildcardExtends(receiverTypeRef.actualThisTypeRef?.declaredType?.ref)
 			};
-			propTypeRef = if(receiverType!==null) TypeUtils.createConstructorTypeRef(receiverType) else TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+			propTypeRef = if(receiverType!==null) {
+				TypeUtils.createConstructorTypeRef(receiverType)
+			} else {
+				TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+			};
 		}
 		else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) {
 			// access to an unknown property of a dynamic type
@@ -731,8 +736,9 @@ from {
 		else {
 			G2.wrap |- expr.property : propTypeRef
 
-			if(expr.parameterized)
+			if(expr.parameterized) {
 				typeSystemHelper.addSubstitutions(G2,expr);
+			}
 		}
 
 		G2 |- propTypeRef ~> T
@@ -751,8 +757,6 @@ from {
 				}
 			}
 		}
-		
-		
 	}
 }
 
@@ -761,7 +765,7 @@ rule typeNewExpression G |- NewExpression e: TypeRef T
 from  {
 	G |- e.callee: T
 	if(T instanceof ConstructorTypeRef) {
-		T = T.createTypeRefFromStaticType(e.typeArgs)
+		T = typeSystemHelper.createTypeRefFromStaticType(G, T, e.typeArgs)
 	}
 }
 
@@ -1631,8 +1635,8 @@ from {
 		G |- left.getTypeArg <: right.getTypeArg
 	
 		// check constructors
-		val left_staticType = left.staticType
-		val right_staticType = right.staticType
+		val left_staticType = typeSystemHelper.getStaticType(G, left);
+		val right_staticType = typeSystemHelper.getStaticType(G, right);
 		if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
 			// special case: we have a type variable on one or both sides
 			// left <: right if and only if the type variables are identical
@@ -1794,7 +1798,7 @@ from {
 			// of the instance to be created
 			// --> for this, create a ParameterizedTypeRef taking the staticType from
 			//     the CtorTypeRef and the type arguments from the NewExpression
-			var typeRefOfInstanceToCreate = ctorTypeRef.createTypeRefFromStaticType(expr.typeArgs)
+			var typeRefOfInstanceToCreate = typeSystemHelper.createTypeRefFromStaticType(G, ctorTypeRef, expr.typeArgs)
 			var typeOfInstanceToCreate = typeRefOfInstanceToCreate.declaredType as ContainerType<?>
 			val G2 = G.wrap
 			typeSystemHelper.addSubstitutions(G2,typeRefOfInstanceToCreate)

@@ -304,10 +304,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
 		// make sure target can be invoked
-		if (!(callExpression.target instanceof SuperLiteral) &&
-			!tsh.isCallable(typeRef, callExpression.eResource)) {
-
-			if (tsh.isClassConstructorFunction(typeRef) || isClassifierTypeRefToAbstractClass(typeRef)) {
+		val G = callExpression.newRuleEnvironment;
+		if (!(callExpression.target instanceof SuperLiteral) && !tsh.isCallable(G, typeRef)) {
+			if (tsh.isClassConstructorFunction(G, typeRef) || isClassifierTypeRefToAbstractClass(G, typeRef)) {
 				val message = IssueCodes.getMessageForEXP_CALL_CLASS_CTOR;
 				addIssue(message, callExpression.target, null, IssueCodes.EXP_CALL_CLASS_CTOR);
 			} else {
@@ -340,9 +339,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	def private boolean isClassifierTypeRefToAbstractClass(TypeRef typeRef) {
+	def private boolean isClassifierTypeRefToAbstractClass(RuleEnvironment G, TypeRef typeRef) {
 		if (typeRef instanceof ClassifierTypeRef) {
-			val staticType = typeRef.staticType;
+			val staticType = tsh.getStaticType(G, typeRef);
 			if (staticType instanceof TClass) {
 				return staticType.isAbstract;
 			}
@@ -503,8 +502,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			issueNotACtor(typeRef, newExpression);
 			return;
 		}
+		val G = newExpression.newRuleEnvironment;
 		val ClassifierTypeRef classifierTypeRef = typeRef as ClassifierTypeRef;
-		val staticType = classifierTypeRef.staticType;
+		val staticType = tsh.getStaticType(G, classifierTypeRef);
 
 		if (staticType !== null && staticType.eIsProxy) {
 			return;
@@ -522,7 +522,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		}
 
-		if (staticType === newExpression.newRuleEnvironment.symbolObjectType) {
+		if (staticType === G.symbolObjectType) {
 			// error case #1: new Symbol()
 			val message = IssueCodes.messageForBIT_SYMBOL_NOT_A_CTOR;
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
@@ -556,7 +556,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 		// success case; but perform some further checks
 		val ConstructorTypeRef ctorTypeRef = typeRef as ConstructorTypeRef;
-		internalCheckCtorVisibility(newExpression, ctorTypeRef)
+		internalCheckCtorVisibility(newExpression, ctorTypeRef, staticType)
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
 
@@ -570,17 +570,17 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Checks visibility of the cTor.
-	 * Cf. Spec:  "Table 3.2.: Member Access Control"
+	 * Cf. Spec: "Table 3.2.: Member Access Control"
 	 */
-	def internalCheckCtorVisibility(NewExpression expression, ConstructorTypeRef ref) {
+	def internalCheckCtorVisibility(NewExpression expression, ConstructorTypeRef ref, Type staticType) {
 
-		if (ref.staticType instanceof TypeVariable) {
+		if (staticType instanceof TypeVariable) {
 			/* cannot check, back out */
 			// TODO is it possible to create an accessibility-check here ?
 			return;
 		}
 
-		val Type ctorClassifier = ref.staticType
+		val Type ctorClassifier = staticType
 		if (ctorClassifier instanceof TClassifier) {
 
 			val usedCtor = containerTypesHelper.fromContext(expression).findConstructor(ctorClassifier)
@@ -593,7 +593,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			val memberScope = memberScopingHelper.createMemberScopeFor(TypeUtils.createTypeRef(ctorClassifier),
 				expression, false, false); // always non-static
 			val scope = new TypingStrategyAwareMemberScope(
-				new VisibilityAwareCtorScope(memberScope, memberVisibilityChecker, ref, expression), ref);
+				new VisibilityAwareCtorScope(memberScope, memberVisibilityChecker, ref, staticType, expression), ref);
 
 			val ele = scope.getSingleElement(usedCtor)
 			if (IEObjectDescriptionWithError.isErrorDescription(ele)) {
@@ -614,7 +614,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (relationalExpression.rhs !== null && relationalExpression.op === RelationalOperator.INSTANCEOF) {
 			val typeRef = ts.tau(relationalExpression.rhs)
 			if (typeRef instanceof ClassifierTypeRef) {
-				val staticType = typeRef.staticType
+				val G = relationalExpression.newRuleEnvironment;
+				val staticType = tsh.getStaticType(G, typeRef);
 				if (staticType instanceof TN4Classifier) {
 					if (staticType.typingStrategy !== TypingStrategy.DEFAULT) {
 						val message = IssueCodes.
@@ -768,8 +769,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 
-		val typeRef = ts.tau(newExpression.callee)
-		val staticType = if (typeRef instanceof ClassifierTypeRef) typeRef.staticType else null;
+		val typeRef = ts.tau(newExpression.callee);
+		val staticType = if (typeRef instanceof ClassifierTypeRef) {
+			val G = newExpression.newRuleEnvironment;
+			tsh.getStaticType(G, typeRef)
+		} else {
+			null
+		};
 
 		if (staticType instanceof TClass) {
 			val maybeConstructor = containerTypesHelper.fromContext(newExpression).findConstructor(staticType);
@@ -1194,7 +1200,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			if (! S.typeRefs.exists [
 				internalCheckCastExpression(G, it, T, castExpression, false,
 					actualSourceTypeIsCPOE || (S instanceof IntersectionTypeExpression && S.typeRefs.exists [
-						isCPOE(it)
+						isCPOE(G, it)
 					]))
 			] && ! S.typeRefs.exists[ts.subtypeSucceeded(G, it, T)] // one type in composed is a subtype of target
 			) {
@@ -1204,7 +1210,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				}
 				return false;
 			}
-		} else if (canCheck(S, T, actualSourceTypeIsCPOE)) { // Constraint 81.3 (Cast Validation At Compile-Time):
+		} else if (canCheck(G, S, T, actualSourceTypeIsCPOE)) { // Constraint 81.3 (Cast Validation At Compile-Time):
 			var castOK = ts.subtypeSucceeded(G, T, S);
 			if (! castOK && (T instanceof ParameterizedTypeRef && S instanceof ParameterizedTypeRef)) {
 				val ptrT = T as ParameterizedTypeRef;
@@ -1260,8 +1266,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * @param in case of an intersection type, S may be part of an intersection in which another element is a CPOE, i.e. concrete
 	 */
-	private def boolean canCheck(TypeRef S, TypeRef T, boolean actualSourceTypeIsCPOE) {
-		return ((isCPOE(S) || actualSourceTypeIsCPOE) && isCPOE(T)) ||
+	private def boolean canCheck(RuleEnvironment G, TypeRef S, TypeRef T, boolean actualSourceTypeIsCPOE) {
+		return ((isCPOE(G, S) || actualSourceTypeIsCPOE) && isCPOE(G, T)) ||
 			( (S.declaredType instanceof TInterface) && T.actuallyFinal) ||
 			(S.actuallyFinal && (T.declaredType instanceof TInterface)) ||
 			(S instanceof ParameterizedTypeRef && T instanceof ParameterizedTypeRef &&
@@ -1269,14 +1275,14 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			T instanceof FunctionTypeExpression;
 	}
 
-	private def boolean isCPOE(TypeRef T) {
+	private def boolean isCPOE(RuleEnvironment G, TypeRef T) {
 		if (T instanceof ParameterizedTypeRef) {
 			val d = T.declaredType;
 			return d instanceof TClass || d instanceof TEnum || d instanceof PrimitiveType ||
 				d instanceof TObjectPrototype;
 		};
 		if (T instanceof ClassifierTypeRef) { // implies || T instanceof ConstructorTypeRef)
-			val d = T.staticType;
+			val d = tsh.getStaticType(G, T);
 			val concreteMetaType = d instanceof TClass || d instanceof TEnum ||
 				d instanceof PrimitiveType || d instanceof TObjectPrototype;
 			return concreteMetaType;

@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.ts.typeRefs;
 
-import eu.numberfour.n4js.ts.types.Type;
 
 /**
  * <!-- begin-user-doc -->
@@ -70,20 +69,5 @@ public interface ClassifierTypeRef extends BaseTypeRef {
 	 * @generated
 	 */
 	String getTypeRefAsString();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * * Helper operation to extract the static type 'C' of 'type{C}' or 'type{this[C]}'
-	 * in cases of ParemterizedTypeRefs the declared type will be returned,
-	 * for bound this-type-refs the actualThisTyperef.declaredtype and
-	 * in all other cases null will be returned
-	 * <!-- end-model-doc -->
-	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _switchResult = null;\n<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> _typeArg = this.getTypeArg();\nboolean _matched = false;\nif (_typeArg instanceof <%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>)\n{\n\t_matched=true;\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> _typeArg_1 = this.getTypeArg();\n\t_switchResult = ((<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>) _typeArg_1).getDeclaredType();\n}\nif (!_matched)\n{\n\tif (_typeArg instanceof <%eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef%>)\n\t{\n\t\t_matched=true;\n\t\t<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> _typeArg_1 = this.getTypeArg();\n\t\t<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _actualThisTypeRef = ((<%eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef%>) _typeArg_1).getActualThisTypeRef();\n\t\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType = null;\n\t\tif (_actualThisTypeRef!=null)\n\t\t{\n\t\t\t_declaredType=_actualThisTypeRef.getDeclaredType();\n\t\t}\n\t\t_switchResult = _declaredType;\n\t}\n}\nif (!_matched)\n{\n\t_switchResult = null;\n}\nreturn _switchResult;'"
-	 * @generated
-	 */
-	Type staticType();
 
 } // ClassifierTypeRef

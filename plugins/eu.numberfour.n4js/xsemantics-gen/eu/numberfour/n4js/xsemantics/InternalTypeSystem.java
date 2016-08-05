@@ -1357,7 +1357,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     T = (TypeRef) result.getFirst();
     
     if (((idref.eContainer() instanceof ParameterizedCallExpression) && (idref.eContainmentFeature() == N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()))) {
-      final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(T);
+      final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(G, T);
       if ((callableCtorFunction != null)) {
         FunctionTypeRef _ref = TypeExtensions.ref(callableCtorFunction);
         T = _ref;
@@ -2225,7 +2225,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypePropertyAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedPropertyAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } var TypeRef propTypeRef; if((receiverTypeRef instanceof BoundThisTypeRef || receiverTypeRef instanceof ParameterizedTypeRef) && expr.property instanceof TMethod && expr.property.name == 'constructor') { var Type receiverType = switch(receiverTypeRef) { ClassifierTypeRef: receiverTypeRef.staticType BoundThisTypeRef: receiverTypeRef.actualThisTypeRef?.declaredType default: receiverTypeRef.declaredType }; propTypeRef = if(receiverType!==null) TypeUtils.createConstructorTypeRef(receiverType) else TypeRefsFactory.eINSTANCE.createUnknownTypeRef; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) typeSystemHelper.addSubstitutions(G2,expr); } G2 |- propTypeRef ~> T if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
+    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument receiverType = switch(receiverTypeRef) { ClassifierTypeRef: G.functionTypeRef ParameterizedTypeRef: TypeUtils.createWildcardExtends(receiverTypeRef.declaredType?.ref) BoundThisTypeRef: TypeUtils.createWildcardExtends(receiverTypeRef.actualThisTypeRef?.declaredType?.ref) }; propTypeRef = if(receiverType!==null) { TypeUtils.createConstructorTypeRef(receiverType) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef; }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2281,13 +2281,25 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
             }
           }
         }
+        final IdentifiableElement prop = expr.getProperty();
         TypeRef propTypeRef = null;
-        if (((((receiverTypeRef instanceof BoundThisTypeRef) || (receiverTypeRef instanceof ParameterizedTypeRef)) && (expr.getProperty() instanceof TMethod)) && Objects.equal(expr.getProperty().getName(), "constructor"))) {
-          Type _switchResult = null;
+        if (((prop instanceof TMethod) && ((TMethod) prop).isConstructor())) {
+          TypeArgument _switchResult = null;
           boolean _matched = false;
           if (receiverTypeRef instanceof ClassifierTypeRef) {
             _matched=true;
-            _switchResult = ((ClassifierTypeRef)receiverTypeRef).staticType();
+            _switchResult = RuleEnvironmentExtensions.functionTypeRef(G);
+          }
+          if (!_matched) {
+            if (receiverTypeRef instanceof ParameterizedTypeRef) {
+              _matched=true;
+              Type _declaredType_1 = ((ParameterizedTypeRef)receiverTypeRef).getDeclaredType();
+              TypeRef _ref = null;
+              if (_declaredType_1!=null) {
+                _ref=TypeExtensions.ref(_declaredType_1);
+              }
+              _switchResult = TypeUtils.createWildcardExtends(_ref);
+            }
           }
           if (!_matched) {
             if (receiverTypeRef instanceof BoundThisTypeRef) {
@@ -2297,13 +2309,14 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
               if (_actualThisTypeRef!=null) {
                 _declaredType_1=_actualThisTypeRef.getDeclaredType();
               }
-              _switchResult = _declaredType_1;
+              TypeRef _ref = null;
+              if (_declaredType_1!=null) {
+                _ref=TypeExtensions.ref(_declaredType_1);
+              }
+              _switchResult = TypeUtils.createWildcardExtends(_ref);
             }
           }
-          if (!_matched) {
-            _switchResult = receiverTypeRef.getDeclaredType();
-          }
-          Type receiverType = _switchResult;
+          final TypeArgument receiverType = _switchResult;
           TypeRef _xifexpression = null;
           if ((receiverType != null)) {
             _xifexpression = TypeUtils.createConstructorTypeRef(receiverType);
@@ -2391,7 +2404,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     
     if ((T instanceof ConstructorTypeRef)) {
       EList<TypeRef> _typeArgs = e.getTypeArgs();
-      TypeRef _createTypeRefFromStaticType = RuleEnvironmentExtensions.createTypeRefFromStaticType(((ClassifierTypeRef)T), ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
+      TypeRef _createTypeRefFromStaticType = this.typeSystemHelper.createTypeRefFromStaticType(G, ((ClassifierTypeRef)T), ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
       T = _createTypeRefFromStaticType;
     }
     return new Result<TypeRef>(T);
@@ -4604,8 +4617,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       TypeArgument _typeArg = left.getTypeArg();
       TypeArgument _typeArg_1 = right.getTypeArg();
       subtypeInternal(G, _trace_, _typeArg, _typeArg_1);
-      final Type left_staticType = left.staticType();
-      final Type right_staticType = right.staticType();
+      final Type left_staticType = this.typeSystemHelper.getStaticType(G, left);
+      final Type right_staticType = this.typeSystemHelper.getStaticType(G, right);
       if (((left_staticType instanceof TypeVariable) || (right_staticType instanceof TypeVariable))) {
         /* left_staticType === right_staticType */
         if (!(left_staticType == right_staticType)) {
@@ -4955,7 +4968,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         ctorTypeRef = (ConstructorTypeRef) result.getFirst();
         
         EList<TypeRef> _typeArgs = ((NewExpression)expr).getTypeArgs();
-        TypeRef typeRefOfInstanceToCreate = RuleEnvironmentExtensions.createTypeRefFromStaticType(ctorTypeRef, ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
+        TypeRef typeRefOfInstanceToCreate = this.typeSystemHelper.createTypeRefFromStaticType(G, ctorTypeRef, ((TypeArgument[])Conversions.unwrapArray(_typeArgs, TypeArgument.class)));
         Type _declaredType = typeRefOfInstanceToCreate.getDeclaredType();
         ContainerType<?> typeOfInstanceToCreate = ((ContainerType<?>) _declaredType);
         final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);

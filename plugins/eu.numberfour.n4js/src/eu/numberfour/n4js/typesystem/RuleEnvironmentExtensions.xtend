@@ -47,7 +47,6 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
 import eu.numberfour.n4js.ts.types.VoidType
-import eu.numberfour.n4js.ts.utils.TypeExtensions
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.utils.RecursionGuard
 import it.xsemantics.runtime.RuleEnvironment
@@ -975,18 +974,5 @@ class RuleEnvironmentExtensions {
 		if( ! container.isStatic ) return false;
 		val isInBody = EcoreUtil2.isAncestor(container.body,locationToCheck)
 		return isInBody;
-	}
-
-	/**
-	 * Creates a parameterized type ref to the wrapped static type of a ClassifierTyperRef, configured with the given TypeArguments.
-	 * Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type)
-	 */
-	public static def TypeRef createTypeRefFromStaticType(ClassifierTypeRef ctr, TypeArgument ... typeArgs) {
-		 val type = ctr.staticType()
-		 if( type !== null ) {
-		 	 TypeExtensions.ref(type,typeArgs)
-		 } else {
-		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-		 }
 	}
 }

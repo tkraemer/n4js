@@ -7133,13 +7133,22 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD___GET_MEMBER_TYPE = TFUNCTION_OPERATION_COUNT + 18;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD___IS_CONSTRUCTOR = TFUNCTION_OPERATION_COUNT + 19;
+
+	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 19;
+	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 20;
 
 	/**
 	 * The operation id for the '<em>Get Member As String</em>' operation.
@@ -7148,7 +7157,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 20;
+	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 21;
 
 	/**
 	 * The number of operations of the '<em>TMethod</em>' class.
@@ -7157,7 +7166,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 21;
+	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 22;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TStructMethodImpl <em>TStruct Method</em>}' class.
@@ -7627,6 +7636,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD___GET_MEMBER_TYPE = TMETHOD___GET_MEMBER_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD___IS_CONSTRUCTOR = TMETHOD___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
@@ -12344,6 +12362,16 @@ public interface TypesPackage extends EPackage {
 	EOperation getTMethod__GetMemberType();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMethod#isConstructor() <em>Is Constructor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Constructor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TMethod#isConstructor()
+	 * @generated
+	 */
+	EOperation getTMethod__IsConstructor();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMethod#getFunctionAsString() <em>Get Function As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14539,6 +14567,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TMETHOD___GET_MEMBER_TYPE = eINSTANCE.getTMethod__GetMemberType();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Constructor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TMETHOD___IS_CONSTRUCTOR = eINSTANCE.getTMethod__IsConstructor();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Function As String</b></em>' operation.

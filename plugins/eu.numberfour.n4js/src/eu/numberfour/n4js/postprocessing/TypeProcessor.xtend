@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -58,6 +59,8 @@ public class TypeProcessor extends AbstractProcessor {
 	private PolyProcessor polyProcessor;
 	@Inject
 	private DestructureProcessor destructureProcessor;
+	@Inject
+	private TypeSystemHelper tsh;
 
 
 	def void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
@@ -263,7 +266,8 @@ public class TypeProcessor extends AbstractProcessor {
 						val callee = expr.callee;
 						if (callee instanceof N4ClassExpression) {
 							val calleeType = askXsemanticsForType(G, null, callee).value;
-							return new Result(TypeUtils.createTypeRef((calleeType as ClassifierTypeRef).staticType));
+							val calleeTypeStaticType = tsh.getStaticType(G, calleeType as ClassifierTypeRef);
+							return new Result(TypeUtils.createTypeRef(calleeTypeStaticType));
 						}
 					}
 					val declTypeRef = node.declaredTypeRefOfVFP;

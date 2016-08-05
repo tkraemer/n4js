@@ -12,30 +12,36 @@ package eu.numberfour.n4js.scoping.accessModifiers;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
+import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * Error-Description of invisible constructor-access
  */
 public class InvisibleCtorDescription extends InvisibleMemberDescription {
 
+	@SuppressWarnings("unused")
 	private final ConstructorTypeRef typeRef;
+	private final Type staticType;
 
 	/**
 	 * @param delegate
 	 *            the constructor
-	 * @param type
+	 * @param typeRef
 	 *            reference to the constructor - used for better error messages.
+	 * @param staticType
+	 *            the static type for the given ConstructorTypeRef
 	 */
-	public InvisibleCtorDescription(IEObjectDescription delegate, ConstructorTypeRef type) {
+	public InvisibleCtorDescription(IEObjectDescription delegate, ConstructorTypeRef typeRef, Type staticType) {
 		super(delegate);
-		this.typeRef = type;
+		this.typeRef = typeRef;
+		this.staticType = staticType;
 	}
 
 	@Override
 	public String getMessage() {
-		String containerName = typeRef.staticType().getTypeAsString();
+		String containerName = staticType.getTypeAsString();
 		return IssueCodes.getMessageForVIS_NEW_CANNOT_INSTANTIATE_INVISIBLE_CONSTRUCTOR(containerName);
 	}
 

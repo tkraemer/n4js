@@ -240,6 +240,15 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Creates new {@link ConstructorTypeRef} with the given type argument.
+	 */
+	public static ConstructorTypeRef createConstructorTypeRef(TypeArgument typeArg) {
+		ConstructorTypeRef ctorTypeRef = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
+		ctorTypeRef.setTypeArg(typeArg);
+		return ctorTypeRef;
+	}
+
+	/**
 	 * Creates new type reference for constructor. if the declared type is TFunction a FunctionTypeRedf is created. If
 	 * declared type is TClassifier than ConstructorTypeRef is created (i.e. <code>constructor{A}</code> in N4JS code)
 	 */
@@ -342,6 +351,31 @@ public class TypeUtils {
 		etr.setWildcard(wildcard);
 		etr.setBoundTypeVariable(typeVar);
 		return etr;
+	}
+
+	/**
+	 * Creates a new unbounded wildcard.
+	 */
+	public static Wildcard createWildcard() {
+		return TypeRefsFactory.eINSTANCE.createWildcard();
+	}
+
+	/**
+	 * Creates a new wildcard with the given upper bound.
+	 */
+	public static Wildcard createWildcardExtends(TypeRef upperBound) {
+		final Wildcard wc = createWildcard();
+		wc.setDeclaredUpperBound(upperBound);
+		return wc;
+	}
+
+	/**
+	 * Creates a new wildcard with the given lower bound.
+	 */
+	public static Wildcard createWildcardSuper(TypeRef lowerBound) {
+		final Wildcard wc = createWildcard();
+		wc.setDeclaredLowerBound(lowerBound);
+		return wc;
 	}
 
 	/**

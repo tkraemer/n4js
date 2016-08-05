@@ -28,6 +28,7 @@ import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.TClass
@@ -36,6 +37,7 @@ import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.utils.TypeExtensions
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.Log
@@ -43,7 +45,6 @@ import eu.numberfour.n4js.utils.StructuralTypesHelper
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
@@ -286,10 +287,10 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * Checks if a value of type <code>typeRef</code> is "callable", i.e. if it can be directly invoked using a call
 	 * expression.
 	 */
-	def boolean isCallable(TypeRef typeRef, Resource resource) {
-		if(isClassConstructorFunction(typeRef)) {
+	def boolean isCallable(RuleEnvironment G, TypeRef typeRef) {
+		if(isClassConstructorFunction(G, typeRef)) {
 			// don't allow direct invocation of class constructors
-			if(getCallableClassConstructorFunction(typeRef)!==null)
+			if(getCallableClassConstructorFunction(G, typeRef)!==null)
 				return true; // exception: this is a class that provides a callable constructor function
 			return false;
 		}
@@ -297,19 +298,16 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			return true;
 		if(typeRef instanceof FunctionTypeExprOrRef)
 			return true;
-		if(resource!==null) {
-			val RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
-			if(ts.subtypeSucceeded(G, typeRef, G.functionTypeRef))
-				return true;
-			if(typeRef.dynamic && ts.subtypeSucceeded(G, G.functionTypeRef, typeRef))
-				return true;
-		}
+		if(ts.subtypeSucceeded(G, typeRef, G.functionTypeRef))
+			return true;
+		if(typeRef.dynamic && ts.subtypeSucceeded(G, G.functionTypeRef, typeRef))
+			return true;
 		return false;
 	}
 	/**
 	 * Checks if a value of type <code>typeRef</code> is a class constructor function.
 	 */
-	def boolean isClassConstructorFunction(TypeRef typeRef) {
+	def public boolean isClassConstructorFunction(RuleEnvironment G, TypeRef typeRef) {
 		val declaredType = typeRef.declaredType;
 		if(declaredType instanceof TMethod) {
 			if(declaredType.isConstructor)
@@ -323,13 +321,13 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			}
 		}
 		if(typeRef instanceof ConstructorTypeRef) {
-			val cls = typeRef.staticType;
+			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				return true;
 		}
 		return false;
 	}
-	def public TMethod getCallableClassConstructorFunction(TypeRef typeRef) {
+	def public TMethod getCallableClassConstructorFunction(RuleEnvironment G, TypeRef typeRef) {
 		var Type type = null;
 		val declaredType = typeRef.declaredType;
 		if(declaredType instanceof TMethod) {
@@ -344,7 +342,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			}
 		}
 		if(typeRef instanceof ClassifierTypeRef) {
-			val cls = typeRef.staticType;
+			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				type = cls;
 		}
@@ -352,5 +350,31 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			return type.callableCtor;
 		}
 		return null;
+	}
+
+	/**
+	 * Returns the so-called "static type" of the given {@link ClassifierTypeRef} or <code>null</code> if not available.
+	 * <p>
+	 * Formerly, this was a utility operation in {@code TypeRefs.xcore} but since the introduction of wildcards in
+	 * {@code ClassifierTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
+	 * and hence it was moved here.
+	 */
+	def public Type getStaticType(RuleEnvironment G, ClassifierTypeRef classifierTypeRef) {
+		val typeArg = classifierTypeRef.typeArg;
+		val ub = if(typeArg!==null) ts.upperBound(G, typeArg).value;
+		return ub?.declaredType; // returns null if 'ub' is not of type ParameterizedTypeRef
+	}
+
+	/**
+	 * Creates a parameterized type ref to the wrapped static type of a ClassifierTyperRef, configured with the given TypeArguments.
+	 * Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type)
+	 */
+	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, ClassifierTypeRef ctr, TypeArgument ... typeArgs) {
+		 val type = getStaticType(G, ctr);
+		 if( type !== null ) {
+		 	 TypeExtensions.ref(type,typeArgs)
+		 } else {
+		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+		 }
 	}
 }

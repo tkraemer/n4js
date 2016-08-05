@@ -69,6 +69,7 @@ import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 
 /**
  * Validations related to dependency injection (covering annotations and instantiations).
@@ -79,6 +80,8 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 
 	@Inject
 	private N4JSTypeSystem ts;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	@Inject
 	private extension ContainerTypesHelper;
@@ -126,7 +129,8 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
 
-		val staticType = if (typeRef instanceof ClassifierTypeRef) typeRef.staticType else null;
+		val G = newExpression.newRuleEnvironment;
+		val staticType = if (typeRef instanceof ClassifierTypeRef) tsh.getStaticType(G, typeRef) else null;
 		if (staticType === null || staticType.eIsProxy)
 			return;
 		if (!(staticType instanceof TClass)) {

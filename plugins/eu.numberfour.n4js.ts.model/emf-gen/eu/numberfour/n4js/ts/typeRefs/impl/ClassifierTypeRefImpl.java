@@ -7,14 +7,10 @@
  */
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
-import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-
-import eu.numberfour.n4js.ts.types.Type;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -135,38 +131,6 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Type staticType() {
-		Type _switchResult = null;
-		TypeArgument _typeArg = this.getTypeArg();
-		boolean _matched = false;
-		if (_typeArg instanceof ParameterizedTypeRef) {
-			_matched=true;
-			TypeArgument _typeArg_1 = this.getTypeArg();
-			_switchResult = ((ParameterizedTypeRef) _typeArg_1).getDeclaredType();
-		}
-		if (!_matched) {
-			if (_typeArg instanceof BoundThisTypeRef) {
-				_matched=true;
-				TypeArgument _typeArg_1 = this.getTypeArg();
-				ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef) _typeArg_1).getActualThisTypeRef();
-				Type _declaredType = null;
-				if (_actualThisTypeRef!=null) {
-					_declaredType=_actualThisTypeRef.getDeclaredType();
-				}
-				_switchResult = _declaredType;
-			}
-		}
-		if (!_matched) {
-			_switchResult = null;
-		}
-		return _switchResult;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -266,8 +230,6 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 		switch (operationID) {
 			case TypeRefsPackage.CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING:
 				return getTypeRefAsString();
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF___STATIC_TYPE:
-				return staticType();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

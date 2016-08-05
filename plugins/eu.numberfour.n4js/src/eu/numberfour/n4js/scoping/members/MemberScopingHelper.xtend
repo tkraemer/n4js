@@ -60,6 +60,7 @@ import org.eclipse.xtext.scoping.Scopes
  */
 class MemberScopingHelper {
 	@Inject N4JSTypeSystem ts;
+	@Inject TypeSystemHelper tsh;
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
 
@@ -229,7 +230,9 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(ConstructorTypeRef ctr, MemberScopeRequest request) {
 		val MemberScopeRequest staticRequest = request.enforceStatic;
-		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
+		val G = RuleEnvironmentExtensions.newRuleEnvironment(request.context);
+		val ctrStaticType = tsh.getStaticType(G, ctr);
+		var IScope staticMembers = membersOfType(ctrStaticType, staticRequest) // staticAccess is always true in this case
 		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
 			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
@@ -249,7 +252,9 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(ClassifierTypeRef ctr, MemberScopeRequest request) {
 		val MemberScopeRequest staticRequest = request.enforceStatic;
-		var IScope staticMembers = membersOfType(ctr.staticType, staticRequest) // staticAccess is always true in this case
+		val G = RuleEnvironmentExtensions.newRuleEnvironment(request.context);
+		val ctrStaticType = tsh.getStaticType(G, ctr);
+		var IScope staticMembers = membersOfType(ctrStaticType, staticRequest) // staticAccess is always true in this case
 		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
 			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
