@@ -44,7 +44,7 @@ I2.propI2;
 
 
 // XPECT scope at 'C.|propC' ---
-// apply, arguments, bind, call, constructor, create, defineProperties,
+// __proto__, apply, arguments, bind, call, constructor, create, defineProperties,
 // defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
 // hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, n4type,
 // preventExtensions, propC, propertyIsEnumerable, prototype, prototype, seal, toLocaleString,

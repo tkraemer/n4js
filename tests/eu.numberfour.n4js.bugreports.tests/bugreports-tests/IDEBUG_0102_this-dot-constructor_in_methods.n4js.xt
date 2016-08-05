@@ -10,7 +10,7 @@ class A extends N4Object {
 		this.constructor.foo;
 		// XPECT noerrors --> "The static member n4type cannot be accessed from a non-static context." at "n4type"
 		this.constructor.n4type;
-		// XPECT type of 'this.constructor' --> constructor{A}
+		// XPECT type of 'this.constructor' --> constructor{? extends A}
 		this.constructor;
 	}
 	
@@ -19,7 +19,7 @@ class A extends N4Object {
 		this.constructor.foo;
 		// XPECT noerrors --> "The static member n4type cannot be accessed from a non-static context." at "n4type"
 		this.constructor.n4type;
-		// XPECT type of 'this.constructor' --> constructor{A}
+		// XPECT type of 'this.constructor' --> constructor{? extends A}
 		this.constructor;
 	}
 }
@@ -31,6 +31,6 @@ var a = new A();
 a.constructor.foo;
 // The static member n4type cannot be accessed from a non-static context:
 a.constructor.n4type;
-// XPECT type of 'a.constructor' --> constructor{A}
+// XPECT type of 'a.constructor' --> constructor{? extends A}
 a.constructor;
 

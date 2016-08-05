@@ -44,7 +44,9 @@ class StructuralTypingComputerTest_collectMembersTest extends AbstractStructural
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(script);
 		val typeRef = (script.scriptElements.last as VariableStatement).varDecl.head.declaredTypeRef;
 
-		val objMembers = ", toLocaleString(), hasOwnProperty(), isPrototypeOf(), propertyIsEnumerable(), toString(), valueOf()"
+// instance members of Object are now ignored in structural typing, so the following is no longer necessary here:
+//		val objMembers = ", toLocaleString(), hasOwnProperty(), isPrototypeOf(), propertyIsEnumerable(), toString(), valueOf()"
+		val objMembers = ""
 		val objFields = ""
 
 		assertMembers("s, foo()"+objMembers,

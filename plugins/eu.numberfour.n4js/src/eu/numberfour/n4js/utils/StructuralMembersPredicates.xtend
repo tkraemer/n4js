@@ -16,7 +16,7 @@ import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TStructuralType
-import ^it.xsemantics.runtime.RuleEnvironment
+import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static eu.numberfour.n4js.ts.types.MemberAccessModifier.*
@@ -24,6 +24,7 @@ import static eu.numberfour.n4js.utils.AndFunction1.conjunctionOf
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.isConstructor
+import eu.numberfour.n4js.ts.types.Type
 
 /**
  * Utility class for filtering out structural members for different structural typing strategies.
@@ -91,9 +92,13 @@ abstract class StructuralMembersPredicates {
 	private static class BaseStructuralMembersPredicate implements Function1<TMember, Boolean> {
 
 		val RuleEnvironment G;
+		val Type objectType;
+		val Type n4ObjectType;
 
 		private new(RuleEnvironment G) {
 			this.G = G;
+			this.objectType = G.objectType;
+			this.n4ObjectType = G.n4ObjectType;
 		}
 
 		@Override
@@ -104,7 +109,7 @@ abstract class StructuralMembersPredicates {
 					return false;
 				}
 
-				if (hasN4ObjectTypeContainer) {
+				if (hasBaseObjectTypeContainer) {
 					return false;
 				}
 
@@ -120,16 +125,13 @@ abstract class StructuralMembersPredicates {
 			return containingType instanceof TStructuralType;
 		}
 
-		def private hasN4ObjectTypeContainer(TMember it) {
-			return containingType === G.n4ObjectType; // cf Constraint 62.4
+		def private hasBaseObjectTypeContainer(TMember it) {
+			return containingType === objectType || containingType === n4ObjectType; // cf Constraint 62.4
 		}
 
 		def private isPublicVisible(TMember it) {
 			// Visibility is public internal or greater: public.
 			0 >= PUBLIC_INTERNAL.compareTo(memberAccessModifier)
 		}
-
 	}
-
-
 }
