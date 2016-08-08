@@ -78,6 +78,7 @@ import eu.numberfour.n4js.n4JS.VariableBinding;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.n4JS.YieldExpression;
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper;
+import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
@@ -2225,7 +2226,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypePropertyAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedPropertyAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument receiverType = switch(receiverTypeRef) { ClassifierTypeRef: G.functionTypeRef ParameterizedTypeRef: TypeUtils.createWildcardExtends(receiverTypeRef.declaredType?.ref) BoundThisTypeRef: TypeUtils.createWildcardExtends(receiverTypeRef.actualThisTypeRef?.declaredType?.ref) }; propTypeRef = if(receiverType!==null) { TypeUtils.createConstructorTypeRef(receiverType) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef; }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
+    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument ctorTypeArg = switch(receiverTypeRef) { ClassifierTypeRef: G.functionTypeRef ParameterizedTypeRef, BoundThisTypeRef: { val declType = if(receiverTypeRef instanceof BoundThisTypeRef) { receiverTypeRef.actualThisTypeRef?.declaredType } else { receiverTypeRef.declaredType }; val finalCtorSig = if(declType instanceof TClass) N4JSLanguageUtils.hasCovariantConstructor(declType); if(finalCtorSig) { declType.ref } else if(declType!==null) { TypeUtils.createWildcardExtends(declType.ref) } else { null } } }; propTypeRef = if(ctorTypeArg!==null) { TypeUtils.createConstructorTypeRef(ctorTypeArg) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2293,33 +2294,54 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           if (!_matched) {
             if (receiverTypeRef instanceof ParameterizedTypeRef) {
               _matched=true;
-              Type _declaredType_1 = ((ParameterizedTypeRef)receiverTypeRef).getDeclaredType();
-              TypeRef _ref = null;
-              if (_declaredType_1!=null) {
-                _ref=TypeExtensions.ref(_declaredType_1);
+            }
+            if (!_matched) {
+              if (receiverTypeRef instanceof BoundThisTypeRef) {
+                _matched=true;
               }
-              _switchResult = TypeUtils.createWildcardExtends(_ref);
+            }
+            if (_matched) {
+              TypeArgument _xblockexpression = null;
+              {
+                Type _xifexpression = null;
+                if ((receiverTypeRef instanceof BoundThisTypeRef)) {
+                  ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef)receiverTypeRef).getActualThisTypeRef();
+                  Type _declaredType_1 = null;
+                  if (_actualThisTypeRef!=null) {
+                    _declaredType_1=_actualThisTypeRef.getDeclaredType();
+                  }
+                  _xifexpression = _declaredType_1;
+                } else {
+                  _xifexpression = ((BaseTypeRef)receiverTypeRef).getDeclaredType();
+                }
+                final Type declType = _xifexpression;
+                boolean _xifexpression_1 = false;
+                if ((declType instanceof TClass)) {
+                  _xifexpression_1 = N4JSLanguageUtils.hasCovariantConstructor(((TClass)declType));
+                }
+                final boolean finalCtorSig = _xifexpression_1;
+                TypeArgument _xifexpression_2 = null;
+                if (finalCtorSig) {
+                  _xifexpression_2 = TypeExtensions.ref(declType);
+                } else {
+                  Wildcard _xifexpression_3 = null;
+                  if ((declType != null)) {
+                    TypeRef _ref = TypeExtensions.ref(declType);
+                    _xifexpression_3 = TypeUtils.createWildcardExtends(_ref);
+                  } else {
+                    _xifexpression_3 = null;
+                  }
+                  _xifexpression_2 = _xifexpression_3;
+                }
+                _xblockexpression = (_xifexpression_2);
+              }
+              _switchResult = _xblockexpression;
             }
           }
-          if (!_matched) {
-            if (receiverTypeRef instanceof BoundThisTypeRef) {
-              _matched=true;
-              ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef)receiverTypeRef).getActualThisTypeRef();
-              Type _declaredType_1 = null;
-              if (_actualThisTypeRef!=null) {
-                _declaredType_1=_actualThisTypeRef.getDeclaredType();
-              }
-              TypeRef _ref = null;
-              if (_declaredType_1!=null) {
-                _ref=TypeExtensions.ref(_declaredType_1);
-              }
-              _switchResult = TypeUtils.createWildcardExtends(_ref);
-            }
-          }
-          final TypeArgument receiverType = _switchResult;
+          final TypeArgument ctorTypeArg = _switchResult;
           TypeRef _xifexpression = null;
-          if ((receiverType != null)) {
-            _xifexpression = TypeUtils.createConstructorTypeRef(receiverType);
+          if ((ctorTypeArg != null)) {
+            _xifexpression = TypeUtils.createConstructorTypeRef(ctorTypeArg);
           } else {
             _xifexpression = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
           }

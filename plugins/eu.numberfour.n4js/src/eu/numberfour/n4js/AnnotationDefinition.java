@@ -114,6 +114,10 @@ public final class AnnotationDefinition {
 			.targets(N4_CLASS_DECLARATION, N4_MEMBER_DECLARATION)
 			.targetsWithCustomError(N4_INTERFACE_DECLARATION).end();
 
+	// FIXME spec update
+	public final static AnnotationDefinition COVARIANT_CONSTRUCTOR = define("CovariantConstructor")
+			.targets(N4_CLASS_DECLARATION, N4_MEMBER_DECLARATION).end();
+
 	/**
 	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
 	 */

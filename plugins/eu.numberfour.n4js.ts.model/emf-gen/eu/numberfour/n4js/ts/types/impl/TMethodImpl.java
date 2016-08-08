@@ -799,6 +799,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				case TypesPackage.TMEMBER___IS_SETTER: return TypesPackage.TMETHOD___IS_SETTER;
 				case TypesPackage.TMEMBER___IS_ACCESSOR: return TypesPackage.TMETHOD___IS_ACCESSOR;
 				case TypesPackage.TMEMBER___IS_METHOD: return TypesPackage.TMETHOD___IS_METHOD;
+				case TypesPackage.TMEMBER___IS_CONSTRUCTOR: return TypesPackage.TMETHOD___IS_CONSTRUCTOR;
 				case TypesPackage.TMEMBER___IS_OPTIONAL: return TypesPackage.TMETHOD___IS_OPTIONAL;
 				case TypesPackage.TMEMBER___IS_ABSTRACT: return TypesPackage.TMETHOD___IS_ABSTRACT;
 				case TypesPackage.TMEMBER___IS_READABLE: return TypesPackage.TMETHOD___IS_READABLE;

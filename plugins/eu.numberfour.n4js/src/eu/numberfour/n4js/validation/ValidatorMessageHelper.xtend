@@ -114,7 +114,10 @@ class ValidatorMessageHelper {
 	 * Returns type of member and short qualified name.
 	 */
 	public def String description(TMember member) {
-		'''«member.prefixedKeyword» «member.shortQualifiedName»'''
+		if(member.isConstructor) {
+			return "constructor of " + member.containingType?.description;
+		}
+		return '''«member.prefixedKeyword» «member.shortQualifiedName»''';
 	}
 
 	/**

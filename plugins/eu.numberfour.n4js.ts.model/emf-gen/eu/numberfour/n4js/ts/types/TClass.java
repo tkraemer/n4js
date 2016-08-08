@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredPolyfill <em>Declared Polyfill</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredStaticPolyfill <em>Declared Static Polyfill</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isObservable <em>Observable</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassRef <em>Super Class Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#getImplementedInterfaceRefs <em>Implemented Interface Refs</em>}</li>
@@ -195,6 +196,32 @@ public interface TClass extends TN4Classifier {
 	void setDeclaredStaticPolyfill(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Declared Final Constructor Signature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Declared Final Constructor Signature</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Declared Final Constructor Signature</em>' attribute.
+	 * @see #setDeclaredFinalConstructorSignature(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClass_DeclaredFinalConstructorSignature()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isDeclaredFinalConstructorSignature();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Final Constructor Signature</em>' attribute.
+	 * @see #isDeclaredFinalConstructorSignature()
+	 * @generated
+	 */
+	void setDeclaredFinalConstructorSignature(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Observable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -276,6 +303,20 @@ public interface TClass extends TN4Classifier {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
+	 * Convenience method, return the explicitly declared super class casted to a {@link TClass} or <code>null</code> if
+	 * not possible, not available. Ignores implicit super types!
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef = this.getSuperClassRef();\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = null;\nif (_superClassRef!=null)\n{\n\t_declaredType=_superClassRef.getDeclaredType();\n}\nfinal <%eu.numberfour.n4js.ts.types.Type%> superType = _declaredType;\n<%eu.numberfour.n4js.ts.types.TClass%> _xifexpression = null;\nif ((superType instanceof <%eu.numberfour.n4js.ts.types.TClass%>))\n{\n\t_xifexpression = ((<%eu.numberfour.n4js.ts.types.TClass%>)superType);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+	 * @generated
+	 */
+	TClass getSuperClass();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
@@ -301,7 +342,7 @@ public interface TClass extends TN4Classifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TMember%>> _ownedMembers = this.getOwnedMembers();\n<%java.lang.Iterable%><<%eu.numberfour.n4js.ts.types.TMethod%>> _filter = <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>filter(_ownedMembers, <%eu.numberfour.n4js.ts.types.TMethod%>.class);\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.types.TMethod%> it)\n\t{\n\t\t<%java.lang.String%> _name = it.getName();\n\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_name, \"constructor\"));\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>findFirst(_filter, _function);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TMember%>> _ownedMembers = this.getOwnedMembers();\n<%java.lang.Iterable%><<%eu.numberfour.n4js.ts.types.TMethod%>> _filter = <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>filter(_ownedMembers, <%eu.numberfour.n4js.ts.types.TMethod%>.class);\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.types.TMethod%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.isConstructor());\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>findFirst(_filter, _function);'"
 	 * @generated
 	 */
 	TMethod getOwnedCtor();

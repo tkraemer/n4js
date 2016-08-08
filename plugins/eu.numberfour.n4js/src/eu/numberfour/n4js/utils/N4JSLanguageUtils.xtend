@@ -11,6 +11,8 @@
 package eu.numberfour.n4js.utils
 
 import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
@@ -49,6 +51,7 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
+import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
@@ -59,19 +62,18 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
-import eu.numberfour.n4js.common.unicode.CharTypes
-import eu.numberfour.n4js.conversion.IdentifierValueConverter
-import org.eclipse.xtext.naming.QualifiedName
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 
 /**
  * Intended for small, static utility methods that
@@ -493,7 +495,7 @@ class N4JSLanguageUtils {
 		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( tsElement ); // transitively inherited
 	}
 	
-	/** checks if the qualifiedName has a last segment named 'default' {@link eu.numberfour.n4js.validation.helper.N4JSLanguageConstants#EXPORT_DEFAULT_NAME} */
+	/** checks if the qualifiedName has a last segment named 'default' {@link N4JSLanguageConstants#EXPORT_DEFAULT_NAME} */
 	def static boolean isDefaultExport(QualifiedName qualifiedName) {
 		return  ( qualifiedName !== null
 				&& qualifiedName.getSegmentCount() > 1
@@ -510,7 +512,7 @@ class N4JSLanguageUtils {
 	 * 
 	 * Moved from {@link IdentifierValueConverter}.
 	 */
-	public def static boolean isValidIdentifierStart(char c) {
+	def static boolean isValidIdentifierStart(char c) {
 		return CharTypes.isLetter(c) || c.isChar('_') || c.isChar('$');
 	}
 	
@@ -519,7 +521,7 @@ class N4JSLanguageUtils {
 	 * 
 	 * Moved from {@link IdentifierValueConverter}.
 	 */
-	public def static boolean isValidIdentifierPart(char c) {
+	def static boolean isValidIdentifierPart(char c) {
 		return N4JSLanguageUtils.isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
 				|| CharTypes.isCombiningMark(c) || c.isChar('\u200C') || c.isChar('\u200D');
 	}
@@ -527,7 +529,7 @@ class N4JSLanguageUtils {
 	/** 
 	 * Returns <code>true</code> if the given identifier is a valid N4JS identifier.  
 	 */
-	public def static boolean isValidIdentifier(String identifier) {
+	def static boolean isValidIdentifier(String identifier) {
 		val characters = identifier.chars.toArray;
 		for (i : 0..<characters.length) {
 			val c = characters.get(i) as char;
@@ -544,8 +546,25 @@ class N4JSLanguageUtils {
 	/**
 	 * Helper method to overcome missing xtend support for character literals
 	 */
-	private def static boolean isChar(char c1, String c2) {
+	def private static boolean isChar(char c1, String c2) {
 		c1 == c2.charAt(0);
 	}
-	
+
+	/**
+	 * Tells if the given class has a covariant constructor, cf. {@link AnnotationDefinition#COVARIANT_CONSTRUCTOR}.
+	 */
+	def static boolean hasCovariantConstructor(TClass tClass) {
+		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
+		return tClass.declaredFinalConstructorSignature
+			|| new ExtendedClassesIterable(tClass).exists[declaredFinalConstructorSignature];
+	}
+
+	/**
+	 * Returns the nearest super class that is itself explicitly annotated with &#64;CovariantConstructor or has an
+	 * owned constructor explicitly annotated with &#64;CovariantConstructor.
+	 */
+	def static TClass findCovariantConstructorDeclarator(TClass tClass) {
+		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
+		return new ExtendedClassesIterable(tClass).findFirst[declaredFinalConstructorSignature]; 
+	}
 }

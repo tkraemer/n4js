@@ -5328,13 +5328,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASS__DECLARED_STATIC_POLYFILL = TN4_CLASSIFIER_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Declared Final Constructor Signature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE = TN4_CLASSIFIER_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Observable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__OBSERVABLE = TN4_CLASSIFIER_FEATURE_COUNT + 6;
+	int TCLASS__OBSERVABLE = TN4_CLASSIFIER_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Super Class Ref</b></em>' containment reference.
@@ -5343,7 +5352,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__SUPER_CLASS_REF = TN4_CLASSIFIER_FEATURE_COUNT + 7;
+	int TCLASS__SUPER_CLASS_REF = TN4_CLASSIFIER_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Implemented Interface Refs</b></em>' containment reference list.
@@ -5352,7 +5361,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__IMPLEMENTED_INTERFACE_REFS = TN4_CLASSIFIER_FEATURE_COUNT + 8;
+	int TCLASS__IMPLEMENTED_INTERFACE_REFS = TN4_CLASSIFIER_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>TClass</em>' class.
@@ -5361,7 +5370,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS_FEATURE_COUNT = TN4_CLASSIFIER_FEATURE_COUNT + 9;
+	int TCLASS_FEATURE_COUNT = TN4_CLASSIFIER_FEATURE_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -5508,13 +5517,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___IS_ABSTRACT = TN4_CLASSIFIER_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Super Class</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_SUPER_CLASS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -5523,7 +5541,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
+	int TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
@@ -5532,7 +5550,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER_OPERATION_COUNT + 3;
+	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Polyfill</em>' operation.
@@ -5541,7 +5559,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 4;
+	int TCLASS___IS_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Static Polyfill</em>' operation.
@@ -5550,7 +5568,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_STATIC_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 5;
+	int TCLASS___IS_STATIC_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -5559,7 +5577,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_FINAL = TN4_CLASSIFIER_OPERATION_COUNT + 6;
+	int TCLASS___IS_FINAL = TN4_CLASSIFIER_OPERATION_COUNT + 7;
 
 	/**
 	 * The number of operations of the '<em>TClass</em>' class.
@@ -5568,7 +5586,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS_OPERATION_COUNT = TN4_CLASSIFIER_OPERATION_COUNT + 7;
+	int TCLASS_OPERATION_COUNT = TN4_CLASSIFIER_OPERATION_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TInterfaceImpl <em>TInterface</em>}' class.
@@ -6068,13 +6086,22 @@ public interface TypesPackage extends EPackage {
 	int TMEMBER___IS_METHOD = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER___IS_CONSTRUCTOR = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 8;
+	int TMEMBER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -6083,7 +6110,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_ABSTRACT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 9;
+	int TMEMBER___IS_ABSTRACT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
@@ -6092,7 +6119,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_READABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 10;
+	int TMEMBER___IS_READABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Writeable</em>' operation.
@@ -6101,7 +6128,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_WRITEABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 11;
+	int TMEMBER___IS_WRITEABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Get Member As String</em>' operation.
@@ -6110,7 +6137,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___GET_MEMBER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 12;
+	int TMEMBER___GET_MEMBER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -6119,7 +6146,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_FINAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 13;
+	int TMEMBER___IS_FINAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -6128,7 +6155,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_STATIC = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 14;
+	int TMEMBER___IS_STATIC = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Polyfilled</em>' operation.
@@ -6137,7 +6164,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_POLYFILLED = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 15;
+	int TMEMBER___IS_POLYFILLED = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 16;
 
 	/**
 	 * The number of operations of the '<em>TMember</em>' class.
@@ -6146,7 +6173,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 16;
+	int TMEMBER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 17;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TMemberWithAccessModifierImpl <em>TMember With Access Modifier</em>}' class.
@@ -6310,6 +6337,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD = TMEMBER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR = TMEMBER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -6554,6 +6590,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_MEMBER___IS_METHOD = TMEMBER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_MEMBER___IS_CONSTRUCTOR = TMEMBER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -7058,7 +7103,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_OPTIONAL = TFUNCTION_OPERATION_COUNT + 8;
+	int TMETHOD___IS_OPTIONAL = TFUNCTION_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
@@ -7067,7 +7112,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_READABLE = TFUNCTION_OPERATION_COUNT + 10;
+	int TMETHOD___IS_READABLE = TFUNCTION_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Writeable</em>' operation.
@@ -7076,7 +7121,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_WRITEABLE = TFUNCTION_OPERATION_COUNT + 11;
+	int TMETHOD___IS_WRITEABLE = TFUNCTION_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -7085,7 +7130,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_FINAL = TFUNCTION_OPERATION_COUNT + 13;
+	int TMETHOD___IS_FINAL = TFUNCTION_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -7094,7 +7139,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_STATIC = TFUNCTION_OPERATION_COUNT + 14;
+	int TMETHOD___IS_STATIC = TFUNCTION_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Polyfilled</em>' operation.
@@ -7103,7 +7148,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_POLYFILLED = TFUNCTION_OPERATION_COUNT + 15;
+	int TMETHOD___IS_POLYFILLED = TFUNCTION_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Get Member Access Modifier</em>' operation.
@@ -7112,7 +7157,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_ACCESS_MODIFIER = TFUNCTION_OPERATION_COUNT + 16;
+	int TMETHOD___GET_MEMBER_ACCESS_MODIFIER = TFUNCTION_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -7121,7 +7166,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_ABSTRACT = TFUNCTION_OPERATION_COUNT + 17;
+	int TMETHOD___IS_ABSTRACT = TFUNCTION_OPERATION_COUNT + 18;
 
 	/**
 	 * The operation id for the '<em>Get Member Type</em>' operation.
@@ -7130,7 +7175,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_TYPE = TFUNCTION_OPERATION_COUNT + 18;
+	int TMETHOD___GET_MEMBER_TYPE = TFUNCTION_OPERATION_COUNT + 19;
 
 	/**
 	 * The operation id for the '<em>Is Constructor</em>' operation.
@@ -7139,7 +7184,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_CONSTRUCTOR = TFUNCTION_OPERATION_COUNT + 19;
+	int TMETHOD___IS_CONSTRUCTOR = TFUNCTION_OPERATION_COUNT + 20;
 
 	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
@@ -7148,7 +7193,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 20;
+	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 21;
 
 	/**
 	 * The operation id for the '<em>Get Member As String</em>' operation.
@@ -7157,7 +7202,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 21;
+	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 22;
 
 	/**
 	 * The number of operations of the '<em>TMethod</em>' class.
@@ -7166,7 +7211,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 22;
+	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 23;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TStructMethodImpl <em>TStruct Method</em>}' class.
@@ -8118,6 +8163,15 @@ public interface TypesPackage extends EPackage {
 	int TFIELD___IS_METHOD = TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD___IS_CONSTRUCTOR = TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8407,6 +8461,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD___IS_METHOD = TFIELD___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD___IS_CONSTRUCTOR = TFIELD___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8687,6 +8750,15 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR___IS_METHOD = TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___IS_CONSTRUCTOR = TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8956,6 +9028,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER___IS_METHOD = FIELD_ACCESSOR___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -9247,6 +9328,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_GETTER___IS_METHOD = TGETTER___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER___IS_CONSTRUCTOR = TGETTER___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9536,6 +9626,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER___IS_METHOD = FIELD_ACCESSOR___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9823,6 +9922,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER___IS_METHOD = TSETTER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER___IS_CONSTRUCTOR = TSETTER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -11849,6 +11957,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTClass_DeclaredStaticPolyfill();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Final Constructor Signature</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature()
+	 * @see #getTClass()
+	 * @generated
+	 */
+	EAttribute getTClass_DeclaredFinalConstructorSignature();
+
+	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClass#isObservable <em>Observable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11890,6 +12009,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTClass__IsAbstract();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClass() <em>Get Super Class</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Class</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClass()
+	 * @generated
+	 */
+	EOperation getTClass__GetSuperClass();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassifiers() <em>Get Super Classifiers</em>}' operation.
@@ -12135,6 +12264,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTMember__IsMethod();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#isConstructor() <em>Is Constructor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Constructor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TMember#isConstructor()
+	 * @generated
+	 */
+	EOperation getTMember__IsConstructor();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#isOptional() <em>Is Optional</em>}' operation.
@@ -14159,6 +14298,14 @@ public interface TypesPackage extends EPackage {
 		EAttribute TCLASS__DECLARED_STATIC_POLYFILL = eINSTANCE.getTClass_DeclaredStaticPolyfill();
 
 		/**
+		 * The meta object literal for the '<em><b>Declared Final Constructor Signature</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE = eINSTANCE.getTClass_DeclaredFinalConstructorSignature();
+
+		/**
 		 * The meta object literal for the '<em><b>Observable</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14189,6 +14336,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TCLASS___IS_ABSTRACT = eINSTANCE.getTClass__IsAbstract();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Class</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TCLASS___GET_SUPER_CLASS = eINSTANCE.getTClass__GetSuperClass();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Super Classifiers</b></em>' operation.
@@ -14385,6 +14540,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TMEMBER___IS_METHOD = eINSTANCE.getTMember__IsMethod();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Constructor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TMEMBER___IS_CONSTRUCTOR = eINSTANCE.getTMember__IsConstructor();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.

@@ -94,7 +94,7 @@ class TypesKeywordProvider {
 	}
 
 	def dispatch String keyword(TMethod n4Method) {
-		"method"
+		if(n4Method.isConstructor) "constructor" else "method"
 	}
 
 	def dispatch String keyword(TFunction function) {

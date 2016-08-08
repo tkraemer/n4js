@@ -1757,7 +1757,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTClass_Observable() {
+	public EAttribute getTClass_DeclaredFinalConstructorSignature() {
 		return (EAttribute)tClassEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -1766,8 +1766,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTClass_Observable() {
+		return (EAttribute)tClassEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getTClass_SuperClassRef() {
-		return (EReference)tClassEClass.getEStructuralFeatures().get(7);
+		return (EReference)tClassEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1776,7 +1785,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	public EReference getTClass_ImplementedInterfaceRefs() {
-		return (EReference)tClassEClass.getEStructuralFeatures().get(8);
+		return (EReference)tClassEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -1793,7 +1802,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__GetSuperClassifiers() {
+	public EOperation getTClass__GetSuperClass() {
 		return tClassEClass.getEOperations().get(1);
 	}
 
@@ -1802,7 +1811,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__GetImplementedOrExtendedInterfaceRefs() {
+	public EOperation getTClass__GetSuperClassifiers() {
 		return tClassEClass.getEOperations().get(2);
 	}
 
@@ -1811,7 +1820,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__GetOwnedCtor() {
+	public EOperation getTClass__GetImplementedOrExtendedInterfaceRefs() {
 		return tClassEClass.getEOperations().get(3);
 	}
 
@@ -1820,7 +1829,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__IsPolyfill() {
+	public EOperation getTClass__GetOwnedCtor() {
 		return tClassEClass.getEOperations().get(4);
 	}
 
@@ -1829,7 +1838,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__IsStaticPolyfill() {
+	public EOperation getTClass__IsPolyfill() {
 		return tClassEClass.getEOperations().get(5);
 	}
 
@@ -1838,8 +1847,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__IsFinal() {
+	public EOperation getTClass__IsStaticPolyfill() {
 		return tClassEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTClass__IsFinal() {
+		return tClassEClass.getEOperations().get(7);
 	}
 
 	/**
@@ -2009,7 +2027,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsOptional() {
+	public EOperation getTMember__IsConstructor() {
 		return tMemberEClass.getEOperations().get(8);
 	}
 
@@ -2018,7 +2036,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsAbstract() {
+	public EOperation getTMember__IsOptional() {
 		return tMemberEClass.getEOperations().get(9);
 	}
 
@@ -2027,7 +2045,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsReadable() {
+	public EOperation getTMember__IsAbstract() {
 		return tMemberEClass.getEOperations().get(10);
 	}
 
@@ -2036,7 +2054,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsWriteable() {
+	public EOperation getTMember__IsReadable() {
 		return tMemberEClass.getEOperations().get(11);
 	}
 
@@ -2045,7 +2063,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__GetMemberAsString() {
+	public EOperation getTMember__IsWriteable() {
 		return tMemberEClass.getEOperations().get(12);
 	}
 
@@ -2054,7 +2072,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsFinal() {
+	public EOperation getTMember__GetMemberAsString() {
 		return tMemberEClass.getEOperations().get(13);
 	}
 
@@ -2063,7 +2081,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsStatic() {
+	public EOperation getTMember__IsFinal() {
 		return tMemberEClass.getEOperations().get(14);
 	}
 
@@ -2072,8 +2090,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTMember__IsPolyfilled() {
+	public EOperation getTMember__IsStatic() {
 		return tMemberEClass.getEOperations().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTMember__IsPolyfilled() {
+		return tMemberEClass.getEOperations().get(16);
 	}
 
 	/**
@@ -2983,10 +3010,12 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tClassEClass, TCLASS__DECLARED_FINAL);
 		createEAttribute(tClassEClass, TCLASS__DECLARED_POLYFILL);
 		createEAttribute(tClassEClass, TCLASS__DECLARED_STATIC_POLYFILL);
+		createEAttribute(tClassEClass, TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE);
 		createEAttribute(tClassEClass, TCLASS__OBSERVABLE);
 		createEReference(tClassEClass, TCLASS__SUPER_CLASS_REF);
 		createEReference(tClassEClass, TCLASS__IMPLEMENTED_INTERFACE_REFS);
 		createEOperation(tClassEClass, TCLASS___IS_ABSTRACT);
+		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASS);
 		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASSIFIERS);
 		createEOperation(tClassEClass, TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 		createEOperation(tClassEClass, TCLASS___GET_OWNED_CTOR);
@@ -3013,6 +3042,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(tMemberEClass, TMEMBER___IS_SETTER);
 		createEOperation(tMemberEClass, TMEMBER___IS_ACCESSOR);
 		createEOperation(tMemberEClass, TMEMBER___IS_METHOD);
+		createEOperation(tMemberEClass, TMEMBER___IS_CONSTRUCTOR);
 		createEOperation(tMemberEClass, TMEMBER___IS_OPTIONAL);
 		createEOperation(tMemberEClass, TMEMBER___IS_ABSTRACT);
 		createEOperation(tMemberEClass, TMEMBER___IS_READABLE);
@@ -3473,11 +3503,14 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getTClass_DeclaredFinal(), theEcorePackage.getEBoolean(), "declaredFinal", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_DeclaredPolyfill(), theEcorePackage.getEBoolean(), "declaredPolyfill", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_DeclaredStaticPolyfill(), theEcorePackage.getEBoolean(), "declaredStaticPolyfill", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTClass_DeclaredFinalConstructorSignature(), theEcorePackage.getEBoolean(), "declaredFinalConstructorSignature", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_Observable(), theEcorePackage.getEBoolean(), "observable", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTClass_SuperClassRef(), theTypeRefsPackage.getParameterizedTypeRef(), null, "superClassRef", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTClass_ImplementedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRef(), null, "implementedInterfaceRefs", null, 0, -1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTClass__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTClass__GetSuperClass(), this.getTClass(), "getSuperClass", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClass__GetSuperClassifiers(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3525,6 +3558,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTMember__IsAccessor(), theEcorePackage.getEBoolean(), "isAccessor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTMember__IsMethod(), theEcorePackage.getEBoolean(), "isMethod", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTMember__IsConstructor(), theEcorePackage.getEBoolean(), "isConstructor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTMember__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

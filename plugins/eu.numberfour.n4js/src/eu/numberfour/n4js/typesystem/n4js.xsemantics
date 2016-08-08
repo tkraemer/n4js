@@ -145,10 +145,10 @@ import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.NullType
 import eu.numberfour.n4js.ts.types.PrimitiveType
-import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
@@ -715,18 +715,29 @@ from {
 
 		if(prop instanceof TMethod && (prop as TMethod).isConstructor) {
 			// accessing the built-in constructor property ...
-			val TypeArgument receiverType = switch(receiverTypeRef) {
+			val TypeArgument ctorTypeArg = switch(receiverTypeRef) {
 				ClassifierTypeRef: // case "C.constructor"
 					G.functionTypeRef
-				ParameterizedTypeRef: // case "c.constructor"
-					TypeUtils.createWildcardExtends(receiverTypeRef.declaredType?.ref)
-				BoundThisTypeRef: // case "this.constructor"
-					TypeUtils.createWildcardExtends(receiverTypeRef.actualThisTypeRef?.declaredType?.ref)
+				ParameterizedTypeRef, BoundThisTypeRef: { // case "c.constructor" or "this.constructor"
+					val declType = if(receiverTypeRef instanceof BoundThisTypeRef) {
+						receiverTypeRef.actualThisTypeRef?.declaredType
+					} else {
+						receiverTypeRef.declaredType
+					};
+					val finalCtorSig = if(declType instanceof TClass) N4JSLanguageUtils.hasCovariantConstructor(declType);
+					if(finalCtorSig) {
+						declType.ref
+					} else if(declType!==null) {
+						TypeUtils.createWildcardExtends(declType.ref)
+					} else {
+						null // will boil down to UnknownTypeRef (see below)
+					}
+				}
 			};
-			propTypeRef = if(receiverType!==null) {
-				TypeUtils.createConstructorTypeRef(receiverType)
+			propTypeRef = if(ctorTypeArg!==null) {
+				TypeUtils.createConstructorTypeRef(ctorTypeArg)
 			} else {
-				TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+				TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 			};
 		}
 		else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) {

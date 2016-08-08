@@ -884,11 +884,20 @@ class TClass extends TN4Classifier {
 	boolean declaredFinal
 	boolean declaredPolyfill
 	boolean declaredStaticPolyfill
+	boolean declaredFinalConstructorSignature
 	boolean observable
 	contains ParameterizedTypeRef superClassRef
 	contains ParameterizedTypeRef[] implementedInterfaceRefs
 	op boolean isAbstract() {
 		return declaredAbstract
+	}
+	/**
+	 * Convenience method, return the explicitly declared super class casted to a {@link TClass} or <code>null</code> if
+	 * not possible, not available. Ignores implicit super types!
+	 */
+	op TClass getSuperClass() {
+		val superType = superClassRef?.declaredType;
+		return if(superType instanceof TClass) superType else null;
 	}
 	/**
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
@@ -908,7 +917,7 @@ class TClass extends TN4Classifier {
 	}
 
 	op TMethod getOwnedCtor() {
-		return ownedMembers.filter(TMethod).findFirst[name=='constructor']
+		return ownedMembers.filter(TMethod).findFirst[isConstructor]
 	}
 
 	/**
@@ -1021,6 +1030,9 @@ abstract class TMember extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	 */
 	op boolean isMethod() {
 		return memberType == MemberType.METHOD
+	}
+	op boolean isConstructor() {
+		false
 	}
 	op boolean isOptional() {
 		false

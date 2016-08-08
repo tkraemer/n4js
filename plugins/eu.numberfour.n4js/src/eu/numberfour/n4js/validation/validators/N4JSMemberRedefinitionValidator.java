@@ -27,6 +27,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_I
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_VISIBILITY;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_CTOR_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_NON_ACCESSIBLE;
@@ -48,6 +49,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_VISIBILITY;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_CTOR_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_NON_ACCESSIBLE;
@@ -77,9 +79,11 @@ import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
+import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
@@ -101,6 +105,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.IssueUserDataKeys;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
@@ -148,6 +153,35 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	@Override
 	public void register(EValidatorRegistrar registrar) {
 		// nop
+	}
+
+	// FIXME spec update
+	@Check
+	public void checkConstructorSignature(N4ClassDeclaration n4ClassDecl) {
+
+		if (!(n4ClassDecl.getDefinedType() instanceof TClass)) {
+			return; // wrongly parsed
+		}
+		final TClass tClass = (TClass) n4ClassDecl.getDefinedType();
+
+		// in next line: ignore implicit super types, because non of them declares @CovariantConstructor
+		final TClass tSuperClass = tClass.getSuperClass();
+		if (tSuperClass != null && N4JSLanguageUtils.hasCovariantConstructor(tSuperClass)) {
+			final TMethod ownedCtor = tClass.getOwnedCtor();
+			if (ownedCtor != null) {
+				final TMethod redefinedCtor = containerTypesHelper.fromContext(n4ClassDecl)
+						.findConstructor(tSuperClass);
+				if (redefinedCtor != null) { // will only be null in case of invalid AST / types model
+					final Result<Boolean> subtypeResult = isSubTypeResult(ownedCtor, redefinedCtor);
+					if (subtypeResult.failed()) {
+						final N4MethodDeclaration ownedCtorAST = n4ClassDecl.getOwnedCtor();
+						final TClass annOwner = N4JSLanguageUtils.findCovariantConstructorDeclarator(tClass);
+						messageOverrideCtorTypeConflict(ownedCtorAST, ownedCtor, redefinedCtor, subtypeResult,
+								annOwner);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -769,6 +803,19 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 	}
 
+	private void messageOverrideCtorTypeConflict(N4MethodDeclaration overridingCtorDecl, TMethod overridingCtor,
+			TMethod overriddenCtor, Result<Boolean> result, TClass annotationOwner) {
+
+		final String code = CLF_REDEFINED_CTOR_TYPE_CONFLICT;
+		final String message = getMessageForCLF_REDEFINED_CTOR_TYPE_CONFLICT(
+				validatorMessageHelper.description(overridingCtor),
+				validatorMessageHelper.description(overriddenCtor),
+				validatorMessageHelper.trimTypesystemMessage(result),
+				validatorMessageHelper.description(annotationOwner));
+
+		addIssue(message, overridingCtorDecl, N4JSPackage.eINSTANCE.getPropertyNameOwner_DeclaredName(), code);
+	}
+
 	private void messageOverrideMemberTypeConflict(RedefinitionType redefinitionType, TMember overriding,
 			TMember overridden, Result<Boolean> result, MemberMatrix mm) {
 
@@ -995,5 +1042,4 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		return new MemberCube(tClassifier, memberCollector);
 
 	}
-
 }
