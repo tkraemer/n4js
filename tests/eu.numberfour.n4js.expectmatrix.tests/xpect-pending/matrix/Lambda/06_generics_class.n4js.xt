@@ -9,7 +9,7 @@ class A<T> {
 	public m : T;
 
 	public bar () : {function():T} {
-		// IDEBUG-177 returning variable of type T XPECT noerrors -->
+		// returning variable of type T XPECT noerrors -->
 		return () => { return this.m };
 	}
 	

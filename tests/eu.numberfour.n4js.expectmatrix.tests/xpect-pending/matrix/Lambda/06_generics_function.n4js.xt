@@ -8,7 +8,7 @@
 
 function <T> bar () : {function():T} {
 	var m : T;
-	// IDEBUG-177 returning variable of type T XPECT noerrors -->
+	// returning variable of type T XPECT noerrors -->
 	return () => { return m };
 }
 	
