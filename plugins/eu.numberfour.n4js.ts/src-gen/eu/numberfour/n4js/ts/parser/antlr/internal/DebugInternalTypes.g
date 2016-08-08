@@ -122,25 +122,16 @@ ruleNullType :
 // Rule TypesIdentifier
 ruleTypesIdentifier :
 	RULE_IDENTIFIER |
-	'get' |
-	'set' |
-	'abstract' |
 	'any' |
-	'project' |
-	'union' |
-	'intersection' |
-	'as' |
-	'from' |
-	'type' |
 	'void' |
 	'null' |
 	'undefined' |
-	'constructor' |
 	'object' |
 	'virtualBase' |
 	'primitive' |
 	'autoboxedType' |
-	'assignmnentCompatible'
+	'assignmnentCompatible' |
+	ruleN4Keyword
 ;
 
 // Rule TypesComputedPropertyName
@@ -360,7 +351,7 @@ ruleTFunction :
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
-	)? ruleTIdentifier '(' (
+	)? ruleTypesIdentifier '(' (
 		ruleTFormalParameter (
 			',' ruleTFormalParameter
 		)*
@@ -492,14 +483,14 @@ ruleTAnonymousFormalParameterList :
 ruleTAnonymousFormalParameter :
 	'...'? (
 		( (
-		ruleTIdentifier
-		) => ruleTIdentifier ) ':'
+		ruleBindingIdentifier
+		) => ruleBindingIdentifier ) ':'
 	)? ruleTypeRef
 ;
 
 // Rule TFormalParameter
 ruleTFormalParameter :
-	'...'? ruleTIdentifier ':' ruleTypeRef
+	'...'? ruleBindingIdentifier ':' ruleTypeRef
 ;
 
 // Rule UnionTypeExpressionOLD
@@ -564,17 +555,17 @@ ruleTStructMemberList :
 // Rule TStructMember
 ruleTStructMember :
 	( (
-	'get' ruleTypesIdentifier
+	'get' ruleIdentifierName
 	) => ruleTStructGetter ) |
 	( (
-	'set' ruleTypesIdentifier
+	'set' ruleIdentifierName
 	) => ruleTStructSetter ) |
 	( (
 	(
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
-	)? ruleTypesIdentifier '('
+	)? ruleIdentifierName '('
 	) => ruleTStructMethod ) |
 	ruleTStructField
 ;
@@ -586,13 +577,13 @@ ruleTStructMethod :
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
-	)? ruleTypesIdentifier '('
+	)? ruleIdentifierName '('
 	) => (
 		(
 			'<' ruleTypeVariable (
 				',' ruleTypeVariable
 			)* '>'
-		)? ruleTypesIdentifier '('
+		)? ruleIdentifierName '('
 	) ) ruleTAnonymousFormalParameterList ')' (
 		':' ruleTypeRef
 	)?
@@ -600,7 +591,7 @@ ruleTStructMethod :
 
 // Rule TStructField
 ruleTStructField :
-	ruleTypesIdentifier (
+	ruleIdentifierName (
 		':' ruleTypeRef
 	)?
 ;
@@ -608,9 +599,9 @@ ruleTStructField :
 // Rule TStructGetter
 ruleTStructGetter :
 	( (
-	'get' ruleTypesIdentifier
+	'get' ruleIdentifierName
 	) => (
-		'get' ruleTypesIdentifier
+		'get' ruleIdentifierName
 	) ) '(' ')' (
 		':' ruleTypeRef
 	)?
@@ -619,9 +610,9 @@ ruleTStructGetter :
 // Rule TStructSetter
 ruleTStructSetter :
 	( (
-	'set' ruleTypesIdentifier
+	'set' ruleIdentifierName
 	) => (
-		'set' ruleTypesIdentifier
+		'set' ruleIdentifierName
 	) ) '(' ruleTAnonymousFormalParameter ')'
 ;
 
@@ -694,15 +685,89 @@ ruleTypeVariableWithDefSiteVariance :
 	)?
 ;
 
-// Rule TIdentifier
-ruleTIdentifier :
-	ruleTypesIdentifier |
+// Rule BindingIdentifier
+ruleBindingIdentifier :
+	RULE_IDENTIFIER |
+	'yield' |
+	ruleN4Keyword
+;
+
+// Rule IdentifierName
+ruleIdentifierName :
+	RULE_IDENTIFIER |
+	ruleReservedWord |
+	ruleN4Keyword
+;
+
+// Rule ReservedWord
+ruleReservedWord :
+	'break' |
+	'case' |
+	'catch' |
+	'class' |
+	'const' |
+	'continue' |
+	'debugger' |
+	'default' |
+	'delete' |
+	'do' |
+	'else' |
+	'export' |
+	'extends' |
+	'finally' |
+	'for' |
+	'function' |
+	'if' |
+	'import' |
+	'in' |
+	'instanceof' |
+	'new' |
+	'return' |
+	'super' |
+	'switch' |
+	'this' |
+	'throw' |
+	'try' |
+	'typeof' |
+	'var' |
+	'void' |
+	'while' |
+	'with' |
+	'yield' |
+	'null' |
+	'true' |
+	'false' |
+	'enum'
+;
+
+// Rule N4Keyword
+ruleN4Keyword :
+	'get' |
+	'set' |
+	'let' |
+	'project' |
+	'external' |
+	'abstract' |
+	'static' |
+	'as' |
+	'from' |
+	'constructor' |
+	'of' |
+	'target' |
+	'type' |
+	'union' |
+	'intersection' |
+	'This' |
+	'Await' |
+	'Promisify' |
+	'await' |
+	'async' |
 	'implements' |
 	'interface' |
 	'private' |
 	'protected' |
 	'public' |
-	'static'
+	'out'
 ;
 
 // Rule TypeAccessModifier

@@ -69,7 +69,10 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWildcardAccess().getAlternatives_1(), "rule__Wildcard__Alternatives_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getAlternatives(), "rule__WildcardNewNotation__Alternatives");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAlternatives_0(), "rule__TypeVariableWithDefSiteVariance__Alternatives_0");
-					put(grammarAccess.getTIdentifierAccess().getAlternatives(), "rule__TIdentifier__Alternatives");
+					put(grammarAccess.getBindingIdentifierAccess().getAlternatives(), "rule__BindingIdentifier__Alternatives");
+					put(grammarAccess.getIdentifierNameAccess().getAlternatives(), "rule__IdentifierName__Alternatives");
+					put(grammarAccess.getReservedWordAccess().getAlternatives(), "rule__ReservedWord__Alternatives");
+					put(grammarAccess.getN4KeywordAccess().getAlternatives(), "rule__N4Keyword__Alternatives");
 					put(grammarAccess.getTypeAccessModifierAccess().getAlternatives(), "rule__TypeAccessModifier__Alternatives");
 					put(grammarAccess.getMemberAccessModifierAccess().getAlternatives(), "rule__MemberAccessModifier__Alternatives");
 					put(grammarAccess.getTAnnotationAccess().getGroup(), "rule__TAnnotation__Group__0");
@@ -208,6 +211,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup(), "rule__TypeVariableWithDefSiteVariance__Group__0");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2(), "rule__TypeVariableWithDefSiteVariance__Group_2__0");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2(), "rule__TypeVariableWithDefSiteVariance__Group_2_2__0");
+					put(grammarAccess.getBindingIdentifierAccess().getGroup_1(), "rule__BindingIdentifier__Group_1__0");
 					put(grammarAccess.getTypeDefsAccess().getTypesAssignment(), "rule__TypeDefs__TypesAssignment");
 					put(grammarAccess.getTAnnotationAccess().getNameAssignment_0_0_1(), "rule__TAnnotation__NameAssignment_0_0_1");
 					put(grammarAccess.getTAnnotationAccess().getArgsAssignment_1_1_0(), "rule__TAnnotation__ArgsAssignment_1_1_0");

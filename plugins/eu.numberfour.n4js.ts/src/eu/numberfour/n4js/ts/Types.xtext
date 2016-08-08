@@ -118,23 +118,15 @@ NullType: {NullType} name='null' '{' '}';
 
 TypesIdentifier:
 	IDENTIFIER
+	// Allow N4Keywords
+	| N4Keyword
 	// no ECMAScript keywords, only in certain contexts
-	| 'get'
-	| 'set'
 	// Types keywords
-	| 'abstract'
 	| 'any'
-	| 'project'
-	| 'union'
-	| 'intersection'
 	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-	| 'as'
-	| 'from'
-	| 'type'
 	| 'void'
 	| 'null'
 	| 'undefined'
-	| 'constructor'
 	// no ECMAScript nor N4JS keyword, used in types only
 	| 'object'
 	| 'virtualBase'
@@ -268,7 +260,7 @@ TFunction:
 	(declaredProvidedByRuntime?='providedByRuntime')?
 	'function'
 	('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	name=TIdentifier
+	name=TypesIdentifier
 	'(' (fpars += TFormalParameter (',' fpars += TFormalParameter)*)? ')'
 	':' returnTypeRef = TypeRef
 ;
