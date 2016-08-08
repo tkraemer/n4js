@@ -377,7 +377,7 @@
         </detail>
         <detail
             key="name">
-          <value>generated targetplatform ${scope.project.label}</value>
+          <value>Generated target-platform ${scope.project.label}:${n4js.target.platform}</value>
         </detail>
         <detail
             key="generateVersions">
