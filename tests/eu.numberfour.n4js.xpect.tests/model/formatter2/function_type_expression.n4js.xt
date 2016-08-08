@@ -7,7 +7,7 @@
  */
 
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /* XPECT formattedLines 15 ---
 public class A {
 	public toNFONObject(nfonRawSerializer: {function(any): any}): ~Object {

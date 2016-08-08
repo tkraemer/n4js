@@ -3,6 +3,7 @@
    END_SETUP
  */
 
+// found during IDE-1852: XPECT FIXME nowarnings
 /* If-expressions: consider having the colon an the beginning of the line:
 	TODO DISCUSS Conditional operator
 */
@@ -36,7 +37,7 @@ var a3 = a ? 42
 
 
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /* the following does not get fully formatted:
  */
 /* XPECT formattedLines 2 ---
@@ -96,14 +97,14 @@ donkey
  * single line.
  */
 /* XPECT formattedLines 4 ---
-var bar;
+var bar1;
 
-({donkey: bar} = {donkey: null});
+({donkey: bar1} = {donkey: null});
 --- */
-var bar;
+var bar1;
 
 (                   {   	donkey
-:            bar
+:            bar1
 } = {donkey: null});
 
 

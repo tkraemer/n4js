@@ -17,10 +17,8 @@
 	
 	END_SETUP 
  */
-//(noerrors)
-/* XPECT errors ---
-
---- */
+ 
+// XPECT noerrors -->
 ProjectId: IDE2101_depToTestLibIndrect
 ProjectType: library
 ProjectVersion: 0.0.1-SNAPSHOT

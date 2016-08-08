@@ -39,6 +39,7 @@ var xMethTyped2 : { @This( X ) function():number };
 
 // Assigning a newly created Method.
 // xMethTyped2 = ( @This( X ) function (): number { 
+// found during IDE-1852: XPECT FIXME noerrors
 xMethTyped2 = ( @This( ~Object with {n : number;} ) function (): number { 
 	// XPECT type of 'this' --> ~this[Object]
 	this;

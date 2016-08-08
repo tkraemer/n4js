@@ -23,9 +23,11 @@ function FA17() : { function() : string } { return FA01; }
 --- */
 function <T> FA18() : {function <T> () } { return FA01; }
 
+// found during IDE-1852: XPECT FIXME nowarnings
 // OK XPECT FIXME noerrors -->
 function <T> FA19() : {function <T> () } { return <T>FA01; }
 
+// found during IDE-1852: XPECT FIXME nowarnings
 // OK XPECT FIXME noerrors -->
 function <T> FA20() : {function <T> () } { return <T>FA01a; }
 
@@ -42,5 +44,6 @@ function FA22a() : {function (string) : string } { return <string> FA03; }
 // OK XPECT FIXME noerrors -->
 function <T> FA23() : {function <T> () : T } { return <T>FA02; }
 
+// found during IDE-1852: XPECT FIXME nowarnings
 // OK XPECT FIXME noerrors -->
 function <T extends {function (T)}> FA23a() : {function<T>(T):T } { return <T>FA03; }

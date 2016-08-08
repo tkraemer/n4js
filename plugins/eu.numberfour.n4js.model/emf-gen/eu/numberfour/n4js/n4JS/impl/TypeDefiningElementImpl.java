@@ -12,13 +12,14 @@ import eu.numberfour.n4js.n4JS.TypeDefiningElement;
 
 import eu.numberfour.n4js.ts.types.Type;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class TypeDefiningElementImpl extends MinimalEObjectImpl.Container implements TypeDefiningElement {
+public abstract class TypeDefiningElementImpl extends ProxyResolvingEObjectImpl implements TypeDefiningElement {
 	/**
 	 * The cached value of the '{@link #getDefinedType() <em>Defined Type</em>}' reference.
 	 * <!-- begin-user-doc -->

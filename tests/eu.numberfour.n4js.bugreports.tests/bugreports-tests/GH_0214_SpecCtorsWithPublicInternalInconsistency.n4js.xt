@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A {
+    constructor(@Spec spec: ~i~ this) {}
+    @Internal public a: int;
+}
+
+// XPECT warnings --> "a is not used in constructor." at "a"
+let x = new A({ a: 5 }); // value has to be initialized
+
+/* XPECT output ---
+<==
+stdout:
+undefined
+stderr:
+==>
+--- */
+console.log(x.a);
+

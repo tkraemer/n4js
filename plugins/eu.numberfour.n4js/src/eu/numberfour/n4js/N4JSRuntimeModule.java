@@ -100,7 +100,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
-import eu.numberfour.n4js.utils.validation.PrePostDiagnostician;
+import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
@@ -446,7 +446,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	@Override
 	@SingletonBinding
 	public Class<? extends Diagnostician> bindDiagnostician() {
-		return PrePostDiagnostician.class;
+		return N4JSDiagnostician.class;
 	}
 
 	/**

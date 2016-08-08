@@ -12,6 +12,8 @@ import eu.numberfour.n4js.n4JS.ParameterizedAccess;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
@@ -22,8 +24,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -41,7 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public abstract class ParameterizedAccessImpl extends MinimalEObjectImpl.Container implements ParameterizedAccess {
+public abstract class ParameterizedAccessImpl extends ProxyResolvingEObjectImpl implements ParameterizedAccess {
 	/**
 	 * The cached value of the '{@link #getTypeArgs() <em>Type Args</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

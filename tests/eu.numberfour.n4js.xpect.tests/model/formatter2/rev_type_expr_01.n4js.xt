@@ -3,12 +3,14 @@
    END_SETUP
  */
 
+interface LoooooooooooongI {}
+
 /* */
 /* XPECT formattedLines 20 ---
 class LooooooooooongC {
 
-	looooooooooooooooongField: LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC
-		& LooooooooooongC | LooooooooooongC & LooooooooooongC | LooooooooooongC;
+	looooooooooooooooongField: LooooooooooongC | LooooooooooongC & LoooooooooooongI | LoooooooooooongI
+		& LooooooooooongC | LooooooooooongC & LoooooooooooongI | LooooooooooongC;
 
 	shortField: ~Object with {looooooooooooooooongMember0;
 			looooooooooooooooongMember1; looooooooooooooooongMember2; looooooooooooooooongMember3;};
@@ -20,13 +22,13 @@ class LooooooooooongC {
     looooooooooooooooongField:
 LooooooooooongC |
              LooooooooooongC 
-&                        LooooooooooongC |           LooooooooooongC      &
+&                        LoooooooooooongI |           LoooooooooooongI      &
 
 
 LooooooooooongC 
 
 
-                        | LooooooooooongC                   & LooooooooooongC | LooooooooooongC;
+                        | LooooooooooongC                   & LoooooooooooongI | LooooooooooongC;
 
 
     shortField:

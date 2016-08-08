@@ -12,6 +12,7 @@ package eu.numberfour.n4js.xpect.validation.suppression
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.ArrayList
 import java.util.Collection
 import org.eclipse.xtext.resource.XtextResource
@@ -21,13 +22,13 @@ import org.eclipse.xtext.validation.Issue
 import org.xpect.XpectImport
 import org.xpect.XpectReplace
 import org.xpect.setup.ISetupInitializer
+import org.xpect.setup.XpectSetupFactory
 import org.xpect.state.Creates
+import org.xpect.text.IRegion
 import org.xpect.xtext.lib.setup.ThisResource
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByLine
-import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByOffsetSetup
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByLineProvider
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.TestingResourceValidator
-import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
-import org.xpect.setup.XpectSetupFactory
 
 /**
  * This setup factory filters issues based on their issue code before 
@@ -40,14 +41,14 @@ import org.xpect.setup.XpectSetupFactory
  * For further configuration you can use {@link IssueConfiguration} in the XPECT_SETUP of specific files.
  */
 @XpectSetupFactory
-@XpectReplace(IssuesByOffsetSetup)
+@XpectReplace(IssuesByLineProvider)
 @XpectImport( #[SuppressIssuesSetupRoot])
-class SuppressIssuesSetup extends IssuesByOffsetSetup {
+class SuppressIssuesSetup extends IssuesByLineProvider {
 	
 	private final Collection<String> suppressedIssueCodes = new ArrayList<String>(
 		N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS
 	);
-	private Multimap<Integer, Issue> issuesByLine;
+	private Multimap<IRegion, Issue> issuesByLine = null;
 	
 	/**
 	 * Instantiates a new SuppressingValidatorSetup.

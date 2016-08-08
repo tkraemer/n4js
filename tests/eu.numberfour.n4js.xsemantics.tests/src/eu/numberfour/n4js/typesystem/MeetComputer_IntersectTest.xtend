@@ -70,11 +70,11 @@ class MeetComputer_IntersectTest extends AbstractTypeSystemHelperTests {
 
 	@Test
 	def void testIntersectReleaxedWithIntersections() {
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "intersection{A,D}");
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "A");
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "D");
-		assertIntersectRelaxed("intersection{B,D}", "intersection{A,D}", "B");
-		assertIntersectRelaxed("intersection{B,D}", "intersection{B,D}", "A");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "intersection{I1,R1}");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "I1");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "R1");
+		assertIntersectRelaxed("intersection{B,R1}", "intersection{A,R1}", "B");
+		assertIntersectRelaxed("intersection{B,R1}", "intersection{B,R1}", "A");
 	}
 
 }

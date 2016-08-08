@@ -12,8 +12,8 @@ var f = function(    p    ,     x) {};
 
 /* */
 /* XPECT formattedLines 1 ---
-var f = function() {};
+var g = function() {};
 --- */
 
-var f = function() {};
+var g = function() {};
 

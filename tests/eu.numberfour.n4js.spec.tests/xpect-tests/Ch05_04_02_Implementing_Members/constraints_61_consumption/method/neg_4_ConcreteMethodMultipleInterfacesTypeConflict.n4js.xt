@@ -13,5 +13,6 @@ interface J  {
 class A implements I,J {}
 
 
+// found during IDE-1852: XPECT FIXME noerrors
 // bind to first one XPECT binding --> I.f
 new A().f();

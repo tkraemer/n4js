@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
+import eu.numberfour.n4js.validation.IssueCodes
 
 /*
  * Tests for {@link TypeSystemHelper#join(RuleEnvironment, TypeRef...)} method with union types.
@@ -43,15 +44,15 @@ class JoinComputer_UnionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Test
 	def void testJoinSimpleWithUnions() {
-		assertJoin("union{A,B}", "A", "union{A,B}");
-		assertJoin("union{A,B}", "union{A,B}", "A");
-		assertJoin("union{A,B}", "A", "union{B,A}");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{A,B}", "A", "union{A,B}");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{A,B}", "union{A,B}", "A");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{A,B}", "A", "union{B,A}");
 	}
 
 	@Test
 	def void testJoinUnionWithUnions() {
-		assertJoin("union{A,B,C}", "union{A,B}", "union{B,C}");
-		assertJoin("union{B,C}", "C", "union{B,C}");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE,IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{A,B,C}", "union{A,B}", "union{B,C}");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{B,C}", "C", "union{B,C}");
 	}
 
 
@@ -64,9 +65,9 @@ class JoinComputer_UnionTypesTest extends AbstractTypeSystemHelperTests {
 		// lower A ^ union{A,B} = B
 		// union{A,B} ... B
 		// TODO: why not G<A>?
-		assertJoin("G<? extends union{A,B}>", "G<A>", "G<union{A,B}>");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "G<? extends union{A,B}>", "G<A>", "G<union{A,B}>");
 
-		assertJoin("union{A,B,G<A>}", "G<A>", "union{A,B}");
+		assertJoin(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "union{A,B,G<A>}", "G<A>", "union{A,B}");
 	}
 
 }

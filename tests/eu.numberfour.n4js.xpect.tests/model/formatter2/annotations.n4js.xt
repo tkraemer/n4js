@@ -20,6 +20,8 @@ class A1 {
     field: any = 4;
 }
 
+
+// found during IDE-1852: XPECT FIXME noerrors
 /* Inser linebreak if arguments are given  */
 /* XPECT formattedLines 3 ---
 class A1 {

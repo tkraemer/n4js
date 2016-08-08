@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
+import eu.numberfour.n4js.validation.IssueCodes
 
 /*
  * Tests for {@link TypeSystemHelper#meet(RuleEnvironment, TypeRef...)} method.
@@ -32,10 +33,10 @@ class MeetComputer_UnionTypesTest extends AbstractTypeSystemHelperTests {
 	@Test
 	def void testMeetWithUnion() {
 
-		assertMeet("B", "A", "union{A,B}");
-		assertMeet("B", "B", "union{A,B}");
-		assertMeet("C", "A", "union{B,C}");
-		assertMeet("C", "C", "union{B,C}");
+		assertMeet(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "B", "A", "union{A,B}");
+		assertMeet(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "B", "B", "union{A,B}");
+		assertMeet(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "C", "A", "union{B,C}");
+		assertMeet(#[IssueCodes.UNI_REDUNDANT_SUBTYPE], "C", "C", "union{B,C}");
 	}
 
 }

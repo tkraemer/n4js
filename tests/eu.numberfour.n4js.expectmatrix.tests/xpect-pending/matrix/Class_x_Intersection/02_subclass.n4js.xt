@@ -20,7 +20,11 @@ var dc : intersection{D,A};
 // D <: B XPECT noerrors -->
 f(dc);
 
-// this may fail when IDEBUG-241 is fixed
+
+// XPECT warnings ---
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "D"
+// "An intersection type should not contain more than one class. Otherwise there cannot exist a value of such a type." at "E"
+// ---
 var de : intersection{D,E};
 // D <: B and E <: B XPECT noerrors -->
 f(de);

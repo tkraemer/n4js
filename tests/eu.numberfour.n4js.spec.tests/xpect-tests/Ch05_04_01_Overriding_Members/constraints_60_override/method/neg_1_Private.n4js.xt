@@ -3,14 +3,13 @@
 
 
 class A {
-	private f(){ console.log("A.f()"); }
+	private f() { console.log("A.f()"); }
 }
 
 class B extends A {
-	@Override
-	// XPECT errors --> "The method B.f cannot override private method A.f." at "f"
-	private f(){ console.log("B.f()"); }
-	
+	// since private is module-relative (not type-relative), it can be overridden as usual
+	// XPECT noerrors -->
+	@Override private f() { console.log("B.f()"); }
 }
 
 var a = new A();

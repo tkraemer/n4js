@@ -14,9 +14,9 @@ package eu.numberfour.n4js.xpect;
  */
 public class CursorMarkerHelper {
 
-	final String markerCursor = "<|>";
-	final String markerSelectionStart = "<[>";
-	final String markerSelectionEnd = "<]>";
+	final static String markerCursor = "<|>";
+	final static String markerSelectionStart = "<[>";
+	final static String markerSelectionEnd = "<]>";
 
 	/**
 	 * @param val

@@ -9,7 +9,7 @@ class A {
 	const AA_BB_CC$ = null;
 	
 	//IDEBUG-304 allows js keywords as member names
-	// XPECT warnings --> 
+	// XPECT nowarnings
 	const yield = null;
 	
 	// XPECT warnings --> "Field let may be confused with future reserved word." at "let"
@@ -29,7 +29,7 @@ class B {
 	static AA_BB_CC$;
 
 	//IDEBUG-304 allows js keywords as member names
-	// XPECT warnings -->
+	// XPECT nowarnings
 	static yield;
 	
 	// XPECT warnings --> "Field let may be confused with future reserved word." at "let"
@@ -52,7 +52,7 @@ class C {
 	aa$bb$cc;
 
 	//IDEBUG-304 allows js keywords as member names
-	// XPECT warnings --> 
+	// XPECT nowarnings
 	yield;
 	
 	// XPECT warnings --> "Field let may be confused with future reserved word." at "let"

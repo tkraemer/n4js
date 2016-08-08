@@ -3,7 +3,7 @@
    END_SETUP
  */
  
-
+// found during IDE-1852: XPECT FIXME noerrors
 // format 'typeof' and 'as' operator, make sure there is no space.
 /* XPECT formattedLines 3 ---
 if (typeof value === "number" && !isFinite(value as number)) {
