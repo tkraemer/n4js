@@ -49,73 +49,63 @@ public class CSVParserTest {
 			#["1", "2", "3"],
 			#["1", "2", "3"]
 		], 
-		new CSVParser("1,2,3\r\n1,2,3").data);
+		CSVParser.parse("1,2,3\r\n1,2,3"));
 
 		assertResult(#[
 			#["1", "2", ""],
 			#["1", "2", "3"]
 		], 
-		new CSVParser("1,2,\r\n1,2,3").data);
+		CSVParser.parse("1,2,\r\n1,2,3"));
 
 		assertResult(#[
 			#["1", "2", ""],
 			#["", "2", "3"]
 		], 
-		new CSVParser("1,2,\r\n,2,3").data);
+		CSVParser.parse("1,2,\r\n,2,3"));
 
 		assertResult(#[
 			#["", "", "Supplier", "Class","",""],
 			#["", "", "Subject of Access", "Field, Accessor, Method", "", "Static Field, Getter, Setter, Method", "", ""]
 		], 
-		new CSVParser(",,Supplier,Class,,\r\n,,Subject of Access,\"Field, Accessor, Method\",,\"Static Field, Getter, Setter, Method\",,\r\n").data);
+		CSVParser.parse(",,Supplier,Class,,\r\n,,Subject of Access,\"Field, Accessor, Method\",,\"Static Field, Getter, Setter, Method\",,\r\n"));
 	}
 
 	@Test
 	public def void testEmptyString() {
-		var CSVParser parser = new CSVParser("");
-		
-		assertResult(#[], parser.data);
+		assertResult(#[], CSVParser.parse(""));
 	}
 
 	@Test
 	public def void testOneEmptyField() {
-		var CSVParser parser = new CSVParser("\n");
-		
 		assertResult(#[
 			#[""]
-		], parser.data);
+		], CSVParser.parse("\n"));
 	}
 
 	@Test
 	public def void testTwoRowsWithOneFieldEach() {
-		var CSVParser parser = new CSVParser("\n\n");
-		
 		assertResult(#[
 			#[""],
 			#[""]
-		], parser.data);
+		], CSVParser.parse("\n\n"));
 	}
 	
 	@Test
 	public def void testOneRowWithThreeFields() {
-		var CSVParser parser = new CSVParser('''
-		One,Two,Three
-		''');
-
 		assertResult(#[
 			#["One", "Two", "Three"]
-		], parser.data);
+		], CSVParser.parse('''
+		One,Two,Three
+		'''));
 	}
 	
 	@Test
 	public def void testOneRowWithThreeEmptyFields() {
-		var CSVParser parser = new CSVParser('''
-		,,
-		''');
-
 		assertResult(#[
 			#["", "", ""]
-		], parser.data);
+		], CSVParser.parse('''
+		,,
+		'''));
 	}
 	
 	@Test
@@ -123,51 +113,51 @@ public class CSVParserTest {
 		assertResult(#[
 			#["One", "", "", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,,,
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["", "One", "", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		,One,,
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["", "", "One", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		,,One,
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["", "", "", "One"]
 		], 
-		new CSVParser('''
+		CSVParser.parse('''
 		,,,One
-		''').data);
+		'''));
 		
 		assertResult(#[
 			#["One", "", "Two", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,,Two,
-		''').data);
+		'''));
 		
 		assertResult(#[
 			#["One", "", "", "Two"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,,,Two
-		''').data);
+		'''));
 		
 		assertResult(#[
 			#["", "One", "Two", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		,One,Two,
-		''').data);
+		'''));
 	}
 	
 	@Test
@@ -176,19 +166,19 @@ public class CSVParserTest {
 			#["One", "Two", "Three", "Four"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,Two,Three,Four
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["", "Two", "Three", ""],
 			#["", "Six", "Seven", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		,Two,Three,
 		,Six,Seven,
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["One", "Two", "Three", "Four"],
@@ -196,12 +186,12 @@ public class CSVParserTest {
 			#["Five", "Six", "Seven", "Eight"],
 			#["", "", "", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,Two,Three,Four
 		,,,
 		Five,Six,Seven,Eight
 		,,,
-		''').data);
+		'''));
 	}
 	
 	@Test
@@ -210,39 +200,39 @@ public class CSVParserTest {
 			#["One", "Two", "Three"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,Two,Three
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 
 		assertResult(#[
 			#[""],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["Five", "Six", "Seven", "Eight"],
 			#[""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		Five,Six,Seven,Eight
 
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["Five", "Six", "Seven", "Eight"],
 			#[""],
 			#["", "", ""]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		Five,Six,Seven,Eight
 
 		,,
-		''').data);
+		'''));
 		
 		assertResult(#[
 			#["One", "Two", "Three"],
@@ -251,13 +241,13 @@ public class CSVParserTest {
 			#[""],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		One,Two,Three
 		
 		,
 		
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 	}
 
 	
@@ -267,32 +257,32 @@ public class CSVParserTest {
 			#["One,Two, Three"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		"One,Two, Three"
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["One,Two, \n\nThree"],
 			#["\n"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		"One,Two, 
 		
 		Three"
 		"
 		"
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 
 		assertResult(#[
 			#["\"This is a quote!\"", "This isn't", "This is not, either"],
 			#["Five", "Six", "Seven", "Eight"]
 		],
-		new CSVParser('''
+		CSVParser.parse('''
 		"""This is a quote!""",This isn't,"This is not, either"
 		Five,Six,Seven,Eight
-		''').data);
+		'''));
 	}
 }

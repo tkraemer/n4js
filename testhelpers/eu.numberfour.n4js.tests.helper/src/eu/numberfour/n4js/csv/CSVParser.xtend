@@ -159,14 +159,13 @@ class CSVParser {
 	}
 
 	private CSVTokenizer tokenizer;
-	private CSVData cachedData;
 
 	/**
 	 * Creates a new parser that parses the given string.
 	 * 
 	 * @param data the string to parse
 	 */
-	public new(String data) {
+	private new(String data) {
 		this.tokenizer = new CSVTokenizer(data);
 	}
 
@@ -178,7 +177,7 @@ class CSVParser {
 	 * 
 	 * @throws IOException if the file cannot be found or cannot be opened
 	 */
-	public new(String path, Charset encoding) throws IOException {
+	private new(String path, Charset encoding) throws IOException {
 		this(Paths.get(path), encoding);
 	}
 
@@ -190,19 +189,43 @@ class CSVParser {
 	 * 
 	 * @throws IOException if the file cannot be found or cannot be opened
 	 */
-	public new(Path path, Charset encoding) throws IOException {
+	private new(Path path, Charset encoding) throws IOException {
 		this(new String(Files.readAllBytes(path), encoding));
 	}
 
 	/**
-	 * Returns all rows and columns.
+	 * Parses the CSV data contained in the given string.
 	 * 
-	 * @return the parsed rows
+	 * @param returns the CSV data that was parsed from the string
 	 */
-	public def CSVData getData() {
-		if (cachedData === null)
-			cachedData = doParse();
-		return cachedData;
+	public static def CSVData parse(String data) {
+		return new CSVParser(data).doParse();
+	}
+
+	/**
+	 * Parses the file at the given location with the given encoding.
+	 * 
+	 * @param path the path to the file to be parsed
+	 * @param encoding the encoding of the file to be parsed
+	 * @return the CSV data that was parsed from the file at the given location
+	 * 
+	 * @throws IOException if the file cannot be found or cannot be opened
+	 */
+	public static def CSVData parse(String path, Charset encoding) throws IOException {
+		return new CSVParser(path, encoding).doParse();
+	}
+	
+	/**
+	 * Parses the file at the given location with the given encoding.
+	 * 
+	 * @param path the path to the file to be parsed
+	 * @param encoding the encoding of the file to be parsed
+	 * @return the CSV data that was parsed from the file at the given location
+	 * 
+	 * @throws IOException if the file cannot be found or cannot be opened
+	 */
+	public static def CSVData parse(Path path, Charset encoding) throws IOException {
+		return new CSVParser(path, encoding).doParse();	
 	}
 
 	private def CSVData doParse() {

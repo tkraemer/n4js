@@ -815,8 +815,7 @@ public class AccessControlTest {
     // @formatter:on
 	@Parameters(name = "{0}")
 	public static List<TestSpecification> data() throws IOException {
-		CSVParser parser = new CSVParser("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
-		CSVData csvData = parser.getData();
+		CSVData csvData = CSVParser.parse("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
 
 		List<TestSpecification> result = new LinkedList<>();
 
