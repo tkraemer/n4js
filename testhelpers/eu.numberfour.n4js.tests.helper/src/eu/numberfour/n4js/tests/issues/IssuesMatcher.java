@@ -67,8 +67,12 @@ public class IssuesMatcher {
 		performMatching(issueCopy, matcherCopy, messages);
 		if (inverted) {
 			if (issueCopy.isEmpty() && matcherCopy.isEmpty()) {
-				explainIssues(issues, messages, inverted);
-				explainExpectations(issueMatchers, messages, inverted);
+				if (issueMatchers.isEmpty() && messages != null) {
+					messages.add("Expected issues, but got nothing");
+				} else {
+					explainIssues(issues, messages, inverted);
+					explainExpectations(issueMatchers, messages, inverted);
+				}
 				return false;
 			}
 		} else {
@@ -151,7 +155,7 @@ public class IssuesMatcher {
 			boolean expected) {
 		if (messages != null) {
 			for (IssueMatcher matcher : unmatchedMatchers) {
-				messages.add((expected ? "Expected" : "Unexpected") + " expectation: " + matcher.getDescription());
+				messages.add((expected ? "Expected" : "Unmatched") + " expectation: " + matcher.getDescription());
 			}
 		}
 	}

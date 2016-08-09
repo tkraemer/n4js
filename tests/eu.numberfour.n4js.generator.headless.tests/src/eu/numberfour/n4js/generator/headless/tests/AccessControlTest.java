@@ -11,17 +11,27 @@
 package eu.numberfour.n4js.generator.headless.tests;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.eclipse.xtext.validation.Issue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -176,9 +186,8 @@ public class AccessControlTest {
 				return IMPLEMENTS;
 			case "References":
 				return REFERENCES;
-			default:
-				throw new IllegalArgumentException("Unexpected scenario: '" + str + "'");
 			}
+			throw new IllegalArgumentException("Unexpected scenario: '" + str + "'");
 		}
 	}
 
@@ -227,9 +236,8 @@ public class AccessControlTest {
 				return SAME_VENDOR;
 			case "Other":
 				return OTHER;
-			default:
-				throw new IllegalArgumentException("Unexpected client location: '" + str + "'");
 			}
+			throw new IllegalArgumentException("Unexpected client location: '" + str + "'");
 		}
 	}
 
@@ -260,9 +268,8 @@ public class AccessControlTest {
 				return ACCESS;
 			case "Override":
 				return OVERRIDE;
-			default:
-				throw new IllegalArgumentException("Unexpected usage type: '" + str + "'");
 			}
+			throw new IllegalArgumentException("Unexpected usage type: '" + str + "'");
 		}
 	}
 
@@ -271,6 +278,27 @@ public class AccessControlTest {
 	 */
 	private static enum MemberType {
 		FIELD, GETTER, SETTER, METHOD;
+
+		/**
+		 * Parse the given string representation of the member type.
+		 *
+		 * @param str
+		 *            the string to parse
+		 * @return the enum value that corresponds to the given string
+		 */
+		public static MemberType parse(String str) {
+			switch (str) {
+			case "Field":
+				return FIELD;
+			case "Getter":
+				return GETTER;
+			case "Setter":
+				return SETTER;
+			case "Method":
+				return METHOD;
+			}
+			throw new IllegalArgumentException("Unexpected member type: '" + str + "'");
+		}
 	}
 
 	/**
@@ -312,9 +340,8 @@ public class AccessControlTest {
 				return INTERFACE;
 			case "Default Interface":
 				return DEFAULT_INTERFACE;
-			default:
-				throw new IllegalArgumentException("Unexpected classifier type: '" + str + "'");
 			}
+			throw new IllegalArgumentException("Unexpected classifier type: '" + str + "'");
 		}
 	}
 
@@ -376,9 +403,29 @@ public class AccessControlTest {
 			case "":
 			case "#":
 				return SKIP;
-			default:
-				throw new IllegalArgumentException("Unexpected expectation: '" + str + "'");
 			}
+			throw new IllegalArgumentException("Unexpected expectation: '" + str + "'");
+		}
+
+		/**
+		 * Indicates whether this enum value is a fixme.
+		 *
+		 * @return <code>true</code> if this enum value is a fixme and <code>false</code> otherwise
+		 */
+		public boolean isFixMe() {
+			switch (this) {
+			case OK:
+			case FAIL:
+			case UNUSABLE:
+			case SKIP:
+				return false;
+			case FIXME_OK:
+			case FIXME_FAIL:
+			case FIXME_UNUSABLE:
+				return true;
+			}
+
+			throw new IllegalArgumentException("Unknown expectation: '" + this + "'");
 		}
 	}
 
@@ -393,7 +440,6 @@ public class AccessControlTest {
 		private final ClassifierType supplierType;
 		private final ClassifierType clientType;
 		private final ClientLocation clientLocation;
-		private final MemberType memberType;
 		private final UsageType usageType;
 		private final Classifier.Visibility supplierVisibility;
 		private final Member.Visibility memberVisibility;
@@ -417,8 +463,6 @@ public class AccessControlTest {
 		 *            the type of the client
 		 * @param clientLocation
 		 *            the location of the generated client in relation to the generated supplier
-		 * @param memberType
-		 *            the type of the member being accessed by the client
 		 * @param usageType
 		 *            the type of usage intended by the client
 		 * @param supplierVisibility
@@ -432,7 +476,7 @@ public class AccessControlTest {
 		 */
 		public TestSpecification(int index, int row, int column, Scenario scenario, ClassifierType supplierType,
 				ClassifierType clientType,
-				ClientLocation clientLocation, MemberType memberType,
+				ClientLocation clientLocation,
 				UsageType usageType,
 				Classifier.Visibility supplierVisibility,
 				Member.Visibility memberVisibility, Member.Static memberStatic, Expectation expectation) {
@@ -444,7 +488,6 @@ public class AccessControlTest {
 			this.clientType = clientType;
 			this.clientLocation = clientLocation;
 			this.usageType = usageType;
-			this.memberType = memberType;
 			this.supplierVisibility = supplierVisibility;
 			this.memberVisibility = memberVisibility;
 			this.memberStatic = memberStatic;
@@ -511,15 +554,6 @@ public class AccessControlTest {
 		}
 
 		/**
-		 * Returns the type of the member being accessed by the client.
-		 *
-		 * @return the member type
-		 */
-		public MemberType getMemberType() {
-			return memberType;
-		}
-
-		/**
 		 * Returns the visibility of the generated supplier type.
 		 *
 		 * @return the supplier visibility
@@ -566,7 +600,7 @@ public class AccessControlTest {
 					+ ": "
 					+ usageType + " to "
 					+ memberVisibility + (memberStatic == Member.Static.YES ? " STATIC " : " INSTANCE ")
-					+ memberType + " with expectation: "
+					+ "member with expectation: "
 					+ expectation;
 		}
 
@@ -839,15 +873,13 @@ public class AccessControlTest {
 				Expectation expectation = Expectation.parse(expectations.get(col));
 
 				if (expectation != Expectation.SKIP) {
-					for (MemberType memberType : MemberType.values()) {
-						TestSpecification specification = new TestSpecification(count + indexOffset, row + rowOffset,
-								col + columnOffset,
-								scenario, supplierType, clientType,
-								clientLocation, memberType,
-								usageType, supplierVisibility, memberVisibility, memberStatic, expectation);
-						result.add(specification);
-						count++;
-					}
+					TestSpecification specification = new TestSpecification(count + indexOffset, row + rowOffset,
+							col + columnOffset,
+							scenario, supplierType, clientType,
+							clientLocation,
+							usageType, supplierVisibility, memberVisibility, memberStatic, expectation);
+					result.add(specification);
+					count++;
 				}
 			}
 		}
@@ -1018,19 +1050,37 @@ public class AccessControlTest {
 	 */
 	@Test
 	public void test() throws IOException {
-		executeSpecification(specification, true);
+		executeSpecification(specification);
 	}
 
-	private static void executeSpecification(TestSpecification specification, boolean cleanupAfterwards)
+	private static void executeSpecification(TestSpecification specification)
 			throws IOException {
-		createFixtureDirectory();
-		try {
-			generateScenario(specification);
-			final IssuesMatcher matcher = createIssues(specification);
-			compileAndAssert(Arrays.asList(new File(FIXTURE_ROOT)), matcher);
-		} finally {
-			if (cleanupAfterwards)
+
+		List<String> messages = new ArrayList<>();
+		boolean failOnExit = specification.getExpectation().isFixMe();
+		for (MemberType memberType : MemberType.values()) {
+			createFixtureDirectory();
+			try {
+				generateScenario(specification, memberType);
+				Collection<Issue> issues = compile();
+				IssuesMatcher expectations = createIssues(specification, memberType);
+
+				if (specification.getExpectation().isFixMe()) {
+					// We want the entire test case to fail only if none of the tested scenarios match their
+					// expectations.
+					failOnExit &= !expectations.matchesExactly(issues, messages);
+				} else {
+					boolean result = expectations.matchesExactly(issues, messages);
+					assertTrue(Joiner.on(", ").join(messages), result);
+					messages.clear();
+				}
+			} finally {
 				deleteFixtureDirectory();
+			}
+		}
+
+		if (failOnExit) {
+			fail("Fixme test failed: At least one scenario did not match its inverted expectations.");
 		}
 	}
 
@@ -1039,9 +1089,11 @@ public class AccessControlTest {
 	 *
 	 * @param specification
 	 *            the test specification
+	 * @param memberType
+	 *            the member type
 	 * @return a list files representing the root directories of the created projects
 	 */
-	private static List<File> generateScenario(TestSpecification specification) {
+	private static List<File> generateScenario(TestSpecification specification, MemberType memberType) {
 		List<File> result = new LinkedList<>();
 
 		// Create the required classifiers for the scenario.
@@ -1055,12 +1107,13 @@ public class AccessControlTest {
 		switch (specification.getSupplierType()) {
 		case CLASS:
 		case DEFAULT_INTERFACE:
-			supplier.addMember(createMember(specification, "member", specification.getMemberVisibility()));
+			supplier.addMember(createMember(specification, "member", specification.getMemberVisibility(), memberType));
 			break;
 		case ABSTRACT_CLASS:
 		case INTERFACE:
 			supplier.addMember(
-					createMember(specification, "member", specification.getMemberVisibility()).makeAbstract());
+					createMember(specification, "member", specification.getMemberVisibility(), memberType)
+							.makeAbstract());
 			break;
 		}
 
@@ -1074,23 +1127,24 @@ public class AccessControlTest {
 			case ACCESS:
 				switch (specification.getMemberStatic()) {
 				case YES:
-					client.addMember(createAccess(specification, "member", "S"));
+					client.addMember(createAccess(specification, "member", memberType, "S"));
 					break;
 				case NO:
-					client.addMember(createAccess(specification, "member", "this"));
+					client.addMember(createAccess(specification, "member", memberType, "this"));
 					break;
 				}
 				if (specification.getSupplierType() != ClassifierType.INTERFACE &&
 						specification.getSupplierType() != ClassifierType.ABSTRACT_CLASS)
 					break;
-				if (specification.getMemberType() == MemberType.FIELD) // Fields cannot be abstract
+				if (memberType == MemberType.FIELD) // Fields cannot be abstract
 					break;
 				// We want to fall through here because in the case of implementing an abstract interface or extending
 				// an abstract class, we need to override the abstract member.
 				// $FALL-THROUGH$
 			case OVERRIDE:
 				client.addMember(
-						createMember(specification, "member", specification.getMemberVisibility()).makeOverride());
+						createMember(specification, "member", specification.getMemberVisibility(), memberType)
+								.makeOverride());
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected usage type: " + specification.getUsageType());
@@ -1107,12 +1161,13 @@ public class AccessControlTest {
 			case ABSTRACT_CLASS:
 			case INTERFACE:
 				implementer.addMember(
-						createMember(specification, "member", specification.getMemberVisibility()).makeOverride());
+						createMember(specification, "member", specification.getMemberVisibility(), memberType)
+								.makeOverride());
 				break;
 			}
 
 			// Create a method that accesses the supplier's member via an instance created by the factory.
-			client.addMember(createAccess(specification, "member", "new GetS().getS()"));
+			client.addMember(createAccess(specification, "member", memberType, "new GetS().getS()"));
 			break;
 		}
 		}
@@ -1437,8 +1492,8 @@ public class AccessControlTest {
 	}
 
 	/**
-	 * Creates a new member with the given name and visibility. The type of member depends on the value returned by
-	 * {@link TestSpecification#getMemberType()}. The member is also set to static according to the value returned by
+	 * Creates a new member with the given name and visibility. The type of member depends on the value of the parameter
+	 * <code>memberType</code>. The member is also set to static according to the value returned by
 	 * {@link TestSpecification#getMemberStatic()}.
 	 *
 	 * @param specification
@@ -1447,12 +1502,15 @@ public class AccessControlTest {
 	 *            the name of the created member
 	 * @param visibility
 	 *            the visibility of the created member
+	 * @param memberType
+	 *            the type of the created member
 	 *
 	 * @return the newly created member
 	 */
-	private static Member<?> createMember(TestSpecification specification, String name, Member.Visibility visibility) {
+	private static Member<?> createMember(TestSpecification specification, String name, Member.Visibility visibility,
+			MemberType memberType) {
 		Member<?> result = null;
-		switch (specification.getMemberType()) {
+		switch (memberType) {
 		case FIELD:
 			result = new Field(name).setVisibility(visibility);
 			break;
@@ -1466,7 +1524,7 @@ public class AccessControlTest {
 			result = new Method(name).setVisibility(visibility);
 			break;
 		default:
-			throw new IllegalArgumentException("Unknown member type: " + specification.getMemberType());
+			throw new IllegalArgumentException("Unknown member type: " + memberType);
 		}
 
 		if (specification.getMemberStatic() == Member.Static.YES)
@@ -1484,14 +1542,17 @@ public class AccessControlTest {
 	 *            the test specification
 	 * @param memberName
 	 *            the name of the member being accessed
+	 * @param memberType
+	 *            the type of the member being accessed
 	 * @param subjectExpression
 	 *            the expression used to retrieve the subject of access
 	 *
 	 * @return the newly created method
 	 */
-	private static Method createAccess(TestSpecification specification, String memberName, String subjectExpression) {
+	private static Method createAccess(TestSpecification specification, String memberName, MemberType memberType,
+			String subjectExpression) {
 		Method result = null;
-		switch (specification.getMemberType()) {
+		switch (memberType) {
 		case FIELD:
 			result = new Method("accessor").setBody("var t = " + subjectExpression + "." + memberName + ";");
 			break;
@@ -1505,7 +1566,7 @@ public class AccessControlTest {
 			result = new Method("accessor").setBody("" + subjectExpression + "." + memberName + "();");
 			break;
 		default:
-			throw new IllegalArgumentException("Unknown member type: " + specification.getMemberType());
+			throw new IllegalArgumentException("Unknown member type: " + memberType);
 		}
 
 		if (specification.getMemberStatic() == Member.Static.YES)
@@ -1606,9 +1667,11 @@ public class AccessControlTest {
 	 *
 	 * @param specification
 	 *            the test specification
+	 * @param memberType
+	 *            the type of member being tested
 	 * @return an instance of {@link IssuesMatcher} that represents the expectations
 	 */
-	private static IssuesMatcher createIssues(TestSpecification specification) {
+	private static IssuesMatcher createIssues(TestSpecification specification, MemberType memberType) {
 		IssuesMatcher result = new IssuesMatcher();
 
 		switch (specification.getExpectation()) {
@@ -1622,7 +1685,7 @@ public class AccessControlTest {
 		case UNUSABLE:
 		case FIXME_UNUSABLE:
 			result.add().error();
-			if (specification.getMemberType() != MemberType.FIELD) // fields cannot be abstract
+			if (memberType != MemberType.FIELD) // fields cannot be abstract
 				result.add().error().message().startsWith("Cannot use");
 			break;
 		case SKIP:
@@ -1648,39 +1711,19 @@ public class AccessControlTest {
 	private static N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
 
 	/**
-	 * Compiles the projects at the given root paths, which in this test case the projects representing the currently
-	 * tested scenario and asserts the expectations represented by the given instance of {@link IssuesMatcher}.
+	 * Compiles the projects generated into the path at {@link #FIXTURE_ROOT}, which in this test case the projects
+	 * representing the currently tested scenario and returns the generated issues.
 	 *
-	 * @param projectRoots
-	 *            the root paths of the projects to be compiled
-	 * @param matcher
-	 *            the test expectations
+	 * @return the generated issues
 	 */
-	private static void compileAndAssert(List<File> projectRoots, IssuesMatcher matcher) {
+	private static Collection<Issue> compile() {
 		IssueCollector issueCollector = new IssueCollector();
 		try {
-			hlc.compileAllProjects(projectRoots, issueCollector);
+			hlc.compileAllProjects(Arrays.asList(new File(FIXTURE_ROOT)), issueCollector);
 		} catch (N4JSCompileException e) {
 			// nothing to do
 		}
-
-		assertIssues(issueCollector.getCollectedIssues(), matcher);
-	}
-
-	/**
-	 * Asserts that the given issues are matched exactly by the given expectations.
-	 *
-	 * @see IssuesMatcher#matchesExactly(Collection, List)
-	 *
-	 * @param issues
-	 *            the issues to match
-	 * @param matchers
-	 *            the expectations
-	 */
-	private static void assertIssues(Collection<Issue> issues, IssuesMatcher matchers) {
-		List<String> messages = new LinkedList<>();
-		boolean result = matchers.matchesExactly(issues, messages);
-		assertTrue(Joiner.on(", ").join(messages), result);
+		return issueCollector.getCollectedIssues();
 	}
 
 	/**
@@ -1707,20 +1750,64 @@ public class AccessControlTest {
 		FileDeleter.delete(new File(FIXTURE_ROOT));
 	}
 
+	/**
+	 * Execute a single scenario.
+	 *
+	 * @param args
+	 *            command line arguments, execute without arguments to see instructions
+	 * @throws IOException
+	 *             if an error occurs during generation of the test scenario
+	 */
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) throws IOException {
-		if (args.length != 2) {
-			System.out.println("Pass row and column names!");
-			System.exit(1);
-		}
+		Option rowIndexOption = OptionBuilder.withArgName("ROW").withLongOpt("row").hasArg().isRequired()
+				.withDescription("row index (1 based, from the sheet)").create("r");
+		Option colIndexOption = OptionBuilder.withArgName("COLUMN").withLongOpt("column").hasArg().isRequired()
+				.withDescription("column name (from the sheet)").create("c");
+		Option executionModeOption = OptionBuilder.withArgName("MEMBERTYPE").withLongOpt("generate").hasArg()
+				.withDescription(
+						"only generate the test case for the given member type (one of Field, Getter, Setter, Method)")
+				.create("g");
 
-		int rowIndex = parseRowIndex(args[0]);
-		int columnIndex = parseColumnIndex(args[1]);
+		Options options = new Options();
+		options.addOption(rowIndexOption);
+		options.addOption(colIndexOption);
+		options.addOption(executionModeOption);
 
-		List<TestSpecification> specs = data();
-		for (TestSpecification spec : specs) {
-			if (spec.hasPosition(rowIndex, columnIndex)) {
-				executeSpecification(spec, false);
+		try {
+			CommandLineParser parser = new GnuParser();
+			CommandLine line = parser.parse(options, args);
+
+			int rowIndex = parseRowIndex(line.getOptionValue(rowIndexOption.getOpt()));
+			int columnIndex = parseColumnIndex(line.getOptionValue(colIndexOption.getOpt()));
+			boolean generateOnly = line.hasOption(executionModeOption.getOpt());
+			MemberType memberType = generateOnly ? MemberType.parse(line.getOptionValue(executionModeOption.getOpt()))
+					: null;
+
+			List<TestSpecification> specs = data();
+			for (TestSpecification spec : specs) {
+				if (spec.hasPosition(rowIndex - 1, columnIndex)) {
+					if (generateOnly) {
+						System.out.println("Generating " + spec.toString() + " for member type " + memberType);
+						createFixtureDirectory();
+						generateScenario(spec, memberType);
+					} else {
+						executeAndPrintResult(spec);
+					}
+				}
 			}
+		} catch (ParseException e) {
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("test", options);
+		}
+	}
+
+	private static void executeAndPrintResult(TestSpecification specification) throws IOException {
+		try {
+			System.out.println("Executing specification: " + specification.toString());
+			executeSpecification(specification);
+		} catch (AssertionError e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
