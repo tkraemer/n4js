@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.numberfour.n4js.test.helpers.tests
+Bundle-Vendor: NumberFour AG
+Bundle-Version: 0.0.1.qualifier
+Bundle-SymbolicName: eu.numberfour.n4js.test.helpers.tests;singleton:=true
+Fragment-Host: eu.numberfour.n4js
+Require-Bundle: eu.numberfour.n4js.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.junit4,
+ org.eclipse.ui.workbench;resolution:=optional,
+ eu.numberfour.n4js.tests.helper,
+ eu.numberfour.n4js.regex.tests.helper,
+ org.eclipse.xtext.ui,
+ eu.numberfour.n4js.npmexporter;bundle-version="0.0.1"
+Import-Package: org.apache.log4j,
+ org.junit;version="4.5.0",
+ org.junit.runner;version="4.5.0",
+ org.junit.runner.manipulation;version="4.5.0",
+ org.junit.runner.notification;version="4.5.0",
+ org.junit.runners;version="4.5.0",
+ org.junit.runners.model;version="4.5.0",
+ org.hamcrest.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
