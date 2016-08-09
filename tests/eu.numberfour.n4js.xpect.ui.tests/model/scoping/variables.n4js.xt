@@ -1,10 +1,10 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest END_SETUP */
 
-var a=1,b=2;
-/* XPECT scope at a --- 
-a, b, c, ...
+var x=1,b=2;
+/* XPECT scope at x --- 
+x, b, c, ...
 ---*/
 /* XPECT scope at b ---
-a, b, c, ...
+x, b, c, ...
 ---*/
-var c=a+b;
+var c=x+b;

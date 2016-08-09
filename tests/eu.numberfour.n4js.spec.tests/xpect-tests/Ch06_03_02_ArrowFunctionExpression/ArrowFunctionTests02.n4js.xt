@@ -30,6 +30,7 @@ var a4 = a.map( f4 );
 // XPECT FIXME type of 'a4WithExpectedTypeForLambda_1' --> Array<number>
 var a4WithExpectedTypeForLambda_1 = a.map( s => s.length );
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT FIXME type of 'a4WithExpectedTypeForLambda_2' --> Array<number>
 var a4WithExpectedTypeForLambda_2 = a.map( s => { s.length } );
 

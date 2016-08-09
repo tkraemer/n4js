@@ -102,7 +102,7 @@ class D {
 }
 
 
-// errors -->
+// noerrors
 var d2 = new D();
 // XPECT errors --> "string is not a subtype of number." at "d2.s"
 d2.s++;

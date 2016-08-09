@@ -10,10 +10,10 @@
 var s : string = "abc";
 
 // ### #### Methods #### ###
-// OK XPECT errors -->
+// OK XPECT noerrors
 var s01 : string = "Adam".toString();
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var s02 : string = s.toString();
 
 
@@ -26,7 +26,7 @@ var n04 : number = s.length;
 
 
 // ### #### indexed #### ###
-// OK, char at position X!PECT errors -->
+// OK, char at position X!PECT noerrors
 // XPECT noerrors --> "string index access returns string"
 var s05 : string = "Carl"[2];
 

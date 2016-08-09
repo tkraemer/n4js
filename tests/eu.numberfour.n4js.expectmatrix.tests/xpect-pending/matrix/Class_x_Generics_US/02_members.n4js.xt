@@ -62,5 +62,6 @@ b2.c.a.d = 2;
 
 var e1 = new E<string>();
 
+// found during IDE-1852: XPECT FIXME nowarnings
 // A<T> inside E<T> XPECT type of e2 --> {function():A<string>}
 var e2 = e1.e.f2;

@@ -75,7 +75,7 @@ function f3() {
 }
 
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /////// break out of try:
 // XPECT returnOrThrow --> noReturnsMode
 function f4(): number {
@@ -149,6 +149,7 @@ function f5(): number {
 }
 
 
+// found during IDE-1852: XPECT FIXME noerrors
 /////// break out of try:
 // XPECT returnOrThrow --> noReturnsMode
 function f6(): number {
@@ -241,6 +242,7 @@ function f10() : number {
 	}
 }
 
+// found during IDE-1852: XPECT FIXME noerrors
 //////// try: case doesn't return
 // XPECT returnOrThrow --> noReturnsMode
 function f10() : number {
@@ -295,6 +297,7 @@ function f13() : number {
 }
 
 
+// found during IDE-1852: XPECT FIXME noerrors
 //////// try: try+catch: just throws.
 // XPECT returnOrThrow --> noReturnsMode
 function f14() : number {

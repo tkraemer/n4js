@@ -7,8 +7,8 @@ interface Rinit{}
 var r = new Rinit()
 
 
-class A{} 
-class B{}
+interface A{} 
+interface B{}
 
 interface R1 {
   foo(a : A) : A { return null; }

@@ -21,7 +21,7 @@ var t1 = h1({a: 4});
 // structural parameterized as argument; primitive parameter XPECT noerrors -->
 function h2 (b : ~B1<string>) : string { return b.s; }
 
-// function call with structural parameterized; primitive parameter XPECT errors -->
+// function call with structural parameterized; primitive parameter XPECT noerrors
 h2({a: 3, s: "b"});
 
 // function call with structural parameterized; return primitive parameter XPECT type of t2 --> string

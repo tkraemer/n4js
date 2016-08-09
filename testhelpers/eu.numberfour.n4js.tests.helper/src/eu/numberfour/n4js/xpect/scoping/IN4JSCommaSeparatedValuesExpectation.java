@@ -10,10 +10,14 @@
  */
 package eu.numberfour.n4js.xpect.scoping;
 
+import org.xpect.XpectImport;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
+
+import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation.N4JSCommaSeparatedValuesExpectationImpl;
 
 /**
  */
+@XpectImport(N4JSCommaSeparatedValuesExpectationImpl.class)
 public interface IN4JSCommaSeparatedValuesExpectation extends ICommaSeparatedValuesExpectation {
 	// just a marker interface
 }

@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.typesystem
 
+import com.google.common.collect.Iterables
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.AnnotationDefinition
@@ -44,6 +45,8 @@ import eu.numberfour.n4js.utils.Log
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
+import java.util.LinkedList
+import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
@@ -128,6 +131,9 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 	def <T extends ComposedTypeRef> TypeRef simplify(RuleEnvironment G, T composedType) {
 		simplifyComputer.simplify(G,composedType)
+	}
+	def List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, ComposedTypeRef composedType) {
+		simplifyComputer.getSimplifiedTypeRefs(G,composedType)
 	}
 
 	/**
@@ -376,5 +382,39 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		 } else {
 		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 		 }
+	 }
+
+	/**
+	 * This method computes the set of all subtypes in the set of TypeRefs.
+	 * It does not copy the TypeRefs!
+	 */
+	def List<TypeRef> getSubtypesOnly(RuleEnvironment G, TypeRef... typeRefs) {
+		val intersectTRs = new LinkedList<TypeRef>();
+		
+		for (s : typeRefs) {
+			if (! intersectTRs.exists[ts.subtypeSucceeded(G, it, s)]) {
+				Iterables.removeIf(intersectTRs, [ts.subtypeSucceeded(G, s, it)]);
+				intersectTRs.add(s)
+			}
+		}
+		
+		return intersectTRs
+	}
+
+	/**
+	 * This method computes the set of all supertypes in the set of TypeRefs.
+	 * It does not copy the TypeRefs!
+	 */
+	def List<TypeRef> getSuperTypesOnly(RuleEnvironment G, TypeRef... typeRefs) {
+		val unionTRs = new LinkedList<TypeRef>();
+
+		for (s : typeRefs) {
+			if (! unionTRs.exists[ts.subtypeSucceeded(G, s, it)]) {
+				Iterables.removeIf(unionTRs, [ts.subtypeSucceeded(G, s, it)]);
+				unionTRs.add(s)
+			}
+		}
+		
+		return unionTRs
 	}
 }

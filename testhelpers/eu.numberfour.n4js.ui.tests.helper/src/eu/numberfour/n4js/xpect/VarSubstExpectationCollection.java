@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.xpect.expectation.ExpectationCollection;
+import org.xpect.expectation.impl.ExpectationCollection;
+
+import com.google.common.base.Preconditions;
 
 import eu.numberfour.n4js.xpect.config.ValueList;
 import eu.numberfour.n4js.xpect.config.VarDef;
@@ -24,12 +26,14 @@ import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
 
 /**
  */
+@SuppressWarnings("restriction")
 class VarSubstExpectationCollection extends ExpectationCollection {
 
 	final static Pattern pVar = Pattern.compile("<\\$(\\p{Alpha}*)>");
 	private final XpEnvironmentData runData;
 
 	public VarSubstExpectationCollection(XpEnvironmentData data) {
+		Preconditions.checkNotNull(data);
 		this.runData = data;
 	}
 
