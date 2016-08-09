@@ -11,13 +11,13 @@ import eu.numberfour.n4js.n4JS.ModifiableElement;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.N4Modifier;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  *
  * @generated
  */
-public abstract class ModifiableElementImpl extends MinimalEObjectImpl.Container implements ModifiableElement {
+public abstract class ModifiableElementImpl extends ProxyResolvingEObjectImpl implements ModifiableElement {
 	/**
 	 * The cached value of the '{@link #getDeclaredModifiers() <em>Declared Modifiers</em>}' attribute list.
 	 * <!-- begin-user-doc -->

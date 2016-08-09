@@ -1,6 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /* no spaces inside braces of import statements */
 /* XPECT formattedLines 1 ---
 import {Class1} from "formatter2/MultipleClasses";
@@ -32,13 +32,13 @@ var y = 1;
 /* XPECT formattedLines 5 ---
 {
 	{
-		var y = [
+		var z = [
 				7
 			];
 	}
 }
 --- */
-{ { var y = [ 
+{ { var z = [ 
 7
 ];
 }
@@ -49,11 +49,11 @@ var y = 1;
 /* XPECT formattedLines 1 ---
 {
 	{
-		var y = [ 7 ];
+		var a = [ 7 ];
 	}
 }
 --- */
-{ { var y = [ 7 ]; } }
+{ { var a = [ 7 ]; } }
 
 
 /* indent blocks */
@@ -61,12 +61,12 @@ var y = 1;
 {
 	{
 		{
-			var y = [ 8 ];
+			var b = [ 8 ];
 		}
 	}
 }
 --- */
-{ { { var y = [ 8 ]; } } }
+{ { { var b = [ 8 ]; } } }
 
 
 /* indent blocks */
@@ -74,14 +74,14 @@ var y = 1;
 {
 	{
 		{
-			var y = [ 9 ];
-			let z = [ 10 ];
+			var c = [ 9 ];
+			let d = [ 10 ];
 			let z2 = [ 11 ];
 		}
 	}
 }
 --- */
-{ { { var y = [ 9 ]; let z = [ 10 ]; let z2 = [ 11 ]; } } }
+{ { { var c = [ 9 ]; let d = [ 10 ]; let z2 = [ 11 ]; } } }
 
 
 /* keep single-line formatting with multiple braces */
@@ -89,13 +89,13 @@ var y = 1;
 {
 	{
 		{
-			var y = 9;
-			let z = 10;
+			var e = 9;
+			let f = 10;
 		}
 	}
 }
 --- */
-{ { { var y =  9 ; let z =  10 ; } } }
+{ { { var e =  9 ; let f =  10 ; } } }
 
 
 /* keep single-line formatting with comma */

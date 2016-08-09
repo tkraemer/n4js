@@ -8,10 +8,10 @@
 //
 
 
-class A {}
-class B {} // does not inherit from A!
+interface A {}
+interface B {} // does not inherit from A!
 
-class G<T> {}
+interface G<T> {}
 
 
 //

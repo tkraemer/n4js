@@ -11,6 +11,8 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.xtext.EcoreUtil2;
 
@@ -37,7 +38,7 @@ import org.eclipse.xtext.EcoreUtil2;
  *
  * @generated
  */
-public class IdentifiableElementImpl extends MinimalEObjectImpl.Container implements IdentifiableElement {
+public class IdentifiableElementImpl extends ProxyResolvingEObjectImpl implements IdentifiableElement {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

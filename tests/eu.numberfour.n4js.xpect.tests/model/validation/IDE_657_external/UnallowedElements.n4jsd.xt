@@ -94,7 +94,7 @@ enum MyEnum {
 export function foo() {
 };
 
-// no errors expected XPECT errors --> 
+// no errors expected XPECT noerrors
 ;
 
 // XPECT errors --> "Only classes, interfaces, enums and functions declared as external as well as structural typed interfaces are allowed in n4jsd files." at "{ 	 }"

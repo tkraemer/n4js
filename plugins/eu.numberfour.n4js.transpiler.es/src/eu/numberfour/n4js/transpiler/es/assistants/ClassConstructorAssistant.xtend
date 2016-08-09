@@ -41,6 +41,8 @@ import java.util.LinkedHashSet
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.ModifierUtils
+import eu.numberfour.n4js.ts.types.MemberAccessModifier
 
 /**
  * Create the constructor function for classes (as a function declaration).
@@ -139,7 +141,7 @@ class ClassConstructorAssistant extends TransformationAssistant {
 			val structFields = specFpar.declaredTypeRef.structuralMembers;
 			val result = <Statement>newArrayList;
 			for(field : allFields) {
-				val isSpecced = field.declaredModifiers.contains(N4Modifier.PUBLIC) || structFields.exists[name == field.name];
+				val isSpecced = isPublic(field) || structFields.exists[name == field.name];
 				if(isSpecced) {
 					result += field.createFieldInitCodeForSingleSpeccedField(specFparSTE)
 				} else {
@@ -373,5 +375,13 @@ class ClassConstructorAssistant extends TransformationAssistant {
 
 	def private boolean isConsumedFromInterface(N4MemberDeclaration memberDecl) {
 		return state.info.isConsumedFromInterface(memberDecl);
+	}
+
+	def private boolean isPublic(N4MemberDeclaration memberDecl) {
+		// no need to bother with default accessibility, here, because 'public' is never the default
+		// (not ideal; would be better if the utility method handled default accessibility)
+		val accessModifier = ModifierUtils.convertToMemberAccessModifier(memberDecl.declaredModifiers,
+			memberDecl.annotations);
+		return accessModifier === MemberAccessModifier.PUBLIC;
 	}
 }

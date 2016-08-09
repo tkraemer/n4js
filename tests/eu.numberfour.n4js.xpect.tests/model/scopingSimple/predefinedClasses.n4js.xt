@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest  END_SETUP */
 class MyClassX {
 	/* as here it cannot be decided if "string field" or "string field() should be written, void is included in scope"*/
-/* XPECT scope at '|field : string' ---
+/* XPECT scope at 'string' ---
 	Array, Boolean, Date, Error, EvalError, Function,
 	JSON, Math, N4Object, Number, Object,  RangeError,
 	ReferenceError, RegExp, String, SyntaxError, TypeError,  URIError, any, boolean,

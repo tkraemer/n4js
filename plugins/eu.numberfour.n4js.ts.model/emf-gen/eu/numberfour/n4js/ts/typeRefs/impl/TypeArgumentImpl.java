@@ -10,13 +10,13 @@ package eu.numberfour.n4js.ts.typeRefs.impl;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class TypeArgumentImpl extends MinimalEObjectImpl.Container implements TypeArgument {
+public abstract class TypeArgumentImpl extends ProxyResolvingEObjectImpl implements TypeArgument {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

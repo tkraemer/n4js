@@ -30,6 +30,7 @@ function test4Fun2() {
 		test4Fun1 - 28, !test4Fun1 - T26, test1FunVar - 3, ...
 	---*/
 	test4Fun1();
+	// found during IDE-1852: XPECT FIXME noerrors
 	/* XPECT! scopeWithPosition at 'this.|test4Fun1();' ---
 		!test4Fun1 - 28, !test4Fun1 - T26, ...
 	---*/
@@ -45,6 +46,7 @@ function test5Fun2() {
 			test5Fun1 -43, !test5Fun1 - T39, !test5Fun1 - 41, test1FunVar - 3, ...
 		---*/
 		test5Fun1();
+		// found during IDE-1852: XPECT FIXME noerrors
 		/* XPECT! scopeWithPosition at 'this.|test5Fun1();' ---
 		 	!test5Fun1 -43, !test5Fun1 - T39, !test5Fun1 - 41, ... 
 		---*/
@@ -56,6 +58,7 @@ function test5Fun2() {
 	---*/
 	test5Fun1();
 	
+	// found during IDE-1852: XPECT FIXME noerrors
 	/* XPECT! scopeWithPosition at 'this.|test5Fun1();' ---
 	 	!test5Fun1 -43, !test5Fun1 - T39, !test5Fun1 - 41, ... 
 	---*/

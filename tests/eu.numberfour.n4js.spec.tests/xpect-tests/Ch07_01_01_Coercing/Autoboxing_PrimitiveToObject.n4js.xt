@@ -13,7 +13,7 @@ var ox : Object;
 // XPECT errors --> "boolean is not a subtype of Object." at "! bVar"
 ox = ! bVar
 
-// OK, explicit single Boolean can be converted to Object. XPECT errors -->
+// OK, explicit single Boolean can be converted to Object. XPECT noerrors
 ox = new Boolean(! bVar)
 
 ox =

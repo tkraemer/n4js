@@ -1,9 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
 
 
-class X {}
-class Y {}
-class Z {}
+interface X {}
+interface Y {}
+interface Z {}
 
 
 // XPECT type of 'v01' --> union{X,Y}

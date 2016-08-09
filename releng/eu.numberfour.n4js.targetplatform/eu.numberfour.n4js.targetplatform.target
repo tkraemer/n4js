@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated target-platform N4JS:N4JS_Neon" sequenceNumber="99">
+<target name="Generated target-platform N4JS:N4JS_Neon" sequenceNumber="100">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.executable.feature.group" version="3.6.300.v20160525-1303"/>
@@ -70,8 +70,8 @@
       <repository location="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.xpect.xtext.lib" version="0.1.0.201506020812"/>
-      <repository location="https://numberfour.github.io/Xpect/updatesite/nightly/local"/>
+      <unit id="org.xpect.xtext.lib" version="0.1.0.201608041256"/>
+      <repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="1.0.1.v20140414-1359"/>

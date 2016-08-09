@@ -28,7 +28,7 @@ export public class CanceledError {
 }
 
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /* XPECT formattedLines 8 ---
 let e = 1;
 /\**
@@ -49,7 +49,7 @@ export public class CanceledError2
   public fieldA:int = 3;
 }
 
-
+// found during IDE-1852: XPECT FIXME noerrors
 /* XPECT formattedLines 7 ---
 let e = 1;
 /\**

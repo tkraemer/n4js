@@ -8,7 +8,7 @@ class C {
       return y => x +
                  // XPECT linkedPathname at 'y'      --> C/m/y
                   y +
-                 // XPECT linkedPathname at 'this.z' --> C/z
+                 // XPECT linkedPathname at 'z' --> C/z
                   this.z;
 
     }

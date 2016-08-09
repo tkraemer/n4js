@@ -27,7 +27,7 @@
 --- */
 import { Class1 } from "scoping/imports/MultipleClasses"
 
-/* XPECT scopeWithResource at '|class1 : Class1' ---
+/* XPECT scopeWithResource at 'class1 : |Class1' ---
 Array - builtin_js.n4ts, Boolean - builtin_js.n4ts,
 Class1 - MultipleClasses.n4js, Class2 - T, Date - builtin_js.n4ts, Error - builtin_js.n4ts,
 EvalError - builtin_js.n4ts, Function - builtin_js.n4ts,

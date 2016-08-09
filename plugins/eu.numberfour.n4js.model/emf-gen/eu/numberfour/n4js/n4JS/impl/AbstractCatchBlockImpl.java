@@ -11,6 +11,8 @@ import eu.numberfour.n4js.n4JS.AbstractCatchBlock;
 import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -18,7 +20,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class AbstractCatchBlockImpl extends MinimalEObjectImpl.Container implements AbstractCatchBlock {
+public abstract class AbstractCatchBlockImpl extends ProxyResolvingEObjectImpl implements AbstractCatchBlock {
 	/**
 	 * The cached value of the '{@link #getBlock() <em>Block</em>}' containment reference.
 	 * <!-- begin-user-doc -->

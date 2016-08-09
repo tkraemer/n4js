@@ -1,9 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
-class A {}
-class ASub extends A {}
-class B {}
+interface A {}
+interface ASub extends A {}
+interface B {}
 
 
 class T1 {
@@ -43,7 +43,7 @@ u.m_onlyInT1;
 u.m_onlyInT2;
 // XPECT type of 'u.m1()' --> A
 u.m1();
-// private members are visible inside module XPECT errors --> 
+// private members are visible inside module XPECT noerrors
 u.m2();
 // XPECT type of 'u.m3()' --> union{A,ASub}
 u.m3();

@@ -24,28 +24,30 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.ComparisonFailure;
-
 import org.apache.log4j.Logger;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.templates.TemplateProposal;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.xpect.XpectImport;
 import org.xpect.expectation.CommaSeparatedValuesExpectation;
-import org.xpect.expectation.CommaSeparatedValuesExpectation.CommaSeparatedValuesExpectationImpl;
-import org.xpect.expectation.ExpectationCollection;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
 import org.xpect.expectation.IExpectationRegion;
 import org.xpect.expectation.IStringExpectation;
+import org.xpect.expectation.impl.AbstractExpectation;
+import org.xpect.expectation.impl.CommaSeparatedValuesExpectationImpl;
+import org.xpect.expectation.impl.ExpectationCollection;
+import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.setup.ISetupInitializer;
 import org.xpect.xtext.lib.setup.ThisResource;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.ConsumedIssues;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -56,12 +58,15 @@ import eu.numberfour.n4js.xpect.QuickFixTestHelper.ChangeInfo;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import junit.framework.AssertionFailedError;
+import junit.framework.ComparisonFailure;
 
 /**
  * Provides XPECT test methods for content assist
  */
 @SuppressWarnings("restriction")
-@XpectImport({ N4JSOffsetAdapter.class, XpEnvironmentData.class, VarDef.class, Config.class })
+@XpectImport({ N4JSOffsetAdapter.class, XpEnvironmentData.class, VarDef.class, Config.class,
+		ValidationTestModuleSetup.class })
 public class ContentAssistXpectMethod {
 	@Inject
 	private N4ContentAssistProcessorTestBuilderHelper n4ContentAssistProcessorTestBuilderHelper;
@@ -100,10 +105,11 @@ public class ContentAssistXpectMethod {
 	 * @throws Exception
 	 *             in junit-error case
 	 */
-	@ParameterParser2(syntax = "( ('kind' arg3=STRING)? 'at' (arg2=OFFSET  ('apply' arg4=STRING)?  (arg5=ID)? )? )?")
 	@Xpect
+	@ParameterParser(syntax = "( ('kind' arg3=STRING)? 'at' (arg2=STRING  ('apply' arg4=STRING)?  (arg5=ID)? )? )?")
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void contentAssist(
-			@PositionAwareStringExpectation IStringExpectation expectation, // arg0
+			IStringExpectation expectation, // arg0
 			@ThisResource XtextResource resource, // arg1
 			RegionWithCursor offset, // arg2 //@ThisOffset is obsolete
 			String kind, // arg3
@@ -142,9 +148,18 @@ public class ContentAssistXpectMethod {
 		} else if (changedLines.isEmpty()) {
 			throw new AssertionError("Nothing changed.");
 		}
+		String exp = changedLines.first().getAfter();
 
+		Point selection = proposal.getSelection(document);
+		if (selection != null) {
+			IExpectationRegion region = ((AbstractExpectation) expectation).getRegion();
+			if (CursorMarkerHelper.exists(region.getRegionText(), CursorMarkerHelper.markerCursor)) {
+				int newPos = selection.x - changedLines.first().getAfterOffset();
+				exp = new StringBuilder(exp).insert(newPos, CursorMarkerHelper.markerCursor).toString();
+			}
+		}
 		// Single changed line:
-		expectation.assertEquals(changedLines.first().after);
+		expectation.assertEquals(exp);
 
 		// TODO up to now this only removes the locations for the cursor but doesn't check the location.
 		// TODO multilines must be supported.
@@ -166,7 +181,7 @@ public class ContentAssistXpectMethod {
 	 contentAssistList              at 'a.<|>methodA'       proposals             unordered --> methodA2, methodA
 	 contentAssistList              at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
 	 contentAssistList kind 'smart' at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
-
+	
 	                    kind        offset                  checkType  selected    mode
 	                    arg4        arg2                    arg3       arg5        arg6
 	 */
@@ -194,8 +209,9 @@ public class ContentAssistXpectMethod {
 	 * @throws Exception
 	 *             some exception
 	 */
-	@ParameterParser2(syntax = "( ('kind' arg4=STRING)? 'at' (arg2=OFFSET (arg3=ID  (arg5=STRING)?  (arg6=ID (arg7=ID)? )? )? )? )?")
 	@Xpect
+	@ParameterParser(syntax = "( ('kind' arg4=STRING)? 'at' (arg2=STRING (arg3=ID  (arg5=STRING)?  (arg6=ID (arg7=ID)? )? )? )? )?")
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void contentAssistList(
 			@CommaSeparatedValuesExpectation(quoted = true) ICommaSeparatedValuesExpectation expect, // arg0
 			@ThisResource XtextResource resource, // arg1
@@ -205,8 +221,7 @@ public class ContentAssistXpectMethod {
 			String selected, // arg5
 			String mode, // arg6
 			String orderMod, // arg7
-			ISetupInitializer<XpEnvironmentData> uiTestRunInit
-			) throws Exception {
+			ISetupInitializer<XpEnvironmentData> uiTestRunInit) throws Exception {
 
 		XpEnvironmentData xpEnvData = new XpEnvironmentData();
 		uiTestRunInit.initialize(xpEnvData);
@@ -214,9 +229,9 @@ public class ContentAssistXpectMethod {
 
 		// Expansion of Variables. This changes the original expectation:
 		CommaSeparatedValuesExpectationImpl csvE = (CommaSeparatedValuesExpectationImpl) expect;
-		Pair<NCSVExpectation, CharSequence> exptectationAndText = expandVariables(csvE, xpEnvData);
+		Pair<CommaSeparatedValuesExpectationImpl, CharSequence> exptectationAndText = expandVariables(csvE, xpEnvData);
 
-		NCSVExpectation expectation = exptectationAndText.getKey();
+		CommaSeparatedValuesExpectationImpl expectation = exptectationAndText.getKey();
 		CharSequence expectedText = exptectationAndText.getValue();
 
 		// System.out.println("---|" + expectedText + "|---");
@@ -299,7 +314,32 @@ public class ContentAssistXpectMethod {
 		}
 	}
 
-	private Pair<NCSVExpectation, CharSequence> expandVariables(CommaSeparatedValuesExpectationImpl csvE,
+	private static class VarSubstCommaSeparatedValuesExpectationImpl extends CommaSeparatedValuesExpectationImpl {
+
+		/***/
+		public VarSubstCommaSeparatedValuesExpectationImpl(CommaSeparatedValuesExpectationImpl original,
+				CommaSeparatedValuesExpectation annotation) {
+			super(original, annotation);
+		}
+
+		@Override
+		protected ExpectationCollection createExpectationCollection() {
+			CommaSeparatedValuesExpectation annotation = getAnnotation();
+			ExpectationCollection exp = new VarSubstExpectationCollection(
+					((CommaSeparatedValuesExpectationCfg) annotation).getData());
+			exp.setCaseSensitive(annotation.caseSensitive());
+			exp.setOrdered(annotation.ordered());
+			exp.setQuoted(annotation.quoted());
+			exp.setSeparator(',');
+			exp.setWhitespaceSensitive(annotation.whitespaceSensitive());
+			exp.init(getExpectation());
+			return exp;
+		}
+
+	}
+
+	private Pair<CommaSeparatedValuesExpectationImpl, CharSequence> expandVariables(
+			CommaSeparatedValuesExpectationImpl csvE,
 			XpEnvironmentData data) {
 
 		// val CommaSeparatedValuesExpectationImpl csvE = (expectation as CommaSeparatedValuesExpectationImpl);
@@ -308,19 +348,14 @@ public class ContentAssistXpectMethod {
 		CharSequence expectedText = null;
 		if (region.getLength() < 0) {
 			expectedText = "";
-		}
-		else {
+		} else {
 			expectedText = doc.subSequence(region.getOffset(), region.getOffset() + region.getLength());
 		}
 
-		NCSVExpectation csvRet = new NCSVExpectation(csvE);
-		csvRet.annotationCfg.expectationCollectionProvider = new Function0<ExpectationCollection>() {
-
-			@Override
-			public ExpectationCollection apply() {
-				return new VarSubstExpectationCollection(data);
-			}
-		};
+		CommaSeparatedValuesExpectationCfg cfg = new CommaSeparatedValuesExpectationCfg(csvE.getAnnotation());
+		cfg.setData(data);
+		VarSubstCommaSeparatedValuesExpectationImpl csvRet = new VarSubstCommaSeparatedValuesExpectationImpl(csvE,
+				cfg);
 		VarSubstExpectationCollection vseColl = new VarSubstExpectationCollection(data);
 		vseColl.init(expectedText.toString());
 		String expandedExpectedText = IteratorExtensions.join(vseColl.iterator(), ",");
@@ -346,7 +381,8 @@ public class ContentAssistXpectMethod {
 		}
 	}
 
-	private void assertExactlyOrdered(List<String> proposals, List<String> required, NCSVExpectation expectation) {
+	private void assertExactlyOrdered(List<String> proposals, List<String> required,
+			CommaSeparatedValuesExpectationImpl expectation) {
 		assertContainingMatchAllOrdered(proposals, required, expectation);
 
 		// assert same length:
@@ -355,8 +391,10 @@ public class ContentAssistXpectMethod {
 					"Ambiguity: All required proposal (right side) could match the ones the system provides." +
 							" But, at least two required labels matched the same proposal." +
 							" Your requirement on the right side is to sloppy. Please provide more specific labels." +
-							" See the full proposal display strings in the comparison", required.stream().collect(
-							Collectors.joining(",")), proposals.stream().collect(Collectors.joining(",")));
+							" See the full proposal display strings in the comparison",
+					required.stream().collect(
+							Collectors.joining(",")),
+					proposals.stream().collect(Collectors.joining(",")));
 	}
 
 	/** Unordered comparison: same number of required and proposed */
@@ -401,7 +439,8 @@ public class ContentAssistXpectMethod {
 		return matched;
 	}
 
-	private void assertContainingMatchAllOrdered(List<String> proposals, List<String> required, NCSVExpectation exp) {
+	private void assertContainingMatchAllOrdered(List<String> proposals, List<String> required,
+			CommaSeparatedValuesExpectationImpl exp) {
 
 		List<String> matched = Lists.newArrayList();
 		HashMap<String, Integer> match2index = new HashMap<>();
@@ -433,10 +472,10 @@ public class ContentAssistXpectMethod {
 					}
 				}).map(sme -> sme.getKey()).collect(Collectors.toList());
 
-		NCSVExpectation expNCSV = exp;
-
 		// change config to ordered:
-		expNCSV.annotationCfg.ordered = true;
+		CommaSeparatedValuesExpectationCfg cfg = new CommaSeparatedValuesExpectationCfg(exp.getAnnotation());
+		cfg.setOrdered(true);
+		CommaSeparatedValuesExpectationImpl expNCSV = new CommaSeparatedValuesExpectationImpl(exp, cfg);
 		expNCSV.assertEquals(matchedOrder);
 	}
 
@@ -444,7 +483,7 @@ public class ContentAssistXpectMethod {
 	 * Searches for the proposal matching to selected.
 	 *
 	 * Throws exception if there are more then one or no proposals matching 'selected' found.
-	 * */
+	 */
 	private ICompletionProposal exactlyMatchingProposal(RegionWithCursor offset,
 			N4ContentAssistProcessorTestBuilder fixture,
 			String selected) {

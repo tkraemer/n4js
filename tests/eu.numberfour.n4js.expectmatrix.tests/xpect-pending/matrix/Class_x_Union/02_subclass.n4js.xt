@@ -4,11 +4,11 @@
 // Subclass relation II //
 //////////////////////////
 
-class A {}
-class B extends A {}
-class C extends A {}
-class D extends B {}
-class E extends B {}
+interface A {}
+interface B extends A {}
+interface C extends A {}
+interface D extends B {}
+interface E extends B {}
 
 function f (a : B) {};
 
