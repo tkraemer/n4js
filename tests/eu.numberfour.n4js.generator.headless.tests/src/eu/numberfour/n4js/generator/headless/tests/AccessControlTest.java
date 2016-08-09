@@ -335,9 +335,17 @@ public class AccessControlTest {
 		 */
 		UNUSABLE,
 		/**
-		 * Same as {@link #SKIP}, this is used to denote scenarios which still have errors, but must be fixed later on.
+		 * Should have no errors, but due to bugs we currently do get them.
 		 */
-		FIXME,
+		FIXME_OK,
+		/**
+		 * Should have errors, but due to bugs we currently get none.
+		 */
+		FIXME_FAIL,
+		/**
+		 * Should have errors, but due to bugs we currently get none.
+		 */
+		FIXME_UNUSABLE,
 		/**
 		 * Skip this test scenario.
 		 */
@@ -360,9 +368,11 @@ public class AccessControlTest {
 			case "u":
 				return UNUSABLE;
 			case "y?":
+				return FIXME_OK;
 			case "n?":
+				return FIXME_FAIL;
 			case "u?":
-				return FIXME;
+				return FIXME_UNUSABLE;
 			case "":
 			case "#":
 				return SKIP;
@@ -376,6 +386,7 @@ public class AccessControlTest {
 	 * A specification of one test scenario that should be created and checked by this test case.
 	 */
 	private static class TestSpecification {
+		private final int index;
 		private final int row;
 		private final int column;
 		private final Scenario scenario;
@@ -392,6 +403,8 @@ public class AccessControlTest {
 		/**
 		 * Creates a new instance with the given parameters.
 		 *
+		 * @param index
+		 *            the index of this specification
 		 * @param row
 		 *            the table row containing this specification
 		 * @param column
@@ -417,12 +430,13 @@ public class AccessControlTest {
 		 * @param expectation
 		 *            the expected test result
 		 */
-		public TestSpecification(int row, int column, Scenario scenario, ClassifierType supplierType,
+		public TestSpecification(int index, int row, int column, Scenario scenario, ClassifierType supplierType,
 				ClassifierType clientType,
 				ClientLocation clientLocation, MemberType memberType,
 				UsageType usageType,
 				Classifier.Visibility supplierVisibility,
 				Member.Visibility memberVisibility, Member.Static memberStatic, Expectation expectation) {
+			this.index = index;
 			this.row = row;
 			this.column = column;
 			this.scenario = scenario;
@@ -435,6 +449,20 @@ public class AccessControlTest {
 			this.memberVisibility = memberVisibility;
 			this.memberStatic = memberStatic;
 			this.expectation = expectation;
+		}
+
+		/**
+		 * Indicates whether this specification has the given row and column index.
+		 *
+		 * @param row
+		 *            the row index
+		 * @param column
+		 *            the column index
+		 * @return <code>true</code> if this specification has the given indices and <code>false</code> otherwise
+		 */
+		@SuppressWarnings("hiding")
+		public boolean hasPosition(int row, int column) {
+			return this.row == row && this.column == column;
 		}
 
 		/**
@@ -529,7 +557,8 @@ public class AccessControlTest {
 
 		@Override
 		public String toString() {
-			return "[" + (row + 1) + ", " + (column + 1) + "]: " + scenario + " scenario with supplier "
+			return (index + 1) + ": [" + (row + 1) + ", " + getColumnName(column) + "]: " + scenario + " scenario with "
+					+ supplierVisibility + " supplier "
 					+ supplierType
 					+ " and client "
 					+ clientType
@@ -539,6 +568,23 @@ public class AccessControlTest {
 					+ memberVisibility + (memberStatic == Member.Static.YES ? " STATIC " : " INSTANCE ")
 					+ memberType + " with expectation: "
 					+ expectation;
+		}
+
+		private static String getColumnName(int columnIndex) {
+			String result = "";
+
+			int outerIndex = columnIndex / 26;
+			if (outerIndex > 0)
+				result += getChar(outerIndex - 1);
+
+			int innerIndex = columnIndex % 26;
+			result += getChar(innerIndex);
+
+			return result;
+		}
+
+		private static char getChar(int index) {
+			return Character.toChars(index + 65)[0]; // 65 is the ASCII offset of 'A'
 		}
 	}
 
@@ -734,7 +780,7 @@ public class AccessControlTest {
 	 */
     // @formatter:on
 	@Parameters(name = "{0}")
-	public static Iterable<? extends Object> data() throws IOException {
+	public static List<TestSpecification> data() throws IOException {
 		CSVParser parser = new CSVParser("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
 		CSVData csvData = parser.getData();
 
@@ -745,7 +791,10 @@ public class AccessControlTest {
 
 		for (int row = 0; row < scenarios.getSize() / 5; row++) {
 			CSVData scenario = scenarios.getRange(row * 5, 0, 5, -1);
-			result.addAll(createScenarios(accessSpec, scenario, row * 5, 0));
+			int indexOffset = result.size();
+			int rowOffset = row * 5 + 5;
+			int columnOffset = 4;
+			result.addAll(createScenarios(accessSpec, scenario, indexOffset, rowOffset, columnOffset));
 		}
 
 		return result;
@@ -764,7 +813,8 @@ public class AccessControlTest {
 	 *            the current column offset
 	 * @return a list of test specifications corresponding to the scenarios in the given portion of the table
 	 */
-	private static List<TestSpecification> createScenarios(CSVData accessSpec, CSVData data, int rowOffset,
+	private static List<TestSpecification> createScenarios(CSVData accessSpec, CSVData data, int indexOffset,
+			int rowOffset,
 			int columnOffset) {
 		List<TestSpecification> result = new LinkedList<>();
 
@@ -773,6 +823,8 @@ public class AccessControlTest {
 		Scenario scenario = Scenario.parse(testSpec.get(0, 0));
 		ClassifierType supplierType = ClassifierType.parse(testSpec.get(0, 1));
 		ClassifierType clientType = ClassifierType.parse(testSpec.get(0, 2));
+
+		int count = 0;
 
 		for (int row = 0; row < testSpec.getSize(); row++) {
 			ClientLocation clientLocation = ClientLocation.parse(testSpec.get(row, 3));
@@ -788,11 +840,13 @@ public class AccessControlTest {
 
 				if (expectation != Expectation.SKIP) {
 					for (MemberType memberType : MemberType.values()) {
-						TestSpecification specification = new TestSpecification(row + rowOffset, col + columnOffset,
+						TestSpecification specification = new TestSpecification(count + indexOffset, row + rowOffset,
+								col + columnOffset,
 								scenario, supplierType, clientType,
 								clientLocation, memberType,
 								usageType, supplierVisibility, memberVisibility, memberStatic, expectation);
 						result.add(specification);
+						count++;
 					}
 				}
 			}
@@ -964,26 +1018,34 @@ public class AccessControlTest {
 	 */
 	@Test
 	public void test() throws IOException {
+		executeSpecification(specification, true);
+	}
+
+	private static void executeSpecification(TestSpecification specification, boolean cleanupAfterwards)
+			throws IOException {
 		createFixtureDirectory();
 		try {
-			generateScenario();
-			final IssuesMatcher matcher = createIssues();
+			generateScenario(specification);
+			final IssuesMatcher matcher = createIssues(specification);
 			compileAndAssert(Arrays.asList(new File(FIXTURE_ROOT)), matcher);
 		} finally {
-			deleteFixtureDirectory();
+			if (cleanupAfterwards)
+				deleteFixtureDirectory();
 		}
 	}
 
 	/**
-	 * Generates a test scenario according to the parameters specified in {@link #specification}.
+	 * Generates a test scenario according to the parameters specified in the given test specification.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @return a list files representing the root directories of the created projects
 	 */
-	private List<File> generateScenario() {
+	private static List<File> generateScenario(TestSpecification specification) {
 		List<File> result = new LinkedList<>();
 
 		// Create the required classifiers for the scenario.
-		ScenarioResult scenario = createScenario();
+		ScenarioResult scenario = createScenario(specification);
 		Classifier<?> supplier = scenario.supplier;
 		Classifier<?> client = scenario.client;
 		Class factory = scenario.factory;
@@ -993,11 +1055,12 @@ public class AccessControlTest {
 		switch (specification.getSupplierType()) {
 		case CLASS:
 		case DEFAULT_INTERFACE:
-			supplier.addMember(createMember("member", specification.getMemberVisibility()));
+			supplier.addMember(createMember(specification, "member", specification.getMemberVisibility()));
 			break;
 		case ABSTRACT_CLASS:
 		case INTERFACE:
-			supplier.addMember(createMember("member", specification.getMemberVisibility()).makeAbstract());
+			supplier.addMember(
+					createMember(specification, "member", specification.getMemberVisibility()).makeAbstract());
 			break;
 		}
 
@@ -1011,19 +1074,23 @@ public class AccessControlTest {
 			case ACCESS:
 				switch (specification.getMemberStatic()) {
 				case YES:
-					client.addMember(createAccess("member", "S"));
+					client.addMember(createAccess(specification, "member", "S"));
 					break;
 				case NO:
-					client.addMember(createAccess("member", "this"));
+					client.addMember(createAccess(specification, "member", "this"));
 					break;
 				}
-				if (specification.getSupplierType() != ClassifierType.INTERFACE)
+				if (specification.getSupplierType() != ClassifierType.INTERFACE &&
+						specification.getSupplierType() != ClassifierType.ABSTRACT_CLASS)
 					break;
-				// We want to fall through here because in the case of implementing an abstract interface, we need to
-				// implement the abstract member.
+				if (specification.getMemberType() == MemberType.FIELD) // Fields cannot be abstract
+					break;
+				// We want to fall through here because in the case of implementing an abstract interface or extending
+				// an abstract class, we need to override the abstract member.
 				// $FALL-THROUGH$
 			case OVERRIDE:
-				client.addMember(createMember("member", specification.getMemberVisibility()).makeOverride());
+				client.addMember(
+						createMember(specification, "member", specification.getMemberVisibility()).makeOverride());
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected usage type: " + specification.getUsageType());
@@ -1039,12 +1106,13 @@ public class AccessControlTest {
 				break;
 			case ABSTRACT_CLASS:
 			case INTERFACE:
-				implementer.addMember(createMember("member", specification.getMemberVisibility()).makeOverride());
+				implementer.addMember(
+						createMember(specification, "member", specification.getMemberVisibility()).makeOverride());
 				break;
 			}
 
 			// Create a method that accesses the supplier's member via an instance created by the factory.
-			client.addMember(createAccess("member", "new GetS().getS()"));
+			client.addMember(createAccess(specification, "member", "new GetS().getS()"));
 			break;
 		}
 		}
@@ -1167,19 +1235,22 @@ public class AccessControlTest {
 	}
 
 	/**
-	 * Creates the scenario. To be more precise, this method creates the classifiers that participate in the scenario,
-	 * but not the required members.
+	 * Creates the scenario for the given specification. To be more precise, this method creates the classifiers that
+	 * participate in the scenario, but not the required members.
+	 *
+	 * @param specification
+	 *            the test specification
 	 *
 	 * @return the created classifiers wrapped in an instance of {@link ScenarioResult}.
 	 */
-	private ScenarioResult createScenario() {
+	private static ScenarioResult createScenario(TestSpecification specification) {
 		switch (specification.getScenario()) {
 		case EXTENDS:
-			return createExtensionScenario();
+			return createExtensionScenario(specification);
 		case IMPLEMENTS:
-			return createImplementationScenario();
+			return createImplementationScenario(specification);
 		case REFERENCES:
-			return createReferenceScenario();
+			return createReferenceScenario(specification);
 		}
 
 		throw new IllegalArgumentException("Unexpected scenario: " + specification.getScenario());
@@ -1189,13 +1260,15 @@ public class AccessControlTest {
 	 * Creates an instance of the extension scenario where either one class extends another or where one interface
 	 * extends another.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @return the created classifiers wrapped in an instance of {@link ScenarioResult}.
 	 *
 	 * @throws IllegalArgumentException
 	 *             if the supplier and client types do not agree with this scenario, e.g., if the supplier is a class
 	 *             and the client is an interface
 	 */
-	private ScenarioResult createExtensionScenario() {
+	private static ScenarioResult createExtensionScenario(TestSpecification specification) {
 		switch (specification.getSupplierType()) {
 		case CLASS: {
 			Class supplier = new Class("S").setVisibility(specification.getSupplierVisibility());
@@ -1245,12 +1318,14 @@ public class AccessControlTest {
 	 * Creates an instance of the implementation scenario where the supplier is an interface and the client is a class
 	 * implementing that interface.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @return the created classifiers wrapped in an instance of {@link ScenarioResult}.
 	 *
 	 * @throws IllegalArgumentException
 	 *             if the supplier and client types do not agree with this scenario, e.g., if the supplier is a class
 	 */
-	private ScenarioResult createImplementationScenario() {
+	private static ScenarioResult createImplementationScenario(TestSpecification specification) {
 		switch (specification.getSupplierType()) {
 		case CLASS:
 		case ABSTRACT_CLASS:
@@ -1279,13 +1354,15 @@ public class AccessControlTest {
 	 * a factory and, optionally, an implementer if the supplier is an abstract class or an interface. In this scenario,
 	 * the client must be a class.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @return the created classifiers wrapped in an instance of {@link ScenarioResult}
 	 *
 	 * @throws IllegalArgumentException
 	 *             if the supplier and client types do not agree with this scenario, e.g., if the supplier is a class
 	 *             and the client is an interface
 	 */
-	private ScenarioResult createReferenceScenario() {
+	private static ScenarioResult createReferenceScenario(TestSpecification specification) {
 		switch (specification.getSupplierType()) {
 		case CLASS: {
 			Class supplier = new Class("S").setVisibility(specification.getSupplierVisibility());
@@ -1364,6 +1441,8 @@ public class AccessControlTest {
 	 * {@link TestSpecification#getMemberType()}. The member is also set to static according to the value returned by
 	 * {@link TestSpecification#getMemberStatic()}.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @param name
 	 *            the name of the created member
 	 * @param visibility
@@ -1371,7 +1450,7 @@ public class AccessControlTest {
 	 *
 	 * @return the newly created member
 	 */
-	private Member<?> createMember(String name, Member.Visibility visibility) {
+	private static Member<?> createMember(TestSpecification specification, String name, Member.Visibility visibility) {
 		Member<?> result = null;
 		switch (specification.getMemberType()) {
 		case FIELD:
@@ -1401,6 +1480,8 @@ public class AccessControlTest {
 	 * used to retrieve the subject of access, i.e., the supplier. In most cases, we will pass <code>this</code> as the
 	 * subject expression.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @param memberName
 	 *            the name of the member being accessed
 	 * @param subjectExpression
@@ -1408,7 +1489,7 @@ public class AccessControlTest {
 	 *
 	 * @return the newly created method
 	 */
-	private Method createAccess(String memberName, String subjectExpression) {
+	private static Method createAccess(TestSpecification specification, String memberName, String subjectExpression) {
 		Method result = null;
 		switch (specification.getMemberType()) {
 		case FIELD:
@@ -1447,7 +1528,7 @@ public class AccessControlTest {
 	 *            the implementer class
 	 * @return the newly created module
 	 */
-	private Module createSupplierModule(Classifier<?> supplier, Class factory, Class implementer) {
+	private static Module createSupplierModule(Classifier<?> supplier, Class factory, Class implementer) {
 		Module supplierModule = new Module("SupplierModule");
 		supplierModule.addClassifier(supplier);
 		if (implementer != null)
@@ -1473,7 +1554,7 @@ public class AccessControlTest {
 	 *
 	 * @return the newly created module
 	 */
-	private Module createClientModule(Classifier<?> client, Classifier<?> supplier, Class supplierFactory,
+	private static Module createClientModule(Classifier<?> client, Classifier<?> supplier, Class supplierFactory,
 			Module supplierModule) {
 		Module clientModule = new Module("ClientModule");
 		if (supplierFactory != null)
@@ -1494,7 +1575,7 @@ public class AccessControlTest {
 	 *
 	 * @return the newly created project
 	 */
-	private Project createSupplierProject(Module supplierModule, String vendorId) {
+	private static Project createSupplierProject(Module supplierModule, String vendorId) {
 		Project supplierProject = new Project("SupplierProject", vendorId, vendorId + "_name");
 		supplierProject.createSourceFolder("src").addModule(supplierModule);
 		return supplierProject;
@@ -1513,7 +1594,7 @@ public class AccessControlTest {
 	 *
 	 * @return the newly created project
 	 */
-	private Project createClientProject(Module clientModule, String vendorId, Project supplierProject) {
+	private static Project createClientProject(Module clientModule, String vendorId, Project supplierProject) {
 		Project clientProject = new Project("ClientProject", vendorId, vendorId + "_name");
 		clientProject.addProjectDependency(supplierProject);
 		clientProject.createSourceFolder("src").addModule(clientModule);
@@ -1523,24 +1604,42 @@ public class AccessControlTest {
 	/**
 	 * Creates the issues according to the expectation returned by {@link TestSpecification#getExpectation()}.
 	 *
+	 * @param specification
+	 *            the test specification
 	 * @return an instance of {@link IssuesMatcher} that represents the expectations
 	 */
-	private IssuesMatcher createIssues() {
+	private static IssuesMatcher createIssues(TestSpecification specification) {
 		IssuesMatcher result = new IssuesMatcher();
 
 		switch (specification.getExpectation()) {
 		case OK:
+		case FIXME_OK:
 			break;
 		case FAIL:
+		case FIXME_FAIL:
 			result.add().error();
 			break;
 		case UNUSABLE:
+		case FIXME_UNUSABLE:
 			result.add().error();
 			if (specification.getMemberType() != MemberType.FIELD) // fields cannot be abstract
 				result.add().error().message().startsWith("Cannot use");
 			break;
-		default:
-			throw new IllegalArgumentException("Unexpected test expectation: " + specification.getExpectation());
+		case SKIP:
+			break;
+		}
+
+		switch (specification.getExpectation()) {
+		case FIXME_OK:
+		case FIXME_FAIL:
+		case FIXME_UNUSABLE:
+			result.invert();
+			break;
+		case OK:
+		case FAIL:
+		case UNUSABLE:
+		case SKIP:
+			break;
 		}
 
 		return result;
@@ -1550,15 +1649,14 @@ public class AccessControlTest {
 
 	/**
 	 * Compiles the projects at the given root paths, which in this test case the projects representing the currently
-	 * tested scenario (created by {@link #generateScenario()}) and asserts the expectations represented by the given
-	 * instance of {@link IssuesMatcher}.
+	 * tested scenario and asserts the expectations represented by the given instance of {@link IssuesMatcher}.
 	 *
 	 * @param projectRoots
 	 *            the root paths of the projects to be compiled
 	 * @param matcher
 	 *            the test expectations
 	 */
-	private void compileAndAssert(List<File> projectRoots, IssuesMatcher matcher) {
+	private static void compileAndAssert(List<File> projectRoots, IssuesMatcher matcher) {
 		IssueCollector issueCollector = new IssueCollector();
 		try {
 			hlc.compileAllProjects(projectRoots, issueCollector);
@@ -1579,7 +1677,7 @@ public class AccessControlTest {
 	 * @param matchers
 	 *            the expectations
 	 */
-	private void assertIssues(Collection<Issue> issues, IssuesMatcher matchers) {
+	private static void assertIssues(Collection<Issue> issues, IssuesMatcher matchers) {
 		List<String> messages = new LinkedList<>();
 		boolean result = matchers.matchesExactly(issues, messages);
 		assertTrue(Joiner.on(", ").join(messages), result);
@@ -1592,7 +1690,7 @@ public class AccessControlTest {
 	 * @throws IOException
 	 *             if the directory cannot be created
 	 */
-	private void createFixtureDirectory() throws IOException {
+	private static void createFixtureDirectory() throws IOException {
 		File file = new File(FIXTURE_ROOT);
 		if (file.exists())
 			deleteFixtureDirectory();
@@ -1605,7 +1703,53 @@ public class AccessControlTest {
 	 * @throws IOException
 	 *             if the directory cannot be deleted
 	 */
-	private void deleteFixtureDirectory() throws IOException {
+	private static void deleteFixtureDirectory() throws IOException {
 		FileDeleter.delete(new File(FIXTURE_ROOT));
+	}
+
+	public static void main(String[] args) throws IOException {
+		if (args.length != 2) {
+			System.out.println("Pass row and column names!");
+			System.exit(1);
+		}
+
+		int rowIndex = parseRowIndex(args[0]);
+		int columnIndex = parseColumnIndex(args[1]);
+
+		List<TestSpecification> specs = data();
+		for (TestSpecification spec : specs) {
+			if (spec.hasPosition(rowIndex, columnIndex)) {
+				executeSpecification(spec, false);
+			}
+		}
+	}
+
+	private static int parseRowIndex(String str) {
+		return Integer.parseInt(str);
+	}
+
+	private static int parseColumnIndex(String str) {
+		if (str.length() < 1 || str.length() > 2)
+			throw new IllegalArgumentException("Invalid column name: " + str);
+
+		int result = 0;
+		if (str.length() == 2) {
+			char outer = str.charAt(0);
+			checkColumnNameChar(outer);
+
+			result = (outer - 65) * 26;
+		}
+
+		char inner = str.charAt(str.length() - 1);
+		checkColumnNameChar(inner);
+
+		result += (inner - 65);
+
+		return result;
+	}
+
+	private static void checkColumnNameChar(char c) {
+		if (c < 65 || c >= 65 + 26)
+			throw new IllegalArgumentException("Invalid column name part: " + c);
 	}
 }
