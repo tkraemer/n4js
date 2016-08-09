@@ -22,6 +22,21 @@ import org.eclipse.xtext.validation.Issue;
  */
 public class IssuesMatcher {
 	private final Collection<IssueMatcher> issueMatchers = new LinkedList<>();
+	private boolean inverted;
+
+	/**
+	 * Creates a new, non-inverted instance.
+	 */
+	public IssuesMatcher() {
+		this.inverted = false;
+	}
+
+	/**
+	 * Inverts this matcher, that is, inverts the result that is returned from the matching methods.
+	 */
+	public void invert() {
+		this.inverted = !this.inverted;
+	}
 
 	/**
 	 * Creates a new issue matcher and adds it to this matcher.
@@ -50,9 +65,20 @@ public class IssuesMatcher {
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
 		performMatching(issueCopy, matcherCopy, messages);
-		explainUnmatchedIssues(issueCopy, messages);
-		explainUnmatchedExpectations(matcherCopy, messages);
-		return issueCopy.isEmpty() && matcherCopy.isEmpty();
+		if (inverted) {
+			if (issueCopy.isEmpty() && matcherCopy.isEmpty()) {
+				explainIssues(issues, messages, inverted);
+				explainExpectations(issueMatchers, messages, inverted);
+				return false;
+			}
+		} else {
+			if (!issueCopy.isEmpty() || !matcherCopy.isEmpty()) {
+				explainIssues(issueCopy, messages, inverted);
+				explainExpectations(matcherCopy, messages, inverted);
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -70,8 +96,18 @@ public class IssuesMatcher {
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
 		performMatching(issueCopy, matcherCopy, messages);
-		explainUnmatchedExpectations(matcherCopy, messages);
-		return matcherCopy.isEmpty();
+		if (inverted) {
+			if (matcherCopy.isEmpty()) {
+				explainExpectations(issueMatchers, messages, inverted);
+				return false;
+			}
+		} else {
+			if (!matcherCopy.isEmpty()) {
+				explainExpectations(matcherCopy, messages, inverted);
+				return false;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -89,22 +125,33 @@ public class IssuesMatcher {
 		Collection<IssueMatcher> matcherCopy = new LinkedList<>(issueMatchers);
 
 		performMatching(issueCopy, matcherCopy, messages);
-		explainUnmatchedIssues(issueCopy, messages);
-		return issueCopy.isEmpty();
+		if (inverted) {
+			if (issueCopy.isEmpty()) {
+				explainIssues(issues, messages, inverted);
+				return false;
+			}
+		} else {
+			if (!issueCopy.isEmpty()) {
+				explainIssues(issueCopy, messages, inverted);
+				return false;
+			}
+		}
+		return true;
 	}
 
-	private void explainUnmatchedIssues(Collection<Issue> unmatchedIssues, List<String> messages) {
+	private void explainIssues(Collection<Issue> unmatchedIssues, List<String> messages, boolean expected) {
 		if (messages != null) {
 			for (Issue issue : unmatchedIssues) {
-				messages.add("Unexpected issue: " + issue);
+				messages.add((expected ? "Expected" : "Unexpected") + " issue: " + issue);
 			}
 		}
 	}
 
-	private void explainUnmatchedExpectations(Collection<IssueMatcher> unmatchedMatchers, List<String> messages) {
+	private void explainExpectations(Collection<IssueMatcher> unmatchedMatchers, List<String> messages,
+			boolean expected) {
 		if (messages != null) {
 			for (IssueMatcher matcher : unmatchedMatchers) {
-				messages.add("Unmatched expectation: " + matcher.getDescription());
+				messages.add((expected ? "Expected" : "Unexpected") + " expectation: " + matcher.getDescription());
 			}
 		}
 	}
