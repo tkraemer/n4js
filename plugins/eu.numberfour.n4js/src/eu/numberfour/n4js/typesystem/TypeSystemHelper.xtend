@@ -19,9 +19,9 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -31,6 +31,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
@@ -347,7 +348,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 					type = ft.containingType;
 			}
 		}
-		if(typeRef instanceof ClassifierTypeRef) {
+		if(typeRef instanceof ConstructorTypeRef) {
 			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				type = cls;
@@ -359,23 +360,61 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * Returns the so-called "static type" of the given {@link ClassifierTypeRef} or <code>null</code> if not available.
+	 * Returns the so-called "static type" of the given {@link ConstructorTypeRef} or <code>null</code> if not
+	 * available.
 	 * <p>
 	 * Formerly, this was a utility operation in {@code TypeRefs.xcore} but since the introduction of wildcards in
-	 * {@code ClassifierTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
+	 * {@code ConstructorTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
 	 * and hence it was moved here.
 	 */
-	def public Type getStaticType(RuleEnvironment G, ClassifierTypeRef classifierTypeRef) {
-		val typeArg = classifierTypeRef.typeArg;
-		val ub = if(typeArg!==null) ts.upperBound(G, typeArg).value;
-		return ub?.declaredType; // returns null if 'ub' is not of type ParameterizedTypeRef
+	def public Type getStaticType(RuleEnvironment G, ConstructorTypeRef ctorTypeRef) {
+		var typeArg = ctorTypeRef.typeArg;
+		while(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef) {
+			typeArg = ts.upperBound(G, typeArg).value;
+		}
+		return (typeArg as TypeRef)?.declaredType; // will return null if 'typeArg' is not of type ParameterizedTypeRef
 	}
 
 	/**
-	 * Creates a parameterized type ref to the wrapped static type of a ClassifierTyperRef, configured with the given TypeArguments.
-	 * Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type)
+	 * Tells whether all valid values of the given constructor type are guaranteed to be functions.
 	 */
-	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, ClassifierTypeRef ctr, TypeArgument ... typeArgs) {
+	def public boolean isFunction(RuleEnvironment G, ConstructorTypeRef ctorTypeRef) {
+		return ctorTypeRef.isConstructorRef;
+// FIXME remove:
+//		if (ctorTypeRef.isConstructorRef) {
+//			return true;
+//		}
+//		val typeArg = ctorTypeRef.typeArg;
+//		if(typeArg instanceof Wildcard) { // FIXME what about ExistentialTypeRef, here?
+//			val typeToCheck = getStaticType(G, ctorTypeRef);
+//			if(typeToCheck instanceof TypeVariable) {
+//				val ubs = typeToCheck.declaredUpperBounds;
+//				return !ubs.empty && ubs.forall[ub|isTypeThatHasOnlyClassesAsSubtypes(G, ub.declaredType)];
+//			} else {
+//				return isTypeThatHasOnlyClassesAsSubtypes(G, typeToCheck);
+//			}
+//		} else if((typeArg as TypeRef).declaredType instanceof TypeVariable) {
+//			// case: constructor{T} but not constructor{? extends T} (with T being a type variable)
+//			// -> we don't need to check the declared upper bounds as above, because even if T is bound to some
+//			// interface I, the constructor type constructor{I} will also always be a function (see next case)
+//			return true;
+//		} else {
+//			// case: constructor{C} (with C being a class), constructor{I} (with I being an interface), etc.
+//			// -> true even if I points to an interface, because the object representing interface I has a type of
+//			// constructor{? extends I} which is not assignable to constructor{I}.
+//			// FIXME this might no longer be true if support for @CovariantConstructor is added to interfaces!
+//			return true;
+//		}
+//	}
+//	def private boolean isTypeThatHasOnlyClassesAsSubtypes(RuleEnvironment G, Type type) {
+//		return type instanceof TClass && type!==G.n4ObjectType;
+	}
+
+	/**
+	 * Creates a parameterized type ref to the wrapped static type of a ConstructorTypeRef, configured with the given
+	 * TypeArguments. Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type).
+	 */
+	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, ConstructorTypeRef ctr, TypeArgument ... typeArgs) {
 		 val type = getStaticType(G, ctr);
 		 if( type !== null ) {
 		 	 TypeExtensions.ref(type,typeArgs)
@@ -402,7 +441,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * This method computes the set of all supertypes in the set of TypeRefs.
+	 * This method computes the set of all super types in the set of TypeRefs.
 	 * It does not copy the TypeRefs!
 	 */
 	def List<TypeRef> getSuperTypesOnly(RuleEnvironment G, TypeRef... typeRefs) {

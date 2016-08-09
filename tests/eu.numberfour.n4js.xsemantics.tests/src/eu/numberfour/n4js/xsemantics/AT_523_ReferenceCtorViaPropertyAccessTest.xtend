@@ -19,6 +19,8 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.junit.Assert.*
+
 /*
  */
 @RunWith(XtextRunner)
@@ -39,6 +41,8 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var resultNewInstance: C = new ctor();
 		'''.assertValidationErrors(
 		'''
+			"constructor{? extends C} is not a subtype of constructor{C}." at line:4, column:34
+			"Cannot instantiate ? extends C." at line:5, column:32
 		'''
 		)
 	}
@@ -64,7 +68,7 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var x = C
 			var c: C;
 			var y = c.constructor
-			var z1 = new y()
+			var z1 = new y() // error: "Cannot instantiate ? extends C."
 			var z2 = new C()
 
 
@@ -74,7 +78,7 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			}
 
 			fun(x)
-			fun(y)
+			fun(y) // error: "constructor{? extends C} is not a subtype of constructor{C}."
 
 
 			//The type of z1 and z2 should be C
@@ -83,6 +87,8 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var result2: C = z2;
 		'''.assertValidationErrors(
 		'''
+			"Cannot instantiate ? extends C." at line:5, column:14
+			"constructor{? extends C} is not a subtype of constructor{C}." at line:15, column:5
 		'''
 		)
 	}
@@ -90,6 +96,8 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 	def private assertValidationErrors(CharSequence input, CharSequence expectedErrors) {
 		val script = createScript(JavaScriptVariant.n4js,input.toString)
 		val issues = script.validate();
-		issues.assertErrorMessages(expectedErrors)
+		val issuesStr = issues.map['''"«message»" at line:«lineNumber», column:«column»''']
+			.join(System.getProperty("line.separator"));
+		assertEquals(expectedErrors.toString.trim, issuesStr);
 	}
 }

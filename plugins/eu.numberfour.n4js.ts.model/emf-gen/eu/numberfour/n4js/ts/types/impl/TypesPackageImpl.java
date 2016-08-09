@@ -1361,7 +1361,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getContainerType__FindOwnedMember__String() {
+	public EOperation getContainerType__GetOwnedCtor() {
 		return containerTypeEClass.getEOperations().get(0);
 	}
 
@@ -1370,7 +1370,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getContainerType__FindOwnedMember__String_boolean_boolean() {
+	public EOperation getContainerType__FindOwnedMember__String() {
 		return containerTypeEClass.getEOperations().get(1);
 	}
 
@@ -1379,8 +1379,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getContainerType__GetOrCreateOwnedMembersByNameAndAccess() {
+	public EOperation getContainerType__FindOwnedMember__String_boolean_boolean() {
 		return containerTypeEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getContainerType__GetOrCreateOwnedMembersByNameAndAccess() {
+		return containerTypeEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -1829,7 +1838,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__GetOwnedCtor() {
+	public EOperation getTClass__IsPolyfill() {
 		return tClassEClass.getEOperations().get(4);
 	}
 
@@ -1838,7 +1847,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__IsPolyfill() {
+	public EOperation getTClass__IsStaticPolyfill() {
 		return tClassEClass.getEOperations().get(5);
 	}
 
@@ -1847,17 +1856,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__IsStaticPolyfill() {
-		return tClassEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getTClass__IsFinal() {
-		return tClassEClass.getEOperations().get(7);
+		return tClassEClass.getEOperations().get(6);
 	}
 
 	/**
@@ -2952,6 +2952,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEReference(containerTypeEClass, CONTAINER_TYPE__OWNED_MEMBERS);
 		createEReference(containerTypeEClass, CONTAINER_TYPE__CALLABLE_CTOR);
 		createEReference(containerTypeEClass, CONTAINER_TYPE__TYPE_VARS);
+		createEOperation(containerTypeEClass, CONTAINER_TYPE___GET_OWNED_CTOR);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS);
@@ -3018,7 +3019,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASS);
 		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASSIFIERS);
 		createEOperation(tClassEClass, TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
-		createEOperation(tClassEClass, TCLASS___GET_OWNED_CTOR);
 		createEOperation(tClassEClass, TCLASS___IS_POLYFILL);
 		createEOperation(tClassEClass, TCLASS___IS_STATIC_POLYFILL);
 		createEOperation(tClassEClass, TCLASS___IS_FINAL);
@@ -3420,6 +3420,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getContainerType_CallableCtor(), this.getTMethod(), null, "callableCtor", null, 0, 1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getContainerType_TypeVars(), this.getTypeVariable(), null, "typeVars", null, 0, -1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEOperation(getContainerType__GetOwnedCtor(), this.getTMethod(), "getOwnedCtor", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		op = initEOperation(getContainerType__FindOwnedMember__String(), this.getTMember(), "findOwnedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3515,8 +3517,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTClass__GetSuperClassifiers(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClass__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getTClass__GetOwnedCtor(), this.getTMethod(), "getOwnedCtor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClass__IsPolyfill(), theEcorePackage.getEBoolean(), "isPolyfill", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

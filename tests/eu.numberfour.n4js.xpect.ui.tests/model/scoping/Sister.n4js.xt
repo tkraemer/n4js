@@ -41,11 +41,11 @@ var sister : Sister = new Sister();
 var brother : Brother = new Brother();
 var child : Child = new Child();
 /* XPECT scope at getSister ---
-constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 /* XPECT scope at getBrother ---
-constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 brother = brother.getSister().getBrother();
@@ -53,11 +53,11 @@ sister = brother.getSister();
 child = sister.getChild();
 var childAge  = child.age;
 /* XPECT scope at getBrother ---
-constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 /* XPECT scope at getChild ---
-constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 var brotherChildAge = sister.getBrother().getChild().age;

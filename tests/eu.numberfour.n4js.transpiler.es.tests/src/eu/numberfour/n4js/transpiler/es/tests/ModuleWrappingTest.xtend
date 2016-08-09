@@ -476,7 +476,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 			                           C1 = $_import_test_ExportedStuff.C1;
 			                         }                                                      ],
 			             execute  : function (){
-			                          $makeClass(A, Object, [], {
+			                          $makeClass(A, N4Object, [], {
 			                                                  method1  : {
 			                                                               value  : function method1___n4(){
 
@@ -570,7 +570,7 @@ class ModuleWrappingTest extends AbstractTranspilerTest {
 			                           C1 = $_import_test_ExportedStuff.C1;
 			                         }                                                      ],
 			             execute  : function (){
-			                          $makeClass(A, Object, [], {
+			                          $makeClass(A, N4Object, [], {
 			                                                  method1  : {
 			                                                               value  : function method1___n4(){
 			                                                                            console.log("do it in method1");

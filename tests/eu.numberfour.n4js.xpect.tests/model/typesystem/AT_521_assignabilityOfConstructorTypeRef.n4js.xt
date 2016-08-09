@@ -29,10 +29,7 @@ b		// invalid, as constructor{B} !extends constructor{A}
 
 
 var fun1 = function(typeA : type{A}) {
-	/* XPECT errors ---
-		"Incorrect number of arguments: expected 1, got 0." at "new typeA()"
-		"Not a reference to a constructor: type{A}." at "typeA"
-	--- */
+	// XPECT errors --> "Cannot instantiate A." at "typeA"
 	return new typeA();	// invalid, as only constructor type ref is allowed in new expression
 }
 

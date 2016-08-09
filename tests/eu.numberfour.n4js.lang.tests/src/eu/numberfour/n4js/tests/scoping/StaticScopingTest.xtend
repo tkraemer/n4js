@@ -19,7 +19,6 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.members.MemberScope
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TMember
@@ -116,8 +115,8 @@ class StaticScopingTest {
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
 		val G = script.newRuleEnvironment
 		val thisType1 = ts.upperBound(G, ts.type(G, thisInMethod1).value).value
-		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ClassifierTypeRef)
-		val classifierTypeRef1 = thisType1 as ClassifierTypeRef
+		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ConstructorTypeRef)
+		val classifierTypeRef1 = thisType1 as ConstructorTypeRef
 		val typeName1 = tsh.getStaticType(G, classifierTypeRef1).name
 		Assert.assertEquals("A", typeName1)
 
@@ -136,7 +135,7 @@ class StaticScopingTest {
 			var x = C
 			var c: C;
 			var y = c.constructor
-			var z1 = new y()
+			//var z1 = new y() // would raise error: "Cannot instantiate constructor{? extends C}."
 			var z2 = new C()
 		'''.parse
 

@@ -39,7 +39,6 @@ import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -74,6 +73,9 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
+import eu.numberfour.n4js.ts.types.TN4Classifier
+import eu.numberfour.n4js.ts.types.TObjectPrototype
 
 /**
  * Intended for small, static utility methods that
@@ -240,6 +242,22 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * Tells if a value of the given type can be instantiated, i.e. whether
+	 * <pre>
+	 * new value();
+	 * </pre>
+	 * is legal, given a variable {@code value} of type {@code ctorTypeRef}.
+	 */
+	def public static boolean isInstantiable(ConstructorTypeRef ctorTypeRef) {
+		val typeArg = ctorTypeRef.typeArg;
+		if(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef) {
+			return false;
+		}
+		val pseudoStaticType = (typeArg as TypeRef).declaredType;
+		return pseudoStaticType instanceof TN4Classifier || pseudoStaticType instanceof TObjectPrototype;
+	}
+
+	/**
 	 * Returns the variance of the given type reference's position within its containing classifier declaration or
 	 * <code>null</code> if
 	 * <ol>
@@ -340,10 +358,12 @@ class N4JSLanguageUtils {
 					ComposedTypeRef case parent.typeRefs.contains(curr): 
 						Variance.CO
 					ConstructorTypeRef case parent.typeArg===curr:
-						Variance.INV // constructor{T}
-					ClassifierTypeRef case parent.typeArg===curr:
-						Variance.CO // type{T}
-					ClassifierTypeRef case parent.typeArg instanceof Wildcard: {
+						if (parent.isConstructorRef) {
+							Variance.INV // constructor{T}
+						} else {
+							Variance.CO // type{T}
+						}
+					ConstructorTypeRef case parent.typeArg instanceof Wildcard: {
 						val wc = parent.typeArg as Wildcard;
 						if(wc.declaredUpperBound===curr) {
 							Variance.CO // type{? extends T} OR constructor{? extends T}

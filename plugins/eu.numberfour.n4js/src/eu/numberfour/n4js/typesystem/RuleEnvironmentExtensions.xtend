@@ -20,7 +20,6 @@ import eu.numberfour.n4js.scoping.builtin.GlobalObjectScope
 import eu.numberfour.n4js.scoping.builtin.VirtualBaseTypeScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
@@ -61,6 +60,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 
 /**
  * Extensions of class RuleEnvironment for handling substitutions and
@@ -197,10 +197,10 @@ class RuleEnvironmentExtensions {
 	 */
 	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
 		switch (actualThisTypeRef) {
-			ClassifierTypeRef: // IDE-785 decompose
-			  if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
-			  	addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
-			  } 
+			ConstructorTypeRef: // IDE-785 decompose
+				if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
+					addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
+				}
 			ParameterizedTypeRef:
 				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 			BoundThisTypeRef:
@@ -541,6 +541,11 @@ class RuleEnvironmentExtensions {
 	/* Returns built-in type {@code N4Enum} */
 	public def static n4EnumType(RuleEnvironment G) {
 		G.getPredefinedTypes().builtInTypeScope.n4EnumType
+	}
+
+	/* 	Returns newly created reference to built-in type {@code N4Enum} */
+	public def static n4EnumTypeRef(RuleEnvironment G) {
+		G.n4EnumType.createTypeRef
 	}
 
 	/* Returns built-in type {@code N4StringBasedEnum} */

@@ -2146,13 +2146,13 @@ public interface TypesPackage extends EPackage {
 	int CONTAINER_TYPE___GET_TYPE_AS_STRING = TYPE___GET_TYPE_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Find Owned Member</em>' operation.
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING = TYPE_OPERATION_COUNT + 0;
+	int CONTAINER_TYPE___GET_OWNED_CTOR = TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -2161,7 +2161,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN = TYPE_OPERATION_COUNT + 1;
+	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING = TYPE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Find Owned Member</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN = TYPE_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Or Create Owned Members By Name And Access</em>' operation.
@@ -2170,7 +2179,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TYPE_OPERATION_COUNT + 2;
+	int CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Container Type</em>' class.
@@ -2179,7 +2188,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 3;
+	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.VirtualBaseTypeImpl <em>Virtual Base Type</em>}' class.
@@ -2406,6 +2415,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIRTUAL_BASE_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -2894,6 +2912,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIMITIVE_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -4108,6 +4135,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCTURAL_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCTURAL_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4368,6 +4404,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASSIFIER___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -5057,6 +5102,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER___GET_TYPE_AS_STRING = TCLASSIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_OWNED_CTOR = TCLASSIFIER___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5454,6 +5508,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_TYPE_AS_STRING = TN4_CLASSIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5544,22 +5607,13 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER_OPERATION_COUNT + 4;
-
-	/**
 	 * The operation id for the '<em>Is Polyfill</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 5;
+	int TCLASS___IS_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Static Polyfill</em>' operation.
@@ -5568,7 +5622,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_STATIC_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 6;
+	int TCLASS___IS_STATIC_POLYFILL = TN4_CLASSIFIER_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -5577,7 +5631,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___IS_FINAL = TN4_CLASSIFIER_OPERATION_COUNT + 7;
+	int TCLASS___IS_FINAL = TN4_CLASSIFIER_OPERATION_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>TClass</em>' class.
@@ -5586,7 +5640,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS_OPERATION_COUNT = TN4_CLASSIFIER_OPERATION_COUNT + 8;
+	int TCLASS_OPERATION_COUNT = TN4_CLASSIFIER_OPERATION_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TInterfaceImpl <em>TInterface</em>}' class.
@@ -5831,6 +5885,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE___GET_TYPE_AS_STRING = TN4_CLASSIFIER___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_OWNED_CTOR = TN4_CLASSIFIER___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -11501,6 +11564,16 @@ public interface TypesPackage extends EPackage {
 	EReference getContainerType_TypeVars();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#getOwnedCtor() <em>Get Owned Ctor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Owned Ctor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.ContainerType#getOwnedCtor()
+	 * @generated
+	 */
+	EOperation getContainerType__GetOwnedCtor();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#findOwnedMember(java.lang.String) <em>Find Owned Member</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12039,16 +12112,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTClass__GetImplementedOrExtendedInterfaceRefs();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getOwnedCtor() <em>Get Owned Ctor</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Owned Ctor</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TClass#getOwnedCtor()
-	 * @generated
-	 */
-	EOperation getTClass__GetOwnedCtor();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#isPolyfill() <em>Is Polyfill</em>}' operation.
@@ -13918,6 +13981,14 @@ public interface TypesPackage extends EPackage {
 		EReference CONTAINER_TYPE__TYPE_VARS = eINSTANCE.getContainerType_TypeVars();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Owned Ctor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTAINER_TYPE___GET_OWNED_CTOR = eINSTANCE.getContainerType__GetOwnedCtor();
+
+		/**
 		 * The meta object literal for the '<em><b>Find Owned Member</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14360,14 +14431,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = eINSTANCE.getTClass__GetImplementedOrExtendedInterfaceRefs();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Owned Ctor</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TCLASS___GET_OWNED_CTOR = eINSTANCE.getTClass__GetOwnedCtor();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Polyfill</b></em>' operation.

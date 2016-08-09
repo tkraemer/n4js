@@ -341,15 +341,6 @@ public interface TClass extends TN4Classifier {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TMember%>> _ownedMembers = this.getOwnedMembers();\n<%java.lang.Iterable%><<%eu.numberfour.n4js.ts.types.TMethod%>> _filter = <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>filter(_ownedMembers, <%eu.numberfour.n4js.ts.types.TMethod%>.class);\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.types.TMethod%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.isConstructor());\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>findFirst(_filter, _function);'"
-	 * @generated
-	 */
-	TMethod getOwnedCtor();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
 	 * Returns true if the class actually is a polyfill or a static-polyfill. (c.f. {@link TClass#isStaticPolyfill()})

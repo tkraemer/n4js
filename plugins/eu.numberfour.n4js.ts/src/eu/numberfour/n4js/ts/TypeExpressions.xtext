@@ -59,7 +59,6 @@ TypeRefWithModifiers returns StaticBaseTypeRef:
 TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
 	| ConstructorTypeRef
-	| ClassifierTypeRef
 	| FunctionTypeExpressionOLD
 	| UnionTypeExpressionOLD
 	| IntersectionTypeExpressionOLD;
@@ -68,7 +67,6 @@ TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
 	| ArrayTypeRef
 	| ConstructorTypeRef
-	| ClassifierTypeRef
 	| UnionTypeExpressionOLD
 	| IntersectionTypeExpressionOLD
 	;
@@ -78,13 +76,12 @@ TypeRefForCast returns StaticBaseTypeRef:
 	| ArrayTypeRef
 	| ThisTypeRef
 	| ConstructorTypeRef
-	| ClassifierTypeRef
 	| FunctionTypeExpressionOLD
 	| ArrowFunctionTypeExpression
 	| UnionTypeExpressionOLD
 	| IntersectionTypeExpressionOLD;
 
-TypeRefInClassifierType returns TypeArgument:
+TypeArgInConstructorTypeRef returns TypeArgument:
 	  ParameterizedTypeRefNominal
 	| ThisTypeRefNominal
 	| Wildcard;
@@ -208,10 +205,9 @@ terminal STRUCTMODSUFFIX:
 ;
 
 ConstructorTypeRef returns ConstructorTypeRef:
-	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
-
-ClassifierTypeRef returns ClassifierTypeRef:
-	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
+	{ConstructorTypeRef}
+	('type' | constructorRef?='constructor')
+	'{' typeArg=TypeArgInConstructorTypeRef '}';
 
 TypeReferenceName:
 	IDENTIFIER ('.' IDENTIFIER)*;

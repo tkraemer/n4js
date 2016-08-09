@@ -21,7 +21,6 @@ import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -394,7 +393,7 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		assertEquals('x', param.name)
 		assertTrue(param.declaredTypeRef instanceof FunctionTypeExpression)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
-		assertTrue(paramType.returnTypeRef instanceof ClassifierTypeRef)
+		assertTrue(paramType.returnTypeRef instanceof ConstructorTypeRef)
 		// returnType.getTypeArg is now interpreted as wildcard, but check other AST elements:
 	}
 

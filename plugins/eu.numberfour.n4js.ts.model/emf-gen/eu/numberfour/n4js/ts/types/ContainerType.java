@@ -121,6 +121,19 @@ public interface ContainerType<MT extends TMember> extends Type {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 * *
+	 * Convenience method returning the owned constructor or <code>null</code> if not available.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><MT> _ownedMembers = this.getOwnedMembers();\n<%java.lang.Iterable%><<%eu.numberfour.n4js.ts.types.TMethod%>> _filter = <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>filter(_ownedMembers, <%eu.numberfour.n4js.ts.types.TMethod%>.class);\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.types.TMethod%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.isConstructor());\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>findFirst(_filter, _function);'"
+	 * @generated
+	 */
+	TMethod getOwnedCtor();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
 	 * Convenience method, similar to {code findMember(name, false)}.
 	 * That is, this method returns fields, methods, and getters rather then setters.
 	 * <!-- end-model-doc -->

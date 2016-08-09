@@ -98,7 +98,7 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			"OutlineTest",
 			"a(union{int, string}) : void",
 			"b(int, intersection{I1, I2}, number) <B> : void",
-			"c(type{I1}) : void",
+			"c(constructor{? extends I1}) : void",
 			"d(constructor{I1}) : void",
 			"e((union{int, string}) => int) : void",
 			"f((union{int, string, intersection{...},...}) => union{int, string, intersection{...},...}) : union{int, string, intersection{...},...}",
@@ -115,7 +115,7 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			"fieldWithLongTypeDescription : union{int, intersection{int, union{...}}}",
 			"a(union{int, string}) : void",
 			"b(intersection{I1, I2}) : void",
-			"c(type{I1}) : void",
+			"c(constructor{? extends I1}) : void",
 			"d(constructor{I1}) : void",
 			"e((union{int, string}) => int) : void",
 			"f((intersection{I1, I2}) => int) : void"

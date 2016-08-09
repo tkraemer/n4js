@@ -22,7 +22,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
@@ -349,8 +348,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduceComposedTypeRef(left, (ComposedTypeRef) right, variance);
 		}
 
-		if (left instanceof ClassifierTypeRef && right instanceof ClassifierTypeRef) {
-			return reduceClassifierTypeRef((ClassifierTypeRef) left, (ClassifierTypeRef) right, variance);
+		if (left instanceof ConstructorTypeRef && right instanceof ConstructorTypeRef) {
+			return reduceConstructorTypeRef((ConstructorTypeRef) left, (ConstructorTypeRef) right, variance);
 		} else if (left instanceof FunctionTypeExprOrRef && right instanceof FunctionTypeExprOrRef) {
 			return reduceFunctionTypeExprOrRef((FunctionTypeExprOrRef) left, (FunctionTypeExprOrRef) right, variance);
 		} else if (left instanceof ParameterizedTypeRef && right instanceof ParameterizedTypeRef) {
@@ -458,10 +457,10 @@ import it.xsemantics.runtime.RuleEnvironment;
 		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
-	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
+	private boolean reduceConstructorTypeRef(ConstructorTypeRef left, ConstructorTypeRef right, Variance variance) {
 		final TypeArgument leftStatic = TypeUtils.copy(left.getTypeArg());
 		final TypeArgument rightStatic = TypeUtils.copy(right.getTypeArg());
-		if (!(left instanceof ConstructorTypeRef) && !(right instanceof ConstructorTypeRef)) {
+		if (!left.isConstructorRef() && !right.isConstructorRef()) {
 			// both sides are plain ClassifierTypeRefs
 			return reduce(leftStatic, rightStatic, variance);
 		} else {

@@ -164,7 +164,7 @@ class BlockTransformationTest extends AbstractTranspilerTest {
 					setters: [],
 					execute: function() {
 
-						$makeClass(System2, Object, [], {}, {
+						$makeClass(System2, N4Object, [], {}, {
 							normalize: {
 								value: function normalize___n4(p) {
 									return $spawn(function*() {

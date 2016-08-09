@@ -28,8 +28,8 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.ThrowStatement
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -702,7 +702,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		!(typeRef instanceof FunctionTypeExpression)
 			&& !(typeRef instanceof ThisTypeRef)
 			&& !(typeRef instanceof ComposedTypeRef)
-			&& !(typeRef instanceof ClassifierTypeRef)
+			&& !(typeRef instanceof ConstructorTypeRef)
 			&& typeRef.declaredType === null
 	}
 

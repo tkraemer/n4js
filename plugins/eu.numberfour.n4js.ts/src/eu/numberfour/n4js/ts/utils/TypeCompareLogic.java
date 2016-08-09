@@ -17,8 +17,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
@@ -236,9 +236,9 @@ import eu.numberfour.n4js.ts.types.Type;
 			if (c != 0) {
 				return c;
 			}
-		} else if (ref1 instanceof ClassifierTypeRef) {
-			final ClassifierTypeRef cref1 = (ClassifierTypeRef) ref1;
-			final ClassifierTypeRef cref2 = (ClassifierTypeRef) ref2;
+		} else if (ref1 instanceof ConstructorTypeRef) {
+			final ConstructorTypeRef cref1 = (ConstructorTypeRef) ref1;
+			final ConstructorTypeRef cref2 = (ConstructorTypeRef) ref2;
 			c = compare(fqnProvider, cref1.getTypeArg(), cref2.getTypeArg());
 			if (c != 0) {
 				return c;

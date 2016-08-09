@@ -13,8 +13,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
-import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
@@ -38,10 +36,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -551,22 +545,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TMethod getOwnedCtor() {
-		EList<TMember> _ownedMembers = this.getOwnedMembers();
-		Iterable<TMethod> _filter = Iterables.<TMethod>filter(_ownedMembers, TMethod.class);
-		final Function1<TMethod, Boolean> _function = new Function1<TMethod, Boolean>() {
-			public Boolean apply(final TMethod it) {
-				return Boolean.valueOf(it.isConstructor());
-			}
-		};
-		return IterableExtensions.<TMethod>findFirst(_filter, _function);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isPolyfill() {
 		return this.isDeclaredPolyfill();
 	}
@@ -798,8 +776,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 				return getSuperClassifiers();
 			case TypesPackage.TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
-			case TypesPackage.TCLASS___GET_OWNED_CTOR:
-				return getOwnedCtor();
 			case TypesPackage.TCLASS___IS_POLYFILL:
 				return isPolyfill();
 			case TypesPackage.TCLASS___IS_STATIC_POLYFILL:

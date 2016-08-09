@@ -1,6 +1,8 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
 class S {
-	// XPECT errors -->"type{this[S]} is not a subtype of this[S]." at "this"
+	// XPECT errors -->"constructor{this[S]} is not a subtype of this[S]." at "this"
 	static f0() : this { return this; }
 	
 	// should be ok, returned type actually is type{S}
@@ -9,7 +11,7 @@ class S {
 	static f2() : type{S} { return this; }
 	
 	static f3() : constructor{S} { 
-		// XPECT errors --> "type{this[S]} is not a subtype of constructor{S}." at "this"
+		// XPECT errors --> "constructor{this[S]} is not a subtype of constructor{S}." at "this"
 		return this;
 	}
 	
@@ -21,3 +23,4 @@ class T extends S {
 	// would cause a problem in T.f3()!
 }
 new (T.f3()); // must not work
+

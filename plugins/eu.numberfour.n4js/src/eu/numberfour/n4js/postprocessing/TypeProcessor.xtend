@@ -22,15 +22,18 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
 import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptionWithoutStacktrace
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -40,7 +43,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -129,7 +131,7 @@ public class TypeProcessor extends AbstractProcessor {
 	/**
 	 * This is the single, central method for obtaining the type of a typable element (AST node or TModule element).
 	 * <b>It should never be invoked directly by client code!</b> Instead, client code should always call
-	 * {@link eu.numberfour.n4js.typesystem.N4JSTypeSystem#type(RuleEnvironment,TypableElement) N4JSTypeSystem#type()}.
+	 * {@link N4JSTypeSystem#type(RuleEnvironment,TypableElement) N4JSTypeSystem#type()}.
 	 * <p>
 	 * The behavior of this method depends on the state the containing {@link N4JSResource} is in:
 	 * <ul>
@@ -142,7 +144,7 @@ public class TypeProcessor extends AbstractProcessor {
 	 *     <li>in case of a forward reference:<br>
 	 *         -> trigger forward-processing of the identifiable subtree below the given typable element, see
 	 *         {@link #getTypeOfForwardReference(RuleEnvironment,TypableElement,ASTMetaInfoCache) #getTypeOfForwardReference()},
-	 *         which delegates to {@link eu.numberfour.n4js.postprocessing.ASTProcessor#processSubtree_forwardReference(
+	 *         which delegates to {@link ASTProcessor#processSubtree_forwardReference(
 	 *         RuleEnvironment,TypableElement,ASTMetaInfoCache) ASTProcessor#processSubtree_forwardReference()}.
 	 *     </ul>
 	 * <li>after post-processing has completed:<br>
@@ -152,8 +154,8 @@ public class TypeProcessor extends AbstractProcessor {
 	 * <p>
 	 * Two methods delegate here (no one else should call this method):
 	 * <ol>
-	 * <li>{@link eu.numberfour.n4js.typesystem.N4JSTypeSystem#type(RuleEnvironment,TypableElement)}
-	 * <li>{@link eu.numberfour.n4js.typesystem.CustomInternalTypeSystem#typeInternal(RuleEnvironment,
+	 * <li>{@link N4JSTypeSystem#type(RuleEnvironment,TypableElement)}
+	 * <li>{@link CustomInternalTypeSystem#typeInternal(RuleEnvironment,
 	 *     RuleApplicationTrace,TypableElement)}
 	 * </ol>
 	 */
@@ -239,7 +241,7 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
-	/** @see eu.numberfour.n4js.postprocessing.TypeProcessor#getType(RuleEnvironment,RuleApplicationTrace,TypableElement) */
+	/** @see TypeProcessor#getType(RuleEnvironment,RuleApplicationTrace,TypableElement) */
 	def private Result<TypeRef> getTypeOfForwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
 		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
 
@@ -266,7 +268,7 @@ public class TypeProcessor extends AbstractProcessor {
 						val callee = expr.callee;
 						if (callee instanceof N4ClassExpression) {
 							val calleeType = askXsemanticsForType(G, null, callee).value;
-							val calleeTypeStaticType = tsh.getStaticType(G, calleeType as ClassifierTypeRef);
+							val calleeTypeStaticType = tsh.getStaticType(G, calleeType as ConstructorTypeRef);
 							return new Result(TypeUtils.createTypeRef(calleeTypeStaticType));
 						}
 					}

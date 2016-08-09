@@ -2891,7 +2891,6 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
 	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
-	//	| ClassifierTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
@@ -2907,7 +2906,6 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	ParameterizedTypeRef
 	//	| ArrayTypeRef
 	//	| ConstructorTypeRef
-	//	| ClassifierTypeRef
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
@@ -2923,7 +2921,6 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ArrayTypeRef
 	//	| ThisTypeRef
 	//	| ConstructorTypeRef
-	//	| ClassifierTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
 	//	| UnionTypeExpressionOLD
@@ -2936,16 +2933,16 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeRefForCastAccess().getRule();
 	}
 
-	//TypeRefInClassifierType TypeArgument:
+	//TypeArgInConstructorTypeRef TypeArgument:
 	//	ParameterizedTypeRefNominal
 	//	| ThisTypeRefNominal
 	//	| Wildcard
-	public TypeExpressionsGrammarAccess.TypeRefInClassifierTypeElements getTypeRefInClassifierTypeAccess() {
-		return gaTypeExpressions.getTypeRefInClassifierTypeAccess();
+	public TypeExpressionsGrammarAccess.TypeArgInConstructorTypeRefElements getTypeArgInConstructorTypeRefAccess() {
+		return gaTypeExpressions.getTypeArgInConstructorTypeRefAccess();
 	}
 	
-	public ParserRule getTypeRefInClassifierTypeRule() {
-		return getTypeRefInClassifierTypeAccess().getRule();
+	public ParserRule getTypeArgInConstructorTypeRefRule() {
+		return getTypeArgInConstructorTypeRefAccess().getRule();
 	}
 
 	//ThisTypeRef:
@@ -3203,23 +3200,14 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} 'constructor' '{' typeArg=TypeRefInClassifierType '}';
+	//	{ConstructorTypeRef} ('type' | constructorRef?='constructor')
+	//	'{' typeArg=TypeArgInConstructorTypeRef '}';
 	public TypeExpressionsGrammarAccess.ConstructorTypeRefElements getConstructorTypeRefAccess() {
 		return gaTypeExpressions.getConstructorTypeRefAccess();
 	}
 	
 	public ParserRule getConstructorTypeRefRule() {
 		return getConstructorTypeRefAccess().getRule();
-	}
-
-	//ClassifierTypeRef:
-	//	{ClassifierTypeRef} 'type' '{' typeArg=TypeRefInClassifierType '}';
-	public TypeExpressionsGrammarAccess.ClassifierTypeRefElements getClassifierTypeRefAccess() {
-		return gaTypeExpressions.getClassifierTypeRefAccess();
-	}
-	
-	public ParserRule getClassifierTypeRefRule() {
-		return getClassifierTypeRefAccess().getRule();
 	}
 
 	//TypeArgument:

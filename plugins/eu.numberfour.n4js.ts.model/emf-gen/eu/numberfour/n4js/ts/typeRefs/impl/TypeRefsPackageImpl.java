@@ -9,7 +9,6 @@ package eu.numberfour.n4js.ts.typeRefs.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef;
@@ -169,13 +168,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * @generated
 	 */
 	private EClass constructorTypeRefEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass classifierTypeRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1193,35 +1185,26 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getConstructorTypeRef_TypeArg() {
+		return (EReference)constructorTypeRefEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConstructorTypeRef_ConstructorRef() {
+		return (EAttribute)constructorTypeRefEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getConstructorTypeRef__GetTypeRefAsString() {
 		return constructorTypeRefEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getClassifierTypeRef() {
-		return classifierTypeRefEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getClassifierTypeRef_TypeArg() {
-		return (EReference)classifierTypeRefEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getClassifierTypeRef__GetTypeRefAsString() {
-		return classifierTypeRefEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1797,11 +1780,9 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(unknownTypeRefEClass, UNKNOWN_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		constructorTypeRefEClass = createEClass(CONSTRUCTOR_TYPE_REF);
+		createEReference(constructorTypeRefEClass, CONSTRUCTOR_TYPE_REF__TYPE_ARG);
+		createEAttribute(constructorTypeRefEClass, CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF);
 		createEOperation(constructorTypeRefEClass, CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING);
-
-		classifierTypeRefEClass = createEClass(CLASSIFIER_TYPE_REF);
-		createEReference(classifierTypeRefEClass, CLASSIFIER_TYPE_REF__TYPE_ARG);
-		createEOperation(classifierTypeRefEClass, CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
 		enumTypeRefEClass = createEClass(ENUM_TYPE_REF);
 		createEReference(enumTypeRefEClass, ENUM_TYPE_REF__ENUM_TYPE);
@@ -1911,8 +1892,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		parameterizedTypeRefStructuralEClass.getESuperTypes().add(this.getStructuralTypeRef());
 		existentialTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 		unknownTypeRefEClass.getESuperTypes().add(this.getTypeRef());
-		constructorTypeRefEClass.getESuperTypes().add(this.getClassifierTypeRef());
-		classifierTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
+		constructorTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
 		enumTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
 		wildcardEClass.getESuperTypes().add(this.getTypeArgument());
 		functionTypeExprOrRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
@@ -2103,13 +2083,10 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getUnknownTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(constructorTypeRefEClass, ConstructorTypeRef.class, "ConstructorTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConstructorTypeRef_TypeArg(), this.getTypeArgument(), null, "typeArg", null, 0, 1, ConstructorTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConstructorTypeRef_ConstructorRef(), theEcorePackage.getEBoolean(), "constructorRef", null, 0, 1, ConstructorTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getConstructorTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEClass(classifierTypeRefEClass, ClassifierTypeRef.class, "ClassifierTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getClassifierTypeRef_TypeArg(), this.getTypeArgument(), null, "typeArg", null, 0, 1, ClassifierTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEOperation(getClassifierTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(enumTypeRefEClass, EnumTypeRef.class, "EnumTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEnumTypeRef_EnumType(), theTypesPackage.getTEnum(), null, "enumType", null, 0, 1, EnumTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

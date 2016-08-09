@@ -648,6 +648,13 @@ abstract class ContainerType<MT extends TMember> extends Type {
 	 */
 	contains TypeVariable[] typeVars
 
+	/**
+	 * Convenience method returning the owned constructor or <code>null</code> if not available.
+	 */
+	op TMethod getOwnedCtor() {
+		return ownedMembers.filter(TMethod).findFirst[isConstructor]
+	}
+
 	/*
 	 * Convenience method, similar to {code findMember(name, false)}.
 	 * That is, this method returns fields, methods, and getters rather then setters.
@@ -914,10 +921,6 @@ class TClass extends TN4Classifier {
 	 */
 	op ParameterizedTypeRefIterable getImplementedOrExtendedInterfaceRefs() {
 		return implementedInterfaceRefs;
-	}
-
-	op TMethod getOwnedCtor() {
-		return ownedMembers.filter(TMethod).findFirst[isConstructor]
 	}
 
 	/**

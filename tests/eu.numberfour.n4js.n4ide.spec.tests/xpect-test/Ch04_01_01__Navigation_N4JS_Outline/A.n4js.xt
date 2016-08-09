@@ -99,7 +99,7 @@ export public class C5 {
 
 /* XPECT errors ---
 "A constructor must not be declared abstract, static or final and may not be annotated with @Override." at "constructor"
-"The abstract method constructor in class C5 can only be defined in an abstract class." at "constructor"
+"The abstract constructor constructor in class C5 can only be defined in an abstract class." at "constructor"
 --- */
 	abstract constructor(x : number)
 

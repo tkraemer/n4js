@@ -29,7 +29,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.SuperLiteral;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef;
@@ -203,9 +203,9 @@ public class MemberVisibilityChecker {
 	 * computed.
 	 */
 	private Type getActualDeclaredReceiverType(EObject context, TypeRef receiverType, ResourceSet resourceSet) {
-		if (receiverType instanceof ClassifierTypeRef) {
+		if (receiverType instanceof ConstructorTypeRef) {
 			final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(context);
-			return tsh.getStaticType(G, (ClassifierTypeRef) receiverType);
+			return tsh.getStaticType(G, (ConstructorTypeRef) receiverType);
 		}
 		if (receiverType instanceof EnumTypeRef) {
 			return ((EnumTypeRef) receiverType).getEnumType();

@@ -338,14 +338,22 @@ public /* @Final */ class N4Annotation extends Object {
 /**
  * The base class for all instances of n4 classes.
  */
-public class N4Object extends Object { 
+public class N4Object extends Object {
+
+	/**
+	 * Default constructor for N4JS classes.
+	 */
+	// This constructor is only defined here to avoid having the one from Object (which has a parameter) be inherited
+	// by all N4JS classes that do not define a custom constructor.
+	public constructor(): void
+
 	/**
 	 * Returns the meta class object of this class for reflection.
 	 * The very same meta class object can be retrieved from an instance by calling
 	 * <code>instance.constructor.n4type</code> or, preferred, via
 	 * <code>N4Class.of(instance)</code>
 	 */
-	public static get n4type(): N4Class 
+	public static get n4type(): N4Class
 }
 
 

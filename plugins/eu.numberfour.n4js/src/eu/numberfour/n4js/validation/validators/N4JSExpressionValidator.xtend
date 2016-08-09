@@ -57,7 +57,6 @@ import eu.numberfour.n4js.scoping.members.TypingStrategyAwareMemberScope
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
@@ -128,6 +127,8 @@ import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 
 /**
  */
@@ -340,7 +341,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private boolean isClassifierTypeRefToAbstractClass(RuleEnvironment G, TypeRef typeRef) {
-		if (typeRef instanceof ClassifierTypeRef) {
+		if (typeRef instanceof ConstructorTypeRef) {
 			val staticType = tsh.getStaticType(G, typeRef);
 			if (staticType instanceof TClass) {
 				return staticType.isAbstract;
@@ -490,9 +491,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
-			
+
 		// use classifier type ref in order to improve error messages	
-		if (! (typeRef instanceof ClassifierTypeRef)) {
+		if (! (typeRef instanceof ConstructorTypeRef)) {
 			if (typeRef instanceof EnumTypeRef) {
 				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("enum", typeRef.enumType?.name);
 				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
@@ -502,55 +503,48 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			issueNotACtor(typeRef, newExpression);
 			return;
 		}
-		val G = newExpression.newRuleEnvironment;
-		val ClassifierTypeRef classifierTypeRef = typeRef as ClassifierTypeRef;
-		val staticType = tsh.getStaticType(G, classifierTypeRef);
 
+		val G = newExpression.newRuleEnvironment;
+		val ConstructorTypeRef classifierTypeRef = typeRef as ConstructorTypeRef;
+		val typeArg = classifierTypeRef.typeArg;
+		val staticType = tsh.getStaticType(G, classifierTypeRef);
 		if (staticType !== null && staticType.eIsProxy) {
 			return;
 		}
 
-		if (staticType === null || staticType instanceof TypeVariable) {
-			val name = if (classifierTypeRef.typeArg !== null) {
-					classifierTypeRef.typeArg.typeRefAsString;
-				} else {
-					"undefined type";
-				}
-			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_OR_TYPEVAR(name);
-			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
-				IssueCodes.EXP_NEW_WILDCARD_OR_TYPEVAR);
-			return;
-		}
+		// FIXME clean up, improve messages
 
+		val isCtor = classifierTypeRef.isConstructorRef;
+		val isConcrete = !(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef);
 		if (staticType === G.symbolObjectType) {
 			// error case #1: new Symbol()
 			val message = IssueCodes.messageForBIT_SYMBOL_NOT_A_CTOR;
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.BIT_SYMBOL_NOT_A_CTOR);
 			return;
-		}
-		
-		if (! (classifierTypeRef instanceof ConstructorTypeRef) && staticType instanceof TN4Classifier) {
-			if (staticType instanceof TInterface) {
-				// error case #2: trying to instantiate an interface
-				val message = IssueCodes.
-					getMessageForEXP_NEW_CANNOT_INSTANTIATE(staticType.keyword, staticType.name);
-				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
-					IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
-				return;
+		} else if ((!isCtor || !isConcrete) && staticType instanceof TInterface) {
+			// error case #2: trying to instantiate an interface
+			val message = IssueCodes.
+				getMessageForEXP_NEW_CANNOT_INSTANTIATE(staticType.keyword, staticType.name);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
+			return;
 
-			} else if (staticType instanceof TClass && (staticType as TClass).abstract) { // check for abstract is unnecessary, just to be sure
-				// error case #3: trying to instantiate an abstract class
-				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("abstract class", staticType.name);
-				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
-					IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
-				return;
-			}
-		}
-		
-		// all other cases with generic error message:
-		if (! (typeRef instanceof ConstructorTypeRef)) {
-			issueNotACtor(typeRef, newExpression);
+		} else if ((!isCtor || !isConcrete) && staticType instanceof TClass && (staticType as TClass).abstract) {
+			// error case #3: trying to instantiate an abstract class
+			val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("abstract class", staticType.name);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
+			return;
+		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcrete) {
+			val name = if (classifierTypeRef.typeArg !== null) {
+					classifierTypeRef.typeArg.typeRefAsString
+				} else {
+					"undefined type"
+				};
+			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_OR_TYPEVAR(name);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_WILDCARD_OR_TYPEVAR);
 			return;
 		}
 
@@ -559,7 +553,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckCtorVisibility(newExpression, ctorTypeRef, staticType)
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
-
+		internalCheckNewParameters(newExpression, staticType as TClassifier);
 	}
 
 	/** Helper to issue the error case of having a new-expression on a non-constructor element */
@@ -613,7 +607,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkRelationalExpression(RelationalExpression relationalExpression) {
 		if (relationalExpression.rhs !== null && relationalExpression.op === RelationalOperator.INSTANCEOF) {
 			val typeRef = ts.tau(relationalExpression.rhs)
-			if (typeRef instanceof ClassifierTypeRef) {
+			if (typeRef instanceof ConstructorTypeRef) {
 				val G = relationalExpression.newRuleEnvironment;
 				val staticType = tsh.getStaticType(G, typeRef);
 				if (staticType instanceof TN4Classifier) {
@@ -758,32 +752,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	@Check
-	def checkNewParameters(NewExpression newExpression) {
-		if (JavaScriptVariant.getVariant(newExpression).isECMAScript()) {
-			return; // cf. 13.1
-		}
-
-		// wrong parsed
-		if (newExpression.callee === null) {
-			return
-		}
-
-		val typeRef = ts.tau(newExpression.callee);
-		val staticType = if (typeRef instanceof ClassifierTypeRef) {
-			val G = newExpression.newRuleEnvironment;
-			tsh.getStaticType(G, typeRef)
-		} else {
-			null
-		};
-
-		if (staticType instanceof TClass) {
-			val maybeConstructor = containerTypesHelper.fromContext(newExpression).findConstructor(staticType);
-			if (maybeConstructor !== null) {
-				internalCheckNumberOfArguments((maybeConstructor as TFunction).fpars, newExpression.arguments,
-					newExpression)
-				return;
-			}
+	def private internalCheckNewParameters(NewExpression newExpression, TClassifier staticType) {
+		val maybeConstructor = containerTypesHelper.fromContext(newExpression).findConstructor(staticType);
+		if (maybeConstructor !== null) {
+			internalCheckNumberOfArguments((maybeConstructor as TFunction).fpars, newExpression.arguments,
+				newExpression)
+			return;
 		}
 	}
 
@@ -1160,7 +1134,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		} else {
 			if (!(T.declaredType instanceof ContainerType<?>) && !(T.declaredType instanceof TEnum) &&
 				!(T.declaredType instanceof TypeVariable) && !(T instanceof FunctionTypeExpression) &&
-				!(T instanceof ClassifierTypeRef) && !(T instanceof UnionTypeExpression) &&
+				!(T instanceof ConstructorTypeRef) && !(T instanceof UnionTypeExpression) &&
 				!(T instanceof IntersectionTypeExpression)
 		) { // Constraint 78 (Cast Validation At Compile-Time): 2
 					addIssue(IssueCodes.getMessageForEXP_CAST_INVALID_TARGET(), castExpression,
@@ -1281,7 +1255,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return d instanceof TClass || d instanceof TEnum || d instanceof PrimitiveType ||
 				d instanceof TObjectPrototype;
 		};
-		if (T instanceof ClassifierTypeRef) { // implies || T instanceof ConstructorTypeRef)
+		if (T instanceof ConstructorTypeRef) { // implies || T instanceof ConstructorTypeRef)
 			val d = tsh.getStaticType(G, T);
 			val concreteMetaType = d instanceof TClass || d instanceof TEnum ||
 				d instanceof PrimitiveType || d instanceof TObjectPrototype;
@@ -1391,7 +1365,7 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 			return
 		}
 		val checkVisibility = true
-		val staticAccess = (receiverTypeRef instanceof ClassifierTypeRef)
+		val staticAccess = (receiverTypeRef instanceof ConstructorTypeRef)
 		val scope = memberScopingHelper.createMemberScopeFor(receiverTypeRef, indexedAccess,
 			checkVisibility, staticAccess)
 		if (memberScopingHelper.isNonExistentMember(scope, memberName, staticAccess)) {

@@ -25,7 +25,7 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -49,6 +49,7 @@ import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.SuperInterfacesIterable
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
@@ -69,7 +70,6 @@ import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
 
 /**
  * Validations related to dependency injection (covering annotations and instantiations).
@@ -130,7 +130,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 			return; // suppress error message in case of UnknownTypeRef
 
 		val G = newExpression.newRuleEnvironment;
-		val staticType = if (typeRef instanceof ClassifierTypeRef) tsh.getStaticType(G, typeRef) else null;
+		val staticType = if (typeRef instanceof ConstructorTypeRef) tsh.getStaticType(G, typeRef) else null;
 		if (staticType === null || staticType.eIsProxy)
 			return;
 		if (!(staticType instanceof TClass)) {

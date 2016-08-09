@@ -739,29 +739,24 @@ class UnknownTypeRef extends TypeRef {
  * can be used in a NewExpression. It is a subtype of the equivalent
  * ClassifierTypeRef.
  */
-class ConstructorTypeRef extends ClassifierTypeRef {
-	/*
-	 * Overrides {@link TypeRef#getTypeRefAsString()}
-	 */
-	op String getTypeRefAsString() {
-		val refName = if (null === getTypeArg) '' else getTypeArg.typeRefAsString
-		return "constructor{" + refName + "}" + getModifiersAsString();
-	}
-}
-
-/**
- * A reference to the type of a type. This type can be used
- * to access the static members of a type.
- * It can either be a ParameterizedTypeRefNominal or a ThisTypeNominal
- */
-class ClassifierTypeRef extends BaseTypeRef {
+class ConstructorTypeRef extends BaseTypeRef {
 	contains TypeArgument typeArg
 	/*
+	 * Tells if this {@link TypeTypeRef} is declared to be a reference to a constructor. This is the case if, in the
+	 * source code, keyword {@code constructor} has been used instead of keyword {@code type}:
+	 * <pre>
+	 * type{C} // flag will be false
+	 * constructor{C} // flag will be true
+	 * </pre>
+	 */
+	boolean constructorRef
+	/*
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		val refName = getTypeArg?.typeRefAsString
-		return "type{" + refName + "}" + getModifiersAsString();
+		val kwd = if (isConstructorRef) "constructor" else "type";
+		val refName = if (null === getTypeArg) '' else getTypeArg.typeRefAsString;
+		return kwd + "{" + refName + "}" + getModifiersAsString();
 	}
 	
 	// note: operation getStaticType moved to TypeSystemHelper#getStaticType()

@@ -82,7 +82,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getTypeArgument()
 	 * @generated
 	 */
-	int TYPE_ARGUMENT = 18;
+	int TYPE_ARGUMENT = 17;
 
 	/**
 	 * The number of structural features of the '<em>Type Argument</em>' class.
@@ -4069,268 +4069,6 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF_OPERATION_COUNT = TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl <em>Classifier Type Ref</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getClassifierTypeRef()
-	 * @generated
-	 */
-	int CLASSIFIER_TYPE_REF = 16;
-
-	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF__NULL_MODIFIER = BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF__UNDEF_MODIFIER = BASE_TYPE_REF__UNDEF_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF__DYNAMIC = BASE_TYPE_REF__DYNAMIC;
-
-	/**
-	 * The feature id for the '<em><b>Type Arg</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF__TYPE_ARG = BASE_TYPE_REF_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Classifier Type Ref</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Contains Wildcards</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___CONTAINS_WILDCARDS = BASE_TYPE_REF___CONTAINS_WILDCARDS;
-
-	/**
-	 * The operation id for the '<em>Contains Unbound Type Variables</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES = BASE_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES;
-
-	/**
-	 * The operation id for the '<em>Is Final By Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_FINAL_BY_TYPE = BASE_TYPE_REF___IS_FINAL_BY_TYPE;
-
-	/**
-	 * The operation id for the '<em>Is Dynamic</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_DYNAMIC = BASE_TYPE_REF___IS_DYNAMIC;
-
-	/**
-	 * The operation id for the '<em>Is Existential</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_EXISTENTIAL = BASE_TYPE_REF___IS_EXISTENTIAL;
-
-	/**
-	 * The operation id for the '<em>Is Generic</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_GENERIC = BASE_TYPE_REF___IS_GENERIC;
-
-	/**
-	 * The operation id for the '<em>Is Parameterized</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_PARAMETERIZED = BASE_TYPE_REF___IS_PARAMETERIZED;
-
-	/**
-	 * The operation id for the '<em>Is Raw</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_RAW = BASE_TYPE_REF___IS_RAW;
-
-	/**
-	 * The operation id for the '<em>Get Declared Upper Bound</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_DECLARED_UPPER_BOUND = BASE_TYPE_REF___GET_DECLARED_UPPER_BOUND;
-
-	/**
-	 * The operation id for the '<em>Get Declared Lower Bound</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_DECLARED_LOWER_BOUND = BASE_TYPE_REF___GET_DECLARED_LOWER_BOUND;
-
-	/**
-	 * The operation id for the '<em>Get Type Args</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_TYPE_ARGS = BASE_TYPE_REF___GET_TYPE_ARGS;
-
-	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___UNDEFINED_OR_NULL = BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
-	 * The operation id for the '<em>To String</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___TO_STRING = BASE_TYPE_REF___TO_STRING;
-
-	/**
-	 * The operation id for the '<em>Get Declared Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_DECLARED_TYPE = BASE_TYPE_REF___GET_DECLARED_TYPE;
-
-	/**
-	 * The operation id for the '<em>Is Top Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_TOP_TYPE = BASE_TYPE_REF___IS_TOP_TYPE;
-
-	/**
-	 * The operation id for the '<em>Is Bottom Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_BOTTOM_TYPE = BASE_TYPE_REF___IS_BOTTOM_TYPE;
-
-	/**
-	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_TYPING_STRATEGY = BASE_TYPE_REF___GET_TYPING_STRATEGY;
-
-	/**
-	 * The operation id for the '<em>Get Structural Members</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_STRUCTURAL_MEMBERS = BASE_TYPE_REF___GET_STRUCTURAL_MEMBERS;
-
-	/**
-	 * The operation id for the '<em>Is Use Site Structural Typing</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
-
-	/**
-	 * The operation id for the '<em>Is Def Site Structural Typing</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
-
-	/**
-	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_MODIFIERS_AS_STRING = BASE_TYPE_REF___GET_MODIFIERS_AS_STRING;
-
-	/**
-	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING = BASE_TYPE_REF_OPERATION_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Classifier Type Ref</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CLASSIFIER_TYPE_REF_OPERATION_COUNT = BASE_TYPE_REF_OPERATION_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ConstructorTypeRefImpl <em>Constructor Type Ref</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4347,7 +4085,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF__NULL_MODIFIER = CLASSIFIER_TYPE_REF__NULL_MODIFIER;
+	int CONSTRUCTOR_TYPE_REF__NULL_MODIFIER = BASE_TYPE_REF__NULL_MODIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
@@ -4356,7 +4094,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF__UNDEF_MODIFIER = CLASSIFIER_TYPE_REF__UNDEF_MODIFIER;
+	int CONSTRUCTOR_TYPE_REF__UNDEF_MODIFIER = BASE_TYPE_REF__UNDEF_MODIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -4365,7 +4103,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF__DYNAMIC = CLASSIFIER_TYPE_REF__DYNAMIC;
+	int CONSTRUCTOR_TYPE_REF__DYNAMIC = BASE_TYPE_REF__DYNAMIC;
 
 	/**
 	 * The feature id for the '<em><b>Type Arg</b></em>' containment reference.
@@ -4374,7 +4112,16 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF__TYPE_ARG = CLASSIFIER_TYPE_REF__TYPE_ARG;
+	int CONSTRUCTOR_TYPE_REF__TYPE_ARG = BASE_TYPE_REF_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Constructor Ref</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF = BASE_TYPE_REF_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Constructor Type Ref</em>' class.
@@ -4383,7 +4130,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF_FEATURE_COUNT = CLASSIFIER_TYPE_REF_FEATURE_COUNT + 0;
+	int CONSTRUCTOR_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -4392,7 +4139,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___CONTAINS_WILDCARDS = CLASSIFIER_TYPE_REF___CONTAINS_WILDCARDS;
+	int CONSTRUCTOR_TYPE_REF___CONTAINS_WILDCARDS = BASE_TYPE_REF___CONTAINS_WILDCARDS;
 
 	/**
 	 * The operation id for the '<em>Contains Unbound Type Variables</em>' operation.
@@ -4401,7 +4148,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES = CLASSIFIER_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES;
+	int CONSTRUCTOR_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES = BASE_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES;
 
 	/**
 	 * The operation id for the '<em>Is Final By Type</em>' operation.
@@ -4410,7 +4157,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_FINAL_BY_TYPE = CLASSIFIER_TYPE_REF___IS_FINAL_BY_TYPE;
+	int CONSTRUCTOR_TYPE_REF___IS_FINAL_BY_TYPE = BASE_TYPE_REF___IS_FINAL_BY_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
@@ -4419,7 +4166,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_DYNAMIC = CLASSIFIER_TYPE_REF___IS_DYNAMIC;
+	int CONSTRUCTOR_TYPE_REF___IS_DYNAMIC = BASE_TYPE_REF___IS_DYNAMIC;
 
 	/**
 	 * The operation id for the '<em>Is Existential</em>' operation.
@@ -4428,7 +4175,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_EXISTENTIAL = CLASSIFIER_TYPE_REF___IS_EXISTENTIAL;
+	int CONSTRUCTOR_TYPE_REF___IS_EXISTENTIAL = BASE_TYPE_REF___IS_EXISTENTIAL;
 
 	/**
 	 * The operation id for the '<em>Is Generic</em>' operation.
@@ -4437,7 +4184,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_GENERIC = CLASSIFIER_TYPE_REF___IS_GENERIC;
+	int CONSTRUCTOR_TYPE_REF___IS_GENERIC = BASE_TYPE_REF___IS_GENERIC;
 
 	/**
 	 * The operation id for the '<em>Is Parameterized</em>' operation.
@@ -4446,7 +4193,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_PARAMETERIZED = CLASSIFIER_TYPE_REF___IS_PARAMETERIZED;
+	int CONSTRUCTOR_TYPE_REF___IS_PARAMETERIZED = BASE_TYPE_REF___IS_PARAMETERIZED;
 
 	/**
 	 * The operation id for the '<em>Is Raw</em>' operation.
@@ -4455,7 +4202,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_RAW = CLASSIFIER_TYPE_REF___IS_RAW;
+	int CONSTRUCTOR_TYPE_REF___IS_RAW = BASE_TYPE_REF___IS_RAW;
 
 	/**
 	 * The operation id for the '<em>Get Declared Upper Bound</em>' operation.
@@ -4464,7 +4211,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_UPPER_BOUND = CLASSIFIER_TYPE_REF___GET_DECLARED_UPPER_BOUND;
+	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_UPPER_BOUND = BASE_TYPE_REF___GET_DECLARED_UPPER_BOUND;
 
 	/**
 	 * The operation id for the '<em>Get Declared Lower Bound</em>' operation.
@@ -4473,7 +4220,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_LOWER_BOUND = CLASSIFIER_TYPE_REF___GET_DECLARED_LOWER_BOUND;
+	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_LOWER_BOUND = BASE_TYPE_REF___GET_DECLARED_LOWER_BOUND;
 
 	/**
 	 * The operation id for the '<em>Get Type Args</em>' operation.
@@ -4482,7 +4229,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_TYPE_ARGS = CLASSIFIER_TYPE_REF___GET_TYPE_ARGS;
+	int CONSTRUCTOR_TYPE_REF___GET_TYPE_ARGS = BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
 	 * The operation id for the '<em>Undefined Or Null</em>' operation.
@@ -4491,7 +4238,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___UNDEFINED_OR_NULL = CLASSIFIER_TYPE_REF___UNDEFINED_OR_NULL;
+	int CONSTRUCTOR_TYPE_REF___UNDEFINED_OR_NULL = BASE_TYPE_REF___UNDEFINED_OR_NULL;
 
 	/**
 	 * The operation id for the '<em>To String</em>' operation.
@@ -4500,7 +4247,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___TO_STRING = CLASSIFIER_TYPE_REF___TO_STRING;
+	int CONSTRUCTOR_TYPE_REF___TO_STRING = BASE_TYPE_REF___TO_STRING;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type</em>' operation.
@@ -4509,7 +4256,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_TYPE = CLASSIFIER_TYPE_REF___GET_DECLARED_TYPE;
+	int CONSTRUCTOR_TYPE_REF___GET_DECLARED_TYPE = BASE_TYPE_REF___GET_DECLARED_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Top Type</em>' operation.
@@ -4518,7 +4265,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_TOP_TYPE = CLASSIFIER_TYPE_REF___IS_TOP_TYPE;
+	int CONSTRUCTOR_TYPE_REF___IS_TOP_TYPE = BASE_TYPE_REF___IS_TOP_TYPE;
 
 	/**
 	 * The operation id for the '<em>Is Bottom Type</em>' operation.
@@ -4527,7 +4274,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_BOTTOM_TYPE = CLASSIFIER_TYPE_REF___IS_BOTTOM_TYPE;
+	int CONSTRUCTOR_TYPE_REF___IS_BOTTOM_TYPE = BASE_TYPE_REF___IS_BOTTOM_TYPE;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -4536,7 +4283,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_TYPING_STRATEGY = CLASSIFIER_TYPE_REF___GET_TYPING_STRATEGY;
+	int CONSTRUCTOR_TYPE_REF___GET_TYPING_STRATEGY = BASE_TYPE_REF___GET_TYPING_STRATEGY;
 
 	/**
 	 * The operation id for the '<em>Get Structural Members</em>' operation.
@@ -4545,7 +4292,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_STRUCTURAL_MEMBERS = CLASSIFIER_TYPE_REF___GET_STRUCTURAL_MEMBERS;
+	int CONSTRUCTOR_TYPE_REF___GET_STRUCTURAL_MEMBERS = BASE_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
 	 * The operation id for the '<em>Is Use Site Structural Typing</em>' operation.
@@ -4554,7 +4301,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING = CLASSIFIER_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
+	int CONSTRUCTOR_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
 
 	/**
 	 * The operation id for the '<em>Is Def Site Structural Typing</em>' operation.
@@ -4563,7 +4310,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = CLASSIFIER_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+	int CONSTRUCTOR_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -4572,7 +4319,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_MODIFIERS_AS_STRING = CLASSIFIER_TYPE_REF___GET_MODIFIERS_AS_STRING;
+	int CONSTRUCTOR_TYPE_REF___GET_MODIFIERS_AS_STRING = BASE_TYPE_REF___GET_MODIFIERS_AS_STRING;
 
 	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
@@ -4581,7 +4328,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING = CLASSIFIER_TYPE_REF_OPERATION_COUNT + 0;
+	int CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING = BASE_TYPE_REF_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Constructor Type Ref</em>' class.
@@ -4590,7 +4337,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_TYPE_REF_OPERATION_COUNT = CLASSIFIER_TYPE_REF_OPERATION_COUNT + 1;
+	int CONSTRUCTOR_TYPE_REF_OPERATION_COUNT = BASE_TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.EnumTypeRefImpl <em>Enum Type Ref</em>}' class.
@@ -4600,7 +4347,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getEnumTypeRef()
 	 * @generated
 	 */
-	int ENUM_TYPE_REF = 17;
+	int ENUM_TYPE_REF = 16;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -4862,7 +4609,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getWildcard()
 	 * @generated
 	 */
-	int WILDCARD = 19;
+	int WILDCARD = 18;
 
 	/**
 	 * The feature id for the '<em><b>Declared Upper Bound</b></em>' containment reference.
@@ -4962,7 +4709,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeExprOrRef()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF = 20;
+	int FUNCTION_TYPE_EXPR_OR_REF = 19;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -5269,7 +5016,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeRef()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_REF = 21;
+	int FUNCTION_TYPE_REF = 20;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -5621,7 +5368,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeExpression()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_EXPRESSION = 22;
+	int FUNCTION_TYPE_EXPRESSION = 21;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -6000,7 +5747,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getDeferredTypeRef()
 	 * @generated
 	 */
-	int DEFERRED_TYPE_REF = 23;
+	int DEFERRED_TYPE_REF = 22;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -6244,7 +5991,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getTypeVariableMapping()
 	 * @generated
 	 */
-	int TYPE_VARIABLE_MAPPING = 24;
+	int TYPE_VARIABLE_MAPPING = 23;
 
 	/**
 	 * The feature id for the '<em><b>Type Var</b></em>' reference.
@@ -6290,7 +6037,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getParameterizedTypeRefIterable()
 	 * @generated
 	 */
-	int PARAMETERIZED_TYPE_REF_ITERABLE = 25;
+	int PARAMETERIZED_TYPE_REF_ITERABLE = 24;
 
 
 	/**
@@ -7293,6 +7040,28 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getConstructorTypeRef();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#getTypeArg <em>Type Arg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Type Arg</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#getTypeArg()
+	 * @see #getConstructorTypeRef()
+	 * @generated
+	 */
+	EReference getConstructorTypeRef_TypeArg();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#isConstructorRef <em>Constructor Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Constructor Ref</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#isConstructorRef()
+	 * @see #getConstructorTypeRef()
+	 * @generated
+	 */
+	EAttribute getConstructorTypeRef_ConstructorRef();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7301,37 +7070,6 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getConstructorTypeRef__GetTypeRefAsString();
-
-	/**
-	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef <em>Classifier Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Classifier Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
-	 * @generated
-	 */
-	EClass getClassifierTypeRef();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeArg <em>Type Arg</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Arg</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeArg()
-	 * @see #getClassifierTypeRef()
-	 * @generated
-	 */
-	EReference getClassifierTypeRef_TypeArg();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type Ref As String</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef#getTypeRefAsString()
-	 * @generated
-	 */
-	EOperation getClassifierTypeRef__GetTypeRefAsString();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.EnumTypeRef <em>Enum Type Ref</em>}'.
@@ -8668,38 +8406,28 @@ public interface TypeRefsPackage extends EPackage {
 		EClass CONSTRUCTOR_TYPE_REF = eINSTANCE.getConstructorTypeRef();
 
 		/**
+		 * The meta object literal for the '<em><b>Type Arg</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONSTRUCTOR_TYPE_REF__TYPE_ARG = eINSTANCE.getConstructorTypeRef_TypeArg();
+
+		/**
+		 * The meta object literal for the '<em><b>Constructor Ref</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF = eINSTANCE.getConstructorTypeRef_ConstructorRef();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING = eINSTANCE.getConstructorTypeRef__GetTypeRefAsString();
-
-		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl <em>Classifier Type Ref</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getClassifierTypeRef()
-		 * @generated
-		 */
-		EClass CLASSIFIER_TYPE_REF = eINSTANCE.getClassifierTypeRef();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Arg</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CLASSIFIER_TYPE_REF__TYPE_ARG = eINSTANCE.getClassifierTypeRef_TypeArg();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING = eINSTANCE.getClassifierTypeRef__GetTypeRefAsString();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.EnumTypeRefImpl <em>Enum Type Ref</em>}' class.

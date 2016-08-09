@@ -15235,13 +15235,11 @@ ruleTypeRefWithoutModifiers
 )?)
     |	ConstructorTypeRefParserRuleCall_1=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_1.start, $ConstructorTypeRefParserRuleCall_1.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getConstructorTypeRefParserRuleCall_1()); }
 
-    |	ClassifierTypeRefParserRuleCall_2=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_2.start, $ClassifierTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getClassifierTypeRefParserRuleCall_2()); }
+    |	FunctionTypeExpressionOLDParserRuleCall_2=ruleFunctionTypeExpressionOLD		{ announce($FunctionTypeExpressionOLDParserRuleCall_2.start, $FunctionTypeExpressionOLDParserRuleCall_2.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_2()); }
 
-    |	FunctionTypeExpressionOLDParserRuleCall_3=ruleFunctionTypeExpressionOLD		{ announce($FunctionTypeExpressionOLDParserRuleCall_3.start, $FunctionTypeExpressionOLDParserRuleCall_3.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getFunctionTypeExpressionOLDParserRuleCall_3()); }
+    |	UnionTypeExpressionOLDParserRuleCall_3=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_3.start, $UnionTypeExpressionOLDParserRuleCall_3.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_3()); }
 
-    |	UnionTypeExpressionOLDParserRuleCall_4=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_4.start, $UnionTypeExpressionOLDParserRuleCall_4.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getUnionTypeExpressionOLDParserRuleCall_4()); }
-
-    |	IntersectionTypeExpressionOLDParserRuleCall_5=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_5.start, $IntersectionTypeExpressionOLDParserRuleCall_5.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); }
+    |	IntersectionTypeExpressionOLDParserRuleCall_4=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_4.start, $IntersectionTypeExpressionOLDParserRuleCall_4.stop, grammarAccess.getTypeRefWithoutModifiersAccess().getIntersectionTypeExpressionOLDParserRuleCall_4()); }
 )
 ;
 
@@ -15266,11 +15264,9 @@ ruleTypeRefFunctionTypeExpression
 
     |	ConstructorTypeRefParserRuleCall_2=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_2.start, $ConstructorTypeRefParserRuleCall_2.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getConstructorTypeRefParserRuleCall_2()); }
 
-    |	ClassifierTypeRefParserRuleCall_3=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_3.start, $ClassifierTypeRefParserRuleCall_3.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getClassifierTypeRefParserRuleCall_3()); }
+    |	UnionTypeExpressionOLDParserRuleCall_3=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_3.start, $UnionTypeExpressionOLDParserRuleCall_3.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_3()); }
 
-    |	UnionTypeExpressionOLDParserRuleCall_4=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_4.start, $UnionTypeExpressionOLDParserRuleCall_4.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getUnionTypeExpressionOLDParserRuleCall_4()); }
-
-    |	IntersectionTypeExpressionOLDParserRuleCall_5=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_5.start, $IntersectionTypeExpressionOLDParserRuleCall_5.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_5()); }
+    |	IntersectionTypeExpressionOLDParserRuleCall_4=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_4.start, $IntersectionTypeExpressionOLDParserRuleCall_4.stop, grammarAccess.getTypeRefFunctionTypeExpressionAccess().getIntersectionTypeExpressionOLDParserRuleCall_4()); }
 )
 ;
 
@@ -15297,15 +15293,13 @@ ruleTypeRefForCast
 
     |	ConstructorTypeRefParserRuleCall_3=ruleConstructorTypeRef		{ announce($ConstructorTypeRefParserRuleCall_3.start, $ConstructorTypeRefParserRuleCall_3.stop, grammarAccess.getTypeRefForCastAccess().getConstructorTypeRefParserRuleCall_3()); }
 
-    |	ClassifierTypeRefParserRuleCall_4=ruleClassifierTypeRef		{ announce($ClassifierTypeRefParserRuleCall_4.start, $ClassifierTypeRefParserRuleCall_4.stop, grammarAccess.getTypeRefForCastAccess().getClassifierTypeRefParserRuleCall_4()); }
+    |	FunctionTypeExpressionOLDParserRuleCall_4=ruleFunctionTypeExpressionOLD		{ announce($FunctionTypeExpressionOLDParserRuleCall_4.start, $FunctionTypeExpressionOLDParserRuleCall_4.stop, grammarAccess.getTypeRefForCastAccess().getFunctionTypeExpressionOLDParserRuleCall_4()); }
 
-    |	FunctionTypeExpressionOLDParserRuleCall_5=ruleFunctionTypeExpressionOLD		{ announce($FunctionTypeExpressionOLDParserRuleCall_5.start, $FunctionTypeExpressionOLDParserRuleCall_5.stop, grammarAccess.getTypeRefForCastAccess().getFunctionTypeExpressionOLDParserRuleCall_5()); }
+    |	ArrowFunctionTypeExpressionParserRuleCall_5=ruleArrowFunctionTypeExpression		{ announce($ArrowFunctionTypeExpressionParserRuleCall_5.start, $ArrowFunctionTypeExpressionParserRuleCall_5.stop, grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_5()); }
 
-    |	ArrowFunctionTypeExpressionParserRuleCall_6=ruleArrowFunctionTypeExpression		{ announce($ArrowFunctionTypeExpressionParserRuleCall_6.start, $ArrowFunctionTypeExpressionParserRuleCall_6.stop, grammarAccess.getTypeRefForCastAccess().getArrowFunctionTypeExpressionParserRuleCall_6()); }
+    |	UnionTypeExpressionOLDParserRuleCall_6=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_6.start, $UnionTypeExpressionOLDParserRuleCall_6.stop, grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_6()); }
 
-    |	UnionTypeExpressionOLDParserRuleCall_7=ruleUnionTypeExpressionOLD		{ announce($UnionTypeExpressionOLDParserRuleCall_7.start, $UnionTypeExpressionOLDParserRuleCall_7.stop, grammarAccess.getTypeRefForCastAccess().getUnionTypeExpressionOLDParserRuleCall_7()); }
-
-    |	IntersectionTypeExpressionOLDParserRuleCall_8=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_8.start, $IntersectionTypeExpressionOLDParserRuleCall_8.stop, grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_8()); }
+    |	IntersectionTypeExpressionOLDParserRuleCall_7=ruleIntersectionTypeExpressionOLD		{ announce($IntersectionTypeExpressionOLDParserRuleCall_7.start, $IntersectionTypeExpressionOLDParserRuleCall_7.stop, grammarAccess.getTypeRefForCastAccess().getIntersectionTypeExpressionOLDParserRuleCall_7()); }
 )
 ;
 
@@ -15313,23 +15307,23 @@ ruleTypeRefForCast
 
 
 
-// Entry rule entryRuleTypeRefInClassifierType
-entryRuleTypeRefInClassifierType
+// Entry rule entryRuleTypeArgInConstructorTypeRef
+entryRuleTypeArgInConstructorTypeRef
 	:
-	ruleTypeRefInClassifierType 
+	ruleTypeArgInConstructorTypeRef 
 	EOF 
 ;
 
-// Rule TypeRefInClassifierType
-ruleTypeRefInClassifierType 
+// Rule TypeArgInConstructorTypeRef
+ruleTypeArgInConstructorTypeRef 
     @init {
     }:
-(	ParameterizedTypeRefNominalParserRuleCall_0=ruleParameterizedTypeRefNominal		{ announce($ParameterizedTypeRefNominalParserRuleCall_0.start, $ParameterizedTypeRefNominalParserRuleCall_0.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getParameterizedTypeRefNominalParserRuleCall_0()); }
+(	ParameterizedTypeRefNominalParserRuleCall_0=ruleParameterizedTypeRefNominal		{ announce($ParameterizedTypeRefNominalParserRuleCall_0.start, $ParameterizedTypeRefNominalParserRuleCall_0.stop, grammarAccess.getTypeArgInConstructorTypeRefAccess().getParameterizedTypeRefNominalParserRuleCall_0()); }
 
-    |	ThisTypeRefNominalParserRuleCall_1=ruleThisTypeRefNominal		{ announce($ThisTypeRefNominalParserRuleCall_1.start, $ThisTypeRefNominalParserRuleCall_1.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getThisTypeRefNominalParserRuleCall_1()); }
+    |	ThisTypeRefNominalParserRuleCall_1=ruleThisTypeRefNominal		{ announce($ThisTypeRefNominalParserRuleCall_1.start, $ThisTypeRefNominalParserRuleCall_1.stop, grammarAccess.getTypeArgInConstructorTypeRefAccess().getThisTypeRefNominalParserRuleCall_1()); }
 
     |(((
-	QuestionMark 	))=>	WildcardParserRuleCall_2=ruleWildcard		{ announce($WildcardParserRuleCall_2.start, $WildcardParserRuleCall_2.stop, grammarAccess.getTypeRefInClassifierTypeAccess().getWildcardParserRuleCall_2()); }
+	QuestionMark 	))=>	WildcardParserRuleCall_2=ruleWildcard		{ announce($WildcardParserRuleCall_2.start, $WildcardParserRuleCall_2.stop, grammarAccess.getTypeArgInConstructorTypeRefAccess().getWildcardParserRuleCall_2()); }
 ))
 ;
 
@@ -15851,39 +15845,21 @@ entryRuleConstructorTypeRef
 ruleConstructorTypeRef 
     @init {
     }:
+((
+	TypeKeyword_1_0=Type 	 { announce($TypeKeyword_1_0, grammarAccess.getConstructorTypeRefAccess().getTypeKeyword_1_0()); }
+    |(
 (
-	ConstructorKeyword_1=Constructor 	 { announce($ConstructorKeyword_1, grammarAccess.getConstructorTypeRefAccess().getConstructorKeyword_1()); }
+
+	ConstructorRefConstructorKeyword_1_1_0=Constructor 	 { announce($ConstructorRefConstructorKeyword_1_1_0, grammarAccess.getConstructorTypeRefAccess().getConstructorRefConstructorKeyword_1_1_0()); }
+
+)
+))
 	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getConstructorTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
 (
-	TypeArgTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
+	TypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0=ruleTypeArgInConstructorTypeRef { announce($TypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0.start, $TypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0.stop, grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3()); }
 )
 )
 	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getConstructorTypeRefAccess().getRightCurlyBracketKeyword_4()); })
-;
-
-
-
-
-
-// Entry rule entryRuleClassifierTypeRef
-entryRuleClassifierTypeRef
-	:
-	ruleClassifierTypeRef 
-	EOF 
-;
-
-// Rule ClassifierTypeRef
-ruleClassifierTypeRef 
-    @init {
-    }:
-(
-	TypeKeyword_1=Type 	 { announce($TypeKeyword_1, grammarAccess.getClassifierTypeRefAccess().getTypeKeyword_1()); }
-	LeftCurlyBracketKeyword_2=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2, grammarAccess.getClassifierTypeRefAccess().getLeftCurlyBracketKeyword_2()); }(
-(
-	TypeArgTypeRefInClassifierTypeParserRuleCall_3_0=ruleTypeRefInClassifierType { announce($TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.start, $TypeArgTypeRefInClassifierTypeParserRuleCall_3_0.stop, grammarAccess.getClassifierTypeRefAccess().getTypeArgAssignment_3()); }
-)
-)
-	RightCurlyBracketKeyword_4=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_4, grammarAccess.getClassifierTypeRefAccess().getRightCurlyBracketKeyword_4()); })
 ;
 
 

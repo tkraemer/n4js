@@ -16,7 +16,6 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -237,19 +236,15 @@ class StyledTextCalculationHelper {
 		styledString.append(returnTypeString);
 	}
 	
-	// produces type{typeName}
-	def dispatch private void dispatchGetTypeRefDescription(ClassifierTypeRef ref, StyledString styledString) {
+	// produces constructor{typeName} 
+	def dispatch private void dispatchGetTypeRefDescription(ConstructorTypeRef ref, StyledString styledString) {
 		val typeName = switch ref.typeArg {
 			ThisTypeRef:
 				"this"
 			default:
 				ref.nominalTypeNameOrWildCard
 		}
-		styledString.append('''type{«typeName»}''');
-	}
-	// produces constructor{typeName} 
-	def dispatch private void dispatchGetTypeRefDescription(ConstructorTypeRef ref, StyledString styledString) {
-		styledString.append('''constructor{«ref.nominalTypeNameOrWildCard»}''');
+		styledString.append('''constructor{«typeName»}''');
 	}
 	
 	// produces union{type1, type2, ...} or intersection{type1, type2, ...} 
@@ -295,7 +290,7 @@ class StyledTextCalculationHelper {
 		return string.string;
 	}
 	
-	def private String nominalTypeNameOrWildCard(ClassifierTypeRef ref) {
+	def private String nominalTypeNameOrWildCard(ConstructorTypeRef ref) {
 		switch (ref.typeArg) {
 			TypeRef: (ref.typeArg as TypeRef).declaredType?.name
 			Wildcard: getWildcardDescription(ref.typeArg as Wildcard)

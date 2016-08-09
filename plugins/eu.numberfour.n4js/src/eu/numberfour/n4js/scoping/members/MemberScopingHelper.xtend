@@ -18,7 +18,6 @@ import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
 import eu.numberfour.n4js.scoping.utils.CompositeScope
 import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -236,10 +235,10 @@ class MemberScopingHelper {
 		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
 			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
 		}
-		// additionally we need instance members of Function in case of constructor{T}, cf. GH-219
+		// in addition, we need instance members of either Function (in case of constructor{T}) or Object (for type{T})
 		val MemberScopeRequest instanceRequest = request.enforceInstance;
 		val builtInScope = BuiltInTypeScope.get(getResourceSet(ctr, request.context));
-		val functionType = builtInScope.functionType
+		val functionType = if (tsh.isFunction(G, ctr)) builtInScope.functionType else builtInScope.objectType;
 		val IScope ftypeScope = membersOfType(functionType, instanceRequest);
 
 		// order matters (shadowing!)
@@ -248,17 +247,6 @@ class MemberScopingHelper {
 			ftypeScope.decorate(instanceRequest, ctr)
 		);
 		return result
-	}
-
-	private def dispatch IScope members(ClassifierTypeRef ctr, MemberScopeRequest request) {
-		val MemberScopeRequest staticRequest = request.enforceStatic;
-		val G = RuleEnvironmentExtensions.newRuleEnvironment(request.context);
-		val ctrStaticType = tsh.getStaticType(G, ctr);
-		var IScope staticMembers = membersOfType(ctrStaticType, staticRequest) // staticAccess is always true in this case
-		if (ctr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
-			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ctr))
-		}
-		return staticMembers.decorate(staticRequest, ctr)
 	}
 
 	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {

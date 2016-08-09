@@ -22,7 +22,6 @@ import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
@@ -48,6 +47,7 @@ import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -265,10 +265,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		if ((constructor.astElement as N4MemberDeclaration).body !== null) { // otherwise another validation will complain
 			val type = constructor.eContainer;
 			if (type instanceof TClass) { // otherwise another validation will complain
-				val G = RuleEnvironmentExtensions.newRuleEnvironment(constructor);
-				val superClass = RuleEnvironmentExtensions.getDeclaredOrImplicitSuperType(G, type)
+				val G = constructor.newRuleEnvironment;
+				val superClass = G.getDeclaredOrImplicitSuperType(type);
 				val ctor = containerTypesHelper.fromContext(constructor).findConstructor(superClass);
-				if (ctor !== null) {
+				if (ctor !== null && ctor !== G.objectType.ownedCtor) {
 					if (ctor.fpars.size > 0) {
 						val existsSuperCall = (constructor.astElement as N4MethodDeclaration).existsExplicitSuperCall();
 						if (! existsSuperCall) {

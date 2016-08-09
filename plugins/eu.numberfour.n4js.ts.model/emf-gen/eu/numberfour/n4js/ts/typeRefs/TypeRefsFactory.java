@@ -126,15 +126,6 @@ public interface TypeRefsFactory extends EFactory {
 	ConstructorTypeRef createConstructorTypeRef();
 
 	/**
-	 * Returns a new object of class '<em>Classifier Type Ref</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Classifier Type Ref</em>'.
-	 * @generated
-	 */
-	ClassifierTypeRef createClassifierTypeRef();
-
-	/**
 	 * Returns a new object of class '<em>Enum Type Ref</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
