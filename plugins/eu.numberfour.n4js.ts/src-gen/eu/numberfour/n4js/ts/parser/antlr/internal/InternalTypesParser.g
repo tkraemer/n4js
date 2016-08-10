@@ -617,9 +617,9 @@ rulePrimitiveType returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPrimitiveTypeAccess().getNameTypesIdentifierParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getPrimitiveTypeAccess().getNameVoidOrBindingIdentifierParserRuleCall_1_0()); 
 	    }
-		lv_name_1_0=ruleTypesIdentifier		{
+		lv_name_1_0=ruleVoidOrBindingIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPrimitiveTypeRule());
 	        }
@@ -627,7 +627,7 @@ rulePrimitiveType returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.VoidOrBindingIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1046,87 +1046,183 @@ ruleTypesIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
     }
     @after { leaveRule();
     }:
-(    this_IDENTIFIER_0=RULE_IDENTIFIER    {
-		$current.merge(this_IDENTIFIER_0);
+(
+    { 
+        newCompositeNode(grammarAccess.getTypesIdentifierAccess().getTypesSpecificKeywordsParserRuleCall_0()); 
+    }
+    this_TypesSpecificKeywords_0=ruleTypesSpecificKeywords    {
+		$current.merge(this_TypesSpecificKeywords_0);
     }
 
     { 
-    newLeafNode(this_IDENTIFIER_0, grammarAccess.getTypesIdentifierAccess().getIDENTIFIERTerminalRuleCall_0()); 
+        afterParserOrEnumRuleCall();
     }
 
     |
-	kw=Any 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getAnyKeyword_1()); 
+    { 
+        newCompositeNode(grammarAccess.getTypesIdentifierAccess().getIdentifierNameParserRuleCall_1()); 
+    }
+    this_IdentifierName_1=ruleIdentifierName    {
+		$current.merge(this_IdentifierName_1);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleBindingTypesIdentifier
+entryRuleBindingTypesIdentifier returns [String current=null] 
+:
+	{ newCompositeNode(grammarAccess.getBindingTypesIdentifierRule()); } 
+	 iv_ruleBindingTypesIdentifier=ruleBindingTypesIdentifier 
+	 { $current=$iv_ruleBindingTypesIdentifier.current.getText(); }  
+	 EOF 
+;
+
+// Rule BindingTypesIdentifier
+ruleBindingTypesIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule();
+    }:
+(
+    { 
+        newCompositeNode(grammarAccess.getBindingTypesIdentifierAccess().getTypesSpecificKeywordsParserRuleCall_0()); 
+    }
+    this_TypesSpecificKeywords_0=ruleTypesSpecificKeywords    {
+		$current.merge(this_TypesSpecificKeywords_0);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
     }
 
     |
+    { 
+        newCompositeNode(grammarAccess.getBindingTypesIdentifierAccess().getBindingIdentifierParserRuleCall_1()); 
+    }
+    this_BindingIdentifier_1=ruleBindingIdentifier    {
+		$current.merge(this_BindingIdentifier_1);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleVoidOrBindingIdentifier
+entryRuleVoidOrBindingIdentifier returns [String current=null] 
+:
+	{ newCompositeNode(grammarAccess.getVoidOrBindingIdentifierRule()); } 
+	 iv_ruleVoidOrBindingIdentifier=ruleVoidOrBindingIdentifier 
+	 { $current=$iv_ruleVoidOrBindingIdentifier.current.getText(); }  
+	 EOF 
+;
+
+// Rule VoidOrBindingIdentifier
+ruleVoidOrBindingIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule();
+    }:
+(
 	kw=Void 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getVoidKeyword_2()); 
+        newLeafNode(kw, grammarAccess.getVoidOrBindingIdentifierAccess().getVoidKeyword_0()); 
     }
 
     |
-	kw=Null 
+    { 
+        newCompositeNode(grammarAccess.getVoidOrBindingIdentifierAccess().getBindingTypesIdentifierParserRuleCall_1()); 
+    }
+    this_BindingTypesIdentifier_1=ruleBindingTypesIdentifier    {
+		$current.merge(this_BindingTypesIdentifier_1);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleTypesSpecificKeywords
+entryRuleTypesSpecificKeywords returns [String current=null] 
+:
+	{ newCompositeNode(grammarAccess.getTypesSpecificKeywordsRule()); } 
+	 iv_ruleTypesSpecificKeywords=ruleTypesSpecificKeywords 
+	 { $current=$iv_ruleTypesSpecificKeywords.current.getText(); }  
+	 EOF 
+;
+
+// Rule TypesSpecificKeywords
+ruleTypesSpecificKeywords returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule();
+    }:
+(
+	kw=Any 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getNullKeyword_3()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getAnyKeyword_0()); 
     }
 
     |
 	kw=Undefined 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getUndefinedKeyword_4()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getUndefinedKeyword_1()); 
     }
 
     |
 	kw=Object 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getObjectKeyword_5()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getObjectKeyword_2()); 
     }
 
     |
 	kw=VirtualBase 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getVirtualBaseKeyword_6()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getVirtualBaseKeyword_3()); 
     }
 
     |
 	kw=Primitive 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getPrimitiveKeyword_7()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getPrimitiveKeyword_4()); 
     }
 
     |
 	kw=AutoboxedType 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getAutoboxedTypeKeyword_8()); 
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getAutoboxedTypeKeyword_5()); 
     }
 
     |
 	kw=AssignmnentCompatible 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getTypesIdentifierAccess().getAssignmnentCompatibleKeyword_9()); 
-    }
-
-    |
-    { 
-        newCompositeNode(grammarAccess.getTypesIdentifierAccess().getN4KeywordParserRuleCall_10()); 
-    }
-    this_N4Keyword_10=ruleN4Keyword    {
-		$current.merge(this_N4Keyword_10);
-    }
-
-    { 
-        afterParserOrEnumRuleCall();
+        newLeafNode(kw, grammarAccess.getTypesSpecificKeywordsAccess().getAssignmnentCompatibleKeyword_6()); 
     }
 )
     ;
@@ -1343,9 +1439,9 @@ ruleTObjectPrototype returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTObjectPrototypeAccess().getNameTypesIdentifierParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getTObjectPrototypeAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
 	    }
-		lv_name_4_0=ruleTypesIdentifier		{
+		lv_name_4_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTObjectPrototypeRule());
 	        }
@@ -1353,7 +1449,7 @@ ruleTObjectPrototype returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_4_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1579,9 +1675,9 @@ ruleVirtualBaseType returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getVirtualBaseTypeAccess().getNameTypesIdentifierParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getVirtualBaseTypeAccess().getNameBindingTypesIdentifierParserRuleCall_2_0()); 
 	    }
-		lv_name_2_0=ruleTypesIdentifier		{
+		lv_name_2_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getVirtualBaseTypeRule());
 	        }
@@ -1589,7 +1685,7 @@ ruleVirtualBaseType returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_2_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1735,9 +1831,9 @@ ruleTClass returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTClassAccess().getNameTypesIdentifierParserRuleCall_6_0()); 
+	        newCompositeNode(grammarAccess.getTClassAccess().getNameBindingTypesIdentifierParserRuleCall_6_0()); 
 	    }
-		lv_name_6_0=ruleTypesIdentifier		{
+		lv_name_6_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTClassRule());
 	        }
@@ -1745,7 +1841,7 @@ ruleTClass returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_6_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2040,9 +2136,9 @@ ruleTInterface returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTInterfaceAccess().getNameTypesIdentifierParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getTInterfaceAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
 	    }
-		lv_name_4_0=ruleTypesIdentifier		{
+		lv_name_4_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTInterfaceRule());
 	        }
@@ -2050,7 +2146,7 @@ ruleTInterface returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_4_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3391,9 +3487,9 @@ ruleTFunction returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTFunctionAccess().getNameTypesIdentifierParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getTFunctionAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
 	    }
-		lv_name_8_0=ruleTypesIdentifier		{
+		lv_name_8_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTFunctionRule());
 	        }
@@ -3401,7 +3497,7 @@ ruleTFunction returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_8_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3543,9 +3639,9 @@ ruleTEnum returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTEnumAccess().getNameTypesIdentifierParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getTEnumAccess().getNameBindingTypesIdentifierParserRuleCall_3_0()); 
 	    }
-		lv_name_3_0=ruleTypesIdentifier		{
+		lv_name_3_0=ruleBindingTypesIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTEnumRule());
 	        }
@@ -3553,7 +3649,7 @@ ruleTEnum returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_3_0, 
-        		"eu.numberfour.n4js.ts.Types.TypesIdentifier");
+        		"eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6785,14 +6881,6 @@ ruleReservedWord returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 
 
 
-// Entry rule entryRuleN4Keyword
-entryRuleN4Keyword returns [String current=null] 
-:
-	{ newCompositeNode(grammarAccess.getN4KeywordRule()); } 
-	 iv_ruleN4Keyword=ruleN4Keyword 
-	 { $current=$iv_ruleN4Keyword.current.getText(); }  
-	 EOF 
-;
 
 // Rule N4Keyword
 ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 

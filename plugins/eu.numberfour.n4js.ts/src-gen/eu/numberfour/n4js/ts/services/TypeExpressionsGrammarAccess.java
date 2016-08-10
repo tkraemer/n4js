@@ -2135,7 +2135,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
 		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
 		
-		//N4Keyword:
+		//fragment N4Keyword:
 		//	'get' | 'set'
 		//	| 'let'
 		//	| 'project'
@@ -2145,7 +2145,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| 'This' | 'Await' | 'Promisify'
 		//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 		//	| 'await'
-		//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
+		//	// async is not a reserved keyword, i.e. it can be used as a variable name
 		//	| 'async'
 		//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//	| 'implements' | 'interface'
@@ -2156,7 +2156,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
 		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
-		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name
+		//| 'await' // async is not a reserved keyword, i.e. it can be used as a variable name
 		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//| 'implements' | 'interface' | 'private' | 'protected' | 'public' // package not used in N4JS
 		//// definition-site variance
@@ -2924,7 +2924,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReservedWordAccess().getRule();
 	}
 
-	//N4Keyword:
+	//fragment N4Keyword:
 	//	'get' | 'set'
 	//	| 'let'
 	//	| 'project'
@@ -2934,7 +2934,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'This' | 'Await' | 'Promisify'
 	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 	//	| 'await'
-	//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
+	//	// async is not a reserved keyword, i.e. it can be used as a variable name
 	//	| 'async'
 	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 	//	| 'implements' | 'interface'

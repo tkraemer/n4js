@@ -76,7 +76,7 @@ ruleUndefModifierToken :
 
 // Rule PrimitiveType
 rulePrimitiveType :
-	'primitive' ruleTypesIdentifier (
+	'primitive' ruleVoidOrBindingIdentifier (
 		'<' ruleTypeVariable '>'
 	)? (
 		'indexed' ruleParameterizedTypeRefNominal
@@ -121,17 +121,31 @@ ruleNullType :
 
 // Rule TypesIdentifier
 ruleTypesIdentifier :
-	RULE_IDENTIFIER |
-	'any' |
+	ruleTypesSpecificKeywords |
+	ruleIdentifierName
+;
+
+// Rule BindingTypesIdentifier
+ruleBindingTypesIdentifier :
+	ruleTypesSpecificKeywords |
+	ruleBindingIdentifier
+;
+
+// Rule VoidOrBindingIdentifier
+ruleVoidOrBindingIdentifier :
 	'void' |
-	'null' |
+	ruleBindingTypesIdentifier
+;
+
+// Rule TypesSpecificKeywords
+ruleTypesSpecificKeywords :
+	'any' |
 	'undefined' |
 	'object' |
 	'virtualBase' |
 	'primitive' |
 	'autoboxedType' |
-	'assignmnentCompatible' |
-	ruleN4Keyword
+	'assignmnentCompatible'
 ;
 
 // Rule TypesComputedPropertyName
@@ -155,7 +169,7 @@ ruleTypesStringLiteralComputedName :
 // Rule TObjectPrototype
 ruleTObjectPrototype :
 	ruleTypeAccessModifier 'providedByRuntime'? 'final'? 'object'
-	ruleTypesIdentifier (
+	ruleBindingTypesIdentifier (
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
@@ -172,13 +186,13 @@ ruleTObjectPrototype :
 
 // Rule VirtualBaseType
 ruleVirtualBaseType :
-	'virtualBase' ruleTypesIdentifier '{' ruleTMember* '}'
+	'virtualBase' ruleBindingTypesIdentifier '{' ruleTMember* '}'
 ;
 
 // Rule TClass
 ruleTClass :
 	ruleTypeAccessModifier 'providedByRuntime'? 'abstract'? 'final'? 'class'
-	ruleTypingStrategyDefSiteOperator? ruleTypesIdentifier (
+	ruleTypingStrategyDefSiteOperator? ruleBindingTypesIdentifier (
 		'<' ruleTypeVariableWithDefSiteVariance (
 			',' ruleTypeVariableWithDefSiteVariance
 		)* '>'
@@ -198,7 +212,7 @@ ruleTClass :
 // Rule TInterface
 ruleTInterface :
 	ruleTypeAccessModifier 'providedByRuntime'? 'interface'
-	ruleTypingStrategyDefSiteOperator? ruleTypesIdentifier (
+	ruleTypingStrategyDefSiteOperator? ruleBindingTypesIdentifier (
 		'<' ruleTypeVariableWithDefSiteVariance (
 			',' ruleTypeVariableWithDefSiteVariance
 		)* '>'
@@ -351,7 +365,7 @@ ruleTFunction :
 		'<' ruleTypeVariable (
 			',' ruleTypeVariable
 		)* '>'
-	)? ruleTypesIdentifier '(' (
+	)? ruleBindingTypesIdentifier '(' (
 		ruleTFormalParameter (
 			',' ruleTFormalParameter
 		)*
@@ -360,8 +374,8 @@ ruleTFunction :
 
 // Rule TEnum
 ruleTEnum :
-	ruleTypeAccessModifier 'providedByRuntime'? 'enum' ruleTypesIdentifier '{'
-	ruleTEnumLiteral (
+	ruleTypeAccessModifier 'providedByRuntime'? 'enum' ruleBindingTypesIdentifier
+	'{' ruleTEnumLiteral (
 		',' ruleTEnumLiteral
 	)* '}'
 ;

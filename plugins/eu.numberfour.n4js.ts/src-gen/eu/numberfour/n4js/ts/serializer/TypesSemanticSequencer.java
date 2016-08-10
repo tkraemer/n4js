@@ -1063,7 +1063,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=TypesIdentifier 
+	 *         name=VoidOrBindingIdentifier 
 	 *         typeVars+=TypeVariable? 
 	 *         declaredElementType=ParameterizedTypeRefNominal? 
 	 *         autoboxedType=[TClassifier|TypeReferenceName]? 
@@ -1167,7 +1167,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredAbstract?='abstract'? 
 	 *         declaredFinal?='final'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         superClassRef=ParameterizedTypeRefNominal? 
 	 *         (implementedInterfaceRefs+=ParameterizedTypeRefNominal implementedInterfaceRefs+=ParameterizedTypeRefNominal*)? 
@@ -1208,7 +1208,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     (
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         literals+=TEnumLiteral 
 	 *         literals+=TEnumLiteral*
 	 *     )
@@ -1258,7 +1258,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (fpars+=TFormalParameter fpars+=TFormalParameter*)? 
 	 *         returnTypeRef=TypeRef
 	 *     )
@@ -1296,7 +1296,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         (superInterfaceRefs+=ParameterizedTypeRefNominal superInterfaceRefs+=ParameterizedTypeRefNominal*)? 
 	 *         annotations+=TAnnotation* 
@@ -1338,7 +1338,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         declaredFinal?='final'? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
 	 *         superType=ParameterizedTypeRefNominal? 
 	 *         declaredElementType=ParameterizedTypeRefNominal? 
@@ -1711,7 +1711,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     VirtualBaseType returns VirtualBaseType
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier ownedMembers+=TMember*)
+	 *     (name=BindingTypesIdentifier ownedMembers+=TMember*)
 	 */
 	protected void sequence_VirtualBaseType(ISerializationContext context, VirtualBaseType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

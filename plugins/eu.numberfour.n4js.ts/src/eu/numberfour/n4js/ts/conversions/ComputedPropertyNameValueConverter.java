@@ -15,7 +15,6 @@ import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Group;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.conversion.ValueConverterException;
-import org.eclipse.xtext.conversion.impl.KeywordAlternativeConverter;
 import org.eclipse.xtext.nodemodel.INode;
 
 /**
@@ -44,7 +43,7 @@ import org.eclipse.xtext.nodemodel.INode;
  * and the sections related to symbols, iterators, and the <code>for..of</code> loop in the N4JS Specification and
  * Section 9.3 in the Design document.
  */
-public class ComputedPropertyNameValueConverter extends KeywordAlternativeConverter {
+public class ComputedPropertyNameValueConverter extends IdentifierDelegateValueConverter {
 
 	/**
 	 * Prefix used in names of members that are identified by a built-in symbol.

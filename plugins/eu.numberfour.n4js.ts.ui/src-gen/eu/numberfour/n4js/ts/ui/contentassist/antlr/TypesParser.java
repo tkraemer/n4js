@@ -43,6 +43,9 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUndefModifierTokenAccess().getAlternatives(), "rule__UndefModifierToken__Alternatives");
 					put(grammarAccess.getTypeReferenceNameAccess().getAlternatives(), "rule__TypeReferenceName__Alternatives");
 					put(grammarAccess.getTypesIdentifierAccess().getAlternatives(), "rule__TypesIdentifier__Alternatives");
+					put(grammarAccess.getBindingTypesIdentifierAccess().getAlternatives(), "rule__BindingTypesIdentifier__Alternatives");
+					put(grammarAccess.getVoidOrBindingIdentifierAccess().getAlternatives(), "rule__VoidOrBindingIdentifier__Alternatives");
+					put(grammarAccess.getTypesSpecificKeywordsAccess().getAlternatives(), "rule__TypesSpecificKeywords__Alternatives");
 					put(grammarAccess.getTypesComputedPropertyNameAccess().getAlternatives_1(), "rule__TypesComputedPropertyName__Alternatives_1");
 					put(grammarAccess.getTMemberAccess().getAlternatives(), "rule__TMember__Alternatives");
 					put(grammarAccess.getTMethodAccess().getAlternatives_0_0_1(), "rule__TMethod__Alternatives_0_0_1");

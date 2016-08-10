@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.conversion;
+package eu.numberfour.n4js.ts.conversions;
 
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
