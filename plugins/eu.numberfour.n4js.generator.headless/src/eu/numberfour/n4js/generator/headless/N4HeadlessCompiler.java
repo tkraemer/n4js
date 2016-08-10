@@ -283,7 +283,7 @@ public class N4HeadlessCompiler {
 	 */
 	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles)
 			throws N4JSCompileException {
-		compileProjects(projectRoots, modelFiles, new DismissingIssueAcceptor());
+		compileSingleFiles(projectRoots, modelFiles, new DismissingIssueAcceptor());
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class N4HeadlessCompiler {
 	 *             in case of errros.
 	 */
 	public void compileAllProjects(List<File> pProjectRoots) throws N4JSCompileException {
-		compileProjects(pProjectRoots, new DismissingIssueAcceptor());
+		compileAllProjects(pProjectRoots, new DismissingIssueAcceptor());
 	}
 
 	/**
