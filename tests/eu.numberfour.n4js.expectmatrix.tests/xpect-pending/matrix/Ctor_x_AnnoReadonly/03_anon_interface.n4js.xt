@@ -2,14 +2,13 @@
 
 ////////////////////////////////////////
 // Anonymous interface in spec object //
-// needs @Readonly	   				  //
 // Example 41						  //
 ////////////////////////////////////////
 
 class A {
 	public s : string;
-	// IDE-139 @Readonly not working yet XPECT FIXME noerrors -->
-	public constructor(@Spec @Readonly spec : ~~this) {}
+	// IDE-139 XPECT noerrors -->
+	public constructor(@Spec spec : ~i~this) {}
 }
 
 class B extends A { 

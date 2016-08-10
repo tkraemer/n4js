@@ -2,7 +2,6 @@
 
 /////////////////////////
 // Null in spec object //
-// needs @Readonly	   //
 /////////////////////////
 
 class A {
@@ -10,8 +9,8 @@ class A {
 	public bc : B<C>;
 	public ubc : union{B<int>, C};
 	
-	// IDE-139 @Readonly not working yet XPECT FIXME noerrors -->
-	public constructor (@Readonly @Spec spec : ~i~this) {}	
+	// IDE-139 not working yet XPECT noerrors -->
+	public constructor (@Spec spec : ~i~this) {}	
 }
 
 class B<T> {
@@ -26,7 +25,7 @@ class C {
 	public constructor (@Spec spec : ~i~this) {}
 }
 
-// IDE-139 (@Readonly) initializing field with null XPECT noerrors -->
+// IDE-139 initializing field with null XPECT noerrors -->
 var b1 = new B<C>({b: 5, c: null});
 
 var n1 : C = null;
