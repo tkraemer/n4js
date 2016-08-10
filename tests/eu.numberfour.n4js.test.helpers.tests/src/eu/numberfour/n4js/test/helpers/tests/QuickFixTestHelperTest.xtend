@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests
+package eu.numberfour.n4js.test.helpers.tests
 
 import eu.numberfour.n4js.xpect.QuickFixTestHelper
 import org.junit.Test
