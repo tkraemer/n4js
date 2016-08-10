@@ -12,7 +12,7 @@ enum NSBEnum { A, B }
 // Want N4Enum, got SBEnum //
 /////////////////////////////
 
-// N4StringBasedEnum !<: N4Enum XPECT errors --> "SBEnum is not a subtype of N4Enum." at "s"
+// IDEBUG-294 N4StringBasedEnum !<: N4Enum XPECT errors --> "SBEnum is not a subtype of N4Enum." at "s"
 function f(s : SBEnum) : N4Enum { return s; }
 
 

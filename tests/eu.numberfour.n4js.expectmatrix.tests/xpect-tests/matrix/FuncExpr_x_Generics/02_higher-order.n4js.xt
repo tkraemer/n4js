@@ -17,11 +17,11 @@ var f2 = function <T,S> (f : {function(B<T,S>):T}, t : T, s : S) {
 	return f(b);
 }
 
-// higher-order function use XPECT noerrors -->
+// IDEBUG-166 higher-order function use XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 f2(f1, 2, "S");
 
-// higher-order function use (with parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 higher-order function use (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 <number,string>f2(f1, 2, "S");
 
@@ -33,11 +33,11 @@ var f3 = function <T,S> (f : {function(B<T,S>):T}, t : T, s : S) {
 	return function () { return f(b); }; 
 }
 
-// higher-order function use (returns a function) XPECT noerrors -->
+// IDEBUG-166 higher-order function use (returns a function) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 f3(f1, 2, "s");
 
-// higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 <number,string>f3(f1, 2, "s");
 
@@ -52,10 +52,10 @@ var f4 = function <T,S> (f : {function(B<T,S>):T}, t : T, s : S) {
 	return ff; 
 }
 
-// higher-order function use (returns a function) XPECT noerrors -->
+// IDEBUG-166 higher-order function use (returns a function) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 f4(f1, 2, "s");
 
-// higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 higher-order function use (returns a function) (with parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,string>):number}.
 <number,string>f4(f1, 2, "s");

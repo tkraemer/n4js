@@ -19,21 +19,21 @@ function <T,S> h (f : {function(B<T,S>)}) {}
 // generic return type XPECT noerrors -->
 h(f1);
 
-// generic return (parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 generic return (parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):T} is not a subtype of {function(B<number,number>)}. <-- Example 21, 8
 <number,number>h(f1);
 
 // primitive return type XPECT noerrors -->
 h(f2);
 
-// primitive return type (parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 primitive return type (parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):number} is not a subtype of {function(B<number,number>)}. <-- Example 21, 8
 <number,number>h(f2);
 
 // no return type XPECT noerrors -->
 h(f3);
 
-// no return type (parameters explicitly specified) XPECT noerrors -->
+// IDEBUG-166 no return type (parameters explicitly specified) XPECT noerrors -->
 // {function<T,S>(B<T,S>):void} is not a subtype of {function(B<number,number>)}. <-- Example 21, 10
 <number,number>h(f3);
 

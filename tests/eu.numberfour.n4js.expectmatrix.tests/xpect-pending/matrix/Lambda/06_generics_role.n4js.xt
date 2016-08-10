@@ -9,7 +9,7 @@ interface B<T> {
 	public m : T;
 
 	public bar () : {function():T} {
-		// returning variable of type T XPECT noerrors -->
+		// IDEBUG-177 returning variable of type T XPECT noerrors -->
 		return () => { return this.m };
 	}
 	

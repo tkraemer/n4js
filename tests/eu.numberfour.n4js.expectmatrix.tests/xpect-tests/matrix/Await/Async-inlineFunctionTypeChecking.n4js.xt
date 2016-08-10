@@ -4,7 +4,7 @@ var dumbnumbs = [1,2,3,4,5];
 
 // XPECT type of 'v11' --> Array<Promise<any,?>>
 var v11 = dumbnumbs.map(
-	//XPECT noerrors --> 
+	//XPECT noerrors --> "IDE-1494"
 	async function (num : number) {
 		return num + 7;  
 	}
@@ -13,7 +13,7 @@ var v11 = dumbnumbs.map(
 
 // XPECT type of 'v12' --> Array<Promise<any,?>>
 var v12 = dumbnumbs.map(
-	//XPECT noerrors --> 
+	//XPECT noerrors --> "IDE-1494"
 	async function luckify(num : number) {
 		return num + 7;  
 	}

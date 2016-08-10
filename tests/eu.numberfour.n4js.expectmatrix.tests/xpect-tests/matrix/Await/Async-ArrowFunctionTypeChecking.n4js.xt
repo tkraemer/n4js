@@ -13,14 +13,14 @@ var dumbnumbs = [1,2,3,4,5];
 // single-expression form, no type hint
 // XPECT type of 'v01' --> Array<Promise<any,?>>
 var v01 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num : number) => num + 1
 )
 
 // explicit return, no type hint
 // XPECT type of 'v02' --> Array<Promise<any,?>>
 var v02 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num : number) => { return num + 2 }
 )
 
@@ -28,14 +28,14 @@ var v02 = dumbnumbs.map(
 // single-expression form, with type hint (non-poly)
 // XPECT type of 'v11' --> Array<Promise<number,?>>
 var v11 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num : number): number => num + 3
 )
 
 // explicit return, with type hint (non-poly)
 // XPECT type of 'v12' --> Array<Promise<number,?>>
 var v12 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num : number): number => { return num + 4 }
 )
 
@@ -43,14 +43,14 @@ var v12 = dumbnumbs.map(
 // single-expression form, with type hint (but still poly, because now type of fpar missing)
 // XPECT type of 'v21' --> Array<Promise<number,?>>
 var v21 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num): number => num + 3
 )
 
 // explicit return, with type hint (but still poly, because now type of fpar missing)
 // XPECT type of 'v22' --> Array<Promise<number,?>>
 var v22 = dumbnumbs.map(
-	// XPECT noerrors --> 
+	// XPECT noerrors --> "IDE-1494"
 	async (num): number => { return num + 4 }
 )
 
