@@ -118,7 +118,7 @@ class CircularReferencesScopingTest implements N4Scheme {
 
 		val sister = rs.getResource(sisterURI, false)
 		assertNotNull(sister)
-		assertTrue(sister.loaded)
+		assertFalse(sister.loaded)
 		assertEquals(2, sister.contents.size)
 
 		sister.contents.head // use an iterator here internally to check for concurrent modifications on the contents list

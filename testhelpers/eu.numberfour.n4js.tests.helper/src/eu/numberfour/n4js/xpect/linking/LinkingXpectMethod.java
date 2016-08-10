@@ -24,7 +24,6 @@ import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.tests.LinkingTest;
 import org.xpect.xtext.lib.util.XtextOffsetAdapter.ICrossEReferenceAndEObject;
 
@@ -48,7 +47,7 @@ public class LinkingXpectMethod extends LinkingTest {
 	@Xpect
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void linkedPathname(@StringExpectation IStringExpectation expectation,
-			@ThisOffset ICrossEReferenceAndEObject arg1) {
+			ICrossEReferenceAndEObject arg1) {
 		EObject targetObject = (EObject) arg1.getEObject().eGet(arg1.getCrossEReference());
 		if (targetObject == null) {
 			Assert.fail("Reference is null");

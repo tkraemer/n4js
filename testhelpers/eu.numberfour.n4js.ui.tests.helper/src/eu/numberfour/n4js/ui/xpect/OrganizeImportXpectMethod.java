@@ -18,14 +18,18 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
+import org.xpect.XpectImport;
 import org.xpect.expectation.IStringDiffExpectation;
 import org.xpect.expectation.StringDiffExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.xtext.lib.setup.ThisResource;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.ConsumedIssues;
 
 import com.google.inject.Inject;
 
@@ -39,6 +43,7 @@ import junit.framework.AssertionFailedError;
 
 /**
  */
+@XpectImport(ValidationTestModuleSetup.class)
 public class OrganizeImportXpectMethod {
 
 	static { // avoid Exceptions (mainly in IDE)
@@ -68,6 +73,7 @@ public class OrganizeImportXpectMethod {
 	@SuppressWarnings("restriction")
 	@ParameterParser(syntax = "('ambiguous' arg0=STRING)?")
 	@Xpect
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void organizeImports(
 			String ambiguous, // arg0
 			@StringDiffExpectation(whitespaceSensitive = false, allowSingleSegmentDiff = false, allowSingleLineDiff = false) IStringDiffExpectation expectation,

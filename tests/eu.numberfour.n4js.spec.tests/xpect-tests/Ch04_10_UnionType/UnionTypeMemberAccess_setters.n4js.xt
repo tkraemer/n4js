@@ -1,9 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
-class A {}
-class ASub extends A {}
-class B {}
+interface A {}
+interface ASub extends A {}
+interface B {}
 
 
 class T1 {
@@ -43,7 +43,7 @@ u.s_onlyInT1 = null;
 u.s_onlyInT2 = null;
 // XPECT expectedType at 'null' --> A
 u.s1 = null;
-// private members are visible inside module XPECT errors -->
+// private members are visible inside module XPECT noerrors
 u.s2 = null;
 // XPECT expectedType at 'null' --> intersection{A,ASub}
 u.s3 = null;

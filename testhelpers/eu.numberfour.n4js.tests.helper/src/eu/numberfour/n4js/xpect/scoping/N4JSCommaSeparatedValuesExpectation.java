@@ -24,34 +24,29 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.Pair;
 import org.junit.ComparisonFailure;
-import org.xpect.XpectInvocation;
-import org.xpect.expectation.AbstractExpectation;
-import org.xpect.expectation.AbstractExpectationParser;
-import org.xpect.expectation.AbstractExpectationProvider;
-import org.xpect.expectation.ActualCollection;
-import org.xpect.expectation.ActualCollection.ActualItem;
-import org.xpect.expectation.ActualCollection.ToString;
-import org.xpect.expectation.ExpectationCollection;
-import org.xpect.expectation.ExpectationCollection.ExpectationItem;
-import org.xpect.expectation.IExpectationRegion;
-import org.xpect.expectation.TargetSyntaxSupport;
-import org.xpect.parameter.IParameterParser.ISingleParameterParser;
-import org.xpect.parameter.IParameterParser.SingleParameterParser;
+import org.xpect.XpectArgument;
+import org.xpect.expectation.impl.AbstractExpectation;
+import org.xpect.expectation.impl.ActualCollection;
+import org.xpect.expectation.impl.ActualCollection.ActualItem;
+import org.xpect.expectation.impl.ActualCollection.ToString;
+import org.xpect.expectation.impl.ExpectationCollection;
+import org.xpect.expectation.impl.ExpectationCollection.ExpectationItem;
+import org.xpect.expectation.impl.TargetSyntaxSupport;
+import org.xpect.setup.XpectSetupFactory;
+import org.xpect.state.Creates;
 import org.xpect.text.Text;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
-import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation.N4JSCommaSeparatedValuesExpectationParser;
-
 /**
  * @author Moritz Eysholdt - Initial contribution and API
  * @author Jörg Reichert, Jens von Pilgrim <jens.von.pilgrim@numberfour.eu> - N4JS adaptations
  */
+@SuppressWarnings("restriction")
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-@SingleParameterParser(N4JSCommaSeparatedValuesExpectationParser.class)
 public @interface N4JSCommaSeparatedValuesExpectation {
 
 	/***/
@@ -63,16 +58,15 @@ public @interface N4JSCommaSeparatedValuesExpectation {
 	}
 
 	/***/
+	@XpectSetupFactory
 	public class N4JSCommaSeparatedValuesExpectationImpl extends AbstractExpectation implements
-	IN4JSCommaSeparatedValuesExpectation {
+			IN4JSCommaSeparatedValuesExpectation {
 		private final N4JSCommaSeparatedValuesExpectation annotation;
 
 		/***/
-		public N4JSCommaSeparatedValuesExpectationImpl(N4JSCommaSeparatedValuesExpectation annotation,
-				TargetSyntaxSupport syntax,
-				IExpectationRegion region) {
-			super(syntax, region);
-			this.annotation = annotation;
+		public N4JSCommaSeparatedValuesExpectationImpl(XpectArgument argument, TargetSyntaxSupport syntax) {
+			super(argument, syntax);
+			this.annotation = argument.getAnnotationOrDefault(N4JSCommaSeparatedValuesExpectation.class);
 		}
 
 		@Override
@@ -216,55 +210,19 @@ public @interface N4JSCommaSeparatedValuesExpectation {
 			return b.toString();
 		}
 
-	}
-
-	/***/
-	public class N4JSCommaSeparatedValuesExpectationParser extends AbstractExpectationParser implements
-	ISingleParameterParser {
-		private final N4JSCommaSeparatedValuesExpectation annotation;
-
 		/***/
-		public N4JSCommaSeparatedValuesExpectationParser(N4JSCommaSeparatedValuesExpectation cfg) {
-			super();
-			this.annotation = cfg;
-		}
-
-		/***/
-		public N4JSCommaSeparatedValuesExpectation getAnnotation() {
-			return annotation;
+		@Creates
+		public IN4JSCommaSeparatedValuesExpectation create() {
+			return this;
 		}
 
 		@Override
-		public IParsedParameterProvider parseRegion(XpectInvocation invocation, int paramIndex,
-				List<IClaimedRegion> claims) {
-			IExpectationRegion region = claimRegion(invocation, paramIndex);
-			if (region != null)
-				return new N4JSCommaSeparatedValuesExpectationProvider(annotation, region);
-			return null;
-		}
-	}
-
-	/***/
-	public class N4JSCommaSeparatedValuesExpectationProvider extends
-	AbstractExpectationProvider<IN4JSCommaSeparatedValuesExpectation> {
-		private final N4JSCommaSeparatedValuesExpectation annotation;
-
-		/***/
-		public N4JSCommaSeparatedValuesExpectationProvider(N4JSCommaSeparatedValuesExpectation annotation,
-				IExpectationRegion region) {
-			super(region);
-			this.annotation = annotation;
+		public List<Value> getExpectedValues() {
+			// if needed, implement as in
+			// org.xpect.expectation.impl.CommaSeparatedValuesExpectationImpl.getExpectedValues()
+			throw new UnsupportedOperationException();
 		}
 
-		@Override
-		protected IN4JSCommaSeparatedValuesExpectation createExpectation(TargetSyntaxSupport targetSyntax) {
-			return new N4JSCommaSeparatedValuesExpectationImpl(annotation, targetSyntax, getClaimedRegion());
-		}
-
-		/***/
-		public N4JSCommaSeparatedValuesExpectation getAnnotation() {
-			return annotation;
-		}
 	}
 
 	/***/

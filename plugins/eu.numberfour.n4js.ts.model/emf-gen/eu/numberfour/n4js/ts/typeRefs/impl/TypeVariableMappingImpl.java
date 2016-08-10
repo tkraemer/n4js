@@ -13,6 +13,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
 
 import eu.numberfour.n4js.ts.types.TypeVariable;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -20,7 +22,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class TypeVariableMappingImpl extends MinimalEObjectImpl.Container implements TypeVariableMapping {
+public class TypeVariableMappingImpl extends ProxyResolvingEObjectImpl implements TypeVariableMapping {
 	/**
 	 * The cached value of the '{@link #getTypeVar() <em>Type Var</em>}' reference.
 	 * <!-- begin-user-doc -->

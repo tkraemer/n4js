@@ -35,21 +35,16 @@ export public class E implements D {
     @Override
     @Internal public meth1(b : boolean) {  }
 
-	// static cases
+	// static cases (note: static members of interfaces are not inherited, so the below are independent members!)
 
 	// XPECT  noerrors --> "The static field E.sfield cannot reduce the visibility of static field D.sfield."    
-    @Override
-    @Internal public static sfield = true;
+    project static sfield = true;
 	// XPECT  noerrors --> "The static getter E.sfield2 cannot reduce the visibility of static getter D.sfield2."    
-    @Override
-    @Internal public static get sfield2() { return true; }
+    project static get sfield2() { return true; }
 	// XPECT  noerrors --> "The static setter E.sfield3 cannot reduce the visibility of static setter D.sfield3."    
-    @Override
-    @Internal public static set sfield3(b : boolean) {  }
+    project static set sfield3(b : boolean) {  }
     
 	// XPECT  noerrors --> "The static method E.meth1 cannot reduce the visibility of static method D.meth1."    
-    @Override
-    @Internal public static meth1(b : boolean) {  } 
+    project static meth1(b : boolean) {  } 
 }
-
 

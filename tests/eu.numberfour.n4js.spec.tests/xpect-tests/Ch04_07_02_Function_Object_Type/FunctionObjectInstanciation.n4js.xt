@@ -4,11 +4,11 @@
 // Example can be run directly in your JavaScript console
 
 // Create a function that takes two arguments and returns the sum of those arguments
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 var adder = new Function("a", "b", "return a + b");
 
 // Call the function
-// Ok, XPECT errors -->
+// Ok, XPECT noerrors
 var res = adder(2, 6);
 
 // > 8

@@ -13,9 +13,8 @@ package eu.numberfour.n4js.typesystem
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import java.util.Arrays
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtext.EcoreUtil2
@@ -23,6 +22,7 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 
 import static org.junit.Assert.*
+import java.util.Arrays
 
 /**
  * Helper for type system tests, base class for assembler classes generating script under test.
@@ -82,10 +82,23 @@ class AbstractScriptAssembler {
 		}
 	}
 
-	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, int expectedIssueCount) {
+	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, int expectedIssueCount) {		
+		return setupScript(scriptSrc, variant, null, expectedIssueCount);
+	}
+
+	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, String[] expectedMessages) {	
+		return setupScript(scriptSrc, variant, expectedMessages, -1);		
+	}
+	
+	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, String[] expectedMessages, int expectedIssueCount) {
 		script = createScript(scriptSrc, variant)
 		val issues = script.validate();
-		assertEquals(Arrays.toString(issues.toArray) + "\nin\n" + scriptSrc, expectedIssueCount, issues.size);
+		
+		if (expectedMessages === null) {			
+			assertEquals(Arrays.toString(issues.toArray) + "\nin\n" + scriptSrc, expectedIssueCount, issues.size);
+		} else {
+			assertEquals(String.join(",", expectedMessages), issues.map[code].join(","));			
+		}
 
 		// newly created top level vars and
 		// nested variables starting with "local":

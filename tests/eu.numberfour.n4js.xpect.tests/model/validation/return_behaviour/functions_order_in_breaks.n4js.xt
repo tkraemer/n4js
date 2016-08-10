@@ -2,6 +2,7 @@
    END_SETUP
  */
 
+// found during IDE-1852: XPECT FIXME noerrors
 /////// break out of try:
 // XPECT returnOrThrow --> noReturnsMode
 function f6(): number {

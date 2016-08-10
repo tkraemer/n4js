@@ -24,7 +24,7 @@ function <T,S> FA04(p1 : T, p2 : S?) : T  { return null; }
 function <T,S> FA06(p1 : T, ...p2 : S) : T  { return null; }
 function <T,S extends T> FA07(p1 : T, p2 : S) : T  { return null; }
 
-// OK, no generics XPECT errors -->
+// OK, no generics XPECT noerrors
 function FA21() : {function()} { return FA01; }
 
 // OK, match in concrete type and generics 
@@ -50,24 +50,24 @@ class CB3 <T,S> extends CA<T> implements IA<S> {}
 // function has no ret-type XPECT errors --> "any is not a subtype of CB1<string>." at "FA01()"
 var cbfa01 : CB1<string> = FA01();
 
-// OK type inferred XPECT errors -->
+// OK type inferred XPECT noerrors
 var cbfa02 : CB1<string> = FA02();
 
-// OK, new without parameters. XPECT errors -->
+// OK, new without parameters. XPECT noerrors
 var cbfa03a : CB1<string> = FA03(new CB1<string> );
 
-// OK, new with empty parameterlist XPECT errors -->
+// OK, new with empty parameterlist XPECT noerrors
 var cbfa03b : CB1<string> = FA03(new CB1<string>() );
 
 class A {}
 
-// OK, string extends string XPECT errors -->
+// OK, string extends string XPECT noerrors
 var cbfa03c : CB1<? extends A> = FA03(new CB1<A>() );
 
-// OK, string super string XPECT errors -->
+// OK, string super string XPECT noerrors
 var cbfa03d : CB1<? super string> = FA03(new CB1<string>() );
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var cbfa06a : CB1<string> = FA06(new CB1<string>() , 1,2,3,4,5 );
 
 // variadic sequence as union-type {string,number} XPECT  noerrors --> 
@@ -79,17 +79,17 @@ var cbfa06c : CB1<string> = <CB1<string>,number>FA06(new CB1<string>() , 1,2,3,"
 
 // + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var cbfa07a : CB1<string> = FA07(new CB1<string>() , new CB1<string>() );
 
 // *** deactivated, because "... implements IA<?>" is now allowed
 //// class implementing wildcard variant of interface cannot be bound to concrete variant X---PECT errors --> "CB1<string> is not a subtype of IA<string>."  at "new CB1<string>()"
 //var ia00 : IA<string> = new CB1<string>();
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var ia01 : IA<string> = new CB2<string>();
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var ia02 : IA<number> = new CB2<number>();
 
 // interface cannot be subtype of class XPECT FIXME errors --> "IA<string> is not a subtype of CB1<string>."
@@ -102,11 +102,11 @@ var cbfa07c : CB1<string> = FA07(new CB1<string>() , ia02 );
 var cbfa07d : CB1<string> = FA07(new CB1<string>() , new CB1<number>() );
 
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var cbfa07e : IA<string> = FA07( ia01, new CB2<string>() );
 
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var cbfa07eXXXX = FA07(new CB2<string>() , ia01 );
 
 // 2nd arg in F07 is not subtype of 1st arg. XPECT FIXME errors --> "IA<number> is not a subtype of CB2<string>."

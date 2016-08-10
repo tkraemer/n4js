@@ -15,11 +15,12 @@ class C extends B {
   m() : number { return 1 }
   
   m2() : any {
-      return y => // XPECT linkedPathname at 'y'      ---> C/m2/y
+      return y => // XPECT linkedPathname at 'y'      --> C/m2/y
                   y +
-                  // XPECT linkedPathname at 'm()' ---> B/m
+                  // found during IDE-1852: XPECT FIXME noerrors
+                  // XPECT linkedPathname at 'm()' --> B/m
                   super.m() +
-                  // XPECT linkedPathname at 'm()' ---> C/m
+                  // XPECT linkedPathname at 'm()' --> C/m
                   this.m();
   }
 

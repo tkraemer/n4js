@@ -15,24 +15,24 @@ fs(new String("Hello"));
 //  ++++ string types  +++++++++++++
 
 function f_ps(p : pathSelector<?>) {
-	// ok XPECT errors -->
+	// ok XPECT noerrors
 	var s : string = p;
 }
 function f_tn(p : typeName<?>) {
-	// ok // XPECT errors -->
+	// ok // XPECT noerrors
 	var s : string = p;
 }
 
 function f_ik(p : i18nKey) {
-	// ok // XPECT errors -->
+	// ok // XPECT noerrors
 	var s : string = p;
 }
 
-// ok // XPECT errors -->
+// ok // XPECT noerrors
 f_ps("hello.world");
 
-// ok // XPECT errors -->
+// ok // XPECT noerrors
 f_tn("A");
 
-// ok // XPECT errors -->
+// ok // XPECT noerrors
 f_ik("somekey");

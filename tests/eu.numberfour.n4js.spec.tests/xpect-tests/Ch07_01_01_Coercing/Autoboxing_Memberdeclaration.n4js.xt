@@ -73,7 +73,7 @@ var a : A = new A();
 console.log(a);
 console.log(typeof a.b);
 
-// OK, no error XPECT errors -->
+// OK, no error XPECT noerrors
 a.b = "3";
 
 console.log(a);

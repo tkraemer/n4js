@@ -47,6 +47,7 @@ var v12 : Iterable3<B,B,B> = [b,x,b];
 // case all remaining match XPECT type of '[b,c,b,b,b,c,b]' --> Iterable3<B,B,B>
 var v13 : Iterable3<B,B,B> = [b,c,b,b,b,c,b];
 
+// found during IDE-1852: XPECT FIXME noerrors
 // case NOT all remaining match XPECT type of '[b,c,b,b,b,x,b]' --> Iterable3<B,B,union{B,X}>
 var v14 : Iterable3<B,B,B> = [b,c,b,b,b,x,b];
 
@@ -77,6 +78,7 @@ var v19 : union{Iterable2<A,A>,Iterable2<A,B>} = [a,b];
 // XPECT type of '[a,b]' --> Iterable2<A,A>
 var v20 : union{Iterable2<A,A>,Iterable2<A,X>} = [a,b];
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT type of '[a,x]' --> Iterable2<A,union{A,X}>
 var v21 : union{Iterable2<A,A>,Iterable2<A,X>} = [a,x];
 

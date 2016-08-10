@@ -26,7 +26,10 @@ stderr:
 var a = new A();
 var b = new B();
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT binding --> A.f
 a.f();
+
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT binding --> B.f
 b.f();

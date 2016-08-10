@@ -12,6 +12,8 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -19,7 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class TypedElementImpl extends MinimalEObjectImpl.Container implements TypedElement {
+public abstract class TypedElementImpl extends ProxyResolvingEObjectImpl implements TypedElement {
 	/**
 	 * The cached value of the '{@link #getDeclaredTypeRef() <em>Declared Type Ref</em>}' containment reference.
 	 * <!-- begin-user-doc -->

@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -44,10 +45,14 @@ import org.xpect.expectation.IStringDiffExpectation;
 import org.xpect.expectation.IStringDiffExpectation.ITokenAdapter;
 import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringDiffExpectation;
+import org.xpect.expectation.StringExpectation;
+import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
 import org.xpect.setup.ISetupInitializer;
 import org.xpect.xtext.lib.setup.FileSetupContext;
 import org.xpect.xtext.lib.setup.ThisResource;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup;
+import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.ConsumedIssues;
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.IssuesByLine;
 import org.xpect.xtext.lib.tests.ValidationTestModuleSetup.TestingResourceValidator;
 
@@ -65,7 +70,8 @@ import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
 /**
  * Provides XPEXT test methods for quick fixes
  */
-@XpectImport({ N4JSOffsetAdapter.class, XpEnvironmentData.class, VarDef.class, Config.class })
+@XpectImport({ N4JSOffsetAdapter.class, XpEnvironmentData.class, VarDef.class, Config.class,
+		ValidationTestModuleSetup.class })
 public class QuickFixXpectMethod {
 	@Inject
 	private XpectN4JSES5TranspilerHelper xpectN4JSES5TranpilerHelper;
@@ -104,8 +110,9 @@ public class QuickFixXpectMethod {
 	 * @throws Exception
 	 *             in test failure.
 	 */
-	@ParameterParser2(syntax = "('at' (arg2=OFFSET ('apply' arg3=STRING)? ('resource=' arg5=STRING)?  (arg4=ID)? )? )? )?")
+	@ParameterParser(syntax = "('at' (arg2=STRING ('apply' arg3=STRING)? ('resource=' arg5=STRING)?  (arg4=ID)? )? )? )?")
 	@Xpect
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void quickFix(
 			// @StringDiffExpectation(tokenizer = LineBasedTokenizer) IStringDiffExpectation expectation, // arg0
 			@StringDiffExpectation(whitespaceSensitive = false) IStringDiffExpectation expectation, // arg0
@@ -294,10 +301,11 @@ public class QuickFixXpectMethod {
 	 * @throws Exception
 	 *             in failure case
 	 */
-	@ParameterParser2(syntax = "('at' arg2=OFFSET)? ('apply'  arg3=STRING )?")
 	@Xpect
+	@ParameterParser(syntax = "('at' arg2=STRING)? ('apply'  arg3=STRING )?")
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void quickFixAndRun(
-			@LineFeedAwareStringExpectation(ignoreLineEndings = true) IStringExpectation expectation, // arg0
+			@StringExpectation(caseSensitive = true) IStringExpectation expectation, // arg0
 			@ThisResource XtextResource resource, // arg1
 			RegionWithCursor offset, // arg2
 			String selected, // arg3
@@ -381,8 +389,9 @@ public class QuickFixXpectMethod {
 	 * @throws Exception
 	 *             if failing
 	 */
-	@ParameterParser2(syntax = "('at' (arg2=OFFSET (arg3=ID  (arg4=STRING)?  (arg5=ID)? )? )? )?")
 	@Xpect
+	@ParameterParser(syntax = "('at' (arg2=STRING (arg3=ID  (arg4=STRING)?  (arg5=ID)? )? )? )?")
+	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
 	public void quickFixList(
 			@CommaSeparatedValuesExpectation(quoted = true, ordered = true) ICommaSeparatedValuesExpectation expectation, // arg0
 			@ThisResource XtextResource resource, // arg1

@@ -15,14 +15,14 @@ import eu.numberfour.n4js.n4JS.Script;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
+import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class ExportableElementImpl extends MinimalEObjectImpl.Container implements ExportableElement {
+public abstract class ExportableElementImpl extends ProxyResolvingEObjectImpl implements ExportableElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

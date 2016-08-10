@@ -72,11 +72,20 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	/** Property to specify whether a greeter file should be created */
 	public static final String CREATE_GREETER_FILE_PROP_NAME = "createGreeterFile";
 
+	/** Property to specify the vendor id */
+	public static final String VENDOR_ID_PROP_NAME = "vendorId";
+
+	/** The default value for the vendor id */
+	public static final String DEFAULT_VENDOR_ID = "eu.numberfour";
+
 	/** The custom project location. {@code null} if there is not custom project location set. */
 	private IPath projectLocation;
 
 	/** The type of the N4 project. By default: {@link ProjectType#LIBRARY system}. */
 	private ProjectType projectType = LIBRARY;
+
+	/** The vendor id of the project */
+	private String vendorId = DEFAULT_VENDOR_ID;
 
 	/** The optional implementation ID. */
 	private String implementationId;
@@ -371,6 +380,21 @@ public class N4MFProjectInfo extends DefaultProjectInfo {
 	public void setCreateGreeterFile(boolean createTestGreeterFile) {
 		firePropertyChange(CREATE_GREETER_FILE_PROP_NAME, this.createGreeterFile,
 				this.createGreeterFile = createTestGreeterFile);
+	}
+
+	/**
+	 * Returns the vendor id the the project.
+	 */
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	/**
+	 * Sets the vendor id of the project.
+	 *
+	 */
+	public void setVendorId(String vendorId) {
+		firePropertyChange(VENDOR_ID_PROP_NAME, this.vendorId, this.vendorId = vendorId);
 	}
 
 }

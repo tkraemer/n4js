@@ -12,6 +12,7 @@
 @GenModel(fileExtensions="n4ts",
 // modelPluginID isn't strictly necessary but causes some trouble
 //	modelPluginID="eu.numberfour.n4js.ts.model",
+	rootExtendsClass="eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl",
 	modelDirectory="/eu.numberfour.n4js.ts.model/emf-gen",
 	forceOverwrite="true",
 	updateClasspath="false",

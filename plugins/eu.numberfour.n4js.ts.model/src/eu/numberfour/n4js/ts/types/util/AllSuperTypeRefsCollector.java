@@ -58,7 +58,10 @@ public class AllSuperTypeRefsCollector extends AbstractCompleteHierarchyTraverse
 			result.addAll(casted.getSuperInterfaceRefs());
 		} else if (containerType instanceof TObjectPrototype) {
 			TObjectPrototype casted = (TObjectPrototype) containerType;
-			result.add(casted.getSuperType());
+			ParameterizedTypeRef superType = casted.getSuperType();
+			if (superType != null) {
+				result.add(superType);
+			}
 		} else if (containerType instanceof PrimitiveType) {
 			PrimitiveType assignmentCompatible = ((PrimitiveType) containerType).getAssignmentCompatible();
 			if (assignmentCompatible != null) {

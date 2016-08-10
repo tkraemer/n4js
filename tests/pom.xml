@@ -89,6 +89,9 @@ Contributors:
 		<!-- Spec Examples test -->
 		<module>/eu.numberfour.n4js.spec.examples.xpect.tests</module>
 
+		<!-- *************************************** Tests testing the test helpers -->
+		<module>/eu.numberfour.n4js.test.helpers.tests</module>
+
 		<!-- *************************************** Headless Tools Tests -->
 		<module>eu.numberfour.n4js.hlc.tests</module>
 		
