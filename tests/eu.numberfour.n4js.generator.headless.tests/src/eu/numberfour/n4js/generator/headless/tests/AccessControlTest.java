@@ -1040,11 +1040,6 @@ public class AccessControlTest {
 	}
 
 	/**
-	 * The directory to store the test fixture (the generated projects) in.
-	 */
-	private static String FIXTURE_ROOT = "accesscontrol-tests-temp";
-
-	/**
 	 * Performs the actual test according to the specification.
 	 */
 	@Test
@@ -1082,6 +1077,11 @@ public class AccessControlTest {
 			fail("Fixme test failed: At least one scenario did not match its inverted expectations.");
 		}
 	}
+
+	/**
+	 * The directory to store the test fixture (the generated projects) in.
+	 */
+	private static String FIXTURE_ROOT = "accesscontrol-tests-temp";
 
 	/**
 	 * Generates a test scenario according to the parameters specified in the given test specification.
@@ -1707,7 +1707,7 @@ public class AccessControlTest {
 		return result;
 	}
 
-	private static N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
+	private static N4HeadlessCompiler HLC = N4HeadlessCompiler.injectAndSetup(null);
 
 	/**
 	 * Compiles the projects generated into the path at {@link #FIXTURE_ROOT}, which in this test case the projects
@@ -1718,7 +1718,7 @@ public class AccessControlTest {
 	private static Collection<Issue> compile() {
 		IssueCollector issueCollector = new IssueCollector();
 		try {
-			hlc.compileAllProjects(Arrays.asList(new File(FIXTURE_ROOT)), issueCollector);
+			HLC.compileAllProjects(Arrays.asList(new File(FIXTURE_ROOT)), issueCollector);
 		} catch (N4JSCompileException e) {
 			// nothing to do
 		}
