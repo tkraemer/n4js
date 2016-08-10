@@ -3325,7 +3325,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getReservedWordAccess().getRule();
 	}
 
-	//fragment N4Keyword:
+	//N4Keyword:
 	//	'get' | 'set'
 	//	| 'let'
 	//	| 'project'

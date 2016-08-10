@@ -6881,6 +6881,14 @@ ruleReservedWord returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 
 
 
+// Entry rule entryRuleN4Keyword
+entryRuleN4Keyword returns [String current=null] 
+:
+	{ newCompositeNode(grammarAccess.getN4KeywordRule()); } 
+	 iv_ruleN4Keyword=ruleN4Keyword 
+	 { $current=$iv_ruleN4Keyword.current.getText(); }  
+	 EOF 
+;
 
 // Rule N4Keyword
 ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 

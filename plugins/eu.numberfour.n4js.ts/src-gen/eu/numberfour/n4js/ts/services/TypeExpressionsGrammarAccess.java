@@ -2135,7 +2135,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
 		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
 		
-		//fragment N4Keyword:
+		//N4Keyword:
 		//	'get' | 'set'
 		//	| 'let'
 		//	| 'project'
@@ -2924,7 +2924,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReservedWordAccess().getRule();
 	}
 
-	//fragment N4Keyword:
+	//N4Keyword:
 	//	'get' | 'set'
 	//	| 'let'
 	//	| 'project'

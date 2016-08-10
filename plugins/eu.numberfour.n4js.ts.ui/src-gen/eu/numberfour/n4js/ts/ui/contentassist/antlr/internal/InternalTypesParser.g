@@ -2196,6 +2196,14 @@ finally {
 
 
 
+// Entry rule entryRuleN4Keyword
+entryRuleN4Keyword 
+:
+{ before(grammarAccess.getN4KeywordRule()); }
+	 ruleN4Keyword
+{ after(grammarAccess.getN4KeywordRule()); } 
+	 EOF 
+;
 
 // Rule N4Keyword
 ruleN4Keyword 
