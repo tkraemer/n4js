@@ -74,73 +74,73 @@ import eu.numberfour.n4js.utils.io.FileDeleter;
  *
  * <ul>
  *     <li>
- *         <b>Scenario:</b> one of
+ *         <b>Scenario</b> one of
  *         <ul>
- *             <li><b>Extends:</b> The client extends the supplier, which implies that the supplier and the client are either both classes or both interfaces.</li>
- *             <li><b>Implements:</b>: The client implements the supplier, which implies that the supplier is an interface and the client is a class.</li>
- *             <li><b>References:</b>: The client has a reference to an instance of the supplier. Here, the client must be a class while the supplier can be either a class or an interface. If the supplier is abstract, then an implementing class is automatically generated.</li>
+ *             <li><b>Extends</b> The client extends the supplier, which implies that the supplier and the client are either both classes or both interfaces.</li>
+ *             <li><b>Implements</b> The client implements the supplier, which implies that the supplier is an interface and the client is a class.</li>
+ *             <li><b>References</b> The client has a reference to an instance of the supplier. Here, the client must be a class while the supplier can be either a class or an interface. If the supplier is abstract, then an implementing class is automatically generated.</li>
  *         </ul>
  *     </li>
  *     <li>
- *         <b>Supplier Type:</b> The actual type of the supplier, which is one of
+ *         <b>Supplier Type</b> The actual type of the supplier, which is one of
  *         <ul>
- *             <li><b>Class:</b> A concrete, instantiable class.</li>
- *             <li><b>Abstract Class:</b> An abstract class. The generated member is also abstract unless it's a field.</li>
- *             <li><b>Interface:</b> An abstract interface. The generated member is also abstract unless it's a field.</li>
- *             <li><b>Default Interface:</b> An interface where all members have default implementations.</li>
+ *             <li><b>Class</b> A concrete, instantiable class.</li>
+ *             <li><b>Abstract Class</b> An abstract class. The generated member is also abstract unless it's a field.</li>
+ *             <li><b>Interface</b> An abstract interface. The generated member is also abstract unless it's a field.</li>
+ *             <li><b>Default Interface</b> An interface where all members have default implementations.</li>
  *         </ul>
  *     </li>
  *     <li>
- *         <b>Client Type:</b> The actual type of the client, which has the same possible values as <b>Supplier Type</b>.
+ *         <b>Client Type</b> The actual type of the client, which has the same possible values as <b>Supplier Type</b>.
  *     </li>
  *     <li>
- *         <b>Client Location:</b> The location of the client in relation to the supplier, one of
+ *         <b>Client Location</b> The location of the client in relation to the supplier, one of
  *         <ul>
- *             <li><b>Same Type:</b> Client and supplier are the same type.</li>
- *             <li><b>Same Module:</b> Client and supplier are generated into the same module. This implies that only one project has to be generated.</li>
- *             <li><b>Same Project:</b> Client and supplier are in separate modules in the same project. Again, only one project is generated.</li>
- *             <li><b>Same Vendor:</b> Client and supplier are in different projects that share the same vendor ID.</li>
- *             <li><b>Other:</b> Client and supplier are in different projects with different vendor IDs.</li>
+ *             <li><b>Same Type</b> Client and supplier are the same type.</li>
+ *             <li><b>Same Module</b> Client and supplier are generated into the same module. This implies that only one project has to be generated.</li>
+ *             <li><b>Same Project</b> Client and supplier are in separate modules in the same project. Again, only one project is generated.</li>
+ *             <li><b>Same Vendor</b> Client and supplier are in different projects that share the same vendor ID.</li>
+ *             <li><b>Other</b> Client and supplier are in different projects with different vendor IDs.</li>
  *         </ul>
  *     </li>
  *     <li>
- *         <b>Member Static:</b> Whether or not the member being accessed is an instance member or a static member, one of <b>Instance</b> or <b>Static</b></li>
+ *         <b>Member Static</b> Whether or not the member being accessed is an instance member or a static member, one of <b>Instance</b> or <b>Static</b></li>
  *     </li>
  *     <li>
- *         <b>Usage Type:</b> The type of usage that the client is attempting, one of
+ *         <b>Usage Type</b> The type of usage that the client is attempting, one of
  *         <ul>
- *             <li><b>Access:</b> The client is attempting to read, write, or call a member of the supplier.</li>
- *             <li><b>Override:</b> The client is attempting to override a member of the supplier.</li>
+ *             <li><b>Access</b> The client is attempting to read, write, or call a member of the supplier.</li>
+ *             <li><b>Override</b> The client is attempting to override a member of the supplier.</li>
  *         </ul>
  *     </li>
  *     <li>
- *         <b>Supplier Visibility:</b> The top level visibility modifier for the supplier classifier, one of
+ *         <b>Supplier Visibility</b> The top level visibility modifier for the supplier classifier, one of
  *         <ul>
- *             <li><b>pub:</b> public visibility</li>
- *             <li><b>pub@:</b> public internal visibility</li>
- *             <li><b>proj:</b> project visibility</li>
- *             <li><b>priv:</b> (module-) private visibility (no modifier added)</li>
+ *             <li><b>pub</b> public visibility</li>
+ *             <li><b>pub@</b> public internal visibility</li>
+ *             <li><b>proj</b> project visibility</li>
+ *             <li><b>priv</b> (module-) private visibility (no modifier added)</li>
  *         </ul>
  *         For the first three visibilities, the keyword <code>export</code> is automatically added in the generated code.
  *     </li>
  *     <li>
- *         <b>Member Visibility:</b> The visibility of the generated member of the supplier that is being accessed by the client, one of
+ *         <b>Member Visibility</b> The visibility of the generated member of the supplier that is being accessed by the client, one of
  *         <ul>
- *             <li><b>pub:</b> public visibility</li>
- *             <li><b>pub@:</b> public internal visibility</li>
- *             <li><b>prot:</b> protected visibility</li>
- *             <li><b>prot@:</b> protected internal visibility</li>
- *             <li><b>proj:</b> project visibility</li>
- *             <li><b>priv:</b> private visibility</li>
+ *             <li><b>pub</b> public visibility</li>
+ *             <li><b>pub@</b> public internal visibility</li>
+ *             <li><b>prot</b> protected visibility</li>
+ *             <li><b>prot@</b> protected internal visibility</li>
+ *             <li><b>proj</b> project visibility</li>
+ *             <li><b>priv</b> private visibility</li>
  *         </ul>
  *     </li>
  *     <li>
- *         <b>Expectation:</b> The expectation of the test's outcome, one of
+ *         <b>Expectation</b> The expectation of the test's outcome, one of
  *         <ul>
- *             <li><b>y</b>: The test is expected to succeed without warnings or errors.</li>
- *             <li><b>n</b>: The test is expected to fail with an error</li>
+ *             <li><b>y</b> The test is expected to succeed without warnings or errors.</li>
+ *             <li><b>n</b> The test is expected to fail with an error</li>
  *             <li>
- *                 <b>u</b>: The test is expected to fail with two errors:
+ *                 <b>u</b> The test is expected to fail with two errors:
  *                 <ul>
  *                     <li>One error at the client classifier level regarding the unusability of the supplier.</li>
  *                     <li>Another error at the member level of the client.</li>
