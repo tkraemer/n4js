@@ -26,7 +26,7 @@ import eu.numberfour.n4js.tests.codegen.Method;
 import eu.numberfour.n4js.tests.codegen.Module;
 import eu.numberfour.n4js.tests.codegen.Project;
 import eu.numberfour.n4js.tests.codegen.Setter;
-import eu.numberfour.n4js.tests.issues.IssuesMatcher;
+import eu.numberfour.n4js.tests.issues.IssueExpectations;
 
 /**
  * Generates scenarios to be used by {@link AccessControlTest}. The created scenarios comprise of one or more N4JS
@@ -611,10 +611,10 @@ class ScenarioGenerator {
 	/**
 	 * Creates the issues according to the expectation returned by {@link TestSpecification#getExpectation()}.
 	 *
-	 * @return an instance of {@link IssuesMatcher} that represents the expectations
+	 * @return an instance of {@link IssueExpectations} that represents the expectations
 	 */
-	IssuesMatcher createIssues() {
-		IssuesMatcher result = new IssuesMatcher();
+	IssueExpectations createIssues() {
+		IssueExpectations result = new IssueExpectations();
 
 		switch (specification.getExpectation()) {
 		case OK:

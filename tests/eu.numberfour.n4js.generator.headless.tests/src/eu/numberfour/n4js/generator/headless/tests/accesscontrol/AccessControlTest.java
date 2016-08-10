@@ -47,7 +47,7 @@ import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
 import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Member;
-import eu.numberfour.n4js.tests.issues.IssuesMatcher;
+import eu.numberfour.n4js.tests.issues.IssueExpectations;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 
 // @formatter:off
@@ -585,7 +585,7 @@ public class AccessControlTest {
 				ScenarioGenerator generator = new ScenarioGenerator(specification, memberType);
 				generator.generateScenario(Paths.get(FIXTURE_ROOT));
 				Collection<Issue> issues = compile();
-				IssuesMatcher expectations = generator.createIssues();
+				IssueExpectations expectations = generator.createIssues();
 
 				if (specification.getExpectation().isFixMe()) {
 					// We want the entire test case to fail only if none of the tested scenarios match their

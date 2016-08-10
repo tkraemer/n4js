@@ -18,16 +18,18 @@ import java.util.List;
 import org.eclipse.xtext.validation.Issue;
 
 /**
- * Matches a collection of {@link IssueMatcher}s against a collection of errors.
+ * Represents expectations against {@link Issue}s. The expectations can be inverted by calling the {@link #invert()}
+ * method. Inverting expectations negates the result of <code>matches*</code> method calls. This is useful for
+ * <i>FIXME</i> expectations that should not fail if the actual expectations are violated, but when they are matched.
  */
-public class IssuesMatcher {
+public class IssueExpectations {
 	private final Collection<IssueMatcher> issueMatchers = new LinkedList<>();
 	private boolean inverted;
 
 	/**
 	 * Creates a new, non-inverted instance.
 	 */
-	public IssuesMatcher() {
+	public IssueExpectations() {
 		this.inverted = false;
 	}
 
