@@ -49,6 +49,7 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 
+
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
  *

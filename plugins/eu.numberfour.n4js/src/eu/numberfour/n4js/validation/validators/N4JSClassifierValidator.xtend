@@ -154,6 +154,30 @@ class N4JSClassifierValidator extends AbstractN4JSDeclarativeValidator {
 		val finalAcc = acc
 		return acc.keySet.map[it -> finalAcc.get(it)]
 	}
+	
+//	@Check
+//	def checkCompleteAccessorPairs(N4ClassifierDefinition n4ClassifierDefinition) {
+//		val classifier = n4ClassifierDefinition.definedType as TClassifier;
+//		val isN4JSMode = JavaScriptVariant.n4js.isActive(n4ClassifierDefinition);		
+//		
+//		if (classifier === null) { return; }
+//		
+//		classifier.ownedMembers
+//			.filter[it.isSetter]
+//			.filter[it.declaredOverride]
+//			.forEach[
+//				if (classifier.findOwnedMember(it.name, false, it.static) === null) {
+//					val message = IssueCodes.getMessageForCLF_UNPAIRED_SETTER(it.name, 
+//						if (it.declaredOverride) "overridden" else "declared");
+//						
+//					if (isN4JSMode) {
+//						addIssue(message, it.astElement, CLF_UNPAIRED_SETTER);
+//					} else {
+//						addIssue(message, it.astElement, CLF_UNPAIRED_SETTER_WARN);
+//					}
+//				}
+//			]
+//	}
 
 	/**
 	 * @see N4JSSpec, 4.18. Members, Constraints 33 (Member Names)

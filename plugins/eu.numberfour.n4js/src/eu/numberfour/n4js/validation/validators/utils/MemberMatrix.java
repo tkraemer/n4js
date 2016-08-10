@@ -285,6 +285,20 @@ public class MemberMatrix {
 	}
 
 	/**
+	 * Returns true if the matrix contains a mixed accessor pair. That is that getter and setter have different origins.
+	 * (inherited, owned)
+	 */
+	public boolean hasMixedAccessorPair() {
+		boolean hasOwnedGetter = !members(OWNED, GETTER).isEmpty();
+		boolean hasOwnedSetter = !members(OWNED, SETTER).isEmpty();
+		boolean hasInheritedGetter = !members(INHERITED, GETTER).isEmpty();
+		boolean hasInheritedSetter = !members(INHERITED, SETTER).isEmpty();
+
+		return (!hasOwnedGetter && hasInheritedGetter && hasOwnedSetter) ||
+				(hasOwnedGetter && hasInheritedSetter && !hasOwnedSetter);
+	}
+
+	/**
 	 * Returns all owned, inherited and implemented members (but not consumed members, since they are already contained
 	 * in "implemented").
 	 */

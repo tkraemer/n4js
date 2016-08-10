@@ -1,0 +1,68 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class OnlyGetter {
+	get field() : string { return "OnlyGetter.field get"; }	
+}
+class OnlySetter {
+	set field(v: string) {}	
+}
+class GetterAndSetter {
+	get field() : string { return "GetterAndSetter.field get"; }
+	set field(v: string) {}	
+}
+
+
+class OverrideGetter extends OnlyGetter {
+	@Override
+	// XPECT noerrors -->
+	get field() : string { return "A.field get";}
+}
+class OverrideSetter extends OnlySetter {
+	@Override
+	// XPECT noerrors -->
+	set field(v: string) {}
+}
+class DeclareMissingSetter extends OnlyGetter {
+	// XPECT errors --> "Setter DeclareMissingSetter.field should not be declared without a corresponding getter." at "field"
+	set field(v: string) {}
+}
+class DeclareMissingGetter extends OnlySetter {
+	// XPECT errors -->"Getter DeclareMissingGetter.field should not be declared without a corresponding setter." at "field"
+	get field() : string { return "DeclareMissingGetter.field get"; }
+}
+
+class OverrideGetterOnly extends GetterAndSetter {
+	@Override
+	// XPECT errors -->"Getter OverrideGetterOnly.field should not be overridden without a corresponding setter." at "field"
+	get field() : string { return "OverrideGetterOnly.field get"; }
+}
+
+class OverrideSetterOnly extends GetterAndSetter {
+	@Override
+	// XPECT errors -->"Setter OverrideSetterOnly.field should not be overridden without a corresponding getter." at "field"
+	set field(v: string) {}
+}
+
+class OverrideGetterAndDeclareSetter extends OnlyGetter {
+	@Override
+	// XPECT noerrors -->
+	get field() : string { return "OverrideGetterAndDeclareSetter.field get"; }
+	// XPECT noerrors -->
+	set field(v: string) {}	
+}
+class OverrideSetterAndDeclareGetter extends OnlySetter {
+	// XPECT noerrors -->
+	get field() : string { return "OverrideGetterAndDeclareSetter.field get"; }
+	@Override
+	// XPECT noerrors -->
+	set field(v: string) {}	
+}
+class OverrideGetterAndSetter extends GetterAndSetter {
+	@Override
+	// XPECT noerrors -->
+	get field() : string { return "OverrideGetterAndDeclareSetter.field get"; }
+	@Override
+	// XPECT noerrors -->
+	set field(v: string) {}	
+}
+

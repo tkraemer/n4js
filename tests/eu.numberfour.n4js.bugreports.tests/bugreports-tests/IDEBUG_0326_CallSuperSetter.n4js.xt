@@ -22,7 +22,7 @@ class A {
     console.log('setter in A: '+n);
     this._a = n;
   }
-  get a() {
+  get a() : number {
     return this._a - 10;
   }
 }
@@ -30,6 +30,7 @@ class A {
 
 class B extends A {
   
+  @Override get a() : number { return super.a; }
   @Override
   set a(n : number) {
     console.log('setter in B: '+n);

@@ -31,6 +31,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_TYPE_NOT_SAME_TYPE;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_UNMATCHED_ACCESSOR_OVERRIDE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_INHERITED_MEMBER_UNSOLVABLE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_MEMBER_SOLVABLE_CONFLICT;
@@ -52,6 +53,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -84,6 +86,7 @@ import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
@@ -92,6 +95,7 @@ import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
@@ -265,11 +269,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 							continue; // avoid consequential errors
 						}
 					}
+
 					// 4. declared overridden
 					if (!m.isDeclaredOverride()) {
 						membersMissingOverrideAnnotation.add(m);
 					}
 				}
+			}
+			// 5. don't allow incomplete accessor overrides / declarations
+			if (m.isAccessor() && mm.hasMixedAccessorPair()) {
+				messageMissingOwnedAccessor((FieldAccessor) m);
 			}
 		}
 	}
@@ -925,6 +934,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				missingAccessor,
 				validatorMessageHelper.descriptions(conflictingMembers));
 		addIssue(message, CLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE);
+	}
+
+	private void messageMissingOwnedAccessor(FieldAccessor accessor) {
+
+		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE(
+				org.eclipse.xtext.util.Strings.toFirstUpper(validatorMessageHelper.description(accessor)),
+				accessor.isDeclaredOverride() ? "overridden" : "declared",
+				accessor instanceof TSetter ? "getter" : "setter");
+		addIssue(message, accessor.getAstElement(),
+				N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
 	}
 
 	private void addIssueToMemberOrInterfaceReference(RedefinitionType redefinitionType, TMember overriding,
