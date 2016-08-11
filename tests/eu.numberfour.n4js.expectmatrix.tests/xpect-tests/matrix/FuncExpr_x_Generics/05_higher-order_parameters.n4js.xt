@@ -32,7 +32,7 @@ h(g0);
 h(g1);
 
 // IDEBUG-166 argument with the expected parameters (parameters explicitly specified) XPECT noerrors -->
-// {function<T,S>(T,S):void} is not a subtype of {function(number,string)}.  <-- Example 21, 10
+// {function<T,S>(T,S):void} is not a subtype of {function(number,string)}.  <-- Example 62, 10 "Subtyping with function types"
 <number,string>h(g1);
 
 // argument with the expected parameters (parameters explicitly specified for both functions) XPECT noerrors -->
