@@ -2144,8 +2144,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDeclaredUpperBoundsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
 		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_2_1.eContents().get(0);
 		
-		//// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-		//// (can't clean this up right now due to GH-206)
 		//TypeVariable types::TypeVariable:
 		//	(declaredCovariant?='out' | declaredContravariant?='in')?
 		//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
@@ -10888,8 +10886,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotatedExpressionAccess().getRule();
 	}
 
-	//// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-	//// (can't clean this up right now due to GH-206)
 	//TypeVariable types::TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
 	//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
