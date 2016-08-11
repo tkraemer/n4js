@@ -9,18 +9,18 @@ function <T> FA03(p1 : T) : T  { return null; }
 
 
 // following should be wrong, function name should not be used as type
-// XPECT FIXME errors --> "function name should not be used as a type"
+// GH-204 XPECT FIXME errors --> "function name should not be used as a type"
 function FA16() : FA00 { return FA00; }
 
 
-// XPECT FIXME errors --> "function name should not be used as a type"
+// GH-204 XPECT FIXME errors --> "function name should not be used as a type"
 function <T> FA19() : FA01<T> { return FA01; }
 
 
-// XPECT FIXME errors --> "function name should not be used as a type"
+// GH-204 XPECT FIXME errors --> "function name should not be used as a type"
 function FA21() : FA01<string> { return FA01; }
 
 
-// XPECT FIXME errors --> "function name should not be used as a type"
+// GH-204 XPECT FIXME errors --> "function name should not be used as a type"
 function <T> FA23() : FA03<T> { return FA03; }
 
