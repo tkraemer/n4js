@@ -60,7 +60,7 @@ function <T,S extends T & IA<T> > FA13(p1 : T, p2 : S) : T  { return null; }
 // XPECT noerrors -->
 function <T,S extends T & IA<S> > FA14(p1 : T, p2 : S) : T  { return null; }
 
-// XPECT FIXME errors --> "nothing can extends enum"
+// GH-249 XPECT FIXME errors --> "nothing can extends enum"
 function <T,S extends EA > FA15(p1 : T, p2 : S) : T  { return null; }
 
 

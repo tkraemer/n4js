@@ -7,14 +7,15 @@
 
 class A {
 	public x : number;
-	
-	// IDEBUG-134 y is not a field in A XPECT FIXME errors --> "y is not a field in A" at "number y"
+
+	// IDE-2318, IDEBUG-134 y is not a field in A XPECT FIXME errors --> "y is not a field in A" at "number y"
 	public constructor (@Spec spec : ~i~this with { y: number; }) {}
 }
 
 class B {
 	x : number;
-	
-	// IDEBUG-134 string x is not a field in A XPECT FIXME errors --> "string is not a subtype of number" at "string x"
-	public constructor (spec : ~~this with { x: string; }) {}
+
+	// IDEBUG-134 string x is not a field in A 
+	// XPECT errors --> "Type of structural member x of spec parameter must be a subtype of field B.x: string is not a subtype of number." at "x: string"
+	public constructor (@Spec spec : ~i~this with { x: string; }) {}
 }

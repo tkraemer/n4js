@@ -9,7 +9,7 @@ class A {
 	protected y : number;
 	private z :  number;
 	w : number;
-	
+
 	public constructor (@Spec spec : ~i~this with {y: number; z: number; }) {
 		this.y = spec.y;
 	}
