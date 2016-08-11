@@ -9,7 +9,7 @@ class A {
 	public x : number;
 	
 	// IDEBUG-134 y is not a field in A XPECT FIXME errors --> "y is not a field in A" at "number y"
-	public constructor (@Spec spec : ~~this with { y: number; }) {}
+	public constructor (@Spec spec : ~i~this with { y: number; }) {}
 }
 
 class B {

@@ -92,13 +92,13 @@ var ia01 : IA<string> = new CB2<string>();
 // OK XPECT errors -->
 var ia02 : IA<number> = new CB2<number>();
 
-// interface cannot be subtype of class XPECT FIXME errors --> "IA<string> is not a subtype of CB1<string>."
+// IDE-1727 interface cannot be subtype of class XPECT FIXME errors --> "IA<string> is not a subtype of CB1<string>."
 var cbfa07b : CB1<string> = FA07(new CB1<string>() , ia01 );
 
-// interface cannot be subtype of class XPECT FIXME errors --> "IA<number> is not a subtype of CB1<string>."
+// IDE-1727 interface cannot be subtype of class XPECT FIXME errors --> "IA<number> is not a subtype of CB1<string>."
 var cbfa07c : CB1<string> = FA07(new CB1<string>() , ia02 );
 
-// mismatch in generic variable: number variant of CB1 is not a subtype of string variant. XPECT FIXME errors --> "number is not a subtype of string"
+// IDE-1727 mismatch in generic variable: number variant of CB1 is not a subtype of string variant. XPECT FIXME errors --> "number is not a subtype of string"
 var cbfa07d : CB1<string> = FA07(new CB1<string>() , new CB1<number>() );
 
 
@@ -109,15 +109,15 @@ var cbfa07e : IA<string> = FA07( ia01, new CB2<string>() );
 // OK XPECT errors -->
 var cbfa07eXXXX = FA07(new CB2<string>() , ia01 );
 
-// 2nd arg in F07 is not subtype of 1st arg. XPECT FIXME errors --> "IA<number> is not a subtype of CB2<string>."
+// IDE-1727 2nd arg in F07 is not subtype of 1st arg. XPECT FIXME errors --> "IA<number> is not a subtype of CB2<string>."
 var cbfa07f : CB2<string> = FA07(new CB2<string>() , ia02 );
 
-// number != string XPECT FIXME errors --> "number is not a subtype of string"
+// IDE-1727 number != string XPECT FIXME errors --> "number is not a subtype of string"
 var cbfa07g : CB2<string> = FA07(new CB2<string>() , new CB2<number>() );
 
 var cb03 : CB3<number,string> = new CB3<number,string>();
 
-// returns interface-type, not assignable to implementing class-type. XPECT FIXME errors --> "IA<string> is not a subtype of CB3<string,number>"
+// IDE-1727 returns interface-type, not assignable to implementing class-type. XPECT FIXME errors --> "IA<string> is not a subtype of CB3<string,number>"
 // BUT GOT: "union{CB3<string,number>,IA<string>} is not a subtype of CB3<string,number>." at "FA07( ia01 , new CB3<string,number>() )"
 var cbfa07k : CB3<string,number> = FA07( ia01 , new CB3<string,number>() );
 

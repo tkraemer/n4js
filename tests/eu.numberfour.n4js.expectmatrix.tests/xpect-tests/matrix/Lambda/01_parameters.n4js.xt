@@ -2,6 +2,7 @@
 
 ////////////////
 // Parameters //
+//  IDE-1037  //
 ////////////////
 
 // zero parameters, one-liner block XPECT noerrors -->
@@ -18,10 +19,10 @@
 };
 
 // one parameter, one-liner block XPECT noerrors -->
-(x : number) => { return x*x };
+(x : number) => { return x+x };
 
-//IDE-1037 one parameter, simple syntax XPECT FIXME noerrors -->
-x => x*x;
+// one parameter, simple syntax XPECT noerrors -->
+x => x+x;
 
 // one parameter, multiline block XPECT noerrors -->
 (y : number) => { 

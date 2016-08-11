@@ -54,13 +54,14 @@ var cfa06d : string = FA06("bee","you","and");
 // wrong type in variadic XPECT errors --> "int is not a subtype of string." at "4"
 var cfa06e : string = <string,string>FA06("bee","you","and",4);
 
-// X--PECT errors --> "string is not a subtype of number." at "FA06("bee","you","and")"
-// note: above error message would be better, cf. IDE-1727
-// XPECT errors ---
+// X--PECT errors --> 
 // "T is not a subtype of number." at "FA06("bee","you","and")"
 // "string is not a subtype of S." at ""and""
 // "string is not a subtype of S." at ""you""
 // "string is not a subtype of T." at ""bee""
+// note: above are current error messages
+// IDE-1727 XPECT FIXME errors ---
+// "string is not a subtype of number." at "FA06("bee","you","and")"
 // ---
 var cfa06f : number = FA06("bee","you","and");
 

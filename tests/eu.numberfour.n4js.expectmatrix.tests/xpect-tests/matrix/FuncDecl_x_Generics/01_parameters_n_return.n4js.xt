@@ -31,12 +31,10 @@ n1 = g2(new A<number>());
 
 
 var b1 : boolean;
-// X--PECT errors --> "string is not a subtype of boolean." at "g2(new A<string>())"
-// note: above error message would be better, cf. IDE-1727
-// XPECT errors ---
 // "A<string> is not a subtype of A<T>." at "new A<string>()"
 // "T is not a subtype of boolean." at "g2(new A<string>())"
-// ---
+// note: above is current error message
+// IDE-1727 XPECT FIXME errors ---> "string is not a subtype of boolean." at "g2(new A<string>())"
 b1 = g2(new A<string>());
 
 // XPECT errors --> "string is not a subtype of boolean." at "<string>g2(new A<string>())"
