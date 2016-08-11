@@ -333,8 +333,6 @@ AnnotatedExpression <Yield> returns Expression:
 	)
 ;
 
-// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-// (can't clean this up right now due to GH-206)
 TypeVariable returns types::TypeVariable:
 	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
