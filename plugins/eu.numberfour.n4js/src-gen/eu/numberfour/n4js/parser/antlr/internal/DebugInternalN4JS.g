@@ -4481,97 +4481,6 @@ ruleAnnotationName :
 	'target'
 ;
 
-// Rule BindingIdentifier
-ruleBindingIdentifier :
-	RULE_IDENTIFIER |
-	'yield' |
-	ruleN4Keyword
-;
-
-// Rule BindingIdentifier
-norm1_BindingIdentifier :
-	RULE_IDENTIFIER |
-	ruleN4Keyword
-;
-
-// Rule IdentifierName
-ruleIdentifierName :
-	RULE_IDENTIFIER |
-	ruleReservedWord |
-	ruleN4Keyword
-;
-
-// Rule ReservedWord
-ruleReservedWord :
-	'break' |
-	'case' |
-	'catch' |
-	'class' |
-	'const' |
-	'continue' |
-	'debugger' |
-	'default' |
-	'delete' |
-	'do' |
-	'else' |
-	'export' |
-	'extends' |
-	'finally' |
-	'for' |
-	'function' |
-	'if' |
-	'import' |
-	'in' |
-	'instanceof' |
-	'new' |
-	'return' |
-	'super' |
-	'switch' |
-	'this' |
-	'throw' |
-	'try' |
-	'typeof' |
-	'var' |
-	'void' |
-	'while' |
-	'with' |
-	'yield' |
-	'null' |
-	'true' |
-	'false' |
-	'enum'
-;
-
-// Rule N4Keyword
-ruleN4Keyword :
-	'get' |
-	'set' |
-	'let' |
-	'project' |
-	'external' |
-	'abstract' |
-	'static' |
-	'as' |
-	'from' |
-	'constructor' |
-	'of' |
-	'target' |
-	'type' |
-	'union' |
-	'intersection' |
-	'This' |
-	'Await' |
-	'Promisify' |
-	'await' |
-	'async' |
-	'implements' |
-	'interface' |
-	'private' |
-	'protected' |
-	'public' |
-	'out'
-;
-
 // Rule REGEX_LITERAL
 ruleREGEX_LITERAL :
 	(
@@ -6082,52 +5991,6 @@ ruleElision :
 	','
 ;
 
-// Rule TStructMethod
-ruleTStructMethod :
-	( (
-	(
-		'<' ruleTypeVariable (
-			',' ruleTypeVariable
-		)* '>'
-	)? ruleIdentifierName '('
-	) => (
-		(
-			'<' ruleTypeVariable (
-				',' ruleTypeVariable
-			)* '>'
-		)? ruleIdentifierName '('
-	) ) ruleTAnonymousFormalParameterList ')' (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructField
-ruleTStructField :
-	ruleIdentifierName (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructGetter
-ruleTStructGetter :
-	( (
-	'get' ruleIdentifierName
-	) => (
-		'get' ruleIdentifierName
-	) ) '(' ')' (
-		':' ruleTypeRef
-	)?
-;
-
-// Rule TStructSetter
-ruleTStructSetter :
-	( (
-	'set' ruleIdentifierName
-	) => (
-		'set' ruleIdentifierName
-	) ) '(' ruleTAnonymousFormalParameter ')'
-;
-
 // Rule LiteralOrComputedPropertyName
 ruleLiteralOrComputedPropertyName :
 	ruleIdentifierName |
@@ -6288,8 +6151,8 @@ ruleTAnonymousFormalParameterList :
 ruleTAnonymousFormalParameter :
 	'...'? (
 		( (
-		ruleTIdentifier
-		) => ruleTIdentifier ) ':'
+		ruleBindingIdentifier
+		) => ruleBindingIdentifier ) ':'
 	)? ruleTypeRef
 ;
 
@@ -6370,6 +6233,52 @@ ruleTStructMember :
 	ruleTStructField
 ;
 
+// Rule TStructMethod
+ruleTStructMethod :
+	( (
+	(
+		'<' ruleTypeVariable (
+			',' ruleTypeVariable
+		)* '>'
+	)? ruleIdentifierName '('
+	) => (
+		(
+			'<' ruleTypeVariable (
+				',' ruleTypeVariable
+			)* '>'
+		)? ruleIdentifierName '('
+	) ) ruleTAnonymousFormalParameterList ')' (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructField
+ruleTStructField :
+	ruleIdentifierName (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructGetter
+ruleTStructGetter :
+	( (
+	'get' ruleIdentifierName
+	) => (
+		'get' ruleIdentifierName
+	) ) '(' ')' (
+		':' ruleTypeRef
+	)?
+;
+
+// Rule TStructSetter
+ruleTStructSetter :
+	( (
+	'set' ruleIdentifierName
+	) => (
+		'set' ruleIdentifierName
+	) ) '(' ruleTAnonymousFormalParameter ')'
+;
+
 // Rule TypingStrategyUseSiteOperator
 ruleTypingStrategyUseSiteOperator :
 	'~' (
@@ -6423,32 +6332,95 @@ ruleUndefModifierToken :
 	'?'
 ;
 
-// Rule TypesIdentifier
-ruleTypesIdentifier :
+// Rule BindingIdentifier
+ruleBindingIdentifier :
 	RULE_IDENTIFIER |
-	'get' |
-	'set' |
-	'abstract' |
-	'project' |
-	'union' |
-	'intersection' |
-	'as' |
-	'from' |
-	'type' |
+	'yield' |
+	ruleN4Keyword
+;
+
+// Rule BindingIdentifier
+norm1_BindingIdentifier :
+	RULE_IDENTIFIER |
+	ruleN4Keyword
+;
+
+// Rule IdentifierName
+ruleIdentifierName :
+	RULE_IDENTIFIER |
+	ruleReservedWord |
+	ruleN4Keyword
+;
+
+// Rule ReservedWord
+ruleReservedWord :
+	'break' |
+	'case' |
+	'catch' |
+	'class' |
+	'const' |
+	'continue' |
+	'debugger' |
+	'default' |
+	'delete' |
+	'do' |
+	'else' |
+	'export' |
+	'extends' |
+	'finally' |
+	'for' |
+	'function' |
+	'if' |
+	'import' |
+	'in' |
+	'instanceof' |
+	'new' |
+	'return' |
+	'super' |
+	'switch' |
+	'this' |
+	'throw' |
+	'try' |
+	'typeof' |
+	'var' |
 	'void' |
+	'while' |
+	'with' |
+	'yield' |
 	'null' |
+	'true' |
+	'false' |
 	'enum'
 ;
 
-// Rule TIdentifier
-ruleTIdentifier :
-	ruleTypesIdentifier |
+// Rule N4Keyword
+ruleN4Keyword :
+	'get' |
+	'set' |
+	'let' |
+	'project' |
+	'external' |
+	'abstract' |
+	'static' |
+	'as' |
+	'from' |
+	'constructor' |
+	'of' |
+	'target' |
+	'type' |
+	'union' |
+	'intersection' |
+	'This' |
+	'Await' |
+	'Promisify' |
+	'await' |
+	'async' |
 	'implements' |
 	'interface' |
 	'private' |
 	'protected' |
 	'public' |
-	'static'
+	'out'
 ;
 
 // Rule VariableStatementKeyword
