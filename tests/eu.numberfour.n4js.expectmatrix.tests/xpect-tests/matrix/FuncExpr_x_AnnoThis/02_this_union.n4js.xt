@@ -14,6 +14,7 @@ class C {
 	log() : string { return "C was logged"; }
 } 
 
+// IDE-2313
 var logger = @This(union{A,B}) function () { console.log("~" + this.log() + "~"); }
 
 var a : A = new A();
@@ -24,6 +25,7 @@ logger.call(a);
 logger.call(b);
 logger.call(c);
 
+// IDE-1010, IDE-2313
 /* XPECT output ---
 <==
 stdout:

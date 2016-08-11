@@ -21,6 +21,7 @@ class B {
 	constructor (stuff : string) { this.stuff = stuff; } 
 }
 
+// IDE-1010, IDE-2313
 @This(~Object with { name: string; price: number; })
 function rename(name : string) { this.name = name; }
 

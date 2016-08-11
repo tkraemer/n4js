@@ -4,6 +4,7 @@
 // @This with field accessors //
 ////////////////////////////////
 
+// IDE-2313
 interface A {
 	// cannot use @This with getters XPECT errors --> "The annotation @This is disallowed for this location." at "This"
 	@This(~Object with { s: string; })

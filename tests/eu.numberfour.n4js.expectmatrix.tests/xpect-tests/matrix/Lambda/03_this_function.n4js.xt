@@ -5,6 +5,7 @@
 // in function declarations  //
 ///////////////////////////////
 
+// IDE-2313
 @This(~Object with {m: number;})
 function fun(n : number) {
 	// this is bound to outer context (all well) XPECT noerrors -->
@@ -16,6 +17,7 @@ function noFun(n : number) {
 	(() => { this.m = n })();
 }
 
+// IDE-2313
 @This(~Object with {m: number;})
 function evenLessFun(n : number) {
 	var f = @This(~Object with {g: number;}) function () {

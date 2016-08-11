@@ -23,6 +23,7 @@ var a : A = new A("first A");
 // Via annotating the expression with @This(B) access to the receiver of type B is enabled.
 a.logMe = @This(B) function () { console.log("logging " + this.log())}
 
+// IDE-1010, IDE-2313
 a.logMe();
 a.logMe.call(new A("second A"));
 a.logMe.call(new B());

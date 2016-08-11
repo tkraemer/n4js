@@ -7,7 +7,7 @@
 interface A {
 	s : string;
 	n : number;
-	
+
 	@This(~Object with {m: number;})
 	// this is an Object with m now XPECT noerrors -->
 	f() : number { return this.m + 7; }
@@ -21,5 +21,6 @@ class B implements A {}
 
 var b = new B();
 
-// returns a number XPECT noerrors -->
+// IDE-1010, IDE-2313
+// returns a number XPECT FIXME errors --> "Receiver b has no member m" at "b"
 var n1 : number = b.f();
