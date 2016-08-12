@@ -29,13 +29,13 @@ var cfa03 : string = FA03("bee");
 // OK XPECT noerrors -->
 var cfa04 : string = FA04("bee",4);
 
-// wrong return XPECT FIXME errors --> "number is not a subtype of string" at "FA04(4,"bee")"
+// IDE-1727 wrong return XPECT FIXME errors --> "number is not a subtype of string" at "FA04(4,"bee")"
 var cfa04a : string = FA04(4,"bee");
 
 // OK XPECT noerrors -->
 var cfa04b : string = FA04("bee");
 
-// XPECT FIXME errors --> "string is not a subtype of number" at "FA04("bee")"
+// IDE-1727 XPECT FIXME errors --> "string is not a subtype of number" at "FA04("bee")"
 var cfa04c : number = FA04("bee"); // error strange message: "union{number,string} is not a subtype of number." should be "string is not a subtype of number" !
 
 // XPECT errors --> "Incorrect number of arguments: expected 2, got 0." at "FA06()"

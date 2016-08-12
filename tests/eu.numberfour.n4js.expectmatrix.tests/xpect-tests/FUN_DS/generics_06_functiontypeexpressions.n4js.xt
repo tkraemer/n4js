@@ -23,8 +23,8 @@ var fa201b : { function () :void } = FA01;
 // XPECT type of 'fa101' --> {function<T>(T):T}
 var fa101 = FA03;
 
-// OK XPECT FIXME noerrors -->
-var fa203 : { function ( string ) : string } =  <string>FA03 ;
+// OK XPECT noerrors -->
+var fa203 : { function ( string ) : string } =  FA03;
 
 /*  Typevar not specified XPECT errors ---
 "Couldn't resolve reference to Type 'T'." at "T"

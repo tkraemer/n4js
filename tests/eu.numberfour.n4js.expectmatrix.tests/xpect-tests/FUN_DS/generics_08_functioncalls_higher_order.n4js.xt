@@ -8,12 +8,12 @@ function <T,S> FA04(p1 : T, p2 : S?) : T  { return null; }
 
 function <T,S> FA06(p1 : T, ...p2 : S) : T  { return null; }
 
-// XPECT FIXME noerrors -->
-function FA21() : {function()} { return <string>FA01; }
-// XPECT FIXME noerrors -->
-function FA22() : {function(string):string} { return <string>FA03; }
-// XPECT FIXME noerrors -->
-function <T> FA23() : {function(T):T} { return <T>FA03; }
+// XPECT noerrors -->
+function FA21() : {function()} { return FA01; }
+// XPECT noerrors -->
+function FA22() : {function(string):string} { return FA03; }
+// XPECT noerrors -->
+function <T> FA23() : {function(T):T} { return FA03; }
 
 
 
@@ -50,17 +50,20 @@ var cfa22e : number = FA22()(4);
 --- */
 var cfa23a : string = FA23()();
 
-// OK XPECT FIXME noerrors -->
-var cfa23b : string = FA23()("bee");
+// OK XPECT noerrors -->
+var f = <string>FA23();
 
-// XPECT FIXME errors --> "number is not a subtype of string" at "4"
-var cfa23c : string = FA23()(4);
+// OK XPECT noerrors -->
+var cfa23b : string = <string>FA23()("bee");
 
-// XPECT FIXME errors --> "string is not a subtype number" at "bee"
-var cfa23d : number = FA23()("bee");
+// XPECT errors --> "int is not a subtype of string." at "4"
+var cfa23c : string = <string>FA23()(4);
 
-// OK XPECT FIXME noerrors -->
-var cfa23e : number = FA23()(4); // ok
+// XPECT errors --> "string is not a subtype of number." at ""bee""
+var cfa23d : number = <number>FA23()("bee");
+
+// OK XPECT noerrors -->
+var cfa23e : number = <number>FA23()(4); // ok
 
 
 // + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
