@@ -62,11 +62,6 @@ import org.eclipse.xtext.validation.Issue
 import static eu.numberfour.n4js.ui.changes.ChangeProvider.*
 import static eu.numberfour.n4js.ui.quickfix.QuickfixUtil.*
 import static org.eclipse.jface.dialogs.MessageDialog.openError
-import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.ui.changes.ChangeProvider
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import eu.numberfour.n4js.n4JS.N4GetterDeclaration
-import eu.numberfour.n4js.ts.types.MemberAccessModifier
 
 /**
  * N4JS quick fixes.
@@ -227,44 +222,6 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 				return #[addModifier(context.xtextDocument, element, N4Modifier.ABSTRACT)]
 			}
 			return #[]
-		]
-	}
-	
-	@Fix(IssueCodes.CLF_UNMATCHED_ACCESSOR_OVERRIDE)
-	def addCorrespondingGetter(Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, "Add corresponding accessor", "", null) [ context, marker, offset, length, element |
-			
-			
-			if (element instanceof N4SetterDeclaration) {
-				val setter = element.definedSetter
-				val name = setter.name;
-				val returnType = setter.fpar.typeRef.typeRefAsString;
-				val node = NodeModelUtils.findActualNodeFor(element);
-				val accessModifier = switch (setter.declaredMemberAccessModifier) {
-					case PRIVATE: "private "
-					case PROJECT: ""
-					case PROTECTED: "protected "
-					case PUBLIC: "public "
-					default: ""
-				};
-									
-				return #[ChangeProvider.insertLineAbove(context.xtextDocument, node.offset, '''@Override «accessModifier»«IF setter.static»static «ENDIF»get «name»() : «returnType» {}''', true)]
-			} else if (element instanceof N4GetterDeclaration) {
-				val getter = element.definedGetter
-				val name = getter.name;
-				val parameterType = getter.declaredTypeRef.typeRefAsString;
-				val node = NodeModelUtils.findActualNodeFor(element);
-				val accessModifier = switch (getter.declaredMemberAccessModifier) {
-					case PRIVATE: "private "
-					case PROJECT: ""
-					case PROTECTED: "protected "
-					case PUBLIC: "public "
-					default: ""
-				};
-									
-				return #[ChangeProvider.insertLineAbove(context.xtextDocument, node.offset, '''@Override «accessModifier»«IF getter.static»static «ENDIF»set «name»(value : «parameterType») {}''', true)]
-			}
-			return #[];
 		]
 	}
 
