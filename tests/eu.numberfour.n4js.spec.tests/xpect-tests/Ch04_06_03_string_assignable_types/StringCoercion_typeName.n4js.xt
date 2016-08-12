@@ -14,12 +14,12 @@ function <T extends Widget> createWidget(type : typeName<T>): T
 }
 
 
-// OK, valid XPECT errors -->
+// OK, valid XPECT noerrors
 var validUsage = createWidget("Widget");
 
 // TODO validation
 // invalid, because String is not a subclass of Widget, X!PECT errors --> "String is not a subtype of Widget." at ""String""
 var invalidUsage = createWidget("String");
 
-// OK XPECT errors -->
+// OK XPECT noerrors
 var anyType : typeName<?> = "Number";

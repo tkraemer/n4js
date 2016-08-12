@@ -19,5 +19,5 @@ class H {
 
 // XPECT noerrors -->
 var where : H = new H().getMe();
-// XPECT errors -->
+// XPECT noerrors
 var which : H = H.getIt("yes");

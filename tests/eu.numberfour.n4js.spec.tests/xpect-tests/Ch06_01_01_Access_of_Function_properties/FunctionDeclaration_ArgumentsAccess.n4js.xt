@@ -3,58 +3,58 @@
 // Acceptance Test IDE-662 
 
 
-// Ok, nameless function XPECT  errors -->
+// Ok, nameless function XPECT  noerrors
 var x = function() {
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var l : number = arguments.length;
 
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_0 = arguments[0];
 	
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_1 = arguments[1];
 	
 	
 	// XPECT  errors --> "any is not a subtype of string." at "arguments[1]"
 	var s : string = arguments[1];
 
-	// Ok, setting XPECT  errors -->
+	// Ok, setting XPECT  noerrors
 	arguments[10] = "hallo";
 }
 
 // Ok, function
 function fa(aa : string, bb : number)  {
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var l : number = arguments.length;
 
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_0 = arguments[0];
 	
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_1 = arguments[1];
 	
 	
 	// XPECT  errors --> "any is not a subtype of string." at "arguments[1]"
 	var s : string = arguments[1];
 
-	// Ok, setting XPECT  errors -->
+	// Ok, setting XPECT  noerrors
 	arguments[10] = "hallo";
 }
 
 export function exp_a(a : string, b : number)  {
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var l : number = arguments.length;
 
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_0 = arguments[0];
 	
-	// Ok, XPECT  errors -->
+	// Ok, XPECT  noerrors
 	var arg_1 = arguments[1];
 	
 	// XPECT  errors --> "any is not a subtype of string." at "arguments[1]"
 	var s : string = arguments[1];
 
-	// Ok, setting XPECT  errors -->
+	// Ok, setting XPECT  noerrors
 	arguments[10] = "hallo";
 }
 
@@ -63,13 +63,13 @@ export function exp_a(a : string, b : number)  {
 class A {
 	x : string;
 	public m1(s : string, o : Object) : void { 
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var l : number = arguments.length;
 	
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_0 = arguments[0];
 		
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_1 = arguments[1];
 		
 		
@@ -79,7 +79,7 @@ class A {
 		--- */
 		var s : string = arguments[1];
 	
-		// Ok, setting XPECT  errors -->
+		// Ok, setting XPECT  noerrors
 		arguments[10] = "hallo";
 		
 		return;
@@ -87,20 +87,20 @@ class A {
 	
 	// Constructor
 	constructor(ss : string) {
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var l : number = arguments.length;
 	
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_0 = arguments[0];
 		
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_1 = arguments[1];
 		
 		
 		// XPECT  errors --> "any is not a subtype of string." at "arguments[1]"
 		var s : string = arguments[1];
 	
-		// Ok, setting XPECT  errors -->
+		// Ok, setting XPECT  noerrors
 		arguments[10] = "hallo";
 	}
 }
@@ -111,19 +111,19 @@ class B {
 	x : string;
 	public m1(ss : string, o : Object) : void { 
 
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var l : number = arguments.length;
 
 		// -- -- --- nesting
         var f1 = function(sss : string, n : number) {
 			
-			// Ok, XPECT  errors -->
+			// Ok, XPECT  noerrors
 			var l : number = arguments.length;
 		
-			// Ok, XPECT  errors -->
+			// Ok, XPECT  noerrors
 			var arg_0 = arguments[0];
 			
-			// Ok, XPECT  errors -->
+			// Ok, XPECT  noerrors
 			var arg_1 = arguments[1];
 			
 			/* XPECT  errors ---
@@ -132,7 +132,7 @@ class B {
 			--- */
 			var sss : string = arguments[1];
 		
-			// Ok, setting XPECT  errors -->
+			// Ok, setting XPECT  noerrors
 			arguments[10] = "hallo";
 		}
 		
@@ -144,20 +144,20 @@ class B {
 interface R {
 	x : string;
 	public m1(ss : string, o : Object) : void { 
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var l : number = arguments.length;
 	
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_0 = arguments[0];
 		
-		// Ok, XPECT  errors -->
+		// Ok, XPECT  noerrors
 		var arg_1 = arguments[1];
 		
 		
 		// XPECT  errors --> "any is not a subtype of string." at "arguments[1]"
 		var s : string = arguments[1];
 	
-		// Ok, setting XPECT  errors -->
+		// Ok, setting XPECT  noerrors
 		arguments[10] = "hallo";
 		
 		return;

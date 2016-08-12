@@ -19,5 +19,6 @@
 */
 import * as N from "A"	
 
+// found during IDE-1852: XPECT FIXME noerrors
 // XPECT hyperlinks at 'met<|>hod1' --> method1: "method1"(N4MethodDeclaration) in "A"(N4ClassDeclaration) in file A.n4js
 new N.A().method1()

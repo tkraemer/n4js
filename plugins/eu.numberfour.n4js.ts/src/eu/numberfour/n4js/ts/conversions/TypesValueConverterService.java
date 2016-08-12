@@ -13,7 +13,6 @@ package eu.numberfour.n4js.ts.conversions;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.impl.AbstractDeclarativeValueConverterService;
-import org.eclipse.xtext.conversion.impl.KeywordAlternativeConverter;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -34,7 +33,7 @@ public class TypesValueConverterService extends AbstractDeclarativeValueConverte
 	private UndefModifierValueConverter undefModifierValueConverter;
 
 	@Inject
-	private KeywordAlternativeConverter typesIdentifierValueConverter;
+	private IdentifierDelegateValueConverter identifierDelegateValueConverter;
 
 	@Inject
 	private ComputedPropertyNameValueConverter typesComputedPropertyNameValueConverter;
@@ -60,7 +59,7 @@ public class TypesValueConverterService extends AbstractDeclarativeValueConverte
 	 */
 	@ValueConverter(rule = "TypesIdentifier")
 	public IValueConverter<String> TypesIdentifier() {
-		return typesIdentifierValueConverter;
+		return identifierDelegateValueConverter;
 	}
 
 	/**

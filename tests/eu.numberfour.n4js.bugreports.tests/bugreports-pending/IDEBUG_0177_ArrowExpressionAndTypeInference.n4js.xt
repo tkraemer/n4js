@@ -1,5 +1,7 @@
+// found during IDE-1852: XPECT FIXME nowarnings
 // XPECT FIXME noerrors --> "return type should be inferred"
 var boolean b1 = function() { return true; }();
 
+// found during IDE-1852: XPECT FIXME nowarnings
 // XPECT FIXME noerrors --> "return type should be inferred"
 var boolean b2 = (() => { return true })();

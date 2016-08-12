@@ -21,6 +21,7 @@ import org.eclipse.xtext.conversion.impl.STRINGValueConverter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.ts.conversions.IdentifierDelegateValueConverter;
 import eu.numberfour.n4js.ts.types.UndefModifier;
 
 /**

@@ -18,7 +18,6 @@ import org.xpect.expectation.IStringExpectation;
 import org.xpect.expectation.StringExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
 
 import eu.numberfour.n4js.n4JS.Block;
@@ -45,20 +44,15 @@ public class ReturnXpectMethod {
 	 *            actual position
 	 */
 	@Xpect
-	@ParameterParser(syntax = "('at' offset=OFFSET)?")
+	@ParameterParser(syntax = "('at' arg2=OFFSET)?")
 	public void returnOrThrow(@StringExpectation IStringExpectation expectation,
-			@ThisResource XtextResource resource, @ThisOffset INode offset) { // gute Ergebnisse
+			@ThisResource XtextResource resource, INode offset) {
 
-		if (offset == null)
-		{
-			// System.out.println("*** ouch null im context ");
+		if (offset == null) {
 			return;
 		}
 
 		String actual = evaluateReturnBehaviour(offset);
-
-		// System.out.println("  - - - > Computed    = " + actual);
-		// System.out.println("  - - - > Expectation = " + ((AbstractExpectation) expectation).getExpectation());
 
 		expectation.assertEquals(actual);
 
@@ -68,8 +62,6 @@ public class ReturnXpectMethod {
 
 		EObject context = NodeModelUtils.findActualSemanticObjectFor(offset);
 
-		// System.out.println("  Kontext (INode) ist   : " + context.eClass().getName());
-
 		// Function can be evaluated on their own and should be self-contained
 		if (context instanceof FunctionDeclaration) {
 			FunctionDeclaration funDecl = (FunctionDeclaration) context;
@@ -78,7 +70,7 @@ public class ReturnXpectMethod {
 			return returnModeToString(result);
 
 		} else if (context instanceof Statement) {
-			// Other Snippets might encounter sope-issues in break/continue with lables.
+			// Other snippet might encounter scope-issues in break/continue with labels.
 
 			ReturnMode result = rotAnalyzer.evalSubstatement((Statement) context);
 			return returnModeToString(result);
@@ -112,12 +104,11 @@ public class ReturnXpectMethod {
 	 *            the offset where the XPECT comment is used
 	 */
 	@Xpect
-	@ParameterParser(syntax = "('at' offset=OFFSET)?")
+	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void deadCode(@StringExpectation IStringExpectation expectation,
 			// @ThisResource XtextResource resource,
-			@ThisOffset INode offset) {
-		if (offset == null)
-		{
+			INode offset) {
+		if (offset == null) {
 			return;
 		}
 
@@ -160,92 +151,5 @@ public class ReturnXpectMethod {
 		else
 			return "dead code";
 	}
-
-	// private String evaluateReturnBehaviour(IEReferenceAndEObject offset) {
-	//
-	// EObject context = offset.getEObject();
-	// EReference ref = offset.getEReference();
-	// System.out.println("\n\n      + + + + > reference = " + ref.getName());
-	//
-	// return evaluateReturnBehaviour((IEObjectOwner) offset);
-	// }
-	//
-	// private String evaluateReturnBehaviour(IEObjectOwner offset) {
-	//
-	// EObject context = offset.getEObject();
-	//
-	// System.out.println("  Kontext ist   : " + context.eClass().getName());
-	//
-	// if (context instanceof FunctionDeclaration) {
-	// FunctionDeclaration funDecl = (FunctionDeclaration) context;
-	// ReturnMode result = rotAnalyzer.containsReturnOrThrow(funDecl.getBody().getStatements());
-	//
-	// return returnModeToString(result);
-	//
-	// } else if (context instanceof Statement) {
-	// ReturnMode result = rotAnalyzer.containsReturnOrThrow((Statement) context);
-	// return returnModeToString(result);
-	// } else {
-	//
-	// System.out.println("*** Xpect 'returnOrThrow' called on wrong context: " + context);
-	// }
-	//
-	// return "";
-	// }
-	//
-	// private String evaluateReturnBehaviour(IEAttributeAndEObject offset) {
-	//
-	// EObject context = offset.getEObject();
-	// EAttribute attrib = offset.getEAttribute();
-	//
-	// System.out.println("  Kontext ist   : " + context.eClass().getName());
-	// System.out.println("     Attribute: " + attrib.getName() + " = " + context.eGet(attrib));
-	//
-	// if (context instanceof FunctionDeclaration) {
-	// FunctionDeclaration funDecl = (FunctionDeclaration) context;
-	// ReturnMode result = rotAnalyzer.containsReturnOrThrow(funDecl.getBody().getStatements());
-	//
-	// return returnModeToString(result);
-	//
-	// } else if (context instanceof Statement) {
-	// ReturnMode result = rotAnalyzer.containsReturnOrThrow((Statement) context);
-	// return returnModeToString(result);
-	// } else {
-	//
-	// System.out.println("*** Xpect 'returnOrThrow' called on wrong context: " + context);
-	// }
-	//
-	// return "";
-	// }
-	//
-	//
-	// @Xpect
-	// @ParameterParser(syntax = "('at' offset=OFFSET)?")
-	// public void xpIERef(@StringExpectation IStringExpectation expectation,
-	// @ThisResource XtextResource resource, @ThisOffset IEReferenceAndEObject offset) {
-	// System.out.println("===========================");
-	// System.out.println("xpIERef");
-	// evaluateReturnBehaviour(offset);
-	// }
-	//
-	// @Xpect
-	// @ParameterParser(syntax = "('at' offset=OFFSET)?")
-	// public void xpINode(@StringExpectation IStringExpectation expectation,
-	// @ThisResource XtextResource resource, @ThisOffset INode offset) { // gute Ergebnisse
-	// System.out.println("===========================");
-	// System.out.println("xpINode");
-	// evaluateReturnBehaviour(offset);
-	// }
-	//
-	// @Xpect
-	// @ParameterParser(syntax = "('at' offset=OFFSET)?")
-	// public void xpIEAttrib(@StringExpectation IStringExpectation expectation,
-	// @ThisResource XtextResource resource, @ThisOffset IEAttributeAndEObject offset) { // nur Elemente mit
-	// System.out.println("===========================");
-	// System.out.println("xpIEAttrib");
-	// evaluateReturnBehaviour(offset);
-	// }
-	//
-	// // Attribut wie name,value,... -> keine Blöcke.
 
 }

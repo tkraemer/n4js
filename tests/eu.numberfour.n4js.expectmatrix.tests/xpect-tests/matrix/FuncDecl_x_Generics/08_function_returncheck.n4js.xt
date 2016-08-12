@@ -28,12 +28,6 @@ function <T> FA18() : {function <T> () } { return FA01; }
 	"Type variable T not used in parameters or return type." at "T"
 	"Type variable T not used in parameters or return type." at "T"
 --- */
-function <T> FA19() : {function <T> () } { return FA01; }
-
-/* XPECT warnings ---
-	"Type variable T not used in parameters or return type." at "T"
-	"Type variable T not used in parameters or return type." at "T"
---- */
 function <T> FA20() : {function <T> () } { return FA01a; }
 
 // wrong no. of parameters XPECT errors --> "{function<T>(T):T} is not a subtype of {function()}." at "FA03"

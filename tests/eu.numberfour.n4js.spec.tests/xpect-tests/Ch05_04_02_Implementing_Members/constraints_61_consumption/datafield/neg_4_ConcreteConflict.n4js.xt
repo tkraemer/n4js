@@ -12,5 +12,6 @@ interface J {
 // XPECT errors --> "Redefine ambiguously consumed members: field I.f and field J.f." at "A"
 class A implements I,J {}
 
+// found during IDE-1852: XPECT FIXME noerrors
 // although it is an error, we bind to the first one XPECT binding --> I.f
 new A().f();

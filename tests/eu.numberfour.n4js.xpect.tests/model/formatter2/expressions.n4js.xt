@@ -9,6 +9,7 @@
 class A { a:A; }
 var exc = null;
 
+// found during IDE-1852: XPECT FIXME noerrors
 // Nested String-concat.
 /* XPECT formattedLines 1 ---
 throw new ArithmeticError("BigNumber Error: " + (exc as Error).message, exc as Error);

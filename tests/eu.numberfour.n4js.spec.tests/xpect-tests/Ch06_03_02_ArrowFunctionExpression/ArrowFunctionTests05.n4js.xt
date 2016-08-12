@@ -30,9 +30,11 @@ class C {
 
 class D extends C {
 	
+	// found during IDE-1852: XPECT FIXME noerrors
 	// XPECT FIXME type of 'p1' --> {function():{function():{function():{function():C}}}}}
 	p1() { return () => m1() }
 	
+	// found during IDE-1852: XPECT FIXME noerrors
 	// XPECT FIXME type of 'p2' --> {function():{function():{function():{function():{function():C}}}}}}
 	p2() { return () => p1() }
 	
