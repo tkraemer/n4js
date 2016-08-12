@@ -12,6 +12,7 @@ package eu.numberfour.n4js.postprocessing;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.util.IResourceScopeCache;
 import org.eclipse.xtext.util.OnChangeEvictingCache;
 
@@ -19,6 +20,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
+import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
@@ -52,6 +54,14 @@ public final class ASTMetaInfoCacheHelper {
 	 */
 	public List<TypeRef> getInferredTypeArgs(ParameterizedCallExpression callExpr) {
 		return getOrCreate((N4JSResource) callExpr.eResource()).getInferredTypeArgs(callExpr);
+	}
+
+	/**
+	 * Returns all AST nodes referencing the given local (i.e. non-exported) variable declaration. Returns empty list if
+	 * variable declaration is exported.
+	 */
+	public List<EObject> getLocalVariableReferences(VariableDeclaration varDecl) {
+		return getOrCreate((N4JSResource) varDecl.eResource()).getLocalVariableReferences(varDecl);
 	}
 
 	/**

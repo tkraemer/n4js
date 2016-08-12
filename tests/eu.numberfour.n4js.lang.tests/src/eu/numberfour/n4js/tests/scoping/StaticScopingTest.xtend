@@ -24,6 +24,7 @@ import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -108,7 +109,7 @@ class StaticScopingTest {
 			}
 		'''.parse
 
-		val issues = validate(script)
+		val issues = validate(script).filter[it.code != IssueCodes.AST_LOCAL_VAR_UNUSED]
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
@@ -126,7 +127,7 @@ class StaticScopingTest {
 		val typeName2 = parameterizedTypeRef.declaredType.name
 		Assert.assertEquals("A", typeName2)
 	}
-
+	
 	@Test
 	def void testTyping() {
 		val script = '''
@@ -138,7 +139,7 @@ class StaticScopingTest {
 			var z2 = new C()
 		'''.parse
 
-		val issues = validate(script)
+		val issues = validate(script).filter[it.code != IssueCodes.AST_LOCAL_VAR_UNUSED];
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
 		val varX = script.eAllContents.filter(VariableDeclaration).filter[name == "x"].head

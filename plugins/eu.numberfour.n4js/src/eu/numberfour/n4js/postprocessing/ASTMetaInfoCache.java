@@ -25,6 +25,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 
 import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
+import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
@@ -51,6 +52,8 @@ public final class ASTMetaInfoCache {
 	private final N4JSResource resource;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
+
+	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
 	ASTMetaInfoCache(N4JSResource resource) {
 		this.resource = resource;
@@ -123,6 +126,30 @@ public final class ASTMetaInfoCache {
 			throw new IllegalStateException();
 		}
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
+	}
+
+	/**
+	 * Returns all AST nodes referencing the given local (i.e. non-exported) variable declaration. Returns empty list if
+	 * variable declaration is exported.
+	 */
+	public List<EObject> getLocalVariableReferences(VariableDeclaration varDecl) {
+		final List<EObject> references = localVariableReferences.get(varDecl);
+		if (references != null) {
+			return Collections.unmodifiableList(references);
+		} else {
+			return Collections.emptyList();
+		}
+	}
+
+	void storeLocalVariableReference(VariableDeclaration varDecl, EObject sourceNode) {
+		if (localVariableReferences.containsKey(varDecl)) {
+			final List<EObject> references = localVariableReferences.get(varDecl);
+			references.add(sourceNode);
+		} else {
+			final List<EObject> references = new ArrayList<>();
+			references.add(sourceNode);
+			localVariableReferences.put(varDecl, references);
+		}
 	}
 
 	// ################################################################################################################

@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -28,26 +29,28 @@ import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin linking test
  */
 @XpectSuiteClasses({
-	LinkingTest.class,
-	TypeXpectMethod.class,
-	NoerrorsXpectMethod.class,
-	ScopeXpectMethod.class,
-	ResourceDescriptionTest.class,
-	ValidationTest.class,
-	OutlineXpectMethod.class,
-	QuickFixXpectMethod.class,
-	ContentAssistXpectMethod.class,
-	ProposalXpectMethod.class,
-	HyperlinkXpectMethod.class,
-	OrganizeImportXpectMethod.class
+		LinkingTest.class,
+		TypeXpectMethod.class,
+		NoerrorsXpectMethod.class,
+		ScopeXpectMethod.class,
+		ResourceDescriptionTest.class,
+		ValidationTest.class,
+		OutlineXpectMethod.class,
+		QuickFixXpectMethod.class,
+		ContentAssistXpectMethod.class,
+		ProposalXpectMethod.class,
+		HyperlinkXpectMethod.class,
+		OrganizeImportXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model_ui", fileExtensions = "xt")
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSXpectPluginUITest {
 	//
 }
