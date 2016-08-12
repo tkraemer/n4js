@@ -30,6 +30,7 @@ class B_withSetters extends A {
 	set p(n : number) {
 		console.log('called B_withSetters#p (setter)');
 	}
+	@Override get p() : number { return super.p; }
 }
 class B_withGetters extends A {
 	@Override
@@ -42,6 +43,7 @@ class B_withGetters extends A {
 		console.log('called B_withGetters#p (getter)');
 		return 0;
 	}
+	@Override set p(n : number) { super.p = n; }
 }
 
 class Test1 extends B {

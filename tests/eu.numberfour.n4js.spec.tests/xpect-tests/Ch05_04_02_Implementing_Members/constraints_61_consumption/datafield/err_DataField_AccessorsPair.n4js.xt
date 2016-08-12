@@ -24,7 +24,8 @@ class S {
 	set x(s : string) {}
 }
 
-// XPECT noerrors --> "Conflict solved, added getter to setter in S to make it compatible with field in R" at "C4"
+// XPECT noerrors --> "Conflict solved, added getter to setter in S to make it compatible with field in R. Setter is just delegating." at "C4"
 class C4 extends S implements R1 {
 	@Override get x() : string { return ""}
+	@Override set x(s : string) { super.x = s; }
 }
