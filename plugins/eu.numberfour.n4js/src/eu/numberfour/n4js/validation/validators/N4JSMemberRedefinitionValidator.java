@@ -196,6 +196,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			constraints_42_45_46_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
 
+			checkUnpairedAccessorConsumption(mm, n4ClassifierDefinition);
+
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
 
@@ -206,6 +208,20 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		if (!foundImpossibleExtendsImplements) { // avoid consequential errors
 			constraints_41_AbstractClass(tClassifier, memberCube);
+		}
+	}
+
+	/**
+	 * Checks if any accessor has been consumed for which the counterpart accessor is only inherited.
+	 */
+	private void checkUnpairedAccessorConsumption(MemberMatrix mm, N4ClassifierDefinition definition) {
+		if (!mm.hasOwned() && mm.hasInherited() && mm.hasImplemented()) {
+			for (TMember implementedMember : mm.implemented()) {
+				if (implementedMember.isAccessor() && mm.isConsumed(implementedMember)) {
+					messageMissingOwnedAccessorCorrespondingConsumedAccessor((FieldAccessor) implementedMember,
+							definition);
+				}
+			}
 		}
 	}
 
@@ -944,6 +960,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				accessor instanceof TSetter ? "getter" : "setter");
 		addIssue(message, accessor.getAstElement(),
 				N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
+	}
+
+	private void messageMissingOwnedAccessorCorrespondingConsumedAccessor(FieldAccessor accessor,
+			N4ClassifierDefinition definition) {
+		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE(
+				org.eclipse.xtext.util.Strings.toFirstUpper(validatorMessageHelper.description(accessor)),
+				"consumed from " + accessor.getContainingType().getName(),
+				accessor instanceof TSetter ? "getter" : "setter");
+		addIssue(message, definition,
+				N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
 	}
 
 	private void addIssueToMemberOrInterfaceReference(RedefinitionType redefinitionType, TMember overriding,
