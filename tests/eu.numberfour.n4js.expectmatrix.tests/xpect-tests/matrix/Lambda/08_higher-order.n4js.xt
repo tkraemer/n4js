@@ -27,18 +27,18 @@ foo((n : number) => n+6);
 
 
 function bar1 () : {function (number) : number} {
-	// IDE-2140, IDE-1037 lambda as return, wrong syntax XPECT errors --> "missing brackets or whatever" at "n=>{return n+6}"
+	// IDE-2140, IDE-1037 lambda as return, wrong syntax XPECT noerrors --> 
 	// this is compiled to "returnn=>..."
 	return n=>{return n+6};
 }
 
 function bar2 () : {function (number) : number} {
-	// IDE-2140, IDEBUG-177 lambda as return, good syntax XPECT noerrors -->
+	// IDE-2140, IDEBUG-177 lambda as return, good syntax XPECT errors -->"{function(number):any} is not a subtype of {function(number):number}." at "( (n : number) => { return n+6 } )"
 	return ( (n : number) => { return n+6 } );
 }
 
 function bar3 () : {function (number) : number} {
-	// IDE-2140, IDE-1037 lambda as return, simpler syntax XPECT errors --> "missing brackets or whatever" at "n=>n+6"
+	// IDE-2140, IDE-1037 lambda as return, simpler syntax XPECT noerrors --> 
 	return n=>n+6;
 }
 

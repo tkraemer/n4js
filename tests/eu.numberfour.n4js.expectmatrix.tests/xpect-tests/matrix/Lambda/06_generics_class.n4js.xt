@@ -14,7 +14,7 @@ class A<T> {
 	}
 	
 	public foo () : boolean {
-		// IDE-2140, IDEBUG-177 parameter of type T XPECT noerrors -->
+		// IDE-2140, IDEBUG-177 parameter of type T XPECT errors -->"any is not a subtype of boolean." at "((h : T) => { return this.m === h })(this.m)"
 		return ((h : T) => { return this.m === h })(this.m);
 	}
 	

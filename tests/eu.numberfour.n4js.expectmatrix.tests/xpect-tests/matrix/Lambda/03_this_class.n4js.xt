@@ -5,7 +5,7 @@
 // in class declarations //
 ///////////////////////////
 
-class A {	
+class A {
 	public m : number;
 	public foo () { return 5; }
 }
@@ -23,7 +23,7 @@ class B extends A {
 	}
 
 	public baz () : this {
-		IDE-2140, // IDEBUG-177 this return type XPECT noerrors -->
+		// IDE-2140, IDEBUG-177 this return type XPECT errors -->"any is not a subtype of this[B]." at "(() => { return this })()"
 		return (() => { return this })();
 	}
 }

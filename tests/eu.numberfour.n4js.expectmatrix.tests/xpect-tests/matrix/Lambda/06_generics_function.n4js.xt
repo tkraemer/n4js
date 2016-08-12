@@ -14,7 +14,7 @@ function <T> bar () : {function():T} {
 	
 function <T> foo () : boolean {
 	var m : T;
-	// IDE-2140, IDEBUG-177 parameter of type T XPECT noerrors -->
+	// IDE-2140, IDEBUG-177 parameter of type T XPECT errors -->"any is not a subtype of boolean." at "((h : T) => { return !h })(m)"
 	return ((h : T) => { return !h })(m);
 }
 	

@@ -7,13 +7,28 @@
 class A {
 	public x : number;
 	y : number;
-	
+
 	// IDEBUG-188 in ctor: all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "@Spec spec : ~i~this?"
 	public constructor (@Spec spec : ~i~this?, y : number, z : number) {
 	}
-	
+
 	// IDEBUG-188 in method: all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "b : boolean?"
 	public f (b : boolean?, z : number, w : string) : union{string,boolean} {
+		if (b !== undefined) {
+			return b;
+		}
+		else return "nope";
+	}
+};
+
+class AC {
+	public x : number;
+	y : number;
+
+	public constructor (@Spec spec : ~i~this?, y : number?, z : number?) {
+	}
+
+	public f (b : boolean?, z : number?, w : string?) : union{string,boolean} {
 		if (b !== undefined) {
 			return b;
 		}
@@ -24,21 +39,27 @@ class A {
 // no arguments XPECT noerrors -->
 var a0 : A = new A();
 
-// IDEBUG-188 too few arguments XPECT FIXME noerrors -->
-var a2 : A = new A({x: 1}, 2);
+// no arguments XPECT noerrors -->
+var ac0 : AC = new AC();
 
-// wrong type of some arguments XPECT errors --> "string is not a subtype of number." at ""ff""
-var a3 : A = new A({x: 1},2,"ff");
+// IDEBUG-188 too few arguments XPECT noerrors -->
+var a2 : AC = new AC({x: 1}, 2);
+
+// wrong type of some arguments XPECT errors --> "string is not a subtype of number?." at ""ff""
+var a3 : AC = new AC({x: 1},2,"ff");
 
 // no arguments XPECT noerrors -->
 a0.f();
 
-// IDEBUG-188 not enough arguments XPECT FIXME noerrors -->
-a0.f(true);
+// no arguments XPECT noerrors -->
+ac0.f();
 
-// IDEBUG-188  argument in wrong place XPECT FIXME errors --> "number is not a subtype of boolean?." at "5"
-a0.f(5);
+// IDEBUG-188 not enough arguments XPECT noerrors -->
+ac0.f(true);
+
+// IDEBUG-188  argument in wrong place XPECT errors --> "int is not a subtype of boolean?." at "5"
+ac0.f(5);
 
 // good arguments XPECT noerrors -->
-a0.f(true, 5, "F");
+ac0.f(true, 5, "F");
 
