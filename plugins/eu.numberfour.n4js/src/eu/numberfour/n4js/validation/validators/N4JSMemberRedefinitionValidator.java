@@ -966,7 +966,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			N4ClassifierDefinition definition) {
 		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE(
 				org.eclipse.xtext.util.Strings.toFirstUpper(validatorMessageHelper.description(accessor)),
-				"consumed from " + accessor.getContainingType().getName(),
+				"consumed",
 				accessor instanceof TSetter ? "getter" : "setter");
 		addIssue(message, definition,
 				N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
