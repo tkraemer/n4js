@@ -6,7 +6,7 @@
 ////////////////////////////
 
 function <T,S> foo (g : {function (T) : S}) : {function (T) : S} {
-	// IDEBUG-177 return type not inferred XPECT noerrors -->
+	// IDE-2140, IDEBUG-177 return type not inferred XPECT noerrors -->
 	return s=>{return g(s)};
 }
 

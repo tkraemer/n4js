@@ -8,13 +8,13 @@
 
 function <T> bar () : {function():T} {
 	var m : T;
-	// IDEBUG-177 returning variable of type T XPECT noerrors -->
+	// IDE-2140, IDEBUG-177 returning variable of type T XPECT noerrors -->
 	return () => { return m };
 }
 	
 function <T> foo () : boolean {
 	var m : T;
-	// IDEBUG-177 parameter of type T XPECT FIXME noerrors -->
+	// IDE-2140, IDEBUG-177 parameter of type T XPECT noerrors -->
 	return ((h : T) => { return !h })(m);
 }
 	

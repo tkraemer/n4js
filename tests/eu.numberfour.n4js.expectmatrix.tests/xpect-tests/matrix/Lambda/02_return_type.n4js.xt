@@ -7,11 +7,11 @@
 // return type inferred XPECT errors --> "any is not a subtype of boolean." at "(() => true)()"
 var b1 : boolean = (() => true)();
 
-// IDEBUG-177 return type inferred XPECT FIXME noerrors -->
+// IDE-2140, IDEBUG-177 return type inferred XPECT noerrors -->
 // getting: any is not a subtype of boolean.
 var b2 : boolean = (() => { return true })();
 
-// IDEBUG-177 return type inferred XPECT FIXME errors --> "number is not a subtype of boolean." at "(() => { return 12 })()"
+// IDE-2140, IDEBUG-177 return type inferred XPECT errors --> "number is not a subtype of boolean." at "(() => { return 12 })()"
 // getting: any is not a subtype of boolean.
 var b3 : boolean = (() => { return 12 })();
 

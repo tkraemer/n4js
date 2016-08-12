@@ -23,7 +23,7 @@ class B extends A {
 	}
 
 	public baz () : this {
-		// IDEBUG-177 this return type XPECT FIXME noerrors -->
+		IDE-2140, // IDEBUG-177 this return type XPECT noerrors -->
 		return (() => { return this })();
 	}
 }

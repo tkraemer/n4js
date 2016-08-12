@@ -2,19 +2,19 @@
 
 //////////////
 // Generics //
-// Class	//
+// Role		//
 //////////////
 
-class A<T> {
+interface B<T> {
 	public m : T;
 
 	public bar () : {function():T} {
-		// IDEBUG-177 returning variable of type T XPECT noerrors -->
+		// IDE-2140, IDEBUG-177 returning variable of type T XPECT noerrors -->
 		return () => { return this.m };
 	}
 	
 	public foo () : boolean {
-		// IDEBUG-177 parameter of type T XPECT FIXME noerrors -->
+		// IDE-2140, IDEBUG-177 parameter of type T XPECT noerrors -->
 		return ((h : T) => { return this.m === h })(this.m);
 	}
 	
