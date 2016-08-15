@@ -1,0 +1,25 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+//////////////
+// Generics //
+// Function //
+//////////////
+
+
+function <T> bar () : {function():T} {
+	var m : T;
+	// IDE-2140, IDEBUG-177 returning variable of type T XPECT noerrors -->
+	return () => { return m };
+}
+	
+function <T> foo () : boolean {
+	var m : T;
+	// IDE-2140, IDEBUG-177 parameter of type T XPECT errors -->"any is not a subtype of boolean." at "((h : T) => { return !h })(m)"
+	return ((h : T) => { return !h })(m);
+}
+	
+function <T> baz (g : T) {
+	var m : T;
+	// variable assignment XPECT noerrors -->
+	((h : T) => { m = h })(g);
+}

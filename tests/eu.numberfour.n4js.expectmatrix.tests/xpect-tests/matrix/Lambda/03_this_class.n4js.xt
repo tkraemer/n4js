@@ -1,0 +1,29 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+///////////////////////////
+// this keyword & type	 //
+// in class declarations //
+///////////////////////////
+
+class A {
+	public m : number;
+	public foo () { return 5; }
+}
+
+class B extends A {
+	public bar () : void {
+		//  inherited fields are accessible XPECT noerrors -->
+		(() => { return this.m; })();
+		//  missing fields are not accessible XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'h'." at "h"
+		(() => { return this.h; })();
+		//  inherited methods are accessible XPECT noerrors -->
+		(() => { return this.foo(); })();
+		//  missing methods are not accessible XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'bazz'." at "bazz"
+		(() => { return this.bazz(); })();
+	}
+
+	public baz () : this {
+		// IDE-2140, IDEBUG-177 this return type XPECT errors -->"any is not a subtype of this[B]." at "(() => { return this })()"
+		return (() => { return this })();
+	}
+}

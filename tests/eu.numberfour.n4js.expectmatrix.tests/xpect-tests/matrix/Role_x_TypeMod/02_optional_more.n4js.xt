@@ -1,0 +1,68 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////////////
+// Optional parameters //
+/////////////////////////
+
+interface A {
+	public x : number;
+	y : number;
+
+	// IDEBUG-188 in method: all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "b : boolean?"
+	public f (b : boolean?, z : number, w : string) : union{string,boolean} {
+		if (b !== undefined) {
+			return b;
+		}
+		else return "nope";
+	}
+};
+
+class B implements A {}
+
+var a : B = new B();
+
+// no arguments XPECT noerrors -->
+a.f();
+
+// IDEBUG-188 not enough arguments XPECT errors -->"Incorrect number of arguments: expected 3, got 1." at "a.f(true)"
+a.f(true);
+
+/* IDEBUG-188 argument in wrong place XPECT errors ---
+"Incorrect number of arguments: expected 3, got 1." at "a.f(5)"
+"int is not a subtype of boolean?." at "5"
+---*/
+a.f(5);
+
+// good arguments XPECT noerrors -->
+a.f(true, 5, "F");
+
+
+interface AC {
+	public x : number;
+	y : number;
+
+	// in method: all parameters after an optional one are optional XPECT noerrors -->
+	public f (b : boolean?, z : number?, w : string?) : union{string,boolean} {
+		if (b !== undefined) {
+			return b;
+		}
+		else return "nope";
+	}
+};
+
+class BC implements AC {}
+
+var ac : BC = new BC();
+
+// no arguments XPECT noerrors -->
+ac.f();
+
+// not enough arguments XPECT noerrors -->
+ac.f(true);
+
+// argument in wrong place XPECT errors --> "int is not a subtype of boolean?." at "5"
+ac.f(5);
+
+// good arguments XPECT noerrors -->
+ac.f(true, 5, "F");
+

@@ -1,0 +1,69 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// This file focuses on functions !
+
+class CA <T> {
+}
+
+interface IA <T> {
+}
+
+interface RA  <T> {
+}
+
+enum EA  {
+	 item1, item2
+}
+// enum EB extends EA { item3 } // not in spec
+// class CEA extends EA {}
+
+
+
+
+
+// OK - any XPECT noerrors -->
+function FA00()  { return null; }
+
+// OK - T XPECT warnings --> "Type variable T not used in parameters or return type." at "T"
+function <T> FA01()  { return null; }
+
+// OK XPECT noerrors -->
+function <T> FA02() : T  { return null; }
+
+// OK XPECT noerrors -->
+function <T> FA03(p1 : T) : T  { return null; }
+
+// OK XPECT noerrors -->
+function <T,S> FA04(p1 : T, p2 : S?) : T  { return null; }
+
+// Wrong use of optional in combination with TypeVar
+// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "p2 : S?"
+function <T,S> FA05(p1 : T, p2 : S?, p3 : T, ...p4 : S) : T  { return null; }
+
+// OK XPECT noerrors -->
+function <T,S> FA06(p1 : T, ...p2 : S) : T  { return null; }
+
+// OK XPECT noerrors -->
+function <T,S extends T> FA07(p1 : T, p2 : S) : T  { return null; }
+
+
+
+
+
+
+
+// Inheritance // OK
+// XPECT noerrors -->
+function <T,S extends T & IA<T> > FA13(p1 : T, p2 : S) : T  { return null; }
+
+// OK
+// XPECT noerrors -->
+function <T,S extends T & IA<S> > FA14(p1 : T, p2 : S) : T  { return null; }
+
+// GH-249 XPECT FIXME errors --> "nothing can extends enum"
+function <T,S extends EA > FA15(p1 : T, p2 : S) : T  { return null; }
+
+
+// OK
+// XPECT noerrors -->
+function FA16a() : { function () : any } { return FA00; }
