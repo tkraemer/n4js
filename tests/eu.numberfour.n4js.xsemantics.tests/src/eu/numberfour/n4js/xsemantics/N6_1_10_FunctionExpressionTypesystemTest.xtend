@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.Script
@@ -33,7 +33,7 @@ import static org.junit.Assert.*
  * @see https://numberfour.jira.com/browse/IDE-433
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N6_1_10_FunctionExpressionTypesystemTest extends AbstractTypesystemTest {
 
 	@Inject	extension ParseHelper<Script>

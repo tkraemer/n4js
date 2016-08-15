@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.expectmatrix.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -22,18 +23,20 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.expectmatrix.tests.utils.N4JSRuntimeTest;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  */
 @XpectSuiteClasses({
-	LinkingTest.class, ResourceDescriptionTest.class,
-	TypeXpectMethod.class,
-	ValidationTest.class,
-	N4JSRuntimeTest.class,
-	NoerrorsXpectMethod.class
+		LinkingTest.class, ResourceDescriptionTest.class,
+		TypeXpectMethod.class,
+		ValidationTest.class,
+		N4JSRuntimeTest.class,
+		NoerrorsXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-pending", fileExtensions = { "xt" })
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSExpectMatrixPendingTest {
 	//
 }

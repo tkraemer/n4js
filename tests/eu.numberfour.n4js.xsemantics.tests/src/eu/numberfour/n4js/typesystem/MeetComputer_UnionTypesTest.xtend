@@ -10,19 +10,19 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProvider
-import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
+import eu.numberfour.n4js.validation.IssueCodes
 
 /*
  * Tests for {@link TypeSystemHelper#meet(RuleEnvironment, TypeRef...)} method.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class MeetComputer_UnionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Before

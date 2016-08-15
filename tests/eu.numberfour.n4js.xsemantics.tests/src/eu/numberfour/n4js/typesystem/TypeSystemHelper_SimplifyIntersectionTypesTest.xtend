@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -21,12 +20,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /*
  * Tests for {@link eu.numberfour.n4js.typesystem.XsemanticsTypeSystemHelper.createIntersectionType(RuleEnvironment, TypeRef)} method with intersection types.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class TypeSystemHelper_SimplifyIntersectionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Before

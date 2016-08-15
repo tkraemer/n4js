@@ -62,21 +62,21 @@ class NoValidationPluginTest extends AbstractBuilderParticipantTest {
 		val fileWolfgangsUglyHack = createTestFile(p, "wolfgangsUglyHack", fileWolfgangsUglyHack);
 		val fileJuergenA = createTestFile(pJuergensHacks, "A", fileJuergenA);
 		val fileJuergenB = createTestFile(pJuergensHacks, "B", fileJuergenB);
-		assertMarkers("file should have markers", fileAValidated, 3);
-		assertMarkers("file should have markers", fileAValidatedInSrc2, 3);
-		assertMarkers("file should have markers", fileBValidated, 2);
-		assertMarkers("file should have markers", fileMyAlreadyAsModuleHack, 2);
-		assertMarkers("file should have markers", fileWolfgangsUglyHack, 2);
-		assertMarkers("file should have markers", fileJuergenA, 5);
-		assertMarkers("file should have markers", fileJuergenB, 2);
+		assertMarkers("file A should have markers", fileAValidated, 4);
+		assertMarkers("file AInSrc should have markers", fileAValidatedInSrc2, 4);
+		assertMarkers("file B should have markers", fileBValidated, 2);
+		assertMarkers("file MyAlreadyAsModuleHack should have markers", fileMyAlreadyAsModuleHack, 2);
+		assertMarkers("file WolfgangsUglyHack should have markers", fileWolfgangsUglyHack, 2);
+		assertMarkers("file JuergenA should have markers", fileJuergenA, 5);
+		assertMarkers("file JuergenB should have markers", fileJuergenB, 2);
 
 		addPathsToNoValidate("p/wolfgangsUglyHack" -> null, "p/juergensHacks/*" -> null)
-		assertMarkers("file should have no markers", fileWolfgangsUglyHack, 0);
-		assertMarkers("file should have no markers", fileJuergenA, 0);
-		assertMarkers("file should have no markers", fileJuergenB, 0);
-		assertMarkers("file should have still markers", fileAValidatedInSrc2, 3);
+		assertMarkers("file WolfgangsUglyHack should have no markers", fileWolfgangsUglyHack, 0);
+		assertMarkers("file JuergensA should have no markers", fileJuergenA, 0);
+		assertMarkers("file JuergenB should have no markers", fileJuergenB, 0);
+		assertMarkers("file AInSrc should have still markers", fileAValidatedInSrc2, 4);
 		addPathsToNoValidate("p2/*" -> "src2")
-		assertMarkers("file should have no markers", fileAValidatedInSrc2, 0);
+		assertMarkers("file AInSrc2 should have no markers", fileAValidatedInSrc2, 0);
 	}
 
 	def void addFolderAsSource(String folderName) {

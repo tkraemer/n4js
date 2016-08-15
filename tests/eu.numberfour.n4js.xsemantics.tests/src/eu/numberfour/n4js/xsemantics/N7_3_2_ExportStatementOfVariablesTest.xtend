@@ -11,24 +11,24 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.JavaScriptVariant
+import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import org.junit.Test
-import org.eclipse.xtext.diagnostics.Severity
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N7_3_2_ExportStatementOfVariablesTest extends N7_1_1_VariablesTest {
 
 	@Inject
