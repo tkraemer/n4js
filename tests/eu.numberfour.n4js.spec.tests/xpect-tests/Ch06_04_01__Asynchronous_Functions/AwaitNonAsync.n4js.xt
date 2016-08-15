@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+async function foo() {
+    return "World";
+}
+async function bar() {
+	// XPECT nowarnings
+    var s = await (foo());
+    // XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await (7 + 2)"
+    var i = await (7 + 2);
+    return "Hello " + i;
+}
+
+
+class G<T> {
+	m(): T {
+		return null;
+	}
+}
+class H1 extends G<Promise<?,?>> {
+	async m2() {
+		// XPECT nowarnings
+		await this.m();
+	}
+}
+class H2 extends G<string> {
+	async m2() {
+		// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await this.m()"
+		await this.m();
+	}
+}
+
+
+var g1: G<Promise<?,?>>;
+async function f1() {
+	// XPECT nowarnings
+	await g1.m();
+}
+var g2: G<string>;
+async function f2() {
+	// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await g2.m()"
+	await g2.m();
+}
