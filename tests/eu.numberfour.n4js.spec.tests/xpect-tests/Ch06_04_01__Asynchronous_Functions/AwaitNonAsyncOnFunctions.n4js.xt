@@ -69,6 +69,5 @@ function pf2(path : string, cb : {function(Error,string)}) {
 async function pfT() {
 	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await pf1("", null)"
 	await pf1("", null);
-	// XPECT FIXME nowarnings
-	await pf2("");
+	await @Promisify pf2("");
 }
