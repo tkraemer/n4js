@@ -33,20 +33,6 @@ class G<T> {
 		return null;
 	}
 }
-class H1 extends G<Promise<?,?>> {
-	async m2() {
-		// XPECT nowarnings
-		await this.m();
-	}
-}
-class H2 extends G<string> {
-	async m2() {
-		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.m()"
-		await this.m();
-	}
-}
-
-
 var g1: G<Promise<?,?>>;
 async function f1() {
 	// XPECT nowarnings
@@ -57,7 +43,6 @@ async function f2() {
 	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await g2.m()"
 	await g2.m();
 }
-
 
 
 function pf1(path : string, cb : {function(Error,string)}) : string {
