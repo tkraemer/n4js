@@ -85,9 +85,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 				"yield");
 		/** Public for testing */
 		public static final ImmutableSet<String> futureKeywords = ImmutableSet.of(
-				"enum",
-				"await" // future reserved keyword in ECMAScript 2015, but only in modules
-		);
+				"enum");
 		/** Public for testing */
 		public static final ImmutableSet<String> nullLiteral = ImmutableSet.of(
 				"null");
@@ -115,6 +113,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 				"public",
 				"target",
 				"async",
+				"await", // future reserved keyword in ECMAScript 2015, but only in modules
 				"out");
 		/** Public for testing */
 		public static final ImmutableSet<String> keywordFromTypeRef = ImmutableSet.of(
