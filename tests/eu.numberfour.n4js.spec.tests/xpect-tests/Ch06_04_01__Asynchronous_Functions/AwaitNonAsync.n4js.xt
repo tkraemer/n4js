@@ -43,3 +43,17 @@ async function f2() {
 	// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await g2.m()"
 	await g2.m();
 }
+
+
+
+function pf1(path : string, cb : {function(Error,string)}) {
+}
+@Promisifiable
+function pf2(path : string, cb : {function(Error,string)}) {
+}
+async function pfT() {
+	// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await g2.m()"
+	await pf1("", null);
+	// XPECT nowarnings
+	await pf2("", null);
+}
