@@ -4,8 +4,7 @@
 
 //XPECT noerrors --> "should pass"
 async function t2(): void {
-	//XPECT warnings --> "asd" at "undefined"
-	//XPECT noerrors --> "should pass"
+	//XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await undefined"
 	await undefined;
 }
 

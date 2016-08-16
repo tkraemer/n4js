@@ -8,9 +8,23 @@ async function foo() {
 async function bar() {
 	// XPECT nowarnings
     var s = await (foo());
-    // XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await (7 + 2)"
+    // XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await (7 + 2)"
     var i = await (7 + 2);
     return "Hello " + i;
+}
+
+
+function nf1(path : string, cb : {function(Error,string)}) : string {
+	return null;
+}
+function nf2(path : string, cb : {function(Error,string)}) : Promise<any, any> {
+	return null;
+}
+async function nfT() {
+	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await nf1("", null)"
+	await nf1("", null);
+	// XPECT nowarnings
+	await nf2("", null);
 }
 
 
@@ -27,7 +41,7 @@ class H1 extends G<Promise<?,?>> {
 }
 class H2 extends G<string> {
 	async m2() {
-		// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await this.m()"
+		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.m()"
 		await this.m();
 	}
 }
@@ -40,20 +54,21 @@ async function f1() {
 }
 var g2: G<string>;
 async function f2() {
-	// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await g2.m()"
+	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await g2.m()"
 	await g2.m();
 }
 
 
 
-function pf1(path : string, cb : {function(Error,string)}) {
+function pf1(path : string, cb : {function(Error,string)}) : string {
+	return null;
 }
 @Promisifiable
 function pf2(path : string, cb : {function(Error,string)}) {
 }
 async function pfT() {
-	// XPECT warnings --> "The use of await on a non-async expressions is discouraged." at "await g2.m()"
+	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await pf1("", null)"
 	await pf1("", null);
-	// XPECT nowarnings
-	await pf2("", null);
+	// XPECT FIXME nowarnings
+	await pf2("");
 }
