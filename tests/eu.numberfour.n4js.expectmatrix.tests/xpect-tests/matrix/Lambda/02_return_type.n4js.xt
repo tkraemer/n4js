@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////
+// Return type //
+/////////////////
+
+// return type inferred XPECT errors --> "any is not a subtype of boolean." at "(() => true)()"
+var b1 : boolean = (() => true)();
+
+// IDE-2140, IDEBUG-177 return type inferred XPECT errors -->"any is not a subtype of boolean." at "(() => { return true })()"
+// getting: any is not a subtype of boolean.
+var b2 : boolean = (() => { return true })();
+
+// IDE-2140, IDEBUG-177 return type inferred XPECT errors --> "any is not a subtype of boolean." at "(() => { return 12 })()"
+// getting: any is not a subtype of boolean.
+var b3 : boolean = (() => { return 12 })();
+
