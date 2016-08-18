@@ -49,7 +49,7 @@ function f2(e: E) {
 };
 
 
-/* block in case clause opens after colon, following statements are formatted too 
+/* block in case clause opens in next line, following statements are formatted too 
    XPECT formattedLines 10 ---
 function f3(e: E) {
 	switch (e) {
@@ -74,7 +74,7 @@ function f3(e: E) {
 };
 
 
-/* blocks in case clause open after colon and are formatted too 
+/* blocks in case clause opens in same line as colon, block is formatted too 
    XPECT formattedLines 18 ---
 function f4(e: E) {
 	switch (e) {
@@ -109,7 +109,7 @@ function f4(e: E) {
 };
 
 
-/* statements in case, new line after case expression colon
+/* >1 statements in case: new line after case expression colon
    XPECT formattedLines 13 ---
 function f5(e: E) {
 	switch (e) {
@@ -142,7 +142,7 @@ function f5(e: E) {
 };
 
 
-/* statements in case, new line after case expression colon 
+/* >1 statements in case: new line after case expression colon 
    XPECT formattedLines 8 ---
 function f6(e: E) {
 	switch (e) {
@@ -169,7 +169,7 @@ function f6(e: E) {
 };
 
 
-/* one statements in case, new line after case expression colon 
+/* one statements in case: new line after case expression colon 
    XPECT formattedLines 8 ---
 function f7(e: E) {
 	switch (e) {
@@ -193,7 +193,7 @@ function f7(e: E) {
 };
 
 
-/* one statements in case, same line after case expression colon 
+/* one statements in case: same line after case expression colon 
    XPECT formattedLines 7 ---
 function f8(e: E) {
 	switch (e) {
