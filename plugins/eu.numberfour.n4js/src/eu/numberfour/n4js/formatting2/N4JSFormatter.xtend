@@ -574,6 +574,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 			caseClause.statements.head.prepend[setNewLines(1,1,1)];
 		}
 		
+		// caseClause.regionFor.keyword(":").prepend[oneSpace]; // In case one space before the colon is desired
 		caseClause.statements.forEach[format];
 		caseClause.statements.forEach[append[setNewLines(1,1,maxConsecutiveNewLines)]];
 		caseClause.statements.last.append[setNewLines(1, 1, 2);]
