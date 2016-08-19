@@ -1320,9 +1320,11 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 				// custom error message for computed-name access
 				internalCheckComputedIndexedAccess(indexedAccess, receiverTypeRef)
 			} else {
-				addIssue(
-					getMessageForEXP_INDEXED_ACCESS_N4CLASSIFIER(receiverTypeRef.declaredType.keyword),
-					indexedAccess, EXP_INDEXED_ACCESS_N4CLASSIFIER);
+				if (!receiverTypeRef.isDynamic()) {
+					addIssue(
+						getMessageForEXP_INDEXED_ACCESS_N4CLASSIFIER(receiverTypeRef.declaredType.keyword),
+						indexedAccess, EXP_INDEXED_ACCESS_N4CLASSIFIER);
+				}
 			}
 			return
 		} else if (receiverTypeRef instanceof EnumTypeRef) { // Constraints 69.2
