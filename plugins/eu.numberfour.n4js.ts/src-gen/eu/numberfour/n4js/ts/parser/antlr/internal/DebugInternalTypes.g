@@ -772,7 +772,6 @@ ruleN4Keyword :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'await' |
 	'async' |

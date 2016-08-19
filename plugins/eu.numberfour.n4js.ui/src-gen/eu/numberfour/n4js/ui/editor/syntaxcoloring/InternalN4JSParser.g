@@ -3670,7 +3670,7 @@ ruleForStatement
 
 )
 ))(
-	Await_1 	
+	Await 	
     |
 	CommercialAt 	
     |
@@ -3711,8 +3711,6 @@ ruleForStatement
 	Intersection 	
     |
 	This 	
-    |
-	Await 	
     |
 	Promisify 	
     |
@@ -3799,7 +3797,7 @@ ruleForStatement
 
 )
 ))((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -3820,7 +3818,6 @@ ruleForStatement
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -4018,7 +4015,7 @@ norm1_ForStatement
 
 )
 ))(
-	Await_1 	
+	Await 	
     |
 	CommercialAt 	
     |
@@ -4057,8 +4054,6 @@ norm1_ForStatement
 	Intersection 	
     |
 	This 	
-    |
-	Await 	
     |
 	Promisify 	
     |
@@ -4147,7 +4142,7 @@ norm1_ForStatement
 
 )
 ))((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -4167,7 +4162,6 @@ norm1_ForStatement
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -5660,11 +5654,9 @@ rulePropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -5848,11 +5840,9 @@ norm1_PropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6058,11 +6048,9 @@ ruleAnnotatedPropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6140,9 +6128,8 @@ ruleAnnotatedPropertyAssignment
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -6377,11 +6364,9 @@ norm1_AnnotatedPropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6459,9 +6444,8 @@ norm1_AnnotatedPropertyAssignment
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -6965,11 +6949,9 @@ rulePropertySetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -7047,9 +7029,8 @@ rulePropertySetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -7192,11 +7173,9 @@ norm1_PropertySetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -7274,9 +7253,8 @@ norm1_PropertySetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8161,11 +8139,9 @@ ruleRelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8257,9 +8233,8 @@ ruleRelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8349,11 +8324,9 @@ norm1_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8445,9 +8418,8 @@ norm1_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8535,11 +8507,9 @@ norm2_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8630,9 +8600,8 @@ norm2_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8720,11 +8689,9 @@ norm3_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8815,9 +8782,8 @@ norm3_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -9783,7 +9749,7 @@ ruleAssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=ruleAwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=ruleAwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -9869,7 +9835,7 @@ norm1_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm1_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm1_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -9955,7 +9921,7 @@ norm2_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm2_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm2_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -10043,7 +10009,7 @@ norm3_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm3_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm3_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -10150,7 +10116,7 @@ ruleYieldExpression
 
 )
 )?((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -10170,7 +10136,6 @@ ruleYieldExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -10230,7 +10195,7 @@ norm1_YieldExpression
 
 )
 )?((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -10250,7 +10215,6 @@ norm1_YieldExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -10370,8 +10334,8 @@ ruleAwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=ruleAssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10388,8 +10352,8 @@ norm1_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm1_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10406,8 +10370,8 @@ norm2_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm2_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10424,8 +10388,8 @@ norm3_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm3_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -11566,7 +11530,7 @@ ruleTypeReferenceName
  
 
     |
-	AwaitKeyword_2=Await_1 { announce($AwaitKeyword_2, grammarAccess.getTypeReferenceNameAccess().getAwaitKeyword_2()); }
+	AwaitKeyword_2=Await { announce($AwaitKeyword_2, grammarAccess.getTypeReferenceNameAccess().getAwaitKeyword_2()); }
  
 
     |
@@ -12110,11 +12074,9 @@ ruleN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12297,11 +12259,9 @@ norm1_N4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12499,11 +12459,9 @@ ruleAnnotatedN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12585,9 +12543,8 @@ ruleAnnotatedN4MemberDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -12803,11 +12760,9 @@ norm1_AnnotatedN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12889,9 +12844,8 @@ norm1_AnnotatedN4MemberDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13424,9 +13378,8 @@ ruleGetterHeader
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13509,9 +13462,8 @@ norm1_GetterHeader
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13656,11 +13608,9 @@ ruleN4SetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -13742,9 +13692,8 @@ ruleN4SetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13892,11 +13841,9 @@ norm1_N4SetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -13978,9 +13925,8 @@ norm1_N4SetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -15962,43 +15908,39 @@ ruleN4Keyword
  
 
     |
-	AwaitKeyword_16=Await { announce($AwaitKeyword_16, grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); }
+	PromisifyKeyword_16=Promisify { announce($PromisifyKeyword_16, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); }
  
 
     |
-	PromisifyKeyword_17=Promisify { announce($PromisifyKeyword_17, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); }
+	AwaitKeyword_17=Await { announce($AwaitKeyword_17, grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); }
  
 
     |
-	AwaitKeyword_18=Await_1 { announce($AwaitKeyword_18, grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); }
+	AsyncKeyword_18=Async { announce($AsyncKeyword_18, grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); }
  
 
     |
-	AsyncKeyword_19=Async { announce($AsyncKeyword_19, grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); }
+	ImplementsKeyword_19=Implements { announce($ImplementsKeyword_19, grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); }
  
 
     |
-	ImplementsKeyword_20=Implements { announce($ImplementsKeyword_20, grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); }
+	InterfaceKeyword_20=Interface { announce($InterfaceKeyword_20, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); }
  
 
     |
-	InterfaceKeyword_21=Interface { announce($InterfaceKeyword_21, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); }
+	PrivateKeyword_21=Private { announce($PrivateKeyword_21, grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); }
  
 
     |
-	PrivateKeyword_22=Private { announce($PrivateKeyword_22, grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); }
+	ProtectedKeyword_22=Protected { announce($ProtectedKeyword_22, grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); }
  
 
     |
-	ProtectedKeyword_23=Protected { announce($ProtectedKeyword_23, grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); }
+	PublicKeyword_23=Public { announce($PublicKeyword_23, grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); }
  
 
     |
-	PublicKeyword_24=Public { announce($PublicKeyword_24, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
- 
-
-    |
-	OutKeyword_25=Out { announce($OutKeyword_25, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+	OutKeyword_24=Out { announce($OutKeyword_24, grammarAccess.getN4KeywordAccess().getOutKeyword_24()); }
  
 )
     ;

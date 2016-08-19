@@ -92,11 +92,9 @@ Target : 'target';
 
 Typeof : 'typeof';
 
-Await : 'Await';
-
 Async : 'async';
 
-Await_1 : 'await';
+Await : 'await';
 
 Break : 'break';
 
