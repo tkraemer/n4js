@@ -88,6 +88,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
@@ -215,12 +216,24 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	 * Checks if any accessor has been consumed for which the counterpart accessor is only inherited.
 	 */
 	private void checkUnpairedAccessorConsumption(MemberMatrix mm, N4ClassifierDefinition definition) {
+		// validate conflicts between inherited and consumed accessor members only
 		if (!mm.hasOwned() && mm.hasInherited() && mm.hasImplemented()) {
+			boolean getterConsumed = false;
+			boolean setterConsumed = false;
+			TMember consumedAccessor = null;
 			for (TMember implementedMember : mm.implemented()) {
 				if (implementedMember.isAccessor() && mm.isConsumed(implementedMember)) {
-					messageMissingOwnedAccessorCorrespondingConsumedAccessor((FieldAccessor) implementedMember,
-							definition);
+					if (implementedMember.getMemberType() == MemberType.GETTER) {
+						getterConsumed = true;
+					} else {
+						setterConsumed = true;
+					}
+					consumedAccessor = implementedMember;
 				}
+			}
+			if ((getterConsumed != setterConsumed) && mm.hasAccessorPair() && null != consumedAccessor) {
+				messageMissingOwnedAccessorCorrespondingConsumedAccessor((FieldAccessor) consumedAccessor,
+						definition);
 			}
 		}
 	}

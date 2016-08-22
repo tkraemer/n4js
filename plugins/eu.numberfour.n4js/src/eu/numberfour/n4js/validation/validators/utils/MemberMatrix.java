@@ -299,6 +299,16 @@ public class MemberMatrix {
 	}
 
 	/**
+	 * Returns {@code true} if the matrix contains a getter as well as a setter.
+	 */
+	public boolean hasAccessorPair() {
+		return (!members(OWNED, GETTER).isEmpty() || !members(INHERITED, GETTER).isEmpty()
+				|| !members(IMPLEMENTED, GETTER).isEmpty()) &&
+				(!members(OWNED, SETTER).isEmpty() || !members(INHERITED, SETTER).isEmpty()
+						|| !members(IMPLEMENTED, SETTER).isEmpty());
+	}
+
+	/**
 	 * Returns all owned, inherited and implemented members (but not consumed members, since they are already contained
 	 * in "implemented").
 	 */
