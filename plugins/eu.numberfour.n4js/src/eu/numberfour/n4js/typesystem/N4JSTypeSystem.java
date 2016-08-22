@@ -209,7 +209,10 @@ public class N4JSTypeSystem {
 
 	/**
 	 * Convenience method. Infers the context of <code>element</code> using the {@link org.eclipse.xtext.EcoreUtil2}
-	 * class.
+	 * class.<br/>
+	 * <br/>
+	 * WARNING: does not handle all cases yet!<br/>
+	 * TODO refactor uses of #tau() methods to have general approach of deriving rule env from AST node
 	 */
 	public TypeRef tau(TypableElement element, EObject astNodeForContext) {
 		TypeDefiningElement tde = EcoreUtil2.getContainerOfType(astNodeForContext, TypeDefiningElement.class);

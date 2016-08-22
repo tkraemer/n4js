@@ -56,3 +56,10 @@ async function pfT() {
 	await pf1("", null);
 	await @Promisify pf2("");
 }
+
+class MyPromise extends Promise<any,any> {}
+function mp() : MyPromise { return null; }
+async function mpc() {
+	// XPECT nowarnings
+	await mp();
+}

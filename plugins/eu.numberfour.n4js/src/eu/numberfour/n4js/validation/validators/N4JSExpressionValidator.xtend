@@ -165,16 +165,16 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, awaitExpression, IssueCodes.EXP_MISPLACED_AWAIT_EXPRESSION);
 		}
 
-		awaitingAPromise(awaitExpression);
+		internalCheckAwaitingAPromise(awaitExpression);
 	}
 
-	private def awaitingAPromise(AwaitExpression awaitExpression) {
+	private def void internalCheckAwaitingAPromise(AwaitExpression awaitExpression) {
 		val Expression subExpr = awaitExpression.getExpression();
 		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
-		val tscope = RuleEnvironmentExtensions.getPredefinedTypes(G).builtInTypeScope
+		val BuiltInTypeScope tscope = RuleEnvironmentExtensions.getPredefinedTypes(G).builtInTypeScope;
 
-		if (! TypeUtils.isPromise(typeRef, tscope)) {
+		if (! TypeUtils.isRawSuperType(typeRef.declaredType, tscope.getPromiseType())) {
 			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
 			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
 		}
