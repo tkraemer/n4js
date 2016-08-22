@@ -9625,7 +9625,7 @@ Of
 
 )
 ))(
-Await_1
+Await
 
     |
 CommercialAt
@@ -9686,9 +9686,6 @@ Intersection
 
     |
 This
-
-    |
-Await
 
     |
 Promisify
@@ -9839,7 +9836,7 @@ ExclamationMark
 
 )
 ))((
-Await_1
+Await
  | 
 CommercialAt
  | 
@@ -9880,8 +9877,6 @@ Union
 Intersection
  | 
 This
- | 
-Await
  | 
 Promisify
  | 
@@ -10469,7 +10464,7 @@ Of
 
 )
 ))(
-Await_1
+Await
 
     |
 CommercialAt
@@ -10527,9 +10522,6 @@ Intersection
 
     |
 This
-
-    |
-Await
 
     |
 Promisify
@@ -10683,7 +10675,7 @@ ExclamationMark
 
 )
 ))((
-Await_1
+Await
  | 
 CommercialAt
  | 
@@ -10722,8 +10714,6 @@ Union
 Intersection
  | 
 This
- | 
-Await
  | 
 Promisify
  | 
@@ -14490,13 +14480,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -14800,13 +14787,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -15203,13 +15187,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -15359,11 +15340,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -15964,13 +15943,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -16120,11 +16096,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -17386,13 +17360,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -17542,11 +17513,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -17806,13 +17775,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -17962,11 +17928,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -20417,13 +20381,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -20584,11 +20545,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -20751,13 +20710,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -20918,11 +20874,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -21082,13 +21036,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -21247,11 +21198,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -21411,13 +21360,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -21576,11 +21522,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -23949,7 +23893,7 @@ ruleAssignmentExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>
     { 
         newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); 
@@ -24120,7 +24064,7 @@ norm1_AssignmentExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>
     { 
         newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); 
@@ -24291,7 +24235,7 @@ norm2_AssignmentExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>
     { 
         newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); 
@@ -24472,7 +24416,7 @@ norm3_AssignmentExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>
     { 
         newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); 
@@ -24694,7 +24638,7 @@ Asterisk
 
 )
 )?((
-Await_1
+Await
  | 
 CommercialAt
  | 
@@ -24733,8 +24677,6 @@ Union
 Intersection
  | 
 This
- | 
-Await
  | 
 Promisify
  | 
@@ -24861,7 +24803,7 @@ Asterisk
 
 )
 )?((
-Await_1
+Await
  | 
 CommercialAt
  | 
@@ -24900,8 +24842,6 @@ Union
 Intersection
  | 
 This
- | 
-Await
  | 
 Promisify
  | 
@@ -25113,7 +25053,7 @@ ruleAwaitExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>((
     {
         $current = forceCreateModelElement(
@@ -25121,7 +25061,7 @@ Await_1
             $current);
     }
 )
-	otherlv_1=Await_1
+	otherlv_1=Await
     {
     	newLeafNode(otherlv_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1());
     }
@@ -25158,7 +25098,7 @@ norm1_AwaitExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>((
     {
         $current = forceCreateModelElement(
@@ -25166,7 +25106,7 @@ Await_1
             $current);
     }
 )
-	otherlv_1=Await_1
+	otherlv_1=Await
     {
     	newLeafNode(otherlv_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1());
     }
@@ -25203,7 +25143,7 @@ norm2_AwaitExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>((
     {
         $current = forceCreateModelElement(
@@ -25211,7 +25151,7 @@ Await_1
             $current);
     }
 )
-	otherlv_1=Await_1
+	otherlv_1=Await
     {
     	newLeafNode(otherlv_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1());
     }
@@ -25248,7 +25188,7 @@ norm3_AwaitExpression returns [EObject current=null]
     @after { leaveRule(); }:
 (((((
 )
-Await_1
+Await
 ))=>((
     {
         $current = forceCreateModelElement(
@@ -25256,7 +25196,7 @@ Await_1
             $current);
     }
 )
-	otherlv_1=Await_1
+	otherlv_1=Await
     {
     	newLeafNode(otherlv_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1());
     }
@@ -27741,7 +27681,7 @@ ruleTypeReferenceName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeR
     }
 
     |
-	kw=Await_1 
+	kw=Await 
     {
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getTypeReferenceNameAccess().getAwaitKeyword_2()); 
@@ -29064,13 +29004,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -29371,13 +29308,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -29738,13 +29672,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -29912,11 +29843,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -30453,13 +30382,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -30627,11 +30553,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -32168,11 +32092,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -32366,11 +32288,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -32615,13 +32535,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -32789,11 +32706,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -33062,13 +32977,10 @@ Intersection
 This
 
     |
-Await
-
-    |
 Promisify
 
     |
-Await_1
+Await
 
     |
 Async
@@ -33236,11 +33148,9 @@ Intersection
  | 
 This
  | 
-Await
- | 
 Promisify
  | 
-Await_1
+Await
  | 
 Async
  | 
@@ -37979,73 +37889,66 @@ ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     }
 
     |
-	kw=Await 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); 
-    }
-
-    |
 	kw=Promisify 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); 
     }
 
     |
-	kw=Await_1 
+	kw=Await 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); 
     }
 
     |
 	kw=Async 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); 
     }
 
     |
 	kw=Implements 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); 
     }
 
     |
 	kw=Interface 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); 
     }
 
     |
 	kw=Private 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); 
     }
 
     |
 	kw=Protected 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); 
     }
 
     |
 	kw=Public 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); 
     }
 
     |
 	kw=Out 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_24()); 
     }
 )
     ;

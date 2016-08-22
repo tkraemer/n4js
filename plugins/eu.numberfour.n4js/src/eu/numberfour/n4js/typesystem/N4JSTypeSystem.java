@@ -14,11 +14,13 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.TypeDefiningElement;
 import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
@@ -203,6 +205,22 @@ public class N4JSTypeSystem {
 			return substValue;
 		}
 		return null;
+	}
+
+	/**
+	 * Convenience method. Infers the context of <code>element</code> using the {@link org.eclipse.xtext.EcoreUtil2}
+	 * class.<br/>
+	 * <br/>
+	 * WARNING: does not handle all cases yet!<br/>
+	 * TODO refactor uses of #tau() methods to have general approach of deriving rule env from AST node
+	 */
+	public TypeRef tau(TypableElement element, EObject astNodeForContext) {
+		TypeDefiningElement tde = EcoreUtil2.getContainerOfType(astNodeForContext, TypeDefiningElement.class);
+		TypeRef context = null;
+		if (tde != null) {
+			context = TypeUtils.createTypeRef(tde.getDefinedType());
+		}
+		return tau(element, context);
 	}
 
 	/**

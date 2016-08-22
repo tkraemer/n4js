@@ -113,6 +113,7 @@ public class TokenTypeRewriter implements PseudoTokens {
 				"public",
 				"target",
 				"async",
+				"await", // future reserved keyword in ECMAScript 2015, but only in modules
 				"out");
 		/** Public for testing */
 		public static final ImmutableSet<String> keywordFromTypeRef = ImmutableSet.of(
@@ -123,8 +124,6 @@ public class TokenTypeRewriter implements PseudoTokens {
 		/** Public for testing */
 		public static final ImmutableSet<String> hardcodedAnnotationAndSemanticKeywords = ImmutableSet.of(
 				"This",
-				"Await",
-				"await", // future reserved keyword in ECMAScript 2015, but only in modules
 				"Promisify");
 
 		/**

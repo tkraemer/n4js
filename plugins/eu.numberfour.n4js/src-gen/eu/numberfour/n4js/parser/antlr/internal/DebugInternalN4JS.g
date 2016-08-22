@@ -1260,7 +1260,6 @@ ruleForStatement :
 					'union' |
 					'intersection' |
 					'This' |
-					'Await' |
 					'Promisify' |
 					'implements' |
 					'interface' |
@@ -1328,7 +1327,6 @@ ruleForStatement :
 					'union' |
 					'intersection' |
 					'This' |
-					'Await' |
 					'Promisify' |
 					'implements' |
 					'interface' |
@@ -1428,7 +1426,6 @@ norm1_ForStatement :
 					'union' |
 					'intersection' |
 					'This' |
-					'Await' |
 					'Promisify' |
 					'implements' |
 					'interface' |
@@ -1496,7 +1493,6 @@ norm1_ForStatement :
 					'union' |
 					'intersection' |
 					'This' |
-					'Await' |
 					'Promisify' |
 					'implements' |
 					'interface' |
@@ -1950,7 +1946,6 @@ rulePropertyAssignment :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -2043,7 +2038,6 @@ norm1_PropertyAssignment :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -2140,7 +2134,6 @@ ruleAnnotatedPropertyAssignment :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -2214,7 +2207,6 @@ ruleAnnotatedPropertyAssignment :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -2325,7 +2317,6 @@ norm1_AnnotatedPropertyAssignment :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -2399,7 +2390,6 @@ norm1_AnnotatedPropertyAssignment :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -2587,7 +2577,6 @@ rulePropertySetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -2661,7 +2650,6 @@ rulePropertySetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -2742,7 +2730,6 @@ norm1_PropertySetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -2816,7 +2803,6 @@ norm1_PropertySetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3123,7 +3109,6 @@ ruleRelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3188,7 +3173,6 @@ ruleRelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3258,7 +3242,6 @@ norm1_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3323,7 +3306,6 @@ norm1_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3392,7 +3374,6 @@ norm2_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3456,7 +3437,6 @@ norm2_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3525,7 +3505,6 @@ norm3_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -3589,7 +3568,6 @@ norm3_RelationalExpression :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -4110,7 +4088,6 @@ ruleYieldExpression :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'implements' |
 	'interface' |
@@ -4180,7 +4157,6 @@ norm1_YieldExpression :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'implements' |
 	'interface' |
@@ -4777,7 +4753,6 @@ ruleN4MemberDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -4868,7 +4843,6 @@ norm1_N4MemberDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -4963,7 +4937,6 @@ ruleAnnotatedN4MemberDeclaration :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -5037,7 +5010,6 @@ ruleAnnotatedN4MemberDeclaration :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -5143,7 +5115,6 @@ norm1_AnnotatedN4MemberDeclaration :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -5217,7 +5188,6 @@ norm1_AnnotatedN4MemberDeclaration :
 			'union' |
 			'intersection' |
 			'This' |
-			'Await' |
 			'Promisify' |
 			'await' |
 			'async' |
@@ -5442,7 +5412,6 @@ ruleGetterHeader :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'await' |
 	'async' |
@@ -5519,7 +5488,6 @@ norm1_GetterHeader :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'await' |
 	'async' |
@@ -5597,7 +5565,6 @@ ruleN4SetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -5671,7 +5638,6 @@ ruleN4SetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -5752,7 +5718,6 @@ norm1_N4SetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -5826,7 +5791,6 @@ norm1_N4SetterDeclaration :
 		'union' |
 		'intersection' |
 		'This' |
-		'Await' |
 		'Promisify' |
 		'await' |
 		'async' |
@@ -6411,7 +6375,6 @@ ruleN4Keyword :
 	'union' |
 	'intersection' |
 	'This' |
-	'Await' |
 	'Promisify' |
 	'await' |
 	'async' |

@@ -13555,7 +13555,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'external' | 'abstract' | 'static'
 	//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
 	//	| 'type' | 'union' | 'intersection'
-	//	| 'This' | 'Await' | 'Promisify'
+	//	| 'This' | 'Promisify'
 	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 	//	| 'await'
 	//	// async is not a reserved keyword, i.e. it can be used as a variable name

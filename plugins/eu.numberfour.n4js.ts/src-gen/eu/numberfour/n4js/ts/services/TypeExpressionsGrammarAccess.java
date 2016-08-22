@@ -2124,16 +2124,15 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cUnionKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
 		private final Keyword cIntersectionKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
 		private final Keyword cThisKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
-		private final Keyword cAwaitKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
-		private final Keyword cPromisifyKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
-		private final Keyword cAwaitKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
-		private final Keyword cAsyncKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
-		private final Keyword cImplementsKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
-		private final Keyword cInterfaceKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
-		private final Keyword cPrivateKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
-		private final Keyword cProtectedKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
-		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
-		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
+		private final Keyword cPromisifyKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
+		private final Keyword cAwaitKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
+		private final Keyword cAsyncKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
+		private final Keyword cImplementsKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
+		private final Keyword cInterfaceKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
+		private final Keyword cPrivateKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
+		private final Keyword cProtectedKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
+		private final Keyword cPublicKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
+		private final Keyword cOutKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
 		
 		//N4Keyword:
 		//	'get' | 'set'
@@ -2142,7 +2141,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| 'external' | 'abstract' | 'static'
 		//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
 		//	| 'type' | 'union' | 'intersection'
-		//	| 'This' | 'Await' | 'Promisify'
+		//	| 'This' | 'Promisify'
 		//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 		//	| 'await'
 		//	// async is not a reserved keyword, i.e. it can be used as a variable name
@@ -2155,7 +2154,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
-		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
+		//| 'type' | 'union' | 'intersection' | 'This' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
 		//| 'await' // async is not a reserved keyword, i.e. it can be used as a variable name
 		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
 		//| 'implements' | 'interface' | 'private' | 'protected' | 'public' // package not used in N4JS
@@ -2211,35 +2210,32 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'This'
 		public Keyword getThisKeyword_15() { return cThisKeyword_15; }
 
-		//'Await'
-		public Keyword getAwaitKeyword_16() { return cAwaitKeyword_16; }
-
 		//'Promisify'
-		public Keyword getPromisifyKeyword_17() { return cPromisifyKeyword_17; }
+		public Keyword getPromisifyKeyword_16() { return cPromisifyKeyword_16; }
 
 		//'await'
-		public Keyword getAwaitKeyword_18() { return cAwaitKeyword_18; }
+		public Keyword getAwaitKeyword_17() { return cAwaitKeyword_17; }
 
 		//'async'
-		public Keyword getAsyncKeyword_19() { return cAsyncKeyword_19; }
+		public Keyword getAsyncKeyword_18() { return cAsyncKeyword_18; }
 
 		//'implements'
-		public Keyword getImplementsKeyword_20() { return cImplementsKeyword_20; }
+		public Keyword getImplementsKeyword_19() { return cImplementsKeyword_19; }
 
 		//'interface'
-		public Keyword getInterfaceKeyword_21() { return cInterfaceKeyword_21; }
+		public Keyword getInterfaceKeyword_20() { return cInterfaceKeyword_20; }
 
 		//'private'
-		public Keyword getPrivateKeyword_22() { return cPrivateKeyword_22; }
+		public Keyword getPrivateKeyword_21() { return cPrivateKeyword_21; }
 
 		//'protected'
-		public Keyword getProtectedKeyword_23() { return cProtectedKeyword_23; }
+		public Keyword getProtectedKeyword_22() { return cProtectedKeyword_22; }
 
 		//'public'
-		public Keyword getPublicKeyword_24() { return cPublicKeyword_24; }
+		public Keyword getPublicKeyword_23() { return cPublicKeyword_23; }
 
 		//'out'
-		public Keyword getOutKeyword_25() { return cOutKeyword_25; }
+		public Keyword getOutKeyword_24() { return cOutKeyword_24; }
 	}
 	
 	
@@ -2931,7 +2927,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'external' | 'abstract' | 'static'
 	//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
 	//	| 'type' | 'union' | 'intersection'
-	//	| 'This' | 'Await' | 'Promisify'
+	//	| 'This' | 'Promisify'
 	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
 	//	| 'await'
 	//	// async is not a reserved keyword, i.e. it can be used as a variable name
