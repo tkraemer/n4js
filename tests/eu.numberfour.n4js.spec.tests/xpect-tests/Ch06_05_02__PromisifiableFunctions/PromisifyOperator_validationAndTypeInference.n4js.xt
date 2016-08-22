@@ -33,8 +33,7 @@ async function testFun() {
 	var test05 = await @Promisify f("");
 	
 	// XPECT type of 'test06' --> Content
-	// XPECT noerrors -->
-	var test06 = await f("");
+	var test06 = await @Promisify f("");
 }
 
 
@@ -73,7 +72,6 @@ async function testMeth() {
 	var test15 = await @Promisify c.m("");
 	
 	// XPECT type of 'test16' --> Content
-	// XPECT noerrors -->
-	var test16 = await c.m("");
+	var test16 = await @Promisify c.m("");
 }
 

@@ -30,7 +30,7 @@ async function testWithFooOne(allDone : {function()}) {
 	catch(err01) { console.log('-> got expected error err01:', (err01  as Object).toString()); }
 	
 	console.log('use case #2: with await, short syntax');
-	try { console.log(await fooOne('some path')); }
+	try { console.log(await @Promisify fooOne('some path')); }
 	catch(err02) { console.log('-> got expected error err02:', (err02 as Object).toString()); }
 	
 	console.log('use case #3: use Promise directly');
@@ -66,7 +66,7 @@ async function testWithFooMany(allDone : {function()}) {
 	catch(err11) { console.log('-> got expected error err11:', (err11 as Object).toString()); }
 	
 	console.log('use case #2: with await, short syntax');
-	try { console.log(await fooMany('some path')); }
+	try { console.log(await @Promisify fooMany('some path')); }
 	catch(err12) { console.log('-> got expected error err12:', (err12 as Object).toString()); }
 	
 	console.log('use case #3: use Promise directly');
@@ -102,7 +102,7 @@ async function testWithFooNone(allDone : {function()}) {
 	catch(err21) { console.log('-> got expected error err21:', (err21 as Object).toString()); }
 	
 	console.log('use case #2: with await, short syntax');
-	try { await fooNone('some path'); }
+	try { await @Promisify fooNone('some path'); }
 	catch(err22) { console.log('-> got expected error err22:', (err22 as Object).toString()); }
 	
 	console.log('use case #3: use Promise directly');

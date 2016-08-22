@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.spec.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -23,21 +24,23 @@ import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Test class for all Xpect tests in folder xpect-tests; this test class is also configured in the plugin.xml so that is
  * found by all these xpect tests (even when run as non-OSGi-test).
  */
 @XpectSuiteClasses({
-	LinkingXpectMethod.class, ResourceDescriptionTest.class,
-	TypeXpectMethod.class,
-	ValidationTest.class,
-	NoerrorsXpectMethod.class,
-	ScopeXpectMethod.class,
-	OutputXpectMethod.class
+		LinkingXpectMethod.class, ResourceDescriptionTest.class,
+		TypeXpectMethod.class,
+		ValidationTest.class,
+		NoerrorsXpectMethod.class,
+		ScopeXpectMethod.class,
+		OutputXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests", fileExtensions = { "xt" })
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSSpecTest {
 	// nop
 }

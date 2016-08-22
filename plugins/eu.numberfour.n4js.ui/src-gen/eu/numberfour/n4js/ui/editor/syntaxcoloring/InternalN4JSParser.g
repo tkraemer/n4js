@@ -3670,7 +3670,7 @@ ruleForStatement
 
 )
 ))(
-	Await_1 	
+	Await 	
     |
 	CommercialAt 	
     |
@@ -3711,8 +3711,6 @@ ruleForStatement
 	Intersection 	
     |
 	This 	
-    |
-	Await 	
     |
 	Promisify 	
     |
@@ -3799,7 +3797,7 @@ ruleForStatement
 
 )
 ))((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -3820,7 +3818,6 @@ ruleForStatement
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -4018,7 +4015,7 @@ norm1_ForStatement
 
 )
 ))(
-	Await_1 	
+	Await 	
     |
 	CommercialAt 	
     |
@@ -4057,8 +4054,6 @@ norm1_ForStatement
 	Intersection 	
     |
 	This 	
-    |
-	Await 	
     |
 	Promisify 	
     |
@@ -4147,7 +4142,7 @@ norm1_ForStatement
 
 )
 ))((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -4167,7 +4162,6 @@ norm1_ForStatement
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -5660,11 +5654,9 @@ rulePropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -5848,11 +5840,9 @@ norm1_PropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6058,11 +6048,9 @@ ruleAnnotatedPropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6140,9 +6128,8 @@ ruleAnnotatedPropertyAssignment
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -6377,11 +6364,9 @@ norm1_AnnotatedPropertyAssignment
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -6459,9 +6444,8 @@ norm1_AnnotatedPropertyAssignment
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -6965,11 +6949,9 @@ rulePropertySetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -7047,9 +7029,8 @@ rulePropertySetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -7192,11 +7173,9 @@ norm1_PropertySetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -7274,9 +7253,8 @@ norm1_PropertySetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8161,11 +8139,9 @@ ruleRelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8257,9 +8233,8 @@ ruleRelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8349,11 +8324,9 @@ norm1_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8445,9 +8418,8 @@ norm1_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8535,11 +8507,9 @@ norm2_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8630,9 +8600,8 @@ norm2_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -8720,11 +8689,9 @@ norm3_RelationalExpression
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -8815,9 +8782,8 @@ norm3_RelationalExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -9783,7 +9749,7 @@ ruleAssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=ruleAwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=ruleAwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -9869,7 +9835,7 @@ norm1_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm1_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm1_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -9955,7 +9921,7 @@ norm2_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm2_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm2_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -10043,7 +10009,7 @@ norm3_AssignmentExpression
     @init {
     }:
 ((((
-	Await_1 	))=>	AwaitExpressionParserRuleCall_0=norm3_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
+	Await 	))=>	AwaitExpressionParserRuleCall_0=norm3_AwaitExpression		{ announce($AwaitExpressionParserRuleCall_0.start, $AwaitExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionAccess().getAwaitExpressionParserRuleCall_0()); }
 )
     |(((
 	CommercialAt 	
@@ -10150,7 +10116,7 @@ ruleYieldExpression
 
 )
 )?((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -10170,7 +10136,6 @@ ruleYieldExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -10230,7 +10195,7 @@ norm1_YieldExpression
 
 )
 )?((
-	Await_1 	 | 
+	Await 	 | 
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
@@ -10250,7 +10215,6 @@ norm1_YieldExpression
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -10370,8 +10334,8 @@ ruleAwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=ruleAssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10388,8 +10352,8 @@ norm1_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm1_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10406,8 +10370,8 @@ norm2_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm2_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -10424,8 +10388,8 @@ norm3_AwaitExpression
     @init {
     }:
 ((((
-	Await_1 	))=>(
-	AwaitKeyword_0_0_1=Await_1 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
+	Await 	))=>(
+	AwaitKeyword_0_0_1=Await 	 { announce($AwaitKeyword_0_0_1, grammarAccess.getAwaitExpressionAccess().getAwaitKeyword_0_0_1()); }))(
 (
 	ExpressionAssignmentExpressionParserRuleCall_1_0=norm3_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getAwaitExpressionAccess().getExpressionAssignment_1()); }
 )
@@ -11203,348 +11167,6 @@ ruleAnnotationName
 
 
 
-// Entry rule entryRuleBindingIdentifier
-entryRuleBindingIdentifier 
-	:
-	ruleBindingIdentifier 
-	EOF 
-;
-
-// Rule BindingIdentifier
-ruleBindingIdentifier 
-    @init {
-    }:
-(	RULE_IDENTIFIER
-    |
-	YieldKeyword_1_0=Yield { announce($YieldKeyword_1_0, grammarAccess.getBindingIdentifierAccess().getYieldKeyword_1_0()); }
- 
-
-    |	ruleN4Keyword)
-    ;
-
-
-
-
-
-
-// Rule BindingIdentifier
-norm1_BindingIdentifier 
-    @init {
-    }:
-(	RULE_IDENTIFIER
-    |	ruleN4Keyword)
-    ;
-
-
-
-
-
-// Entry rule entryRuleIdentifierName
-entryRuleIdentifierName 
-	:
-	ruleIdentifierName 
-	EOF 
-;
-
-// Rule IdentifierName
-ruleIdentifierName 
-    @init {
-    }:
-(	RULE_IDENTIFIER
-    |	ruleReservedWord
-    |	ruleN4Keyword)
-    ;
-
-
-
-
-
-// Entry rule entryRuleReservedWord
-entryRuleReservedWord 
-	:
-	ruleReservedWord 
-	EOF 
-;
-
-// Rule ReservedWord
-ruleReservedWord 
-    @init {
-    }:
-(
-	BreakKeyword_0=Break { announce($BreakKeyword_0, grammarAccess.getReservedWordAccess().getBreakKeyword_0()); }
- 
-
-    |
-	CaseKeyword_1=Case { announce($CaseKeyword_1, grammarAccess.getReservedWordAccess().getCaseKeyword_1()); }
- 
-
-    |
-	CatchKeyword_2=Catch { announce($CatchKeyword_2, grammarAccess.getReservedWordAccess().getCatchKeyword_2()); }
- 
-
-    |
-	ClassKeyword_3=Class { announce($ClassKeyword_3, grammarAccess.getReservedWordAccess().getClassKeyword_3()); }
- 
-
-    |
-	ConstKeyword_4=Const { announce($ConstKeyword_4, grammarAccess.getReservedWordAccess().getConstKeyword_4()); }
- 
-
-    |
-	ContinueKeyword_5=Continue { announce($ContinueKeyword_5, grammarAccess.getReservedWordAccess().getContinueKeyword_5()); }
- 
-
-    |
-	DebuggerKeyword_6=Debugger { announce($DebuggerKeyword_6, grammarAccess.getReservedWordAccess().getDebuggerKeyword_6()); }
- 
-
-    |
-	DefaultKeyword_7=Default { announce($DefaultKeyword_7, grammarAccess.getReservedWordAccess().getDefaultKeyword_7()); }
- 
-
-    |
-	DeleteKeyword_8=Delete { announce($DeleteKeyword_8, grammarAccess.getReservedWordAccess().getDeleteKeyword_8()); }
- 
-
-    |
-	DoKeyword_9=Do { announce($DoKeyword_9, grammarAccess.getReservedWordAccess().getDoKeyword_9()); }
- 
-
-    |
-	ElseKeyword_10=Else { announce($ElseKeyword_10, grammarAccess.getReservedWordAccess().getElseKeyword_10()); }
- 
-
-    |
-	ExportKeyword_11=Export { announce($ExportKeyword_11, grammarAccess.getReservedWordAccess().getExportKeyword_11()); }
- 
-
-    |
-	ExtendsKeyword_12=Extends { announce($ExtendsKeyword_12, grammarAccess.getReservedWordAccess().getExtendsKeyword_12()); }
- 
-
-    |
-	FinallyKeyword_13=Finally { announce($FinallyKeyword_13, grammarAccess.getReservedWordAccess().getFinallyKeyword_13()); }
- 
-
-    |
-	ForKeyword_14=For { announce($ForKeyword_14, grammarAccess.getReservedWordAccess().getForKeyword_14()); }
- 
-
-    |
-	FunctionKeyword_15=Function { announce($FunctionKeyword_15, grammarAccess.getReservedWordAccess().getFunctionKeyword_15()); }
- 
-
-    |
-	IfKeyword_16=If { announce($IfKeyword_16, grammarAccess.getReservedWordAccess().getIfKeyword_16()); }
- 
-
-    |
-	ImportKeyword_17=Import { announce($ImportKeyword_17, grammarAccess.getReservedWordAccess().getImportKeyword_17()); }
- 
-
-    |
-	InKeyword_18=In { announce($InKeyword_18, grammarAccess.getReservedWordAccess().getInKeyword_18()); }
- 
-
-    |
-	InstanceofKeyword_19=Instanceof { announce($InstanceofKeyword_19, grammarAccess.getReservedWordAccess().getInstanceofKeyword_19()); }
- 
-
-    |
-	NewKeyword_20=New { announce($NewKeyword_20, grammarAccess.getReservedWordAccess().getNewKeyword_20()); }
- 
-
-    |
-	ReturnKeyword_21=Return { announce($ReturnKeyword_21, grammarAccess.getReservedWordAccess().getReturnKeyword_21()); }
- 
-
-    |
-	SuperKeyword_22=Super { announce($SuperKeyword_22, grammarAccess.getReservedWordAccess().getSuperKeyword_22()); }
- 
-
-    |
-	SwitchKeyword_23=Switch { announce($SwitchKeyword_23, grammarAccess.getReservedWordAccess().getSwitchKeyword_23()); }
- 
-
-    |
-	ThisKeyword_24=This_1 { announce($ThisKeyword_24, grammarAccess.getReservedWordAccess().getThisKeyword_24()); }
- 
-
-    |
-	ThrowKeyword_25=Throw { announce($ThrowKeyword_25, grammarAccess.getReservedWordAccess().getThrowKeyword_25()); }
- 
-
-    |
-	TryKeyword_26=Try { announce($TryKeyword_26, grammarAccess.getReservedWordAccess().getTryKeyword_26()); }
- 
-
-    |
-	TypeofKeyword_27=Typeof { announce($TypeofKeyword_27, grammarAccess.getReservedWordAccess().getTypeofKeyword_27()); }
- 
-
-    |
-	VarKeyword_28=Var { announce($VarKeyword_28, grammarAccess.getReservedWordAccess().getVarKeyword_28()); }
- 
-
-    |
-	VoidKeyword_29=Void { announce($VoidKeyword_29, grammarAccess.getReservedWordAccess().getVoidKeyword_29()); }
- 
-
-    |
-	WhileKeyword_30=While { announce($WhileKeyword_30, grammarAccess.getReservedWordAccess().getWhileKeyword_30()); }
- 
-
-    |
-	WithKeyword_31=With { announce($WithKeyword_31, grammarAccess.getReservedWordAccess().getWithKeyword_31()); }
- 
-
-    |
-	YieldKeyword_32=Yield { announce($YieldKeyword_32, grammarAccess.getReservedWordAccess().getYieldKeyword_32()); }
- 
-
-    |
-	NullKeyword_33=Null { announce($NullKeyword_33, grammarAccess.getReservedWordAccess().getNullKeyword_33()); }
- 
-
-    |
-	TrueKeyword_34=True { announce($TrueKeyword_34, grammarAccess.getReservedWordAccess().getTrueKeyword_34()); }
- 
-
-    |
-	FalseKeyword_35=False { announce($FalseKeyword_35, grammarAccess.getReservedWordAccess().getFalseKeyword_35()); }
- 
-
-    |
-	EnumKeyword_36=Enum { announce($EnumKeyword_36, grammarAccess.getReservedWordAccess().getEnumKeyword_36()); }
- 
-)
-    ;
-
-
-
-
-
-// Entry rule entryRuleN4Keyword
-entryRuleN4Keyword 
-	:
-	ruleN4Keyword 
-	EOF 
-;
-
-// Rule N4Keyword
-ruleN4Keyword 
-    @init {
-    }:
-(
-	GetKeyword_0=Get { announce($GetKeyword_0, grammarAccess.getN4KeywordAccess().getGetKeyword_0()); }
- 
-
-    |
-	SetKeyword_1=Set { announce($SetKeyword_1, grammarAccess.getN4KeywordAccess().getSetKeyword_1()); }
- 
-
-    |
-	LetKeyword_2=Let { announce($LetKeyword_2, grammarAccess.getN4KeywordAccess().getLetKeyword_2()); }
- 
-
-    |
-	ProjectKeyword_3=Project { announce($ProjectKeyword_3, grammarAccess.getN4KeywordAccess().getProjectKeyword_3()); }
- 
-
-    |
-	ExternalKeyword_4=External { announce($ExternalKeyword_4, grammarAccess.getN4KeywordAccess().getExternalKeyword_4()); }
- 
-
-    |
-	AbstractKeyword_5=Abstract { announce($AbstractKeyword_5, grammarAccess.getN4KeywordAccess().getAbstractKeyword_5()); }
- 
-
-    |
-	StaticKeyword_6=Static { announce($StaticKeyword_6, grammarAccess.getN4KeywordAccess().getStaticKeyword_6()); }
- 
-
-    |
-	AsKeyword_7=As { announce($AsKeyword_7, grammarAccess.getN4KeywordAccess().getAsKeyword_7()); }
- 
-
-    |
-	FromKeyword_8=From { announce($FromKeyword_8, grammarAccess.getN4KeywordAccess().getFromKeyword_8()); }
- 
-
-    |
-	ConstructorKeyword_9=Constructor { announce($ConstructorKeyword_9, grammarAccess.getN4KeywordAccess().getConstructorKeyword_9()); }
- 
-
-    |
-	OfKeyword_10=Of { announce($OfKeyword_10, grammarAccess.getN4KeywordAccess().getOfKeyword_10()); }
- 
-
-    |
-	TargetKeyword_11=Target { announce($TargetKeyword_11, grammarAccess.getN4KeywordAccess().getTargetKeyword_11()); }
- 
-
-    |
-	TypeKeyword_12=Type { announce($TypeKeyword_12, grammarAccess.getN4KeywordAccess().getTypeKeyword_12()); }
- 
-
-    |
-	UnionKeyword_13=Union { announce($UnionKeyword_13, grammarAccess.getN4KeywordAccess().getUnionKeyword_13()); }
- 
-
-    |
-	IntersectionKeyword_14=Intersection { announce($IntersectionKeyword_14, grammarAccess.getN4KeywordAccess().getIntersectionKeyword_14()); }
- 
-
-    |
-	ThisKeyword_15=This { announce($ThisKeyword_15, grammarAccess.getN4KeywordAccess().getThisKeyword_15()); }
- 
-
-    |
-	AwaitKeyword_16=Await { announce($AwaitKeyword_16, grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); }
- 
-
-    |
-	PromisifyKeyword_17=Promisify { announce($PromisifyKeyword_17, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); }
- 
-
-    |
-	AwaitKeyword_18=Await_1 { announce($AwaitKeyword_18, grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); }
- 
-
-    |
-	AsyncKeyword_19=Async { announce($AsyncKeyword_19, grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); }
- 
-
-    |
-	ImplementsKeyword_20=Implements { announce($ImplementsKeyword_20, grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); }
- 
-
-    |
-	InterfaceKeyword_21=Interface { announce($InterfaceKeyword_21, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); }
- 
-
-    |
-	PrivateKeyword_22=Private { announce($PrivateKeyword_22, grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); }
- 
-
-    |
-	ProtectedKeyword_23=Protected { announce($ProtectedKeyword_23, grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); }
- 
-
-    |
-	PublicKeyword_24=Public { announce($PublicKeyword_24, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
- 
-
-    |
-	OutKeyword_25=Out { announce($OutKeyword_25, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
- 
-)
-    ;
-
-
-
-
-
 // Entry rule entryRuleREGEX_LITERAL
 entryRuleREGEX_LITERAL 
 	:
@@ -11908,7 +11530,7 @@ ruleTypeReferenceName
  
 
     |
-	AwaitKeyword_2=Await_1 { announce($AwaitKeyword_2, grammarAccess.getTypeReferenceNameAccess().getAwaitKeyword_2()); }
+	AwaitKeyword_2=Await { announce($AwaitKeyword_2, grammarAccess.getTypeReferenceNameAccess().getAwaitKeyword_2()); }
  
 
     |
@@ -12452,11 +12074,9 @@ ruleN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12639,11 +12259,9 @@ norm1_N4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12841,11 +12459,9 @@ ruleAnnotatedN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -12927,9 +12543,8 @@ ruleAnnotatedN4MemberDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13145,11 +12760,9 @@ norm1_AnnotatedN4MemberDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -13231,9 +12844,8 @@ norm1_AnnotatedN4MemberDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13766,9 +13378,8 @@ ruleGetterHeader
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13851,9 +13462,8 @@ norm1_GetterHeader
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -13998,11 +13608,9 @@ ruleN4SetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -14084,9 +13692,8 @@ ruleN4SetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -14234,11 +13841,9 @@ norm1_N4SetterDeclaration
     |
 	This 	
     |
-	Await 	
-    |
 	Promisify 	
     |
-	Await_1 	
+	Await 	
     |
 	Async 	
     |
@@ -14320,9 +13925,8 @@ norm1_N4SetterDeclaration
 	Union 	 | 
 	Intersection 	 | 
 	This 	 | 
-	Await 	 | 
 	Promisify 	 | 
-	Await_1 	 | 
+	Await 	 | 
 	Async 	 | 
 	Implements 	 | 
 	Interface 	 | 
@@ -14818,159 +14422,6 @@ ruleElision
     }:
 (
 	CommaKeyword_1=Comma 	 { announce($CommaKeyword_1, grammarAccess.getElisionAccess().getCommaKeyword_1()); })
-;
-
-
-
-
-
-// Entry rule entryRuleTStructMethod
-entryRuleTStructMethod
-	:
-	ruleTStructMethod 
-	EOF 
-;
-
-// Rule TStructMethod
-ruleTStructMethod 
-    @init {
-    }:
-(((((
-	LessThanSign 	(
-(
-	ruleTypeVariable
-)
-)(
-	Comma 	(
-(
-	ruleTypeVariable
-)
-))*
-	GreaterThanSign 	)?(
-(
-	ruleIdentifierName
-)
-)
-	LeftParenthesis 	))=>((
-	LessThanSignKeyword_0_0_1_0=LessThanSign 	 { announce($LessThanSignKeyword_0_0_1_0, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0()); }(
-(
-	TypeVarsTypeVariableParserRuleCall_0_0_1_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_1()); }
-)
-)(
-	CommaKeyword_0_0_1_2_0=Comma 	 { announce($CommaKeyword_0_0_1_2_0, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0()); }(
-(
-	TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_2_1()); }
-)
-))*
-	GreaterThanSignKeyword_0_0_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_0_0_1_3, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3()); })?(
-(
-	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructMethodAccess().getNameAssignment_0_0_2()); }
-)
-)
-	LeftParenthesisKeyword_0_0_3=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_3, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3()); }))	TAnonymousFormalParameterListParserRuleCall_1=ruleTAnonymousFormalParameterList		{ announce($TAnonymousFormalParameterListParserRuleCall_1.start, $TAnonymousFormalParameterListParserRuleCall_1.stop, grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); }
-
-	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2()); }(
-	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructMethodAccess().getReturnTypeRefAssignment_3_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructField
-entryRuleTStructField
-	:
-	ruleTStructField 
-	EOF 
-;
-
-// Rule TStructField
-ruleTStructField 
-    @init {
-    }:
-((
-(
-	NameIdentifierNameParserRuleCall_0_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0.start, $NameIdentifierNameParserRuleCall_0_0.stop, grammarAccess.getTStructFieldAccess().getNameAssignment_0()); }
-)
-)(
-	ColonKeyword_1_0=Colon 	 { announce($ColonKeyword_1_0, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0()); }(
-(
-	TypeRefTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($TypeRefTypeRefParserRuleCall_1_1_0.start, $TypeRefTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_1_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructGetter
-entryRuleTStructGetter
-	:
-	ruleTStructGetter 
-	EOF 
-;
-
-// Rule TStructGetter
-ruleTStructGetter 
-    @init {
-    }:
-((((
-	Get 	(
-(
-	ruleIdentifierName
-)
-)))=>(
-	GetKeyword_0_0_1=Get 	 { announce($GetKeyword_0_0_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1()); }(
-(
-	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructGetterAccess().getNameAssignment_0_0_2()); }
-)
-)))
-	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1()); }
-	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2()); }(
-	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0()); }(
-(
-	DeclaredTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_3_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1()); }
-)
-))?)
-;
-
-
-
-
-
-// Entry rule entryRuleTStructSetter
-entryRuleTStructSetter
-	:
-	ruleTStructSetter 
-	EOF 
-;
-
-// Rule TStructSetter
-ruleTStructSetter 
-    @init {
-    }:
-((((
-	Set 	(
-(
-	ruleIdentifierName
-)
-)))=>(
-	SetKeyword_0_0_1=Set 	 { announce($SetKeyword_0_0_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1()); }(
-(
-	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2()); }
-)
-)))
-	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1()); }(
-(
-	FparTAnonymousFormalParameterParserRuleCall_2_0=ruleTAnonymousFormalParameter { announce($FparTAnonymousFormalParameterParserRuleCall_2_0.start, $FparTAnonymousFormalParameterParserRuleCall_2_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_2()); }
-)
-)
-	RightParenthesisKeyword_3=RightParenthesis 	 { announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3()); })
 ;
 
 
@@ -15516,11 +14967,11 @@ ruleTAnonymousFormalParameter
 )
 )?(((
 (
-	ruleTIdentifier
+	ruleBindingIdentifier
 )
 )=>
 (
-	NameTIdentifierParserRuleCall_1_0_0=ruleTIdentifier { announce($NameTIdentifierParserRuleCall_1_0_0.start, $NameTIdentifierParserRuleCall_1_0_0.stop, grammarAccess.getTAnonymousFormalParameterAccess().getNameAssignment_1_0()); }
+	NameBindingIdentifierParserRuleCall_1_0_0=ruleBindingIdentifier { announce($NameBindingIdentifierParserRuleCall_1_0_0.start, $NameBindingIdentifierParserRuleCall_1_0_0.stop, grammarAccess.getTAnonymousFormalParameterAccess().getNameAssignment_1_0()); }
 )
 )
 	ColonKeyword_1_1=Colon 	 { announce($ColonKeyword_1_1, grammarAccess.getTAnonymousFormalParameterAccess().getColonKeyword_1_1()); })?(
@@ -15794,6 +15245,159 @@ ruleTStructMember
 
 
 
+// Entry rule entryRuleTStructMethod
+entryRuleTStructMethod
+	:
+	ruleTStructMethod 
+	EOF 
+;
+
+// Rule TStructMethod
+ruleTStructMethod 
+    @init {
+    }:
+(((((
+	LessThanSign 	(
+(
+	ruleTypeVariable
+)
+)(
+	Comma 	(
+(
+	ruleTypeVariable
+)
+))*
+	GreaterThanSign 	)?(
+(
+	ruleIdentifierName
+)
+)
+	LeftParenthesis 	))=>((
+	LessThanSignKeyword_0_0_1_0=LessThanSign 	 { announce($LessThanSignKeyword_0_0_1_0, grammarAccess.getTStructMethodAccess().getLessThanSignKeyword_0_0_1_0()); }(
+(
+	TypeVarsTypeVariableParserRuleCall_0_0_1_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_1()); }
+)
+)(
+	CommaKeyword_0_0_1_2_0=Comma 	 { announce($CommaKeyword_0_0_1_2_0, grammarAccess.getTStructMethodAccess().getCommaKeyword_0_0_1_2_0()); }(
+(
+	TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0=ruleTypeVariable { announce($TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.start, $TypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0.stop, grammarAccess.getTStructMethodAccess().getTypeVarsAssignment_0_0_1_2_1()); }
+)
+))*
+	GreaterThanSignKeyword_0_0_1_3=GreaterThanSign 	 { announce($GreaterThanSignKeyword_0_0_1_3, grammarAccess.getTStructMethodAccess().getGreaterThanSignKeyword_0_0_1_3()); })?(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructMethodAccess().getNameAssignment_0_0_2()); }
+)
+)
+	LeftParenthesisKeyword_0_0_3=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_3, grammarAccess.getTStructMethodAccess().getLeftParenthesisKeyword_0_0_3()); }))	TAnonymousFormalParameterListParserRuleCall_1=ruleTAnonymousFormalParameterList		{ announce($TAnonymousFormalParameterListParserRuleCall_1.start, $TAnonymousFormalParameterListParserRuleCall_1.stop, grammarAccess.getTStructMethodAccess().getTAnonymousFormalParameterListParserRuleCall_1()); }
+
+	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructMethodAccess().getRightParenthesisKeyword_2()); }(
+	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructMethodAccess().getColonKeyword_3_0()); }(
+(
+	ReturnTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructMethodAccess().getReturnTypeRefAssignment_3_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructField
+entryRuleTStructField
+	:
+	ruleTStructField 
+	EOF 
+;
+
+// Rule TStructField
+ruleTStructField 
+    @init {
+    }:
+((
+(
+	NameIdentifierNameParserRuleCall_0_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0.start, $NameIdentifierNameParserRuleCall_0_0.stop, grammarAccess.getTStructFieldAccess().getNameAssignment_0()); }
+)
+)(
+	ColonKeyword_1_0=Colon 	 { announce($ColonKeyword_1_0, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0()); }(
+(
+	TypeRefTypeRefParserRuleCall_1_1_0=ruleTypeRef { announce($TypeRefTypeRefParserRuleCall_1_1_0.start, $TypeRefTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_1_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructGetter
+entryRuleTStructGetter
+	:
+	ruleTStructGetter 
+	EOF 
+;
+
+// Rule TStructGetter
+ruleTStructGetter 
+    @init {
+    }:
+((((
+	Get 	(
+(
+	ruleIdentifierName
+)
+)))=>(
+	GetKeyword_0_0_1=Get 	 { announce($GetKeyword_0_0_1, grammarAccess.getTStructGetterAccess().getGetKeyword_0_0_1()); }(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructGetterAccess().getNameAssignment_0_0_2()); }
+)
+)))
+	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1()); }
+	RightParenthesisKeyword_2=RightParenthesis 	 { announce($RightParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2()); }(
+	ColonKeyword_3_0=Colon 	 { announce($ColonKeyword_3_0, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0()); }(
+(
+	DeclaredTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef { announce($DeclaredTypeRefTypeRefParserRuleCall_3_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1()); }
+)
+))?)
+;
+
+
+
+
+
+// Entry rule entryRuleTStructSetter
+entryRuleTStructSetter
+	:
+	ruleTStructSetter 
+	EOF 
+;
+
+// Rule TStructSetter
+ruleTStructSetter 
+    @init {
+    }:
+((((
+	Set 	(
+(
+	ruleIdentifierName
+)
+)))=>(
+	SetKeyword_0_0_1=Set 	 { announce($SetKeyword_0_0_1, grammarAccess.getTStructSetterAccess().getSetKeyword_0_0_1()); }(
+(
+	NameIdentifierNameParserRuleCall_0_0_2_0=ruleIdentifierName { announce($NameIdentifierNameParserRuleCall_0_0_2_0.start, $NameIdentifierNameParserRuleCall_0_0_2_0.stop, grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2()); }
+)
+)))
+	LeftParenthesisKeyword_1=LeftParenthesis 	 { announce($LeftParenthesisKeyword_1, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1()); }(
+(
+	FparTAnonymousFormalParameterParserRuleCall_2_0=ruleTAnonymousFormalParameter { announce($FparTAnonymousFormalParameterParserRuleCall_2_0.start, $FparTAnonymousFormalParameterParserRuleCall_2_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_2()); }
+)
+)
+	RightParenthesisKeyword_3=RightParenthesis 	 { announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3()); })
+;
+
+
+
+
+
 // Entry rule entryRuleTypingStrategyUseSiteOperator
 entryRuleTypingStrategyUseSiteOperator 
 	:
@@ -16007,64 +15611,219 @@ ruleUndefModifierToken
 
 
 
-// Entry rule entryRuleTypesIdentifier
-entryRuleTypesIdentifier 
+// Entry rule entryRuleBindingIdentifier
+entryRuleBindingIdentifier 
 	:
-	ruleTypesIdentifier 
+	ruleBindingIdentifier 
 	EOF 
 ;
 
-// Rule TypesIdentifier
-ruleTypesIdentifier 
+// Rule BindingIdentifier
+ruleBindingIdentifier 
     @init {
     }:
 (	RULE_IDENTIFIER
     |
-	GetKeyword_1=Get { announce($GetKeyword_1, grammarAccess.getTypesIdentifierAccess().getGetKeyword_1()); }
+	YieldKeyword_1_0=Yield { announce($YieldKeyword_1_0, grammarAccess.getBindingIdentifierAccess().getYieldKeyword_1_0()); }
+ 
+
+    |	ruleN4Keyword)
+    ;
+
+
+
+
+
+
+// Rule BindingIdentifier
+norm1_BindingIdentifier 
+    @init {
+    }:
+(	RULE_IDENTIFIER
+    |	ruleN4Keyword)
+    ;
+
+
+
+
+
+// Entry rule entryRuleIdentifierName
+entryRuleIdentifierName 
+	:
+	ruleIdentifierName 
+	EOF 
+;
+
+// Rule IdentifierName
+ruleIdentifierName 
+    @init {
+    }:
+(	RULE_IDENTIFIER
+    |	ruleReservedWord
+    |	ruleN4Keyword)
+    ;
+
+
+
+
+
+// Entry rule entryRuleReservedWord
+entryRuleReservedWord 
+	:
+	ruleReservedWord 
+	EOF 
+;
+
+// Rule ReservedWord
+ruleReservedWord 
+    @init {
+    }:
+(
+	BreakKeyword_0=Break { announce($BreakKeyword_0, grammarAccess.getReservedWordAccess().getBreakKeyword_0()); }
  
 
     |
-	SetKeyword_2=Set { announce($SetKeyword_2, grammarAccess.getTypesIdentifierAccess().getSetKeyword_2()); }
+	CaseKeyword_1=Case { announce($CaseKeyword_1, grammarAccess.getReservedWordAccess().getCaseKeyword_1()); }
  
 
     |
-	AbstractKeyword_3=Abstract { announce($AbstractKeyword_3, grammarAccess.getTypesIdentifierAccess().getAbstractKeyword_3()); }
+	CatchKeyword_2=Catch { announce($CatchKeyword_2, grammarAccess.getReservedWordAccess().getCatchKeyword_2()); }
  
 
     |
-	ProjectKeyword_4=Project { announce($ProjectKeyword_4, grammarAccess.getTypesIdentifierAccess().getProjectKeyword_4()); }
+	ClassKeyword_3=Class { announce($ClassKeyword_3, grammarAccess.getReservedWordAccess().getClassKeyword_3()); }
  
 
     |
-	UnionKeyword_5=Union { announce($UnionKeyword_5, grammarAccess.getTypesIdentifierAccess().getUnionKeyword_5()); }
+	ConstKeyword_4=Const { announce($ConstKeyword_4, grammarAccess.getReservedWordAccess().getConstKeyword_4()); }
  
 
     |
-	IntersectionKeyword_6=Intersection { announce($IntersectionKeyword_6, grammarAccess.getTypesIdentifierAccess().getIntersectionKeyword_6()); }
+	ContinueKeyword_5=Continue { announce($ContinueKeyword_5, grammarAccess.getReservedWordAccess().getContinueKeyword_5()); }
  
 
     |
-	AsKeyword_7=As { announce($AsKeyword_7, grammarAccess.getTypesIdentifierAccess().getAsKeyword_7()); }
+	DebuggerKeyword_6=Debugger { announce($DebuggerKeyword_6, grammarAccess.getReservedWordAccess().getDebuggerKeyword_6()); }
  
 
     |
-	FromKeyword_8=From { announce($FromKeyword_8, grammarAccess.getTypesIdentifierAccess().getFromKeyword_8()); }
+	DefaultKeyword_7=Default { announce($DefaultKeyword_7, grammarAccess.getReservedWordAccess().getDefaultKeyword_7()); }
  
 
     |
-	TypeKeyword_9=Type { announce($TypeKeyword_9, grammarAccess.getTypesIdentifierAccess().getTypeKeyword_9()); }
+	DeleteKeyword_8=Delete { announce($DeleteKeyword_8, grammarAccess.getReservedWordAccess().getDeleteKeyword_8()); }
  
 
     |
-	VoidKeyword_10=Void { announce($VoidKeyword_10, grammarAccess.getTypesIdentifierAccess().getVoidKeyword_10()); }
+	DoKeyword_9=Do { announce($DoKeyword_9, grammarAccess.getReservedWordAccess().getDoKeyword_9()); }
  
 
     |
-	NullKeyword_11=Null { announce($NullKeyword_11, grammarAccess.getTypesIdentifierAccess().getNullKeyword_11()); }
+	ElseKeyword_10=Else { announce($ElseKeyword_10, grammarAccess.getReservedWordAccess().getElseKeyword_10()); }
  
 
     |
-	EnumKeyword_12=Enum { announce($EnumKeyword_12, grammarAccess.getTypesIdentifierAccess().getEnumKeyword_12()); }
+	ExportKeyword_11=Export { announce($ExportKeyword_11, grammarAccess.getReservedWordAccess().getExportKeyword_11()); }
+ 
+
+    |
+	ExtendsKeyword_12=Extends { announce($ExtendsKeyword_12, grammarAccess.getReservedWordAccess().getExtendsKeyword_12()); }
+ 
+
+    |
+	FinallyKeyword_13=Finally { announce($FinallyKeyword_13, grammarAccess.getReservedWordAccess().getFinallyKeyword_13()); }
+ 
+
+    |
+	ForKeyword_14=For { announce($ForKeyword_14, grammarAccess.getReservedWordAccess().getForKeyword_14()); }
+ 
+
+    |
+	FunctionKeyword_15=Function { announce($FunctionKeyword_15, grammarAccess.getReservedWordAccess().getFunctionKeyword_15()); }
+ 
+
+    |
+	IfKeyword_16=If { announce($IfKeyword_16, grammarAccess.getReservedWordAccess().getIfKeyword_16()); }
+ 
+
+    |
+	ImportKeyword_17=Import { announce($ImportKeyword_17, grammarAccess.getReservedWordAccess().getImportKeyword_17()); }
+ 
+
+    |
+	InKeyword_18=In { announce($InKeyword_18, grammarAccess.getReservedWordAccess().getInKeyword_18()); }
+ 
+
+    |
+	InstanceofKeyword_19=Instanceof { announce($InstanceofKeyword_19, grammarAccess.getReservedWordAccess().getInstanceofKeyword_19()); }
+ 
+
+    |
+	NewKeyword_20=New { announce($NewKeyword_20, grammarAccess.getReservedWordAccess().getNewKeyword_20()); }
+ 
+
+    |
+	ReturnKeyword_21=Return { announce($ReturnKeyword_21, grammarAccess.getReservedWordAccess().getReturnKeyword_21()); }
+ 
+
+    |
+	SuperKeyword_22=Super { announce($SuperKeyword_22, grammarAccess.getReservedWordAccess().getSuperKeyword_22()); }
+ 
+
+    |
+	SwitchKeyword_23=Switch { announce($SwitchKeyword_23, grammarAccess.getReservedWordAccess().getSwitchKeyword_23()); }
+ 
+
+    |
+	ThisKeyword_24=This_1 { announce($ThisKeyword_24, grammarAccess.getReservedWordAccess().getThisKeyword_24()); }
+ 
+
+    |
+	ThrowKeyword_25=Throw { announce($ThrowKeyword_25, grammarAccess.getReservedWordAccess().getThrowKeyword_25()); }
+ 
+
+    |
+	TryKeyword_26=Try { announce($TryKeyword_26, grammarAccess.getReservedWordAccess().getTryKeyword_26()); }
+ 
+
+    |
+	TypeofKeyword_27=Typeof { announce($TypeofKeyword_27, grammarAccess.getReservedWordAccess().getTypeofKeyword_27()); }
+ 
+
+    |
+	VarKeyword_28=Var { announce($VarKeyword_28, grammarAccess.getReservedWordAccess().getVarKeyword_28()); }
+ 
+
+    |
+	VoidKeyword_29=Void { announce($VoidKeyword_29, grammarAccess.getReservedWordAccess().getVoidKeyword_29()); }
+ 
+
+    |
+	WhileKeyword_30=While { announce($WhileKeyword_30, grammarAccess.getReservedWordAccess().getWhileKeyword_30()); }
+ 
+
+    |
+	WithKeyword_31=With { announce($WithKeyword_31, grammarAccess.getReservedWordAccess().getWithKeyword_31()); }
+ 
+
+    |
+	YieldKeyword_32=Yield { announce($YieldKeyword_32, grammarAccess.getReservedWordAccess().getYieldKeyword_32()); }
+ 
+
+    |
+	NullKeyword_33=Null { announce($NullKeyword_33, grammarAccess.getReservedWordAccess().getNullKeyword_33()); }
+ 
+
+    |
+	TrueKeyword_34=True { announce($TrueKeyword_34, grammarAccess.getReservedWordAccess().getTrueKeyword_34()); }
+ 
+
+    |
+	FalseKeyword_35=False { announce($FalseKeyword_35, grammarAccess.getReservedWordAccess().getFalseKeyword_35()); }
+ 
+
+    |
+	EnumKeyword_36=Enum { announce($EnumKeyword_36, grammarAccess.getReservedWordAccess().getEnumKeyword_36()); }
  
 )
     ;
@@ -16073,40 +15832,115 @@ ruleTypesIdentifier
 
 
 
-// Entry rule entryRuleTIdentifier
-entryRuleTIdentifier 
+// Entry rule entryRuleN4Keyword
+entryRuleN4Keyword 
 	:
-	ruleTIdentifier 
+	ruleN4Keyword 
 	EOF 
 ;
 
-// Rule TIdentifier
-ruleTIdentifier 
+// Rule N4Keyword
+ruleN4Keyword 
     @init {
     }:
-(	ruleTypesIdentifier
-    |
-	ImplementsKeyword_1=Implements { announce($ImplementsKeyword_1, grammarAccess.getTIdentifierAccess().getImplementsKeyword_1()); }
+(
+	GetKeyword_0=Get { announce($GetKeyword_0, grammarAccess.getN4KeywordAccess().getGetKeyword_0()); }
  
 
     |
-	InterfaceKeyword_2=Interface { announce($InterfaceKeyword_2, grammarAccess.getTIdentifierAccess().getInterfaceKeyword_2()); }
+	SetKeyword_1=Set { announce($SetKeyword_1, grammarAccess.getN4KeywordAccess().getSetKeyword_1()); }
  
 
     |
-	PrivateKeyword_3=Private { announce($PrivateKeyword_3, grammarAccess.getTIdentifierAccess().getPrivateKeyword_3()); }
+	LetKeyword_2=Let { announce($LetKeyword_2, grammarAccess.getN4KeywordAccess().getLetKeyword_2()); }
  
 
     |
-	ProtectedKeyword_4=Protected { announce($ProtectedKeyword_4, grammarAccess.getTIdentifierAccess().getProtectedKeyword_4()); }
+	ProjectKeyword_3=Project { announce($ProjectKeyword_3, grammarAccess.getN4KeywordAccess().getProjectKeyword_3()); }
  
 
     |
-	PublicKeyword_5=Public { announce($PublicKeyword_5, grammarAccess.getTIdentifierAccess().getPublicKeyword_5()); }
+	ExternalKeyword_4=External { announce($ExternalKeyword_4, grammarAccess.getN4KeywordAccess().getExternalKeyword_4()); }
  
 
     |
-	StaticKeyword_6=Static { announce($StaticKeyword_6, grammarAccess.getTIdentifierAccess().getStaticKeyword_6()); }
+	AbstractKeyword_5=Abstract { announce($AbstractKeyword_5, grammarAccess.getN4KeywordAccess().getAbstractKeyword_5()); }
+ 
+
+    |
+	StaticKeyword_6=Static { announce($StaticKeyword_6, grammarAccess.getN4KeywordAccess().getStaticKeyword_6()); }
+ 
+
+    |
+	AsKeyword_7=As { announce($AsKeyword_7, grammarAccess.getN4KeywordAccess().getAsKeyword_7()); }
+ 
+
+    |
+	FromKeyword_8=From { announce($FromKeyword_8, grammarAccess.getN4KeywordAccess().getFromKeyword_8()); }
+ 
+
+    |
+	ConstructorKeyword_9=Constructor { announce($ConstructorKeyword_9, grammarAccess.getN4KeywordAccess().getConstructorKeyword_9()); }
+ 
+
+    |
+	OfKeyword_10=Of { announce($OfKeyword_10, grammarAccess.getN4KeywordAccess().getOfKeyword_10()); }
+ 
+
+    |
+	TargetKeyword_11=Target { announce($TargetKeyword_11, grammarAccess.getN4KeywordAccess().getTargetKeyword_11()); }
+ 
+
+    |
+	TypeKeyword_12=Type { announce($TypeKeyword_12, grammarAccess.getN4KeywordAccess().getTypeKeyword_12()); }
+ 
+
+    |
+	UnionKeyword_13=Union { announce($UnionKeyword_13, grammarAccess.getN4KeywordAccess().getUnionKeyword_13()); }
+ 
+
+    |
+	IntersectionKeyword_14=Intersection { announce($IntersectionKeyword_14, grammarAccess.getN4KeywordAccess().getIntersectionKeyword_14()); }
+ 
+
+    |
+	ThisKeyword_15=This { announce($ThisKeyword_15, grammarAccess.getN4KeywordAccess().getThisKeyword_15()); }
+ 
+
+    |
+	PromisifyKeyword_16=Promisify { announce($PromisifyKeyword_16, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); }
+ 
+
+    |
+	AwaitKeyword_17=Await { announce($AwaitKeyword_17, grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); }
+ 
+
+    |
+	AsyncKeyword_18=Async { announce($AsyncKeyword_18, grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); }
+ 
+
+    |
+	ImplementsKeyword_19=Implements { announce($ImplementsKeyword_19, grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); }
+ 
+
+    |
+	InterfaceKeyword_20=Interface { announce($InterfaceKeyword_20, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); }
+ 
+
+    |
+	PrivateKeyword_21=Private { announce($PrivateKeyword_21, grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); }
+ 
+
+    |
+	ProtectedKeyword_22=Protected { announce($ProtectedKeyword_22, grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); }
+ 
+
+    |
+	PublicKeyword_23=Public { announce($PublicKeyword_23, grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); }
+ 
+
+    |
+	OutKeyword_24=Out { announce($OutKeyword_24, grammarAccess.getN4KeywordAccess().getOutKeyword_24()); }
  
 )
     ;

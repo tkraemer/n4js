@@ -30,7 +30,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.N4JSInjectorProvider;
+import eu.numberfour.n4js.SmokeTestWriter;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.parser.antlr.lexer.InternalN4JSLexer;
 
@@ -50,8 +50,8 @@ public abstract class AbstractSmokeTester {
 
 	/***/
 	public void assertNoException(CharSequence expression) throws Exception {
-		boolean old = N4JSInjectorProvider.SmokeTestWriter.active;
-		N4JSInjectorProvider.SmokeTestWriter.active = false;
+		boolean old = SmokeTestWriter.active;
+		SmokeTestWriter.active = false;
 		try {
 			skipLastCharacters(expression);
 			skipFirstCharacters(expression);
@@ -60,7 +60,7 @@ public abstract class AbstractSmokeTester {
 			skipTokensInBetween(expression);
 			skipNodesInBetween(expression);
 		} finally {
-			N4JSInjectorProvider.SmokeTestWriter.active = old;
+			SmokeTestWriter.active = old;
 		}
 	}
 

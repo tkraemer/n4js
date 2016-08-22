@@ -29,9 +29,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 public class QuickFixTestHelper {
 
 	/**
-	 * Select all issues from {@link #offset2issue} concerning the {@link #linenumber}
+	 * Select all issues from {@link #offset2issue} concerning the {@link #offStartLine}
 	 *
-	 * @param offStartLine linenumber
+	 * @param offStartLine line number
 	 * @param line2issue map of issues
 	 * @return sorted list of Issues
 	 */
@@ -60,7 +60,7 @@ public class QuickFixTestHelper {
 	 * EObjects.
 	 *
 	 * @param offsetNode
-	 *            Node at cursorposition
+	 *            Node at cursor position
 	 * @return list of EObjects directly associated with this line. (but no wrapping Elements)
 	 */
 	def public static List<EObject> elementsInSameLine(ILeafNode offsetNode) {
@@ -177,7 +177,7 @@ public class QuickFixTestHelper {
 	 *
 	 * If more than one line is effected the result is probably useless.
 	 *
-	 * Qury this with {@ChangeInfo#isMoreThanOne()}
+	 * Query this with {@ChangeInfo#isMoreThanOne()}
 	 *
 	 * @param before first text
 	 * @param after second text
@@ -223,7 +223,7 @@ public class QuickFixTestHelper {
 				// match.
 			}
 			ao += aLines.get(ai).length + delim.length
-			bo += aLines.get(bi).length + delim.length
+			bo += bLines.get(bi).length + delim.length
 		}
 		return ci
 	}

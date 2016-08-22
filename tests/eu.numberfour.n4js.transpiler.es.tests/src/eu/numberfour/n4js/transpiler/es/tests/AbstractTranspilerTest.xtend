@@ -14,6 +14,14 @@ import com.google.inject.Inject
 import com.google.inject.Provider
 import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.N4JSParseHelper
+import eu.numberfour.n4js.n4JS.Block
+import eu.numberfour.n4js.n4JS.ImportSpecifier
+import eu.numberfour.n4js.n4JS.NamedElement
+import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.Statement
+import eu.numberfour.n4js.n4JS.VariableStatement
+import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
+import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.transpiler.PreparationStep
 import eu.numberfour.n4js.transpiler.TranspilerState
 import eu.numberfour.n4js.transpiler.es.EcmaScriptSubGenerator
@@ -23,16 +31,9 @@ import eu.numberfour.n4js.transpiler.im.ReferencingElement_IM
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal
 import eu.numberfour.n4js.transpiler.utils.TranspilerDebugUtils
-import eu.numberfour.n4js.n4JS.Block
-import eu.numberfour.n4js.n4JS.ImportSpecifier
-import eu.numberfour.n4js.n4JS.NamedElement
-import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.n4JS.Statement
-import eu.numberfour.n4js.n4JS.VariableStatement
-import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TModule
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.regex.Pattern
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.common.util.WrappedException
@@ -47,7 +48,6 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter
 
 /**
  */
@@ -291,7 +291,7 @@ abstract class AbstractTranspilerTest {
 		val generatedResult = esSubGen.getCompileResultAsText(scriptNode);
 
 		// ignoring pretty printing, we want to compare:
-		eu.numberfour.n4js.transpiler.es.tests.AbstractTranspilerTest.assertSameExceptWhiteSpace ( expectedTranspilerText, generatedResult );
+		AbstractTranspilerTest.assertSameExceptWhiteSpace ( expectedTranspilerText, generatedResult );
 	}
 
 

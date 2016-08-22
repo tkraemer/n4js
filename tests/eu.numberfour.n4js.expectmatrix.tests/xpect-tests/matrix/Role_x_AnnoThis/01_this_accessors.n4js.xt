@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+////////////////////////////////
+// @This with field accessors //
+////////////////////////////////
+
+// IDE-2313
+interface A {
+	// cannot use @This with getters XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(~Object with { s: string; })
+	get s() : string  {
+		if (this.s) {
+			return this.s;
+		}
+		return "";
+	}
+	// cannot use @This with setters XPECT errors --> "The annotation @This is disallowed for this location." at "This"
+	@This(~Object with { s: string; })
+	set s (n : string) { this.s = n; }
+}

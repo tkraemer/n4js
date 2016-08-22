@@ -99,7 +99,7 @@ NullModifierToken returns NullModifier: 'notnull'|'nullable';
 UndefModifierToken returns UndefModifier: '?'|'!';
 
 PrimitiveType:
-	'primitive' name=TypesIdentifier
+	'primitive' name=VoidOrBindingIdentifier
 	( '<' typeVars+=TypeVariable '>' )?
 	('indexed' declaredElementType=ParameterizedTypeRefNominal)?
 	'{'
@@ -117,24 +117,24 @@ UndefinedType: {UndefinedType} name='undefined' '{' '}';
 NullType: {NullType} name='null' '{' '}';
 
 TypesIdentifier:
-	IDENTIFIER
-	// no ECMAScript keywords, only in certain contexts
-	| 'get'
-	| 'set'
+	TypesSpecificKeywords | IdentifierName
+;
+
+BindingTypesIdentifier:
+	TypesSpecificKeywords | BindingIdentifier<Yield=false>
+;
+
+// Also allows void as identifier although it is a reserved keyword as of [ECM15]
+VoidOrBindingIdentifier:
+	'void' | BindingTypesIdentifier
+;
+
+// These keywords are specific to the types language when comparing with N4JS
+TypesSpecificKeywords: 
 	// Types keywords
-	| 'abstract'
-	| 'any'
-	| 'project'
-	| 'union'
-	| 'intersection'
-	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-	| 'as'
-	| 'from'
-	| 'type'
-	| 'void'
-	| 'null'
+	'any'
+	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts
 	| 'undefined'
-	| 'constructor'
 	// no ECMAScript nor N4JS keyword, used in types only
 	| 'object'
 	| 'virtualBase'
@@ -162,7 +162,7 @@ TObjectPrototype:
 	declaredTypeAccessModifier=TypeAccessModifier
 	(declaredProvidedByRuntime?='providedByRuntime')?
 	(declaredFinal?='final')?
-	'object' name=TypesIdentifier
+	'object' name=BindingTypesIdentifier
 	( '<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>' )?
 	('extends'  superType=ParameterizedTypeRefNominal)?
 	('indexed' declaredElementType=ParameterizedTypeRefNominal)?
@@ -181,7 +181,7 @@ TObjectPrototype:
  * Used to define common super types, e.g. for all enumerations.
  */
 VirtualBaseType: {VirtualBaseType}
-	'virtualBase' name=TypesIdentifier '{'
+	'virtualBase' name=BindingTypesIdentifier '{'
 		(ownedMembers+=TMember)*
 	'}'
 ;
@@ -191,7 +191,7 @@ TClass:
 	(declaredProvidedByRuntime?='providedByRuntime')?
 	(declaredAbstract?='abstract')?
 	(declaredFinal?='final')?
-	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier
+	'class' typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier
 	( '<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>' )?
 	('extends'  superClassRef=ParameterizedTypeRefNominal)?
 	('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
@@ -208,7 +208,7 @@ TClass:
 TInterface:
 	declaredTypeAccessModifier=TypeAccessModifier
 	(declaredProvidedByRuntime?='providedByRuntime')?
-	'interface'  typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier
+	'interface'  typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier
 	( '<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>' )?
 	('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	annotations+=TAnnotation*
@@ -268,7 +268,7 @@ TFunction:
 	(declaredProvidedByRuntime?='providedByRuntime')?
 	'function'
 	('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	name=TIdentifier
+	name=BindingTypesIdentifier
 	'(' (fpars += TFormalParameter (',' fpars += TFormalParameter)*)? ')'
 	':' returnTypeRef = TypeRef
 ;
@@ -276,7 +276,7 @@ TFunction:
 TEnum:
 	declaredTypeAccessModifier=TypeAccessModifier
 	(declaredProvidedByRuntime?='providedByRuntime')?
-	'enum' name=TypesIdentifier
+	'enum' name=BindingTypesIdentifier
 	'{' literals+=TEnumLiteral (',' literals+=TEnumLiteral)* '}'
 ;
 

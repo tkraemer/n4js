@@ -30,10 +30,10 @@ var a2 : ~A2 = { a: 2, f: function () { console.log( this.a) ; this.f();} };
 var a3 : ~~A2 = { a: 2 };
 
 // Spec says structural (field) type cannot be on right-hand-side of instanceof but strange error occurs
-// IDEBUG-163 instanceof XPECT FIXME errors --> "Cannot use structural type with instanceof." at "A2"
+// GH-9 (IDEBUG-163) instanceof XPECT FIXME errors --> "Cannot use structural type with instanceof." at "A2"
 a2 instanceof ~A2;
 
-// IDEBUG-163 instanceof XPECT FIXME errors --> "Cannot use structural field type with instanceof." at "A2"
+// GH-9 (IDEBUG-163) instanceof XPECT FIXME errors --> "Cannot use structural field type with instanceof." at "A2"
 a3 instanceof ~~A2;
 
 // missing members XPECT errors --> "~Object with { a: number } is not a structural subtype of ~A2: missing method f." at "{a: 2}"

@@ -45,7 +45,6 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.SuperLiteral
 import eu.numberfour.n4js.n4JS.ThisLiteral
-import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
@@ -124,7 +123,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
-import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
@@ -161,11 +159,24 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkAwaitExpression(AwaitExpression awaitExpression) {
-
 		val FunctionDefinition containerFunDef = EcoreUtil2.getContainerOfType(awaitExpression, FunctionDefinition);
 		if (containerFunDef === null || containerFunDef.isAsync() === false) {
 			val message = IssueCodes.getMessageForEXP_MISPLACED_AWAIT_EXPRESSION("await", "async");
 			addIssue(message, awaitExpression, IssueCodes.EXP_MISPLACED_AWAIT_EXPRESSION);
+		}
+
+		internalCheckAwaitingAPromise(awaitExpression);
+	}
+
+	private def void internalCheckAwaitingAPromise(AwaitExpression awaitExpression) {
+		val Expression subExpr = awaitExpression.getExpression();
+		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
+		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
+		val BuiltInTypeScope tscope = RuleEnvironmentExtensions.getPredefinedTypes(G).builtInTypeScope;
+
+		if (! TypeUtils.isRawSuperType(typeRef.declaredType, tscope.getPromiseType())) {
+			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
+			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
 		}
 	}
 
@@ -1139,9 +1150,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkCastExpression(CastExpression castExpression) {
-		val Type typeContext = EcoreUtil2.getContainerOfType(castExpression, TypeDefiningElement)?.definedType;
-		val context = if (typeContext === null) null else createTypeRef(typeContext);
-		val S = ts.tau(castExpression.expression, context);
+		val S = ts.tau(castExpression.expression, castExpression);
 		val T = castExpression.targetTypeRef
 
 		// avoid consequential errors

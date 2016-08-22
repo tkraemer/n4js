@@ -34,6 +34,10 @@ VirtualBase : 'virtualBase';
 
 Implements : 'implements';
 
+Instanceof : 'instanceof';
+
+Promisify : 'Promisify';
+
 Interface : 'interface';
 
 Primitive : 'primitive';
@@ -44,11 +48,21 @@ Undefined : 'undefined';
 
 Abstract : 'abstract';
 
+Continue : 'continue';
+
+Debugger : 'debugger';
+
+External : 'external';
+
 Function : 'function';
 
 Nullable : 'nullable';
 
+Default : 'default';
+
 Extends : 'extends';
+
+Finally : 'finally';
 
 Indexed : 'indexed';
 
@@ -58,23 +72,57 @@ Private : 'private';
 
 Project : 'project';
 
+Delete : 'delete';
+
+Export : 'export';
+
+Import : 'import';
+
 Object : 'object';
 
 Public : 'public';
 
+Return : 'return';
+
 Static : 'static';
+
+Switch : 'switch';
+
+Target : 'target';
+
+Typeof : 'typeof';
+
+Async : 'async';
+
+Await : 'await';
+
+Break : 'break';
+
+Catch : 'catch';
 
 Class : 'class';
 
 Const : 'const';
 
+False : 'false';
+
 Final : 'final';
 
 Super : 'super';
 
+Throw : 'throw';
+
 Union : 'union';
 
+While : 'while';
+
+Yield : 'yield';
+
 This : 'This';
+
+Case : 'case';
+
+Else : 'else';
 
 Enum : 'enum';
 
@@ -83,6 +131,8 @@ From : 'from';
 Null : 'null';
 
 This_1 : 'this';
+
+True : 'true';
 
 Type : 'type';
 
@@ -94,17 +144,33 @@ FullStopFullStopFullStop : '...';
 
 Any : 'any';
 
+For : 'for';
+
 Get : 'get';
+
+Let : 'let';
+
+New : 'new';
 
 Out : 'out';
 
 Set : 'set';
 
+Try : 'try';
+
+Var : 'var';
+
 EqualsSignGreaterThanSign : '=>';
 
 As : 'as';
 
+Do : 'do';
+
+If : 'if';
+
 In : 'in';
+
+Of : 'of';
 
 ExclamationMark : '!';
 

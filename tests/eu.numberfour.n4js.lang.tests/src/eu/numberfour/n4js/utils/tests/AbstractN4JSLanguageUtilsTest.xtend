@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.utils.tests
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.N4JSParseHelper
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
@@ -23,12 +22,13 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  *
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 abstract class AbstractN4JSLanguageUtilsTest {
 	
 	@Inject private extension N4JSParseHelper parseHelper;
