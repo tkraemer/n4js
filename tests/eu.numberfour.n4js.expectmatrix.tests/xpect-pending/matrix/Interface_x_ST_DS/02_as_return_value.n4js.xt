@@ -11,13 +11,19 @@ interface I<T> {
 
 class A { public i : int; }
 
+
+var i: I<A>;
+// XPECT type of x --> ~A
+var x = i.x;
+
+
 class C1 {
 	@Final f () : void {};
 	
 	// return value must be nominal type XPECT errors --> "Structural type ~Object with { x: int; foo: {function():void} } is not a subtype of non-structural type I<int>." at "{x: 3, foo: this.f}"
 	public f1 () : I<int> { return {x: 3, foo: this.f}; };
 	
-	// return value must be ~I, missing foo field XPECT errors --> "~Object with { x: int } is not a structural subtype of ~I<int>: missing method foo." at "{x: 3}"
+	// return value must be ~I, missing foo field XPECT errors --> "~Object with { x: ~int } is not a structural subtype of ~I<int>: missing method foo." at "{x: 3}"
 	public f2a () : ~I<int> { return {x: 3}; };
 	
 	// return value must be ~I, all well XPECT noerrors -->
@@ -33,18 +39,18 @@ class C2 {
 	// return value must be nominal type XPECT errors --> "Structural type ~Object with { x: ~Object with { i: int }; foo: {function():void} } is not a subtype of non-structural type I<A>." at "{x: {i: 3}, foo: this.f}"
 	public f1 () : I<A> { return {x: {i: 3}, foo: this.f}; };
 	
-	// return value must be ~I, missing foo field XPECT errors --> "~Object with { x: ~Object with { i: int } } is not a structural subtype of ~I<A>: missing method foo; x failed: ~Object with { i: int } is not equal to A." at "{x: {i: 3}}"
+	// return value must be ~I, missing foo field XPECT errors --> "~Object with { x: ~Object with { i: int } } is not a structural subtype of ~I<A>: missing method foo." at "{x: {i: 3}}"
 	public f2a () : ~I<A> { return {x: {i: 3}}; };
 	
-	// GH-250 ATTENTION return value must be ~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~I, all well XPECT noerrors -->
 	// ~Object with { ~Object with { int i; } x; {function():void} foo; } is not a subtype of ~I<A>.
 	public f2b () : ~I<A> { return {x: {i: 3}, foo: this.f}; };
 	
-	// GH-250 ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~~I, all well XPECT noerrors -->
 	// ~Object with { ~Object with { int i; } x; {function():void} foo; } is not a subtype of ~~I<A>.
 	public f3 () : ~~I<A> { return {x: {i: 3}, foo: this.f}; };
 	
-	// GH-250 ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~~I, all well XPECT noerrors -->
 	// ~Object with { ~Object with { int i; } x; } is not a subtype of ~~I<A>.
 	public f4 () : ~~I<A> { return {x: {i: 3}}; };
 }
@@ -71,6 +77,7 @@ i2 = c1.f3();
 
 var ia1 : ~I<A>;
 var ia2 : ~~I<A>;
+
 
 // ~I<A> is returned XPECT noerrors -->
 ia1 = c2.f2b();
