@@ -20,20 +20,18 @@ class A {
 	// This is a comment.
 	private static getSomething(mode: XMode): number {
 		switch(mode) {
-			case XMode.A :
+			case XMode.A:
 				return YStuff.E;
 
-			case XMode.B :
+			case XMode.B:
 				return YStuff.F;
 
-			case XMode.C :
-				return YStuff.G;
+			case XMode.C: return YStuff.G;
 
-			case XMode.Z :
+			case XMode.Z:
 				return -1;
 
-			default :
-				throw new Error("Incorrect XMode!");
+			default: throw new Error("Incorrect XMode!");
 		}
 	}
 }
