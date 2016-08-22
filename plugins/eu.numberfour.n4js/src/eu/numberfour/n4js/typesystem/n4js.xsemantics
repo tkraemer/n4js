@@ -134,6 +134,7 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
@@ -2565,6 +2566,10 @@ from {
 			// ---- NOTE: this code was copied in rule 'substTypeVariablesInClassifierTypeRef' above (keep in sync!) ----
 			// do we have a substitution?
 			var temp = env(G, typeVar, TypeRef)
+			if (typeRef instanceof ParameterizedTypeRefStructural) {
+				temp = TypeUtils.createParameterizedTypeRefStructural(temp.declaredType, typeRef.definedTypingStrategy);
+			}
+			
 			val tempDeclaredType = temp.declaredType
 			if (typeVar !== tempDeclaredType
 					&& (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic))
