@@ -172,9 +172,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val Expression subExpr = awaitExpression.getExpression();
 		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
-		val BuiltInTypeScope tscope = RuleEnvironmentExtensions.getPredefinedTypes(G).builtInTypeScope;
+		val ptr = G.promiseTypeRef(TypeRefsFactory.eINSTANCE.createWildcard(), TypeRefsFactory.eINSTANCE.createWildcard());
 
-		if (! TypeUtils.isRawSuperType(typeRef.declaredType, tscope.getPromiseType())) {
+		if (! ts.subtypeSucceeded(G, typeRef, ptr)) {
 			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
 			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
 		}
