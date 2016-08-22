@@ -49,6 +49,7 @@ import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Member;
 import eu.numberfour.n4js.tests.issues.IssueExpectations;
 import eu.numberfour.n4js.utils.io.FileDeleter;
+import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 // @formatter:off
 /**
@@ -584,7 +585,9 @@ public class AccessControlTest {
 			try {
 				ScenarioGenerator generator = new ScenarioGenerator(specification, memberType);
 				generator.generateScenario(Paths.get(FIXTURE_ROOT));
-				Collection<Issue> issues = compile();
+				List<Issue> issues = new ArrayList<>(compile());
+				issues.removeIf(issue -> N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS
+						.contains(issue.getCode()));
 				IssueExpectations expectations = generator.createIssues();
 
 				if (specification.getExpectation().isFixMe()) {
