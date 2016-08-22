@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.bugreports.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -22,10 +23,9 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
-/**
- * Test setup targeting the bugreports-tests folder.
- */
+/** Test setup targeting the bugreports-tests folder. */
 @XpectSuiteClasses({
 		LinkingTest.class, ResourceDescriptionTest.class,
 		TypeXpectMethod.class,
@@ -35,6 +35,7 @@ import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "bugreports-tests")
+@XpectImport({ SuppressIssuesSetup.class })
 public class N4JSBugreportTest {
 	//
 }

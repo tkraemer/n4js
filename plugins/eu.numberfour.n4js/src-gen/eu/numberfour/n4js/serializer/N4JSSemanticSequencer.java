@@ -21860,8 +21860,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructMethod returns TStructMethod
 	 *     TStructMember returns TStructMethod
+	 *     TStructMethod returns TStructMethod
 	 *
 	 * Constraint:
 	 *     (
@@ -21881,7 +21881,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=TIdentifier? typeRef=TypeRef)
+	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef)
 	 */
 	protected void sequence_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -21893,7 +21893,7 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TFormalParameter returns TFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=TIdentifier typeRef=TypeRef)
+	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef)
 	 */
 	protected void sequence_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -21902,8 +21902,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructField returns TStructField
 	 *     TStructMember returns TStructField
+	 *     TStructField returns TStructField
 	 *
 	 * Constraint:
 	 *     (name=IdentifierName typeRef=TypeRef?)
@@ -21915,8 +21915,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructGetter returns TStructGetter
 	 *     TStructMember returns TStructGetter
+	 *     TStructGetter returns TStructGetter
 	 *
 	 * Constraint:
 	 *     (name=IdentifierName declaredTypeRef=TypeRef?)
@@ -21974,8 +21974,8 @@ public class N4JSSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TStructSetter returns TStructSetter
 	 *     TStructMember returns TStructSetter
+	 *     TStructSetter returns TStructSetter
 	 *
 	 * Constraint:
 	 *     (name=IdentifierName fpar=TAnonymousFormalParameter)

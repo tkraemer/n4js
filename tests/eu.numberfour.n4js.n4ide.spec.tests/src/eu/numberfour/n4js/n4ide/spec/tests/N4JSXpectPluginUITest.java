@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.n4ide.spec.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.lib.XpectTestResultTest;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
@@ -25,6 +26,7 @@ import eu.numberfour.n4js.xpect.HyperlinkXpectMethod;
 import eu.numberfour.n4js.xpect.ProposalXpectMethod;
 import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin linking test
@@ -47,6 +49,7 @@ import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-test", fileExtensions = "xt")
+@XpectImport(SuppressIssuesSetup.class)
 public class N4JSXpectPluginUITest {
 	//
 }

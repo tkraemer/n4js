@@ -13,7 +13,9 @@ package eu.numberfour.n4js;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -22,12 +24,36 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper;
+import org.eclipse.xtext.validation.Issue;
 
 import com.google.common.base.Joiner;
 
 /**
  */
 public class N4JSValidationTestHelper extends ValidationTestHelper {
+
+	/**
+	 * Asserts the given model to not have any issues except the ones specified by the exception issue codes parameter.
+	 *
+	 * @param model
+	 *            The model
+	 * @param exceptionIssueCodes
+	 *            Issue codes which should be ignored
+	 */
+	public void assertNoIssuesExcept(EObject model, String... exceptionIssueCodes) {
+		Resource resource = model.eResource();
+		final List<Issue> issues = validate(resource);
+
+		if (removeIssuesWithCode(issues, exceptionIssueCodes).size() > 0) {
+			fail("Expected no issues, but got :" + getIssuesAsString(resource, issues, new StringBuilder()));
+		}
+	}
+
+	private List<Issue> removeIssuesWithCode(List<Issue> issues, String... codes) {
+		List<String> excludedIssueCodesList = Arrays.asList(codes);
+		return issues.stream().filter(issue -> !excludedIssueCodesList.contains(issue.getCode()))
+				.collect(Collectors.toList());
+	}
 
 	/**
 	 * Asserts that root and the entire object tree below root does not contain any dangling references, i.e.
@@ -51,8 +77,7 @@ public class N4JSValidationTestHelper extends ValidationTestHelper {
 									break;
 								}
 							}
-						}
-						else {
+						} else {
 							final EObject target = (EObject) currObj.eGet(currRef, false);
 							if (isDangling(target))
 								errMsgs.add(getErrorInfoForDanglingEObject(currObj, currRef));
@@ -72,4 +97,5 @@ public class N4JSValidationTestHelper extends ValidationTestHelper {
 	private static final String getErrorInfoForDanglingEObject(EObject base, EReference ref) {
 		return "in " + base.eClass().getName() + " at " + EcoreUtil.getURI(base) + " via reference " + ref.getName();
 	}
+
 }

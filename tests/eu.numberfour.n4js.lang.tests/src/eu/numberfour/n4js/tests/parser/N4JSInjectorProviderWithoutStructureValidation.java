@@ -12,41 +12,35 @@ package eu.numberfour.n4js.tests.parser;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.eclipse.xtext.service.AbstractGenericModule;
 
 import eu.numberfour.n4js.N4JSInjectorProvider;
-import eu.numberfour.n4js.N4JSRuntimeModule;
-import eu.numberfour.n4js.N4JSStandaloneSetup;
 import eu.numberfour.n4js.validation.ASTStructureValidator;
 
 /**
- * Disables the structure validation to allow testing the semicolon injection with minimal overhead
+ * An injector provider which disables the AST structure validation to allow testing the semicolon injection with
+ * minimal overhead
  */
 public class N4JSInjectorProviderWithoutStructureValidation extends N4JSInjectorProvider {
 
-	@Override
-	protected Injector internalCreateInjector() {
-		return new N4JSStandaloneSetup() {
-			@Override
-			public Injector createInjector() {
-				return Guice.createInjector(new N4JSRuntimeModule() {
-					@SuppressWarnings("unused")
-					public Class<? extends ASTStructureValidator> bindASTStructureValidator() {
-						return NullASTStructureValidator.class;
-					}
-				});
-			}
-		}.createInjectorAndDoEMFRegistration();
+	/** */
+	public N4JSInjectorProviderWithoutStructureValidation() {
+		super(new NullASTStructurValidatorModule());
 	}
 
-	/***/
-	public static class NullASTStructureValidator extends ASTStructureValidator {
+	/** Runtime module to disable the {@link ASTStructureValidator} */
+	public static class NullASTStructurValidatorModule extends AbstractGenericModule {
+		/** */
+		public Class<? extends ASTStructureValidator> bindASTStructureValidator() {
+			return NullASTStructureValidator.class;
+		}
+	}
+
+	/** Null implementation for {@link ASTStructureValidator} */
+	private static class NullASTStructureValidator extends ASTStructureValidator {
 		@Override
 		public void validate(EObject model, IDiagnosticConsumer consumer) {
 			// no-op
 		}
 	}
-
 }

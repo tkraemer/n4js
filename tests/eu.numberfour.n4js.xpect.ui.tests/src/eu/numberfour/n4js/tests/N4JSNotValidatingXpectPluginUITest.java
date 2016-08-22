@@ -26,6 +26,7 @@ import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin for proposal test. This plugin turns <b>off</b> validation in xpect-tests by default since most input files
@@ -44,7 +45,7 @@ import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
 		ContentAssistXpectMethod.class,
 		XpectTestResultTest.class
 })
-@XpectImport({ Config.class, VarDef.class, XpEnvironmentData.class })
+@XpectImport({ Config.class, VarDef.class, XpEnvironmentData.class, SuppressIssuesSetup.class })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model_nonvalidating", fileExtensions = "xt")
 public class N4JSNotValidatingXpectPluginUITest {
