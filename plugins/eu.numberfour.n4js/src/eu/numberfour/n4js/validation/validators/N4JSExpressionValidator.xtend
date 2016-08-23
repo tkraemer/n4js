@@ -172,9 +172,20 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val Expression subExpr = awaitExpression.getExpression();
 		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
-		val ptr = G.promiseTypeRef(TypeRefsFactory.eINSTANCE.createWildcard(), TypeRefsFactory.eINSTANCE.createWildcard());
+		val scope = G.predefinedTypes.builtInTypeScope;
+		val einst = TypeRefsFactory.eINSTANCE;
+		val promWW = TypeUtils.createPromiseTypeRef(scope, einst.createWildcard, einst.createWildcard);
+		val promVW = TypeUtils.createPromiseTypeRef(scope, scope.getVoidTypeRef(), einst.createWildcard);
+		val promWV = TypeUtils.createPromiseTypeRef(scope, einst.createWildcard, scope.getVoidTypeRef());
+		val promVV = TypeUtils.createPromiseTypeRef(scope, scope.getVoidTypeRef(), scope.getVoidTypeRef());
 
-		if (! ts.subtypeSucceeded(G, typeRef, ptr)) {
+		val boolean isUndef = typeRef.declaredType == G.undefinedType;
+		val boolean isNull = typeRef.declaredType == G.nullType;
+		val boolean stWW = ts.subtypeSucceeded(G, typeRef, promWW);
+		val boolean stVW = ts.subtypeSucceeded(G, typeRef, promVW);
+		val boolean stWV = ts.subtypeSucceeded(G, typeRef, promWV);
+		val boolean stVV = ts.subtypeSucceeded(G, typeRef, promVV);
+		if (!(stWW || stVW || stWV || stVV) || isUndef || isNull) {
 			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
 			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
 		}
