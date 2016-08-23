@@ -4,13 +4,13 @@
 
 async function testWithMethod(allDone : {function()}) {
 
-	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await null"
+	// XPECT warnings -->"await should not be used on 'null' since it has no effect here." at "await null"
 	await null;
-	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await any"
+	// XPECT warnings -->"await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await any"
 	await any;
-	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await undefined"
+	// XPECT warnings -->"await should not be used on 'undefined' since it has no effect here." at "await undefined"
 	await undefined;
-	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await 47"
+	// XPECT warnings -->"await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await 47"
 	await 47;
 
 }
