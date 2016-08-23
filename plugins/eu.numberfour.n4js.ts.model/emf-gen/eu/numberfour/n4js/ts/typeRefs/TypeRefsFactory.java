@@ -117,13 +117,13 @@ public interface TypeRefsFactory extends EFactory {
 	UnknownTypeRef createUnknownTypeRef();
 
 	/**
-	 * Returns a new object of class '<em>Constructor Type Ref</em>'.
+	 * Returns a new object of class '<em>Type Type Ref</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Constructor Type Ref</em>'.
+	 * @return a new object of class '<em>Type Type Ref</em>'.
 	 * @generated
 	 */
-	ConstructorTypeRef createConstructorTypeRef();
+	TypeTypeRef createTypeTypeRef();
 
 	/**
 	 * Returns a new object of class '<em>Enum Type Ref</em>'.

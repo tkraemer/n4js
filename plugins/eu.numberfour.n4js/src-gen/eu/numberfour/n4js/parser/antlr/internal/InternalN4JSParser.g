@@ -36165,11 +36165,11 @@ PlusSign
 )?)
     |
     { 
-        newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getConstructorTypeRefParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getTypeRefWithoutModifiersAccess().getTypeTypeRefParserRuleCall_1()); 
     }
-    this_ConstructorTypeRef_3=ruleConstructorTypeRef
+    this_TypeTypeRef_3=ruleTypeTypeRef
     {
-        $current = $this_ConstructorTypeRef_3.current;
+        $current = $this_TypeTypeRef_3.current;
         afterParserOrEnumRuleCall();
     }
 
@@ -36245,11 +36245,11 @@ ruleTypeRefFunctionTypeExpression returns [EObject current=null]
 
     |
     { 
-        newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getConstructorTypeRefParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getTypeTypeRefParserRuleCall_2()); 
     }
-    this_ConstructorTypeRef_2=ruleConstructorTypeRef
+    this_TypeTypeRef_2=ruleTypeTypeRef
     {
-        $current = $this_ConstructorTypeRef_2.current;
+        $current = $this_TypeTypeRef_2.current;
         afterParserOrEnumRuleCall();
     }
 
@@ -36325,11 +36325,11 @@ ruleTypeRefForCast returns [EObject current=null]
 
     |
     { 
-        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getConstructorTypeRefParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getTypeRefForCastAccess().getTypeTypeRefParserRuleCall_3()); 
     }
-    this_ConstructorTypeRef_3=ruleConstructorTypeRef
+    this_TypeTypeRef_3=ruleTypeTypeRef
     {
-        $current = $this_ConstructorTypeRef_3.current;
+        $current = $this_TypeTypeRef_3.current;
         afterParserOrEnumRuleCall();
     }
 
@@ -36379,23 +36379,23 @@ ruleTypeRefForCast returns [EObject current=null]
 
 
 
-// Entry rule entryRuleTypeArgInConstructorTypeRef
-entryRuleTypeArgInConstructorTypeRef returns [EObject current=null]
+// Entry rule entryRuleTypeArgInTypeTypeRef
+entryRuleTypeArgInTypeTypeRef returns [EObject current=null]
 	:
-	{ newCompositeNode(grammarAccess.getTypeArgInConstructorTypeRefRule()); }
-	 iv_ruleTypeArgInConstructorTypeRef=ruleTypeArgInConstructorTypeRef 
-	 { $current=$iv_ruleTypeArgInConstructorTypeRef.current; } 
+	{ newCompositeNode(grammarAccess.getTypeArgInTypeTypeRefRule()); }
+	 iv_ruleTypeArgInTypeTypeRef=ruleTypeArgInTypeTypeRef 
+	 { $current=$iv_ruleTypeArgInTypeTypeRef.current; } 
 	 EOF 
 ;
 
-// Rule TypeArgInConstructorTypeRef
-ruleTypeArgInConstructorTypeRef returns [EObject current=null] 
+// Rule TypeArgInTypeTypeRef
+ruleTypeArgInTypeTypeRef returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 (
     { 
-        newCompositeNode(grammarAccess.getTypeArgInConstructorTypeRefAccess().getParameterizedTypeRefNominalParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getTypeArgInTypeTypeRefAccess().getParameterizedTypeRefNominalParserRuleCall_0()); 
     }
     this_ParameterizedTypeRefNominal_0=ruleParameterizedTypeRefNominal
     {
@@ -36405,7 +36405,7 @@ ruleTypeArgInConstructorTypeRef returns [EObject current=null]
 
     |
     { 
-        newCompositeNode(grammarAccess.getTypeArgInConstructorTypeRefAccess().getThisTypeRefNominalParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getTypeArgInTypeTypeRefAccess().getThisTypeRefNominalParserRuleCall_1()); 
     }
     this_ThisTypeRefNominal_1=ruleThisTypeRefNominal
     {
@@ -36418,7 +36418,7 @@ ruleTypeArgInConstructorTypeRef returns [EObject current=null]
 QuestionMark
 ))=>
     { 
-        newCompositeNode(grammarAccess.getTypeArgInConstructorTypeRefAccess().getWildcardParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getTypeArgInTypeTypeRefAccess().getWildcardParserRuleCall_2()); 
     }
     this_Wildcard_2=ruleWildcard
     {
@@ -37649,30 +37649,30 @@ ruleTypingStrategyDefSiteOperator returns [AntlrDatatypeRuleToken current=new An
 
 
 
-// Entry rule entryRuleConstructorTypeRef
-entryRuleConstructorTypeRef returns [EObject current=null]
+// Entry rule entryRuleTypeTypeRef
+entryRuleTypeTypeRef returns [EObject current=null]
 	:
-	{ newCompositeNode(grammarAccess.getConstructorTypeRefRule()); }
-	 iv_ruleConstructorTypeRef=ruleConstructorTypeRef 
-	 { $current=$iv_ruleConstructorTypeRef.current; } 
+	{ newCompositeNode(grammarAccess.getTypeTypeRefRule()); }
+	 iv_ruleTypeTypeRef=ruleTypeTypeRef 
+	 { $current=$iv_ruleTypeTypeRef.current; } 
 	 EOF 
 ;
 
-// Rule ConstructorTypeRef
-ruleConstructorTypeRef returns [EObject current=null] 
+// Rule TypeTypeRef
+ruleTypeTypeRef returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 ((
     {
         $current = forceCreateModelElement(
-            grammarAccess.getConstructorTypeRefAccess().getConstructorTypeRefAction_0(),
+            grammarAccess.getTypeTypeRefAccess().getTypeTypeRefAction_0(),
             $current);
     }
 )(
 	otherlv_1=Type
     {
-    	newLeafNode(otherlv_1, grammarAccess.getConstructorTypeRefAccess().getTypeKeyword_1_0());
+    	newLeafNode(otherlv_1, grammarAccess.getTypeTypeRefAccess().getTypeKeyword_1_0());
     }
 
     |(
@@ -37680,12 +37680,12 @@ ruleConstructorTypeRef returns [EObject current=null]
 		lv_constructorRef_2_0=
 	Constructor
     {
-        newLeafNode(lv_constructorRef_2_0, grammarAccess.getConstructorTypeRefAccess().getConstructorRefConstructorKeyword_1_1_0());
+        newLeafNode(lv_constructorRef_2_0, grammarAccess.getTypeTypeRefAccess().getConstructorRefConstructorKeyword_1_1_0());
     }
 
 	    {
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getConstructorTypeRefRule());
+	            $current = createModelElement(grammarAccess.getTypeTypeRefRule());
 	        }
        		setWithLastConsumed($current, "constructorRef", true, "constructor");
 	    }
@@ -37694,22 +37694,22 @@ ruleConstructorTypeRef returns [EObject current=null]
 ))
 	otherlv_3=LeftCurlyBracket
     {
-    	newLeafNode(otherlv_3, grammarAccess.getConstructorTypeRefAccess().getLeftCurlyBracketKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getTypeTypeRefAccess().getLeftCurlyBracketKeyword_2());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstructorTypeRefAccess().getTypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getTypeTypeRefAccess().getTypeArgTypeArgInTypeTypeRefParserRuleCall_3_0()); 
 	    }
-		lv_typeArg_4_0=ruleTypeArgInConstructorTypeRef		{
+		lv_typeArg_4_0=ruleTypeArgInTypeTypeRef		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getConstructorTypeRefRule());
+	            $current = createModelElementForParent(grammarAccess.getTypeTypeRefRule());
 	        }
        		set(
        			$current, 
        			"typeArg",
         		lv_typeArg_4_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.TypeArgInConstructorTypeRef");
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeArgInTypeTypeRef");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -37717,7 +37717,7 @@ ruleConstructorTypeRef returns [EObject current=null]
 )
 	otherlv_5=RightCurlyBracket
     {
-    	newLeafNode(otherlv_5, grammarAccess.getConstructorTypeRefAccess().getRightCurlyBracketKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getTypeTypeRefAccess().getRightCurlyBracketKeyword_4());
     }
 )
 ;

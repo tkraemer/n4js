@@ -7,10 +7,10 @@
  */
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -26,19 +26,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Constructor Type Ref</b></em>'.
+ * An implementation of the model object '<em><b>Type Type Ref</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ConstructorTypeRefImpl#getTypeArg <em>Type Arg</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ConstructorTypeRefImpl#isConstructorRef <em>Constructor Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeTypeRefImpl#getTypeArg <em>Type Arg</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeTypeRefImpl#isConstructorRef <em>Constructor Ref</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements ConstructorTypeRef {
+public class TypeTypeRefImpl extends BaseTypeRefImpl implements TypeTypeRef {
 	/**
 	 * The cached value of the '{@link #getTypeArg() <em>Type Arg</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -74,7 +74,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ConstructorTypeRefImpl() {
+	protected TypeTypeRefImpl() {
 		super();
 	}
 
@@ -85,7 +85,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TypeRefsPackage.Literals.CONSTRUCTOR_TYPE_REF;
+		return TypeRefsPackage.Literals.TYPE_TYPE_REF;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 		TypeArgument oldTypeArg = typeArg;
 		typeArg = newTypeArg;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG, oldTypeArg, newTypeArg);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, oldTypeArg, newTypeArg);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -121,14 +121,14 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 		if (newTypeArg != typeArg) {
 			NotificationChain msgs = null;
 			if (typeArg != null)
-				msgs = ((InternalEObject)typeArg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG, null, msgs);
+				msgs = ((InternalEObject)typeArg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, null, msgs);
 			if (newTypeArg != null)
-				msgs = ((InternalEObject)newTypeArg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG, null, msgs);
+				msgs = ((InternalEObject)newTypeArg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, null, msgs);
 			msgs = basicSetTypeArg(newTypeArg, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG, newTypeArg, newTypeArg));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, newTypeArg, newTypeArg));
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 		boolean oldConstructorRef = constructorRef;
 		constructorRef = newConstructorRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF, oldConstructorRef, constructorRef));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF, oldConstructorRef, constructorRef));
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return basicSetTypeArg(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -204,9 +204,9 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return getTypeArg();
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF:
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
 				return isConstructorRef();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -220,10 +220,10 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				setTypeArg((TypeArgument)newValue);
 				return;
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF:
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
 				setConstructorRef((Boolean)newValue);
 				return;
 		}
@@ -238,10 +238,10 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				setTypeArg((TypeArgument)null);
 				return;
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF:
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
 				setConstructorRef(CONSTRUCTOR_REF_EDEFAULT);
 				return;
 		}
@@ -256,9 +256,9 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return typeArg != null;
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF__CONSTRUCTOR_REF:
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
 				return constructorRef != CONSTRUCTOR_REF_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -273,13 +273,13 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == TypeArgument.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING;
+				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
 		if (baseClass == TypeRef.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING;
+				case TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -294,7 +294,7 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF___GET_TYPE_REF_AS_STRING:
+			case TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING:
 				return getTypeRefAsString();
 		}
 		return super.eInvoke(operationID, arguments);
@@ -316,4 +316,4 @@ public class ConstructorTypeRefImpl extends BaseTypeRefImpl implements Construct
 		return result.toString();
 	}
 
-} //ConstructorTypeRefImpl
+} //TypeTypeRefImpl

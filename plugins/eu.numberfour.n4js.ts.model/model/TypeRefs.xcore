@@ -739,7 +739,7 @@ class UnknownTypeRef extends TypeRef {
  * can be used in a NewExpression. It is a subtype of the equivalent
  * ClassifierTypeRef.
  */
-class ConstructorTypeRef extends BaseTypeRef {
+class TypeTypeRef extends BaseTypeRef {
 	contains TypeArgument typeArg
 	/*
 	 * Tells if this {@link TypeTypeRef} is declared to be a reference to a constructor. This is the case if, in the

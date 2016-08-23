@@ -12,7 +12,7 @@ package eu.numberfour.n4js.scoping.accessModifiers;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.validation.IssueCodes;
 
@@ -22,7 +22,7 @@ import eu.numberfour.n4js.validation.IssueCodes;
 public class InvisibleCtorDescription extends InvisibleMemberDescription {
 
 	@SuppressWarnings("unused")
-	private final ConstructorTypeRef typeRef;
+	private final TypeTypeRef typeRef;
 	private final Type staticType;
 
 	/**
@@ -31,9 +31,9 @@ public class InvisibleCtorDescription extends InvisibleMemberDescription {
 	 * @param typeRef
 	 *            reference to the constructor - used for better error messages.
 	 * @param staticType
-	 *            the static type for the given ConstructorTypeRef
+	 *            the static type for the given TypeTypeRef
 	 */
-	public InvisibleCtorDescription(IEObjectDescription delegate, ConstructorTypeRef typeRef, Type staticType) {
+	public InvisibleCtorDescription(IEObjectDescription delegate, TypeTypeRef typeRef, Type staticType) {
 		super(delegate);
 		this.typeRef = typeRef;
 		this.staticType = staticType;

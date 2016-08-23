@@ -20,7 +20,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -327,7 +327,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 					return true;
 			}
 		}
-		if(typeRef instanceof ConstructorTypeRef) {
+		if(typeRef instanceof TypeTypeRef) {
 			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				return true;
@@ -348,7 +348,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 					type = ft.containingType;
 			}
 		}
-		if(typeRef instanceof ConstructorTypeRef) {
+		if(typeRef instanceof TypeTypeRef) {
 			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				type = cls;
@@ -360,14 +360,14 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * Returns the so-called "static type" of the given {@link ConstructorTypeRef} or <code>null</code> if not
+	 * Returns the so-called "static type" of the given {@link TypeTypeRef} or <code>null</code> if not
 	 * available.
 	 * <p>
 	 * Formerly, this was a utility operation in {@code TypeRefs.xcore} but since the introduction of wildcards in
-	 * {@code ConstructorTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
+	 * {@code TypeTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
 	 * and hence it was moved here.
 	 */
-	def public Type getStaticType(RuleEnvironment G, ConstructorTypeRef ctorTypeRef) {
+	def public Type getStaticType(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
 		var typeArg = ctorTypeRef.typeArg;
 		while(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef) {
 			typeArg = ts.upperBound(G, typeArg).value;
@@ -378,7 +378,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	/**
 	 * Tells whether all valid values of the given constructor type are guaranteed to be functions.
 	 */
-	def public boolean isFunction(RuleEnvironment G, ConstructorTypeRef ctorTypeRef) {
+	def public boolean isFunction(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
 		return ctorTypeRef.isConstructorRef;
 // FIXME remove:
 //		if (ctorTypeRef.isConstructorRef) {
@@ -411,10 +411,10 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * Creates a parameterized type ref to the wrapped static type of a ConstructorTypeRef, configured with the given
+	 * Creates a parameterized type ref to the wrapped static type of a TypeTypeRef, configured with the given
 	 * TypeArguments. Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type).
 	 */
-	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, ConstructorTypeRef ctr, TypeArgument ... typeArgs) {
+	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, TypeTypeRef ctr, TypeArgument ... typeArgs) {
 		 val type = getStaticType(G, ctr);
 		 if( type !== null ) {
 		 	 TypeExtensions.ref(type,typeArgs)

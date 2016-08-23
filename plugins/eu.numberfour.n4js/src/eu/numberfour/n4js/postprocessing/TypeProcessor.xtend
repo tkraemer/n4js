@@ -22,10 +22,10 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -268,7 +268,7 @@ public class TypeProcessor extends AbstractProcessor {
 						val callee = expr.callee;
 						if (callee instanceof N4ClassExpression) {
 							val calleeType = askXsemanticsForType(G, null, callee).value;
-							val calleeTypeStaticType = tsh.getStaticType(G, calleeType as ConstructorTypeRef);
+							val calleeTypeStaticType = tsh.getStaticType(G, calleeType as TypeTypeRef);
 							return new Result(TypeUtils.createTypeRef(calleeTypeStaticType));
 						}
 					}

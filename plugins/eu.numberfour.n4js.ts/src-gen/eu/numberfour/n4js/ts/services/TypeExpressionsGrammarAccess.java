@@ -272,20 +272,20 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cThisTypeRefParserRuleCall_0_0_1 = (RuleCall)cAlternatives_0_0.eContents().get(1);
 		private final Assignment cDynamicAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final Keyword cDynamicPlusSignKeyword_0_1_0 = (Keyword)cDynamicAssignment_0_1.eContents().get(0);
-		private final RuleCall cConstructorTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTypeTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cFunctionTypeExpressionOLDParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cUnionTypeExpressionOLDParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cIntersectionTypeExpressionOLDParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//TypeRefWithoutModifiers StaticBaseTypeRef:
-		//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
+		//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | TypeTypeRef
 		//	| FunctionTypeExpressionOLD
 		//	| UnionTypeExpressionOLD
 		//	| IntersectionTypeExpressionOLD
 		@Override public ParserRule getRule() { return rule; }
 
-		//(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef | FunctionTypeExpressionOLD |
-		//UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
+		//(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | TypeTypeRef | FunctionTypeExpressionOLD | UnionTypeExpressionOLD
+		//| IntersectionTypeExpressionOLD
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?
@@ -306,8 +306,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'+'
 		public Keyword getDynamicPlusSignKeyword_0_1_0() { return cDynamicPlusSignKeyword_0_1_0; }
 
-		//ConstructorTypeRef
-		public RuleCall getConstructorTypeRefParserRuleCall_1() { return cConstructorTypeRefParserRuleCall_1; }
+		//TypeTypeRef
+		public RuleCall getTypeTypeRefParserRuleCall_1() { return cTypeTypeRefParserRuleCall_1; }
 
 		//FunctionTypeExpressionOLD
 		public RuleCall getFunctionTypeExpressionOLDParserRuleCall_2() { return cFunctionTypeExpressionOLDParserRuleCall_2; }
@@ -324,19 +324,19 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cParameterizedTypeRefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cArrayTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cConstructorTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cTypeTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cUnionTypeExpressionOLDParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cIntersectionTypeExpressionOLDParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 		//	ParameterizedTypeRef
 		//	| ArrayTypeRef
-		//	| ConstructorTypeRef
+		//	| TypeTypeRef
 		//	| UnionTypeExpressionOLD
 		//	| IntersectionTypeExpressionOLD
 		@Override public ParserRule getRule() { return rule; }
 
-		//ParameterizedTypeRef | ArrayTypeRef | ConstructorTypeRef | UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
+		//ParameterizedTypeRef | ArrayTypeRef | TypeTypeRef | UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ParameterizedTypeRef
@@ -345,8 +345,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ArrayTypeRef
 		public RuleCall getArrayTypeRefParserRuleCall_1() { return cArrayTypeRefParserRuleCall_1; }
 
-		//ConstructorTypeRef
-		public RuleCall getConstructorTypeRefParserRuleCall_2() { return cConstructorTypeRefParserRuleCall_2; }
+		//TypeTypeRef
+		public RuleCall getTypeTypeRefParserRuleCall_2() { return cTypeTypeRefParserRuleCall_2; }
 
 		//UnionTypeExpressionOLD
 		public RuleCall getUnionTypeExpressionOLDParserRuleCall_3() { return cUnionTypeExpressionOLDParserRuleCall_3; }
@@ -361,7 +361,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParameterizedTypeRefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cArrayTypeRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cThisTypeRefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cConstructorTypeRefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cTypeTypeRefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cFunctionTypeExpressionOLDParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cArrowFunctionTypeExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cUnionTypeExpressionOLDParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
@@ -371,14 +371,14 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	ParameterizedTypeRef
 		//	| ArrayTypeRef
 		//	| ThisTypeRef
-		//	| ConstructorTypeRef
+		//	| TypeTypeRef
 		//	| FunctionTypeExpressionOLD
 		//	| ArrowFunctionTypeExpression
 		//	| UnionTypeExpressionOLD
 		//	| IntersectionTypeExpressionOLD
 		@Override public ParserRule getRule() { return rule; }
 
-		//ParameterizedTypeRef | ArrayTypeRef | ThisTypeRef | ConstructorTypeRef | FunctionTypeExpressionOLD |
+		//ParameterizedTypeRef | ArrayTypeRef | ThisTypeRef | TypeTypeRef | FunctionTypeExpressionOLD |
 		//ArrowFunctionTypeExpression | UnionTypeExpressionOLD | IntersectionTypeExpressionOLD
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -391,8 +391,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ThisTypeRef
 		public RuleCall getThisTypeRefParserRuleCall_2() { return cThisTypeRefParserRuleCall_2; }
 
-		//ConstructorTypeRef
-		public RuleCall getConstructorTypeRefParserRuleCall_3() { return cConstructorTypeRefParserRuleCall_3; }
+		//TypeTypeRef
+		public RuleCall getTypeTypeRefParserRuleCall_3() { return cTypeTypeRefParserRuleCall_3; }
 
 		//FunctionTypeExpressionOLD
 		public RuleCall getFunctionTypeExpressionOLDParserRuleCall_4() { return cFunctionTypeExpressionOLDParserRuleCall_4; }
@@ -407,14 +407,14 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getIntersectionTypeExpressionOLDParserRuleCall_7() { return cIntersectionTypeExpressionOLDParserRuleCall_7; }
 	}
 
-	public class TypeArgInConstructorTypeRefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeArgInConstructorTypeRef");
+	public class TypeArgInTypeTypeRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeArgInTypeTypeRef");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cParameterizedTypeRefNominalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cThisTypeRefNominalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cWildcardParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//TypeArgInConstructorTypeRef TypeArgument:
+		//TypeArgInTypeTypeRef TypeArgument:
 		//	ParameterizedTypeRefNominal
 		//	| ThisTypeRefNominal
 		//	| Wildcard
@@ -1474,29 +1474,29 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getTildeKeyword() { return cTildeKeyword; }
 	}
 
-	public class ConstructorTypeRefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.ConstructorTypeRef");
+	public class TypeTypeRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeTypeRef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cConstructorTypeRefAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cTypeTypeRefAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Keyword cTypeKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
 		private final Assignment cConstructorRefAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final Keyword cConstructorRefConstructorKeyword_1_1_0 = (Keyword)cConstructorRefAssignment_1_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTypeArgAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0 = (RuleCall)cTypeArgAssignment_3.eContents().get(0);
+		private final RuleCall cTypeArgTypeArgInTypeTypeRefParserRuleCall_3_0 = (RuleCall)cTypeArgAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//ConstructorTypeRef:
-		//	{ConstructorTypeRef} ('type' | constructorRef?='constructor')
-		//	'{' typeArg=TypeArgInConstructorTypeRef '}';
+		//TypeTypeRef:
+		//	{TypeTypeRef} ('type' | constructorRef?='constructor')
+		//	'{' typeArg=TypeArgInTypeTypeRef '}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ConstructorTypeRef} ('type' | constructorRef?='constructor') '{' typeArg=TypeArgInConstructorTypeRef '}'
+		//{TypeTypeRef} ('type' | constructorRef?='constructor') '{' typeArg=TypeArgInTypeTypeRef '}'
 		public Group getGroup() { return cGroup; }
 
-		//{ConstructorTypeRef}
-		public Action getConstructorTypeRefAction_0() { return cConstructorTypeRefAction_0; }
+		//{TypeTypeRef}
+		public Action getTypeTypeRefAction_0() { return cTypeTypeRefAction_0; }
 
 		//('type' | constructorRef?='constructor')
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
@@ -1513,11 +1513,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//typeArg=TypeArgInConstructorTypeRef
+		//typeArg=TypeArgInTypeTypeRef
 		public Assignment getTypeArgAssignment_3() { return cTypeArgAssignment_3; }
 
-		//TypeArgInConstructorTypeRef
-		public RuleCall getTypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0() { return cTypeArgTypeArgInConstructorTypeRefParserRuleCall_3_0; }
+		//TypeArgInTypeTypeRef
+		public RuleCall getTypeArgTypeArgInTypeTypeRefParserRuleCall_3_0() { return cTypeArgTypeArgInTypeTypeRefParserRuleCall_3_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -1983,7 +1983,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TypeRefWithoutModifiersElements pTypeRefWithoutModifiers;
 	private final TypeRefFunctionTypeExpressionElements pTypeRefFunctionTypeExpression;
 	private final TypeRefForCastElements pTypeRefForCast;
-	private final TypeArgInConstructorTypeRefElements pTypeArgInConstructorTypeRef;
+	private final TypeArgInTypeTypeRefElements pTypeArgInTypeTypeRef;
 	private final ThisTypeRefElements pThisTypeRef;
 	private final ThisTypeRefNominalElements pThisTypeRefNominal;
 	private final ThisTypeRefStructuralElements pThisTypeRefStructural;
@@ -2007,7 +2007,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TypingStrategyUseSiteOperatorElements pTypingStrategyUseSiteOperator;
 	private final TypingStrategyDefSiteOperatorElements pTypingStrategyDefSiteOperator;
 	private final TerminalRule tSTRUCTMODSUFFIX;
-	private final ConstructorTypeRefElements pConstructorTypeRef;
+	private final TypeTypeRefElements pTypeTypeRef;
 	private final TypeReferenceNameElements pTypeReferenceName;
 	private final TypeArgumentElements pTypeArgument;
 	private final WildcardElements pWildcard;
@@ -2046,7 +2046,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTypeRefWithoutModifiers = new TypeRefWithoutModifiersElements();
 		this.pTypeRefFunctionTypeExpression = new TypeRefFunctionTypeExpressionElements();
 		this.pTypeRefForCast = new TypeRefForCastElements();
-		this.pTypeArgInConstructorTypeRef = new TypeArgInConstructorTypeRefElements();
+		this.pTypeArgInTypeTypeRef = new TypeArgInTypeTypeRefElements();
 		this.pThisTypeRef = new ThisTypeRefElements();
 		this.pThisTypeRefNominal = new ThisTypeRefNominalElements();
 		this.pThisTypeRefStructural = new ThisTypeRefStructuralElements();
@@ -2070,7 +2070,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTypingStrategyUseSiteOperator = new TypingStrategyUseSiteOperatorElements();
 		this.pTypingStrategyDefSiteOperator = new TypingStrategyDefSiteOperatorElements();
 		this.tSTRUCTMODSUFFIX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.STRUCTMODSUFFIX");
-		this.pConstructorTypeRef = new ConstructorTypeRefElements();
+		this.pTypeTypeRef = new TypeTypeRefElements();
 		this.pTypeReferenceName = new TypeReferenceNameElements();
 		this.pTypeArgument = new TypeArgumentElements();
 		this.pWildcard = new WildcardElements();
@@ -2200,7 +2200,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
-	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
+	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | TypeTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
@@ -2215,7 +2215,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 	//	ParameterizedTypeRef
 	//	| ArrayTypeRef
-	//	| ConstructorTypeRef
+	//	| TypeTypeRef
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
 	public TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
@@ -2230,7 +2230,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	ParameterizedTypeRef
 	//	| ArrayTypeRef
 	//	| ThisTypeRef
-	//	| ConstructorTypeRef
+	//	| TypeTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
 	//	| UnionTypeExpressionOLD
@@ -2243,16 +2243,16 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeRefForCastAccess().getRule();
 	}
 
-	//TypeArgInConstructorTypeRef TypeArgument:
+	//TypeArgInTypeTypeRef TypeArgument:
 	//	ParameterizedTypeRefNominal
 	//	| ThisTypeRefNominal
 	//	| Wildcard
-	public TypeArgInConstructorTypeRefElements getTypeArgInConstructorTypeRefAccess() {
-		return pTypeArgInConstructorTypeRef;
+	public TypeArgInTypeTypeRefElements getTypeArgInTypeTypeRefAccess() {
+		return pTypeArgInTypeTypeRef;
 	}
 	
-	public ParserRule getTypeArgInConstructorTypeRefRule() {
-		return getTypeArgInConstructorTypeRefAccess().getRule();
+	public ParserRule getTypeArgInTypeTypeRefRule() {
+		return getTypeArgInTypeTypeRefAccess().getRule();
 	}
 
 	//ThisTypeRef:
@@ -2509,15 +2509,15 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return tSTRUCTMODSUFFIX;
 	} 
 
-	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} ('type' | constructorRef?='constructor')
-	//	'{' typeArg=TypeArgInConstructorTypeRef '}';
-	public ConstructorTypeRefElements getConstructorTypeRefAccess() {
-		return pConstructorTypeRef;
+	//TypeTypeRef:
+	//	{TypeTypeRef} ('type' | constructorRef?='constructor')
+	//	'{' typeArg=TypeArgInTypeTypeRef '}';
+	public TypeTypeRefElements getTypeTypeRefAccess() {
+		return pTypeTypeRef;
 	}
 	
-	public ParserRule getConstructorTypeRefRule() {
-		return getConstructorTypeRefAccess().getRule();
+	public ParserRule getTypeTypeRefRule() {
+		return getTypeTypeRefAccess().getRule();
 	}
 
 	//TypeReferenceName:

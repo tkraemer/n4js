@@ -125,7 +125,7 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
@@ -645,7 +645,7 @@ from {
 			}
 		} else if (expr.index instanceof StringLiteral) {
 			// indexing via constant computed-name, sub-cases: static or instance member, for the latter nominally-typed or structurally-typed receiver
-			val staticAccess = (targetTypeRef instanceof ConstructorTypeRef)
+			val staticAccess = (targetTypeRef instanceof TypeTypeRef)
 			val checkVisibility = false // access modifiers checked in validation
 			val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess)
 			val memberName = (expr.index as StringLiteral).value;
@@ -714,7 +714,7 @@ from {
 		if(prop instanceof TMethod && (prop as TMethod).isConstructor) {
 			// accessing the built-in constructor property ...
 			val TypeArgument ctorTypeArg = switch(receiverTypeRef) {
-				ConstructorTypeRef: // case "C.constructor"
+				TypeTypeRef: // case "C.constructor"
 					G.functionTypeRef
 				ParameterizedTypeRef, BoundThisTypeRef: { // case "c.constructor" or "this.constructor"
 					val declType = if(receiverTypeRef instanceof BoundThisTypeRef) {
@@ -733,7 +733,7 @@ from {
 				}
 			};
 			propTypeRef = if(ctorTypeArg!==null) {
-				TypeUtils.createConstructorTypeRef(ctorTypeArg)
+				TypeUtils.createTypeTypeRef(ctorTypeArg, true)
 			} else {
 				TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 			};
@@ -773,7 +773,7 @@ from {
 rule typeNewExpression G |- NewExpression e: TypeRef T
 from  {
 	G |- e.callee: T
-	if(T instanceof ConstructorTypeRef) {
+	if(T instanceof TypeTypeRef) {
 		T = typeSystemHelper.createTypeRefFromStaticType(G, T, e.typeArgs)
 	}
 }
@@ -1072,8 +1072,8 @@ from {
 			G2 |- vdecl.expression: var TypeRef E
 			if( (E instanceof BoundThisTypeRef)
 				||
-				  ( (E instanceof ConstructorTypeRef)
-				    && ((E as ConstructorTypeRef).getTypeArg instanceof BoundThisTypeRef)
+				  ( (E instanceof TypeTypeRef)
+				    && ((E as TypeTypeRef).getTypeArg instanceof BoundThisTypeRef)
 				  )
 			) {
 				// N.T.D. on purpose:
@@ -1204,7 +1204,7 @@ from {
  *
  *
  */
-rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: ConstructorTypeRef ctr
+rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: TypeTypeRef ctr
 from {
 	val staticType = typeSystemHelper.getStaticType(G, ctr);
 	// staticTypeRef is either ThisTypeRefNominal OR ParemterizedTypeRef:
@@ -1619,8 +1619,8 @@ from {
 	}
 }
 
-rule subtypeConstructorTypeRef
-	G |- ConstructorTypeRef left <: ConstructorTypeRef right
+rule subtypeTypeTypeRef
+	G |- TypeTypeRef left <: TypeTypeRef right
 from {
 	if(!right.isConstructorRef) { // type{} <: type{} OR constructor{} <: type{}
 
@@ -1691,8 +1691,8 @@ from {
 /*
  * Constructors are functions (also see GH-227)
  */
-rule subtypeConstructorTypeRef__ParameterizedTypeRef
-	G |- ConstructorTypeRef left <: ParameterizedTypeRef right
+rule subtypeTypeTypeRef__ParameterizedTypeRef
+	G |- TypeTypeRef left <: ParameterizedTypeRef right
 from {
 	right.declaredType === G.anyType
 	||
@@ -1794,7 +1794,7 @@ from {
 			// expected type of argument
 
 			// compute ctor
-			G |- expr.callee : var ConstructorTypeRef ctorTypeRef
+			G |- expr.callee : var TypeTypeRef ctorTypeRef
 
 			// add type variable mappings based on the type
 			// of the instance to be created
@@ -1961,7 +1961,7 @@ from {
 		case RelationalOperator.INSTANCEOF: {
 			if (expression===e.rhs) {
 				T = TypeUtils.createNonSimplifiedUnionType(G.functionTypeRef,
-					G.objectTypeRef.createTypeTypeRef, G.n4EnumTypeRef.createTypeTypeRef)
+					G.objectTypeRef.createTypeTypeRef(false), G.n4EnumTypeRef.createTypeTypeRef(false))
 			}  else {
 				T = G.anyTypeRef
 			}
@@ -2337,13 +2337,13 @@ from {
 	TypeUtils.copyTypeModifiers(T, boundThisTypeRef)
 }
 
-rule upperBoundConstructorTypeRef
-	G |~ ConstructorTypeRef ct /\ TypeRef T
+rule upperBoundTypeTypeRef
+	G |~ TypeTypeRef ct /\ TypeRef T
 from {
 	val typeArg = ct.typeArg;
 	if(typeArg instanceof BoundThisTypeRef) {
 		val typeArgNew = TypeUtils.createResolvedThisTypeRef(typeArg);
-		val ctNew = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
+		val ctNew = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
 		ctNew.setTypeArg(typeArgNew);
 		ctNew.setConstructorRef(ct.isConstructorRef);
 		T = ctNew;
@@ -2535,10 +2535,10 @@ from {
 }
 
 /**
- * Substitute in ConstructorTypeRef.
+ * Substitute in TypeTypeRef.
  */
-rule substTypeVariablesInConstructorTypeRef
-	G |- ConstructorTypeRef typeRef ~> ConstructorTypeRef result
+rule substTypeVariablesInTypeTypeRef
+	G |- TypeTypeRef typeRef ~> TypeTypeRef result
 from {
 	// Substitute in Parameterized Typeref.
 	G |- typeRef.getTypeArg ~> var TypeArgument tResult
@@ -2714,7 +2714,7 @@ from {
 								) {
 									G |~ thisTargetDEFTYPE.ref ~> T;
 								} else if( isInBody_Of_StaticMethod(location, containingFunction as N4MethodDeclaration)) {
-										T = TypeUtils.createConstructorBoundThisTypeRef( TypeUtils.createConstructorTypeRef( thisTargetDEFTYPE) as ConstructorTypeRef );
+										T = TypeUtils.createConstructorBoundThisTypeRef( TypeUtils.createConstructorTypeRef( thisTargetDEFTYPE) as TypeTypeRef );
 								} else {
 										T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
 								}

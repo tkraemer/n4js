@@ -30,6 +30,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
@@ -60,7 +61,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 
 /**
  * Extensions of class RuleEnvironment for handling substitutions and
@@ -197,7 +197,7 @@ class RuleEnvironmentExtensions {
 	 */
 	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
 		switch (actualThisTypeRef) {
-			ConstructorTypeRef: // IDE-785 decompose
+			TypeTypeRef: // IDE-785 decompose
 				if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
 					addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
 				}

@@ -18,7 +18,6 @@ import org.eclipse.xtext.naming.QualifiedName;
 
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
@@ -27,6 +26,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TFunction;
@@ -236,9 +236,9 @@ import eu.numberfour.n4js.ts.types.Type;
 			if (c != 0) {
 				return c;
 			}
-		} else if (ref1 instanceof ConstructorTypeRef) {
-			final ConstructorTypeRef cref1 = (ConstructorTypeRef) ref1;
-			final ConstructorTypeRef cref2 = (ConstructorTypeRef) ref2;
+		} else if (ref1 instanceof TypeTypeRef) {
+			final TypeTypeRef cref1 = (TypeTypeRef) ref1;
+			final TypeTypeRef cref2 = (TypeTypeRef) ref2;
 			c = compare(fqnProvider, cref1.getTypeArg(), cref2.getTypeArg());
 			if (c != 0) {
 				return c;

@@ -10,7 +10,7 @@ package eu.numberfour.n4js.ts.typeRefs;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Constructor Type Ref</b></em>'.
+ * A representation of the model object '<em><b>Type Type Ref</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -24,15 +24,15 @@ package eu.numberfour.n4js.ts.typeRefs;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#getTypeArg <em>Type Arg</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#isConstructorRef <em>Constructor Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeTypeRef#getTypeArg <em>Type Arg</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeTypeRef#isConstructorRef <em>Constructor Ref</em>}</li>
  * </ul>
  *
- * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getConstructorTypeRef()
+ * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeTypeRef()
  * @model
  * @generated
  */
-public interface ConstructorTypeRef extends BaseTypeRef {
+public interface TypeTypeRef extends BaseTypeRef {
 	/**
 	 * Returns the value of the '<em><b>Type Arg</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -43,14 +43,14 @@ public interface ConstructorTypeRef extends BaseTypeRef {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Arg</em>' containment reference.
 	 * @see #setTypeArg(TypeArgument)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getConstructorTypeRef_TypeArg()
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeTypeRef_TypeArg()
 	 * @model containment="true"
 	 * @generated
 	 */
 	TypeArgument getTypeArg();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#getTypeArg <em>Type Arg</em>}' containment reference.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeTypeRef#getTypeArg <em>Type Arg</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type Arg</em>' containment reference.
@@ -73,14 +73,14 @@ public interface ConstructorTypeRef extends BaseTypeRef {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Constructor Ref</em>' attribute.
 	 * @see #setConstructorRef(boolean)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getConstructorTypeRef_ConstructorRef()
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeTypeRef_ConstructorRef()
 	 * @model unique="false"
 	 * @generated
 	 */
 	boolean isConstructorRef();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef#isConstructorRef <em>Constructor Ref</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeTypeRef#isConstructorRef <em>Constructor Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Constructor Ref</em>' attribute.
@@ -101,4 +101,4 @@ public interface ConstructorTypeRef extends BaseTypeRef {
 	 */
 	String getTypeRefAsString();
 
-} // ConstructorTypeRef
+} // TypeTypeRef

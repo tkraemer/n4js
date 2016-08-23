@@ -55,7 +55,7 @@ var m32 = t3.prototype;
 var m33 = t3.method();
 
 
-// member access on ConstructorTypeRef with wildcard, style 4:
+// member access on ClassifierTypeRef with wildcard, style 4:
 
 class C4<T extends A> {
 	m(): type{? extends T} {return null;}

@@ -133,8 +133,8 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 				return createUnknownTypeRefAdapter();
 			}
 			@Override
-			public Adapter caseConstructorTypeRef(ConstructorTypeRef object) {
-				return createConstructorTypeRefAdapter();
+			public Adapter caseTypeTypeRef(TypeTypeRef object) {
+				return createTypeTypeRefAdapter();
 			}
 			@Override
 			public Adapter caseEnumTypeRef(EnumTypeRef object) {
@@ -399,16 +399,16 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef <em>Constructor Type Ref</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.TypeTypeRef <em>Type Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 	 * @generated
 	 */
-	public Adapter createConstructorTypeRefAdapter() {
+	public Adapter createTypeTypeRefAdapter() {
 		return null;
 	}
 

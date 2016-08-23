@@ -2890,7 +2890,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeRefWithoutModifiers StaticBaseTypeRef:
-	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | ConstructorTypeRef
+	//	(ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'? | TypeTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
@@ -2905,7 +2905,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TypeRefFunctionTypeExpression StaticBaseTypeRef:
 	//	ParameterizedTypeRef
 	//	| ArrayTypeRef
-	//	| ConstructorTypeRef
+	//	| TypeTypeRef
 	//	| UnionTypeExpressionOLD
 	//	| IntersectionTypeExpressionOLD
 	public TypeExpressionsGrammarAccess.TypeRefFunctionTypeExpressionElements getTypeRefFunctionTypeExpressionAccess() {
@@ -2920,7 +2920,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	ParameterizedTypeRef
 	//	| ArrayTypeRef
 	//	| ThisTypeRef
-	//	| ConstructorTypeRef
+	//	| TypeTypeRef
 	//	| FunctionTypeExpressionOLD
 	//	| ArrowFunctionTypeExpression
 	//	| UnionTypeExpressionOLD
@@ -2933,16 +2933,16 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeRefForCastAccess().getRule();
 	}
 
-	//TypeArgInConstructorTypeRef TypeArgument:
+	//TypeArgInTypeTypeRef TypeArgument:
 	//	ParameterizedTypeRefNominal
 	//	| ThisTypeRefNominal
 	//	| Wildcard
-	public TypeExpressionsGrammarAccess.TypeArgInConstructorTypeRefElements getTypeArgInConstructorTypeRefAccess() {
-		return gaTypeExpressions.getTypeArgInConstructorTypeRefAccess();
+	public TypeExpressionsGrammarAccess.TypeArgInTypeTypeRefElements getTypeArgInTypeTypeRefAccess() {
+		return gaTypeExpressions.getTypeArgInTypeTypeRefAccess();
 	}
 	
-	public ParserRule getTypeArgInConstructorTypeRefRule() {
-		return getTypeArgInConstructorTypeRefAccess().getRule();
+	public ParserRule getTypeArgInTypeTypeRefRule() {
+		return getTypeArgInTypeTypeRefAccess().getRule();
 	}
 
 	//ThisTypeRef:
@@ -3199,15 +3199,15 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return gaTypeExpressions.getSTRUCTMODSUFFIXRule();
 	} 
 
-	//ConstructorTypeRef:
-	//	{ConstructorTypeRef} ('type' | constructorRef?='constructor')
-	//	'{' typeArg=TypeArgInConstructorTypeRef '}';
-	public TypeExpressionsGrammarAccess.ConstructorTypeRefElements getConstructorTypeRefAccess() {
-		return gaTypeExpressions.getConstructorTypeRefAccess();
+	//TypeTypeRef:
+	//	{TypeTypeRef} ('type' | constructorRef?='constructor')
+	//	'{' typeArg=TypeArgInTypeTypeRef '}';
+	public TypeExpressionsGrammarAccess.TypeTypeRefElements getTypeTypeRefAccess() {
+		return gaTypeExpressions.getTypeTypeRefAccess();
 	}
 	
-	public ParserRule getConstructorTypeRefRule() {
-		return getConstructorTypeRefAccess().getRule();
+	public ParserRule getTypeTypeRefRule() {
+		return getTypeTypeRefAccess().getRule();
 	}
 
 	//TypeArgument:

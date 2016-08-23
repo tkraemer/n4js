@@ -47,10 +47,10 @@ import eu.numberfour.n4js.scoping.utils.MainModuleAwareSelectableBasedScope
 import eu.numberfour.n4js.scoping.utils.N4JSTypesScopeFilter
 import eu.numberfour.n4js.scoping.utils.ProjectImportEnablingScope
 import eu.numberfour.n4js.ts.scoping.ValidatingScope
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TStructMethod
@@ -407,7 +407,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 		// take upper bound to get rid of ExistentialTypeRefs, ThisTypeRefs, etc.
 		val TypeRef typeRef = if(typeRefRaw!==null) ts.upperBound(G, typeRefRaw).value else null;
 
-		val staticAccess = typeRef instanceof ConstructorTypeRef;
+		val staticAccess = typeRef instanceof TypeTypeRef;
 		val checkVisibility = true;
 		return memberScopingHelper.createMemberScopeFor(typeRef, propertyAccess, checkVisibility, staticAccess);
 	}

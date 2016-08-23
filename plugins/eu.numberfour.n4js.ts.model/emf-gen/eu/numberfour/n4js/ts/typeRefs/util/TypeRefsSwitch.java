@@ -213,13 +213,13 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF: {
-				ConstructorTypeRef constructorTypeRef = (ConstructorTypeRef)theEObject;
-				T result = caseConstructorTypeRef(constructorTypeRef);
-				if (result == null) result = caseBaseTypeRef(constructorTypeRef);
-				if (result == null) result = caseStaticBaseTypeRef(constructorTypeRef);
-				if (result == null) result = caseTypeRef(constructorTypeRef);
-				if (result == null) result = caseTypeArgument(constructorTypeRef);
+			case TypeRefsPackage.TYPE_TYPE_REF: {
+				TypeTypeRef typeTypeRef = (TypeTypeRef)theEObject;
+				T result = caseTypeTypeRef(typeTypeRef);
+				if (result == null) result = caseBaseTypeRef(typeTypeRef);
+				if (result == null) result = caseStaticBaseTypeRef(typeTypeRef);
+				if (result == null) result = caseTypeRef(typeTypeRef);
+				if (result == null) result = caseTypeArgument(typeTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -521,17 +521,17 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Constructor Type Ref</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Type Type Ref</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Constructor Type Ref</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Type Type Ref</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseConstructorTypeRef(ConstructorTypeRef object) {
+	public T caseTypeTypeRef(TypeTypeRef object) {
 		return null;
 	}
 

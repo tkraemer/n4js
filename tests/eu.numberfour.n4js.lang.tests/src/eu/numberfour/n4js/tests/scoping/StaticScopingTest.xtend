@@ -19,8 +19,8 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.members.MemberScope
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
@@ -115,8 +115,8 @@ class StaticScopingTest {
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
 		val G = script.newRuleEnvironment
 		val thisType1 = ts.upperBound(G, ts.type(G, thisInMethod1).value).value
-		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ConstructorTypeRef)
-		val classifierTypeRef1 = thisType1 as ConstructorTypeRef
+		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof TypeTypeRef)
+		val classifierTypeRef1 = thisType1 as TypeTypeRef
 		val typeName1 = tsh.getStaticType(G, classifierTypeRef1).name
 		Assert.assertEquals("A", typeName1)
 
@@ -146,8 +146,8 @@ class StaticScopingTest {
 
 		val varX = script.eAllContents.filter(VariableDeclaration).filter[name == "x"].head
 		val varXType = varX.tau
-		Assert.assertTrue("type{C}", varXType instanceof ConstructorTypeRef)
-		val varXConstructorTypeRef = varXType as ConstructorTypeRef
+		Assert.assertTrue("type{C}", varXType instanceof TypeTypeRef)
+		val varXConstructorTypeRef = varXType as TypeTypeRef
 		val varXTypeName = tsh.getStaticType(G, varXConstructorTypeRef).name
 		Assert.assertEquals("C", varXTypeName)
 
@@ -161,8 +161,8 @@ class StaticScopingTest {
 		val newCExpression = script.eAllContents.filter(NewExpression).last
 		val identifierRefType = newCExpression.callee.tau
 		Assert.assertTrue("ConstructorTypeRef expected but was " + identifierRefType.class,
-			identifierRefType instanceof ConstructorTypeRef)
-		val identifierConstructorTypeName = tsh.getStaticType(G, identifierRefType as ConstructorTypeRef)?.name
+			identifierRefType instanceof TypeTypeRef)
+		val identifierConstructorTypeName = tsh.getStaticType(G, identifierRefType as TypeTypeRef)?.name
 		Assert.assertEquals("C", identifierConstructorTypeName)
 
 		val varZ2 = script.eAllContents.filter(VariableDeclaration).filter[name == "z2"].head

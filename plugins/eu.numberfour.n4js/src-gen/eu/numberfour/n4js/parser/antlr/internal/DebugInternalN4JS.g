@@ -6200,7 +6200,7 @@ ruleTypeRefWithoutModifiers :
 	) ( (
 	'+'
 	) => '+' )? |
-	ruleConstructorTypeRef |
+	ruleTypeTypeRef |
 	ruleFunctionTypeExpressionOLD |
 	ruleUnionTypeExpressionOLD |
 	ruleIntersectionTypeExpressionOLD
@@ -6210,7 +6210,7 @@ ruleTypeRefWithoutModifiers :
 ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
 	ruleArrayTypeRef |
-	ruleConstructorTypeRef |
+	ruleTypeTypeRef |
 	ruleUnionTypeExpressionOLD |
 	ruleIntersectionTypeExpressionOLD
 ;
@@ -6220,15 +6220,15 @@ ruleTypeRefForCast :
 	ruleParameterizedTypeRef |
 	ruleArrayTypeRef |
 	ruleThisTypeRef |
-	ruleConstructorTypeRef |
+	ruleTypeTypeRef |
 	ruleFunctionTypeExpressionOLD |
 	ruleArrowFunctionTypeExpression |
 	ruleUnionTypeExpressionOLD |
 	ruleIntersectionTypeExpressionOLD
 ;
 
-// Rule TypeArgInConstructorTypeRef
-ruleTypeArgInConstructorTypeRef :
+// Rule TypeArgInTypeTypeRef
+ruleTypeArgInTypeTypeRef :
 	ruleParameterizedTypeRefNominal |
 	ruleThisTypeRefNominal |
 	( (
@@ -6380,12 +6380,12 @@ ruleTypingStrategyDefSiteOperator :
 	'~'
 ;
 
-// Rule ConstructorTypeRef
-ruleConstructorTypeRef :
+// Rule TypeTypeRef
+ruleTypeTypeRef :
 	(
 		'type' |
 		'constructor'
-	) '{' ruleTypeArgInConstructorTypeRef '}'
+	) '{' ruleTypeArgInTypeTypeRef '}'
 ;
 
 // Rule TypeArgument

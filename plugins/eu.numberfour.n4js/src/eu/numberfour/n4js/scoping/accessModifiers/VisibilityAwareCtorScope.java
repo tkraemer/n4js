@@ -15,7 +15,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 
 import eu.numberfour.n4js.n4JS.NewExpression;
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.typesystem.TypeSystemHelper;
@@ -30,7 +30,7 @@ public class VisibilityAwareCtorScope extends FilterWithErrorMarkerScope {
 
 	private final MemberVisibilityChecker checker;
 	private final NewExpression context;
-	private final ConstructorTypeRef receiverType;
+	private final TypeTypeRef receiverType;
 	private final Type staticType;
 
 	/**
@@ -42,12 +42,12 @@ public class VisibilityAwareCtorScope extends FilterWithErrorMarkerScope {
 	 *            Type which holds the constructor to call.
 	 * @param staticType
 	 *            the static type of 'receiverType' as returned by
-	 *            {@link TypeSystemHelper#getStaticType(RuleEnvironment, ConstructorTypeRef)}.
+	 *            {@link TypeSystemHelper#getStaticType(RuleEnvironment, TypeTypeRef)}.
 	 * @param context
 	 *            new expression calling a constructor
 	 */
 	public VisibilityAwareCtorScope(IScope parent, MemberVisibilityChecker checker,
-			ConstructorTypeRef receiverType, Type staticType, NewExpression context) {
+			TypeTypeRef receiverType, Type staticType, NewExpression context) {
 		super(parent);
 		this.checker = checker;
 		this.receiverType = receiverType;

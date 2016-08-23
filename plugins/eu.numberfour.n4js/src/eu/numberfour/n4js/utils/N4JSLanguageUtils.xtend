@@ -40,11 +40,12 @@ import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
@@ -57,6 +58,8 @@ import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TModule
+import eu.numberfour.n4js.ts.types.TN4Classifier
+import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -73,9 +76,6 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
-import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
-import eu.numberfour.n4js.ts.types.TN4Classifier
-import eu.numberfour.n4js.ts.types.TObjectPrototype
 
 /**
  * Intended for small, static utility methods that
@@ -248,8 +248,8 @@ class N4JSLanguageUtils {
 	 * </pre>
 	 * is legal, given a variable {@code value} of type {@code ctorTypeRef}.
 	 */
-	def public static boolean isInstantiable(ConstructorTypeRef ctorTypeRef) {
-		val typeArg = ctorTypeRef.typeArg;
+	def public static boolean isInstantiable(TypeTypeRef typeTypeRef) {
+		val typeArg = typeTypeRef.typeArg;
 		if(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef) {
 			return false;
 		}
@@ -357,13 +357,13 @@ class N4JSLanguageUtils {
 					vFactor = switch(parent) {
 					ComposedTypeRef case parent.typeRefs.contains(curr): 
 						Variance.CO
-					ConstructorTypeRef case parent.typeArg===curr:
+					TypeTypeRef case parent.typeArg===curr:
 						if (parent.isConstructorRef) {
 							Variance.INV // constructor{T}
 						} else {
 							Variance.CO // type{T}
 						}
-					ConstructorTypeRef case parent.typeArg instanceof Wildcard: {
+					TypeTypeRef case parent.typeArg instanceof Wildcard: {
 						val wc = parent.typeArg as Wildcard;
 						if(wc.declaredUpperBound===curr) {
 							Variance.CO // type{? extends T} OR constructor{? extends T}

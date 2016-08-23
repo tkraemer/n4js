@@ -21,14 +21,14 @@ import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.diagnostics.Diagnostic
+import org.eclipse.xtext.nodemodel.impl.InvariantChecker
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic
 import org.junit.Test
-import org.eclipse.xtext.nodemodel.impl.InvariantChecker
 
 /**
  */
@@ -393,7 +393,7 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		assertEquals('x', param.name)
 		assertTrue(param.declaredTypeRef instanceof FunctionTypeExpression)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
-		assertTrue(paramType.returnTypeRef instanceof ConstructorTypeRef)
+		assertTrue(paramType.returnTypeRef instanceof TypeTypeRef)
 		// returnType.getTypeArg is now interpreted as wildcard, but check other AST elements:
 	}
 
@@ -407,7 +407,7 @@ class N4_SyntaxErrorTest extends AbstractParserTest {
 		assertEquals('x', param.name)
 		assertTrue(param.declaredTypeRef instanceof FunctionTypeExpression)
 		val paramType = param.declaredTypeRef as FunctionTypeExpression
-		assertTrue(paramType.returnTypeRef instanceof ConstructorTypeRef)
+		assertTrue(paramType.returnTypeRef instanceof TypeTypeRef)
 		// returnType.getTypeArg is now interpreted as wildcard, but check other AST elements:
 	}
 

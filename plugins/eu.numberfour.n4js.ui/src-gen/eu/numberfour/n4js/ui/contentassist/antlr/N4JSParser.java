@@ -119,13 +119,13 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getAlternatives_0_0(), "rule__TypeRefWithoutModifiers__Alternatives_0_0");
 					put(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getAlternatives(), "rule__TypeRefFunctionTypeExpression__Alternatives");
 					put(grammarAccess.getTypeRefForCastAccess().getAlternatives(), "rule__TypeRefForCast__Alternatives");
-					put(grammarAccess.getTypeArgInConstructorTypeRefAccess().getAlternatives(), "rule__TypeArgInConstructorTypeRef__Alternatives");
+					put(grammarAccess.getTypeArgInTypeTypeRefAccess().getAlternatives(), "rule__TypeArgInTypeTypeRef__Alternatives");
 					put(grammarAccess.getThisTypeRefAccess().getAlternatives(), "rule__ThisTypeRef__Alternatives");
 					put(grammarAccess.getParameterizedTypeRefAccess().getAlternatives(), "rule__ParameterizedTypeRef__Alternatives");
 					put(grammarAccess.getTStructMemberListAccess().getAlternatives_1_1(), "rule__TStructMemberList__Alternatives_1_1");
 					put(grammarAccess.getTStructMemberAccess().getAlternatives(), "rule__TStructMember__Alternatives");
 					put(grammarAccess.getTypingStrategyUseSiteOperatorAccess().getAlternatives_1(), "rule__TypingStrategyUseSiteOperator__Alternatives_1");
-					put(grammarAccess.getConstructorTypeRefAccess().getAlternatives_1(), "rule__ConstructorTypeRef__Alternatives_1");
+					put(grammarAccess.getTypeTypeRefAccess().getAlternatives_1(), "rule__TypeTypeRef__Alternatives_1");
 					put(grammarAccess.getTypeArgumentAccess().getAlternatives(), "rule__TypeArgument__Alternatives");
 					put(grammarAccess.getWildcardAccess().getAlternatives_1(), "rule__Wildcard__Alternatives_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getAlternatives(), "rule__WildcardNewNotation__Alternatives");
@@ -596,7 +596,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTStructMemberListAccess().getGroup(), "rule__TStructMemberList__Group__0");
 					put(grammarAccess.getTStructMemberListAccess().getGroup_1(), "rule__TStructMemberList__Group_1__0");
 					put(grammarAccess.getTypingStrategyUseSiteOperatorAccess().getGroup(), "rule__TypingStrategyUseSiteOperator__Group__0");
-					put(grammarAccess.getConstructorTypeRefAccess().getGroup(), "rule__ConstructorTypeRef__Group__0");
+					put(grammarAccess.getTypeTypeRefAccess().getGroup(), "rule__TypeTypeRef__Group__0");
 					put(grammarAccess.getWildcardAccess().getGroup(), "rule__Wildcard__Group__0");
 					put(grammarAccess.getWildcardAccess().getGroup_0(), "rule__Wildcard__Group_0__0");
 					put(grammarAccess.getWildcardAccess().getGroup_0_0(), "rule__Wildcard__Group_0_0__0");
@@ -1009,8 +1009,8 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getTypeArgsAssignment_2_1(), "rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1");
 					put(grammarAccess.getParameterizedTypeRefStructuralAccess().getTypeArgsAssignment_2_2_1(), "rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_2_1");
 					put(grammarAccess.getTStructMemberListAccess().getAstStructuralMembersAssignment_1_0(), "rule__TStructMemberList__AstStructuralMembersAssignment_1_0");
-					put(grammarAccess.getConstructorTypeRefAccess().getConstructorRefAssignment_1_1(), "rule__ConstructorTypeRef__ConstructorRefAssignment_1_1");
-					put(grammarAccess.getConstructorTypeRefAccess().getTypeArgAssignment_3(), "rule__ConstructorTypeRef__TypeArgAssignment_3");
+					put(grammarAccess.getTypeTypeRefAccess().getConstructorRefAssignment_1_1(), "rule__TypeTypeRef__ConstructorRefAssignment_1_1");
+					put(grammarAccess.getTypeTypeRefAccess().getTypeArgAssignment_3(), "rule__TypeTypeRef__TypeArgAssignment_3");
 					put(grammarAccess.getWildcardAccess().getDeclaredUpperBoundAssignment_1_0_1(), "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1");
 					put(grammarAccess.getWildcardAccess().getDeclaredLowerBoundAssignment_1_1_1(), "rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1");
 					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_0_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0");

@@ -121,7 +121,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) 'this' dynamic?='+'
 	 *     (rule start) (ambiguity) 'this' nullModifier=NullModifierToken
 	 *     (rule start) (ambiguity) 'this' undefModifier=UndefModifierToken
-	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeArgInConstructorTypeRef
+	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeArgInTypeTypeRef
 	 *     (rule start) (ambiguity) 'union' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) '{' '@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' ':' returnTypeRef=TypeRef

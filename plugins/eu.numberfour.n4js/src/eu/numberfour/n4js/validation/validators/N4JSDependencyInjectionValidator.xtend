@@ -25,10 +25,10 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
@@ -130,7 +130,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 			return; // suppress error message in case of UnknownTypeRef
 
 		val G = newExpression.newRuleEnvironment;
-		val staticType = if (typeRef instanceof ConstructorTypeRef) tsh.getStaticType(G, typeRef) else null;
+		val staticType = if (typeRef instanceof TypeTypeRef) tsh.getStaticType(G, typeRef) else null;
 		if (staticType === null || staticType.eIsProxy)
 			return;
 		if (!(staticType instanceof TClass)) {

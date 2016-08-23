@@ -58,8 +58,8 @@ import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
@@ -67,8 +67,10 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
@@ -127,8 +129,6 @@ import static eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.typeRefs.Wildcard
-import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 
 /**
  */
@@ -341,7 +341,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private boolean isClassifierTypeRefToAbstractClass(RuleEnvironment G, TypeRef typeRef) {
-		if (typeRef instanceof ConstructorTypeRef) {
+		if (typeRef instanceof TypeTypeRef) {
 			val staticType = tsh.getStaticType(G, typeRef);
 			if (staticType instanceof TClass) {
 				return staticType.isAbstract;
@@ -444,7 +444,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				val tresult = ts.type(G, utilityAccess.target)
 				if (!tresult.failed) {
 					val tr = tresult.value
-					if (tr instanceof ConstructorTypeRef) {
+					if (tr instanceof TypeTypeRef) {
 						val str = tr.getTypeArg
 						val isReceiverPromise = if (str instanceof TypeRef) TypeUtils.isPromise(str, tscope) else false;
 						return isReceiverPromise
@@ -493,7 +493,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // suppress error message in case of UnknownTypeRef
 
 		// use classifier type ref in order to improve error messages	
-		if (! (typeRef instanceof ConstructorTypeRef)) {
+		if (! (typeRef instanceof TypeTypeRef)) {
 			if (typeRef instanceof EnumTypeRef) {
 				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("enum", typeRef.enumType?.name);
 				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
@@ -505,7 +505,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		val G = newExpression.newRuleEnvironment;
-		val ConstructorTypeRef classifierTypeRef = typeRef as ConstructorTypeRef;
+		val TypeTypeRef classifierTypeRef = typeRef as TypeTypeRef;
 		val typeArg = classifierTypeRef.typeArg;
 		val staticType = tsh.getStaticType(G, classifierTypeRef);
 		if (staticType !== null && staticType.eIsProxy) {
@@ -549,7 +549,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		// success case; but perform some further checks
-		val ConstructorTypeRef ctorTypeRef = typeRef as ConstructorTypeRef;
+		val TypeTypeRef ctorTypeRef = typeRef as TypeTypeRef;
 		internalCheckCtorVisibility(newExpression, ctorTypeRef, staticType)
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
@@ -566,7 +566,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * Checks visibility of the cTor.
 	 * Cf. Spec: "Table 3.2.: Member Access Control"
 	 */
-	def internalCheckCtorVisibility(NewExpression expression, ConstructorTypeRef ref, Type staticType) {
+	def internalCheckCtorVisibility(NewExpression expression, TypeTypeRef ref, Type staticType) {
 
 		if (staticType instanceof TypeVariable) {
 			/* cannot check, back out */
@@ -607,7 +607,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkRelationalExpression(RelationalExpression relationalExpression) {
 		if (relationalExpression.rhs !== null && relationalExpression.op === RelationalOperator.INSTANCEOF) {
 			val typeRef = ts.tau(relationalExpression.rhs)
-			if (typeRef instanceof ConstructorTypeRef) {
+			if (typeRef instanceof TypeTypeRef) {
 				val G = relationalExpression.newRuleEnvironment;
 				val staticType = tsh.getStaticType(G, typeRef);
 				if (staticType instanceof TN4Classifier) {
@@ -1134,7 +1134,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		} else {
 			if (!(T.declaredType instanceof ContainerType<?>) && !(T.declaredType instanceof TEnum) &&
 				!(T.declaredType instanceof TypeVariable) && !(T instanceof FunctionTypeExpression) &&
-				!(T instanceof ConstructorTypeRef) && !(T instanceof UnionTypeExpression) &&
+				!(T instanceof TypeTypeRef) && !(T instanceof UnionTypeExpression) &&
 				!(T instanceof IntersectionTypeExpression)
 		) { // Constraint 78 (Cast Validation At Compile-Time): 2
 					addIssue(IssueCodes.getMessageForEXP_CAST_INVALID_TARGET(), castExpression,
@@ -1255,7 +1255,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return d instanceof TClass || d instanceof TEnum || d instanceof PrimitiveType ||
 				d instanceof TObjectPrototype;
 		};
-		if (T instanceof ConstructorTypeRef) { // implies || T instanceof ConstructorTypeRef)
+		if (T instanceof TypeTypeRef) {
 			val d = tsh.getStaticType(G, T);
 			val concreteMetaType = d instanceof TClass || d instanceof TEnum ||
 				d instanceof PrimitiveType || d instanceof TObjectPrototype;
@@ -1365,7 +1365,7 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 			return
 		}
 		val checkVisibility = true
-		val staticAccess = (receiverTypeRef instanceof ConstructorTypeRef)
+		val staticAccess = (receiverTypeRef instanceof TypeTypeRef)
 		val scope = memberScopingHelper.createMemberScopeFor(receiverTypeRef, indexedAccess,
 			checkVisibility, staticAccess)
 		if (memberScopingHelper.isNonExistentMember(scope, memberName, staticAccess)) {
