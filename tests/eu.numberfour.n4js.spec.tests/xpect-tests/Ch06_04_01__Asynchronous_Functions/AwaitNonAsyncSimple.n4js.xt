@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+async function testWithMethod(allDone : {function()}) {
+
+	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await null"
+	await null;
+	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await any"
+	await any;
+	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await undefined"
+	await undefined;
+	// XPECT warnings -->"Keyword await should only be used on expressions of type Promise<?,?>." at "await 47"
+	await 47;
+
+}
