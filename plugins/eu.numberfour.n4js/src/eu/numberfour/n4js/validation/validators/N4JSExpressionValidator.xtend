@@ -174,20 +174,25 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
 		val scope = G.predefinedTypes.builtInTypeScope;
 		val einst = TypeRefsFactory.eINSTANCE;
-		val promWW = TypeUtils.createPromiseTypeRef(scope, einst.createWildcard, einst.createWildcard);
-		val promVW = TypeUtils.createPromiseTypeRef(scope, scope.getVoidTypeRef(), einst.createWildcard);
-		val promWV = TypeUtils.createPromiseTypeRef(scope, einst.createWildcard, scope.getVoidTypeRef());
-		val promVV = TypeUtils.createPromiseTypeRef(scope, scope.getVoidTypeRef(), scope.getVoidTypeRef());
+
+		val union1 = einst.createUnionTypeExpression;
+		union1.typeRefs.add(scope.getVoidTypeRef());
+		union1.typeRefs.add(scope.getAnyTypeRef());
+		val union2 = einst.createUnionTypeExpression;
+		union2.typeRefs.add(scope.getVoidTypeRef());
+		union2.typeRefs.add(scope.getAnyTypeRef());
+		val promUni = TypeUtils.createPromiseTypeRef(scope, union1, union2);
+		val boolean stUnions = ts.subtypeSucceeded(G, typeRef, promUni);
 
 		val boolean isUndef = typeRef.declaredType == G.undefinedType;
 		val boolean isNull = typeRef.declaredType == G.nullType;
-		val boolean stWW = ts.subtypeSucceeded(G, typeRef, promWW);
-		val boolean stVW = ts.subtypeSucceeded(G, typeRef, promVW);
-		val boolean stWV = ts.subtypeSucceeded(G, typeRef, promWV);
-		val boolean stVV = ts.subtypeSucceeded(G, typeRef, promVV);
-		if (!(stWW || stVW || stWV || stVV) || isUndef || isNull) {
+		if (!stUnions) {
 			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
 			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
+		}
+		if (isUndef || isNull) {
+			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC_SPECIAL(typeRef.declaredType.name);
+			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC_SPECIAL);
 		}
 	}
 
