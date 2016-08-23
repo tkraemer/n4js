@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+class A { public name : string; }
+class B { public name : string; }
+
+class C<T> { 
+	public field : ~T; // note: T is use-site structural!
+
+	public set acc(t : ~T) {	}
+	public get acc() : ~T {
+		return null;
+	}
+
+	public method(t : ~T) : ~T {
+		return null;
+	}
+}
+
+var ca_struct : ~C<A>;
+var cb : C<B>;
+
+// XPECT type of 'cb.field' --> ~B
+cb.field; // type inferred to B instead of ~B
+
+// XPECT noerrors -->
+ca_struct = cb; // but getting: "C<B> is not a structural subtype of ~C<A>: field failed: B is not a subtype of A."
+
+// XPECT noerrors -->
+ca_struct.field = {name:"x"}; // but getting: "~Object with { string name; } is not a subtype of A."
+
+var test : ~B = ca_struct.field  // <-- works, but for the wrong reasons! type inferred to A instead of ~A
+
+// XPECT noerrors -->
+cb.acc = {name:"x"};
+// XPECT type of cb.acc --> ~B
+cb.acc;
+
+// XPECT noerrors -->
+cb.method({name:"x"});
+// XPECT type of cb.method(null) --> ~B
+cb.method(null);
