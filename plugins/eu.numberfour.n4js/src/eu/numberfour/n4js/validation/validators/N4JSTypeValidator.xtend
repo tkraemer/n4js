@@ -510,7 +510,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkUnionTypeContainsNoAny(UnionTypeExpression ute) {
-		checkComposedTypeRefContainsNoAny(ute, messageForUNI_ANY_USED, UNI_ANY_USED);
+		checkComposedTypeRefContainsNoAny(ute, messageForUNI_ANY_USED, UNI_ANY_USED, true);
 	}
 	
 	
@@ -520,24 +520,26 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkIntersectionTypeContainsNoAny(IntersectionTypeExpression ite) {
-		checkComposedTypeRefContainsNoAny(ite, messageForINTER_ANY_USED, INTER_ANY_USED);
+		checkComposedTypeRefContainsNoAny(ite, messageForINTER_ANY_USED, INTER_ANY_USED, false);
 	}
 	
-	def private void checkComposedTypeRefContainsNoAny(ComposedTypeRef ctr, String msg, String issueCode) {
+	def private void checkComposedTypeRefContainsNoAny(ComposedTypeRef ctr, String msg, String issueCode, boolean soleVoidAllowesAny) {
 		val G = ctr.newRuleEnvironment;
 		val anyType = G.anyType;
+		val voidType = G.voidType;
 		val EList<TypeRef> typeRefs = ctr.getTypeRefs();
-		val List<TypeRef> anyTypeRefs = new LinkedList();
+		val Iterable<TypeRef> anyTypeRefs = typeRefs.filter[it.getDeclaredType()===anyType]; // identity check on typeRefs is OK here
 		
-		for (TypeRef tR : typeRefs) {
-			val Type type = tR.getDeclaredType();
-			if (type===anyType) {
-				anyTypeRefs.add(tR);
-			}
+		var boolean dontShowWarning = false;
+		if (soleVoidAllowesAny) {
+			val boolean containsVoid = typeRefs.exists[it.getDeclaredType()===voidType]; // identity check on typeRefs is OK here
+			dontShowWarning = containsVoid && anyTypeRefs.size() == 1;
 		}
 		
-		for (TypeRef anyTR : anyTypeRefs) {
-			addIssue(msg, anyTR, issueCode);
+		if (!dontShowWarning) {
+			for (TypeRef anyTR : anyTypeRefs) {
+				addIssue(msg, anyTR, issueCode);
+			}
 		}
 	}
 

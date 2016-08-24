@@ -172,11 +172,27 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val Expression subExpr = awaitExpression.getExpression();
 		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
-		val BuiltInTypeScope tscope = RuleEnvironmentExtensions.getPredefinedTypes(G).builtInTypeScope;
+		val scope = G.predefinedTypes.builtInTypeScope;
+		val einst = TypeRefsFactory.eINSTANCE;
 
-		if (! TypeUtils.isRawSuperType(typeRef.declaredType, tscope.getPromiseType())) {
+		val union1 = einst.createUnionTypeExpression;
+		union1.typeRefs.add(scope.getVoidTypeRef());
+		union1.typeRefs.add(scope.getAnyTypeRef());
+		val union2 = einst.createUnionTypeExpression;
+		union2.typeRefs.add(scope.getVoidTypeRef());
+		union2.typeRefs.add(scope.getAnyTypeRef());
+		val promUni = TypeUtils.createPromiseTypeRef(scope, union1, union2);
+		val boolean stUnions = ts.subtypeSucceeded(G, typeRef, promUni);
+
+		val boolean isUndef = typeRef.declaredType == G.undefinedType;
+		val boolean isNull = typeRef.declaredType == G.nullType;
+		if (!stUnions) {
 			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC();
 			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC);
+		}
+		if (isUndef || isNull) {
+			val message = IssueCodes.getMessageForEXP_AWAIT_NON_ASYNC_SPECIAL(typeRef.declaredType.name);
+			addIssue(message, awaitExpression, IssueCodes.EXP_AWAIT_NON_ASYNC_SPECIAL);
 		}
 	}
 

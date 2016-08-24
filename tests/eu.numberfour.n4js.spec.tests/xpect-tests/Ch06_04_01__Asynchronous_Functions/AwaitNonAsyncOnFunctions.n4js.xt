@@ -8,7 +8,7 @@ async function foo() {
 async function bar() {
 	// XPECT nowarnings
     var s = await (foo());
-    // XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await (7 + 2)"
+    // XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await (7 + 2)"
     var i = await (7 + 2);
     return "Hello " + i;
 }
@@ -21,7 +21,7 @@ function nf2(path : string, cb : {function(Error,string)}) : Promise<any, any> {
 	return null;
 }
 async function nfT() {
-	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await nf1("", null)"
+	// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await nf1("", null)"
 	await nf1("", null);
 	// XPECT nowarnings
 	await nf2("", null);
@@ -40,7 +40,7 @@ async function f1() {
 }
 var g2: G<string>;
 async function f2() {
-	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await g2.m()"
+	// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await g2.m()"
 	await g2.m();
 }
 
@@ -52,7 +52,7 @@ function pf1(path : string, cb : {function(Error,string)}) : string {
 function pf2(path : string, cb : {function(Error,string)}) {
 }
 async function pfT() {
-	// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await pf1("", null)"
+	// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await pf1("", null)"
 	await pf1("", null);
 	await @Promisify pf2("");
 }
