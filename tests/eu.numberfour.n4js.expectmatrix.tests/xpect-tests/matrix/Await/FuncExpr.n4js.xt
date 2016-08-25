@@ -10,14 +10,14 @@ var h = async function () : string {
 async function f1 () : string {
 	var s = function (): string { return "A"; }
 	
-	// await works with function expressions XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await s()"
+	// await works with function expressions XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await s()"
 	var t : string = await s();
 	
 	return t;
 }
 
 async function f2 () : string {
-	// await works with IIFE XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await ( function (): string { return "hello"; })()"
+	// await works with IIFE XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await ( function (): string { return "hello"; })()"
 	var s : string = await ( function (): string { return "hello"; })();
 	return s;
 }
