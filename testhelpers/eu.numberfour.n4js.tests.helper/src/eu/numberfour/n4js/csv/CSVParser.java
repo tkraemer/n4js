@@ -24,13 +24,19 @@ import eu.numberfour.n4js.utils.SimpleParserException;
  * and newlines) using double quotation marks and escaping double quotation marks as a sequence of two double quotation
  * marks.
  */
-class CSVParser extends SimpleParser {
+public class CSVParser extends SimpleParser {
 	private static enum TokenType {
 		FIELD, FIELD_SEPARATOR, ROW_SEPARATOR, EOF
 	}
 
-	private static class CSVTokenizer extends SimpleTokenizer<TokenType> {
-		CSVTokenizer(String data) {
+	private static class Tokenizer extends SimpleTokenizer<TokenType> {
+		/**
+		 * Creates a new tokenizer that will process the given string.
+		 *
+		 * @param data
+		 *            the string to process
+		 */
+		Tokenizer(String data) {
 			super(data);
 		}
 
@@ -98,7 +104,7 @@ class CSVParser extends SimpleParser {
 		}
 	}
 
-	private final CSVTokenizer tokenizer;
+	private final Tokenizer tokenizer;
 
 	/**
 	 * Creates a new parser that parses the given string.
@@ -107,7 +113,7 @@ class CSVParser extends SimpleParser {
 	 *            the string to parse
 	 */
 	private CSVParser(String data) {
-		this.tokenizer = new CSVTokenizer(data);
+		this.tokenizer = new Tokenizer(data);
 	}
 
 	/**
