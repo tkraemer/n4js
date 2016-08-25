@@ -29,15 +29,15 @@ enum Expectation {
 	 */
 	UNUSABLE,
 	/**
-	 * Should have no errors, but due to bugs we currently do get them.
+	 * Should have no errors, but due to bugs we currently do get them. Will fail once the bugs are fixed.
 	 */
 	FIXME_OK,
 	/**
-	 * Should have errors, but due to bugs we currently get none.
+	 * Should have errors, but due to bugs we currently get none. Will fail once the bugs are fixed.
 	 */
 	FIXME_FAIL,
 	/**
-	 * Should have errors, but due to bugs we currently get none.
+	 * Should have errors, but due to bugs we currently get none. Will fail once the bugs are fixed.
 	 */
 	FIXME_UNUSABLE,
 	/**
