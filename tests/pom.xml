@@ -58,6 +58,9 @@ Contributors:
 		<module>/eu.numberfour.n4js.n4mf.xpect.tests</module>
 		
 
+		<!-- N4 access control tests -->
+		<module>/eu.numberfour.n4js.accesscontrol.tests</module>
+
 		<!-- ************************************** JUnit Plugin Tests -->
 		<!-- N4 JS tests -->
 		<!-- 
