@@ -632,6 +632,7 @@ public class AccessControlTest {
 		IssueCollector issueCollector = new IssueCollector();
 		try {
 			N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
+			hlc.setOutputSuppressed(true);
 
 			final File projectRoot = Paths.get(FIXTURE_ROOT, memberType.name()).toFile();
 			hlc.compileAllProjects(Arrays.asList(projectRoot), issueCollector);

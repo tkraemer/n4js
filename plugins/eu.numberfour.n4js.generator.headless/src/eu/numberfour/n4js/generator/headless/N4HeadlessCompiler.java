@@ -143,6 +143,9 @@ public class N4HeadlessCompiler {
 	/** if set to true prints out processed files to standard out */
 	private boolean verbose = false;
 
+	/** if set to true suppresses all output to standard out */
+	private boolean suppressOutput = false;
+
 	/** if set to true prints to standard out inform about what is currently processed. */
 	private boolean createDebugOutput = false;
 
@@ -404,10 +407,10 @@ public class N4HeadlessCompiler {
 			List<File> singleSourcesToCompile, IssueAcceptor issueAcceptor)
 			throws N4JSCompileException {
 		if (createDebugOutput) {
-			System.out.println("### compileProjects(List,List,List) ");
-			System.out.println("  # projectRoots = " + Joiner.on(", ").join(projectLocations));
-			System.out.println("  # projects     = " + Joiner.on(", ").join(projectLocationsToCompile));
-			System.out.println("  # sources      = " + Joiner.on(", ").join(singleSourcesToCompile));
+			println("### compileProjects(List,List,List) ");
+			println("  # projectRoots = " + Joiner.on(", ").join(projectLocations));
+			println("  # projects     = " + Joiner.on(", ").join(projectLocationsToCompile));
+			println("  # sources      = " + Joiner.on(", ").join(singleSourcesToCompile));
 		}
 
 		// / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- /
@@ -691,7 +694,7 @@ public class N4HeadlessCompiler {
 
 		rec.markStartLoading(markedProject);
 		if (createDebugOutput) {
-			System.out.println("# loading " + markedProject.project);
+			println("# loading " + markedProject.project);
 		}
 
 		// load all files into a resource set
@@ -708,7 +711,7 @@ public class N4HeadlessCompiler {
 					Resource resource = resSet.createResource(uri);
 					if (resource != null) {
 						if (createDebugOutput) {
-							System.out.println("Collecting resources from source container: " + resource.getURI());
+							println("Collecting resources from source container: " + resource.getURI());
 						}
 						resources.add(resource);
 						if (container.isExternal())
@@ -837,7 +840,7 @@ public class N4HeadlessCompiler {
 					.getResourceDescription(resource);
 			if (resourceDescription != null) {
 				if (createDebugOutput) {
-					System.out.println("Adding resource description for resource '" + uri + "' to index.");
+					println("Adding resource description for resource '" + uri + "' to index.");
 				}
 				index.addDescription(uri, resourceDescription);
 			}
@@ -890,7 +893,7 @@ public class N4HeadlessCompiler {
 		rec.markStartCompiling(markedProject);
 
 		if (createDebugOutput) {
-			System.out.println("# compiling " + markedProject.project);
+			println("# compiling " + markedProject.project);
 		}
 
 		boolean unlimitedCompilation = compileFilter.isEmpty();
@@ -952,7 +955,7 @@ public class N4HeadlessCompiler {
 	private void doUnload(MarkedProject markedProject, N4ProgressStateRecorder rec)
 			throws N4JSCompileErrorException {
 		if (createDebugOutput) {
-			System.out.println("# unloading " + markedProject.project);
+			println("# unloading " + markedProject.project);
 		}
 		rec.markStartUnloading(markedProject);
 		// Clean resourceSet ?
@@ -985,7 +988,7 @@ public class N4HeadlessCompiler {
 			allErrorsAndWarnings
 					.stream()
 					.filter(e -> e.getSeverity() != Severity.ERROR)
-					.forEach(i -> System.out.println(issueLine(i)));
+					.forEach(i -> println(issueLine(i)));
 			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
@@ -1001,7 +1004,7 @@ public class N4HeadlessCompiler {
 	 */
 	private void dumpAllIssues(ArrayList<Issue> allErrorsAndWarnings) {
 		for (Issue issue : allErrorsAndWarnings) {
-			System.out.println(issueLine(issue));
+			println(issueLine(issue));
 		}
 
 	}
@@ -1017,7 +1020,7 @@ public class N4HeadlessCompiler {
 	 *            warning
 	 */
 	private void warn(String message) {
-		System.out.println("WARN:  " + message);
+		println("WARN:  " + message);
 	}
 
 	/**
@@ -1028,7 +1031,7 @@ public class N4HeadlessCompiler {
 	 */
 	private void info(String message) {
 		if (verbose) {
-			System.out.println(message);
+			println(message);
 		}
 	}
 
@@ -1039,9 +1042,12 @@ public class N4HeadlessCompiler {
 	 *            error
 	 */
 	private void error(String message) {
+		println("ERROR: " + message);
+	}
 
-		System.out.println("ERROR: " + message);
-
+	private void println(String message) {
+		if (!suppressOutput)
+			System.out.println(message);
 	}
 
 	/**
@@ -1058,7 +1064,7 @@ public class N4HeadlessCompiler {
 		int i = 1;
 		for (MarkedProject mp : sortedProjects) {
 			boolean build = mp.hasMarkers();
-			System.out.println(" " + (build ? i : "-") + ". Project " + mp.project + " used by ["
+			println(" " + (build ? i : "-") + ". Project " + mp.project + " used by ["
 					+ Joiner.on(", ").join(mp.markers)
 					+ "] ");
 			if (build) {
@@ -1376,6 +1382,25 @@ public class N4HeadlessCompiler {
 	 */
 	public void setCreateDebugOutput(boolean createDebugOutput) {
 		this.createDebugOutput = createDebugOutput;
+	}
+
+	/**
+	 * Indicates whether all output to standard out is suppressed.
+	 *
+	 * @return <code>true</code> if output to standard out is suppressed and <code>false</code> otherwise
+	 */
+	public boolean isOutputSuppressed() {
+		return suppressOutput;
+	}
+
+	/**
+	 * Set whether or not to suppress all output to standard out.
+	 *
+	 * @param suppressOutput
+	 *            whether or not to suppress the output
+	 */
+	public void setOutputSuppressed(boolean suppressOutput) {
+		this.suppressOutput = suppressOutput;
 	}
 
 	/**

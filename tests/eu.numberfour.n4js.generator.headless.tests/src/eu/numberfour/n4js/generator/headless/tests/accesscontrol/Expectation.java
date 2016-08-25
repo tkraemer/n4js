@@ -17,31 +17,35 @@ import java.util.Objects;
  */
 enum Expectation {
 	/**
-	 * Expect no errors or warnings.
+	 * Expect no errors or warnings ('y' in the matrix table).
 	 */
 	OK,
 	/**
-	 * Expect one error in the client module.
+	 * Expect one error in the client module ('n' in the matrix table).
 	 */
 	FAIL,
 	/**
-	 * Expect one error in the client module at the client and one additional error in the client module.
+	 * Expect one error in the client module at the client and one additional error in the client module ('u' in the
+	 * matrix table).
 	 */
 	UNUSABLE,
 	/**
-	 * Should have no errors, but due to bugs we currently do get them. Will fail once the bugs are fixed.
+	 * Should have no errors, but due to bugs we currently do get them ('y?' in the matrix table). Will fail once the
+	 * bugs are fixed.
 	 */
 	FIXME_OK,
 	/**
-	 * Should have errors, but due to bugs we currently get none. Will fail once the bugs are fixed.
+	 * Should have errors, but due to bugs we currently get none ('n?' in the matrix table). Will fail once the bugs are
+	 * fixed.
 	 */
 	FIXME_FAIL,
 	/**
-	 * Should have errors, but due to bugs we currently get none. Will fail once the bugs are fixed.
+	 * Should have errors, but due to bugs we currently get none ('u?' in the matrix table). Will fail once the bugs are
+	 * fixed.
 	 */
 	FIXME_UNUSABLE,
 	/**
-	 * Skip this test scenario.
+	 * Skip this test scenario ('#' in the matrix table).
 	 */
 	SKIP;
 
