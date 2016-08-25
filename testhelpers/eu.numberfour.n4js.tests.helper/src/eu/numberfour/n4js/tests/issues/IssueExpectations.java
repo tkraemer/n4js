@@ -148,7 +148,7 @@ public class IssueExpectations {
 	private void explainIssues(Collection<Issue> unmatchedIssues, List<String> messages, boolean expected) {
 		if (messages != null) {
 			for (Issue issue : unmatchedIssues) {
-				messages.add((expected ? "Expected" : "Unexpected") + " issue: " + issue);
+				messages.add((expected ? "Expected issue: " : "Unexpected issue: ") + issue);
 			}
 		}
 	}
@@ -157,7 +157,8 @@ public class IssueExpectations {
 			boolean expected) {
 		if (messages != null) {
 			for (IssueMatcher matcher : unmatchedMatchers) {
-				messages.add((expected ? "Expected" : "Unmatched") + " expectation: " + matcher.getDescription());
+				messages.add((expected ? "Unexpectedly matched" : "Unmatched ") + " expectation: "
+						+ matcher.getDescription());
 			}
 		}
 	}
@@ -179,5 +180,20 @@ public class IssueExpectations {
 				}
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+
+		if (inverted)
+			result.append("Issues expected NOT to match:\n");
+		else
+			result.append("Issues expected to match:\n");
+
+		for (IssueMatcher matcher : issueMatchers)
+			result.append("    ").append(matcher.toString()).append("\n");
+
+		return result.toString();
 	}
 }

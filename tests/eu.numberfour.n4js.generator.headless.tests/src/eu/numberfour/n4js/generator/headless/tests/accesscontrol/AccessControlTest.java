@@ -16,12 +16,16 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -48,6 +52,7 @@ import eu.numberfour.n4js.generator.headless.N4JSCompileException;
 import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Member;
 import eu.numberfour.n4js.tests.issues.IssueExpectations;
+import eu.numberfour.n4js.utils.SimpleParserException;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
@@ -334,10 +339,11 @@ public class AccessControlTest {
 	 *
 	 * Note each cell within the range between rows 6,...,10 and the columns 5,... corresponds to four scenarios that only differ by the actual member type being generated in the supplier type, however the expectation is the same in each case. More test cases can be specified with different parameters for the scenario, supplier type, and client type. Each combination of these three parameters is followed by 5 x 96 cells of expectations that correspond to the different client location, visibilities, usage type and static specifiers.
 	 * @return the parameters
+	 * @throws SimpleParserException if an error occurs while parsing the CSV file
 	 */
     // @formatter:on
 	@Parameters(name = "{0}")
-	public static List<TestSpecification> data() throws IOException {
+	public static List<TestSpecification> data() throws IOException, SimpleParserException {
 		CSVData csvData = CSVParser.parse("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
 
 		List<TestSpecification> result = new LinkedList<>();
@@ -578,38 +584,51 @@ public class AccessControlTest {
 	private static void executeSpecification(TestSpecification specification)
 			throws IOException {
 
-		List<String> messages = new ArrayList<>();
-		boolean failOnExit = specification.getExpectation().isFixMe();
-		for (MemberType memberType : MemberType.values()) {
-			createFixtureDirectory();
-			try {
-				ScenarioGenerator generator = new ScenarioGenerator(specification, memberType);
-				generator.generateScenario(Paths.get(FIXTURE_ROOT));
-				List<Issue> issues = new ArrayList<>(compile());
-				issues.removeIf(issue -> N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS
-						.contains(issue.getCode()));
-				IssueExpectations expectations = generator.createIssues();
+		deleteFixtureDirectory();
 
-				if (specification.getExpectation().isFixMe()) {
-					// We want the entire test case to fail only if none of the tested scenarios match their
-					// expectations.
-					failOnExit &= !expectations.matchesExactly(issues, messages);
-				} else {
-					boolean result = expectations.matchesExactly(issues, messages);
-					assertTrue(Joiner.on(", ").join(messages), result);
-					messages.clear();
-				}
-			} finally {
-				deleteFixtureDirectory();
+		boolean failOnExit = specification.getExpectation().isFixMe();
+		Map<MemberType, List<String>> fixMeMessages = new HashMap<>();
+
+		for (MemberType memberType : MemberType.values()) {
+			createFixtureDirectory(memberType);
+
+			ScenarioGenerator generator = new ScenarioGenerator(specification, memberType);
+			generator.generateScenario(Paths.get(FIXTURE_ROOT, memberType.name()));
+			List<Issue> issues = new ArrayList<>(compile(memberType));
+			issues.removeIf(issue -> N4JSLanguageConstants.DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS
+					.contains(issue.getCode()));
+			IssueExpectations expectations = generator.createIssues();
+
+			if (specification.getExpectation().isFixMe()) {
+				// We want the entire test case to fail only if none of the tested scenarios match their
+				// expectations.
+				List<String> messages = new ArrayList<>();
+				final boolean fixMeFailed = !expectations.matchesExactly(issues, messages);
+				if (fixMeFailed)
+					fixMeMessages.put(memberType, messages);
+				failOnExit &= fixMeFailed;
+			} else {
+				List<String> messages = new ArrayList<>();
+				boolean result = expectations.matchesExactly(issues, messages);
+				assertTrue(Joiner.on(", ").join(messages), result);
+				messages.clear();
 			}
 		}
 
 		if (failOnExit) {
-			fail("Fixme test failed: At least one scenario did not match its inverted expectations.");
+			StringBuilder message = new StringBuilder();
+			for (Map.Entry<MemberType, List<String>> entry : fixMeMessages.entrySet()) {
+				final MemberType memberType = entry.getKey();
+				final List<String> messages = entry.getValue();
+
+				message.append("FixMe test failed for member type ").append(memberType).append(": \n");
+				for (String line : messages)
+					message.append("    ").append(line).append("\n");
+			}
+
+			fail(message.toString());
 		}
 	}
-
-	private static N4HeadlessCompiler HLC = N4HeadlessCompiler.injectAndSetup(null);
 
 	/**
 	 * Compiles the projects generated into the path at {@link #FIXTURE_ROOT}, which in this test case the projects
@@ -617,10 +636,13 @@ public class AccessControlTest {
 	 *
 	 * @return the generated issues
 	 */
-	private static Collection<Issue> compile() {
+	private static Collection<Issue> compile(MemberType memberType) {
 		IssueCollector issueCollector = new IssueCollector();
 		try {
-			HLC.compileAllProjects(Arrays.asList(new File(FIXTURE_ROOT)), issueCollector);
+			N4HeadlessCompiler hlc = N4HeadlessCompiler.injectAndSetup(null);
+
+			final File projectRoot = Paths.get(FIXTURE_ROOT, memberType.name()).toFile();
+			hlc.compileAllProjects(Arrays.asList(projectRoot), issueCollector);
 		} catch (N4JSCompileException e) {
 			// nothing to do
 		}
@@ -634,11 +656,11 @@ public class AccessControlTest {
 	 * @throws IOException
 	 *             if the directory cannot be created
 	 */
-	private static void createFixtureDirectory() throws IOException {
-		File file = new File(FIXTURE_ROOT);
-		if (file.exists())
+	private static void createFixtureDirectory(MemberType memberType) throws IOException {
+		final Path path = Paths.get(FIXTURE_ROOT, memberType.name());
+		if (Files.exists(path))
 			deleteFixtureDirectory();
-		file.mkdir();
+		Files.createDirectories(path);
 	}
 
 	/**
@@ -658,9 +680,11 @@ public class AccessControlTest {
 	 *            command line arguments, execute without arguments to see instructions
 	 * @throws IOException
 	 *             if an error occurs during generation of the test scenario
+	 * @throws SimpleParserException
+	 *             if an error occurs while parsing the CSV data
 	 */
 	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SimpleParserException {
 		Option rowIndexOption = OptionBuilder.withArgName("ROW").withLongOpt("row").hasArg().isRequired()
 				.withDescription("row index (1 based, from the sheet)").create("r");
 		Option colIndexOption = OptionBuilder.withArgName("COLUMN").withLongOpt("column").hasArg().isRequired()
@@ -688,10 +712,11 @@ public class AccessControlTest {
 			List<TestSpecification> specs = data();
 			for (TestSpecification spec : specs) {
 				if (spec.hasPosition(rowIndex - 1, columnIndex)) {
-					if (generateOnly) {
+					if (memberType != null) { // generate only
 						System.out.println("Generating " + spec.toString() + " for member type " + memberType);
-						createFixtureDirectory();
-						new ScenarioGenerator(spec, memberType).generateScenario(Paths.get(FIXTURE_ROOT));
+						createFixtureDirectory(memberType);
+						new ScenarioGenerator(spec, memberType)
+								.generateScenario(Paths.get(FIXTURE_ROOT, memberType.name()));
 					} else {
 						executeAndPrintResult(spec);
 					}

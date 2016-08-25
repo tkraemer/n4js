@@ -328,4 +328,9 @@ public class IssueMatcher {
 				.join(propertyMatchers.stream().map((IssuePropertyMatcher matcher) -> matcher.getDescription())
 						.iterator());
 	}
+
+	@Override
+	public String toString() {
+		return getDescription();
+	}
 }

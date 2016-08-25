@@ -500,10 +500,10 @@ class ScenarioGenerator {
 		Method result = null;
 		switch (memberType) {
 		case FIELD:
-			result = new Method("accessor").setBody("var t = " + subjectExpression + "." + memberName + ";");
+			result = new Method("accessor").setBody("var t = " + subjectExpression + "." + memberName + "; t = t;");
 			break;
 		case GETTER:
-			result = new Method("accessor").setBody("var t = " + subjectExpression + "." + memberName + ";");
+			result = new Method("accessor").setBody("var t = " + subjectExpression + "." + memberName + "; t = t;");
 			break;
 		case SETTER:
 			result = new Method("accessor").setBody("" + subjectExpression + "." + memberName + " = null;");
