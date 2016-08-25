@@ -778,6 +778,11 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				if (!missingOverrideAnnotationMembers.contains(overriding)) {
 					continue;
 				}
+				// skip non-n4js variant members
+				if (JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.strict) ||
+						JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.unrestricted)) {
+					continue;
+				}
 				/*
 				 * Filter overridden members to only contain metatype compatible members to prevent the generation of
 				 * confusing error message
