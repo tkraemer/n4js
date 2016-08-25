@@ -15,7 +15,7 @@ Contributors:
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>eu.numberfour.n4js.accesscontrol.tests</artifactId>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>eclipse-test-plugin</packaging>
 
 	<parent>
 		<groupId>eu.numberfour.n4js</groupId>
@@ -24,18 +24,8 @@ Contributors:
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-	
 	<profiles>
 		<profile>
-			<!-- ECMA test262 regression suite -->
 			<id>execute-accesscontrol-tests</id>
 			<activation><activeByDefault>false</activeByDefault></activation>
 			<build>
@@ -43,6 +33,10 @@ Contributors:
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>
