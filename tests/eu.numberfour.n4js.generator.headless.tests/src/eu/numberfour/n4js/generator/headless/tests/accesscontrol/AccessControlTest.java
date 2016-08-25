@@ -27,14 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.eclipse.xtext.validation.Issue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -671,98 +663,5 @@ public class AccessControlTest {
 	 */
 	private static void deleteFixtureDirectory() throws IOException {
 		FileDeleter.delete(new File(FIXTURE_ROOT));
-	}
-
-	/**
-	 * Execute a single scenario.
-	 *
-	 * @param args
-	 *            command line arguments, execute without arguments to see instructions
-	 * @throws IOException
-	 *             if an error occurs during generation of the test scenario
-	 * @throws SimpleParserException
-	 *             if an error occurs while parsing the CSV data
-	 */
-	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws IOException, SimpleParserException {
-		Option rowIndexOption = OptionBuilder.withArgName("ROW").withLongOpt("row").hasArg().isRequired()
-				.withDescription("row index (1 based, from the sheet)").create("r");
-		Option colIndexOption = OptionBuilder.withArgName("COLUMN").withLongOpt("column").hasArg().isRequired()
-				.withDescription("column name (from the sheet)").create("c");
-		Option executionModeOption = OptionBuilder.withArgName("MEMBERTYPE").withLongOpt("generate").hasArg()
-				.withDescription(
-						"only generate the test case for the given member type (one of Field, Getter, Setter, Method)")
-				.create("g");
-
-		Options options = new Options();
-		options.addOption(rowIndexOption);
-		options.addOption(colIndexOption);
-		options.addOption(executionModeOption);
-
-		try {
-			CommandLineParser parser = new GnuParser();
-			CommandLine line = parser.parse(options, args);
-
-			int rowIndex = parseRowIndex(line.getOptionValue(rowIndexOption.getOpt()));
-			int columnIndex = parseColumnIndex(line.getOptionValue(colIndexOption.getOpt()));
-			boolean generateOnly = line.hasOption(executionModeOption.getOpt());
-			MemberType memberType = generateOnly ? MemberType.parse(line.getOptionValue(executionModeOption.getOpt()))
-					: null;
-
-			List<TestSpecification> specs = data();
-			for (TestSpecification spec : specs) {
-				if (spec.hasPosition(rowIndex - 1, columnIndex)) {
-					if (memberType != null) { // generate only
-						System.out.println("Generating " + spec.toString() + " for member type " + memberType);
-						createFixtureDirectory(memberType);
-						new ScenarioGenerator(spec, memberType)
-								.generateScenario(Paths.get(FIXTURE_ROOT, memberType.name()));
-					} else {
-						executeAndPrintResult(spec);
-					}
-				}
-			}
-		} catch (ParseException e) {
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("test", options);
-		}
-	}
-
-	private static void executeAndPrintResult(TestSpecification specification) throws IOException {
-		try {
-			System.out.println("Executing specification: " + specification.toString());
-			executeSpecification(specification);
-		} catch (AssertionError e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	private static int parseRowIndex(String str) {
-		return Integer.parseInt(str);
-	}
-
-	private static int parseColumnIndex(String str) {
-		if (str.length() < 1 || str.length() > 2)
-			throw new IllegalArgumentException("Invalid column name: " + str);
-
-		int result = 0;
-		if (str.length() == 2) {
-			char outer = str.charAt(0);
-			checkColumnNameChar(outer);
-
-			result = (outer - 65) * 26;
-		}
-
-		char inner = str.charAt(str.length() - 1);
-		checkColumnNameChar(inner);
-
-		result += (inner - 65);
-
-		return result;
-	}
-
-	private static void checkColumnNameChar(char c) {
-		if (c < 65 || c >= 65 + 26)
-			throw new IllegalArgumentException("Invalid column name part: " + c);
 	}
 }
