@@ -24,7 +24,7 @@
  * The other classes and enums in this package are only used internally by the test case. They have been factored out to
  * reduce the size of the test case, but they are not intended for use outside of this package.
  *
- * @see eu.numberfour.n4js.generator.headless.tests.accesscontrol.AccessControlTest test input data and its expected
+ * @see eu.numberfour.n4js.accesscontrol.tests.AccessControlTest test input data and its expected
  *      format
  */
-package eu.numberfour.n4js.generator.headless.tests.accesscontrol;
+package eu.numberfour.n4js.accesscontrol.tests;

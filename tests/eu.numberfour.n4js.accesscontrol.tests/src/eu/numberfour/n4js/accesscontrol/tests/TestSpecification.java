@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.generator.headless.tests.accesscontrol;
+package eu.numberfour.n4js.accesscontrol.tests;
 
 import eu.numberfour.n4js.tests.codegen.Classifier;
 import eu.numberfour.n4js.tests.codegen.Member;

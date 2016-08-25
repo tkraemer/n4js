@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.generator.headless.tests.accesscontrol;
+package eu.numberfour.n4js.accesscontrol.tests;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -336,7 +336,7 @@ public class AccessControlTest {
     // @formatter:on
 	@Parameters(name = "{0}")
 	public static List<TestSpecification> data() throws IOException, SimpleParserException {
-		CSVData csvData = CSVParser.parse("testdata/accesscontrol/Matrix.csv", StandardCharsets.UTF_8);
+		CSVData csvData = CSVParser.parse("testdata/Matrix.csv", StandardCharsets.UTF_8);
 
 		List<TestSpecification> result = new LinkedList<>();
 
@@ -571,7 +571,7 @@ public class AccessControlTest {
 	/**
 	 * The directory to store the test fixture (the generated projects) in.
 	 */
-	private static String FIXTURE_ROOT = "accesscontrol-tests-temp";
+	private static String FIXTURE_ROOT = "target";
 
 	private static void executeSpecification(TestSpecification specification)
 			throws IOException {
