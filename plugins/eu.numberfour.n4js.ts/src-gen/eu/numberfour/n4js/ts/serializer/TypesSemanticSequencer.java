@@ -909,7 +909,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=TypesIdentifier 
+	 *         name=VoidOrBindingIdentifier 
 	 *         typeVars+=TypeVariable? 
 	 *         declaredElementType=ParameterizedTypeRefNominal? 
 	 *         autoboxedType=[TClassifier|TypeReferenceName]? 
@@ -979,7 +979,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 * Constraint:
 	 *     (
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
-	 *         name=TypesIdentifier 
+	 *         name=IdentifierName 
 	 *         (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? 
 	 *         returnTypeRef=TypeRef?
 	 *     )
@@ -994,7 +994,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=TIdentifier? typeRef=TypeRef)
+	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef)
 	 */
 	protected void sequence_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1013,7 +1013,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredAbstract?='abstract'? 
 	 *         declaredFinal?='final'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         superClassRef=ParameterizedTypeRefNominal? 
 	 *         (implementedInterfaceRefs+=ParameterizedTypeRefNominal implementedInterfaceRefs+=ParameterizedTypeRefNominal*)? 
@@ -1054,7 +1054,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     (
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         literals+=TEnumLiteral 
 	 *         literals+=TEnumLiteral*
 	 *     )
@@ -1087,7 +1087,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TFormalParameter returns TFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=TIdentifier typeRef=TypeRef)
+	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef)
 	 */
 	protected void sequence_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1104,7 +1104,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
-	 *         name=TIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (fpars+=TFormalParameter fpars+=TFormalParameter*)? 
 	 *         returnTypeRef=TypeRef
 	 *     )
@@ -1142,7 +1142,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         typingStrategy=TypingStrategyDefSiteOperator? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariableWithDefSiteVariance typeVars+=TypeVariableWithDefSiteVariance*)? 
 	 *         (superInterfaceRefs+=ParameterizedTypeRefNominal superInterfaceRefs+=ParameterizedTypeRefNominal*)? 
 	 *         annotations+=TAnnotation* 
@@ -1184,7 +1184,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *         declaredTypeAccessModifier=TypeAccessModifier 
 	 *         declaredProvidedByRuntime?='providedByRuntime'? 
 	 *         declaredFinal?='final'? 
-	 *         name=TypesIdentifier 
+	 *         name=BindingTypesIdentifier 
 	 *         (typeVars+=TypeVariable typeVars+=TypeVariable*)? 
 	 *         superType=ParameterizedTypeRefNominal? 
 	 *         declaredElementType=ParameterizedTypeRefNominal? 
@@ -1222,7 +1222,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TStructField returns TStructField
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier typeRef=TypeRef?)
+	 *     (name=IdentifierName typeRef=TypeRef?)
 	 */
 	protected void sequence_TStructField(ISerializationContext context, TStructField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1235,7 +1235,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TStructGetter returns TStructGetter
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier declaredTypeRef=TypeRef?)
+	 *     (name=IdentifierName declaredTypeRef=TypeRef?)
 	 */
 	protected void sequence_TStructGetter(ISerializationContext context, TStructGetter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1327,7 +1327,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TStructSetter returns TStructSetter
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier fpar=TAnonymousFormalParameter)
+	 *     (name=IdentifierName fpar=TAnonymousFormalParameter)
 	 */
 	protected void sequence_TStructSetter(ISerializationContext context, TStructSetter semanticObject) {
 		if (errorAcceptor != null) {
@@ -1337,7 +1337,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.TSETTER__FPAR));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTStructSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0(), semanticObject.getFpar());
 		feeder.finish();
 	}
@@ -1618,7 +1618,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     VirtualBaseType returns VirtualBaseType
 	 *
 	 * Constraint:
-	 *     (name=TypesIdentifier ownedMembers+=TMember*)
+	 *     (name=BindingTypesIdentifier ownedMembers+=TMember*)
 	 */
 	protected void sequence_VirtualBaseType(ISerializationContext context, VirtualBaseType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

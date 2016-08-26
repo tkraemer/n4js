@@ -14,6 +14,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.CatchBlock
+import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
@@ -30,17 +31,18 @@ import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
+import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.ts.types.TypableElement
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -199,7 +201,9 @@ public class ASTProcessor extends AbstractProcessor {
 			// N4JSResource#resolveLazyCrossReferences(CancelIndicator), so we have to guarantee that all lazy
 			// cross-references are actually resolved; (2) the type system may not resolve all proxies and some
 			// nodes are not typed at all (i.e. isTypableNode() returns false), so we have to enforce this here.
-			resolveProxiesInNode(node);
+			 
+			// We also perform all processing, related to outgoing references from the current node at this point.	
+			resolveAndProcessReferencesInNode(node, cache);
 
 		} finally {
 			cache.astNodesCurrentlyBeingTyped.remove(node);
@@ -357,11 +361,37 @@ public class ASTProcessor extends AbstractProcessor {
 		return false;
 	}
 
-	def private void resolveProxiesInNode(EObject astNode) {
-		for (eRef : astNode.eClass.EReferences) {
-			if (!eRef.isContainment) { // only cross-references have proxies (in our case)
-				astNode.eGet(eRef, true);
+	def private void resolveAndProcessReferencesInNode(EObject astNode, ASTMetaInfoCache cache) {
+		for(eRef : astNode.eClass.EReferences) {
+			if(!eRef.isContainment) { // only cross-references have proxies (in our case)
+				val node = astNode.eGet(eRef, true);
+				
+				if (node instanceof EObject) {
+					recordReferencesToLocalVariables(eRef, astNode, node, cache);
+				}
 			}
+		}
+	}
+
+	def private recordReferencesToLocalVariables(EReference reference, EObject sourceNode, EObject targetNode,
+		ASTMetaInfoCache cache) {
+
+		// If targetNode is still a proxy its resolution failed, 
+		// therefore it should be skipped.
+		if (targetNode.eIsProxy) {
+			return;
+		}
+		// skip non-local references		
+		if (sourceNode.eResource !== targetNode.eResource) {
+			return;
+		}
+		if (targetNode instanceof VariableDeclaration) {
+			// don't save references to exported variable declarations
+			if (targetNode instanceof ExportedVariableDeclaration) {
+				return;
+			}
+			
+			cache.storeLocalVariableReference(targetNode, sourceNode);
 		}
 	}
 

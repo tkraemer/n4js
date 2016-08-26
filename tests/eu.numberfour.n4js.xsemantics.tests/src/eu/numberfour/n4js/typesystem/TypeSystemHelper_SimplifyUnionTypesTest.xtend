@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -22,12 +21,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /*
  * Tests for {@link TypeSystemHelper#join(RuleEnvironment, TypeRef...)} method with union types.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Before

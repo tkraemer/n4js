@@ -7,6 +7,12 @@
  *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
+ * 
+ * References:
+ * 
+ * [ECM15] 	ECMAScript 2015 Language Specification / ISO/IEC (ECMA-262, 6th Edition).
+ * 			International Standard.
+ * 			http://www.ecma-international.org/publications/ files/ECMA-ST/Ecma-262.pdf
  */
 grammar eu.numberfour.n4js.ts.TypeExpressions with eu.numberfour.n4js.common.unicode.Unicode hidden(WS, ML_COMMENT,
 SL_COMMENT, EOL)
@@ -119,14 +125,14 @@ fragment TAnonymousFormalParameterList*:
  * Used in type expressions, name is optional.
  */
 TAnonymousFormalParameter:
-	variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef
+	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
 ;
 
 /**
  * Used in Types language only.
  */
 TFormalParameter:
-	variadic?='...'? name=TIdentifier ':' typeRef=TypeRef;
+	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
 
 
 
@@ -166,31 +172,31 @@ TStructMember:
 	| TStructMethod
 	| TStructField;
 
-TStructMethod:
+TStructMethod: 
 	=>
 	({TStructMethod}
 		('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	    name=TypesIdentifier '('
+	    name=IdentifierName '('
 	) TAnonymousFormalParameterList ')'
 	(':' returnTypeRef=TypeRef)?
 ;
 
 
 TStructField:
-	name=TypesIdentifier (':' typeRef=TypeRef)?
+	name=IdentifierName (':' typeRef=TypeRef)?
 ;
 
 TStructGetter:
 	=> ({TStructGetter}
 	'get'
-	name=TypesIdentifier)
+	name=IdentifierName)
 	'(' ')' (':' declaredTypeRef=TypeRef)?
 ;
 
 TStructSetter:
 	=> ({TStructSetter}
 	'set'
-	name=TypesIdentifier)
+	name=IdentifierName)
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
 
@@ -235,39 +241,53 @@ TypeVariableWithDefSiteVariance returns TypeVariable:
 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
 	declaredUpperBounds+=ParameterizedTypeRef)*)?;
 
-TypesIdentifier:
+/*
+ * [ECM11] (7.6, pp. 17)
+ * Identifier :: IdentifierName but not ReservedWord
+ * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
+ */
+BindingIdentifier <Yield>:
 	IDENTIFIER
-	// no ECMAScript keywords, only in certain contexts
-	| 'get'
-	| 'set'
-	// Types keywords
-	| 'abstract'
-//	| 'any'
-	| 'project'
-	| 'union'
-	| 'intersection'
-	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-	| 'as'
-	| 'from'
-	| 'type'
-	| 'void'
-	| 'null'
-	| 'enum'; // GH-203
+	// yield as identifier as of [ECM15] (11.6.2, pp. 165) 
+	| <!Yield> 'yield'
+	| N4Keyword
+;
 
-TIdentifier:
-	TypesIdentifier
-	// 7.6.1.2: future reserved words, may not be used only in strict mode:
-	| 'implements'
-	| 'interface'
-//	| 'let'
-//	| 'package'
-	| 'private'
-	| 'protected'
-	| 'public'
-	| 'static'
-//	| 'yield'
-	// Types keywords which are no valid TypesIdentifier
-//	| 'undefined'
+IdentifierName:
+	IDENTIFIER | ReservedWord | N4Keyword
+;
+
+ReservedWord:
+	// Keywords as of [ECM15] (11.6.2, pp. 165)
+	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete'
+	| 'do' | 'else' | 'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import'
+	| 'in' | 'instanceof' | 'new' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'try'
+	| 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield'
+	// null literal
+	| 'null'
+	// boolean literal
+	| 'true' | 'false'
+	// Future Reserved Word as of [ECM15] (11.6.2.2, pp. 166)
+	// | 'await' /* reserved word only if parse goal is module - compromise: allow as identifier and validate */
+	| 'enum';
+
+N4Keyword:
+	'get' | 'set'
+	| 'let'
+	| 'project'
+	| 'external' | 'abstract' | 'static'
+	| 'as' | 'from' | 'constructor' | 'of' | 'target'
+	| 'type' | 'union' | 'intersection'
+	| 'This' | 'Promisify'
+	// future reserved keyword in [ECM15] only in modules, we add additional validation
+	| 'await'
+	// async is not a reserved keyword, i.e. it can be used as a variable name
+	| 'async'
+	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
+	| 'implements' | 'interface'
+	| 'private' | 'protected' | 'public' // package not used in N4JS
+	// definition-site variance
+	| 'out'
 ;
 
 terminal IDENTIFIER:

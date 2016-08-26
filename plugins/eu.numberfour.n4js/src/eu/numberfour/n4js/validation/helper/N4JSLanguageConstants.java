@@ -26,6 +26,7 @@ import com.google.common.collect.ImmutableSet;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.N4JSASTUtils;
 import eu.numberfour.n4js.n4mf.ModuleLoader;
+import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * Contains constants for the N4JS language.
@@ -45,6 +46,16 @@ public abstract class N4JSLanguageConstants {
 	public static final String EXTERNAL_KEYWORD = "external";
 	/** Direct access to the yield keyword */
 	public static final String YIELD_KEYWORD = "yield";
+
+	/**
+	 * Default issue codes to suppress while running tests which are configured for issue suppression.
+	 *
+	 * You can use {@code N4JSInjectorProviderWithFilteredValidator} to configure JUnit tests
+	 * or {@code SuppressIssuesSetup} to configure XPECT tests for issue suppression.
+	 */
+	public static final Collection<String> DEFAULT_SUPPRESSED_ISSUE_CODES_FOR_TESTS = unmodifiableCollection(newHashSet(
+			IssueCodes.AST_LOCAL_VAR_UNUSED
+	));
 
 	//@formatter:on
 

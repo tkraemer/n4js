@@ -11,20 +11,20 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 import static org.junit.Assert.*
 
 /*
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 
 	@Inject

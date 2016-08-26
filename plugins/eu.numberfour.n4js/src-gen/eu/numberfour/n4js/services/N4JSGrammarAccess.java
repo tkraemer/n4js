@@ -2144,8 +2144,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDeclaredUpperBoundsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
 		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_2_1.eContents().get(0);
 		
-		//// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-		//// (can't clean this up right now due to GH-206)
 		//TypeVariable types::TypeVariable:
 		//	(declaredCovariant?='out' | declaredContravariant?='in')?
 		//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
@@ -7439,375 +7437,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getTargetKeyword_2() { return cTargetKeyword_2; }
 	}
 
-	public class BindingIdentifierElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.BindingIdentifier");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIDENTIFIERTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cYieldKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cN4KeywordParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		/// *
-		// * [ECM11] (7.6, pp. 17)
-		// * Identifier :: IdentifierName but not ReservedWord
-		// * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
-		// * / BindingIdentifier <Yield>:
-		//	IDENTIFIER
-		//	| <!Yield> 'yield'
-		//	| N4Keyword;
-		@Override public ParserRule getRule() { return rule; }
-
-		//IDENTIFIER | <!Yield> 'yield' | N4Keyword
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//IDENTIFIER
-		public RuleCall getIDENTIFIERTerminalRuleCall_0() { return cIDENTIFIERTerminalRuleCall_0; }
-
-		//<!Yield> 'yield'
-		public Group getGroup_1() { return cGroup_1; }
-
-		//'yield'
-		public Keyword getYieldKeyword_1_0() { return cYieldKeyword_1_0; }
-
-		//N4Keyword
-		public RuleCall getN4KeywordParserRuleCall_2() { return cN4KeywordParserRuleCall_2; }
-	}
-
-	public class IdentifierNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.IdentifierName");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIDENTIFIERTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cReservedWordParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cN4KeywordParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//IdentifierName:
-		//	IDENTIFIER | ReservedWord | N4Keyword;
-		@Override public ParserRule getRule() { return rule; }
-
-		//IDENTIFIER | ReservedWord | N4Keyword
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//IDENTIFIER
-		public RuleCall getIDENTIFIERTerminalRuleCall_0() { return cIDENTIFIERTerminalRuleCall_0; }
-
-		//ReservedWord
-		public RuleCall getReservedWordParserRuleCall_1() { return cReservedWordParserRuleCall_1; }
-
-		//N4Keyword
-		public RuleCall getN4KeywordParserRuleCall_2() { return cN4KeywordParserRuleCall_2; }
-	}
-
-	public class ReservedWordElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.ReservedWord");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cBreakKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cCaseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cCatchKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cClassKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cConstKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cContinueKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cDebuggerKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cDefaultKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
-		private final Keyword cDeleteKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
-		private final Keyword cDoKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
-		private final Keyword cElseKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
-		private final Keyword cExportKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
-		private final Keyword cExtendsKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
-		private final Keyword cFinallyKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
-		private final Keyword cForKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
-		private final Keyword cFunctionKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
-		private final Keyword cIfKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
-		private final Keyword cImportKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
-		private final Keyword cInKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
-		private final Keyword cInstanceofKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
-		private final Keyword cNewKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
-		private final Keyword cReturnKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
-		private final Keyword cSuperKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
-		private final Keyword cSwitchKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
-		private final Keyword cThisKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
-		private final Keyword cThrowKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
-		private final Keyword cTryKeyword_26 = (Keyword)cAlternatives.eContents().get(26);
-		private final Keyword cTypeofKeyword_27 = (Keyword)cAlternatives.eContents().get(27);
-		private final Keyword cVarKeyword_28 = (Keyword)cAlternatives.eContents().get(28);
-		private final Keyword cVoidKeyword_29 = (Keyword)cAlternatives.eContents().get(29);
-		private final Keyword cWhileKeyword_30 = (Keyword)cAlternatives.eContents().get(30);
-		private final Keyword cWithKeyword_31 = (Keyword)cAlternatives.eContents().get(31);
-		private final Keyword cYieldKeyword_32 = (Keyword)cAlternatives.eContents().get(32);
-		private final Keyword cNullKeyword_33 = (Keyword)cAlternatives.eContents().get(33);
-		private final Keyword cTrueKeyword_34 = (Keyword)cAlternatives.eContents().get(34);
-		private final Keyword cFalseKeyword_35 = (Keyword)cAlternatives.eContents().get(35);
-		private final Keyword cEnumKeyword_36 = (Keyword)cAlternatives.eContents().get(36);
-		
-		//ReservedWord: // Keywords as of [ECM15]
-		//	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' |
-		//	'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' |
-		//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
-		//	| 'null' // boolean literal
-		//	| 'true' | 'false' // Future Reserved Word
-		//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
-		//	| 'enum';
-		@Override public ParserRule getRule() { return rule; }
-
-		//// Keywords as of [ECM15]
-		//'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' |
-		//'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' |
-		//'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
-		//| 'null' // boolean literal
-		//| 'true' | 'false' // Future Reserved Word
-		//// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
-		//| 'enum'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//// Keywords as of [ECM15]
-		//'break'
-		public Keyword getBreakKeyword_0() { return cBreakKeyword_0; }
-
-		//'case'
-		public Keyword getCaseKeyword_1() { return cCaseKeyword_1; }
-
-		//'catch'
-		public Keyword getCatchKeyword_2() { return cCatchKeyword_2; }
-
-		//'class'
-		public Keyword getClassKeyword_3() { return cClassKeyword_3; }
-
-		//'const'
-		public Keyword getConstKeyword_4() { return cConstKeyword_4; }
-
-		//'continue'
-		public Keyword getContinueKeyword_5() { return cContinueKeyword_5; }
-
-		//'debugger'
-		public Keyword getDebuggerKeyword_6() { return cDebuggerKeyword_6; }
-
-		//'default'
-		public Keyword getDefaultKeyword_7() { return cDefaultKeyword_7; }
-
-		//'delete'
-		public Keyword getDeleteKeyword_8() { return cDeleteKeyword_8; }
-
-		//'do'
-		public Keyword getDoKeyword_9() { return cDoKeyword_9; }
-
-		//'else'
-		public Keyword getElseKeyword_10() { return cElseKeyword_10; }
-
-		//'export'
-		public Keyword getExportKeyword_11() { return cExportKeyword_11; }
-
-		//'extends'
-		public Keyword getExtendsKeyword_12() { return cExtendsKeyword_12; }
-
-		//'finally'
-		public Keyword getFinallyKeyword_13() { return cFinallyKeyword_13; }
-
-		//'for'
-		public Keyword getForKeyword_14() { return cForKeyword_14; }
-
-		//'function'
-		public Keyword getFunctionKeyword_15() { return cFunctionKeyword_15; }
-
-		//'if'
-		public Keyword getIfKeyword_16() { return cIfKeyword_16; }
-
-		//'import'
-		public Keyword getImportKeyword_17() { return cImportKeyword_17; }
-
-		//'in'
-		public Keyword getInKeyword_18() { return cInKeyword_18; }
-
-		//'instanceof'
-		public Keyword getInstanceofKeyword_19() { return cInstanceofKeyword_19; }
-
-		//'new'
-		public Keyword getNewKeyword_20() { return cNewKeyword_20; }
-
-		//'return'
-		public Keyword getReturnKeyword_21() { return cReturnKeyword_21; }
-
-		//'super'
-		public Keyword getSuperKeyword_22() { return cSuperKeyword_22; }
-
-		//'switch'
-		public Keyword getSwitchKeyword_23() { return cSwitchKeyword_23; }
-
-		//'this'
-		public Keyword getThisKeyword_24() { return cThisKeyword_24; }
-
-		//'throw'
-		public Keyword getThrowKeyword_25() { return cThrowKeyword_25; }
-
-		//'try'
-		public Keyword getTryKeyword_26() { return cTryKeyword_26; }
-
-		//'typeof'
-		public Keyword getTypeofKeyword_27() { return cTypeofKeyword_27; }
-
-		//'var'
-		public Keyword getVarKeyword_28() { return cVarKeyword_28; }
-
-		//'void'
-		public Keyword getVoidKeyword_29() { return cVoidKeyword_29; }
-
-		//'while'
-		public Keyword getWhileKeyword_30() { return cWhileKeyword_30; }
-
-		//'with'
-		public Keyword getWithKeyword_31() { return cWithKeyword_31; }
-
-		//'yield'
-		public Keyword getYieldKeyword_32() { return cYieldKeyword_32; }
-
-		//'null'
-		public Keyword getNullKeyword_33() { return cNullKeyword_33; }
-
-		//'true'
-		public Keyword getTrueKeyword_34() { return cTrueKeyword_34; }
-
-		//'false'
-		public Keyword getFalseKeyword_35() { return cFalseKeyword_35; }
-
-		//'enum'
-		public Keyword getEnumKeyword_36() { return cEnumKeyword_36; }
-	}
-
-	public class N4KeywordElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.N4Keyword");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cGetKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cSetKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cLetKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cProjectKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cExternalKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cAbstractKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cStaticKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cAsKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
-		private final Keyword cFromKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
-		private final Keyword cConstructorKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
-		private final Keyword cOfKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
-		private final Keyword cTargetKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
-		private final Keyword cTypeKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
-		private final Keyword cUnionKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
-		private final Keyword cIntersectionKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
-		private final Keyword cThisKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
-		private final Keyword cAwaitKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
-		private final Keyword cPromisifyKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
-		private final Keyword cAwaitKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
-		private final Keyword cAsyncKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
-		private final Keyword cImplementsKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
-		private final Keyword cInterfaceKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
-		private final Keyword cPrivateKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
-		private final Keyword cProtectedKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
-		private final Keyword cPublicKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
-		private final Keyword cOutKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
-		
-		//N4Keyword:
-		//	'get' | 'set'
-		//	| 'let'
-		//	| 'project'
-		//	| 'external' | 'abstract' | 'static'
-		//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
-		//	| 'type' | 'union' | 'intersection'
-		//	| 'This' | 'Await' | 'Promisify'
-		//	// future reserved keyword in [ECM15] only in modules, we add additional validation
-		//	| 'await'
-		//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
-		//	| 'async'
-		//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-		//	| 'implements' | 'interface'
-		//	| 'private' | 'protected' | 'public' // package not used in N4JS
-		//	// definition-site variance
-		//	| 'out';
-		@Override public ParserRule getRule() { return rule; }
-
-		//'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target'
-		//| 'type' | 'union' | 'intersection' | 'This' | 'Await' | 'Promisify' // future reserved keyword in [ECM15] only in modules, we add additional validation
-		//| 'await' // asnyc is not a reserved keyword, i.e. it can be used as a variable name
-		//| 'async' // future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-		//| 'implements' | 'interface' | 'private' | 'protected' | 'public' // package not used in N4JS
-		//// definition-site variance
-		//| 'out'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//'get'
-		public Keyword getGetKeyword_0() { return cGetKeyword_0; }
-
-		//'set'
-		public Keyword getSetKeyword_1() { return cSetKeyword_1; }
-
-		//'let'
-		public Keyword getLetKeyword_2() { return cLetKeyword_2; }
-
-		//'project'
-		public Keyword getProjectKeyword_3() { return cProjectKeyword_3; }
-
-		//'external'
-		public Keyword getExternalKeyword_4() { return cExternalKeyword_4; }
-
-		//'abstract'
-		public Keyword getAbstractKeyword_5() { return cAbstractKeyword_5; }
-
-		//'static'
-		public Keyword getStaticKeyword_6() { return cStaticKeyword_6; }
-
-		//'as'
-		public Keyword getAsKeyword_7() { return cAsKeyword_7; }
-
-		//'from'
-		public Keyword getFromKeyword_8() { return cFromKeyword_8; }
-
-		//'constructor'
-		public Keyword getConstructorKeyword_9() { return cConstructorKeyword_9; }
-
-		//'of'
-		public Keyword getOfKeyword_10() { return cOfKeyword_10; }
-
-		//'target'
-		public Keyword getTargetKeyword_11() { return cTargetKeyword_11; }
-
-		//'type'
-		public Keyword getTypeKeyword_12() { return cTypeKeyword_12; }
-
-		//'union'
-		public Keyword getUnionKeyword_13() { return cUnionKeyword_13; }
-
-		//'intersection'
-		public Keyword getIntersectionKeyword_14() { return cIntersectionKeyword_14; }
-
-		//'This'
-		public Keyword getThisKeyword_15() { return cThisKeyword_15; }
-
-		//'Await'
-		public Keyword getAwaitKeyword_16() { return cAwaitKeyword_16; }
-
-		//'Promisify'
-		public Keyword getPromisifyKeyword_17() { return cPromisifyKeyword_17; }
-
-		//'await'
-		public Keyword getAwaitKeyword_18() { return cAwaitKeyword_18; }
-
-		//'async'
-		public Keyword getAsyncKeyword_19() { return cAsyncKeyword_19; }
-
-		//'implements'
-		public Keyword getImplementsKeyword_20() { return cImplementsKeyword_20; }
-
-		//'interface'
-		public Keyword getInterfaceKeyword_21() { return cInterfaceKeyword_21; }
-
-		//'private'
-		public Keyword getPrivateKeyword_22() { return cPrivateKeyword_22; }
-
-		//'protected'
-		public Keyword getProtectedKeyword_23() { return cProtectedKeyword_23; }
-
-		//'public'
-		public Keyword getPublicKeyword_24() { return cPublicKeyword_24; }
-
-		//'out'
-		public Keyword getOutKeyword_25() { return cOutKeyword_25; }
-	}
-
 	public class REGEX_LITERALElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.REGEX_LITERAL");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -9902,261 +9531,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getCommaKeyword_1() { return cCommaKeyword_1; }
 	}
 
-	public class TStructMethodElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructMethod");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
-		private final Action cTStructMethodAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
-		private final Group cGroup_0_0_1 = (Group)cGroup_0_0.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_0_0_1_0 = (Keyword)cGroup_0_0_1.eContents().get(0);
-		private final Assignment cTypeVarsAssignment_0_0_1_1 = (Assignment)cGroup_0_0_1.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_0_0_1_1_0 = (RuleCall)cTypeVarsAssignment_0_0_1_1.eContents().get(0);
-		private final Group cGroup_0_0_1_2 = (Group)cGroup_0_0_1.eContents().get(2);
-		private final Keyword cCommaKeyword_0_0_1_2_0 = (Keyword)cGroup_0_0_1_2.eContents().get(0);
-		private final Assignment cTypeVarsAssignment_0_0_1_2_1 = (Assignment)cGroup_0_0_1_2.eContents().get(1);
-		private final RuleCall cTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0 = (RuleCall)cTypeVarsAssignment_0_0_1_2_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_0_0_1_3 = (Keyword)cGroup_0_0_1.eContents().get(3);
-		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
-		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_0_0_3 = (Keyword)cGroup_0_0.eContents().get(3);
-		private final RuleCall cTAnonymousFormalParameterListParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cColonKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cReturnTypeRefAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cReturnTypeRefTypeRefParserRuleCall_3_1_0 = (RuleCall)cReturnTypeRefAssignment_3_1.eContents().get(0);
-		
-		//// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
-		//// (having these rules here, is a temporary work-around for the problem described in GH-206)
-		//TStructMethod types::TStructMethod:
-		//	=>
-		//	({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-		//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
-		@Override public ParserRule getRule() { return rule; }
-
-		//=> ({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
-		//TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
-		public Group getGroup() { return cGroup; }
-
-		//=> ({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
-		public Group getGroup_0() { return cGroup_0; }
-
-		//({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
-		public Group getGroup_0_0() { return cGroup_0_0; }
-
-		//{types::TStructMethod}
-		public Action getTStructMethodAction_0_0_0() { return cTStructMethodAction_0_0_0; }
-
-		//('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-		public Group getGroup_0_0_1() { return cGroup_0_0_1; }
-
-		//'<'
-		public Keyword getLessThanSignKeyword_0_0_1_0() { return cLessThanSignKeyword_0_0_1_0; }
-
-		//typeVars+=TypeVariable
-		public Assignment getTypeVarsAssignment_0_0_1_1() { return cTypeVarsAssignment_0_0_1_1; }
-
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_0_0_1_1_0() { return cTypeVarsTypeVariableParserRuleCall_0_0_1_1_0; }
-
-		//(',' typeVars+=TypeVariable)*
-		public Group getGroup_0_0_1_2() { return cGroup_0_0_1_2; }
-
-		//','
-		public Keyword getCommaKeyword_0_0_1_2_0() { return cCommaKeyword_0_0_1_2_0; }
-
-		//typeVars+=TypeVariable
-		public Assignment getTypeVarsAssignment_0_0_1_2_1() { return cTypeVarsAssignment_0_0_1_2_1; }
-
-		//TypeVariable
-		public RuleCall getTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0() { return cTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0; }
-
-		//'>'
-		public Keyword getGreaterThanSignKeyword_0_0_1_3() { return cGreaterThanSignKeyword_0_0_1_3; }
-
-		//name=IdentifierName
-		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
-
-		//IdentifierName
-		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_0_0_3() { return cLeftParenthesisKeyword_0_0_3; }
-
-		//TAnonymousFormalParameterList
-		public RuleCall getTAnonymousFormalParameterListParserRuleCall_1() { return cTAnonymousFormalParameterListParserRuleCall_1; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
-
-		//(':' returnTypeRef=TypeRef)?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//':'
-		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
-
-		//returnTypeRef=TypeRef
-		public Assignment getReturnTypeRefAssignment_3_1() { return cReturnTypeRefAssignment_3_1; }
-
-		//TypeRef
-		public RuleCall getReturnTypeRefTypeRefParserRuleCall_3_1_0() { return cReturnTypeRefTypeRefParserRuleCall_3_1_0; }
-	}
-
-	public class TStructFieldElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructField");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIdentifierNameParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cTypeRefAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cTypeRefTypeRefParserRuleCall_1_1_0 = (RuleCall)cTypeRefAssignment_1_1.eContents().get(0);
-		
-		//TStructField types::TStructField:
-		//	name=IdentifierName (':' typeRef=TypeRef)?
-		@Override public ParserRule getRule() { return rule; }
-
-		//name=IdentifierName (':' typeRef=TypeRef)?
-		public Group getGroup() { return cGroup; }
-
-		//name=IdentifierName
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
-
-		//IdentifierName
-		public RuleCall getNameIdentifierNameParserRuleCall_0_0() { return cNameIdentifierNameParserRuleCall_0_0; }
-
-		//(':' typeRef=TypeRef)?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//':'
-		public Keyword getColonKeyword_1_0() { return cColonKeyword_1_0; }
-
-		//typeRef=TypeRef
-		public Assignment getTypeRefAssignment_1_1() { return cTypeRefAssignment_1_1; }
-
-		//TypeRef
-		public RuleCall getTypeRefTypeRefParserRuleCall_1_1_0() { return cTypeRefTypeRefParserRuleCall_1_1_0; }
-	}
-
-	public class TStructGetterElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructGetter");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
-		private final Action cTStructGetterAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
-		private final Keyword cGetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
-		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
-		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cColonKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cDeclaredTypeRefAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cDeclaredTypeRefTypeRefParserRuleCall_3_1_0 = (RuleCall)cDeclaredTypeRefAssignment_3_1.eContents().get(0);
-		
-		//TStructGetter types::TStructGetter:
-		//	=> ({types::TStructGetter}
-		//	'get'
-		//	name=IdentifierName)
-		//	'(' ')' (':' declaredTypeRef=TypeRef)?
-		@Override public ParserRule getRule() { return rule; }
-
-		//=> ({types::TStructGetter} 'get' name=IdentifierName) '(' ')' (':' declaredTypeRef=TypeRef)?
-		public Group getGroup() { return cGroup; }
-
-		//=> ({types::TStructGetter} 'get' name=IdentifierName)
-		public Group getGroup_0() { return cGroup_0; }
-
-		//({types::TStructGetter} 'get' name=IdentifierName)
-		public Group getGroup_0_0() { return cGroup_0_0; }
-
-		//{types::TStructGetter}
-		public Action getTStructGetterAction_0_0_0() { return cTStructGetterAction_0_0_0; }
-
-		//'get'
-		public Keyword getGetKeyword_0_0_1() { return cGetKeyword_0_0_1; }
-
-		//name=IdentifierName
-		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
-
-		//IdentifierName
-		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
-
-		//(':' declaredTypeRef=TypeRef)?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//':'
-		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
-
-		//declaredTypeRef=TypeRef
-		public Assignment getDeclaredTypeRefAssignment_3_1() { return cDeclaredTypeRefAssignment_3_1; }
-
-		//TypeRef
-		public RuleCall getDeclaredTypeRefTypeRefParserRuleCall_3_1_0() { return cDeclaredTypeRefTypeRefParserRuleCall_3_1_0; }
-	}
-
-	public class TStructSetterElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.TStructSetter");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
-		private final Action cTStructSetterAction_0_0_0 = (Action)cGroup_0_0.eContents().get(0);
-		private final Keyword cSetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
-		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
-		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cFparAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cFparTAnonymousFormalParameterParserRuleCall_2_0 = (RuleCall)cFparAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//TStructSetter types::TStructSetter:
-		//	=> ({types::TStructSetter}
-		//	'set'
-		//	name=IdentifierName)
-		//	'(' fpar=TAnonymousFormalParameter ')'
-		@Override public ParserRule getRule() { return rule; }
-
-		//=> ({types::TStructSetter} 'set' name=IdentifierName) '(' fpar=TAnonymousFormalParameter ')'
-		public Group getGroup() { return cGroup; }
-
-		//=> ({types::TStructSetter} 'set' name=IdentifierName)
-		public Group getGroup_0() { return cGroup_0; }
-
-		//({types::TStructSetter} 'set' name=IdentifierName)
-		public Group getGroup_0_0() { return cGroup_0_0; }
-
-		//{types::TStructSetter}
-		public Action getTStructSetterAction_0_0_0() { return cTStructSetterAction_0_0_0; }
-
-		//'set'
-		public Keyword getSetKeyword_0_0_1() { return cSetKeyword_0_0_1; }
-
-		//name=IdentifierName
-		public Assignment getNameAssignment_0_0_2() { return cNameAssignment_0_0_2; }
-
-		//IdentifierName
-		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//fpar=TAnonymousFormalParameter
-		public Assignment getFparAssignment_2() { return cFparAssignment_2; }
-
-		//TAnonymousFormalParameter
-		public RuleCall getFparTAnonymousFormalParameterParserRuleCall_2_0() { return cFparTAnonymousFormalParameterParserRuleCall_2_0; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-
 	public class LiteralOrComputedPropertyNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.LiteralOrComputedPropertyName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -10172,6 +9546,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionAssignmentExpressionParserRuleCall_3_1_0 = (RuleCall)cExpressionAssignment_3_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
+		//// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
+		//// (having these rules here, is a temporary work-around for the problem described in GH-206)
 		//LiteralOrComputedPropertyName <Yield>:
 		//	literalName=IdentifierName
 		//	| literalName=STRING
@@ -10706,10 +10082,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	private final NumericLiteralAsStringElements pNumericLiteralAsString;
 	private final IdentifierOrThisElements pIdentifierOrThis;
 	private final AnnotationNameElements pAnnotationName;
-	private final BindingIdentifierElements pBindingIdentifier;
-	private final IdentifierNameElements pIdentifierName;
-	private final ReservedWordElements pReservedWord;
-	private final N4KeywordElements pN4Keyword;
 	private final TerminalRule tDOUBLE;
 	private final TerminalRule tHEX_INT;
 	private final TerminalRule tBINARY_INT;
@@ -10782,10 +10154,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	private final BindingElementElements pBindingElement;
 	private final BindingRestElementElements pBindingRestElement;
 	private final ElisionElements pElision;
-	private final TStructMethodElements pTStructMethod;
-	private final TStructFieldElements pTStructField;
-	private final TStructGetterElements pTStructGetter;
-	private final TStructSetterElements pTStructSetter;
 	private final LiteralOrComputedPropertyNameElements pLiteralOrComputedPropertyName;
 	private final TerminalRule tINCOMPLETE_ASYNC_ARROW;
 	
@@ -10958,10 +10326,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNumericLiteralAsString = new NumericLiteralAsStringElements();
 		this.pIdentifierOrThis = new IdentifierOrThisElements();
 		this.pAnnotationName = new AnnotationNameElements();
-		this.pBindingIdentifier = new BindingIdentifierElements();
-		this.pIdentifierName = new IdentifierNameElements();
-		this.pReservedWord = new ReservedWordElements();
-		this.pN4Keyword = new N4KeywordElements();
 		this.tDOUBLE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.DOUBLE");
 		this.tHEX_INT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.HEX_INT");
 		this.tBINARY_INT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.BINARY_INT");
@@ -11034,10 +10398,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBindingElement = new BindingElementElements();
 		this.pBindingRestElement = new BindingRestElementElements();
 		this.pElision = new ElisionElements();
-		this.pTStructMethod = new TStructMethodElements();
-		this.pTStructField = new TStructFieldElements();
-		this.pTStructGetter = new TStructGetterElements();
-		this.pTStructSetter = new TStructSetterElements();
 		this.pLiteralOrComputedPropertyName = new LiteralOrComputedPropertyNameElements();
 		this.tINCOMPLETE_ASYNC_ARROW = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.N4JS.INCOMPLETE_ASYNC_ARROW");
 	}
@@ -11526,8 +10886,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotatedExpressionAccess().getRule();
 	}
 
-	//// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-	//// (can't clean this up right now due to GH-206)
 	//TypeVariable types::TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
 	//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
@@ -12929,73 +12287,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationNameAccess().getRule();
 	}
 
-	/// *
-	// * [ECM11] (7.6, pp. 17)
-	// * Identifier :: IdentifierName but not ReservedWord
-	// * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
-	// * / BindingIdentifier <Yield>:
-	//	IDENTIFIER
-	//	| <!Yield> 'yield'
-	//	| N4Keyword;
-	public BindingIdentifierElements getBindingIdentifierAccess() {
-		return pBindingIdentifier;
-	}
-	
-	public ParserRule getBindingIdentifierRule() {
-		return getBindingIdentifierAccess().getRule();
-	}
-
-	//IdentifierName:
-	//	IDENTIFIER | ReservedWord | N4Keyword;
-	public IdentifierNameElements getIdentifierNameAccess() {
-		return pIdentifierName;
-	}
-	
-	public ParserRule getIdentifierNameRule() {
-		return getIdentifierNameAccess().getRule();
-	}
-
-	//ReservedWord: // Keywords as of [ECM15]
-	//	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' |
-	//	'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' |
-	//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
-	//	| 'null' // boolean literal
-	//	| 'true' | 'false' // Future Reserved Word
-	//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
-	//	| 'enum';
-	public ReservedWordElements getReservedWordAccess() {
-		return pReservedWord;
-	}
-	
-	public ParserRule getReservedWordRule() {
-		return getReservedWordAccess().getRule();
-	}
-
-	//N4Keyword:
-	//	'get' | 'set'
-	//	| 'let'
-	//	| 'project'
-	//	| 'external' | 'abstract' | 'static'
-	//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
-	//	| 'type' | 'union' | 'intersection'
-	//	| 'This' | 'Await' | 'Promisify'
-	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
-	//	| 'await'
-	//	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
-	//	| 'async'
-	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-	//	| 'implements' | 'interface'
-	//	| 'private' | 'protected' | 'public' // package not used in N4JS
-	//	// definition-site variance
-	//	| 'out';
-	public N4KeywordElements getN4KeywordAccess() {
-		return pN4Keyword;
-	}
-	
-	public ParserRule getN4KeywordRule() {
-		return getN4KeywordAccess().getRule();
-	}
-
 	//terminal DOUBLE returns ecore::EBigDecimal:
 	//	'.' DECIMAL_DIGIT_FRAGMENT+ EXPONENT_PART?
 	//	| DECIMAL_INTEGER_LITERAL_FRAGMENT '.' DECIMAL_DIGIT_FRAGMENT* EXPONENT_PART?;
@@ -13729,54 +13020,6 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
 	//// (having these rules here, is a temporary work-around for the problem described in GH-206)
-	//TStructMethod types::TStructMethod:
-	//	=>
-	//	({types::TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
-	public TStructMethodElements getTStructMethodAccess() {
-		return pTStructMethod;
-	}
-	
-	public ParserRule getTStructMethodRule() {
-		return getTStructMethodAccess().getRule();
-	}
-
-	//TStructField types::TStructField:
-	//	name=IdentifierName (':' typeRef=TypeRef)?
-	public TStructFieldElements getTStructFieldAccess() {
-		return pTStructField;
-	}
-	
-	public ParserRule getTStructFieldRule() {
-		return getTStructFieldAccess().getRule();
-	}
-
-	//TStructGetter types::TStructGetter:
-	//	=> ({types::TStructGetter}
-	//	'get'
-	//	name=IdentifierName)
-	//	'(' ')' (':' declaredTypeRef=TypeRef)?
-	public TStructGetterElements getTStructGetterAccess() {
-		return pTStructGetter;
-	}
-	
-	public ParserRule getTStructGetterRule() {
-		return getTStructGetterAccess().getRule();
-	}
-
-	//TStructSetter types::TStructSetter:
-	//	=> ({types::TStructSetter}
-	//	'set'
-	//	name=IdentifierName)
-	//	'(' fpar=TAnonymousFormalParameter ')'
-	public TStructSetterElements getTStructSetterAccess() {
-		return pTStructSetter;
-	}
-	
-	public ParserRule getTStructSetterRule() {
-		return getTStructSetterAccess().getRule();
-	}
-
 	//LiteralOrComputedPropertyName <Yield>:
 	//	literalName=IdentifierName
 	//	| literalName=STRING
@@ -14000,7 +13243,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return gaTypeExpressions.getTAnonymousFormalParameterAccess();
 	}
@@ -14012,7 +13255,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in Types language only.
 	// * / TFormalParameter:
-	//	variadic?='...'? name=TIdentifier ':' typeRef=TypeRef;
+	//	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
 	public TypeExpressionsGrammarAccess.TFormalParameterElements getTFormalParameterAccess() {
 		return gaTypeExpressions.getTFormalParameterAccess();
 	}
@@ -14100,16 +13343,64 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * Most type references are optional. However, in the types language (n4ts), these
 	// * references are NOT optional.
 	// * / TStructMember:
-	//	super::TStructGetter
-	//	| super::TStructSetter
-	//	| super::TStructMethod
-	//	| super::TStructField;
+	//	TStructGetter
+	//	| TStructSetter
+	//	| TStructMethod
+	//	| TStructField;
 	public TypeExpressionsGrammarAccess.TStructMemberElements getTStructMemberAccess() {
 		return gaTypeExpressions.getTStructMemberAccess();
 	}
 	
 	public ParserRule getTStructMemberRule() {
 		return getTStructMemberAccess().getRule();
+	}
+
+	//TStructMethod:
+	//	=>
+	//	({TStructMethod} ('<' typeVars+=super::TypeVariable (',' typeVars+=super::TypeVariable)* '>')?
+	//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?;
+	public TypeExpressionsGrammarAccess.TStructMethodElements getTStructMethodAccess() {
+		return gaTypeExpressions.getTStructMethodAccess();
+	}
+	
+	public ParserRule getTStructMethodRule() {
+		return getTStructMethodAccess().getRule();
+	}
+
+	//TStructField:
+	//	name=IdentifierName (':' typeRef=TypeRef)?;
+	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
+		return gaTypeExpressions.getTStructFieldAccess();
+	}
+	
+	public ParserRule getTStructFieldRule() {
+		return getTStructFieldAccess().getRule();
+	}
+
+	//TStructGetter:
+	//	=> ({TStructGetter}
+	//	'get'
+	//	name=IdentifierName)
+	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
+	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
+		return gaTypeExpressions.getTStructGetterAccess();
+	}
+	
+	public ParserRule getTStructGetterRule() {
+		return getTStructGetterAccess().getRule();
+	}
+
+	//TStructSetter:
+	//	=> ({TStructSetter}
+	//	'set'
+	//	name=IdentifierName)
+	//	'(' fpar=TAnonymousFormalParameter ')';
+	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
+		return gaTypeExpressions.getTStructSetterAccess();
+	}
+	
+	public ParserRule getTStructSetterRule() {
+		return getTStructSetterAccess().getRule();
 	}
 
 	//TypingStrategyUseSiteOperator TypingStrategy:
@@ -14202,54 +13493,72 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeVariableWithDefSiteVarianceAccess().getRule();
 	}
 
-	//TypesIdentifier:
+	/// *
+	// * [ECM11] (7.6, pp. 17)
+	// * Identifier :: IdentifierName but not ReservedWord
+	// * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
+	// * / BindingIdentifier <Yield>:
 	//	IDENTIFIER
-	//	// no ECMAScript keywords, only in certain contexts
-	//	| 'get'
-	//	| 'set'
-	//	// Types keywords
-	//	| 'abstract'
-	//	//	| 'any'
-	//	| 'project'
-	//	| 'union'
-	//	| 'intersection'
-	//	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-	//	| 'as'
-	//	| 'from'
-	//	| 'type'
-	//	| 'void'
-	//	| 'null'
-	//	| 'enum';
-	public TypeExpressionsGrammarAccess.TypesIdentifierElements getTypesIdentifierAccess() {
-		return gaTypeExpressions.getTypesIdentifierAccess();
+	//	// yield as identifier as of [ECM15] (11.6.2, pp. 165) 
+	//	| <!Yield> 'yield'
+	//	| N4Keyword;
+	public TypeExpressionsGrammarAccess.BindingIdentifierElements getBindingIdentifierAccess() {
+		return gaTypeExpressions.getBindingIdentifierAccess();
 	}
 	
-	public ParserRule getTypesIdentifierRule() {
-		return getTypesIdentifierAccess().getRule();
+	public ParserRule getBindingIdentifierRule() {
+		return getBindingIdentifierAccess().getRule();
 	}
 
-	//// GH-203
-	//TIdentifier:
-	//	TypesIdentifier
-	//	// 7.6.1.2: future reserved words, may not be used only in strict mode:
-	//	| 'implements'
-	//	| 'interface'
-	//	//	| 'let'
-	//	//	| 'package'
-	//	| 'private'
-	//	| 'protected'
-	//	| 'public'
-	//	| 'static'
-	//	//	| 'yield'
-	//	// Types keywords which are no valid TypesIdentifier
-	//	//	| 'undefined'
-	//;
-	public TypeExpressionsGrammarAccess.TIdentifierElements getTIdentifierAccess() {
-		return gaTypeExpressions.getTIdentifierAccess();
+	//IdentifierName:
+	//	IDENTIFIER | ReservedWord | N4Keyword;
+	public TypeExpressionsGrammarAccess.IdentifierNameElements getIdentifierNameAccess() {
+		return gaTypeExpressions.getIdentifierNameAccess();
 	}
 	
-	public ParserRule getTIdentifierRule() {
-		return getTIdentifierAccess().getRule();
+	public ParserRule getIdentifierNameRule() {
+		return getIdentifierNameAccess().getRule();
+	}
+
+	//ReservedWord: // Keywords as of [ECM15] (11.6.2, pp. 165)
+	//	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' |
+	//	'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' |
+	//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
+	//	| 'null' // boolean literal
+	//	| 'true' | 'false' // Future Reserved Word as of [ECM15] (11.6.2.2, pp. 166)
+	//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
+	//	| 'enum';
+	public TypeExpressionsGrammarAccess.ReservedWordElements getReservedWordAccess() {
+		return gaTypeExpressions.getReservedWordAccess();
+	}
+	
+	public ParserRule getReservedWordRule() {
+		return getReservedWordAccess().getRule();
+	}
+
+	//N4Keyword:
+	//	'get' | 'set'
+	//	| 'let'
+	//	| 'project'
+	//	| 'external' | 'abstract' | 'static'
+	//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
+	//	| 'type' | 'union' | 'intersection'
+	//	| 'This' | 'Promisify'
+	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
+	//	| 'await'
+	//	// async is not a reserved keyword, i.e. it can be used as a variable name
+	//	| 'async'
+	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
+	//	| 'implements' | 'interface'
+	//	| 'private' | 'protected' | 'public' // package not used in N4JS
+	//	// definition-site variance
+	//	| 'out';
+	public TypeExpressionsGrammarAccess.N4KeywordElements getN4KeywordAccess() {
+		return gaTypeExpressions.getN4KeywordAccess();
+	}
+	
+	public ParserRule getN4KeywordRule() {
+		return getN4KeywordAccess().getRule();
 	}
 
 	//terminal IDENTIFIER:

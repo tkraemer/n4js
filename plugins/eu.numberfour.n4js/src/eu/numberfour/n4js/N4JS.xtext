@@ -62,8 +62,6 @@ ScriptElement:
 ;
 
 
-
-
 /**
  * Left factored, annotated script elements.
  *
@@ -335,8 +333,6 @@ AnnotatedExpression <Yield> returns Expression:
 	)
 ;
 
-// TODO this rule is redundant with TypeVariableWithDefSiteVariance in TypeExpressions.xtext
-// (can't clean this up right now due to GH-206)
 TypeVariable returns types::TypeVariable:
 	(declaredCovariant?='out' | declaredContravariant?='in')?
 	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
@@ -1000,53 +996,7 @@ AnnotationName:
 	| 'This'
 	| 'target';
 
-/*
- * [ECM11] (7.6, pp. 17)
- * Identifier :: IdentifierName but not ReservedWord
- * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
- */
-BindingIdentifier <Yield>:
-	IDENTIFIER
-	| <!Yield> 'yield'
-	| N4Keyword
-;
 
-IdentifierName:
-	IDENTIFIER | ReservedWord | N4Keyword
-;
-
-ReservedWord:
-	// Keywords as of [ECM15]
-	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete'
-	| 'do' | 'else' | 'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import'
-	| 'in' | 'instanceof' | 'new' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'try'
-	| 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield'
-	// null literal
-	| 'null'
-	// boolean literal
-	| 'true' | 'false'
-	// Future Reserved Word
-	// | 'await' /* reserved word only if parse goal is module - compromise: allow as identifier and validate */
-	| 'enum';
-
-N4Keyword:
-	'get' | 'set'
-	| 'let'
-	| 'project'
-	| 'external' | 'abstract' | 'static'
-	| 'as' | 'from' | 'constructor' | 'of' | 'target'
-	| 'type' | 'union' | 'intersection'
-	| 'This' | 'Await' | 'Promisify'
-	// future reserved keyword in [ECM15] only in modules, we add additional validation
-	| 'await'
-	// asnyc is not a reserved keyword, i.e. it can be used as a variable name
-	| 'async'
-	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
-	| 'implements' | 'interface'
-	| 'private' | 'protected' | 'public' // package not used in N4JS
-	// definition-site variance
-	| 'out'
-;
 
 /**
  * The terminal rules to represent number literals are listed below.
@@ -1508,33 +1458,7 @@ Elision returns BindingElement:
 // TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
 // (having these rules here, is a temporary work-around for the problem described in GH-206)
 
-TStructMethod returns types::TStructMethod:
-	=>
-	({types::TStructMethod}
-		('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	    name=IdentifierName '('
-	) TAnonymousFormalParameterList ')'
-	(':' returnTypeRef=TypeRef)?
-;
 
-
-TStructField returns types::TStructField:
-	name=IdentifierName (':' typeRef=TypeRef)?
-;
-
-TStructGetter returns types::TStructGetter:
-	=> ({types::TStructGetter}
-	'get'
-	name=IdentifierName)
-	'(' ')' (':' declaredTypeRef=TypeRef)?
-;
-
-TStructSetter returns types::TStructSetter:
-	=> ({types::TStructSetter}
-	'set'
-	name=IdentifierName)
-	'(' fpar=TAnonymousFormalParameter ')'
-;
 
 
 LiteralOrComputedPropertyName <Yield>:

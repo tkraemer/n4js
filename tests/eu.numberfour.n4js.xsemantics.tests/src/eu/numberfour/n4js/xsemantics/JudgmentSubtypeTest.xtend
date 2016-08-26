@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.xsemantics
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import org.eclipse.xtext.junit4.InjectWith
@@ -23,12 +22,13 @@ import org.junit.runner.RunWith
 
 import static eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /*
  * Tests for judgment subtype, see n4js.xsemantics for judgment, axiom and rules.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class JudgmentSubtypeTest extends AbstractTypesystemTest {
 
 

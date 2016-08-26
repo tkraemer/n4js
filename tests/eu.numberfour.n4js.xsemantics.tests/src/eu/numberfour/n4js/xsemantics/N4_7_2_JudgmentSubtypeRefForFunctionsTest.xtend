@@ -10,17 +10,17 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * N4JS Spec Test: 4.7.2. Functions and FunctionType, Type Inference
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class N4_7_2_JudgmentSubtypeRefForFunctionsTest extends AbstractJudgmentSubtypeTest {
 
 	@Test

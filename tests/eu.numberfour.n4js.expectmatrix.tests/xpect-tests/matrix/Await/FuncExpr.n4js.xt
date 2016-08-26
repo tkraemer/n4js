@@ -1,0 +1,34 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+// Async and Await with function expression
+
+// XPECT noerrors --> "IDEBUG-280"
+var h = async function () : string {
+	return "hello";
+}
+
+async function f1 () : string {
+	var s = function (): string { return "A"; }
+	
+	// await works with function expressions XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await s()"
+	var t : string = await s();
+	
+	return t;
+}
+
+async function f2 () : string {
+	// await works with IIFE XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await ( function (): string { return "hello"; })()"
+	var s : string = await ( function (): string { return "hello"; })();
+	return s;
+}
+
+
+
+// Function expects function as an argument
+
+function f3 (fun : {function (number) : number}) : number {
+	return fun(4);
+}
+
+// XPECT errors --> "{function(number):Promise<any,?>} is not a subtype of {function(number):number}." at "async function (n : number) { return n; }"
+f3(async function (n : number) { return n; });

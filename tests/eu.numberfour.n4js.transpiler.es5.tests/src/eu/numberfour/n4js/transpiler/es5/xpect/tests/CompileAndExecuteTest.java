@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.transpiler.es5.xpect.tests;
 
 import org.junit.runner.RunWith;
+import org.xpect.XpectImport;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
@@ -19,15 +20,17 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  */
 @XpectSuiteClasses({
-	ValidationTest.class,
-	NoerrorsXpectMethod.class,
-	OutputXpectMethod.class
+		ValidationTest.class,
+		NoerrorsXpectMethod.class,
+		OutputXpectMethod.class
 })
 @RunWith(XpectRunner.class)
+@XpectImport(SuppressIssuesSetup.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata", fileExtensions = { "xt" })
 public class CompileAndExecuteTest {
 	// nop

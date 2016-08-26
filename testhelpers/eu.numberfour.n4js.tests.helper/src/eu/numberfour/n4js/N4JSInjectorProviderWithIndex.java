@@ -11,28 +11,21 @@
 package eu.numberfour.n4js;
 
 import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.util.Modules2;
+import org.eclipse.xtext.service.AbstractGenericModule;
 
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-/***/
+/**
+ * An injector provider which binds {@link EagerResourceSetBasedResourceDescriptions}.
+ */
 public class N4JSInjectorProviderWithIndex extends N4JSInjectorProvider {
-
-	@Override
-	protected Injector internalCreateInjector() {
-		return new N4JSTestsStandaloneSetup() {
-			@Override
-			public Injector createInjector() {
-				return Guice.createInjector(Modules2.mixin(new N4JSTestRuntimeModule() {
-					@Override
-					public void configureIResourceDescriptions(Binder binder) {
-						binder.bind(IResourceDescriptions.class).to(EagerResourceSetBasedResourceDescriptions.class);
-					}
-				}, new N4JSTestsModule()));
-			}
-		}.createInjectorAndDoEMFRegistration();
+	/** */
+	public N4JSInjectorProviderWithIndex() {
+		super(new EagerResourceSetModule());
 	}
 
+	@SuppressWarnings("javadoc")
+	public static class EagerResourceSetModule extends AbstractGenericModule {
+		public Class<? extends IResourceDescriptions> bindResourceDescriptions() {
+			return EagerResourceSetBasedResourceDescriptions.class;
+		}
+	}
 }
