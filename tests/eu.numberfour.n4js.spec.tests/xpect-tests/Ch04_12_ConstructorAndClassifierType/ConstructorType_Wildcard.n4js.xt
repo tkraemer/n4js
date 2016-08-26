@@ -68,7 +68,7 @@ ctor = Y;
 
 // XPECT noerrors -->
 new ctor("");
-// XPECT errors --> "Cannot instantiate ? extends C." at "_ctor"
+// XPECT errors --> "Cannot instantiate ? extends C, because C does not have a @CovariantConstructor." at "_ctor"
 new _ctor();
 // XPECT errors --> "Cannot instantiate ?." at "_xtor"
 new _xtor();

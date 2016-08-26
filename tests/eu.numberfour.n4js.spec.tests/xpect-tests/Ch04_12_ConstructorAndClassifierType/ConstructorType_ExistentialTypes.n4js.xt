@@ -11,7 +11,7 @@ class C{
     private createFromInjectedTypeMeta(meta: G<? extends N4Object>) {
     	// XPECT noerrors -->
         let metaType = meta.type;
-        // XPECT errors --> "Cannot instantiate ? extends N4Object." at "metaType"
+        // XPECT errors --> "Cannot instantiate ? extends N4Object, because N4Object does not have a @CovariantConstructor." at "metaType"
     	new metaType();
     }
 }

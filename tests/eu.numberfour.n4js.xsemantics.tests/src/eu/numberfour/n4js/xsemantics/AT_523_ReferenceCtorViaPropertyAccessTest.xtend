@@ -42,7 +42,7 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 		'''.assertValidationErrors(
 		'''
 			"constructor{? extends C} is not a subtype of constructor{C}." at line:4, column:34
-			"Cannot instantiate ? extends C." at line:5, column:32
+			"Cannot instantiate ? extends C, because C does not have a @CovariantConstructor." at line:5, column:32
 		'''
 		)
 	}
@@ -87,7 +87,7 @@ class AT_523_ReferenceCtorViaPropertyAccessTest extends AbstractTypesystemTest {
 			var result2: C = z2;
 		'''.assertValidationErrors(
 		'''
-			"Cannot instantiate ? extends C." at line:5, column:14
+			"Cannot instantiate ? extends C, because C does not have a @CovariantConstructor." at line:5, column:14
 			"constructor{? extends C} is not a subtype of constructor{C}." at line:15, column:5
 		'''
 		)

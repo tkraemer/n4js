@@ -29,7 +29,7 @@ class D<T extends C> {
         new ctor_T();
         
         var ctor_CW: constructor{? extends C};
-        // XPECT errors --> "Cannot instantiate ? extends C." at "ctor_CW"
+        // XPECT errors --> "Cannot instantiate ? extends C, because C does not have a @CovariantConstructor." at "ctor_CW"
         new ctor_CW();
         
         var ctor: constructor{C};

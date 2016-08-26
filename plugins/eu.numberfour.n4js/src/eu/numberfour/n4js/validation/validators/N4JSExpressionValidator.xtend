@@ -542,28 +542,35 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		// FIXME clean up, improve messages
 
 		val isCtor = classifierTypeRef.isConstructorRef;
-		val isConcrete = !(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef);
+		val isConcrete = !(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef)
+			|| (staticType instanceof TClassifier && N4JSLanguageUtils.hasCovariantConstructor(staticType as TClassifier));
 		if (staticType === G.symbolObjectType) {
 			// error case #1: new Symbol()
 			val message = IssueCodes.messageForBIT_SYMBOL_NOT_A_CTOR;
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.BIT_SYMBOL_NOT_A_CTOR);
 			return;
-		} else if ((!isCtor || !isConcrete) && staticType instanceof TInterface) {
+		} else if (!isCtor && staticType instanceof TInterface) {
 			// error case #2: trying to instantiate an interface
 			val message = IssueCodes.
 				getMessageForEXP_NEW_CANNOT_INSTANTIATE(staticType.keyword, staticType.name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
-
-		} else if ((!isCtor || !isConcrete) && staticType instanceof TClass && (staticType as TClass).abstract) {
+		} else if (!isCtor && staticType instanceof TClass && (staticType as TClass).abstract) {
 			// error case #3: trying to instantiate an abstract class
 			val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("abstract class", staticType.name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
+		} else if (isCtor && !isConcrete && staticType instanceof TClassifier) {
+			// error case #4: trying to instantiate "constructor{? extends C}", with C not having @CovariantConstructor
+			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_NO_COVARIANT_CTOR(typeArg.typeRefAsString, staticType.typeAsString);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_WILDCARD_NO_COVARIANT_CTOR);
+			return;
 		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcrete) {
+			// remaining cases
 			val name = if (classifierTypeRef.typeArg !== null) {
 					classifierTypeRef.typeArg.typeRefAsString
 				} else {
