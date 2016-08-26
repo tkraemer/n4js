@@ -26,11 +26,11 @@ class D1_ctor extends C1 {
 	public constructor() {}
 }
 class D1_ctor_bad1 extends C1 {
-	// XPECT errors --> "The constructor D1_ctor_bad1.constructor cannot reduce the visibility of constructor N4Object.constructor." at "constructor"
+	// XPECT errors --> "The constructor of class D1_ctor_bad1 cannot reduce the visibility of constructor of class N4Object." at "constructor"
 	constructor() {}
 }
 class D1_ctor_bad2 extends C1 {
-	// XPECT errors --> "Signature of constructor D1_ctor_bad2.constructor does not conform to overridden constructor N4Object.constructor: {function(X)} is not a subtype of {function()}." at "constructor"
+	// XPECT errors --> "Signature of constructor of class D1_ctor_bad2 does not conform to overridden constructor of class N4Object: {function(X)} is not a subtype of {function()}." at "constructor"
 	public constructor(p: X) {}
 }
 
@@ -62,11 +62,11 @@ class D2_ctor extends C2 {
 	constructor(p: number) { super(42); }
 }
 class D2_ctor_bad1 extends C2 {
-	// XPECT errors --> "The constructor D2_ctor_bad1.constructor cannot reduce the visibility of constructor B2.constructor." at "constructor"
+	// XPECT errors --> "The constructor of class D2_ctor_bad1 cannot reduce the visibility of constructor of class B2." at "constructor"
 	private constructor(p: number) { super(42); }
 }
 class D2_ctor_bad2 extends C2 {
-	// XPECT errors --> "Signature of constructor D2_ctor_bad2.constructor does not conform to overridden constructor B2.constructor: {function(X)} is not a subtype of {function(number)}." at "constructor"
+	// XPECT errors --> "Signature of constructor of class D2_ctor_bad2 does not conform to overridden constructor of class B2: {function(X)} is not a subtype of {function(number)}." at "constructor"
 	constructor(p: X) { super(42); }
 }
 
