@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#isDeclaredPolyfill <em>Declared Polyfill</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#isDeclaredStaticPolyfill <em>Declared Static Polyfill</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#isObservable <em>Observable</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#getSuperClassRef <em>Super Class Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassImpl#getImplementedInterfaceRefs <em>Implemented Interface Refs</em>}</li>
@@ -179,26 +178,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 * @ordered
 	 */
 	protected boolean declaredStaticPolyfill = DECLARED_STATIC_POLYFILL_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isDeclaredFinalConstructorSignature() <em>Declared Final Constructor Signature</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isDeclaredFinalConstructorSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean DECLARED_FINAL_CONSTRUCTOR_SIGNATURE_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isDeclaredFinalConstructorSignature() <em>Declared Final Constructor Signature</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isDeclaredFinalConstructorSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean declaredFinalConstructorSignature = DECLARED_FINAL_CONSTRUCTOR_SIGNATURE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isObservable() <em>Observable</em>}' attribute.
@@ -390,27 +369,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isDeclaredFinalConstructorSignature() {
-		return declaredFinalConstructorSignature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDeclaredFinalConstructorSignature(boolean newDeclaredFinalConstructorSignature) {
-		boolean oldDeclaredFinalConstructorSignature = declaredFinalConstructorSignature;
-		declaredFinalConstructorSignature = newDeclaredFinalConstructorSignature;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE, oldDeclaredFinalConstructorSignature, declaredFinalConstructorSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isObservable() {
 		return observable;
 	}
@@ -518,7 +476,7 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Iterable<ParameterizedTypeRef> getSuperClassifiers() {
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
 		ParameterizedTypeRef _superClassRef = this.getSuperClassRef();
 		boolean _tripleNotEquals = (_superClassRef != null);
 		if (_tripleNotEquals) {
@@ -603,8 +561,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 				return isDeclaredPolyfill();
 			case TypesPackage.TCLASS__DECLARED_STATIC_POLYFILL:
 				return isDeclaredStaticPolyfill();
-			case TypesPackage.TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE:
-				return isDeclaredFinalConstructorSignature();
 			case TypesPackage.TCLASS__OBSERVABLE:
 				return isObservable();
 			case TypesPackage.TCLASS__SUPER_CLASS_REF:
@@ -641,9 +597,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 				return;
 			case TypesPackage.TCLASS__DECLARED_STATIC_POLYFILL:
 				setDeclaredStaticPolyfill((Boolean)newValue);
-				return;
-			case TypesPackage.TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE:
-				setDeclaredFinalConstructorSignature((Boolean)newValue);
 				return;
 			case TypesPackage.TCLASS__OBSERVABLE:
 				setObservable((Boolean)newValue);
@@ -685,9 +638,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 			case TypesPackage.TCLASS__DECLARED_STATIC_POLYFILL:
 				setDeclaredStaticPolyfill(DECLARED_STATIC_POLYFILL_EDEFAULT);
 				return;
-			case TypesPackage.TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE:
-				setDeclaredFinalConstructorSignature(DECLARED_FINAL_CONSTRUCTOR_SIGNATURE_EDEFAULT);
-				return;
 			case TypesPackage.TCLASS__OBSERVABLE:
 				setObservable(OBSERVABLE_EDEFAULT);
 				return;
@@ -721,8 +671,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 				return declaredPolyfill != DECLARED_POLYFILL_EDEFAULT;
 			case TypesPackage.TCLASS__DECLARED_STATIC_POLYFILL:
 				return declaredStaticPolyfill != DECLARED_STATIC_POLYFILL_EDEFAULT;
-			case TypesPackage.TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE:
-				return declaredFinalConstructorSignature != DECLARED_FINAL_CONSTRUCTOR_SIGNATURE_EDEFAULT;
 			case TypesPackage.TCLASS__OBSERVABLE:
 				return observable != OBSERVABLE_EDEFAULT;
 			case TypesPackage.TCLASS__SUPER_CLASS_REF:
@@ -751,7 +699,7 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 		if (baseClass == TClassifier.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TCLASSIFIER___IS_ABSTRACT: return TypesPackage.TCLASS___IS_ABSTRACT;
-				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIERS: return TypesPackage.TCLASS___GET_SUPER_CLASSIFIERS;
+				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS: return TypesPackage.TCLASS___GET_SUPER_CLASSIFIER_REFS;
 				case TypesPackage.TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return TypesPackage.TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				case TypesPackage.TCLASSIFIER___IS_FINAL: return TypesPackage.TCLASS___IS_FINAL;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
@@ -772,8 +720,8 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 				return isAbstract();
 			case TypesPackage.TCLASS___GET_SUPER_CLASS:
 				return getSuperClass();
-			case TypesPackage.TCLASS___GET_SUPER_CLASSIFIERS:
-				return getSuperClassifiers();
+			case TypesPackage.TCLASS___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case TypesPackage.TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 			case TypesPackage.TCLASS___IS_POLYFILL:
@@ -808,8 +756,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 		result.append(declaredPolyfill);
 		result.append(", declaredStaticPolyfill: ");
 		result.append(declaredStaticPolyfill);
-		result.append(", declaredFinalConstructorSignature: ");
-		result.append(declaredFinalConstructorSignature);
 		result.append(", observable: ");
 		result.append(observable);
 		result.append(')');

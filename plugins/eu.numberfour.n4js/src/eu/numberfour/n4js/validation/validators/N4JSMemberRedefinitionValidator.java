@@ -27,7 +27,6 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_MEMBERTYPE_I
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_OVERRIDE_VISIBILITY;
-import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_CTOR_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_NON_ACCESSIBLE;
@@ -49,7 +48,6 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_NON_EXISTENT_INTERFACE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_OVERRIDE_VISIBILITY;
-import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_CTOR_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_MEMBER_TYPE_INVALID;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_NON_ACCESSIBLE;
@@ -79,12 +77,12 @@ import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
-import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
-import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker;
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
@@ -103,6 +101,7 @@ import eu.numberfour.n4js.ts.types.util.NameStaticPair;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
@@ -140,6 +139,8 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private ContainerTypesHelper containerTypesHelper;
 	@Inject
 	private N4JSTypeSystem ts;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	@Inject
 	private MemberVisibilityChecker memberVisibilityChecker;
@@ -153,35 +154,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	@Override
 	public void register(EValidatorRegistrar registrar) {
 		// nop
-	}
-
-	// FIXME spec update
-	@Check
-	public void checkConstructorSignature(N4ClassDeclaration n4ClassDecl) {
-
-		if (!(n4ClassDecl.getDefinedType() instanceof TClass)) {
-			return; // wrongly parsed
-		}
-		final TClass tClass = (TClass) n4ClassDecl.getDefinedType();
-
-		// in next line: ignore implicit super types, because non of them declares @CovariantConstructor
-		final TClass tSuperClass = tClass.getSuperClass();
-		if (tSuperClass != null && N4JSLanguageUtils.hasCovariantConstructor(tSuperClass)) {
-			final TMethod ownedCtor = tClass.getOwnedCtor();
-			if (ownedCtor != null) {
-				final TMethod redefinedCtor = containerTypesHelper.fromContext(n4ClassDecl)
-						.findConstructor(tSuperClass);
-				if (redefinedCtor != null) { // will only be null in case of invalid AST / types model
-					final Result<Boolean> subtypeResult = isSubTypeResult(ownedCtor, redefinedCtor);
-					if (subtypeResult.failed()) {
-						final N4MethodDeclaration ownedCtorAST = n4ClassDecl.getOwnedCtor();
-						final TClass annOwner = N4JSLanguageUtils.findCovariantConstructorDeclarator(tClass);
-						messageOverrideCtorTypeConflict(ownedCtorAST, ownedCtor, redefinedCtor, subtypeResult,
-								annOwner);
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -582,8 +554,14 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			return OverrideCompatibilityResult.ERROR;
 		}
 
+		// all remaining rules do not apply to constructors, except constructors defined in polyfills and those defined
+		// in subclasses of @CovariantConstructor classes
+		if (m.isConstructor() && s.isConstructor() && !(isPolyfill(m) || isCovarianceForConstructorsRequired(m, s))) {
+			return OverrideCompatibilityResult.COMPATIBLE;
+		}
+
 		// 6. type compatible
-		if (!m.isSetter() && !s.isSetter()) { // in Method, Getter, Field
+		if (!m.isSetter() && !s.isSetter()) { // in Method (including constructor), Getter, Field
 			Result<Boolean> result = isSubTypeResult(m, s);
 			if (result.failed()) { // 4. subtype
 				if (!consumptionConflict) { // avoid consequential errors
@@ -626,6 +604,29 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 
 		return OverrideCompatibilityResult.COMPATIBLE;
+	}
+
+	/** Tells if 'm' belongs to a polyfill (i.e. the filling, not the filled type; cf. {@link Type#isPolyfill()}. */
+	private boolean isPolyfill(TMember m) {
+		final Type mContainer = m.getContainingType();
+		return mContainer != null && mContainer.isPolyfill();
+	}
+
+	/** Assuming m and s are constructors (not checked), tells if override compatibility is required. */
+	private boolean isCovarianceForConstructorsRequired(TMember m, TMember s) {
+		if (s.getContainingType() instanceof TInterface) {
+			// s is coming from an interface -> covariance always required (because we enforce @CovariantConstructor
+			// whenever an interface contains a constructor)
+			return true;
+		}
+		final Type mContainer = m.getContainingType();
+		if (mContainer instanceof TClass) {
+			final TClass tSuperClass = ((TClass) mContainer).getSuperClass();
+			if (tSuperClass != null && N4JSLanguageUtils.hasCovariantConstructor(tSuperClass)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -768,6 +769,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				if (!missingOverrideAnnotationMembers.contains(overriding)) {
 					continue;
 				}
+				// skip constructors
+				if (overriding.isConstructor()) {
+					continue;
+				}
 				/*
 				 * Filter overridden members to only contain metatype compatible members to prevent the generation of
 				 * confusing error message
@@ -801,19 +806,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		} else {
 			throw new IllegalStateException("must not happen as member is not consumed");
 		}
-	}
-
-	private void messageOverrideCtorTypeConflict(N4MethodDeclaration overridingCtorDecl, TMethod overridingCtor,
-			TMethod overriddenCtor, Result<Boolean> result, TClass annotationOwner) {
-
-		final String code = CLF_REDEFINED_CTOR_TYPE_CONFLICT;
-		final String message = getMessageForCLF_REDEFINED_CTOR_TYPE_CONFLICT(
-				validatorMessageHelper.description(overridingCtor),
-				validatorMessageHelper.description(overriddenCtor),
-				validatorMessageHelper.trimTypesystemMessage(result),
-				validatorMessageHelper.description(annotationOwner));
-
-		addIssue(message, overridingCtorDecl, N4JSPackage.eINSTANCE.getPropertyNameOwner_DeclaredName(), code);
 	}
 
 	private void messageOverrideMemberTypeConflict(RedefinitionType redefinitionType, TMember overriding,
@@ -1017,6 +1009,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		TypeRef typeLeft = ts.tau(left, classTypeRef);
 		TypeRef typeRight = ts.tau(right, classTypeRef);
 
+		// in case of checking compatibility of constructors, we can ignore the return types
+		// i.e. turn {function(string):this[C]?} into {function(string)}
+		// (simplifies subtype check and, more importantly, leads to better error messages)
+		if (left.isConstructor() && typeLeft instanceof FunctionTypeExprOrRef) {
+			typeLeft = changeReturnTypeToVoid(G, (FunctionTypeExprOrRef) typeLeft);
+		}
+		if (right.isConstructor() && typeRight instanceof FunctionTypeExprOrRef) {
+			typeRight = changeReturnTypeToVoid(G, (FunctionTypeExprOrRef) typeRight);
+		}
+
 		return ts.subtype(G, typeLeft, typeRight);
 	}
 
@@ -1040,6 +1042,13 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		MemberCollector memberCollector = containerTypesHelper.fromContext(getCurrentClassifierDefinition());
 		TClassifier tClassifier = getCurrentClassifier();
 		return new MemberCube(tClassifier, memberCollector);
+	}
 
+	/** Returns a copy of the given {@link FunctionTypeExprOrRef} with its return type changed to <code>void</code>. */
+	private FunctionTypeExpression changeReturnTypeToVoid(RuleEnvironment G, FunctionTypeExprOrRef typeRef) {
+		final RuleEnvironment G_empty = RuleEnvironmentExtensions.newRuleEnvironment(G);
+		final FunctionTypeExpression result = tsh.createSubstitutionOfFunctionTypeExprOrRef(G_empty, typeRef);
+		result.setReturnTypeRef(null); // FIXME use RuleEnvironmentExtensions.voidTypeRef(G) here!
+		return result;
 	}
 }

@@ -28,7 +28,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredPolyfill <em>Declared Polyfill</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredStaticPolyfill <em>Declared Static Polyfill</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#isObservable <em>Observable</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassRef <em>Super Class Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClass#getImplementedInterfaceRefs <em>Implemented Interface Refs</em>}</li>
@@ -196,32 +195,6 @@ public interface TClass extends TN4Classifier {
 	void setDeclaredStaticPolyfill(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Declared Final Constructor Signature</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Declared Final Constructor Signature</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declared Final Constructor Signature</em>' attribute.
-	 * @see #setDeclaredFinalConstructorSignature(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClass_DeclaredFinalConstructorSignature()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isDeclaredFinalConstructorSignature();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Declared Final Constructor Signature</em>' attribute.
-	 * @see #isDeclaredFinalConstructorSignature()
-	 * @generated
-	 */
-	void setDeclaredFinalConstructorSignature(boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Observable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -323,7 +296,7 @@ public interface TClass extends TN4Classifier {
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef = this.getSuperClassRef();\nboolean _tripleNotEquals = (_superClassRef != null);\nif (_tripleNotEquals)\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef_1 = this.getSuperClassRef();\n\t<%java.util.Set%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _singleton = <%java.util.Collections%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>singleton(_superClassRef_1);\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _implementedInterfaceRefs = this.getImplementedInterfaceRefs();\n\treturn <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>concat(_singleton, _implementedInterfaceRefs);\n}\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _implementedInterfaceRefs_1 = this.getImplementedInterfaceRefs();\nreturn <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>concat(_implementedInterfaceRefs_1);'"
 	 * @generated
 	 */
-	Iterable<ParameterizedTypeRef> getSuperClassifiers();
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
 
 	/**
 	 * <!-- begin-user-doc -->

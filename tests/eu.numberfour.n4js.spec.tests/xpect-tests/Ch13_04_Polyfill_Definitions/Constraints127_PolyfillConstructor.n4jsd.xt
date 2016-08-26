@@ -7,6 +7,6 @@
 
 @Polyfill
 export external public class Object extends Object {
-	// XPECT errors --> "Signature of constructor Object.constructor (line 11) does not conform to overridden constructor Object.constructor: {function(number):this[Object]?} is not a subtype of {function(any?):void}." at "constructor"
+	// XPECT errors --> "Signature of constructor Object.constructor (line 11) does not conform to overridden constructor Object.constructor: {function(number)} is not a subtype of {function(any?)}." at "constructor"
 	constructor(n : number)
 }

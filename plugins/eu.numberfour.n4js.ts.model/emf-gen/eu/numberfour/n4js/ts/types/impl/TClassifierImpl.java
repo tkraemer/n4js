@@ -7,6 +7,8 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
+import com.google.common.collect.Iterables;
+
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
@@ -31,6 +33,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>TClassifier</b></em>'.
@@ -40,6 +46,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassifierImpl#getAstElement <em>Ast Element</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TClassifierImpl#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}</li>
  * </ul>
  *
  * @generated
@@ -54,6 +61,26 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 	 * @ordered
 	 */
 	protected EObject astElement;
+
+	/**
+	 * The default value of the '{@link #isDeclaredCovariantConstructor() <em>Declared Covariant Constructor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredCovariantConstructor()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_COVARIANT_CONSTRUCTOR_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredCovariantConstructor() <em>Declared Covariant Constructor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredCovariantConstructor()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredCovariantConstructor = DECLARED_COVARIANT_CONSTRUCTOR_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,6 +144,27 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredCovariantConstructor() {
+		return declaredCovariantConstructor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredCovariantConstructor(boolean newDeclaredCovariantConstructor) {
+		boolean oldDeclaredCovariantConstructor = declaredCovariantConstructor;
+		declaredCovariantConstructor = newDeclaredCovariantConstructor;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR, oldDeclaredCovariantConstructor, declaredCovariantConstructor));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAbstract() {
 		return false;
 	}
@@ -126,7 +174,24 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Iterable<ParameterizedTypeRef> getSuperClassifiers() {
+	public Iterable<? extends TClassifier> getSuperClassifiers() {
+		Iterable<ParameterizedTypeRef> _superClassifierRefs = this.getSuperClassifierRefs();
+		Iterable<ParameterizedTypeRef> _filterNull = IterableExtensions.<ParameterizedTypeRef>filterNull(_superClassifierRefs);
+		final Function1<ParameterizedTypeRef, Type> _function = new Function1<ParameterizedTypeRef, Type>() {
+			public Type apply(final ParameterizedTypeRef it) {
+				return it.getDeclaredType();
+			}
+		};
+		Iterable<Type> _map = IterableExtensions.<ParameterizedTypeRef, Type>map(_filterNull, _function);
+		return Iterables.<TClassifier>filter(_map, TClassifier.class);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
 		return CollectionLiterals.<ParameterizedTypeRef>emptyList();
 	}
 
@@ -159,6 +224,8 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 			case TypesPackage.TCLASSIFIER__AST_ELEMENT:
 				if (resolve) return getAstElement();
 				return basicGetAstElement();
+			case TypesPackage.TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR:
+				return isDeclaredCovariantConstructor();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -173,6 +240,9 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 		switch (featureID) {
 			case TypesPackage.TCLASSIFIER__AST_ELEMENT:
 				setAstElement((EObject)newValue);
+				return;
+			case TypesPackage.TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR:
+				setDeclaredCovariantConstructor((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -189,6 +259,9 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 			case TypesPackage.TCLASSIFIER__AST_ELEMENT:
 				setAstElement((EObject)null);
 				return;
+			case TypesPackage.TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR:
+				setDeclaredCovariantConstructor(DECLARED_COVARIANT_CONSTRUCTOR_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -203,6 +276,8 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 		switch (featureID) {
 			case TypesPackage.TCLASSIFIER__AST_ELEMENT:
 				return astElement != null;
+			case TypesPackage.TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR:
+				return declaredCovariantConstructor != DECLARED_COVARIANT_CONSTRUCTOR_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -272,12 +347,30 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 				return isAbstract();
 			case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIERS:
 				return getSuperClassifiers();
+			case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case TypesPackage.TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 			case TypesPackage.TCLASSIFIER___IS_FINAL:
 				return isFinal();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredCovariantConstructor: ");
+		result.append(declaredCovariantConstructor);
+		result.append(')');
+		return result.toString();
 	}
 
 } //TClassifierImpl

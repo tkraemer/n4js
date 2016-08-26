@@ -502,6 +502,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EDataType iterableOfTClassifierEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType varianceEDataType = null;
 
 	/**
@@ -1568,6 +1575,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTClassifier_DeclaredCovariantConstructor() {
+		return (EAttribute)tClassifierEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTClassifier__IsAbstract() {
 		return tClassifierEClass.getEOperations().get(0);
 	}
@@ -1586,7 +1602,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClassifier__GetImplementedOrExtendedInterfaceRefs() {
+	public EOperation getTClassifier__GetSuperClassifierRefs() {
 		return tClassifierEClass.getEOperations().get(2);
 	}
 
@@ -1595,8 +1611,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClassifier__IsFinal() {
+	public EOperation getTClassifier__GetImplementedOrExtendedInterfaceRefs() {
 		return tClassifierEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTClassifier__IsFinal() {
+		return tClassifierEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -1766,7 +1791,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTClass_DeclaredFinalConstructorSignature() {
+	public EAttribute getTClass_Observable() {
 		return (EAttribute)tClassEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -1775,17 +1800,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTClass_Observable() {
-		return (EAttribute)tClassEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getTClass_SuperClassRef() {
-		return (EReference)tClassEClass.getEStructuralFeatures().get(8);
+		return (EReference)tClassEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1794,7 +1810,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	public EReference getTClass_ImplementedInterfaceRefs() {
-		return (EReference)tClassEClass.getEStructuralFeatures().get(9);
+		return (EReference)tClassEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1820,7 +1836,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTClass__GetSuperClassifiers() {
+	public EOperation getTClass__GetSuperClassifierRefs() {
 		return tClassEClass.getEOperations().get(2);
 	}
 
@@ -1901,7 +1917,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTInterface__GetSuperClassifiers() {
+	public EOperation getTInterface__GetSuperClassifierRefs() {
 		return tInterfaceEClass.getEOperations().get(1);
 	}
 
@@ -2792,6 +2808,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getIterableOfTClassifier() {
+		return iterableOfTClassifierEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getVariance() {
 		return varianceEDataType;
 	}
@@ -2985,8 +3010,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(tStructuralTypeEClass, TSTRUCTURAL_TYPE___IS_FINAL);
 
 		tClassifierEClass = createEClass(TCLASSIFIER);
+		createEAttribute(tClassifierEClass, TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR);
 		createEOperation(tClassifierEClass, TCLASSIFIER___IS_ABSTRACT);
 		createEOperation(tClassifierEClass, TCLASSIFIER___GET_SUPER_CLASSIFIERS);
+		createEOperation(tClassifierEClass, TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(tClassifierEClass, TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 		createEOperation(tClassifierEClass, TCLASSIFIER___IS_FINAL);
 
@@ -3011,13 +3038,12 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tClassEClass, TCLASS__DECLARED_FINAL);
 		createEAttribute(tClassEClass, TCLASS__DECLARED_POLYFILL);
 		createEAttribute(tClassEClass, TCLASS__DECLARED_STATIC_POLYFILL);
-		createEAttribute(tClassEClass, TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE);
 		createEAttribute(tClassEClass, TCLASS__OBSERVABLE);
 		createEReference(tClassEClass, TCLASS__SUPER_CLASS_REF);
 		createEReference(tClassEClass, TCLASS__IMPLEMENTED_INTERFACE_REFS);
 		createEOperation(tClassEClass, TCLASS___IS_ABSTRACT);
 		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASS);
-		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASSIFIERS);
+		createEOperation(tClassEClass, TCLASS___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(tClassEClass, TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 		createEOperation(tClassEClass, TCLASS___IS_POLYFILL);
 		createEOperation(tClassEClass, TCLASS___IS_STATIC_POLYFILL);
@@ -3027,7 +3053,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tInterfaceEClass, TINTERFACE__EXTERNAL);
 		createEReference(tInterfaceEClass, TINTERFACE__SUPER_INTERFACE_REFS);
 		createEOperation(tInterfaceEClass, TINTERFACE___IS_ABSTRACT);
-		createEOperation(tInterfaceEClass, TINTERFACE___GET_SUPER_CLASSIFIERS);
+		createEOperation(tInterfaceEClass, TINTERFACE___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(tInterfaceEClass, TINTERFACE___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 
 		tMemberEClass = createEClass(TMEMBER);
@@ -3148,6 +3174,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		// Create data types
 		collectionOfTypeRefEDataType = createEDataType(COLLECTION_OF_TYPE_REF);
+		iterableOfTClassifierEDataType = createEDataType(ITERABLE_OF_TCLASSIFIER);
 		varianceEDataType = createEDataType(VARIANCE);
 		nameAndAccessEDataType = createEDataType(NAME_AND_ACCESS);
 		memberListEDataType = createEDataType(MEMBER_LIST);
@@ -3472,10 +3499,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTStructuralType__IsFinal(), theEcorePackage.getEBoolean(), "isFinal", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(tClassifierEClass, TClassifier.class, "TClassifier", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTClassifier_DeclaredCovariantConstructor(), theEcorePackage.getEBoolean(), "declaredCovariantConstructor", null, 0, 1, TClassifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTClassifier__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTClassifier__GetSuperClassifiers(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTClassifier__GetSuperClassifiers(), this.getIterableOfTClassifier(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTClassifier__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClassifier__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3505,7 +3535,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getTClass_DeclaredFinal(), theEcorePackage.getEBoolean(), "declaredFinal", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_DeclaredPolyfill(), theEcorePackage.getEBoolean(), "declaredPolyfill", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_DeclaredStaticPolyfill(), theEcorePackage.getEBoolean(), "declaredStaticPolyfill", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTClass_DeclaredFinalConstructorSignature(), theEcorePackage.getEBoolean(), "declaredFinalConstructorSignature", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTClass_Observable(), theEcorePackage.getEBoolean(), "observable", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTClass_SuperClassRef(), theTypeRefsPackage.getParameterizedTypeRef(), null, "superClassRef", null, 0, 1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTClass_ImplementedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRef(), null, "implementedInterfaceRefs", null, 0, -1, TClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3514,7 +3543,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEOperation(getTClass__GetSuperClass(), this.getTClass(), "getSuperClass", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTClass__GetSuperClassifiers(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTClass__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClass__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3530,7 +3559,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEOperation(getTInterface__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTInterface__GetSuperClassifiers(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifiers", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTInterface__GetSuperClassifierRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getSuperClassifierRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTInterface__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3741,6 +3770,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		// Initialize data types
 		initEDataType(collectionOfTypeRefEDataType, Collection.class, "CollectionOfTypeRef", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Collection<? extends eu.numberfour.n4js.ts.typeRefs.TypeRef>");
+		initEDataType(iterableOfTClassifierEDataType, Iterable.class, "IterableOfTClassifier", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.lang.Iterable<? extends eu.numberfour.n4js.ts.types.TClassifier>");
 		initEDataType(varianceEDataType, Variance.class, "Variance", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(nameAndAccessEDataType, NameAndAccess.class, "NameAndAccess", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(memberListEDataType, List.class, "MemberList", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.List<? extends eu.numberfour.n4js.ts.types.TMember>");

@@ -115,7 +115,9 @@ class ValidatorMessageHelper {
 	 */
 	public def String description(TMember member) {
 		if(member.isConstructor) {
-			return "constructor of " + member.containingType?.description;
+			val container = member.containingType;
+			val preposition = if(container instanceof TInterface) "in" else "of";
+			return '''«member.keyword» «preposition» «container?.description»''';
 		}
 		return '''«member.prefixedKeyword» «member.shortQualifiedName»''';
 	}

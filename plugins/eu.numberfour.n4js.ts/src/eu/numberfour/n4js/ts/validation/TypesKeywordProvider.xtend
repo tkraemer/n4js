@@ -93,8 +93,16 @@ class TypesKeywordProvider {
 		"field"
 	}
 
-	def dispatch String keyword(TMethod n4Method) {
-		if(n4Method.isConstructor) "constructor" else "method"
+	def dispatch String keyword(TMethod tMethod) {
+		if(tMethod.isConstructor) {
+			if(tMethod.containingType instanceof TInterface) {
+				"constructor signature"
+			} else {
+				"constructor"
+			}
+		} else {
+			"method"
+		}
 	}
 
 	def dispatch String keyword(TFunction function) {

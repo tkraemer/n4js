@@ -345,7 +345,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			return; // broken AST
 		val G = newRuleEnvironment(classifierDecl);
 		G.recordInconsistentSubstitutions;
-		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
+		tClassifier.superClassifierRefs.forEach[tsh.addSubstitutions(G, it)];
 		for(tv : G.getTypeMappingKeys()) {
 			if(!tv.declaredCovariant && !tv.declaredContravariant) {
 				val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;

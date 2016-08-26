@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
-import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.util.NameStaticPair;
+import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
 import eu.numberfour.n4js.utils.UtilN4;
+import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator;
 
 /**
  * Helper class for the {@link N4JSMemberRedefinitionValidator} storing a {@link MemberMatrix} for each member of the
@@ -30,37 +30,35 @@ import eu.numberfour.n4js.utils.UtilN4;
  */
 public class MemberCube {
 
-	Map<NameStaticPair, MemberMatrix> memberMatrixesByName;
+	private final Map<NameStaticPair, MemberMatrix> memberMatrixesByName;
 
 	/**
 	 * Creates the cube for the given classifier, using the passed member collector. The latter is passed as argument as
 	 * it needed DI.
 	 */
 	public MemberCube(TClassifier tClassifier, MemberCollector memberCollector) {
-		memberMatrixesByName = new HashMap<>();
-		addMembers(MemberMatrix.OWNED, tClassifier.getOwnedMembers(), tClassifier.isPolyfill());
+		this.memberMatrixesByName = new HashMap<>();
+		addMembers(MemberMatrix.OWNED, tClassifier.getOwnedMembers());
 		if (tClassifier instanceof TClass) {
 			addMembers(MemberMatrix.INHERITED, memberCollector
-					.inheritedMembers((TClass) tClassifier), tClassifier.isPolyfill());
+					.inheritedMembers((TClass) tClassifier));
 		}
 		// interfaces must not contain constructors anyway
-		addMembers(MemberMatrix.IMPLEMENTED, memberCollector.membersOfImplementedInterfaces(tClassifier), false);
+		addMembers(MemberMatrix.IMPLEMENTED, memberCollector.membersOfImplementedInterfaces(tClassifier));
 	}
 
 	/**
 	 * constructors (in case of non-polyfills) are filtered out
 	 */
-	private void addMembers(int source, List<TMember> members, boolean isPolyfill) {
+	private void addMembers(int source, List<TMember> members) {
 		for (TMember member : members) {
-			if (isPolyfill || !"constructor".equals(member.getName())) {
-				NameStaticPair nsp = NameStaticPair.of(member);
-				MemberMatrix memberMatrix = memberMatrixesByName.get(nsp);
-				if (memberMatrix == null) {
-					memberMatrix = new MemberMatrix();
-					memberMatrixesByName.put(nsp, memberMatrix);
-				}
-				memberMatrix.add(source, member);
+			NameStaticPair nsp = NameStaticPair.of(member);
+			MemberMatrix memberMatrix = memberMatrixesByName.get(nsp);
+			if (memberMatrix == null) {
+				memberMatrix = new MemberMatrix();
+				memberMatrixesByName.put(nsp, memberMatrix);
 			}
+			memberMatrix.add(source, member);
 		}
 	}
 

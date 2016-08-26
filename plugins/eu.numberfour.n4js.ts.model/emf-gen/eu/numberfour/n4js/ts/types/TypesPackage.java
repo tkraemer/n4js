@@ -4271,13 +4271,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER__AST_ELEMENT = CONTAINER_TYPE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = CONTAINER_TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>TClassifier</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 1;
+	int TCLASSIFIER_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -4460,13 +4469,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER___GET_SUPER_CLASSIFIERS = CONTAINER_TYPE_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS = CONTAINER_TYPE_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = CONTAINER_TYPE_OPERATION_COUNT + 2;
+	int TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = CONTAINER_TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -4475,7 +4493,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER___IS_FINAL = CONTAINER_TYPE_OPERATION_COUNT + 3;
+	int TCLASSIFIER___IS_FINAL = CONTAINER_TYPE_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>TClassifier</em>' class.
@@ -4484,7 +4502,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 4;
+	int TCLASSIFIER_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TObjectPrototypeImpl <em>TObject Prototype</em>}' class.
@@ -4567,6 +4585,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE__AST_ELEMENT = TCLASSIFIER__AST_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE__DECLARED_COVARIANT_CONSTRUCTOR = TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -4756,6 +4783,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE___GET_SUPER_CLASSIFIERS = TCLASSIFIER___GET_SUPER_CLASSIFIERS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE___GET_SUPER_CLASSIFIER_REFS = TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -4958,6 +4994,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER__AST_ELEMENT = TCLASSIFIER__AST_ELEMENT;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5156,6 +5201,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS = TCLASSIFIER___GET_SUPER_CLASSIFIERS;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_SUPER_CLASSIFIER_REFS = TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5292,6 +5346,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS__AST_ELEMENT = TN4_CLASSIFIER__AST_ELEMENT;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS__DECLARED_COVARIANT_CONSTRUCTOR = TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5382,22 +5445,13 @@ public interface TypesPackage extends EPackage {
 	int TCLASS__DECLARED_STATIC_POLYFILL = TN4_CLASSIFIER_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Declared Final Constructor Signature</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE = TN4_CLASSIFIER_FEATURE_COUNT + 6;
-
-	/**
 	 * The feature id for the '<em><b>Observable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__OBSERVABLE = TN4_CLASSIFIER_FEATURE_COUNT + 7;
+	int TCLASS__OBSERVABLE = TN4_CLASSIFIER_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Super Class Ref</b></em>' containment reference.
@@ -5406,7 +5460,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__SUPER_CLASS_REF = TN4_CLASSIFIER_FEATURE_COUNT + 8;
+	int TCLASS__SUPER_CLASS_REF = TN4_CLASSIFIER_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Implemented Interface Refs</b></em>' containment reference list.
@@ -5415,7 +5469,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS__IMPLEMENTED_INTERFACE_REFS = TN4_CLASSIFIER_FEATURE_COUNT + 9;
+	int TCLASS__IMPLEMENTED_INTERFACE_REFS = TN4_CLASSIFIER_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>TClass</em>' class.
@@ -5424,7 +5478,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS_FEATURE_COUNT = TN4_CLASSIFIER_FEATURE_COUNT + 10;
+	int TCLASS_FEATURE_COUNT = TN4_CLASSIFIER_FEATURE_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -5544,6 +5598,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS;
+
+	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5589,13 +5652,13 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_SUPER_CLASS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
+	int TCLASS___GET_SUPER_CLASSIFIER_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -5723,6 +5786,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE__AST_ELEMENT = TN4_CLASSIFIER__AST_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE__DECLARED_COVARIANT_CONSTRUCTOR = TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -5923,6 +5995,15 @@ public interface TypesPackage extends EPackage {
 	int TINTERFACE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS;
+
+	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5968,13 +6049,13 @@ public interface TypesPackage extends EPackage {
 	int TINTERFACE___IS_ABSTRACT = TN4_CLASSIFIER_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TINTERFACE___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+	int TINTERFACE___GET_SUPER_CLASSIFIER_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -10636,6 +10717,16 @@ public interface TypesPackage extends EPackage {
 	int COLLECTION_OF_TYPE_REF = 56;
 
 	/**
+	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Iterable
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
+	 * @generated
+	 */
+	int ITERABLE_OF_TCLASSIFIER = 57;
+
+	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10643,7 +10734,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 57;
+	int VARIANCE = 58;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -10653,7 +10744,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 58;
+	int NAME_AND_ACCESS = 59;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -10663,7 +10754,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 59;
+	int MEMBER_LIST = 60;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -10673,7 +10764,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 60;
+	int TCLASSIFIER_ITERABLE = 61;
 
 
 	/**
@@ -11799,6 +11890,17 @@ public interface TypesPackage extends EPackage {
 	EClass getTClassifier();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Covariant Constructor</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor()
+	 * @see #getTClassifier()
+	 * @generated
+	 */
+	EAttribute getTClassifier_DeclaredCovariantConstructor();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#isAbstract() <em>Is Abstract</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11817,6 +11919,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTClassifier__GetSuperClassifiers();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClassifier#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getTClassifier__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -12030,17 +12142,6 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTClass_DeclaredStaticPolyfill();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature <em>Declared Final Constructor Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Declared Final Constructor Signature</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TClass#isDeclaredFinalConstructorSignature()
-	 * @see #getTClass()
-	 * @generated
-	 */
-	EAttribute getTClass_DeclaredFinalConstructorSignature();
-
-	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClass#isObservable <em>Observable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12094,14 +12195,14 @@ public interface TypesPackage extends EPackage {
 	EOperation getTClass__GetSuperClass();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassifiers() <em>Get Super Classifiers</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Super Classifiers</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClassifiers()
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClassifierRefs()
 	 * @generated
 	 */
-	EOperation getTClass__GetSuperClassifiers();
+	EOperation getTClass__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -12186,14 +12287,14 @@ public interface TypesPackage extends EPackage {
 	EOperation getTInterface__IsAbstract();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getSuperClassifiers() <em>Get Super Classifiers</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Super Classifiers</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TInterface#getSuperClassifiers()
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TInterface#getSuperClassifierRefs()
 	 * @generated
 	 */
-	EOperation getTInterface__GetSuperClassifiers();
+	EOperation getTInterface__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -13200,6 +13301,17 @@ public interface TypesPackage extends EPackage {
 	EDataType getCollectionOfTypeRef();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.Iterable <em>Iterable Of TClassifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Iterable Of TClassifier</em>'.
+	 * @see java.lang.Iterable
+	 * @model instanceClass="java.lang.Iterable<? extends eu.numberfour.n4js.ts.types.TClassifier>"
+	 * @generated
+	 */
+	EDataType getIterableOfTClassifier();
+
+	/**
 	 * Returns the meta object for data type '{@link eu.numberfour.n4js.ts.types.util.Variance <em>Variance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14185,6 +14297,14 @@ public interface TypesPackage extends EPackage {
 		EClass TCLASSIFIER = eINSTANCE.getTClassifier();
 
 		/**
+		 * The meta object literal for the '<em><b>Declared Covariant Constructor</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = eINSTANCE.getTClassifier_DeclaredCovariantConstructor();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Abstract</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14199,6 +14319,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TCLASSIFIER___GET_SUPER_CLASSIFIERS = eINSTANCE.getTClassifier__GetSuperClassifiers();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTClassifier__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -14369,14 +14497,6 @@ public interface TypesPackage extends EPackage {
 		EAttribute TCLASS__DECLARED_STATIC_POLYFILL = eINSTANCE.getTClass_DeclaredStaticPolyfill();
 
 		/**
-		 * The meta object literal for the '<em><b>Declared Final Constructor Signature</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TCLASS__DECLARED_FINAL_CONSTRUCTOR_SIGNATURE = eINSTANCE.getTClass_DeclaredFinalConstructorSignature();
-
-		/**
 		 * The meta object literal for the '<em><b>Observable</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14417,12 +14537,12 @@ public interface TypesPackage extends EPackage {
 		EOperation TCLASS___GET_SUPER_CLASS = eINSTANCE.getTClass__GetSuperClass();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Super Classifiers</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TCLASS___GET_SUPER_CLASSIFIERS = eINSTANCE.getTClass__GetSuperClassifiers();
+		EOperation TCLASS___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTClass__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -14491,12 +14611,12 @@ public interface TypesPackage extends EPackage {
 		EOperation TINTERFACE___IS_ABSTRACT = eINSTANCE.getTInterface__IsAbstract();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Super Classifiers</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TINTERFACE___GET_SUPER_CLASSIFIERS = eINSTANCE.getTInterface__GetSuperClassifiers();
+		EOperation TINTERFACE___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTInterface__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -15331,6 +15451,16 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType COLLECTION_OF_TYPE_REF = eINSTANCE.getCollectionOfTypeRef();
+
+		/**
+		 * The meta object literal for the '<em>Iterable Of TClassifier</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Iterable
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
+		 * @generated
+		 */
+		EDataType ITERABLE_OF_TCLASSIFIER = eINSTANCE.getIterableOfTClassifier();
 
 		/**
 		 * The meta object literal for the '<em>Variance</em>' data type.

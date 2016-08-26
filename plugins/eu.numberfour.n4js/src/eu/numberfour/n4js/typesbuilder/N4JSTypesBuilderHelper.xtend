@@ -17,6 +17,7 @@ import eu.numberfour.n4js.n4JS.Annotation
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument
 import eu.numberfour.n4js.n4JS.ModifierUtils
+import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4Modifier
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
@@ -24,13 +25,14 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
+import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.utils.ResourceType
 import java.util.Collection
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import eu.numberfour.n4js.utils.ResourceType
 
 @Singleton
 package class N4JSTypesBuilderHelper {
@@ -168,5 +170,14 @@ package class N4JSTypesBuilderHelper {
 			BuiltInTypeScope.get(rs).objectType
 		else
 			null
+	}
+
+	/** @see TClassifier#isDeclaredCovariantConstructor() */
+	def package boolean isDeclaredCovariantConstructor(N4ClassifierDeclaration classifierDecl) {
+		if(AnnotationDefinition.COVARIANT_CONSTRUCTOR.hasAnnotation(classifierDecl)) {
+			return true;
+		}
+		val ctor = classifierDecl.ownedMembers.findFirst[isConstructor];
+		return ctor!==null && AnnotationDefinition.COVARIANT_CONSTRUCTOR.hasAnnotation(ctor);
 	}
 }

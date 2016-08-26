@@ -22,10 +22,7 @@ import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.FieldAccessor
@@ -37,6 +34,10 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.VoidType
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.util.Tuples
@@ -46,7 +47,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
@@ -206,7 +207,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private boolean holdsConstructorConstraints(TMethod method) {
 		if (method.constructor) {
-			if (!holdsConstructorNotInInterface(method)) {
+			if (!holdsConstructorInInterfaceDoesNotHaveBody(method)) {
+				return false;
+			}
+			if (!holdsConstructorInInterfaceRequiresCovarianceAnnotation(method)) {
 				return false;
 			}
 			if (!holdsConstructorNoReturnType(method)) {
@@ -222,8 +226,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	 * N4JS spec constraints 51.1
 	 */
 	private def holdsConstructorModifiers(TMethod constructor) {
-		if (constructor.abstract || constructor.static || constructor.final ||
-			constructor.hasIllegalOverride ) {
+		if ((constructor.abstract && !(constructor.containingType instanceof TInterface)) // ctor in interface may be abstract (actually it *must* be abstract)
+			|| constructor.static
+			|| constructor.final
+			|| constructor.hasIllegalOverride ) {
 			val message = getMessageForCLF_CTOR_ILLEGAL_MODIFIER
 			addIssue(message, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_CTOR_ILLEGAL_MODIFIER)
 			return false;
@@ -238,12 +244,23 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * N4JS spec constraints 51.4
+	 * N4JS spec constraints 51.4 FIXME spec update!!!
 	 */
-	private def boolean holdsConstructorNotInInterface(TMethod constructor) {
-		if (constructor.containingType instanceof TInterface) {
-			addIssue(getMessageForITF_NO_CONSTRUCTOR, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
-				ITF_NO_CONSTRUCTOR);
+	private def boolean holdsConstructorInInterfaceDoesNotHaveBody(TMethod constructor) {
+		if (constructor.containingType instanceof TInterface && !constructor.hasNoBody) {
+			addIssue(getMessageForITF_CONSTRUCTOR_BODY, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
+				ITF_CONSTRUCTOR_BODY);
+			return false;
+		}
+		return true;
+	}
+
+	// FIXME spec update!
+	private def boolean holdsConstructorInInterfaceRequiresCovarianceAnnotation(TMethod constructor) {
+		val container = constructor.containingType;
+		if (container instanceof TInterface && !(container as TInterface).declaredCovariantConstructor) {
+			addIssue(getMessageForITF_CONSTRUCTOR_COVARIANCE, constructor.astElement,
+				PROPERTY_NAME_OWNER__DECLARED_NAME, ITF_CONSTRUCTOR_COVARIANCE);
 			return false;
 		}
 		return true;

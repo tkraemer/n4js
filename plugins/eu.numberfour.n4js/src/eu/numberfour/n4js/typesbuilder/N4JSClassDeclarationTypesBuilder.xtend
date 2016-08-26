@@ -49,7 +49,7 @@ package class N4JSClassDeclarationTypesBuilder {
 		tclass.setProvidedByRuntime(n4Class, preLinkingPhase);
 		tclass.declaredStaticPolyfill = n4Class.isStaticPolyfill;
 		tclass.declaredPolyfill = n4Class.isPolyfill || tclass.declaredStaticPolyfill;
-		tclass.declaredFinalConstructorSignature = isDeclaredFinalConstructorSignature(n4Class);
+		tclass.declaredCovariantConstructor = n4Class.isDeclaredCovariantConstructor;
 		tclass.addTypeParameters(n4Class, preLinkingPhase);
 
 		// super types etc
@@ -169,13 +169,5 @@ package class N4JSClassDeclarationTypesBuilder {
 	def private addImplementedInterfaces(TClass tclass, N4ClassDefinition classDecl, boolean preLinkingPhase) {
 		addCopyOfReferences([List<ParameterizedTypeRef> interfaces|tclass.implementedInterfaceRefs += interfaces],
 			classDecl.implementedInterfaceRefs, preLinkingPhase);
-	}
-
-	def private boolean isDeclaredFinalConstructorSignature(N4ClassDeclaration classDecl) {
-		if(AnnotationDefinition.COVARIANT_CONSTRUCTOR.hasAnnotation(classDecl)) {
-			return true;
-		}
-		val ctor = classDecl.ownedMembers.findFirst[isConstructor];
-		return ctor!==null && AnnotationDefinition.COVARIANT_CONSTRUCTOR.hasAnnotation(ctor);
 	}
 }

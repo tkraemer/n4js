@@ -64,6 +64,7 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -571,12 +572,13 @@ class N4JSLanguageUtils {
 	}
 
 	/**
-	 * Tells if the given class has a covariant constructor, cf. {@link AnnotationDefinition#COVARIANT_CONSTRUCTOR}.
+	 * Tells if the given class has a covariant constructor, cf. {@link AnnotationDefinition#COVARIANT_CONSTRUCTOR}, or
+	 * the given interface requires all implementing classes to have a covariant constructor.
 	 */
-	def static boolean hasCovariantConstructor(TClass tClass) {
+	def static boolean hasCovariantConstructor(TClassifier tClassifier) {
 		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
-		return tClass.declaredFinalConstructorSignature
-			|| new ExtendedClassesIterable(tClass).exists[declaredFinalConstructorSignature];
+		return tClassifier.declaredCovariantConstructor
+			|| AllSuperTypesCollector.collect(tClassifier).exists[declaredCovariantConstructor];
 	}
 
 	/**
@@ -585,6 +587,6 @@ class N4JSLanguageUtils {
 	 */
 	def static TClass findCovariantConstructorDeclarator(TClass tClass) {
 		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
-		return new ExtendedClassesIterable(tClass).findFirst[declaredFinalConstructorSignature]; 
+		return new ExtendedClassesIterable(tClass).findFirst[declaredCovariantConstructor]; 
 	}
 }

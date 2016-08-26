@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
 type CollectionOfTypeRef wraps Collection<? extends TypeRef>
+type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
 
 /*
@@ -808,14 +809,27 @@ class TStructuralType extends ContainerType<TStructMember>, SyntaxRelatedTElemen
  */
 abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement {
 
+	/*
+	 * Tells if this classifier is itself annotated with <code>@CovariantConstructor</code> or if it has an owned
+	 * constructor annotated with <code>@CovariantConstructor</code>.
+	 */
+	boolean declaredCovariantConstructor
+
 	op boolean isAbstract() {
 		return false
 	}
 
 	/**
-	 * Convenience method, returns all super classes and implemented or extended interfaces
+	 * Convenience method, returns all super classes and implemented or extended interfaces as classifiers.
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op IterableOfTClassifier getSuperClassifiers() {
+		return this.superClassifierRefs.filterNull.map[declaredType].filter(TClassifier);
+	}
+
+	/**
+	 * Convenience method, returns all super classes and implemented or extended interfaces as type references.
+	 */
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		return <ParameterizedTypeRef>emptyList();
 	}
 
@@ -891,7 +905,6 @@ class TClass extends TN4Classifier {
 	boolean declaredFinal
 	boolean declaredPolyfill
 	boolean declaredStaticPolyfill
-	boolean declaredFinalConstructorSignature
 	boolean observable
 	contains ParameterizedTypeRef superClassRef
 	contains ParameterizedTypeRef[] implementedInterfaceRefs
@@ -909,7 +922,7 @@ class TClass extends TN4Classifier {
 	/**
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		if (getSuperClassRef !== null) {
 			return Iterables.concat(Collections.singleton(getSuperClassRef), implementedInterfaceRefs)
 		}
@@ -955,7 +968,7 @@ class TInterface extends TN4Classifier {
 	/**
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		return superInterfaceRefs;
 	}
 	/**
