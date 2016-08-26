@@ -236,7 +236,7 @@ class StyledTextCalculationHelper {
 		styledString.append(returnTypeString);
 	}
 	
-	// produces constructor{typeName} 
+	// produces type{typeName} or constructor{typeName}
 	def dispatch private void dispatchGetTypeRefDescription(TypeTypeRef ref, StyledString styledString) {
 		val typeName = switch ref.typeArg {
 			ThisTypeRef:
@@ -244,7 +244,11 @@ class StyledTextCalculationHelper {
 			default:
 				ref.nominalTypeNameOrWildCard
 		}
-		styledString.append('''constructor{«typeName»}''');
+		if(ref.isConstructorRef) {
+			styledString.append('''constructor{«typeName»}''')
+		} else {
+			styledString.append('''type{«typeName»}''')
+		}
 	}
 	
 	// produces union{type1, type2, ...} or intersection{type1, type2, ...} 
