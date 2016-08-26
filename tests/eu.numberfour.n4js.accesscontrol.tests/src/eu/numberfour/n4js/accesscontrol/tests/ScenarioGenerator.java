@@ -33,7 +33,7 @@ import eu.numberfour.n4js.tests.issues.IssueExpectations;
  * projects that are created at a given path according to a test specification. Each scenario tests access control for a
  * given specification and member type.
  */
-class ScenarioGenerator {
+public class ScenarioGenerator {
 
 	private final TestSpecification specification;
 	private final MemberType memberType;
