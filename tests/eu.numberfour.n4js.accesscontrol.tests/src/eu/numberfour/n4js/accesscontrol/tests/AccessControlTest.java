@@ -571,7 +571,7 @@ public class AccessControlTest {
 	/**
 	 * The directory to store the test fixture (the generated projects) in.
 	 */
-	private static String FIXTURE_ROOT = "target";
+	private static String FIXTURE_ROOT = "n4js-gen";
 
 	private static void executeSpecification(TestSpecification specification)
 			throws IOException {
