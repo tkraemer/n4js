@@ -1,0 +1,11 @@
+
+
+export public class C {
+	private constructor(p: string) {}
+}
+
+@CovariantConstructor
+export public class C_cc {
+	private constructor(p: string) {}
+}
+

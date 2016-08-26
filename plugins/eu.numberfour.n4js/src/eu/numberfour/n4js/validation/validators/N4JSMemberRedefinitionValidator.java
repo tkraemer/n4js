@@ -469,6 +469,12 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			return OverrideCompatibilityResult.ACCESSOR_PAIR;
 		}
 
+		// constructors not checked here, except constructors defined in polyfills and those defined in subclasses
+		// of @CovariantConstructor classes or implementing @CovariantConstructor interfaces
+		if (m.isConstructor() && s.isConstructor() && !(isPolyfill(m) || isCovarianceForConstructorsRequired(m, s))) {
+			return OverrideCompatibilityResult.COMPATIBLE;
+		}
+
 		// Nr.1 of Constraints 67 (Overriding Members) and Constraints 69 (Implementation of Interface Members)
 		// --> s must be accessible
 		final TModule contextModule = m.getContainingModule();
@@ -552,12 +558,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				messageOverrideAbstract(redefinitionType, m, s);
 			}
 			return OverrideCompatibilityResult.ERROR;
-		}
-
-		// all remaining rules do not apply to constructors, except constructors defined in polyfills and those defined
-		// in subclasses of @CovariantConstructor classes
-		if (m.isConstructor() && s.isConstructor() && !(isPolyfill(m) || isCovarianceForConstructorsRequired(m, s))) {
-			return OverrideCompatibilityResult.COMPATIBLE;
 		}
 
 		// 6. type compatible
@@ -875,7 +875,6 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				overridden.getMemberAccessModifier().getName(),
 				IssueUserDataKeys.CLF_OVERRIDE_VISIBILITY.OVERRIDDEN_MEMBER_NAME, overridden.getName(),
 				IssueUserDataKeys.CLF_OVERRIDE_VISIBILITY.SUPER_CLASS_NAME, overridden.getContainingType().getName());
-
 	}
 
 	private void messageOverrideNonAccessible(@SuppressWarnings("unused") RedefinitionType redefinitionType,
