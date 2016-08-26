@@ -57,6 +57,16 @@ public class N4JSStandaloneSetup implements ISetup {
 		N4mfPackage.eINSTANCE.getNsURI();
 		XMLTypePackage.eINSTANCE.getNsURI();
 
+		/*
+		 * Explicitly set the package registry. This is necessary to work around EMF's global initialization approach,
+		 * which prevents the re-initialization of the package.
+		 */
+		EPackage.Registry.INSTANCE.put(TypeRefsPackage.eNS_URI, TypeRefsPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(TypesPackage.eNS_URI, TypesPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(N4JSPackage.eNS_URI, N4JSPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(N4mfPackage.eNS_URI, N4mfPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
+
 		RegularExpressionStandaloneSetup.doSetup();
 
 		TypesStandaloneSetup.doSetup();
