@@ -2568,6 +2568,7 @@ from {
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
 				temp = TypeUtils.createParameterizedTypeRefStructural(temp.declaredType, typeRef.definedTypingStrategy);
+				TypeUtils.copyStructuralTypingInfo(temp as StructuralTypeRef, typeRef);
 			}
 			
 			val tempDeclaredType = temp.declaredType

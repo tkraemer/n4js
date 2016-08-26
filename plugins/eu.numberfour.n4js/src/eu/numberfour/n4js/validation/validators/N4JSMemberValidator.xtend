@@ -22,11 +22,8 @@ import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.FieldAccessor
@@ -37,7 +34,13 @@ import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
+import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.VoidType
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.util.Tuples
@@ -47,7 +50,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -164,6 +166,17 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		// same for methods, getters, setters:
 		// same for getters, setters:
 		internalCheckAccessorType
+	}
+
+	@Check
+	def void checkN4StructuralWithOnTypeVariables(ParameterizedTypeRefStructural ptrs) {
+		if (!(ptrs.declaredType instanceof TypeVariable))
+			return;
+		
+		for (sm : ptrs.structuralMembers) {
+			val message = IssueCodes.getMessageForTYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS()
+			addIssue(message, sm.astElement, TYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS)
+		}
 	}
 
 	def boolean holdsAbstractAndBodyPropertiesOfMethod(TMember accessorOrMethod) {

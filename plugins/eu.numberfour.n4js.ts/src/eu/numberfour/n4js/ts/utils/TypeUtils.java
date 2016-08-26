@@ -521,7 +521,7 @@ public class TypeUtils {
 	 * <p>
 	 * See {@link StructuralTypeRef} for details on the special handling of property 'astStructuralMembers'.
 	 */
-	private static void copyStructuralTypingInfo(StructuralTypeRef dest, StructuralTypeRef src) {
+	public static void copyStructuralTypingInfo(StructuralTypeRef dest, StructuralTypeRef src) {
 		dest.setTypingStrategy(src.getTypingStrategy());
 		dest.getAstStructuralMembers().clear(); // need not copy those (if 'src' is an AST node, it will have a
 		// TStructuralType containing the same members!)
