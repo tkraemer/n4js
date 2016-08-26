@@ -59,7 +59,10 @@ public class N4JSStandaloneSetup implements ISetup {
 
 		/*
 		 * Explicitly set the package registry. This is necessary to work around EMF's global initialization approach,
-		 * which prevents the re-initialization of the package.
+		 * which prevents the re-initialization of the package, in case this method need to be called several times
+		 * (e.g. when using JUnit tests with different subclasses of N4JSInjectorProvider in @InjectWith annotations
+		 * within the same bundle). For example, see N4JSPackageImpl#isInited and its effect in N4JSPackageImpl#init().
+		 * See also GH-254.
 		 */
 		EPackage.Registry.INSTANCE.put(TypeRefsPackage.eNS_URI, TypeRefsPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(TypesPackage.eNS_URI, TypesPackage.eINSTANCE);
