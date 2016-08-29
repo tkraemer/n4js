@@ -113,7 +113,8 @@ class MemberScopingHelper {
 		}
 		if (memberScopeRequest.checkVisibility &&
 			! FilterWithErrorMarkerScope.isDecoratedWithFilter(scope, TypingStrategyAwareMemberScope)) {
-			decoratedScope = new TypingStrategyAwareMemberScope(decoratedScope, receiverTypeRef);
+			decoratedScope = new TypingStrategyAwareMemberScope(decoratedScope, receiverTypeRef,
+				memberScopeRequest.context);
 		}
 		return decoratedScope;
 	}
