@@ -70,13 +70,13 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 		if (member instanceof TMethod) {
 			switch (typingStrategy) {
 			case STRUCTURAL:
-				return true;
-			case STRUCTURAL_FIELDS:
-			case STRUCTURAL_WRITE_ONLY_FIELDS:
-			case STRUCTURAL_READ_ONLY_FIELDS:
-			case STRUCTURAL_FIELD_INITIALIZER:
-				boolean hasMethod = "constructor".equals(member.getName()) && member instanceof TStructMember;
+				boolean hasMethod = !"constructor".equals(member.getName()) || member instanceof TStructMember;
 				return hasMethod;
+			case STRUCTURAL_FIELDS:
+			case STRUCTURAL_READ_ONLY_FIELDS:
+			case STRUCTURAL_WRITE_ONLY_FIELDS:
+			case STRUCTURAL_FIELD_INITIALIZER:
+				return false;
 			}
 		}
 
