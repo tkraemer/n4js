@@ -1,0 +1,115 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// *NO* COVARIANT CONSTRUCTOR
+
+class A {
+
+	// WITHOUT CONSTRUCTOR
+
+	static m() {
+		// XPECT type of 'ctorThis' --> constructor{this[A]}
+		let ctorThis = this;
+
+		let ctorA: constructor{A};
+		let ctorExtA: constructor{? extends A};
+
+		// XPECT errors --> "constructor{this[A]} is not a subtype of constructor{A}." at "ctorThis"
+		ctorA = ctorThis;
+		// XPECT noerrors -->
+		ctorExtA = ctorThis;
+
+		// XPECT errors --> "Cannot instantiate this[A], because A does not have a @CovariantConstructor." at "ctorThis"
+		new ctorThis();
+	}
+}
+
+class B {
+
+	// WITH CONSTRUCTOR
+	constructor(p: number) {}
+
+	static m() {
+		// XPECT type of 'ctorThis' --> constructor{this[B]}
+		let ctorThis = this;
+
+		let ctorB: constructor{B};
+		let ctorExtB: constructor{? extends B};
+
+		// XPECT errors --> "constructor{this[B]} is not a subtype of constructor{B}." at "ctorThis"
+		ctorB = ctorThis;
+		// XPECT noerrors -->
+		ctorExtB = ctorThis;
+
+		// XPECT errors --> "Cannot instantiate this[B], because B does not have a @CovariantConstructor." at "ctorThis"
+		new ctorThis(42);
+	}
+}
+
+// *WITH* COVARIANT CONSTRUCTOR
+
+@CovariantConstructor
+class C {
+
+	// WITHOUT CONSTRUCTOR
+
+	static m() {
+		// XPECT type of 'ctorThis' --> constructor{this[C]}
+		let ctorThis = this;
+
+		let ctorC: constructor{C};
+		let ctorExtC: constructor{? extends C};
+
+		// XPECT noerrors -->
+		ctorC = ctorThis;
+		// XPECT noerrors -->
+		ctorExtC = ctorThis;
+
+		// XPECT noerrors -->
+		new ctorThis();
+	}
+}
+
+class D {
+
+	// WITH CONSTRUCTOR
+	@CovariantConstructor constructor(p: number) {}
+
+	static m() {
+		// XPECT type of 'ctorThis' --> constructor{this[D]}
+		let ctorThis = this;
+
+		let ctorD: constructor{D};
+		let ctorExtD: constructor{? extends D};
+
+		// XPECT noerrors -->
+		ctorD = ctorThis;
+		// XPECT noerrors -->
+		ctorExtD = ctorThis;
+
+		// XPECT noerrors -->
+		new ctorThis(42);
+	}
+}
+
+// same in subclass:
+
+class DD extends D {
+	
+	static m2() {
+		// XPECT type of 'ctorThis' --> constructor{this[DD]}
+		let ctorThis = this;
+
+		let ctorD: constructor{D};
+		let ctorExtD: constructor{? extends D};
+
+		// XPECT noerrors -->
+		ctorD = ctorThis;
+		// XPECT noerrors -->
+		ctorExtD = ctorThis;
+
+		// XPECT noerrors -->
+		new ctorThis(42);
+	}
+}
+

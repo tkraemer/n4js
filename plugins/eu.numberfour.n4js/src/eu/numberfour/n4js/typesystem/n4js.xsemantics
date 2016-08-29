@@ -1629,18 +1629,24 @@ from {
 		G |- left.getTypeArg <: right.getTypeArg
 
 	} else if(!left.isConstructorRef) { // type{} <: constructor{}
+
 		fail
-	} else if (right.typeArg instanceof TypeRef) { // constructor <: constructor{} AND right does not contain wildcard
+
+	} else if (right.typeArg instanceof TypeRef) { // constructor{} <: constructor{} AND right does not contain wildcard
+
+		val left_staticType = typeSystemHelper.getStaticType(G, left);
+		val right_staticType = typeSystemHelper.getStaticType(G, right);
+
+		val leftHasCovariantConstructor = left_staticType instanceof TClassifier
+				&& N4JSLanguageUtils.hasCovariantConstructor(left_staticType as TClassifier);
 
 		// left must not contain a wildcard
-		!(left.typeArg instanceof Wildcard)
+		( !(left.typeArg instanceof Wildcard || left.typeArg instanceof ThisTypeRef) || leftHasCovariantConstructor )
 
 		// check type arguments
 		G |- left.getTypeArg <: right.getTypeArg
 
 		// check constructors
-		val left_staticType = typeSystemHelper.getStaticType(G, left);
-		val right_staticType = typeSystemHelper.getStaticType(G, right);
 		if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
 			// special case: we have a type variable on one or both sides
 			// left <: right if and only if the type variables are identical
@@ -1673,7 +1679,9 @@ from {
 
 			G |- leftCtorRefSubst <: rightCtorRefSubst
 		}
-	} else { // constructor <: constructor{} AND right contains wildcard
+
+	} else { // constructor{} <: constructor{} AND right contains wildcard
+
 		G |~ left.typeArg /\ var TypeRef upperBoundLeft
 		G |~ left.typeArg \/ var TypeRef lowerBoundLeft
 		G |~ right.typeArg /\ var TypeRef upperBoundRight

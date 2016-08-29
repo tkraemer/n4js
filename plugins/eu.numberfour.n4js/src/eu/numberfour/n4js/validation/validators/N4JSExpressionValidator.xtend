@@ -542,7 +542,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		// FIXME clean up, improve messages
 
 		val isCtor = classifierTypeRef.isConstructorRef;
-		val isConcrete = !(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef)
+		val isConcreteOrCovariant =
+			!(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef || typeArg instanceof ThisTypeRef)
 			|| (staticType instanceof TClassifier && N4JSLanguageUtils.hasCovariantConstructor(staticType as TClassifier));
 		if (staticType === G.symbolObjectType) {
 			// error case #1: new Symbol()
@@ -563,13 +564,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
-		} else if (isCtor && !isConcrete && staticType instanceof TClassifier) {
+		} else if (isCtor && !isConcreteOrCovariant && staticType instanceof TClassifier) {
 			// error case #4: trying to instantiate "constructor{? extends C}", with C not having @CovariantConstructor
 			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_NO_COVARIANT_CTOR(typeArg.typeRefAsString, staticType.typeAsString);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_WILDCARD_NO_COVARIANT_CTOR);
 			return;
-		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcrete) {
+		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcreteOrCovariant) {
 			// remaining cases
 			val name = if (classifierTypeRef.typeArg !== null) {
 					classifierTypeRef.typeArg.typeRefAsString
