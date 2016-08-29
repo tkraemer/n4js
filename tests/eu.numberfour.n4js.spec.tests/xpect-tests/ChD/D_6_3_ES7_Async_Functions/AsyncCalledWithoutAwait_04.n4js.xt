@@ -4,7 +4,7 @@
 
 //XPECT noerrors --> "should pass"
 async function t2(): void {
-	//XPECT noerrors --> "should pass"
+	//XPECT warnings --> "await should not be used on 'undefined' since it has no effect here." at "await undefined"
 	await undefined;
 }
 

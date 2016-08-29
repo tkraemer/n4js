@@ -59,6 +59,7 @@ async function testWithFunction(allDone : {function()}) {
 	console.log('-> res01:', res01);
 	
 	console.log('use case #2: with await, short syntax');
+	// XPECT FIXME nowarnings
 	var res02 = await foo('some path');
 	console.log('-> res02:', res02);
 	
@@ -91,7 +92,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res11:', res11);
 	
 	console.log('use case #2: with await, short syntax');
-	var res12 = await c.mOne('some path');
+	var res12 = await @Promisify c.mOne('some path');
 	console.log('-> res12:', res12);
 	
 	console.log('****** method mMany:');
@@ -101,7 +102,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res21:', res21);
 	
 	console.log('use case #2: with await, short syntax');
-	var res22 = await c.mMany('some path');
+	var res22 = await @Promisify c.mMany('some path');
 	console.log('-> res22:', res22);
 	
 	console.log('****** method mNone:');
@@ -111,7 +112,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res31:', res31);
 	
 	console.log('use case #2: with await, short syntax');
-	var res32 = (await c.mNone('some path')) as Object; // casting void to Object here to be able to assert that 'undefined' is returned at runtime
+	var res32 = (await @Promisify c.mNone('some path')) as Object; // casting void to Object here to be able to assert that 'undefined' is returned at runtime
 	console.log('-> res32:', res32);
 	
 	console.log('****** method mOneNoErr:');
@@ -121,7 +122,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res41:', res41);
 	
 	console.log('use case #2: with await, short syntax');
-	var res42 = await c.mOneNoErr('some path');
+	var res42 = await @Promisify c.mOneNoErr('some path');
 	console.log('-> res42:', res42);
 	
 	console.log('****** method mManyNoErr:');
@@ -131,7 +132,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res51:', res51);
 	
 	console.log('use case #2: with await, short syntax');
-	var res52 = await c.mManyNoErr('some path');
+	var res52 = await @Promisify c.mManyNoErr('some path');
 	console.log('-> res52:', res52);
 	
 	console.log('****** method mNoneNoErr:');
@@ -141,7 +142,7 @@ async function testWithMethod(allDone : {function()}) {
 	console.log('-> res61:', res61);
 	
 	console.log('use case #2: with await, short syntax');
-	var res62 = (await c.mNoneNoErr('some path')) as Object; // casting void to Object here to be able to assert that 'undefined' is returned at runtime
+	var res62 = (await @Promisify c.mNoneNoErr('some path')) as Object; // casting void to Object here to be able to assert that 'undefined' is returned at runtime
 	console.log('-> res62:', res62);
 	
 	console.log('****** back to method mOne:');
@@ -172,7 +173,7 @@ async function testWithMethodStatic(allDone : {function()}) {
 	console.log('-> res91:', res91);
 	
 	console.log('use case #2: with await, short syntax');
-	var res92 = await C.mStatic('some path');
+	var res92 = await @Promisify C.mStatic('some path');
 	console.log('-> res92:', res92);
 	
 	console.log('use case #3: use Promise directly');

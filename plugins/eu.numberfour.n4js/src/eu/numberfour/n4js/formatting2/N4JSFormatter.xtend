@@ -562,8 +562,21 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 
 	/** Formats DefaultCaseClause + CaseClause */
 	def dispatch void format(AbstractCaseClause caseClause, extension IFormattableDocument document) {
-		caseClause.insertNewlineAfterColon(document,getPreference(FORMAT_SWITCH_CASES_HAVE_SPACE_IN_FRONT_OF_COLON));
 		caseClause.interiorBUGFIX([indent],document);	//caseClause.interior[indent];
+		
+		if (caseClause.statements.size == 1) {
+			if (caseClause.statements.head instanceof Block) {
+				caseClause.statements.head.prepend[setNewLines(0,0,0)];
+			} else {
+				caseClause.statements.head.prepend[setNewLines(0,1,1)];
+			}
+		} else {
+			caseClause.statements.head.prepend[setNewLines(1,1,1)];
+		}
+		
+		// caseClause.regionFor.keyword(":").prepend[oneSpace]; // In case one space before the colon is desired
+		caseClause.statements.forEach[format];
+		caseClause.statements.forEach[append[setNewLines(1,1,maxConsecutiveNewLines)]];
 		caseClause.statements.last.append[setNewLines(1, 1, 2);]
 	}
 
@@ -1019,11 +1032,6 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		semEObject.regionFor.keyword("@").append[noSpace;newLines=0].prepend[oneSpace];
 	}
 
-	/** Insert 'new line'+'no space' after first colon (':') directly contained in the semantic object*/
-	private def void insertNewlineAfterColon(EObject semEObject, extension IFormattableDocument document,boolean leadingSpace) {
-		semEObject.regionFor.keyword(":").append[newLine; noSpace;].prepend[ if(leadingSpace) oneSpace else noSpace; ];
-	}
-	
 	/** On the direct level of an semantic Object enforce commas to ", " with autoWrap option. */
 	private def void configureCommas(EObject semEObject, extension IFormattableDocument document) {
 		semEObject.regionFor.keywords(",").forEach [

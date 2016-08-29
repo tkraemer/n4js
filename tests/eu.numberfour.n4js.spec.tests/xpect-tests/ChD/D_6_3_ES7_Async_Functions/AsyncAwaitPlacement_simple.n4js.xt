@@ -6,7 +6,7 @@
 
 //XPECT noerrors --> "should pass"
 async function t2(): void {
-	//XPECT noerrors --> "should pass"
+	//XPECT warnings --> "await should not be used on 'undefined' since it has no effect here." at "await undefined"
 	await undefined;
 }
 
@@ -21,12 +21,18 @@ function t() {
 //XPECT noerrors --> "IDE-1494"
 var f =  async function(){};
 
-//XPECT errors --> "await is allowed only inside functions annotated with async." at "await undefined"
+		/* XPECT issues ---
+		"await is allowed only inside functions annotated with async." at "await undefined"
+		"await should not be used on 'undefined' since it has no effect here." at "await undefined"
+		--- */
 await undefined;
 
 async function t3(): void {
 	function ti(){
-		//XPECT errors --> "await is allowed only inside functions annotated with async." at "await undefined"
+		/* XPECT issues ---
+		"await is allowed only inside functions annotated with async." at "await undefined"
+		"await should not be used on 'undefined' since it has no effect here." at "await undefined"
+		--- */
 		await undefined;
 	}
 }

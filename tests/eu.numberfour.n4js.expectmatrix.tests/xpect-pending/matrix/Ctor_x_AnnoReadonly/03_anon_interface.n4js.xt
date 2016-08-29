@@ -2,14 +2,13 @@
 
 ////////////////////////////////////////
 // Anonymous interface in spec object //
-// needs @Readonly	   				  //
 // Example 41						  //
 ////////////////////////////////////////
 
 class A {
 	public s : string;
-	// IDE-139 @Readonly not working yet XPECT FIXME noerrors -->
-	public constructor(@Spec @Readonly spec : ~~this) {}
+	// IDE-139 XPECT noerrors -->
+	public constructor(@Spec spec : ~i~this) {}
 }
 
 class B extends A { 
@@ -21,8 +20,8 @@ class B extends A {
 }
 
 class B2 extends A { 
-	// IDEBUG-134 XPECT FIXME errors --> "n is not a field in C" at "number n;"
-	public constructor(spec : ~~this with {n: C;}) {
+	// IDE-2318, IDEBUG-134 XPECT FIXME errors --> "n is not a field in C" at "number n;"
+	public constructor(@Spec spec : ~i~this with {n: C;}) {
 		super(spec);
 	}
 }

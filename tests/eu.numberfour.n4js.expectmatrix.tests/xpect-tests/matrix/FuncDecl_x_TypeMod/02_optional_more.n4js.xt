@@ -1,0 +1,49 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////////////
+// Optional parameters //
+/////////////////////////
+
+// IDEBUG-188 all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "b : boolean?"
+function f (b : boolean?, z : number, w : string) : union{string,boolean} {
+	if (b !== undefined) {
+		return b;
+	}
+	else return "nope";
+}
+
+function g (b : boolean?, z : number?, w : string?) : union{string,boolean} {
+	if (b !== undefined) {
+		return b;
+	}
+	else return "nope";
+}
+
+// no arguments XPECT noerrors -->
+f();
+
+// IDEBUG-188 not enough arguments XPECT errors -->"Incorrect number of arguments: expected 3, got 1." at "f(true)"
+f(true);
+
+/* IDEBUG-188 argument in wrong place XPECT errors ---
+"Incorrect number of arguments: expected 3, got 1." at "f(5)"
+"int is not a subtype of boolean?." at "5"
+ --- */
+f(5);
+
+// good arguments XPECT noerrors -->
+f(true, 5, "F");
+
+
+// no arguments XPECT noerrors -->
+g();
+
+// not enough arguments XPECT noerrors -->
+g(true);
+
+// argument in wrong place XPECT errors --> "int is not a subtype of boolean?." at "5"
+g(5);
+
+// good arguments XPECT noerrors -->
+g(true, 5, "F");
+
