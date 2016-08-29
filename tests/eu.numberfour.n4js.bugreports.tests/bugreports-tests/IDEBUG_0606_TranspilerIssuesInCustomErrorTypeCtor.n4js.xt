@@ -17,7 +17,7 @@ before D<init> n: 42
 before D<init> message: message for ctor D [modified before calling super ctor]
 after D<init> n: 36
 after D<init> message: message for ctor D
-D: message for ctor D [modified before calling super ctor]
+D: message for ctor D
 
 stderr:
 ==>
@@ -52,14 +52,11 @@ class C extends Error {
 class D extends Error {
 	public n : number;
 	constructor(@Spec spec : ~i~this) {
-		var originalmessage = spec.message;
 		var originalN = spec.n;
-		spec.message = spec.message + ' [modified before calling super ctor]';
 		console.log('before D<init> n: ' + spec.n);
-		console.log('before D<init> message: ' + spec.message);
+		console.log('before D<init> message: ' + spec.message + ' [modified before calling super ctor]');
 		super(spec.message);
 		this.n = 36;
-		spec.message = originalmessage;
 		console.log('after D<init> n: ' + this.n);
 		console.log('after D<init> message: ' + spec.message);
 	}
