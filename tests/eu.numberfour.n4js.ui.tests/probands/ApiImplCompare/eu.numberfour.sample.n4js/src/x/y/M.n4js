@@ -43,6 +43,16 @@ export public interface I {
 	public methodMissingDefaultImpl()
 }
 
+// Test missing type variable
+export external public class TypeVariableTest1<Other> {}
+// Test renamed and upper bound type variable
+export external public class TypeVariableTest2<Other extends Clazz, Name> {}
+// Test renamed and wrongly bound type variable
+export external public class TypeVariableTest21<Other extends Color, Name> {}
+
+// Test type variable with multiple upper bounds 
+export external public class TypeVariableTest3<T1 extends Clazz & I, T2 extends Clazz> {}
+
 // test inheritance hierarchy:
 
 export public interface DI {
