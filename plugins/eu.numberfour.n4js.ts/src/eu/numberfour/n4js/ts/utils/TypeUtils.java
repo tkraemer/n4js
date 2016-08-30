@@ -436,7 +436,7 @@ public class TypeUtils {
 	 * @param actualThisTypeRef
 	 *            must not be null, must not contain a this unbound-this-type-ref.
 	 */
-	public static TypeTypeRef createConstructorBoundThisTypeRef(TypeTypeRef actualThisTypeRef) {
+	public static TypeTypeRef createClassifierBoundThisTypeRef(TypeTypeRef actualThisTypeRef) {
 		if (actualThisTypeRef == null) {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
@@ -453,7 +453,7 @@ public class TypeUtils {
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
 		constructorBoundThisTypeRef.setTypeArg(boundThisTypeRef);
-		constructorBoundThisTypeRef.setConstructorRef(actualThisTypeRef.isConstructorRef());
+		constructorBoundThisTypeRef.setConstructorRef(false);
 		// TODO is there anything else to copy ?
 		return constructorBoundThisTypeRef;
 	}

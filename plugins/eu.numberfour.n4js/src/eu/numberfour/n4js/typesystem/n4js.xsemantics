@@ -1623,16 +1623,20 @@ from {
 rule subtypeTypeTypeRef
 	G |- TypeTypeRef left <: TypeTypeRef right
 from {
-	if(!right.isConstructorRef) { // type{} <: type{} OR constructor{} <: type{}
+	val leftIsCtorRef = left.isConstructorRef;
+	val rightIsCtorRef = right.isConstructorRef;
+	val rightHasTypeRef = right.typeArg instanceof TypeRef;
+
+	if(!leftIsCtorRef && rightIsCtorRef) { // type{} <: constructor{}
+
+		fail
+
+	} else if(rightHasTypeRef && !rightIsCtorRef) { // type|constructor{} <: type{} AND right doesn't contain wildcard
 
 		// check type arguments
 		G |- left.getTypeArg <: right.getTypeArg
 
-	} else if(!left.isConstructorRef) { // type{} <: constructor{}
-
-		fail
-
-	} else if (right.typeArg instanceof TypeRef) { // constructor{} <: constructor{} AND right does not contain wildcard
+	} else if (rightHasTypeRef && rightIsCtorRef) { // constructor{} <: constructor{} AND right doesn't contain wildcard
 
 		val left_staticType = typeSystemHelper.getStaticType(G, left);
 		val right_staticType = typeSystemHelper.getStaticType(G, right);
@@ -1680,7 +1684,7 @@ from {
 			G |- leftCtorRefSubst <: rightCtorRefSubst
 		}
 
-	} else { // constructor{} <: constructor{} AND right contains wildcard
+	} else { // any combination except type{} <: constructor{} AND right contains wildcard
 
 		G |~ left.typeArg /\ var TypeRef upperBoundLeft
 		G |~ left.typeArg \/ var TypeRef lowerBoundLeft
@@ -2723,7 +2727,7 @@ from {
 								) {
 									G |~ thisTargetDEFTYPE.ref ~> T;
 								} else if( isInBody_Of_StaticMethod(location, containingFunction as N4MethodDeclaration)) {
-										T = TypeUtils.createConstructorBoundThisTypeRef( TypeUtils.createConstructorTypeRef( thisTargetDEFTYPE) as TypeTypeRef );
+										T = TypeUtils.createClassifierBoundThisTypeRef( TypeUtils.createTypeTypeRef( thisTargetDEFTYPE.ref, false));
 								} else {
 										T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
 								}

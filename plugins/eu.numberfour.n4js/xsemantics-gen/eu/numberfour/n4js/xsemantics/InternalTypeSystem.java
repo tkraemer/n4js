@@ -4590,22 +4590,21 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeTypeTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeTypeRef left, final TypeTypeRef right) throws RuleFailedException {
-    boolean _isConstructorRef = right.isConstructorRef();
-    boolean _not = (!_isConstructorRef);
-    if (_not) {
-      /* G |- left.getTypeArg <: right.getTypeArg */
-      TypeArgument _typeArg = left.getTypeArg();
-      TypeArgument _typeArg_1 = right.getTypeArg();
-      subtypeInternal(G, _trace_, _typeArg, _typeArg_1);
+    final boolean leftIsCtorRef = left.isConstructorRef();
+    final boolean rightIsCtorRef = right.isConstructorRef();
+    TypeArgument _typeArg = right.getTypeArg();
+    final boolean rightHasTypeRef = (_typeArg instanceof TypeRef);
+    if (((!leftIsCtorRef) && rightIsCtorRef)) {
+      /* fail */
+      throwForExplicitFail();
     } else {
-      boolean _isConstructorRef_1 = left.isConstructorRef();
-      boolean _not_1 = (!_isConstructorRef_1);
-      if (_not_1) {
-        /* fail */
-        throwForExplicitFail();
-      } else {
+      if ((rightHasTypeRef && (!rightIsCtorRef))) {
+        /* G |- left.getTypeArg <: right.getTypeArg */
+        TypeArgument _typeArg_1 = left.getTypeArg();
         TypeArgument _typeArg_2 = right.getTypeArg();
-        if ((_typeArg_2 instanceof TypeRef)) {
+        subtypeInternal(G, _trace_, _typeArg_1, _typeArg_2);
+      } else {
+        if ((rightHasTypeRef && rightIsCtorRef)) {
           final Type left_staticType = this.typeSystemHelper.getStaticType(G, left);
           final Type right_staticType = this.typeSystemHelper.getStaticType(G, right);
           final boolean leftHasCovariantConstructor = ((left_staticType instanceof TClassifier) && N4JSLanguageUtils.hasCovariantConstructor(((TClassifier) left_staticType)));
@@ -7226,33 +7225,34 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
                 } else {
                   boolean _isInBody_Of_StaticMethod = RuleEnvironmentExtensions.isInBody_Of_StaticMethod(location, ((N4MethodDeclaration) containingFunction));
                   if (_isInBody_Of_StaticMethod) {
-                    TypeRef _createConstructorTypeRef = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                    TypeTypeRef _createConstructorBoundThisTypeRef = TypeUtils.createConstructorBoundThisTypeRef(((TypeTypeRef) _createConstructorTypeRef));
-                    T = _createConstructorBoundThisTypeRef;
+                    TypeRef _ref_1 = TypeExtensions.ref(thisTargetDEFTYPE);
+                    TypeTypeRef _createTypeTypeRef = TypeUtils.createTypeTypeRef(_ref_1, false);
+                    TypeTypeRef _createClassifierBoundThisTypeRef = TypeUtils.createClassifierBoundThisTypeRef(_createTypeTypeRef);
+                    T = _createClassifierBoundThisTypeRef;
                   } else {
-                    TypeRef _createConstructorTypeRef_1 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                    T = _createConstructorTypeRef_1;
+                    TypeRef _createConstructorTypeRef = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                    T = _createConstructorTypeRef;
                   }
                 }
               } else {
                 final N4FieldDeclaration n4Field = EcoreUtil2.<N4FieldDeclaration>getContainerOfType(location, N4FieldDeclaration.class);
                 if (((n4Field != null) && n4Field.isStatic())) {
-                  TypeRef _createConstructorTypeRef_2 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                  T = _createConstructorTypeRef_2;
+                  TypeRef _createConstructorTypeRef_1 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                  T = _createConstructorTypeRef_1;
                 } else {
                   final N4GetterDeclaration n4Getter = EcoreUtil2.<N4GetterDeclaration>getContainerOfType(location, N4GetterDeclaration.class);
                   if (((n4Getter != null) && n4Getter.isStatic())) {
-                    TypeRef _createConstructorTypeRef_3 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                    T = _createConstructorTypeRef_3;
+                    TypeRef _createConstructorTypeRef_2 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                    T = _createConstructorTypeRef_2;
                   } else {
                     final N4SetterDeclaration n4Setter = EcoreUtil2.<N4SetterDeclaration>getContainerOfType(location, N4SetterDeclaration.class);
                     if (((n4Setter != null) && n4Setter.isStatic())) {
-                      TypeRef _createConstructorTypeRef_4 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                      T = _createConstructorTypeRef_4;
+                      TypeRef _createConstructorTypeRef_3 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                      T = _createConstructorTypeRef_3;
                     } else {
                       /* G |~ thisTargetDEFTYPE.ref ~> T */
-                      TypeRef _ref_1 = TypeExtensions.ref(thisTargetDEFTYPE);
-                      Result<TypeRef> result_2 = thisTypeRefInternal(G, _trace_, _ref_1);
+                      TypeRef _ref_2 = TypeExtensions.ref(thisTargetDEFTYPE);
+                      Result<TypeRef> result_2 = thisTypeRefInternal(G, _trace_, _ref_2);
                       checkAssignableTo(result_2.getFirst(), TypeRef.class);
                       T = (TypeRef) result_2.getFirst();
                       
