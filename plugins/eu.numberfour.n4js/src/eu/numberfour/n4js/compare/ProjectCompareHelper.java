@@ -622,7 +622,7 @@ public class ProjectCompareHelper {
 			EList<TypeVariable> apiTypeVars = apiClassifier.getTypeVars();
 			EList<TypeVariable> implTypeVars = implClassifier.getTypeVars();
 
-			// only check for number of type variables
+			// check for number of type variables
 			if (apiTypeVars.size() != implTypeVars.size()) {
 				return ProjectCompareResult.error("the number of type variables doesn't match");
 			}
@@ -630,6 +630,7 @@ public class ProjectCompareHelper {
 			final RuleEnvironment ruleEnvironment = RuleEnvironmentExtensions.newRuleEnvironment(api);
 			RuleEnvironmentExtensions.setTypeReplacement(ruleEnvironment, typeReplacementProvider);
 
+			// check for upper bound compatibility
 			for (int i = 0; i < apiTypeVars.size(); i++) {
 				TypeVariable apiTypeVar = apiTypeVars.get(i);
 				TypeVariable implTypeVar = implTypeVars.get(i);
