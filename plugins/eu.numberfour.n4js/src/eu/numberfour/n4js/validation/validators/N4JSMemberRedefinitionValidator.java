@@ -81,6 +81,7 @@ import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
+import eu.numberfour.n4js.n4JS.N4ClassDefinition;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
@@ -200,6 +201,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			unusedGenericTypeVariable(mm);
 
 			checkUnpairedAccessorConsumption(mm, n4ClassifierDefinition);
+			checkUnpairedAccessorFilling(mm, n4ClassifierDefinition);
 
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
@@ -239,6 +241,39 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			if ((getterConsumed != setterConsumed) && mm.hasAccessorPair() && null != consumedAccessor) {
 				messageMissingOwnedAccessorCorrespondingConsumedAccessor((FieldAccessor) consumedAccessor,
 						definition);
+			}
+		}
+	}
+
+	private void checkUnpairedAccessorFilling(MemberMatrix mm, N4ClassifierDefinition definition) {
+		if (definition.getDefinedType().isStaticPolyfill() && mm.hasMixedAccessorPair()) {
+			FieldAccessor ownedAccessor = (FieldAccessor) Iterables.getFirst(mm.owned(), null);
+
+			if (null == ownedAccessor) {
+				// Should not happen, a mixed accessor pair implies at least one owned member
+				return;
+			}
+			if (!(definition instanceof N4ClassDefinition)) {
+				// Non-class static polyfills aren't allowed. Validated somewhere else.
+				return;
+			}
+
+			TClass filledClass = MemberRedefinitionUtils.getFilledClass((N4ClassDefinition) definition);
+			if (null == filledClass) {
+				// Invalid static polyfill class. Validated somewhere else.
+				return;
+			}
+
+			// Iterate over all inherited members
+			SourceAwareIterator memberIterator = mm.actuallyInheritedAndMixedMembers();
+			while (memberIterator.hasNext()) {
+				TMember next = memberIterator.next();
+				ContainerType<?> containingType = next.getContainingType();
+
+				// Issue an error if the member isn't owned by the filled class
+				if (containingType != filledClass) {
+					messageMissingOwnedAccessor(ownedAccessor);
+				}
 			}
 		}
 	}
@@ -312,8 +347,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			}
 			// 5. don't allow incomplete accessor overrides / declarations (for classes that aren't annotated as
 			// StaticPolyfill)
-			if (m.isAccessor() && mm.hasMixedAccessorPair() && !m.getContainingType().isStaticPolyfill()) {
-				messageMissingOwnedAccessor((FieldAccessor) m);
+			if (m.isAccessor() && mm.hasMixedAccessorPair()) {
+				if (!m.getContainingType().isStaticPolyfill()) {
+					messageMissingOwnedAccessor((FieldAccessor) m);
+				}
 			}
 		}
 	}
@@ -979,7 +1016,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private void messageMissingOwnedAccessor(FieldAccessor accessor) {
 		String accessorDescription = org.eclipse.xtext.util.Strings
 				.toFirstUpper(validatorMessageHelper.description(accessor));
-		String verb = accessor.isDeclaredOverride() ? "overridden" : "declared";
+
+		String verb = accessor.getContainingType().isStaticPolyfill() ? "filled" : "declared";
+		verb = accessor.isDeclaredOverride() ? "overridden" : verb;
+
 		String counterpartDescription = accessor instanceof TSetter ? "getter" : "setter";
 
 		if (JavaScriptVariant.getVariant(accessor) == JavaScriptVariant.n4js

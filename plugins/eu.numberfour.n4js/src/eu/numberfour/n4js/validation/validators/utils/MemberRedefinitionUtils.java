@@ -16,10 +16,14 @@ import java.util.stream.StreamSupport;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.n4JS.N4ClassDefinition;
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 /**
@@ -93,6 +97,36 @@ public class MemberRedefinitionUtils {
 		} else {
 			// General case, should not happen
 			return "redefining";
+		}
+	}
+
+	/**
+	 * Returns the class which is filled by the given static polyfill class definition.
+	 *
+	 * Returns {@code null} if staticPolyfillDefinition isn't a valid static polyfill class definition.
+	 */
+	public static TClass getFilledClass(N4ClassDefinition staticPolyfillDefinition) {
+		if (!(staticPolyfillDefinition.getDefinedType() instanceof TClassifier)) {
+			return null;
+		}
+
+		TClassifier classifier = (TClassifier) staticPolyfillDefinition.getDefinedType();
+		if (!classifier.isStaticPolyfill()) {
+			return null;
+		}
+
+		ParameterizedTypeRef superClassTypeRef = Iterables
+				.getFirst(classifier.getSuperClassifiers(), null);
+		if (null == superClassTypeRef) {
+			return null;
+		}
+
+		Type superClassType = superClassTypeRef.getDeclaredType();
+		if (superClassType instanceof TClass
+				&& ((TClass) superClassType).getContainingModule().isStaticPolyfillAware()) {
+			return (TClass) superClassType;
+		} else {
+			return null;
 		}
 	}
 
