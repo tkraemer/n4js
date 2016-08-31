@@ -426,6 +426,14 @@ abstract class FunctionOrFieldAccessor extends AnnotableElement, VariableEnviron
 	op boolean isAsync() {
 		return false;
 	}
+
+	op IdentifiableElement getDefinedFunctionOrAccessor() {
+		val _this = this;
+		return switch(_this) {
+			FunctionDefinition: _this.definedType
+			FieldAccessor: _this.definedAccessor
+		};
+	}
 }
 
 

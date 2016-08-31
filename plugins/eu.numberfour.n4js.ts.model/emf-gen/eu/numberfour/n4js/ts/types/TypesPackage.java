@@ -8813,13 +8813,22 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR__DECLARED_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR__DECLARED_THIS_TYPE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Field Accessor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -9091,6 +9100,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER__DECLARED_ABSTRACT = FIELD_ACCESSOR__DECLARED_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER__DECLARED_THIS_TYPE = FIELD_ACCESSOR__DECLARED_THIS_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
@@ -9380,6 +9398,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_GETTER__DECLARED_ABSTRACT = TGETTER__DECLARED_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER__DECLARED_THIS_TYPE = TGETTER__DECLARED_THIS_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
@@ -9689,6 +9716,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER__DECLARED_ABSTRACT = FIELD_ACCESSOR__DECLARED_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER__DECLARED_THIS_TYPE = FIELD_ACCESSOR__DECLARED_THIS_TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Fpar</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9976,6 +10012,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER__DECLARED_ABSTRACT = TSETTER__DECLARED_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER__DECLARED_THIS_TYPE = TSETTER__DECLARED_THIS_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Fpar</b></em>' containment reference.
@@ -12931,6 +12976,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getFieldAccessor_DeclaredAbstract();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredThisType <em>Declared This Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Declared This Type</em>'.
+	 * @see eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredThisType()
+	 * @see #getFieldAccessor()
+	 * @generated
+	 */
+	EReference getFieldAccessor_DeclaredThisType();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredTypeRef() <em>Get Declared Type Ref</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15133,6 +15189,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FIELD_ACCESSOR__DECLARED_ABSTRACT = eINSTANCE.getFieldAccessor_DeclaredAbstract();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared This Type</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD_ACCESSOR__DECLARED_THIS_TYPE = eINSTANCE.getFieldAccessor_DeclaredThisType();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Declared Type Ref</b></em>' operation.

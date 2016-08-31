@@ -2687,11 +2687,8 @@ from {
 		}
 		default: {
 			// searching for declaredTypeRefs introduced through @This
-			//G |- containingFunctionOrAccessor : var TypeRef x
-			var Type x = null;
-			if( containingFunctionOrAccessor instanceof FunctionDefinition ) { x= containingFunctionOrAccessor.definedType}
-
-			val TypeRef declaredThisType = TypeSystemHelper.declaredThisType(x)
+			val containingTFunctionOrAccessor = containingFunctionOrAccessor?.definedFunctionOrAccessor;
+			val TypeRef declaredThisType = TypeSystemHelper.declaredThisType(containingTFunctionOrAccessor);
 
 			if (declaredThisType!==null) {
 				if ( declaredThisType instanceof ParameterizedTypeRef) {

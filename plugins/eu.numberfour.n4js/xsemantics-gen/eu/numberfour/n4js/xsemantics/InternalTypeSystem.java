@@ -7169,12 +7169,12 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       
     }
     if (!_matched) {
-      Type x = null;
-      if ((containingFunctionOrAccessor instanceof FunctionDefinition)) {
-        Type _definedType = ((FunctionDefinition)containingFunctionOrAccessor).getDefinedType();
-        x = _definedType;
+      IdentifiableElement _definedFunctionOrAccessor = null;
+      if (containingFunctionOrAccessor!=null) {
+        _definedFunctionOrAccessor=containingFunctionOrAccessor.getDefinedFunctionOrAccessor();
       }
-      final TypeRef declaredThisType = TypeSystemHelper.declaredThisType(x);
+      final IdentifiableElement containingTFunctionOrAccessor = _definedFunctionOrAccessor;
+      final TypeRef declaredThisType = TypeSystemHelper.declaredThisType(containingTFunctionOrAccessor);
       if ((declaredThisType != null)) {
         if ((declaredThisType instanceof ParameterizedTypeRef)) {
           /* G |~ declaredThisType ~> T */

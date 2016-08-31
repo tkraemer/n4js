@@ -1938,6 +1938,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION___IS_ASYNC = N4JSPackage.N4_GETTER_DECLARATION___IS_ASYNC;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = N4JSPackage.N4_GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2216,6 +2225,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION___IS_ASYNC = N4JSPackage.N4_SETTER_DECLARATION___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = N4JSPackage.N4_SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -2586,6 +2604,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.

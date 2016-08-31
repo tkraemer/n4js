@@ -15,6 +15,7 @@ import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.n4JS.Annotation
 import eu.numberfour.n4js.n4JS.ExportDeclaration
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument
 import eu.numberfour.n4js.n4JS.ModifierUtils
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
@@ -23,9 +24,11 @@ import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
+import eu.numberfour.n4js.ts.types.FieldAccessor
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -179,5 +182,19 @@ package class N4JSTypesBuilderHelper {
 		}
 		val ctor = classifierDecl.ownedMembers.findFirst[isConstructor];
 		return ctor!==null && AnnotationDefinition.COVARIANT_CONSTRUCTOR.hasAnnotation(ctor);
+	}
+
+	/** Handle optional "@This" annotation and set its argument as declared this type in types model element. */
+	def protected void setDeclaredThisTypeFromAnnotation(TFunction functionType, FunctionDefinition functionDef,
+		boolean preLinkingPhase) {
+		setCopyOfReference([TypeRef tr | functionType.declaredThisType = tr], internalGetDeclaredThisTypeFromAnnotation(functionDef), preLinkingPhase);
+	}
+	/** Handle optional "@This" annotation and set its argument as declared this type in types model element. */
+	def protected void setDeclaredThisTypeFromAnnotation(FieldAccessor accessorType, eu.numberfour.n4js.n4JS.FieldAccessor accessorDecl, boolean preLinkingPhase) {
+		setCopyOfReference([TypeRef tr | accessorType.declaredThisType = tr], internalGetDeclaredThisTypeFromAnnotation(accessorDecl), preLinkingPhase);
+	}
+	def private TypeRef internalGetDeclaredThisTypeFromAnnotation(AnnotableElement element) {
+		val annThis = AnnotationDefinition.THIS.getAnnotation(element);
+		return annThis?.args?.filter(TypeRefAnnotationArgument)?.head?.typeRef;
 	}
 }

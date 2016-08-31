@@ -168,9 +168,10 @@ public final class AnnotationDefinition {
 	public final static AnnotationDefinition OVERRIDE = define("Override").targets(N4_MEMBER_DECLARATION).end();
 
 	/**
-	 * 7.1.1. The this Keyword
+	 * 7.1.1. The this Keyword FIXME spec update!
 	 */
-	public final static AnnotationDefinition THIS = define("This").targets(FUNCTION_DEFINITION).args(TYPE_REF).end();
+	public final static AnnotationDefinition THIS = define("This")
+			.targets(FUNCTION_DEFINITION /* includes method! */, N4_FIELD_ACCESSOR).args(TYPE_REF).end();
 
 	/**
 	 * 11.1.1. Declaring externals

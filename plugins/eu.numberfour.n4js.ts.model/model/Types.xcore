@@ -1331,6 +1331,8 @@ class TStructField extends TField, TStructMember {
  */
 abstract class FieldAccessor extends TMemberWithAccessModifier {
 	boolean declaredAbstract
+	contains TypeRef declaredThisType
+
 	op TypeRef getDeclaredTypeRef() {
 		return null;
 	}

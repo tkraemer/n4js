@@ -72,6 +72,7 @@ import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.ts.types.FieldAccessor
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.PrimitiveType
@@ -198,20 +199,48 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def checkPropertyAccesssExpression(ParameterizedPropertyAccessExpression propAccessExpression) {
-		if (propAccessExpression?.target === null)
+	def void checkPropertyAccesssExpression(ParameterizedPropertyAccessExpression propAccessExpression) {
+		if (propAccessExpression?.target === null || propAccessExpression.property === null)
 			return; // invalid AST
+
 		// check type arguments
 		val prop = propAccessExpression.property;
 		val typeVars = if (prop instanceof Type) prop.typeVars else #[]; // else-case required for TField, TGetter, TSetter
 		internalCheckTypeArguments(typeVars, propAccessExpression.typeArgs, true, prop, propAccessExpression,
 			N4JSPackage.eINSTANCE.parameterizedPropertyAccessExpression_Property);
 
+		internalCheckTargetSubtypeOfDeclaredThisType(propAccessExpression);
+
 		// check methods aren't assigned to variables or parameters
 		internalCheckMethodReference(propAccessExpression)
 
 		// check access to static members of interfaces
 		internalCheckAccessToStaticMemberOfInterface(propAccessExpression)
+	}
+
+	def private void internalCheckTargetSubtypeOfDeclaredThisType(ParameterizedPropertyAccessExpression propAccessExpr) {
+		val prop = propAccessExpr.property;
+		if(prop.eIsProxy) {
+			return; // unresolved reference
+		}
+
+		val declThisTypeRef = switch(prop) {
+			TMethod: prop.declaredThisType
+			FieldAccessor: prop.declaredThisType
+		};
+
+		if(declThisTypeRef!==null) {
+			val G = propAccessExpr.newRuleEnvironment;
+			val targetTypeRef = ts.type(G, propAccessExpr.target).value;
+			if(targetTypeRef!==null) {
+				if(!ts.subtypeSucceeded(G, targetTypeRef, declThisTypeRef)) {
+					val msg = IssueCodes.getMessageForEXP_ACCESS_INVALID_TYPE_OF_TARGET(prop.description,
+						targetTypeRef.typeRefAsString, declThisTypeRef.typeRefAsString);
+					addIssue(msg, propAccessExpr, N4JSPackage.eINSTANCE.parameterizedPropertyAccessExpression_Property,
+						IssueCodes.TYS_NO_SUBTYPE);
+				}
+			}
+		}
 	}
 
 	/**
@@ -231,7 +260,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * @see N4JSSpec, 5.2.1
 	 * 
 	 */
-	private def internalCheckMethodReference(ParameterizedPropertyAccessExpression propAccessExpression) {
+	private def void internalCheckMethodReference(ParameterizedPropertyAccessExpression propAccessExpression) {
 		if (JavaScriptVariant.getVariant(propAccessExpression) !== JavaScriptVariant.n4js) {
 			return
 		}
@@ -284,7 +313,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		warning(message, source, feature, IssueCodes.EXP_METHOD_REF_UNATTACHED_FROM_RECEIVER);
 	}
 
-	private def isMethodEffectivelyFinal(TMethod method) {
+	private def boolean isMethodEffectivelyFinal(TMethod method) {
 		if (method.isFinal || method.getMemberAccessModifier() == MemberAccessModifier.PRIVATE) {
 			return true;
 		}

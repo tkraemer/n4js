@@ -161,11 +161,21 @@ public class TypeUtils {
 	 * in case parameter <code>useSiteTypingStrategy</code> is set to a different value than
 	 * {@link TypingStrategy#DEFAULT DEFAULT}.
 	 */
+	public static ParameterizedTypeRef createTypeRef(Type declaredType, TypingStrategy typingStrategy,
+			TypeArgument... typeArgs) {
+		// TODO default for 'autoCreateTypeArgs' should probably be 'true'
+		return createTypeRef(declaredType, typingStrategy, false, typeArgs);
+	}
+
+	/**
+	 * Same as {@link #createTypeRef(Type, TypingStrategy, TypeArgument...)}, but will create unbounded wildcards as
+	 * type arguments if fewer type arguments are provided than the number of type parameters of the given declared.
+	 */
 	// TODO after java update bring back nullness analysis
 	// public static ParameterizedTypeRef createTypeRef(@Nonnull Type declaredType,
 	// @Nonnull TypingStrategy useSiteTypingStrategy, @Nonnull TypeArgument... typeArgs) {
 	public static ParameterizedTypeRef createTypeRef(Type declaredType,
-			TypingStrategy typingStrategy, TypeArgument... typeArgs) {
+			TypingStrategy typingStrategy, boolean autoCreateTypeArgs, TypeArgument... typeArgs) {
 		final ParameterizedTypeRef ref;
 		if (declaredType instanceof TFunction) {
 			ref = TypeRefsFactory.eINSTANCE.createFunctionTypeRef();
@@ -178,8 +188,15 @@ public class TypeUtils {
 		}
 		ref.setDefinedTypingStrategy(typingStrategy);
 		ref.setDeclaredType(declaredType);
+		final EList<TypeArgument> refTypeArgs = ref.getTypeArgs();
 		for (TypeArgument typeArg : typeArgs) {
-			ref.getTypeArgs().add(TypeUtils.copyIfContained(typeArg));
+			refTypeArgs.add(TypeUtils.copyIfContained(typeArg));
+		}
+		if (autoCreateTypeArgs) {
+			final int l = declaredType.getTypeVars().size();
+			for (int i = refTypeArgs.size(); i < l; i++) {
+				refTypeArgs.add(createWildcard());
+			}
 		}
 		return ref;
 	}

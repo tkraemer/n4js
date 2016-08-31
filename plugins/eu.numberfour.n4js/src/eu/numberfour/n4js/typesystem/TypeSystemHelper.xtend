@@ -34,11 +34,14 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TObjectPrototype
+import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.utils.TypeExtensions
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -240,13 +243,21 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		return typeRef;
 	}
 
-	/** Return any explicitly given  this type.
-	 * @param type either subtype of TFunction or subtypes of FunctionTypeExprOrRef can have a declared this type ("@This")
+	/**
+	 * Returns the explicitly declared this type, or <code>null</code>.
+	 * @param type either subtype of TFunction, of FieldAccessor, or of FunctionTypeExprOrRef can have a declared this
+	 *             type ("@This")
 	 * @return declaredThisType if any, null in other cases.
 	 */
-	public static def TypeRef declaredThisType(Type type) {
+	public static def TypeRef declaredThisType(IdentifiableElement type) {
 		return switch ( type ) {
 			TFunction: {
+				type.declaredThisType
+			}
+			TGetter: {
+				type.declaredThisType
+			}
+			TSetter: {
 				type.declaredThisType
 			}
 			FunctionTypeExprOrRef: {
