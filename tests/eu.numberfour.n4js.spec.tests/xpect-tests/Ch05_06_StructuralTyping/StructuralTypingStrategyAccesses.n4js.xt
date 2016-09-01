@@ -99,7 +99,7 @@ ci.initField;
 // XPECT errors --> "field anyField is not available for structurally referenced type ~i~C." at "anyField"
 ci.anyField = "47";
 // XPECT noerrors
-cf.anyField;
+ci.anyField;
 // XPECT errors --> "setter accessor is not available for structurally referenced type ~i~C." at "accessor"
 ci.accessor = 5;
 // XPECT noerrors
@@ -110,7 +110,7 @@ ci.accRead = 5;
 ci.accRead;
 // XPECT errors --> "setter accWrite is not available for structurally referenced type ~i~C." at "accWrite"
 ci.accWrite = 5;
-// XPECT errors --> "The accessor accWrite is write-only." at "accWrite"
+// IDE-2345 XPECT FIXME noerrors
 ci.accWrite;
 // XPECT errors --> "method foo is not available for structurally referenced type ~i~C." at "foo"
 ci.foo();

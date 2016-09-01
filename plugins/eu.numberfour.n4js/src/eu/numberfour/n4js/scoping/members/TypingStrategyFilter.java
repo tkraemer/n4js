@@ -35,11 +35,11 @@ import eu.numberfour.n4js.ts.types.TypingStrategy;
 class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 
 	final TypingStrategy typingStrategy;
-	final boolean isLeftHand;
+	final boolean isWriteAccess;
 
-	TypingStrategyFilter(TypingStrategy typingStrategy, boolean isLeftHand) {
+	TypingStrategyFilter(TypingStrategy typingStrategy, boolean isWriteAccess) {
 		this.typingStrategy = typingStrategy;
-		this.isLeftHand = isLeftHand;
+		this.isWriteAccess = isWriteAccess;
 	}
 
 	/**
@@ -49,7 +49,6 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 		return typingStrategy;
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public boolean apply(IEObjectDescription description) {
 		if (typingStrategy == TypingStrategy.DEFAULT || typingStrategy == TypingStrategy.NOMINAL) {
@@ -69,19 +68,24 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 
 		if (member instanceof TMethod) {
 			switch (typingStrategy) {
-			case STRUCTURAL:
-				boolean hasMethod = !"constructor".equals(member.getName()) || member instanceof TStructMember;
-				return hasMethod;
+			case NOMINAL:
+			case DEFAULT:
+				return true;
 			case STRUCTURAL_FIELDS:
 			case STRUCTURAL_READ_ONLY_FIELDS:
 			case STRUCTURAL_WRITE_ONLY_FIELDS:
 			case STRUCTURAL_FIELD_INITIALIZER:
 				return false;
+			case STRUCTURAL:
+				boolean hasMethod = !"constructor".equals(member.getName()) || member instanceof TStructMember;
+				return hasMethod;
 			}
 		}
 
 		if (member instanceof TGetter) {
 			switch (typingStrategy) {
+			case NOMINAL:
+			case DEFAULT:
 			case STRUCTURAL:
 			case STRUCTURAL_FIELDS:
 			case STRUCTURAL_READ_ONLY_FIELDS:
@@ -99,6 +103,8 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 
 		if (member instanceof TSetter) {
 			switch (typingStrategy) {
+			case NOMINAL:
+			case DEFAULT:
 			case STRUCTURAL:
 			case STRUCTURAL_FIELDS:
 			case STRUCTURAL_WRITE_ONLY_FIELDS:
@@ -112,15 +118,17 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 		if (member instanceof TField) {
 			TField field = (TField) member;
 			switch (typingStrategy) {
+			case NOMINAL:
+			case DEFAULT:
 			case STRUCTURAL:
 			case STRUCTURAL_FIELDS:
 				return true;
 			case STRUCTURAL_READ_ONLY_FIELDS:
-				return !isLeftHand;
+				return !isWriteAccess;
 			case STRUCTURAL_WRITE_ONLY_FIELDS:
-				return isLeftHand;
+				return isWriteAccess;
 			case STRUCTURAL_FIELD_INITIALIZER:
-				boolean isAccessable = !isLeftHand && (!field.isFinal() || !field.isHasExpression());
+				boolean isAccessable = !isWriteAccess && (!field.isFinal() || !field.isHasExpression());
 				return isAccessable;
 			}
 		}
